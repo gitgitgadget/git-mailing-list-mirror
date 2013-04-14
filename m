@@ -1,110 +1,143 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 07/33] get_packed_ref(): return a ref_entry
-Date: Sun, 14 Apr 2013 14:54:22 +0200
-Message-ID: <1365944088-10588-8-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 18/33] search_ref_dir(): return an index rather than a pointer
+Date: Sun, 14 Apr 2013 14:54:33 +0200
+Message-ID: <1365944088-10588-19-git-send-email-mhagger@alum.mit.edu>
 References: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sun Apr 14 14:56:39 2013
+X-From: git-owner@vger.kernel.org Sun Apr 14 14:56:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URMU1-0005J6-Cx
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 14:56:37 +0200
+	id 1URMU6-0005OY-Pf
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 14:56:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751827Ab3DNMze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 08:55:34 -0400
-Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:52901 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751845Ab3DNMz1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Apr 2013 08:55:27 -0400
-X-AuditID: 1207440e-b7f2b6d00000094c-73-516aa73e238f
+	id S932114Ab3DNM4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 08:56:34 -0400
+Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:65523 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751397Ab3DNMzo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Apr 2013 08:55:44 -0400
+X-AuditID: 1207440c-b7ff06d0000008f7-cc-516aa750aff9
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 06.D8.02380.E37AA615; Sun, 14 Apr 2013 08:55:26 -0400 (EDT)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id FA.52.02295.057AA615; Sun, 14 Apr 2013 08:55:44 -0400 (EDT)
 Received: from michael.fritz.box (p57A24996.dip.t-dialin.net [87.162.73.150])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3ECtAk4007029
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3ECtAkF007029
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 14 Apr 2013 08:55:25 -0400
+	Sun, 14 Apr 2013 08:55:42 -0400
 X-Mailer: git-send-email 1.8.2.1
 In-Reply-To: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsUixO6iqGu3PCvQYHa/pUXXlW4mi4beK8wW
-	Kx/fZba4vWI+s8WPlh5mB1aPv+8/MHm0v3/H7PGsdw+jx8VLyh6fN8kFsEZx2yQllpQFZ6bn
-	6dslcGe0HVrPXtDCXzG7YRtrA+Mn7i5GTg4JAROJSVsXskDYYhIX7q1n62Lk4hASuMwocfnu
-	QiYI5yyTxOo7EFVsAroSi3qagRIcHCIC2RK718qDhJkFHCQ2f25kBLGFBawlFl3bxA5iswio
-	Sry6eosNxOYVcJG4tXMNI8QyBYnj27eB2ZwCrhLTnx8DqxcCqpm1eTbrBEbeBYwMqxjlEnNK
-	c3VzEzNzilOTdYuTE/PyUot0jfVyM0v0UlNKNzFCQopvB2P7eplDjAIcjEo8vC8YswKFWBPL
-	iitzDzFKcjApifKeXAYU4kvKT6nMSCzOiC8qzUktPsQowcGsJMLr2AqU401JrKxKLcqHSUlz
-	sCiJ86otUfcTEkhPLEnNTk0tSC2CycpwcChJ8E4DGSpYlJqeWpGWmVOCkGbi4AQRXCAbeIA2
-	zAMp5C0uSMwtzkyHKDrFqCglzpsCkhAASWSU5sENgEX/K0ZxoH+EIfbwABMHXPcroMFMQIN9
-	9qaDDC5JREhJNTAuF9mgnf7+z82slaYtZx9pS30ujoh6cTb/lk/KSd4/Sc4vyl2u8XBfS779
-	QrH5nUjXtA1q9Rta/4tsv6j3iuU4S3DLfBe9S/fZFuzONDZ6XOG5JWiHX+EXk7A/v27uSd01
-	6ecxH5uHMfKng0/1tK8WEHsu+jtk2+H9vbP/fct6s9ZhvsYmVQ9eJZbijERDLeai 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrBIsWRmVeSWpSXmKPExsUixO6iqBuwPCvQYMJGIYuuK91MFg29V5gt
+	Vj6+y2xxe8V8ZosfLT3MDqwef99/YPJof/+O2eNZ7x5Gj4uXlD0+b5ILYI3itklKLCkLzkzP
+	07dL4M64vPkiU8FCsYp5/TdYGxiPC3YxcnJICJhIPF0zgx3CFpO4cG89WxcjF4eQwGVGiTd9
+	m1khnLNMEkdvvmcFqWIT0JVY1NPM1MXIwSEikC2xe608SJhZwEFi8+dGRhBbWMBPou/lNmYQ
+	m0VAVaJh1QSwBbwCrhJTZx9ihFimIHF8+zYwmxMoPv35MbAaIQEXiVmbZ7NOYORdwMiwilEu
+	Mac0Vzc3MTOnODVZtzg5MS8vtUjXUC83s0QvNaV0EyMkpHh2MH5bJ3OIUYCDUYmH9wVjVqAQ
+	a2JZcWXuIUZJDiYlUd6Ty4BCfEn5KZUZicUZ8UWlOanFhxglOJiVRHgdW4FyvCmJlVWpRfkw
+	KWkOFiVxXtUl6n5CAumJJanZqakFqUUwWRkODiUJ3osgQwWLUtNTK9Iyc0oQ0kwcnCDDuaRE
+	ilPzUlKLEktLMuJBkRFfDIwNkBQP0N67IO28xQWJuUBRiNZTjLocs7Y+ec0oxJKXn5cqJc57
+	FqRIAKQoozQPbgUsgbxiFAf6WBiiigeYfOAmvQJawgS0xGdvOsiSkkSElFQDI1fJFFf5xEWO
+	OcH6M+++es95oXCry5uon5WeUo9TwyLut0854nH6t/XzKSKuuvOsXFc8WKbx688pWZ3d3HbC
+	v+NnRynpBD5SqDrT9Fty7dPAdy5vl7oz9ppNDnrbtHviee15hbwLGhq5Mu7HLjhk 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221121>
 
-Instead of copying the reference's SHA1 into a caller-supplied
-variable, just return the ref_entry itself (or NULL if there is no
-such entry).  This change will allow the function to be used from
-elsewhere.
+Change search_ref_dir() to return the index of the sought entry (or -1
+on error) rather than a pointer to the entry.  This will make it more
+natural to use the function for removing an entry from the list.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ refs.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 9f508dd..de5dc7d 100644
+index eadbc2a..0c0668b 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1100,18 +1100,12 @@ int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sh
+@@ -366,18 +366,17 @@ static int ref_entry_cmp_sslice(const void *key_, const void *ent_)
  }
  
  /*
-- * Try to read ref from the packed references.  On success, set sha1
-- * and return 0; otherwise, return -1.
-+ * Return the ref_entry for the given refname from the packed
-+ * references.  If it does not exist, return NULL.
+- * Return the entry with the given refname from the ref_dir
+- * (non-recursively), sorting dir if necessary.  Return NULL if no
+- * such entry is found.  dir must already be complete.
++ * Return the index of the entry with the given refname from the
++ * ref_dir (non-recursively), sorting dir if necessary.  Return -1 if
++ * no such entry is found.  dir must already be complete.
   */
--static int get_packed_ref(const char *refname, unsigned char *sha1)
-+static struct ref_entry *get_packed_ref(const char *refname)
+-static struct ref_entry *search_ref_dir(struct ref_dir *dir,
+-					const char *refname, size_t len)
++static int search_ref_dir(struct ref_dir *dir, const char *refname, size_t len)
  {
--	struct ref_dir *packed = get_packed_refs(get_ref_cache(NULL));
--	struct ref_entry *entry = find_ref(packed, refname);
--	if (entry) {
--		hashcpy(sha1, entry->u.value.sha1);
--		return 0;
--	}
--	return -1;
-+	return find_ref(get_packed_refs(get_ref_cache(NULL)), refname);
+ 	struct ref_entry **r;
+ 	struct string_slice key;
+ 
+ 	if (refname == NULL || !dir->nr)
+-		return NULL;
++		return -1;
+ 
+ 	sort_ref_dir(dir);
+ 	key.len = len;
+@@ -386,9 +385,9 @@ static struct ref_entry *search_ref_dir(struct ref_dir *dir,
+ 		    ref_entry_cmp_sslice);
+ 
+ 	if (r == NULL)
+-		return NULL;
++		return -1;
+ 
+-	return *r;
++	return r - dir->entries;
  }
  
- const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int reading, int *flag)
-@@ -1139,13 +1133,17 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
- 		git_snpath(path, sizeof(path), "%s", refname);
+ /*
+@@ -402,8 +401,9 @@ static struct ref_dir *search_for_subdir(struct ref_dir *dir,
+ 					 const char *subdirname, size_t len,
+ 					 int mkdir)
+ {
+-	struct ref_entry *entry = search_ref_dir(dir, subdirname, len);
+-	if (!entry) {
++	int entry_index = search_ref_dir(dir, subdirname, len);
++	struct ref_entry *entry;
++	if (entry_index == -1) {
+ 		if (!mkdir)
+ 			return NULL;
+ 		/*
+@@ -414,6 +414,8 @@ static struct ref_dir *search_for_subdir(struct ref_dir *dir,
+ 		 */
+ 		entry = create_dir_entry(dir->ref_cache, subdirname, len, 0);
+ 		add_entry_to_dir(dir, entry);
++	} else {
++		entry = dir->entries[entry_index];
+ 	}
+ 	return get_ref_dir(entry);
+ }
+@@ -452,12 +454,16 @@ static struct ref_dir *find_containing_dir(struct ref_dir *dir,
+  */
+ static struct ref_entry *find_ref(struct ref_dir *dir, const char *refname)
+ {
++	int entry_index;
+ 	struct ref_entry *entry;
+ 	dir = find_containing_dir(dir, refname, 0);
+ 	if (!dir)
+ 		return NULL;
+-	entry = search_ref_dir(dir, refname, strlen(refname));
+-	return (entry && !(entry->flag & REF_DIR)) ? entry : NULL;
++	entry_index = search_ref_dir(dir, refname, strlen(refname));
++	if (entry_index == -1)
++		return NULL;
++	entry = dir->entries[entry_index];
++	return (entry->flag & REF_DIR) ? NULL : entry;
+ }
  
- 		if (lstat(path, &st) < 0) {
-+			struct ref_entry *entry;
-+
- 			if (errno != ENOENT)
- 				return NULL;
- 			/*
- 			 * The loose reference file does not exist;
- 			 * check for a packed reference.
- 			 */
--			if (!get_packed_ref(refname, sha1)) {
-+			entry = get_packed_ref(refname);
-+			if (entry) {
-+				hashcpy(sha1, entry->u.value.sha1);
- 				if (flag)
- 					*flag |= REF_ISPACKED;
- 				return refname;
+ /*
 -- 
 1.8.2.1
