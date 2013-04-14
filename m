@@ -1,7 +1,7 @@
 From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH 1/3] fast-export: add --signed-tags=warn-strip mode
-Date: Sun, 14 Apr 2013 11:57:06 +0100
-Message-ID: <8716b887972b0eb1671afd2692416efd588f7d1d.1365936811.git.john@keeping.me.uk>
+Subject: [PATCH 2/3] transport-helper: pass --signed-tags=warn-strip to fast-export
+Date: Sun, 14 Apr 2013 11:57:07 +0100
+Message-ID: <1d7cbf61d07f1f0490806f7516c622087ebed05d.1365936811.git.john@keeping.me.uk>
 References: <CAGdFq_g+kk-Fy1fcV6D5x4kroRXX63T8wjKNUqqfu39wUkSO6A@mail.gmail.com>
  <cover.1365936811.git.john@keeping.me.uk>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>,
@@ -9,41 +9,41 @@ Cc: Sverre Rabbelier <srabbelier@gmail.com>,
 	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
 	John Keeping <john@keeping.me.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 14 12:57:43 2013
+X-From: git-owner@vger.kernel.org Sun Apr 14 12:57:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URKcu-0002hF-HE
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 12:57:40 +0200
+	id 1URKd2-0002sq-TL
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 12:57:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751804Ab3DNK5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 06:57:36 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:48204 "EHLO
+	id S1751845Ab3DNK5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 06:57:44 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:48263 "EHLO
 	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751036Ab3DNK5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 06:57:35 -0400
+	with ESMTP id S1751036Ab3DNK5n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 06:57:43 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id E8D666064C8;
-	Sun, 14 Apr 2013 11:57:34 +0100 (BST)
-X-Quarantine-ID: <aLwnWG3IJxnb>
+	by coyote.aluminati.org (Postfix) with ESMTP id 92A686064DD;
+	Sun, 14 Apr 2013 11:57:43 +0100 (BST)
+X-Quarantine-ID: <OupbVZ8AU9B8>
 X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
 X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
 X-Spam-Flag: NO
-X-Spam-Score: -10.999
+X-Spam-Score: -12.899
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, URIBL_BLOCKED=0.001]
-	autolearn=ham
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
 Received: from coyote.aluminati.org ([127.0.0.1])
 	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aLwnWG3IJxnb; Sun, 14 Apr 2013 11:57:34 +0100 (BST)
+	with ESMTP id OupbVZ8AU9B8; Sun, 14 Apr 2013 11:57:43 +0100 (BST)
 Received: from river.lan (tg2.aluminati.org [10.0.7.178])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 3DDE760650E;
-	Sun, 14 Apr 2013 11:57:25 +0100 (BST)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 0D5936064C8;
+	Sun, 14 Apr 2013 11:57:34 +0100 (BST)
 X-Mailer: git-send-email 1.8.2.694.ga76e9c3.dirty
 In-Reply-To: <cover.1365936811.git.john@keeping.me.uk>
 In-Reply-To: <cover.1365936811.git.john@keeping.me.uk>
@@ -52,94 +52,68 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221094>
 
-This issues a warning while stripping signatures from signed tags, which
-allows us to use it as default behaviour for remote helpers which cannot
-specify how to handle signed tags.
+Currently, attempting to push a signed tag to a remote helper which uses
+fast-export results in the remote helper failing because the default
+fast-export action for signed tags is "abort".  This is not helpful for
+users because there is no way to pass additional arguments to
+fast-export here, either from the remote helper or from the command
+line.
+
+In general, the signature will be invalidated by whatever transformation
+a remote helper performs on a tag to push it to a repository in a
+different format so the correct behaviour is to strip the tag.  Doing
+this silently may surprise people, so use "warn-strip" to issue a
+warning when a signed tag is encountered.
 
 Signed-off-by: John Keeping <john@keeping.me.uk>
 ---
- Documentation/git-fast-export.txt | 10 ++++++----
- builtin/fast-export.c             |  8 +++++++-
- t/t9350-fast-export.sh            |  6 ++++++
- 3 files changed, 19 insertions(+), 5 deletions(-)
+ t/t5801-remote-helpers.sh | 10 ++++++++++
+ transport-helper.c        |  3 ++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-index feab7a3..03fc8c3 100644
---- a/Documentation/git-fast-export.txt
-+++ b/Documentation/git-fast-export.txt
-@@ -27,15 +27,17 @@ OPTIONS
- 	Insert 'progress' statements every <n> objects, to be shown by
- 	'git fast-import' during import.
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index f387027..9b287db 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -6,6 +6,7 @@
+ test_description='Test remote-helper import and export commands'
  
----signed-tags=(verbatim|warn|strip|abort)::
-+--signed-tags=(verbatim|warn|warn-strip|strip|abort)::
- 	Specify how to handle signed tags.  Since any transformation
- 	after the export can change the tag names (which can also happen
- 	when excluding revisions) the signatures will not match.
- +
- When asking to 'abort' (which is the default), this program will die
--when encountering a signed tag.  With 'strip', the tags will be made
--unsigned, with 'verbatim', they will be silently exported
--and with 'warn', they will be exported, but you will see a warning.
-+when encountering a signed tag.  With 'strip', the tags will silently
-+be made unsigned, with 'warn-strip' they will be made unsigned but a
-+warning will be displayed, with 'verbatim', they will be silently
-+exported and with 'warn', they will be exported, but you will see a
-+warning.
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-gpg.sh
  
- --tag-of-filtered-object=(abort|drop|rewrite)::
- 	Specify how to handle tags whose tagged object is filtered out.
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 725c0a7..d60d675 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -24,7 +24,7 @@ static const char *fast_export_usage[] = {
- };
- 
- static int progress;
--static enum { ABORT, VERBATIM, WARN, STRIP } signed_tag_mode = ABORT;
-+static enum { ABORT, VERBATIM, WARN, WARN_STRIP, STRIP } signed_tag_mode = ABORT;
- static enum { ERROR, DROP, REWRITE } tag_of_filtered_mode = ERROR;
- static int fake_missing_tagger;
- static int use_done_feature;
-@@ -40,6 +40,8 @@ static int parse_opt_signed_tag_mode(const struct option *opt,
- 		signed_tag_mode = VERBATIM;
- 	else if (!strcmp(arg, "warn"))
- 		signed_tag_mode = WARN;
-+	else if (!strcmp(arg, "warn-strip"))
-+		signed_tag_mode = WARN_STRIP;
- 	else if (!strcmp(arg, "strip"))
- 		signed_tag_mode = STRIP;
- 	else
-@@ -428,6 +430,10 @@ static void handle_tag(const char *name, struct tag *tag)
- 				/* fallthru */
- 			case VERBATIM:
- 				break;
-+			case WARN_STRIP:
-+				warning ("Stripping signature from tag %s",
-+					 sha1_to_hex(tag->object.sha1));
-+				/* fallthru */
- 			case STRIP:
- 				message_size = signature + 1 - message;
- 				break;
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 9320b4f..2471bc6 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -146,6 +146,12 @@ test_expect_success 'signed-tags=strip' '
- 
+ if ! type "${BASH-bash}" >/dev/null 2>&1; then
+ 	skip_all='skipping remote-testgit tests, bash not available'
+@@ -166,4 +167,13 @@ test_expect_success 'push ref with existing object' '
+ 	compare_refs local dup server dup
  '
  
-+test_expect_success 'signed-tags=warn-strip' '
-+	git fast-export --signed-tags=warn-strip sign-your-name >output 2>err &&
-+	! grep PGP output &&
-+	test -s err
++test_expect_success GPG 'push signed tag' '
++	(cd local &&
++	git checkout master &&
++	git tag -s -m signed-tag signed-tag &&
++	git push origin signed-tag
++	) &&
++	compare_refs local signed-tag^{} server signed-tag^{}
 +'
 +
- test_expect_success 'setup submodule' '
- 
- 	git checkout -f master &&
+ test_done
+diff --git a/transport-helper.c b/transport-helper.c
+index dcd8d97..3ce8259 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -410,9 +410,10 @@ static int get_exporter(struct transport *transport,
+ 	/* we need to duplicate helper->in because we want to use it after
+ 	 * fastexport is done with it. */
+ 	fastexport->out = dup(helper->in);
+-	fastexport->argv = xcalloc(5 + revlist_args->nr, sizeof(*fastexport->argv));
++	fastexport->argv = xcalloc(6 + revlist_args->nr, sizeof(*fastexport->argv));
+ 	fastexport->argv[argc++] = "fast-export";
+ 	fastexport->argv[argc++] = "--use-done-feature";
++	fastexport->argv[argc++] = "--signed-tags=warn-strip";
+ 	if (data->export_marks)
+ 		fastexport->argv[argc++] = data->export_marks;
+ 	if (data->import_marks)
 -- 
 1.8.2.694.ga76e9c3.dirty
