@@ -1,72 +1,100 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: cvsps: bad usage: invalid argument --norc
-Date: Sun, 14 Apr 2013 10:47:56 +0100
-Message-ID: <20130414094756.GA2278@serenity.lan>
-References: <323381594.20130414121834@gmail.com>
- <673219382.20130414124800@gmail.com>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: git instaweb - share all project files
+Date: Sun, 14 Apr 2013 12:35:37 +0200
+Message-ID: <516A8679.8090604@gmail.com>
+References: <CAMg8Y2pFXrbh8cz6m5z=LsksRijLVcV4fTk-TBx+9yaQTtAzpA@mail.gmail.com> <51659B5B.6000707@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: esr@thyrsus.com, git@vger.kernel.org
-To: Ilya Basin <basinilya@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 14 11:48:14 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Trenton D. Adams" <trenton.d.adams@gmail.com>, git@vger.kernel.org
+To: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 14 12:35:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URJXi-0008NY-6z
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 11:48:14 +0200
+	id 1URKHj-0002qF-8l
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 12:35:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751317Ab3DNJsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 05:48:09 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:41166 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750744Ab3DNJsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 05:48:08 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 36FEFCDA525;
-	Sun, 14 Apr 2013 10:48:07 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5yA2VSLQHhTa; Sun, 14 Apr 2013 10:48:06 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 31E23CDA5B9;
-	Sun, 14 Apr 2013 10:48:01 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <673219382.20130414124800@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751564Ab3DNKfn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Apr 2013 06:35:43 -0400
+Received: from mail-ea0-f182.google.com ([209.85.215.182]:45021 "EHLO
+	mail-ea0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751375Ab3DNKfm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 06:35:42 -0400
+Received: by mail-ea0-f182.google.com with SMTP id q15so1830445ead.13
+        for <git@vger.kernel.org>; Sun, 14 Apr 2013 03:35:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=VL43ts2n/k3+U42YqNkCEfD1hDIiauQC8EOr5cAWK8M=;
+        b=TFRAGQkjMH158LVR+zJ2gdSf81BBVEMN/HUpVbTMdkaDvmty6B5+D37HETpTCACgNe
+         aAHY+wUmrWh/lX504a7bm48UjdYeajOP88/V66+Hc8Fz0UPZABNZL8IryBWXvhHP9BIg
+         GAVC5wvLT6qBa/nPyEMz9AYR9Z8yLCtnr3cTzVOMjo5bUkJ7o27lamFR1GVcuv6uoLZp
+         2lli/iyqw26MZkmkeinkFXy7McbCZzJ3gTejP3cXXgz0vMcYoQufDQX8NkEBbQjklaP0
+         Ra/HqAFivLfCvtyqdp2OT2V+EZWgz0F+f3MXCY6VvEo5IcKgle8gxrI8veWD/vGEJ61p
+         hJ/A==
+X-Received: by 10.14.110.198 with SMTP id u46mr49011701eeg.41.1365935740648;
+        Sun, 14 Apr 2013 03:35:40 -0700 (PDT)
+Received: from [192.168.1.14] (dji243.neoplus.adsl.tpnet.pl. [83.23.242.243])
+        by mx.google.com with ESMTPS id cd3sm20877253eeb.6.2013.04.14.03.35.38
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 14 Apr 2013 03:35:39 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <51659B5B.6000707@gmail.com>
+X-Enigmail-Version: 1.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221091>
 
-On Sun, Apr 14, 2013 at 12:48:00PM +0400, Ilya Basin wrote:
-> IB> Hi esr.
-> IB> In cvsps 3.10 the flag --norc was removed. It broke 'git cvsimport'.
-> IB> Please give the option back and write something in the man page like:
-> IB>     This option has no effect; it is present for compatibility
-> 
-> Looks like the tool is completely different. I think I'll have to
-> downgrade.
+W dniu 10.04.2013 19:03, Jakub Nar=C4=99bski pisze:
+> W dniu 07.04.2013 05:02, Trenton D. Adams pisze:
+>=20
+>> On that first page that shows up, it shows the .git folder.  It woul=
+d
+>> be kind of nice if it shared out both the git repo and the actual
+>> current project files.  I frequently have stuff I'd like to see in a
+>> web browser, and even requires one (i.e. Navigating to
+>> file:///home/blah/blah doesn't work; ajax requests for example)
+>=20
+> There are a few possible solutions, from simplest to most complicated=
+:
+[...]
 
-If you want incremental import support, then that's the best thing to
-do.  There was some discussion about this in January [1] and it doesn't
-look like cvsps-3 has changed since then, so if you want to
-incrementally update a Git clone of a CVS repository then cvsps-2 is
-really the only way to go.
+> 2. In the web server configuration generated by git-instaweb, perhaps
+>    as an option, add serving of worktree (with mod_autoindex aka.
+>    'Options +Indexes' for Apache2, and equivalent solutions for *all*
+>    other supported web servers: lighttpd, mongoose, plack, webrick).
+>=20
+>    This may require some fiddling with URI rewriting, or change of
+>    gitweb URI, to be able to have both worktree index and gitweb
+>    script (gitweb is now under '/'), so it should probably be protect=
+ed
+>    by an option to git-instaweb.
 
-If you're doing a one-off import then I recommend ignoring git-cvsimport
-and investigating cvs2svn[2] and cvs-fast-export [3].
+The trouble (besides writing the same code for 5 web servers) is that
+you have to make web server detect whether you want to access workdir o=
+r
+gitweb from URL alone...
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/214258/focus=214305
-[2] http://cvs2svn.tigris.org/cvs2git.html
-[3] https://gitorious.org/cvs-fast-export
+=2E..and still you wouldn't have nice UI integration.
+
+> 3. Add proper support to gitweb: add 'worktree' action (similar to
+>    'tree' action / view).  Probably needs to be made somewhat
+>    configurable (and of course enabled in git-instaweb).
+
+I wonder if this should be solved via new actions, for example
+'worktree' and 'file' (which could also be a solution to problem in 2.)
+via URI rewriting), or via new symbolic "hash" name, for example
+'WORKTREE' (like 'HEAD').
+
+Hmmm... while at it, perhaps we can add browsing of INDEX version of fi=
+les?
+
+--=20
+Jakub Nar=C4=99bski
