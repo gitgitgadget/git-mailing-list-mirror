@@ -1,71 +1,77 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: Why does "git config" output nothing instead of the default value
- for unset variables?
-Date: Sun, 14 Apr 2013 21:05:21 +0200
-Message-ID: <CAHGBnuOJFVahoUwcF6dZZUEmDtKU_zvWsKtTwufN7RqeNxkZ=w@mail.gmail.com>
-References: <kke7o1$oo$1@ger.gmane.org>
-	<CAH5451nL0cmTy+vwEsJnvX7OP1iSSgY9UMhvrrimk0zWM71YDw@mail.gmail.com>
-	<20130414185619.GB1621@sigill.intra.peff.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] branch: colour upstream branches
+Date: Sun, 14 Apr 2013 21:07:30 +0200
+Message-ID: <87li8lylql.fsf@hexa.v.cablecom.net>
+References: <1365903985-24920-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Andrew Ardill <andrew.ardill@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Apr 14 21:05:34 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 14 21:07:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URSEy-0003t0-5u
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 21:05:28 +0200
+	id 1URSH8-0006Vr-AR
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 21:07:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753299Ab3DNTFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 15:05:24 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:63969 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753106Ab3DNTFX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 15:05:23 -0400
-Received: by mail-la0-f48.google.com with SMTP id fq12so3756962lab.21
-        for <git@vger.kernel.org>; Sun, 14 Apr 2013 12:05:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=NDw0af8VnWoK992Xu7sWAcNxCqnztaJjazN58aRhftc=;
-        b=GvwG6ARb0gh6J4IbK+e6NkLk/ZYxv+pvuKqpszz9cubn8Tck1l6CX6wnToMgqt4jf5
-         5JGmPMQ7f+8XtzFW15RNAGVHlejqXO+H7Mz+fBb//VbwyE0tQqPgfq30XXNQ07Su7dHR
-         QoYIWTlh/yTKhFlDK45mmwDR9x2AeKfG3WJJvE1iYas/sKHeC5TclHqNgNeH4ri73WC9
-         TEBCqIn59MQaoq0FBsgaJPwBYWv3ixdCJl0zvXpshEpab/RVgRg1m5UmWCpmLJcBxgkL
-         8awqdtzqxh8B3VOcOqZJRX5xYHxPpG2S3nnqBGdTywv9sBIZXLoaFsTarXlg51A5jcHA
-         m2Ug==
-X-Received: by 10.112.151.34 with SMTP id un2mr8696502lbb.14.1365966321746;
- Sun, 14 Apr 2013 12:05:21 -0700 (PDT)
-Received: by 10.114.84.33 with HTTP; Sun, 14 Apr 2013 12:05:21 -0700 (PDT)
-In-Reply-To: <20130414185619.GB1621@sigill.intra.peff.net>
+	id S1753413Ab3DNTHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 15:07:38 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:57039 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753364Ab3DNTHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 15:07:37 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 14 Apr
+ 2013 21:07:33 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 14 Apr
+ 2013 21:07:34 +0200
+In-Reply-To: <1365903985-24920-1-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Sat, 13 Apr 2013 20:46:25 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221154>
 
-On Sun, Apr 14, 2013 at 8:56 PM, Jeff King <peff@peff.net> wrote:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
->> More to the point, I can easily imagine many scripts relying on git
->> config returning a value to indicate that a config item has been set.
->> Your proposed change would break all those. For that reason, it might
->> be nicer to introduce a flag that returns the config if it is set or
->> the default otherwise. Something like git config --value perhaps.
+> It's hard to see them among so much output otherwise.
 >
-> The expected output is certainly a problem, but the issue is more
-> fundamental than that: git-config does not even _know_ what the default
-> is for any given option.
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  builtin/branch.c | 27 ++++++++++++++++++++-------
+>  1 file changed, 20 insertions(+), 7 deletions(-)
+>
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 00d17d2..a1cdc29 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -417,32 +417,45 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
+>  	int ours, theirs;
+>  	char *ref = NULL;
+>  	struct branch *branch = branch_get(branch_name);
+> +	char fancy[80];
+>  
+>  	if (!stat_tracking_info(branch, &ours, &theirs)) {
+>  		if (branch && branch->merge && branch->merge[0]->dst &&
+> -		    show_upstream_ref)
+> -			strbuf_addf(stat, "[%s] ",
+> -			    shorten_unambiguous_ref(branch->merge[0]->dst, 0));
+> +		    show_upstream_ref) {
+> +			ref = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
+> +			if (want_color(branch_use_color))
+> +				strbuf_addf(stat, "[%s%s%s] ",
+> +						GIT_COLOR_BLUE, ref, GIT_COLOR_RESET);
 
-Thanks for the explanation, I feared something like that. I.e. that
-git config does not even know any of the options or values it manages,
-but just is a "dumb" front-end to writing / reading whatever you pass
-it to / from a file.
+AFAICS you are hardcoding the color?  The other bits of branch colors
+are configurable through branch.color.*, so why not this?
 
 -- 
-Sebastian Schuberth
+Thomas Rast
+trast@{inf,student}.ethz.ch
