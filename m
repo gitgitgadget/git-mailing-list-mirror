@@ -1,88 +1,67 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 31/33] pack_one_ref(): do some cheap tests before a more expensive one
-Date: Sun, 14 Apr 2013 14:54:46 +0200
-Message-ID: <1365944088-10588-32-git-send-email-mhagger@alum.mit.edu>
-References: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sun Apr 14 15:03:46 2013
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Why does "git config" output nothing instead of the default value
+ for unset variables?
+Date: Sun, 14 Apr 2013 23:03:36 +1000
+Message-ID: <CAH5451=GsvVLX+08agpWgggTdYsgpD8H-JHxGOgThC=D=GObhw@mail.gmail.com>
+References: <kke7o1$oo$1@ger.gmane.org> <CAH5451nL0cmTy+vwEsJnvX7OP1iSSgY9UMhvrrimk0zWM71YDw@mail.gmail.com>
+ <CAHGBnuO2d9Wkez4sLLKp3Ei0vkAJBjJp1+m+Lsu3ozaKPQD29A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 14 15:04:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URMav-0005Av-DX
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 15:03:45 +0200
+	id 1URMbB-0005TC-QS
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 15:04:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751858Ab3DNNDl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 09:03:41 -0400
-Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:48981 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751597Ab3DNNDl (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Apr 2013 09:03:41 -0400
-X-Greylist: delayed 454 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Apr 2013 09:03:41 EDT
-X-AuditID: 12074412-b7f216d0000008d4-4d-516aa7656c98
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id B2.CD.02260.567AA615; Sun, 14 Apr 2013 08:56:05 -0400 (EDT)
-Received: from michael.fritz.box (p57A24996.dip.t-dialin.net [87.162.73.150])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3ECtAkS007029
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 14 Apr 2013 08:56:04 -0400
-X-Mailer: git-send-email 1.8.2.1
-In-Reply-To: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKIsWRmVeSWpSXmKPExsUixO6iqJu6PCvQYOZmDYuuK91MFg29V5gt
-	Vj6+y2xxe8V8ZosfLT3MDqwef99/YPJof/+O2eNZ7x5Gj4uXlD0+b5ILYI3itklKLCkLzkzP
-	07dL4M64fG8Ca8EMzoqHSzkbGLexdzFyckgImEjM/P4XyhaTuHBvPVsXIxeHkMBlRomT7Ueh
-	nLNMEm8ff2cDqWIT0JVY1NPM1MXIwSEikC2xe608SJhZwEFi8+dGRhBbWCBMYt230ywgNouA
-	qsT3fy/AbF4BV4lFP04xQSxTkDi+fRtYPSdQfPrzY2BHCAm4SMzaPJt1AiPvAkaGVYxyiTml
-	ubq5iZk5xanJusXJiXl5qUW6Znq5mSV6qSmlmxghASW0g3H9SblDjAIcjEo8vC8YswKFWBPL
-	iitzDzFKcjApifIqLgMK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuF1bAXK8aYkVlalFuXDpKQ5
-	WJTEeX8uVvcTEkhPLEnNTk0tSC2CycpwcChJ8L5eCtQoWJSanlqRlplTgpBm4uAEEVwgG3iA
-	NrwFKeQtLkjMLc5Mhyg6xagoJc77ESQhAJLIKM2DGwCL/VeM4kD/CPM+BaniAaYNuO5XQIOZ
-	gAb77E0HGVySiJCSamA8+GPn8q9ff1utN21fmmUyM/zudTczz7uHj+3sz5891yZsqXZWaO7n
-	1U9vnJ+rFrtGUaVcdu40Za1o1hZr857NzOs9NY4vSi1bVXhW5MFWe6uHmg8byrJjNOL1bs9Z
-	6bZ+8idNln6Ds5OuRiav2zPpzD/vx3wsDhGsXo1vs1+9npT8+gajQPkmJZbijERD 
+	id S1751859Ab3DNND6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 09:03:58 -0400
+Received: from mail-ve0-f175.google.com ([209.85.128.175]:34179 "EHLO
+	mail-ve0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751597Ab3DNND5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 09:03:57 -0400
+Received: by mail-ve0-f175.google.com with SMTP id jy13so507097veb.34
+        for <git@vger.kernel.org>; Sun, 14 Apr 2013 06:03:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=M8IKxh4fNWF4IezCDoXyuh1/LjGpyCcX+V7yKjdd6qo=;
+        b=fho39kaB7DDDPfCseG+0WDE9A+yQPPTd5ulvfFqs05U5ON/tbkOlFOymny5m+DuBIi
+         L/GjdU4Xo1NgC/XySRz5OQeG/0P/v10a2p39RtZ4t8GSvLyEE1twbaBX968jX6osYLui
+         Ef0D7e3rGGwGOweXKamy0rS8QliiRIQccmClxkAZcJv5d/4AO7wTiT39XX1GD2vJNb79
+         XUHT0PXVuSVQtWiFMaD07tswyOX35BC10ocKftppKI4d2y0FyAjN+/s9stJ6fgB9XW8h
+         9mSnRvp1LmpRgLo0bGIcVmQH1JuHcr/QvhiEIK1IacrYL2saRY0Xy/xQQacIdB6VTatv
+         bc9g==
+X-Received: by 10.52.19.200 with SMTP id h8mr7870780vde.60.1365944636472; Sun,
+ 14 Apr 2013 06:03:56 -0700 (PDT)
+Received: by 10.220.107.82 with HTTP; Sun, 14 Apr 2013 06:03:36 -0700 (PDT)
+In-Reply-To: <CAHGBnuO2d9Wkez4sLLKp3Ei0vkAJBjJp1+m+Lsu3ozaKPQD29A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221135>
 
+On 14 April 2013 22:56, Sebastian Schuberth <sschuberth@gmail.com> wrote:
+>> The closest thing I can see for doing this is git config --list, but
+>> perhaps there should be a flag to check if a config item is set?
+>
+> Yet more command line options? Well, there's probably no way around
+> that in order to maintain backward compatibility.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+'--list' already exists; it shows all defined options. With your
+change in place (and no others) then the only (documented) way to know
+if something was configured would be by looking at git config --list.
 
-diff --git a/refs.c b/refs.c
-index 923d34f..361a28f 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2005,16 +2005,15 @@ static int pack_one_ref(struct ref_entry *entry, void *cb_data)
- {
- 	struct pack_refs_cb_data *cb = cb_data;
- 	enum peel_status peel_status;
--	int is_tag_ref;
-+	int is_tag_ref = !prefixcmp(entry->name, "refs/tags/");
- 
--	/* Do not pack symbolic or broken refs: */
--	if ((entry->flag & REF_ISSYMREF) || !ref_resolves_to_object(entry, 0))
-+	/* ALWAYS pack refs that were already packed or are tags */
-+	if (!((cb->flags & PACK_REFS_ALL) || is_tag_ref ||
-+	      (entry->flag & REF_ISPACKED)))
- 		return 0;
--	is_tag_ref = !prefixcmp(entry->name, "refs/tags/");
- 
--	/* ALWAYS pack refs that were already packed or are tags */
--	if (!(cb->flags & PACK_REFS_ALL) && !is_tag_ref &&
--	    !(entry->flag & REF_ISPACKED))
-+	/* Do not pack symbolic or broken refs: */
-+	if ((entry->flag & REF_ISSYMREF) || !ref_resolves_to_object(entry, 0))
- 		return 0;
- 
- 	peel_status = peel_entry(entry, 1);
--- 
-1.8.2.1
+Changing the default behaviour is probably too big a breaking change,
+but a flag to change the behaviour might be nice. Then again, there
+may be away to do what you want already :-)
+
+Regards,
+
+Andrew Ardill
