@@ -1,102 +1,179 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] transport-helper: update remote helper namespace
-Date: Sat, 13 Apr 2013 22:13:55 -0700
-Message-ID: <7v8v4l7ils.fsf@alter.siamese.dyndns.org>
-References: <1365638832-9000-1-git-send-email-felipe.contreras@gmail.com>
- <1365638832-9000-3-git-send-email-felipe.contreras@gmail.com>
- <20130411043346.GE14551@sigill.intra.peff.net>
- <CAMP44s0FkiwPMJVhVBNa32J3rgghRZy6xDTN-YnHKcQ4Fj0BMQ@mail.gmail.com>
- <20130411050509.GC27795@sigill.intra.peff.net>
- <CAMP44s1LF46VU0E4W=r-qog3JY+Y-qyYGfkqxLEnTG8X8GoWOA@mail.gmail.com>
- <CAMP44s3+eaRbeXP0bPXMSE8Z1K_Lqyu8e1XCvudkapkTJFBWnA@mail.gmail.com>
+Subject: Re: [RFC/PATCH] push: introduce implicit push
+Date: Sat, 13 Apr 2013 21:42:51 -0700
+Message-ID: <7vehed7ilu.fsf@alter.siamese.dyndns.org>
+References: <1365780835-2853-1-git-send-email-artagnon@gmail.com>
+ <7v38uvcrjl.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=-GcOF17Q-y-Aqj0ThX5pPQFrriDqoJ2qsr=CS+wUNGA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 14 08:05:20 2013
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 14 08:05:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URG3v-0001Hn-Dl
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 08:05:15 +0200
+	id 1URG3z-0001Io-PK
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 08:05:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751140Ab3DNGFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 02:05:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45554 "EHLO
+	id S1750718Ab3DNGFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 02:05:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63169 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751042Ab3DNGFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 02:05:06 -0400
+	id S1750766Ab3DNGFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 02:05:04 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92DDFE3ED;
-	Sun, 14 Apr 2013 06:05:05 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8EE5DE3E7;
+	Sun, 14 Apr 2013 06:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 s=sasl; bh=aU4O6HuJ5oBewzphGBv2fay/hzY=; b=gmDEEwyS1WK1f2RRXloj
-	SAIMiJ7TOBQyn3y0sLy7xp/EQzkyNLF8TustjHQwD6z9Rp3qWyOq6m+vgorHHPcl
-	pBs48XRbSsVqSv5a4kjqKBwEXBcFkJA15M6g9ssKQB2WwajVR3AbJ/U6sSHNEosr
-	F4V8X83WUu3f5Fh7p8P3Hm8=
+	 s=sasl; bh=l35YhJ145SMoM0HYj4Q3+9cWkKw=; b=YNbo/biPTxmJohCOPJ1s
+	GwyEyA6vKIl3VLmjvFMd/mX4OozuYfoqeuqBsFxhsnlLIdnXPoTuwlsymdOvuDIg
+	6K7XnbLmweLnI09CDO8exEvvIUKDxr8/j2Hge2CZpspLm5M2vAdgZvq8lHY4LdW/
+	OkR21YjVIcPC9UX3f8Nnwtw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=TUPrqQUc6GcvcRwA89jjym5IEgdAzPI6YLt/G78iQBI3aA
-	RrN1gs4FzLMNsWDOVMkGPla3F5VRExvB/ayJQgI31DSACNwVCUOiCVgyyrB+Pc4v
-	SaMKOLtDrCz6+7A+1PlupCZ7MsXqdwxPE0H8NlmdG7td8JMicJoWo6xcDDgJU=
+	 q=dns; s=sasl; b=L6l3KogBUkv9n2fc9CLIATM55SJ8AAgsCPq3NUzdcowE4M
+	cgJ7/m7h1nsNEQ50VjUlBm7hXrhi8ePYrP66JswYi7yavB9/bxRuU0t9gmacrUiD
+	DzeA21xzQbrOTlNbPs+12+vxkY0tOjnhRoqr9lBBCN8s/C3zdq7SIbpW6WaLA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89E2EE3EB;
-	Sun, 14 Apr 2013 06:05:05 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85DE5E3E4;
+	Sun, 14 Apr 2013 06:05:03 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1ED21E3EA; Sun, 14 Apr 2013
- 06:05:05 +0000 (UTC)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F21F1E3E1; Sun, 14 Apr 2013
+ 06:05:02 +0000 (UTC)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4075636C-A4C9-11E2-B4B1-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3F2FA7B0-A4C9-11E2-9D5F-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221082>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> Why wasn't this patch merged to 'pu'? To my knowledge nobody raised
-> any real concerns.
+> I agree with you largely, but I would still argue that choosing a
+> destination based on the current branch is a historical mistake made
+> by "matching".
 
-There are many reasons not to queue _everything_ ever posted to the
-list on 'pu', and they are almost always not a deliberate rejection.
+"matching" is not necessarily a good default for everybody, and we
+are fixing that historical mistake in Git 2.0.
 
-The maintainer may have thought he is not the best person to judge
-changes to the area the patch touches, and may be expecting further
-comments from others, but haven't said "Comments?" and waiting for
-them to say something without being asked. Or the maintainer may
-have judged that it is likely to result in wasted work if he queues
-that version of the patch, fixing trivial nits himself, only to see
-a reroll arrive before the day's integration cycle finishes (which
-makes him run the cycle again). Or the maintainer may have been busy
-tending to other topics. Or the maintainer may have pushed the patch
-down the queue for any of the above reasons to deal with it later,
-and after having tended to others' topics, may have forgotten about
-that patch.
+Step back and think again. "matching" has never been about where the
+push goes.  It is about what are pushed out, once you decide where
+to push.
 
-Do I need to go on?
+If a user often wants to push out a branch as soon as he made a
+commit on it (even when other branches that go to the same
+publishing point should not be pushed out yet), an instructoin "Ok,
+I'll push to that repository" that pushes all matching branches will
+not work well, because it will publish uncooked other branches, too.
 
-> I know I said I was going
-> to update the commit message, but I don't think that reason to not put
-> it in 'pu'.
+That is the historical mistake of making "matching" the unconfigured
+default. The historical mistake of "matching" does not have anything
+to do with the choice of "where to push". It is only about "what to
+push".
 
-For this particular case, I think that was exactly the reason why it
-is not in 'pu' today. I actually did not remember the reason when
-you asked above, until I read the above "I said I'll update".
+If you re-read your three-remote example involving "upstream" (me),
+"ram" (your wip publishing point) and "peff":
 
-One major reason why I queue a patch that is clearly not ready for
-'next' is because I do not want to forget about the topic and not
-because I want to keep the particular version of the patch. I do so
-especially when contributor is unlikely to come back soon. If you
-said you would come back soon, I do not even have to judge if it is
-"clearly not ready" or "it is good enough" for next, and I have to
-remember one less thing. The more I can put in "this will come back
-so I do not have to do anything" bin, not in the "queue it as-is for
-now, because it is likely that it won't be rerolled soon and I'll
-forget about it" bin, the easier for me and we as the development
-process as a whole can scale better.
+  Cf. http://thread.gmane.org/gmane.comp.version-control.git/220769/focus=220933
+
+you'll see that the only reason why you thought you need the hack to
+set pushremote to null was because you did _not_ use matching. It
+illustrates one reason why blaming matching for selection of
+destination misses the point.
+
+In any case, dispelling a misplaced blame on "matching" is not the
+main point of this message.
+
+> With this patch, users must mandatorily know about
+> remote.pushdefault and branch.<name>.pushremote, if they want to
+> work in multiple-remote scenarios.
+
+I am afraid that it is neither sufficient nor a good solution.
+
+I do not necessarily think that the best course is to devise an
+unintuitive (to unsuspecting users) set of rules and force users to
+understand it. That is where my secondary unhappiness comes from,
+and that was why I said that limiting the magic only to a very
+simple and easy to understand case might make it more sellable.
+
+"git push" that pays attention to "branch.*.remote" was the original
+sin.
+
+To casual users with push.default=current/upstream, the two branches
+(my current branch?  the branch I am pushing out?) have always been
+the same when branch.*.remote is used.  These users don't even have
+to think about the distinction between the two [*1*].  But the
+distinction starts mattering once you start wishing to omit saying
+_where_ to push, because at that point, _what_ to push is the only
+thing the user would give us, but the end users are not used to see
+the destination chosen based on what is being pushed out.
+
+The new branch.*.pushremote does not alleviate this confusion. It
+gives the same "when on this branch, we push out to that remote"
+(and not "when pushing this branch out, it goes there" impression.
+
+The new remote.pushdefault _is_ a definite improvement: "If I do not
+say where to push, this is where things go". It makes a very clear
+statement, and does not have that confusion.
+
+> - In git push master, master is verified not to be a path on the
+> filesystem, not a remote, and finally a local branch.
+
+Yes.
+
+> - In git push master:next, master:next is interpreted as a destination.
+
+Ideally it should notice and diagnose it as a syntax error and error
+out (of course an attempt to locate master: URL handler will fail,
+but that is less nice).
+
+> - In git push master next:pu, master is verified as usual, and next:pu
+> is pushed to the remote specified by next.  My patch currently does
+> this (checks that <src> and <dst> are branches).
+
+I am not sure what you mean by "and next:pu is...".  If "git push
+next:pu master" should error out without mistaking "next:pu" as
+destination, so should "git push master next:pu", I think.
+
+The last one is also the same.  The "guess destination" magic should
+kick in only when we can verify _all_ the refs we are pushing out
+are simple ones (branch names, and possibly tag names), and the
+behaviour should not depend on the order. Anything more complex is
+too confusing.
+
+I personally think it is much more sellable to use an even simpler
+rule than what Jeff suggested, to make
+
+	git push -- <refspec>
+
+go to the remote.pushdefault (falling back to remote.default that is
+"origin"), without even paying attention to what branch you are on,
+and ignoring branch.*.remote/pushremote configuration.
+
+That is sufficient to support the triangular, the publish-to-mine,
+and the centralized workflows, no?  In any of these cases, the
+repository you push out to is _one_, even though it may be a
+different one from where you pull from.  If you have a very special
+branch that goes to a different place than all the other branches,
+you can always push out while on that branch without any refspec,
+anyway.
+
+
+[Footnote]
+
+*1* If you really think about what branch.*.remote is _for_, it says
+"I want this branch to integrate with that branch at this remote".
+If the user were to push the branch out using the configuration, it
+is more logical to think of it as "When pushing this branch out, it
+goes there", and not as "When I am on this branch and say 'git
+push', 'git push' pushes there".
+
+But that is clear and logical _only_ to Git-heads who have thought
+about this hard enough.
