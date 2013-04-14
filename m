@@ -1,91 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] commit: allow associating auxiliary info on-demand
-Date: Sun, 14 Apr 2013 12:01:21 -0700
-Message-ID: <7vfvyt543i.fsf@alter.siamese.dyndns.org>
-References: <1365919489-17553-1-git-send-email-gitster@pobox.com>
- <1365919489-17553-2-git-send-email-gitster@pobox.com>
- <20130414151229.GA1544@sigill.intra.peff.net>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: Why does "git config" output nothing instead of the default value
+ for unset variables?
+Date: Sun, 14 Apr 2013 21:05:21 +0200
+Message-ID: <CAHGBnuOJFVahoUwcF6dZZUEmDtKU_zvWsKtTwufN7RqeNxkZ=w@mail.gmail.com>
+References: <kke7o1$oo$1@ger.gmane.org>
+	<CAH5451nL0cmTy+vwEsJnvX7OP1iSSgY9UMhvrrimk0zWM71YDw@mail.gmail.com>
+	<20130414185619.GB1621@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Apr 14 21:01:30 2013
+X-From: git-owner@vger.kernel.org Sun Apr 14 21:05:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URSB6-0006l9-8l
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 21:01:28 +0200
+	id 1URSEy-0003t0-5u
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 21:05:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753332Ab3DNTBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 15:01:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56427 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753106Ab3DNTBX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 15:01:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4747E16F75;
-	Sun, 14 Apr 2013 19:01:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+9iilknAWWmuRAfHewFGxjwhvGI=; b=weOzId
-	noWG4JdyJcGgyGT/YD1tcZEl/zX4V8p/4FD+RyuBjI/NNeoz38JqZKyHPiDKadS3
-	0RJRXXpWzKajh4t2a2AF8s2DhuzquL5KcsuBD1kLuA0tZZlOKvsUKQAJ/ZcAjOLx
-	jq09boFiepk5ohdbp4EP8Ixj9IDHyuCJXCc4k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JUS1lji8MiTDaZtLcCmn0U4POD66Pnh2
-	zfJFirlSoDSUm01u5unliqj7GQt1VHZLqMnNhbZ++tHA44WeGiS9zYocaEL3E2OD
-	TLMUsaASmfxAL92+xTcw0zWKa+aq8WlCPbM1EXm/LzrjCcc74+EH2Yn/UQAEiwf2
-	o6lSAz5EFdA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E86C16F74;
-	Sun, 14 Apr 2013 19:01:23 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9BEEF16F73; Sun, 14 Apr
- 2013 19:01:22 +0000 (UTC)
-In-Reply-To: <20130414151229.GA1544@sigill.intra.peff.net> (Jeff King's
- message of "Sun, 14 Apr 2013 11:12:29 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B2D1DAC8-A535-11E2-B139-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753299Ab3DNTFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 15:05:24 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:63969 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753106Ab3DNTFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 15:05:23 -0400
+Received: by mail-la0-f48.google.com with SMTP id fq12so3756962lab.21
+        for <git@vger.kernel.org>; Sun, 14 Apr 2013 12:05:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=NDw0af8VnWoK992Xu7sWAcNxCqnztaJjazN58aRhftc=;
+        b=GvwG6ARb0gh6J4IbK+e6NkLk/ZYxv+pvuKqpszz9cubn8Tck1l6CX6wnToMgqt4jf5
+         5JGmPMQ7f+8XtzFW15RNAGVHlejqXO+H7Mz+fBb//VbwyE0tQqPgfq30XXNQ07Su7dHR
+         QoYIWTlh/yTKhFlDK45mmwDR9x2AeKfG3WJJvE1iYas/sKHeC5TclHqNgNeH4ri73WC9
+         TEBCqIn59MQaoq0FBsgaJPwBYWv3ixdCJl0zvXpshEpab/RVgRg1m5UmWCpmLJcBxgkL
+         8awqdtzqxh8B3VOcOqZJRX5xYHxPpG2S3nnqBGdTywv9sBIZXLoaFsTarXlg51A5jcHA
+         m2Ug==
+X-Received: by 10.112.151.34 with SMTP id un2mr8696502lbb.14.1365966321746;
+ Sun, 14 Apr 2013 12:05:21 -0700 (PDT)
+Received: by 10.114.84.33 with HTTP; Sun, 14 Apr 2013 12:05:21 -0700 (PDT)
+In-Reply-To: <20130414185619.GB1621@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221153>
 
-Jeff King <peff@peff.net> writes:
+On Sun, Apr 14, 2013 at 8:56 PM, Jeff King <peff@peff.net> wrote:
 
-> Thanks, this writeup makes sense to me. Obviously,
+>> More to the point, I can easily imagine many scripts relying on git
+>> config returning a value to indicate that a config item has been set.
+>> Your proposed change would break all those. For that reason, it might
+>> be nicer to introduce a flag that returns the config if it is set or
+>> the default otherwise. Something like git config --value perhaps.
 >
->   Signed-off-by: Jeff King <peff@peff.net>
->
-> Comparing a slab index versus a util pointer, I think the differences
-> should be:
-> ...
-> So I think the util pointer is strictly better, except for point (2). And
-> the main cost is point (1), the extra indirection. So if we can measure
-> (1) and decide it isn't a big cost, the maintainability improvement for
-> (2) is probably worth it, and we can rip out the util pointer entirely,
-> saving us some extra space in "struct commit".
+> The expected output is certainly a problem, but the issue is more
+> fundamental than that: git-config does not even _know_ what the default
+> is for any given option.
 
-I am glad you brought up "util". In an earlier round of the indgree
-thing, I think that it was discussed that casting the indegree to
-(void *) and storing it there was a possibility.  Because sorting
-was so generic a thing everybody may want in their codepath, and
-some callers may already have something they want to keep in util,
-we ended up adding a separate field not to interfere with the callers'
-use of the util field.
+Thanks for the explanation, I feared something like that. I.e. that
+git config does not even know any of the options or values it manages,
+but just is a "dumb" front-end to writing / reading whatever you pass
+it to / from a file.
 
-In the simpler days, a single util used with careful coorination
-among various codepaths may have been manageable, but I tend to
-think it will become more and more cumbersome to extend the system
-correctly (the same can be said for the in-object flags). We should
-encourage the users of the util field to migrate to either slab or
-decorate in the longer term.
-
-A criterion to choose between the two is probably the density. The
-slab mechanism is for annotations that almost everybody involved in
-the processing gets, while decorate is more suited for sparse ones.
+-- 
+Sebastian Schuberth
