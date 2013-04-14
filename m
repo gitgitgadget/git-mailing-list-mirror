@@ -1,216 +1,123 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 19/33] refs: change how packed refs are deleted
-Date: Sun, 14 Apr 2013 14:54:34 +0200
-Message-ID: <1365944088-10588-20-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 22/33] refs: extract a function write_packed_entry()
+Date: Sun, 14 Apr 2013 14:54:37 +0200
+Message-ID: <1365944088-10588-23-git-send-email-mhagger@alum.mit.edu>
 References: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sun Apr 14 14:55:53 2013
+X-From: git-owner@vger.kernel.org Sun Apr 14 14:56:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URMTH-0004NM-S3
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 14:55:52 +0200
+	id 1URMTQ-0004Wx-Ex
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 14:56:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751997Ab3DNMzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 08:55:48 -0400
-Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:60514 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751981Ab3DNMzq (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Apr 2013 08:55:46 -0400
-X-AuditID: 12074414-b7fb86d000000905-5a-516aa751072b
+	id S1752036Ab3DNMzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 08:55:55 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:54967 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751989Ab3DNMzv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Apr 2013 08:55:51 -0400
+X-AuditID: 1207440f-b7f0e6d000000957-69-516aa756cec9
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id A6.A8.02309.157AA615; Sun, 14 Apr 2013 08:55:45 -0400 (EDT)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 1D.7A.02391.657AA615; Sun, 14 Apr 2013 08:55:50 -0400 (EDT)
 Received: from michael.fritz.box (p57A24996.dip.t-dialin.net [87.162.73.150])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3ECtAkG007029
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3ECtAkJ007029
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 14 Apr 2013 08:55:44 -0400
+	Sun, 14 Apr 2013 08:55:49 -0400
 X-Mailer: git-send-email 1.8.2.1
 In-Reply-To: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrLIsWRmVeSWpSXmKPExsUixO6iqBu4PCvQoOGvqUXXlW4mi4beK8wW
-	Kx/fZba4vWI+s8WPlh5mB1aPv+8/MHm0v3/H7PGsdw+jx8VLyh6fN8kFsEZx2yQllpQFZ6bn
-	6dslcGf8v3yYsWCVTkXL83usDYwvlbsYOTkkBEwkZu/+zgRhi0lcuLeerYuRi0NI4DKjxNol
-	uxhBEkICZ5kkjvwqBbHZBHQlFvU0AzVwcIgIZEvsXisPEmYWcJDY/LkRrFxYwF7iw7v/LCA2
-	i4CqxOWlB9hBbF4BV4l1/X1QuxQkjm/fBlbPCRSf/vwYO8QqF4lZm2ezTmDkXcDIsIpRLjGn
-	NFc3NzEzpzg1Wbc4OTEvL7VI10IvN7NELzWldBMjJKBEdjAeOSl3iFGAg1GJh9eBJStQiDWx
-	rLgy9xCjJAeTkiiv4jKgEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRFex1agHG9KYmVValE+TEqa
-	g0VJnPfbYnU/IYH0xJLU7NTUgtQimKwMB4eSBK8GyFDBotT01Iq0zJwShDQTByfIcC4pkeLU
-	vJTUosTSkox4UFzEFwMjAyTFA7T37VKQvcUFiblAUYjWU4zGHLO2PnnNyPG18+VrRiGWvPy8
-	VClx3o8gpQIgpRmleXCLYKnkFaM40N/CvE9BqniAaQhu3iugVUxAq3z2poOsKklESEk1MMa+
-	t3zU+fem9L9DOou3bHDJV31wYMLhFaX2d/3cf8+fvF6vdJJvTMnmE+K+YZ5+5Vt0Il6dNdti
-	aM/uufvSjkN7555Kvqj64YLz68n/xdUV7hzinnp/u9im+DfaJzW3XZodfebMxaPH 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrMIsWRmVeSWpSXmKPExsUixO6iqBu2PCvQ4OFRE4uuK91MFg29V5gt
+	Vj6+y2xxe8V8ZosfLT3MDqwef99/YPJof/+O2eNZ7x5Gj4uXlD0+b5ILYI3itklKLCkLzkzP
+	07dL4M6Yuzq64KVgRfubDuYGxoV8XYwcHBICJhLL9kl3MXICmWISF+6tZwOxhQQuM0r8OMnY
+	xcgFZJ9lknjyazULSIJNQFdiUU8zE0iviEC2xO618iBhZgEHic2fGxlBbGEBF4lDvy+wg9gs
+	AqoSN/oOgLXyCrhKLFvxnwlil4LE8e3bwOo5geLTnx9jh9jrIjFr82zWCYy8CxgZVjHKJeaU
+	5urmJmbmFKcm6xYnJ+blpRbpmujlZpbopaaUbmKEBBP/Dsau9TKHGAU4GJV4eB1YsgKFWBPL
+	iitzDzFKcjApifIuXAoU4kvKT6nMSCzOiC8qzUktPsQowcGsJMLr2AqU401JrKxKLcqHSUlz
+	sCiJ86ovUfcTEkhPLEnNTk0tSC2CycpwcChJ8L4GGSpYlJqeWpGWmVOCkGbi4AQRXCAbeIA2
+	vAUp5C0uSMwtzkyHKDrFqCglzvsRJCEAksgozYMbAIv7V4ziQP8I8z4FqeIBpgy47ldAg5mA
+	BvvsTQcZXJKIkJJqYGwMvZA2JeXsxVNMlg55j+SOmi7wOBB3Nbvs8Pud1zxWT2AUkq1VvN69
+	P3n2poDOnXNTehnfGcecW3rw6QTFvtdXVh2Ifpe/99IBCb7MjFP1Ey/YHMvZuHXHdzb7Zws0
+	jzSlHJ9nms8XdSbWOevOGS8/9Sus3DozT7M7qOTtjpxQZ1D2QLuw66cSS3FGoqEW 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221108>
 
-Add a function remove_ref(), which removes a single entry from a
-reference cache.
-
-Use this function to reimplement repack_without_ref().  The old
-version iterated over all refs, packing all of them except for the one
-to be deleted, then discarded the entire packed reference cache.  The
-new version deletes the doomed reference from the cache *before*
-iterating.
-
-This has two advantages:
-
-* the code for writing packed-refs becomes simpler, because it doesn't
-  have to exclude one of the references.
-
-* it is no longer necessary to discard the packed refs cache after
-  deleting a reference: symbolic refs cannot be packed, so packed
-  references cannot depend on each other, so the rest of the packed
-  refs cache remains valid after a reference is deleted.
+Extract the I/O code from the "business logic" in repack_ref_fn().
+Later there will be another caller for this function.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 84 +++++++++++++++++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 68 insertions(+), 16 deletions(-)
+ refs.c | 40 +++++++++++++++++++++++++++-------------
+ 1 file changed, 27 insertions(+), 13 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 0c0668b..3c20853 100644
+index 140360f..9e3eff2 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -467,6 +467,57 @@ static struct ref_entry *find_ref(struct ref_dir *dir, const char *refname)
- }
- 
- /*
-+ * Remove the entry with the given name from dir, recursing into
-+ * subdirectories as necessary.  If refname is the name of a directory
-+ * (i.e., ends with '/'), then remove the directory and its contents.
-+ * If the removal was successful, return the number of entries
-+ * remaining in the directory entry that contained the deleted entry.
-+ * If the name was not found, return -1.  Please note that this
-+ * function only deletes the entry from the cache; it does not delete
-+ * it from the filesystem or ensure that other cache entries (which
-+ * might be symbolic references to the removed entry) are updated.
-+ * Nor does it remove any containing dir entries that might be made
-+ * empty by the removal.  dir must represent the top-level directory
-+ * and must already be complete.
-+ */
-+static int remove_entry(struct ref_dir *dir, const char *refname)
-+{
-+	int refname_len = strlen(refname);
-+	int entry_index;
-+	struct ref_entry *entry;
-+	int is_dir = refname[refname_len - 1] == '/';
-+	if (is_dir) {
-+		/*
-+		 * refname represents a reference directory.  Remove
-+		 * the trailing slash; otherwise we will get the
-+		 * directory *representing* refname rather than the
-+		 * one *containing* it.
-+		 */
-+		char *dirname = xmemdupz(refname, refname_len - 1);
-+		dir = find_containing_dir(dir, dirname, 0);
-+		free(dirname);
-+	} else {
-+		dir = find_containing_dir(dir, refname, 0);
-+	}
-+	if (!dir)
-+		return -1;
-+	entry_index = search_ref_dir(dir, refname, refname_len);
-+	if (entry_index == -1)
-+		return -1;
-+	entry = dir->entries[entry_index];
-+
-+	memmove(&dir->entries[entry_index],
-+		&dir->entries[entry_index + 1],
-+		(dir->nr - entry_index - 1) * sizeof(*dir->entries)
-+		);
-+	dir->nr--;
-+	if (dir->sorted > entry_index)
-+		dir->sorted--;
-+	free_ref_entry(entry);
-+	return dir->nr;
-+}
-+
-+/*
-  * Add a ref_entry to the ref_dir (unsorted), recursing into
-  * subdirectories as necessary.  dir must represent the top-level
-  * directory.  Return 0 on success.
-@@ -1892,19 +1943,12 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
+@@ -1956,29 +1956,43 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
  	return lock_ref_sha1_basic(refname, old_sha1, flags, NULL);
  }
  
--struct repack_without_ref_sb {
--	const char *refname;
--	int fd;
--};
--
--static int repack_without_ref_fn(struct ref_entry *entry, void *cb_data)
-+static int repack_ref_fn(struct ref_entry *entry, void *cb_data)
+-static int repack_ref_fn(struct ref_entry *entry, void *cb_data)
++/*
++ * Write an entry to the packed-refs file for the specified refname.
++ * If peeled is non-NULL, write it as the entry's peeled value.
++ */
++static void write_packed_entry(int fd, char *refname, unsigned char *sha1,
++			       unsigned char *peeled)
  {
--	struct repack_without_ref_sb *data = cb_data;
-+	int *fd = cb_data;
+-	int *fd = cb_data;
  	char line[PATH_MAX + 100];
  	int len;
  
--	if (!strcmp(data->refname, entry->name))
+-	/* Silently skip broken refs: */
+-	if (!ref_resolves_to_object(entry, 0))
 -		return 0;
- 	/* Silently skip broken refs: */
- 	if (!ref_resolves_to_object(entry, 0))
- 		return 0;
-@@ -1913,7 +1957,7 @@ static int repack_without_ref_fn(struct ref_entry *entry, void *cb_data)
+ 	len = snprintf(line, sizeof(line), "%s %s\n",
+-		       sha1_to_hex(entry->u.value.sha1), entry->name);
++		       sha1_to_hex(sha1), refname);
  	/* this should not happen but just being defensive */
  	if (len > sizeof(line))
- 		die("too long a refname '%s'", entry->name);
--	write_or_die(data->fd, line, len);
-+	write_or_die(*fd, line, len);
- 	return 0;
- }
- 
-@@ -1921,22 +1965,30 @@ static struct lock_file packlock;
- 
- static int repack_without_ref(const char *refname)
- {
--	struct repack_without_ref_sb data;
-+	int fd;
- 	struct ref_cache *refs = get_ref_cache(NULL);
- 	struct ref_dir *packed;
- 
- 	if (!get_packed_ref(refname))
- 		return 0; /* refname does not exist in packed refs */
- 
--	data.refname = refname;
--	data.fd = hold_lock_file_for_update(&packlock, git_path("packed-refs"), 0);
--	if (data.fd < 0) {
-+	fd = hold_lock_file_for_update(&packlock, git_path("packed-refs"), 0);
-+	if (fd < 0) {
- 		unable_to_lock_error(git_path("packed-refs"), errno);
- 		return error("cannot delete '%s' from packed refs", refname);
+-		die("too long a refname '%s'", entry->name);
+-	write_or_die(*fd, line, len);
+-	if (!peel_entry(entry)) {
+-		/* This reference could be peeled; write the peeled value: */
++		die("too long a refname '%s'", refname);
++	write_or_die(fd, line, len);
++
++	if (peeled) {
+ 		if (snprintf(line, sizeof(line), "^%s\n",
+-			     sha1_to_hex(entry->u.value.peeled)) !=
+-		    PEELED_LINE_LENGTH)
++			     sha1_to_hex(peeled)) != PEELED_LINE_LENGTH)
+ 			die("internal error");
+-		write_or_die(*fd, line, PEELED_LINE_LENGTH);
++		write_or_die(fd, line, PEELED_LINE_LENGTH);
  	}
- 	clear_packed_ref_cache(refs);
- 	packed = get_packed_refs(refs);
--	do_for_each_entry_in_dir(packed, 0, repack_without_ref_fn, &data);
-+	/* Remove refname from the cache. */
-+	if (remove_entry(packed, refname) == -1) {
-+		/*
-+		 * The packed entry disappeared while we were
-+		 * acquiring the lock.
-+		 */
-+		rollback_lock_file(&packlock);
++}
++
++static int repack_ref_fn(struct ref_entry *entry, void *cb_data)
++{
++	int *fd = cb_data;
++	enum peel_status peel_status;
++
++	/* Silently skip broken refs: */
++	if (!ref_resolves_to_object(entry, 0))
 +		return 0;
-+	}
-+	do_for_each_entry_in_dir(packed, 0, repack_ref_fn, &fd);
- 	return commit_lock_file(&packlock);
- }
++	peel_status = peel_entry(entry);
++	write_packed_entry(*fd, entry->name, entry->u.value.sha1,
++			   peel_status == PEEL_PEELED ?
++			   entry->u.value.peeled : NULL);
  
-@@ -1965,7 +2017,7 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
- 	ret |= repack_without_ref(lock->ref_name);
- 
- 	unlink_or_warn(git_path("logs/%s", lock->ref_name));
--	invalidate_ref_cache(NULL);
-+	clear_loose_ref_cache(get_ref_cache(NULL));
- 	unlock_ref(lock);
- 	return ret;
+ 	return 0;
  }
 -- 
 1.8.2.1
