@@ -1,110 +1,144 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 13/33] peel_ref(): fix return value for non-peelable, not-current reference
-Date: Sun, 14 Apr 2013 14:54:28 +0200
-Message-ID: <1365944088-10588-14-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 11/33] refs: extract function peel_object()
+Date: Sun, 14 Apr 2013 14:54:26 +0200
+Message-ID: <1365944088-10588-12-git-send-email-mhagger@alum.mit.edu>
 References: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sun Apr 14 14:56:43 2013
+X-From: git-owner@vger.kernel.org Sun Apr 14 14:56:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URMU7-0005OY-94
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 14:56:43 +0200
+	id 1URMU8-0005OY-9S
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 14:56:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932124Ab3DNM4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 08:56:35 -0400
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:53347 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751925Ab3DNMzg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Apr 2013 08:55:36 -0400
-X-AuditID: 12074413-b7f226d000000902-e4-516aa748c0fd
+	id S1752040Ab3DNM4m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 08:56:42 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:54964 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751849Ab3DNMzd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Apr 2013 08:55:33 -0400
+X-AuditID: 1207440f-b7f0e6d000000957-26-516aa745451a
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id BE.D6.02306.847AA615; Sun, 14 Apr 2013 08:55:36 -0400 (EDT)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id AA.7A.02391.547AA615; Sun, 14 Apr 2013 08:55:33 -0400 (EDT)
 Received: from michael.fritz.box (p57A24996.dip.t-dialin.net [87.162.73.150])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3ECtAkA007029
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3ECtAk8007029
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 14 Apr 2013 08:55:35 -0400
+	Sun, 14 Apr 2013 08:55:31 -0400
 X-Mailer: git-send-email 1.8.2.1
 In-Reply-To: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCIsWRmVeSWpSXmKPExsUixO6iqOuxPCvQ4M9GEYuuK91MFg29V5gt
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKIsWRmVeSWpSXmKPExsUixO6iqOu6PCvQYN0xHouuK91MFg29V5gt
 	Vj6+y2xxe8V8ZosfLT3MDqwef99/YPJof/+O2eNZ7x5Gj4uXlD0+b5ILYI3itklKLCkLzkzP
-	07dL4M5o+TyLpWCSQMWWXr8Gxsc8XYycHBICJhKLb35khLDFJC7cW8/WxcjFISRwmVFixr75
-	jBDOWSaJ/d82soJUsQnoSizqaWbqYuTgEBHIlti9Vh4kzCzgILH5cyPYIGGBaImfX94xg9gs
-	AqoS03+/YAEp5xVwlfjzIQ1il4LE8e3bwMo5gcLTnx9jB7GFBFwkZm2ezTqBkXcBI8MqRrnE
-	nNJc3dzEzJzi1GTd4uTEvLzUIl1zvdzMEr3UlNJNjJBwEt7BuOuk3CFGAQ5GJR7eF4xZgUKs
-	iWXFlbmHGCU5mJREeRWXAYX4kvJTKjMSizPii0pzUosPMUpwMCuJ8Dq2AuV4UxIrq1KL8mFS
-	0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK8r5cCNQoWpaanVqRl5pQgpJk4OEEEF8gG
-	HqANb0EKeYsLEnOLM9Mhik4xKkqJ834ESQiAJDJK8+AGwCL/FaM40D/CvE9BqniASQOu+xXQ
-	YCagwT5700EGlyQipKQaGPlnNqV2Or/5xrYm4Wrkk0V9Wg+P+z7XZrdcWdiyTexuts2TuFn3
-	xbjCag3Wxmxy9l90sJwpfu7/9zmcPkxHp+4wroze0DHpqwin1B1rCQ+DlqqSSzda5bjEm+Z9
-	mrf/+LFTfyon3leLtwsxkgzePTvsx4PJn28JPcvlnMQibPnnS+yHFUFsHEosxRmJ 
+	07dL4M64+PsjW8FpoYpd796xNTDu5+ti5OSQEDCRuPD9FjOELSZx4d56NhBbSOAyo0RHv38X
+	IxeQfZZJorV3CytIgk1AV2JRTzNTFyMHh4hAtsTutfIgYWYBB4nNnxsZQWxhAWuJ/jlnWEBs
+	FgFVibdPpzOB2LwCrhI7Hy1lgtilIHF8+zawek6g+PTnx9gh9rpIzNo8m3UCI+8CRoZVjHKJ
+	OaW5urmJmTnFqcm6xcmJeXmpRbomermZJXqpKaWbGCEBxb+DsWu9zCFGAQ5GJR5eB5asQCHW
+	xLLiytxDjJIcTEqivAuXAoX4kvJTKjMSizPii0pzUosPMUpwMCuJ8Dq2AuV4UxIrq1KL8mFS
+	0hwsSuK86kvU/YQE0hNLUrNTUwtSi2CyMhwcShK8r0GGChalpqdWpGXmlCCkmTg4QQQXyAYe
+	oA1vQQp5iwsSc4sz0yGKTjEqSonzfgRJCIAkMkrz4AbAYv8VozjQP8K8T0GqeIBpA677FdBg
+	JqDBPnvTQQaXJCKkpBoYE+42V8UG5wc+2MCwMDv6yZQjH4QPZggYz94lbeR+dGGV68+X4o53
+	PPL/sCUbrH8lHvNqx76OmJRH+dM0PT+7/FSYz9d7RT7JpNDIzPmNQ/GXoJydm9W4/9Y8lXc+
+	ydGy7PiNmO5GHheZo0H7vzVe25j5NOKoroDnykJ5Hg4hzuKp6r5NAaeVWIozEg21 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221123>
 
-The old version was inconsistent: when a reference was
-REF_KNOWS_PEELED but with a null peeled value, it returned non-zero
-for the current reference but zero for other references.  Change the
-behavior for non-current references to match that of current_ref,
-which is what callers expect.  Document the behavior.
+It is a nice, logical unit of work, and putting it in a function
+removes the need to use a goto in peel_ref().  Soon it will also have
+other uses.
 
-Current callers did not trigger the previously-buggy behavior.
+The algorithm is unchanged.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 5 ++++-
- refs.h | 8 ++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ refs.c | 50 ++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 30 insertions(+), 20 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 84c2497..a0d8e32 100644
+index dfc8600..a1fe6b0 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -120,7 +120,8 @@ struct ref_value {
- 	/*
- 	 * If REF_KNOWS_PEELED, then this field holds the peeled value
- 	 * of this reference, or null if the reference is known not to
--	 * be peelable.
-+	 * be peelable.  See the documentation for peel_ref() for an
-+	 * exact definition of "peelable".
- 	 */
- 	unsigned char peeled[20];
- };
-@@ -1339,6 +1340,8 @@ int peel_ref(const char *refname, unsigned char *sha1)
- 		struct ref_entry *r = get_packed_ref(refname);
- 
- 		if (r && (r->flag & REF_KNOWS_PEELED)) {
-+			if (is_null_sha1(r->u.value.peeled))
-+			    return -1;
- 			hashcpy(sha1, r->u.value.peeled);
- 			return 0;
- 		}
-diff --git a/refs.h b/refs.h
-index 17bc1c1..ac0ff92 100644
---- a/refs.h
-+++ b/refs.h
-@@ -74,6 +74,14 @@ extern void add_packed_ref(const char *refname, const unsigned char *sha1);
- 
- extern int ref_exists(const char *);
+@@ -1272,11 +1272,38 @@ static int filter_refs(const char *refname, const unsigned char *sha1, int flags
+ 	return filter->fn(refname, sha1, flags, filter->cb_data);
+ }
  
 +/*
-+ * If refname is a non-symbolic reference that refers to a tag object,
-+ * and the tag can be (recursively) dereferenced to a non-tag object,
-+ * store the SHA1 of the referred-to object to sha1 and return 0.  If
-+ * any of these conditions are not met, return a non-zero value.
-+ * Symbolic references are considered unpeelable, even if they
-+ * ultimately resolve to a peelable tag.
++ * Peel the named object; i.e., if the object is a tag, resolve the
++ * tag recursively until a non-tag is found.  Store the result to sha1
++ * and return 0 iff successful.  If the object is not a tag or is not
++ * valid, return -1 and leave sha1 unchanged.
 + */
- extern int peel_ref(const char *refname, unsigned char *sha1);
++static int peel_object(const unsigned char *name, unsigned char *sha1)
++{
++	struct object *o = lookup_unknown_object(name);
++
++	if (o->type == OBJ_NONE) {
++		int type = sha1_object_info(name, NULL);
++		if (type < 0)
++			return -1;
++		o->type = type;
++	}
++
++	if (o->type != OBJ_TAG)
++		return -1;
++
++	o = deref_tag_noverify(o);
++	if (!o)
++		return -1;
++
++	hashcpy(sha1, o->sha1);
++	return 0;
++}
++
+ int peel_ref(const char *refname, unsigned char *sha1)
+ {
+ 	int flag;
+ 	unsigned char base[20];
+-	struct object *o;
  
- /** Locks a "refs/" ref returning the lock on success and NULL on failure. **/
+ 	if (current_ref && (current_ref->name == refname
+ 		|| !strcmp(current_ref->name, refname))) {
+@@ -1286,8 +1313,7 @@ int peel_ref(const char *refname, unsigned char *sha1)
+ 			hashcpy(sha1, current_ref->u.value.peeled);
+ 			return 0;
+ 		}
+-		hashcpy(base, current_ref->u.value.sha1);
+-		goto fallback;
++		return peel_object(current_ref->u.value.sha1, sha1);
+ 	}
+ 
+ 	if (read_ref_full(refname, base, 1, &flag))
+@@ -1302,23 +1328,7 @@ int peel_ref(const char *refname, unsigned char *sha1)
+ 		}
+ 	}
+ 
+-fallback:
+-	o = lookup_unknown_object(base);
+-	if (o->type == OBJ_NONE) {
+-		int type = sha1_object_info(base, NULL);
+-		if (type < 0)
+-			return -1;
+-		o->type = type;
+-	}
+-
+-	if (o->type == OBJ_TAG) {
+-		o = deref_tag_noverify(o);
+-		if (o) {
+-			hashcpy(sha1, o->sha1);
+-			return 0;
+-		}
+-	}
+-	return -1;
++	return peel_object(base, sha1);
+ }
+ 
+ struct warn_if_dangling_data {
 -- 
 1.8.2.1
