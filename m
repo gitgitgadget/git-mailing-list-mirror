@@ -1,70 +1,89 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] branch: colour upstream branches
-Date: Sun, 14 Apr 2013 18:22:16 -0500
-Message-ID: <CAMP44s2j-Cqksu29fJRTqDNGBNi1tZkE0gfgj69K-ckFwVgnRg@mail.gmail.com>
-References: <1365903985-24920-1-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8DdBkPDXORxv08cFi+i5Q4WiBjjbNf9GyB4hv+t-K=wRQ@mail.gmail.com>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH v1 23/45] check-ignore: convert to use parse_pathspec
+Date: Sun, 14 Apr 2013 16:25:42 -0700
+Message-ID: <20130414232542.GB21564@indian.linksys.moosehall>
+References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
+ <1363327620-29017-24-git-send-email-pclouds@gmail.com>
+ <20130412150304.GH26949@pacific.linksys.moosehall>
+ <CACsJy8Au4KL7msPr62bvSgGdseWFF=cUJSuB2JzGUXehDD6hng@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 15 01:22:35 2013
+X-From: git-owner@vger.kernel.org Mon Apr 15 01:25:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URWFl-0002I8-PA
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 01:22:34 +0200
+	id 1URWIx-0005iT-G6
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 01:25:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752676Ab3DNXWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 19:22:19 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:43711 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752130Ab3DNXWT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 19:22:19 -0400
-Received: by mail-la0-f45.google.com with SMTP id gw10so3915936lab.32
-        for <git@vger.kernel.org>; Sun, 14 Apr 2013 16:22:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=IPc7H7Pl81iZIZCCKwNuAlC6+iejlD5lXGJFRTt3QPE=;
-        b=zHzXU+VFmfRH6Ktg7EeReC36lXKBtx2ongYbYyEo+FzTAZy2ZrslRtL7fVdGcUwb/T
-         Dcrn0NKkYnhzgnBn9H3LUFBJ00mI3oas9n8k6tytjqjBvhrxrhhsCZfEMfA3NovxOE6/
-         nHhrodeKbg7GPVPbyYAFpnJkS2YzSkaV6+/oY/qPnEASB1AEDLO20zKZfysrDpDcD2eZ
-         2Mzp2TO1qjcnw+bsed/v/yQYgH5/cs6uKJW/GUxfbXKbOGpzHoP6FXVyyiV7GXCShXvE
-         wgY32PlC/kFDjJvVst8W+h7c0q+xicmLA1GuTGvusaDPU0Cqgl0op7ItadBeyoy1aQuG
-         uERA==
-X-Received: by 10.112.20.106 with SMTP id m10mr9245081lbe.8.1365981736887;
- Sun, 14 Apr 2013 16:22:16 -0700 (PDT)
-Received: by 10.114.59.210 with HTTP; Sun, 14 Apr 2013 16:22:16 -0700 (PDT)
-In-Reply-To: <CACsJy8DdBkPDXORxv08cFi+i5Q4WiBjjbNf9GyB4hv+t-K=wRQ@mail.gmail.com>
+	id S1752609Ab3DNXZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 19:25:48 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:37987 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752103Ab3DNXZr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 19:25:47 -0400
+Received: from localhost (unknown [209.63.50.82])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 646252EAD3;
+	Mon, 15 Apr 2013 00:25:45 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8Au4KL7msPr62bvSgGdseWFF=cUJSuB2JzGUXehDD6hng@mail.gmail.com>
+X-OS: GNU/Linux
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221165>
 
-On Sun, Apr 14, 2013 at 5:31 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sun, Apr 14, 2013 at 11:46 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> +       char fancy[80];
->>
->> -       if (show_upstream_ref)
->> +       if (show_upstream_ref) {
->>                 ref = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
->> +               if (want_color(branch_use_color))
->> +                       snprintf(fancy, sizeof(fancy), "%s%s%s",
->> +                                       GIT_COLOR_BLUE, ref, GIT_COLOR_RESET);
->> +               else
->> +                       strncpy(fancy, ref, sizeof(fancy));
->> +       }
->> +
->
-> Please use strbuf for "fancy".
+On Sat, Apr 13, 2013 at 09:09:33AM +1000, Duy Nguyen wrote:
+> On Sat, Apr 13, 2013 at 1:03 AM, Adam Spiers <git@adamspiers.org> wrote:
+> >> -static int check_ignore(const char *prefix, const char **pathspec)
+> >> +static int check_ignore(int argc, const char **argv, const char *prefix)
+> >>  {
+> >>       struct dir_struct dir;
+> >> -     const char *path, *full_path;
+> >>       char *seen;
+> >>       int num_ignored = 0, dtype = DT_UNKNOWN, i;
+> >>       struct path_exclude_check check;
+> >>       struct exclude *exclude;
+> >> +     struct pathspec pathspec;
+> >>
+> >>       /* read_cache() is only necessary so we can watch out for submodules. */
+> >>       if (read_cache() < 0)
+> >> @@ -70,31 +70,39 @@ static int check_ignore(const char *prefix, const char **pathspec)
+> >>       dir.flags |= DIR_COLLECT_IGNORED;
+> >>       setup_standard_excludes(&dir);
+> >>
+> >> -     if (!pathspec || !*pathspec) {
+> >> +     if (!argc) {
+> >
+> > Is there a compelling reason for introducing argc as a new parameter
+> > to check_ignore(), other than simplifying the above line?  And why
+> > rename the pathspec parameter to argv?  Both these changes are
+> > misleading AFAICS, since paths provided to check_ignore() can come
+> > from sources other than CLI arguments (i.e. via --stdin).
+> 
+> Because I introduced "struct pathspec pathspec;" I need to rename the
+> argument "pathspec" to something else.
 
-Why? We would need to initialize and free it. What's the advantage?
+Ah, I see - that makes sense :-)
 
--- 
-Felipe Contreras
+> Maybe we could rename the argument to "paths"?
+
+Sounds fine to me.
+
+> > The introduction of argc also makes it possible to invoke
+> > check_ignore() with arguments which are not self-consistent.
+> 
+> This is the same problem with main()
+
+How could main() be invoked with argc inconsistent with argv?
+
+> and other places that follow this convention.  But I don't mind
+> dropping argc either.
+
+What is the reason for that convention?  I'm willing to be persuaded
+either way.
