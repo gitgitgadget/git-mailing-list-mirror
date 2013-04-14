@@ -1,95 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] commit-slab: avoid large realloc
-Date: Sun, 14 Apr 2013 15:19:47 -0400
-Message-ID: <20130414191947.GB4599@sigill.intra.peff.net>
-References: <1365919489-17553-1-git-send-email-gitster@pobox.com>
- <1365919489-17553-3-git-send-email-gitster@pobox.com>
- <20130414152842.GB1544@sigill.intra.peff.net>
- <7vk3o554jn.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 0/2] Test the Git version string
+Date: Sun, 14 Apr 2013 12:22:17 -0700
+Message-ID: <7v8v4k6hp2.fsf@alter.siamese.dyndns.org>
+References: <1365949646-1988-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 14 21:20:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: GitList <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sun Apr 14 21:22:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URSSz-0004e3-Cq
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 21:19:57 +0200
+	id 1URSVN-0007js-1n
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 21:22:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753461Ab3DNTTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 15:19:53 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:45533 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753383Ab3DNTTw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 15:19:52 -0400
-Received: (qmail 16214 invoked by uid 107); 14 Apr 2013 19:21:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 14 Apr 2013 15:21:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 14 Apr 2013 15:19:47 -0400
-Content-Disposition: inline
-In-Reply-To: <7vk3o554jn.fsf@alter.siamese.dyndns.org>
+	id S1753472Ab3DNTWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 15:22:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47572 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753106Ab3DNTWU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 15:22:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8451B16487;
+	Sun, 14 Apr 2013 19:22:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ojlrTxevJBwWDN8yNc/f2acWhgg=; b=tNrBgw
+	kR4osBGdB/6t9uSl8jYqYPLA7OtFu+I2zWF8vLDP5YUb3pnQFj+/E3TTRDvA3C0P
+	L8ap/B7818ka+6/C5gIEvkTZQJh4mzlEU9NWNechdXHSaxlVtlBXlOMcWryCP5mS
+	2vfejkRbrnQ1tTg3QtqdwwwajPky+EV9YsVxQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NMyG+iTurz/rDAYxAlrhpTwvg9O4Szlv
+	r3XjoGDXZEQ+7YajEZ1m789gM8LzENtnXLR5VzKoQpQ1aMQ3789H+hYWO6CkYN75
+	GhcGEiht9qj5/7CZ55EDiPZ3bm47tCWBcks3qfVs6oo0Z9QUC5SO58AImVhhRqYw
+	R8E7SAWxeWg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 782B116486;
+	Sun, 14 Apr 2013 19:22:19 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E8B9816485; Sun, 14 Apr
+ 2013 19:22:18 +0000 (UTC)
+In-Reply-To: <1365949646-1988-1-git-send-email-philipoakley@iee.org> (Philip
+ Oakley's message of "Sun, 14 Apr 2013 15:27:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9FA449BA-A538-11E2-86E2-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221156>
 
-On Sun, Apr 14, 2013 at 11:51:40AM -0700, Junio C Hamano wrote:
+Philip Oakley <philipoakley@iee.org> writes:
 
-> > I don't know if shrinking the size of the realloc is all that big a
-> > deal. We are doubling, so the allocation cost is already amortized
-> > constant time.
-> 
-> I was more disturbed about copying the actual bytes. One of the
-> envisioned use of the mechanism is to give us unbound number of flag
-> bits to paint the history, and also this could be later used to
-> store larger structures per commit.
+> This patch series seeks to add tests for the version string format
+> and document it.
+>
+> The key questions to be answered are:
+> * should the test be inside t0000, or somewhere else?
+> * should the version string be limited to one line, <80 characters?
 
-Right; your solution does lower the constant factor. I just don't know
-that it matters all that much, since the allocations are so few (i.e.,
-log2(N) to get to N items). And you are hurting the "hot path" of every
-access of the flags to do it (by introducing the extra division and
-indirection). Probably the extra work on lookup doesn't matter on modern
-processors due to pipelining. I'd like to measure a few cases to be
-sure, but I probably won't get to it today.
+One line, perhaps, but I do not think any byte-limit is reasonable.
 
-> Also "you can now take a pointer" you illustrated (but I snipped
-> from here) is a good point.
+It is unreasonable to limit the form to X.Y.Z; after we hit Git 2.0,
+it is likely that we would go to two-decimals.
 
-Yeah, assuming the timings are equal, I'd take your solution on that
-principle alone.
-
-> >>  struct commit_slab {
-> >> -	int *buf;
-> >> -	int alloc;
-> >> +	int piece_size;
-> >> +	int piece_count;
-> >> +	struct commit_slab_piece **piece;
-> >>  };
-> >
-> > Is there a reason to make piece_size a struct member? It must be
-> > constant after any pieces are allocated. Is the intent that callers
-> > could do:
-> >
-> >   slab_init(&s);
-> >   /* I know ahead of time we are going to need N of these. */
-> >   s.piece_size = n;
-> 
-> The piece_size (later slab_size) is to hold the number of commits
-> each slice (i.e. the piece of memory s->slab[nth_slab] points at)
-> handles.
-
-Yes, but isn't that a constant:
-
-  (512*1024-32) / sizeof(struct commit_slab_piece)
-
-Leaving it as such lets the compiler optimize better, and is safe from
-anybody changing it at runtime. But I think the answer to my question is
-"yes, that would be the best thing for patch 2, but patch 3 will allow a
-run-time stride parameter anyway". Correct?
-
--Peff
+If the "parsing" is done for white/blacklist purposes, is there a
+need to straight-jacket the verison string format like this series?
