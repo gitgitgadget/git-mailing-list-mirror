@@ -1,76 +1,66 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] rebase-am: fix regression with new cover-letter config
-Date: Sun, 14 Apr 2013 17:27:04 -0500
-Message-ID: <1365978424-11841-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 15 00:28:32 2013
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] branch: colour upstream branches
+Date: Mon, 15 Apr 2013 08:31:23 +1000
+Message-ID: <CACsJy8DdBkPDXORxv08cFi+i5Q4WiBjjbNf9GyB4hv+t-K=wRQ@mail.gmail.com>
+References: <1365903985-24920-1-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 15 00:31:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URVPT-0000i2-NG
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 00:28:32 +0200
+	id 1URVSo-0004m1-IU
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 00:31:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130Ab3DNW2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 18:28:17 -0400
-Received: from mail-qc0-f180.google.com ([209.85.216.180]:33508 "EHLO
-	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752022Ab3DNW2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 18:28:16 -0400
-Received: by mail-qc0-f180.google.com with SMTP id b40so36604qcq.39
-        for <git@vger.kernel.org>; Sun, 14 Apr 2013 15:28:13 -0700 (PDT)
+	id S1752266Ab3DNWby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 18:31:54 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:33368 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752022Ab3DNWby (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 18:31:54 -0400
+Received: by mail-ob0-f170.google.com with SMTP id x4so1440897obh.1
+        for <git@vger.kernel.org>; Sun, 14 Apr 2013 15:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=sGLLyrONXk5MswYuXwfSYLltAlMRBuixMgM/GqKHnU8=;
-        b=ZX6JWAg2vDmEtcik99/WEFbnfmBewMX8Zd0g/t5WGFMFROoej/xDKIkjkhWoZ4KHcA
-         +n1VCSbF02r6z6Y8egPi5T6qlElJGZyU/znsI0qNv7nwni0sm3yeBu+9OjUkN8FDL4g0
-         0X7TMn0/Gl1aR0Bx0qjHVpxCCXqn1CICf6I6tnnCmvf1CwJ5kw1hMlaA4j3tFL6DKFt7
-         LU5o+TIlyxkP+Qv7HLzB2+rEMZ/4IPWqUD7hKwc+3vOJNZTWXYl4wHQE6XmlUU4VtcEd
-         viPq6m7wKq0QxBMPyxuUNuFiT1eTO2QS2gPLX7Hx5WjsZGxn01czJG4cp3Hh3qYpdc2X
-         QKqQ==
-X-Received: by 10.224.72.83 with SMTP id l19mr20394615qaj.63.1365978492444;
-        Sun, 14 Apr 2013 15:28:12 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id 10sm28747942qax.13.2013.04.14.15.28.10
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 14 Apr 2013 15:28:11 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.643.ge3cc75d
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=6I5kvs3HQzQRONWYjOD7mah5y8G++3A9D0Kfo9/jxmA=;
+        b=ReoSoGGLur+Y4Ez2FuKYNAbPPN2j/xm6xkTUxfiYzd4HHcDujTEoJiYSecE6j+go49
+         q7Fyg7IG60GHanEqBph2CjREoHQWzhyRQ72JJH7cY6+IkdK/PTQaVeTiF0Mp67W0wEfi
+         qcVK5BaI1H0GnoI8e2mN4Qg8hbM0kDwGldX+dhBmsvsHpP3bgXGUYBBEbS/FybQAy113
+         99bqqa/CqIAkR/wSpdQay74YsKb2w+h2/PKBbxkRCeGjBLPauEm+lpFzlWovm/4Khv1E
+         vZNPxcIJrn3E/0Nq7Zdj8AoUAyYkuNBaYET1pxqP7hFjDl2PYob86SUL54YgJQ3sSZ2g
+         XGiw==
+X-Received: by 10.60.142.230 with SMTP id rz6mr6897110oeb.22.1365978713710;
+ Sun, 14 Apr 2013 15:31:53 -0700 (PDT)
+Received: by 10.76.122.163 with HTTP; Sun, 14 Apr 2013 15:31:23 -0700 (PDT)
+In-Reply-To: <1365903985-24920-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221163>
 
-If you have a cover-letter configuration set to anything other than
-'false', 'git format-patch' might generate a cover letter, and 'git am'
-doesn't seem to like that.
+On Sun, Apr 14, 2013 at 11:46 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> +       char fancy[80];
+>
+> -       if (show_upstream_ref)
+> +       if (show_upstream_ref) {
+>                 ref = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
+> +               if (want_color(branch_use_color))
+> +                       snprintf(fancy, sizeof(fancy), "%s%s%s",
+> +                                       GIT_COLOR_BLUE, ref, GIT_COLOR_RESET);
+> +               else
+> +                       strncpy(fancy, ref, sizeof(fancy));
+> +       }
+> +
 
-Ideally 'git am' should skip the cover-letter, but for now lets just fix
-the regression.
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- git-rebase--am.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-index 97f31dc..f84854f 100644
---- a/git-rebase--am.sh
-+++ b/git-rebase--am.sh
-@@ -31,8 +31,8 @@ else
- 	rm -f "$GIT_DIR/rebased-patches"
- 
- 	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
--		--src-prefix=a/ --dst-prefix=b/ \
--		--no-renames $root_flag "$revisions" >"$GIT_DIR/rebased-patches"
-+		--src-prefix=a/ --dst-prefix=b/ --no-renames --no-cover-letter \
-+		$root_flag "$revisions" >"$GIT_DIR/rebased-patches"
- 	ret=$?
- 
- 	if test 0 != $ret
--- 
-1.8.2.1.643.ge3cc75d
+Please use strbuf for "fancy". I also agree with Thomas that the color
+should not be hard coded.
+--
+Duy
