@@ -1,85 +1,93 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/2] transport-helper: report errors properly
-Date: Sun, 14 Apr 2013 10:54:07 -0500
-Message-ID: <CAMP44s2Ksi_nNm8f+YTdceSSavtiPODHKw-4eASeEeCWW2N91g@mail.gmail.com>
-References: <20130410211311.GA24277@sigill.intra.peff.net>
-	<20130410211552.GA3256@sigill.intra.peff.net>
-	<CAMP44s02K5ydKLNi0umMkuAicoVTWyCdVfjs0yssCa2oyFShGQ@mail.gmail.com>
-	<7vfvywj4au.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2QJJnSRVVJscLsTnXk5zdGbA2utefF5SO7=90+ttENew@mail.gmail.com>
-	<7vd2u0hdmj.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1pZW6OJ2nkegKFQq6=npPSiD4dX_z37t63B9baaFW16w@mail.gmail.com>
-	<20130413060031.GA22374@sigill.intra.peff.net>
-	<CAMP44s3gOXvHknN1yXQcDYP=OBfjm7=eJnSkh5cj5QJNOarEWQ@mail.gmail.com>
-	<7v38ut7ilq.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 14 17:54:17 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH] t/test-lib.sh: fix TRASH_DIRECTORY handling
+Date: Sun, 14 Apr 2013 17:34:56 +0100
+Message-ID: <11cf45ad9779240b588da4b25c8ae5b6cc61b427.1365957201.git.john@keeping.me.uk>
+Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 14 18:35:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URPFw-0003oE-AB
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 17:54:16 +0200
+	id 1URPtm-0001y7-I8
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 18:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752111Ab3DNPyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 11:54:11 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:60757 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751877Ab3DNPyK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 11:54:10 -0400
-Received: by mail-la0-f42.google.com with SMTP id fn20so3450196lab.15
-        for <git@vger.kernel.org>; Sun, 14 Apr 2013 08:54:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=LWYQoRvu3okP4+GHTPhkBgn25ueBNJq13WHF39vGSSo=;
-        b=ZDkUU/rhAN7caiP/1jhF2WM18BSqHlFLZWIolfrPyj4twt8ciLgBqKb3rR5wZ6TgwX
-         ciIno3L+6ajXkv6Fm7IgYLQaAnmbp6wPlobdB9riPr57j1GwyhhkFbG5qX9ENPCVeRBK
-         GUkrfKXwweq4k4wmtR7Gq/nQieSP4gSa1FHJOuXhMSX9aEngu0A8TutoS/bclJ32GBiX
-         sdRu9Y2hIwioJH9O+MlRy0znRDxMx4cunOgChTrP4W1NGH3j/nYjqRikFcmG7QPN3Gh0
-         zCJxN1M9eL0dBCfxvfdryC5A2UiPqZ6ID4Xbu9eU6XvTtuCbkSsQhaQrGCo24ZYCO16f
-         OqEQ==
-X-Received: by 10.152.18.164 with SMTP id x4mr5727439lad.38.1365954848000;
- Sun, 14 Apr 2013 08:54:08 -0700 (PDT)
-Received: by 10.114.59.210 with HTTP; Sun, 14 Apr 2013 08:54:07 -0700 (PDT)
-In-Reply-To: <7v38ut7ilq.fsf@alter.siamese.dyndns.org>
+	id S1752117Ab3DNQfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 12:35:10 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:48548 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751580Ab3DNQfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 12:35:09 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id A6210CDA5B7;
+	Sun, 14 Apr 2013 17:35:08 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Fk9z5Yk6t81n; Sun, 14 Apr 2013 17:35:08 +0100 (BST)
+Received: from river.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id F3062CDA5A6;
+	Sun, 14 Apr 2013 17:35:01 +0100 (BST)
+X-Mailer: git-send-email 1.8.2.694.ga76e9c3.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221145>
 
-On Sun, Apr 14, 2013 at 12:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
+After the location of $TRASH_DIRECTORY is adjusted by
+$TEST_OUTPUT_DIRECTORY, we go on to use the $test variable to make the
+trash directory and cd into it.  This means that when
+$TEST_OUTPUT_DIRECTORY is not "." and an absolute --root has not been
+specified, we do not remove the trash directory once the tests are
+complete (remove_trash is set to $TRASH_DIRECTORY).
 
-> "Double" may only be showing that we do not have enough trusted
-> maintainers; ideally I would like it to have "Triple" or more.
+Fix this by always referring to the trash directory as $TRASH_DIRECTORY.
 
-A double or triple review raises *a single* standard higher, but
-having more than one standard is never good. But apparently your trust
-in Jeff means more than caring about the double standard.
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ t/test-lib.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-But good to know, my patches will always have an unfair disadvantages
-to everybody else's.
-
->  - when we add something, we try not to overengineer or to shoot for
->    unattainable perfection, but we still try to make sure we will
->    not paint ourselves into an unescapable corner when we later want
->    to extend it.
-
-And there is such a thing as being too cautious, to the point where
-you walk WAY too slowly for the fear of tumbling, because it happened
-a few times in the fast, when you were running. But how would you even
-know that you are being too cautions? If you don't dare to walk a bit
-faster to find out.
-
-Cheers.
-
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index debd8b4..f79745c 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -607,7 +607,7 @@ case "$test" in
+  *) TRASH_DIRECTORY="$TEST_OUTPUT_DIRECTORY/$test" ;;
+ esac
+ test ! -z "$debug" || remove_trash=$TRASH_DIRECTORY
+-rm -fr "$test" || {
++rm -fr "$TRASH_DIRECTORY" || {
+ 	GIT_EXIT_OK=t
+ 	echo >&5 "FATAL: Cannot prepare test area"
+ 	exit 1
+@@ -618,13 +618,13 @@ export HOME
+ 
+ if test -z "$TEST_NO_CREATE_REPO"
+ then
+-	test_create_repo "$test"
++	test_create_repo "$TRASH_DIRECTORY"
+ else
+-	mkdir -p "$test"
++	mkdir -p "$TRASH_DIRECTORY"
+ fi
+ # Use -P to resolve symlinks in our working directory so that the cwd
+ # in subprocesses like git equals our $PWD (for pathname comparisons).
+-cd -P "$test" || exit 1
++cd -P "$TRASH_DIRECTORY" || exit 1
+ 
+ this_test=${0##*/}
+ this_test=${this_test%%-*}
 -- 
-Felipe Contreras
+1.8.2.694.ga76e9c3.dirty
