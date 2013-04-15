@@ -1,95 +1,89 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] branch: colour upstream branches
-Date: Sun, 14 Apr 2013 20:24:38 -0500
-Message-ID: <CAMP44s27Tj4x5U34ysdfQx8uzxAz=yJZ+rkWxLWtQHzAeoF8SA@mail.gmail.com>
-References: <1365903985-24920-1-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8DdBkPDXORxv08cFi+i5Q4WiBjjbNf9GyB4hv+t-K=wRQ@mail.gmail.com>
-	<CAMP44s2j-Cqksu29fJRTqDNGBNi1tZkE0gfgj69K-ckFwVgnRg@mail.gmail.com>
-	<CACsJy8AGFEEkS2qQygnbZOorGv=DKc2OgC-nZ47+k2oYGBBD2Q@mail.gmail.com>
-	<CAMP44s38e4n_jKC-f973JJUXuxkD2dqP+ECwzxvUMWxit2P2PA@mail.gmail.com>
-	<CACsJy8CTmh2eMDqBpr0agiTGcHkP_AQBLLg2A4HM203u9G1v9g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate
+ $GITDIR
+Date: Sun, 14 Apr 2013 18:28:28 -0700
+Message-ID: <7vy5ck4m6b.fsf@alter.siamese.dyndns.org>
+References: <1365881007-25731-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 15 03:24:52 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 15 03:28:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URYA6-0007LG-K3
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 03:24:50 +0200
+	id 1URYDk-0002gS-C1
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 03:28:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752948Ab3DOBYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 21:24:41 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:39838 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752734Ab3DOBYk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 21:24:40 -0400
-Received: by mail-lb0-f178.google.com with SMTP id q13so4011025lbi.23
-        for <git@vger.kernel.org>; Sun, 14 Apr 2013 18:24:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=lXN37Kr+K01RG1ka2ZF9Gf7EqXMjCSmsIEzHQgs4Xcs=;
-        b=dslwSGOavGXz+L9tk2E97ZykLIuHtl7Z9y/bIQSZMR20yL5K5iGeFjrD8d9580FD2n
-         UeTMTj1s7bC+GgdChZVqtbBqmrP7P8tSKDX2DNgWSH9p5nBjHgnI7pSWgtDdPUxiP5qa
-         +nPtwepKqmMh3JhsudFD1Qxyrozix2bL/Q14cWvCYpNvSzjsyctHV7Hen3WEZ24/EZmN
-         sNcGgqQSzjsaIHzRQjfMs0QdWUA+SPcoT6Jv3FQEM1T+4Vmc3xqTev7WEfBNRejLwuA1
-         sDVSCy396aUkym4yc1QH6x61Cv9/fKMBVI+YYlblPj7DZtoI7LjSFXkAOPg9AmGZ7TWl
-         v6Ow==
-X-Received: by 10.152.113.34 with SMTP id iv2mr9454631lab.20.1365989078494;
- Sun, 14 Apr 2013 18:24:38 -0700 (PDT)
-Received: by 10.114.59.210 with HTTP; Sun, 14 Apr 2013 18:24:38 -0700 (PDT)
-In-Reply-To: <CACsJy8CTmh2eMDqBpr0agiTGcHkP_AQBLLg2A4HM203u9G1v9g@mail.gmail.com>
+	id S1753569Ab3DOB2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 21:28:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34081 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753394Ab3DOB2b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 21:28:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CD2A11A7F;
+	Mon, 15 Apr 2013 01:28:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Jebrn86+C2t/k2uEbDn8hSjcjrw=; b=Uftkuu
+	xXhu68lQJSxSkL7XzyNVTmEB+Jb2IBzlvizO2X3c3fJztLVwmoQCXBlXtkK64wsC
+	w4OntCwPGW4iuuk1wFIr5Jj3QO/MhO9IQ7tSErQlFa0vflgOnhtlR/wLi1yi19AB
+	uxfjfn9xZsX4mCb81OFe1Pb3vQqvkhLZG+FJ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XCG8hktm8xdpqcA/rl2Inp3k8xMWHQ9y
+	zMyHWB5r9umoz1eQguSzC8IEWdCUDJrLuGYhHRaF8eTDsd8TygGBQZx1Hf6eG51V
+	k5/CaT49HZ96AtTa9JuZ/ClOQFEZpFwDlEyhC7CAOQsskVPCH9wAXgr6VQONPbFP
+	98l0OfnRxLk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13DC311A7E;
+	Mon, 15 Apr 2013 01:28:31 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 69AFE11A7C; Mon, 15 Apr
+ 2013 01:28:30 +0000 (UTC)
+In-Reply-To: <1365881007-25731-1-git-send-email-artagnon@gmail.com> (Ramkumar
+ Ramachandra's message of "Sun, 14 Apr 2013 00:53:27 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C7AAA3B8-A56B-11E2-BF57-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221174>
 
-On Sun, Apr 14, 2013 at 7:55 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Mon, Apr 15, 2013 at 9:54 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> On Sun, Apr 14, 2013 at 6:46 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->>> On Mon, Apr 15, 2013 at 9:22 AM, Felipe Contreras
->>> <felipe.contreras@gmail.com> wrote:
->>>> On Sun, Apr 14, 2013 at 5:31 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->>>>> On Sun, Apr 14, 2013 at 11:46 AM, Felipe Contreras
->>>>> <felipe.contreras@gmail.com> wrote:
->>>>>> +       char fancy[80];
->>>>>>
->>>>>> -       if (show_upstream_ref)
->>>>>> +       if (show_upstream_ref) {
->>>>>>                 ref = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
->>>>>> +               if (want_color(branch_use_color))
->>>>>> +                       snprintf(fancy, sizeof(fancy), "%s%s%s",
->>>>>> +                                       GIT_COLOR_BLUE, ref, GIT_COLOR_RESET);
->>>>>> +               else
->>>>>> +                       strncpy(fancy, ref, sizeof(fancy));
->>>>>> +       }
->>>>>> +
->>>>>
->>>>> Please use strbuf for "fancy".
->>>>
->>>> Why? We would need to initialize and free it. What's the advantage?
->>>
->>> From a quick glance, I don't see any gurantee that "ref" (plus ansi
->>> codes) will always fit in 80 bytes.
->>
->> Would changing it to 1024 (MAXREFLEN) fix it?
->
-> You still need to take ansi codes into account. I think it's easier to
-> just use strbuf.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-I'm not sure what you mean. If there was an issue with snprintf, then
-there would be with this in refs.c:
+> This configuration variable comes into effect when 'git clone' is
+> invoked inside an existing git repository's worktree.  When set,
+> instead of cloning the given repository as-is, it relocates the gitdir
+> of the repository to the path specified by this variable.
 
-	if (recursion > MAXDEPTH || strlen(refname) > MAXREFLEN)
+Relocate to where in the superproject's gitdir?  Presumably you can
+do this more than once in a given superproject, so there needs to be
+a key per such a clone, no?  I am guessing that you would follow the
+usual "when adding a submodule without name, use its path as the
+initial name" convention, but then I would suggest it to be spelled
+out (and if you are doing it differently, that choice needs to be
+spelled out and defended).
 
-Cheers.
+>  Okay, so this is part of my evil plan to make 'git add' DTRT wrt
+>  submodules,...
 
--- 
-Felipe Contreras
+If the envisioned use of this is to use it as a building block of
+something else that is user-facing (e.g. the user says "git add",
+and before the command finishes, somewhere we internally run "git
+clone"), then would it be possible that you are better off running
+that clone with --separate-git-dir and let it make the gitfile for
+you?
+
+Any new configuration variable brings its own problem by forcing
+existing users to countermand it explicitly from the command line.
+If the --separate-git-dir would not work for your application, you
+need a new feature and you can achieve the same by adding a new
+command line option (say, --submodule-git-dir), that would be more
+preferrable.
