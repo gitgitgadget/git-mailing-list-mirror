@@ -1,73 +1,179 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [BUG] git-clone fails due to GnuTLS recv error (-9), then deletes
- entire local repo
-Date: Mon, 15 Apr 2013 23:58:54 +0800
-Message-ID: <CALUzUxr5i6sRywbKB=eFEcrpHdVtduMQFKaXwMX-WdcWAa6g2A@mail.gmail.com>
-References: <510B8416.7010802@iam.tj>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/3] pull: introduce --[no-]autostash and pull.autostash
+Date: Mon, 15 Apr 2013 18:13:16 +0200
+Message-ID: <vpqwqs3lqlf.fsf@grenoble-inp.fr>
+References: <1365887729-9630-1-git-send-email-artagnon@gmail.com>
+	<1365887729-9630-4-git-send-email-artagnon@gmail.com>
+	<vpq38us2oov.fsf@grenoble-inp.fr>
+	<CALkWK0mdC_tK2CGqAa67fr189PQCjSjzAOPujipOHFfoiYW0qA@mail.gmail.com>
+	<vpqppxvoqsc.fsf@grenoble-inp.fr>
+	<CALkWK0nqrw7DFQSnMvULYjJtBHRnadKWqCLQOAjzJH0o7USo+A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: TJ <git@iam.tj>
-X-From: git-owner@vger.kernel.org Mon Apr 15 17:59:22 2013
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 15 18:14:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URloP-0002nR-5T
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 17:59:21 +0200
+	id 1URm3U-0000vB-AW
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 18:14:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752729Ab3DOP7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 11:59:16 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:57618 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751854Ab3DOP7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 11:59:16 -0400
-Received: by mail-ie0-f174.google.com with SMTP id 10so1204364ied.19
-        for <git@vger.kernel.org>; Mon, 15 Apr 2013 08:59:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=fcU6emeqDKmKGYSWsiVnL2ERZoj9dPwdaB3YhHy1lqI=;
-        b=nEGgOdubLpKdLX74VpzwTXx0irukgpzYc+8MazUbSRoRee6VbX0S78oql5f0Tqk4/3
-         TeQzwj8N7dk1axT5rA5qT8CiPFAxz5e2PoNWHgFeSfbl4aVTNLQ97jKRmRfbjo82PfSl
-         HtWAfNnfpnXam7vDiafwlj0pgMNRA2dbnIFm9uyBOkO8jp6R5hRYZLbIiPSfnUiYhWa3
-         ERkq1DbHAfltMixMIN2z7Xd6FcW3UqyaDgGP0Ih8hmlfDg8aE91MqsxlBmGayqJZxuX6
-         jWGr8Zf6PahBo8rKsrAiWo2u3htP1COPAYGCXSgSsOoarWaW8648uvanEkkqwBeiJbic
-         KdBg==
-X-Received: by 10.50.170.36 with SMTP id aj4mr5463195igc.67.1366041555537;
- Mon, 15 Apr 2013 08:59:15 -0700 (PDT)
-Received: by 10.64.61.70 with HTTP; Mon, 15 Apr 2013 08:58:54 -0700 (PDT)
-In-Reply-To: <510B8416.7010802@iam.tj>
+	id S1755855Ab3DOQOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 12:14:52 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50844 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755853Ab3DOQOv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 12:14:51 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r3FGDE2e008485
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 15 Apr 2013 18:13:15 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1URm1s-0003A3-Nh; Mon, 15 Apr 2013 18:13:16 +0200
+In-Reply-To: <CALkWK0nqrw7DFQSnMvULYjJtBHRnadKWqCLQOAjzJH0o7USo+A@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 15 Apr 2013 19:26:41 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 15 Apr 2013 18:13:15 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r3FGDE2e008485
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1366647197.0558@K7K/1jm72iOADOV3YDP4LA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221243>
 
-On Fri, Feb 1, 2013 at 5:00 PM, TJ <git@iam.tj> wrote:
-> Using Ubuntu Precise 12.04 with git version (1.8.0.3) I discovered a bug whereby git-clone deletes the repository
-> it has just created if there is a GnuTLS error after the final transfer.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+
+> Matthieu Moy wrote:
+>> AFAICT, "git merge --abort" is an alias for "git reset --merge"
 >
-> I switched to building and using the current git head (1.8.1.2.433.g070c57d.dirty) and found the same issue is still present.
+> Yes, that is correct.
 >
-> There are two problems here:
+>> which
+>> was precisely designed to reset only modifications comming from a merge,
+>> and not the local changes that were present before the merge was
+>> started. The man pages are relatively obscure on the subject, but I'd
+>> call that a documentation bug.
 >
-> 1. At the end of the transfer "GnuTLS recv error (-9): A TLS packet with unexpected length was received"
-> 2. git-clone goes on to resolve deltas *then* deletes the entire repository
+> I see.  Either way, we need a clean worktree for it to work, no?
+
+No, you don't. Just try if you're not convinced:
+
+$ git checkout -b branch
+Switched to a new branch 'branch'
+$ date > test.txt && git commit -m 'on branch' test.txt
+[branch 2482623] on branch
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ git checkout -
+Switched to branch 'master'
+$ date > test.txt && git commit -m 'on master' test.txt
+[master c322d35] on master
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ date > other.txt 
+$ git status
+# On branch master
+# Changes not staged for commit:
+#
+#       modified:   other.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git merge branch
+Auto-merging test.txt
+CONFLICT (content): Merge conflict in test.txt
+Automatic merge failed; fix conflicts and then commit the result.
+$ git status
+# On branch master
+# You have unmerged paths.
+#
+# Unmerged paths:
+#
+#       both modified:      test.txt
+#
+# Changes not staged for commit:
+#
+#       modified:   other.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git merge --abort
+$ git status
+# On branch master
+# Changes not staged for commit:
+#
+#       modified:   other.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+$ 
+
+There may be corner-cases where it doesn't work, but I never encountered
+such case.
+
+>> It does. stashing means the user will have to "stash pop" later. One
+>> extra step, one extra opportunity to forget something important.
 >
-> This is reported as Ubuntu bug #1111882 at https://bugs.launchpad.net/ubuntu/+bug/1111882
+> That's only if there are conflicts.  If there are conflicts, you'll
+> have to stash anyway if:
+> - You're doing a pull-merge and want merge --abort to work.
 
-I believe this is due to git not supporting resumable clones, and that
-the repo is in an unusable state.
+Again, no.
 
-It's listed as a 2011 GSoC idea [1] but has since been taken off
-because it's considered a "hard" problem (can't come with a email
-thread right off the top of my head).
+>> A minor annoyance is that it will touch files that have no reason to be
+>> touched, hence may trigger extra rebuilds with "make", disturbing text
+>> editors that have the file open, etc.
+>
+> Okay, I need to ask you something at this point: do you ever run merge
+> on a dirty worktree unless you're absolutely sure that your local
+> changes won't conflict with the changes introduced by the merge? 
 
-[1] https://git.wiki.kernel.org/index.php/SoC2011Ideas#Resumable_clone
+Most of the time, I just run "git pull" or "git merge". I know it's
+conservative enough, to it will stop if there's anything dangerous.
 
---
-Cheers,
-Ray Chuan
+> That's only a pull-merge.  Unfortunately, making git-pull.sh uniform
+> means that we have to fall back to the least-common-denominator of
+> functionality (which is currently pull-rebase).
+
+You may want to, but you don't have to. pull-merge and pull-rebase
+already have different behavior in case of non-overlapping changes:
+
+$ git pull --rebase . branch
+Cannot pull with rebase: You have unstaged changes.
+Please commit or stash them.
+$ git pull --no-rebase . branch
+From .
+ * branch            branch     -> FETCH_HEAD
+[...]
+
+I don't see any reason to restrict to the common denominator in the same
+situation for another feature.
+
+I can accept the "it's too hard to implement" argument, but not "it
+doesn't bring anything".
+
+>> As a user, when I run "git rebase --continue" and it tells me it's done,
+>> I expect the work to actually be done. This is the case today. This
+>> won't be the case after autostash is introduced if the user has to
+>> remember to run "stash pop" afterwards.
+>
+> And how will you implement that for merge, since there is no merge
+> --continue to execute stash pop from?  Do you propose to make commit
+> do the stash pop'ing?
+
+No, I'm not proposing to do anything for merge. There's no reason to try
+being uniform in conflict resolution for pull-merge and pull-rebase as
+it is already different now. We already have "git rebase --continue", we
+don't have "git merge --continue". So what? The fact that merge doesn't
+have the equivalent doesn't mean we should not do something for "rebase
+--continue".
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
