@@ -1,93 +1,71 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] push: introduce implicit push
-Date: Mon, 15 Apr 2013 00:20:32 -0700
-Message-ID: <7vzjx01cqn.fsf@alter.siamese.dyndns.org>
-References: <1365780835-2853-1-git-send-email-artagnon@gmail.com>
- <7v38uvcrjl.fsf@alter.siamese.dyndns.org>
- <CALkWK0=-GcOF17Q-y-Aqj0ThX5pPQFrriDqoJ2qsr=CS+wUNGA@mail.gmail.com>
- <7vehed7ilu.fsf@alter.siamese.dyndns.org>
- <CALkWK0k6bmjFxTSMAutgu2EjWRZ_cyTU9jZ3Er-aaV78T16RtQ@mail.gmail.com>
- <7vppxw335o.fsf@alter.siamese.dyndns.org> <516BA732.4080405@viscovery.net>
+Subject: No "What's cooking" yet, but...
+Date: Mon, 15 Apr 2013 00:26:58 -0700
+Message-ID: <7vvc7o1cfx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Apr 15 09:20:46 2013
+Cc: Adam Spiers <git@adamspiers.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmc=?= =?utf-8?B?4buNYw==?= Duy 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 15 09:27:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URdiW-0005cE-Ry
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 09:20:45 +0200
+	id 1URdoh-0003ib-Vp
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 09:27:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753497Ab3DOHUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 03:20:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64002 "EHLO
+	id S1753741Ab3DOH1D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 03:27:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60600 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753487Ab3DOHUe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 03:20:34 -0400
+	id S1753702Ab3DOH1B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 03:27:01 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28A5D11BDF;
-	Mon, 15 Apr 2013 07:20:34 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A2CD11E1C;
+	Mon, 15 Apr 2013 07:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mzJxbNTx3AdbqoGrqbMiw7i8HHg=; b=osEmy1
-	xWo/01mg7YztD7AFSwXRf1ssddGkWW/xd3ShXqXwdXWJMDX5XpjUrU0xMLuc5ZZd
-	vqnyVMML/u2JCQbqxesiB+QtxLyThIE5YgXcxIrgqO7OPwWQIR7SWQJ6Z3AnaL7U
-	y0hon5UCTf/9yN9KwcHiZHmhq5ijat7QY7BLE=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=t
+	6kwSXigEG66ycFdKke/lmpyeBs=; b=MzLpHWbt2r5ApQTiLu1WwFOZqE1spc3k2
+	kJ1bNR4gNPPg8PKdr7YgzQpnRJTfvkNLVf8u8tDSDWLPF5WVhTn+E1DpMJP0G7vJ
+	X/agEJ8t+sqlzNlyfIZzcMshltmq7vcjXp2Ff88XZRDAT/inTuuU9lcVbfja+N2B
+	YYUAhY5zIg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=V+DVT3UX6N1UrbcJFXZ2MLf6MXGbQ3EQ
-	PxOvmYi+nGOp/zOmmHmr3BhJ88eapblig8rt9amnzsJCw9E2rnQKHKL3/packpqR
-	J59aCdnP3gmCUWMk6I+2bHF2fz/ntUEFzBsBEBLmTIpd4e2tRjo5RavQtlCUaszd
-	4OdlBsvlRYY=
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=Jp0W7PpfFDWhV4aqevn3CcKJ0SyEN6Dbh0xz0PG/2vC3d4BkE4+ZQ5uv
+	qb+fCJgoNUtiLdQUj9soRg6qyP5F1dfC7kRdUZc3HQa9D1JY4AxaXZs6QFZiH2fa
+	0l/7zBd/MvSuwi77XlwsNwPMEzATTonK6UW5yNe/MziCxr5wVCk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F5AC11BDE;
-	Mon, 15 Apr 2013 07:20:34 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EFC211E1B;
+	Mon, 15 Apr 2013 07:27:00 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9478411BDC; Mon, 15 Apr
- 2013 07:20:33 +0000 (UTC)
-In-Reply-To: <516BA732.4080405@viscovery.net> (Johannes Sixt's message of
- "Mon, 15 Apr 2013 09:07:30 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0547511E19; Mon, 15 Apr
+ 2013 07:26:59 +0000 (UTC)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F60F09C0-A59C-11E2-B7C0-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DC613AB0-A59D-11E2-8704-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221197>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+I've merged a handful more topics to 'next'.
 
-> User says:
->
->    git push -- master docs release
->
-> Then git pushes the three branches to three different upstreams. You find
-> that confusing. Do I understanding correctly so far?
+It is likely that I'll be merging kb/status-ignored-optim to
+'master' soonish, but as I kept saying this topic touches rather
+core part of working tree inspection code, so a fallout from it may
+affect not just "status -u<various>" but more destructive "add",
+"rm". A final eyeballing of the topic is very much appreciated.
 
-It is far more subtle than that.  User says that while on 'next'
-branch.
+Also I've ejected nd/magic-pathspecs and as/check-ignore topics from
+'pu' for now, as the former when taken with jl/submodule-mv were
+somehow breaking the tests (I was running the integration run for
+'pu' without 5301, 5700, 7001 and 7408 for a few days), and the
+latter topic did not play well with kb/status-ignored-optim topic.
+We may want to revisit them after having a few more topics graduate
+to 'master' first and then ask them to be rebased.
 
-The user has been trained to think "branch.master.remote" takes
-effect while he has "master" branch checked out.
-
-That is where the possible confusion comes from. As I said number of
-times, you may be able to declare that the confusion is unfounded
-once you think it through.
-
-> Just my 2 cents. (But I'm a traditional "matching" type, so take this with
-> a grain of salt. Or I may be missing the point of this thread, as I
-> haven't followed closely.)
-
-For exmaple, see
-
-cf. http://thread.gmane.org/gmane.comp.version-control.git/218429/focus=220707
-
-where I say "branch.next.remote" should not come into play when I
-say "git push --master docs release" while on the next branch and
-Peff gives a counter-viewpoint.
+Thanks.
