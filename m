@@ -1,99 +1,103 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] branch: colour upstream branches
-Date: Mon, 15 Apr 2013 11:31:01 +1000
-Message-ID: <CACsJy8Cecymz-vPQ_WwGzB8kR6B_j5vm8MPVykrO44C5Vk=1Zg@mail.gmail.com>
-References: <1365903985-24920-1-git-send-email-felipe.contreras@gmail.com>
- <CACsJy8DdBkPDXORxv08cFi+i5Q4WiBjjbNf9GyB4hv+t-K=wRQ@mail.gmail.com>
- <CAMP44s2j-Cqksu29fJRTqDNGBNi1tZkE0gfgj69K-ckFwVgnRg@mail.gmail.com>
- <CACsJy8AGFEEkS2qQygnbZOorGv=DKc2OgC-nZ47+k2oYGBBD2Q@mail.gmail.com>
- <CAMP44s38e4n_jKC-f973JJUXuxkD2dqP+ECwzxvUMWxit2P2PA@mail.gmail.com>
- <CACsJy8CTmh2eMDqBpr0agiTGcHkP_AQBLLg2A4HM203u9G1v9g@mail.gmail.com> <CAMP44s27Tj4x5U34ysdfQx8uzxAz=yJZ+rkWxLWtQHzAeoF8SA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] commit-slab: introduce a macro to define a slab for
+ new type
+Date: Sun, 14 Apr 2013 18:32:42 -0700
+Message-ID: <7vppxw4lz9.fsf@alter.siamese.dyndns.org>
+References: <1365919489-17553-1-git-send-email-gitster@pobox.com>
+ <1365919489-17553-4-git-send-email-gitster@pobox.com>
+ <20130414184121.GA1621@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 15 03:31:39 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 15 03:32:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URYGf-0005hI-B4
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 03:31:37 +0200
+	id 1URYHp-0006wi-FE
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 03:32:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932081Ab3DOBbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 21:31:33 -0400
-Received: from mail-oa0-f42.google.com ([209.85.219.42]:40542 "EHLO
-	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753187Ab3DOBbc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 21:31:32 -0400
-Received: by mail-oa0-f42.google.com with SMTP id i18so4031322oag.29
-        for <git@vger.kernel.org>; Sun, 14 Apr 2013 18:31:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=nuKErzsevc4Pd6hShQiy4oZNsiYqDnRPpBo75uiYoGM=;
-        b=XmlA9ZMnHh767wmQg5kiiG5sYSAnDTZQhWoigtUPnavH+LhZQLeh7ikAqrTP0Ot/fL
-         cdTi+OcVHUrppexdiwhHlv0jMNX4RLaM+PIwQnmw++uO7HfwQhk+K1+coI/l1wvqHcsE
-         j3YF8hvuerE94rbtlvip4zLN9w4XDiPpMiGs019goSy8G1z7yQNw43zGnjBwXqALzMY4
-         rJKtEreyoSThY79QUY9DFpo5yaCseAJZ6lZ+6Rx2XgVcgvOOZCNtHvciMDxc5IsJ5CdN
-         ooiPty+QJYiMHphxnobSt7pPLXLh415NZiz7dhKlqA3uXae4B0qq17XiUxnQntNX2EW3
-         QM6A==
-X-Received: by 10.60.135.103 with SMTP id pr7mr6678581oeb.142.1365989491918;
- Sun, 14 Apr 2013 18:31:31 -0700 (PDT)
-Received: by 10.76.122.163 with HTTP; Sun, 14 Apr 2013 18:31:01 -0700 (PDT)
-In-Reply-To: <CAMP44s27Tj4x5U34ysdfQx8uzxAz=yJZ+rkWxLWtQHzAeoF8SA@mail.gmail.com>
+	id S932162Ab3DOBcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 21:32:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56895 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932109Ab3DOBco (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 21:32:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 845F911BBD;
+	Mon, 15 Apr 2013 01:32:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=t980rKBYHph80K24QyFWT8VfI0w=; b=w4Hwgd
+	L+i2hkE8aBe1EGU9NJiqjTfU/5SCv/+UPY+TX6QB6QgI7d0SCxSY9qQ3mfD3wmcr
+	lKTSYhZwchX+SM35ZQPcMUfnHId/K/gu/To+ANwJHlje5gUvY0fz/5gVE0rtn1ng
+	PpdTsqLM5ZCUcQPVY4NmLmwFf0FddHhgdPds4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=i2mZYp71Mun7Q6GS2iUzor8Ql+7Wcps3
+	YFf+SfAKsWwefIdv9m9UCc4G/6fM7QHxtcbDt6AR88Yx+N4FAJPXfX/c8ESEynZ3
+	r8ia1GPbBxygTPc98NgSjLOdgTYf6wY4Xg+UkFrrc/dYi3H1wEwEl27bnRU3JXQn
+	xfWbTopD0S4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CB7611BBC;
+	Mon, 15 Apr 2013 01:32:44 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CAD6411BBB; Mon, 15 Apr
+ 2013 01:32:43 +0000 (UTC)
+In-Reply-To: <20130414184121.GA1621@sigill.intra.peff.net> (Jeff King's
+ message of "Sun, 14 Apr 2013 14:41:21 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5EB30EDA-A56C-11E2-BFD9-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221177>
 
-On Mon, Apr 15, 2013 at 11:24 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Sun, Apr 14, 2013 at 7:55 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Mon, Apr 15, 2013 at 9:54 AM, Felipe Contreras
->> <felipe.contreras@gmail.com> wrote:
->>> On Sun, Apr 14, 2013 at 6:46 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->>>> On Mon, Apr 15, 2013 at 9:22 AM, Felipe Contreras
->>>> <felipe.contreras@gmail.com> wrote:
->>>>> On Sun, Apr 14, 2013 at 5:31 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->>>>>> On Sun, Apr 14, 2013 at 11:46 AM, Felipe Contreras
->>>>>> <felipe.contreras@gmail.com> wrote:
->>>>>>> +       char fancy[80];
->>>>>>>
->>>>>>> -       if (show_upstream_ref)
->>>>>>> +       if (show_upstream_ref) {
->>>>>>>                 ref = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
->>>>>>> +               if (want_color(branch_use_color))
->>>>>>> +                       snprintf(fancy, sizeof(fancy), "%s%s%s",
->>>>>>> +                                       GIT_COLOR_BLUE, ref, GIT_COLOR_RESET);
->>>>>>> +               else
->>>>>>> +                       strncpy(fancy, ref, sizeof(fancy));
->>>>>>> +       }
->>>>>>> +
->>>>>>
->>>>>> Please use strbuf for "fancy".
->>>>>
->>>>> Why? We would need to initialize and free it. What's the advantage?
->>>>
->>>> From a quick glance, I don't see any gurantee that "ref" (plus ansi
->>>> codes) will always fit in 80 bytes.
->>>
->>> Would changing it to 1024 (MAXREFLEN) fix it?
->>
->> You still need to take ansi codes into account. I think it's easier to
->> just use strbuf.
->
-> I'm not sure what you mean. If there was an issue with snprintf, then
-> there would be with this in refs.c:
->
->         if (recursion > MAXDEPTH || strlen(refname) > MAXREFLEN)
+Jeff King <peff@peff.net> writes:
 
-I mean GIT_COLOR_BLUE and GIT_COLOR_RESET take some bytes from
-"fancy". In the stretched case where ref takes all MAXREFLEN, then
-fancy must be a little bit bigger. Why do we need to think hard about
-the size of fancy when strbuf would solve it nicely?
---
-Duy
+> On Sat, Apr 13, 2013 at 11:04:49PM -0700, Junio C Hamano wrote:
+>
+>> Suppose you want to give one bit per existing ref and paint commits
+>> down to find which refs are descendants of each commit. You find
+>> that you have 320 refs only at runtime.
+>> 
+>> The code can declare a commit slab "struct flagbits"
+>> 
+>> 	define_commit_slab(flagbits, unsigned char);
+>> 	struct flagbits flags;
+>> 
+>> and initialize it by:
+>> 
+>> 	nrefs = ... count number of refs that returns say 320 ...
+>> 	init_flagbits_with_stride(&flags, (nrefs + 7) / 8);
+>> 
+>> so that
+>> 
+>> 	unsigned char *fp = flagbits_at(&flags, commit);
+>> 
+>> will return a pointer pointing at an array of 40 "unsigned char"s
+>> associated with the commit.
+>
+> Thanks, I was thinking originally that we would want to break it down
+> into "unsigned long" or something, but there is probably no real
+> performance advantage to doing that over bytes.
+
+The 320 came from writing "an array of 5 unsigned long long" in the
+first draft ;-)
+
+> I'd probably further wrap it with a flagbit_set and flagbit_tst to wrap
+> the "figure out which byte, then which bit of that byte" logic, but that
+> would be a wrapper around flagbits_at, anyway. It can come later.
+
+Exactly. At that point, it is not about "what you could use commit
+slab for" but is about "how you would implement unbounded set of
+flag bits".
+
+> We'd probably want the hot path of this (returning the actual pointer)
+> to be inline, but not necessarily the parts about growing,...
+
+Yeah, this was just a technology demonstration as your original.
