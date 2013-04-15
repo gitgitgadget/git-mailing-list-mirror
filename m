@@ -1,103 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: [RFC/PATCH] push: introduce implicit push
-Date: Mon, 15 Apr 2013 02:29:29 -0700
-Message-ID: <7vk3o416rq.fsf@alter.siamese.dyndns.org>
+Date: Mon, 15 Apr 2013 15:05:17 +0530
+Message-ID: <CALkWK0nNn_dGgr8F-kcQZm9UfkZAKwBd0bPSW9yCex4L9F+4Qw@mail.gmail.com>
 References: <1365780835-2853-1-git-send-email-artagnon@gmail.com>
- <7v38uvcrjl.fsf@alter.siamese.dyndns.org>
- <CALkWK0=-GcOF17Q-y-Aqj0ThX5pPQFrriDqoJ2qsr=CS+wUNGA@mail.gmail.com>
- <7vehed7ilu.fsf@alter.siamese.dyndns.org>
- <CALkWK0k6bmjFxTSMAutgu2EjWRZ_cyTU9jZ3Er-aaV78T16RtQ@mail.gmail.com>
- <7vppxw335o.fsf@alter.siamese.dyndns.org> <516BA732.4080405@viscovery.net>
- <7vzjx01cqn.fsf@alter.siamese.dyndns.org>
- <20130415083558.GB2278@serenity.lan>
+ <7v38uvcrjl.fsf@alter.siamese.dyndns.org> <CALkWK0=-GcOF17Q-y-Aqj0ThX5pPQFrriDqoJ2qsr=CS+wUNGA@mail.gmail.com>
+ <7vehed7ilu.fsf@alter.siamese.dyndns.org> <CALkWK0k6bmjFxTSMAutgu2EjWRZ_cyTU9jZ3Er-aaV78T16RtQ@mail.gmail.com>
+ <7vppxw335o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon Apr 15 11:29:37 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 15 11:36:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URfjE-0005Bf-PH
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 11:29:37 +0200
+	id 1URfpV-0003mb-Ap
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 11:36:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934425Ab3DOJ3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 05:29:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50516 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933959Ab3DOJ3c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 05:29:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BC0F14575;
-	Mon, 15 Apr 2013 09:29:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=jY7HgYVvoGu0AmvdksvBITc0gi4=; b=JVPvrn43RHqmTmP2kJfH
-	bn0dtna/BehSlWPlcTnwPvwv/OkF0nG06Exa+y1jma5YhoiQ53J215JEqql/Nwir
-	0HR68U7c9gWTzs++UhKbSSzylwWRf+A4gCffGk24bZhXGeJzes79ArKJx1dkLNiS
-	ighGKl6Ns77LO5yaKNmaewQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=dYfJBHi/r994xIK9aJRRrk3AHGd8TzbfJ/XRu6c7m84bZE
-	XB7bFqS1mnIqE4m00XyWWMMCidbNpEQ8QI7kCnmlN+OM/5TuCcAEOHjivddID1EF
-	llttiTuq0MJLiTl4GPUq/AbXAr7ZZa9h4GS4Oc+30Pd8pwRlKQZ/49BnW/oZ8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 72D5814573;
-	Mon, 15 Apr 2013 09:29:31 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E6BC314571; Mon, 15 Apr
- 2013 09:29:30 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F9DED082-A5AE-11E2-95F5-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S964925Ab3DOJgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 05:36:00 -0400
+Received: from mail-ia0-f182.google.com ([209.85.210.182]:63919 "EHLO
+	mail-ia0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934577Ab3DOJf7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 05:35:59 -0400
+Received: by mail-ia0-f182.google.com with SMTP id u20so4122416iag.41
+        for <git@vger.kernel.org>; Mon, 15 Apr 2013 02:35:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=eijABIxyNeGb83ykw6mqwWSgTxw8cxbhF2VJlTlyHNw=;
+        b=M0UhXcFC6o55op/3zkiWpXqflq/R5/dW4allvuzrKCUGBIHvVRRMmHyuenyWaIbfpD
+         sqTr0GhsT+NvnnXoPjrPbSBaCTNvHN4uQtxADJOcfuxDtYLDSXnSH5J+01wSFix2+azk
+         BbUrZ4BCYkKgRxsz46VRRxB6i2DDj4ka3USPACLUVeqh0DngO5rYZ+oCiuQXnS3FOLzy
+         mU28tHZ0fZs2/MZJYtzTD4g6rodv89+AYBW2mtDE++1NaHSZ8tdH+yCiGIvqffmEGO0q
+         MocXcC4KJAGdvhfwqU9f1j/ZdCKhBkQcbAyxKHk5X2+A2nZxTrEGyhTx6r2lEd8IzhUA
+         UtZQ==
+X-Received: by 10.50.50.71 with SMTP id a7mr4710190igo.14.1366018557611; Mon,
+ 15 Apr 2013 02:35:57 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Mon, 15 Apr 2013 02:35:17 -0700 (PDT)
+In-Reply-To: <7vppxw335o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221210>
 
-John Keeping <john@keeping.me.uk> writes:
+Junio C Hamano wrote:
+> That "changing the meaning of <name>" in the middle, and doing so
+> will be confusing to the users, is exactly the issue, isn't it?
 
-> I may be an atypical user, but my expectation currently is that
-> branch.<name>.remote is what is used when I run "git push" with no
-> additional arguments.
+Yes, but we have to change _something_ if we don't want to hit a WTF
+like 'git push master next' pushing master and next to
+branch.<HEAD>.pushremote.  In my opinion, this seems to be the less
+evil (or disruptive) change.  After all, we're not proposing to change
+the current behavior of any current git invocations: a plain git push
+can still consider branch.<HEAD>.pushremote, and it's not a problem in
+my opinion.  After all, a git fetch also considers
+branch.<HEAD>.remote, and we all agree that this is fine.
+
+1. We are changing the meaning of branch.<name>.remote, but this is
+not inconsistent with the current behavior of push.default at all
+(even push.default=matching).  We just have to improve the
+push.default documentation.
+
+2. We are not changing the meaning of _any_ existing git push
+invocations.  Pushing "unrelated branches" to the "corresponding
+remote" has not been possible until now (unless you check out each of
+the branches, set push.default=current, and git push), and we're
+inventing a new syntax that makes this possible.  I see no problem
+with changing the meaning of branch.<name>.remote/pushremote for this
+purpose.
+
+> Just like Peff, I am sympathetic to people who want to omit "where
+> to" and have Git automatically make a guess, and would be happy if
+> we can find a reasonable solution to that problem.
 >
-> This is probably because whenever I add additional arguments (currently)
-> I have to specify where I am pushing to.
->
-> So I think breaking user expectations is a red herring here because the
-> current behaviour means that users cannot have any expectation of what
-> will happen in this case.
+> But I am not convinced what we discussed in these threads are good
+> solutions. At least not yet.
 
-The thing is, people _want_ to reuse the knowledge they have already
-learned to a situation it does not directly apply to, by finding a
-consequence, natural extension of that knowledge, applied to a new
-situation.
+There are only so many possibilities, Junio*.  You either decide that
+the logical alternative that I proposed is too confusing and drop the
+idea, or think about how to move forward minimizing friction.
 
- - Your "branch.*.remote only kicks in when I do not say either what
-   to push or where to push to, so 'git push -- master' won't be
-   affected" could be one valid natural extension to your knowledge
-   "the config only kicks in when I do not say either".
-
- - Peff's "'git push' chooses to push to branch.next.remote when I
-   am on 'next', so 'git push -- master' run in the same state
-   should also push to that place" is another equally valid natural
-   extension to his knowledge that "'git push' chooses to push to
-   branch.next.remote when I am on 'next'".
-
- - Ram's and my "branch.master.remote is about what remote my master
-   branch integrates with, so no matter where I am, 'git push' that
-   does not say where-to should push out my master to that remote"
-   is yet another equally valid natural extension to our knowledge
-   that ""branch.master.remote is about what remote my master branch
-   integrates with".
-
-I do not think it is a red-herring at all. It is not about
-"breaking", but "there will be multiple, conflicting and equally
-plausible expectations" that makes me worry about unnecessary
-confusion.
+* If you think there are other possibilities, I'd be glad to hear them.
