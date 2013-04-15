@@ -1,70 +1,85 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] rebase-am: fix regression with new cover-letter config
-Date: Sun, 14 Apr 2013 22:57:05 -0400
-Message-ID: <CAPig+cQXaZ_pdOn1RtANdQnYrOaRvpbS2kpCYDq1Gej1w5j=jQ@mail.gmail.com>
-References: <1365978424-11841-1-git-send-email-felipe.contreras@gmail.com>
-	<7vhaj84l8m.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0GbocoBrONYdiN6f=qd58xbX0Y4neGSVRmCiLRr_f8Jw@mail.gmail.com>
-	<7v1uac4icp.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] push: introduce implicit push
+Date: Sun, 14 Apr 2013 20:04:35 -0700
+Message-ID: <7vppxw335o.fsf@alter.siamese.dyndns.org>
+References: <1365780835-2853-1-git-send-email-artagnon@gmail.com>
+ <7v38uvcrjl.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=-GcOF17Q-y-Aqj0ThX5pPQFrriDqoJ2qsr=CS+wUNGA@mail.gmail.com>
+ <7vehed7ilu.fsf@alter.siamese.dyndns.org>
+ <CALkWK0k6bmjFxTSMAutgu2EjWRZ_cyTU9jZ3Er-aaV78T16RtQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 15 04:57:13 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 15 05:04:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URZbV-0000vG-Do
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 04:57:13 +0200
+	id 1URZit-0000FH-U2
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 05:04:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932584Ab3DOC5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 22:57:08 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:46515 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755145Ab3DOC5G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 22:57:06 -0400
-Received: by mail-la0-f46.google.com with SMTP id ea20so3899455lab.5
-        for <git@vger.kernel.org>; Sun, 14 Apr 2013 19:57:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=Tlc30Nzh0XYhul/5YdGbyesnLZuoHMHHr6XXo8QfPLM=;
-        b=XLyAU0P5U9pEfp0JDRz5uS2M7o/xQOTpM9Z7818ydw7KShnUwXAgLY/joN3af+8vCo
-         zZCWmHoEQzxugQqPKKeSTceKTEK+G5A+eFpvUShIgQKdXI4LB4bSjeVo4iaxG76oTU7r
-         /tBNLhxGvf+/pG8aIhZOulCCFmiI9niFiarB8/RAb26MqxvvhF6vYXaCZeR0KboVkC9c
-         +8XQiqrHh9vum/lJGzkDSaSwEb31xQYMKIMlkkJoXNjMiguWM9XzHs9Pq6VZO2/cyFOZ
-         AVNgRq4ZyH6ZJB3+oem0pcMFtc9VsPguoBe7qA9Xf5aOwzhpoYtRjRrCb1yHO0m/AU3l
-         jbrA==
-X-Received: by 10.112.155.131 with SMTP id vw3mr9440313lbb.64.1365994625433;
- Sun, 14 Apr 2013 19:57:05 -0700 (PDT)
-Received: by 10.114.99.67 with HTTP; Sun, 14 Apr 2013 19:57:05 -0700 (PDT)
-In-Reply-To: <7v1uac4icp.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: qrkfcFCOR7CBeUFsD6JEJyWtaSc
+	id S933959Ab3DODEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 23:04:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56815 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932620Ab3DODEi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 23:04:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C0F3F78B;
+	Mon, 15 Apr 2013 03:04:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=ey0Nf4wlK8dYIqRjlttTzsoPW7M=; b=u436CEsLlFHslv2lsGhE
+	27yS8FU4DMe+Us+tpcAe4pAsJXDCxkvypUzAmmiuEey+BMg33gtQipZe0YDe1CKv
+	JSgPpRshLq0DAy3ZUBgSx8BkR5GgSW/si2d4hWGsoNMhd0OBMv2glFGu69mUL9Jr
+	iW5MnIJgShuvBlq21BCaEBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=f7lSNlOYpHxO2CTQLZu6DYE8i5kCamFsFd260+2CQyFnq1
+	MhnEMzfs2Od5vA9Ej8cpGTmDqwk0i1VFQjXYJzMlXQub6zUVrllbQ87ovENeslPb
+	EdBQsr8psLqaNVujxbd/WwBPQX9qePOGmZggebTgWPBVOyRv/RNm86AwuZp68=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 303EEF78A;
+	Mon, 15 Apr 2013 03:04:38 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A43BF789; Mon, 15 Apr 2013
+ 03:04:37 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 351AE586-A579-11E2-802C-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221190>
 
-On Sun, Apr 14, 2013 at 10:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Here is what I tentatively queued.
->
->     rebase-am: explicitly disable cover-letter
->
->     If the user has a cover-letter configuration set to anything
->     other than 'false', 'git format-patch' may generate a cover
->     letter, which has no place in "format-patch | am" pipeline.
->
->     The internal invocatoin of format-patch must explicitly override
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-s/invocatoin/invocation/
+> ...  In my proposal, the
+> precedence order branch.<name>.pushremote, remote.pushdefault,
+> branch.<name>.remote, remote.default, origin, remains the same: we
+> just want to change which branch that <name> refers to.
 
->     the configuration from the command line, just like --src-prefix
->     and other options already do.
->
->     Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+That "changing the meaning of <name>" in the middle, and doing so
+will be confusing to the users, is exactly the issue, isn't it?
+
+> In my
+> opinion, it is a much more subtle change than the entirely new
+> precedence order that you're inventing.
+
+Adding "--" has never been my itch. I just brought it up out of thin
+air as a possible alternative that is less confusing.
+
+If it does not work well, we do not have to add it, but it is
+dubious that we would want to add something that is even more
+confusing.
+
+Just like Peff, I am sympathetic to people who want to omit "where
+to" and have Git automatically make a guess, and would be happy if
+we can find a reasonable solution to that problem.
+
+But I am not convinced what we discussed in these threads are good
+solutions. At least not yet.
