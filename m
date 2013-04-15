@@ -1,71 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: No "What's cooking" yet, but...
-Date: Mon, 15 Apr 2013 00:26:58 -0700
-Message-ID: <7vvc7o1cfx.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Ensimag students projects, version 2013
+Date: Mon, 15 Apr 2013 09:59:22 +0200
+Message-ID: <vpqr4ic2pid.fsf@grenoble-inp.fr>
+References: <vpqobdg515m.fsf@grenoble-inp.fr>
+	<CACSwcnTsEiV7ehanPAxJm-SGP+P16FgvWYpEXtF9NK8fG2aNHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Adam Spiers <git@adamspiers.org>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmc=?= =?utf-8?B?4buNYw==?= Duy 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 15 09:27:10 2013
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 15 09:59:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URdoh-0003ib-Vp
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 09:27:08 +0200
+	id 1UReKB-00032e-IS
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 09:59:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753741Ab3DOH1D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 03:27:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60600 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753702Ab3DOH1B (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 03:27:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A2CD11E1C;
-	Mon, 15 Apr 2013 07:27:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=t
-	6kwSXigEG66ycFdKke/lmpyeBs=; b=MzLpHWbt2r5ApQTiLu1WwFOZqE1spc3k2
-	kJ1bNR4gNPPg8PKdr7YgzQpnRJTfvkNLVf8u8tDSDWLPF5WVhTn+E1DpMJP0G7vJ
-	X/agEJ8t+sqlzNlyfIZzcMshltmq7vcjXp2Ff88XZRDAT/inTuuU9lcVbfja+N2B
-	YYUAhY5zIg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=Jp0W7PpfFDWhV4aqevn3CcKJ0SyEN6Dbh0xz0PG/2vC3d4BkE4+ZQ5uv
-	qb+fCJgoNUtiLdQUj9soRg6qyP5F1dfC7kRdUZc3HQa9D1JY4AxaXZs6QFZiH2fa
-	0l/7zBd/MvSuwi77XlwsNwPMEzATTonK6UW5yNe/MziCxr5wVCk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EFC211E1B;
-	Mon, 15 Apr 2013 07:27:00 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0547511E19; Mon, 15 Apr
- 2013 07:26:59 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DC613AB0-A59D-11E2-8704-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755061Ab3DOH7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 03:59:33 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:51409 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755033Ab3DOH7c (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 03:59:32 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r3F7xMTn005916
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 15 Apr 2013 09:59:24 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UReJv-0006rJ-1o; Mon, 15 Apr 2013 09:59:23 +0200
+In-Reply-To: <CACSwcnTsEiV7ehanPAxJm-SGP+P16FgvWYpEXtF9NK8fG2aNHA@mail.gmail.com>
+	(Ping Yin's message of "Mon, 15 Apr 2013 10:04:40 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 15 Apr 2013 09:59:24 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r3F7xMTn005916
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1366617569.06225@Ye9prkwDzAGb5Js1Wvafhg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221198>
 
-I've merged a handful more topics to 'next'.
+Ping Yin <pkufranky@gmail.com> writes:
 
-It is likely that I'll be merging kb/status-ignored-optim to
-'master' soonish, but as I kept saying this topic touches rather
-core part of working tree inspection code, so a fallout from it may
-affect not just "status -u<various>" but more destructive "add",
-"rm". A final eyeballing of the topic is very much appreciated.
+>> 15 git rebase --stash, git pull --rebase --stash
+>
+> It seems that Ramkumar Ramachandra is working on this in his "[PATCH
+> v2 0/3] Introduce pull.autostash" series
+> Ping Yin
 
-Also I've ejected nd/magic-pathspecs and as/check-ignore topics from
-'pu' for now, as the former when taken with jl/submodule-mv were
-somehow breaking the tests (I was running the integration run for
-'pu' without 5301, 5700, 7001 and 7408 for a few days), and the
-latter topic did not play well with kb/status-ignored-optim topic.
-We may want to revisit them after having a few more topics graduate
-to 'master' first and then ask them to be rebased.
+Ah, cool! Added a note to the wiki, thanks,
 
-Thanks.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
