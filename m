@@ -1,98 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/3] pull: introduce --[no-]autostash and pull.autostash
-Date: Tue, 16 Apr 2013 00:17:35 +0200
-Message-ID: <vpqli8je8w0.fsf@grenoble-inp.fr>
-References: <1365887729-9630-1-git-send-email-artagnon@gmail.com>
-	<1365887729-9630-4-git-send-email-artagnon@gmail.com>
-	<vpq38us2oov.fsf@grenoble-inp.fr>
-	<CALkWK0mdC_tK2CGqAa67fr189PQCjSjzAOPujipOHFfoiYW0qA@mail.gmail.com>
-	<vpqppxvoqsc.fsf@grenoble-inp.fr>
-	<7vobdfztz9.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=cNEkE0bUoWJg119o+FaQywJhgkUxiFfLGPSsLrFVZ=A@mail.gmail.com>
-	<7vr4ibu14j.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=6E=s6kJysMo2yC22c3pvCWn90S5neRyP0jpzpYrZboA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Mon, 15 Apr 2013 17:24:47 -0500
+Message-ID: <CAMP44s2_wiNr4RaBOEnKnZzT4CF0qKK+bp+Lyi=Nfx3Q9ggqOQ@mail.gmail.com>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 00:17:51 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 00:24:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URrig-0001Il-BL
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 00:17:50 +0200
+	id 1URrpV-0001kG-Nl
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 00:24:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754812Ab3DOWRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 18:17:42 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:49489 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753806Ab3DOWRl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 18:17:41 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r3FMHXRu022100
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 16 Apr 2013 00:17:33 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1URriR-0008JV-LU; Tue, 16 Apr 2013 00:17:35 +0200
-In-Reply-To: <CALkWK0=6E=s6kJysMo2yC22c3pvCWn90S5neRyP0jpzpYrZboA@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Mon, 15 Apr 2013 23:38:20 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 16 Apr 2013 00:17:33 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r3FMHXRu022100
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1366669054.88597@Ceb6JqgInKAxZH7iLLsEkw
+	id S1755510Ab3DOWYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 18:24:49 -0400
+Received: from mail-la0-f41.google.com ([209.85.215.41]:64435 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754517Ab3DOWYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 18:24:49 -0400
+Received: by mail-la0-f41.google.com with SMTP id er20so4849274lab.14
+        for <git@vger.kernel.org>; Mon, 15 Apr 2013 15:24:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=Cbdz7cLc4m46XCJUJpzQ6rlkwOm8tUVCKBKL+5/TEpk=;
+        b=eG2EWRqpINnW/FjKz3EZIJrKRHX/zHRWTWI9KlCS1rfSzc8m2H2bWjWy3haNl5mXi/
+         fQQdoupACmn/u7QwzsMw3Vg3Tc5B5kKb60ic43F2PNDi2I5bGI8QXK2vgP8msnTAgJhl
+         /Kh9y8VOsBGzAXa/8wR3F5vx5EpFFVPlGdUbBUHD0Slq7qSaNhNGLbh4Wzapg77cPMf0
+         6EQWuCBt0ICOa7OVIFZ/LRtMfbrPaf4SkfSBU1GNDTaM0rTHpZarM/ijYI8lEn98Ay1w
+         Babs0J0iyjS1LnGaogF/2oh9VJO9yNDi7wWtT4KvZumzjQltRE7xbP9+EEeCal1U7Ao6
+         f43Q==
+X-Received: by 10.152.113.34 with SMTP id iv2mr11406962lab.20.1366064687439;
+ Mon, 15 Apr 2013 15:24:47 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Mon, 15 Apr 2013 15:24:47 -0700 (PDT)
+In-Reply-To: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221323>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Mon, Apr 15, 2013 at 3:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Junio C Hamano wrote:
->> If "rebase -m" were to be taught to do this, the natural way to do
->> so is to
->>
->>   (1) Prepare the todo the usual way
->>   (2) Do those two commits for index and working tree
->>   (3) Append two insns (exec reset HEAD^ and exec reset --soft
->>       HEAD^) at the end of the rebase todo file.
+> * fc/remote-hg (2013-04-11) 21 commits
+>  - remote-hg: activate graphlog extension for hg_log()
+>  - remote-hg: fix bad file paths
+>  - remote-hg: document location of stored hg repository
+>  - remote-hg: fix bad state issue
+>  - remote-hg: add 'insecure' option
+>  - remote-hg: add simple mail test
+>  - remote-hg: add basic author tests
+>  - remote-hg: show more proper errors
+>  - remote-hg: force remote push
+>  - remote-hg: push to the appropriate branch
+>  - remote-hg: update tags globally
+>  - remote-hg: update remote bookmarks
+>  - remote-hg: refactor export
+>  - remote-hg: split bookmark handling
+>  - remote-hg: redirect buggy mercurial output
+>  - remote-hg: trivial test cleanups
+>  - remote-hg: make sure fake bookmarks are updated
+>  - remote-hg: fix for files with spaces
+>  - remote-hg: properly report errors on bookmark pushes
+>  - remote-hg: add missing config variable in doc
+>  - remote-hg: trivial cleanups
 >
-> Er, no.  I don't want to touch the instruction sheet.  It becomes
-> especially problematic in -i, when the instruction sheet is
-> user-editable.
-
-I do not find this problematic. It shows the user what's going on. It
-may be a good idea to append the last instructions after launching the
-editor if we want to partially hide it (but it's still going to be
-visible with rebase --edit-todo)
-
->> "rebase--am" could also be told to generate (on the preparation
->> side) and notice (on the application side) a pair of patch files at
->> the end that represent the index state and the working tree state
->> and apply them without making the WIP part into a commit.
+>  Rerolled.
 >
-> Ugh, no.  I don't want to leak the implementation detail of autostash
-> into specific rebases.  Why can't I wrap the last statment in
-> git-rebase.sh in git stash/ git stash pop like I did with git-pull.sh?
+>  Waiting for comments.
 
-Because "git rebase" needs multiple runs in case of conflicts. You have
-to store the information somewhere in the filesystem, not in a variable.
-What you need to store is whether you need to unstash, and where you are
-in the process (in Junio's version, you may be doing the actual rebase,
-or fixing conflicts in index state application, or fixing conflicts in
-tree state application, or done). Storing what you have to do and where
-you are in the process really sounds like a job for the instruction
-sheet, no?
+>From whom?
+
+
+And about this:
+http://mid.gmane.org/1365638832-9000-3-git-send-email-felipe.contreras@gmail.com
+
+I think it's a disservice to git users to not consider this a "cooking
+patch", specially since it's only the commit message somebody was
+worried about. But whatever, don't.
+
+Cheers.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Felipe Contreras
