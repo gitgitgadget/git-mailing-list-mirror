@@ -1,72 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bisect: Store first bad commit as comment in log file
-Date: Mon, 15 Apr 2013 08:00:41 -0700
-Message-ID: <7vwqs3zvmu.fsf@alter.siamese.dyndns.org>
-References: <20130413152257.GB16040@pvv.ntnu.no>
- <20130415.063809.1055555229072260139.chriscool@tuxfamily.org>
- <20130415095339.GA28480@pvv.ntnu.no>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 3/3] pull: introduce --[no-]autostash and pull.autostash
+Date: Mon, 15 Apr 2013 20:34:04 +0530
+Message-ID: <CALkWK0kUoW22d67Ufc0i2OTVuRC8G6xGiR4Joz9vLh_4+bkuZQ@mail.gmail.com>
+References: <1365887729-9630-1-git-send-email-artagnon@gmail.com>
+ <1365887729-9630-4-git-send-email-artagnon@gmail.com> <vpq38us2oov.fsf@grenoble-inp.fr>
+ <CALkWK0mdC_tK2CGqAa67fr189PQCjSjzAOPujipOHFfoiYW0qA@mail.gmail.com>
+ <vpqppxvoqsc.fsf@grenoble-inp.fr> <CALkWK0nqrw7DFQSnMvULYjJtBHRnadKWqCLQOAjzJH0o7USo+A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Torstein Hegge <hegge@resisty.net>
-X-From: git-owner@vger.kernel.org Mon Apr 15 17:00:49 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Apr 15 17:04:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URktl-0002Hp-CP
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 17:00:49 +0200
+	id 1URkxe-0008Nh-Ua
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 17:04:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752506Ab3DOPAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 11:00:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40404 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752249Ab3DOPAo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 11:00:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A82F14EA0;
-	Mon, 15 Apr 2013 15:00:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mvNTNHTE8QN8XL5vNieXpTqp+kM=; b=q6YGv2
-	zBaS0tk6XNmWBOdqxkIyGwR9/mYWkOfo6mEUlg+g2NWn3ZC/TaBcR5AEWaV5+IkJ
-	G7ZX0deyJPtIldwKWGLNDB1c3oTcY7Aoy+mnFqWBYvNwSmZGFBRICQyNyO7327DZ
-	wRqKBDcUUdDMWNGOgRAEuicOuktKgBjpbeQoc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VzplrPbls66pV8Loa18iDqc4zXJoSTK5
-	rIeMX2BmUIHvdH4q03Klvpq7R7qr4FOFIAHq/n67apu8dpuHWc1OCl8pdcH4KGkT
-	zm+a85g3TMDNobkAtJUj6GbRrvs8y/OqXLAIj5oGFsWaQeMB+MbPPI1IrM8/z5un
-	4AhkvvRrOkw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01AA914E9E;
-	Mon, 15 Apr 2013 15:00:44 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D44914E9B; Mon, 15 Apr
- 2013 15:00:43 +0000 (UTC)
-In-Reply-To: <20130415095339.GA28480@pvv.ntnu.no> (Torstein Hegge's message
- of "Mon, 15 Apr 2013 11:53:39 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3ED77A80-A5DD-11E2-BE9E-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753136Ab3DOPEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 11:04:46 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:35460 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751307Ab3DOPEp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 11:04:45 -0400
+Received: by mail-ie0-f182.google.com with SMTP id at1so5926719iec.27
+        for <git@vger.kernel.org>; Mon, 15 Apr 2013 08:04:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=YoqITCeSeFjBlzVEUHwZ348zwiLDrrss/nPDWv2opAc=;
+        b=CaExdOWabhiH057/9cJgAc2jHNxQS5eTsSiCB9wLKj83125tvM0vY9AY3Zx8Uy8uiw
+         MgnBcF2s2q3A0cxyp5CuKl9LUPuxRNHRXHD5qruXuMFhHUxcjoCVDVww0QxyMFdi8JVQ
+         u6Wt3X7TLPfdHGbVyvnnFIswv3KU2iDNJGNRrCloNPL2xwU2HczQ9P601Z4fA3/PRICY
+         iSh5ULtbhFBcKtbTJwo0McOcLDzYVZFz/Ohdcf5LiZ/qhJoJ+MS/Z2Syi6VBq12dUhut
+         B6hrmzcX9ZkneUpA46y5DXwgnIjAt5SIRwpwpuqCgZhRXfCstJKCkcpGH2CApbfoZr5w
+         rduw==
+X-Received: by 10.50.50.71 with SMTP id a7mr5424258igo.14.1366038285341; Mon,
+ 15 Apr 2013 08:04:45 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Mon, 15 Apr 2013 08:04:04 -0700 (PDT)
+In-Reply-To: <CALkWK0nqrw7DFQSnMvULYjJtBHRnadKWqCLQOAjzJH0o7USo+A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221236>
 
-Torstein Hegge <hegge@resisty.net> writes:
+Ramkumar Ramachandra wrote:
+> Okay, so you're proposing a uniform --autostash feature for both merge
+> and rebase.  Sorry, I didn't get it last time due to the typos in your
+> email; yeah, this is worth investigating.
 
-> I was wondering why "git grep show-ref *.sh" gave so few users. It looks
-> like rev-parse is more common.
+So, I thought about this and have concluded that pull is the Right
+place for autostash because of the following reasons:
 
-It is primarily because show-ref is slightly newer.  When you have a
-full refname (e.g. refs/bisect/bad) and not an arbitrary object name
-that is spelled in a random way (e.g. master~24):
+0. autostash is purely a convenience function that's useful in simple
+reduced cases like a dumb 'git pull'; when the script we're
+implementing it for doesn't have a ton of command-line options.
 
-       show-ref --verify refs/bisect/bad
+1. git stash; git pull; git stash pop; is a very common idiom.  git
+stash; git rebase master; git stash pop; is a less common idiom, but I
+agree that it is one rebase case where autostash could be useful.
+Having git rebase -i show "exec git stash pop" at the end of a
+user-editable instruction sheet is less than ideal.  Having git rebase
+--onto master HEAD~3 do an autostash _might_ be useful, but I'm not
+sure about it.  git stash; git merge feature-branch; git stash pop; is
+not a common idiom at all.
 
-is a perfectly valid way to make sure it _is_ an existing ref.
+2. git-stash.sh is a helper script, in the same spirit as git-pull.sh
+and git-rebase.sh.  It is natural and easy to implement autostash for
+pull and rebase, but not for a C builtin like merge.  In fact, it's
+impossible to implement it for merge unless we make git commit execute
+git stash pop (yuck!).
 
-Cf. 358ddb62cfd0 (Add "git show-ref" builtin command, 2006-09-15)
+If you want, you can implement a rebase.autostash, but that is not my
+itch.  Considering the gymnastics the implementation would have to do,
+I'd be against a merge.autostash.  So, again: what is your gripe
+against my pull.autostash implementation, apart from the fact that git
+status doesn't show stash information? (I _might_ decide to fix this)
