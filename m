@@ -1,63 +1,66 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Ensimag students projects, version 2013
-Date: Mon, 15 Apr 2013 09:59:22 +0200
-Message-ID: <vpqr4ic2pid.fsf@grenoble-inp.fr>
-References: <vpqobdg515m.fsf@grenoble-inp.fr>
-	<CACSwcnTsEiV7ehanPAxJm-SGP+P16FgvWYpEXtF9NK8fG2aNHA@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate $GITDIR
+Date: Mon, 15 Apr 2013 13:29:45 +0530
+Message-ID: <CALkWK0=9OgRtrwnCpVOpmjHb0j38M=VQrzfFh4H=sV=dVvcV8w@mail.gmail.com>
+References: <1365881007-25731-1-git-send-email-artagnon@gmail.com> <7vy5ck4m6b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 15 09:59:41 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 15 10:00:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UReKB-00032e-IS
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 09:59:39 +0200
+	id 1UReL2-0003tt-Bu
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 10:00:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755061Ab3DOH7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 03:59:33 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:51409 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755033Ab3DOH7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 03:59:32 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r3F7xMTn005916
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 15 Apr 2013 09:59:24 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UReJv-0006rJ-1o; Mon, 15 Apr 2013 09:59:23 +0200
-In-Reply-To: <CACSwcnTsEiV7ehanPAxJm-SGP+P16FgvWYpEXtF9NK8fG2aNHA@mail.gmail.com>
-	(Ping Yin's message of "Mon, 15 Apr 2013 10:04:40 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 15 Apr 2013 09:59:24 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r3F7xMTn005916
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1366617569.06225@Ye9prkwDzAGb5Js1Wvafhg
+	id S1755081Ab3DOIA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 04:00:28 -0400
+Received: from mail-ia0-f174.google.com ([209.85.210.174]:63315 "EHLO
+	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754157Ab3DOIA1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 04:00:27 -0400
+Received: by mail-ia0-f174.google.com with SMTP id o25so1265527iad.5
+        for <git@vger.kernel.org>; Mon, 15 Apr 2013 01:00:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=yWI3ScdO0b7kLUSPYJnZXSQP1xw4pn30lYFWa3Ipy54=;
+        b=UMnKj4hFo9Qc9cFV4Uve/SflcELVde7+pe7EgPPy5K1W+y68skwjT1PbALIg37qWdI
+         p3+rVUtCczQ1fvo2Ed1oeMnE1iDY/gAONm2rNGRnqP3UlancJcPZddmOc2fUSbUhPFGy
+         +GB8ThscbDIIlZdoSL74gF1M7D0KqrN8ffJxUS+rHYhjmFFPvGAAfIK4hQlrE+q4hHlU
+         BsLF1iNXhZ02qfLZ8CMGNkK9hwltADN9H0Ro5X6eTI+oYUi6xNmgkHXnbRmMhMCJqOxX
+         nvSw/hbVP72aFI+G6T5TKBLgguTI3EVppCIe5m/An7pb7UIy7GJZDQ8BDS3VQUyP18b7
+         kxvg==
+X-Received: by 10.50.17.166 with SMTP id p6mr4597230igd.12.1366012826120; Mon,
+ 15 Apr 2013 01:00:26 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Mon, 15 Apr 2013 00:59:45 -0700 (PDT)
+In-Reply-To: <7vy5ck4m6b.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221199>
 
-Ping Yin <pkufranky@gmail.com> writes:
+Junio C Hamano wrote:
+> Relocate to where in the superproject's gitdir?  Presumably you can
+> do this more than once in a given superproject, so there needs to be
+> a key per such a clone, no?  I am guessing that you would follow the
+> usual "when adding a submodule without name, use its path as the
+> initial name" convention, but then I would suggest it to be spelled
+> out (and if you are doing it differently, that choice needs to be
+> spelled out and defended).
 
->> 15 git rebase --stash, git pull --rebase --stash
->
-> It seems that Ramkumar Ramachandra is working on this in his "[PATCH
-> v2 0/3] Introduce pull.autostash" series
-> Ping Yin
-
-Ah, cool! Added a note to the wiki, thanks,
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I probably wasn't clear enough in the commit message, but this is what
+happens when I set clone.submoduleGitDir to ~/bare: a git clone
+gh:artagnon/clayoven inside the superproject's worktree will make
+~/bare/clayoven.git and ./clayoven corresponding to the GITDIR and the
+worktree of the newly cloned repository.  If there are conflicts, it
+will complain as usual saying that the destination path %s already
+exists, in which case the user has to choose a name for the GITDIR
+(not yet implemented) and/or the worktree path (as the final
+command-line argument to git clone).
