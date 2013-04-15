@@ -1,93 +1,98 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] remote-bzr: fix prefix of tags
-Date: Mon, 15 Apr 2013 16:47:28 -0500
-Message-ID: <1366062448-2136-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 15 23:48:56 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/3] pull: introduce --[no-]autostash and pull.autostash
+Date: Tue, 16 Apr 2013 00:17:35 +0200
+Message-ID: <vpqli8je8w0.fsf@grenoble-inp.fr>
+References: <1365887729-9630-1-git-send-email-artagnon@gmail.com>
+	<1365887729-9630-4-git-send-email-artagnon@gmail.com>
+	<vpq38us2oov.fsf@grenoble-inp.fr>
+	<CALkWK0mdC_tK2CGqAa67fr189PQCjSjzAOPujipOHFfoiYW0qA@mail.gmail.com>
+	<vpqppxvoqsc.fsf@grenoble-inp.fr>
+	<7vobdfztz9.fsf@alter.siamese.dyndns.org>
+	<CALkWK0=cNEkE0bUoWJg119o+FaQywJhgkUxiFfLGPSsLrFVZ=A@mail.gmail.com>
+	<7vr4ibu14j.fsf@alter.siamese.dyndns.org>
+	<CALkWK0=6E=s6kJysMo2yC22c3pvCWn90S5neRyP0jpzpYrZboA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 00:17:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URrGc-0006Ll-CE
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 23:48:50 +0200
+	id 1URrig-0001Il-BL
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 00:17:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935246Ab3DOVsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 17:48:46 -0400
-Received: from mail-qe0-f53.google.com ([209.85.128.53]:38562 "EHLO
-	mail-qe0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934779Ab3DOVsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 17:48:45 -0400
-Received: by mail-qe0-f53.google.com with SMTP id q19so3005010qeb.12
-        for <git@vger.kernel.org>; Mon, 15 Apr 2013 14:48:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=NEU9Zoc528doLWHkTIswAZ0wNysHo1xp1N3YQrsdQt8=;
-        b=dDd41hiExYBpDNeFOXYh7tTUR6yzvCZW1Dpa7OBzGTlUeLSeX/xOxtb27Z44GuqwD7
-         dw7/G7cM8gW0AZxdMD2yR/4PDKIxknYHxlbpIdL9PB0IYRua+ux71MFaojiynLSTmCRh
-         hctvrj9lF2ik6gD70HPUOQYjr29zkfRRI0Pg1qGjgA2mTm83oxnmbP6YIq+kAO8OU/1d
-         fZmkbOJhfS9YgctAdCexMkAbxiHq7N7vY+yM3Vvc7P38FtG9KWlx2R+rGZFVfB/zNCmW
-         9HvEALzUB2tmLhdcoHr4GVD/5Q+EKyBTMPMzQ04M7JLCbsDTYvgQL5X8cLyyXwzyrt2W
-         8Njg==
-X-Received: by 10.224.86.206 with SMTP id t14mr46795qal.90.1366062525206;
-        Mon, 15 Apr 2013 14:48:45 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id z2sm14867327qad.4.2013.04.15.14.48.39
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 15 Apr 2013 14:48:44 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.679.g509521a
+	id S1754812Ab3DOWRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 18:17:42 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:49489 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753806Ab3DOWRl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 18:17:41 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r3FMHXRu022100
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 16 Apr 2013 00:17:33 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1URriR-0008JV-LU; Tue, 16 Apr 2013 00:17:35 +0200
+In-Reply-To: <CALkWK0=6E=s6kJysMo2yC22c3pvCWn90S5neRyP0jpzpYrZboA@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 15 Apr 2013 23:38:20 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 16 Apr 2013 00:17:33 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r3FMHXRu022100
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1366669054.88597@Ceb6JqgInKAxZH7iLLsEkw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221322>
 
-In the current transport-helper code, refs without namespaced refspecs don't
-work correctly, so let's always use them.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Some people reported issues with 'git clone --mirror', and this fixes them, as
-well as possibly others.
+> Junio C Hamano wrote:
+>> If "rebase -m" were to be taught to do this, the natural way to do
+>> so is to
+>>
+>>   (1) Prepare the todo the usual way
+>>   (2) Do those two commits for index and working tree
+>>   (3) Append two insns (exec reset HEAD^ and exec reset --soft
+>>       HEAD^) at the end of the rebase todo file.
+>
+> Er, no.  I don't want to touch the instruction sheet.  It becomes
+> especially problematic in -i, when the instruction sheet is
+> user-editable.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/git-remote-bzr | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+I do not find this problematic. It shows the user what's going on. It
+may be a good idea to append the last instructions after launching the
+editor if we want to partially hide it (but it's still going to be
+visible with rebase --edit-todo)
 
-diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index bd25e08..aa7bc97 100755
---- a/contrib/remote-helpers/git-remote-bzr
-+++ b/contrib/remote-helpers/git-remote-bzr
-@@ -249,7 +249,7 @@ def export_files(tree, files):
-     return final
- 
- def export_branch(branch, name):
--    global prefix, dirname
-+    global prefix
- 
-     ref = '%s/heads/%s' % (prefix, name)
-     tip = marks.get_tip(name)
-@@ -335,8 +335,10 @@ def export_branch(branch, name):
-     marks.set_tip(name, revid)
- 
- def export_tag(repo, name):
--    global tags
--    print "reset refs/tags/%s" % name
-+    global tags, prefix
-+
-+    ref = '%s/tags/%s' % (prefix, name)
-+    print "reset %s" % ref
-     print "from :%u" % rev_to_mark(tags[name])
-     print
- 
-@@ -649,6 +651,7 @@ def do_capabilities(parser):
-     print "import"
-     print "export"
-     print "refspec refs/heads/*:%s/heads/*" % prefix
-+    print "refspec refs/tags/*:%s/tags/*" % prefix
- 
-     path = os.path.join(dirname, 'marks-git')
- 
+>> "rebase--am" could also be told to generate (on the preparation
+>> side) and notice (on the application side) a pair of patch files at
+>> the end that represent the index state and the working tree state
+>> and apply them without making the WIP part into a commit.
+>
+> Ugh, no.  I don't want to leak the implementation detail of autostash
+> into specific rebases.  Why can't I wrap the last statment in
+> git-rebase.sh in git stash/ git stash pop like I did with git-pull.sh?
+
+Because "git rebase" needs multiple runs in case of conflicts. You have
+to store the information somewhere in the filesystem, not in a variable.
+What you need to store is whether you need to unstash, and where you are
+in the process (in Junio's version, you may be doing the actual rebase,
+or fixing conflicts in index state application, or fixing conflicts in
+tree state application, or done). Storing what you have to do and where
+you are in the process really sounds like a job for the instruction
+sheet, no?
+
 -- 
-1.8.2.1.679.g509521a
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
