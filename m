@@ -1,71 +1,115 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/3] pull: introduce --[no-]autostash and pull.autostash
-Date: Mon, 15 Apr 2013 20:01:46 +0530
-Message-ID: <CALkWK0mLxZCr-QK2tkR9xEsocj6GAM7FZOSeiJ9SnEusfnv88g@mail.gmail.com>
-References: <1365887729-9630-1-git-send-email-artagnon@gmail.com>
- <1365887729-9630-4-git-send-email-artagnon@gmail.com> <vpq38us2oov.fsf@grenoble-inp.fr>
- <7vbo9g15po.fsf@alter.siamese.dyndns.org> <vpqbo9gqcvl.fsf@grenoble-inp.fr>
- <CALkWK0nymT=wTnHpTE=uBsqoHxACFb4gStU0SGE79bc7uBVKXQ@mail.gmail.com> <vpqbo9foqld.fsf@grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Ensimag students projects, version 2013
+Date: Mon, 15 Apr 2013 07:53:48 -0700
+Message-ID: <7v1uab26bn.fsf@alter.siamese.dyndns.org>
+References: <vpqobdg515m.fsf@grenoble-inp.fr>
+ <87r4iccgdw.fsf@linux-k42r.v.cablecom.net> <vpqvc7oqh8a.fsf@grenoble-inp.fr>
+ <20130415140513.GA16154@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 15 16:32:32 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 15 16:53:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URkSO-0007XP-3B
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 16:32:32 +0200
+	id 1URkn7-0001dV-QY
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 16:53:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335Ab3DOOc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 10:32:27 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:40405 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751014Ab3DOOc0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 10:32:26 -0400
-Received: by mail-ie0-f173.google.com with SMTP id k13so2840817iea.32
-        for <git@vger.kernel.org>; Mon, 15 Apr 2013 07:32:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=CVreJZoDIMcSsFfRiDAdZFFL4Dq06jG8eGHyGDBcLuc=;
-        b=WI+v/1cYurayitgp1WwQVig9b/SXtlRbLKnf4xN1Fy41yR3UpDS5wuNQTwlRsao0yP
-         ChhLGhCwVnN5bGHUpIK4sUJIW/GZ20ot4A5x6yZNFfASJzworYIrYmuYSB3zNcWORskg
-         RJOmxtLY4DEsnWghJwF1ALv7ZsKpIknfSL58UtXZlh58xMyxb4vIyOR8sXjfaUNa/TDA
-         5PIZGIOkir7EgEE2DHr29z/pLDwecK8gCeu5wgxMC2kwuB5x3Dyjkl4TAceCdVc6HLCq
-         MjB0sJZT/LxD3zW4ofloxcuSwylVlVwUKgrikT6s9VWuUYI30j4WFsyoNJqG/mWFmghs
-         fbdw==
-X-Received: by 10.50.119.102 with SMTP id kt6mr5589098igb.12.1366036346326;
- Mon, 15 Apr 2013 07:32:26 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Mon, 15 Apr 2013 07:31:46 -0700 (PDT)
-In-Reply-To: <vpqbo9foqld.fsf@grenoble-inp.fr>
+	id S1753137Ab3DOOxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 10:53:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51212 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751335Ab3DOOxw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 10:53:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6F6514C04;
+	Mon, 15 Apr 2013 14:53:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ai/xI8RqsiJPfZEmrx+uUw+W0Bw=; b=PLYx1l
+	WvJ0CDfSY+9JwE8WkaADGljnggfmfNPYXwgoZ3XeUvonsIllP9JaWmc2m4R3TAlY
+	Yc1w876wut92tBlca4KTpNDmH4oms9Zy8XnQWxgx9+bO8AOWDwrPTeka8MTbnBzU
+	rDpGLh7Tx3VjmNH4gzBBYSaSH2r7xmU26glHU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GuUecPjIGCtNjBJnGL+V1grALu0m1a8b
+	B7K0du+yZyjwRTXSKb3h5NnnAu4MFjPKGxMJ6fH3TW0O15a+eI83wTgbpKDkczor
+	A4i/u/hK5G10+/eI/WMggoG1JaNtcB/sYYEbXJCsbzaCzjUhwTrM0GSYzLlguUXY
+	5MeqgRNzURk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BEEA414C03;
+	Mon, 15 Apr 2013 14:53:51 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A87514BFB; Mon, 15 Apr
+ 2013 14:53:50 +0000 (UTC)
+In-Reply-To: <20130415140513.GA16154@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 15 Apr 2013 10:05:13 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 48FDD3A2-A5DC-11E2-B69C-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221234>
 
-Matthieu Moy wrote:
-> I disagree. A configuration option is something you set once, and then
-> forget about. A command, or a command-line option, is something you
-> explicitely add when you need it.
+Jeff King <peff@peff.net> writes:
 
-You're making it out to be a much bigger difference than it actually
-is.  Users will simply alias pull to 'pull --autostash' (a lot of them
-already alias it to pull --ff-only, and I'm going to fix this soon).
-The decision making process for creating a configuration variable
-shouldn't be "this is potentially dangerous, and therefore therefore
-it shouldn't be a configuration variable", but rather "this is a
-rarely used option that users only need <50% of the time, and
-therefore it shouldn't be a configuration variable".  In my case,
-pull.autostash is my 90~95% usecase, and I'm not unique in this
-aspect.  Therefore, it should be a configuration variable that can be
-consciously turned off with a --no-autostash.
+> On Mon, Apr 15, 2013 at 11:24:21AM +0200, Matthieu Moy wrote:
+>
+>> > * git pull --set-upstream
+>> >
+>> >   This is vaguely related to another itch that nobody has bothered to
+>> >   fix: 'git fetch origin foo' should really update origin/foo.  This has
+>> >   been discussed on the list a few times already:
+>> >
+>> >     http://thread.gmane.org/gmane.comp.version-control.git/192252
+>> >     http://thread.gmane.org/gmane.comp.version-control.git/165720/focus=165758
+>> >
+>> >   which by the way would be a *great* thing to fix, hint hint ;-)  and
+>> >   since Peff already posted a POC patch in the first thread, it's
+>> >   probably not that hard.  (Peff?)
+>> 
+>> My understanding is that this would be technically easy to fix, but a
+>> migration plan is needed, which isn't easy for a one-shot, one-month
+>> contribution.
+>
+> Yes. The concept isn't that hard, but the question was one of whether it
+> would break some obscure workflows. But I don't remember all of the
+> details; I think I gave some examples in past threads.
 
-If your criticism were that git status doesn't show stash state, I
-agree with you.  However, I don't agree with basing it on user
-forgetfulness in having set pull.autostash a long time ago + lack of
-observation skills to notice the message printed by git pull.
+I think the one Thomas lists in $gmane/165758 is the one.
+
+It has been the way for users to make sure that origin/master stays
+put to explicitly tell Git not to update the remote tracking branch
+using a refspec without colon, so that they can do
+
+	git fetch origin master
+	git log origin/master..FETCH_HEAD
+
+(or its three-dot variant) to gauge the progress of the other side
+since the last time the user observed.
+
+Personally I doubt this trick is so relevant these days, not just
+because we can look at reflog of origin/master.  The user could just
+do
+
+	old=$(git rev-parse origin/master)
+        git fetch origin master
+        git log $old..FETCH_HEAD
+
+even with a modified Git that updates the remote tracking branches
+without a storing refspec.
+
+The primary reason why I do not think this is relevant these days is
+because the original premise "remote tracking branches keep what the
+last 'git fetch' observed" has already been broken for a long time.
+The users are better off thinking that the remote tracking branches
+can be updated any time (not just the last 'git fetch') when Git
+observes (or could observe) the state of the remote without being
+told explicitly with today's "pretend as if we fetched immediately
+after we push" behaviour.
