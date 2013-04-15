@@ -1,87 +1,79 @@
-From: Torstein Hegge <hegge@resisty.net>
-Subject: Re: [PATCH] bisect: Store first bad commit as comment in log file
-Date: Mon, 15 Apr 2013 11:53:39 +0200
-Message-ID: <20130415095339.GA28480@pvv.ntnu.no>
-References: <20130413152257.GB16040@pvv.ntnu.no>
- <20130415.063809.1055555229072260139.chriscool@tuxfamily.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 09/12] pretty: add %C(auto) for auto-coloring on the
+ next placeholder
+Date: Mon, 15 Apr 2013 19:54:44 +1000
+Message-ID: <CACsJy8A6vMxZLn8RXaxxMAg2yx-Pmfriip_u_DSSYeyjwY2aHg@mail.gmail.com>
+References: <1363400683-14813-1-git-send-email-pclouds@gmail.com>
+ <1364636112-15065-1-git-send-email-pclouds@gmail.com> <1364636112-15065-10-git-send-email-pclouds@gmail.com>
+ <7vzjxihztj.fsf@alter.siamese.dyndns.org> <CACsJy8C0wb92QOhh=e27Cqd=e5yJYnQWYkYi4uPd+vPXGqVbdQ@mail.gmail.com>
+ <7v8v4wdhpd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Apr 15 11:53:48 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 15 11:55:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URg6c-0005UD-5C
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 11:53:46 +0200
+	id 1URg8B-0007E6-No
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 11:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751377Ab3DOJxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 05:53:42 -0400
-Received: from microbel.pvv.ntnu.no ([129.241.210.179]:60273 "EHLO
-	microbel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751229Ab3DOJxl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 05:53:41 -0400
-Received: from torstehe by microbel.pvv.ntnu.no with local (Exim 4.72)
-	(envelope-from <torstehe@pvv.ntnu.no>)
-	id 1URg6V-00025i-UL; Mon, 15 Apr 2013 11:53:39 +0200
-Content-Disposition: inline
-In-Reply-To: <20130415.063809.1055555229072260139.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751399Ab3DOJzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 05:55:19 -0400
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:38773 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751229Ab3DOJzS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 05:55:18 -0400
+Received: by mail-ob0-f171.google.com with SMTP id wc20so909236obb.2
+        for <git@vger.kernel.org>; Mon, 15 Apr 2013 02:55:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=oeiynnXvOkQge9SwO322vZQINKp2SNSct+D69/fGyDc=;
+        b=wRmIOjVe8w/HaM5zhKA6LWV7JRLPeXd9GD3YUZt6oqT8+WIdTrkgPzIqa6tQKSaPmC
+         amDJsMwcA8eZy+O/ASuNXwb6fMxD1FN29T7Cj8+DTEMSY6mfipHrxhF8rjJ0piQERFK+
+         GSKSIaTsXq3W9AAf4oXnMzMQfFnzUljkNVIYv0yXxb/M+krtQWVDl3WRi6dHeaiNTTTv
+         N9caza7z2/c33X3jCiPU2jFKaVoGyU67wlbM2eXelO43sclRHGHeYT877ytzaV4ie3jJ
+         48Z1LKhytKvFbjjWE68flUcZlMBsAnTUrEUBpq6FTU7RId+xeqPiNvD9LEfO8kidTcgd
+         a/8w==
+X-Received: by 10.60.99.68 with SMTP id eo4mr7189062oeb.126.1366019714694;
+ Mon, 15 Apr 2013 02:55:14 -0700 (PDT)
+Received: by 10.76.122.163 with HTTP; Mon, 15 Apr 2013 02:54:44 -0700 (PDT)
+In-Reply-To: <7v8v4wdhpd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221218>
 
-On Mon, Apr 15, 2013 at 06:38:09 +0200, Christian Couder wrote:
-> I wonder if we should also write something into the bisect log if for
-> example the bisection stopped because there are only 'skip'ped commits
-> left to test. But maybe this could go into another patch after this
-> one.
+On Sat, Apr 6, 2013 at 4:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> If %C(auto) applies to some %<placeholder> but not to some others,
+> the user needs to learn which %<placeholder> will eat the "auto" (so
+> it no longer applies to the next one) and which one will not even
+> look at "auto" (so the next %<placeholder> is affected by the auto,
+> i.e. making the effect of auto skip a %<placeholder>).  If the rule
+> were "%C(auto) applies to -next- placeholder", then the user does
+> not have to worry about which ones are what you call textual and
+> which ones are not (and there is no textual placeholder defined in
+> the glossary).
+>
+> That would make it harder to learn. It would be much easier to
+> explain if you said "%C(auto) affects the next %-placeholder and
+> then resets".
 
-Yes, that would be useful, but I wasn't able to determine all the cases
-that would be relevant to log. Only skipped commits left to test is one,
-but bisect--helper also exits on various problems related to merge base
-handling. The handling of problems related to inconsistent user input is
-probably not relevant to log.
+So far (after this series, that is), we have two modifiers: %C(auto)
+and %< (and friends). Both can be used to modify the "next"
+placeholder, so either of them must learn to ignore the next
+non-textual placeholder...
 
-I think the successful bisect case is most important to log and the one
-that requires the least amount of invasive changes.
+> I wonder if "Everything after %C(auto) will not be coloured if the
+> output is not going to the terminal.", i.e. not resetting once
+> colouring decision is made, makes more sense, though...
 
-> > diff --git a/git-bisect.sh b/git-bisect.sh
-> > index 99efbe8..c58eea7 100755
-> > --- a/git-bisect.sh
-> > +++ b/git-bisect.sh
-> > @@ -311,7 +311,13 @@ bisect_next() {
-> >  	res=$?
-> >  
-> >  	# Check if we should exit because bisection is finished
-> > -	test $res -eq 10 && exit 0
-> > +	if test $res -eq 10
-> > +	then
-> > +		bad_rev=$(git show-ref --hash --verify refs/bisect/bad)
-> 
-> I had a look to make sure that refs/bisect/bad always refered to the
-> first bad commit at this point, and it is true indeed.
-
-According to Documentation/git-bisect.txt, refs/bisect/bad is the proper
-way to determine the first bad commit at the end of a bisection.
-
-> Maybe you could have used "git rev-parse --verify" instead of "git
-> show-ref --hash --verify". It looks simpler to me.
-
-I was wondering why "git grep show-ref *.sh" gave so few users. It looks
-like rev-parse is more common.
-
-> And maybe, just in case, you could have added: || die "$(gettext "Bad rev: refs/bisect/bad")"
-
-Yes, I should probably have done that.
-
-> Otherwise this patch looks good to me.
-
-Thanks.
-
-
-Torstein
+.. or we do this, which makes %< and friends the only placeholders
+that care about the next one. Thanks for the idea.
+--
+Duy
