@@ -1,95 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] pull: introduce --[no-]autostash and pull.autostash
-Date: Mon, 15 Apr 2013 02:52:19 -0700
-Message-ID: <7vbo9g15po.fsf@alter.siamese.dyndns.org>
-References: <1365887729-9630-1-git-send-email-artagnon@gmail.com>
- <1365887729-9630-4-git-send-email-artagnon@gmail.com>
- <vpq38us2oov.fsf@grenoble-inp.fr>
+From: Torstein Hegge <hegge@resisty.net>
+Subject: Re: [PATCH] bisect: Store first bad commit as comment in log file
+Date: Mon, 15 Apr 2013 11:53:39 +0200
+Message-ID: <20130415095339.GA28480@pvv.ntnu.no>
+References: <20130413152257.GB16040@pvv.ntnu.no>
+ <20130415.063809.1055555229072260139.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 15 11:52:38 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Apr 15 11:53:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URg5W-0004H4-CT
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 11:52:38 +0200
+	id 1URg6c-0005UD-5C
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 11:53:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753190Ab3DOJwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 05:52:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42908 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753181Ab3DOJwW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 05:52:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C582E14BBD;
-	Mon, 15 Apr 2013 09:52:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OOr3JGNpTlm/Wp17+lkLAj2n1WE=; b=J0QMc5
-	LUTmrtOTo0TK3T7myDhcnwgWjJgTyx27XK2fh6iQEW7mqZX/HmT1UXHcEGuASowJ
-	mk7vzwtStm2t4cPn86F/WysuONAGqz3AS9+KjuKOk2kEJJJqJVceX4LSSfCgFY3K
-	wrLLd5l9HMYI7DitOAR7CPh2xUlrga2P9XwV0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J2KCkUwdzujIXjR1JKfJYgpQTu8SpNUK
-	1NGdQCY4lFQBRBmiBH925FFRfHj2wopJrUMFgl6YTXka/r8fQQRdyfk17ooPYeGa
-	4uPUqSJ0Yh3Ax/tnn5SaS1CqAhUi+kHJjSLA8e/GRZdbhcpfkXth1s/ySlMzN6p/
-	BwCdDukCUbQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B8B4D14BBC;
-	Mon, 15 Apr 2013 09:52:21 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2325414BB9; Mon, 15 Apr
- 2013 09:52:21 +0000 (UTC)
-In-Reply-To: <vpq38us2oov.fsf@grenoble-inp.fr> (Matthieu Moy's message of
- "Mon, 15 Apr 2013 10:17:04 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2A928E96-A5B2-11E2-BFE6-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751377Ab3DOJxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 05:53:42 -0400
+Received: from microbel.pvv.ntnu.no ([129.241.210.179]:60273 "EHLO
+	microbel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751229Ab3DOJxl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 05:53:41 -0400
+Received: from torstehe by microbel.pvv.ntnu.no with local (Exim 4.72)
+	(envelope-from <torstehe@pvv.ntnu.no>)
+	id 1URg6V-00025i-UL; Mon, 15 Apr 2013 11:53:39 +0200
+Content-Disposition: inline
+In-Reply-To: <20130415.063809.1055555229072260139.chriscool@tuxfamily.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221217>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Mon, Apr 15, 2013 at 06:38:09 +0200, Christian Couder wrote:
+> I wonder if we should also write something into the bisect log if for
+> example the bisection stopped because there are only 'skip'ped commits
+> left to test. But maybe this could go into another patch after this
+> one.
 
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->
->> +stash_required () {
->> +	! (git diff-files --quiet --ignore-submodules &&
->> +	git diff-index --quiet --cached HEAD --ignore-submodules)
->> +}
->
-> Isn't this too pessimistic? If the local changes do not overlap (in
-> terms of files) with the pulled changes, then autosquash is not needed.
+Yes, that would be useful, but I wasn't able to determine all the cases
+that would be relevant to log. Only skipped commits left to test is one,
+but bisect--helper also exits on various problems related to merge base
+handling. The handling of problems related to inconsistent user input is
+probably not relevant to log.
 
-Yes, that is why I said for pull-merge, --authsquash is neutral-to-better
-and pull.autosquash is harmful.
+I think the successful bisect case is most important to log and the one
+that requires the least amount of invasive changes.
 
-But for pull-rebase folks, I can understand why this "working tree
-must be squeakily clean" logic is appropriate, if we were to do
-this. The root cause is because rebase insists to be run on such a
-working tree.
+> > diff --git a/git-bisect.sh b/git-bisect.sh
+> > index 99efbe8..c58eea7 100755
+> > --- a/git-bisect.sh
+> > +++ b/git-bisect.sh
+> > @@ -311,7 +311,13 @@ bisect_next() {
+> >  	res=$?
+> >  
+> >  	# Check if we should exit because bisection is finished
+> > -	test $res -eq 10 && exit 0
+> > +	if test $res -eq 10
+> > +	then
+> > +		bad_rev=$(git show-ref --hash --verify refs/bisect/bad)
+> 
+> I had a look to make sure that refs/bisect/bad always refered to the
+> first bad commit at this point, and it is true indeed.
 
-And the worst part is that in order to check if local changes
-overlap, you need to fetch first. But Ram's annoyance is about the
-user being told the merge/rebase cannot proceed _after_ fetch is
-done.
+According to Documentation/git-bisect.txt, refs/bisect/bad is the proper
+way to determine the first bad commit at the end of a bisection.
 
-> Shouldn't this belong to "git merge" instead (i.e. implement "git merge
-> --autosquash" and call it from "git pull")? Users doing "git fetch &&
-> git merge" by hand should be able to use --autosquash, I think.
+> Maybe you could have used "git rev-parse --verify" instead of "git
+> show-ref --hash --verify". It looks simpler to me.
 
-See my other message. I do not think autosquash would help "merge"
-folks very much, and will actively hurt when it matters.
+I was wondering why "git grep show-ref *.sh" gave so few users. It looks
+like rev-parse is more common.
 
-> Something should be done for "git rebase" and "git pull --rebase" too.
+> And maybe, just in case, you could have added: || die "$(gettext "Bad rev: refs/bisect/bad")"
 
-That I would agree. I am not sure autosquash is the best approach,
-but we should be able to help them more.
+Yes, I should probably have done that.
+
+> Otherwise this patch looks good to me.
+
+Thanks.
+
+
+Torstein
