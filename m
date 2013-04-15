@@ -1,115 +1,127 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: gitweb commitdiff page - binary files with ampersands in filename?
-Date: Mon, 15 Apr 2013 23:42:13 +0200
-Message-ID: <516C7435.7050203@gmail.com>
-References: <CAKzCUUH4m8Hn_zcE_eHB9YBjDQWPAiX17HCOVZ80f+Tx5EVdOg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH master] convert: The native line-ending is \r\n on MinGW
+Date: Mon, 15 Apr 2013 14:43:24 -0700
+Message-ID: <7vsj2rpj0j.fsf@alter.siamese.dyndns.org>
+References: <1275679748-7214-1-git-send-email-eyvind.bernhardsen@gmail.com>
+ <20100904082509.GC10140@burratino> <7vbp8aqtuz.fsf@alter.siamese.dyndns.org>
+ <7v4nf7qzkd.fsf@alter.siamese.dyndns.org>
+ <CABPQNSaA7Qdt5eCZR3rs87gL730Y_xMrg6S-++YuaXdC2k45jg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Oj W <ojwlists@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 15 23:42:22 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Mon Apr 15 23:43:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URrAL-0006JA-Vt
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 23:42:22 +0200
+	id 1URrBT-0007jD-IA
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 23:43:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933305Ab3DOVmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 17:42:17 -0400
-Received: from mail-ee0-f44.google.com ([74.125.83.44]:61144 "EHLO
-	mail-ee0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754839Ab3DOVmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 17:42:17 -0400
-Received: by mail-ee0-f44.google.com with SMTP id c41so2526992eek.3
-        for <git@vger.kernel.org>; Mon, 15 Apr 2013 14:42:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=NwE06ba9KCWJzxWOGpGXzynB5eMZ8jc4tlhEv/+WKBg=;
-        b=TyKO/rLy0FepJXirERIVgeJsQeVqVL08tTkLmukdg1Vb9qGAGz8ir6rhpZImz4OaoI
-         UjhVk1GWpisV0vqR04KYdVboya3VG8L5d2aC8paDiGVOEmRKhnsDq9MnkOCU1lJfZETg
-         NsVFyyBy8Ibd2uO3nJg281Y9dqeBTQyfcbMq/ylcghUUUbx3WXQhtHjAkfdlFvG3rj3S
-         nKXZEHnuF2bedQyfaARBJM9kXIh64REv0USaenZ2+ZCXOU9G5wC1B/cUWw0+JE1nZfok
-         2gJGH9vwIknN1DNGyqBSkfIeZR5jpBFNen5w5XRT5Z3CCtNhqTVmTrm3Js2/Y0cjJs4V
-         Hm2Q==
-X-Received: by 10.14.177.197 with SMTP id d45mr9780132eem.9.1366062135988;
-        Mon, 15 Apr 2013 14:42:15 -0700 (PDT)
-Received: from [192.168.1.14] (ept17.neoplus.adsl.tpnet.pl. [83.20.61.17])
-        by mx.google.com with ESMTPS id a41sm29052827eei.4.2013.04.15.14.42.14
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 15 Apr 2013 14:42:15 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <CAKzCUUH4m8Hn_zcE_eHB9YBjDQWPAiX17HCOVZ80f+Tx5EVdOg@mail.gmail.com>
+	id S934918Ab3DOVn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 17:43:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54874 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934043Ab3DOVn1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 17:43:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7ECB5167B3;
+	Mon, 15 Apr 2013 21:43:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zuyj5fPOaoY+IMxhuCYIB90aXKs=; b=L+uceD
+	mbg3SnTdgUb96DZFrkF2ViAD/jlVA9yssdwXwbQLhs3Br4yDB+GZsyc4sCIw+57x
+	8fCTuaMs64zLyJKcZWPe4Yyv/a2iMLzZ7VzgqpmVlVWiwktogXiw0yvafFhVDOi2
+	60FKG2H9/sc6zTvEmkaTS/AEjzhBZ2tCf4h4s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BQyXaH6wBu21H0Ijjd60QuGPhNJSRkht
+	hFqIplTEnDAxRn5bHSUlXwdwoLIEhioRzPh2qCOc3b2RJNzhrnUdcWp1X1ADbdj8
+	HvKK1IS1VgTcslthb48k2j+0B3bk1L1uVDZ0ztFG0Rx78e8n5BKyPCRPE28hX+nc
+	vJm329RClE0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75930167B2;
+	Mon, 15 Apr 2013 21:43:26 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA9C1167B0; Mon, 15 Apr
+ 2013 21:43:25 +0000 (UTC)
+In-Reply-To: <CABPQNSaA7Qdt5eCZR3rs87gL730Y_xMrg6S-++YuaXdC2k45jg@mail.gmail.com> (Erik
+ Faye-Lund's message of "Mon, 15 Apr 2013 23:20:01 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 80AD0780-A615-11E2-B657-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221320>
 
-Oj W wrote:
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-> Change a binary file whose filename contains an ampersand, then view
-> the commitdiff page in gitweb.
-> 
-> Git outputs a message like "Binary files a/b&w.dll and b/b&w.dll differ"
-> 
-> Gitweb format_diff_from_to_header() doesn't notice anything in that
-> output which needs escaping, and writes it directly to the XHTML 1.0
-> Strict output.
-> 
-> Then gitweb's output is invalid XML, meaning that browsers such as
-> Firefox will refuse to display the page.
+> This is absolutely the right thing to do. However, stuff have changed
+> a bit since the patch was written; this change now needs to go in
+> config.mak.uname instead of config.mak.
 
-This was because in case of binary files we don't get usual diff,
-just "Binary files a/foo and b/foo differ" just after extended git diff 
-headers.
+Thanks for a quick response.
 
-There are two problems with gitweb code.  First is that git_patchset_body()
-didn't recognize and handle this situation.  This should be fixed by the
-patch below (I have trouble testing it as git-instaweb keeps using old
-gitweb version for some reason).
+What's your preference?  I could just ignore a patch I won't be able
+to test myself and have you guys carry it in your tree forever, but
+I do not think that is necessary for something small like this.
 
-Second is that format_diff_from_to_header() doesn't handle unrecognized
-extended git diff headers well - it doesn't HTML escape them.  This is to
-be fixed.
+I think this is low impact enough that it can directly go to
+'master' or even 'maint' if I were to apply to my tree.
+
+Thanks.
 
 -- >8 --
----
- gitweb/gitweb.perl |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+From: Jonathan Nieder <jrnieder@gmail.com>
+Date: Sat, 4 Sep 2010 03:25:09 -0500
+Subject: [PATCH] convert: The native line-ending is \r\n on MinGW
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1309196..33a0de1 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -5345,7 +5345,8 @@ sub git_patchset_body {
- 		while ($patch_line = <$fd>) {
- 			chomp $patch_line;
- 
--			last EXTENDED_HEADER if ($patch_line =~ m/^--- |^diff /);
-+			last EXTENDED_HEADER
-+				if ($patch_line =~ m/^--- |^diff |^Binary files .* differ$/);
- 
- 			print format_extended_diff_header_line($patch_line, $diffinfo,
- 			                                       \%from, \%to);
-@@ -5357,7 +5358,12 @@ sub git_patchset_body {
- 			print "</div>\n"; # class="patch"
- 			last PATCH;
- 		}
--		next PATCH if ($patch_line =~ m/^diff /);
-+		if ($patch_line =~ m/^Binary files .* differ$/) {
-+			print "<div class=\"diff bin\">" .
-+			      esc_html($patch_line, -nbsp => 1) .
-+			      "</div>\n";
-+		}
-+		next PATCH if ($patch_line =~ m/^diff |^Binary files .* differ$/);
- 		#assert($patch_line =~ m/^---/) if DEBUG;
- 
- 		my $last_patch_line = $patch_line;
+If you try this:
+
+ 1. Install Git for Windows (from the msysgit project)
+
+ 2. Put
+
+	[core]
+		autocrlf = false
+		eol = native
+
+    in your .gitconfig.
+
+ 3. Clone a project with
+
+	*.txt text
+
+    in its .gitattributes.
+
+Then with current git, any text files checked out have LF line
+endings, instead of the expected CRLF.
+
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/config.mak.uname b/config.mak.uname
+index 9080054..d78fd3d 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -507,6 +507,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 		compat/win32/dirent.o
+ 	EXTLIBS += -lws2_32
+ 	PTHREAD_LIBS =
++	NATIVE_CRLF = YesPlease
+ 	X = .exe
+ 	SPARSE_FLAGS = -Wno-one-bit-signed-bitfield
+ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
 -- 
-1.7.10.4
+1.8.2.1-542-g3613165
