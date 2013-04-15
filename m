@@ -1,76 +1,111 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate $GITDIR
-Date: Mon, 15 Apr 2013 13:49:43 +0530
-Message-ID: <CALkWK0mvtRhFc0_4883ATNaYpb+kDwpV9VxeAoqJy5HxNQ6vgg@mail.gmail.com>
-References: <1365881007-25731-1-git-send-email-artagnon@gmail.com> <7vy5ck4m6b.fsf@alter.siamese.dyndns.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [RFC/PATCH] push: introduce implicit push
+Date: Mon, 15 Apr 2013 09:35:59 +0100
+Message-ID: <20130415083558.GB2278@serenity.lan>
+References: <1365780835-2853-1-git-send-email-artagnon@gmail.com>
+ <7v38uvcrjl.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=-GcOF17Q-y-Aqj0ThX5pPQFrriDqoJ2qsr=CS+wUNGA@mail.gmail.com>
+ <7vehed7ilu.fsf@alter.siamese.dyndns.org>
+ <CALkWK0k6bmjFxTSMAutgu2EjWRZ_cyTU9jZ3Er-aaV78T16RtQ@mail.gmail.com>
+ <7vppxw335o.fsf@alter.siamese.dyndns.org>
+ <516BA732.4080405@viscovery.net>
+ <7vzjx01cqn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 15 10:20:31 2013
+X-From: git-owner@vger.kernel.org Mon Apr 15 10:36:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UReeM-0007YM-FS
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 10:20:30 +0200
+	id 1URetc-00082r-Nq
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 10:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934797Ab3DOIU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 04:20:26 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:59842 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932124Ab3DOIUZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 04:20:25 -0400
-Received: by mail-ie0-f182.google.com with SMTP id at1so5434711iec.41
-        for <git@vger.kernel.org>; Mon, 15 Apr 2013 01:20:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=UEW9OrHYrOt52PaGHbW6lb8sERFG/i2gzqw9wmQtTd4=;
-        b=0b7dcUEp8Ze/zdtmoCgGkE82iORgACqF8Ji4doF0k4XmeF74CbZQ1CBiZTCwjbsznO
-         q3vcDzeeywGY1bqxdsu5Hvz5wJAo1PqDblEKHtPEFPUL8pm0CR4BVTCMS+CYLbvBEWp2
-         zKyJaiC1OfRK2LQCOTalTExqfiXxIMFH0sgxhvlqun2CfXBlGWna/kmjKuICTvUtZ4KM
-         zQ0gUGJoYsrFc+edbS8NOJQP3Q0hpfO4EgnottJmKfJMmvfQA1RoA5jsLo3YNsJbhYnk
-         fADJJtslRSMlJDoDvwBGlcmy4Kh06rmen8g7Tu2ZpeeWPlHAKgeig+E49lb5Ds7+LkvJ
-         33/Q==
-X-Received: by 10.50.50.71 with SMTP id a7mr4585571igo.14.1366014023277; Mon,
- 15 Apr 2013 01:20:23 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Mon, 15 Apr 2013 01:19:43 -0700 (PDT)
-In-Reply-To: <7vy5ck4m6b.fsf@alter.siamese.dyndns.org>
+	id S934425Ab3DOIgM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Apr 2013 04:36:12 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:39035 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933813Ab3DOIgL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 04:36:11 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id C683C606570;
+	Mon, 15 Apr 2013 09:36:10 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -10.999
+X-Spam-Level: 
+X-Spam-Status: No, score=-10.999 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id nPWIWATUQ5Ur; Mon, 15 Apr 2013 09:36:10 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 4964460656D;
+	Mon, 15 Apr 2013 09:36:00 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7vzjx01cqn.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221203>
 
-Junio C Hamano wrote:
-> Any new configuration variable brings its own problem by forcing
-> existing users to countermand it explicitly from the command line.
-> If the --separate-git-dir would not work for your application, you
-> need a new feature and you can achieve the same by adding a new
-> command line option (say, --submodule-git-dir), that would be more
-> preferrable.
+On Mon, Apr 15, 2013 at 12:20:32AM -0700, Junio C Hamano wrote:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+>=20
+> > User says:
+> >
+> >    git push -- master docs release
+> >
+> > Then git pushes the three branches to three different upstreams. Yo=
+u find
+> > that confusing. Do I understanding correctly so far?
+>=20
+> It is far more subtle than that.  User says that while on 'next'
+> branch.
+>=20
+> The user has been trained to think "branch.master.remote" takes
+> effect while he has "master" branch checked out.
+>=20
+> That is where the possible confusion comes from. As I said number of
+> times, you may be able to declare that the confusion is unfounded
+> once you think it through.
 
-I'm getting a little tired of your first instinct to oppose every new
-addition to git. (Ofcourse I understand your attitude as the
-maintainer, but still)
+I may be an atypical user, but my expectation currently is that
+branch.<name>.remote is what is used when I run "git push" with no
+additional arguments.
 
-It doesn't make sense as a command-line option, because it is "magic"
-that kicks in only when git clone is executed inside an existing git
-worktree.  The point is that the user doesn't have to remember
-anything special: a normal git clone already does the right thing
-outside a git worktree; my proposal is to make it do the right thing
-inside a git worktree as well.  Although I'm not against allowing a
-user to create a "full clone" inside a git repository by overriding
-clone.submoduleGitDir via a command-line option, I really cannot see
-why this would be anything but rare.  Why would a user *want* a full
-clone inside a git worktree?
+This is probably because whenever I add additional arguments (currently=
+)
+I have to specify where I am pushing to.
 
-Also, naming it --submodule-git-dir can cause a lot of confusion:
---separate-git-dir names a specific directory to put the GITDIR in,
-while --submodule-git-dir names a directory inside which to create
-other named directories to put GITDIRs in.  Ofcourse
-clone.submoduleGitDir is a bad name too: any suggestions?
+So I think breaking user expectations is a red herring here because the
+current behaviour means that users cannot have any expectation of what
+will happen in this case.  Either you don't say anything and "git push"
+DTRT for your current branch or you must specify precisely what you wan=
+t
+to happen (or at least the remote to use if you have push.default =3D
+matching or remote.<name>.mirror set).
+
+Personally I'd vote for "git push -- master" pushing to
+remote.pushdefault, but I really don't know how you handle "git push --=
+"
+with the na=EFve implementation of that - is it the same as "git push" =
+or
+"git push $(git config remote.pushdefault)"?
+
+On the other hand, I'm really not sure how often I'd use this feature.
+Normally I just use "git push" and if I'm giving any more arguments tha=
+n
+that then it's for something that I don't do often enough for it to be
+worth setting up configuration.
