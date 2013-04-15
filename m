@@ -1,96 +1,90 @@
-From: Brice Lambson <bricelam@live.com>
-Subject: Re: [PATCH master] convert: The native line-ending is \r\n on MinGW
-Date: Mon, 15 Apr 2013 20:11:49 +0000 (UTC)
-Message-ID: <loom.20130415T220316-790@post.gmane.org>
-References: <1275679748-7214-1-git-send-email-eyvind.bernhardsen@gmail.com> <20100904082509.GC10140@burratino> <7vbp8aqtuz.fsf@alter.siamese.dyndns.org> <1353857940941-7571889.post@n2.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/14] Improve git-status --ignored
+Date: Mon, 15 Apr 2013 13:25:05 -0700
+Message-ID: <7vli8jr17i.fsf@alter.siamese.dyndns.org>
+References: <514778E4.1040607@gmail.com> <516C4F27.30203@gmail.com>
+ <7v1uabsin7.fsf@alter.siamese.dyndns.org>
+ <7vwqs3r3m4.fsf@alter.siamese.dyndns.org> <516C5DBF.1010102@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 15 22:20:16 2013
+Cc: Git List <git@vger.kernel.org>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Robert Zeh <robert.allan.zeh@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Adam Spiers <git@adamspiers.org>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 15 22:25:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URpsr-0004TT-L8
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 22:20:13 +0200
+	id 1URpxl-0002Un-Fh
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 22:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755542Ab3DOUUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 16:20:07 -0400
-Received: from plane.gmane.org ([80.91.229.3]:54530 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752715Ab3DOUUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 16:20:06 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1URpsh-0004GZ-C9
-	for git@vger.kernel.org; Mon, 15 Apr 2013 22:20:03 +0200
-Received: from 131.107.192.25 ([131.107.192.25])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Apr 2013 22:20:03 +0200
-Received: from bricelam by 131.107.192.25 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Apr 2013 22:20:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 131.107.192.25 (Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0))
+	id S1753335Ab3DOUZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 16:25:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58014 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751541Ab3DOUZI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 16:25:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9569316FFD;
+	Mon, 15 Apr 2013 20:25:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WMPJMK/vBMr/PhHCaoypwM7JCg0=; b=N9X6V3
+	2ZRLZ2vN02Eu4pqnD26s22anQWm/3hbNQ+D4ZpBm/4f/m3alcJaqtBKC7Fm7ZszS
+	bu3QI2wrj4+7h6+Tn+xs16TSoIIfdKs4lQvKBbwtLLgQVZYO0hxTtUmNgxXeAwiq
+	NVq1gxFONRTsocm4Ig0gNty9wXd99uB3eNdPI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tkfkw2SDanWhaFHvVuWVy9c9dD5jXqb5
+	f5ihibL1ic0pA6YhWbGJqBeA6KAdeLd5fWuQni8pj3SGwdxZecT8BNgrFEN08R3k
+	KamAymX/sEee1lXHRIQffeRrvD+MzfLW1+WJ4+4tTRyRmc/UApd1eUxqcTQV7shD
+	PTukU+bjwPw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C85C16FFA;
+	Mon, 15 Apr 2013 20:25:07 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0175F16FF9; Mon, 15 Apr
+ 2013 20:25:07 +0000 (UTC)
+In-Reply-To: <516C5DBF.1010102@gmail.com> (Karsten Blees's message of "Mon,
+ 15 Apr 2013 22:06:23 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 900A0BC0-A60A-11E2-A3BD-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221310>
 
-Mr_and_Mrs_D <the.ubik <at> gmail.com> writes:
+Karsten Blees <karsten.blees@gmail.com> writes:
 
+> Am 15.04.2013 21:33, schrieb Junio C Hamano:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> 
+>>> Karsten Blees <karsten.blees@gmail.com> writes:
+>>>
+>>>> This patch series addresses several bugs and performance issues in
+>>>> .gitignore processing.
+>>>
+>>> A 8-patch series ending at 5d765dc7888b (dir.c: git-status: avoid
+>>> is_excluded checks for tracked files, 2013-03-18) has been cooking
+>>> in 'next'; in general we won't revert and requeue a new round for a
+>>> topic that has already merged to 'next'.
+>>>
+>
+> I'm sorry to have caused such trouble. I thought you were expecting a reroll from this:
 
+Heh, that was an ancient history.
 
-> 
+It is not such a big deal to revert stuff from 'next'.  I've tried
+to queue this reroll, but tentatively ejected the result from 'pu'
+for today's integration run, as as/check-ignore topic has an
+unpleasant conflict with this.
 
-> I am on windows 7 Pro - mingwin
-
-> 
-
-> I decided to turn autocrlf to false and use .gitattributes instead and was
-
-> bitten by this bug :
-
-> 
-
-> http://stackoverflow.com/questions/13531988/git-line-endings-renormalize-
-does-not-seem-to-checkout-the-right-line-endings
-
-> 
-
-> It took me 2 days to figure this out
-
-> 
-
-> Please fix
-
-> 
-
-> --
-
-> View this message in context: http://git.661346.n2.nabble.com/PATCH-v6-
-Add-core-eol-config-variable-tp5140844p7571889.html
-
-> Sent from the git mailing list archive at Nabble.com.
-
-> 
-
-
-
-+1, this is a significant issue downstream in Git for Windows:
-
-
-
-https://github.com/msysgit/git/issues/57
-
-
-
-Effectively this renders .gitattributes useless for the scenario of 
-enforcing normalized line ending characters.
+Thanks.
