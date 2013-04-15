@@ -1,99 +1,81 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] bisect: Store first bad commit as comment in log file
-Date: Mon, 15 Apr 2013 06:38:09 +0200 (CEST)
-Message-ID: <20130415.063809.1055555229072260139.chriscool@tuxfamily.org>
-References: <20130413152257.GB16040@pvv.ntnu.no>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: State of CVS-to-git conversion tools (Was: Re: cvsps: bad usage:
+ invalid argument --norc)
+Date: Mon, 15 Apr 2013 07:00:07 +0200
+Message-ID: <516B8957.5010508@alum.mit.edu>
+References: <323381594.20130414121834@gmail.com> <673219382.20130414124800@gmail.com> <20130414113351.GA1299@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: hegge@resisty.net
-X-From: git-owner@vger.kernel.org Mon Apr 15 07:05:52 2013
+Cc: Ilya Basin <basinilya@gmail.com>, git@vger.kernel.org
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Mon Apr 15 07:07:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URbbz-0004Ri-JX
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 07:05:51 +0200
+	id 1URbdQ-0005sS-UO
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 07:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932601Ab3DOFFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 01:05:47 -0400
-Received: from delay-2d.bbox.fr ([194.158.122.62]:34470 "EHLO delay-2d.bbox.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932513Ab3DOFFq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 01:05:46 -0400
-X-Greylist: delayed 1653 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Apr 2013 01:05:46 EDT
-Received: from mail-4d.bbox.fr (bt8ssscb.cs.dolmen.bouyguestelecom.fr [10.119.71.135])
-	by delay-2d.bbox.fr (Postfix) with ESMTP id 7A03823323E
-	for <git@vger.kernel.org>; Mon, 15 Apr 2013 06:41:13 +0200 (CEST)
-Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-4d.bbox.fr (Postfix) with ESMTP id F0A6246;
-	Mon, 15 Apr 2013 06:38:09 +0200 (CEST)
-In-Reply-To: <20130413152257.GB16040@pvv.ntnu.no>
-X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+	id S932984Ab3DOFHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 01:07:14 -0400
+Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:43739 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932513Ab3DOFHM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Apr 2013 01:07:12 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Apr 2013 01:07:12 EDT
+X-AuditID: 12074412-b7f216d0000008d4-62-516b895aaf26
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id CD.0F.02260.A598B615; Mon, 15 Apr 2013 01:00:10 -0400 (EDT)
+Received: from [192.168.69.140] (p57A2542B.dip.t-dialin.net [87.162.84.43])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3F5078W013178
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 15 Apr 2013 01:00:09 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <20130414113351.GA1299@thyrsus.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPKsWRmVeSWpSXmKPExsUixO6iqBvVmR1o8GgOm8XRv6YWV7f4WHRd
+	6WZyYPbYOesuu8eyr50sHp83yQUwR3HbJCWWlAVnpufp2yVwZyxpvMpcsIqj4ubHDrYGxlNs
+	XYwcHBICJhLtu0S7GDmBTDGJC/fWA4W5OIQELjNK3P3VzQSSEBI4zSRxv9kaxOYV0Ja4+aWX
+	BcRmEVCVOLn1OlgNm4CuxKKeZjBbVCBMYtX6ZcwQ9YISJ2c+YQHZJSIgLHGsTw0kzCxgKXHs
+	yzewEmGBDIl1qzsYIVZVSlzcN4ENxOYUMJBY0vCTHaJeR+Jd3wNmCFteYvvbOcwTGAVmIdkw
+	C0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpmunlZpbopaaUbmKEBK3QDsb1J+UO
+	MQpwMCrx8E7Qzg4UYk0sK67MPcQoycGkJMo7rRUoxJeUn1KZkVicEV9UmpNafIhRgoNZSYT3
+	fwRQjjclsbIqtSgfJiXNwaIkzvtzsbqfkEB6YklqdmpqQWoRTFaGg0NJgpelA6hRsCg1PbUi
+	LTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhSl8cXAOAVJ8QDtzQJp5y0uSMwFikK0nmI05pi1
+	9clrRo6VV4CkEEtefl6qlDhvGUipAEhpRmke3CJYunrFKA70tzDvt3agKh5gqoOb9wpoFRPQ
+	Kp+96SCrShIRUlINjLXrb335uV+aUSZ1knl3t5aJ9pu+n085wurdWJdL5/ZUfPl9x3aCbO+x
+	zducJI6+sRBN8/pveelg6b2vPiYHpLbdYk0unLAlYb9S0uSeZadeOs1RqZtoMde9 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221192>
 
-From: Torstein Hegge <hegge@resisty.net>
-Subject: [PATCH] bisect: Store first bad commit as comment in log file
-Date: Sat, 13 Apr 2013 17:22:57 +0200
+On 04/14/2013 01:33 PM, Eric S. Raymond wrote:
+> [...]
+> I wish I could point you at a convertor I really trust.  I can't.
+> There is a third tool, cvs2git (based on the analyzer from cvs2svn)
+> that I don't maintain, which has problems of its own.
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-> When bisect successfully finds a single revision, the first bad commit
-> should be shown to human readers of 'git bisect log'.
-> 
-> This resolves the apparent disconnect between the bisection result and
-> the log when a bug reporter says "I know that the first bad commit is
-> $rev, as you can see from $(git bisect log)".
+Again I request that instead of spreading non-specific FUD about
+cvs2git, you describe concrete problems so that I can improve the tool.
+ So far about the only problems that you have mentioned that have not
+been addressed have been stylistic trivia like that you object that
+cvs2git writes its outputs by pass, to two separate files, rather than
+writing all of its output to stdout, and that you are bothered that it
+names its temporary directory "cvs2svn-tmp" rather than "cvs2git-tmp".
 
-I agree that it's a good idea to do that.
+I would like to fix any conversion deficiencies you can find.  I stand
+behind this tool and think it is the best one out there for extracting
+history from CVS.
 
-I wonder if we should also write something into the bisect log if for
-example the bisection stopped because there are only 'skip'ped commits
-left to test. But maybe this could go into another patch after this
-one.
- 
-> Signed-off-by: Torstein Hegge <hegge@resisty.net>
-> ---
-> I don't know how useful the added test is, I didn't find any existing
-> tests that looks at the comment parts of bisect log.
+Michael
 
-Thanks for adding a test. It's always appreciated.
-
->  git-bisect.sh               |    8 +++++++-
->  t/t6030-bisect-porcelain.sh |   18 ++++++++++++++++++
->  2 files changed, 25 insertions(+), 1 deletion(-)
-> 
-> diff --git a/git-bisect.sh b/git-bisect.sh
-> index 99efbe8..c58eea7 100755
-> --- a/git-bisect.sh
-> +++ b/git-bisect.sh
-> @@ -311,7 +311,13 @@ bisect_next() {
->  	res=$?
->  
->  	# Check if we should exit because bisection is finished
-> -	test $res -eq 10 && exit 0
-> +	if test $res -eq 10
-> +	then
-> +		bad_rev=$(git show-ref --hash --verify refs/bisect/bad)
-
-I had a look to make sure that refs/bisect/bad always refered to the
-first bad commit at this point, and it is true indeed.
-
-Maybe you could have used "git rev-parse --verify" instead of "git
-show-ref --hash --verify". It looks simpler to me.
-
-And maybe, just in case, you could have added: || die "$(gettext "Bad rev: refs/bisect/bad")"
-
-Otherwise this patch looks good to me.
-
-> +		bad_commit=$(git show-branch $bad_rev)
-> +		echo "# first bad commit: $bad_commit" >>"$GIT_DIR/BISECT_LOG"
-> +		exit 0
-> +	fi
-
-Thanks,
-Christian.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
