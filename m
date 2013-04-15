@@ -1,68 +1,97 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate $GITDIR
-Date: Mon, 15 Apr 2013 13:38:32 +0530
-Message-ID: <CALkWK0m-X7K=WXFiiMkqZBBTBB9KC6myeN+s_xYLXfadGJCdZQ@mail.gmail.com>
-References: <1365881007-25731-1-git-send-email-artagnon@gmail.com>
- <7vy5ck4m6b.fsf@alter.siamese.dyndns.org> <7v61zo4igg.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/3] pull: introduce --[no-]autostash and pull.autostash
+Date: Mon, 15 Apr 2013 10:17:04 +0200
+Message-ID: <vpq38us2oov.fsf@grenoble-inp.fr>
+References: <1365887729-9630-1-git-send-email-artagnon@gmail.com>
+	<1365887729-9630-4-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 15 10:09:26 2013
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 15 10:17:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UReTb-0004WD-Ri
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 10:09:24 +0200
+	id 1URebU-0004j2-EQ
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 10:17:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934192Ab3DOIJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 04:09:17 -0400
-Received: from mail-ia0-f170.google.com ([209.85.210.170]:36747 "EHLO
-	mail-ia0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932337Ab3DOIJP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 04:09:15 -0400
-Received: by mail-ia0-f170.google.com with SMTP id j38so4177453iad.29
-        for <git@vger.kernel.org>; Mon, 15 Apr 2013 01:09:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=iz1M+F0B/lDScCDrSII3g+6nRCtOTkbnxY2F3So8HV0=;
-        b=uJycqdSA3pHYdALkfqlRnRz0B9uqqFz5iEm0F6toyoSZOUPTS0cMDxKVxx7rimY69S
-         5GuZi2XZC8P+vYt07EwdOC4eKxoMBucM8f3gNOxFDcdBt2C3eLSeFHr3aHd4uk4YzMvy
-         7372smUmB8DvgWR+i+ScHF+O7XgKKHXVofeFNYh7fpL7qKvHlPwhEBpOkXBWbISuPz1k
-         4fwJclzxaegcBPeyL+3WhAd6E7WhPamXtTR+LJcLltiOhWH0ZO63WMkZy/+faeLIMqJH
-         MzIc3COlWMHqpjjFyA9eSqTOFIVPv1JTi5bb4MMcEYpuE8vok+l4PfhmrK3WCWNgZCfK
-         tIrA==
-X-Received: by 10.50.119.102 with SMTP id kt6mr4773017igb.12.1366013352397;
- Mon, 15 Apr 2013 01:09:12 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Mon, 15 Apr 2013 01:08:32 -0700 (PDT)
-In-Reply-To: <7v61zo4igg.fsf@alter.siamese.dyndns.org>
+	id S934479Ab3DOIR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 04:17:27 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:34171 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933147Ab3DOIR0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 04:17:26 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r3F8H38d007466
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 15 Apr 2013 10:17:03 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UReb2-0007PU-Jn; Mon, 15 Apr 2013 10:17:04 +0200
+In-Reply-To: <1365887729-9630-4-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Sun, 14 Apr 2013 02:45:29 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 15 Apr 2013 10:17:04 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r3F8H38d007466
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1366618625.73104@KUaK19ro6D/QggSXhgn/nA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221201>
 
-> You could continue "git clone" and then teach "git add" (or "git
-> submodule add") to relocate the embedded git directory from the
-> submodule working tree, you could "git clone" with separate-git-dir
-> from the beginning, or you could extend "git add", perhaps
->
->     git add --url=git://up.stre.am/repository [--name=name] sub/mod/ule
->
-> and do that "git clone --separate-git-dir" internally (which will
-> mean that the end user will not run "git clone").
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-I specifically did not go down this route, because I think it is
-gross.  Where does moving a GITDIR fit into what git add's normal job
-(index manipulation) is?  Tools should do one specific thing, and do
-it well: not a mixed bag of unrelated things.  git clone, on the other
-hand, was always intended to have a way to point to a location for
-GITDIR and the worktree: isn't this feature very close to
---separate-git-dir already?  It is, therefore, git clone's job to
-relocate the GITDIR.  My future plan is to deny git add'ing anything
-but a worktree-with-a-gitfile.
+> +stash_required () {
+> +	! (git diff-files --quiet --ignore-submodules &&
+> +	git diff-index --quiet --cached HEAD --ignore-submodules)
+> +}
+
+Isn't this too pessimistic? If the local changes do not overlap (in
+terms of files) with the pulled changes, then autosquash is not needed.
+
+There should be a test for the case of non-overlapping changes.
+
+> +if test "$autostash" = true && stash_required
+> +then
+> +	git stash || die "$(gettext "Cannot autostash")" &&
+> +	require_clean_work_tree "pull" "Please commit or stash them." &&
+> +	if eval "$eval"
+> +	then
+> +		git stash pop || die "$(gettext "Cannot pop stash")"
+> +	else
+> +		exit_code=$?
+> +		echo "Please run 'git stash pop' after commiting the conflict resolution."
+> +		exit $exit_code
+> +	fi
+> +else
+> +	eval "exec $eval"
+> +fi
+
+Shouldn't this belong to "git merge" instead (i.e. implement "git merge
+--autosquash" and call it from "git pull")? Users doing "git fetch &&
+git merge" by hand should be able to use --autosquash, I think.
+
+Something should be done for "git rebase" and "git pull --rebase" too.
+In this case, the UI can be much smoother, since the user would have to
+run "git rebase --continue" anyway, so you can do the auto-stash-pop for
+him by adding something like "exec git stash pop" at the end of the todo-list.
+
+Ideally, "git rebase --abort" should auto-stash-pop too, although this
+is much less trivial to implement.
+
+Maybe a good first step is to implement --autosquash only for non-rebase
+pull, and later to implement "git rebase --autosquash" and call it from
+"git pull".
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
