@@ -1,64 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 32/33] refs: change do_for_each_*() functions to take
- ref_cache arguments
-Date: Mon, 15 Apr 2013 10:40:04 -0700
-Message-ID: <7v38urvgjv.fsf@alter.siamese.dyndns.org>
-References: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
- <1365944088-10588-33-git-send-email-mhagger@alum.mit.edu>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: [PATCH v3 0/4] Some small fixes to glossary-content.txt
+Date: Mon, 15 Apr 2013 19:45:02 +0200 (CEST)
+Message-ID: <46832203.996447.1366047902197.JavaMail.ngmail@webmail19.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Apr 15 19:40:18 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: th.acker@arcor.de, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 15 19:45:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URnO5-0006nA-Kj
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 19:40:17 +0200
+	id 1URnSq-0006BL-7j
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 19:45:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934580Ab3DORkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 13:40:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45649 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932679Ab3DORkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 13:40:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 373D815CF1;
-	Mon, 15 Apr 2013 17:40:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=+1USyLf2QjbePLaOb4rK7My7DVo=; b=yhyGfxYCS4R85uXkFLTG
-	XuSo7L7PjOi4p/WdwyEt+4BXy93/nK60Pr3mfOFmVJrMIrgQDmY9H4DbYfARFpJp
-	sbJFJ6yUaJTSFErDFKha2EHb6plmgI0GnavVcoa7Ib74KPyX/CsrcbhewgktPcm+
-	/+EyJ2DINi8OijmZBUk6WNU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=ORGFHPRFVM0gWC58dJjVRk22fN/N3GA1+PlUZXn4E7ZZl+
-	lOy9OGh/70WtvA28SskcbqMZ/j7K67aheFbJUqzOarugF/elLSazbSBcj0az5a+v
-	Kvxi979e/+5ZO5J6m+DNqIZpEnLTIj7bZfDFWkDMlNvJXN5AOoxC5+6guwoHI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D55715CF0;
-	Mon, 15 Apr 2013 17:40:06 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A825115CED; Mon, 15 Apr
- 2013 17:40:05 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8257DD5C-A5F3-11E2-A8CB-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754886Ab3DORpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 13:45:05 -0400
+Received: from mail-in-04.arcor-online.net ([151.189.21.44]:56944 "EHLO
+	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751768Ab3DORpD (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Apr 2013 13:45:03 -0400
+Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
+	by mx.arcor.de (Postfix) with ESMTP id 4CAC9AA879;
+	Mon, 15 Apr 2013 19:45:02 +0200 (CEST)
+Received: from mail-in-15.arcor-online.net (mail-in-15.arcor-online.net [151.189.21.55])
+	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 3FFED1F6003;
+	Mon, 15 Apr 2013 19:45:02 +0200 (CEST)
+Received: from webmail19.arcor-online.net (webmail19.arcor-online.net [151.189.8.77])
+	by mail-in-15.arcor-online.net (Postfix) with ESMTP id 35F081AB32B;
+	Mon, 15 Apr 2013 19:45:02 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-15.arcor-online.net 35F081AB32B
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1366047902; bh=sAnL1QjEUEJw0jODfr0+IOD9Ya58Zk8Sdj7PTIsHGis=;
+	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=bN8Wi91qssS8H3LNzCrNKzeX1Ndby/j5LUI2F/pT1sLcT5XVxt1FV/hiU482o7WlX
+	 IDNKiy6xWyUaY6bUsTXV4WFH3mQJEkF6bAqaZInFiD0iEIsgGNqQvtUNJXAdIyXfUO
+	 Rzdyr6wD4ynV/seyB2IpYigZulVy6lx0Mw4avq3Y=
+Received: from [188.105.109.185] by webmail19.arcor-online.net (151.189.8.77) with HTTP (Arcor Webmail); Mon, 15 Apr 2013 19:45:01 +0200 (CEST)
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 188.105.109.185
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221268>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+This is another reroll of my patches for glossary-content.txt.
 
-> Change the callers convert submodule names into ref_cache pointers.
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
+- The first patch is the same as in v2.
+- The second patch only adds the log message which Junio suggested and a missing full stop.
+- The third patch is new and is a direct consequence of the second patch.
+- In the fourth patch there is an explanation in the log message why the exact definition of 
+  "refspec" can be omitted in the glossary. The definition of "pathspec" is kept in the glossary; 
+  there are only small improvements to wording and formatting.
 
-A nice cleanup.
+[PATCH v3 1/4] glossary: remove outdated/misleading/irrelevant entries
+[PATCH v3 2/4] glossary: improve description of SHA-1 related topics
+[PATCH v3 3/4] The name of the hash function is "SHA-1", not "SHA1"
+[PATCH v3 4/4] glossary: improve definitions of refspec and pathspec
+
+
+---
+Thomas
