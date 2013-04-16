@@ -1,96 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git log - crash and core dump
-Date: Tue, 16 Apr 2013 17:34:14 -0400
-Message-ID: <20130416213414.GA11229@sigill.intra.peff.net>
-References: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
- <516D93C4.1000100@lsrfire.ath.cx>
- <7v61zml0ow.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 10/13] pretty: add %C(auto) for auto-coloring
+Date: Tue, 16 Apr 2013 14:37:30 -0700
+Message-ID: <7v8v4ijgx1.fsf@alter.siamese.dyndns.org>
+References: <1364636112-15065-1-git-send-email-pclouds@gmail.com>
+ <1366100702-31745-1-git-send-email-pclouds@gmail.com>
+ <1366100702-31745-11-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Ivan Lyapunov <dront78@gmail.com>, git@vger.kernel.org,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 23:34:22 2013
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 23:37:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USDW9-0003pV-Je
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 23:34:21 +0200
+	id 1USDZJ-0008HO-67
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 23:37:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965403Ab3DPVeR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 17:34:17 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48478 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965368Ab3DPVeR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 17:34:17 -0400
-Received: (qmail 8839 invoked by uid 107); 16 Apr 2013 21:36:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Apr 2013 17:36:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Apr 2013 17:34:14 -0400
-Content-Disposition: inline
-In-Reply-To: <7v61zml0ow.fsf@alter.siamese.dyndns.org>
+	id S965444Ab3DPVhd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 17:37:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39819 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965344Ab3DPVhc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 17:37:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41BE016452;
+	Tue, 16 Apr 2013 21:37:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=CiZiUpMWRYYp
+	T8hql8TvuK4f+lE=; b=ErsmdASSCYP/LgxY/yHcucLM9vmtKMZ0fVN1qPLneok4
+	Lks/UUaWS7y66c3g1BYe0VOKs07lyHTqU/u14KuqRXT8adwIuKYZ7PkNw1VHxfCm
+	TxDx355Cst4yA5/1k1aZ9nCfxbG/FFBOrwMzDNuktHEGEXC4nNoBEo4uQ27+iU4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hOQvSd
+	5/XbBYxLKCez7rZJ3fDghD1wLAFgLlVW+BPWodmmOZbblocWPSGGi0rOh/EPcM8C
+	ZtNgdbq2+dfEUeHRaL3kf8KJhUWWQ/uUaew37WcfYWCWyxeWR/gjPZmKTeyziHWp
+	jJu2drcxtPb20vDectBP3O2TqHUzTcnzXdVpc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 323B716451;
+	Tue, 16 Apr 2013 21:37:32 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 967E91644F; Tue, 16 Apr
+ 2013 21:37:31 +0000 (UTC)
+In-Reply-To: <1366100702-31745-11-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 16 Apr
+ 2013 18:24:59 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D7FDF634-A6DD-11E2-8E65-CC48E7F0ECB6-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221479>
 
-On Tue, Apr 16, 2013 at 12:45:03PM -0700, Junio C Hamano wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
-> > Does this patch help?
-> >
-> >  pretty.c | 10 ++++++----
-> >  1 file changed, 6 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/pretty.c b/pretty.c
-> > index d3a82d2..713eefc 100644
-> > --- a/pretty.c
-> > +++ b/pretty.c
-> > @@ -405,8 +405,8 @@ void pp_user_info(const struct pretty_print_con=
-text *pp,
-> >  	const char *mailbuf, *namebuf;
-> >  	size_t namelen, maillen;
-> >  	int max_length =3D 78; /* per rfc2822 */
-> > -	unsigned long time;
-> > -	int tz;
-> > +	unsigned long time =3D 0;
-> > +	int tz =3D 0;
-> > =20
-> >  	if (pp->fmt =3D=3D CMIT_FMT_ONELINE)
-> >  		return;
-> > @@ -438,8 +438,10 @@ void pp_user_info(const struct pretty_print_co=
-ntext *pp,
-> >  	strbuf_add(&name, namebuf, namelen);
-> > =20
-> >  	namelen =3D name.len + mail.len + 3; /* ' ' + '<' + '>' */
-> > -	time =3D strtoul(ident.date_begin, &date, 10);
-> > -	tz =3D strtol(date, NULL, 10);
-> > +	if (ident.date_begin) {
-> > +		time =3D strtoul(ident.date_begin, &date, 10);
-> > +		tz =3D strtol(date, NULL, 10);
-> > +	}
-> > =20
-> >  	if (pp->fmt =3D=3D CMIT_FMT_EMAIL) {
-> >  		strbuf_addstr(sb, "From: ");
->=20
-> Looks like a sensible change.  split_ident_line() decided that the
-> given input was mangled and decided there is no valid date (the
-> input had <> where the timestamp string was required), so the
-> updated code leaves the time/tz unspecified.
+>  	case 'h':		/* abbreviated commit hash */
+> +		strbuf_addstr(sb, diff_get_color(c->auto_color_next, DIFF_COMMIT))=
+;
+>  		if (add_again(sb, &c->abbrev_commit_hash))
+>  			return 1;
 
-Hmm. This seemed oddly familiar to me, and indeed:
+Doesn't this early return mess things up?
 
-  http://thread.gmane.org/gmane.comp.version-control.git/216870/focus=3D=
-217077
-
-We need to fix blame, too, and there is a question of how "cat-file -p"
-behaves.
-
--Peff
+>  		strbuf_addstr(sb, find_unique_abbrev(commit->object.sha1,
+>  						     c->pretty_ctx->abbrev));
+> +		strbuf_addstr(sb, diff_get_color(c->auto_color_next, DIFF_RESET));
+>  		c->abbrev_commit_hash.len =3D sb->len - c->abbrev_commit_hash.off;
+>  		return 1;
