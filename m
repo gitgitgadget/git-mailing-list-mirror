@@ -1,119 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] i18n: branch: mark strings for translation
-Date: Mon, 15 Apr 2013 19:40:21 -0700
-Message-ID: <20130416024021.GG3262@elie.Belkin>
-References: <CACsJy8DK5U3XErjDYZJZ+RBywDypuDotc-cH=CYGcd9Pu=V4PQ@mail.gmail.com>
- <b841ddcc538f77c89859efe867fc638005dc13f9.1365861788.git.worldhello.net@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] usage: refactor die-recursion checks
+Date: Mon, 15 Apr 2013 22:50:24 -0400
+Message-ID: <20130416025024.GA20932@sigill.intra.peff.net>
+References: <20130415230651.GA16670@sigill.intra.peff.net>
+ <20130415230802.GA11267@sigill.intra.peff.net>
+ <CA+sFfMes99EepY4FCW32s1L3ywv_gyFb76=Y=35rvPbc2K1BWA@mail.gmail.com>
+ <20130416004228.GA14995@sigill.intra.peff.net>
+ <CA+sFfMdzTNjH10FKxhvJy+7hZg+0=1Wrqy9k8KaPoJg1DuDpmg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.co>,
-	Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 04:40:34 2013
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 04:50:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URvou-0003i4-Oq
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 04:40:33 +0200
+	id 1URvye-0006pV-Lq
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 04:50:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935256Ab3DPCk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 22:40:28 -0400
-Received: from mail-da0-f51.google.com ([209.85.210.51]:53947 "EHLO
-	mail-da0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935183Ab3DPCk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 22:40:27 -0400
-Received: by mail-da0-f51.google.com with SMTP id g27so16243dan.24
-        for <git@vger.kernel.org>; Mon, 15 Apr 2013 19:40:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=jCrd7d9/EVmEutaccyIqDBzlJgHF55XHqiw+yylfyUc=;
-        b=dSbQld2NXHx9eeiZvE/94Kw+dQu9bH+bxNTCObI28S/9/ICaocqFTclEuV8yQlHXBd
-         WiJUzIx2dUwgWNzmZZmAhl4p0hpdtLjuatLiwtkD3ZHkbB0aue9Tt2P8uuIX3Fs/oE2G
-         QsRJv1m4ctJdhPk+LVAQhbfvYNvPZe8t05fEtBLjqay95ci4wLT68QYzBh59s5n5HW5b
-         sovOTuqXK8qpzAnJ1i5THZTJH0xnCOgBUvoL43wbxN4r0iQ95yId7QxmPs3RaAbH+QdB
-         NhjmvtOJMFmcPqEW9SKRBJg9Led4/uPHHhAmZamxJytY0u1upAf+hfn+PYEjvVzdPudw
-         n4lA==
-X-Received: by 10.68.218.34 with SMTP id pd2mr370751pbc.204.1366080027143;
-        Mon, 15 Apr 2013 19:40:27 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id tx9sm11690pbc.27.2013.04.15.19.40.24
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 15 Apr 2013 19:40:25 -0700 (PDT)
+	id S935471Ab3DPCuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 22:50:32 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:47430 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935467Ab3DPCub (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 22:50:31 -0400
+Received: (qmail 32705 invoked by uid 107); 16 Apr 2013 02:52:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 15 Apr 2013 22:52:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Apr 2013 22:50:24 -0400
 Content-Disposition: inline
-In-Reply-To: <b841ddcc538f77c89859efe867fc638005dc13f9.1365861788.git.worldhello.net@gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+In-Reply-To: <CA+sFfMdzTNjH10FKxhvJy+7hZg+0=1Wrqy9k8KaPoJg1DuDpmg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221348>
 
-Jiang Xin wrote:
+On Mon, Apr 15, 2013 at 07:34:07PM -0700, Brandon Casey wrote:
 
-> --- a/branch.c
-> +++ b/branch.c
-[...]
-> @@ -79,23 +79,23 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
->  	if (flag & BRANCH_CONFIG_VERBOSE) {
->  		if (remote_is_branch && origin)
->  			printf(rebasing ?
-> -			       "Branch %s set up to track remote branch %s from %s by rebasing.\n" :
-> -			       "Branch %s set up to track remote branch %s from %s.\n",
-> +			       _("Branch %s set up to track remote branch %s from %s by rebasing.\n") :
-> +			       _("Branch %s set up to track remote branch %s from %s.\n"),
+> > Right. My assumption was that we are primarily interested in protecting
+> > against the die_routine. Compat functions should never be calling die.
+> 
+> I think the rule we have been enforcing is less strict than that.  We
+> have only said that any compat function in a die handler path should
+> never call die.  But maybe that's what you meant.
 
-Micronit: it would be nicer to use printf_ln to save translators the
-trouble of worrying about the final newline.
+No, I assumed we were following the stronger rule. If you are a compat
+function for a C library function, then you should never need to die.
+You should be conforming to the existing interface, which will have some
+mechanism for passing back an error.
 
-With that change,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> The primary motivation was that Hannes Sixt had to step in and point
+> out yet again that the high-level memory allocators should not be
+> called in anything that could be in a die handler code path.  I was on
+> the thread, but I don't remember the topic (ah, Jonathan has stepped
+> in with the answer).  I do remember that I was not the only one who
+> had forgotten about that rule though.
 
-Thanks.  Here's a patch making that change for squashing in.
+Yeah, it is subtle enough that it may be worth protecting against.
 
-diff --git i/branch.c w/branch.c
-index 4ddd69f3..c67b97d1 100644
---- i/branch.c
-+++ w/branch.c
-@@ -78,24 +78,24 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
- 
- 	if (flag & BRANCH_CONFIG_VERBOSE) {
- 		if (remote_is_branch && origin)
--			printf(rebasing ?
--			       _("Branch %s set up to track remote branch %s from %s by rebasing.\n") :
--			       _("Branch %s set up to track remote branch %s from %s.\n"),
-+			printf_ln(rebasing ?
-+			       _("Branch %s set up to track remote branch %s from %s by rebasing.") :
-+			       _("Branch %s set up to track remote branch %s from %s."),
- 			       local, shortname, origin);
- 		else if (remote_is_branch && !origin)
--			printf(rebasing ?
--			       _("Branch %s set up to track local branch %s by rebasing.\n") :
--			       _("Branch %s set up to track local branch %s.\n"),
-+			printf_ln(rebasing ?
-+			       _("Branch %s set up to track local branch %s by rebasing.") :
-+			       _("Branch %s set up to track local branch %s."),
- 			       local, shortname);
- 		else if (!remote_is_branch && origin)
--			printf(rebasing ?
--			       _("Branch %s set up to track remote ref %s by rebasing.\n") :
--			       _("Branch %s set up to track remote ref %s.\n"),
-+			printf_ln(rebasing ?
-+			       _("Branch %s set up to track remote ref %s by rebasing.") :
-+			       _("Branch %s set up to track remote ref %s."),
- 			       local, remote);
- 		else if (!remote_is_branch && !origin)
--			printf(rebasing ?
--			       _("Branch %s set up to track local ref %s by rebasing.\n") :
--			       _("Branch %s set up to track local ref %s.\n"),
-+			printf_ln(rebasing ?
-+			       _("Branch %s set up to track local ref %s by rebasing.") :
-+			       _("Branch %s set up to track local ref %s."),
- 			       local, remote);
- 		else
- 			die("BUG: impossible combination of %d and %p",
+> To implement this check correctly/completely (i.e. detect recursion in
+> the main thread as well as in any child threads), I think you really
+> do need to use thread-local storage as you mentioned in 3/3 which
+> could look something like:
+> 
+>    static pthread_key_t dying;
+>    static pthread_once_t dying_once = PTHREAD_ONCE_INIT;
+> 
+>    void setup_die_counter(void)
+>    {
+>            pthread_key_create(&dying, NULL);
+>    }
+> 
+>    check_die_recursion(void)
+>    {
+>            pthread_once(&dying_once, setup_die_counter);
+>            if (pthread(getspecific(dying)) {
+>                    puts("BUG: recursion...");
+>                    exit(128);
+>            }
+> 
+>            pthread_setspecific(dying, &dying);
+>    }
+
+Yeah, that seems sane; my biggest worry was that it would create
+headaches for Windows folks, who would have to emulate pthread_key. But
+it seems like we already added support in 9ba604a.
+
+I'll try to re-work the series with thread-local storage, and I'll leave
+off the extra printing. This _should_ never happen, so if we are going
+to put in the check, it is probably better to be more thorough than to
+worry about what the error message looks like.
+
+Thanks for looking it over.
+
+-Peff
