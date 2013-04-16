@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 10/13] pretty: add %C(auto) for auto-coloring
-Date: Tue, 16 Apr 2013 18:24:59 +1000
-Message-ID: <1366100702-31745-11-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 11/13] pretty: support padding placeholders, %< %> and %><
+Date: Tue, 16 Apr 2013 18:25:00 +1000
+Message-ID: <1366100702-31745-12-git-send-email-pclouds@gmail.com>
 References: <1364636112-15065-1-git-send-email-pclouds@gmail.com>
  <1366100702-31745-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,134 +12,400 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 16 10:27:29 2013
+X-From: git-owner@vger.kernel.org Tue Apr 16 10:27:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US1Ee-0007Me-D9
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 10:27:28 +0200
+	id 1US1Ek-0007Tx-HY
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 10:27:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754564Ab3DPI1W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 04:27:22 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:60463 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754415Ab3DPI1S (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 04:27:18 -0400
-Received: by mail-pa0-f49.google.com with SMTP id kp14so217902pab.8
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 01:27:18 -0700 (PDT)
+	id S933050Ab3DPI12 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 04:27:28 -0400
+Received: from mail-da0-f44.google.com ([209.85.210.44]:54500 "EHLO
+	mail-da0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754509Ab3DPI1Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 04:27:25 -0400
+Received: by mail-da0-f44.google.com with SMTP id z20so145691dae.3
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 01:27:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=xK9rbxO8e5wRdgoDUR/0dCBTTjzmyKieKhNZ5OayzIY=;
-        b=PHK4mr6pcfPADKbgqO6nVS5gyoRHEvjgQVIaJJjTwlVDtxBBastoHudc0loeZ3axi2
-         V18EjaX5L33VKntq4Z+7NB79mrnzZR39++1S9wk7mU1yw+jDwkuLuUmDd6utFcJr9xfC
-         743va7SU/3Uwp+ALrkBYHqJ/i6Sk/14+CqhrKLuUMoAk8wi9buf3dcPzqUtPsAfDmOWi
-         gnmMPdURyhmlAgGw3Zvg3F4UOCOm2RRSyqxioWVsW6cglsuOUg7NzLMhBk4vnJgz8odL
-         PoFPQ6jF6jqmagoJeUMNr5R0b9Er5mq23lU0NN1VGQ8HknH+e1Ag5olPAjY2r9I+4naF
-         SjWw==
-X-Received: by 10.68.180.67 with SMTP id dm3mr1753594pbc.110.1366100838144;
-        Tue, 16 Apr 2013 01:27:18 -0700 (PDT)
+        bh=MsECak1LRcIRGFhqBv/Oe9xTWNJYTXyTRtEf1/z2iAM=;
+        b=awHb91GK6co2tvQ8bdMtzyMvISi2NU5C11xcmu+pz4KfcULmA3NfoIRIkdX3uIT022
+         AAqmaniDzg/Ol40RE9qcBSgEnzs36tWl1YWLfA1uur8zUaNo7NReTQ+wmoyXJrK8p7yI
+         RyeA014aGACt57UgnHFyX7A2+GQU1nglHrv31tObp5KlZx6+CwHcsJyN0rfcr4cNto2q
+         hV3ui8Fr2ZhcUgYiFNsOJlssYJShNFKzJTiWWlcp3m7YVqtbhyJblUyNH1si6VRlfGMs
+         ZsANNoT86gzfbVTe7tpCT/b94XoFHhwxPFsF2r+4uncrG8fVFIc40zEddHDexJV0fb/H
+         5NKg==
+X-Received: by 10.66.50.138 with SMTP id c10mr2214785pao.220.1366100845188;
+        Tue, 16 Apr 2013 01:27:25 -0700 (PDT)
 Received: from pclouds@gmail.com (xinyep.lnk.telstra.net. [110.143.18.114])
-        by mx.google.com with ESMTPS id kd7sm1179929pbb.34.2013.04.16.01.27.14
+        by mx.google.com with ESMTPS id ux10sm1794405pab.1.2013.04.16.01.27.21
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 16 Apr 2013 01:27:17 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 16 Apr 2013 18:27:04 +1000
+        Tue, 16 Apr 2013 01:27:24 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 16 Apr 2013 18:27:16 +1000
 X-Mailer: git-send-email 1.8.2.82.gc24b958
 In-Reply-To: <1366100702-31745-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221390>
 
-This is not simply convenient over %C(auto,xxx). Some placeholders
-(actually only one, %d) do multi coloring and we can't emit a multiple
-colors with %C(auto,xxx).
+Either %<, %> or %>< standing before a placeholder specifies how many
+columns (at least as the placeholder can exceed it) it takes. Each
+differs on how spaces are padded:
+
+  %< pads on the right (aka left alignment)
+  %> pads on the left (aka right alignment)
+  %>< pads both ways equally (aka centered)
+
+The (<N>) follows them, e.g. `%<(100)', to specify the number of
+columns the next placeholder takes.
+
+However, if '|' stands before (<N>), e.g. `%>|(100)', then the number
+of columns is calculated so that it reaches the Nth column on screen.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/pretty-formats.txt |  3 ++-
- pretty.c                         | 17 +++++++++++++++--
- 2 files changed, 17 insertions(+), 3 deletions(-)
+ Documentation/pretty-formats.txt |   8 +++
+ pretty.c                         | 117 +++++++++++++++++++++++++++++++=
+++++-
+ t/t4205-log-pretty-formats.sh    | 126 +++++++++++++++++++++++++++++++=
+++++++++
+ 3 files changed, 250 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-fo=
 rmats.txt
-index 6bde67e..bad627a 100644
+index bad627a..e2345d2 100644
 --- a/Documentation/pretty-formats.txt
 +++ b/Documentation/pretty-formats.txt
-@@ -156,7 +156,8 @@ The placeholders are:
-   adding `auto,` at the beginning will emit color only when colors are
-   enabled for log output (by `color.diff`, `color.ui`, or `--color`, a=
-nd
-   respecting the `auto` settings of the former if we are going to a
--  terminal)
-+  terminal). `auto` alone (i.e. `%C(auto)`) will turn on auto coloring
-+  on the next placeholders until the color is switched again.
- - '%m': left, right or boundary mark
- - '%n': newline
- - '%%': a raw '%'
+@@ -164,6 +164,14 @@ The placeholders are:
+ - '%x00': print a byte from a hex code
+ - '%w([<w>[,<i1>[,<i2>]]])': switch line wrapping, like the -w option =
+of
+   linkgit:git-shortlog[1].
++- '%<(<N>)': make the next placeholder take at least N columns,
++  padding spaces on the right if necessary
++- '%<|(<N>)': make the next placeholder take at least until Nth
++  columns, padding spaces on the right if necessary
++- '%>(<N>)', '%>|(<N>)': similar to '%<(<N>)', '%<|(<N>)'
++  respectively, but padding spaces on the left
++- '%><(<N>)', '%><|(<N>)': similar to '%<(<N>)', '%<|(<N>)'
++  respectively, but padding both sides (i.e. the text is centered)
+=20
+ NOTE: Some placeholders may depend on other options given to the
+ revision traversal engine. For example, the `%g*` reflog options will
 diff --git a/pretty.c b/pretty.c
-index e0413e3..f385176 100644
+index f385176..7debfb2 100644
 --- a/pretty.c
 +++ b/pretty.c
-@@ -778,6 +778,7 @@ struct format_commit_context {
+@@ -769,16 +769,25 @@ struct chunk {
+ 	size_t len;
+ };
+=20
++enum flush_type {
++	no_flush,
++	flush_right,
++	flush_left,
++	flush_both
++};
++
+ struct format_commit_context {
+ 	const struct commit *commit;
+ 	const struct pretty_print_context *pretty_ctx;
+ 	unsigned commit_header_parsed:1;
+ 	unsigned commit_message_parsed:1;
+ 	struct signature_check signature_check;
++	enum flush_type flush_type;
  	char *message;
  	char *commit_encoding;
  	size_t width, indent1, indent2;
-+	int auto_color_next;
+ 	int auto_color_next;
++	int padding;
 =20
  	/* These offsets are relative to the start of the commit message. */
  	struct chunk author;
-@@ -1005,7 +1006,15 @@ static size_t format_commit_one(struct strbuf *s=
-b, /* in UTF-8 */
- 	/* these are independent of the commit */
- 	switch (placeholder[0]) {
- 	case 'C':
--		return parse_color(sb, placeholder, c);
-+		if (!prefixcmp(placeholder + 1, "(auto)")) {
-+			c->auto_color_next =3D 1;
-+			return 7;
-+		} else {
-+			int ret =3D parse_color(sb, placeholder, c);
-+			if (ret)
-+				c->auto_color_next =3D 0;
-+			return ret;
-+		}
- 	case 'n':		/* newline */
- 		strbuf_addch(sb, '\n');
- 		return 1;
-@@ -1051,13 +1060,17 @@ static size_t format_commit_one(struct strbuf *=
-sb, /* in UTF-8 */
+@@ -993,6 +1002,52 @@ static size_t parse_color(struct strbuf *sb, /* i=
+n UTF-8 */
+ 		return 0;
+ }
 =20
- 	switch (placeholder[0]) {
- 	case 'H':		/* commit hash */
-+		strbuf_addstr(sb, diff_get_color(c->auto_color_next, DIFF_COMMIT));
- 		strbuf_addstr(sb, sha1_to_hex(commit->object.sha1));
-+		strbuf_addstr(sb, diff_get_color(c->auto_color_next, DIFF_RESET));
- 		return 1;
- 	case 'h':		/* abbreviated commit hash */
-+		strbuf_addstr(sb, diff_get_color(c->auto_color_next, DIFF_COMMIT));
- 		if (add_again(sb, &c->abbrev_commit_hash))
- 			return 1;
- 		strbuf_addstr(sb, find_unique_abbrev(commit->object.sha1,
- 						     c->pretty_ctx->abbrev));
-+		strbuf_addstr(sb, diff_get_color(c->auto_color_next, DIFF_RESET));
- 		c->abbrev_commit_hash.len =3D sb->len - c->abbrev_commit_hash.off;
- 		return 1;
- 	case 'T':		/* tree hash */
-@@ -1095,7 +1108,7 @@ static size_t format_commit_one(struct strbuf *sb=
-, /* in UTF-8 */
- 		return 1;
- 	case 'd':
- 		load_ref_decorations(DECORATE_SHORT_REFS);
--		format_decorations(sb, commit, 0);
-+		format_decorations(sb, commit, c->auto_color_next);
- 		return 1;
- 	case 'g':		/* reflog info */
- 		switch(placeholder[1]) {
++static size_t parse_padding_placeholder(struct strbuf *sb,
++					const char *placeholder,
++					struct format_commit_context *c)
++{
++	const char *ch =3D placeholder;
++	enum flush_type flush_type;
++	int to_column =3D 0;
++
++	switch (*ch++) {
++	case '<':
++		flush_type =3D flush_right;
++		break;
++	case '>':
++		if (*ch =3D=3D '<') {
++			flush_type =3D flush_both;
++			ch++;
++		} else
++			flush_type =3D flush_left;
++		break;
++	default:
++		return 0;
++	}
++
++	/* the next value means "wide enough to that column" */
++	if (*ch =3D=3D '|') {
++		to_column =3D 1;
++		ch++;
++	}
++
++	if (*ch =3D=3D '(') {
++		const char *start =3D ch + 1;
++		const char *end =3D strchr(start, ')');
++		char *next;
++		int width;
++		if (!end || end =3D=3D start)
++			return 0;
++		width =3D strtoul(start, &next, 10);
++		if (next =3D=3D start || width =3D=3D 0)
++			return 0;
++		c->padding =3D to_column ? -width : width;
++		c->flush_type =3D flush_type;
++		return end - placeholder + 1;
++	}
++	return 0;
++}
++
+ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 				const char *placeholder,
+ 				void *context)
+@@ -1052,6 +1107,10 @@ static size_t format_commit_one(struct strbuf *s=
+b, /* in UTF-8 */
+ 			return end - placeholder + 1;
+ 		} else
+ 			return 0;
++
++	case '<':
++	case '>':
++		return parse_padding_placeholder(sb, placeholder, c);
+ 	}
+=20
+ 	/* these depend on the commit */
+@@ -1214,6 +1273,59 @@ static size_t format_commit_one(struct strbuf *s=
+b, /* in UTF-8 */
+ 	return 0;	/* unknown placeholder */
+ }
+=20
++static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
++				    const char *placeholder,
++				    struct format_commit_context *c)
++{
++	struct strbuf local_sb =3D STRBUF_INIT;
++	int total_consumed =3D 0, len, padding =3D c->padding;
++	if (padding < 0) {
++		const char *start =3D strrchr(sb->buf, '\n');
++		int occupied;
++		if (!start)
++			start =3D sb->buf;
++		occupied =3D utf8_strnwidth(start, -1, 1);
++		padding =3D (-padding) - occupied;
++	}
++	while (1) {
++		int modifier =3D *placeholder =3D=3D 'C';
++		int consumed =3D format_commit_one(&local_sb, placeholder, c);
++		total_consumed +=3D consumed;
++
++		if (!modifier)
++			break;
++
++		placeholder +=3D consumed;
++		if (*placeholder !=3D '%')
++			break;
++		placeholder++;
++		total_consumed++;
++	}
++	len =3D utf8_strnwidth(local_sb.buf, -1, 1);
++	if (len > padding)
++		strbuf_addstr(sb, local_sb.buf);
++	else {
++		int sb_len =3D sb->len, offset =3D 0;
++		if (c->flush_type =3D=3D flush_left)
++			offset =3D padding - len;
++		else if (c->flush_type =3D=3D flush_both)
++			offset =3D (padding - len) / 2;
++		/*
++		 * we calculate padding in columns, now
++		 * convert it back to chars
++		 */
++		padding =3D padding - len + local_sb.len;
++		strbuf_grow(sb, padding);
++		strbuf_setlen(sb, sb_len + padding);
++		memset(sb->buf + sb_len, ' ', sb->len - sb_len);
++		memcpy(sb->buf + sb_len + offset, local_sb.buf,
++		       local_sb.len);
++	}
++	strbuf_release(&local_sb);
++	c->flush_type =3D no_flush;
++	return total_consumed;
++}
++
+ static size_t format_commit_item(struct strbuf *sb, /* in UTF-8 */
+ 				 const char *placeholder,
+ 				 void *context)
+@@ -1244,7 +1356,10 @@ static size_t format_commit_item(struct strbuf *=
+sb, /* in UTF-8 */
+ 		placeholder++;
+=20
+ 	orig_len =3D sb->len;
+-	consumed =3D format_commit_one(sb, placeholder, context);
++	if (((struct format_commit_context *)context)->flush_type !=3D no_flu=
+sh)
++		consumed =3D format_and_pad_commit(sb, placeholder, context);
++	else
++		consumed =3D format_commit_one(sb, placeholder, context);
+ 	if (magic =3D=3D NO_MAGIC)
+ 		return consumed;
+=20
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats=
+=2Esh
+index 98a43d4..e9d7c2c 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -99,4 +99,130 @@ test_expect_failure 'NUL termination with --stat' '
+ 	test_i18ncmp expected actual
+ '
+=20
++test_expect_success 'setup more commits' '
++	test_commit "message one" one one message-one &&
++	test_commit "message two" two two message-two
++'
++
++delete_trailing_dollar() {
++	sed 's/\$$//'
++}
++
++test_expect_success 'left alignment formatting' '
++	git log --pretty=3D"format:%<(40)%s" >actual &&
++	# complete the incomplete line at the end
++	echo >>actual &&
++	cat <<\EOF | delete_trailing_dollar >expected &&
++message two                             $
++message one                             $
++add bar                                 $
++initial                                 $
++EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'left alignment formatting at the nth column' '
++	git log --pretty=3D"format:%h %<|(40)%s" >actual &&
++	# complete the incomplete line at the end
++	echo >>actual &&
++	cat <<\EOF | delete_trailing_dollar >expected &&
++fa33ab1 message two                     $
++7cd6c63 message one                     $
++1711bf9 add bar                         $
++af20c06 initial                         $
++EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'left alignment formatting with no padding' '
++	git log --pretty=3D"format:%<(1)%s" >actual &&
++	# complete the incomplete line at the end
++	echo >>actual &&
++	cat <<\EOF >expected &&
++message two
++message one
++add bar
++initial
++EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'right alignment formatting' '
++	git log --pretty=3D"format:%>(40)%s" >actual &&
++	# complete the incomplete line at the end
++	echo >>actual &&
++	cat <<\EOF | delete_trailing_dollar >expected &&
++                             message two$
++                             message one$
++                                 add bar$
++                                 initial$
++EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'right alignment formatting at the nth column' '
++	git log --pretty=3D"format:%h %>|(40)%s" >actual &&
++	# complete the incomplete line at the end
++	echo >>actual &&
++	cat <<\EOF | delete_trailing_dollar >expected &&
++fa33ab1                      message two$
++7cd6c63                      message one$
++1711bf9                          add bar$
++af20c06                          initial$
++EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'right alignment formatting with no padding' '
++	git log --pretty=3D"format:%>(1)%s" >actual &&
++	# complete the incomplete line at the end
++	echo >>actual &&
++	cat <<\EOF >expected &&
++message two
++message one
++add bar
++initial
++EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'center alignment formatting' '
++	git log --pretty=3D"format:%><(40)%s" >actual &&
++	# complete the incomplete line at the end
++	echo >>actual &&
++	cat <<\EOF | delete_trailing_dollar >expected &&
++              message two               $
++              message one               $
++                add bar                 $
++                initial                 $
++EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'center alignment formatting at the nth column' '
++	git log --pretty=3D"format:%h %><|(40)%s" >actual &&
++	# complete the incomplete line at the end
++	echo >>actual &&
++	cat <<\EOF | delete_trailing_dollar >expected &&
++fa33ab1           message two           $
++7cd6c63           message one           $
++1711bf9             add bar             $
++af20c06             initial             $
++EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'center alignment formatting with no padding' '
++	git log --pretty=3D"format:%><(1)%s" >actual &&
++	# complete the incomplete line at the end
++	echo >>actual &&
++	cat <<\EOF >expected &&
++message two
++message one
++add bar
++initial
++EOF
++	test_cmp expected actual
++'
++
+ test_done
 --=20
 1.8.2.82.gc24b958
