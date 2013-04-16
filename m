@@ -1,118 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 2/2] run-command: use thread-aware die_is_recursing routine
-Date: Tue, 16 Apr 2013 15:50:07 -0400
-Message-ID: <20130416195006.GB11185@sigill.intra.peff.net>
-References: <20130416194418.GA7187@sigill.intra.peff.net>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [Resend PATCH] t3903 (stash): add failing test for ref of form ^{/message}
+Date: Tue, 16 Apr 2013 12:52:20 -0700
+Message-ID: <CA+sFfMc1Brgf3mewjizv-F9Fir+wJ56fV18s--CE1h0gsuvcrw@mail.gmail.com>
+References: <1366135765-18437-1-git-send-email-artagnon@gmail.com>
+	<CA+sFfMfkoBcoPvJSYBGUe46EbMfiC7q6tVZs6db2NHrEb2gb7Q@mail.gmail.com>
+	<7veheal28i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brandon Casey <drafnel@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Apr 16 21:50:28 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 21:52:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USBtb-0004xv-O2
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 21:50:28 +0200
+	id 1USBvX-0007mi-3C
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 21:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935935Ab3DPTuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 15:50:13 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48349 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935589Ab3DPTuJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 15:50:09 -0400
-Received: (qmail 7865 invoked by uid 107); 16 Apr 2013 19:52:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Apr 2013 15:52:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Apr 2013 15:50:07 -0400
-Content-Disposition: inline
-In-Reply-To: <20130416194418.GA7187@sigill.intra.peff.net>
+	id S936013Ab3DPTwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 15:52:22 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:60552 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935589Ab3DPTwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 15:52:21 -0400
+Received: by mail-wi0-f182.google.com with SMTP id m6so850026wiv.15
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 12:52:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=EwqHbP9O5avKM2fCK7kRLzXrfz6iag/RToW2u/wgujw=;
+        b=j5AUxgViTkoE2LiGhQ/QjzHg/qpdvn4dPoDWp7Xw0TVH9lTQx64pGlQUSZ66FsNl+/
+         tib21ahDyFOcSoF/9YRu+O+WwR8jybuAX5gXGRPiHD7ELysQ8N9T1mt0rO4AunsDZSoH
+         PmDSu0NRSrhbt3hLih6otxQMXTsZpN7xr8UYGUAK599tURIMT6TIOwCN/GPe93MCK00+
+         sDIN4W4aL9B0QQMdUiz0Lx6NkcdiZofuNvP2pThhiPBSyEUjYan8ZJa3VS2gGisn3SBI
+         y1ZczIwNil+1Gd8iIc1u3FffwTTyoozpEfPofjhUMlVqdb9d1Es+5zFkdNQNQ219tvdy
+         G9VA==
+X-Received: by 10.194.5.196 with SMTP id u4mr6427683wju.54.1366141940440; Tue,
+ 16 Apr 2013 12:52:20 -0700 (PDT)
+Received: by 10.194.249.69 with HTTP; Tue, 16 Apr 2013 12:52:20 -0700 (PDT)
+In-Reply-To: <7veheal28i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221461>
 
-If we die from an async thread, we do not actually exit the
-program, but just kill the thread. This confuses the static
-counter in usage.c's default die_is_recursing function; it
-updates the counter once for the thread death, and then when
-the main program calls die() itself, it erroneously thinks
-we are recursing. The end result is that we print "recursion
-detected in die handler" instead of the real error in such a
-case (the easiest way to trigger this is having a remote
-connection hang up while running a sideband demultiplexer).
+On Tue, Apr 16, 2013 at 12:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Brandon Casey <drafnel@gmail.com> writes:
+>
+>> The stash is implemented using the reflog.  The ^{/<text>} notation
+>> searches the commit history, not the reflog.  So I think it will be
+>> able to match the first entry in your stash stack, but not any of the
+>> other ones.
+>
+> Good point, together with...
+>
+>> An extension to the reflog dwimery that implements @{/<text>} could be
+>> interesting though.
+>
+> "log -g --grep=<text>" gives you a way to eyeball, but with
+> @{/<text>} you _might_ have a good way to name the revision.
+>
+> I am not however so sure if it is useful outside the context of the
+> stash, because the ones you would want to recover from a normal
+> reflog is most likely the older version of what you already amended,
+> so the latest hit will likely be the post-amend version, not the one
+> closer to the original.  You would end up eyeballing the output of
+> "log --oneline -g -grep=<text>" and cutting from it.
 
-This patch solves it by using a per-thread counter when the
-async_die function is installed; we detect recursion in each
-thread (including the main one), but they do not step on
-each other's toes.
+Yeah, I think that's true.  I can't think of a reason, at the moment,
+where it would be useful outside of with 'git stash'.  I mainly wanted
+to spell out "@{/<text>}" so that the mental link could be made back
+to the code in git-stash that removes the "@*" suffix.
 
-Other threaded code does not need to worry about this, as
-they do not install specialized die handlers; they just let
-a die() from a sub-thread take down the whole program.
-
-Since we are overriding the default recursion-check
-function, there is an interesting corner case that is not a
-problem, but bears some explanation. Imagine the main thread
-calls die(), and then in the die_routine starts an async
-call. We will switch to using thread-local storage, which
-starts at 0, for the main thread's counter, even though
-the original counter was actually at 1. That's OK, though,
-for two reasons:
-
-  1. It would miss only the first level of recursion, and
-     would still find recursive failures inside the async
-     helper.
-
-  2. We do not currently and are not likely to start doing
-     anything as heavyweight as starting an async routine
-     from within a die routine or helper function.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- run-command.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/run-command.c b/run-command.c
-index 765c2ce..1b32a12 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -588,6 +588,7 @@ static pthread_key_t async_key;
- static pthread_t main_thread;
- static int main_thread_set;
- static pthread_key_t async_key;
-+static pthread_key_t async_die_counter;
- 
- static void *run_thread(void *data)
- {
-@@ -614,6 +615,14 @@ static NORETURN void die_async(const char *err, va_list params)
- 
- 	exit(128);
- }
-+
-+static int async_die_is_recursing(void)
-+{
-+	void *ret = pthread_getspecific(async_die_counter);
-+	pthread_setspecific(async_die_counter, (void *)1);
-+	return ret != NULL;
-+}
-+
- #endif
- 
- int start_async(struct async *async)
-@@ -695,7 +704,9 @@ int start_async(struct async *async)
- 		main_thread_set = 1;
- 		main_thread = pthread_self();
- 		pthread_key_create(&async_key, NULL);
-+		pthread_key_create(&async_die_counter, NULL);
- 		set_die_routine(die_async);
-+		set_die_is_recursing_routine(async_die_is_recursing);
- 	}
- 
- 	if (proc_in >= 0)
--- 
-1.8.2.8.g44e4c28
+-Brandon
