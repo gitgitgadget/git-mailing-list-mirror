@@ -1,95 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 0/2] Test the Git version string
-Date: Tue, 16 Apr 2013 12:02:00 -0700
-Message-ID: <7vip3ml2on.fsf@alter.siamese.dyndns.org>
-References: <1365949646-1988-1-git-send-email-philipoakley@iee.org>
- <7v8v4k6hp2.fsf@alter.siamese.dyndns.org>
- <79879228B71A45A48A961F5B1880B61F@PhilipOakley>
- <7vli8k4lnj.fsf@alter.siamese.dyndns.org>
- <99AE5E981E2547B6A71A4D77B17167B9@PhilipOakley>
- <7v8v4imjji.fsf@alter.siamese.dyndns.org>
- <CAJDDKr7WKwt10sCRTbm8gdhwEUKSYuQxtPDVm7usTm2ZHryk9g@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Tue, 16 Apr 2013 14:04:13 -0500
+Message-ID: <CAMP44s0a2VsPBMd9Vrrhwdw=SPp2HrvDdXZ9Dmzhr9A6T+Sz7w@mail.gmail.com>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2_wiNr4RaBOEnKnZzT4CF0qKK+bp+Lyi=Nfx3Q9ggqOQ@mail.gmail.com>
+	<7vip3npet0.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3NE3yrQoa1nZXAgy3KFXGF56Ki8icJ2z2TDigzax0nWg@mail.gmail.com>
+	<8761zm4wzg.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Philip Oakley <philipoakley@iee.org>, GitList <git@vger.kernel.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 21:02:15 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Apr 16 21:04:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USB8s-0004c9-8R
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 21:02:10 +0200
+	id 1USBAy-00082O-5l
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 21:04:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934963Ab3DPTCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 15:02:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35919 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752143Ab3DPTCD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 15:02:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3BDD1436E;
-	Tue, 16 Apr 2013 19:02:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uUAiHoGxTBvz9wq+5HmvtIDuHIA=; b=wLN+KH
-	pI0+xggb8V4rGFsCYqXVbHOdWtT/NV8dMyL5JYQtGJGZENO5/hgsq/O+0l4EEKw7
-	A/PMajxRW51qWDbseY21RIqrI1YmCBFKWZihbMj4bmFQZ0VZUSQPUatewhUdsZOv
-	Q/bVMPu0QvaytU1D83NEXcc18EMGbAhr7JBF8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sCm9eyDCefXLHrSK/hV4xti+WOuMHe2p
-	hzdq6ANJodcWZW/USypgKd1IyGZtUBk+ns3/WzV13X54pqtPGp8hnTIFsKQgMuxI
-	V8fVhjoCZQpEgscIglc5fBQmEaU/SmpC/o9XFXK2pMES3PxV6baHRFS2+X3z9VHk
-	fjj47MnR+zY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E88311436C;
-	Tue, 16 Apr 2013 19:02:02 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1EC8114367; Tue, 16 Apr
- 2013 19:02:02 +0000 (UTC)
-In-Reply-To: <CAJDDKr7WKwt10sCRTbm8gdhwEUKSYuQxtPDVm7usTm2ZHryk9g@mail.gmail.com> (David
- Aguilar's message of "Tue, 16 Apr 2013 11:24:28 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1F2E373C-A6C8-11E2-97B4-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S964835Ab3DPTEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 15:04:16 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:41688 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752143Ab3DPTEP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 15:04:15 -0400
+Received: by mail-lb0-f171.google.com with SMTP id v10so883220lbd.16
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 12:04:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=ktdZTMEtaqOEOJs44HUdlR4h5oHXhRA35clSGT5sgao=;
+        b=lIryeSJtZss0+S5RDTrhNyMiExJklaLEmR07YymbvoLcj5hw345F+Z9IVYWKe90v1P
+         tBf+GUV0CrNTKeJ6n0FaVYKe7FnpPamQQGSdji1Jh2Z2rte4w6s1k4ObtNcxiRkdyQQs
+         V+PzjTua/lHX/BWjMRjGUmKGaB3gL8B4HoXt3kFjL15CcWs/edXbAYZ5vVvQ/UkwqYNi
+         Y2xf50982yWpCToJEg2Tw3dd9yDmZ8wUhWccxVF268cSwF/4mOJuUaXXYt2vkwA1E5F/
+         FnSaFjTDmON8vvtr46S1j4UWNogfPffxIRlWxW1I4dxN4DSPjzS2LPc2qSsJAoX2iAhl
+         1/pQ==
+X-Received: by 10.152.105.17 with SMTP id gi17mr1819935lab.46.1366139053718;
+ Tue, 16 Apr 2013 12:04:13 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Tue, 16 Apr 2013 12:04:13 -0700 (PDT)
+In-Reply-To: <8761zm4wzg.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221452>
 
-David Aguilar <davvid@gmail.com> writes:
-
-> The "regression" is that there are scripts and tools in the wild that
-> need to know the git version when deciding whether or not to use some
-> new feature.
+On Tue, Apr 16, 2013 at 4:59 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> e.g. "git status --ignore-submodules=dirty" did not appear until git 1.7.2.
-> A script may want to use this flag, but it will only want to use it
-> when available.
+>> Clearly, that's the correct behavior. Why would anybody send a change
+>> that does something other than the correct behavior?
 >
-> If this string started saying "The Git Version Control System v2.0" then these
-> scripts would be "broken" since they would no longer recognize this as a
-> "post-1.7.2 Git".
+> Along the same lines, why would anyone write broken code?  Nobody does,
+> right?
 
-Blacklisting known-bad version and hoping all other versions
-including the ones you have never seen to behave in the way you
-expect usually works but there is a limit.
+Yes, I should change the subject to:
 
-A change to say "The Git Version Control System %s" will not happen
-willy-nilly, but when there is a good reason to do so, we would.
+  transport-helper: update remote helper namespace, because that's
+exactly the thing we DON'T want to do, the purpose of this patch is to
+mess up everything
 
-I do not think a test that hardcodes the output is a good way to
-make sure a change is being done with a good reason.  After all, a
-patch that updates the "git version %s" string can just update the
-expected output in the same patch.  The only reason such a change
-will be caught is because during the review, somebody notices that
-the change touches the expected output of a test; for that to
-reliably protect the output, the test *has* to be commented to say
-that this expected output should be changed very carefully.
+Suree. I'm willing and knowingly introducing a change that goes
+diametrically opposite to what we want.
 
-A much better solution would be to leave that "very carefully"
-comment next to the in-code string to warn people about ramifiations
-of changing it.
+> If anyone reads that commit message in more than a few weeks, then it's
+> because some of the code is *broken*.
+
+That is irrelevant. Junio said the correct behavior was not described,
+when if fact it clearly is. Whether or not the patch has a bug in it
+is irrelevant to the fact that the correct behavior is described or
+not.
+
+> So the reader is investigating a
+> situation where there must be a flaw somewhere, and trying to pin down
+> the source.  Having access to the thinking behind each commit means s/he
+> can more easily verify whether that thinking was correct and still
+> applies.
+
+Sure, and where is the thinking not clear? The remote helper ref is
+not updated, so we do update it. How is that not clear?
+
+> And your commit messages do nothing towards that end.
+
+Oh, it does. You just don't understand how remote-helper works.
+
+> A cursory look^W^Wreview of the messages in fc/remote-hg:
+
+[skipping irrelevant comments]
+
+I'm sorry, did you actually hit an issue that required to look at the
+commit message to understand where the issue came from? No? Then I
+won't bother with hypotheticals.
+
+If you want to waste your time, by all means, rewrite all my commit
+messages with essays that nobody will ever read. I'm not going to do
+that for some hypothetical case that will never happen. I'm not going
+to waste my time.
+
+Cheers.
+
+-- 
+Felipe Contreras
