@@ -1,132 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 14/33] refs: extract a function peel_entry()
-Date: Tue, 16 Apr 2013 10:55:16 -0700
-Message-ID: <7vhaj6mkcb.fsf@alter.siamese.dyndns.org>
-References: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
- <1365944088-10588-15-git-send-email-mhagger@alum.mit.edu>
- <7v38urwv6o.fsf@alter.siamese.dyndns.org> <516D4D1F.5010207@alum.mit.edu>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH master] convert: The native line-ending is \r\n on MinGW
+Date: Tue, 16 Apr 2013 20:03:22 +0200
+Message-ID: <516D926A.70106@kdbg.org>
+References: <1275679748-7214-1-git-send-email-eyvind.bernhardsen@gmail.com> <20100904082509.GC10140@burratino> <7vbp8aqtuz.fsf@alter.siamese.dyndns.org> <7v4nf7qzkd.fsf@alter.siamese.dyndns.org> <CABPQNSaA7Qdt5eCZR3rs87gL730Y_xMrg6S-++YuaXdC2k45jg@mail.gmail.com> <7vsj2rpj0j.fsf@alter.siamese.dyndns.org> <CABPQNSZwc8Ae_fGwvyEq84NuBNntB7-KXnJtqt9ZLowCJof9Gw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Apr 16 19:55:25 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Tue Apr 16 20:03:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USA6G-0002XM-MH
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 19:55:25 +0200
+	id 1USAEG-00063I-VC
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 20:03:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965079Ab3DPRzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 13:55:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57209 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935536Ab3DPRzT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 13:55:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9C0616B62;
-	Tue, 16 Apr 2013 17:55:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aZJJL1HavzA67CPlpcyrGcPUBC8=; b=EFTvJj
-	ujHt7xJxOfiynun4zDwcZTu8b3ghehG4J2L6ufS28VyRIW4JuoCu2LfhX2oYGcCe
-	w4OAIciIV47xJ5nsj4IP9RaQwqZlzS0sQsaGioPpMXH42Gim2hUEDt/N6sWZ4eA4
-	LGSIm0HnrKGk6/CVCtyZg2sRHSlwXNsXznOdo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=riO2yPpct851kG5RNJlVd2TmatNmNBXF
-	z/TwuFPvr5YCT1cuJJe30+ncDFMzhLvGlg/4K5Bp591g5ipRfX5merL2azjJhUgP
-	Hip58s6uCC2vN3ThfxpzSaejwi+h//VNDBMEFOgS+CzwSHIxbstoLsuuTp6JVNU8
-	ZJIQHzmHGx8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C10D916B61;
-	Tue, 16 Apr 2013 17:55:18 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E8F1116B60; Tue, 16 Apr
- 2013 17:55:17 +0000 (UTC)
-In-Reply-To: <516D4D1F.5010207@alum.mit.edu> (Michael Haggerty's message of
- "Tue, 16 Apr 2013 15:07:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CC827240-A6BE-11E2-A23A-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S965163Ab3DPSD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 14:03:29 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:13731 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S936036Ab3DPSD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 14:03:28 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id C18F813005A;
+	Tue, 16 Apr 2013 20:03:23 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 1DAD419F542;
+	Tue, 16 Apr 2013 20:03:23 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <CABPQNSZwc8Ae_fGwvyEq84NuBNntB7-KXnJtqt9ZLowCJof9Gw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221438>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Am 16.04.2013 16:39, schrieb Erik Faye-Lund:
+> On Mon, Apr 15, 2013 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>>
+>>> This is absolutely the right thing to do. However, stuff have changed
+>>> a bit since the patch was written; this change now needs to go in
+>>> config.mak.uname instead of config.mak.
+>>
+>> Thanks for a quick response.
+>>
+>> What's your preference?  I could just ignore a patch I won't be able
+>> to test myself and have you guys carry it in your tree forever, but
+>> I do not think that is necessary for something small like this.
+> 
+> I should probably clarify; conceptually, this is the right thing to
+> do. Git for Windows is a Windows application, and should have CRLF as
+> the native newline. I hadn't tested this patch myself, though. Our
+> tree is currently way behind yours, and I tried to do a rebase, but it
+> turned out much trickier than I was hoping for.
+> 
+> I've given it a go on top of your tree + some essential patches I'll
+> need to get things to run, and it seems to do what it claims to do.
+> However, I haven't been able to run the test-suite, because I need a
+> bunch more patches from the msysGit-tree for that.
 
-> On 04/15/2013 07:38 PM, Junio C Hamano wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->> 
->>>  	if (read_ref_full(refname, base, 1, &flag))
->>>  		return -1;
->>>  
->>> -	if ((flag & REF_ISPACKED)) {
->>> +	/*
->>> +	 * If the reference is packed, read its ref_entry from the
->>> +	 * cache in the hope that we already know its peeled value.
->>> +	 * We only try this optimization on packed references because
->>> +	 * (a) forcing the filling of the loose reference cache could
->>> +	 * be expensive and (b) loose references anyway usually do not
->>> +	 * have REF_KNOWS_PEELED.
->>> +	 */
->>> +	if (flag & REF_ISPACKED) {
->>>  		struct ref_entry *r = get_packed_ref(refname);
->> 
->> This code makes the reader wonder what happens when a new loose ref
->> masks a stale packed ref, but the worry is unfounded because the
->> read_ref_full() wouldn't have gave us REF_ISPACKED in the flag in
->> such a case.
->> 
->> But somehow the calling sequence looks like such a mistake waiting
->> to happen.  It would be much more clear if a function that returns a
->> "struct ref_entry *" is used instead of read_ref_full() above, and
->> we checked (r->flag & REF_ISPACKED) in the conditional, without a
->> separate get_packed_ref(refname).
->
-> As I'm sure you realize, I didn't change the code that you are referring
-> to; I just added a comment.
+I have been using this patch or an equivalent one since at least one and
+a half years (until a month or two ago, as I discovered today, but that
+is only by accident). But I do not use any text attributes or eol
+configuration, so I can only say that it does not regress this use case.
 
-Yes.
+> 
+>> I think this is low impact enough that it can directly go to
+>> 'master' or even 'maint' if I were to apply to my tree.
+>>
+> 
+> I agree. I don't think we need it in maint; we don't track that branch
+> for msysGit.
 
-> But yes, I sympathize with your complaint.  Additionally, the code has
-> the drawback that get_packed_ref() is called twice: once in
-> read_ref_full() and again in the if block here.  Unfortunately, this
-> isn't so easy to fix because read_ref_full() doesn't use the loose
-> reference cache, so the reference that it returns might not even have a
-> ref_entry associated with it (specifically, unless the returned flag
-> value has REF_ISPACKED set).  So there are a couple options:
->
-> * Always read loose references through the cache; that way there would
-> always be a ref_entry in which the return value could be presented.
-> This would not be a good idea at the moment because the loose reference
-> cache is populated one directory at a time, and reading a whole
-> directory of loose references could be expensive.  So before
-> implementing this, it would be advisable to change the code to populate
-> the loose reference cache more selectively when single loose references
-> are needed.  -> This approach would be well beyond the scope of this
-> patch series.
->
-> * Implement a function like read_ref_full() with an additional (struct
-> ref_entry **entry) argument that is written to *in the case* that the
-> reference that was returned has a ref_entry associated with it, and NULL
-> otherwise.  This would have to be an internal function because we don't
-> want to expose the ref_entry structure outside of refs.c.
-> read_ref_full() would be implemented on top of the new function.
+Yes, master is good enough.
 
-Isn't there another?
+Thanks.
 
-Instead of using read_ref_full() at this callsite, can it call a
-function, given a refname, returns a pointer to "struct ref_entry",
-using the proper "a loose ref covers the packed ref with the same
-name" semantics?
-
-I guess that may need the same machinery for your first option to
-implement it efficiently; right now read_ref_full() goes directly to
-the single file that would hold the named ref without scanning and
-populating sibling refs in the in-core loose ref hierarchy, and
-without doing so you cannot return a struct ref_entry.  Hmm...
+> 
+>> Thanks.
+>>
+>> -- >8 --
+>> From: Jonathan Nieder <jrnieder@gmail.com>
+>> Date: Sat, 4 Sep 2010 03:25:09 -0500
+>> Subject: [PATCH] convert: The native line-ending is \r\n on MinGW
+>>
+>> If you try this:
+>>
+>>  1. Install Git for Windows (from the msysgit project)
+>>
+>>  2. Put
+>>
+>>         [core]
+>>                 autocrlf = false
+>>                 eol = native
+>>
+>>     in your .gitconfig.
+>>
+>>  3. Clone a project with
+>>
+>>         *.txt text
+>>
+>>     in its .gitattributes.
+>>
+>> Then with current git, any text files checked out have LF line
+>> endings, instead of the expected CRLF.
+>>
+>> Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> Cc: Johannes Sixt <j6t@kdbg.org>
+>> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  config.mak.uname | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/config.mak.uname b/config.mak.uname
+>> index 9080054..d78fd3d 100644
+>> --- a/config.mak.uname
+>> +++ b/config.mak.uname
+>> @@ -507,6 +507,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+>>                 compat/win32/dirent.o
+>>         EXTLIBS += -lws2_32
+>>         PTHREAD_LIBS =
+>> +       NATIVE_CRLF = YesPlease
+>>         X = .exe
+>>         SPARSE_FLAGS = -Wno-one-bit-signed-bitfield
+>>  ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
+>> --
+>> 1.8.2.1-542-g3613165
+>>
+> 
+> Looks fine to me.
+> 
