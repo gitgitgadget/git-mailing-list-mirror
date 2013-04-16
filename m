@@ -1,65 +1,77 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Ensimag students projects, version 2013
-Date: Wed, 17 Apr 2013 02:11:51 +0530
-Message-ID: <CALkWK0n0w9gB-1=SA4gVBA+coYrXThQrTE28uWpMD=yeB1ph4A@mail.gmail.com>
-References: <vpqobdg515m.fsf@grenoble-inp.fr> <CALkWK0nFB1dzmp6yC9XS4ADmWf9tfQYtsSH0K1u0dtBWT0CRNw@mail.gmail.com>
- <vpqzjwzkb4e.fsf@grenoble-inp.fr> <CALkWK0m=ZFK_+Za=_JabO4fiGTQ4K-Bxpr1hiZTrL_T4XuZKog@mail.gmail.com>
- <7v4nf6mjcw.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 11/13] pretty: support padding placeholders, %< %> and
+ %><
+Date: Tue, 16 Apr 2013 13:43:32 -0700
+Message-ID: <7vwqs2jjez.fsf@alter.siamese.dyndns.org>
+References: <1364636112-15065-1-git-send-email-pclouds@gmail.com>
+ <1366100702-31745-1-git-send-email-pclouds@gmail.com>
+ <1366100702-31745-12-git-send-email-pclouds@gmail.com>
+ <7v1uaaky2q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>, Phil Hord <phil.hord@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 22:42:54 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 22:43:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USCiK-0001U9-6Y
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 22:42:53 +0200
+	id 1USCj8-0002cC-Bs
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 22:43:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965347Ab3DPUmd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 16:42:33 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:35972 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965099Ab3DPUmc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 16:42:32 -0400
-Received: by mail-ie0-f179.google.com with SMTP id 16so1081695iea.38
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 13:42:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=/71ImM2RYiM2mVo8x+SGOpPlRJx2xeMKzzHZVmposCM=;
-        b=BorzJ2KFtmFkzm4InGv1cKXhucgpydq3qZ5RVBeC1EAdpx5+7FtsRk3nby2vZA4RwH
-         a9VW8dGUww1znA+CVu2GlpBn2Z6DeK1a2RqheMzBbdIHzTcdITc8LApcrDzXXMVwqx2Y
-         XLOGbg5BCLqxbGfhXFn/yHcIw2SPcgHtE4yHvzWFJgYerl+OZKGyoF6lSipSByh+Gdup
-         4n4jrpppDl9UtWnIu/+7w9WKRlzkXUCg9CG98/3vDodvnESMyG/l5svN3MCh9F/IWBRo
-         78PO7GSarmbgqAcqH0M+WtBISqpwA1D/mFi0PxCErQw7lv2gGwi1p2U5JBndibhtTNV2
-         Mwgg==
-X-Received: by 10.50.108.235 with SMTP id hn11mr2305733igb.107.1366144951394;
- Tue, 16 Apr 2013 13:42:31 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Tue, 16 Apr 2013 13:41:51 -0700 (PDT)
-In-Reply-To: <7v4nf6mjcw.fsf@alter.siamese.dyndns.org>
+	id S965327Ab3DPUnh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 16:43:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43091 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965319Ab3DPUng convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 16:43:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E705616F3A;
+	Tue, 16 Apr 2013 20:43:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=4LFCwReR7/2X
+	TwEEtx9aYxXedZo=; b=SKl6OJ+Tvmdrr5UKf7HqcIcQNfGiUMGy1qtZv86mgMP9
+	nGjkTb9G6y6Pdi6wHeIxq8zQGavW9ljVk8Dpho8y1X3GHZGM72uEMzXJpgGvkzjh
+	fWxaZY96D7GxMC7poN8gy6o4p/AXfAfNrXGJEemNDAJAMez/ieyerAvI1ZERth0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=rNTxUd
+	E/+S7yTn9YfMRO3LSihAl6hzAnBCPGU2W6GSHpfXxD1otoVb2CIU5ZJ0jx5oAG8h
+	W95FS7Eyo5KNRfRwNEzyvQIPSFQjAS/TabTlIb+5pMrqdyt/xeASnWvat8bn13ZJ
+	RGMiE5bxMAji9hgUsC7f7fbAGJUjWhm1ujcJE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE76B16F38;
+	Tue, 16 Apr 2013 20:43:35 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6541816F1D; Tue, 16 Apr
+ 2013 20:43:35 +0000 (UTC)
+In-Reply-To: <7v1uaaky2q.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 16 Apr 2013 13:41:33 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4F1088FC-A6D6-11E2-B1DB-CC48E7F0ECB6-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221468>
 
-Junio C Hamano wrote:
-> Who said anything about a customer?
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
 >
-> A newcomer to a community (i.e. Matthieu's student) needs not just
-> to show technical excellence with patches, but needs to make a good
-> argument on a larger design decision; old timers already tried to
-> achieve a concensus on it, and did not manage to do so the last time
-> we tried.
+>> +delete_trailing_dollar() {
+>> +	sed 's/\$$//'
+>> +}
+>
+> This is what we have qz_to_tab_space for, isn't it?  With it, you
+> can not just avoid "trailing whitespace", but also "indent with
+> spaces", like this:
+>
+> Q         message thousand    Z
 
-And sorry about the huge misunderstanding.  I thought Matthieu was
-saying that the proposed configuration variable would be harmful to
-newcomers, and we should therefore not add it.
-
-I feel very silly about having written such a long response to
-something I misunderstood.
+Sorry, the above needs s/Q/Z/;
