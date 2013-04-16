@@ -1,81 +1,114 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Ensimag students projects, version 2013
-Date: Tue, 16 Apr 2013 12:54:19 +0530
-Message-ID: <CALkWK0m=ZFK_+Za=_JabO4fiGTQ4K-Bxpr1hiZTrL_T4XuZKog@mail.gmail.com>
-References: <vpqobdg515m.fsf@grenoble-inp.fr> <CALkWK0nFB1dzmp6yC9XS4ADmWf9tfQYtsSH0K1u0dtBWT0CRNw@mail.gmail.com>
- <vpqzjwzkb4e.fsf@grenoble-inp.fr>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [RFC/PATCH 0/2] Test the Git version string
+Date: Tue, 16 Apr 2013 08:25:24 +0100
+Organization: OPDS
+Message-ID: <99AE5E981E2547B6A71A4D77B17167B9@PhilipOakley>
+References: <1365949646-1988-1-git-send-email-philipoakley@iee.org> <7v8v4k6hp2.fsf@alter.siamese.dyndns.org> <79879228B71A45A48A961F5B1880B61F@PhilipOakley> <7vli8k4lnj.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Phil Hord <phil.hord@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Apr 16 09:25:13 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "GitList" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 09:25:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US0GK-0005Vn-RM
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 09:25:09 +0200
+	id 1US0Gb-0005qZ-3i
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 09:25:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755272Ab3DPHZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 03:25:00 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:60150 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751570Ab3DPHZA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 03:25:00 -0400
-Received: by mail-ie0-f173.google.com with SMTP id k5so101520iea.32
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 00:24:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=9aLkQE3f0SOec5eWjTf3woKj+SkF3x88hWNFkRcY4nc=;
-        b=h8cwPyJQwQ/Pq4vP0E4UmYx5UPKJVwPzuSqnrkO6e0Fnn2XGN3nLnOxT8KS9jIZVud
-         ivIQSupS+cIUDWG1Qbfk4HS4lbOkOwOERbc6V4CFm7P+uE26Oq2pOx+gZSojdM/luVkp
-         KdCaFUrAUS/9X0obFQPgGwNQ8dLfYntpm8sDtPXnLTu8OC2UMTktEjG7dJCIaS7Ydxdp
-         FJyzGADKIsriZs+u8+X1iVFT/+y6l5lWc2lUeZfihoFqX2GKfkGYqhKTAYkVMjt2E1Ec
-         UpB10pBQvJS4F/wTtxNGNe8qx1MBM2gC+GpLkh3YpEgmVzuvzgXSwLN+J3PcgZX3hmzT
-         qkSw==
-X-Received: by 10.50.119.102 with SMTP id kt6mr637416igb.12.1366097099786;
- Tue, 16 Apr 2013 00:24:59 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Tue, 16 Apr 2013 00:24:19 -0700 (PDT)
-In-Reply-To: <vpqzjwzkb4e.fsf@grenoble-inp.fr>
+	id S1755157Ab3DPHZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 03:25:20 -0400
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:35857 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751570Ab3DPHZS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 03:25:18 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AswOADj8bFFOl3gj/2dsb2JhbAAuGAqDBjaIb7gNBAEDAYEGF3SCGgUBAQQBCAEBLh4BASELAgMFAgEDFQELJRQBBBoGBxcGEwgCAQIDAYd9CqwQkDONWwVNaoJnYQOITYV0mVWDDDuBLw
+X-IronPort-AV: E=Sophos;i="4.87,484,1363132800"; 
+   d="scan'208";a="425187089"
+Received: from host-78-151-120-35.as13285.net (HELO PhilipOakley) ([78.151.120.35])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 16 Apr 2013 08:25:16 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221374>
 
-Matthieu Moy wrote:
-> I tend to agree with you, but the idea has explicitly been rejected in
-> the past. The problem with an option like this is that it would also
-> disable the advices that may be added in the future. By letting people
-> disable the advices one by one, people see new advices as they arrive.
-> You may think of it like "do not show this message again" tickboxes in
-> some graphical user interfaces.
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Monday, April 15, 2013 2:39 AM
+> "Philip Oakley" <philipoakley@iee.org> writes:
 >
-> Too controversial area for newcommers I guess ;-).
+>>> If the "parsing" is done for white/blacklist purposes, is there a
+>>> need to straight-jacket the verison string format like this series?
+>>
+>> The purpose is to document what we felt we could guarantee, and that
+>> which was open to variation, so that those, like the Git-Gui, can
+>> code
+>> in a sensible check for the version. Two digits (X.Y) should pass the
+>> existing Git Gui check.
+>>
+>> I'll drop the length limit, and keep to an X.Y check
+>>
+>> Is the end of t0000-basic.sh a sensible place for the check?
+>
+> Sorry, but I still do not understand what you are trying to achieve.
+>
+> What kind of benefit are you envisioning out of this?
 
-This is the kind of nonsense that I absolutely won't stand for.  Am I
-a less important customer than a newcomer?  Hell, if anything, I'm the
-_more_ important customer because I spend time improving git while a
-newcomer makes no contribution whatsoever.  In my opinion, the most
-important customers of git are (in this order of precedence):
+The purpose of tests is to detect mistakes and spot regressions.
 
-1. Developers who hack on git to make it better.  This means that the
-implementation must have a pleasing consistency, and end-user
-expectations of UI are secondary.  For some reason, Junio seems to
-disagree with this.
+A change to the 'git version X.Y.z' string would be a regression, as I 
+spotted earlier, as it conflicts with expectations of standard 
+programmes such as git-gui.
 
-2. Advanced users hacking on projects that demand effective use of git
-like linux.git and git.git, as opposed to some little project on
-GitHub that just accepts pull requests.
+>For a future
+> version, people would not know what incompatibilities it would
+> introduce, so
+>
+> case "$(git version)" in
+> "git verison"[2-9].*)
+>        echo unsupported version
+>                exit 1
+>                ;;
+> esac
+>
+> is a nonsense check.
+>
+> For all released versions, people know how they looked like
+> and we
+> do not have anything further to specify.  Git 1.5.0 will forever
+> identify itself as:
+>
+> $ git version
+>        git version 1.5.0
+>
+> Worse yet, for an untagged version, you may get something like
+>
+> git version 1.8.2.1-515-g78d2372
 
-3. Newcomers.
+However, if it passes the test [all the tests], one expects it will be 
+reasonably (almost completely) compatibility with external expectations, 
+such as those of git gui.
 
-I don't develop git for newcomers.  I develop git for myself, and
-scratch my personal itches.  The most important customer to me is
-myself, and everyone else is secondary.
+The questions I'm posing is from the other direction - use of tests for 
+quality control.
 
-That said, I don't feel strongly about this particular advice.ui
-issue, and Jeff/ Junio have presented a reasonably cogent argument.
+>
+> and it may or may not behave the same way as 1.8.2.1 depending on
+> what trait you are interested in.
+
+That will depend on the tests if [deliberately?] failed.
+
+I'll tidy up the patches and commit meesage and see how it looks then.
+
+Philip
