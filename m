@@ -1,135 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 16/33] t3210: test for spurious error messages for
- dangling packed refs
-Date: Tue, 16 Apr 2013 16:22:25 -0700
-Message-ID: <7vip3mhxhq.fsf@alter.siamese.dyndns.org>
-References: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
- <1365944088-10588-17-git-send-email-mhagger@alum.mit.edu>
- <7vobdfvglf.fsf@alter.siamese.dyndns.org> <516D5CC6.10505@alum.mit.edu>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Tue, 16 Apr 2013 18:50:05 -0500
+Message-ID: <CAMP44s0q23j-7amBSuT0SL2-SkTmpyonmJx0y5VuAbk38Jo9KQ@mail.gmail.com>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2_wiNr4RaBOEnKnZzT4CF0qKK+bp+Lyi=Nfx3Q9ggqOQ@mail.gmail.com>
+	<7vip3npet0.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3NE3yrQoa1nZXAgy3KFXGF56Ki8icJ2z2TDigzax0nWg@mail.gmail.com>
+	<8761zm4wzg.fsf@linux-k42r.v.cablecom.net>
+	<CAMP44s0a2VsPBMd9Vrrhwdw=SPp2HrvDdXZ9Dmzhr9A6T+Sz7w@mail.gmail.com>
+	<7va9oyl1wb.fsf@alter.siamese.dyndns.org>
+	<CAMP44s38M7P0T1Wjhfv=XryoUevuxGwrik4pXwfkUfdpPNrXTQ@mail.gmail.com>
+	<CABURp0q29QkUadbXXa7pQLnTAArRbKh0Y5tdN8stQ7s2BjNAYw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Apr 17 01:22:42 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 17 01:50:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USFCz-00014L-7t
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 01:22:41 +0200
+	id 1USFdu-0002J8-TZ
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 01:50:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965650Ab3DPXWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 19:22:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60688 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965609Ab3DPXW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 19:22:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F259A17A31;
-	Tue, 16 Apr 2013 23:22:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6Hgr5ndmang9BSICkbWP3SIkkGo=; b=tfT9xu
-	3WsJ3T9FAECyp9GmwHq2b39bWO3eOhGrhYroCzMwYiuZLuNQjnPVKBSwf5rN2jQ6
-	wtlYDQhIv9RynWbRoIOA95ldeVsUqgyD4lNYdyZUe0hOxh1eclM86TEuPRqmyAFx
-	ZUMCREUDQLqYIUkBbFcuNDD3o8sybi2GfgSwQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bgDQ9Xq8VPeXabOg2lEBRsrbxE82SJog
-	bYlHCULCZkvEtJhxGg4S9/aMIbohCwF3BxnSY6wBnpD8MuyaSuKS/F3qgp8rmFw5
-	LzNI/t0uHOuaEeZwuILfo+GvIpnrbnbk4KrjLHZrEhdGDLiM1lDlZubH6BsHgJxG
-	7fejlQ9h84I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA65D17A30;
-	Tue, 16 Apr 2013 23:22:27 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 39E7517A2F; Tue, 16 Apr
- 2013 23:22:27 +0000 (UTC)
-In-Reply-To: <516D5CC6.10505@alum.mit.edu> (Michael Haggerty's message of
- "Tue, 16 Apr 2013 16:14:30 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8079D5CC-A6EC-11E2-B64B-CC48E7F0ECB6-77302942!b-pb-sasl-quonix.pobox.com
+	id S965619Ab3DPXuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 19:50:08 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:53808 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965576Ab3DPXuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 19:50:06 -0400
+Received: by mail-lb0-f179.google.com with SMTP id t1so1084613lbd.38
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 16:50:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=1Nex7/UWxt3hSBn3xQr9XR/q7YALu8Oj3EE9JOsXzuQ=;
+        b=HzKp1SkLdFXiqwmItF1Ql4NALa5L8jYtx1bCJ/zHAzsK9c8JyYe87ns4NVAPYx8LUm
+         i16LEmnyKB9orfaB8+VimyrNP2UczpkPZtDqhPUvtBil9ZDuJgTKqTYL4iLxd9oAS17C
+         Lnh74cIx8eKBP8QUSopgSk5cAUXHh52abP6wm99zTab0UOZnj+hdivtPQ4EB9rSMv9E/
+         k+xcCiozrBPVD/T6iVV1DvsWNxOu11xe4C7pmLHsE2AZ/mjTtJcxC5qNZvn1/i36IvCw
+         /HZJYK1ORp48ftif/9bv0uLZfMbdXfYvaAxseAyRzIekTJN6FvkzNUv7gwQT75EHaFOH
+         Bieg==
+X-Received: by 10.112.154.98 with SMTP id vn2mr1025281lbb.8.1366156205129;
+ Tue, 16 Apr 2013 16:50:05 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Tue, 16 Apr 2013 16:50:05 -0700 (PDT)
+In-Reply-To: <CABURp0q29QkUadbXXa7pQLnTAArRbKh0Y5tdN8stQ7s2BjNAYw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221489>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Tue, Apr 16, 2013 at 5:34 PM, Phil Hord <phil.hord@gmail.com> wrote:
+> On Tue, Apr 16, 2013 at 3:48 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> Here it goes. The remote helper ref is going to be used to tell
+>> fast-export which refs to negate (e.g. ^refs/testgit/origin/master),
+>> so that extra commits are not generated, which the remote helper
+>> should ignore anyway, because it should already have marks for those.
+>> So doing two consecutive pushes, would push the commits twice.
+>>
+>> It's worth noting this is the first time anybody asks what is the
+>> negative effect of this not getting fixed.
+>
+> Yes, but what is noteworthy about it is that you did not include that
+> in your commit message to begin with.  This is the commit message
+> request from Documentation/SubmittingPatches:
 
-> would be that it expires *everything*.  But in fact it seems to only
-> expire things that are at least one second old, which doesn't seem at
-> all useful in the real world.  "--expire=all" is accepted without
-> complaint but doesn't do what one would hope.
+And yet, nobody asked for that.
 
-Perhaps that is worth fixing, independent of this topic.
+Anyway, drop the patch then.
 
-Approxidate gives the current time for anything it does not
-understand, and that is how --expire=all is interpreted as "anything
-older than now".  For that matter, even a string "now" has long been
-interpreted as the current time with the same "I do not understand
-it, so I'll give you the current timestamp" logic, until we added an
-official support for "now" at 93cfa7c7a85e (approxidate_careful()
-reports errorneous date string, 2010-01-26) for entirely different
-reasons.
-
-A completely untested patch for your enjoyment...
-
- builtin/reflog.c | 27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 72a0af7..9fa0e41 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -492,15 +492,28 @@ static struct reflog_expire_cfg *find_cfg_ent(const char *pattern, size_t len)
- 	return ent;
- }
- 
-+static void parse_expire_value(const char *value, unsigned long *expire)
-+{
-+	if (!strcmp(value, "never") || !strcmp(value, "false"))
-+		*expire = 0;
-+	else if (!strcmp(value, "all") || !strcmp(value, "now"))
-+		/*
-+		 * We take over "now" here, which usually translates
-+		 * to the current timestamp, because the user really
-+		 * means everything she has done in the past, and by
-+		 * definition reflogs are the record of the past,
-+		 * there is nothing from the future to be kept.
-+		 */
-+		*expire = ULONG_MAX;
-+	else
-+		*expire = approxidate(value);
-+}
-+
- static int parse_expire_cfg_value(const char *var, const char *value, unsigned long *expire)
- {
- 	if (!value)
- 		return config_error_nonbool(var);
--	if (!strcmp(value, "never") || !strcmp(value, "false")) {
--		*expire = 0;
--		return 0;
--	}
--	*expire = approxidate(value);
-+	parse_expire_value(value, expire);
- 	return 0;
- }
- 
-@@ -614,11 +627,11 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 		if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
- 			cb.dry_run = 1;
- 		else if (!prefixcmp(arg, "--expire=")) {
--			cb.expire_total = approxidate(arg + 9);
-+			parse_expire_value(arg + 9, &cb.expire_total);
- 			explicit_expiry |= EXPIRE_TOTAL;
- 		}
- 		else if (!prefixcmp(arg, "--expire-unreachable=")) {
--			cb.expire_unreachable = approxidate(arg + 21);
-+			parse_expire_value(arg + 21, &cb.expire_unreachable);
- 			explicit_expiry |= EXPIRE_UNREACH;
- 		}
- 		else if (!strcmp(arg, "--stale-fix"))
+-- 
+Felipe Contreras
