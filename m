@@ -1,100 +1,84 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] usage: refactor die-recursion checks
-Date: Mon, 15 Apr 2013 22:50:24 -0400
-Message-ID: <20130416025024.GA20932@sigill.intra.peff.net>
+Subject: Re: [PATCH 2/3] run-command: factor out running_main_thread function
+Date: Mon, 15 Apr 2013 22:53:40 -0400
+Message-ID: <20130416025340.GB20932@sigill.intra.peff.net>
 References: <20130415230651.GA16670@sigill.intra.peff.net>
- <20130415230802.GA11267@sigill.intra.peff.net>
- <CA+sFfMes99EepY4FCW32s1L3ywv_gyFb76=Y=35rvPbc2K1BWA@mail.gmail.com>
- <20130416004228.GA14995@sigill.intra.peff.net>
- <CA+sFfMdzTNjH10FKxhvJy+7hZg+0=1Wrqy9k8KaPoJg1DuDpmg@mail.gmail.com>
+ <20130415230816.GB11267@sigill.intra.peff.net>
+ <20130416014504.GD3262@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 04:50:37 2013
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 04:53:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URvye-0006pV-Lq
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 04:50:37 +0200
+	id 1URw1n-0002Pp-RW
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 04:53:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935471Ab3DPCuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 22:50:32 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:47430 "EHLO
+	id S935480Ab3DPCxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 22:53:48 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:47435 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935467Ab3DPCub (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 22:50:31 -0400
-Received: (qmail 32705 invoked by uid 107); 16 Apr 2013 02:52:25 -0000
+	id S935467Ab3DPCxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 22:53:47 -0400
+Received: (qmail 32731 invoked by uid 107); 16 Apr 2013 02:55:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 15 Apr 2013 22:52:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Apr 2013 22:50:24 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 15 Apr 2013 22:55:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Apr 2013 22:53:40 -0400
 Content-Disposition: inline
-In-Reply-To: <CA+sFfMdzTNjH10FKxhvJy+7hZg+0=1Wrqy9k8KaPoJg1DuDpmg@mail.gmail.com>
+In-Reply-To: <20130416014504.GD3262@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221349>
 
-On Mon, Apr 15, 2013 at 07:34:07PM -0700, Brandon Casey wrote:
+On Mon, Apr 15, 2013 at 06:45:04PM -0700, Jonathan Nieder wrote:
 
-> > Right. My assumption was that we are primarily interested in protecting
-> > against the die_routine. Compat functions should never be calling die.
+> Jeff King wrote:
 > 
-> I think the rule we have been enforcing is less strict than that.  We
-> have only said that any compat function in a die handler path should
-> never call die.  But maybe that's what you meant.
-
-No, I assumed we were following the stronger rule. If you are a compat
-function for a C library function, then you should never need to die.
-You should be conforming to the existing interface, which will have some
-mechanism for passing back an error.
-
-> The primary motivation was that Hannes Sixt had to step in and point
-> out yet again that the high-level memory allocators should not be
-> called in anything that could be in a die handler code path.  I was on
-> the thread, but I don't remember the topic (ah, Jonathan has stepped
-> in with the answer).  I do remember that I was not the only one who
-> had forgotten about that rule though.
-
-Yeah, it is subtle enough that it may be worth protecting against.
-
-> To implement this check correctly/completely (i.e. detect recursion in
-> the main thread as well as in any child threads), I think you really
-> do need to use thread-local storage as you mentioned in 3/3 which
-> could look something like:
+> > --- a/run-command.c
+> > +++ b/run-command.c
+> > @@ -603,7 +603,7 @@ static NORETURN void die_async(const char *err, va_list params)
+> >  {
+> >  	vreportf("fatal: ", err, params);
+> >  
+> > -	if (!pthread_equal(main_thread, pthread_self())) {
+> > +	if (!running_main_thread()) {
+> >  		struct async *async = pthread_getspecific(async_key);
+> >  		if (async->proc_in >= 0)
+> >  			close(async->proc_in);
+> > @@ -614,6 +614,19 @@ static NORETURN void die_async(const char *err, va_list params)
+> >  
+> >  	exit(128);
+> >  }
+> > +
+> > +int running_main_thread(void)
+> > +{
+> > +	return pthread_equal(main_thread, pthread_self());
+> > +}
 > 
->    static pthread_key_t dying;
->    static pthread_once_t dying_once = PTHREAD_ONCE_INIT;
+> Would it make sense to do something like
 > 
->    void setup_die_counter(void)
->    {
->            pthread_key_create(&dying, NULL);
->    }
+> 	return !main_thread_set || pthread_equal(...);
 > 
->    check_die_recursion(void)
->    {
->            pthread_once(&dying_once, setup_die_counter);
->            if (pthread(getspecific(dying)) {
->                    puts("BUG: recursion...");
->                    exit(128);
->            }
-> 
->            pthread_setspecific(dying, &dying);
->    }
+> in case someone tries to call this before the first start_async call?
 
-Yeah, that seems sane; my biggest worry was that it would create
-headaches for Windows folks, who would have to emulate pthread_key. But
-it seems like we already added support in 9ba604a.
+I considered that, but assumed that pthread_equal would always return
+false against the zeroed out static main_thread. Mostly because we
+appeared not to be bothering with such a check already.  But actually,
+in the existing code, it is only checked from die_async, which is only
+put into place when we _do_ start a thread, so we would never hit this
+code path without main_thread being set.
 
-I'll try to re-work the series with thread-local storage, and I'll leave
-off the extra printing. This _should_ never happen, so if we are going
-to put in the check, it is probably better to be more thorough than to
-worry about what the error message looks like.
+So yes, a check probably would make sense. However, I think I'm
+convinced that we should drop this in favor of using thread-local
+storage for the "dying" counter. So this patch can just go away.
 
-Thanks for looking it over.
+Thanks for reviewing this version, though.
 
 -Peff
