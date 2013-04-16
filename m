@@ -1,153 +1,132 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2 03/14] dir.c: git-status --ignored: don't list empty
- ignored directories
-Date: Tue, 16 Apr 2013 23:18:06 +0530
-Message-ID: <CALkWK0mG6bzWu7dqdP1mBe+AZfUDK=Mx4+ZkDOc2saXr3gBsUQ@mail.gmail.com>
-References: <514778E4.1040607@gmail.com> <516C4F27.30203@gmail.com> <516C4FE4.9090806@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 14/33] refs: extract a function peel_entry()
+Date: Tue, 16 Apr 2013 10:55:16 -0700
+Message-ID: <7vhaj6mkcb.fsf@alter.siamese.dyndns.org>
+References: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
+ <1365944088-10588-15-git-send-email-mhagger@alum.mit.edu>
+ <7v38urwv6o.fsf@alter.siamese.dyndns.org> <516D4D1F.5010207@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Robert Zeh <robert.allan.zeh@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Adam Spiers <git@adamspiers.org>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 19:49:11 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Apr 16 19:55:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USA0B-0002AJ-VS
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 19:49:08 +0200
+	id 1USA6G-0002XM-MH
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 19:55:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965153Ab3DPRtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 13:49:00 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:58745 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965097Ab3DPRsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 13:48:47 -0400
-Received: by mail-ie0-f178.google.com with SMTP id bn7so884702ieb.9
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 10:48:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=vc/ZciS4WM71L8OgqqClRge5BH96aRnYUrT9dfe0ECk=;
-        b=y5DK9KmHbxklBLLFMoNJdUlYGvX0Fbs+UQ4QFD8aVyatOO6rwZY7TTnWlVmLKMU+jo
-         J6jZWTAkO3fo+Ksl0uFXE1Tv9jHY3HaX2EbAW988zA93h2Lsvfl7iKq9lWQM64VlgXXC
-         +GJ8LMO3On/ljrGMGk751R2h0OxQFZ8stZrx2XAZyQ+2gPNi+DOHR54CAQ00oEN3gIcm
-         /OxtjHkz5SVAEo84So0Yv/+/GQCRUOVMHU5JUozyubhK4Tyo+S6XEkB0f8aAwkgypCbv
-         qtT8KiA9SynMocGU8xJ77XL4t2IlrbTbVmRiL9U7LysgXA3rPy7/QcxrT1bfCWeh902P
-         TM9A==
-X-Received: by 10.50.17.166 with SMTP id p6mr8527518igd.12.1366134526343; Tue,
- 16 Apr 2013 10:48:46 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Tue, 16 Apr 2013 10:48:06 -0700 (PDT)
-In-Reply-To: <516C4FE4.9090806@gmail.com>
+	id S965079Ab3DPRzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 13:55:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57209 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935536Ab3DPRzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 13:55:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9C0616B62;
+	Tue, 16 Apr 2013 17:55:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aZJJL1HavzA67CPlpcyrGcPUBC8=; b=EFTvJj
+	ujHt7xJxOfiynun4zDwcZTu8b3ghehG4J2L6ufS28VyRIW4JuoCu2LfhX2oYGcCe
+	w4OAIciIV47xJ5nsj4IP9RaQwqZlzS0sQsaGioPpMXH42Gim2hUEDt/N6sWZ4eA4
+	LGSIm0HnrKGk6/CVCtyZg2sRHSlwXNsXznOdo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=riO2yPpct851kG5RNJlVd2TmatNmNBXF
+	z/TwuFPvr5YCT1cuJJe30+ncDFMzhLvGlg/4K5Bp591g5ipRfX5merL2azjJhUgP
+	Hip58s6uCC2vN3ThfxpzSaejwi+h//VNDBMEFOgS+CzwSHIxbstoLsuuTp6JVNU8
+	ZJIQHzmHGx8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C10D916B61;
+	Tue, 16 Apr 2013 17:55:18 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E8F1116B60; Tue, 16 Apr
+ 2013 17:55:17 +0000 (UTC)
+In-Reply-To: <516D4D1F.5010207@alum.mit.edu> (Michael Haggerty's message of
+ "Tue, 16 Apr 2013 15:07:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CC827240-A6BE-11E2-A23A-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221437>
 
-Karsten Blees wrote:
-> 'git-status --ignored' lists ignored tracked directories without any
-> ignored files if a tracked file happens to match an exclude pattern.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Here, I have:
-
-    quux/
-        bar
-        baz/
-            foo
-
-So, quux is an ignored tracked directory.  bar is tracked, but matches
-an ignore pattern.  Currently, git status --ignored lists quux/.  I'm
-confused.
-
-> Always exclude tracked files.
-
-"exclude" it from the 'git status --ignored' output, I presume?
-There's already an _exclude_ pattern in your previous sentence, so you
-can see why the reader might be confused about what you're talking
-about.
-
-> diff --git a/dir.c b/dir.c
-> index 7c9bc9c..fd1f088 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1109,16 +1109,13 @@ static int treat_file(struct dir_struct *dir, struct strbuf *path, int exclude,
->         struct path_exclude_check check;
->         int exclude_file = 0;
+> On 04/15/2013 07:38 PM, Junio C Hamano wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> 
+>>>  	if (read_ref_full(refname, base, 1, &flag))
+>>>  		return -1;
+>>>  
+>>> -	if ((flag & REF_ISPACKED)) {
+>>> +	/*
+>>> +	 * If the reference is packed, read its ref_entry from the
+>>> +	 * cache in the hope that we already know its peeled value.
+>>> +	 * We only try this optimization on packed references because
+>>> +	 * (a) forcing the filling of the loose reference cache could
+>>> +	 * be expensive and (b) loose references anyway usually do not
+>>> +	 * have REF_KNOWS_PEELED.
+>>> +	 */
+>>> +	if (flag & REF_ISPACKED) {
+>>>  		struct ref_entry *r = get_packed_ref(refname);
+>> 
+>> This code makes the reader wonder what happens when a new loose ref
+>> masks a stale packed ref, but the worry is unfounded because the
+>> read_ref_full() wouldn't have gave us REF_ISPACKED in the flag in
+>> such a case.
+>> 
+>> But somehow the calling sequence looks like such a mistake waiting
+>> to happen.  It would be much more clear if a function that returns a
+>> "struct ref_entry *" is used instead of read_ref_full() above, and
+>> we checked (r->flag & REF_ISPACKED) in the conditional, without a
+>> separate get_packed_ref(refname).
 >
-> +       /* Always exclude indexed files */
-> +       if (index_name_exists(&the_index, path->buf, path->len, ignore_case))
-> +               return 1;
-> +
->         if (exclude)
->                 exclude_file = !(dir->flags & DIR_SHOW_IGNORED);
->         else if (dir->flags & DIR_SHOW_IGNORED) {
-> -               /* Always exclude indexed files */
-> -               struct cache_entry *ce = index_name_exists(&the_index,
-> -                   path->buf, path->len, ignore_case);
-> -
-> -               if (ce)
-> -                       return 1;
-> -
+> As I'm sure you realize, I didn't change the code that you are referring
+> to; I just added a comment.
 
-Okay, so you just moved this segment outside the else if()
-conditional.  Can you explain what the old logic was doing, and what
-the rationale for it was?
+Yes.
 
-> diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-> index 4ece129..28b7d95 100755
-> --- a/t/t7061-wtstatus-ignore.sh
-> +++ b/t/t7061-wtstatus-ignore.sh
-> @@ -122,10 +122,34 @@ cat >expected <<\EOF
->  ?? .gitignore
->  ?? actual
->  ?? expected
-> +EOF
-> +
-> +test_expect_success 'status ignored tracked directory and ignored file with --ignore' '
-> +       echo "committed" >>.gitignore &&
-> +       git status --porcelain --ignored >actual &&
-> +       test_cmp expected actual
-> +'
-
-Um, didn't really get this one.  You have three untracked files, and
-git status seems to be showing them fine.  What am I missing?
-
-> +cat >expected <<\EOF
-> +?? .gitignore
-> +?? actual
-> +?? expected
-> +EOF
-> +
-> +test_expect_success 'status ignored tracked directory and ignored file with --ignore -u' '
-> +       git status --porcelain --ignored -u >actual &&
-> +       test_cmp expected actual
-> +'
-
-I didn't understand why you're invoking -u here (doesn't it imply
-"all", as opposed to "normal" when unspecified?).  There are really no
-directories, so I don't know what I'm expected to see.
-
-> +cat >expected <<\EOF
-> +?? .gitignore
-> +?? actual
-> +?? expected
->  !! tracked/
->  EOF
+> But yes, I sympathize with your complaint.  Additionally, the code has
+> the drawback that get_packed_ref() is called twice: once in
+> read_ref_full() and again in the if block here.  Unfortunately, this
+> isn't so easy to fix because read_ref_full() doesn't use the loose
+> reference cache, so the reference that it returns might not even have a
+> ref_entry associated with it (specifically, unless the returned flag
+> value has REF_ISPACKED set).  So there are a couple options:
 >
->  test_expect_success 'status ignored tracked directory and uncommitted file with --ignore' '
-> +       echo "tracked" >.gitignore &&
->         : >tracked/uncommitted &&
->         git status --porcelain --ignored >actual &&
->         test_cmp expected actual
+> * Always read loose references through the cache; that way there would
+> always be a ref_entry in which the return value could be presented.
+> This would not be a good idea at the moment because the loose reference
+> cache is populated one directory at a time, and reading a whole
+> directory of loose references could be expensive.  So before
+> implementing this, it would be advisable to change the code to populate
+> the loose reference cache more selectively when single loose references
+> are needed.  -> This approach would be well beyond the scope of this
+> patch series.
+>
+> * Implement a function like read_ref_full() with an additional (struct
+> ref_entry **entry) argument that is written to *in the case* that the
+> reference that was returned has a ref_entry associated with it, and NULL
+> otherwise.  This would have to be an internal function because we don't
+> want to expose the ref_entry structure outside of refs.c.
+> read_ref_full() would be implemented on top of the new function.
 
-Didn't we test this in the last patch?  Okay, I'm completely confused now.
+Isn't there another?
 
-Once again, apologies for my inexperienced comments:  I'm contributing
-whatever little I can to the review process.
+Instead of using read_ref_full() at this callsite, can it call a
+function, given a refname, returns a pointer to "struct ref_entry",
+using the proper "a loose ref covers the packed ref with the same
+name" semantics?
+
+I guess that may need the same machinery for your first option to
+implement it efficiently; right now read_ref_full() goes directly to
+the single file that would hold the named ref without scanning and
+populating sibling refs in the in-core loose ref hierarchy, and
+without doing so you cannot return a struct ref_entry.  Hmm...
