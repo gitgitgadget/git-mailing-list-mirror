@@ -1,81 +1,147 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/3] pull: introduce --[no-]autostash and pull.autostash
-Date: Mon, 15 Apr 2013 20:09:48 -0700
-Message-ID: <20130416030948.GJ3262@elie.Belkin>
-References: <1365887729-9630-1-git-send-email-artagnon@gmail.com>
- <1365887729-9630-4-git-send-email-artagnon@gmail.com>
- <vpq38us2oov.fsf@grenoble-inp.fr>
- <7vbo9g15po.fsf@alter.siamese.dyndns.org>
- <vpqbo9gqcvl.fsf@grenoble-inp.fr>
+From: Drew Northup <n1xim.email@gmail.com>
+Subject: Re: [PATCH] gitweb/INSTALL: Simplify description of GITWEB_CONFIG_SYSTEM
+Date: Mon, 15 Apr 2013 23:10:58 -0400
+Message-ID: <CAM9Z-nmOzpJdT3ni0rYRkg7Z26N5XSRyqp0TkTY79AAZ85pw2A@mail.gmail.com>
+References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com>
+	<85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com>
+	<7v4nfch90r.fsf@alter.siamese.dyndns.org>
+	<20130412064837.GA5710@elie.Belkin>
+	<20130412064953.GB5710@elie.Belkin>
+	<7vy5cnd0m4.fsf@alter.siamese.dyndns.org>
+	<516888C0.90501@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Apr 16 05:10:06 2013
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+	Stefano Lattarini <stefano.lattarini@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 05:11:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URwHV-0005Po-8e
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 05:10:05 +0200
+	id 1URwIa-0006u4-7x
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 05:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935551Ab3DPDJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 23:09:56 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:37399 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935212Ab3DPDJy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 23:09:54 -0400
-Received: by mail-pa0-f52.google.com with SMTP id fb10so85651pad.25
-        for <git@vger.kernel.org>; Mon, 15 Apr 2013 20:09:53 -0700 (PDT)
+	id S935576Ab3DPDLB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Apr 2013 23:11:01 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:33338 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935470Ab3DPDK7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Apr 2013 23:10:59 -0400
+Received: by mail-wi0-f177.google.com with SMTP id hm14so24225wib.10
+        for <git@vger.kernel.org>; Mon, 15 Apr 2013 20:10:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=0DoWun2TdkrGBLYxEe8RAQEYweeiIKZQ6nYBGzAX8UU=;
-        b=j0MjM+TTz8agNJWy3gvfFG9+ZCjMmez7oKABM9JxW0A7XK6/VYX2X5rARlu6WMC6VG
-         lxMgg2BaOfCg3/R08TvOOsz49xoOcv9jaG42uza6+2YSZrAPelrkIEtYlOlaATfaVrtn
-         bD9anZtMuD+gTD2hPLN+1vQd66swinV44mkXyY83usZNiQMUGOQ2ZhAIjq6Brq8ortHr
-         u/m4/BeniFu0SZMgmxWgQd5jvsrI0flPqC9y1yvQVc463OaDLsB/SbJfw9Qm/CBAlFJj
-         8pTCXEajJNfq+g1GgMEiJnNVGm6Lfhf8TnElBb31Rf/aEe0OSqup0hmJ0hYHD+Bz9d6P
-         ZbzA==
-X-Received: by 10.66.7.228 with SMTP id m4mr1028592paa.173.1366081793310;
-        Mon, 15 Apr 2013 20:09:53 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id wz9sm148249pbc.5.2013.04.15.20.09.51
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 15 Apr 2013 20:09:52 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <vpqbo9gqcvl.fsf@grenoble-inp.fr>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=x69SlFwwTaNfSPoVCNPHJkIyrJVFW5+UansLWmUwHMU=;
+        b=08zPQDtWmwczSL64keW0Jfv+nAOT92EvZrCNOzhM5WembDcgyymP+qPIl955Mfp94j
+         ugBJ1hTO9IwnCfcZTv9w5ZbwopV8P4AMXWmUwK43/LBLRTQhmGwpi/I/DfWtrpzPaOz7
+         59yMgK3eZ8Xv7N7z/V4aN8Tmp1MF32UqtuYjwRJ0oEarexVGR1+T9ihdtyV6SvIDqgxB
+         KDTk/rG7voKDg6xNXdBc79lv6HKuay7baBircFUdF7Y4ZNSNOXZC+BJ8kX7GbpvQ8gEc
+         9Fd8fIdCYcLqwHb00N92O9uib4sTJT8/I9jCcTqMmsqGCuDl9CYFWRVcRGyXeATHMHy3
+         Z/gw==
+X-Received: by 10.180.94.133 with SMTP id dc5mr16531032wib.1.1366081858548;
+ Mon, 15 Apr 2013 20:10:58 -0700 (PDT)
+Received: by 10.194.163.101 with HTTP; Mon, 15 Apr 2013 20:10:58 -0700 (PDT)
+In-Reply-To: <516888C0.90501@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221352>
 
-Matthieu Moy wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Apr 12, 2013 at 6:20 PM, Jakub Nar=C4=99bski <jnareb@gmail.com>=
+ wrote:
 
->> Yes, that is why I said for pull-merge, --authsquash is neutral-to-better
->> and pull.autosquash is harmful.
+> -- >8 --
+> Subject: [PATCH] gitweb/INSTALL: Simplify description of GITWEB_CONFI=
+G_SYSTEM
 >
-> To speak from my experience: I find myself typing "git stash && git pull
-> && git stash pop" relatively often.
+> The flow of the text describing GITWEB_CONFIG_SYSTEM and
+> GITWEB_CONFIG_COMMON in gitweb/INSTALL is awkward.  "This is
+> bad. Oh the other hand, better is broken. Therefore ..." forces
+> readers to make multiple guesses while reading: "ok, bad, so you plan
+> to change it and warn us about upcoming change?  oh, not that,
+> changing it is bad, so we have to live with it?  oh, not that, there
+> is another one that is common and that is what we can use".
+>
+> Better rewrite said paragraph to avoid such a mental roller-coaster i=
+n
+> the first place.
+>
+> Signed-off-by: Junio Hamano <gitster@pobox.com>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
+>  gitweb/INSTALL |   14 ++++++--------
+>  1 file changed, 6 insertions(+), 8 deletions(-)
+>
+> diff --git a/gitweb/INSTALL b/gitweb/INSTALL
+> index 6d45406..7ad1050 100644
+> --- a/gitweb/INSTALL
+> +++ b/gitweb/INSTALL
+> @@ -243,14 +243,12 @@ for gitweb (in gitweb/README), and gitweb.conf(=
+5) manpage.
+>    GITWEB_CONFIG_SYSTEM build configuration variable, and override it
+>    through the GITWEB_CONFIG_SYSTEM environment variable.
+>
+> -  Note that if per-instance configuration file exists, then system-w=
+ide
+> -  configuration is _not used at all_.  This is quite untypical and s=
+uprising
+> -  behavior.  On the other hand changing current behavior would break=
+ backwards
+> -  compatibility and can lead to unexpected changes in gitweb behavio=
+r.
+> -  Therefore gitweb also looks for common system-wide configuration f=
+ile,
+> -  normally /etc/gitweb-common.conf (set during build time using buil=
+d time
+> -  configuration variable GITWEB_CONFIG_COMMON, set it at runtime usi=
+ng
+> -  environment variable with the same name).  Settings from per-insta=
+nce or
+> +
+> +  Note that the GITWEB_CONFIG_SYSTEM system-wide configuration file =
+is
+> +  only used for instances that lack per-instance configuration file.
+> +  You can use GITWEB_CONFIG_COMMON common system-wide configuration
+> +  file (normally /etc/gitweb-common.conf) to keep common default
+> +  settings that apply to all instances.  Settings from per-instance =
+or
+>    system-wide configuration file override those from common system-w=
+ide
+>    configuration file.
 
-To that end, maybe "git pull --stash" would be an easier to type option
-name than "git pull --autostash".
+The point of wording it such that it was explicitly noted that the
+supposed "system-wide" settings were really just "system-wide
+defaults" (which would be ignored wholesale if any one setting was
+overridden locally) was due to the fact that most of the time server
+administrators don't deal with software that idiosyncratic. Prior to
+the addition of GITWEB_CONFIG_COMMON there was no method for setting
+up a sane default template that wouldn't be discarded wholesale upon
+any one configuration parameter being overridden.
 
-That would also avoid the question of "What is automatically going to
-happen here?  Is it going to stash only sometimes?  Is it going to
-automatically stash what I pull?".
+That's the point of explaining SPECIFICALLY why the then current
+behavior wasn't being replaced, and this other mechanism (which would
+otherwise have no obvious reason for existing) was being introduced.
+So, unfortunately,  if we remove the "mental roller coaster" part of
+the explanation entirely we can expect to end up in exactly the
+situation that I complained about to begin with. (Or we could just do
+this the way everybody else does, with partial overrides being the
+common case, starting at 2.x and no longer have the mental roller
+coaster problem at all.)
 
-I'm not a big stash user (except "git stash --keep-index" to prepare
-to test changes in the index), so I can't say much more about the
-details.
+As I'm the one that complained loudly enough to get this change to be
+made in the first place I'd appreciate being kept in the loop in this
+series.
 
-Thanks,
-Jonathan
+--
+-Drew Northup
+--------------------------------------------------------------
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
