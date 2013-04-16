@@ -1,91 +1,109 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: [PATCH] gitweb/INSTALL: GITWEB_CONFIG_SYSTEM is for backward compatibility
-Date: Tue, 16 Apr 2013 14:26:01 +0200
-Message-ID: <516D4359.2070501@gmail.com>
-References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com> <85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com> <7v4nfch90r.fsf@alter.siamese.dyndns.org> <20130412064837.GA5710@elie.Belkin> <20130412064953.GB5710@elie.Belkin> <7vy5cnd0m4.fsf@alter.siamese.dyndns.org> <516888C0.90501@gmail.com> <CAM9Z-nmOzpJdT3ni0rYRkg7Z26N5XSRyqp0TkTY79AAZ85pw2A@mail.gmail.com> <7vobdfnlc7.fsf@alter.siamese.dyndns.org> <CAM9Z-nm=SUNAHXZtOnz_BSS8VrVYPczicX99FUmDJe6Lj_oKpQ@mail.gmail.com>
+From: Drew Northup <n1xim.email@gmail.com>
+Subject: Re: [PATCH] gitweb/INSTALL: GITWEB_CONFIG_SYSTEM is for backward compatibility
+Date: Tue, 16 Apr 2013 08:47:09 -0400
+Message-ID: <CAM9Z-nkbBS5qvbkocdGWj7rwtSxB86+R4jdjcBOxCU4YjtgZ1A@mail.gmail.com>
+References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com>
+	<85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com>
+	<7v4nfch90r.fsf@alter.siamese.dyndns.org>
+	<20130412064837.GA5710@elie.Belkin>
+	<20130412064953.GB5710@elie.Belkin>
+	<7vy5cnd0m4.fsf@alter.siamese.dyndns.org>
+	<516888C0.90501@gmail.com>
+	<CAM9Z-nmOzpJdT3ni0rYRkg7Z26N5XSRyqp0TkTY79AAZ85pw2A@mail.gmail.com>
+	<7vobdfnlc7.fsf@alter.siamese.dyndns.org>
+	<CAM9Z-nm=SUNAHXZtOnz_BSS8VrVYPczicX99FUmDJe6Lj_oKpQ@mail.gmail.com>
+	<516D4359.2070501@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
 	Stefano Lattarini <stefano.lattarini@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 14:26:14 2013
+To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 14:47:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US4xg-0002wQ-Ie
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 14:26:12 +0200
+	id 1US5I3-0005Zn-EZ
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 14:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756379Ab3DPM0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 08:26:07 -0400
-Received: from mail-ee0-f45.google.com ([74.125.83.45]:64387 "EHLO
-	mail-ee0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755268Ab3DPM0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 08:26:06 -0400
-Received: by mail-ee0-f45.google.com with SMTP id c50so215272eek.32
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 05:26:04 -0700 (PDT)
+	id S1754133Ab3DPMrL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 08:47:11 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:36238 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753414Ab3DPMrK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 08:47:10 -0400
+Received: by mail-ie0-f181.google.com with SMTP id as1so423440iec.12
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 05:47:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=wMwu/ugafcl+vxoKrLbUwSsLU9PXfIifRA3cfbxoajI=;
-        b=NVwa9ez8YBnY7wsmcpLy7s36rQ5Xgwcae/W/dEhB/WS7iVOtsjIvkfUl16dH7ghAq2
-         xEtld6+r8zVxBV3WZNeWcDtUzDXYwySriM7gq+93rx8nAdKeRlMPBTiRYbC5Zhiin7tf
-         bHD23tg7xGaG6v5rkQO5qeF1n5w3D55KlzEuGZ+8Eie9iEipKSEEcZwBh9Z4yxq7ULL1
-         TK8JMZJ0jda5uhzY6yRsLzy8y6azlCYm3W/PhzxLYwc9uDMbNsYzGuDqS0BtoeapPukS
-         t1JHGdCwIAaszDvJAEiKL7FWAPMy9vsfys0BPhCKjeDPjpEi8XY/v50nJ+EKMDiT4PX7
-         rPog==
-X-Received: by 10.15.32.67 with SMTP id z43mr5917496eeu.24.1366115164195;
-        Tue, 16 Apr 2013 05:26:04 -0700 (PDT)
-Received: from [192.168.1.14] (ept17.neoplus.adsl.tpnet.pl. [83.20.61.17])
-        by mx.google.com with ESMTPS id bk42sm2627054eeb.3.2013.04.16.05.26.02
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 16 Apr 2013 05:26:03 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <CAM9Z-nm=SUNAHXZtOnz_BSS8VrVYPczicX99FUmDJe6Lj_oKpQ@mail.gmail.com>
-X-Enigmail-Version: 1.5.1
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=kmkXp+ToWFCNO9O6W+6qRb5NdZ9cHYaf5LjhVtUp2gk=;
+        b=glIaMBw61sopr5IKN9V4IzZmRilLhjb3ax8i8Un6iSyEeJ/IMn+KcVZCQhj0PDxHq2
+         fDhP8z4HVAn6/tfdQuOGr4qvRhg9adUqT9uU6chiBvHZsEkJsDBSkhbzrTGQcsiOeZ0o
+         Km7jrS59F5c3tRncxi664Q1h0q9HGdQl7G25hR7vc3yYkfIClXfeIt2lyuWYP1nrh4eQ
+         MlT+j0uNojOqQOxZ84fdhfgc6JVOJgRdaV6kOnMVI3cQ3ubOH8KlV+JmhSqrSn51+N96
+         JuELymsm5ve3qSKjxWZDD2kBbvF+AJH0i2iJlOVXAlD6WK2VY/e9eMxjSYuvWirDw0k9
+         pRtg==
+X-Received: by 10.43.8.200 with SMTP id ot8mr1008930icb.11.1366116429415; Tue,
+ 16 Apr 2013 05:47:09 -0700 (PDT)
+Received: by 10.42.173.70 with HTTP; Tue, 16 Apr 2013 05:47:09 -0700 (PDT)
+In-Reply-To: <516D4359.2070501@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221411>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+On Tue, Apr 16, 2013 at 8:26 AM, Jakub Nar=C4=99bski <jnareb@gmail.com>=
+ wrote:
+
+> Drew: gitweb(1) or gitweb.conf(5) solution is more involved, so
+> perhaps something like that?
+
+
+That or: (or both I suppose....hopefully not too mangled by Google's
+mail gadget)
+
+-- >8 --
+Subject: [PATCH] Documentation/gitweb.conf.txt: Move note about config
+order precedence
+
+To go along with Jakub Narebski's cleanup of gitweb/INSTALL; making
+it clear that gitweb's config files work differently than a lot of
+other system-wide software. This is unobtrusive yet to the point.
 ---
-This can be either squashed with previous patch to gitweb/INSTALL,
-kept as separate patch or discarded.
-
-Drew: gitweb(1) or gitweb.conf(5) solution is more involved, so
-perhaps something like that?
-
- gitweb/INSTALL |    3 ++-
+ Documentation/gitweb.conf.txt | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index 7ad1050..386e62f 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -243,7 +243,6 @@ for gitweb (in gitweb/README), and gitweb.conf(5) manpage.
-   GITWEB_CONFIG_SYSTEM build configuration variable, and override it
-   through the GITWEB_CONFIG_SYSTEM environment variable.
- 
--
-   Note that the GITWEB_CONFIG_SYSTEM system-wide configuration file is
-   only used for instances that lack per-instance configuration file.
-   You can use GITWEB_CONFIG_COMMON common system-wide configuration
-@@ -252,6 +251,8 @@ for gitweb (in gitweb/README), and gitweb.conf(5) manpage.
-   system-wide configuration file override those from common system-wide
-   configuration file.
- 
-+  (Idiosyncratic GITWEB_CONFIG_SYSTEM is present for backward compatibility.)
-+
- - The gitweb config file is a fragment of perl code. You can set variables
-   using "our $variable = value"; text from "#" character until the end
-   of a line is ignored. See perlsyn(1) for details.
--- 
-1.7.10.4
+diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.=
+txt
+index eb63631..05c81e7 100644
+--- a/Documentation/gitweb.conf.txt
++++ b/Documentation/gitweb.conf.txt
+@@ -55,7 +55,8 @@ following order:
+    then fallback system-wide configuration file (defaults to
+'/etc/gitweb.conf').
+
+ Values obtained in later configuration files override values obtained =
+earlier
+-in the above sequence.
++in the above sequence. This is different from many system-wide softwar=
+e
++installations and will stay this way for historical reasons.
+
+ Locations of the common system-wide configuration file, the fallback
+ system-wide configuration file and the per-instance configuration file
+--
+1.8.0
+
+
+--
+-Drew Northup
+--------------------------------------------------------------
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
