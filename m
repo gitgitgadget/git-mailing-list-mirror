@@ -1,75 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 10/13] pretty: add %C(auto) for auto-coloring
-Date: Tue, 16 Apr 2013 14:37:30 -0700
-Message-ID: <7v8v4ijgx1.fsf@alter.siamese.dyndns.org>
-References: <1364636112-15065-1-git-send-email-pclouds@gmail.com>
- <1366100702-31745-1-git-send-email-pclouds@gmail.com>
- <1366100702-31745-11-git-send-email-pclouds@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] help.c: add a compatibility comment to cmd_version()
+Date: Tue, 16 Apr 2013 22:59:56 +0100
+Organization: OPDS
+Message-ID: <3D6BDB8830FC44A38B1AC508488049C0@PhilipOakley>
+References: <1366144405-61438-1-git-send-email-davvid@gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 23:37:40 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "David Aguilar" <davvid@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 23:59:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USDZJ-0008HO-67
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 23:37:37 +0200
+	id 1USDuo-0003fn-JK
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 23:59:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965444Ab3DPVhd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 17:37:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39819 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965344Ab3DPVhc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 17:37:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41BE016452;
-	Tue, 16 Apr 2013 21:37:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=CiZiUpMWRYYp
-	T8hql8TvuK4f+lE=; b=ErsmdASSCYP/LgxY/yHcucLM9vmtKMZ0fVN1qPLneok4
-	Lks/UUaWS7y66c3g1BYe0VOKs07lyHTqU/u14KuqRXT8adwIuKYZ7PkNw1VHxfCm
-	TxDx355Cst4yA5/1k1aZ9nCfxbG/FFBOrwMzDNuktHEGEXC4nNoBEo4uQ27+iU4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hOQvSd
-	5/XbBYxLKCez7rZJ3fDghD1wLAFgLlVW+BPWodmmOZbblocWPSGGi0rOh/EPcM8C
-	ZtNgdbq2+dfEUeHRaL3kf8KJhUWWQ/uUaew37WcfYWCWyxeWR/gjPZmKTeyziHWp
-	jJu2drcxtPb20vDectBP3O2TqHUzTcnzXdVpc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 323B716451;
-	Tue, 16 Apr 2013 21:37:32 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 967E91644F; Tue, 16 Apr
- 2013 21:37:31 +0000 (UTC)
-In-Reply-To: <1366100702-31745-11-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 16 Apr
- 2013 18:24:59 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D7FDF634-A6DD-11E2-8E65-CC48E7F0ECB6-77302942!b-pb-sasl-quonix.pobox.com
+	id S965417Ab3DPV7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 17:59:46 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:10475 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965386Ab3DPV7p (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 17:59:45 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AsMNAN7IbVFOl3gj/2dsb2JhbAAuIoMGNohwuA8EAQMBgQoXdIIaBQEBBQgBAS4RBQgBASELAgMFAgEDDgYBAQslFAEECBACBgcXBgEHCwgCAQIDAQwEh2EDEwisRIZHDYldjEiBaWqCa2EDiE6FdIZhgwaIWIF9hRyDDDs
+X-IronPort-AV: E=Sophos;i="4.87,487,1363132800"; 
+   d="scan'208";a="406781361"
+Received: from host-78-151-120-35.as13285.net (HELO PhilipOakley) ([78.151.120.35])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 16 Apr 2013 22:59:43 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221480>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+From: "David Aguilar" <davvid@gmail.com>
+Sent: Tuesday, April 16, 2013 9:33 PM
+> External projects have been known to parse the output of
+> "git version".  Help prevent future authors from changing
+> its format by adding a comment to its implementation.
+>
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+> help.c | 4 ++++
+> 1 file changed, 4 insertions(+)
+>
+> diff --git a/help.c b/help.c
+> index 1dfa0b0..02ba043 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -397,6 +397,10 @@ const char *help_unknown_cmd(const char *cmd)
+>
+> int cmd_version(int argc, const char **argv, const char *prefix)
+> {
+> + /*
+> + * The format of this string should be kept stable for compatibility
+> + * with external projects that rely on the output of "git version".
 
->  	case 'h':		/* abbreviated commit hash */
-> +		strbuf_addstr(sb, diff_get_color(c->auto_color_next, DIFF_COMMIT))=
-;
->  		if (add_again(sb, &c->abbrev_commit_hash))
->  			return 1;
+Shouldn't the expected format of our known external project also be 
+indicated?
+Or mention "such as git gui"?
 
-Doesn't this early return mess things up?
-
->  		strbuf_addstr(sb, find_unique_abbrev(commit->object.sha1,
->  						     c->pretty_ctx->abbrev));
-> +		strbuf_addstr(sb, diff_get_color(c->auto_color_next, DIFF_RESET));
->  		c->abbrev_commit_hash.len =3D sb->len - c->abbrev_commit_hash.off;
->  		return 1;
+> + */
+>  printf("git version %s\n", git_version_string);
+>  return 0;
+> }
+> -- 
+> 1.8.2.1.652.ge104b5e
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
+> -----
+> No virus found in this message.
+> Checked by AVG - www.avg.com
+> Version: 2013.0.3272 / Virus Database: 3162/6248 - Release Date: 
+> 04/16/13
+> 
