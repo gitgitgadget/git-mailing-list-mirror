@@ -1,106 +1,84 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH/RFC] l10n: de.po: translate 39 new messages
-Date: Tue, 16 Apr 2013 10:34:09 +0200
-Message-ID: <87ppxuan7i.fsf@linux-k42r.v.cablecom.net>
-References: <1366043260-3131-1-git-send-email-ralf.thielow@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate $GITDIR
+Date: Tue, 16 Apr 2013 14:06:36 +0530
+Message-ID: <CALkWK0kDgSicNejydLsH6iqj-yDYGz6CKd+kbn4EW1HxgAxsBA@mail.gmail.com>
+References: <1365881007-25731-1-git-send-email-artagnon@gmail.com> <20130416025840.GH3262@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <jk@jk.gs>, <stimming@tuhh.de>, <git@vger.kernel.org>
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 10:34:25 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 10:37:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US1LN-0007pV-3G
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 10:34:25 +0200
+	id 1US1OI-0003dd-7t
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 10:37:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754996Ab3DPIeO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 04:34:14 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:26858 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754868Ab3DPIeM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 04:34:12 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 16 Apr
- 2013 10:34:05 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS12.d.ethz.ch (172.31.38.212) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Tue, 16 Apr 2013 10:34:09 +0200
-In-Reply-To: <1366043260-3131-1-git-send-email-ralf.thielow@gmail.com> (Ralf
-	Thielow's message of "Mon, 15 Apr 2013 18:27:40 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1754838Ab3DPIhU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 04:37:20 -0400
+Received: from mail-ia0-f179.google.com ([209.85.210.179]:63217 "EHLO
+	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752669Ab3DPIhR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 04:37:17 -0400
+Received: by mail-ia0-f179.google.com with SMTP id l25so182609iad.24
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 01:37:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=FativpihdZJ3jfpzdVDhuebi3lzYZdTeiplZJmh0Qyk=;
+        b=qJn85seT4uhF9b1yQAFtXYf/rSwMSoTxjdw6NWSA160epLC9zTE2sNf3B/XqWR3KT6
+         Aw8NLWbw6vNx9v2ahMQ80loXj3JvKhB9EOdpvj4jUyg8LuajXKzQ0qcP67NqAglereQR
+         8yhILnVgwKqx6ZDHKFQXfnLVQAxQa66oL77u7+2vB2x/UiE0mrWeoYpRwOZ5YaOhO9fb
+         EGHbHhNoP3f1JVpRyjcHxx3KU4mJtSzsQpiFYahYWvKgHMIbG6MoEHmVSAcObN2U23sG
+         Aw4kNbtn+51HGW2G+hHyzEnCrka0f/e/geIxXK6+9wUANwFuQqUiKjZNs8WJunC6Cc6P
+         Zyng==
+X-Received: by 10.50.50.71 with SMTP id a7mr7163871igo.14.1366101436461; Tue,
+ 16 Apr 2013 01:37:16 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Tue, 16 Apr 2013 01:36:36 -0700 (PDT)
+In-Reply-To: <20130416025840.GH3262@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221396>
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
+Jonathan Nieder wrote:
+> I quite like .git/modules/<subproject name> (for some reasons that
+> I've mentioned in other threads) and don't consider it nonsense, which
+> makes me assume I don't understand the goal of this patch, either.
+> Please don't take that personally.
 
->  msgid "You are currently reverting commit %s."
-> -msgstr "Sie sind gerade bei einer bin=C3=A4ren Suche in Zweig '%s'."
-> +msgstr "Sie kehren gerade Version '%s' um."
+There's nothing to take personally, Jonathan.  We're designing
+software, and the rationale for choosing a design is never "Jonathan
+personally likes this particular design, so therefore we'll go with
+it", but rather "Ram's design is objectively superior, and therefore
+we'll go with it".  I'll proceed with bashing .git/modules, while your
+job is to defend it:
 
-Is revert->umkehren new?  I can see it's in the glossary, but
+1. The path to the object store of a submodule depends upon how deeply
+it is nested in other submodules, and hence how many /modules/
+components to add to the path to the project's name.  Presumably, this
+is to avoid conflicts: but it's an overkill for such a simple job.  In
+the 98% case, I never have two submodules with the same name in my
+superproject; for the 2% case, I can live with the inconvenience of
+naming a directory by hand, rather than putting up with this ugliness.
 
-  #: sequencer.c:536
-  #, c-format
-  msgid "could not revert %s... %s"
-  msgstr "Konnte %s nicht zur=C3=BCcksetzen... %s"
+2. This ugliness complicates implementation of add/ rm/ mv, because
+each of them will have to know about this contrived path solution.
 
-  #: sequencer.c:1016
-  msgid "Can't revert as initial commit"
-  msgstr "Kann nicht zu initialer Version zur=C3=BCcksetzen."
+3. The paths in the gitfiles in various submodules is horribly ugly
+with tons of ../ components.  This is especially the case in deeply
+nested submodules.  We can't use an absolute path, because the
+superproject directory can be moved anywhere in the filesystem.
 
-which I don't really like either now that you mention it -- I would
-re-translate it as 'reset'.  But either way they should be consistent.
+4. To relocate the object store and reuse it elsewhere is almost
+impossible.  What if I want to remove the submodule, but work on it
+independently from the superproject?  Re-clone?
 
->  msgid "Commit %s has an untrusted GPG signature, allegedly by %s."
-> -msgstr ""
-> +msgstr "Version %s hat eine nicht vertrauensw=C3=BCrdige GPG-Signatu=
-r, "
-> +"vermeintlich von %s."
-> =20
->  msgid "Commit %s has a bad GPG signature allegedly by %s."
-> -msgstr ""
-> +msgstr "Version %s hat eine ung=C3=BCltige GPG-Signatur, vermeintlic=
-h von %s."
-
-You could say "angeblich" instead, which is more to the point.
-
->  #: git-submodule.sh:626
-> -#, fuzzy, sh-format
-> +#, sh-format
->  msgid "Submodule '$name' ($url) unregistered for path '$sm_path'"
-> -msgstr "Unterprojekt '$name' ($url) ist f=C3=BCr Pfad '$sm_path' reg=
-istriert"
-> +msgstr "Unterprojekt '$name' ($url) ist nicht f=C3=BCr Pfad '$sm_pat=
-h' registriert."
-
-This is in cmd_deinit(), and the comment for the enclosing block says
-
-  # Remove the whole section so we have a clean state when
-  # the user later decides to init this submodule again
-
-So it would seem to use "unregister" as a verb, not an adjective, and
-the correct translation is
-
-  msgstr "Unterprojekt '$name' ($url) f=C3=BCr '$sm_path' deregistriert=
-=2E"
-
-or some such.  "Deregistriert" is not very nice; in the absence of
-context I would suggest "ausgetragen", but that problably collides with
-our use of "eintragen".  Perhaps you can go the long way for this
-isolated use and just say "aus der Konfiguration entfernt" (and
-similarly for 'register').
-
-In any case you should also add 'register' and 'unregister' to the
-glossary once you've settled on something.
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+My solution fixes all these problems, and we need
+.git/modules/<name>.git (no path-to-submodule nonsense) only as a last
+resort: #3 (ref: my email to Peff).
