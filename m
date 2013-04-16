@@ -1,139 +1,89 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH master] convert: The native line-ending is \r\n on MinGW
-Date: Tue, 16 Apr 2013 20:03:22 +0200
-Message-ID: <516D926A.70106@kdbg.org>
-References: <1275679748-7214-1-git-send-email-eyvind.bernhardsen@gmail.com> <20100904082509.GC10140@burratino> <7vbp8aqtuz.fsf@alter.siamese.dyndns.org> <7v4nf7qzkd.fsf@alter.siamese.dyndns.org> <CABPQNSaA7Qdt5eCZR3rs87gL730Y_xMrg6S-++YuaXdC2k45jg@mail.gmail.com> <7vsj2rpj0j.fsf@alter.siamese.dyndns.org> <CABPQNSZwc8Ae_fGwvyEq84NuBNntB7-KXnJtqt9ZLowCJof9Gw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Tue Apr 16 20:03:44 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] t3903 (stash): add failing test for ref of form ^{/message}
+Date: Tue, 16 Apr 2013 23:37:23 +0530
+Message-ID: <1366135643-18358-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gister@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 16 20:07:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USAEG-00063I-VC
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 20:03:41 +0200
+	id 1USAID-0003mr-9E
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 20:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965163Ab3DPSD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 14:03:29 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:13731 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S936036Ab3DPSD2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 14:03:28 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id C18F813005A;
-	Tue, 16 Apr 2013 20:03:23 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 1DAD419F542;
-	Tue, 16 Apr 2013 20:03:23 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <CABPQNSZwc8Ae_fGwvyEq84NuBNntB7-KXnJtqt9ZLowCJof9Gw@mail.gmail.com>
+	id S1751801Ab3DPSHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 14:07:40 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:50028 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751327Ab3DPSHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 14:07:39 -0400
+Received: by mail-pd0-f174.google.com with SMTP id p12so422164pdj.33
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 11:07:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=cGqYvszcGAWAgCWBeYjDtL9A4iUKKAPK+jtQMdI+Y8w=;
+        b=wxG9hrdDo46B+IXtMamCJr+JsBs0mUSFDgED3dR1mMY+p2mSqrT67hXf7PfsgrsIEe
+         D/4pKEXnh8jXWkvkYZ+USZ1/WJw2Lonuy7uANma7+Vjbe6ONG+tgKobuarDC68gvCEbZ
+         QyPfJLFd6VKJ9p8WMvh1y+fNRrTHZehqyTNdcSgq31/rrPTpGuZeImE2ZxruJj/AOQdb
+         DWjePrpQlRWzJrVZQ3aDxjTT+qWncAfrsLkuOBNcI6MZ7K9k6pfc4iYcOjZ39mgWATy9
+         2pwyF7hwKMHj6jF+UhIVFmmw6k9tCTUo9rBltDZsuSnFxfGl41Qq5xFKtcDYHUqebilW
+         0Cew==
+X-Received: by 10.68.51.135 with SMTP id k7mr4851815pbo.48.1366135659325;
+        Tue, 16 Apr 2013 11:07:39 -0700 (PDT)
+Received: from localhost.localdomain ([122.164.25.24])
+        by mx.google.com with ESMTPS id gi10sm2883778pbc.40.2013.04.16.11.07.36
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 16 Apr 2013 11:07:38 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.1.390.g924f6c3.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221439>
 
-Am 16.04.2013 16:39, schrieb Erik Faye-Lund:
-> On Mon, Apr 15, 2013 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Erik Faye-Lund <kusmabite@gmail.com> writes:
->>
->>> This is absolutely the right thing to do. However, stuff have changed
->>> a bit since the patch was written; this change now needs to go in
->>> config.mak.uname instead of config.mak.
->>
->> Thanks for a quick response.
->>
->> What's your preference?  I could just ignore a patch I won't be able
->> to test myself and have you guys carry it in your tree forever, but
->> I do not think that is necessary for something small like this.
-> 
-> I should probably clarify; conceptually, this is the right thing to
-> do. Git for Windows is a Windows application, and should have CRLF as
-> the native newline. I hadn't tested this patch myself, though. Our
-> tree is currently way behind yours, and I tried to do a rebase, but it
-> turned out much trickier than I was hoping for.
-> 
-> I've given it a go on top of your tree + some essential patches I'll
-> need to get things to run, and it seems to do what it claims to do.
-> However, I haven't been able to run the test-suite, because I need a
-> bunch more patches from the msysGit-tree for that.
+While a 'git stash show stash^{/quuxery}' works just fine, a 'git
+stash pop stash^{/quuxery}' complains with: 'stash^{/quuxery} is not a
+stash reference'.  This confusing behavior arises from the differences
+in logic that 'show' and 'pop' internally employ to validate the
+specified ref.  Document this bug by adding a failing testcase for it.
 
-I have been using this patch or an equivalent one since at least one and
-a half years (until a month or two ago, as I discovered today, but that
-is only by accident). But I do not use any text attributes or eol
-configuration, so I can only say that it does not regress this use case.
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ So if you look at git-stash.sh:377, you'll notice that it's doing a
+ the shell substitution "${REV%@*}" to figure out whether the stash
+ ref is a valid ref.  This hacky myopic design has to be done away
+ with immediately, and we should really compare the SHA-1 hex of the
+ specified ref with those in the stash reflog.
 
-> 
->> I think this is low impact enough that it can directly go to
->> 'master' or even 'maint' if I were to apply to my tree.
->>
-> 
-> I agree. I don't think we need it in maint; we don't track that branch
-> for msysGit.
+ The only reason I haven't written a fix yet is because I'm not sure
+ why you need this convoluted IS_STASH_LIKE and IS_STASH_REF logic in
+ the first place.  Can someone enlighten me as to what is going on?
 
-Yes, master is good enough.
+ t/t3903-stash.sh | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Thanks.
-
-> 
->> Thanks.
->>
->> -- >8 --
->> From: Jonathan Nieder <jrnieder@gmail.com>
->> Date: Sat, 4 Sep 2010 03:25:09 -0500
->> Subject: [PATCH] convert: The native line-ending is \r\n on MinGW
->>
->> If you try this:
->>
->>  1. Install Git for Windows (from the msysgit project)
->>
->>  2. Put
->>
->>         [core]
->>                 autocrlf = false
->>                 eol = native
->>
->>     in your .gitconfig.
->>
->>  3. Clone a project with
->>
->>         *.txt text
->>
->>     in its .gitattributes.
->>
->> Then with current git, any text files checked out have LF line
->> endings, instead of the expected CRLF.
->>
->> Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
->> Cc: Johannes Sixt <j6t@kdbg.org>
->> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  config.mak.uname | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/config.mak.uname b/config.mak.uname
->> index 9080054..d78fd3d 100644
->> --- a/config.mak.uname
->> +++ b/config.mak.uname
->> @@ -507,6 +507,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
->>                 compat/win32/dirent.o
->>         EXTLIBS += -lws2_32
->>         PTHREAD_LIBS =
->> +       NATIVE_CRLF = YesPlease
->>         X = .exe
->>         SPARSE_FLAGS = -Wno-one-bit-signed-bitfield
->>  ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
->> --
->> 1.8.2.1-542-g3613165
->>
-> 
-> Looks fine to me.
-> 
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 5dfbda7..04ba983 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -583,6 +583,15 @@ test_expect_success 'invalid ref of the form stash@{n}, n >= N' '
+ 	git stash drop
+ '
+ 
++test_expect_failure 'valid ref of the form stash^{/message}' '
++	git stash clear &&
++	echo bar > file &&
++	git add file &&
++	git stash save "quuxery" &&
++	git stash show stash^{/quuxery} &&
++	git stash pop stash^{/quuxery}
++'
++
+ test_expect_success 'stash branch should not drop the stash if the branch exists' '
+ 	git stash clear &&
+ 	echo foo >file &&
+-- 
+1.8.2.1.390.g924f6c3.dirty
