@@ -1,126 +1,95 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [Resend PATCH] t3903 (stash): add failing test for ref of form ^{/message}
-Date: Tue, 16 Apr 2013 11:57:49 -0700
-Message-ID: <CA+sFfMfkoBcoPvJSYBGUe46EbMfiC7q6tVZs6db2NHrEb2gb7Q@mail.gmail.com>
-References: <1366135765-18437-1-git-send-email-artagnon@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 0/2] Test the Git version string
+Date: Tue, 16 Apr 2013 12:02:00 -0700
+Message-ID: <7vip3ml2on.fsf@alter.siamese.dyndns.org>
+References: <1365949646-1988-1-git-send-email-philipoakley@iee.org>
+ <7v8v4k6hp2.fsf@alter.siamese.dyndns.org>
+ <79879228B71A45A48A961F5B1880B61F@PhilipOakley>
+ <7vli8k4lnj.fsf@alter.siamese.dyndns.org>
+ <99AE5E981E2547B6A71A4D77B17167B9@PhilipOakley>
+ <7v8v4imjji.fsf@alter.siamese.dyndns.org>
+ <CAJDDKr7WKwt10sCRTbm8gdhwEUKSYuQxtPDVm7usTm2ZHryk9g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 20:57:57 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Philip Oakley <philipoakley@iee.org>, GitList <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 21:02:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USB4m-0006ig-6f
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 20:57:56 +0200
+	id 1USB8s-0004c9-8R
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 21:02:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935056Ab3DPS5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 14:57:51 -0400
-Received: from mail-we0-f180.google.com ([74.125.82.180]:58537 "EHLO
-	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752143Ab3DPS5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 14:57:51 -0400
-Received: by mail-we0-f180.google.com with SMTP id r5so601346wey.25
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 11:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=TX8ZXT9zVsN3VrLYT921VJ71l5e/Jng2zsy/LpfbuoY=;
-        b=rPzZvi0QErxfd2oHjrCgFSaEWbHjxnRtWgl+J3iHdf7KsFO6sGmb9l2cwANTaJWkzY
-         VMXK1ARhldaJdrYbH+TDQ+3VUrGt2fFAkF5WWlQhqPmYJPgZf1VqP3ffAIsbhiqHZwT+
-         etYct6jvlCc7/RA9n/LblUpsHIKSETbmU1t1IbRNq6AtAq9kcoXOJnP+T+e6riKGS39E
-         TsuAs8yn62GBlL3nSR6LBGQZC6+ktx7kxygeLn6mft0lh3oH0cEAXjhT/mUcB7KEzQ89
-         ejIoD568ZuDwK2GKAsD3ohcxshMtO9H1L6R06U0u0F6sLerfXHRLWW/TpL++Kz2sMnTL
-         QOYQ==
-X-Received: by 10.194.10.129 with SMTP id i1mr6257828wjb.21.1366138670051;
- Tue, 16 Apr 2013 11:57:50 -0700 (PDT)
-Received: by 10.194.249.69 with HTTP; Tue, 16 Apr 2013 11:57:49 -0700 (PDT)
-In-Reply-To: <1366135765-18437-1-git-send-email-artagnon@gmail.com>
+	id S934963Ab3DPTCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 15:02:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35919 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752143Ab3DPTCD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 15:02:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3BDD1436E;
+	Tue, 16 Apr 2013 19:02:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uUAiHoGxTBvz9wq+5HmvtIDuHIA=; b=wLN+KH
+	pI0+xggb8V4rGFsCYqXVbHOdWtT/NV8dMyL5JYQtGJGZENO5/hgsq/O+0l4EEKw7
+	A/PMajxRW51qWDbseY21RIqrI1YmCBFKWZihbMj4bmFQZ0VZUSQPUatewhUdsZOv
+	Q/bVMPu0QvaytU1D83NEXcc18EMGbAhr7JBF8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sCm9eyDCefXLHrSK/hV4xti+WOuMHe2p
+	hzdq6ANJodcWZW/USypgKd1IyGZtUBk+ns3/WzV13X54pqtPGp8hnTIFsKQgMuxI
+	V8fVhjoCZQpEgscIglc5fBQmEaU/SmpC/o9XFXK2pMES3PxV6baHRFS2+X3z9VHk
+	fjj47MnR+zY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E88311436C;
+	Tue, 16 Apr 2013 19:02:02 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1EC8114367; Tue, 16 Apr
+ 2013 19:02:02 +0000 (UTC)
+In-Reply-To: <CAJDDKr7WKwt10sCRTbm8gdhwEUKSYuQxtPDVm7usTm2ZHryk9g@mail.gmail.com> (David
+ Aguilar's message of "Tue, 16 Apr 2013 11:24:28 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1F2E373C-A6C8-11E2-97B4-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221451>
 
-On Tue, Apr 16, 2013 at 11:09 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> While a 'git stash show stash^{/quuxery}' works just fine, a 'git
-> stash pop stash^{/quuxery}' complains with: 'stash^{/quuxery} is not a
-> stash reference'.
+David Aguilar <davvid@gmail.com> writes:
 
-I don't think it is appropriate to use the ^{/<text>} notation with stashes.
-
-The stash is implemented using the reflog.  The ^{/<text>} notation
-searches the commit history, not the reflog.  So I think it will be
-able to match the first entry in your stash stack, but not any of the
-other ones.
-
-Try inserting another stash (see below) on top of the one that
-contains the string "quuxery" and I think you'll find that your 'git
-stash show stash^{/quuxery}' no longer works.
-
-An extension to the reflog dwimery that implements @{/<text>} could be
-interesting though.
-
-> This confusing behavior arises from the differences
-> in logic that 'show' and 'pop' internally employ to validate the
-> specified ref.  Document this bug by adding a failing testcase for it.
+> The "regression" is that there are scripts and tools in the wild that
+> need to know the git version when deciding whether or not to use some
+> new feature.
 >
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  So sorry about misspelling Junio's address in my previous email.
->  Please respond to this one instead.
+> e.g. "git status --ignore-submodules=dirty" did not appear until git 1.7.2.
+> A script may want to use this flag, but it will only want to use it
+> when available.
 >
->  So if you look at git-stash.sh:377, you'll notice that it's doing a
->  the shell substitution "${REV%@*}" to figure out whether the stash
->  ref is a valid ref.
+> If this string started saying "The Git Version Control System v2.0" then these
+> scripts would be "broken" since they would no longer recognize this as a
+> "post-1.7.2 Git".
 
-> This hacky myopic design has to be done away
->  with immediately, and we should really compare the SHA-1 hex of the
->  specified ref with those in the stash reflog.
+Blacklisting known-bad version and hoping all other versions
+including the ones you have never seen to behave in the way you
+expect usually works but there is a limit.
 
-Just a bit of advice, maybe you should think about softening your tone
-a bit hmm?  I find this last sentence to be somewhat repelling and
-tend to refrain from responding to such.
+A change to say "The Git Version Control System %s" will not happen
+willy-nilly, but when there is a good reason to do so, we would.
 
->  The only reason I haven't written a fix yet is because I'm not sure
->  why you need this convoluted IS_STASH_LIKE and IS_STASH_REF logic in
->  the first place.  Can someone enlighten me as to what is going on?
+I do not think a test that hardcodes the output is a good way to
+make sure a change is being done with a good reason.  After all, a
+patch that updates the "git version %s" string can just update the
+expected output in the same patch.  The only reason such a change
+will be caught is because during the review, somebody notices that
+the change touches the expected output of a test; for that to
+reliably protect the output, the test *has* to be commented to say
+that this expected output should be changed very carefully.
 
->  t/t3903-stash.sh | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index 5dfbda7..04ba983 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -583,6 +583,15 @@ test_expect_success 'invalid ref of the form stash@{n}, n >= N' '
->         git stash drop
->  '
->
-> +test_expect_failure 'valid ref of the form stash^{/message}' '
-> +       git stash clear &&
-> +       echo bar > file &&
-> +       git add file &&
-> +       git stash save "quuxery" &&
-
-            # Save another stash here
-
-            echo bash >file
-            git add file
-            git stash save "something"
-
-            # Now git stash show stash^{/quuxery} no longer works.
-
-> +       git stash show stash^{/quuxery} &&
-> +       git stash pop stash^{/quuxery}
-> +'
-> +
->  test_expect_success 'stash branch should not drop the stash if the branch exists' '
->         git stash clear &&
->         echo foo >file &&
-
--Brandon
+A much better solution would be to leave that "very carefully"
+comment next to the in-code string to warn people about ramifiations
+of changing it.
