@@ -1,63 +1,63 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: Ensimag students projects, version 2013
-Date: Mon, 15 Apr 2013 23:38:58 -0400
-Message-ID: <CABURp0rd1owLCwTudQ7WkX7JzmnNOT2ZKvNDv9aqqWOpVOn-mQ@mail.gmail.com>
-References: <vpqobdg515m.fsf@grenoble-inp.fr> <CALkWK0nFB1dzmp6yC9XS4ADmWf9tfQYtsSH0K1u0dtBWT0CRNw@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 1/3] fast-export: add --signed-tags=warn-strip mode
+Date: Mon, 15 Apr 2013 21:09:53 -0700
+Message-ID: <CAGdFq_jCO_+qj87rtcFyFG2tot8Ah2706X2dm82F6=GBV-g6nw@mail.gmail.com>
+References: <CAGdFq_g+kk-Fy1fcV6D5x4kroRXX63T8wjKNUqqfu39wUkSO6A@mail.gmail.com>
+ <cover.1365936811.git.john@keeping.me.uk> <8716b887972b0eb1671afd2692416efd588f7d1d.1365936811.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 05:39:27 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Apr 16 06:10:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URwjs-0005S6-2E
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 05:39:24 +0200
+	id 1URxE8-0008Fj-0E
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 06:10:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935619Ab3DPDjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 23:39:20 -0400
-Received: from mail-ve0-f180.google.com ([209.85.128.180]:47873 "EHLO
-	mail-ve0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935355Ab3DPDjT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 23:39:19 -0400
-Received: by mail-ve0-f180.google.com with SMTP id pb11so43987veb.39
-        for <git@vger.kernel.org>; Mon, 15 Apr 2013 20:39:18 -0700 (PDT)
+	id S1751522Ab3DPEKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 00:10:35 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:41969 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751000Ab3DPEKf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 00:10:35 -0400
+Received: by mail-ie0-f178.google.com with SMTP id bn7so72591ieb.23
+        for <git@vger.kernel.org>; Mon, 15 Apr 2013 21:10:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=SwyeU+q3oXrlhX3pEOb+r4yJGFjvrsmJaVKwjW+s3AM=;
-        b=XxsSJmiAvWYJ8SZ4vVozErft5E+6I9+XiIKyB5yF1MmyfQBwmxc8E0AnW4PO/6JhBk
-         lBv9SZ2sfwV96iRHYFGBQc+SV7TaiIb0W0FHKvn0YC21tbgtpjUXqHWVz13ZSzeCf9tG
-         zPRM60iXzWMIZA+xjxoge8pp0LorpULeLMvwxYY2cbMZgyp2uRQ8F+d5ybURji1vF7c3
-         UBJHU3dQFhazgb9NCoQ0+ZUJ/a5E/LNSJCJUTIMYdSArrXZp5MNIQzF95tTHGWtmrdTc
-         VVra1e4XHxemsexK5TefOfk7azicZ/Li+xfGO1h+mnXlc8eIUzyDvXdmoAwILuA7yL5P
-         /5ng==
-X-Received: by 10.59.11.199 with SMTP id ek7mr336571ved.19.1366083558448; Mon,
- 15 Apr 2013 20:39:18 -0700 (PDT)
-Received: by 10.58.219.34 with HTTP; Mon, 15 Apr 2013 20:38:58 -0700 (PDT)
-In-Reply-To: <CALkWK0nFB1dzmp6yC9XS4ADmWf9tfQYtsSH0K1u0dtBWT0CRNw@mail.gmail.com>
+        bh=e/n4Z/XMZJ5FLdvLEVilmT3krANrFxlu2FEPcDJnR/8=;
+        b=j6g2Oq3YubakS2Ucn5ZJAeyAkkxhPw6ap7fNg/1cjo6aIBnr6iLIMUIRG6EWqymowf
+         QgvMSzr0HrkExRsXhPbQJlmr5Ev+m1BHhxhm7WPcJk9MRikQ7CJPVzKSxOZnQ8txDQO8
+         kCmnXdgaZWADdKerchmBFNWK7gSAmEisyWXlk4+/4PPwFvV1/ZmitHEKP2KhaVbhXj3S
+         +aV6USjF6r1iA79iAVIze+VzquTJSwhYqJYbqnmqHgj3WDQi1W62Waia7JOE7aWTBQJy
+         MFZ6VbHZToqZxe5FRv+RON4ya9rEqaKEk0M0AX6N9rT2ZWGvgpbqKJ6EP3Z9B67fUQsL
+         yD2w==
+X-Received: by 10.50.55.8 with SMTP id n8mr341268igp.28.1366085434587; Mon, 15
+ Apr 2013 21:10:34 -0700 (PDT)
+Received: by 10.50.157.229 with HTTP; Mon, 15 Apr 2013 21:09:53 -0700 (PDT)
+In-Reply-To: <8716b887972b0eb1671afd2692416efd588f7d1d.1365936811.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221357>
 
-On Mon, Apr 15, 2013 at 11:18 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> A few small personal itches off the top of my head:
->
-> - Make git status -s show "state status" as well: this essentially
-> requires writing an equivalent of wt_status_print_state() for use in
-> wt_shortstatus_print().
+On Sun, Apr 14, 2013 at 3:57 AM, John Keeping <john@keeping.me.uk> wrote:
+> This issues a warning while stripping signatures from signed tags, which
+> allows us to use it as default behaviour for remote helpers which cannot
+> specify how to handle signed tags.
 
-I actually submitted a patch for this last fall.   I was going to
-reprise it and give it another run after your wt_status changes died
-down (and I found some free time).
+Perhaps it makes sense to instead count the number of signed tags and
+emit "Stripped signature from %d tags"? For example, for git.git it
+would be on the order of a hundred warning lines.
 
-http://comments.gmane.org/gmane.comp.version-control.git/208209
+--
+Cheers,
 
-Phil
+Sverre Rabbelier
