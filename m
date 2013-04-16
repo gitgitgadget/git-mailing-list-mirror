@@ -1,63 +1,74 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
-Date: Mon, 15 Apr 2013 21:08:23 -0400
-Message-ID: <CAPig+cTemYT1qTNpYFF2gvZhu=O=NwQu5GzAisgnMCjfZYFCkA@mail.gmail.com>
-References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
-	<20130415232532.GA7134@sigill.intra.peff.net>
-	<20130416003038.GA5336@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/3] usage: refactor die-recursion checks
+Date: Mon, 15 Apr 2013 18:41:45 -0700
+Message-ID: <20130416014145.GC3262@elie.Belkin>
+References: <20130415230651.GA16670@sigill.intra.peff.net>
+ <20130415230802.GA11267@sigill.intra.peff.net>
+ <CA+sFfMes99EepY4FCW32s1L3ywv_gyFb76=Y=35rvPbc2K1BWA@mail.gmail.com>
+ <20130416004228.GA14995@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <drafnel@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 16 03:08:38 2013
+X-From: git-owner@vger.kernel.org Tue Apr 16 03:42:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URuNq-0006Cx-NO
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 03:08:31 +0200
+	id 1URuuG-0002LH-2u
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 03:42:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935205Ab3DPBI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 21:08:26 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:51119 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934834Ab3DPBIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 21:08:25 -0400
-Received: by mail-la0-f54.google.com with SMTP id ec20so4944981lab.13
-        for <git@vger.kernel.org>; Mon, 15 Apr 2013 18:08:23 -0700 (PDT)
+	id S964840Ab3DPBlv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 21:41:51 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:37941 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934863Ab3DPBlu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 21:41:50 -0400
+Received: by mail-pd0-f173.google.com with SMTP id v14so2842675pde.4
+        for <git@vger.kernel.org>; Mon, 15 Apr 2013 18:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=re2qQTiHgSIQD/N/eZwNl2N1iMTr1y4pak1l+fkV4KI=;
-        b=TphEftlzQ3Ss6dFD64oLDhoGnzyC88oTh/Ie+suRd66rQlKy7MuVSKRrC+pvdCj2qX
-         Vgrqscxqs3zsF1tf/8SUDdiA2zdh8hCJh+MhI7i2vcPHQaN7OsPl4IBfRPug0zscudCG
-         Cer31kchPzWfGlNLqvFbuRMhOzJaXh+UUrxKHdKLqkoeShftUtTVINtamt038Vhvq99I
-         Z0me18sn5mnUOLJ7UtxUYGyOWLPxZjeQNO1We3P5MEBKqEvvT6ToblF8LooOK2GWXYIs
-         hrgSnps6AqcoJkKXY322PcXqST4SLCMSwjlv32pbFtELIWz5wintS60YMIrM5dmEVQnx
-         /Uqw==
-X-Received: by 10.152.20.226 with SMTP id q2mr80740lae.16.1366074503632; Mon,
- 15 Apr 2013 18:08:23 -0700 (PDT)
-Received: by 10.114.186.233 with HTTP; Mon, 15 Apr 2013 18:08:23 -0700 (PDT)
-In-Reply-To: <20130416003038.GA5336@sigill.intra.peff.net>
-X-Google-Sender-Auth: yE4i6WbN7O-mlko0aB_KFz57ClA
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=3fN845h258mRYXUuvJ6zWuzhS6Zd9HgN84LNP7kHYkw=;
+        b=uT1wgsJq4904s+S2aiJ0O4tt5fpbUN9Mkw7AwhHpDlQQhkQog5z6rkjgNolJVDxlr1
+         ZIyFVCdmAWnzIgoN611NvEaHNvK4iLYzT/0CgFzCaAQRvdr+ySX+6A3uyo7CAAyy1RK9
+         yA6HNGZ8jtYbBZlFjiCrjts8vwjA/i5jvKZLK8Kf4Tmwnb1INDSaGlLl5Hp/wFPiPkKS
+         XMipeGl92WDWmsPBSMOHpfQCDKXHJiz6fMPnS9BCzwxSUumUPPqVT2Xx2xa4R551UOzH
+         J5t3PxcogayRqwswSZHkTVbOQJgj/YIL/yPH6l7IAC1U49dmzAObhWu6S0yKua4tI9WZ
+         MjFA==
+X-Received: by 10.67.2.68 with SMTP id bm4mr907083pad.9.1366076510143;
+        Mon, 15 Apr 2013 18:41:50 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id ba10sm22377777pbd.21.2013.04.15.18.41.47
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 15 Apr 2013 18:41:48 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20130416004228.GA14995@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221342>
 
-On Mon, Apr 15, 2013 at 8:30 PM, Jeff King <peff@peff.net> wrote:
-> Subject: [PATCH] http: set curl FAILONERROR each time we select a handle
->
-> Until commit 6d052d7 (http: add HTTP_KEEP_ERROR option,
-> 2013-04-05), setting curl's FAILONERROR option was a global
-> setup; we never changed it. However, 6d052d7 introduced in
+Jeff King wrote:
 
-s/in/an/
+> I was also tempted to suggest just dropping the recursion check
+> altogether. While it is neat to detect such things, it's a "should never
+> happen" bug situation, and an infinite loop of printing out the same
+> message is pretty easy to notice.
 
-> option where some requests might turn off FAILONERROR. Later
-> requests using the same handle would have the option
-> unexpectedly turned off, which meant they would not notice
-> http failures at all.
+On servers it might be useful to avoid accidentally filling up logs
+quickly.
+
+IIUC the context is in the following two threads:
+
+ http://thread.gmane.org/gmane.comp.version-control.git/182982
+ http://thread.gmane.org/gmane.comp.version-control.git/181421/focus=181443
+
+Thanks,
+Jonathan
