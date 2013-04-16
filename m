@@ -1,84 +1,85 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate $GITDIR
-Date: Tue, 16 Apr 2013 14:06:36 +0530
-Message-ID: <CALkWK0kDgSicNejydLsH6iqj-yDYGz6CKd+kbn4EW1HxgAxsBA@mail.gmail.com>
-References: <1365881007-25731-1-git-send-email-artagnon@gmail.com> <20130416025840.GH3262@elie.Belkin>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 1/3] fast-export: add --signed-tags=warn-strip mode
+Date: Tue, 16 Apr 2013 09:42:52 +0100
+Message-ID: <20130416084252.GK2278@serenity.lan>
+References: <CAGdFq_g+kk-Fy1fcV6D5x4kroRXX63T8wjKNUqqfu39wUkSO6A@mail.gmail.com>
+ <cover.1365936811.git.john@keeping.me.uk>
+ <8716b887972b0eb1671afd2692416efd588f7d1d.1365936811.git.john@keeping.me.uk>
+ <CAGdFq_jCO_+qj87rtcFyFG2tot8Ah2706X2dm82F6=GBV-g6nw@mail.gmail.com>
+ <7vk3o3nktl.fsf@alter.siamese.dyndns.org>
+ <CAGdFq_gCeE8gRxmRYkGkm+kn6_Vo22_8g7+eLMuj-+pKjJjPcA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 10:37:28 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 10:43:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US1OI-0003dd-7t
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 10:37:26 +0200
+	id 1US1Tr-0002mD-Oa
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 10:43:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754838Ab3DPIhU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 04:37:20 -0400
-Received: from mail-ia0-f179.google.com ([209.85.210.179]:63217 "EHLO
-	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752669Ab3DPIhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 04:37:17 -0400
-Received: by mail-ia0-f179.google.com with SMTP id l25so182609iad.24
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 01:37:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=FativpihdZJ3jfpzdVDhuebi3lzYZdTeiplZJmh0Qyk=;
-        b=qJn85seT4uhF9b1yQAFtXYf/rSwMSoTxjdw6NWSA160epLC9zTE2sNf3B/XqWR3KT6
-         Aw8NLWbw6vNx9v2ahMQ80loXj3JvKhB9EOdpvj4jUyg8LuajXKzQ0qcP67NqAglereQR
-         8yhILnVgwKqx6ZDHKFQXfnLVQAxQa66oL77u7+2vB2x/UiE0mrWeoYpRwOZ5YaOhO9fb
-         EGHbHhNoP3f1JVpRyjcHxx3KU4mJtSzsQpiFYahYWvKgHMIbG6MoEHmVSAcObN2U23sG
-         Aw4kNbtn+51HGW2G+hHyzEnCrka0f/e/geIxXK6+9wUANwFuQqUiKjZNs8WJunC6Cc6P
-         Zyng==
-X-Received: by 10.50.50.71 with SMTP id a7mr7163871igo.14.1366101436461; Tue,
- 16 Apr 2013 01:37:16 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Tue, 16 Apr 2013 01:36:36 -0700 (PDT)
-In-Reply-To: <20130416025840.GH3262@elie.Belkin>
+	id S1755337Ab3DPInF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 04:43:05 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:36092 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754192Ab3DPInD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 04:43:03 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 1ABB36064FC;
+	Tue, 16 Apr 2013 09:43:02 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 1E-6Y779gswR; Tue, 16 Apr 2013 09:43:01 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 842D16065AA;
+	Tue, 16 Apr 2013 09:42:54 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <CAGdFq_gCeE8gRxmRYkGkm+kn6_Vo22_8g7+eLMuj-+pKjJjPcA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221397>
 
-Jonathan Nieder wrote:
-> I quite like .git/modules/<subproject name> (for some reasons that
-> I've mentioned in other threads) and don't consider it nonsense, which
-> makes me assume I don't understand the goal of this patch, either.
-> Please don't take that personally.
+On Mon, Apr 15, 2013 at 09:50:42PM -0700, Sverre Rabbelier wrote:
+> On Mon, Apr 15, 2013 at 9:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > When you see 78 in the output and you know you have 92 tags in the
+> > repository, is that sufficient to let you go on, or do we also need
+> > an easy way to tell which ones are those 78 that were stripped and
+> > the remaining 14 were not stripped?
+> >
+> > There is no reason to worry about "some signed tags are stripped but
+> > not others", so it feels that the number alone should be sufficient,
+> > I guess.  If those remaining 14 weren't stripped, that is (at least
+> > at the moment) by definition because they are unsigned, annotated
+> > tags.
+> 
+> Or because they were not exported? Perhaps "78 tags stripped, 92
+> exported in total".
 
-There's nothing to take personally, Jonathan.  We're designing
-software, and the rationale for choosing a design is never "Jonathan
-personally likes this particular design, so therefore we'll go with
-it", but rather "Ram's design is objectively superior, and therefore
-we'll go with it".  I'll proceed with bashing .git/modules, while your
-job is to defend it:
+I think I prefer Jonathan's suggestion to this one if we need to change
+it.
 
-1. The path to the object store of a submodule depends upon how deeply
-it is nested in other submodules, and hence how many /modules/
-components to add to the path to the project's name.  Presumably, this
-is to avoid conflicts: but it's an overkill for such a simple job.  In
-the 98% case, I never have two submodules with the same name in my
-superproject; for the 2% case, I can live with the inconvenience of
-naming a directory by hand, rather than putting up with this ugliness.
+The reason I didn't do this initially was that I assumed that from a
+remote helper we would, in general, not be pushing any tags which
+already exist, so the number of tags to push will be small.
 
-2. This ugliness complicates implementation of add/ rm/ mv, because
-each of them will have to know about this contrived path solution.
-
-3. The paths in the gitfiles in various submodules is horribly ugly
-with tons of ../ components.  This is especially the case in deeply
-nested submodules.  We can't use an absolute path, because the
-superproject directory can be moved anywhere in the filesystem.
-
-4. To relocate the object store and reuse it elsewhere is almost
-impossible.  What if I want to remove the submodule, but work on it
-independently from the superproject?  Re-clone?
-
-My solution fixes all these problems, and we need
-.git/modules/<name>.git (no path-to-submodule nonsense) only as a last
-resort: #3 (ref: my email to Peff).
+Printing one message per tag also matches the current behaviour for
+--signed-tags=warn.  I don't want to make the behaviour for "warn" and
+"warn-strip" different, so should "warn" also print a summary message
+instead of a message for each tag?
