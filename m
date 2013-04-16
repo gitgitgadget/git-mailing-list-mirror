@@ -1,144 +1,96 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: git log - crash and core dump
-Date: Tue, 16 Apr 2013 23:10:06 +0200
-Message-ID: <516DBE2E.4060201@lsrfire.ath.cx>
-References: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com> <516D93C4.1000100@lsrfire.ath.cx> <7v61zml0ow.fsf@alter.siamese.dyndns.org>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [RFC/PATCH 0/2] Test the Git version string
+Date: Tue, 16 Apr 2013 22:22:57 +0100
+Organization: OPDS
+Message-ID: <2FE4D2171A03425AA9C8FF10140AC030@PhilipOakley>
+References: <1365949646-1988-1-git-send-email-philipoakley@iee.org> <7v8v4k6hp2.fsf@alter.siamese.dyndns.org> <79879228B71A45A48A961F5B1880B61F@PhilipOakley> <7vli8k4lnj.fsf@alter.siamese.dyndns.org> <99AE5E981E2547B6A71A4D77B17167B9@PhilipOakley> <7v8v4imjji.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ivan Lyapunov <dront78@gmail.com>, git@vger.kernel.org,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 23:10:16 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "GitList" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 23:22:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USD8p-0004bo-Fg
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 23:10:15 +0200
+	id 1USDL4-00059Y-VW
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 23:22:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965362Ab3DPVKJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 17:10:09 -0400
-Received: from india601.server4you.de ([85.25.151.105]:48096 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965253Ab3DPVKI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 17:10:08 -0400
-Received: from [192.168.2.105] (p579BE374.dip.t-dialin.net [87.155.227.116])
-	by india601.server4you.de (Postfix) with ESMTPSA id 31EB318F;
-	Tue, 16 Apr 2013 23:10:07 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <7v61zml0ow.fsf@alter.siamese.dyndns.org>
+	id S965376Ab3DPVWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 17:22:50 -0400
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:35752 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965331Ab3DPVWu (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 17:22:50 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ar0NAMzAbVFOl3gj/2dsb2JhbAAuGAqDBokmuAUEAQMBgQoXdIIaBQEBBQgBAS4eAQEhCwIDBQIBAxUBCyUUAQQaBgcXBhMIAgECAwGIB6xDkDSNX1JqgmthA4hOhXSZWIMMOw
+X-IronPort-AV: E=Sophos;i="4.87,487,1363132800"; 
+   d="scan'208";a="572482320"
+Received: from host-78-151-120-35.as13285.net (HELO PhilipOakley) ([78.151.120.35])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 16 Apr 2013 22:22:47 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221474>
 
-=46irst, lest I forget again: Thank you, Ivan, for the very useful
-bug report!
-
-Am 16.04.2013 21:45, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
->> Does this patch help?
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Tuesday, April 16, 2013 7:12 PM
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>>> What kind of benefit are you envisioning out of this?
 >>
->>   pretty.c | 10 ++++++----
->>   1 file changed, 6 insertions(+), 4 deletions(-)
+>> The purpose of tests is to detect mistakes and spot regressions.
 >>
->> diff --git a/pretty.c b/pretty.c
->> index d3a82d2..713eefc 100644
->> --- a/pretty.c
->> +++ b/pretty.c
->> @@ -405,8 +405,8 @@ void pp_user_info(const struct pretty_print_cont=
-ext *pp,
->>   	const char *mailbuf, *namebuf;
->>   	size_t namelen, maillen;
->>   	int max_length =3D 78; /* per rfc2822 */
->> -	unsigned long time;
->> -	int tz;
->> +	unsigned long time =3D 0;
->> +	int tz =3D 0;
->>  =20
->>   	if (pp->fmt =3D=3D CMIT_FMT_ONELINE)
->>   		return;
->> @@ -438,8 +438,10 @@ void pp_user_info(const struct pretty_print_con=
-text *pp,
->>   	strbuf_add(&name, namebuf, namelen);
->>  =20
->>   	namelen =3D name.len + mail.len + 3; /* ' ' + '<' + '>' */
->> -	time =3D strtoul(ident.date_begin, &date, 10);
->> -	tz =3D strtol(date, NULL, 10);
->> +	if (ident.date_begin) {
->> +		time =3D strtoul(ident.date_begin, &date, 10);
->> +		tz =3D strtol(date, NULL, 10);
->> +	}
->>  =20
->>   	if (pp->fmt =3D=3D CMIT_FMT_EMAIL) {
->>   		strbuf_addstr(sb, "From: ");
->=20
-> Looks like a sensible change.  split_ident_line() decided that the
-> given input was mangled and decided there is no valid date (the
-> input had <> where the timestamp string was required), so the
-> updated code leaves the time/tz unspecified.
+>> A change to the 'git version X.Y.z' string would be a regression, as 
+>> I
+>> spotted earlier, as it conflicts with expectations of standard
+>> programmes such as git-gui.
+>
+> Sorry, but I do not follow.
+>
+> A released version says "git version 1.8.2.1".  In a month or so,
+> I'll have another one that says "git version 1.8.3".  Or I may
+> decide to bump in preparation for 2.0 and it may identify itself as
+> "git version 1.9".
+>
+> Neither of which no existing "program such as git-gui" has ever
+> seen.
+>
+> In what way is that a regression?
 
-We'd need update pretty.c::format_person_part() and
-builtin/blame.c::get_ac_line() as well, though.
+But they both pass the test and test suite, yes? And even if you use 
+git-gui with them, git-gui will not barf on start up, which it would if 
+the version string fails my test.
 
-How about making split_ident_line() a bit friendlier be letting it
-provide the epoch as default time stamp instead of NULL?  We shouldn't
-do that if we'd like to be able to tell a missing/broken time stamp
-apart from a commit that was actually made back in 1970 (e.g. an
-imported one).  Or if we'd like to not show a time stamp in git log
-output at all in that case.
+Passing the test suite should be a reasonble guarantee that co-tools 
+will work, including those that check for version. This is a check for 
+that version string.
 
--- >8 --
-Subject: ident: let split_ident_line() provide a default time stamp
+However if someone[1] creates "My Special Git Version 1-9-3 (Index 
+V7b)", and here I'm suggesting they may have other special changes, then 
+the version check will tell them that even when they have fixed their 
+special changes to pass the other parts of the test suite, other 
+co-tools could barf.
 
-If a commit has a broken time stamp, split_ident_line() sets
-date_begin, date_end, tz_begin and tz_end to NULL.  Not all callers
-are prepared to handle that case and segfault.
+Its about pushing the piece of string from the users end ;-) It also 
+stops others trying to change 'git' to 'Git' within this message, just 
+as I did.
 
-Instead of fixing them and having to be careful while implementing
-the next caller, provide a string consisting of the number zero as
-default value, representing the UNIX epoch.  That's the value that
-git log showed before it was converted to use split_ident_line().
-
-Reported-by: Ivan Lyapunov <dront78@gmail.com>
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- ident.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/ident.c b/ident.c
-index 1c123e6..ee840f4 100644
---- a/ident.c
-+++ b/ident.c
-@@ -191,6 +191,8 @@ static void strbuf_addstr_without_crud(struct strbu=
-f *sb, const char *src)
- 	sb->buf[sb->len] =3D '\0';
- }
-=20
-+static const char zero_string[] =3D "0";
-+
- /*
-  * Reverse of fmt_ident(); given an ident line, split the fields
-  * to allow the caller to parse it.
-@@ -254,10 +256,10 @@ int split_ident_line(struct ident_split *split, c=
-onst char *line, int len)
- 	return 0;
-=20
- person_only:
--	split->date_begin =3D NULL;
--	split->date_end =3D NULL;
--	split->tz_begin =3D NULL;
--	split->tz_end =3D NULL;
-+	split->date_begin =3D zero_string;
-+	split->date_end =3D zero_string + strlen(zero_string);
-+	split->tz_begin =3D zero_string;
-+	split->tz_end =3D zero_string + strlen(zero_string);
- 	return 0;
- }
-=20
---=20
-1.8.2.1
+Philip
+>
+[1] my first draft had 'you', but that is not a reasonable starting 
+position. It's more about *others* attempting to create release 
+versions, which announce their name, that we expect to be compatible 
+with say git-gui (via the rest of the test suite), and need to check 
+that announcement. 
