@@ -1,85 +1,77 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 1/3] fast-export: add --signed-tags=warn-strip mode
-Date: Tue, 16 Apr 2013 09:42:52 +0100
-Message-ID: <20130416084252.GK2278@serenity.lan>
-References: <CAGdFq_g+kk-Fy1fcV6D5x4kroRXX63T8wjKNUqqfu39wUkSO6A@mail.gmail.com>
- <cover.1365936811.git.john@keeping.me.uk>
- <8716b887972b0eb1671afd2692416efd588f7d1d.1365936811.git.john@keeping.me.uk>
- <CAGdFq_jCO_+qj87rtcFyFG2tot8Ah2706X2dm82F6=GBV-g6nw@mail.gmail.com>
- <7vk3o3nktl.fsf@alter.siamese.dyndns.org>
- <CAGdFq_gCeE8gRxmRYkGkm+kn6_Vo22_8g7+eLMuj-+pKjJjPcA@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 03/33] refs: document do_for_each_ref() and do_one_ref()
+Date: Tue, 16 Apr 2013 11:11:36 +0200
+Message-ID: <516D15C8.2050500@alum.mit.edu>
+References: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu> <1365944088-10588-4-git-send-email-mhagger@alum.mit.edu> <7vobdfwv7m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 10:43:15 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 11:11:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US1Tr-0002mD-Oa
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 10:43:12 +0200
+	id 1US1vV-0005fA-JT
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 11:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755337Ab3DPInF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 04:43:05 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:36092 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754192Ab3DPInD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 04:43:03 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 1ABB36064FC;
-	Tue, 16 Apr 2013 09:43:02 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1E-6Y779gswR; Tue, 16 Apr 2013 09:43:01 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 842D16065AA;
-	Tue, 16 Apr 2013 09:42:54 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CAGdFq_gCeE8gRxmRYkGkm+kn6_Vo22_8g7+eLMuj-+pKjJjPcA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754797Ab3DPJLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 05:11:41 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:60969 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751105Ab3DPJLk (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 05:11:40 -0400
+X-AuditID: 1207440f-b7f0e6d000000957-96-516d15cb090b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 98.5B.02391.BC51D615; Tue, 16 Apr 2013 05:11:39 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3G9Bbh0018115
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 16 Apr 2013 05:11:38 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <7vobdfwv7m.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqHtaNDfQ4NF3LYuuK91MFg29V5gt
+	Vj6+y2zxo6WH2YHFo/39O2aPZ717GD0uXlL2+LxJLoAlitsmKbGkLDgzPU/fLoE74/vaBewF
+	91krvh5uYm5gPMXSxcjJISFgIjF/92xWCFtM4sK99WxdjFwcQgKXGSW23L3KBOEcZ5K4sPMn
+	WBWvgLbE4xfH2EFsFgFViQsTLzCB2GwCuhKLeprBbFGBMIlV65cxQ9QLSpyc+QRsm4iAmsTE
+	tkNANgcHs0CMxLmrQiBhYQEfif9/njFC7FrOKHHy716w+ZwCZhIPJk0E62UW0JF41/eAGcKW
+	l9j+dg7zBEaBWUhWzEJSNgtJ2QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealFuiZ6uZkleqkp
+	pZsYIQHNv4Oxa73MIUYBDkYlHt4A+ZxAIdbEsuLK3EOMkhxMSqK8FwVyA4X4kvJTKjMSizPi
+	i0pzUosPMUpwMCuJ8KovByrnTUmsrEotyodJSXOwKInzqi9R9xMSSE8sSc1OTS1ILYLJynBw
+	KEnwxokADRUsSk1PrUjLzClBSDNxcIIM55ISKU7NS0ktSiwtyYgHxWp8MTBaQVI8QHvLQNp5
+	iwsSc4GiEK2nGHU5Vl558ppRiCUvPy9VSpy3CqRIAKQoozQPbgUsfb1iFAf6WJh3JkgVDzD1
+	wU16BbSECWjJgVXZIEtKEhFSUg2M2lv2vjJZsDDvtM3hiVr/pfZ0782I2pg263DlgXe3o28b
+	Ptsn9iv2avQUjwvp8Zfze7eveeyTkS7vlv03u6UkarrHif2HDB79OWTy9PRvK5nE 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221398>
 
-On Mon, Apr 15, 2013 at 09:50:42PM -0700, Sverre Rabbelier wrote:
-> On Mon, Apr 15, 2013 at 9:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > When you see 78 in the output and you know you have 92 tags in the
-> > repository, is that sufficient to let you go on, or do we also need
-> > an easy way to tell which ones are those 78 that were stripped and
-> > the remaining 14 were not stripped?
-> >
-> > There is no reason to worry about "some signed tags are stripped but
-> > not others", so it feels that the number alone should be sufficient,
-> > I guess.  If those remaining 14 weren't stripped, that is (at least
-> > at the moment) by definition because they are unsigned, annotated
-> > tags.
+On 04/15/2013 07:38 PM, Junio C Hamano wrote:
+>> +/*
+>> + * Call fn for each reference in the specified submodule for which the
+>> + * refname begins with base.  If trim is non-zero, then trim that many
+>> + * characters off the beginning of each refname before passing the
+>> + * refname to fn.  flags can be DO_FOR_EACH_INCLUDE_BROKEN to include
+>> + * broken references in the iteration.
+>> + */
 > 
-> Or because they were not exported? Perhaps "78 tags stripped, 92
-> exported in total".
+> Early termination due to "fn()" returning non-zero needs to be
+> documented here, no?
+> 
+>>  static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn fn,
 
-I think I prefer Jonathan's suggestion to this one if we need to change
-it.
+Correct, thanks.  Will be fixed in re-roll.
 
-The reason I didn't do this initially was that I assumed that from a
-remote helper we would, in general, not be pushing any tags which
-already exist, so the number of tags to push will be small.
+Michael
 
-Printing one message per tag also matches the current behaviour for
---signed-tags=warn.  I don't want to make the behaviour for "warn" and
-"warn-strip" different, so should "warn" also print a summary message
-instead of a message for each tag?
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
