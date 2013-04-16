@@ -1,61 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Ensimag students projects, version 2013
-Date: Mon, 15 Apr 2013 20:58:37 -0400
-Message-ID: <20130416005836.GC14995@sigill.intra.peff.net>
-References: <vpqobdg515m.fsf@grenoble-inp.fr>
- <CALkWK0nFB1dzmp6yC9XS4ADmWf9tfQYtsSH0K1u0dtBWT0CRNw@mail.gmail.com>
- <vpqzjwzkb4e.fsf@grenoble-inp.fr>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Mon, 15 Apr 2013 21:08:23 -0400
+Message-ID: <CAPig+cTemYT1qTNpYFF2gvZhu=O=NwQu5GzAisgnMCjfZYFCkA@mail.gmail.com>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
+	<20130415232532.GA7134@sigill.intra.peff.net>
+	<20130416003038.GA5336@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	git <git@vger.kernel.org>, Phil Hord <phil.hord@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Apr 16 02:58:52 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 16 03:08:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URuER-0003QB-Qv
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 02:58:48 +0200
+	id 1URuNq-0006Cx-NO
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 03:08:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934813Ab3DPA6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Apr 2013 20:58:44 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:47320 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934340Ab3DPA6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Apr 2013 20:58:43 -0400
-Received: (qmail 31607 invoked by uid 107); 16 Apr 2013 01:00:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 15 Apr 2013 21:00:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Apr 2013 20:58:37 -0400
-Content-Disposition: inline
-In-Reply-To: <vpqzjwzkb4e.fsf@grenoble-inp.fr>
+	id S935205Ab3DPBI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Apr 2013 21:08:26 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:51119 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934834Ab3DPBIZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Apr 2013 21:08:25 -0400
+Received: by mail-la0-f54.google.com with SMTP id ec20so4944981lab.13
+        for <git@vger.kernel.org>; Mon, 15 Apr 2013 18:08:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=re2qQTiHgSIQD/N/eZwNl2N1iMTr1y4pak1l+fkV4KI=;
+        b=TphEftlzQ3Ss6dFD64oLDhoGnzyC88oTh/Ie+suRd66rQlKy7MuVSKRrC+pvdCj2qX
+         Vgrqscxqs3zsF1tf/8SUDdiA2zdh8hCJh+MhI7i2vcPHQaN7OsPl4IBfRPug0zscudCG
+         Cer31kchPzWfGlNLqvFbuRMhOzJaXh+UUrxKHdKLqkoeShftUtTVINtamt038Vhvq99I
+         Z0me18sn5mnUOLJ7UtxUYGyOWLPxZjeQNO1We3P5MEBKqEvvT6ToblF8LooOK2GWXYIs
+         hrgSnps6AqcoJkKXY322PcXqST4SLCMSwjlv32pbFtELIWz5wintS60YMIrM5dmEVQnx
+         /Uqw==
+X-Received: by 10.152.20.226 with SMTP id q2mr80740lae.16.1366074503632; Mon,
+ 15 Apr 2013 18:08:23 -0700 (PDT)
+Received: by 10.114.186.233 with HTTP; Mon, 15 Apr 2013 18:08:23 -0700 (PDT)
+In-Reply-To: <20130416003038.GA5336@sigill.intra.peff.net>
+X-Google-Sender-Auth: yE4i6WbN7O-mlko0aB_KFz57ClA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221341>
 
-On Mon, Apr 15, 2013 at 06:32:49PM +0200, Matthieu Moy wrote:
+On Mon, Apr 15, 2013 at 8:30 PM, Jeff King <peff@peff.net> wrote:
+> Subject: [PATCH] http: set curl FAILONERROR each time we select a handle
+>
+> Until commit 6d052d7 (http: add HTTP_KEEP_ERROR option,
+> 2013-04-05), setting curl's FAILONERROR option was a global
+> setup; we never changed it. However, 6d052d7 introduced in
 
-> > - Create an advice.ui (like color.ui) to turn off all advice.  I don't
-> > need advice.
-> 
-> I tend to agree with you, but the idea has explicitly been rejected in
-> the past. The problem with an option like this is that it would also
-> disable the advices that may be added in the future. By letting people
-> disable the advices one by one, people see new advices as they arrive.
-> You may think of it like "do not show this message again" tickboxes in
-> some graphical user interfaces.
+s/in/an/
 
-FWIW, I do not think it was so much rejected as that I had initially
-planned to implement it, then decided against it. Mostly because I
-wanted to actually get annoyed with each piece of advice before
-disabling it. Because sometimes the right answer is actually "make the
-advice better".
-
-But I do not mind somebody adding it if it is a burning desire.
-
--Peff
+> option where some requests might turn off FAILONERROR. Later
+> requests using the same handle would have the option
+> unexpectedly turned off, which meant they would not notice
+> http failures at all.
