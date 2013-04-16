@@ -1,7 +1,7 @@
 From: Drew Northup <n1xim.email@gmail.com>
 Subject: Re: [PATCH] gitweb/INSTALL: Simplify description of GITWEB_CONFIG_SYSTEM
-Date: Tue, 16 Apr 2013 07:51:12 -0400
-Message-ID: <CAM9Z-n=MNs4598AHjOUfbd1K3uPQBJVQ-GU=qekdsgyzHvBigg@mail.gmail.com>
+Date: Tue, 16 Apr 2013 07:56:56 -0400
+Message-ID: <CAM9Z-nm=SUNAHXZtOnz_BSS8VrVYPczicX99FUmDJe6Lj_oKpQ@mail.gmail.com>
 References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com>
 	<85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com>
 	<7v4nfch90r.fsf@alter.siamese.dyndns.org>
@@ -11,83 +11,102 @@ References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com>
 	<516888C0.90501@gmail.com>
 	<CAM9Z-nmOzpJdT3ni0rYRkg7Z26N5XSRyqp0TkTY79AAZ85pw2A@mail.gmail.com>
 	<7vobdfnlc7.fsf@alter.siamese.dyndns.org>
-	<516CF98E.2050706@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
+Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
 	Stefano Lattarini <stefano.lattarini@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 13:51:24 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 13:57:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US4Pu-0006cl-Lb
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 13:51:18 +0200
+	id 1US4VR-0005Qa-S7
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 13:57:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754087Ab3DPLvO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 07:51:14 -0400
-Received: from mail-ia0-f169.google.com ([209.85.210.169]:47188 "EHLO
-	mail-ia0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753010Ab3DPLvN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 07:51:13 -0400
-Received: by mail-ia0-f169.google.com with SMTP id h23so322117iae.0
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 04:51:13 -0700 (PDT)
+	id S1754904Ab3DPL46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 07:56:58 -0400
+Received: from mail-ia0-f172.google.com ([209.85.210.172]:33577 "EHLO
+	mail-ia0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754521Ab3DPL45 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 07:56:57 -0400
+Received: by mail-ia0-f172.google.com with SMTP id k38so320516iah.31
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 04:56:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=6irXhqCajpNqSOyXM1HHEK3y3rD8ZYxYy55Kq1ddDbs=;
-        b=Re4rEekcP2qgvoWWC5P4WcMvBvF2ahwXg6g0S+7PwKu1MCevhWnzcTOxisAWc2OiFZ
-         SBiLT8I4cL26M6PDuXl4qKDy2Ina0SpHXOSs1SPfCBFqaFzvnDL3dRZK9E14r3huTDo7
-         yEX3jidBi5DUPFZmM7YXIC9kcVMpBkEs6wnuJeLAd0oMhO9NvHwZmt0QAd3YzzmdWZvj
-         8bi06t/N+jcaspq/0/5fkweJlwdfIBXJ9b+oR5ErJOib163UMkPWf29hTZTc05KKv+tp
-         Sae8DUe72cAqiA+IAEbBdVEtK7q5uIO+oXm6u9144eCVkovR98wS80c7det9lkYFyOu0
-         9yuQ==
-X-Received: by 10.50.173.102 with SMTP id bj6mr7437060igc.16.1366113072911;
- Tue, 16 Apr 2013 04:51:12 -0700 (PDT)
-Received: by 10.42.173.70 with HTTP; Tue, 16 Apr 2013 04:51:12 -0700 (PDT)
-In-Reply-To: <516CF98E.2050706@gmail.com>
+         :subject:from:to:cc:content-type;
+        bh=jE4Aon03wiovOdhO2jTX8QQkizymacFNWYkUmbpmo60=;
+        b=mMbV8FtYEdTUGbUMWlxx2Pk5SJ4h4ELawQGissKwVjsyPkFxDySOAissmOoNxOee7u
+         B0ROvfs29odfuHaCcgO0Wv07QQdY2kJmmSHVJZTjVePAEh8d+tzvAeFGMaYXvT+zXfAA
+         9MEtS4pz1biUM9PnY2ADXmVBBaXevB2JxiNoyrPJqRx+CfFHJoZvoZIJsHFOcGBN6VSf
+         v6/FYWbfccHkcOS/P6wPx5oxzKbFkITUHT5Q3+CkUcZB5TdQKJAOcoF4vlNIWE8Kl0GK
+         OCJJhRrHwX4rORi3cDFVeSrpiqPV+LvXd3UblmSiA8t0mpTEK1EfCWt7h4KROF2wUIrg
+         glrw==
+X-Received: by 10.50.187.225 with SMTP id fv1mr1065982igc.74.1366113416809;
+ Tue, 16 Apr 2013 04:56:56 -0700 (PDT)
+Received: by 10.42.173.70 with HTTP; Tue, 16 Apr 2013 04:56:56 -0700 (PDT)
+In-Reply-To: <7vobdfnlc7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221409>
 
-On Tue, Apr 16, 2013 at 3:11 AM, Jakub Nar=C4=99bski <jnareb@gmail.com>=
- wrote:
-> Junio C Hamano wrote:
+On Tue, Apr 16, 2013 at 12:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Drew Northup <n1xim.email@gmail.com> writes:
 >
->> In order to just pick and use the more appropriate one (or a useful
->> combination of the two), a clean description of what each of them do
->> without historical cruft is more readable and useful, isn't it?  I
->> would expect that most of them who are newly configuring a system
->> would pick COMMON one and override per instance as needed, without
->> touching the SYSTEM one (fallback default) after reading the above,
->> and that is what we want to happen.
+>>> +  Note that the GITWEB_CONFIG_SYSTEM system-wide configuration file is
+>>> +  only used for instances that lack per-instance configuration file.
+>>> +  You can use GITWEB_CONFIG_COMMON common system-wide configuration
+>>> +  file (normally /etc/gitweb-common.conf) to keep common default
+>>> +  settings that apply to all instances.  Settings from per-instance or
+>>>    system-wide configuration file override those from common system-wide
+>>>    configuration file.
 >>
->> Do you think sysadmins need a history lesson to understand why there
->> are two different possibilities?
-> [...]
->> I think the new text conveys the necessary information to the
->> intended audience with more clarity without the history lesson or
->> the record of your past frustration. Am I mistaken?
+>> That's the point of explaining SPECIFICALLY why the then current
+>> behavior wasn't being replaced, and this other mechanism (which would
+>> otherwise have no obvious reason for existing) was being introduced.
 >
-> Note also that this is about *gitweb/INSTALL*, which is meant to be
-> *short* and succint description on how to install gitweb, and not
-> about the reference documentation: gitweb(1) or gitweb.conf(5).
->
-> Description of historical behavior (and backward compatibility)
-> has place (if any) in manpages, not gitweb/INSTALL.
-> --
-> Jakub Nar=C4=99bski
+> In order to just pick and use the more appropriate one (or a useful
+> combination of the two), a clean description of what each of them do
+> without historical cruft is more readable and useful, isn't it?
 
-Let us then agree that it should be mentioned somewhere in
-gitweb.conf.txt then (as it currently is not).
+I am not demanding the retention of cruft, and the rewording is
+definitely more pleasant to read.
+
+>  I
+> would expect that most of them who are newly configuring a system
+> would pick COMMON one and override per instance as needed, without
+> touching the SYSTEM one (fallback default) after reading the above,
+> and that is what we want to happen.
+>
+> Do you think sysadmins need a history lesson to understand why there
+> are two different possibilities?
+
+We don't need a full history lesson. What we do need to know is that
+"Hey, they don't do that the way everybody else does because it would
+break things." That's enough to get the point across, and as Jakub
+noted gitweb.conf.txt is the correct place for it.
+
+> For example, bash reads some but not all possible configuration
+> files. I would expect .bashrc to be read even for login shells after
+> reading .bash_login; alas, that is not what happens.  The manual
+> does not apologize that the authors now know better and understand
+> that it is a stupid behaviour.  The order the rc files are read is
+> just described matter-of-factly, and it gives sufficient information
+> without unnecessary backstory.
+>
+> I think the new text conveys the necessary information to the
+> intended audience with more clarity without the history lesson or
+> the record of your past frustration. Am I mistaken?
+
+The back-story isn't needed; the "Hey this is different" part is. I
+think Jakub's suggestion of covering that (succinctly) in
+gitweb.conf.txt is the correct solution.
 
 --
 -Drew Northup
