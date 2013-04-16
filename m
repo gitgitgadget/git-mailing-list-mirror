@@ -1,74 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate
- $GITDIR
-Date: Tue, 16 Apr 2013 10:28:34 -0700
-Message-ID: <7v38uqo059.fsf@alter.siamese.dyndns.org>
-References: <1365881007-25731-1-git-send-email-artagnon@gmail.com>
- <20130416025840.GH3262@elie.Belkin>
- <CALkWK0kDgSicNejydLsH6iqj-yDYGz6CKd+kbn4EW1HxgAxsBA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 19:28:42 2013
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: git log - crash and core dump
+Date: Tue, 16 Apr 2013 19:29:34 +0200
+Message-ID: <E09BD6FE-D531-4CB1-B452-F3FF000CD8C3@gmail.com>
+References: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Ivan Lyapunov <dront78@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 19:29:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US9gP-0008Bx-UG
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 19:28:42 +0200
+	id 1US9hY-0001Ow-Rc
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 19:29:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965045Ab3DPR2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 13:28:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35736 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S936020Ab3DPR2h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 13:28:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8E0617F6A;
-	Tue, 16 Apr 2013 17:28:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HCTzh7kunU98SutX5dSoTpEln1A=; b=bApi2n
-	0TzdCHr7I8XbGMZkU1ETEKgUWSt+vUVPBHi58RdbIOB1bLvclPxW6IsDFo4Tg+aA
-	fH3Pys7naoAG0DUhrM15vl1NwgnLp+wEorqZ73FqztsB6IxMYf6qpGTJxgzttELc
-	efMxmS33YoxDNugVzJCg5SdpHgM5JZRWd92w0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vfn6Q2RroV66CG4JUrZIVPhgotP96XkM
-	pKKHAi425/y6pZGM6nifQuydtc12qpuvvZ1Hyg+rUznh2vAYObD0H5yFJ+DyYUu7
-	KHCF24dSbXURDgeas43+8SGqVvCrnTacYD2+2UwbVpBPgg05DtdfmTDuujCG/0LN
-	5VHd5o7NRw8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD16E17F69;
-	Tue, 16 Apr 2013 17:28:36 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C9C717F68; Tue, 16 Apr
- 2013 17:28:36 +0000 (UTC)
-In-Reply-To: <CALkWK0kDgSicNejydLsH6iqj-yDYGz6CKd+kbn4EW1HxgAxsBA@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Tue, 16 Apr 2013 14:06:36 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 11E8133E-A6BB-11E2-A114-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S965087Ab3DPR3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 13:29:48 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:35654 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965064Ab3DPR3r convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 13:29:47 -0400
+Received: by mail-wi0-f172.google.com with SMTP id hq17so2125511wib.5
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 10:29:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:references:in-reply-to:mime-version
+         :content-transfer-encoding:content-type:message-id:cc:x-mailer:from
+         :subject:date:to;
+        bh=SQ/hQxYdiovoYDo6p7DoqIZrMKCmh9IxF30P60sPKQw=;
+        b=A7iSZiX8YbN6momLYSxFunANsakwC+PHVkRk8eSxX6SF0++TrncegkMwiHNKGP6GIF
+         d45uDxWL5bAHKRGF0vLjD5JX3EdEeQMRN0TAzbhBf5rpmu+6mdy0KPgi93A8Uk1r5ysx
+         18mN5nyybQ5i0Lu+5x0b82DT6m46v1J9W1Mk4RpF6xDdlA3HG2J6eJHZHsd5+tX/p2KE
+         XolGRpv8WgIrxYU3VE2WvPCqJjog5AviGuZimnXLFM4FnEjGoumQlLUbaWNY6MIcbDVq
+         ZbrwfeqUbOPqcNWZkND60ctz7CmuXH+xNJXFQrt6brLklRA+ebrlZ0yU2LJOpj65yc/g
+         QIJg==
+X-Received: by 10.194.81.71 with SMTP id y7mr5685010wjx.19.1366133386213;
+        Tue, 16 Apr 2013 10:29:46 -0700 (PDT)
+Received: from [10.106.223.59] ([37.161.163.98])
+        by mx.google.com with ESMTPS id fg6sm4353849wib.10.2013.04.16.10.29.43
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 16 Apr 2013 10:29:45 -0700 (PDT)
+In-Reply-To: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
+X-Mailer: iPhone Mail (9B206)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221432>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Hey
 
-> My solution fixes all these problems, and we need
-> .git/modules/<name>.git (no path-to-submodule nonsense) only as a last
-> resort: #3 (ref: my email to Peff).
+> #0  0x00007ffff722b3e6 in ____strtoull_l_internal () from /usr/lib/libc.so.6
+> #1  0x00000000004b31d4 in pp_user_info (pp=pp@entry=0x7fffffffd310,
+> what=what@entry=0x521379 "Author", sb=sb@entry=0x7fffffffd290,
+>    line=line@entry=0x7b3a45 "Ivan Lyapunov <ilyapunov@trueconf.ru>-
+> <> 1354083115 +0400\ncommitter Ivan Lyapunov <ilyapunov@trueconf.ru>
+> 1354083115 +0400\n\n- small merge fixes",
+> encoding=encoding@entry=0x505400 "UTF-8") at pretty.c:441
 
-Have you noticed that there are distinction between submodule path
-and submodule name already in the current system, and name is
-derived from path if you do not give it when adding a submodule
-merely as a convenience?
+Clearly the author line is messed up after name and email. It means we won't be able to parse the time, and return a null pointer to it (which we run through strtoll after, with a crash). 
+I thought that bug was already fixed though and we're now checking for null time also ? I think I can submit a fix for that when I'm back home. 
 
-If some existing code uses .git/modules/<path>.git in "git submodule",
-that is a bug that needs to be fixed.
+Thanks for reporting !
+
+Cheers, Antoine 
