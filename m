@@ -1,80 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Extend runtime prefix computation
-Date: Tue, 16 Apr 2013 11:23:09 -0700
-Message-ID: <7vvc7ml4he.fsf@alter.siamese.dyndns.org>
-References: <20121127163004.GC7499@science-computing.de>
- <20130305115837.GD21473@science-computing.de>
- <7vd2vdvn7l.fsf@alter.siamese.dyndns.org>
- <20130306081942.GA11151@science-computing.de>
- <20130416145653.GG12782@science-computing.de>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [RFC/PATCH 0/2] Test the Git version string
+Date: Tue, 16 Apr 2013 11:24:28 -0700
+Message-ID: <CAJDDKr7WKwt10sCRTbm8gdhwEUKSYuQxtPDVm7usTm2ZHryk9g@mail.gmail.com>
+References: <1365949646-1988-1-git-send-email-philipoakley@iee.org>
+	<7v8v4k6hp2.fsf@alter.siamese.dyndns.org>
+	<79879228B71A45A48A961F5B1880B61F@PhilipOakley>
+	<7vli8k4lnj.fsf@alter.siamese.dyndns.org>
+	<99AE5E981E2547B6A71A4D77B17167B9@PhilipOakley>
+	<7v8v4imjji.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 16 20:23:21 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Philip Oakley <philipoakley@iee.org>, GitList <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 20:24:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USAXE-0008Jg-N3
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 20:23:17 +0200
+	id 1USAYU-0001q4-Tx
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 20:24:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934008Ab3DPSXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 14:23:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53439 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753469Ab3DPSXM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 14:23:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EC8717576;
-	Tue, 16 Apr 2013 18:23:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=u1AprXUQ+aRzapsQlknOj3ARRg0=; b=S2HkiB
-	VywrNwHCgOwlG7Yf8ljupFQLorU62BqqGGOpPsKTYMy5VvlwYK4AVUJO03Gmmole
-	WUFSIXrbgiDopuYMzvpWA0NYD8mT5IkEL1zRMZY4VzjlVMUfMmh94HpilJF8KPkM
-	g9WhEMgErFn947oUvtFXeSQ8kO9Y2E7t/ELj4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uQWVs6NtA856Lxnc/5VXUCG0X1uBH7I3
-	br+A8iB47qPyfhbNPaDWkjQFtQIg9sJYJAGzWtkx2LhGrCL0LAwBx9gGtLS56VhV
-	GH6K+pJkmD4O6VuDLV50BYNaCu9rPF5l3QVVOIo5XQwhOuC6KqxsbuCPlAZ+sNK5
-	Varmp9Kr1VQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 525A317575;
-	Tue, 16 Apr 2013 18:23:11 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C3C9E17574; Tue, 16 Apr
- 2013 18:23:10 +0000 (UTC)
-In-Reply-To: <20130416145653.GG12782@science-computing.de> (nobody's message
- of "Tue, 16 Apr 2013 16:56:54 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B19ACBD6-A6C2-11E2-8C90-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S934491Ab3DPSYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 14:24:30 -0400
+Received: from mail-we0-f180.google.com ([74.125.82.180]:40796 "EHLO
+	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753469Ab3DPSY3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 14:24:29 -0400
+Received: by mail-we0-f180.google.com with SMTP id r5so577706wey.25
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 11:24:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=qp+leJCf/+IN90Pj/gN8aLZ9wXex/J+MNS3nhvqDugY=;
+        b=j3JxWGkQeIqExwaBAix6dZlqdPgb94OxbzQvduoBQj6bMhlE7KgCQoDclcJZhw6nRz
+         e2bmiDfwfzTkaCqJ4+xANHKNv7LxKp//N3h9T/pFLnIHsN/K7pFkQlyTbKYuzLm6mAk1
+         gSXuehfZF29q4GfJfmmV/mbjYQvEPlGBMuBLlyFIpnB/2YnKWioqQkxDMN9difSeYviM
+         8TsqF/uAG3O2Fz5JpOJshECixpcJb2yJ6C3JavnyUC8HGgsuP9HDwe+OIH4wShVaIihQ
+         Z//ileG1KHUbwmQwfrnCo/sTo1S1Whqo8nXps+Z74QK/FmDBDEp5Ay3O8FZaNEEw/6Sj
+         V8cQ==
+X-Received: by 10.194.122.131 with SMTP id ls3mr5939911wjb.55.1366136668625;
+ Tue, 16 Apr 2013 11:24:28 -0700 (PDT)
+Received: by 10.194.240.195 with HTTP; Tue, 16 Apr 2013 11:24:28 -0700 (PDT)
+In-Reply-To: <7v8v4imjji.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221447>
 
-nobody writes:
+On Tue, Apr 16, 2013 at 11:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+> >> What kind of benefit are you envisioning out of this?
+> >
+> > The purpose of tests is to detect mistakes and spot regressions.
+> >
+> > A change to the 'git version X.Y.z' string would be a regression, as I
+> > spotted earlier, as it conflicts with expectations of standard
+> > programmes such as git-gui.
+>
+> Sorry, but I do not follow.
+>
+> A released version says "git version 1.8.2.1".  In a month or so,
+> I'll have another one that says "git version 1.8.3".  Or I may
+> decide to bump in preparation for 2.0 and it may identify itself as
+> "git version 1.9".
+>
+> Neither of which no existing "program such as git-gui" has ever
+> seen.
+>
+> In what way is that a regression?
 
-> Hello Junio,
-> Hello list,
->
-> On Wed, Mar 06, 2013 at 09:19:42AM +0100, Michael Weiser wrote:
->
->> > >> Support determining the binaries' installation path at runtime even if
->> > >> called without any path components (i.e. via search path).
->> > The default for any change is not to include it.  Is there any
->> > reason why we want this change?
->> It makes a binary git installation fully relocatable. Seeing how git
->> already has basic support for it I thought other people might be
->> interested in this.
->
-> I am still interested in getting this accepted into git. Where do I push
-> to get it committed?
+Sorry.  I was the one that first suggested that this was an issue.
 
-I do not have a strong objection to what it tries to achieve, but
-I'd prefer to see no "#ifdef platform" code in a very generic part
-of the system like exec_cmd.
+The "regression" is that there are scripts and tools in the wild that
+need to know the git version when deciding whether or not to use some
+new feature.
+
+e.g. "git status --ignore-submodules=dirty" did not appear until git 1.7.2.
+A script may want to use this flag, but it will only want to use it
+when available.
+
+If this string started saying "The Git Version Control System v2.0" then these
+scripts would be "broken" since they would no longer recognize this as a
+"post-1.7.2 Git".
+
+The unstated suggestion here is that it may be helpful to others if we
+were to declare that the "git version" output is plumbing.
+
+Folks are already using it that way so making it official would provide
+a guarantee that we won't break them in the future.
+--
+David
