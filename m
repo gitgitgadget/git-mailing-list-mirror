@@ -1,82 +1,103 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb/INSTALL: Simplify description of GITWEB_CONFIG_SYSTEM
-Date: Tue, 16 Apr 2013 09:11:10 +0200
-Message-ID: <516CF98E.2050706@gmail.com>
-References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com> <85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com> <7v4nfch90r.fsf@alter.siamese.dyndns.org> <20130412064837.GA5710@elie.Belkin> <20130412064953.GB5710@elie.Belkin> <7vy5cnd0m4.fsf@alter.siamese.dyndns.org> <516888C0.90501@gmail.com> <CAM9Z-nmOzpJdT3ni0rYRkg7Z26N5XSRyqp0TkTY79AAZ85pw2A@mail.gmail.com> <7vobdfnlc7.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/3] usage: refactor die-recursion checks
+Date: Tue, 16 Apr 2013 09:18:46 +0200
+Message-ID: <516CFB56.1090805@viscovery.net>
+References: <20130415230651.GA16670@sigill.intra.peff.net> <20130415230802.GA11267@sigill.intra.peff.net> <CA+sFfMes99EepY4FCW32s1L3ywv_gyFb76=Y=35rvPbc2K1BWA@mail.gmail.com> <20130416004228.GA14995@sigill.intra.peff.net> <CA+sFfMdzTNjH10FKxhvJy+7hZg+0=1Wrqy9k8KaPoJg1DuDpmg@mail.gmail.com> <20130416025024.GA20932@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Drew Northup <n1xim.email@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-	Stefano Lattarini <stefano.lattarini@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 09:11:20 2013
+Content-Transfer-Encoding: 7bit
+Cc: Brandon Casey <drafnel@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 16 09:18:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US02w-0004ww-Vf
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 09:11:19 +0200
+	id 1US0AK-0006C8-Cd
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 09:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755021Ab3DPHLP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 03:11:15 -0400
-Received: from mail-ea0-f182.google.com ([209.85.215.182]:60445 "EHLO
-	mail-ea0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754945Ab3DPHLO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 03:11:14 -0400
-Received: by mail-ea0-f182.google.com with SMTP id q15so72051ead.27
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 00:11:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=v3s5yqiiRQefXI6WZbjGu8oEEUBGwqTFSoDbGVaDkGQ=;
-        b=geBEj0ZtO/qfsPG+WH0LVn0qdgYiyjFi9qqL2jsvprfsLWzHqMzGBd2CBuWn5ylEBx
-         IDyeoHhSkI9lInQGXS36hUmB1Q8gS8SMCNuvCmeQzwPGzgn+yO8O3KIymtfYp2ScNAC/
-         HXu6L42ZwmVt9/gzEvXd1oQVQvqf44yzoT4jpLUNr6x1sKf6CEDeyQH+X3IGmIg3T3hR
-         GBUyFuMSXs+LDvsiVAehU6rjWgc6upb/4+dctmK+jPiEI6H5ZSgpCVMyHofvQZ7M6eLQ
-         whW74qTsfgkqLvj7Yz5WL/hGe79iRK7bLe1sZbW1vTJirqU0m9kOqq6IzjJoBm3uqFuU
-         q0rw==
-X-Received: by 10.15.83.73 with SMTP id b49mr3337351eez.25.1366096273396;
-        Tue, 16 Apr 2013 00:11:13 -0700 (PDT)
-Received: from [192.168.1.14] (ept17.neoplus.adsl.tpnet.pl. [83.20.61.17])
-        by mx.google.com with ESMTPS id b47sm1076752eez.2.2013.04.16.00.11.11
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 16 Apr 2013 00:11:12 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <7vobdfnlc7.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5.1
+	id S1755113Ab3DPHSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 03:18:52 -0400
+Received: from so.liwest.at ([212.33.55.14]:44958 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754025Ab3DPHSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 03:18:51 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1US0AB-0007d6-IM; Tue, 16 Apr 2013 09:18:47 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1D3531660F;
+	Tue, 16 Apr 2013 09:18:47 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <20130416025024.GA20932@sigill.intra.peff.net>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221372>
 
-Junio C Hamano wrote:
+Am 4/16/2013 4:50, schrieb Jeff King:
+> On Mon, Apr 15, 2013 at 07:34:07PM -0700, Brandon Casey wrote:
+> 
+>>> Right. My assumption was that we are primarily interested in protecting
+>>> against the die_routine. Compat functions should never be calling die.
+>>
+>> I think the rule we have been enforcing is less strict than that.  We
+>> have only said that any compat function in a die handler path should
+>> never call die.  But maybe that's what you meant.
+> 
+> No, I assumed we were following the stronger rule. If you are a compat
+> function for a C library function, then you should never need to die.
+> You should be conforming to the existing interface, which will have some
+> mechanism for passing back an error.
 
-> In order to just pick and use the more appropriate one (or a useful
-> combination of the two), a clean description of what each of them do
-> without historical cruft is more readable and useful, isn't it?  I
-> would expect that most of them who are newly configuring a system
-> would pick COMMON one and override per instance as needed, without
-> touching the SYSTEM one (fallback default) after reading the above,
-> and that is what we want to happen.
->=20
-> Do you think sysadmins need a history lesson to understand why there
-> are two different possibilities?
-[...]
-> I think the new text conveys the necessary information to the
-> intended audience with more clarity without the history lesson or
-> the record of your past frustration. Am I mistaken?
+This rule has been violated LOOOONG ago, and not only in compat/mingw.c
+(see xmalloc in compat/qsort.c, for example).
 
-Note also that this is about *gitweb/INSTALL*, which is meant to be
-*short* and succint description on how to install gitweb, and not
-about the reference documentation: gitweb(1) or gitweb.conf(5).
+>> The primary motivation was that Hannes Sixt had to step in and point
+>> out yet again that the high-level memory allocators should not be
+>> called in anything that could be in a die handler code path.  I was on
+>> the thread, but I don't remember the topic (ah, Jonathan has stepped
+>> in with the answer).  I do remember that I was not the only one who
+>> had forgotten about that rule though.
+> 
+> Yeah, it is subtle enough that it may be worth protecting against.
 
-Description of historical behavior (and backward compatibility)
-has place (if any) in manpages, not gitweb/INSTALL.
---=20
-Jakub Nar=C4=99bski
+Too late.
+
+>> To implement this check correctly/completely (i.e. detect recursion in
+>> the main thread as well as in any child threads), I think you really
+>> do need to use thread-local storage as you mentioned in 3/3 which
+>> could look something like:
+>>
+>>    static pthread_key_t dying;
+>>    static pthread_once_t dying_once = PTHREAD_ONCE_INIT;
+>>
+>>    void setup_die_counter(void)
+>>    {
+>>            pthread_key_create(&dying, NULL);
+>>    }
+>>
+>>    check_die_recursion(void)
+>>    {
+>>            pthread_once(&dying_once, setup_die_counter);
+>>            if (pthread(getspecific(dying)) {
+>>                    puts("BUG: recursion...");
+>>                    exit(128);
+>>            }
+>>
+>>            pthread_setspecific(dying, &dying);
+>>    }
+> 
+> Yeah, that seems sane; my biggest worry was that it would create
+> headaches for Windows folks, who would have to emulate pthread_key. But
+> it seems like we already added support in 9ba604a.
+
+pthread_key is not a problem, but pthread_once is. It's certainly
+solvable, but do we really have to?
+
+-- Hannes
