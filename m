@@ -1,72 +1,138 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3] cherry-pick: make sure all input objects are commits
-Date: Tue, 16 Apr 2013 16:22:37 +0200
-Message-ID: <516D5EAD.4070503@alum.mit.edu>
-References: <20130403092704.GC21520@suse.cz> <7v38v1yn8o.fsf@alter.siamese.dyndns.org> <20130411092638.GA12770@suse.cz> <CALkWK0n6FjGbXTqiOT_O6NbB5h0DLaNWKCCTQAFSO_BL-pPdBA@mail.gmail.com> <20130411110324.GD12770@suse.cz> <CALkWK0kb+2KZLvRJDJb_VrNNs1k4grsfyFv0HfYv0Kr9v4sChQ@mail.gmail.com> <20130411130652.GG12770@suse.cz> <87vc7odvzi.fsf@linux-k42r.v.cablecom.net> <7v61znsj49.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH master] convert: The native line-ending is \r\n on MinGW
+Date: Tue, 16 Apr 2013 16:39:26 +0200
+Message-ID: <CABPQNSZwc8Ae_fGwvyEq84NuBNntB7-KXnJtqt9ZLowCJof9Gw@mail.gmail.com>
+References: <1275679748-7214-1-git-send-email-eyvind.bernhardsen@gmail.com>
+ <20100904082509.GC10140@burratino> <7vbp8aqtuz.fsf@alter.siamese.dyndns.org>
+ <7v4nf7qzkd.fsf@alter.siamese.dyndns.org> <CABPQNSaA7Qdt5eCZR3rs87gL730Y_xMrg6S-++YuaXdC2k45jg@mail.gmail.com>
+ <7vsj2rpj0j.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@inf.ethz.ch>, Miklos Vajna <vmiklos@suse.cz>,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 16:22:52 2013
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 16:40:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US6mU-0004gv-PU
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 16:22:47 +0200
+	id 1US73P-0002sw-ME
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 16:40:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935721Ab3DPOWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 10:22:42 -0400
-Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:48367 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933715Ab3DPOWm (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 10:22:42 -0400
-X-AuditID: 12074411-b7f286d0000008e8-60-516d5eb1667c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 1C.6E.02280.1BE5D615; Tue, 16 Apr 2013 10:22:41 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3GEMbW9030982
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 16 Apr 2013 10:22:39 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <7v61znsj49.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIKsWRmVeSWpSXmKPExsUixO6iqLsxLjfQ4PslWYtVMx+zW3Rd6Way
-	WDHlHovF3cur2C12TpnP7MDqsXPWXXaP26/nM3tcvKTscWbBEXaPz5vkAlijuG2SEkvKgjPT
-	8/TtErgzNl3tZyroYq14eecHewNjL0sXIweHhICJxK8rRl2MnECmmMSFe+vZuhi5OIQELjNK
-	vLvwmgXCOc4k8XXvJBaQKl4BbYk9t+8ygdgsAqoSfzY1s4LYbAK6Eot6msHiogJhEqvWL2OG
-	qBeUODnzCdgyEQEVib5TMSAzmQV6GCXOdWxnA6kRFvCRuLtwNtTmGcwSS7dPBhvKKWAmcfDI
-	d0YQm1lAR+Jd3wNmCFteYvvbOcwTGAVmIdkxC0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYn
-	J+blpRbpmurlZpbopaaUbmKEBLngDsYZJ+UOMQpwMCrx8AbI5wQKsSaWFVfmHmKU5GBSEuUN
-	C88NFOJLyk+pzEgszogvKs1JLT7EKMHBrCTCe9YRKMebklhZlVqUD5OS5mBREuflW6LuJySQ
-	nliSmp2aWpBaBJOV4eBQkuBtjgVqFCxKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAfF
-	anwxMFpBUjxAeyeAtPMWFyTmAkUhWk8x6nKsvPLkNaMQS15+XqqUOG89SJEASFFGaR7cClhK
-	e8UoDvSxMG8JSBUPMB3CTXoFtIQJaMmBVdkgS0oSEVJSDYzcGVXe5q7Pfh0sCZNt7dKd0n1A
-	QULsjBFr3qrLM77lyD7+Z+y1danRAs9ZiVYuqonehyQs9v1X/JskGfmaZbr/tfQd 
+	id S935797Ab3DPOkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 10:40:09 -0400
+Received: from mail-ia0-f176.google.com ([209.85.210.176]:42181 "EHLO
+	mail-ia0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935469Ab3DPOkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 10:40:08 -0400
+Received: by mail-ia0-f176.google.com with SMTP id i9so479137iad.7
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 07:40:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:reply-to:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=+z9JgJu5f0NVLYm3RkBnnMri/grnT8yS4IkF2pypm+4=;
+        b=RRKoT3Ux9FWGkLmijLNqIh6ujm1BYEBDS2kh2olQrD3ODyCHNeKqgQA2vIFz332oOr
+         jJMDeKRzR/ZB3fJEd8jQvLLsFzytM1LEme3BnPtndOj26BO/Rc2v7zJH8xzvzILMBY7O
+         rrSPM2H6gHas6QBp1D1wgM52JuWa00UqoxJnCPYzREmj18SAJTxKwPAtQs/hBTt0MAku
+         iPYbw2ihyxakuGdcJMMq5RWbdZ5Vl0nTq0dD+v28/zJtYzjAWYQd0QBAQVYbfoGgbzwh
+         J+gwYSWglxqCTeVgmXhhvYaDYOaxcb9Zi5AYgjuHFjRuCiKjGIZHivMn1LNLEje491Ie
+         jLHQ==
+X-Received: by 10.50.93.71 with SMTP id cs7mr1452383igb.53.1366123207546; Tue,
+ 16 Apr 2013 07:40:07 -0700 (PDT)
+Received: by 10.64.44.47 with HTTP; Tue, 16 Apr 2013 07:39:26 -0700 (PDT)
+In-Reply-To: <7vsj2rpj0j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221421>
 
-On 04/15/2013 09:12 PM, Junio C Hamano wrote:
-> The paths given to handle_refs() may also have to be copied before
-> saved, depending on how ref iteration is implemented, details of
-> which may change as Michael seems to be updating the area again.
-> I think we let the callback peek ref_entry->name[] which is stable,
-> so I suspect we are OK.
+On Mon, Apr 15, 2013 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>
+>> This is absolutely the right thing to do. However, stuff have changed
+>> a bit since the patch was written; this change now needs to go in
+>> config.mak.uname instead of config.mak.
+>
+> Thanks for a quick response.
+>
+> What's your preference?  I could just ignore a patch I won't be able
+> to test myself and have you guys carry it in your tree forever, but
+> I do not think that is necessary for something small like this.
 
-ref_entry->name is stable as long as invalidate_ref_cache() is not
-called, and I am not even thinking of changing that (partly because I
-don't have the energy to audit and adjust all of the callers).
+I should probably clarify; conceptually, this is the right thing to
+do. Git for Windows is a Windows application, and should have CRLF as
+the native newline. I hadn't tested this patch myself, though. Our
+tree is currently way behind yours, and I tried to do a rebase, but it
+turned out much trickier than I was hoping for.
 
-Michael
+I've given it a go on top of your tree + some essential patches I'll
+need to get things to run, and it seems to do what it claims to do.
+However, I haven't been able to run the test-suite, because I need a
+bunch more patches from the msysGit-tree for that.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+> I think this is low impact enough that it can directly go to
+> 'master' or even 'maint' if I were to apply to my tree.
+>
+
+I agree. I don't think we need it in maint; we don't track that branch
+for msysGit.
+
+> Thanks.
+>
+> -- >8 --
+> From: Jonathan Nieder <jrnieder@gmail.com>
+> Date: Sat, 4 Sep 2010 03:25:09 -0500
+> Subject: [PATCH] convert: The native line-ending is \r\n on MinGW
+>
+> If you try this:
+>
+>  1. Install Git for Windows (from the msysgit project)
+>
+>  2. Put
+>
+>         [core]
+>                 autocrlf = false
+>                 eol = native
+>
+>     in your .gitconfig.
+>
+>  3. Clone a project with
+>
+>         *.txt text
+>
+>     in its .gitattributes.
+>
+> Then with current git, any text files checked out have LF line
+> endings, instead of the expected CRLF.
+>
+> Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Cc: Johannes Sixt <j6t@kdbg.org>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  config.mak.uname | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 9080054..d78fd3d 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -507,6 +507,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+>                 compat/win32/dirent.o
+>         EXTLIBS += -lws2_32
+>         PTHREAD_LIBS =
+> +       NATIVE_CRLF = YesPlease
+>         X = .exe
+>         SPARSE_FLAGS = -Wno-one-bit-signed-bitfield
+>  ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
+> --
+> 1.8.2.1-542-g3613165
+>
+
+Looks fine to me.
