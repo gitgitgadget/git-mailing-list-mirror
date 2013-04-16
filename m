@@ -1,69 +1,71 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] Extend runtime prefix computation
-Date: Tue, 16 Apr 2013 17:18:49 +0200
-Message-ID: <CABPQNSbd_baEe7pstZPSdNQQCAUMBCgV2FGcszy-8zoeuD+M5w@mail.gmail.com>
-References: <20121127163004.GC7499@science-computing.de> <20130305115837.GD21473@science-computing.de>
- <7vd2vdvn7l.fsf@alter.siamese.dyndns.org> <20130306081942.GA11151@science-computing.de>
-Reply-To: kusmabite@gmail.com
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate
+ $GITDIR
+Date: Tue, 16 Apr 2013 11:39:43 -0400
+Message-ID: <516D70BF.3050006@xiplink.com>
+References: <1365881007-25731-1-git-send-email-artagnon@gmail.com> <7vy5ck4m6b.fsf@alter.siamese.dyndns.org> <CALkWK0mvtRhFc0_4883ATNaYpb+kDwpV9VxeAoqJy5HxNQ6vgg@mail.gmail.com> <516C21CF.5080705@xiplink.com> <7vvc7nu1hu.fsf@alter.siamese.dyndns.org> <CALkWK0n0y6OPJvYjNeEbUx_CC58vHRRLCsmJtws+RKyv3wRTwQ@mail.gmail.com> <20130415184347.GA21170@sigill.intra.peff.net> <CALkWK0nUzbt6R=raWaxxVgAthcUo7E+_FS0rPDDfumgeecHiZg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Weiser <M.Weiser@science-computing.de>
-X-From: git-owner@vger.kernel.org Tue Apr 16 17:19:45 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 17:39:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US7fd-0004nR-1b
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 17:19:45 +0200
+	id 1US7z0-0003wU-SC
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 17:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756132Ab3DPPTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 11:19:32 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:48446 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756557Ab3DPPT3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 11:19:29 -0400
-Received: by mail-ie0-f181.google.com with SMTP id as1so630331iec.26
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 08:19:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:reply-to:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=GzBYxQ+KiaPGYG2w3vT+aZlzdXqFvdIHbi+/mq5N2xs=;
-        b=xVegfobJPJBvrjACuYOPaBUsHj1ZrfdAPvbiSNxrL/NHqLmtapVvFnD7Ojf1mmbd7R
-         dq8jpwjkCeOsWdbd9ZQW58//6dmiwqvRJu5cE2vGz1xHLqnFCwPwU61NFFtAfRSP3ydP
-         wmlT94Z37Uf5DlMafS4ZOHOJoaT513GAzmdDDlzG+BfK73GDLbR2/OHMjPDfS7zYDaN8
-         ZC+vJEEZqWM7Uv5HRzriaadZEC/ZRNTRapdghM5rsPrzF7l1KohmncK4OwxmpP0U1OBZ
-         SE8iYUudfo6Rtsth6BEIYW4OLqLip6SsAlvfsgkg7oLAJiULcUvgBlucv0vf4mSo3acV
-         2RfA==
-X-Received: by 10.50.50.239 with SMTP id f15mr938737igo.30.1366125569372; Tue,
- 16 Apr 2013 08:19:29 -0700 (PDT)
-Received: by 10.64.44.47 with HTTP; Tue, 16 Apr 2013 08:18:49 -0700 (PDT)
-In-Reply-To: <20130306081942.GA11151@science-computing.de>
+	id S935816Ab3DPPjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 11:39:43 -0400
+Received: from smtp154.ord.emailsrvr.com ([173.203.6.154]:58320 "EHLO
+	smtp154.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935783Ab3DPPjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 11:39:42 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp20.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id A92411C0132;
+	Tue, 16 Apr 2013 11:39:41 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp20.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 41E2F1C00BE;
+	Tue, 16 Apr 2013 11:39:41 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <CALkWK0nUzbt6R=raWaxxVgAthcUo7E+_FS0rPDDfumgeecHiZg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221425>
 
-On Wed, Mar 6, 2013 at 9:19 AM, Michael Weiser
-<M.Weiser@science-computing.de> wrote:
-> Hello Junio,
->
-> On Tue, Mar 05, 2013 at 08:13:50AM -0800, Junio C Hamano wrote:
->
->> >> Support determining the binaries' installation path at runtime even if
->> >> called without any path components (i.e. via search path).
->
->> The default for any change is not to include it.  Is there any
->> reason why we want this change?
->
-> It makes a binary git installation fully relocatable. Seeing how git
-> already has basic support for it I thought other people might be
-> interested in this.
+On 13-04-16 04:13 AM, Ramkumar Ramachandra wrote:
+> Jeff King wrote:
+>> So there is some information that is per-clone (the objects, the remote
+>> tips), but there is some information that is per-submodule (where our
+>> local branches are, the index, the worktree). I can see why it is
+>> advantageous to share the per-clone information between similar clones
+>> (because it avoids disk space and network transfer). But I do not think
+>> you can escape having some form of per-submodule repo, even if it is a
+>> thin git-new-workdir-ish repo that points back to a parent repo for the
+>> clone.
+> 
+> I want the flexibility to do the following:
+> 
+> 1. Do a "simple clone", where the clone contains the GITDIR embedded
+> in the worktree.  This is the most common case, and there is no reason
+> to complicate it.  I can optionally attach additional workdirs to this
+> clone.  I can also optionally relocate the GITDIR at a later date, if
+> I feel the need to do so.
+> 
+> 2. Attach a worktree to any object store without having to write a
+> gitfile and set core.worktree by hand.  The limitation is that you
+> can't have two submodules from two different superprojects sharing the
+> same object store (since both of them are worktrees).  However, for
+> the purpose of working on the submodule repository as an independent
+> repository (this is a very common case for me), I can attach a new
+> "workdir" to the GITDIR very easily.
 
-I think the motivation for the feature in the first place is Windows,
-where the installation path isn't known at build-time. In the
-unix-world, this is generally known (/usr/bin or something like that).
-What's the reason you want it on other platforms?
+Doesn't contrib/workdir/git-new-workdir do this?
+
+		M.
