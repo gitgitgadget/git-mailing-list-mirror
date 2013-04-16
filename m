@@ -1,73 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 15/33] refs: change the internal reference-iteration API
-Date: Tue, 16 Apr 2013 10:47:49 -0700
-Message-ID: <7vli8imkoq.fsf@alter.siamese.dyndns.org>
-References: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
- <1365944088-10588-16-git-send-email-mhagger@alum.mit.edu>
- <7vvc7nvglw.fsf@alter.siamese.dyndns.org> <516D51B2.8090007@alum.mit.edu>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v2 03/14] dir.c: git-status --ignored: don't list empty
+ ignored directories
+Date: Tue, 16 Apr 2013 23:18:06 +0530
+Message-ID: <CALkWK0mG6bzWu7dqdP1mBe+AZfUDK=Mx4+ZkDOc2saXr3gBsUQ@mail.gmail.com>
+References: <514778E4.1040607@gmail.com> <516C4F27.30203@gmail.com> <516C4FE4.9090806@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Apr 16 19:48:02 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Robert Zeh <robert.allan.zeh@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Adam Spiers <git@adamspiers.org>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 19:49:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US9z2-0000OX-OV
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 19:47:57 +0200
+	id 1USA0B-0002AJ-VS
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 19:49:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965081Ab3DPRrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 13:47:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59056 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965031Ab3DPRrw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 13:47:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5FAF16818;
-	Tue, 16 Apr 2013 17:47:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eueJsHskHySTo/Mz8QTk+YoFYhc=; b=N8Y/T5
-	s+gxwcE8JjO+Ekgrn9LsmjYJ9o6oY5IWImoWpatJuyeobw9frTnd++h7yMHg49T3
-	ysS+oKNneoOl9EiQ7g3HmPLHw8OlGpPcnXX9NdoBXz88eHA6bn49Znht4Ql0vhrK
-	Za8CAmwwYSac0Cf0GDTHu4zx7n/FkFo3penus=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=weOr8KJBlv+tAYWX5zWWubsRDI1aeWes
-	8FwtR+4MDK77BUogJpuLG9d5N0P/0GJCJ4vkDhuZN/3iJ0UO3RulT3qjfBbzZHWg
-	K70EcDTgIUae6cYgdMm0Fb4fZot2UShY6HESW33YfF0UtNnScVti2UPbdbt0zQi2
-	B/gpEanqQ+8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCADE16817;
-	Tue, 16 Apr 2013 17:47:51 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4811216813; Tue, 16 Apr
- 2013 17:47:51 +0000 (UTC)
-In-Reply-To: <516D51B2.8090007@alum.mit.edu> (Michael Haggerty's message of
- "Tue, 16 Apr 2013 15:27:14 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C247BDB8-A6BD-11E2-8C4A-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S965153Ab3DPRtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 13:49:00 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:58745 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965097Ab3DPRsr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 13:48:47 -0400
+Received: by mail-ie0-f178.google.com with SMTP id bn7so884702ieb.9
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 10:48:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=vc/ZciS4WM71L8OgqqClRge5BH96aRnYUrT9dfe0ECk=;
+        b=y5DK9KmHbxklBLLFMoNJdUlYGvX0Fbs+UQ4QFD8aVyatOO6rwZY7TTnWlVmLKMU+jo
+         J6jZWTAkO3fo+Ksl0uFXE1Tv9jHY3HaX2EbAW988zA93h2Lsvfl7iKq9lWQM64VlgXXC
+         +GJ8LMO3On/ljrGMGk751R2h0OxQFZ8stZrx2XAZyQ+2gPNi+DOHR54CAQ00oEN3gIcm
+         /OxtjHkz5SVAEo84So0Yv/+/GQCRUOVMHU5JUozyubhK4Tyo+S6XEkB0f8aAwkgypCbv
+         qtT8KiA9SynMocGU8xJ77XL4t2IlrbTbVmRiL9U7LysgXA3rPy7/QcxrT1bfCWeh902P
+         TM9A==
+X-Received: by 10.50.17.166 with SMTP id p6mr8527518igd.12.1366134526343; Tue,
+ 16 Apr 2013 10:48:46 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Tue, 16 Apr 2013 10:48:06 -0700 (PDT)
+In-Reply-To: <516C4FE4.9090806@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221436>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Karsten Blees wrote:
+> 'git-status --ignored' lists ignored tracked directories without any
+> ignored files if a tracked file happens to match an exclude pattern.
 
->>> ...  This scenario doesn't currently occur in the code,
->>> but fix it to prevent things from breaking in a very confusing way in
->>> the future.
->> 
->> Hopefully that means "in later patches in this series" ;-)
+Here, I have:
+
+    quux/
+        bar
+        baz/
+            foo
+
+So, quux is an ignored tracked directory.  bar is tracked, but matches
+an ignore pattern.  Currently, git status --ignored lists quux/.  I'm
+confused.
+
+> Always exclude tracked files.
+
+"exclude" it from the 'git status --ignored' output, I presume?
+There's already an _exclude_ pattern in your previous sentence, so you
+can see why the reader might be confused about what you're talking
+about.
+
+> diff --git a/dir.c b/dir.c
+> index 7c9bc9c..fd1f088 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1109,16 +1109,13 @@ static int treat_file(struct dir_struct *dir, struct strbuf *path, int exclude,
+>         struct path_exclude_check check;
+>         int exclude_file = 0;
 >
-> I don't think that the rest of the series would have triggered this
-> problem either.
+> +       /* Always exclude indexed files */
+> +       if (index_name_exists(&the_index, path->buf, path->len, ignore_case))
+> +               return 1;
+> +
+>         if (exclude)
+>                 exclude_file = !(dir->flags & DIR_SHOW_IGNORED);
+>         else if (dir->flags & DIR_SHOW_IGNORED) {
+> -               /* Always exclude indexed files */
+> -               struct cache_entry *ce = index_name_exists(&the_index,
+> -                   path->buf, path->len, ignore_case);
+> -
+> -               if (ce)
+> -                       return 1;
+> -
 
-Yeah, I misread the message when I said "Hopefully". I somehow
-thought it was saying "we will fix it in the future; otherwise
-things can break in a confusing way", which is not the case.
+Okay, so you just moved this segment outside the else if()
+conditional.  Can you explain what the old logic was doing, and what
+the rationale for it was?
+
+> diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
+> index 4ece129..28b7d95 100755
+> --- a/t/t7061-wtstatus-ignore.sh
+> +++ b/t/t7061-wtstatus-ignore.sh
+> @@ -122,10 +122,34 @@ cat >expected <<\EOF
+>  ?? .gitignore
+>  ?? actual
+>  ?? expected
+> +EOF
+> +
+> +test_expect_success 'status ignored tracked directory and ignored file with --ignore' '
+> +       echo "committed" >>.gitignore &&
+> +       git status --porcelain --ignored >actual &&
+> +       test_cmp expected actual
+> +'
+
+Um, didn't really get this one.  You have three untracked files, and
+git status seems to be showing them fine.  What am I missing?
+
+> +cat >expected <<\EOF
+> +?? .gitignore
+> +?? actual
+> +?? expected
+> +EOF
+> +
+> +test_expect_success 'status ignored tracked directory and ignored file with --ignore -u' '
+> +       git status --porcelain --ignored -u >actual &&
+> +       test_cmp expected actual
+> +'
+
+I didn't understand why you're invoking -u here (doesn't it imply
+"all", as opposed to "normal" when unspecified?).  There are really no
+directories, so I don't know what I'm expected to see.
+
+> +cat >expected <<\EOF
+> +?? .gitignore
+> +?? actual
+> +?? expected
+>  !! tracked/
+>  EOF
+>
+>  test_expect_success 'status ignored tracked directory and uncommitted file with --ignore' '
+> +       echo "tracked" >.gitignore &&
+>         : >tracked/uncommitted &&
+>         git status --porcelain --ignored >actual &&
+>         test_cmp expected actual
+
+Didn't we test this in the last patch?  Okay, I'm completely confused now.
+
+Once again, apologies for my inexperienced comments:  I'm contributing
+whatever little I can to the review process.
