@@ -1,110 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] gitweb/INSTALL: GITWEB_CONFIG_SYSTEM is for backward
- compatibility
-Date: Tue, 16 Apr 2013 15:26:00 -0700
-Message-ID: <20130416222600.GG29773@google.com>
-References: <7v4nfch90r.fsf@alter.siamese.dyndns.org>
- <20130412064837.GA5710@elie.Belkin>
- <20130412064953.GB5710@elie.Belkin>
- <7vy5cnd0m4.fsf@alter.siamese.dyndns.org>
- <516888C0.90501@gmail.com>
- <CAM9Z-nmOzpJdT3ni0rYRkg7Z26N5XSRyqp0TkTY79AAZ85pw2A@mail.gmail.com>
- <7vobdfnlc7.fsf@alter.siamese.dyndns.org>
- <CAM9Z-nm=SUNAHXZtOnz_BSS8VrVYPczicX99FUmDJe6Lj_oKpQ@mail.gmail.com>
- <516D4359.2070501@gmail.com>
- <CAM9Z-nkbBS5qvbkocdGWj7rwtSxB86+R4jdjcBOxCU4YjtgZ1A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] help.c: add a compatibility comment to cmd_version()
+Date: Tue, 16 Apr 2013 15:35:07 -0700
+Message-ID: <7vvc7mhzok.fsf@alter.siamese.dyndns.org>
+References: <1366144405-61438-1-git-send-email-davvid@gmail.com>
+ <3D6BDB8830FC44A38B1AC508488049C0@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-	Stefano Lattarini <stefano.lattarini@gmail.com>
-To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 17 00:26:14 2013
+Cc: "David Aguilar" <davvid@gmail.com>, <git@vger.kernel.org>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Wed Apr 17 00:35:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USEKM-0003xg-6o
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 00:26:14 +0200
+	id 1USETD-0007PT-Ku
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 00:35:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965471Ab3DPW0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 18:26:09 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:59576 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965353Ab3DPW0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 18:26:08 -0400
-Received: by mail-pb0-f49.google.com with SMTP id um15so529909pbc.36
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 15:26:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=S/BAXuikg0Fgc80mreYGluD3KHMTF8KDG+H63co2kyY=;
-        b=OdHeWEtRVHGDyHCQ3QH9T1BEA2QzI97FAInvmzsvvtZZdhdJC4ZjLduwxqhuaxMuED
-         chvblSK8nBZ2YfN7kFaoaZyxJRsNJlakSBXXoA3B32x5J2rir0vmrrITEEBe7+dMNveM
-         7rkDNf0IDmLx5M23tiPSpb6xv+K6rA/2h2zcgSigWgs8VddRcoHJ69koFCRSGoemTwjK
-         PxvoerlSYboWp1Bfi7zjBMOnvwlcG5h2DL8IT7GTjooxjBReqYC4LYUBUE30ufyd6FlL
-         759YZYGO75kCouqVzeVbWl4U2/TN4+cecu+k38Fc+0HBsJ16QTUPzJwki93yTnYm38Af
-         e8zQ==
-X-Received: by 10.68.204.71 with SMTP id kw7mr5913150pbc.40.1366151164651;
-        Tue, 16 Apr 2013 15:26:04 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id dr4sm3580306pbb.19.2013.04.16.15.26.02
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 16 Apr 2013 15:26:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAM9Z-nkbBS5qvbkocdGWj7rwtSxB86+R4jdjcBOxCU4YjtgZ1A@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S965492Ab3DPWfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 18:35:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44980 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965426Ab3DPWfS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 18:35:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7A4617C6E;
+	Tue, 16 Apr 2013 22:35:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1AwzyCSDNOSA3cgdxWh+y3xPgcA=; b=StWgPA
+	HKgOuBj06EI82eGdHGF+9xuMLEFIur+vH+Lyqlxxd969qQsfIKyy2XkN2pizjrsd
+	G5dKqm3I52e+3TnW4OW8o5CCoAkEUoDyNPO9I/Kup7Zo2ZnpPFmoscZe8P3WV2Gf
+	Dh3kLsFtIw+jKUX1vBazyGFgvMaXiyynTatFM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZzAxEfrQOKwT2F66z7qcwI/wwSXOP19L
+	qFkEtffOhG4e7RB7ZoCzX2yRe55Jn00dfvIPRqcScb9A35jFEqEU+blN23OeV6QB
+	+SpD+ITP/BjWh98ifXDtpxD4YFBRlmTBkSBUL3kygv95l0xdXdiBkOeRxPfOHyZI
+	QpA9k26ZYDc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD2BF17C6C;
+	Tue, 16 Apr 2013 22:35:17 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2821E17C69; Tue, 16 Apr
+ 2013 22:35:17 +0000 (UTC)
+In-Reply-To: <3D6BDB8830FC44A38B1AC508488049C0@PhilipOakley> (Philip Oakley's
+ message of "Tue, 16 Apr 2013 22:59:56 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E99E66D2-A6E5-11E2-BDA0-CC48E7F0ECB6-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221485>
 
-Drew Northup wrote:
+"Philip Oakley" <philipoakley@iee.org> writes:
 
->                             This is unobtrusive yet to the point.
+>> int cmd_version(int argc, const char **argv, const char *prefix)
+>> {
+>> + /*
+>> + * The format of this string should be kept stable for compatibility
+>> + * with external projects that rely on the output of "git version".
+>
+> Shouldn't the expected format of our known external project also be
+> indicated?
+> ...
+>>  printf("git version %s\n", git_version_string);
 
-I agree with the spirit.
+It is fairly clear from the commented code that the only guarantee
+they will be getting is that it begins with a string "git version ".
+git_version_string[] has anything of the builder's choice.  I am not
+sure if there anything more to "indicate".
 
-[...]
-> --- a/Documentation/gitweb.conf.txt
-> +++ b/Documentation/gitweb.conf.txt
-> @@ -55,7 +55,8 @@ following order:
->     then fallback system-wide configuration file (defaults to
-> '/etc/gitweb.conf').
-> 
->  Values obtained in later configuration files override values obtained earlier
-> -in the above sequence.
-> +in the above sequence. This is different from many system-wide software
-> +installations and will stay this way for historical reasons.
+Really, if you run
 
-That makes it sound like the "per instance overrides common overrides
-built-in" cascading is what is unusual and what we need to apologize
-for.
+	$ git version
 
-How about something like the following?  (It uses a BUGS section to
-make the warning easy to notice for people tracking down confusing
-behavior by searching for "gitweb.conf".)
+and you get "Git Source Code Management Version 3.56" from its
+output, it is likely that the version is very different from what
+you know, and you should not assume any your assumption would hold.
 
-diff --git i/Documentation/gitweb.conf.txt w/Documentation/gitweb.conf.txt
-index eb63631..ea0526e 100644
---- i/Documentation/gitweb.conf.txt
-+++ w/Documentation/gitweb.conf.txt
-@@ -857,6 +857,13 @@ adding the following lines to your gitweb configuration file:
- 	$known_snapshot_formats{'zip'}{'disabled'} = 1;
- 	$known_snapshot_formats{'tgz'}{'compressor'} = ['gzip','-6'];
- 
-+BUGS
-+----
-+Debugging would be easier if the fallback configuration file
-+(`/etc/gitweb.conf`) and environment variable to override its location
-+('GITWEB_CONFIG_SYSTEM') had names reflecting their "fallback" role.
-+The current names are kept to avoid breaking working setups.
-+
- ENVIRONMENT
- -----------
- The location of per-instance and system-wide configuration files can be
+> Or mention "such as git gui"?
+
+I do not see what it would buy us.  It is not like it is OK as long
+as we upadte Git gui at the same time.
