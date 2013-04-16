@@ -1,81 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/3] pull: introduce --[no-]autostash and pull.autostash
-Date: Tue, 16 Apr 2013 13:22:21 +0200
-Message-ID: <vpqa9oyd8k2.fsf@grenoble-inp.fr>
-References: <1365887729-9630-1-git-send-email-artagnon@gmail.com>
-	<1365887729-9630-4-git-send-email-artagnon@gmail.com>
-	<vpq38us2oov.fsf@grenoble-inp.fr>
-	<CALkWK0mdC_tK2CGqAa67fr189PQCjSjzAOPujipOHFfoiYW0qA@mail.gmail.com>
-	<vpqppxvoqsc.fsf@grenoble-inp.fr>
-	<7vobdfztz9.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=cNEkE0bUoWJg119o+FaQywJhgkUxiFfLGPSsLrFVZ=A@mail.gmail.com>
-	<7vr4ibu14j.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=6E=s6kJysMo2yC22c3pvCWn90S5neRyP0jpzpYrZboA@mail.gmail.com>
-	<vpqli8je8w0.fsf@grenoble-inp.fr>
-	<CALkWK0ndk7hPYk4pN8gmLxLOJR0XsLo1gwHB=n0QkK6DHgLzKQ@mail.gmail.com>
-	<vpqvc7mdd3x.fsf@grenoble-inp.fr>
-	<CALkWK0m+NQ_ZdDkD31VxEpFHGm006mGiAy6GHi31+MrPmzB1mQ@mail.gmail.com>
-	<vpqppxudaor.fsf@grenoble-inp.fr>
+From: Drew Northup <n1xim.email@gmail.com>
+Subject: Re: [PATCH] gitweb/INSTALL: Simplify description of GITWEB_CONFIG_SYSTEM
+Date: Tue, 16 Apr 2013 07:51:12 -0400
+Message-ID: <CAM9Z-n=MNs4598AHjOUfbd1K3uPQBJVQ-GU=qekdsgyzHvBigg@mail.gmail.com>
+References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com>
+	<85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com>
+	<7v4nfch90r.fsf@alter.siamese.dyndns.org>
+	<20130412064837.GA5710@elie.Belkin>
+	<20130412064953.GB5710@elie.Belkin>
+	<7vy5cnd0m4.fsf@alter.siamese.dyndns.org>
+	<516888C0.90501@gmail.com>
+	<CAM9Z-nmOzpJdT3ni0rYRkg7Z26N5XSRyqp0TkTY79AAZ85pw2A@mail.gmail.com>
+	<7vobdfnlc7.fsf@alter.siamese.dyndns.org>
+	<516CF98E.2050706@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 13:23:32 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+	Stefano Lattarini <stefano.lattarini@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 13:51:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US3yy-00053U-W7
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 13:23:29 +0200
+	id 1US4Pu-0006cl-Lb
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 13:51:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753820Ab3DPLXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 07:23:23 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:35254 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753708Ab3DPLXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 07:23:21 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r3GBMKUN001484
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 16 Apr 2013 13:22:20 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1US3xt-0003bD-M4; Tue, 16 Apr 2013 13:22:21 +0200
-In-Reply-To: <vpqppxudaor.fsf@grenoble-inp.fr> (Matthieu Moy's message of
-	"Tue, 16 Apr 2013 12:36:20 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 16 Apr 2013 13:22:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r3GBMKUN001484
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1366716143.31549@cW9F3pBfNz4M7djfu9Pu+w
+	id S1754087Ab3DPLvO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 07:51:14 -0400
+Received: from mail-ia0-f169.google.com ([209.85.210.169]:47188 "EHLO
+	mail-ia0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753010Ab3DPLvN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 07:51:13 -0400
+Received: by mail-ia0-f169.google.com with SMTP id h23so322117iae.0
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 04:51:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=6irXhqCajpNqSOyXM1HHEK3y3rD8ZYxYy55Kq1ddDbs=;
+        b=Re4rEekcP2qgvoWWC5P4WcMvBvF2ahwXg6g0S+7PwKu1MCevhWnzcTOxisAWc2OiFZ
+         SBiLT8I4cL26M6PDuXl4qKDy2Ina0SpHXOSs1SPfCBFqaFzvnDL3dRZK9E14r3huTDo7
+         yEX3jidBi5DUPFZmM7YXIC9kcVMpBkEs6wnuJeLAd0oMhO9NvHwZmt0QAd3YzzmdWZvj
+         8bi06t/N+jcaspq/0/5fkweJlwdfIBXJ9b+oR5ErJOib163UMkPWf29hTZTc05KKv+tp
+         Sae8DUe72cAqiA+IAEbBdVEtK7q5uIO+oXm6u9144eCVkovR98wS80c7det9lkYFyOu0
+         9yuQ==
+X-Received: by 10.50.173.102 with SMTP id bj6mr7437060igc.16.1366113072911;
+ Tue, 16 Apr 2013 04:51:12 -0700 (PDT)
+Received: by 10.42.173.70 with HTTP; Tue, 16 Apr 2013 04:51:12 -0700 (PDT)
+In-Reply-To: <516CF98E.2050706@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221408>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Tue, Apr 16, 2013 at 3:11 AM, Jakub Nar=C4=99bski <jnareb@gmail.com>=
+ wrote:
+> Junio C Hamano wrote:
 >
->> Yes, touching a simple "autostash" file at stash-time, and removing it
->> at pop-time will do.  I don't see why it should be part of a
->> (potentially user-editable) todo-list, which serves an entirely
->> different purpose.
+>> In order to just pick and use the more appropriate one (or a useful
+>> combination of the two), a clean description of what each of them do
+>> without historical cruft is more readable and useful, isn't it?  I
+>> would expect that most of them who are newly configuring a system
+>> would pick COMMON one and override per instance as needed, without
+>> touching the SYSTEM one (fallback default) after reading the above,
+>> and that is what we want to happen.
+>>
+>> Do you think sysadmins need a history lesson to understand why there
+>> are two different possibilities?
+> [...]
+>> I think the new text conveys the necessary information to the
+>> intended audience with more clarity without the history lesson or
+>> the record of your past frustration. Am I mistaken?
 >
-> You'll have to apply the index state and then the tree state. How do you
-> know whether the next call to "git rebase" should apply one or the other?
+> Note also that this is about *gitweb/INSTALL*, which is meant to be
+> *short* and succint description on how to install gitweb, and not
+> about the reference documentation: gitweb(1) or gitweb.conf(5).
+>
+> Description of historical behavior (and backward compatibility)
+> has place (if any) in manpages, not gitweb/INSTALL.
+> --
+> Jakub Nar=C4=99bski
 
-Plus: what happens if the user ran "git stash" during rebase? In Junio's
-version, the right commits are applied. Running blindly "stash pop" may
-pop the wrong stash.
+Let us then agree that it should be mentioned somewhere in
+gitweb.conf.txt then (as it currently is not).
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--
+-Drew Northup
+--------------------------------------------------------------
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
