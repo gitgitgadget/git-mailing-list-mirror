@@ -1,107 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git log - crash and core dump
-Date: Tue, 16 Apr 2013 12:45:03 -0700
-Message-ID: <7v61zml0ow.fsf@alter.siamese.dyndns.org>
-References: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
- <516D93C4.1000100@lsrfire.ath.cx>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH v2 1/2] usage: allow pluggable die-recursion checks
+Date: Tue, 16 Apr 2013 15:46:22 -0400
+Message-ID: <20130416194621.GA11185@sigill.intra.peff.net>
+References: <20130416194418.GA7187@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ivan Lyapunov <dront78@gmail.com>, git@vger.kernel.org,
-	Antoine Pelisse <apelisse@gmail.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Apr 16 21:45:17 2013
+Cc: Brandon Casey <drafnel@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Apr 16 21:46:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USBoZ-0006Hc-OR
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 21:45:16 +0200
+	id 1USBpl-0007zJ-B8
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 21:46:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935644Ab3DPTpJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 15:45:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32940 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935589Ab3DPTpI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 15:45:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 24944D8BC;
-	Tue, 16 Apr 2013 19:45:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=o2HGamIYRTue
-	6mEUVUdJwWYlMFI=; b=UYkjqPQswoCWswTdaUmwR8nMW7TRAj5iMDjnbTYWctHK
-	JumwYcGIgquA+ZyiOxb/QummkKLXBPL61zGxRr6pDpnWGXX4C1R+3RNS0kgS/MPm
-	C0qCZYymBriH7J6yv1iyCyO3ds73LMhkT2bcwlm+MQo0iUG7vZ9NY/A4Kjjl2y8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=dkIxyo
-	8IWURabUFBhTmXEI//+0OVm4DbHx45//622x6gBXX4f+xBsEWQFDbVBKGlK9e7Xi
-	/jaLqqIx5+CFX1wmkCOrkZeBViVtGoTRmoEvdIrThEUdJEapk6+kGQwO1ag3Zbso
-	4O1SYKeOwwiyXZ74mwsBNV+/j28RGWXBbFlMY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C337D8BA;
-	Tue, 16 Apr 2013 19:45:06 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7E2C1D8B9; Tue, 16 Apr 2013
- 19:45:05 +0000 (UTC)
-In-Reply-To: <516D93C4.1000100@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Tue, 16 Apr 2013 20:09:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2300A8F8-A6CE-11E2-91C0-CC48E7F0ECB6-77302942!b-pb-sasl-quonix.pobox.com
+	id S935677Ab3DPTqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 15:46:25 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48343 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935589Ab3DPTqY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 15:46:24 -0400
+Received: (qmail 7817 invoked by uid 107); 16 Apr 2013 19:48:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Apr 2013 15:48:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Apr 2013 15:46:22 -0400
+Content-Disposition: inline
+In-Reply-To: <20130416194418.GA7187@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221458>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+When any git code calls die or die_errno, we use a counter
+to detect recursion into the die functions from any of the
+helper functions. However, such a simple counter is not good
+enough for threaded programs, which may call die from a
+sub-thread, killing only the sub-thread (but incrementing
+the counter for everyone).
 
-> Does this patch help?
->
->  pretty.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/pretty.c b/pretty.c
-> index d3a82d2..713eefc 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -405,8 +405,8 @@ void pp_user_info(const struct pretty_print_conte=
-xt *pp,
->  	const char *mailbuf, *namebuf;
->  	size_t namelen, maillen;
->  	int max_length =3D 78; /* per rfc2822 */
-> -	unsigned long time;
-> -	int tz;
-> +	unsigned long time =3D 0;
-> +	int tz =3D 0;
-> =20
->  	if (pp->fmt =3D=3D CMIT_FMT_ONELINE)
->  		return;
-> @@ -438,8 +438,10 @@ void pp_user_info(const struct pretty_print_cont=
-ext *pp,
->  	strbuf_add(&name, namebuf, namelen);
-> =20
->  	namelen =3D name.len + mail.len + 3; /* ' ' + '<' + '>' */
-> -	time =3D strtoul(ident.date_begin, &date, 10);
-> -	tz =3D strtol(date, NULL, 10);
-> +	if (ident.date_begin) {
-> +		time =3D strtoul(ident.date_begin, &date, 10);
-> +		tz =3D strtol(date, NULL, 10);
-> +	}
-> =20
->  	if (pp->fmt =3D=3D CMIT_FMT_EMAIL) {
->  		strbuf_addstr(sb, "From: ");
+Rather than try to deal with threads ourselves here, let's
+just allow callers to plug in their own recursion-detection
+function. This is similar to how we handle the die routine
+(the caller plugs in a die routine which may kill only the
+sub-thread).
 
-Looks like a sensible change.  split_ident_line() decided that the
-given input was mangled and decided there is no valid date (the
-input had <> where the timestamp string was required), so the
-updated code leaves the time/tz unspecified.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ git-compat-util.h |  1 +
+ usage.c           | 20 ++++++++++++++------
+ 2 files changed, 15 insertions(+), 6 deletions(-)
 
-It still is curious how a malformed line was created in the first
-place.  I wouldn't worry if a private tool used hash-object to
-create such a commit, but if it is something that is commonly used
-(e.g. "git commit"), others may suffer from the same and the tool
-needs to be tightened a bit.
+diff --git a/git-compat-util.h b/git-compat-util.h
+index cde442f..e955bb5 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -331,6 +331,7 @@ extern void set_error_routine(void (*routine)(const char *err, va_list params));
+ 
+ extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
+ extern void set_error_routine(void (*routine)(const char *err, va_list params));
++extern void set_die_is_recursing_routine(int (*routine)(void));
+ 
+ extern int prefixcmp(const char *str, const char *prefix);
+ extern int suffixcmp(const char *str, const char *suffix);
+diff --git a/usage.c b/usage.c
+index 40b3de5..ed14645 100644
+--- a/usage.c
++++ b/usage.c
+@@ -6,8 +6,6 @@
+ #include "git-compat-util.h"
+ #include "cache.h"
+ 
+-static int dying;
+-
+ void vreportf(const char *prefix, const char *err, va_list params)
+ {
+ 	char msg[4096];
+@@ -49,12 +47,19 @@ static void (*warn_routine)(const char *err, va_list params) = warn_builtin;
+ 	vreportf("warning: ", warn, params);
+ }
+ 
++static int die_is_recursing_builtin(void)
++{
++	static int dying;
++	return dying++;
++}
++
+ /* If we are in a dlopen()ed .so write to a global variable would segfault
+  * (ugh), so keep things static. */
+ static NORETURN_PTR void (*usage_routine)(const char *err, va_list params) = usage_builtin;
+ static NORETURN_PTR void (*die_routine)(const char *err, va_list params) = die_builtin;
+ static void (*error_routine)(const char *err, va_list params) = error_builtin;
+ static void (*warn_routine)(const char *err, va_list params) = warn_builtin;
++static int (*die_is_recursing)(void) = die_is_recursing_builtin;
+ 
+ void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params))
+ {
+@@ -66,6 +71,11 @@ void set_error_routine(void (*routine)(const char *err, va_list params))
+ 	error_routine = routine;
+ }
+ 
++void set_die_is_recursing_routine(int (*routine)(void))
++{
++	die_is_recursing = routine;
++}
++
+ void NORETURN usagef(const char *err, ...)
+ {
+ 	va_list params;
+@@ -84,11 +94,10 @@ void NORETURN die(const char *err, ...)
+ {
+ 	va_list params;
+ 
+-	if (dying) {
++	if (die_is_recursing()) {
+ 		fputs("fatal: recursion detected in die handler\n", stderr);
+ 		exit(128);
+ 	}
+-	dying = 1;
+ 
+ 	va_start(params, err);
+ 	die_routine(err, params);
+@@ -102,12 +111,11 @@ void NORETURN die_errno(const char *fmt, ...)
+ 	char str_error[256], *err;
+ 	int i, j;
+ 
+-	if (dying) {
++	if (die_is_recursing()) {
+ 		fputs("fatal: recursion detected in die_errno handler\n",
+ 			stderr);
+ 		exit(128);
+ 	}
+-	dying = 1;
+ 
+ 	err = strerror(errno);
+ 	for (i = j = 0; err[i] && j < sizeof(str_error) - 1; ) {
+-- 
+1.8.2.8.g44e4c28
