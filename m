@@ -1,119 +1,92 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: git log - crash and core dump
-Date: Tue, 16 Apr 2013 20:09:08 +0200
-Message-ID: <516D93C4.1000100@lsrfire.ath.cx>
-References: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
-To: Ivan Lyapunov <dront78@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 20:09:21 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [Resend PATCH] t3903 (stash): add failing test for ref of form ^{/message}
+Date: Tue, 16 Apr 2013 23:39:25 +0530
+Message-ID: <1366135765-18437-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 16 20:09:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USAJl-00063V-8W
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 20:09:21 +0200
+	id 1USAK8-0006a7-MF
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 20:09:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753378Ab3DPSJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 14:09:15 -0400
-Received: from india601.server4you.de ([85.25.151.105]:48074 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752917Ab3DPSJO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 14:09:14 -0400
-Received: from [192.168.2.105] (p579BE374.dip.t-dialin.net [87.155.227.116])
-	by india601.server4you.de (Postfix) with ESMTPSA id CC1721E3;
-	Tue, 16 Apr 2013 20:09:12 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
+	id S1752917Ab3DPSJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 14:09:40 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:65360 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751493Ab3DPSJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 14:09:39 -0400
+Received: by mail-pa0-f44.google.com with SMTP id bi5so478248pad.31
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 11:09:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=4/DoIqYvhL7ehn9RhjkgCjUxoV2rDl9c6uAGVHWO2qE=;
+        b=KGpqsBe0zZzpuiU54RG+L1hhUZkm90HZry8XYDg/ws7kxupG831+VXEiy1qeLB4UGC
+         BJjk2KVllS9U5wB7HpKk8r9fjsSvVfrf9vR8sFSh1Gidr0WVoXLuQUiTxUVqvafTZXOR
+         aqVcLZgfpW3uxvNmhhp7rqg7IU84NRBTyoWaXWq0c/2YWZQSc5TihTzvuCQQwupp6ub/
+         EK0DhrAoXE2IroSLn4N8wpaApTPceaK2oiNDGt+oB8XYXvjJhDS0BUSe7OC0WnB2csbN
+         Q4oiNQ9gf86GpOeiiNxJRltGq1jfm7zMGqYERAz2vTiTFivSy4wKCBFAW0iIiykdiQxN
+         X8Yg==
+X-Received: by 10.68.1.138 with SMTP id 10mr4939241pbm.136.1366135779058;
+        Tue, 16 Apr 2013 11:09:39 -0700 (PDT)
+Received: from localhost.localdomain ([122.164.25.24])
+        by mx.google.com with ESMTPS id g8sm3589400pae.7.2013.04.16.11.09.37
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 16 Apr 2013 11:09:38 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.1.390.g924f6c3.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221442>
 
-Am 16.04.2013 18:55, schrieb Ivan Lyapunov:
-> git version 1.8.2.1 crashes on my ArchLinux x86_64 on git log command
-> gdb bt is attached
-> 
-> git log | less
-> does not crash in same repo
-> 
-> I cannot share a repo for a debug purposes since it's private repo of
-> my employer
-> but I can perform any suitable tests on repo to help this bug to be fixed
-> 
-> #0  0x00007ffff722b3e6 in ____strtoull_l_internal () from /usr/lib/libc.so.6
-> #1  0x00000000004b31d4 in pp_user_info (pp=pp@entry=0x7fffffffd310,
-> what=what@entry=0x521379 "Author", sb=sb@entry=0x7fffffffd290,
->      line=line@entry=0x7b3a45 "Ivan Lyapunov <ilyapunov@trueconf.ru>-
-> <> 1354083115 +0400\ncommitter Ivan Lyapunov <ilyapunov@trueconf.ru>
+While a 'git stash show stash^{/quuxery}' works just fine, a 'git
+stash pop stash^{/quuxery}' complains with: 'stash^{/quuxery} is not a
+stash reference'.  This confusing behavior arises from the differences
+in logic that 'show' and 'pop' internally employ to validate the
+specified ref.  Document this bug by adding a failing testcase for it.
 
-So this is the author information, correct?
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ So sorry about misspelling Junio's address in my previous email.
+ Please respond to this one instead.
 
-	Ivan Lyapunov <ilyapunov@trueconf.ru>-<> 1354083115 +0400
-        |author name|  |---author email----| ^^^ |--time--| |tz-|
+ So if you look at git-stash.sh:377, you'll notice that it's doing a
+ the shell substitution "${REV%@*}" to figure out whether the stash
+ ref is a valid ref.  This hacky myopic design has to be done away
+ with immediately, and we should really compare the SHA-1 hex of the
+ specified ref with those in the stash reflog.
 
-How did you manage to add the "-<>" after the email address?
+ The only reason I haven't written a fix yet is because I'm not sure
+ why you need this convoluted IS_STASH_LIKE and IS_STASH_REF logic in
+ the first place.  Can someone enlighten me as to what is going on?
 
-What does git log in version 1.8.1 or earlier show for this commit?
+ t/t3903-stash.sh | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-> 1354083115 +0400\n\n- small merge fixes",
-> encoding=encoding@entry=0x505400 "UTF-8") at pretty.c:441
-> #2  0x00000000004b533a in pp_header (sb=0x7fffffffd290,
-> msg_p=0x7fffffffd228, commit=0x7c1e10, encoding=0x505400 "UTF-8",
-> pp=0x7fffffffd310) at pretty.c:1415
-> #3  pretty_print_commit (pp=pp@entry=0x7fffffffd310,
-> commit=commit@entry=0x7c1e10, sb=sb@entry=0x7fffffffd290) at
-> pretty.c:1545
-> #4  0x00000000004a0b45 in show_log (opt=opt@entry=0x7fffffffd4d0) at
-> log-tree.c:683
-> #5  0x00000000004a1616 in log_tree_commit
-> (opt=opt@entry=0x7fffffffd4d0, commit=commit@entry=0x7c1e10) at
-> log-tree.c:859
-> #6  0x0000000000438b03 in cmd_log_walk (rev=rev@entry=0x7fffffffd4d0)
-> at builtin/log.c:310
-> #7  0x00000000004395dd in cmd_log (argc=1, argv=0x7fffffffdd30,
-> prefix=0x0) at builtin/log.c:582
-> #8  0x000000000040562d in run_builtin (argv=0x7fffffffdd30, argc=1,
-> p=0x754d18 <commands.21404+1080>) at git.c:282
-> #9  handle_internal_command (argc=1, argv=0x7fffffffdd30) at git.c:444
-> #10 0x0000000000404a6f in run_argv (argv=0x7fffffffdbd0,
-> argcp=0x7fffffffdbdc) at git.c:490
-> #11 main (argc=1, argv=0x7fffffffdd30) at git.c:565
-
-Does this patch help?
-
- pretty.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/pretty.c b/pretty.c
-index d3a82d2..713eefc 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -405,8 +405,8 @@ void pp_user_info(const struct pretty_print_context *pp,
- 	const char *mailbuf, *namebuf;
- 	size_t namelen, maillen;
- 	int max_length = 78; /* per rfc2822 */
--	unsigned long time;
--	int tz;
-+	unsigned long time = 0;
-+	int tz = 0;
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 5dfbda7..04ba983 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -583,6 +583,15 @@ test_expect_success 'invalid ref of the form stash@{n}, n >= N' '
+ 	git stash drop
+ '
  
- 	if (pp->fmt == CMIT_FMT_ONELINE)
- 		return;
-@@ -438,8 +438,10 @@ void pp_user_info(const struct pretty_print_context *pp,
- 	strbuf_add(&name, namebuf, namelen);
- 
- 	namelen = name.len + mail.len + 3; /* ' ' + '<' + '>' */
--	time = strtoul(ident.date_begin, &date, 10);
--	tz = strtol(date, NULL, 10);
-+	if (ident.date_begin) {
-+		time = strtoul(ident.date_begin, &date, 10);
-+		tz = strtol(date, NULL, 10);
-+	}
- 
- 	if (pp->fmt == CMIT_FMT_EMAIL) {
- 		strbuf_addstr(sb, "From: ");
++test_expect_failure 'valid ref of the form stash^{/message}' '
++	git stash clear &&
++	echo bar > file &&
++	git add file &&
++	git stash save "quuxery" &&
++	git stash show stash^{/quuxery} &&
++	git stash pop stash^{/quuxery}
++'
++
+ test_expect_success 'stash branch should not drop the stash if the branch exists' '
+ 	git stash clear &&
+ 	echo foo >file &&
+-- 
+1.8.2.1.390.g924f6c3.dirty
