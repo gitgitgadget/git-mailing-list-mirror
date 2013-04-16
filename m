@@ -1,167 +1,109 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2 01/14] dir.c: git-status --ignored: don't drop ignored directories
-Date: Tue, 16 Apr 2013 23:03:40 +0530
-Message-ID: <CALkWK0=0MbKnEWc+uLkbynJZXYYiRyfJ539HjtPTajHotB4q9A@mail.gmail.com>
-References: <514778E4.1040607@gmail.com> <516C4F27.30203@gmail.com> <516C4F6F.5020708@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] pull: introduce --[no-]autostash and pull.autostash
+Date: Tue, 16 Apr 2013 10:42:56 -0700
+Message-ID: <7vsj2qmkwv.fsf@alter.siamese.dyndns.org>
+References: <1365887729-9630-1-git-send-email-artagnon@gmail.com>
+ <1365887729-9630-4-git-send-email-artagnon@gmail.com>
+ <vpq38us2oov.fsf@grenoble-inp.fr>
+ <CALkWK0mdC_tK2CGqAa67fr189PQCjSjzAOPujipOHFfoiYW0qA@mail.gmail.com>
+ <vpqppxvoqsc.fsf@grenoble-inp.fr> <7vobdfztz9.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=cNEkE0bUoWJg119o+FaQywJhgkUxiFfLGPSsLrFVZ=A@mail.gmail.com>
+ <7vr4ibu14j.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=6E=s6kJysMo2yC22c3pvCWn90S5neRyP0jpzpYrZboA@mail.gmail.com>
+ <vpqli8je8w0.fsf@grenoble-inp.fr>
+ <CALkWK0ndk7hPYk4pN8gmLxLOJR0XsLo1gwHB=n0QkK6DHgLzKQ@mail.gmail.com>
+ <vpqvc7mdd3x.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Robert Zeh <robert.allan.zeh@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Adam Spiers <git@adamspiers.org>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 19:34:27 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Apr 16 19:43:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US9ly-0007bE-LF
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 19:34:27 +0200
+	id 1US9uJ-0002AA-IO
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 19:43:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936019Ab3DPReW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 13:34:22 -0400
-Received: from mail-ia0-f182.google.com ([209.85.210.182]:49268 "EHLO
-	mail-ia0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935536Ab3DPReV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 13:34:21 -0400
-Received: by mail-ia0-f182.google.com with SMTP id u20so653182iag.27
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 10:34:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=B/kKni51bg2bQPX1AXHgwwyDcpQrluaNXexeQLDUzgQ=;
-        b=CnQtKSnz/OWM6FkQkTblzEsURQm/b2d8YcfQ5Ar4KIpzKPBrHjWONid5GO50JMG9qJ
-         Bq1Q95mSPH9CXv9JY7W+qY1EZ3iGj62eV4Aix9tCVq89zsRf0yn3AVb0HREovzKaSbwV
-         mbAG7wmR+GFo1vCZxSdfOStwpZA8rpuid8HA54XsAPSmHUit/m69diwbtX/sZpC6zEnk
-         tr2gA1f42/mN6TNLz5l2swq67CnIwrHqv7ZZu3Jj9fmS1ve3LyKVUkz1QPyrtEEaKEKM
-         KW3cP0AMpYaSs6k0nOYA0aKo8RbZzxmlOGHTt/aR2IW78LI9ZCGNy/ZoOb+/0Y1acXpW
-         Ouog==
-X-Received: by 10.50.119.102 with SMTP id kt6mr2046600igb.12.1366133660890;
- Tue, 16 Apr 2013 10:34:20 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Tue, 16 Apr 2013 10:33:40 -0700 (PDT)
-In-Reply-To: <516C4F6F.5020708@gmail.com>
+	id S936038Ab3DPRm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 13:42:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57800 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935536Ab3DPRm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 13:42:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C9E7165D5;
+	Tue, 16 Apr 2013 17:42:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nLGtRY5rlYwuMpTeXGCdzl/I94o=; b=MYuS/y
+	khuIhV6dvmQp3NF9tCyc4H7YL73n73kuCDllNm8rNyGWlDWyd+3ALht+/J0kDQF2
+	fCw4RJ4jA/IBWo231ymtCIwbxc9ziK0sEv+MEICvSpA3+QoV23FezQX8MSz8Iusx
+	vWPurs++duvTlFCFHQM2WR/zVpd+4b4tqxJ/w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cNwZr/wVkY0uoPypNMcFTGegYtfytuOS
+	LDYJ6cihl7ShNmYYT55yOFHQJHaoYNlvqPex41hX3a/yliT0TVhO8oS9Hz/7fA80
+	/ic/46WdljtlxqcIHAv1z3nVFaxHd8XD1A+qaha9J+9p1TOUjsULzcGI2by5A+rX
+	nn38BS1Ubko=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43A83165D4;
+	Tue, 16 Apr 2013 17:42:58 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 89DF9165D0; Tue, 16 Apr
+ 2013 17:42:57 +0000 (UTC)
+In-Reply-To: <vpqvc7mdd3x.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+ "Tue, 16 Apr 2013 11:44:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 13344DAA-A6BD-11E2-977C-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221434>
 
-Firstly, great work on the series! I've just started looking into it,
-so please don't take my comments too seriously: some of them may be
-queries, and others may be minor suggestions, but I can't say I
-understand the area you're patching.  I know Junio doesn't like me
-mixing queries in reviews, but I don't fully agree with his policy.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Karsten Blees wrote:
-> 'git-status --ignored' drops ignored directories if they contain untracked
-> files in an untracked sub directory.
-
-Wait, ignored directories will always contain untracked
-subdirectories, unless you add -f them, right?  Why are you saying
-untracked files in an _untracked_ subdirectory?  We don't track
-directories anyway, and I would call a directory "tracked" if there's
-atleast one file inside it is tracked.  So, my understanding of this
-is:
-
-    quux/
-       bar
-        baz/
-             foo
-
-In this example, if quux is ignored and untracked, git status
---ignored currently shows quux/.  If quux/bar is tracked (say with add
--f), but baz/ is untracked, git status --ignored doesn't show me
-anything.  What exactly is the bug you're fixing?  I'll try to look at
-the tests to infer this, but your commit message could probably be
-clearer.
-
-Nit: please s/git-status/git status/
-
-> Fix it by getting exact (recursive) excluded status in treat_directory.
-
-Okay, so you're patching treat_directory() in dir.c to do some
-recursive exclude handling.  Let's see what this is.
-
-> diff --git a/dir.c b/dir.c
-> index 57394e4..ec4eebf 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1060,6 +1060,15 @@ static enum directory_treatment treat_directory(struct dir_struct *dir,
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
 >
->         /* This is the "show_other_directories" case */
+>> If it is 0 (which means that the rebase completely successfully), pop
+>> the stash before exiting as usual.
 >
-> +       /* might be a sub directory in an excluded directory */
-> +       if (!exclude) {
-> +               struct path_exclude_check check;
-> +               int dt = DT_DIR;
-> +               path_exclude_check_init(&check, dir);
-> +               exclude = is_path_excluded(&check, dirname, len, &dt);
-> +               path_exclude_check_clear(&check);
-> +       }
-> +
-
-So, I'm guessing that DT_DIR refers to a value that a field in struct
-dirent can take; that value could be one of DIR (directory), REG
-(regular file?), LNK (symbolic link?).  I don't get much of this, but
-what I do get is that you're setting exclude for the rest of the code
-in this function.
-
-Sorry that I'm not able to do a more thorough review.
-
-> diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-> index 0da1214..0f1034e 100755
-> --- a/t/t7061-wtstatus-ignore.sh
-> +++ b/t/t7061-wtstatus-ignore.sh
-> @@ -143,4 +143,31 @@ test_expect_success 'status ignored tracked directory and uncommitted file with
->         test_cmp expected actual
->  '
+> And you're going to pop the stash even if no stash were triggered when
+> starting the rebase.
 >
-> +cat >expected <<\EOF
-> +?? .gitignore
-> +?? actual
-> +?? expected
-> +!! tracked/
-> +EOF
+> Really, think about it again: you're not going to guess whether you have
+> to unstash without storing this information somewhere. You may argue
+> about storing it outside the todolist, you can't unstash
+> unconditionally.
 
-Please put these segments inside the test_expect_success block, so
-it's easy to think about those blocks in isolation.  I know you're
-just following the existing conventions existing in this test, but
-those are not necessarily good conventions.
+Yes, it can be part of todo, but it does not have to be.
 
-> +test_expect_success 'status ignored tracked directory with uncommitted file in untracked subdir with --ignore' '
-> +       rm -rf tracked/uncommitted &&
-> +       mkdir tracked/ignored &&
-> +       : >tracked/ignored/uncommitted &&
-> +       git status --porcelain --ignored >actual &&
-> +       test_cmp expected actual
-> +'
+Regardless of where the information is stored, implementing the last
+step as "stash pop" will add a small inconsistency the end user
+needs to be aware of.
 
-This is very confusing.  How is tracked a tracked directory?  Oh,
-right: some previous test git add'ed tracked/committed.  How do I know
-about that in this test?
+Imagine "git rebase" stops, asks you to help with conflicts, and you
+look at it, play with the working tree, and made a mess.  If this
+was the last "stash pop" invocation, the way to go back and start
+again is "reset --hard && stash pop".  For all the other steps, that
+is not how the user goes back to the originally conflicted state in
+order to retry from scratch.
 
-Yeah, changes to tracked ignored directories are not shown, but the
-commit message didn't tell me this.
+Makes me wonder if the world were a better place if the rebase-todo
+list were implemented as a dedicated stash and "rebase --continue"
+were a mere "stash pop" followed by a commit if pop goes smoothly.
 
-> +cat >expected <<\EOF
-> +?? .gitignore
-> +?? actual
-> +?? expected
-> +!! tracked/ignored/uncommitted
-> +EOF
-> +
-> +test_expect_success 'status ignored tracked directory with uncommitted file in untracked subdir with --ignore -u' '
-> +       git status --porcelain --ignored -u >actual &&
-> +       test_cmp expected actual
-> +'
-> +
->  test_done
+I am not suggesting to actually do so, but it is an intriguing
+thought from the perspective of end user experience, isn't it?
 
-I suppose the commit message told me about this one vaguely, but I
-think it could be much clearer overall.
-
-Thanks.
+In any case, I am not saying that it is a _bad_ thing to implement
+the last "restore the WIP" stage as "stash pop". I am just pointing
+out that the messaging needs to be done carefully to make sure the
+user understands which one is which, as the way to deal with the
+situation where it stops and asks the user for help would be
+different from normal step in the rebase sequence that replays a
+commit.
