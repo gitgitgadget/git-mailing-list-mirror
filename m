@@ -1,70 +1,66 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH] submodule deinit: clarify work tree removal message
-Date: Tue, 16 Apr 2013 09:32:21 -0400
-Message-ID: <CABURp0rkeYc7K0COhc1+96Q2Ox2TaNRpMSmQYOiwBpgPJbsafA@mail.gmail.com>
-References: <5112C6F6.4030607@web.de> <CABURp0pC2FELxM5aUwxuTqS1roZm+fwkCQA+BoXjrd0+yQMmbg@mail.gmail.com>
- <7v1ubk8u6o.fsf@alter.siamese.dyndns.org> <51477EFF.2010505@web.de>
- <7v7gl4mabf.fsf@alter.siamese.dyndns.org> <5159D9A8.30901@web.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/3] usage: refactor die-recursion checks
+Date: Tue, 16 Apr 2013 16:13:56 +0200
+Message-ID: <516D5CA4.7000500@viscovery.net>
+References: <20130415230651.GA16670@sigill.intra.peff.net> <20130415230802.GA11267@sigill.intra.peff.net> <CA+sFfMes99EepY4FCW32s1L3ywv_gyFb76=Y=35rvPbc2K1BWA@mail.gmail.com> <20130416004228.GA14995@sigill.intra.peff.net> <CA+sFfMdzTNjH10FKxhvJy+7hZg+0=1Wrqy9k8KaPoJg1DuDpmg@mail.gmail.com> <20130416025024.GA20932@sigill.intra.peff.net> <516CFB56.1090805@viscovery.net> <20130416130154.GA17976@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	"W. Trevor King" <wking@tremily.us>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Apr 16 15:32:50 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Brandon Casey <drafnel@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 16 16:14:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US608-0006Ht-CQ
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 15:32:48 +0200
+	id 1US6e8-0001yO-DR
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 16:14:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755633Ab3DPNco (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 09:32:44 -0400
-Received: from mail-vc0-f175.google.com ([209.85.220.175]:41014 "EHLO
-	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753749Ab3DPNcn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 09:32:43 -0400
-Received: by mail-vc0-f175.google.com with SMTP id ib11so372781vcb.6
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 06:32:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=O7MHQXEBdrUKocvRGvMVoLfKOym3Ek+N1c7+Z2k71IQ=;
-        b=YlxtgK6pRfV2ZNVywAL2FMnQHgT9c4XaYAkn61uzjTF/ERHFIC+kHltjLj5F9qUl5q
-         5Zdo4U5w5awOtVjNAt9jvhRbATHTHFQUTkY2TYcfmF/KwgCkqnizTaKpAMqMawsmziI9
-         XtlOtogJJPn4VtNCP2vEv+qFAYcrU1R7b8lEpqyrMGaCdtKCD4GB4i31EzcjWXFSiBU9
-         wi5LxfPcedFgblfSl/Rkw2VRQEFzs/5s4teA/hCJSxmaZAQ9+v1kMANSqDvDshQ83Rj8
-         EOiaTZUSZQA3v9z4y/0KROsi7tYViOL1Q0oNC1nJrKw5rF5Bwz6G9j7g3ngvgyMcwlXV
-         DsdQ==
-X-Received: by 10.52.230.197 with SMTP id ta5mr1259465vdc.103.1366119162918;
- Tue, 16 Apr 2013 06:32:42 -0700 (PDT)
-Received: by 10.58.219.34 with HTTP; Tue, 16 Apr 2013 06:32:21 -0700 (PDT)
-In-Reply-To: <5159D9A8.30901@web.de>
+	id S935486Ab3DPOOD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 10:14:03 -0400
+Received: from so.liwest.at ([212.33.55.14]:36525 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935444Ab3DPOOA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 10:14:00 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1US6dx-0005Yw-59; Tue, 16 Apr 2013 16:13:57 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id DB5D21660F;
+	Tue, 16 Apr 2013 16:13:56 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <20130416130154.GA17976@sigill.intra.peff.net>
+X-Enigmail-Version: 1.5.1
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221418>
 
-On Mon, Apr 1, 2013 at 3:02 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> Okay, so here is the patch for that. If someone could point out
-> a portable and efficient way to check if a directory is already
-> empty I would be happy to use that to silence the "Cleaned
-> directory" message currently printed also when deinit is run on
-> an already empty directory.
+Am 4/16/2013 15:01, schrieb Jeff King:
+> On Tue, Apr 16, 2013 at 09:18:46AM +0200, Johannes Sixt wrote:
+> 
+>>> Yeah, that seems sane; my biggest worry was that it would create
+>>> headaches for Windows folks, who would have to emulate pthread_key. But
+>>> it seems like we already added support in 9ba604a.
+>>
+>> pthread_key is not a problem, but pthread_once is. It's certainly
+>> solvable, but do we really have to?
+> 
+> I'm not clear on what you are suggesting. That we protect only the main
+> thread from recursion, or that we drop the check entirely? Or that we
+> implement thread-local storage for this case without using pthread_once?
 
-   isemptydir() {
-        test -d "$(find $1 -maxdepth 0 -empty)"
-   }
+Anything(*) that does not require pthread_once. A pthread_once
+implementation on Windows would be tricky and voluminous and and on top of
+it very likely to be done differently for gcc and MSVC. I don't like to go
+there if we can avoid it.
 
-Sorry for the late reply.  I see this patch is already in master
-(which is fine with me).
+(*) That includes doing nothing, but does not include ripping out the
+recursion check, as it protects us from crashes.
 
-Thanks,
-Phil
+-- Hannes
