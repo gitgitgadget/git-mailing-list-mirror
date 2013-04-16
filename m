@@ -1,96 +1,62 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [RFC/PATCH 0/2] Test the Git version string
-Date: Tue, 16 Apr 2013 22:22:57 +0100
-Organization: OPDS
-Message-ID: <2FE4D2171A03425AA9C8FF10140AC030@PhilipOakley>
-References: <1365949646-1988-1-git-send-email-philipoakley@iee.org> <7v8v4k6hp2.fsf@alter.siamese.dyndns.org> <79879228B71A45A48A961F5B1880B61F@PhilipOakley> <7vli8k4lnj.fsf@alter.siamese.dyndns.org> <99AE5E981E2547B6A71A4D77B17167B9@PhilipOakley> <7v8v4imjji.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: git log - crash and core dump
+Date: Tue, 16 Apr 2013 23:24:43 +0200
+Message-ID: <CALWbr2xpweZOYo6szAJL5axdBBrV-c1-X_yuh6FAZQbq4iVcTw@mail.gmail.com>
+References: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
+	<516D93C4.1000100@lsrfire.ath.cx>
+	<7v61zml0ow.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 23:22:55 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Ivan Lyapunov <dront78@gmail.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 23:24:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USDL4-00059Y-VW
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 23:22:55 +0200
+	id 1USDMu-0007mf-Ej
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 23:24:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965376Ab3DPVWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 17:22:50 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:35752 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965331Ab3DPVWu (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 17:22:50 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ar0NAMzAbVFOl3gj/2dsb2JhbAAuGAqDBokmuAUEAQMBgQoXdIIaBQEBBQgBAS4eAQEhCwIDBQIBAxUBCyUUAQQaBgcXBhMIAgECAwGIB6xDkDSNX1JqgmthA4hOhXSZWIMMOw
-X-IronPort-AV: E=Sophos;i="4.87,487,1363132800"; 
-   d="scan'208";a="572482320"
-Received: from host-78-151-120-35.as13285.net (HELO PhilipOakley) ([78.151.120.35])
-  by out1.ip06ir2.opaltelecom.net with SMTP; 16 Apr 2013 22:22:47 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S965411Ab3DPVYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 17:24:44 -0400
+Received: from mail-qa0-f49.google.com ([209.85.216.49]:43096 "EHLO
+	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965262Ab3DPVYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 17:24:43 -0400
+Received: by mail-qa0-f49.google.com with SMTP id bs12so560027qab.1
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 14:24:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=XMQyK8idVWGb1wkeVUIi77BpuVWCIeB2oLbwZt4rJWc=;
+        b=gjGWyeaWy3sj9FTlTsbQMKgsPki0U9KrBIzXYikNtrq4flbllhkEyBENQirQrnfe/B
+         IGfy0hcLjKRnkEwoUviAfOj5ibOfr+lB1YmW00jp+l5tZT2NTfa1UfPG8sMMxtcYzFEl
+         BhKQ1ZM3H0ebElSnJZNAllSriH/GLQwy8MtWkpjfQsrBFN5GfNIXPDTV+75vutBhCfRG
+         LSWLH4EvZ0LqAccYWDzmqCxluPN8my878WMmFnKIVF3d6LGQce2dSYx8tVXkRQ8+EVUR
+         nMj5jw4thdj/FH0CwXHVtUBergp0KG79xrqr8SzB0SWcIuadr1tJtkCYNs7JaldslIq/
+         lWRg==
+X-Received: by 10.49.61.226 with SMTP id t2mr5029173qer.40.1366147483109; Tue,
+ 16 Apr 2013 14:24:43 -0700 (PDT)
+Received: by 10.49.118.42 with HTTP; Tue, 16 Apr 2013 14:24:43 -0700 (PDT)
+In-Reply-To: <7v61zml0ow.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221475>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Tuesday, April 16, 2013 7:12 PM
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->>> What kind of benefit are you envisioning out of this?
->>
->> The purpose of tests is to detect mistakes and spot regressions.
->>
->> A change to the 'git version X.Y.z' string would be a regression, as 
->> I
->> spotted earlier, as it conflicts with expectations of standard
->> programmes such as git-gui.
->
-> Sorry, but I do not follow.
->
-> A released version says "git version 1.8.2.1".  In a month or so,
-> I'll have another one that says "git version 1.8.3".  Or I may
-> decide to bump in preparation for 2.0 and it may identify itself as
-> "git version 1.9".
->
-> Neither of which no existing "program such as git-gui" has ever
-> seen.
->
-> In what way is that a regression?
+On Tue, Apr 16, 2013 at 9:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> It still is curious how a malformed line was created in the first
+> place.  I wouldn't worry if a private tool used hash-object to
+> create such a commit, but if it is something that is commonly used
+> (e.g. "git commit"), others may suffer from the same and the tool
+> needs to be tightened a bit.
 
-But they both pass the test and test suite, yes? And even if you use 
-git-gui with them, git-gui will not barf on start up, which it would if 
-the version string fails my test.
-
-Passing the test suite should be a reasonble guarantee that co-tools 
-will work, including those that check for version. This is a check for 
-that version string.
-
-However if someone[1] creates "My Special Git Version 1-9-3 (Index 
-V7b)", and here I'm suggesting they may have other special changes, then 
-the version check will tell them that even when they have fixed their 
-special changes to pass the other parts of the test suite, other 
-co-tools could barf.
-
-Its about pushing the piece of string from the users end ;-) It also 
-stops others trying to change 'git' to 'Git' within this message, just 
-as I did.
-
-Philip
->
-[1] my first draft had 'you', but that is not a reasonable starting 
-position. It's more about *others* attempting to create release 
-versions, which announce their name, that we expect to be compatible 
-with say git-gui (via the rest of the test suite), and need to check 
-that announcement. 
+I already happened to see one like that, and it was clearly imported
+through remote-hg. I've not been able to reproduce though, and the
+parser in git-fast-import seemed already robust enough to me to not
+allow this kind of messed-up line. I will see if I can find some time
+to reproduce/investigate this deeper.
