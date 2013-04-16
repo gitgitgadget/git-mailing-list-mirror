@@ -1,79 +1,85 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v3 00/13] nd/pretty-formats
-Date: Tue, 16 Apr 2013 16:47:02 +0200
-Message-ID: <516D6466.1080906@web.de>
-References: <1364636112-15065-1-git-send-email-pclouds@gmail.com> <1366100702-31745-1-git-send-email-pclouds@gmail.com> <516D57BD.7080208@web.de>
+From: Michael Weiser <M.Weiser@science-computing.de>
+Subject: Re: [PATCH] Extend runtime prefix computation
+Date: Tue, 16 Apr 2013 16:56:54 +0200
+Message-ID: <20130416145653.GG12782@science-computing.de>
+References: <20121127163004.GC7499@science-computing.de>
+ <20130305115837.GD21473@science-computing.de>
+ <7vd2vdvn7l.fsf@alter.siamese.dyndns.org>
+ <20130306081942.GA11151@science-computing.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 16 16:48:00 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 16 17:07:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1US7At-0004mq-Dh
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 16:47:59 +0200
+	id 1US7TT-00052j-FF
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Apr 2013 17:07:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935780Ab3DPOry convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 10:47:54 -0400
-Received: from mout.web.de ([212.227.15.4]:51541 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935614Ab3DPOry (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 10:47:54 -0400
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb003)
- with ESMTPA (Nemesis) id 0M6V2p-1UmHoS04eR-00xm4E; Tue, 16 Apr 2013 16:47:03
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <516D57BD.7080208@web.de>
-X-Provags-ID: V02:K0:GfAD6mgZ/ri8Ppg2k8U3cXAuNUEb8IZRw1NOBZ7HHC1
- 5mCcZTAIS03R8T5T9HMj1I4ongSJM35l/qo6Qkc02tdyGjVDrf
- Fp6FhBx4TWaHI10GKWcoAuvoFrtnQDRE5tGjFM6PfZovFt9XTw
- gIpsZxcC3QW8GtOnuDUqM42jcmHsigPkbu5dt1ryIaEQjFd4cO
- EWKfyL82UOQX/PJENsTpg==
+	id S1754367Ab3DPPHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 11:07:05 -0400
+Received: from mx4.science-computing.de ([193.197.16.30]:1639 "EHLO
+	mx4.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751841Ab3DPPHE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 11:07:04 -0400
+X-Greylist: delayed 605 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Apr 2013 11:07:03 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by scmail.science-computing.de (Postfix) with ESMTP id 8AFF9414009;
+	Tue, 16 Apr 2013 16:56:55 +0200 (CEST)
+X-Virus-Scanned: amavisd-new
+Received: from scmail.science-computing.de ([127.0.0.1])
+	by localhost (obitest.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4MtbTco8KSUT; Tue, 16 Apr 2013 16:56:54 +0200 (CEST)
+Received: from samoa.science-computing.de (samoa.science-computing.de [10.0.5.93])
+	by scmail.science-computing.de (Postfix) with ESMTP id DC206414004;
+	Tue, 16 Apr 2013 16:56:54 +0200 (CEST)
+Received: by samoa.science-computing.de (Postfix, from userid 1176)
+	id CC88C10101; Tue, 16 Apr 2013 16:56:54 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20130306081942.GA11151@science-computing.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221423>
 
-The short version:
-all applied, compiled and test OK.
+Hello Junio,
+Hello list,
 
-Possible minor nits from apply:
-applying: pretty: support padding placeholders, %< %> and %><
-/Users/tb/projects/git/tb.duy/.git/rebase-apply/patch:253: indent with =
-spaces.
-                             message two$
-/Users/tb/projects/git/tb.duy/.git/rebase-apply/patch:254: indent with =
-spaces.
-                             message one$
-/Users/tb/projects/git/tb.duy/.git/rebase-apply/patch:255: indent with =
-spaces.
-                                 add bar$
-/Users/tb/projects/git/tb.duy/.git/rebase-apply/patch:256: indent with =
-spaces.
-                                 initial$
-/Users/tb/projects/git/tb.duy/.git/rebase-apply/patch:292: indent with =
-spaces.
-              message two               $
-warning: squelched 3 whitespace errors
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-And a possible micronit: what happened to that?
+On Wed, Mar 06, 2013 at 09:19:42AM +0100, Michael Weiser wrote:
 
-On Sun, Mar 31, 2013 at 12:06 AM, Torsten B=C3=B6gershausen <tboegi@web=
-=2Ede> wrote:
+> > >> Support determining the binaries' installation path at runtime even if
+> > >> called without any path components (i.e. via search path).
+> > The default for any change is not to include it.  Is there any
+> > reason why we want this change?
+> It makes a binary git installation fully relocatable. Seeing how git
+> already has basic support for it I thought other people might be
+> interested in this.
 
-> On 30.03.13 10:35, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> [...]
-> The short version of a review:
-> Would it make sense to leave  reencode_string() as it is,
-> and add a new function reencode_string_len()
+I am still interested in getting this accepted into git. Where do I push
+to get it committed?
 
-Hmm.. yeah.
-
-/Torsten
+Thanks,
+-- 
+Michael Weiser                science + computing ag
+Senior Systems Engineer       Geschaeftsstelle Duesseldorf
+                              Martinstrasse 47-55, Haus A
+phone: +49 211 302 708 32     D-40223 Duesseldorf
+fax:   +49 211 302 708 50     www.science-computing.de
+-- 
+Vorstandsvorsitzender/Chairman of the board of management:
+Gerd-Lothar Leonhart
+Vorstand/Board of Management:
+Dr. Bernd Finkbeiner, Michael Heinrichs, 
+Dr. Arno Steitz, Dr. Ingrid Zech
+Vorsitzender des Aufsichtsrats/
+Chairman of the Supervisory Board:
+Philippe Miltin
+Sitz/Registered Office: Tuebingen
+Registergericht/Registration Court: Stuttgart
+Registernummer/Commercial Register No.: HRB 382196
