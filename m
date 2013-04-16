@@ -1,122 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git log - crash and core dump
-Date: Tue, 16 Apr 2013 15:21:29 -0700
-Message-ID: <7vzjwyi0ba.fsf@alter.siamese.dyndns.org>
-References: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
- <516D93C4.1000100@lsrfire.ath.cx> <7v61zml0ow.fsf@alter.siamese.dyndns.org>
- <516DBE2E.4060201@lsrfire.ath.cx>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] gitweb/INSTALL: GITWEB_CONFIG_SYSTEM is for backward
+ compatibility
+Date: Tue, 16 Apr 2013 15:26:00 -0700
+Message-ID: <20130416222600.GG29773@google.com>
+References: <7v4nfch90r.fsf@alter.siamese.dyndns.org>
+ <20130412064837.GA5710@elie.Belkin>
+ <20130412064953.GB5710@elie.Belkin>
+ <7vy5cnd0m4.fsf@alter.siamese.dyndns.org>
+ <516888C0.90501@gmail.com>
+ <CAM9Z-nmOzpJdT3ni0rYRkg7Z26N5XSRyqp0TkTY79AAZ85pw2A@mail.gmail.com>
+ <7vobdfnlc7.fsf@alter.siamese.dyndns.org>
+ <CAM9Z-nm=SUNAHXZtOnz_BSS8VrVYPczicX99FUmDJe6Lj_oKpQ@mail.gmail.com>
+ <516D4359.2070501@gmail.com>
+ <CAM9Z-nkbBS5qvbkocdGWj7rwtSxB86+R4jdjcBOxCU4YjtgZ1A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ivan Lyapunov <dront78@gmail.com>, git@vger.kernel.org,
-	Antoine Pelisse <apelisse@gmail.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Wed Apr 17 00:21:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+	Stefano Lattarini <stefano.lattarini@gmail.com>
+To: Drew Northup <n1xim.email@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 17 00:26:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USEFw-0006QD-Gw
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 00:21:40 +0200
+	id 1USEKM-0003xg-6o
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 00:26:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965440Ab3DPWVg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Apr 2013 18:21:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57092 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965353Ab3DPWVf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 18:21:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CAC2B177C3;
-	Tue, 16 Apr 2013 22:21:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=PjEP+lGTohQR
-	U1in0ori2nbm2P0=; b=ec4yD5tjWUxi8bMeUmMMl2ivuRIZQxbSy/gXraU75fKS
-	2e77ob5BCIKsAf61HgKvruJ0xlB0CGKpNimZqL39oWkvGGRkPb1vLd4WmqSVvP5v
-	an/yaoHJQYTRUhPvNvfgNf1muNi+6N9y1YZV1/Nw7NqTRHIvKxR8/DdWvWXTVkw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=wvkEPd
-	pAJzr26ACWZcINlEGvOBQOcZ+aUSsQyG0VDcg6Bbf+SK83KX+h/SNWn2pUvWECkK
-	+ImXEJJV2sykjEoWveRAqOz+zNaNMxbVLsEzN2zjpL98kdk3mAnZaI3SEndPsZWw
-	mTkFfITIgVvUi3dCBUN5e3L+wcC0AU9YRyRuU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C33BD177C1;
-	Tue, 16 Apr 2013 22:21:34 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 258F0177BC; Tue, 16 Apr
- 2013 22:21:34 +0000 (UTC)
-In-Reply-To: <516DBE2E.4060201@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Tue, 16 Apr 2013 23:10:06 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FF10D024-A6E3-11E2-AEC9-CC48E7F0ECB6-77302942!b-pb-sasl-quonix.pobox.com
+	id S965471Ab3DPW0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 18:26:09 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:59576 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965353Ab3DPW0I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Apr 2013 18:26:08 -0400
+Received: by mail-pb0-f49.google.com with SMTP id um15so529909pbc.36
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 15:26:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=S/BAXuikg0Fgc80mreYGluD3KHMTF8KDG+H63co2kyY=;
+        b=OdHeWEtRVHGDyHCQ3QH9T1BEA2QzI97FAInvmzsvvtZZdhdJC4ZjLduwxqhuaxMuED
+         chvblSK8nBZ2YfN7kFaoaZyxJRsNJlakSBXXoA3B32x5J2rir0vmrrITEEBe7+dMNveM
+         7rkDNf0IDmLx5M23tiPSpb6xv+K6rA/2h2zcgSigWgs8VddRcoHJ69koFCRSGoemTwjK
+         PxvoerlSYboWp1Bfi7zjBMOnvwlcG5h2DL8IT7GTjooxjBReqYC4LYUBUE30ufyd6FlL
+         759YZYGO75kCouqVzeVbWl4U2/TN4+cecu+k38Fc+0HBsJ16QTUPzJwki93yTnYm38Af
+         e8zQ==
+X-Received: by 10.68.204.71 with SMTP id kw7mr5913150pbc.40.1366151164651;
+        Tue, 16 Apr 2013 15:26:04 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id dr4sm3580306pbb.19.2013.04.16.15.26.02
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 16 Apr 2013 15:26:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAM9Z-nkbBS5qvbkocdGWj7rwtSxB86+R4jdjcBOxCU4YjtgZ1A@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221484>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Drew Northup wrote:
 
-> How about making split_ident_line() a bit friendlier be letting it
-> provide the epoch as default time stamp instead of NULL? =20
+>                             This is unobtrusive yet to the point.
 
-Two knee-jerk concerns I have without going back to the callers:
+I agree with the spirit.
 
- * Would that "0" ever be given to the approxidate parser, which
-   rejects ancient dates in numbers-since-epoch format without @
-   prefix?
+[...]
+> --- a/Documentation/gitweb.conf.txt
+> +++ b/Documentation/gitweb.conf.txt
+> @@ -55,7 +55,8 @@ following order:
+>     then fallback system-wide configuration file (defaults to
+> '/etc/gitweb.conf').
+> 
+>  Values obtained in later configuration files override values obtained earlier
+> -in the above sequence.
+> +in the above sequence. This is different from many system-wide software
+> +installations and will stay this way for historical reasons.
 
- * Does any existing caller use the NULL as a sign to see the input
-   was without date and act on that information?
+That makes it sound like the "per instance overrides common overrides
+built-in" cascading is what is unusual and what we need to apologize
+for.
 
+How about something like the following?  (It uses a BUGS section to
+make the warning easy to notice for people tracking down confusing
+behavior by searching for "gitweb.conf".)
 
-> -- >8 --
-> Subject: ident: let split_ident_line() provide a default time stamp
->
-> If a commit has a broken time stamp, split_ident_line() sets
-> date_begin, date_end, tz_begin and tz_end to NULL.  Not all callers
-> are prepared to handle that case and segfault.
->
-> Instead of fixing them and having to be careful while implementing
-> the next caller, provide a string consisting of the number zero as
-> default value, representing the UNIX epoch.  That's the value that
-> git log showed before it was converted to use split_ident_line().
->
-> Reported-by: Ivan Lyapunov <dront78@gmail.com>
-> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-> ---
->  ident.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/ident.c b/ident.c
-> index 1c123e6..ee840f4 100644
-> --- a/ident.c
-> +++ b/ident.c
-> @@ -191,6 +191,8 @@ static void strbuf_addstr_without_crud(struct str=
-buf *sb, const char *src)
->  	sb->buf[sb->len] =3D '\0';
->  }
-> =20
-> +static const char zero_string[] =3D "0";
-> +
->  /*
->   * Reverse of fmt_ident(); given an ident line, split the fields
->   * to allow the caller to parse it.
-> @@ -254,10 +256,10 @@ int split_ident_line(struct ident_split *split,=
- const char *line, int len)
->  	return 0;
-> =20
->  person_only:
-> -	split->date_begin =3D NULL;
-> -	split->date_end =3D NULL;
-> -	split->tz_begin =3D NULL;
-> -	split->tz_end =3D NULL;
-> +	split->date_begin =3D zero_string;
-> +	split->date_end =3D zero_string + strlen(zero_string);
-> +	split->tz_begin =3D zero_string;
-> +	split->tz_end =3D zero_string + strlen(zero_string);
->  	return 0;
->  }
+diff --git i/Documentation/gitweb.conf.txt w/Documentation/gitweb.conf.txt
+index eb63631..ea0526e 100644
+--- i/Documentation/gitweb.conf.txt
++++ w/Documentation/gitweb.conf.txt
+@@ -857,6 +857,13 @@ adding the following lines to your gitweb configuration file:
+ 	$known_snapshot_formats{'zip'}{'disabled'} = 1;
+ 	$known_snapshot_formats{'tgz'}{'compressor'} = ['gzip','-6'];
+ 
++BUGS
++----
++Debugging would be easier if the fallback configuration file
++(`/etc/gitweb.conf`) and environment variable to override its location
++('GITWEB_CONFIG_SYSTEM') had names reflecting their "fallback" role.
++The current names are kept to avoid breaking working setups.
++
+ ENVIRONMENT
+ -----------
+ The location of per-instance and system-wide configuration files can be
