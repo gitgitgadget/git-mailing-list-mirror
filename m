@@ -1,79 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/2] avoid bogus "recursion detected in die handler"
- message
-Date: Tue, 16 Apr 2013 21:37:08 -0400
-Message-ID: <20130417013708.GA27786@sigill.intra.peff.net>
-References: <20130415230802.GA11267@sigill.intra.peff.net>
- <CA+sFfMes99EepY4FCW32s1L3ywv_gyFb76=Y=35rvPbc2K1BWA@mail.gmail.com>
- <20130416004228.GA14995@sigill.intra.peff.net>
- <CA+sFfMdzTNjH10FKxhvJy+7hZg+0=1Wrqy9k8KaPoJg1DuDpmg@mail.gmail.com>
- <20130416025024.GA20932@sigill.intra.peff.net>
- <516CFB56.1090805@viscovery.net>
- <20130416130154.GA17976@sigill.intra.peff.net>
- <516D5CA4.7000500@viscovery.net>
- <20130416194418.GA7187@sigill.intra.peff.net>
- <20130417004941.GJ29773@google.com>
+From: Tim Chase <git@tim.thechases.com>
+Subject: Splitting a commit with rebase -i and keeping a commit message
+Date: Tue, 16 Apr 2013 20:38:25 -0500
+Message-ID: <20130416203825.3701d98b@bigbox.christie.dr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Brandon Casey <drafnel@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 17 03:37:20 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 17 04:03:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USHJG-0007Qp-GY
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 03:37:18 +0200
+	id 1USHid-00062z-Sn
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 04:03:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936003Ab3DQBhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Apr 2013 21:37:12 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48679 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932461Ab3DQBhL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Apr 2013 21:37:11 -0400
-Received: (qmail 26655 invoked by uid 107); 17 Apr 2013 01:39:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Apr 2013 21:39:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Apr 2013 21:37:08 -0400
-Content-Disposition: inline
-In-Reply-To: <20130417004941.GJ29773@google.com>
+	id S936220Ab3DQCD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Apr 2013 22:03:28 -0400
+Received: from boston.accountservergroup.com ([50.22.11.22]:52079 "EHLO
+	boston.accountservergroup.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S936204Ab3DQCD1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Apr 2013 22:03:27 -0400
+X-Greylist: delayed 1597 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Apr 2013 22:03:27 EDT
+Received: from 172-0-250-128.lightspeed.rcsntx.sbcglobal.net ([172.0.250.128]:36913 helo=bigbox.christie.dr)
+	by boston.accountservergroup.com with esmtpsa (TLSv1:DHE-RSA-AES128-SHA:128)
+	(Exim 4.80)
+	(envelope-from <git@tim.thechases.com>)
+	id 1USHIn-0000Ch-KI
+	for git@vger.kernel.org; Tue, 16 Apr 2013 20:36:49 -0500
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - boston.accountservergroup.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - tim.thechases.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221496>
 
-On Tue, Apr 16, 2013 at 05:49:41PM -0700, Jonathan Nieder wrote:
+I asked this on IRC and played with some of their ideas, but struck
+out with anything satisfying.  I walked through [1] with the
+following setup:
 
-> Jeff King wrote:
-> 
-> >   [1/2]: usage: allow pluggable die-recursion checks
-> >   [2/2]: run-command: use thread-aware die_is_recursing routine
-> 
-> Lovely.  This doesn't solve the analagous problem for grep,
-> index-pack, pack-objects, preload-index, or bidirectional_transfer_loop,
-> but it doesn't make them worse and even should make them easier to fix
-> later, so
-> 
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+  git init foo
+  cd foo
+  touch a.txt b.txt
+  git add a.txt b.txt
+  git commit -m "Initial checkin"
+  echo "Modify A" >> a.txt
+  git commit -am "Modified A"
+  echo "Modify B" >> b.txt
+  git commit -am "Modified B"
+  echo "Modify A2" >> a.txt
+  echo "Modify B2" >> b.txt
+  git commit -am "Modified B"
+  git commit -am "Long-bodied commit comment about b.txt changes"
+  # whoops, just wanted B
+  git rebase -i HEAD^^
+  # change the "Added b.txt..." commit to "edit"
+  git reset HEAD^  # pull the changes out of the pending commit
+  git add a.txt
+  git commit -m "Tweaked a.txt"
+  git add b.txt
+  git commit ${MAGIC_HERE}
+  git rebase --continue
 
-The problem does exist in those other programs, but is much less
-likely to be triggered. There it would be a race between two threads
-calling die() at the same time, because as soon as one finishes, it
-takes down the whole program. What made this one so easy to trigger was
-the installation of die_async.
+I haven't been able to figure out a good way to keep the "long-bodied
+commit comment" for the final commit where the ${MAGIC_HERE} is.  Is
+there a right/easy way to go about pulling in the commit-message from
+the commit the rebase is transplanting?
 
-So it's probably not that big a deal to leave the race in those other
-places for the time being. Any refactoring of the "dying" flag should
-accompany an overall strategy for managing the clean death of
-sub-threads (which would entail a custom die routine, at which point the
-recursion-check should just fall out naturally from whatever approach
-they choose).
+-tkc
 
-Thanks for reviewing.
-
--Peff
+[1]
+http://git-scm.com/book/en/Git-Tools-Rewriting-History#Splitting-a-Commit
