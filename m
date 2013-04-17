@@ -1,89 +1,115 @@
-From: Michael Weiser <m.weiser@science-computing.de>
-Subject: Re: [PATCH] Extend runtime prefix computation
-Date: Wed, 17 Apr 2013 08:06:48 +0200
-Message-ID: <20130417060647.GA66718@science-computing.de>
-References: <20121127163004.GC7499@science-computing.de>
- <20130305115837.GD21473@science-computing.de>
- <7vd2vdvn7l.fsf@alter.siamese.dyndns.org>
- <20130306081942.GA11151@science-computing.de>
- <CABPQNSbd_baEe7pstZPSdNQQCAUMBCgV2FGcszy-8zoeuD+M5w@mail.gmail.com>
+From: Sivaram Kannan <siva.devel@gmail.com>
+Subject: Re: Git crash in Ubuntu 12.04
+Date: Wed, 17 Apr 2013 11:58:08 +0530
+Message-ID: <CAJiNi_GQZf8BRkTR8+j6YjdcqUH1J1NATSrNUjZ=65V+ip6okQ@mail.gmail.com>
+References: <CAJiNi_FfU9Gsr2D9CcC0wWwgO1oKBXwxp87-wBUJBU2kyGaQNQ@mail.gmail.com>
+	<87mwt6ltia.fsf@linux-k42r.v.cablecom.net>
+	<CAJiNi_EgjgKs7oNJyGcamUFz=ARDAuBTb+bJ0uVsPFBMbZF3YA@mail.gmail.com>
+	<20130411170659.a35d2c581cf34ade13448bfa@domain007.com>
+	<CAJiNi_Gju2aJkVJJmoxnEAubfPvjaVhVF6DisaLn5kUJ3YRD=w@mail.gmail.com>
+	<20130412180525.aa5b8eacd691a427244d6ab5@domain007.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 17 08:21:32 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
+To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Wed Apr 17 08:28:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USLkJ-0002Xe-0i
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 08:21:31 +0200
+	id 1USLqp-0002uc-Sc
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 08:28:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965744Ab3DQGV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 02:21:27 -0400
-Received: from mx4.science-computing.de ([193.197.16.30]:30096 "EHLO
-	mx4.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754342Ab3DQGV0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Apr 2013 02:21:26 -0400
-X-Greylist: delayed 873 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Apr 2013 02:21:26 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by scmail.science-computing.de (Postfix) with ESMTP id C81EFAC003;
-	Wed, 17 Apr 2013 08:06:49 +0200 (CEST)
-X-Virus-Scanned: amavisd-new
-Received: from scmail.science-computing.de ([127.0.0.1])
-	by localhost (guinesstest.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QbsoRXIqfOnr; Wed, 17 Apr 2013 08:06:49 +0200 (CEST)
-Received: from science-computing.de (dhcphag71-188.science-computing.de [10.10.11.188])
-	by scmail.science-computing.de (Postfix) with ESMTPS id 233D4AC002;
-	Wed, 17 Apr 2013 08:06:49 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <CABPQNSbd_baEe7pstZPSdNQQCAUMBCgV2FGcszy-8zoeuD+M5w@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S965764Ab3DQG2K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 02:28:10 -0400
+Received: from mail-ve0-f182.google.com ([209.85.128.182]:33499 "EHLO
+	mail-ve0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965761Ab3DQG2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 02:28:09 -0400
+Received: by mail-ve0-f182.google.com with SMTP id da11so1135533veb.41
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 23:28:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=WBcTtKpetIJnJ3ZQHGEDIdMQiOnSFJg7DmaRypG6mGY=;
+        b=YZjfjagO1nnVnLMMHd3ahtHkRAvnzx9cthh+I284js3UYK80R/aDQ5JzRTtUl6tjgy
+         N/lJ3KA1CfSbn0kSd+hNa/YVOgl1C+9tiwGYWY29LULUHZc0jj+UiPOI1sfXznz0cGKG
+         cRpgdFViCswtk9DgHfUZshQz8YuHObVNJWn0f6slOgnrazUtYyfS52fbnn7YUAFhaubH
+         IeH6iYvmvu8CaaTsZir14z8RZ5k/H2Pekhvo77whiPVhIUmpiZuKjVKylDY/l4szZTDy
+         xJ+sVMlwRhXUSMOZXtXnB1SYdfKfrXtq2n+aEWYOi5Ea18wbjt0FDKOdmV5e5Bdh4ko5
+         yaPQ==
+X-Received: by 10.58.12.225 with SMTP id b1mr3917442vec.20.1366180088172; Tue,
+ 16 Apr 2013 23:28:08 -0700 (PDT)
+Received: by 10.221.3.131 with HTTP; Tue, 16 Apr 2013 23:28:08 -0700 (PDT)
+In-Reply-To: <20130412180525.aa5b8eacd691a427244d6ab5@domain007.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221513>
 
-Hello Erik,
+Hi,
 
-On Tue, Apr 16, 2013 at 05:18:49PM +0200, Erik Faye-Lund wrote:
 
-> >> >> Support determining the binaries' installation path at runtime even if
-> >> >> called without any path components (i.e. via search path).
-> I think the motivation for the feature in the first place is Windows,
-> where the installation path isn't known at build-time. In the
-> unix-world, this is generally known (/usr/bin or something like that).
-> What's the reason you want it on other platforms?
+>> > $ ulimit -c unlimited
+>>
+>> Have set the git user's crash limit to 1GB in
+>> /etc/security/limits.conf and still getting the same error when
+>> issuing gdb to the crash file.
+>
+> Yep, suppsedly in Ubuntu it's not that easy to just get a plain old
+> coredump file -- see below.
+>
 
-It's part of an in-house development toolchain featuring git that I want
-to hand to users as a binary installation for a number of platforms but
-give them the choice where to install it.
+Got an proper dump from git this time. See whether it helps. I have
+setup another machine with Ubuntu 12.04 and updated only git and
+ported the repo there, after 200 clones no crash so far. Mostly will
+be moving latest repo to that server to solve this issue.
 
-Secondly, once the infrastructure is in place, it's easier to do or
-enhance relocatability support for other platforms such as Windows.
+gitadmin@gitserver:/var/crash/gitcash$ gdb git CoreDump
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+For bug reporting instructions, please see:
+<http://bugs.launchpad.net/gdb-linaro/>...
+Reading symbols from /usr/bin/git...(no debugging symbols found)...done.
+[New LWP 12823]
 
-Finally: Others do it. Perl's done it and I've already needed that as
-well - on Mac OS X.
+warning: Can't read pathname for load map: Input/output error.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Core was generated by `git pack-objects --revs --all --stdout
+--progress --delta-base-offset'.
+Program terminated with signal 11, Segmentation fault.
+#0  0x000000000044bb77 in ?? ()
+(gdb) bt
+#0  0x000000000044bb77 in ?? ()
+#1  0x000000000044cb54 in ?? ()
+#2  0x000000000044d4f1 in ?? ()
+#3  0x0000000000405634 in ?? ()
+#4  0x0000000000404a30 in ?? ()
+#5  0x00007fe2a149876d in __libc_start_main (main=0x404980, argc=7,
+ubp_av=0x7fffad58fb28, init=<optimized out>, fini=<optimized out>,
+rtld_fini=<optimized out>,
+    stack_end=0x7fffad58fb18) at libc-start.c:226
+#6  0x0000000000404e65 in ?? ()
+#7  0x00007fffad58fb18 in ?? ()
+#8  0x000000000000001c in ?? ()
+#9  0x0000000000000007 in ?? ()
+#10 0x00007fffad591c95 in ?? ()
+#11 0x00007fffad591c99 in ?? ()
+#12 0x00007fffad591ca6 in ?? ()
+#13 0x00007fffad591cad in ?? ()
+#14 0x00007fffad591cb3 in ?? ()
+#15 0x00007fffad591cbc in ?? ()
+#16 0x00007fffad591cc7 in ?? ()
+#17 0x0000000000000000 in ?? ()
 
 Thanks,
--- 
-Michael Weiser                science + computing ag
-Senior Systems Engineer       Geschaeftsstelle Duesseldorf
-                              Martinstrasse 47-55, Haus A
-phone: +49 211 302 708 32     D-40223 Duesseldorf
-fax:   +49 211 302 708 50     www.science-computing.de
--- 
-Vorstandsvorsitzender/Chairman of the board of management:
-Gerd-Lothar Leonhart
-Vorstand/Board of Management:
-Dr. Bernd Finkbeiner, Michael Heinrichs, 
-Dr. Arno Steitz, Dr. Ingrid Zech
-Vorsitzender des Aufsichtsrats/
-Chairman of the Supervisory Board:
-Philippe Miltin
-Sitz/Registered Office: Tuebingen
-Registergericht/Registration Court: Stuttgart
-Registernummer/Commercial Register No.: HRB 382196
+./Siva.
