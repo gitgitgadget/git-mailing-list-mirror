@@ -1,77 +1,65 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [Resend PATCH] t3903 (stash): add failing test for ref of form ^{/message}
-Date: Wed, 17 Apr 2013 14:01:06 +0530
-Message-ID: <CALkWK0kJOSBN8XTJKBLOqi4tUjjm9unr=No65TtW9V0qvKmV-A@mail.gmail.com>
-References: <1366135765-18437-1-git-send-email-artagnon@gmail.com>
- <CA+sFfMfkoBcoPvJSYBGUe46EbMfiC7q6tVZs6db2NHrEb2gb7Q@mail.gmail.com>
- <CALkWK0=L4mqVBqDMWgzN+BT5bnEF0L6d=GPXvrNhPL_Asvdq8Q@mail.gmail.com> <CA+sFfMd-pfmPXNCoAfH59om1cdYh1=bJ7yb-BGZHjkra5Gm_uw@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: "What's cooking" between #05 and #06
+Date: Wed, 17 Apr 2013 09:40:37 +0100
+Message-ID: <20130417084037.GQ2278@serenity.lan>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
+ <7v8v4ihw41.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 17 10:31:55 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 17 10:40:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USNmU-0007Fn-Dj
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 10:31:54 +0200
+	id 1USNv8-0002Ev-IA
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 10:40:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965879Ab3DQIbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 04:31:49 -0400
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:53416 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965758Ab3DQIbq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Apr 2013 04:31:46 -0400
-Received: by mail-ia0-f174.google.com with SMTP id o25so1177262iad.19
-        for <git@vger.kernel.org>; Wed, 17 Apr 2013 01:31:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=DUedjuxVIseB/P/xfKPK4dq6yeoqxZxc4KWc7SE0j0I=;
-        b=SROVaIKn32tmiHe3nuJndCiZdCsvOXiR3LwfmZImtQdDPbuV+cQcXrGu8JCTVM3Kez
-         M0q3JJcAFCHbuAmeEAMznyOaW+QFRqslAXeXfzIDcg8Jmg+4rrhj2Qsyk7/tPWNy4RE2
-         B05Jw9aq8NgbkqfqEvSog6EBFU2cxc5QGi1nwT4U6NINJFexxrE5492lwedc2YBvNROk
-         A1CUp1mWpn6LjskH7EYTLzB4YswG8Vt3PGFRZ3W8l4s8erjw7KRl2CyEpjqHhTaOgnVx
-         NgUe64G/lmb8oB89Lyr1MM+ETZHNMPMyUGstTLLZkcXq6kyqp3rWjcVDnHUgOWAMh6ha
-         b3rw==
-X-Received: by 10.50.17.166 with SMTP id p6mr10009700igd.12.1366187506260;
- Wed, 17 Apr 2013 01:31:46 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Wed, 17 Apr 2013 01:31:06 -0700 (PDT)
-In-Reply-To: <CA+sFfMd-pfmPXNCoAfH59om1cdYh1=bJ7yb-BGZHjkra5Gm_uw@mail.gmail.com>
+	id S965889Ab3DQIkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 04:40:45 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:54384 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965768Ab3DQIkn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 04:40:43 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 4E4C36065F7;
+	Wed, 17 Apr 2013 09:40:43 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -11
+X-Spam-Level: 
+X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id uE-t1lrtaQRO; Wed, 17 Apr 2013 09:40:42 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 20320606565;
+	Wed, 17 Apr 2013 09:40:39 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7v8v4ihw41.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221521>
 
-So, I read through git-stash.sh a little more, and found the following:
+On Tue, Apr 16, 2013 at 04:52:14PM -0700, Junio C Hamano wrote:
+> > * jk/remote-helper-with-signed-tags (2013-04-15) 3 commits
+> >  - transport-helper: add 'signed-tags' capability
+> >  - transport-helper: pass --signed-tags=warn-strip to fast-export
+> >  - fast-export: add --signed-tags=warn-strip mode
+> 
+> There were some comments on the noisiness of the warning output, but
+> it appears that everybody involved in the area is basically happy
+> with the direction this series goes in, so I'll expect a reroll and
+> then merge it to 'next'.
 
-1. Any stash that can be shown can be applied, but not necessarily
-popped or dropped (as the documentation indicates).  The reason for
-this is simple: a pop/drop attempts to clear the entry in the stash
-reflog as well, but all stashes need to have a corresponding reflog
-entry (for instance, those created with 'stash create').
-
-2. IS_STASH_LIKE is a misnomer: all it checks is that the given <rev>
-is a merge commit.  As a result, you can 'stash show' and 'stash
-apply' any merge commit.  Should we attempt to tighten this somehow,
-or are we okay with the stash being just another merge commit?  Check
-for a special commit message perhaps?
-
-Brandon Casey wrote:
-> You can create a stash without modifying the refs/stash reflog using
-> 'sha1=`git stash create`' and then later apply it using 'git stash
-> apply --index $sha1'.  You'll have to reset the work directory
-> yourself though since 'git stash create' does not do so.  The stash
-> created this way is just a dangling commit so it will have a lifetime
-> according to the gc.pruneexpire (default 2 weeks currently).
-
-Thanks, but I was worried more about reachability of the commit: if I
-create a ref to it in refs/stashes/* like I suggested, it wouldn't
-expire until that ref was gone.  Then again, I suppose a ref is
-unnecessary for a temporary stash.  Yeah, I can store the SHA-1 hex of
-the dangling commit in my caller's $state_dir, and apply it from there
-later.
+What do you expect to change in the reroll?  The only comments I've seen
+have been about the warning output it seems to me that we've agreed to
+leave that as it is.  Have I missed something?
