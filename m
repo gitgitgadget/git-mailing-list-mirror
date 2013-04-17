@@ -1,80 +1,112 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate $GITDIR
-Date: Thu, 18 Apr 2013 09:01:29 +1000
-Message-ID: <CACsJy8AZK4iG4FsM=2wVTggyABBQUeeqb5_3qkWfuAqp0QhKUA@mail.gmail.com>
-References: <1365881007-25731-1-git-send-email-artagnon@gmail.com>
- <CACsJy8D-5x5HXgpr2hHUHee6jcfj3++b961sJB_aKTZC1ZS+tw@mail.gmail.com>
- <CALkWK0kw69rMveDXpGEvV=fGxiQ7JoT_JE9ZU5cor0xD=BUbFQ@mail.gmail.com>
- <CACsJy8C9mrJzmg4FjqBMAZis7WQUpyhNH7TMTLbebWQE124YMg@mail.gmail.com>
- <CALkWK0nLamX1XKcg2t7VWJTPuFhX+ctEGE=4sjSSd7JqMmGzPA@mail.gmail.com>
- <CACsJy8DxspNbopJbSsvcCZZwMFees1JVV_iV5r7dXRJTngzmFA@mail.gmail.com> <CALkWK0kchO-cKuh1vd=aziZa5CA8w81aEecUKqhazp_Y7pOrkw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] l10n: de.po: translate 39 new messages
+Date: Wed, 17 Apr 2013 16:02:08 -0700
+Message-ID: <7v4nf4ep73.fsf@alter.siamese.dyndns.org>
+References: <1366043260-3131-1-git-send-email-ralf.thielow@gmail.com>
+	<1906942.3yyCMUNxTB@cs-pc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 01:02:09 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ralf Thielow <ralf.thielow@gmail.com>, trast@student.ethz.ch,
+	jk@jk.gs, git@vger.kernel.org
+To: Christian Stimming <stimming@tuhh.de>
+X-From: git-owner@vger.kernel.org Thu Apr 18 01:02:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USbMb-0000BL-GN
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 01:02:05 +0200
+	id 1USbMo-0000PN-0B
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 01:02:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966972Ab3DQXCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 19:02:00 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:60448 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966920Ab3DQXB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Apr 2013 19:01:59 -0400
-Received: by mail-ob0-f175.google.com with SMTP id va7so1931554obc.20
-        for <git@vger.kernel.org>; Wed, 17 Apr 2013 16:01:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=Bgr2LvooBZ85m2VpvsNOh/LwaByIQItdkKn9OFw5N/w=;
-        b=oxIHMjuxRjpK8n1s1nrGizIdKZqhj2pXRonxUkkBOTAk/bGDmJhUyvw9068dSkvOtg
-         Yb4gqceKXbIW7w50OUBJrqriH3bYAatI/3Z3M4D+rdaUS01yI82W6Ka3NTFKI4daVxVa
-         vrxk1K9ScXrM2qV5QP+GXD+klSdZqpGqM4mLC+z01dvW+IlA/Y5Ukf27naLgeqD/reNW
-         VryivsYMxXlcxLhA8pQCj450kOaKlVY6QY24Cn0vJ5OHft8JiKxNMEYRJ5Dl4UAmCokb
-         2L918p2gpYOMpcrBLdVDOZWzDY/ousbOxsHI934EBAXySuM2C1POq1jIZqcni5rT3VXN
-         Y2BQ==
-X-Received: by 10.60.142.230 with SMTP id rz6mr3926346oeb.22.1366239719446;
- Wed, 17 Apr 2013 16:01:59 -0700 (PDT)
-Received: by 10.76.122.163 with HTTP; Wed, 17 Apr 2013 16:01:29 -0700 (PDT)
-In-Reply-To: <CALkWK0kchO-cKuh1vd=aziZa5CA8w81aEecUKqhazp_Y7pOrkw@mail.gmail.com>
+	id S966994Ab3DQXCO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Apr 2013 19:02:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46565 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966936Ab3DQXCM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Apr 2013 19:02:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF4C51771F;
+	Wed, 17 Apr 2013 23:02:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=qMwOnBTpB8Vd
+	6H4eY2w+lKSrQqg=; b=PrQyui4t95bWW+C5BFLhLC1P+8T/tSCvUT82v+Bcf+S4
+	/Ki64dx6hKva6RkC/Y8KZijnVQnui4pYazK8P6wSHrUT7ijT23+CIJzodrEgMBwc
+	QwNzQsAzirLnZRCYQjYUAzpLU6e3N6n6XM61qiISTsthc6cwzRo4+bXY4Sgl+a8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pxNQQn
+	ZodkMIetrMPSwxCvAUNHCaHMSfkRitx8mXU7oIOCTIU//f8VUxgQSmupr37Q2t2E
+	A0tLbDSnWP1uKiZvcWTuGdzzbDny9w2ql6b+hSC3sLZrBHc7M8mAHZAwMkjcZGtn
+	BnlRXoAfdrK16YQX7hdkoRpxd4XLgOwhISkBg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D27021771E;
+	Wed, 17 Apr 2013 23:02:10 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3C9981771C;
+	Wed, 17 Apr 2013 23:02:10 +0000 (UTC)
+In-Reply-To: <1906942.3yyCMUNxTB@cs-pc> (Christian Stimming's message of "Mon,
+	15 Apr 2013 21:26:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D581FC0E-A7B2-11E2-8230-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221583>
 
-On Thu, Apr 18, 2013 at 1:02 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
->> No, the point is people make mistakes. What do we do in that case? Or
->> will you introduce yet another "gc" command for clean up ~/bare?
+Christian Stimming <stimming@tuhh.de> writes:
+
+> Thanks for the regular update! This is great work.
 >
-> So, people don't make mistakes when they use 'git submodule add', but
-> do make mistakes when using 'git clone'?  How has the problem
-> _changed_ with my patch?  It's reasonable to point it out as an
-> existing problem, and ask for it to be fixed independent of this
-> discussion, but that is not what you are doing.
+> One issue with the plural form messages, though:
+>
+> Am Montag, 15. April 2013, 18:27:40 schrieb Ralf Thielow:
+>>  #: bundle.c:186
+>> -#, fuzzy, c-format
+>> +#, c-format
+>>  msgid "The bundle contains this ref:"
+>>  msgid_plural "The bundle contains these %d refs:"
+>> -msgstr[0] "Das Paket enth=C3=A4lt %d Referenz"
+>> -msgstr[1] "Das Paket enth=C3=A4lt %d Referenzen"
+>> +msgstr[0] "Das Paket enth=C3=A4lt diese Referenz:"
+>> +msgstr[1] "Das Paket enth=C3=A4lt diese %d Referenzen:"
+>
+> The msgstr[0] must still contain a %d conversion specifier (which wil=
+l be=20
+> filled with the number 1) even though the translated sentence wouldn'=
+t need=20
+> the 1 anymore. The previous msgstr[0] was correct; the English singul=
+ar msgid=20
+> is not.
+>
+> Technical background: The ngettext function chooses only the string i=
+tself,=20
+> which will then be fed to printf() as a second step. If the printf se=
+es more=20
+> variadic arguments than conversion specifiers in the string, it will =
+be=20
+> unhappy. At least that's what I remembered about the ngettext things.=
+=2E.
+>
+> http://www.gnu.org/software/libc/manual/html_node/Advanced-gettext-
+> functions.html
 
-It's the magic in git-clone that changes its behavior that I want to
-address. I know you agree to go with a command line option. But I
-think in the end there will be a switch hidden somewhere in config to
-make things smooth, unless you make this mode the default (*). With
-normal mode, "rm -rf repo" is enough, with the new submodule mode, it
-leaves some garbage behind that the user may not be aware about. Maybe
-this is something that should be addressed anyway even for .gitmodules
-mode like Junio said. But I wonder if there are any other traps that
-come with the config switch.
+This vaguely sounds familiar:
 
-(*) I don't think you can make the new mode the default though. There
-are repos in repos in the field that are not managed by "git
-submodule". Switching the default will disrupt those setups. Some
-deprecation cycles might help, I don't know.
---
-Duy
+  http://thread.gmane.org/gmane.comp.version-control.git/218173
+  http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms
+
+In the English singular case, the number =E2=80=93 always 1 =E2=80=93 c=
+an be
+replaced with "one":
+
+          printf (ngettext ("One file removed", "%d files removed", n),=
+ n);
+
+This works because the =E2=80=98printf=E2=80=99 function discards exces=
+s arguments
+that are not consumed by the format string.
