@@ -1,65 +1,107 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 11/13] pretty: support padding placeholders, %< %> and %><
-Date: Wed, 17 Apr 2013 19:45:41 +1000
-Message-ID: <CACsJy8AsWP8C4W=h8eVQbHMvvNT8Fd6iZV+P6edooMacGHfRwg@mail.gmail.com>
-References: <1364636112-15065-1-git-send-email-pclouds@gmail.com>
- <1366100702-31745-1-git-send-email-pclouds@gmail.com> <1366100702-31745-12-git-send-email-pclouds@gmail.com>
- <7v1uaaky2q.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Wed, 17 Apr 2013 11:47:16 +0200
+Message-ID: <87txn5xzdn.fsf@linux-k42r.v.cablecom.net>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 17 11:46:20 2013
+X-From: git-owner@vger.kernel.org Wed Apr 17 11:47:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USOwV-0001WS-Kt
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 11:46:19 +0200
+	id 1USOxX-0002kY-Sh
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 11:47:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966095Ab3DQJqO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Apr 2013 05:46:14 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:42397 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966087Ab3DQJqM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Apr 2013 05:46:12 -0400
-Received: by mail-ob0-f179.google.com with SMTP id tb18so1250964obb.38
-        for <git@vger.kernel.org>; Wed, 17 Apr 2013 02:46:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=DtxAJzAwByFdVu1AMpVRHQqObm4QWagOEx72OzGf3X4=;
-        b=D3h16W5gMPEhRbhXW27EhFP1M87WEdTrbRur6FqZ8cfm7hgLLbQFhVQDmRhIqIFQV2
-         WSQAJcaJc45DRvtUKu0Ts97ywsEOsNOntNtxuCwYcRgzXyk0NeZhQMiF4uIU9r7hCEM5
-         VwMA+3vkbR1X3xUjt5m8Wb+bSbzhwhDLZ2RLsScpccj68ZWoB3dxcvN72Y6advC8y/FD
-         gOKkS4R98zPMpVAorb1lVm/GgO5z1qlnVUWvClOlTNT7GoN/+DP+N1LIOCSPIWe8WoyV
-         36KMy4VMi0EGQMCIRfMWdRZOgUBAByTYRoPGBI0TzpoYG7zhYmzaHt4tswaCAHcwRKgd
-         TH/Q==
-X-Received: by 10.60.142.230 with SMTP id rz6mr2313954oeb.22.1366191972035;
- Wed, 17 Apr 2013 02:46:12 -0700 (PDT)
-Received: by 10.76.122.163 with HTTP; Wed, 17 Apr 2013 02:45:41 -0700 (PDT)
-In-Reply-To: <7v1uaaky2q.fsf@alter.siamese.dyndns.org>
+	id S966016Ab3DQJrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 05:47:20 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:38746 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965843Ab3DQJrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 05:47:19 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 17 Apr
+ 2013 11:47:13 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS22.d.ethz.ch (172.31.51.112) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Wed, 17 Apr 2013 11:47:16 +0200
+In-Reply-To: <7vhaj7r116.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 15 Apr 2013 13:28:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221527>
 
-On Wed, Apr 17, 2013 at 6:41 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> +delete_trailing_dollar() {
->> +     sed 's/\$$//'
->> +}
->
-> This is what we have qz_to_tab_space for, isn't it?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks! I looked for something like this, but my eyes focused on
-similar sed line and forgot the "tr"
---
-Duy
+> * jc/add-2.0-delete-default (2013-03-08) 3 commits
+>  - git add <pathspec>... defaults to "-A"
+>   (merged to 'next' on 2013-04-05 at 199442e)
+>  + git add: start preparing for "git add <pathspec>..." to default to "-A"
+>  + builtin/add.c: simplify boolean variables
+>
+>  In Git 2.0, "git add pathspec" will mean "git add -A pathspec".  If
+>  you did this in a working tree that tracks dir/lost and dir/another:
+>
+>  $ rm dir/lost
+>  $ edit dir/another
+>  $ git add dir
+>
+>  The last step will not only notices and records updated
+>  dir/another, but also notices and records the removal of dir/lost
+>  in the index.
+>
+>  Start training the users for this change to say --no-all when they
+>  want to ignore the removal to smooth the transition hump.
+>
+>  Will merge to 'master' the early bits and cook the rest in 'next' until Git 2.0.
+
+The warning triggers in some cases where it shouldn't, relating to
+submodules:
+
+  $ git submodule add gitosis@git.csa.inf.ethz.ch:domjudge.git domjudge
+  Adding existing repo at 'domjudge' to the index                                                        
+  warning: In Git 2.0, 'git add <pathspec>...' will also update the                                      
+  index for paths removed from the working tree that match                                               
+  the given pathspec. If you want to 'add' only changed                                                  
+  or newly created paths, say 'git add --no-all <pathspec>...' instead.
+
+It also seems to hint that the problem is with giving a 'pathspec', but
+in fact in the case of a "proper" pathspec (that isn't an existing path)
+it does *not* trigger, even though it probably should:
+
+  $ git ls-files
+  foo
+  $ rm foo
+  $ git add 'f*'
+  $ git status
+  # On branch master
+  # Changes not staged for commit:
+  #   (use "git add/rm <file>..." to update what will be committed)
+  #   (use "git checkout -- <file>..." to discard changes in working directory)
+  #
+  #       deleted:    foo
+  #
+  no changes added to commit (use "git add" and/or "git commit -a")
+  $ git add -A 'f*'
+  $ git status
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #       deleted:    foo
+  #
+  # Untracked files not listed (use -u option to show untracked files)
+
+That's of course assuming that you want to unconditionally make -A the
+default.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
