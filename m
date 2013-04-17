@@ -1,70 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] blame: handle broken commit headers gracefully
-Date: Wed, 17 Apr 2013 17:07:13 -0400
-Message-ID: <20130417210713.GB635@sigill.intra.peff.net>
-References: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
- <516D93C4.1000100@lsrfire.ath.cx>
- <7v61zml0ow.fsf@alter.siamese.dyndns.org>
- <516DBE2E.4060201@lsrfire.ath.cx>
- <7vzjwyi0ba.fsf@alter.siamese.dyndns.org>
- <7vli8hhgmn.fsf@alter.siamese.dyndns.org>
- <20130417063942.GA27703@sigill.intra.peff.net>
- <516EE300.7020200@lsrfire.ath.cx>
- <516EEB12.5050209@lsrfire.ath.cx>
+From: Forrest Galloway <f.galloway@gmail.com>
+Subject: git rev-list --pretty=format:"" issue
+Date: Wed, 17 Apr 2013 16:11:18 -0500
+Message-ID: <CAH2yXXYggB=Wv-w4B9qU=ZxAuqjPVa5WRNZRnMRrWShkTp0UFg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ivan Lyapunov <dront78@gmail.com>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Wed Apr 17 23:07:25 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 17 23:11:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USZZZ-0004Wb-ER
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 23:07:21 +0200
+	id 1USZdT-0001tn-VQ
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 23:11:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965571Ab3DQVHR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Apr 2013 17:07:17 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:50294 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756067Ab3DQVHQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Apr 2013 17:07:16 -0400
-Received: (qmail 4712 invoked by uid 107); 17 Apr 2013 21:09:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 17 Apr 2013 17:09:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Apr 2013 17:07:13 -0400
-Content-Disposition: inline
-In-Reply-To: <516EEB12.5050209@lsrfire.ath.cx>
+	id S1756877Ab3DQVLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 17:11:19 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:56796 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756521Ab3DQVLS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 17:11:18 -0400
+Received: by mail-ie0-f172.google.com with SMTP id c10so2507935ieb.17
+        for <git@vger.kernel.org>; Wed, 17 Apr 2013 14:11:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=NGPYb2bmkXOgGQK+bDtT76ty12QTjTEg1WCMLE7jj9g=;
+        b=n55XUyK1y1XTP8sLJkUoKd7COTRLQBwsfGAbFuGRKPr+2UFCaiSRyjh+Iz0TPdlwgU
+         6QvPSkxG4cpy3f47Bjsrcun7LT4goAgyYM1hnYACLh9MJCSwhN+WQJiJX6AeOdOgcau/
+         KjdH85I4RVPVzyRNiOuJFSkg29L6iIYe6aWBgj5BqGL0m3fMTn8++ZVGRjTl3LJyOquV
+         D4xRskfohVkdMp1MDw4bsTIcPnCDVNiWMwlXeXlcGc5aJk8fCIqJ6PpLGwDye8eT78L5
+         EQMq2EB5DhFJp8C+pE5gWeQlfeIck0KLuUof0ZQ+tqWXYXF/RcQYAcmDX2sGpbJaJ3FX
+         IKSg==
+X-Received: by 10.50.115.42 with SMTP id jl10mr5241507igb.71.1366233078329;
+ Wed, 17 Apr 2013 14:11:18 -0700 (PDT)
+Received: by 10.64.226.132 with HTTP; Wed, 17 Apr 2013 14:11:18 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221573>
 
-On Wed, Apr 17, 2013 at 08:33:54PM +0200, Ren=C3=A9 Scharfe wrote:
+git 1.8.2.1 on OSX(Mountain Lion) installed with Homebrew
 
-> Minimal patch, test case missing.  It's a bit sad that the old commit
-> parser of blame handled Ivan's specific corruption (extra "-<>" after
-> email) gracefully because it used the spaces as cutting points instea=
-d
-> of "<" and ">".
+I am seeing an issue when trying to format the output from rev-list command.
+git log --pretty=format:"%H - %an, %ar : %s" When I attempt the above
+string, instead of printing to the shell, LESS is opened and the
+output is displayed there.
 
-That may mean there is room for improvement in split_ident_line to
-be more resilient in removing cruft. With something like:
 
-  Name <email@host>-<> 123456789 -0000
+Got the command from here:
+http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History
 
-it would obviously be nice to find the date timestamp there, but I
-wonder what the "email" field should return? The full broken string, or
-just "email@host"? One way is convenient for overlooking problems in
-broken commits, but I would worry about code paths that are using
-split_ident_line to verify the quality of the string (like
-determine_author_info). It's possible we would need a strict and a
-forgiving mode.
-
--Peff
+git log --pretty=format:"%h - %an, %ar : %s" The string above works
+fine when I change the %h to %H the issue shoes up.
