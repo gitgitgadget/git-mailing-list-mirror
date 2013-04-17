@@ -1,115 +1,84 @@
-From: Sivaram Kannan <siva.devel@gmail.com>
-Subject: Re: Git crash in Ubuntu 12.04
-Date: Wed, 17 Apr 2013 11:58:08 +0530
-Message-ID: <CAJiNi_GQZf8BRkTR8+j6YjdcqUH1J1NATSrNUjZ=65V+ip6okQ@mail.gmail.com>
-References: <CAJiNi_FfU9Gsr2D9CcC0wWwgO1oKBXwxp87-wBUJBU2kyGaQNQ@mail.gmail.com>
-	<87mwt6ltia.fsf@linux-k42r.v.cablecom.net>
-	<CAJiNi_EgjgKs7oNJyGcamUFz=ARDAuBTb+bJ0uVsPFBMbZF3YA@mail.gmail.com>
-	<20130411170659.a35d2c581cf34ade13448bfa@domain007.com>
-	<CAJiNi_Gju2aJkVJJmoxnEAubfPvjaVhVF6DisaLn5kUJ3YRD=w@mail.gmail.com>
-	<20130412180525.aa5b8eacd691a427244d6ab5@domain007.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git log - crash and core dump
+Date: Wed, 17 Apr 2013 02:39:42 -0400
+Message-ID: <20130417063942.GA27703@sigill.intra.peff.net>
+References: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
+ <516D93C4.1000100@lsrfire.ath.cx>
+ <7v61zml0ow.fsf@alter.siamese.dyndns.org>
+ <516DBE2E.4060201@lsrfire.ath.cx>
+ <7vzjwyi0ba.fsf@alter.siamese.dyndns.org>
+ <7vli8hhgmn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Wed Apr 17 08:28:16 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Ivan Lyapunov <dront78@gmail.com>, git@vger.kernel.org,
+	Antoine Pelisse <apelisse@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 17 08:39:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USLqp-0002uc-Sc
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 08:28:16 +0200
+	id 1USM22-0000sS-B0
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 08:39:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965764Ab3DQG2K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 02:28:10 -0400
-Received: from mail-ve0-f182.google.com ([209.85.128.182]:33499 "EHLO
-	mail-ve0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965761Ab3DQG2J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Apr 2013 02:28:09 -0400
-Received: by mail-ve0-f182.google.com with SMTP id da11so1135533veb.41
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 23:28:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=WBcTtKpetIJnJ3ZQHGEDIdMQiOnSFJg7DmaRypG6mGY=;
-        b=YZjfjagO1nnVnLMMHd3ahtHkRAvnzx9cthh+I284js3UYK80R/aDQ5JzRTtUl6tjgy
-         N/lJ3KA1CfSbn0kSd+hNa/YVOgl1C+9tiwGYWY29LULUHZc0jj+UiPOI1sfXznz0cGKG
-         cRpgdFViCswtk9DgHfUZshQz8YuHObVNJWn0f6slOgnrazUtYyfS52fbnn7YUAFhaubH
-         IeH6iYvmvu8CaaTsZir14z8RZ5k/H2Pekhvo77whiPVhIUmpiZuKjVKylDY/l4szZTDy
-         xJ+sVMlwRhXUSMOZXtXnB1SYdfKfrXtq2n+aEWYOi5Ea18wbjt0FDKOdmV5e5Bdh4ko5
-         yaPQ==
-X-Received: by 10.58.12.225 with SMTP id b1mr3917442vec.20.1366180088172; Tue,
- 16 Apr 2013 23:28:08 -0700 (PDT)
-Received: by 10.221.3.131 with HTTP; Tue, 16 Apr 2013 23:28:08 -0700 (PDT)
-In-Reply-To: <20130412180525.aa5b8eacd691a427244d6ab5@domain007.com>
+	id S1755284Ab3DQGjq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Apr 2013 02:39:46 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49526 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752439Ab3DQGjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 02:39:45 -0400
+Received: (qmail 30298 invoked by uid 107); 17 Apr 2013 06:41:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 17 Apr 2013 02:41:40 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Apr 2013 02:39:42 -0400
+Content-Disposition: inline
+In-Reply-To: <7vli8hhgmn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221514>
 
-Hi,
+On Tue, Apr 16, 2013 at 10:26:40PM -0700, Junio C Hamano wrote:
 
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> > Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+> >
+> >> How about making split_ident_line() a bit friendlier be letting it
+> >> provide the epoch as default time stamp instead of NULL? =20
+> >
+> > Two knee-jerk concerns I have without going back to the callers:
+> >
+> >  * Would that "0" ever be given to the approxidate parser, which
+> >    rejects ancient dates in numbers-since-epoch format without @
+> >    prefix?
+> >
+> >  * Does any existing caller use the NULL as a sign to see the input
+> >    was without date and act on that information?
+>=20
+> I looked at all the callers (there aren't that many), and none of
+> them did "Do this on a person-only ident, and do that on an ident
+> with timestamp".  So for the callers that ignore timestamp, your
+> patch will be a no-op, and for others that assume there is a
+> timestamp, it will turn a crash/segv into output with funny
+> timestamp.
 
->> > $ ulimit -c unlimited
->>
->> Have set the git user's crash limit to 1GB in
->> /etc/security/limits.conf and still getting the same error when
->> issuing gdb to the crash file.
->
-> Yep, suppsedly in Ubuntu it's not that easy to just get a plain old
-> coredump file -- see below.
->
+What about sane_ident_split in builtin/commit.c? It explicitly rejects =
+a
+NULL date. The logic in determine_author_info is a little hard to follo=
+w
+(it assembles the ident line with fmt_ident and then reparses it), but =
+I
+believe it should be catching a bogus line from "commit -c", or from
+GIT_AUTHOR_DATE in the environment.
 
-Got an proper dump from git this time. See whether it helps. I have
-setup another machine with Ubuntu 12.04 and updated only git and
-ported the repo there, after 200 clones no crash so far. Mostly will
-be moving latest repo to that server to solve this issue.
+As a side note, when determine_author_info sees a bogus ident, it
+appears to just silently ignore it, which is probably a bad thing.
+Shouldn't we by complaining?  Or am I mis-reading the code?
 
-gitadmin@gitserver:/var/crash/gitcash$ gdb git CoreDump
-GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
-Copyright (C) 2012 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
-and "show warranty" for details.
-This GDB was configured as "x86_64-linux-gnu".
-For bug reporting instructions, please see:
-<http://bugs.launchpad.net/gdb-linaro/>...
-Reading symbols from /usr/bin/git...(no debugging symbols found)...done.
-[New LWP 12823]
-
-warning: Can't read pathname for load map: Input/output error.
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-Core was generated by `git pack-objects --revs --all --stdout
---progress --delta-base-offset'.
-Program terminated with signal 11, Segmentation fault.
-#0  0x000000000044bb77 in ?? ()
-(gdb) bt
-#0  0x000000000044bb77 in ?? ()
-#1  0x000000000044cb54 in ?? ()
-#2  0x000000000044d4f1 in ?? ()
-#3  0x0000000000405634 in ?? ()
-#4  0x0000000000404a30 in ?? ()
-#5  0x00007fe2a149876d in __libc_start_main (main=0x404980, argc=7,
-ubp_av=0x7fffad58fb28, init=<optimized out>, fini=<optimized out>,
-rtld_fini=<optimized out>,
-    stack_end=0x7fffad58fb18) at libc-start.c:226
-#6  0x0000000000404e65 in ?? ()
-#7  0x00007fffad58fb18 in ?? ()
-#8  0x000000000000001c in ?? ()
-#9  0x0000000000000007 in ?? ()
-#10 0x00007fffad591c95 in ?? ()
-#11 0x00007fffad591c99 in ?? ()
-#12 0x00007fffad591ca6 in ?? ()
-#13 0x00007fffad591cad in ?? ()
-#14 0x00007fffad591cb3 in ?? ()
-#15 0x00007fffad591cbc in ?? ()
-#16 0x00007fffad591cc7 in ?? ()
-#17 0x0000000000000000 in ?? ()
-
-Thanks,
-./Siva.
+-Peff
