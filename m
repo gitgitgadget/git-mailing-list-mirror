@@ -1,87 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git log - crash and core dump
-Date: Tue, 16 Apr 2013 22:26:40 -0700
-Message-ID: <7vli8hhgmn.fsf@alter.siamese.dyndns.org>
-References: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
- <516D93C4.1000100@lsrfire.ath.cx> <7v61zml0ow.fsf@alter.siamese.dyndns.org>
- <516DBE2E.4060201@lsrfire.ath.cx> <7vzjwyi0ba.fsf@alter.siamese.dyndns.org>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH/RFC] l10n: de.po: translate 39 new messages
+Date: Wed, 17 Apr 2013 07:49:48 +0200
+Message-ID: <CAN0XMOLcNwOUPK2sYvvO_QMaJrMkH949_xZLtdyF+zFx1p4v+Q@mail.gmail.com>
+References: <1366043260-3131-1-git-send-email-ralf.thielow@gmail.com>
+	<87ppxuan7i.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ivan Lyapunov <dront78@gmail.com>, git@vger.kernel.org,
-	Antoine Pelisse <apelisse@gmail.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Wed Apr 17 07:26:54 2013
+Cc: =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>,
+	git <git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Apr 17 07:49:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USKtO-0000AS-2I
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 07:26:50 +0200
+	id 1USLFj-00045s-6N
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 07:49:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757564Ab3DQF0p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Apr 2013 01:26:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41195 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754341Ab3DQF0o convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Apr 2013 01:26:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21946EBF8;
-	Wed, 17 Apr 2013 05:26:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=qjMKSLpLp9EI
-	kVFu6hNZuBhW4uo=; b=RdrT1kXuuw+cj2oruVFOc1JWGGxk7E8LLtils3jDJnPp
-	qpTGhN5rr8ME8g6K5flhNXYulso/hYjZdrb1XisscfjknAWlT2cFirBuM6avBMQU
-	4SimyYqMH8ve7a6AbIfUkbesj9MfSobaCZsAYzQzIcZShE15yZ2717wc2xqqQuQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=f8Q5u5
-	2JXSq9nnlQO38hKm42UGNMx9NMI2TLZyl8RguGa9uyXBr3y7kBco/h7ur71tPmBc
-	NM7ORZZqyM2lNYoRI3N6dxxNzYTTst5FktCVjwtajf/QcXSQs0LO7cBOWkBlBqim
-	QsMSNLbuyZOZBJHBfCo3J4aO1KJTdvys67keQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14676EBF7;
-	Wed, 17 Apr 2013 05:26:44 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 588F0EBF4; Wed, 17 Apr 2013
- 05:26:42 +0000 (UTC)
-In-Reply-To: <7vzjwyi0ba.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 16 Apr 2013 15:21:29 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 63251120-A71F-11E2-A7C8-CC48E7F0ECB6-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757563Ab3DQFtu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Apr 2013 01:49:50 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:59479 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757179Ab3DQFtt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Apr 2013 01:49:49 -0400
+Received: by mail-wi0-f175.google.com with SMTP id h11so79849wiv.8
+        for <git@vger.kernel.org>; Tue, 16 Apr 2013 22:49:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=jssh1UG4EEUWvstldgQmavQ68SS0qUkPt+pqsDGnI4c=;
+        b=WU2PGSGStjcoCcyxFGB8jodaezUydT1GQvfVJIzCSw4RoxHOdU0eizfKZrw0A1XKZf
+         dcAH+IW3/6xIxDG3xJ+6gR6b1KDutkuVhY8X8jxTl0lc/tKCDEFkKjFNcIq+TbarfRta
+         1dTbdxv0sEpJwIpF/wEIIqU7YghBZhQ60aVsi4E4s8RyEbRxFkq6Sf57jVR5iiJuC8XS
+         9UTGCt0YPaLDBZhjjPGm6VY9KfKvOwMD7jIUz5bZukfnkXlnGZeGWChVFBQLeaXnqLp2
+         4TiSrSxeJy7VCVSI0JhzyI79+SfFpGRGPJkqbGLgIdCkU8d74YRaUFeCiiq9Ypa3t/qv
+         e+jw==
+X-Received: by 10.194.222.100 with SMTP id ql4mr8432567wjc.59.1366177788487;
+ Tue, 16 Apr 2013 22:49:48 -0700 (PDT)
+Received: by 10.194.31.137 with HTTP; Tue, 16 Apr 2013 22:49:48 -0700 (PDT)
+In-Reply-To: <87ppxuan7i.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221510>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Thanks for review!
+
+2013/4/16 Thomas Rast <trast@inf.ethz.ch>:
+> Ralf Thielow <ralf.thielow@gmail.com> writes:
 >
->> How about making split_ident_line() a bit friendlier be letting it
->> provide the epoch as default time stamp instead of NULL? =20
+>>  msgid "You are currently reverting commit %s."
+>> -msgstr "Sie sind gerade bei einer bin=C3=A4ren Suche in Zweig '%s'.=
+"
+>> +msgstr "Sie kehren gerade Version '%s' um."
 >
-> Two knee-jerk concerns I have without going back to the callers:
+> Is revert->umkehren new?  I can see it's in the glossary, but
 >
->  * Would that "0" ever be given to the approxidate parser, which
->    rejects ancient dates in numbers-since-epoch format without @
->    prefix?
+
+Yes, I've added it recently to the glossary. I've only checked the
+glossary and didn't find it. I didn't check de.po for past usages, thou=
+gh.
+
+>   #: sequencer.c:536
+>   #, c-format
+>   msgid "could not revert %s... %s"
+>   msgstr "Konnte %s nicht zur=C3=BCcksetzen... %s"
 >
->  * Does any existing caller use the NULL as a sign to see the input
->    was without date and act on that information?
+>   #: sequencer.c:1016
+>   msgid "Can't revert as initial commit"
+>   msgstr "Kann nicht zu initialer Version zur=C3=BCcksetzen."
+>
+> which I don't really like either now that you mention it -- I would
+> re-translate it as 'reset'.  But either way they should be consistent=
+=2E
+>
 
-I looked at all the callers (there aren't that many), and none of
-them did "Do this on a person-only ident, and do that on an ident
-with timestamp".  So for the callers that ignore timestamp, your
-patch will be a no-op, and for others that assume there is a
-timestamp, it will turn a crash/segv into output with funny
-timestamp.
+I'm not sure I understand. We currently translate "reset" as "neu
+setzen/umsetzen",
+which is fine if it means a branch or HEAD ('git reset'), but for commi=
+ts?
+What about "zur=C3=BCcknehmen"?
 
-So I think the patch is a right thing to do (we would need in-code
-comment to warn new callers about the semantics, though).
+>>  msgid "Commit %s has an untrusted GPG signature, allegedly by %s."
+>> -msgstr ""
+>> +msgstr "Version %s hat eine nicht vertrauensw=C3=BCrdige GPG-Signat=
+ur, "
+>> +"vermeintlich von %s."
+>>
+>>  msgid "Commit %s has a bad GPG signature allegedly by %s."
+>> -msgstr ""
+>> +msgstr "Version %s hat eine ung=C3=BCltige GPG-Signatur, vermeintli=
+ch von %s."
+>
+> You could say "angeblich" instead, which is more to the point.
+>
 
-Thanks.
+Yes. Thanks.
+
+>>  #: git-submodule.sh:626
+>> -#, fuzzy, sh-format
+>> +#, sh-format
+>>  msgid "Submodule '$name' ($url) unregistered for path '$sm_path'"
+>> -msgstr "Unterprojekt '$name' ($url) ist f=C3=BCr Pfad '$sm_path' re=
+gistriert"
+>> +msgstr "Unterprojekt '$name' ($url) ist nicht f=C3=BCr Pfad '$sm_pa=
+th' registriert."
+>
+> This is in cmd_deinit(), and the comment for the enclosing block says
+>
+>   # Remove the whole section so we have a clean state when
+>   # the user later decides to init this submodule again
+>
+> So it would seem to use "unregister" as a verb, not an adjective, and
+> the correct translation is
+>
+>   msgstr "Unterprojekt '$name' ($url) f=C3=BCr '$sm_path' deregistrie=
+rt."
+>
+> or some such.  "Deregistriert" is not very nice; in the absence of
+> context I would suggest "ausgetragen", but that problably collides wi=
+th
+> our use of "eintragen".  Perhaps you can go the long way for this
+> isolated use and just say "aus der Konfiguration entfernt" (and
+> similarly for 'register').
+>
+
+Thanks. I prefer your "aus der Konfiguration entfernt/eingetragen".
+
+> In any case you should also add 'register' and 'unregister' to the
+> glossary once you've settled on something.
+>
+
+Yes, I'll do.
+
+> --
+> Thomas Rast
+> trast@{inf,student}.ethz.ch
