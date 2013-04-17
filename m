@@ -1,69 +1,99 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate $GITDIR
-Date: Wed, 17 Apr 2013 16:43:10 +0530
-Message-ID: <CALkWK0nLamX1XKcg2t7VWJTPuFhX+ctEGE=4sjSSd7JqMmGzPA@mail.gmail.com>
-References: <1365881007-25731-1-git-send-email-artagnon@gmail.com>
- <CACsJy8D-5x5HXgpr2hHUHee6jcfj3++b961sJB_aKTZC1ZS+tw@mail.gmail.com>
- <CALkWK0kw69rMveDXpGEvV=fGxiQ7JoT_JE9ZU5cor0xD=BUbFQ@mail.gmail.com> <CACsJy8C9mrJzmg4FjqBMAZis7WQUpyhNH7TMTLbebWQE124YMg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Wed, 17 Apr 2013 21:27:40 +1000
+Message-ID: <CACsJy8Bz+yNefiiwEivaaUgRymHTmUUKEFs8_uuonhmRfT3UGg@mail.gmail.com>
+References: <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com>
+ <20130407170201.GH2222@serenity.lan> <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com>
+ <20130407175210.GI2222@serenity.lan> <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com>
+ <20130407182112.GJ2222@serenity.lan> <5161BC33.8060707@web.de>
+ <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com>
+ <5161D3C5.9060804@web.de> <CALkWK0k_vmXZr-x8=ZctouWbuVgv-1sptC0WX2aJ+yYD-T8cxA@mail.gmail.com>
+ <20130407212342.GA19857@elie.Belkin> <CACsJy8BoWfng7p=kHbiF9s6XYH1mPMtAGW6BRz54uYM5454O0w@mail.gmail.com>
+ <CALkWK0mcnA8Qss3uxRXhfHst65RLkv43wje9xdFxmFKi7MtZvA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 17 13:13:58 2013
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 17 13:28:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USQJI-0007pq-1D
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 13:13:56 +0200
+	id 1USQXC-0002aq-OJ
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 13:28:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965826Ab3DQLNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 07:13:52 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:64735 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965130Ab3DQLNv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Apr 2013 07:13:51 -0400
-Received: by mail-ie0-f176.google.com with SMTP id x14so1731717ief.21
-        for <git@vger.kernel.org>; Wed, 17 Apr 2013 04:13:51 -0700 (PDT)
+	id S965870Ab3DQL2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 07:28:14 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:55408 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751327Ab3DQL2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 07:28:13 -0400
+Received: by mail-ob0-f175.google.com with SMTP id va7so1308441obc.6
+        for <git@vger.kernel.org>; Wed, 17 Apr 2013 04:28:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=fccd1jsRxu5LLio84/vcXYocsPwzWoizgyrxVuXA+NY=;
-        b=oKDvRC5BF3jk8+vCcgwZMRli75AvndsoHy0LoDRqAntxZO8WiAfYvHJxiX6KcM+9IG
-         S3Ve0KA/OtwYkLCyOwQ5jpUTyPnwbDsOKd87xLzHUWpfr1DtMAmiq69Uz5wvk6favz1j
-         6KMX6IkTjMKNrIMh/s4cXQpndanHlwze+L/KGo15UCsfM9OF8U2YNtZua3v3hOiGrNrq
-         z+kTY5p9RqReEYXv8dRlrNocnBoIWFs7udKPATGDtIMuj4sf5K13kjva9oXAqUdw49FY
-         wp804UKFFqqIwn1KnWKyRbw6RcsB1ASKqYpMmR/Wug4lPAggFzbUtRfj05EJjt1K6ca2
-         gHwg==
-X-Received: by 10.50.50.71 with SMTP id a7mr10224240igo.14.1366197231302; Wed,
- 17 Apr 2013 04:13:51 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Wed, 17 Apr 2013 04:13:10 -0700 (PDT)
-In-Reply-To: <CACsJy8C9mrJzmg4FjqBMAZis7WQUpyhNH7TMTLbebWQE124YMg@mail.gmail.com>
+        bh=IeTL5I1dueSkmCGu+1g15Cxl6Hb4Y20SMJuOhl7dso0=;
+        b=kxw5270z5spprA62elPO/zp5C8B3XkY4foS+mUEmmK8wms6+lxImA9b5XdPcrWHOjn
+         +szQhSvSp5yyVfr+iGn9/bTkg0URg80QvSxSqE7ebqoQJRkjraX/bQqCerazU3aDQMhm
+         hXdXZq5mD2xlwEr5GZY3fLg1a9h0SV5TU8oFNvNl3v9yUcFbdk9xuP/weQxHvStH0TQq
+         5IEQZg72bLUNs5E2c6GBz2gqkK/WkkuB6VtIWoNsLp/cL3GGH1fb0226Pt5Y2JlpmOEk
+         9iJAYlN2Wy8/HfU91nILBZtj/18N5dJZVa+gfBg/t8Hy0f9CxtSshrZo5jHli29KoIAF
+         6epw==
+X-Received: by 10.182.116.70 with SMTP id ju6mr2213590obb.48.1366198090741;
+ Wed, 17 Apr 2013 04:28:10 -0700 (PDT)
+Received: by 10.76.122.163 with HTTP; Wed, 17 Apr 2013 04:27:40 -0700 (PDT)
+In-Reply-To: <CALkWK0mcnA8Qss3uxRXhfHst65RLkv43wje9xdFxmFKi7MtZvA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221536>
 
-Duy Nguyen wrote:
-> No, submodule code does not change "git clone". If I'm not mistaken,
-> submodule will not kick in until you type "git submodule something".
-> If I turn clone.submoduleGitDir on, how can I undo my mistake in a
-> user friendly way?
+On Wed, Apr 17, 2013 at 9:06 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Duy Nguyen wrote:
+>> Somewhat related to the topic. Why can't .gitattributes be used for
+>> storing what's currently in .gitmodules?
+>
+> It can.  It's just a small syntax change from "key = value" attributes
+> inside a toplevel [submodule <name>] section separated by newlines, to
+> a path marked with multiple "key=value" attributes separated by
+> whitespace.  However, we don't want to make this change because these
+> submodule attributes are somewhat "different" from .gitattributes
+> attributes.
+>
+> Roughly speaking, the current .gitmodules design treats submodule
+> directories as "directories with special attributes", with two
+> differences: these directories have a special mode in the index, and a
+> commit object is created in the database to represent the "partial
+> state" of this submodule.
 
-So, if you currently want to add a submodule, you have to 'git
-submodule add', which runs clone internally apart from other things.
-How do you undo this mistake?
+That was my thinking. .gitmodules would break if a user moves the
+submodule manually (or even if .gitattributes is used)
 
-What I'm essentially proposing is to give the job of cloning back to
-clone, and the job of adding back to add, instead of creating an
-unnatural abstraction over them using 'git submodule add'.  The point
-being: why would you ever _want_ to clone inside a worktree unless you
-intend to add a submodule?  In other words, you intent for running a
-'git clone' inside a worktree is exactly the same as your intent for
-running a 'git submodule add' inside a worktree.  Ofcourse, if you
-have a fringe case where that was _not_ your intent, we'll provide a
-command-line switch to turn off the relocation for that clone.
+> If you think about it, the information
+> stored in the commit object is no less/ no more important than the
+> path-attribute mapping in .gitmodules.  I was arguing for using a
+> special OBJ_LINK to represent the full state of the submodule, and
+> doing away with the attributes altogether, but not everyone agrees.
+
+Include me to those everyone. url feels like a local thing that should
+not stay in object database (another way of looking at it is like an
+email address: the primary one fixed in stone in commits with .mailmap
+for future substitution). Other attributes like .update,
+.fetchRecursiveSubmodules... definitely should not be stored in object
+database. I think if they are stored in the submodule's config file,
+then the manual move problem above will go away.
+
+And if you're dead set on storing some submodule state in object
+database, why not reuse tag object with some nea header lines?
+--
+Duy
