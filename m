@@ -1,63 +1,74 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate $GITDIR
-Date: Wed, 17 Apr 2013 20:22:59 +1000
-Message-ID: <CACsJy8D-5x5HXgpr2hHUHee6jcfj3++b961sJB_aKTZC1ZS+tw@mail.gmail.com>
-References: <1365881007-25731-1-git-send-email-artagnon@gmail.com>
+From: Ivan Lyapunov <dront78@gmail.com>
+Subject: Re: git log - crash and core dump
+Date: Wed, 17 Apr 2013 14:23:40 +0400
+Message-ID: <CANKwXW2gLo7o7DmQQvmGtMDUOjQVHAJZYcyRS5N11q+KQY9Dcw@mail.gmail.com>
+References: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
+ <516D93C4.1000100@lsrfire.ath.cx> <7v61zml0ow.fsf@alter.siamese.dyndns.org>
+ <516DBE2E.4060201@lsrfire.ath.cx> <7vzjwyi0ba.fsf@alter.siamese.dyndns.org>
+ <CANKwXW2h1+CGw2M3CmeXzXAX+wdCPgs5Ff_bGvTgYVpkwpijUw@mail.gmail.com>
+ <CANKwXW0WkZXJMi+6T8ymvTi5-JpRfrn_xKmjGw-FsXpaCGuK5g@mail.gmail.com>
+ <20130417082701.GP2278@serenity.lan> <CANKwXW10tA+qNZ21YYcZxFLL4fWVRhq42nrkSogtmwAMTgPAzQ@mail.gmail.com>
+ <20130417134311.56ea1b191270647dc9ede1df@domain007.com> <CANKwXW1heci+D5ZO3aF+dMN9davRawuZuKz0bf2n3iRiMjjgHg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 17 12:23:36 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 17 12:24:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USPWZ-0007nC-8a
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 12:23:35 +0200
+	id 1USPXN-0000N2-Mi
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 12:24:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965780Ab3DQKXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 06:23:31 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:59275 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757912Ab3DQKXa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Apr 2013 06:23:30 -0400
-Received: by mail-ob0-f175.google.com with SMTP id va7so1299509obc.34
-        for <git@vger.kernel.org>; Wed, 17 Apr 2013 03:23:30 -0700 (PDT)
+	id S965895Ab3DQKYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 06:24:21 -0400
+Received: from mail-ve0-f181.google.com ([209.85.128.181]:38983 "EHLO
+	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965827Ab3DQKYV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 06:24:21 -0400
+Received: by mail-ve0-f181.google.com with SMTP id pa12so1254467veb.26
+        for <git@vger.kernel.org>; Wed, 17 Apr 2013 03:24:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=yregdKnx89zg12GRSQi8RKyMrjv78AkGXmwLnqPzBXQ=;
-        b=PAFmsISkPVJdBTSy5E7OpvEY6yLOKI8ApXEBs2w3bl0konPOnT2S7AZq6cM412Z0aB
-         FAkhWTbJSjM8WETdqMDv5mw7zABYyYtGvfQbJNVM8TXQjED28nTrgO5MlhlFZFS9Y8qf
-         V1z4nqUSJ4v8bWWr2X9mSGFURkhESvUxrPNrAosEdjOYAinH8n1n5x2diYd07O+Ucl6F
-         LQ6CjENMBpHBQA7JMOuUiJ7yJnkicQTxWTDFzEkkYwLIGoGgOTjTTu2ktA9qgb6ucgqN
-         bfqjpo9GnR1gLtojavQxHPUPsVId8hkbPAe/DQ9JdKOgZhm/MCO7ywaMUI8la9DKlUii
-         WuHg==
-X-Received: by 10.182.111.199 with SMTP id ik7mr2218520obb.44.1366194210108;
- Wed, 17 Apr 2013 03:23:30 -0700 (PDT)
-Received: by 10.76.122.163 with HTTP; Wed, 17 Apr 2013 03:22:59 -0700 (PDT)
-In-Reply-To: <1365881007-25731-1-git-send-email-artagnon@gmail.com>
+         :subject:to:content-type;
+        bh=Hh/IhJpLa3L9BKvSXPEWwNjJqfYYkdsVyKK7XTMa0io=;
+        b=JnqdVLeUYbx1i9qt4b6cibBMyB1twE/VrLgg3CWRq+jHNm0To23Zt8NOcYxm684DOs
+         VSLORuaUQEFIx/lwkpvWydZqJLTepXEGGMghsTaEBN+gjcAuyummY+4z9R6c/LkOi6WI
+         qHiOT+pm/9pZAziCH+zFNA0R31cuIMW0hXxr0MOHz1FhOPAWQmQSji/MnP4rm5s/e4pe
+         YRHzq8JlQZ4DA03Dcvkq9SpU9h/pYIL473avzJZmP0kwhUYsB8nwsob9NVO1V1fBbYbV
+         VQA/UgjPFTGz2AU5m3Z+9WMmMU1AvHi3lwQSQy6LYorUqDSgZkHLwKE+M0QnZcy67i8H
+         3t1A==
+X-Received: by 10.52.27.52 with SMTP id q20mr3868140vdg.16.1366194260416; Wed,
+ 17 Apr 2013 03:24:20 -0700 (PDT)
+Received: by 10.58.231.161 with HTTP; Wed, 17 Apr 2013 03:23:40 -0700 (PDT)
+In-Reply-To: <CANKwXW1heci+D5ZO3aF+dMN9davRawuZuKz0bf2n3iRiMjjgHg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221530>
 
-On Sun, Apr 14, 2013 at 5:23 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> This configuration variable comes into effect when 'git clone' is
-> invoked inside an existing git repository's worktree.  When set,
-> instead of cloning the given repository as-is, it relocates the gitdir
-> of the repository to the path specified by this variable.  This
-> setting is especially useful when working with submodules.
+missed a list sorry for dup
 
-What if I clone a repo then realize it was a mistake and remove it?
-With current clone, a "rm -rf" would do. With this, I'll need to
-figure out which subdir in the top .git contains the repo I want to
-remove. I'm not sure how "git submodule" handles this case though
-(i.e. total submodule ignorant speaking..)
---
-Duy
+I ment the same because git changes the version too. Also
+netbeans/eclipse upgrade are not synced, because of different
+products. So the same ment only names, not versions. But in deep
+search another repos I found the broken commits in Eclipse repo dated
+by 13 march 2013. Can them produced because of previous broken
+commits? And probably you can be right about java git wrappers can
+produce this issues, I'll try to make a broken repo from scratch
+later.
+Ivan
+
+2013/4/17 Ivan Lyapunov <dront78@gmail.com>:
+> I ment the same because git changes the version too. Also
+> netbeans/eclipse upgrade are not synced, because of different
+> products. So the same ment only names, not versions. But in deep
+> search another repos I found the broken commits in Eclipse repo dated
+> by 13 march 2013. Can them produced because of previous broken
+> commits? And probably you can be right about java git wrappers can
+> produce this issues, I'll try to make a broken repo from scratch
+> later.
+> Ivan
