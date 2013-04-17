@@ -1,63 +1,87 @@
-From: Alexander Tomlinson <alex@aivor.com>
-Subject: Re: is git-p4 compatible with p4/linux?
-Date: Tue, 16 Apr 2013 23:37:36 -0500
-Message-ID: <278B6790-7EDC-4E7F-A944-B00A6AEE86F2@aivor.com>
-References: <7BF81DF9-941D-400B-8304-6DA5F5C82D4F@aivor.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.3 \(1503\))
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 16/33] t3210: test for spurious error messages for
+ dangling packed refs
+Date: Tue, 16 Apr 2013 21:42:53 -0700
+Message-ID: <7v38upix82.fsf@alter.siamese.dyndns.org>
+References: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
+ <1365944088-10588-17-git-send-email-mhagger@alum.mit.edu>
+ <7vobdfvglf.fsf@alter.siamese.dyndns.org> <516D5CC6.10505@alum.mit.edu>
+ <7vip3mhxhq.fsf@alter.siamese.dyndns.org>
+ <20130416235712.GA20585@sigill.intra.peff.net>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 17 06:37:40 2013
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 17 06:43:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USK7j-0006DW-K6
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 06:37:35 +0200
+	id 1USKD7-00047R-DM
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 06:43:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753621Ab3DQEhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 00:37:31 -0400
-Received: from smtp-out2.electric.net ([72.35.23.38]:56820 "EHLO
-	smtp-out2.electric.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752204Ab3DQEha convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Apr 2013 00:37:30 -0400
-Received: from 1USK7c-0004jn-T7 by cernan.electric.net with emc1-ok (Exim 4.77)
-	(envelope-from <alex@aivor.com>)
-	id 1USK7c-0004kW-Uk
-	for git@vger.kernel.org; Tue, 16 Apr 2013 21:37:28 -0700
-Received: by emcmailer; Tue, 16 Apr 2013 21:37:28 -0700
-Received: from [10.86.10.83] (helo=fuseout2c)
-	by cernan.electric.net with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77)
-	(envelope-from <alex@aivor.com>)
-	id 1USK7c-0004jn-T7
-	for git@vger.kernel.org; Tue, 16 Apr 2013 21:37:28 -0700
-Received: from mailanyone.net
-	by fuseout2c with esmtpsa (TLSv1:AES128-SHA:128)
-	(MailAnyone extSMTP aivort)
-	id 1USK7b-0005UJ-Pt
-	for git@vger.kernel.org; Tue, 16 Apr 2013 21:37:28 -0700
-In-Reply-To: <7BF81DF9-941D-400B-8304-6DA5F5C82D4F@aivor.com>
-X-Mailer: Apple Mail (2.1503)
-X-Outbound-IP: 10.86.10.83
-X-Env-From: alex@aivor.com
-X-PolicySMART: 1102869
-X-Virus-Status: Scanned by VirusSMART (c)
+	id S1754257Ab3DQEm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 00:42:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63191 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752813Ab3DQEm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 00:42:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B2DD1149A;
+	Wed, 17 Apr 2013 04:42:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=L/rrzD8GcygqyVaeCMmcDfJMubM=; b=RLM/eH
+	nHgQIPLxA1MhVxf8aSyqqABZfTlU1iyQw6MLbj5XyDJ/obmUBncAYPxh+8sxuPLc
+	8gPdykRgSG6cIwX/oVyMQMTHvH4JkB0D0hQkTfKscOxFoypCgV9wiWe28bvsGGuT
+	0JyBxW/VssbSL4xje8mc1p6F2H+nNTVY2QU9E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NRVgR1jHbhUVy82YNxPQ3oqBi8XQOU6k
+	zoJDAWhujla1XaD0UxfRW2wuhIX+gBPtQxFsHqvSrALf475HgOH7AGGLRiaZYK/K
+	z5KxYfftnzDnjID2jUATxJ0PLkhtGeI/tfcEAmUNPgWw6/CTcUOmPiYp358x5SFF
+	MgAi/7IIY1k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 711FD11499;
+	Wed, 17 Apr 2013 04:42:55 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E92CA11498; Wed, 17 Apr
+ 2013 04:42:54 +0000 (UTC)
+In-Reply-To: <20130416235712.GA20585@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 16 Apr 2013 19:57:12 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4516503C-A719-11E2-8B6D-CC48E7F0ECB6-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221502>
 
-Sorry about the =3D escapes.  My first attempt to submit bounced b/c it was html and I missed
-cleaning some escapes.  The snippet should be:
+Jeff King <peff@peff.net> writes:
 
-    if type_base == "symlink":
-        git_mode = "120000"
-        # p4 print on a symlink contains "target\n"; remove the newline
-        data = ''.join(contents)
-        contents = [data[:-1]]
+> On Tue, Apr 16, 2013 at 04:22:25PM -0700, Junio C Hamano wrote:
+>
+>> +static void parse_expire_value(const char *value, unsigned long *expire)
+>> +{
+>> +	if (!strcmp(value, "never") || !strcmp(value, "false"))
+>> +		*expire = 0;
+>> +	else if (!strcmp(value, "all") || !strcmp(value, "now"))
+>> +		/*
+>> +		 * We take over "now" here, which usually translates
+>> +		 * to the current timestamp, because the user really
+>> +		 * means everything she has done in the past, and by
+>> +		 * definition reflogs are the record of the past,
+>> +		 * there is nothing from the future to be kept.
+>> +		 */
+>> +		*expire = ULONG_MAX;
+>> +	else
+>> +		*expire = approxidate(value);
+>> +}
+>
+> Do we want to use approxidate_careful here to catch other junk?
 
-
---Alex
+We can catch a misspelt argument or configuration value that way.
+That would be a good idea.
