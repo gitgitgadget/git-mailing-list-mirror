@@ -1,78 +1,64 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate $GITDIR
-Date: Wed, 17 Apr 2013 20:32:25 +0530
-Message-ID: <CALkWK0kchO-cKuh1vd=aziZa5CA8w81aEecUKqhazp_Y7pOrkw@mail.gmail.com>
-References: <1365881007-25731-1-git-send-email-artagnon@gmail.com>
- <CACsJy8D-5x5HXgpr2hHUHee6jcfj3++b961sJB_aKTZC1ZS+tw@mail.gmail.com>
- <CALkWK0kw69rMveDXpGEvV=fGxiQ7JoT_JE9ZU5cor0xD=BUbFQ@mail.gmail.com>
- <CACsJy8C9mrJzmg4FjqBMAZis7WQUpyhNH7TMTLbebWQE124YMg@mail.gmail.com>
- <CALkWK0nLamX1XKcg2t7VWJTPuFhX+ctEGE=4sjSSd7JqMmGzPA@mail.gmail.com> <CACsJy8DxspNbopJbSsvcCZZwMFees1JVV_iV5r7dXRJTngzmFA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Wed, 17 Apr 2013 08:11:21 -0700
+Message-ID: <7vhaj5gpk6.fsf@alter.siamese.dyndns.org>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
+ <20130417084901.GA7632@blizzard>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 17 17:03:15 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Lukas Fleischer <git@cryptocrack.de>
+X-From: git-owner@vger.kernel.org Wed Apr 17 17:11:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USTtD-0008Mg-AF
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 17:03:15 +0200
+	id 1USU1D-0003Zz-My
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 17:11:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966710Ab3DQPDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 11:03:07 -0400
-Received: from mail-ia0-f176.google.com ([209.85.210.176]:55484 "EHLO
-	mail-ia0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966461Ab3DQPDG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Apr 2013 11:03:06 -0400
-Received: by mail-ia0-f176.google.com with SMTP id i9so1506078iad.7
-        for <git@vger.kernel.org>; Wed, 17 Apr 2013 08:03:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=8wE60m4SR42VQydKlIYIX1h/JEc7nliVwTgghkb9n90=;
-        b=ZOZ2eeWIaFGQ83pSlTembw8qrGdQqvQFXL0TD3a9hSkPDepH0wXr+1h+cF/+bpmbLy
-         KuUSv6IX+h/rcgUcjy02HBABojKza0iAhMjumM04O9MWXWMZvEjjcvNMGnercKB6znrW
-         5xF84Z1uLlL9KqlqCZZXhhOz2tRXNAPiMCbPVMa7QXWydexkc2H6S9Brfg25zvBVhjkS
-         WbroVG+VyqKIsF0c7+2uBK4KQpyc24FWny0ktTCVqrwShNRdZsFNXwByB3YqE63Dyryv
-         Lhu83Zrg2+3jpt8vHZMBxCxxaRAkSw6lHGmxJzHMvv4NBdh2MtFTqCnqCvp80lgtd1CE
-         TXSg==
-X-Received: by 10.50.119.102 with SMTP id kt6mr4478711igb.12.1366210985356;
- Wed, 17 Apr 2013 08:03:05 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Wed, 17 Apr 2013 08:02:25 -0700 (PDT)
-In-Reply-To: <CACsJy8DxspNbopJbSsvcCZZwMFees1JVV_iV5r7dXRJTngzmFA@mail.gmail.com>
+	id S966660Ab3DQPL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 11:11:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37005 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966551Ab3DQPLZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 11:11:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 912CA177F6;
+	Wed, 17 Apr 2013 15:11:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cQm8XRlL6IPZRVl3RmoissPV+ig=; b=xbEx9X
+	A2j8m+3GHGezFlB4/XHpWyGAdxC+m+V8Lx9PKqn1Z+Yv5l5oyrb0lMmmSmnIxihp
+	PViLjqoqLc1FgQpP6gcUvhrbcGDE1RZqeYM2OPKZS8r6wTA/0SgUdLZ1BT1Lqckh
+	tVyy+HGJO29lTRDU98skxLqF9+sdiPQfbAUtM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=On6V+2nxfaZn8mLyo9L+b4wViN2H4LdG
+	sKielOm9/EsjyQ5Jqv/6DvmdAcZotOy7giLNrbsCgqN4vFbVjs+YyC3j7laxr6f4
+	QJPUh6l/xDAyuqY6zqqkjy/Jx7g5WHt3JbTSWW0KJi4x48oSYqGwa5FopvSuMczM
+	Jfn6Y+PDEC4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88B57177F5;
+	Wed, 17 Apr 2013 15:11:24 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 138A5177F4; Wed, 17 Apr
+ 2013 15:11:23 +0000 (UTC)
+In-Reply-To: <20130417084901.GA7632@blizzard> (Lukas Fleischer's message of
+ "Wed, 17 Apr 2013 10:49:01 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 117A291C-A771-11E2-AEB5-CC48E7F0ECB6-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221543>
 
-Duy Nguyen wrote:
-> Well, it has "submodule" in the command line. My first reaction would
-> be looking for "git submodule rm" or something.
+Lukas Fleischer <git@cryptocrack.de> writes:
 
-No, 'git submodule rm' cannot remove the corresponding GITDIR.  What
-if there are other branches that refer to the submodule?  What if you
-want to remove it from this branch and add it to another branch?
+> Not sure if you care but the commit messages of these are all wrong now
+> that you squashed your API fix into the first commit. They all refer to
+> read_blob_data_from_index_path()...
 
-> No, the point is people make mistakes. What do we do in that case? Or
-> will you introduce yet another "gc" command for clean up ~/bare?
-
-So, people don't make mistakes when they use 'git submodule add', but
-do make mistakes when using 'git clone'?  How has the problem
-_changed_ with my patch?  It's reasonable to point it out as an
-existing problem, and ask for it to be fixed independent of this
-discussion, but that is not what you are doing.
-
-git cannot read your mind to determine if you made a mistake, if
-that's what you're asking.  No, a gc equivalent won't work either (and
-there's nothing in the current submodule world), because it is
-impossible to determine if a workdir is attached to that GITDIR
-somewhere on your filesystem.
-
-You'll have to do _something_ to say that you don't want that GITDIR
-anymore.  It's reasonable to request tooling to help with this task,
-but your request is entirely different.
+Ouch; thanks for noticing.
