@@ -1,82 +1,99 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Thu, 18 Apr 2013 00:17:21 +0100
-Organization: OPDS
-Message-ID: <BCD944518C304D7D9809346DD899B68F@PhilipOakley>
-References: <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com> <20130407170201.GH2222@serenity.lan> <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com> <20130407175210.GI2222@serenity.lan> <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com> <20130407182112.GJ2222@serenity.lan> <5161BC33.8060707@web.de> <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com> <5161D3C5.9060804@web.de> <CALkWK0k_vmXZr-x8=ZctouWbuVgv-1sptC0WX2aJ+yYD-T8cxA@mail.gmail.com> <20130407212342.GA19857@elie.Belkin> <CACsJy8BoWfng7p=kHbiF9s6XYH1mPMtAGW6BRz54uYM5454O0w@mail.gmail.com> <CALkWK0mcnA8Qss3uxRXhfHst65RLkv43wje9xdFxmFKi7MtZvA@mail.gmail.com> <CACsJy8Bz+yNefiiwEivaaUgRymHTmUUKEFs8_uuonhmRfT3UGg@mail.gmail.com> <CALkWK0m9QmZaSDruY=+2F-Kkw+fd6E1TYC
- TBpVQHRJrzq2VjCQ@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Wed, 17 Apr 2013 16:56:30 -0700
+Message-ID: <7vsj2od841.fsf@alter.siamese.dyndns.org>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2_wiNr4RaBOEnKnZzT4CF0qKK+bp+Lyi=Nfx3Q9ggqOQ@mail.gmail.com>
+	<7vip3npet0.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3NE3yrQoa1nZXAgy3KFXGF56Ki8icJ2z2TDigzax0nWg@mail.gmail.com>
+	<8761zm4wzg.fsf@linux-k42r.v.cablecom.net>
+	<CAMP44s0a2VsPBMd9Vrrhwdw=SPp2HrvDdXZ9Dmzhr9A6T+Sz7w@mail.gmail.com>
+	<CABURp0qGYG4T+t36=Us328YdLzy9KjBOWot2gSOk=FgCRUCLnQ@mail.gmail.com>
+	<CAMP44s3pZt3QVjS7GbXqjMS4ti3p=Vs2DmFXQjsMM3rs9qURmw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Jonathan Nieder" <jrnieder@gmail.com>,
-	"Jens Lehmann" <Jens.Lehmann@web.de>,
-	"John Keeping" <john@keeping.me.uk>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Git List" <git@vger.kernel.org>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>
-To: "Ramkumar Ramachandra" <artagnon@gmail.com>,
-	"Duy Nguyen" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 01:17:33 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Phil Hord <phil.hord@gmail.com>, Thomas Rast <trast@inf.ethz.ch>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 01:56:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USbbW-00033t-2d
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 01:17:30 +0200
+	id 1UScDT-0002oC-DG
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 01:56:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752074Ab3DQXRZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 19:17:25 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:52948 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751453Ab3DQXRY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Apr 2013 19:17:24 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AlgOAPArb1FZ8Yje/2dsb2JhbAAuIoMGg2eFP7daBAEDAYEDF3SCGgUBAQQBCAEBGRUeAQEhBQYCAwUCAQMOBwEEAgUhAgIUAQQIEgYHFwYBEggCAQIDAYdxAwkKqnuIcQ2JXYEjiySBEVhqgjoyYQOOQoZhjVuFHIMMO4E3
-X-IronPort-AV: E=Sophos;i="4.87,496,1363132800"; 
-   d="scan'208";a="426051435"
-Received: from host-89-241-136-222.as13285.net (HELO PhilipOakley) ([89.241.136.222])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 18 Apr 2013 00:17:16 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753668Ab3DQX4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 19:56:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63871 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751585Ab3DQX4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 19:56:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 236021716A;
+	Wed, 17 Apr 2013 23:56:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ylgSs871aliYNEeaOPBCbbbDlwI=; b=FJNrtE
+	J2CKWt8/XW/gTD9srmcslliE8AgLwsiFiLNLsSyIjngxa3k/gnXQUqUt0PEHusmL
+	2Xl2C26CA4sRQ3ZGFE3Xvt1CoBh74WZaynBHr3sRre0Bvf0SseUCy94jbgoHV1WY
+	jhqzPROxRF6whY6z2IuOCGuNqDhj5Nhp/NJ5s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oHudHqyRfyUqOEbi+DTUWBJyTFVf1W/Z
+	AztIqUBGdZzADxn1VdvkfJRTdtANN3Yy7W65JSvw5ClJTI1nLlpdbbO6Y70BG5yt
+	nhItynY4uMb9snWvYZrHDaYIL7kzATtOpfHjOo2leY1nhBKyEIEZ07dDGgAFJdaH
+	o6GQ0vIHZFA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 179A617168;
+	Wed, 17 Apr 2013 23:56:33 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6284C17166;
+	Wed, 17 Apr 2013 23:56:32 +0000 (UTC)
+In-Reply-To: <CAMP44s3pZt3QVjS7GbXqjMS4ti3p=Vs2DmFXQjsMM3rs9qURmw@mail.gmail.com>
+	(Felipe Contreras's message of "Wed, 17 Apr 2013 13:50:50 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6DE7283C-A7BA-11E2-87FD-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221586>
 
-From: "Ramkumar Ramachandra" <artagnon@gmail.com>
-Sent: Wednesday, April 17, 2013 12:56 PM
->
-> We've been over this several times in earlier emails.  [...]
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> Again, I'm not saying that my approach is Correct and Final.  What I'm
-> saying is: "Here's what I've done.  Something interesting is going on.
-> It's probably worth a look?"
->
-[...]
->     The point is to
-> have structured parseable information that the object-parsing code of
-> git code and easily slurp and give to the rest of git-core.
->
-> Please clear your reading backlog to avoid bringing up the same points
-> over and over again.
-> --
+> And how do you know this will be part of the 1%? You don't. How many
+> times have you tracked regressions in transport helper's import/export
+> functionality? How many times in remote-hg? How many times has
+> *anybody* done so?
 
-Ram,
-The email thread is pretty long with a lot of too and fro, that would be 
-difficult to catch up on (too much $dayjob+$family vs $sparetime).
+The last point makes it all the more important to have a good
+history [*1*]. An area that no developer rarely touches with a little
+user base can stay dormant for a long time, and when people do need
+to hunt for an ancient bug or to enhance the existing feature to
+support a new use case without breaking the old use case, the
+original author may not be around, lost interest, or no longer uses
+his own creation.
 
-Would it be possible to summarise the key points and proposals of where 
-the subject is now?
+The code left behind tells us what the author thought was the best
+way to solve his problem, but it does not clearly define what the
+problem he tried to solve was, within what constraint he had to find
+a solution for it, and why he thought that the solution was the best
+(or sometimes "only") one.  Log and in-code comments are to explain
+such things that are beyond how the code works and what it does.
 
-The submodules does need 'fixing', as does agreeing the problem and 
-abuse cases.
 
-Philip 
+[Footnote]
+
+*1* In this message, I am not judging if the depth of your writing
+    for the particular change is deep enough. It depends on how well
+    the reader knows the area, and there is no single right answer
+    to that question.
+    
+    Incidentally that is why we tend to err on the more descriptive
+    side. The next person your commit will help may not know the
+    area as well as you do and has to figure things out on his
+    own. You are helping him by being descriptive.
