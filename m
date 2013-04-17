@@ -1,145 +1,73 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH/RFC] l10n: de.po: translate 39 new messages
-Date: Wed, 17 Apr 2013 07:49:48 +0200
-Message-ID: <CAN0XMOLcNwOUPK2sYvvO_QMaJrMkH949_xZLtdyF+zFx1p4v+Q@mail.gmail.com>
-References: <1366043260-3131-1-git-send-email-ralf.thielow@gmail.com>
-	<87ppxuan7i.fsf@linux-k42r.v.cablecom.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Splitting a commit with rebase -i and keeping a commit message
+Date: Wed, 17 Apr 2013 07:55:41 +0200
+Message-ID: <516E395D.3050307@viscovery.net>
+References: <20130416203825.3701d98b@bigbox.christie.dr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	git <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Apr 17 07:49:55 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Tim Chase <git@tim.thechases.com>
+X-From: git-owner@vger.kernel.org Wed Apr 17 07:55:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USLFj-00045s-6N
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 07:49:55 +0200
+	id 1USLLU-0003Fs-44
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 07:55:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757563Ab3DQFtu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Apr 2013 01:49:50 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:59479 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757179Ab3DQFtt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Apr 2013 01:49:49 -0400
-Received: by mail-wi0-f175.google.com with SMTP id h11so79849wiv.8
-        for <git@vger.kernel.org>; Tue, 16 Apr 2013 22:49:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=jssh1UG4EEUWvstldgQmavQ68SS0qUkPt+pqsDGnI4c=;
-        b=WU2PGSGStjcoCcyxFGB8jodaezUydT1GQvfVJIzCSw4RoxHOdU0eizfKZrw0A1XKZf
-         dcAH+IW3/6xIxDG3xJ+6gR6b1KDutkuVhY8X8jxTl0lc/tKCDEFkKjFNcIq+TbarfRta
-         1dTbdxv0sEpJwIpF/wEIIqU7YghBZhQ60aVsi4E4s8RyEbRxFkq6Sf57jVR5iiJuC8XS
-         9UTGCt0YPaLDBZhjjPGm6VY9KfKvOwMD7jIUz5bZukfnkXlnGZeGWChVFBQLeaXnqLp2
-         4TiSrSxeJy7VCVSI0JhzyI79+SfFpGRGPJkqbGLgIdCkU8d74YRaUFeCiiq9Ypa3t/qv
-         e+jw==
-X-Received: by 10.194.222.100 with SMTP id ql4mr8432567wjc.59.1366177788487;
- Tue, 16 Apr 2013 22:49:48 -0700 (PDT)
-Received: by 10.194.31.137 with HTTP; Tue, 16 Apr 2013 22:49:48 -0700 (PDT)
-In-Reply-To: <87ppxuan7i.fsf@linux-k42r.v.cablecom.net>
+	id S1757778Ab3DQFzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 01:55:48 -0400
+Received: from so.liwest.at ([212.33.55.14]:26860 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754259Ab3DQFzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 01:55:47 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1USLLK-00015d-Mq; Wed, 17 Apr 2013 07:55:42 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 5A7F41660F;
+	Wed, 17 Apr 2013 07:55:42 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <20130416203825.3701d98b@bigbox.christie.dr>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221511>
 
-Hi,
+Am 4/17/2013 3:38, schrieb Tim Chase:
+> I asked this on IRC and played with some of their ideas, but struck
+> out with anything satisfying.  I walked through [1] with the
+> following setup:
+> 
+>   git init foo
+>   cd foo
+>   touch a.txt b.txt
+>   git add a.txt b.txt
+>   git commit -m "Initial checkin"
+>   echo "Modify A" >> a.txt
+>   git commit -am "Modified A"
+>   echo "Modify B" >> b.txt
+>   git commit -am "Modified B"
+>   echo "Modify A2" >> a.txt
+>   echo "Modify B2" >> b.txt
+>   git commit -am "Modified B"
+>   git commit -am "Long-bodied commit comment about b.txt changes"
+>   # whoops, just wanted B
+>   git rebase -i HEAD^^
+>   # change the "Added b.txt..." commit to "edit"
 
-Thanks for review!
+    # and duplicate the instruction line
+    git checkout HEAD^ b.txt # undo b.txt
+    git commit --amend -m "Tweaked a.txt"
+    git rebase --continue
+    # in real world cases, you are likely to see conflicts here
+    # when the commit is applied a second time,
+    # but not in this toy example
+    git rebase --continue
 
-2013/4/16 Thomas Rast <trast@inf.ethz.ch>:
-> Ralf Thielow <ralf.thielow@gmail.com> writes:
->
->>  msgid "You are currently reverting commit %s."
->> -msgstr "Sie sind gerade bei einer bin=C3=A4ren Suche in Zweig '%s'.=
-"
->> +msgstr "Sie kehren gerade Version '%s' um."
->
-> Is revert->umkehren new?  I can see it's in the glossary, but
->
-
-Yes, I've added it recently to the glossary. I've only checked the
-glossary and didn't find it. I didn't check de.po for past usages, thou=
-gh.
-
->   #: sequencer.c:536
->   #, c-format
->   msgid "could not revert %s... %s"
->   msgstr "Konnte %s nicht zur=C3=BCcksetzen... %s"
->
->   #: sequencer.c:1016
->   msgid "Can't revert as initial commit"
->   msgstr "Kann nicht zu initialer Version zur=C3=BCcksetzen."
->
-> which I don't really like either now that you mention it -- I would
-> re-translate it as 'reset'.  But either way they should be consistent=
-=2E
->
-
-I'm not sure I understand. We currently translate "reset" as "neu
-setzen/umsetzen",
-which is fine if it means a branch or HEAD ('git reset'), but for commi=
-ts?
-What about "zur=C3=BCcknehmen"?
-
->>  msgid "Commit %s has an untrusted GPG signature, allegedly by %s."
->> -msgstr ""
->> +msgstr "Version %s hat eine nicht vertrauensw=C3=BCrdige GPG-Signat=
-ur, "
->> +"vermeintlich von %s."
->>
->>  msgid "Commit %s has a bad GPG signature allegedly by %s."
->> -msgstr ""
->> +msgstr "Version %s hat eine ung=C3=BCltige GPG-Signatur, vermeintli=
-ch von %s."
->
-> You could say "angeblich" instead, which is more to the point.
->
-
-Yes. Thanks.
-
->>  #: git-submodule.sh:626
->> -#, fuzzy, sh-format
->> +#, sh-format
->>  msgid "Submodule '$name' ($url) unregistered for path '$sm_path'"
->> -msgstr "Unterprojekt '$name' ($url) ist f=C3=BCr Pfad '$sm_path' re=
-gistriert"
->> +msgstr "Unterprojekt '$name' ($url) ist nicht f=C3=BCr Pfad '$sm_pa=
-th' registriert."
->
-> This is in cmd_deinit(), and the comment for the enclosing block says
->
->   # Remove the whole section so we have a clean state when
->   # the user later decides to init this submodule again
->
-> So it would seem to use "unregister" as a verb, not an adjective, and
-> the correct translation is
->
->   msgstr "Unterprojekt '$name' ($url) f=C3=BCr '$sm_path' deregistrie=
-rt."
->
-> or some such.  "Deregistriert" is not very nice; in the absence of
-> context I would suggest "ausgetragen", but that problably collides wi=
-th
-> our use of "eintragen".  Perhaps you can go the long way for this
-> isolated use and just say "aus der Konfiguration entfernt" (and
-> similarly for 'register').
->
-
-Thanks. I prefer your "aus der Konfiguration entfernt/eingetragen".
-
-> In any case you should also add 'register' and 'unregister' to the
-> glossary once you've settled on something.
->
-
-Yes, I'll do.
-
-> --
-> Thomas Rast
-> trast@{inf,student}.ethz.ch
+-- Hannes
