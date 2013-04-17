@@ -1,64 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
-Date: Wed, 17 Apr 2013 16:10:56 -0400
-Message-ID: <20130417201056.GA2914@sigill.intra.peff.net>
-References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
- <87txn5xzdn.fsf@linux-k42r.v.cablecom.net>
- <7vd2ttgoyr.fsf@alter.siamese.dyndns.org>
- <87wqs1xi9h.fsf@hexa.v.cablecom.net>
- <7vk3o1f5kb.fsf@alter.siamese.dyndns.org>
- <7vwqs1dnxp.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] submodule deinit: clarify work tree removal message
+Date: Wed, 17 Apr 2013 22:30:30 +0200
+Message-ID: <516F0666.5080308@web.de>
+References: <5112C6F6.4030607@web.de> <CABURp0pC2FELxM5aUwxuTqS1roZm+fwkCQA+BoXjrd0+yQMmbg@mail.gmail.com> <7v1ubk8u6o.fsf@alter.siamese.dyndns.org> <51477EFF.2010505@web.de> <7v7gl4mabf.fsf@alter.siamese.dyndns.org> <5159D9A8.30901@web.de> <CABURp0rkeYc7K0COhc1+96Q2Ox2TaNRpMSmQYOiwBpgPJbsafA@mail.gmail.com> <7vppxthh44.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Phil Hord <phil.hord@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	"W. Trevor King" <wking@tremily.us>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 17 22:11:06 2013
+X-From: git-owner@vger.kernel.org Wed Apr 17 22:31:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USYh5-0006NA-KE
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 22:11:03 +0200
+	id 1USZ0U-0002NH-NK
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 22:31:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965509Ab3DQULA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 16:11:00 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:50245 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965338Ab3DQUK6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Apr 2013 16:10:58 -0400
-Received: (qmail 3995 invoked by uid 107); 17 Apr 2013 20:12:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 17 Apr 2013 16:12:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Apr 2013 16:10:56 -0400
-Content-Disposition: inline
-In-Reply-To: <7vwqs1dnxp.fsf@alter.siamese.dyndns.org>
+	id S936442Ab3DQUa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 16:30:56 -0400
+Received: from mout.web.de ([212.227.17.12]:61043 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S936438Ab3DQUay (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 16:30:54 -0400
+Received: from [192.168.178.41] ([91.3.145.117]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0MEEa4-1UM1YE2GGe-00G3HY; Wed, 17 Apr 2013 22:30:31
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <7vppxthh44.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:Ml0tqTwSLbMEpXValOdSLshOSx+3Fr8tz7+zGRkq69V
+ QJT7ZkQ/e8vksjFnB1bl+YcoE+h0aurnuAZ7LyY+bOfa8gkxXQ
+ +cFoHXezyXUG2I1ZOzwqpjuzBGFlw8jimnfVTd9xGUsyuckmkx
+ McEEwunhq3UpU9Ge5RHF5VsUcc9VnvN1p6iJ3np/y66qPkYn9o
+ VrmzvuS+ZVaxeux1rCzbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221570>
 
-On Wed, Apr 17, 2013 at 11:14:42AM -0700, Junio C Hamano wrote:
-
-> > I think it is just the warning code avoiding extra complexity and
-> > overhead, if you are talking about not getting warning in the
-> > pre-2.0 step that is in 'next'.  Patches are very much welcomed,
-> > especially the ones that come before I get around to it ;-)
+Am 17.04.2013 07:16, schrieb Junio C Hamano:
+> Phil Hord <phil.hord@gmail.com> writes:
 > 
-> I took a brief look at the code, and as you said "add" needs to know
-> about submodules, and the best fix looks to me to take the same
-> approach Jonathan came up with to de-noise the "add -u/-A" topic.
+>> On Mon, Apr 1, 2013 at 3:02 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>>> Okay, so here is the patch for that. If someone could point out
+>>> a portable and efficient way to check if a directory is already
+>>> empty I would be happy to use that to silence the "Cleaned
+>>> directory" message currently printed also when deinit is run on
+>>> an already empty directory.
+>>
+>>    isemptydir() {
+>>         test -d "$(find $1 -maxdepth 0 -empty)"
+>>    }
 > 
-> That is, to scan the working tree to actually see if we would record
-> removals to the index in 2.0, but not remove them in this current
-> version, and give the warning when the differences in the behaviours
-> matter.
+> Hrm, -maxdepth and -empty are not even in POSIX.  Folks on GNU
+> platforms and BSDs (I checked NetBSD 6 and OpenBSD 5.2) should be
+> fine, but it makes other platforms unhappy.
 
-Yeah, I had the same thought, as this warning has been bugging me for
-the last day or two. The worst part about it is that I finally trained
-myself to type "git add ." to silence the _other_ warning, and now it
-triggers this one. :)
+Ok, that is not acceptable.
 
--Peff
+> What is this check used for?  To avoid running "rmdir" on non-empty
+> ones?  Saying "cleaning foo/" (or "cleaned foo/") when foo/ is
+> already empty is not a crime; not omitting an empty one may actually
+> be a better behaviour from the point of view of repeatability and
+> uniformity.
+
+It's no big issue, but 'init' issues the "Submodule ... registered
+for path ..." message only once and is quiet on subsequent calls,
+'deinit' does the same with "Submodule ... unregistered for path
+...", only the "Cleared directory ..." message appears each time
+'deinit' is called, which makes it stand out. I do not believe
+this little inconsistency is important enough to write a helper in
+C (to have a portable way to see if the directory has already been
+cleared), but this simple additional "if" looked easy enough. That
+should have made me suspicious ;-)
