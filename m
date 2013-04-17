@@ -1,73 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/14] Improve git-status --ignored
-Date: Wed, 17 Apr 2013 15:03:55 -0700
-Message-ID: <7vobdcerw4.fsf@alter.siamese.dyndns.org>
-References: <514778E4.1040607@gmail.com> <516C4F27.30203@gmail.com>
-	<7v1uabsin7.fsf@alter.siamese.dyndns.org>
-	<7vwqs3r3m4.fsf@alter.siamese.dyndns.org> <516C5DBF.1010102@gmail.com>
-	<7vli8jr17i.fsf@alter.siamese.dyndns.org> <516EFCEC.1090803@gmail.com>
+Subject: Re: git rev-list --pretty=format:"" issue
+Date: Wed, 17 Apr 2013 15:11:21 -0700
+Message-ID: <7vk3o0erjq.fsf@alter.siamese.dyndns.org>
+References: <CAH2yXXYggB=Wv-w4B9qU=ZxAuqjPVa5WRNZRnMRrWShkTp0UFg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Robert Zeh <robert.allan.zeh@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Adam Spiers <git@adamspiers.org>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 00:04:04 2013
+Cc: git@vger.kernel.org
+To: Forrest Galloway <f.galloway@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 00:11:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USaSR-0000LD-KB
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 00:04:03 +0200
+	id 1USaZe-0002GX-R1
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 00:11:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966365Ab3DQWD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 18:03:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42726 "EHLO
+	id S966867Ab3DQWL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 18:11:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52525 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965558Ab3DQWD5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Apr 2013 18:03:57 -0400
+	id S966831Ab3DQWLZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 18:11:25 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EFDC1784E;
-	Wed, 17 Apr 2013 22:03:57 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C28B17D46;
+	Wed, 17 Apr 2013 22:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CMXJ3yyp5VNHcOWr0IAobgyMPyA=; b=gAWJ28
-	WtTxm8DD6WHZjDCb0xDNnvoxmDnwTLTNyyUcVYjo5HwgFFN1JLuJ2wjjbvRkJkxV
-	asQ4XvZW3rncfaMeqeE646Tg85fZufiATSoY5u0UwynvpZHAsiLzj4RXF1OfPCcM
-	C68LdroQr9Sr2MtybnH/hMSJet4KQrihTIcLY=
+	:content-type; s=sasl; bh=2Ge2AX2JYUJhL/pZCRn7cS1Bg/s=; b=Dp+Let
+	Tb9hxQQNk1TknZX/OYSDkntpRmj+fjnoyh7hX2nlogSmdy+VPFIqx+haT4p1gCKz
+	smsYS06l99D8txVe7SNxqojF+SUYH1Ra7+64pnGe+vkuMDcq1SHNRp8nNn3hlxKX
+	nUshgUMd34h3qNR5fr9g1J20BA43avsBeFQoM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uAYg/pIE6ftktsugHLcoo7u9P15VOB0Q
-	cqzk4kjacBWRVxqgCWBs10gRhTxihnCGUmPF0glvGVy5cslZj1u8fEWwiP4GqeFC
-	puRCBqkdPWNX0XJ/TvVB8cO3wiF2/z8VmTGjfQNkvirer2NNDWrebU/WH+MH7U7P
-	K8RWycXTrso=
+	:content-type; q=dns; s=sasl; b=qYcmUZw9aNjqW5M9QMsbQHou/5agXd0i
+	3OfCkaBpizq2SJYbdxGgW/SbJzs1aDX4c3GaobeDNljmw6HPaeaiVoDAsHepcn3U
+	WYxiRA3f+4jZ91qlzs2+w4orkzWwQIF2tua3LeDcW5KmJ+bD0FPnaEgbvoH9mjc9
+	YGXyuY9WbLI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45E3F1784D;
-	Wed, 17 Apr 2013 22:03:57 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1118B17D45;
+	Wed, 17 Apr 2013 22:11:24 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA5F61784C;
-	Wed, 17 Apr 2013 22:03:56 +0000 (UTC)
-In-Reply-To: <516EFCEC.1090803@gmail.com> (Karsten Blees's message of "Wed, 17
-	Apr 2013 21:50:04 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5E54917D43;
+	Wed, 17 Apr 2013 22:11:23 +0000 (UTC)
+In-Reply-To: <CAH2yXXYggB=Wv-w4B9qU=ZxAuqjPVa5WRNZRnMRrWShkTp0UFg@mail.gmail.com>
+	(Forrest Galloway's message of "Wed, 17 Apr 2013 16:11:18 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B33BAFEE-A7AA-11E2-8970-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: BD6F1996-A7AB-11E2-BB78-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221579>
 
-Karsten Blees <karsten.blees@gmail.com> writes:
+Forrest Galloway <f.galloway@gmail.com> writes:
 
-> I'll send fixups for #11 and #14, or you can pick the entire series rebased to pu from:
-> https://github.com/kblees/git/tree/kb/improve-git-status-ignored-v2-pu
-> git pull git://github.com/kblees/git.git kb/improve-git-status-ignored-v2-pu
+> git 1.8.2.1 on OSX(Mountain Lion) installed with Homebrew
+>
+> I am seeing an issue when trying to format the output from rev-list command.
+> git log --pretty=format:"%H - %an, %ar : %s" When I attempt the above
+> string, instead of printing to the shell, LESS is opened and the
+> output is displayed there.
+>
+>
+> Got the command from here:
+> http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History
+>
+> git log --pretty=format:"%h - %an, %ar : %s" The string above works
+> fine when I change the %h to %H the issue shoes up.
 
-Will take a look; very much appreciated.
+Actually, less is running in both cases.
+
+We give --quit-if-one-screen (-F) and --chop-long-lines (-S) by
+default when we run "less", unless you have your own LESS
+environment variable to override our choice, if your history is
+shorter than one screenful *and* if your output lines are narrower
+than your terminal, it exits after showing the output.
+
+By passing %H instead of %h, you make the output wider, and when
+viewing output with --chop-long-lines, less refuses to implicitly
+exit with --quit-if-one-screen, because you may want to look at the
+RHS end of the output with right/left arrow keys, and it cannot do
+so if it exits after showing the last line.
+
+If you do not want pager, run it with no-pager, like this:
+
+	git --no-pager log ...your other parameters...
