@@ -1,71 +1,78 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH] clone: introduce clone.submoduleGitDir to relocate $GITDIR
-Date: Wed, 17 Apr 2013 20:59:05 +1000
-Message-ID: <CACsJy8C9mrJzmg4FjqBMAZis7WQUpyhNH7TMTLbebWQE124YMg@mail.gmail.com>
-References: <1365881007-25731-1-git-send-email-artagnon@gmail.com>
- <CACsJy8D-5x5HXgpr2hHUHee6jcfj3++b961sJB_aKTZC1ZS+tw@mail.gmail.com> <CALkWK0kw69rMveDXpGEvV=fGxiQ7JoT_JE9ZU5cor0xD=BUbFQ@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Wed, 17 Apr 2013 16:36:39 +0530
+Message-ID: <CALkWK0mcnA8Qss3uxRXhfHst65RLkv43wje9xdFxmFKi7MtZvA@mail.gmail.com>
+References: <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com>
+ <20130407170201.GH2222@serenity.lan> <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com>
+ <20130407175210.GI2222@serenity.lan> <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com>
+ <20130407182112.GJ2222@serenity.lan> <5161BC33.8060707@web.de>
+ <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com>
+ <5161D3C5.9060804@web.de> <CALkWK0k_vmXZr-x8=ZctouWbuVgv-1sptC0WX2aJ+yYD-T8cxA@mail.gmail.com>
+ <20130407212342.GA19857@elie.Belkin> <CACsJy8BoWfng7p=kHbiF9s6XYH1mPMtAGW6BRz54uYM5454O0w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 17 12:59:41 2013
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 17 13:07:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USQ5V-0004ku-4C
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 12:59:41 +0200
+	id 1USQD1-0007CE-8S
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Apr 2013 13:07:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965627Ab3DQK7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 06:59:36 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:38309 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936303Ab3DQK7g (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Apr 2013 06:59:36 -0400
-Received: by mail-ob0-f176.google.com with SMTP id wd20so1299387obb.35
-        for <git@vger.kernel.org>; Wed, 17 Apr 2013 03:59:35 -0700 (PDT)
+	id S965106Ab3DQLHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 07:07:21 -0400
+Received: from mail-ia0-f172.google.com ([209.85.210.172]:40680 "EHLO
+	mail-ia0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934715Ab3DQLHU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 07:07:20 -0400
+Received: by mail-ia0-f172.google.com with SMTP id k38so1317182iah.31
+        for <git@vger.kernel.org>; Wed, 17 Apr 2013 04:07:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=NT21jy8EJNpSsfgJ/d6iMkFJgAIqCSA61/8hZWWW1xk=;
-        b=nBLtqNvOYl0Bzc0jYEM/jiZAlPSr118FLU2YhX0uenovV4//++kIE5ne63rPVKbVxF
-         cDN8ud6X1LW9rO54rYNJgV5Y50UB5xtChmnVnpuDWmtIk9al7ut8K/9uvy0yIlqMw0m/
-         OXYFoXWRJgZvqP+Bdz6Fb6YzddSVwYd0C4nxf5ZUGJD5lMWU/mqwvuiWeLyCIrrv/Y9o
-         jWwGtCnpB2z1VjZi+K7BOzpxn49SNgdaRGdY2f+nPpzq1mS3aiJ/UsyrBnOFGNOhhnr2
-         N9t7SMWODfpI8/9AebrICcGhkcVgZVZDWzMGgqYqbpb/LdaGqlfvzH0oJr+V8lUFc2gz
-         9vqg==
-X-Received: by 10.182.19.135 with SMTP id f7mr2204199obe.95.1366196375693;
- Wed, 17 Apr 2013 03:59:35 -0700 (PDT)
-Received: by 10.76.122.163 with HTTP; Wed, 17 Apr 2013 03:59:05 -0700 (PDT)
-In-Reply-To: <CALkWK0kw69rMveDXpGEvV=fGxiQ7JoT_JE9ZU5cor0xD=BUbFQ@mail.gmail.com>
+        bh=X6zteUdkFNd3wk2UZCuvE31m+v/noMWhvFOXMajkk14=;
+        b=xgcJAw0utaOI1gszh6qFuuDX4u71P+a/VPEJI0y5VDow9yxeIMbHm+wCgp3Jo3BfLu
+         sYRbQpUUd7ORFE6M71c4M3BzTHPXVSS6LPXL+Oe30w7erqATgwXBV1e7RaCYLcLsUXBi
+         RHl3U7y/Zf/i98a/4/va41V4lqOhY7aOgYjw7qZExlamYNqmtTXPvmU84WRn5Oky9Fk1
+         FRLE0cK3vdr05h7V0jB+evhWyaGvBm5E6aRfZQQhQMfgpwGxqFtGwaYNdpySmUc4T1L3
+         jNLzPzYUJJ3/+6zq+sXvRAizD+rmsScCGUVZvEFuVnxD7IalRgPcyZERjehBDxkABJST
+         aUoQ==
+X-Received: by 10.50.50.71 with SMTP id a7mr10210975igo.14.1366196839509; Wed,
+ 17 Apr 2013 04:07:19 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Wed, 17 Apr 2013 04:06:39 -0700 (PDT)
+In-Reply-To: <CACsJy8BoWfng7p=kHbiF9s6XYH1mPMtAGW6BRz54uYM5454O0w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221534>
 
-On Wed, Apr 17, 2013 at 8:53 PM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Duy Nguyen wrote:
->> What if I clone a repo then realize it was a mistake and remove it?
->> With current clone, a "rm -rf" would do. With this, I'll need to
->> figure out which subdir in the top .git contains the repo I want to
->> remove. I'm not sure how "git submodule" handles this case though
->> (i.e. total submodule ignorant speaking..)
->
-> Currently, submodules relocate the GITDIR of submodules to
-> .git/modules.  So, my proposed patch doesn't make the situation any
-> worse.  In fact, it improves the situation because you're guaranteed
-> that all your GITDIRs will be in ~/bare (or whatever your
-> core.submoduleGitDir is), as opposed to a complex path in .git/modules
-> of your containing superproject.
+Duy Nguyen wrote:
+> Somewhat related to the topic. Why can't .gitattributes be used for
+> storing what's currently in .gitmodules?
 
-No, submodule code does not change "git clone". If I'm not mistaken,
-submodule will not kick in until you type "git submodule something".
-If I turn clone.submoduleGitDir on, how can I undo my mistake in a
-user friendly way?
---
-Duy
+It can.  It's just a small syntax change from "key = value" attributes
+inside a toplevel [submodule <name>] section separated by newlines, to
+a path marked with multiple "key=value" attributes separated by
+whitespace.  However, we don't want to make this change because these
+submodule attributes are somewhat "different" from .gitattributes
+attributes.
+
+Roughly speaking, the current .gitmodules design treats submodule
+directories as "directories with special attributes", with two
+differences: these directories have a special mode in the index, and a
+commit object is created in the database to represent the "partial
+state" of this submodule.  If you think about it, the information
+stored in the commit object is no less/ no more important than the
+path-attribute mapping in .gitmodules.  I was arguing for using a
+special OBJ_LINK to represent the full state of the submodule, and
+doing away with the attributes altogether, but not everyone agrees.
