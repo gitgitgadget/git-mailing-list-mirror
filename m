@@ -1,107 +1,82 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/6] transport-helper: clarify *:* refspec
-Date: Thu, 18 Apr 2013 08:06:00 -0500
-Message-ID: <CAMP44s2p1udJ=YuXBoYJ42iMiB68nU8t_GBGMdsMjTOEsjrZuQ@mail.gmail.com>
-References: <1366243524-18202-1-git-send-email-felipe.contreras@gmail.com>
-	<1366243524-18202-2-git-send-email-felipe.contreras@gmail.com>
-	<87li8gxpq2.fsf@linux-k42r.v.cablecom.net>
-	<CAMP44s0c-c3pPW8t9p9qabjv46gSeE6y4p6STPeV+kqB77xOJA@mail.gmail.com>
-	<87ppxsvwq7.fsf@linux-k42r.v.cablecom.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: Bug with rev-list --reverse?
+Date: Thu, 18 Apr 2013 16:25:56 +0200
+Message-ID: <87k3nzx6dn.fsf@linux-k42r.v.cablecom.net>
+References: <CAMP44s25mUA1M+K+YKaC=bz3Dr7kSDyXK5g2ot8i+1EPy8zRhA@mail.gmail.com>
+	<alpine.DEB.2.00.1304181146090.30868@ds9.cixit.se>
+	<CAMP44s014Yv9+N7=0CYiYYybJCZJ7r-vQp_zcfg6Xo=3f21RWA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Max Horn <max@quendi.de>, Jonathan Nieder <jrnieder@gmail.com>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Apr 18 15:06:09 2013
+Content-Type: text/plain
+Cc: Peter Krefting <peter@softwolves.pp.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 16:26:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USoXQ-0003ty-HJ
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 15:06:08 +0200
+	id 1USpmp-0007Gl-Dk
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 16:26:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934125Ab3DRNGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 09:06:03 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:65056 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753438Ab3DRNGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 09:06:01 -0400
-Received: by mail-la0-f48.google.com with SMTP id fq13so1429615lab.35
-        for <git@vger.kernel.org>; Thu, 18 Apr 2013 06:06:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=z4Wu0iWiilRsXVPwWjp8Az91vf8LxByBRYt2Fgfu48k=;
-        b=JRXH6FDwdg2wZRAKMHKuQPs7QpitrpdxlXtMFRMAWpGQwaIJeFbys0HPyYDpGtt10B
-         DBlc96OMYwyl3HV3zQm+8PAWoReN6LIOi0G42jqAXG4Ih4HG0bCfI+M/YYLkd7JnQfF2
-         3C2m4i0Et98ANIuIU/NJd1cfIp7zFr1Nx/pJaaJymgfGPXHlY3wtpHrArYjrlNKleS7v
-         w2lTIDwOlPA+8MKza21x+20WHUwonscVBe0jqRDH7MVvLLTdei2iYkgWeVKSgBWmRTfX
-         Fz6M8ikB2TYKcVmRtug+Gy9dNxJNzOrfd3J/8Ff8xAQaac9bJo6+CP0eRJYga2bF1EzO
-         +EAw==
-X-Received: by 10.112.154.98 with SMTP id vn2mr4423935lbb.8.1366290360364;
- Thu, 18 Apr 2013 06:06:00 -0700 (PDT)
-Received: by 10.114.59.210 with HTTP; Thu, 18 Apr 2013 06:06:00 -0700 (PDT)
-In-Reply-To: <87ppxsvwq7.fsf@linux-k42r.v.cablecom.net>
+	id S965968Ab3DRO0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 10:26:01 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:11452 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964989Ab3DRO0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 10:26:00 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 18 Apr
+ 2013 16:25:48 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 18 Apr 2013 16:25:56 +0200
+In-Reply-To: <CAMP44s014Yv9+N7=0CYiYYybJCZJ7r-vQp_zcfg6Xo=3f21RWA@mail.gmail.com>
+	(Felipe Contreras's message of "Thu, 18 Apr 2013 06:18:42 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221658>
 
-On Thu, Apr 18, 2013 at 7:39 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> On Thu, Apr 18, 2013 at 5:47 AM, Peter Krefting <peter@softwolves.pp.se> wrote:
 >
->> On Thu, Apr 18, 2013 at 2:28 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>> % git log --oneline -1 v1.8.1.5^..v1.8.1.6
+>>> % git log --oneline --reverse -1 v1.8.1.5^..v1.8.1.6
 >>>
->>>> The *:* refspec doesn't work, and never has, clarify the code and
->>>> documentation to reflect that. This in effect reverts commit 9e7673e
->>>> (gitremote-helpers(1): clarify refspec behaviour).
->>> [...]
->>>> -test_expect_success 'pulling with straight refspec' '
->>>> -     (cd local2 &&
->>>> -     GIT_REMOTE_TESTGIT_REFSPEC="*:*" git pull) &&
->>>> -     compare_refs local2 HEAD server HEAD
->>>> -'
->>>> -
->>>> -test_expect_failure 'pushing with straight refspec' '
->>>> -     test_when_finished "(cd local2 && git reset --hard origin)" &&
->>>> -     (cd local2 &&
->>>> -     echo content >>file &&
->>>> -     git commit -a -m eleven &&
->>>> -     GIT_REMOTE_TESTGIT_REFSPEC="*:*" git push) &&
->>>> -     compare_refs local2 HEAD server HEAD
->>>> -'
->>>
->>> So what's wrong with the tests?  Do they fail to test what they claim
->>> (how?), test something that wasn't reasonable to begin with, or
->>> something entirely different?
+>>> I expect to get a different output, and not both showing v1.8.1.6.
+>>> Wouldn't you agree?
 >>
->> Look at the code comment, and look at the now updated documentation
->> that assumes that *:* was reasonable. Given the available information,
->> it would be reasonable to assume that *:* did work, but it didn't
->> work, and it's not really possible to fix it, even if we wanted to, it
->> would be a hack. It's better to accept that fact and stop worrying too
->> much about what would be the best way to do the wrong thing.
+>>
+>>  Quoting the manual page:
+>>
+>>  Commit Limiting
+>>    Besides specifying a range of commits that should be listed using the
+>> special notations explained in the description, additional commit limiting
+>> may be applied. Note that they are applied before commit ordering and
+>> formatting options, such as --reverse.
+>>
+>> Given that, I would expect the output to be the same.
 >
-> Ok, you say that the *failing* test set an expectation that is
-> unrealistic, so let's drop it.
+> If expectations were based on documentation, all one has to do is
+> document bugs, and there would be no bugs anymore :)
 >
-> But then what about the successful test?  Does it actually work (and by
-> removing the test, you are saying that we don't care if we subsequently
-> break that (mis)feature)?  Or did it test the wrong thing?
+> Code can be changed to fit more appropriately user expectations (which
+> are independent of documentation), and the documentation updated
+> accordingly.
 
-Yeah, it works, in the sense that peeing in a bottle is a solution; it
-might work, but it's not recommendable. So, if suddenly working,
-frankly I don't care. I added those tests, and I don't think they are
-needed. In a not too distant future it should not be permitted to
-"work"; we don't want developers to shoot themselves in the foot, and
-heir users too.
+It's been this way forever, and applies to rev-list where we can't just
+break how options work (for fear of breaking scripts).
+
+You could come up with a patch series that first starts emitting
+warnings whenever the user asks for behavior that will change, and later
+flips the default and removes the warning (the latter would be merged
+for 2.0 or so).
 
 -- 
-Felipe Contreras
+Thomas Rast
+trast@{inf,student}.ethz.ch
