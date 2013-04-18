@@ -1,78 +1,88 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 2/2] api-parse-options.txt: document "no-" for non-boolean options
-Date: Thu, 18 Apr 2013 09:46:35 +0200
-Message-ID: <1366271195-4276-3-git-send-email-mhagger@alum.mit.edu>
-References: <7vbo9ceqb3.fsf@alter.siamese.dyndns.org>
- <1366271195-4276-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 09:54:20 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/6] transport-helper: clarify *:* refspec
+Date: Thu, 18 Apr 2013 03:18:43 -0500
+Message-ID: <CAMP44s0c-c3pPW8t9p9qabjv46gSeE6y4p6STPeV+kqB77xOJA@mail.gmail.com>
+References: <1366243524-18202-1-git-send-email-felipe.contreras@gmail.com>
+	<1366243524-18202-2-git-send-email-felipe.contreras@gmail.com>
+	<87li8gxpq2.fsf@linux-k42r.v.cablecom.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Max Horn <max@quendi.de>, Jonathan Nieder <jrnieder@gmail.com>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Apr 18 10:18:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USjff-0001r5-UB
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 09:54:20 +0200
+	id 1USk3U-0004nj-Ia
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 10:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754892Ab3DRHyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 03:54:15 -0400
-Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:50388 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754051Ab3DRHyP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Apr 2013 03:54:15 -0400
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Apr 2013 03:54:14 EDT
-X-AuditID: 1207440d-b7fd06d000000905-e0-516fa50024c3
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 5D.60.02309.005AF615; Thu, 18 Apr 2013 03:47:13 -0400 (EDT)
-Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3I7kuVA006934
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 18 Apr 2013 03:47:11 -0400
-X-Mailer: git-send-email 1.8.2.1
-In-Reply-To: <1366271195-4276-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixO6iqMu4ND/Q4PMhJouuK91MFg29V5gt
-	Vj6+y2xxe8V8ZosfLT3MDqwef99/YPJof/+O2eNZ7x5Gj4uXlD0+b5ILYI3itklKLCkLzkzP
-	07dL4M54uWMdY8Fj9ooJS66zNjAeZOti5OSQEDCR2LBmLyuELSZx4d56oDgXh5DAZUaJtl+9
-	LCAJIYEzTBLvdoSD2GwCuhKLepqZQGwRATWJiW2HWEAamAX6GCX6180DSwgLBEnMu/wezGYR
-	UJU4cH4XM4jNK+AssefgFXaIbQoSx7dvYwSxOQVcJB4fvs4KsSxf4tupk2wTGHkXMDKsYpRL
-	zCnN1c1NzMwpTk3WLU5OzMtLLdI10svNLNFLTSndxAgJKt4djP/XyRxiFOBgVOLh7VyRFyjE
-	mlhWXJl7iFGSg0lJlNdySX6gEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHeR7JAOd6UxMqq1KJ8
-	mJQ0B4uSOK/aEnU/IYH0xJLU7NTUgtQimKwMB4eSBG8wyFDBotT01Iq0zJwShDQTByeI4ALZ
-	wAO0wR+kkLe4IDG3ODMdougUo6KUOG8KSEIAJJFRmgc3ABb/rxjFgf4R5o0FqeIBpg647ldA
-	g5mABh9YlQ0yuCQRISXVwOizXzn8xFwDmdVPp5zeOffrwcDmlXwfHKu0PZOMk+r3azhe/W6+
-	JsHt9syHM098vXBMfn5Vwxvb5qwEu+Pdk+SW2ofNeRtnXuikIv1ahttkX3pQ8lauJzIpQhnc
-	z5dvM1jJ4ie3mPfipy31b0/6S/vFbZhTZbrl4IcVs1dY7ctdeXXLTN9J4oJKLMUZ 
+	id S1755628Ab3DRISu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 04:18:50 -0400
+Received: from mail-la0-f44.google.com ([209.85.215.44]:45113 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755599Ab3DRISp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 04:18:45 -0400
+Received: by mail-la0-f44.google.com with SMTP id fr10so2295598lab.3
+        for <git@vger.kernel.org>; Thu, 18 Apr 2013 01:18:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=NowpPB94xjOnj+0Ok5x6uABrzfFdJ/teqbxto8xT5Cw=;
+        b=u23BmUCHgYEpTArGOteflE+P3zXNT1FEXv+BvxIE3vlPJG1sVjMb0sB1IQ7In3fJrX
+         Fatx8InEGZbuqxnDIgfJXy47j6zUWIFUYecEG3+29KvPJL/3jABMIhVnhIqwmh4DvXv0
+         BdebJWntWSdpSGNuLPVcW6IvPm55Qtjo8WW8xUibGnMcpgt2FsgAYLMbNX86GkUOuwHW
+         qEEMkZ/RplKpl/i4dTBGwzqlzVOJSEVWONPKe7abttcJ67NVW6vZ6rmVgJMzYuEgKeGp
+         O6INx7SorepcMZlnEIjewPID3h5xFiOYE/Lb+Xq9FT5EELEGA+jXFOSi+OWryzTVlXBq
+         E5tQ==
+X-Received: by 10.152.120.6 with SMTP id ky6mr5266518lab.19.1366273123810;
+ Thu, 18 Apr 2013 01:18:43 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Thu, 18 Apr 2013 01:18:43 -0700 (PDT)
+In-Reply-To: <87li8gxpq2.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221624>
 
-Document that the "no-" prefix can also be used for non-boolean
-options.
+On Thu, Apr 18, 2013 at 2:28 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> The *:* refspec doesn't work, and never has, clarify the code and
+>> documentation to reflect that. This in effect reverts commit 9e7673e
+>> (gitremote-helpers(1): clarify refspec behaviour).
+> [...]
+>> -test_expect_success 'pulling with straight refspec' '
+>> -     (cd local2 &&
+>> -     GIT_REMOTE_TESTGIT_REFSPEC="*:*" git pull) &&
+>> -     compare_refs local2 HEAD server HEAD
+>> -'
+>> -
+>> -test_expect_failure 'pushing with straight refspec' '
+>> -     test_when_finished "(cd local2 && git reset --hard origin)" &&
+>> -     (cd local2 &&
+>> -     echo content >>file &&
+>> -     git commit -a -m eleven &&
+>> -     GIT_REMOTE_TESTGIT_REFSPEC="*:*" git push) &&
+>> -     compare_refs local2 HEAD server HEAD
+>> -'
+>
+> So what's wrong with the tests?  Do they fail to test what they claim
+> (how?), test something that wasn't reasonable to begin with, or
+> something entirely different?
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- Documentation/technical/api-parse-options.txt | 2 ++
- 1 file changed, 2 insertions(+)
+Look at the code comment, and look at the now updated documentation
+that assumes that *:* was reasonable. Given the available information,
+it would be reasonable to assume that *:* did work, but it didn't
+work, and it's not really possible to fix it, even if we wanted to, it
+would be a hack. It's better to accept that fact and stop worrying too
+much about what would be the best way to do the wrong thing.
 
-diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
-index 32ddc1c..2ff368e 100644
---- a/Documentation/technical/api-parse-options.txt
-+++ b/Documentation/technical/api-parse-options.txt
-@@ -41,6 +41,8 @@ The parse-options API allows:
- * Boolean long options can be 'negated' (or 'unset') by prepending
-   `no-`, e.g. `--no-abbrev` instead of `--abbrev`. Conversely,
-   options that begin with `no-` can be 'negated' by removing it.
-+  Other long options can be unset (e.g., set string to NULL, set
-+  integer to 0) by prepending `no-`.
- 
- * Options and non-option arguments can clearly be separated using the `--`
-   option, e.g. `-a -b --option -- --this-is-a-file` indicates that
 -- 
-1.8.2.1
+Felipe Contreras
