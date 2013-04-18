@@ -1,67 +1,82 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] remote-hg: fix commit messages
-Date: Thu, 18 Apr 2013 01:15:15 -0500
-Message-ID: <CAMP44s1MRYnJ8cQGk03Y8qg-7yMZcC=umetv=RaEDE+i=g0ZEA@mail.gmail.com>
-References: <1366265191-20815-1-git-send-email-felipe.contreras@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: put THEIR commits AFTER my commits with a single rebase command
+Date: Thu, 18 Apr 2013 08:31:05 +0200
+Message-ID: <516F9329.4060405@viscovery.net>
+References: <1928280357.20130418091807@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Simon Ruderich <simon@ruderich.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 18 08:15:37 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ilya Basin <basinilya@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 08:31:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USi88-0002Vg-My
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 08:15:37 +0200
+	id 1USiNH-0003lS-0x
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 08:31:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755240Ab3DRGPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 02:15:18 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:43758 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754413Ab3DRGPQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 02:15:16 -0400
-Received: by mail-lb0-f175.google.com with SMTP id o10so2312191lbi.6
-        for <git@vger.kernel.org>; Wed, 17 Apr 2013 23:15:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=6o1vKWa7avCI96Tg8Vki6gEkSx1odzenskKEa3or7l0=;
-        b=vwhzNRvenytXkdr6fBYd8LnkA0nWjOSoa3CZaqYxnSavPiE1gm1C3Ag/jvr7SGkLeE
-         mmVVoVxBPTPF4dmOl2I4GcuMfrxpEGF+qVs6tOyGLOXr/5KRwJu079U9Nv7XHx+3nThD
-         qyUTEffWvRNkyTmGSyoC2eEA6HeYCkr43GvPK3tCJxRtH3eDp+X/MKLD3lpBXyCU7Jf6
-         HUXAzt0vr4ppbVAb2uBeAAE2PsQFyrlGDgsvGjY4a/Enqw89IU4KTtn+v3wFWLYGjN17
-         qjZijmvJCP63K43ig7dC9J8hQhpMdBC2BzujXDvoe2vOgap1PDBRXZpOFLTSsAiskqjK
-         h4Mw==
-X-Received: by 10.152.5.134 with SMTP id s6mr5087573las.24.1366265715104; Wed,
- 17 Apr 2013 23:15:15 -0700 (PDT)
-Received: by 10.114.59.210 with HTTP; Wed, 17 Apr 2013 23:15:15 -0700 (PDT)
-In-Reply-To: <1366265191-20815-1-git-send-email-felipe.contreras@gmail.com>
+	id S1753045Ab3DRGbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 02:31:11 -0400
+Received: from so.liwest.at ([212.33.55.23]:20158 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752566Ab3DRGbJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 02:31:09 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1USiN7-0005nq-T5; Thu, 18 Apr 2013 08:31:06 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 810E31660F;
+	Thu, 18 Apr 2013 08:31:05 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <1928280357.20130418091807@gmail.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221612>
 
-On Thu, Apr 18, 2013 at 1:06 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> git fast-import expects an extra newline after the commit message data,
-> but we are adding it only on hg-git compat mode, which is why the
-> bidirectionality tests pass.
+Am 4/18/2013 7:18, schrieb Ilya Basin:
+> desired result:
+> 
+>          A---B---C origin/master
+>         /
+>     D---E---F---G---A'---B'---C' *master
+> 
+> 
+> 
+> Variant 1:
+> 
+>     git branch -f tmp
+>     git reset --hard origin/master
+>     git rebase tmp
+
+Variant 1a:
+
+   git reset --hard origin/master
+   git rebase @{1}
+
+> 
+> This variant is bad, because 'git reset --hard' checks out some files
+> and 'git rebase' rewrites them again before applying commits. It's a
+redundant job.
 >
-> We should add it unconditionally.
+> Variant 2:
+> 
+>     git branch -f tmp origin/master
+>     git rebase --onto master master tmp
+>     git branch -f master
+>     git checkout master
+> 
+> Too many commands. I want to do this with just one command. And I want
+> to stay be on branch master in case of rebase conflicts.
 
-This doesn't depend on any other patches, and I think it might be
-worth to put it in 'maint', it's not like a *huge* deal, but it would
-be nice if a mercurial repo cloned with v1.8.2.2 and one cloned with
-v1.8.3 end up with the same commit ids. It would have been nicer if
-v1.8.1 had this already, but hey, it's new, and it's in contrib.
+Perhaps this one:
 
-Cheers.
+   git merge origin/master
+   git rebase ORIG_HEAD
 
--- 
-Felipe Contreras
+-- Hannes
