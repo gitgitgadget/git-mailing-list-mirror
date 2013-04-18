@@ -1,126 +1,81 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 1/2] git-gc.txt, git-reflog.txt: document new expiry options
-Date: Thu, 18 Apr 2013 09:46:34 +0200
-Message-ID: <1366271195-4276-2-git-send-email-mhagger@alum.mit.edu>
-References: <7vbo9ceqb3.fsf@alter.siamese.dyndns.org>
- <1366271195-4276-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 09:47:19 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Thu, 18 Apr 2013 13:20:31 +0530
+Message-ID: <CALkWK0nb0Z2Uf7XJHgEiQ5rM7EVVA7-ZMhMOjMewmKKGYziw2w@mail.gmail.com>
+References: <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com>
+ <20130407170201.GH2222@serenity.lan> <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com>
+ <20130407175210.GI2222@serenity.lan> <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com>
+ <20130407182112.GJ2222@serenity.lan> <5161BC33.8060707@web.de>
+ <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com>
+ <5161D3C5.9060804@web.de> <CALkWK0k_vmXZr-x8=ZctouWbuVgv-1sptC0WX2aJ+yYD-T8cxA@mail.gmail.com>
+ <20130407212342.GA19857@elie.Belkin> <CACsJy8BoWfng7p=kHbiF9s6XYH1mPMtAGW6BRz54uYM5454O0w@mail.gmail.com>
+ <CALkWK0mcnA8Qss3uxRXhfHst65RLkv43wje9xdFxmFKi7MtZvA@mail.gmail.com>
+ <CACsJy8Bz+yNefiiwEivaaUgRymHTmUUKEFs8_uuonhmRfT3UGg@mail.gmail.com>
+ <CALkWK0m9QmZaSDruY=+2F-Kkw+fd6E1TYCTBpVQHRJrzq2VjCQ@mail.gmail.com> <BCD944518C304D7D9809346DD899B68F@PhilipOakley>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Apr 18 09:51:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USjYs-0001tg-3m
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 09:47:18 +0200
+	id 1USjcj-0006oZ-8Z
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 09:51:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966303Ab3DRHrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 03:47:12 -0400
-Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:45816 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S966268Ab3DRHrL (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Apr 2013 03:47:11 -0400
-X-AuditID: 1207440e-b7f2b6d00000094c-02-516fa4feca70
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id D6.10.02380.EF4AF615; Thu, 18 Apr 2013 03:47:10 -0400 (EDT)
-Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3I7kuV9006934
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 18 Apr 2013 03:47:07 -0400
-X-Mailer: git-send-email 1.8.2.1
-In-Reply-To: <1366271195-4276-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrBIsWRmVeSWpSXmKPExsUixO6iqPtvSX6gwYZ2YYuuK91MFg29V5gt
-	Vj6+y2xxe8V8ZosfLT3MDqwef99/YPJof/+O2eNZ7x5Gj4uXlD0+b5ILYI3itklKLCkLzkzP
-	07dL4M54/eMlU8FzoYqe3RfYGhjX83cxcnJICJhInFj5kR3CFpO4cG89WxcjF4eQwGVGiaNf
-	3zJBOGeYJDaeW80MUsUmoCuxqKeZCcQWEVCTmNh2iAWkiFmgj1Gif908sISwgI/Eyv7lYGNZ
-	BFQlLn86yQZi8wo4S7zve8UKsU5B4vj2bYwgNqeAi8Tjw9fB4kIC+RLfTp1km8DIu4CRYRWj
-	XGJOaa5ubmJmTnFqsm5xcmJeXmqRrrFebmaJXmpK6SZGSFjx7WBsXy9ziFGAg1GJh/fBqrxA
-	IdbEsuLK3EOMkhxMSqK8lsCgFOJLyk+pzEgszogvKs1JLT7EKMHBrCTC+0gWKMebklhZlVqU
-	D5OS5mBREudVW6LuJySQnliSmp2aWpBaBJOV4eBQkuANBhkqWJSanlqRlplTgpBm4uAEEVwg
-	G3iANviDFPIWFyTmFmemQxSdYlSUEudNAUkIgCQySvPgBsASwCtGcaB/hHljQap4gMkDrvsV
-	0GAmoMEHVmWDDC5JREhJNTCKaqycp7SgZrc1h9uNzS7qRZkPt7QzPGxe8s2z3ma37r/je+bl
-	3VpW2ndv7Z6keYfvrPhu9yXC8dmsCuuFgb6R3OaSLet+C7gULT9h+GPP9E3iff5SFoVP7yq9
-	27yw4qbylenVM1s3sHGrLd6aln/3Xs60Wfbsd2ffjGtu/SB3bc6ClMN1qVyOSizF 
+	id S965631Ab3DRHvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 03:51:13 -0400
+Received: from mail-ia0-f173.google.com ([209.85.210.173]:50827 "EHLO
+	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965398Ab3DRHvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 03:51:12 -0400
+Received: by mail-ia0-f173.google.com with SMTP id j5so2223503iaf.32
+        for <git@vger.kernel.org>; Thu, 18 Apr 2013 00:51:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=HUecKuTXR2qg1xEW9DMZ7Zk2v+6fMCpA3r6/j4Cf0gg=;
+        b=QAIXX3BGNO3awgxw4agAqja1VmG/6DEbmvXo8Sr6L+ZkqvhpGR1ah2EIrHA1+gvvWg
+         KhVADcAimzRvMDv4yEAbwgYCcV5lHq4IJKDnuNnTiPkqhD3Yz6MUm94637tiRGwNoE3a
+         m1GFM9ErVEfJRPxG/R4A5GVT0/nsamC4iTHpYBvSlx7UysABe7N8/RqvORrN73bfN3ZM
+         eSKsDR9aH6u7PzjA8AR15D70881o6NdLzCI2U5OFkXZ/zrcv9gJ7zO5rdK1Y+1bBUuTX
+         MAah7B0Frdu5dXRU3G9mmMAe5w01FvbudZuENLF4DqBxy4TQ0qPITu0G31C8vrH+0cym
+         nkcg==
+X-Received: by 10.43.9.68 with SMTP id ov4mr5384244icb.22.1366271472052; Thu,
+ 18 Apr 2013 00:51:12 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Thu, 18 Apr 2013 00:50:31 -0700 (PDT)
+In-Reply-To: <BCD944518C304D7D9809346DD899B68F@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221622>
 
-Document the new values that can be used for expiry values where their
-use makes sense:
+Philip Oakley wrote:
+> Would it be possible to summarise the key points and proposals of where the
+> subject is now?
 
-* git reflog expire --expire=[all|never]
-* git reflog expire --expire-unreachable=[all|never]
-* git gc --prune=all
+Sure.
 
-Other combinations aren't useful and therefore no documentation is
-added (even though they are allowed):
+If you want an update from the current approach, wait for a v2; I'm
+cooking it for some time, and getting some resulting ideas merged into
+upstream early (look for clone.submoduleGitDir on the list, for
+instance).  When upstream is in better shape to ease in a better
+fundamental design, I'll post my v2 to the list.  I'll refrain from
+posting any updates now, because I don't think the resulting
+discussion will generate any value.
 
-* git gc --prune=never
+If you want to know what this thread was about, I think [1] and [2]
+summarize my arguments quite well.
 
-  is redundant with "git gc --no-prune"
-
-* git prune --expire=all
-
-  is equivalent to providing no --expire option
-
-* git prune --expire=never
-
-  is a NOP
-
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- Documentation/git-gc.txt     | 5 +++--
- Documentation/git-reflog.txt | 9 +++++++--
- 2 files changed, 10 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index b370b02..2402ed6 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -62,8 +62,9 @@ automatic consolidation of packs.
- 
- --prune=<date>::
- 	Prune loose objects older than date (default is 2 weeks ago,
--	overridable by the config variable `gc.pruneExpire`).  This
--	option is on by default.
-+	overridable by the config variable `gc.pruneExpire`).
-+	--prune=all prunes loose objects regardless of their age.
-+	--prune is on by default.
- 
- --no-prune::
- 	Do not prune any loose objects.
-diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
-index fb8697e..70791b9 100644
---- a/Documentation/git-reflog.txt
-+++ b/Documentation/git-reflog.txt
-@@ -67,14 +67,19 @@ them.
- --expire=<time>::
- 	Entries older than this time are pruned.  Without the
- 	option it is taken from configuration `gc.reflogExpire`,
--	which in turn defaults to 90 days.
-+	which in turn defaults to 90 days.  --expire=all prunes
-+	entries regardless of their age; --expire=never turns off
-+	pruning of reachable entries (but see --expire-unreachable).
- 
- --expire-unreachable=<time>::
- 	Entries older than this time and not reachable from
- 	the current tip of the branch are pruned.  Without the
- 	option it is taken from configuration
- 	`gc.reflogExpireUnreachable`, which in turn defaults to
--	30 days.
-+	30 days.  --expire-unreachable=all prunes unreachable
-+	entries regardless of their age; --expire-unreachable=never
-+	turns off early pruning of unreachable entries (but see
-+	--expire).
- 
- --all::
- 	Instead of listing <refs> explicitly, prune all refs.
--- 
-1.8.2.1
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/220047/focus=220436
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/220047/focus=220495
