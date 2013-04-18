@@ -1,89 +1,180 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] t3400 (rebase): add failing test for a peculiar rev spec
-Date: Thu, 18 Apr 2013 14:22:35 +0530
-Message-ID: <1366275155-26244-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 18 10:51:23 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Thu, 18 Apr 2013 04:15:21 -0500
+Message-ID: <CAMP44s2xH9yi+EvsVnV6JW0gPPistBbvg8Jj_62hXmZAAvC1cw@mail.gmail.com>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2_wiNr4RaBOEnKnZzT4CF0qKK+bp+Lyi=Nfx3Q9ggqOQ@mail.gmail.com>
+	<7vip3npet0.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3NE3yrQoa1nZXAgy3KFXGF56Ki8icJ2z2TDigzax0nWg@mail.gmail.com>
+	<8761zm4wzg.fsf@linux-k42r.v.cablecom.net>
+	<CAMP44s0a2VsPBMd9Vrrhwdw=SPp2HrvDdXZ9Dmzhr9A6T+Sz7w@mail.gmail.com>
+	<CABURp0qGYG4T+t36=Us328YdLzy9KjBOWot2gSOk=FgCRUCLnQ@mail.gmail.com>
+	<CAMP44s3pZt3QVjS7GbXqjMS4ti3p=Vs2DmFXQjsMM3rs9qURmw@mail.gmail.com>
+	<7vsj2od841.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0q4k+bjQDhWAiYoj2P+7PJqFRs9s0arhy+F7YDO50dZg@mail.gmail.com>
+	<vpq61zk8er7.fsf@grenoble-inp.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Phil Hord <phil.hord@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Apr 18 11:15:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USkYp-0007mM-N3
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 10:51:20 +0200
+	id 1USkwC-00019E-Gn
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 11:15:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966658Ab3DRIvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 04:51:12 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:63628 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965897Ab3DRIvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 04:51:11 -0400
-Received: by mail-pa0-f54.google.com with SMTP id fa11so1443781pad.41
-        for <git@vger.kernel.org>; Thu, 18 Apr 2013 01:51:10 -0700 (PDT)
+	id S1756064Ab3DRJPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 05:15:24 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:38172 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756049Ab3DRJPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 05:15:23 -0400
+Received: by mail-la0-f50.google.com with SMTP id el20so2350444lab.9
+        for <git@vger.kernel.org>; Thu, 18 Apr 2013 02:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=Fd9tChjrnB5h8/aO2w66okzzseTZ2lDQb8CRelBv8GU=;
-        b=0UoJ3BTRe8ut5B7tvhR+Y85WaZTcXcEiOUzbgWFMRqK0C4rsEoQbjl5NJVHUkv+u+0
-         YYPBMA0ZilxNc16od0wmBH1wNmFz3/qGaen4v7z8WNPW+5Peib4L9ZjhECbAfU8bjkg5
-         UUmZeWzwfABrkKgk4R8W6ilQFpXIKHt/0t+yCdI7hP4v4wMgay5rzI+GFXkthmIGbp9m
-         Pf7QPvCu0PTmclZpgWtmQEMm8/RNRoFPy7a5xQB0ODqa22oQQAXzr3NaBnbMrKUv+0mB
-         KU56T5RUZlAmgkopW517BNJ5NGS6UfBSpy3C5cpa13Vn8YBmDIgU8f5/ZWQChSsqtPwp
-         mGkg==
-X-Received: by 10.68.16.164 with SMTP id h4mr12647199pbd.122.1366275070605;
-        Thu, 18 Apr 2013 01:51:10 -0700 (PDT)
-Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPS id ms9sm9157262pbc.20.2013.04.18.01.51.08
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 18 Apr 2013 01:51:09 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.423.g4fb5c0a.dirty
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=5Minn0P0JhW3zaRbbxYVJFE2kDo/tui4X8jEM4I7pVc=;
+        b=smmCr0hjAOcc7X6M+eG4QcLCz2QFq4CmTtVKeHJW9ZYmnjOfxhhqpyVeLJpg1ZLzRd
+         Run0UjYtsiP95DjCsur2VRfOq1mRCTKywxfwtutg7NTbHlxDQ/E6bdJDji1gVy18mJ+s
+         mXVoTm0CJVY5rnAefrqox6mjFkGVJr70sYySt8Y6SAj+3isaHGCRG90usPVCKG1aw+Kk
+         7r9KS6oNZBAOopuymEYwGGh0BNx+9krQ/8qt2dFLLl2SsP3OKcyK3vS6p2NqEqaYUyxQ
+         UELSBdG7wXMoJRTqzTEATgKj9YW1YHRl2LGhgLE0N1vqjj9aLnULCK2nQ2v6tQn9wdjX
+         stvg==
+X-Received: by 10.112.163.6 with SMTP id ye6mr5340590lbb.59.1366276521221;
+ Thu, 18 Apr 2013 02:15:21 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Thu, 18 Apr 2013 02:15:21 -0700 (PDT)
+In-Reply-To: <vpq61zk8er7.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221629>
 
-'git rebase' does not recognize revisions specified as :/text.  This
-is because the attempts to rev-parse ${REV}^0, which fails in this
-case.  Add a test to document this failure.
+On Thu, Apr 18, 2013 at 2:44 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> * How many times have you tracked regressions in transport helper's
+>> import/export functionality?
+>>
+>> Hint: zero.
+>
+> The real question to make the situation non-hypothetical would actually
+> be "how many times did you track a regression that bisected down to
+> *this particular commit*". Any regression that ends up on another commit
+> is irrelevant.
+>
+> I guess you realize how stupid my argument is. But how is yours
+> different?
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+I did not make any argument (stupid or otherwise), I made I claim; I
+won't waste my time with hypotheticals.
+
+> You do realize that your claim that nobody is ever going to
+> bisect down to your commit is as hypothetical as other people's claim
+> (if you think it is not, then try to point us a proof that nobody is
+> ever going to need a good message in the future to understand what I
+> mean).
+
+Yeah, they are both hypotheticals, the only difference is that your
+claim is very easy to prove; all you need is *ONE* example.
+
+But I'm very happy to withdraw my claim, as long as you withdraw your
+claim as well, and we go back to the default position: we don't know
+if anybody will every look at these commit messages again.
+
+> We're trying to make all the code and all the commits clean. It seems to
+> be a consensus here that review is good. I see no reason to purposely
+> make some commits less good than others based on the fact that they may
+> not be used in the future.
+
+You have to prove first that they are "less good", and the best way to
+do that is provide commit messages of your own, if you do that, they
+can be used instead, but if you don't, what do you propose to do? Drop
+the patches?
+
+> Search your favorite search engine for "broken window principle" to get
+> more arguments in this direction.
+
+More like broken windows hypothesis, which is not without its critics.
+
+>> * How many times has *anybody* done so?
+>>
+>> Hint: other than me, quite possibly zero.
+>
+> If you want to be the only developer, and avoid being disturbed by
+> others, then why are you pushing your changes to git.git? Why are you
+> even discussing on this list?
+
+Doesn't matter, it's still *HYPOTHETICAL* that anybody will every hit
+this in a bisect.
+
+Now, if you agree it's all hypothetical, the next rational thing to do
+is risk analysis: how likely is it to happen, and what would be the
+impact if it does? The answer to both questions is: close to *ZERO*.
+So, considering the nature of these patches (a remote-helper in the
+contrib area that is relatively new), and the active developers (me),
+I'd say it's much more important to get the fixes in, than to document
+every little quirk, detail and reasoning behind them. It's the balance
+I think it's best at this point, and it is my time, and it is my
+decision what I do with it.
+
+It might also help to compare oranges with oranges, and with regards
+to remote-hg transport helpers, I do believe the one in
+contrib/remote-helpers has the best commit messages:
+
+msysgit's remote-hg:
 ---
- Okay, so I'm not sure what the right fix for this is.
+commit 6bbd5365988d63780acc2ab407878eef8c19b47c
+Author: Sverre Rabbelier <srabbelier@gmail.com>
+Date:   Sun Aug 22 01:22:14 2010 -0500
 
- - The :/text syntax seems to be broken in the first place, as it
-   can't be combined with ^ or @.  I'd like to be able to say
-   {:/bardery}^1, or even {:/foomery}^{/communist mule}.  Why
-   shouldn't I be allowed to do this?
+    git_remote_helpers: add fastimport library
 
- - The failure occurs in git-rebase.sh:403.  Is it using the ^0 only
-   to make sure that the revision specified is a commit?  Surely,
-   there'a a better way to do this?
+ git_remote_helpers/fastimport/__init__.py     |   0
+ git_remote_helpers/fastimport/commands.py     | 469
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ git_remote_helpers/fastimport/dates.py        |  79 +++++++++++
+ git_remote_helpers/fastimport/errors.py       | 182 +++++++++++++++++++++++++
+ git_remote_helpers/fastimport/head_tracker.py |  47 +++++++
+ git_remote_helpers/fastimport/helpers.py      |  88 +++++++++++++
+ git_remote_helpers/fastimport/idmapfile.py    |  65 +++++++++
+ git_remote_helpers/fastimport/parser.py       | 621
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ git_remote_helpers/fastimport/processor.py    | 222
++++++++++++++++++++++++++++++++
+ git_remote_helpers/setup.py                   |   3 +-
+ 10 files changed, 1775 insertions(+), 1 deletion(-)
+---
 
- Can someone point me in the right direction?
+gitifyhg:
+--
+commit 4b364563cd705dc5e69082e6b80d304fe50b9c9c
+Author: Alex Sydell <alex@dropbox.com>
+Date:   Sat Mar 23 23:46:33 2013 -0700
 
- t/t3400-rebase.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+    Report correct (instead of unknown) hashes when importing refs into git
 
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index f6cc102..42ca1e0 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -88,6 +88,14 @@ test_expect_success 'rebase fast-forward to master' '
- 	test_i18ngrep "Fast-forwarded HEAD to my-topic-branch" out
- '
- 
-+test_expect_failure 'rebase against revision specified as :/text' '
-+	git checkout my-topic-branch^ &&
-+	sha1=$(git rev-parse ":/Add B") &&
-+	git rebase $sha1 &&
-+	git checkout my-topic-branch^ &&
-+	git rebase ":/Add B"
-+'
-+
- test_expect_success 'the rebase operation should not have destroyed author information' '
- 	! (git log | grep "Author:" | grep "<>")
- '
+ gitifyhg/gitifyhg.py   | 27 +++++++++++++++++++++------
+ gitifyhg/hgimporter.py | 20 ++------------------
+ gitifyhg/util.py       | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ test/test_push.py      | 31 +++++++++++++++++++++++++++----
+ 4 files changed, 94 insertions(+), 28 deletions(-)
+---
+
+And of course, the best place to discuss the lack of good commit
+messages, is in the patches themselves, which are after all, sent to
+the mailing list for everyone to review.
+
+Cheers.
+
 -- 
-1.8.2.1.423.g4fb5c0a.dirty
+Felipe Contreras
