@@ -1,69 +1,118 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [PATCH 3/6] transport-helper: clarify pushing without refspecs
-Date: Thu, 18 Apr 2013 20:56:47 +0200
-Message-ID: <517041EF.5060000@gmail.com>
-References: <1366243524-18202-1-git-send-email-felipe.contreras@gmail.com> <1366243524-18202-4-git-send-email-felipe.contreras@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 1/6] transport-helper: clarify *:* refspec
+Date: Thu, 18 Apr 2013 14:07:28 -0500
+Message-ID: <CAMP44s1NRMbk2DpgyWqnyEKV+WkxAg1Gjn3UZQKMopJUDBZ4jw@mail.gmail.com>
+References: <1366258473-12841-1-git-send-email-felipe.contreras@gmail.com>
+	<1366258473-12841-2-git-send-email-felipe.contreras@gmail.com>
+	<7vhaj37nr5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>,
+Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Max Horn <max@quendi.de>, Jonathan Nieder <jrnieder@gmail.com>,
 	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 20:57:02 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 21:07:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USu0y-0007AQ-20
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 20:57:00 +0200
+	id 1USuBD-0001ze-6L
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 21:07:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754358Ab3DRS4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 14:56:55 -0400
-Received: from mail-ee0-f50.google.com ([74.125.83.50]:43138 "EHLO
-	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751045Ab3DRS4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 14:56:55 -0400
-Received: by mail-ee0-f50.google.com with SMTP id e53so1483424eek.9
-        for <git@vger.kernel.org>; Thu, 18 Apr 2013 11:56:54 -0700 (PDT)
+	id S932194Ab3DRTHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 15:07:31 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:38377 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752359Ab3DRTHa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 15:07:30 -0400
+Received: by mail-lb0-f180.google.com with SMTP id t11so3019387lbi.39
+        for <git@vger.kernel.org>; Thu, 18 Apr 2013 12:07:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=SKAhEqMdAAytnH/oYWf4bPbWhxxsXX+fbpG2cCh2Kl4=;
-        b=yLkbpHdDr8gk0s/w11m6/UVb6Mv2kFnT8IwWQPRFmH6oHpZio1ouX45jBTrUQc6k3S
-         gJsJcwIFVch0irvqRGaxlq3lVRiDqrnn+Nh4EJjfWShHGAG7fOI9P+tAppX4S5YraFbL
-         BY50SMxGsjrD3mhv2Y7pDgkgI4Qiv1pwdwA4bBnfvCtjx4mgqa0qwAmDw2GmumY30r+V
-         Gtg6f2q4qP7ictzRosaQHU+6//XfBQZiAPlp9FEaeb91odpgGL6HVQm9cyEGZYPTSJc5
-         JPfoAvxIZWQOqpOdiiXGEawZCVEjaQlg6tLXNsYiJKsMsanTlW8olnLf3Qpj55F5KJmt
-         YObA==
-X-Received: by 10.15.75.70 with SMTP id k46mr33350907eey.4.1366311414013;
-        Thu, 18 Apr 2013 11:56:54 -0700 (PDT)
-Received: from [192.168.178.20] (host93-95-dynamic.6-79-r.retail.telecomitalia.it. [79.6.95.93])
-        by mx.google.com with ESMTPS id ch6sm17814293eeb.17.2013.04.18.11.56.50
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 18 Apr 2013 11:56:53 -0700 (PDT)
-In-Reply-To: <1366243524-18202-4-git-send-email-felipe.contreras@gmail.com>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=U1p2RYyOv3p5FYF07H4CBjTooweBgRKMmJxOzMwkG4E=;
+        b=V1/Ysg6IVb9X2Grq90emYl0KkhF7S92jF2nvBz15vCU9Uled5noMM/9TwqXwDB8QxJ
+         Z43nZ3OHYTURs5+DxzxGpUDsWPfCCKou6Tn+NhGQqcQLDuufuleP8tk86dnSulwrNDd4
+         rIhPsjHax5eO1xWP4RZjXpWaZMVj0wayqFH6x4P47N982+ftclMrzPrXEVEElf08oBMh
+         oGWtxHpNEX0ltT/RijsAG6ixqQvoM91R/u7im52TQQjJ8vqep3+zARdcf4quN8Y9/eL7
+         CHMpIU3W/6MFujaU2ByCqOvfrBgrQC/4rZdyBUn6/QqfhSkhfxpbXrjoPsJ4v3u/xyl8
+         dYYA==
+X-Received: by 10.112.135.3 with SMTP id po3mr3379928lbb.103.1366312048950;
+ Thu, 18 Apr 2013 12:07:28 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Thu, 18 Apr 2013 12:07:28 -0700 (PDT)
+In-Reply-To: <7vhaj37nr5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221683>
 
-On 04/18/2013 02:05 AM, Felipe Contreras wrote:
-> This has never worked, since it's inception the code simply skips all
+On Thu, Apr 18, 2013 at 12:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-s/it's/its/ (sorry for nitpicking)
-
-> the refs, essentially telling fast-export to do nothing.
-> 
-> Let's at least tell the user what's going on.
-> 
-> [SNIP]
+>> The *:* refspec doesn't work, and never has, clarify the code and
+>> documentation to reflect that. This in effect reverts commit 9e7673e
+>> (gitremote-helpers(1): clarify refspec behaviour).
+>> ...
+>>  applicable refspec takes precedence.  The left-hand of refspecs
+>>  advertised with this capability must cover all refs reported by
+>> -the list command.  If a helper does not need a specific 'refspec'
+>> -capability then it should advertise `refspec *:*`.
+>> +the list command.  If no 'refspec' capability is advertised,
+>> +there is an implied `refspec *:*`.
 >
+> I presume
+>
+>     s/.$/, but `*:*` does not work so do not use it./
+>
+> is implied?
 
-Regards,
-  Stefano
+I believe
+
+  s/.$/, but you should specify an apropriate one as described above./
+
+Would be better.
+
+>> diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+>> index f387027..cd1873c 100755
+>> --- a/t/t5801-remote-helpers.sh
+>> +++ b/t/t5801-remote-helpers.sh
+>> @@ -120,21 +120,6 @@ test_expect_failure 'pushing without refspecs' '
+>>       compare_refs local2 HEAD server HEAD
+>>  '
+>>
+>> -test_expect_success 'pulling with straight refspec' '
+>> -     (cd local2 &&
+>> -     GIT_REMOTE_TESTGIT_REFSPEC="*:*" git pull) &&
+>> -     compare_refs local2 HEAD server HEAD
+>> -'
+>
+> This one made me raise my eyebrows, first.
+>
+> The only reason this test "passes" is because this particular
+> "pull", due to what local2 and server happens to have before this
+> test runs, is an "Already up-to-date" and a no-op.  You are removing
+> this because it is not really testing anything useful, and if you
+> change it to test something real, e.g. by rewinding local2, it will
+> reveal the breakage.
+>
+> Am I reading you correctly?
+
+Not really. This particular fetch does work, and it's tricky to
+explain all the reasons why, even if you update the server ref before
+fetching. The reason it's written this way is that it comes from from
+a branch of mine that has a hack to make the push above works, and
+since the transport-helper's push doesn't update the ref in this
+version, the test did actually do something and was working.
+
+I am removing the test because we don't care if it works or not,
+remote-helpers should not be doing that. The fact that the test wasn't
+actually doing anything is icing on the cake.
+
+Cheers.
+
+-- 
+Felipe Contreras
