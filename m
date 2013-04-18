@@ -1,120 +1,258 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: [PATCH] gitweb/INSTALL: GITWEB_CONFIG_SYSTEM is for backward compatibility
-Date: Wed, 17 Apr 2013 21:00:15 -0400
-Message-ID: <CAM9Z-nkG0YbudBnhcu6du824aEcXRVLCx406=kVbG83g3rFPdQ@mail.gmail.com>
-References: <7v4nfch90r.fsf@alter.siamese.dyndns.org>
-	<20130412064837.GA5710@elie.Belkin>
-	<20130412064953.GB5710@elie.Belkin>
-	<7vy5cnd0m4.fsf@alter.siamese.dyndns.org>
-	<516888C0.90501@gmail.com>
-	<CAM9Z-nmOzpJdT3ni0rYRkg7Z26N5XSRyqp0TkTY79AAZ85pw2A@mail.gmail.com>
-	<7vobdfnlc7.fsf@alter.siamese.dyndns.org>
-	<CAM9Z-nm=SUNAHXZtOnz_BSS8VrVYPczicX99FUmDJe6Lj_oKpQ@mail.gmail.com>
-	<516D4359.2070501@gmail.com>
-	<CAM9Z-nkbBS5qvbkocdGWj7rwtSxB86+R4jdjcBOxCU4YjtgZ1A@mail.gmail.com>
-	<20130416222600.GG29773@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Wed, 17 Apr 2013 18:39:06 -0700
+Message-ID: <7va9owd3d1.fsf@alter.siamese.dyndns.org>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
+	<87txn5xzdn.fsf@linux-k42r.v.cablecom.net>
+	<7vd2ttgoyr.fsf@alter.siamese.dyndns.org>
+	<87wqs1xi9h.fsf@hexa.v.cablecom.net>
+	<7vk3o1f5kb.fsf@alter.siamese.dyndns.org>
+	<7vwqs1dnxp.fsf@alter.siamese.dyndns.org>
+	<20130417201056.GA2914@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-	Stefano Lattarini <stefano.lattarini@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 03:00:27 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 18 03:39:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USdD8-00051u-Fj
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 03:00:26 +0200
+	id 1USdoh-0002lN-RK
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 03:39:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753350Ab3DRBAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Apr 2013 21:00:18 -0400
-Received: from mail-ia0-f177.google.com ([209.85.210.177]:40069 "EHLO
-	mail-ia0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752459Ab3DRBAQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Apr 2013 21:00:16 -0400
-Received: by mail-ia0-f177.google.com with SMTP id w33so1938863iag.8
-        for <git@vger.kernel.org>; Wed, 17 Apr 2013 18:00:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=xm3n9EB3ZHAvTpaVM/qq0f4jwUkAYK8QEgitDYSA1nc=;
-        b=Uh1fIlAnnM7Y0GOuftn5mAC8aAHawy/3GAClS/vZnKZ7cidfjoiXS+lzm5DOUIMUmB
-         DX07tAYDSymsofjb794L9s0tQe3i+9yUZcCIUIX7zDUbXwkyzxplK27ulGeo8aHrU4Wo
-         vsEPYeeuR+tNSO/qCikzYjE4mGImDg51Zc8dV5QMYBwlzLuepZt6uzeZi8GSwWU5JAFE
-         np5U0fbIhGo804veN/ITI3HBXEyh1Cd7v8Si8j/kyj99DtV5Cj5ByRS5/1s1mgTO4GUd
-         6dviu2SM2EVsYm2niVOhCNj2QM8wB6tsnjWHnBK+V+oUbNwkXioNYVxMxerN7juc8MNT
-         sMhw==
-X-Received: by 10.50.187.225 with SMTP id fv1mr5742659igc.74.1366246816063;
- Wed, 17 Apr 2013 18:00:16 -0700 (PDT)
-Received: by 10.42.173.70 with HTTP; Wed, 17 Apr 2013 18:00:15 -0700 (PDT)
-In-Reply-To: <20130416222600.GG29773@google.com>
+	id S1754038Ab3DRBjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Apr 2013 21:39:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48547 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752459Ab3DRBjK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Apr 2013 21:39:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26D05EBC7;
+	Thu, 18 Apr 2013 01:39:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yafJeoD2ZTVjNJ79dpzRmkLJUwc=; b=EEBGfV
+	98N6YWqphW1EZwbeLgrJfkEr9mGv+Dpxly8MI5MvEJ6ek5/wXViKwXjcW9hUbhaM
+	mvaJYzSr9y/CS2qN9fxwmXUL3U9ZrirVv/3fxouPFf8Gw1B+S97tIDngywFBe7Au
+	H7YvJ68zsy8SJoVYLKHPmVKPFtrOHQ8l7acDQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NacQQy1qvp792pO22Bcgi35vwE1d1Kl7
+	vF81g1Lvk9VR8bverPeuX5rh7J4zfQiCuLItxu17G8QIYSEs+UF5ZU1cFLIm056N
+	y3aufffCgqYsrGw6LtAIQa4SUUi4Mm4pWD9vZOBeJ/uMJ4IwcjzV7pnyZ5jFjQ9E
+	FsUZpMXMPIs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D644EBC6;
+	Thu, 18 Apr 2013 01:39:09 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 28E32EBC4;
+	Thu, 18 Apr 2013 01:39:08 +0000 (UTC)
+In-Reply-To: <20130417201056.GA2914@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 17 Apr 2013 16:10:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C305FEE8-A7C8-11E2-88E2-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221597>
 
-On Tue, Apr 16, 2013 at 6:26 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Drew Northup wrote:
->
->>                             This is unobtrusive yet to the point.
->
-> I agree with the spirit.
->
-> [...]
->> --- a/Documentation/gitweb.conf.txt
->> +++ b/Documentation/gitweb.conf.txt
->> @@ -55,7 +55,8 @@ following order:
->>     then fallback system-wide configuration file (defaults to
->> '/etc/gitweb.conf').
->>
->>  Values obtained in later configuration files override values obtained earlier
->> -in the above sequence.
->> +in the above sequence. This is different from many system-wide software
->> +installations and will stay this way for historical reasons.
->
-> That makes it sound like the "per instance overrides common overrides
-> built-in" cascading is what is unusual and what we need to apologize
-> for.
+Jeff King <peff@peff.net> writes:
 
-I don't think were apologizing for anything. It is helpful to say "we
-do some things differently here and don't plan on changing for a very
-important reason.
+> Yeah, I had the same thought, as this warning has been bugging me for
+> the last day or two. The worst part about it is that I finally trained
+> myself to type "git add ." to silence the _other_ warning, and now it
+> triggers this one. :)
 
-> How about something like the following?  (It uses a BUGS section to
-> make the warning easy to notice for people tracking down confusing
-> behavior by searching for "gitweb.conf".)
->
-> diff --git i/Documentation/gitweb.conf.txt w/Documentation/gitweb.conf.txt
-> index eb63631..ea0526e 100644
-> --- i/Documentation/gitweb.conf.txt
-> +++ w/Documentation/gitweb.conf.txt
-> @@ -857,6 +857,13 @@ adding the following lines to your gitweb configuration file:
->         $known_snapshot_formats{'zip'}{'disabled'} = 1;
->         $known_snapshot_formats{'tgz'}{'compressor'} = ['gzip','-6'];
->
-> +BUGS
-> +----
-> +Debugging would be easier if the fallback configuration file
-> +(`/etc/gitweb.conf`) and environment variable to override its location
-> +('GITWEB_CONFIG_SYSTEM') had names reflecting their "fallback" role.
-> +The current names are kept to avoid breaking working setups.
-> +
->  ENVIRONMENT
->  -----------
->  The location of per-instance and system-wide configuration files can be
+So here is the "reworked" one on top of what is in 'next'.
 
-I don't disagree with this, as some would consider the naming to be a
-bug, but after having been given a good schooling on the git list a
-while back as to why it is the way it is I'm hesitant to label "has
-history" as a bug.
+It introduces a bit of conflict with the "add -u/-A" topic, so I am
+not ready to push out the integration result yet.
 
---
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+-- >8 --
+Subject: [PATCH] git add: rework the logic to warn "git add <pathspec>..." default change
+
+The earlier logic to warn against "git add subdir" that is run
+without "-A" or "--no-all" was only to check any <pathspec> given
+exactly spells a directory name that (still) exists on the
+filesystem.  This had number of problems:
+
+ * "git add '*dir'" (note that the wildcard is hidden from the
+   shell) would not trigger the warning.
+
+ * "git add '*.py'" would behave differently between the current
+   version of Git and Git 2.0 for the same reason as "subdir", but
+   would not trigger the warning.
+
+ * "git add dir" for a submodule "dir" would just update the index
+   entry for the submodule "dir" without ever recursing into it, and
+   use of "-A" or "--no-all" would matter.  But the logic only
+   checks the directory-ness of "dir" and gives an unnecessary
+   warning.
+
+Rework the logic to detect the case where the behaviour will be
+different in Git 2.0, and issue a warning only when it matters.
+Even with the code before this warning, "git add subdir" will have
+to traverse the directory in order to find _new_ files the index
+does not know about _anyway_, so we can do this check without adding
+an extra pass to find if <pathspec> matches any removed file.
+
+This essentially updates the "add_files_to_cache()" public API to
+"update_files_in_cache()" API that is internal to "git add", because
+with the "--all" option, the function is no longer about "adding"
+paths to the cache, but is also used to remove them.
+
+There are other callers of the former from "checkout" (used when
+"checkout -m" prepares the temporary tree that represents the local
+modifications to be merged) and "commit" ("commit --include" that
+picks up local changes in addition to what is in the index).  Since
+ADD_CACHE_IGNORE_ERRORS (aka "--no-all") is not used by either of
+them, once dust settles after Git 2.0 and the warning becomes
+unnecessary, we may want to unify these two functions again.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/add.c | 64 +++++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 38 insertions(+), 26 deletions(-)
+
+diff --git a/builtin/add.c b/builtin/add.c
+index f8f6c9e..4242bce 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -26,6 +26,9 @@ static int take_worktree_changes;
+ struct update_callback_data {
+ 	int flags;
+ 	int add_errors;
++
++	/* only needed for 2.0 transition preparation */
++	int warn_add_would_remove;
+ };
+ 
+ static int fix_unmerged_status(struct diff_filepair *p,
+@@ -49,6 +52,17 @@ static int fix_unmerged_status(struct diff_filepair *p,
+ 		return DIFF_STATUS_MODIFIED;
+ }
+ 
++static void warn_add_would_remove(const char *path)
++{
++	warning(_("In Git 2.0, 'git add <pathspec>...' will also update the\n"
++		  "index for paths removed from the working tree that match\n"
++		  "the given pathspec. If you want to 'add' only changed\n"
++		  "or newly created paths, say 'git add --no-all <pathspec>...'"
++		  " instead.\n\n"
++		  "'%s' would be removed from the index without --no-all."),
++		path);
++}
++
+ static void update_callback(struct diff_queue_struct *q,
+ 			    struct diff_options *opt, void *cbdata)
+ {
+@@ -70,6 +84,10 @@ static void update_callback(struct diff_queue_struct *q,
+ 			}
+ 			break;
+ 		case DIFF_STATUS_DELETED:
++			if (data->warn_add_would_remove) {
++				warn_add_would_remove(path);
++				data->warn_add_would_remove = 0;
++			}
+ 			if (data->flags & ADD_CACHE_IGNORE_REMOVAL)
+ 				break;
+ 			if (!(data->flags & ADD_CACHE_PRETEND))
+@@ -81,20 +99,27 @@ static void update_callback(struct diff_queue_struct *q,
+ 	}
+ }
+ 
+-int add_files_to_cache(const char *prefix, const char **pathspec, int flags)
++static void update_files_in_cache(const char *prefix, const char **pathspec,
++				  struct update_callback_data *data)
+ {
+-	struct update_callback_data data;
+ 	struct rev_info rev;
+ 	init_revisions(&rev, prefix);
+ 	setup_revisions(0, NULL, &rev, NULL);
+ 	init_pathspec(&rev.prune_data, pathspec);
+ 	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = update_callback;
+-	data.flags = flags;
+-	data.add_errors = 0;
+-	rev.diffopt.format_callback_data = &data;
++	rev.diffopt.format_callback_data = data;
+ 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
+ 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
++}
++
++int add_files_to_cache(const char *prefix, const char **pathspec, int flags)
++{
++	struct update_callback_data data;
++
++	memset(&data, 0, sizeof(data));
++	data.flags = flags;
++	update_files_in_cache(prefix, pathspec, &data);
+ 	return !!data.add_errors;
+ }
+ 
+@@ -354,18 +379,6 @@ static void warn_pathless_add(const char *option_name, const char *short_name) {
+ 		option_name, short_name);
+ }
+ 
+-static int directory_given(int argc, const char **argv)
+-{
+-	struct stat st;
+-
+-	while (argc--) {
+-		if (!lstat(*argv, &st) && S_ISDIR(st.st_mode))
+-			return 1;
+-		argv++;
+-	}
+-	return 0;
+-}
+-
+ int cmd_add(int argc, const char **argv, const char *prefix)
+ {
+ 	int exit_status = 0;
+@@ -378,6 +391,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	char *seen = NULL;
+ 	const char *option_with_implicit_dot = NULL;
+ 	const char *short_option_with_implicit_dot = NULL;
++	struct update_callback_data update_data;
+ 
+ 	git_config(add_config, NULL);
+ 
+@@ -403,15 +417,11 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 
+ 	/*
+ 	 * Warn when "git add pathspec..." was given without "-u" or "-A"
+-	 * and pathspec... contains a directory name.
++	 * and pathspec... covers a removed path.
+ 	 */
+-	if (!take_worktree_changes && addremove_explicit < 0 &&
+-	    directory_given(argc, argv))
+-		warning(_("In Git 2.0, 'git add <pathspec>...' will also update the\n"
+-			  "index for paths removed from the working tree that match\n"
+-			  "the given pathspec. If you want to 'add' only changed\n"
+-			  "or newly created paths, say 'git add --no-all <pathspec>...'"
+-			  " instead."));
++	memset(&update_data, 0, sizeof(update_data));
++	if (!take_worktree_changes && addremove_explicit < 0)
++		update_data.warn_add_would_remove = 1;
+ 
+ 	if (!take_worktree_changes && addremove_explicit < 0 && argc)
+ 		/*
+@@ -508,8 +518,10 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 
+ 	plug_bulk_checkin();
+ 
+-	exit_status |= add_files_to_cache(prefix, pathspec, flags);
++	update_data.flags = flags;
++	update_files_in_cache(prefix, pathspec, &update_data);
+ 
++	exit_status |= !!update_data.add_errors;
+ 	if (add_new_files)
+ 		exit_status |= add_files(&dir, flags);
+ 
+-- 
+1.8.2.1-552-g964983e
