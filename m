@@ -1,63 +1,77 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Bug with rev-list --reverse?
-Date: Thu, 18 Apr 2013 11:47:41 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1304181146090.30868@ds9.cixit.se>
-References: <CAMP44s25mUA1M+K+YKaC=bz3Dr7kSDyXK5g2ot8i+1EPy8zRhA@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: put THEIR commits AFTER my commits with a single rebase command
+Date: Thu, 18 Apr 2013 13:03:10 +0200
+Message-ID: <516FD2EE.4040300@viscovery.net>
+References: <1928280357.20130418091807@gmail.com> <516F9329.4060405@viscovery.net> <1949082828.20130418123321@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 12:57:39 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ilya Basin <basinilya@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 13:03:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USmX3-0005jZ-Ku
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 12:57:38 +0200
+	id 1USmcb-0004Di-42
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 13:03:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935515Ab3DRK5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 06:57:33 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:46866 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S935341Ab3DRK5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 06:57:32 -0400
-X-Greylist: delayed 587 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Apr 2013 06:57:32 EDT
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id r3IAlg72011922
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 18 Apr 2013 12:47:42 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id r3IAlf2m011919;
-	Thu, 18 Apr 2013 12:47:41 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <CAMP44s25mUA1M+K+YKaC=bz3Dr7kSDyXK5g2ot8i+1EPy8zRhA@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Thu, 18 Apr 2013 12:47:42 +0200 (CEST)
+	id S967406Ab3DRLDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 07:03:17 -0400
+Received: from so.liwest.at ([212.33.55.23]:64991 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S967271Ab3DRLDQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 07:03:16 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1USmcR-0000Xa-Bo; Thu, 18 Apr 2013 13:03:11 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1CAE21660F;
+	Thu, 18 Apr 2013 13:03:11 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <1949082828.20130418123321@gmail.com>
+X-Enigmail-Version: 1.5.1
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221648>
 
-Felipe Contreras:
+Am 4/18/2013 10:33, schrieb Ilya Basin:
+> 
+> JS> Perhaps this one:
+> 
+> JS>    git merge origin/master
+> JS>    git rebase ORIG_HEAD
+> 
+> JS> -- Hannes
+> 
+> Wouldn't I have to resolve conflicts twice?
 
-> % git log --oneline -1 v1.8.1.5^..v1.8.1.6
-> % git log --oneline --reverse -1 v1.8.1.5^..v1.8.1.6
->
-> I expect to get a different output, and not both showing v1.8.1.6.
-> Wouldn't you agree?
+Yes. But you did run 'git config rerere.enabled true' when you started
+with git, didn't you? ;-)
 
-  Quoting the manual page:
+Anyway, Johan's idea to use git cherry-pick is much better.
 
-  Commit Limiting
-    Besides specifying a range of commits that should be listed using the special notations explained in the description, additional commit limiting may be applied. Note that they are applied before commit ordering and formatting options, such as --reverse.
+> BTW, during the rebase, can I tell git to rewrite a different branch
+> upon rebase success or abort?
+> 
+>     git branch -f tmp origin/master
+>     git rebase --onto master master tmp
+>     if [ $? -ne 0 ]; then
+>        # modify some file in .git/ ?
 
-Given that, I would expect the output to be the same.
+What do you expect here? Failure of git rebase means that it is not
+complete, yet. So far, nothing has been rewritten. So what? Perhaps you mean:
+	# never mind
+	git rebase --abort
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+>     else
+>         git branch -f master
+>         git checkout master
+>     fi
+
+-- Hannes
