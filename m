@@ -1,94 +1,64 @@
 From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 3/6] transport-helper: clarify pushing without refspecs
-Date: Thu, 18 Apr 2013 11:24:29 +0100
-Message-ID: <20130418102428.GX2278@serenity.lan>
-References: <1366258473-12841-1-git-send-email-felipe.contreras@gmail.com>
- <1366258473-12841-4-git-send-email-felipe.contreras@gmail.com>
- <20130418101133.GW2278@serenity.lan>
- <CAMP44s33WLE6xJ_bFJBX2z0hdkALqCKpq7Ve+8hZw2URWUPz_w@mail.gmail.com>
+Subject: Re: Bug with rev-list --reverse?
+Date: Thu, 18 Apr 2013 11:26:44 +0100
+Message-ID: <20130418102644.GY2278@serenity.lan>
+References: <CAMP44s25mUA1M+K+YKaC=bz3Dr7kSDyXK5g2ot8i+1EPy8zRhA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Max Horn <max@quendi.de>, Jonathan Nieder <jrnieder@gmail.com>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+Cc: git@vger.kernel.org
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 12:24:53 2013
+X-From: git-owner@vger.kernel.org Thu Apr 18 12:27:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USm1H-0003sa-9h
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 12:24:47 +0200
+	id 1USm3P-00072Z-2B
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 12:26:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968089Ab3DRKYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 06:24:43 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:59275 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967505Ab3DRKYm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 06:24:42 -0400
+	id S965302Ab3DRK0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 06:26:54 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:46698 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964916Ab3DRK0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 06:26:53 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id CE1A06064FF;
-	Thu, 18 Apr 2013 11:24:41 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+	by jackal.aluminati.org (Postfix) with ESMTP id 8082ECDA5E5;
+	Thu, 18 Apr 2013 11:26:52 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
 X-Spam-Flag: NO
-X-Spam-Score: -0.999
+X-Spam-Score: -12.9
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XwqW3Sp6UXSh; Thu, 18 Apr 2013 11:24:41 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id uIHDSBe3u6UK; Thu, 18 Apr 2013 11:26:49 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 4F548606580;
-	Thu, 18 Apr 2013 11:24:30 +0100 (BST)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id DC17DCDA5E3;
+	Thu, 18 Apr 2013 11:26:46 +0100 (BST)
 Content-Disposition: inline
-In-Reply-To: <CAMP44s33WLE6xJ_bFJBX2z0hdkALqCKpq7Ve+8hZw2URWUPz_w@mail.gmail.com>
+In-Reply-To: <CAMP44s25mUA1M+K+YKaC=bz3Dr7kSDyXK5g2ot8i+1EPy8zRhA@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221644>
 
-On Thu, Apr 18, 2013 at 05:14:18AM -0500, Felipe Contreras wrote:
-> On Thu, Apr 18, 2013 at 5:11 AM, John Keeping <john@keeping.me.uk> wrote:
-> > On Wed, Apr 17, 2013 at 11:14:30PM -0500, Felipe Contreras wrote:
-> >> This has never worked, since it's inception the code simply skips all
-> >> the refs, essentially telling fast-export to do nothing.
-> >>
-> >> Let's at least tell the user what's going on.
-> >>
-> >> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> >> ---
-> >>  Documentation/gitremote-helpers.txt | 4 ++--
-> >>  t/t5801-remote-helpers.sh           | 6 +++---
-> >>  transport-helper.c                  | 5 +++--
-> >>  3 files changed, 8 insertions(+), 7 deletions(-)
-> >>
-> >> diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-> >> index ba7240c..4d26e37 100644
-> >> --- a/Documentation/gitremote-helpers.txt
-> >> +++ b/Documentation/gitremote-helpers.txt
-> >> @@ -162,8 +162,8 @@ Miscellaneous capabilities
-> >>       For remote helpers that implement 'import' or 'export', this capability
-> >>       allows the refs to be constrained to a private namespace, instead of
-> >>       writing to refs/heads or refs/remotes directly.
-> >> -     It is recommended that all importers providing the 'import' or 'export'
-> >> -     capabilities use this.
-> >> +     It is recommended that all importers providing the 'import'
-> >> +     capability use this. It's mandatory for 'export'.
-> >
-> > s/It's/It is/
+On Thu, Apr 18, 2013 at 05:17:14AM -0500, Felipe Contreras wrote:
+> If I do these:
 > 
-> What's the difference?
+> % git log --oneline -1 v1.8.1.5^..v1.8.1.6
+> % git log --oneline --reverse -1 v1.8.1.5^..v1.8.1.6
+> 
+> I expect to get a different output, and not both showing v1.8.1.6.
+> Wouldn't you agree?
 
-"It's" is considered informal, while we do adopt that tone on the
-mailing list and sometimes in the documentation, in general I think we
-should avoid contractions in the formal documentation.
-
-In this case it is particularly jarring because it immediately follows a
-sentence where we use the full "It is" form.
+I expect to get the same output.  This is probably because I consider
+--reverse to be an output filter.  So I expect to show the commits
+"v1.8.1.5^..v1.8.1.6 -1" which selects a single commit and then show
+that in reverse order.
