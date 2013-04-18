@@ -1,81 +1,96 @@
-From: Ilya Basin <basinilya@gmail.com>
-Subject: Re[2]: put THEIR commits AFTER my commits with a single rebase command
-Date: Thu, 18 Apr 2013 12:33:21 +0400
-Message-ID: <1949082828.20130418123321@gmail.com>
-References: <1928280357.20130418091807@gmail.com> <516F9329.4060405@viscovery.net>
-Reply-To: Ilya Basin <basinilya@gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: "What's cooking" between #05 and #06
+Date: Thu, 18 Apr 2013 09:49:23 +0100
+Message-ID: <20130418084923.GT2278@serenity.lan>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
+ <7v8v4ihw41.fsf@alter.siamese.dyndns.org>
+ <516F1333.5070804@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Apr 18 10:33:37 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Apr 18 10:49:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USkHe-0004R8-8e
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 10:33:34 +0200
+	id 1USkXG-0005uf-6J
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 10:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964933Ab3DRId3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 04:33:29 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:38778 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964887Ab3DRId1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 04:33:27 -0400
-Received: by mail-lb0-f173.google.com with SMTP id w20so2450770lbh.18
-        for <git@vger.kernel.org>; Thu, 18 Apr 2013 01:33:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
-         :subject:in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=DwoggHiiyMq1msNmFqlsHNXstyIXY1ktKDg/JeIWN04=;
-        b=zKrX8cFlrBgjwEMpL1jHZVklwCOpM0zqC5yDHOU6M9gkzV2nRL8mUhsartRMdqKlp+
-         wie7jDuzSf0hBtSlZS1HqBoEgLh8+bOLSnMsCYNg89foA1mvKF/elN0o4ApYOdkuvgF6
-         MzTtErO5Lki60nP/Uin2D1UNmnVVZQFehJxRP2KtmdtX0O/R8kAsFoR04Vj0qI3AZmjs
-         0bmmTdh6ndXxFVa/k4+4UKZ5psy0g27IHF06Bwu1CWUThl7/PiuzXsyM3Z5f+QSNDpEm
-         bWNSIF1L0f1ywkMczNnNAgJQa9po64zWZln1kdkj4jV29M2p9ZfPG7gpFWwjdTi05ofK
-         akDQ==
-X-Received: by 10.112.140.1 with SMTP id rc1mr5367287lbb.43.1366274005669;
-        Thu, 18 Apr 2013 01:33:25 -0700 (PDT)
-Received: from BASIN.reksoft.ru ([2a00:1120:0:1001:84e0:55a3:4150:1bdd])
-        by mx.google.com with ESMTPS id t6sm3943606lae.3.2013.04.18.01.33.23
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 18 Apr 2013 01:33:24 -0700 (PDT)
-X-Mailer: Voyager (v3.99.4) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <516F9329.4060405@viscovery.net>
+	id S966648Ab3DRItg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 04:49:36 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:36604 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965897Ab3DRIte (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 04:49:34 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 6428ACDA5B2;
+	Thu, 18 Apr 2013 09:49:33 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 6Jvv03v6Qh7p; Thu, 18 Apr 2013 09:49:32 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by jackal.aluminati.org (Postfix) with ESMTP id A3EACCDA599;
+	Thu, 18 Apr 2013 09:49:31 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 990CB161E3F7;
+	Thu, 18 Apr 2013 09:49:31 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 2bk96-ne4Udg; Thu, 18 Apr 2013 09:49:31 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id A7349161E413;
+	Thu, 18 Apr 2013 09:49:25 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <516F1333.5070804@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221627>
 
+On Wed, Apr 17, 2013 at 11:25:07PM +0200, Jens Lehmann wrote:
+> I like it, as it gets rid of the top-level requirement. But from
+> my testing it looks like we're not quite there yet.
+> 
+> 'summary' and 'status' behave as if they were run in the toplevel
+> directory, while a "git status" shows all filenames relative to the
+> current directory. Me thinks 'summary' and 'status' (and all other
+> submodule commands) should behave like status and print relative
+> paths too. I'm not really sure yet how $sm_path should behave for
+> 'foreach', but I suspect having it relative to the current
+> directory would be the way to go (which it currently isn't).
+>
+> When "submodule add" is run with a relative path it is relative to
+> the top-level directory, which I find confusing (and won't play
+> well with shell completion).
 
-JS> Perhaps this one:
+This confused me for a bit because I was sure I handled this, but I see
+I missed relative submodules URLs.  So the path at which to put the
+submodule is correct, but the path from which to clone is not.
 
-JS>    git merge origin/master
-JS>    git rebase ORIG_HEAD
+> 'deinit .' doesn't deinit submodules above the current directory
+> (but prints the path relative to top-level) while 'init' will
+> initialize all submodules known to the superproject.
 
-JS> -- Hannes
+I can't see how this happens.  'init' uses module_list which has been
+updated to handle relative paths.  So I expect 'git submodule init .' to
+work correctly here.  I would expect either of them to act on all
+submodules when given no extra arguments.
 
-Wouldn't I have to resolve conflicts twice?
+> So this is a good start, but it looks like there is some work left
+> to do before this can hit master.
 
-
-BTW, during the rebase, can I tell git to rewrite a different branch
-upon rebase success or abort?
-
-    git branch -f tmp origin/master
-    git rebase --onto master master tmp
-    if [ $? -ne 0 ]; then
-       # modify some file in .git/ ?
-    else
-        git branch -f master
-        git checkout master
-    fi
-
-
-
--- 
+Thanks for the feedback.
