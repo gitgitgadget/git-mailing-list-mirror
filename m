@@ -1,101 +1,99 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] stash: tighten IS_STASH_LIKE logic
-Date: Thu, 18 Apr 2013 13:08:37 +0530
-Message-ID: <1366270717-19929-1-git-send-email-artagnon@gmail.com>
-Cc: Brandon Casey <drafnel@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 18 09:37:21 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Thu, 18 Apr 2013 09:44:12 +0200
+Message-ID: <vpq61zk8er7.fsf@grenoble-inp.fr>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2_wiNr4RaBOEnKnZzT4CF0qKK+bp+Lyi=Nfx3Q9ggqOQ@mail.gmail.com>
+	<7vip3npet0.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3NE3yrQoa1nZXAgy3KFXGF56Ki8icJ2z2TDigzax0nWg@mail.gmail.com>
+	<8761zm4wzg.fsf@linux-k42r.v.cablecom.net>
+	<CAMP44s0a2VsPBMd9Vrrhwdw=SPp2HrvDdXZ9Dmzhr9A6T+Sz7w@mail.gmail.com>
+	<CABURp0qGYG4T+t36=Us328YdLzy9KjBOWot2gSOk=FgCRUCLnQ@mail.gmail.com>
+	<CAMP44s3pZt3QVjS7GbXqjMS4ti3p=Vs2DmFXQjsMM3rs9qURmw@mail.gmail.com>
+	<7vsj2od841.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0q4k+bjQDhWAiYoj2P+7PJqFRs9s0arhy+F7YDO50dZg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Phil Hord <phil.hord@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 09:44:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USjPE-0006iP-LD
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 09:37:20 +0200
+	id 1USjW7-0006s7-IO
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 09:44:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965937Ab3DRHhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 03:37:14 -0400
-Received: from mail-da0-f50.google.com ([209.85.210.50]:61178 "EHLO
-	mail-da0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754270Ab3DRHhN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 03:37:13 -0400
-Received: by mail-da0-f50.google.com with SMTP id g9so222719dad.9
-        for <git@vger.kernel.org>; Thu, 18 Apr 2013 00:37:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=hnYDc5pLVJXX3+B5atgnW24NXyAhYTG2S1emo07xnNI=;
-        b=DjkMcnODsea05HH65Z3KpXIyS6HXvPXXsZL8BIcnY3eFfmjmtHuuRoh4xk8B+yLbVu
-         JIBGI0I0cKYlpNQbpm+melTUERHZssTkmOKqKXZAwBL/sLXrGzg29j/fhRQpbWzv0rlW
-         kZ7/yhpQq/Bqv1iclveBntPhvjM+P4y1VsGyXyiMXE5RUO0mgLfhSW+HRfSjEiXKbxyF
-         9iWdXXk/8pcGJMOB4k3x+M3UQzAh+jOYp5c6QI5F+OHU2LAN8nSzDNT4BRSbzzS/HT/s
-         odR8GkxFteQXgoYsbkWaEMxOX3vUk1o2VP1aCz1a9AYWNawl7qZXYqwakv7k3B3RdA4X
-         ciOg==
-X-Received: by 10.69.0.200 with SMTP id ba8mr12944768pbd.4.1366270632595;
-        Thu, 18 Apr 2013 00:37:12 -0700 (PDT)
-Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPS id mt13sm8956061pbc.15.2013.04.18.00.37.10
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 18 Apr 2013 00:37:11 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.423.g4fb5c0a.dirty
+	id S966263Ab3DRHoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 03:44:23 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:44908 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965993Ab3DRHoW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 03:44:22 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r3I7iCc7026789
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 18 Apr 2013 09:44:12 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1USjVt-00052N-6X; Thu, 18 Apr 2013 09:44:13 +0200
+In-Reply-To: <CAMP44s0q4k+bjQDhWAiYoj2P+7PJqFRs9s0arhy+F7YDO50dZg@mail.gmail.com>
+	(Felipe Contreras's message of "Wed, 17 Apr 2013 22:59:58 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 18 Apr 2013 09:44:12 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r3I7iCc7026789
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1366875853.43814@QkXP/asHrihytOuVccCz+A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221619>
 
-Currently, 'git stash show' and 'git stash apply' can show/apply any
-merge commit, as the test for setting IS_STASH_LIKE simply asserts if
-the commit is a merge.  Improve the situation by asserting if the
-index_commit and the worktree_commit are based off the same commit, by
-checking that $REV^1 is equal to $REV^2^1.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- git-stash.sh     |  3 ++-
- t/t3903-stash.sh | 11 +++++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+> * How many times have you tracked regressions in transport helper's
+> import/export functionality?
+>
+> Hint: zero.
 
-diff --git a/git-stash.sh b/git-stash.sh
-index bbefdf6..d0428a8 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -366,13 +366,14 @@ parse_flags_and_rev()
- 	}
- 
- 	i_commit=$(git rev-parse --quiet --verify $REV^2 2>/dev/null) &&
--	set -- $(git rev-parse $REV $REV^1 $REV: $REV^1: $REV^2: 2>/dev/null) &&
-+	set -- $(git rev-parse $REV $REV^1 $REV: $REV^1: $REV^2: $REV^2^1 2>/dev/null) &&
- 	s=$1 &&
- 	w_commit=$1 &&
- 	b_commit=$2 &&
- 	w_tree=$3 &&
- 	b_tree=$4 &&
- 	i_tree=$5 &&
-+	test $b_commit = $6 &&
- 	IS_STASH_LIKE=t &&
- 	test "$ref_stash" = "$(git rev-parse --symbolic-full-name "${REV%@*}")" &&
- 	IS_STASH_REF=t
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 5dfbda7..11bcd72 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -637,4 +637,15 @@ test_expect_success 'stash where working directory contains "HEAD" file' '
- 	test_cmp output expect
- '
- 
-+test_expect_success 'show refuses to show any random merge commit' '
-+	git stash clear &&
-+	git reset --hard &&
-+	git checkout -b quux &&
-+	test_commit bar &&
-+	git checkout - &&
-+	test_commit foo &&
-+	git merge quux &&
-+	test_must_fail git stash show HEAD
-+'
-+
- test_done
+The real question to make the situation non-hypothetical would actually
+be "how many times did you track a regression that bisected down to
+*this particular commit*". Any regression that ends up on another commit
+is irrelevant.
+
+I guess you realize how stupid my argument is. But how is yours
+different? You do realize that your claim that nobody is ever going to
+bisect down to your commit is as hypothetical as other people's claim
+(if you think it is not, then try to point us a proof that nobody is
+ever going to need a good message in the future to understand what I
+mean).
+
+We're trying to make all the code and all the commits clean. It seems to
+be a consensus here that review is good. I see no reason to purposely
+make some commits less good than others based on the fact that they may
+not be used in the future.
+
+Search your favorite search engine for "broken window principle" to get
+more arguments in this direction.
+
+> * How many times has *anybody* done so?
+>
+> Hint: other than me, quite possibly zero.
+
+If you want to be the only developer, and avoid being disturbed by
+others, then why are you pushing your changes to git.git? Why are you
+even discussing on this list?
+
 -- 
-1.8.2.1.423.g4fb5c0a.dirty
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
