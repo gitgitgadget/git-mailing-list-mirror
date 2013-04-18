@@ -1,93 +1,110 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
-Date: Thu, 18 Apr 2013 14:49:42 +0530
-Message-ID: <CALkWK0nji4m0zJPf_s0G5jfWaAN_RTGFZ6dSxfahq2OcRsu5xQ@mail.gmail.com>
-References: <7vhaj7r116.fsf@alter.siamese.dyndns.org> <CAMP44s2_wiNr4RaBOEnKnZzT4CF0qKK+bp+Lyi=Nfx3Q9ggqOQ@mail.gmail.com>
- <7vip3npet0.fsf@alter.siamese.dyndns.org> <CAMP44s3NE3yrQoa1nZXAgy3KFXGF56Ki8icJ2z2TDigzax0nWg@mail.gmail.com>
- <8761zm4wzg.fsf@linux-k42r.v.cablecom.net> <CAMP44s0a2VsPBMd9Vrrhwdw=SPp2HrvDdXZ9Dmzhr9A6T+Sz7w@mail.gmail.com>
- <CABURp0qGYG4T+t36=Us328YdLzy9KjBOWot2gSOk=FgCRUCLnQ@mail.gmail.com> <CAMP44s3pZt3QVjS7GbXqjMS4ti3p=Vs2DmFXQjsMM3rs9qURmw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 1/6] transport-helper: clarify *:* refspec
+Date: Thu, 18 Apr 2013 04:27:57 -0500
+Message-ID: <CAMP44s0cJwHSJrWKkWAwKSv8OE=OqVRdKEtBNdAvQ7YAE5-JKw@mail.gmail.com>
+References: <1366258473-12841-1-git-send-email-felipe.contreras@gmail.com>
+	<1366258473-12841-2-git-send-email-felipe.contreras@gmail.com>
+	<20130418082441.GR2278@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Phil Hord <phil.hord@gmail.com>, Thomas Rast <trast@inf.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 11:20:37 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Max Horn <max@quendi.de>, Jonathan Nieder <jrnieder@gmail.com>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Apr 18 11:28:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USl19-0007C7-Mq
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 11:20:36 +0200
+	id 1USl8X-0007hW-1w
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 11:28:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966522Ab3DRJU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 05:20:27 -0400
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:47350 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966504Ab3DRJUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 05:20:23 -0400
-Received: by mail-ia0-f174.google.com with SMTP id m10so296016iam.19
-        for <git@vger.kernel.org>; Thu, 18 Apr 2013 02:20:22 -0700 (PDT)
+	id S966551Ab3DRJ2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 05:28:01 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:63836 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967142Ab3DRJ17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 05:27:59 -0400
+Received: by mail-lb0-f180.google.com with SMTP id t11so2475810lbi.39
+        for <git@vger.kernel.org>; Thu, 18 Apr 2013 02:27:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=pEgYJUApEDvjTjDyZNYgPT1Aq16mhuI+CQhIuoTjm8Q=;
-        b=oBX74TW2aKjz/xNb8pgkgDE+dw5/mrnegEqmk/yXqSdavd+6ULw201kn3bDY5dvQZz
-         fL04fu5zmrqASYZ6Eq6Ms8ji+GlCIcg1ybVkwpimgX3FDMYPfO6UZosCnWDvL6JsmRIa
-         IlBLDe4BTacQdpf25YOAKTH8RScZrqGLEev67jMoQ6yc5yZiCH1okWCB8P5eHUSIFcsV
-         cOgqExqlhM90nNk7j4WzR7AV2nWMKkz/Nr47Y+nsgBddNGYeSOLXGHp4QS0B7K8n/s4+
-         0uBJosj03buCglmltDrYqxckszRQilikTykQWsl50hm8VrR6RjpQSg4npymGAVQSC87d
-         bbbQ==
-X-Received: by 10.50.17.166 with SMTP id p6mr12716004igd.12.1366276822304;
- Thu, 18 Apr 2013 02:20:22 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Thu, 18 Apr 2013 02:19:42 -0700 (PDT)
-In-Reply-To: <CAMP44s3pZt3QVjS7GbXqjMS4ti3p=Vs2DmFXQjsMM3rs9qURmw@mail.gmail.com>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=NWRIVJSUQSrAPTqcwVtl+AbelTWBA3XENpX8A49kw3Q=;
+        b=fNl27gE3DPNENkEpvJXhIKmMvjzx2hvSP3vrShLnJnzaSk8H62QYKHBBOuqcWpsBDy
+         I+OHD3mA2dK3o3vq3BB8LO0WgROT9r/0mO2Fh/9dCDtKDV2Nf47b+S7IdU3/hqpZvP09
+         bvPwnw9v3wvbSTBKDTTOumW41fhApRs7fQ7bErTQEHdXFICSs7JOqOpWe4epT1wHV7Zr
+         Hyjz+bmHYhnh/BjAKttDsO6CgHBthbv/04VFZ9pwj3g3hRbBHU9eBJtJ39M40zf0ozy2
+         0qz0DrIN6d49dYovWaxbCRcnH4b1nP5D0O/vjGKYNlM1n/pJme4eXkl4YIKnXdTgBWLE
+         OwKQ==
+X-Received: by 10.112.22.198 with SMTP id g6mr1418988lbf.135.1366277277735;
+ Thu, 18 Apr 2013 02:27:57 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Thu, 18 Apr 2013 02:27:57 -0700 (PDT)
+In-Reply-To: <20130418082441.GR2278@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221631>
 
-Felipe Contreras wrote:
-> I think the commit message is fine, you don't. So YOU go ahead and
-> write the proper one. If you don't, all you are doing is being an
-> impediment to progress.
+On Thu, Apr 18, 2013 at 3:24 AM, John Keeping <john@keeping.me.uk> wrote:
+> On Wed, Apr 17, 2013 at 11:14:28PM -0500, Felipe Contreras wrote:
+>> The *:* refspec doesn't work, and never has, clarify the code and
+>> documentation to reflect that. This in effect reverts commit 9e7673e
+>> (gitremote-helpers(1): clarify refspec behaviour).
+>
+> In what way doesn't it work?  If I specify that refspec then I do get
+> output that appears sensible.
 
-Hey Felipe.  Let's get a few things straightened out first:
+% git checkout origin/master
+% make -C t t5801-remote-helpers.sh
 
-- We all act in our selfish interests, and write code to scratch our
-personal itches.  I don't write code or commit messages for anyone
-else, and neither should you.
+not ok 15 - pushing with straight refspec # TODO known breakage
 
-- However, we're not working in isolation.  We have this giant mailing
-list where we all post our patches.  It's like a bazaar where we
-compete against other patches for developer attention and potential
-reviewers.  In other words, it's a free market, and we're selling our
-product: if it fails to sell, will you blame the market or your
-product?  I write clear code and beautiful commit messages exactly for
-this reason: I'm fighting for attention!
+It fails for me here.
 
-- We have to learn to interoperate with others' code and conventions,
-if we want to be part of the community.  That doesn't mean that we
-drown out our individuality, but it means that a our patch series has
-to conform to some minimal, loose, and evolving standard.  Now, you
-can argue that many of the existing conventions are outdated (I do it
-all the time), but it cannot change overnight.  Your influence on the
-community will show up over an extended period of time.
 
-- We are not an old enterprise who blame breakages on a few
-individuals, and fire them.  We're a community where all of us are
-equally responsible for all parts of the code.  I am as responsible
-for the remote-hg code in master as you are, as I had every
-opportunity to review it when the patch series came up on the list.  I
-might have chosen not to, but that doesn't relieve me of
-responsibility.
+>>  Documentation/gitremote-helpers.txt |  4 ++--
+>>  t/t5801-remote-helpers.sh           | 15 ---------------
+>>  transport-helper.c                  |  2 +-
+>>  3 files changed, 3 insertions(+), 18 deletions(-)
+>>
+>> diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+>> index f506031..0c91aba 100644
+>> --- a/Documentation/gitremote-helpers.txt
+>> +++ b/Documentation/gitremote-helpers.txt
+>> @@ -174,8 +174,8 @@ ref.
+>>  This capability can be advertised multiple times.  The first
+>>  applicable refspec takes precedence.  The left-hand of refspecs
+>>  advertised with this capability must cover all refs reported by
+>> -the list command.  If a helper does not need a specific 'refspec'
+>> -capability then it should advertise `refspec *:*`.
+>> +the list command.  If no 'refspec' capability is advertised,
+>> +there is an implied `refspec *:*`.
+>
+> This is wrong.
 
--  We don't practice division of labour.  There are no managers,
-"testing people", "documentation people", "code-writing people",
-"commit-message writing people" etc.  Everyone has to do some portion
-of all these tasks, although we try to keep the boring work/ technical
-debt to a minimum.  Don't ask other people to write commit messages
-for your code.
+It has been like that since v1.7.0.
+
+> As your later patch makes clearer, there is no implied
+> refspec for push - it only works for fetch.  I found the wording you've
+> reverted to extremely misleading.  How about something like this:
+>
+>     For historical reasons, 'import' treats the absence of a 'refspec'
+>     line as equivalent to `refspec *:*`; remote helpers should always
+>     specify an explicit refspec.
+
+Maybe my version was "misleading" because it didn't mention it was for
+historical reasons, but yours is plain wrong; remote helpers might not
+be using 'import' or 'export' at all, so not all remote helpers should
+always specify an explicit refspec. And if the previous text "It is
+recommended that all importers providing the 'import' capability use
+this. It's mandatory for 'export'." does not convey the idea these
+remote helpers should always specify an explicit refspec, I don't know
+what it does.
+
+-- 
+Felipe Contreras
