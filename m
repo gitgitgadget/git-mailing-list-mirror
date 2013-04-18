@@ -1,58 +1,73 @@
-From: Ilya Basin <basinilya@gmail.com>
-Subject: Re[2]: put THEIR commits AFTER my commits with a single rebase command
-Date: Thu, 18 Apr 2013 10:59:00 +0400
-Message-ID: <1279652941.20130418105900@gmail.com>
-References: <1928280357.20130418091807@gmail.com> <CALKQrgeYrsOOR9z+khOkGWhy38LPXwHFo9wf8RrZr3LsM3zTAg@mail.gmail.com>
-Reply-To: Ilya Basin <basinilya@gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 1/6] transport-helper: clarify *:* refspec
+Date: Thu, 18 Apr 2013 09:28:05 +0200
+Message-ID: <87li8gxpq2.fsf@linux-k42r.v.cablecom.net>
+References: <1366243524-18202-1-git-send-email-felipe.contreras@gmail.com>
+	<1366243524-18202-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Git mailing list <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Apr 18 08:59:21 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Max Horn <max@quendi.de>, Jonathan Nieder <jrnieder@gmail.com>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 09:28:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USioS-0003rl-Hj
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 08:59:20 +0200
+	id 1USjGQ-0004OA-4V
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 09:28:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965999Ab3DRG7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 02:59:08 -0400
-Received: from mail-la0-f50.google.com ([209.85.215.50]:32854 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965991Ab3DRG7H (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 02:59:07 -0400
-Received: by mail-la0-f50.google.com with SMTP id el20so2251682lab.9
-        for <git@vger.kernel.org>; Wed, 17 Apr 2013 23:59:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
-         :subject:in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=4eXqs0kDsZvAdTT9+BHKQ/fYBrL/+6yg7KJzbJ3FfO0=;
-        b=dC6fPVOXqn+ip+5IrwDj4RXbiioN6opkN/60PtRp5weYGmxmDH+QPc5u4kfGtt/RR1
-         4E/RHS7PUy+aby2zNonZie4ax8iAlsKTi6sYdAty4E9oNwgoyqpw4f1ipc90bLreue1R
-         zE1qd2+K9qEVXYiCLbVH0GNXcQgdruVmPy7ML+K928acVN5NxYguwKjMbd/ZymhnAwR0
-         WmlKn2te/4sSgq0QAaU2b96jZjCp8G5acQW9J6Pxfcxqkucz/x8OZRDQElLXvaCDlB9z
-         mY66T1NaI6IwYYWWKLDchMdpC+0gt4rZ8cz+QBqnSO7JW9qOKfbGDUdK0x7RUcbchk0y
-         ss2w==
-X-Received: by 10.112.163.6 with SMTP id ye6mr5111034lbb.59.1366268345939;
-        Wed, 17 Apr 2013 23:59:05 -0700 (PDT)
-Received: from BASIN.reksoft.ru ([2a00:1120:0:1001:84e0:55a3:4150:1bdd])
-        by mx.google.com with ESMTPS id f4sm491325lbw.6.2013.04.17.23.59.03
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Apr 2013 23:59:04 -0700 (PDT)
-X-Mailer: Voyager (v3.99.4) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <CALKQrgeYrsOOR9z+khOkGWhy38LPXwHFo9wf8RrZr3LsM3zTAg@mail.gmail.com>
+	id S965898Ab3DRH2J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 03:28:09 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:10088 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965073Ab3DRH2I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 03:28:08 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 18 Apr
+ 2013 09:27:57 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 18 Apr 2013 09:28:04 +0200
+In-Reply-To: <1366243524-18202-2-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Wed, 17 Apr 2013 19:05:19 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221616>
 
-JH> git cherry-pick master..origin/master
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Thanks Johan.
+> The *:* refspec doesn't work, and never has, clarify the code and
+> documentation to reflect that. This in effect reverts commit 9e7673e
+> (gitremote-helpers(1): clarify refspec behaviour).
+[...]
+> -test_expect_success 'pulling with straight refspec' '
+> -	(cd local2 &&
+> -	GIT_REMOTE_TESTGIT_REFSPEC="*:*" git pull) &&
+> -	compare_refs local2 HEAD server HEAD
+> -'
+> -
+> -test_expect_failure 'pushing with straight refspec' '
+> -	test_when_finished "(cd local2 && git reset --hard origin)" &&
+> -	(cd local2 &&
+> -	echo content >>file &&
+> -	git commit -a -m eleven &&
+> -	GIT_REMOTE_TESTGIT_REFSPEC="*:*" git push) &&
+> -	compare_refs local2 HEAD server HEAD
+> -'
+
+So what's wrong with the tests?  Do they fail to test what they claim
+(how?), test something that wasn't reasonable to begin with, or
+something entirely different?
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
