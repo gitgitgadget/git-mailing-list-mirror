@@ -1,85 +1,70 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 1/6] transport-helper: clarify *:* refspec
-Date: Thu, 18 Apr 2013 05:02:11 -0500
-Message-ID: <CAMP44s35tmmgNd-vJQnqG56avSPY2NOBR6iR7eNtpfemXsfPJA@mail.gmail.com>
-References: <1366258473-12841-1-git-send-email-felipe.contreras@gmail.com>
-	<1366258473-12841-2-git-send-email-felipe.contreras@gmail.com>
-	<20130418082441.GR2278@serenity.lan>
-	<CAMP44s0cJwHSJrWKkWAwKSv8OE=OqVRdKEtBNdAvQ7YAE5-JKw@mail.gmail.com>
-	<20130418094531.GU2278@serenity.lan>
+From: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: =?tis-620?Q?=93=E4=BF=E3=B5=E9=94 =A1=D1=BA=BE=C7=A1
+ =93=CA=C7=C1=C3=CD?=
+ =?tis-620?Q?=C2=94?=
+Date: Thu, 18 Apr 2013 17:04:44 +0000
+Message-ID: <8310a9$3naia@smtp01.dtacnetwork.co.th>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Max Horn <max@quendi.de>, Jonathan Nieder <jrnieder@gmail.com>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu Apr 18 12:02:20 2013
+Content-Type: text/plain ; charset="tis-620"
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 18 12:02:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USlfW-0007Tp-CG
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 12:02:18 +0200
+	id 1USlfj-0007k9-H0
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 12:02:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755400Ab3DRKCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 06:02:14 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:44175 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755378Ab3DRKCN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 06:02:13 -0400
-Received: by mail-la0-f48.google.com with SMTP id fq13so1278032lab.35
-        for <git@vger.kernel.org>; Thu, 18 Apr 2013 03:02:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=JX7tFDR7rVKII8ViUJEMo5UJfB4NrppoZLHddi4+vA0=;
-        b=U7GmgOTA9W/6sxJzfDyIVIj973FR6WepHAwBs9gASVlfNl/ysxjiNdH/fj41G7gKdG
-         ylWic042FM+lzjkcWtkaGLxoHn74qnK3b6srO873LOWh5zyUGEshBw2K4dDMmQW3N/eq
-         A1RFE5ytMco96SeyDfNGmhxcNsJ9RF+n2ZsJbSoKmsD217WWZ3pfoDiqbwocNpnncIpp
-         srC+RA3MissxzbHILr+oKv794bBq/FZkps+1u/ff2vwJq78Si1vf5bHZIjU+qNkmoGNL
-         MTq8fMznk8dctYvJ5uLKUfTe5gozsjKpyNh4T3NV5aPk/agAjkdfFeGiW7hUfX31DBDQ
-         buhA==
-X-Received: by 10.152.27.229 with SMTP id w5mr2874657lag.46.1366279332084;
- Thu, 18 Apr 2013 03:02:12 -0700 (PDT)
-Received: by 10.114.59.210 with HTTP; Thu, 18 Apr 2013 03:02:11 -0700 (PDT)
-In-Reply-To: <20130418094531.GU2278@serenity.lan>
+	id S1755449Ab3DRKC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 06:02:27 -0400
+Received: from smtp1.dtacnetwork.co.th ([124.40.235.3]:17278 "EHLO
+	smtp01.dtacnetwork.co.th" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755408Ab3DRKC1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Apr 2013 06:02:27 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AmsJAGLDb1FzQ+cG/2dsb2JhbAAeMh6CaDaCSL4qchZ0glpWCA8nFIkBDZAzjDKGW6oPgiqBBgMEnSyKaoMLPA
+Received: from unknown (HELO mochilero4humanity.org) ([115.67.231.6])
+  by smtp01.dtacnetwork.co.th with ESMTP; 18 Apr 2013 17:02:23 +0700
+X-Mailer: out.aliceposta.it
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221637>
+X-Spam-Report: 5.2 points;
+ *  2.9 BAD_ENC_HEADER Message has bad MIME encoding in the header
+ *  3.1 DATE_IN_FUTURE_06_12 Date: is 6 to 12 hours after Received: date
+ *  2.9 TVD_SPACE_RATIO BODY: TVD_SPACE_RATIO
+ *  2.8 MIME_BASE64_TEXT RAW: Message text disguised using base64 encoding
+ * -8.0 RCVD_IN_DNSWL_HI RBL: Sender listed at http://www.dnswl.org/, high
+ *      trust
+ *      [209.132.180.67 listed in list.dnswl.org]
+ *  1.5 MSGID_FROM_MTA_HEADER Message-Id was added by a relay
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221638>
 
-On Thu, Apr 18, 2013 at 4:45 AM, John Keeping <john@keeping.me.uk> wrote:
-> On Thu, Apr 18, 2013 at 04:27:57AM -0500, Felipe Contreras wrote:
-
->> Maybe my version was "misleading" because it didn't mention it was for
->> historical reasons, but yours is plain wrong; remote helpers might not
->> be using 'import' or 'export' at all, so not all remote helpers should
->> always specify an explicit refspec. And if the previous text "It is
->> recommended that all importers providing the 'import' capability use
->> this. It's mandatory for 'export'." does not convey the idea these
->> remote helpers should always specify an explicit refspec, I don't know
->> what it does.
->
-> I didn't say mine was correct, but there was a reason that I wanted to
-> change the existing text.  Just going back to what was there before is
-> not a good way to make things better.
-
-And just because it was that way before doesn't mean it was worst.
-Your patch essentially switched from "it is implied", to "it should be
-explicit", which is wrong. Going back to the previous text is the
-simplest change that restores a reasonable explanation. The next
-patches in this series deal with the rest of the issues in this text.
-
-> In my copy of pu I don't see the text "It's mandatory for 'export'", it
-> just stops after "It is recommended that all importers providing the
-> 'import' capability use this".  That paragraph also starts with "This
-> modifies the 'import' capability" making no mention of export.
-
-This is patch 1 of 6, keep going.
-
--- 
-Felipe Contreras
+IuS/47XpIOTB6KjRtKHSw77HoSAnysfBw83CJyCh6M25IODL57m31ajQwtKht9Xo47XpqNChxdG6
+wdLD6MHgwue5zdWhpMPR6acuLi4iDQoNCuS3wsPRsM3NueTFuey+wtLC0sGk6bnL0qLpzcHZxajS
+oaS547kNCsu56MfCp9K5w9C00bq7r9S60bXUodLD47m+1+m5t9Xoy8XSwrXozcvF0sKkuSC21qfK
+wNK+qMPUp7fV6OCh1LSi1um5IA0K4rTC4Km+0tDgw9fozaeizaeh0sOi6NLHx+jSwdG54MvB1825
+IA0Ky8PXzeG1obXo0qfku6jSobfV6MPRurfD0rqh0bnhpOjky7nNwujSp+TDIKHn5LTppNO1zbrB
+0sfo0iANCqjD1KfNwtnot9XoqNi04MPU6MG16bmizaekx9LBw9i54cOn47m+1+m5t9XoIDMgqC6q
+0sLhtLnjtem50em5IA0KzdKo4MPU6MHB0qjSoaHSw6HD0LfTwNLC47Xpzdi0waHSw7PszcLo0qfh
+t+mow9SnIA0K4bXo4MHX6M3gx8XSvOjSueS7udK5w+jHwcrUurvVIKHF0bq+usfo0sHVocXY6MGk
+ubrSp6HF2OjBIA0KqaGpx8LizaHSyuO5odLD4KHUtKTH0sHkwejKp7rgy8Xo0rnV6SANCuC757mq
+6M2nt9Kn47mh0sOhw9C308rU6KfgvtfozbvD0OLCqrnsos2ntbngzaeoucq20rmh0sOz7KLC0sK1
+0ccgDQqr1uinxenHueG16KHn4LvnueDD1+jNp7fV6LzUtKGuy8HSwuG3urfR6ae50em5IA0K5MHo
+x+jSqNDgu+e54MPX6M2nos2nodLDpOnSos2nvNS0oa7LwdLC4KrouSC56dPB0bngttfozbkgwtLg
+yr611LQgDQritMLgqb7S0MLS4Mq+tdS0IOCo6dLLuenSt9Xot9XopMXYoaTF1eO5vtfpubfV6KjD
+1KfmILXo0qe+2bTgy8HXzbmh0bnH6NINCiChxdLC4LvnucrU6KfLudbop7fV6CAiw9C60rQiIOO5
+vtfpubfV6CDhxdDB1aHSw+Oq6cLS4Mq+tdS04MvF6NK51ekgDQrgu+e5ytTop6jZp+Oo47mh0sOh
+6M3gy7XYtejSp+Yg5LvhxenHus2h4MXo0uDLxejSudXpILbZocrTt9G6IOPL6cu50aHhuei5tOnH
+wqHSw+DF6NK16M3H6NIgDQoiorPQxae+1+m5t9Xo5MHowtKh4MXCt9XoqNC+uuDL57m22KfC0iDD
+6Meny8XouSDjucrHucLSpy4uLiIgDQrgwdfozeS3wsPRsM3NueTFueyo1enLudGh4KLp0uS7ttan
+wdjBwc2nttan4Mu12OHL6Kekx9LBw9i54cOnt9Xo4KHUtCANCqHF0bq22aGiwtLCpMfSwbXozcfo
+0iDLxdGn5iDLxdLC4Mu12KHSw7Ps4MvB1825ttmhICLKx8HDzcIiIA0KzdG54LnX6M2nwdKo0qHg
+y7XYodLDs+ykx9LBw9i54cOnt9Xo4KHUtKLW6bnjub7X6bm31eggDQq60qekw9Hpp7XNuuTB6OS0
+6cfo0rfT5Lvgvtfozc3Q5MMgqNDhpOjLx9Gn4L7Vwqfgvtfozbvox7ngwdfNpyANCrrSp6TD0emn
+wtGnwc2n5MHo5LTpornStLnR6bngxcINCg0K4cvF6Ke31ejB0i4uLmh0dHA6Ly93d3cudGhhaXJh
+dGguY28udGgvY29udGVudC9wb2wvMzM3NTc1DQo=
