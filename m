@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 02/13] pretty: get the correct encoding for --pretty:format=%e
-Date: Fri, 19 Apr 2013 09:08:41 +1000
-Message-ID: <1366326532-28517-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v4 03/13] pretty-formats.txt: wrap long lines
+Date: Fri, 19 Apr 2013 09:08:42 +1000
+Message-ID: <1366326532-28517-4-git-send-email-pclouds@gmail.com>
 References: <1366100702-31745-1-git-send-email-pclouds@gmail.com>
  <1366326532-28517-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,119 +12,106 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 19 01:09:26 2013
+X-From: git-owner@vger.kernel.org Fri Apr 19 01:09:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USxxE-0007F3-6d
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 01:09:24 +0200
+	id 1USxxJ-0007MV-Uk
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 01:09:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754231Ab3DRXJU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Apr 2013 19:09:20 -0400
-Received: from mail-da0-f53.google.com ([209.85.210.53]:50840 "EHLO
-	mail-da0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754074Ab3DRXJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 19:09:18 -0400
-Received: by mail-da0-f53.google.com with SMTP id n34so1611185dal.40
-        for <git@vger.kernel.org>; Thu, 18 Apr 2013 16:09:18 -0700 (PDT)
+	id S966174Ab3DRXJ0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Apr 2013 19:09:26 -0400
+Received: from mail-da0-f42.google.com ([209.85.210.42]:56623 "EHLO
+	mail-da0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754497Ab3DRXJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 19:09:25 -0400
+Received: by mail-da0-f42.google.com with SMTP id n15so1159951dad.15
+        for <git@vger.kernel.org>; Thu, 18 Apr 2013 16:09:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=KdqIehFTSm+38dgIfEFDFoWgIljYPn170wPjfviq1HA=;
-        b=L8U8O6lPNizp5mrVey704fTrz16WKzNujbXaQ/oNjuttPdUxaKHICkLoqzB2l2PLpI
-         bE8vg3DdhpZfoIexzsUlgjAMIl3Uzf+PVJX4niiIpMR9KslSAON/Z0vMifaswZBiQqXu
-         RoL7CFvyegegAsOthxTSnnyySJWAGuByTiSoAcXcHmaY0hgtjUCpZYUxnAMVhJsOfHmt
-         hmeSDC4KnqN+FkCQsGZ+fZ2YCNjpezPuyuyNnLM6UZ/NerHAItYOgMDMeCpeRAdEf9Xl
-         odrE/atyRTjJQn4SyN0h5aY5sn1McdxVLWYeIAiLXmALMao27/xvHN6YVYPHCNvq0s30
-         OlLw==
-X-Received: by 10.66.8.133 with SMTP id r5mr2372328paa.219.1366326558420;
-        Thu, 18 Apr 2013 16:09:18 -0700 (PDT)
+        bh=NVPvA7OM88/IFdBdZug5blLCNCWXEa2TIVez0V4+22Y=;
+        b=EdEDqomjrQ7d8sU93kZ0trrnhWV3CBWZve0U8Y+mh7MYIipqTMx3kXo95mSUYzaoEI
+         cqAkTh3YoEtu62y2o/lTJSdWT8QtfWbCm9AIVDE0NRTgSfVuTkHXLRUEP93olRGsEWaV
+         DyYu4u96Cn+EkfvQCtiMlJicDetioNTXwK6kIe3O5vZtALCglocLlY1tPiYw+0hLCJLX
+         q4EXlDnfNnRJy/OLV7A+ETVC1eKL61gV79tWOgKNu56BoLX2H3ETZiCYzsBf+ISzegEv
+         JgvqtdwSnBxRtpQKtzLNlsIiwlTP08eD/+GknqvmaipNk+33K+lZrV1nBpdeFAiMJ2LE
+         QAHQ==
+X-Received: by 10.68.220.2 with SMTP id ps2mr15868179pbc.51.1366326565055;
+        Thu, 18 Apr 2013 16:09:25 -0700 (PDT)
 Received: from pclouds@gmail.com (dektec3.lnk.telstra.net. [165.228.202.174])
-        by mx.google.com with ESMTPS id ra9sm12356744pab.16.2013.04.18.16.09.15
+        by mx.google.com with ESMTPS id ak1sm11214881pbc.10.2013.04.18.16.09.21
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 18 Apr 2013 16:09:17 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 19 Apr 2013 09:09:08 +1000
+        Thu, 18 Apr 2013 16:09:24 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 19 Apr 2013 09:09:15 +1000
 X-Mailer: git-send-email 1.8.2.82.gc24b958
 In-Reply-To: <1366326532-28517-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221704>
-
-parse_commit_header() provides the commit encoding for '%e' and it
-reads it from the re-encoded message, which contains the new encoding,
-not the original one in the commit object. This never happens because
---pretty=3Dformat:xxx never respects i18n.logoutputencoding. But that's
-a different story.
-
-Get the commit encoding from logmsg_reencode() instead.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221705>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- pretty.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ Documentation/pretty-formats.txt | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/pretty.c b/pretty.c
-index c361b9b..e59688b 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -776,12 +776,12 @@ struct format_commit_context {
- 	unsigned commit_message_parsed:1;
- 	struct signature_check signature_check;
- 	char *message;
-+	char *commit_encoding;
- 	size_t width, indent1, indent2;
-=20
- 	/* These offsets are relative to the start of the commit message. */
- 	struct chunk author;
- 	struct chunk committer;
--	struct chunk encoding;
- 	size_t message_off;
- 	size_t subject_off;
- 	size_t body_off;
-@@ -828,9 +828,6 @@ static void parse_commit_header(struct format_commi=
-t_context *context)
- 		} else if (!prefixcmp(msg + i, "committer ")) {
- 			context->committer.off =3D i + 10;
- 			context->committer.len =3D eol - i - 10;
--		} else if (!prefixcmp(msg + i, "encoding ")) {
--			context->encoding.off =3D i + 9;
--			context->encoding.len =3D eol - i - 9;
- 		}
- 		i =3D eol;
- 	}
-@@ -1185,7 +1182,8 @@ static size_t format_commit_one(struct strbuf *sb=
-, const char *placeholder,
- 				   msg + c->committer.off, c->committer.len,
- 				   c->pretty_ctx->date_mode);
- 	case 'e':	/* encoding */
--		strbuf_add(sb, msg + c->encoding.off, c->encoding.len);
-+		if (c->commit_encoding)
-+			strbuf_addstr(sb, c->commit_encoding);
- 		return 1;
- 	case 'B':	/* raw body */
- 		/* message_off is always left at the initial newline */
-@@ -1296,11 +1294,14 @@ void format_commit_message(const struct commit =
-*commit,
- 	context.commit =3D commit;
- 	context.pretty_ctx =3D pretty_ctx;
- 	context.wrap_start =3D sb->len;
--	context.message =3D logmsg_reencode(commit, NULL, output_enc);
-+	context.message =3D logmsg_reencode(commit,
-+					  &context.commit_encoding,
-+					  output_enc);
-=20
- 	strbuf_expand(sb, format, format_commit_item, &context);
- 	rewrap_message_tail(sb, &context, 0, 0, 0);
-=20
-+	free(context.commit_encoding);
- 	logmsg_free(context.message, commit);
- 	free(context.signature_check.gpg_output);
- 	free(context.signature_check.signer);
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-fo=
+rmats.txt
+index afac703..6bde67e 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -106,18 +106,22 @@ The placeholders are:
+ - '%P': parent hashes
+ - '%p': abbreviated parent hashes
+ - '%an': author name
+-- '%aN': author name (respecting .mailmap, see linkgit:git-shortlog[1]=
+ or linkgit:git-blame[1])
++- '%aN': author name (respecting .mailmap, see linkgit:git-shortlog[1]
++  or linkgit:git-blame[1])
+ - '%ae': author email
+-- '%aE': author email (respecting .mailmap, see linkgit:git-shortlog[1=
+] or linkgit:git-blame[1])
++- '%aE': author email (respecting .mailmap, see
++  linkgit:git-shortlog[1] or linkgit:git-blame[1])
+ - '%ad': author date (format respects --date=3D option)
+ - '%aD': author date, RFC2822 style
+ - '%ar': author date, relative
+ - '%at': author date, UNIX timestamp
+ - '%ai': author date, ISO 8601 format
+ - '%cn': committer name
+-- '%cN': committer name (respecting .mailmap, see linkgit:git-shortlog=
+[1] or linkgit:git-blame[1])
++- '%cN': committer name (respecting .mailmap, see
++  linkgit:git-shortlog[1] or linkgit:git-blame[1])
+ - '%ce': committer email
+-- '%cE': committer email (respecting .mailmap, see linkgit:git-shortlo=
+g[1] or linkgit:git-blame[1])
++- '%cE': committer email (respecting .mailmap, see
++  linkgit:git-shortlog[1] or linkgit:git-blame[1])
+ - '%cd': committer date
+ - '%cD': committer date, RFC2822 style
+ - '%cr': committer date, relative
+@@ -138,9 +142,11 @@ The placeholders are:
+ - '%gD': reflog selector, e.g., `refs/stash@{1}`
+ - '%gd': shortened reflog selector, e.g., `stash@{1}`
+ - '%gn': reflog identity name
+-- '%gN': reflog identity name (respecting .mailmap, see linkgit:git-sh=
+ortlog[1] or linkgit:git-blame[1])
++- '%gN': reflog identity name (respecting .mailmap, see
++  linkgit:git-shortlog[1] or linkgit:git-blame[1])
+ - '%ge': reflog identity email
+-- '%gE': reflog identity email (respecting .mailmap, see linkgit:git-s=
+hortlog[1] or linkgit:git-blame[1])
++- '%gE': reflog identity email (respecting .mailmap, see
++  linkgit:git-shortlog[1] or linkgit:git-blame[1])
+ - '%gs': reflog subject
+ - '%Cred': switch color to red
+ - '%Cgreen': switch color to green
 --=20
 1.8.2.82.gc24b958
