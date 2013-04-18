@@ -1,74 +1,79 @@
-From: Sivaram Kannan <siva.devel@gmail.com>
-Subject: Re: Git crash in Ubuntu 12.04
-Date: Thu, 18 Apr 2013 17:02:31 +0530
-Message-ID: <CAJiNi_FBzz2Tqp_P8BB=X7UnAaHiNH8s0FyzW4K9Xp6WZijECw@mail.gmail.com>
-References: <CAJiNi_FfU9Gsr2D9CcC0wWwgO1oKBXwxp87-wBUJBU2kyGaQNQ@mail.gmail.com>
-	<87mwt6ltia.fsf@linux-k42r.v.cablecom.net>
-	<CAJiNi_EgjgKs7oNJyGcamUFz=ARDAuBTb+bJ0uVsPFBMbZF3YA@mail.gmail.com>
-	<20130411170659.a35d2c581cf34ade13448bfa@domain007.com>
-	<CAJiNi_Gju2aJkVJJmoxnEAubfPvjaVhVF6DisaLn5kUJ3YRD=w@mail.gmail.com>
-	<20130412180525.aa5b8eacd691a427244d6ab5@domain007.com>
-	<CAJiNi_GQZf8BRkTR8+j6YjdcqUH1J1NATSrNUjZ=65V+ip6okQ@mail.gmail.com>
-	<CACsJy8AfVjhsBtfwJomRmoYsA3EMPja--y5Twq=T7-bCUQRU-w@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Thu, 18 Apr 2013 17:16:28 +0530
+Message-ID: <CALkWK0ncfuzuYSKjkT2uQy4dGR=TSnHoJNdhU9ownDUytysL6w@mail.gmail.com>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org> <CAMP44s2_wiNr4RaBOEnKnZzT4CF0qKK+bp+Lyi=Nfx3Q9ggqOQ@mail.gmail.com>
+ <7vip3npet0.fsf@alter.siamese.dyndns.org> <CAMP44s3NE3yrQoa1nZXAgy3KFXGF56Ki8icJ2z2TDigzax0nWg@mail.gmail.com>
+ <8761zm4wzg.fsf@linux-k42r.v.cablecom.net> <CAMP44s0a2VsPBMd9Vrrhwdw=SPp2HrvDdXZ9Dmzhr9A6T+Sz7w@mail.gmail.com>
+ <CABURp0qGYG4T+t36=Us328YdLzy9KjBOWot2gSOk=FgCRUCLnQ@mail.gmail.com>
+ <CAMP44s3pZt3QVjS7GbXqjMS4ti3p=Vs2DmFXQjsMM3rs9qURmw@mail.gmail.com>
+ <CALkWK0nji4m0zJPf_s0G5jfWaAN_RTGFZ6dSxfahq2OcRsu5xQ@mail.gmail.com>
+ <CAMP44s1RpgM5U0ySsof_sgEHNS1p-seQ=ciVCth9gOJMG0cpHw@mail.gmail.com>
+ <CALkWK0krWM4kJ5GTnQ2SL7HoNfNMNA0-xdRVbeatAFpyKW_RtA@mail.gmail.com> <CAMP44s0KW4_Q6-d-3=M7GzWmHwy4H--FcemK4UF5FS0t3wnOgg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Konstantin Khomoutov <flatworm@users.sourceforge.net>,
-	Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 13:32:50 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Phil Hord <phil.hord@gmail.com>, Thomas Rast <trast@inf.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 13:47:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USn51-0005gt-RQ
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 13:32:44 +0200
+	id 1USnJ5-00060H-Ay
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 13:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936228Ab3DRLcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 07:32:39 -0400
-Received: from mail-vb0-f41.google.com ([209.85.212.41]:34198 "EHLO
-	mail-vb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965340Ab3DRLcd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 07:32:33 -0400
-Received: by mail-vb0-f41.google.com with SMTP id f13so2265405vbg.28
-        for <git@vger.kernel.org>; Thu, 18 Apr 2013 04:32:32 -0700 (PDT)
+	id S967138Ab3DRLrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 07:47:10 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:42172 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967124Ab3DRLrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 07:47:09 -0400
+Received: by mail-ie0-f179.google.com with SMTP id 16so3140461iea.38
+        for <git@vger.kernel.org>; Thu, 18 Apr 2013 04:47:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=anLYu3CaCIwY81sM/vpph/GcMHJaMH6XXb/hUMQMtcQ=;
-        b=VQw1FSz3WnOd88vybPsbrc9R4ac6G3xlS5+bT6zF2LTmoonQ3+oC3yX5oEaJLuSAHT
-         1yermWufYQT2909CwvWy6klGDEO2Rh6mZ5YvhoObCqRw4RbzgpMzBy4XmHPdf1/+UmqD
-         4PCtBh8077Wi7dBRxJal66IveWtHBImDNsO+CntYQeVTm+vKoMJAkvdm3XtHxm2OnzcG
-         TqyCMvlBU30ZlxN0j02ejzAapia/3fqWG6zU6AxD5L172lntRiT0eefq8Dn7KI9hW+Hx
-         jyad2tzDS61Kupua2vch5WhzzZ+oSOogoebeQFr4wJ+MqtdHgtt79hijWtIve4VYmNw9
-         o4Pw==
-X-Received: by 10.52.93.78 with SMTP id cs14mr6877686vdb.17.1366284751707;
- Thu, 18 Apr 2013 04:32:31 -0700 (PDT)
-Received: by 10.221.3.131 with HTTP; Thu, 18 Apr 2013 04:32:31 -0700 (PDT)
-In-Reply-To: <CACsJy8AfVjhsBtfwJomRmoYsA3EMPja--y5Twq=T7-bCUQRU-w@mail.gmail.com>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=W5KySW+TocJCTcbwT9l+c9mQiGOHdrJI+yn5lltPB/I=;
+        b=RzlCala+hge2pkItiPrtoTiB/RlnOwC9BgdZ1CzUHi3d1xUBR8aqo45bEU+s7fBUsa
+         I83Vzplmb+ppztVaz6dJGP9BjurZa2ly4bRRiA/hDAphbEK2tw50JR7jJqZZ+dCi+6fO
+         vPBULghNwb+p1SMy6sp/sHdY83M8/Zcqb1hadRfYdnujCfZ1z65QhDmDoMrEc0PMxeop
+         L4HtHylIiVOvhWwiYhQbTKzc1QiGT86Sr1D7gql/agAAerkolVqojClniiQIqsYzN4h2
+         i2EafCpBBxw7S35jc6RWqBgCUKtPsyDB51atoBlOKBeALq6lNHySe2lXrma2srEIby9r
+         ISwg==
+X-Received: by 10.50.108.235 with SMTP id hn11mr6363795igb.107.1366285628814;
+ Thu, 18 Apr 2013 04:47:08 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Thu, 18 Apr 2013 04:46:28 -0700 (PDT)
+In-Reply-To: <CAMP44s0KW4_Q6-d-3=M7GzWmHwy4H--FcemK4UF5FS0t3wnOgg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221653>
 
-Hi,
+Okay, one more segment needs to be responded to.
 
-> Probably not because there are no debugging symbols. Not sure how
-> ubuntu packages these symbols..
+Felipe Contreras wrote:
+> If remote-hg wasn't available for users, they would be hurt; if stash
+> wasn't available, if rebase --interactive didn't exist, if there was
+> no msysgit, if it wasn't so fast, if the object model wasn't so simple
+> and extensible; users would be hurt. And if users didn't have all
+> these, there would be less users, and if there were less users, there
+> would be less developers, and mercurial might have been more popular,
+> and most repositories you have to work on would be in mercurial, and
+> you might be developing mercurial right now.
 
-Would recompiling the source packages and debugging would give
-different results?
+Flawed logic.
 
->
-> Any chance you could publish the repository that causes the crash?
-> --
-> Duy
+A large number of users doesn't automatically imply good software with
+lots of features, or even a great development community.  A great
+development community leads to great software.  And great software
+leads to lots of users.  Sure, there's a feedback loop pushing users
+to become developers; but it doesn't start with users of vaporware,
+leading to more developers joining the effort to turn that vaporware
+into a great product.
 
-I don't think I can publish the repo online. But I am willing to try
-any steps on the repo to get more info. Most likely I would restore
-the latest repo to the stanby server I tested which works with any
-crash. Let me know what I can do to get more information.
-
-./Siva.
+Life doesn't begin with users.
