@@ -1,102 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
-Date: Thu, 18 Apr 2013 11:16:33 -0700
-Message-ID: <7v61zj66wu.fsf@alter.siamese.dyndns.org>
-References: <7vhaj7r116.fsf@alter.siamese.dyndns.org>
-	<87txn5xzdn.fsf@linux-k42r.v.cablecom.net>
-	<7vd2ttgoyr.fsf@alter.siamese.dyndns.org>
-	<87wqs1xi9h.fsf@hexa.v.cablecom.net>
-	<7vk3o1f5kb.fsf@alter.siamese.dyndns.org>
-	<7vwqs1dnxp.fsf@alter.siamese.dyndns.org>
-	<20130417201056.GA2914@sigill.intra.peff.net>
-	<7va9owd3d1.fsf@alter.siamese.dyndns.org>
-	<20130418172714.GA24690@sigill.intra.peff.net>
-	<7vd2tr6833.fsf@alter.siamese.dyndns.org>
-	<20130418180017.GA5714@sigill.intra.peff.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v2 3/6] transport-helper: clarify pushing without refspecs
+Date: Thu, 18 Apr 2013 19:35:40 +0100
+Message-ID: <20130418183540.GB2278@serenity.lan>
+References: <1366258473-12841-1-git-send-email-felipe.contreras@gmail.com>
+ <1366258473-12841-4-git-send-email-felipe.contreras@gmail.com>
+ <20130418101133.GW2278@serenity.lan>
+ <7v38un7nnp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 18 20:16:43 2013
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Max Horn <max@quendi.de>, Jonathan Nieder <jrnieder@gmail.com>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 20:36:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UStNy-0003Gb-NE
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 20:16:43 +0200
+	id 1UStgf-00085O-0W
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 20:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932156Ab3DRSQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 14:16:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48895 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752330Ab3DRSQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 14:16:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A555217575;
-	Thu, 18 Apr 2013 18:16:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=O3vKH/vjztbQdVCkVojbXGQw/VI=; b=e5b68d
-	pXtlk9WigzFFmQ+fIE7wcfNJuyZ6nldXGJ8y/l9SOhZfe7E53yNNZeRzJFMvfWXV
-	eQ5AuaSeXIf/Q3T0DWq6faU9YpzWIauK8HTFBkmUwps6CDX+QiDKRbjNELj0jPlk
-	FDGB3lC/YoNBCQfQZtanyWmsXlBc9a+l39RiU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qTxeNOgAkHeBGJtsFISoC2BdsCEX98vs
-	fIMFHf3zkpI6IOj6cm6uBfGcvQksx2Zh1mLG/aruPInbqNFIpg++uhhPaClSADQm
-	U97XCSIUFS19YZOHjsrx8gohF8ANjHd2s7wFoiEIXOckMMcFH5P3y+UwoaQrb1Ks
-	4V3FGqRZDpE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CDB917574;
-	Thu, 18 Apr 2013 18:16:35 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S936364Ab3DRSf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 14:35:56 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:39900 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932200Ab3DRSfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 14:35:55 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 008F360650A;
+	Thu, 18 Apr 2013 19:35:55 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.999
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 2PjzMJOkAB1y; Thu, 18 Apr 2013 19:35:54 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id 6078D6064CA;
+	Thu, 18 Apr 2013 19:35:54 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 50A12161E413;
+	Thu, 18 Apr 2013 19:35:54 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YF6Yw+p01Zq9; Thu, 18 Apr 2013 19:35:53 +0100 (BST)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 004DE17572;
-	Thu, 18 Apr 2013 18:16:34 +0000 (UTC)
-In-Reply-To: <20130418180017.GA5714@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 18 Apr 2013 14:00:18 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1A83A70C-A854-11E2-90A0-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	by pichi.aluminati.org (Postfix) with ESMTPSA id EC528161E405;
+	Thu, 18 Apr 2013 19:35:42 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7v38un7nnp.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221681>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Apr 18, 2013 at 10:29:30AM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> >> diff --git a/transport-helper.c b/transport-helper.c
+> >> index cea787c..4d98567 100644
+> >> --- a/transport-helper.c
+> >> +++ b/transport-helper.c
+> >> @@ -785,6 +785,9 @@ static int push_refs_with_export(struct transport *transport,
+> >>  	struct string_list revlist_args = STRING_LIST_INIT_NODUP;
+> >>  	struct strbuf buf = STRBUF_INIT;
+> >>  
+> >> +	if (!data->refspecs)
+> >> +		die("remote-helper doesn't support push; refspec needed");
+> >
+> > I think the "refspec needed" text is likely to be confusing if an
+> > end-user ever sees this message.  I'm not sure how we can provide useful
+> > feedback for both remote helper authors and end-users though.
+> 
+> This "refspecs" only come via the helper and not directly from the
+> end user, no?
+> 
+> If that is the case, I do not think "confusing" is much of an issue.
+> Not _("localizing") is also the right thing to do.  We may want to
+> say "BUG: " at front to clarify it is not the end-user's fault, but
+> a problem they may want to report.  If we at this point know what
+> helper attempted export without giving refspecs, it may help to show
+> it here, so that developers will know with what helper the user
+> had problems with.
 
-> could work for both cases. Something like "not considering" (or another
-> synonym for "considering") might be even more accurate. It is not just
-> that we did not stage it; it is what we did not even consider it an item
-> for staging under the current rules.
-
-Yes, "not considering" is much more sensible, while side-stepping
-the dryrun issue.  Or
-
-       warning("ignoring removal of '%s'")
-
-> Note that the "not staging" warnings may potentially be interspersed
-> with the normal dry-run output. I think that's OK.
-
-As long as the top-text makes it clear what "not considering" (or
-"ignoring") in the following text means, I think it is fine.
-
-But I think we are doing users a disservice by listing tons of
-paths.  Where the difference of versions matters _most_ is when the
-user has tons of removed paths in the working tree.  Either with one
-warning per path, or a block of collected paths at the end, we are
-scrolling the more important part of the message up.
-
-That was why I originally showed one path as an example and stopped
-there.  Perhaps it is a better solution to keep that behaviour and
-rephrase the message to say that we ignored removal of paths like
-this one '%s' you lost from the working tree but it will change in
-Git 2.0 and you will better learn to use the --no-all option now.
-
-The inter-topic conflicts between stages of three "add in Git 2.0"
-topics is getting cumbersome even with the help from rerere, so I'd
-like to merge their preparatory steps as I have them now to 'next'
-and merge them down to 'master' first, and start applying tweaks
-from there, or something.
+I like this idea.  Perhaps we should say "Bug in remote helper; refspec
+needed with export", so that it clearly indicates to both end-users and
+remote helper authors that the error is in the remote helper.
