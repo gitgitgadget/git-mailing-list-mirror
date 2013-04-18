@@ -1,81 +1,78 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Thu, 18 Apr 2013 13:20:31 +0530
-Message-ID: <CALkWK0nb0Z2Uf7XJHgEiQ5rM7EVVA7-ZMhMOjMewmKKGYziw2w@mail.gmail.com>
-References: <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com>
- <20130407170201.GH2222@serenity.lan> <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com>
- <20130407175210.GI2222@serenity.lan> <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com>
- <20130407182112.GJ2222@serenity.lan> <5161BC33.8060707@web.de>
- <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com>
- <5161D3C5.9060804@web.de> <CALkWK0k_vmXZr-x8=ZctouWbuVgv-1sptC0WX2aJ+yYD-T8cxA@mail.gmail.com>
- <20130407212342.GA19857@elie.Belkin> <CACsJy8BoWfng7p=kHbiF9s6XYH1mPMtAGW6BRz54uYM5454O0w@mail.gmail.com>
- <CALkWK0mcnA8Qss3uxRXhfHst65RLkv43wje9xdFxmFKi7MtZvA@mail.gmail.com>
- <CACsJy8Bz+yNefiiwEivaaUgRymHTmUUKEFs8_uuonhmRfT3UGg@mail.gmail.com>
- <CALkWK0m9QmZaSDruY=+2F-Kkw+fd6E1TYCTBpVQHRJrzq2VjCQ@mail.gmail.com> <BCD944518C304D7D9809346DD899B68F@PhilipOakley>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	John Keeping <john@keeping.me.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Thu Apr 18 09:51:20 2013
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 2/2] api-parse-options.txt: document "no-" for non-boolean options
+Date: Thu, 18 Apr 2013 09:46:35 +0200
+Message-ID: <1366271195-4276-3-git-send-email-mhagger@alum.mit.edu>
+References: <7vbo9ceqb3.fsf@alter.siamese.dyndns.org>
+ <1366271195-4276-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 09:54:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USjcj-0006oZ-8Z
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 09:51:17 +0200
+	id 1USjff-0001r5-UB
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 09:54:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965631Ab3DRHvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 03:51:13 -0400
-Received: from mail-ia0-f173.google.com ([209.85.210.173]:50827 "EHLO
-	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965398Ab3DRHvM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 03:51:12 -0400
-Received: by mail-ia0-f173.google.com with SMTP id j5so2223503iaf.32
-        for <git@vger.kernel.org>; Thu, 18 Apr 2013 00:51:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=HUecKuTXR2qg1xEW9DMZ7Zk2v+6fMCpA3r6/j4Cf0gg=;
-        b=QAIXX3BGNO3awgxw4agAqja1VmG/6DEbmvXo8Sr6L+ZkqvhpGR1ah2EIrHA1+gvvWg
-         KhVADcAimzRvMDv4yEAbwgYCcV5lHq4IJKDnuNnTiPkqhD3Yz6MUm94637tiRGwNoE3a
-         m1GFM9ErVEfJRPxG/R4A5GVT0/nsamC4iTHpYBvSlx7UysABe7N8/RqvORrN73bfN3ZM
-         eSKsDR9aH6u7PzjA8AR15D70881o6NdLzCI2U5OFkXZ/zrcv9gJ7zO5rdK1Y+1bBUuTX
-         MAah7B0Frdu5dXRU3G9mmMAe5w01FvbudZuENLF4DqBxy4TQ0qPITu0G31C8vrH+0cym
-         nkcg==
-X-Received: by 10.43.9.68 with SMTP id ov4mr5384244icb.22.1366271472052; Thu,
- 18 Apr 2013 00:51:12 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Thu, 18 Apr 2013 00:50:31 -0700 (PDT)
-In-Reply-To: <BCD944518C304D7D9809346DD899B68F@PhilipOakley>
+	id S1754892Ab3DRHyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 03:54:15 -0400
+Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:50388 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754051Ab3DRHyP (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Apr 2013 03:54:15 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Apr 2013 03:54:14 EDT
+X-AuditID: 1207440d-b7fd06d000000905-e0-516fa50024c3
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 5D.60.02309.005AF615; Thu, 18 Apr 2013 03:47:13 -0400 (EDT)
+Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3I7kuVA006934
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 18 Apr 2013 03:47:11 -0400
+X-Mailer: git-send-email 1.8.2.1
+In-Reply-To: <1366271195-4276-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixO6iqMu4ND/Q4PMhJouuK91MFg29V5gt
+	Vj6+y2xxe8V8ZosfLT3MDqwef99/YPJof/+O2eNZ7x5Gj4uXlD0+b5ILYI3itklKLCkLzkzP
+	07dL4M54uWMdY8Fj9ooJS66zNjAeZOti5OSQEDCR2LBmLyuELSZx4d56oDgXh5DAZUaJtl+9
+	LCAJIYEzTBLvdoSD2GwCuhKLepqZQGwRATWJiW2HWEAamAX6GCX6180DSwgLBEnMu/wezGYR
+	UJU4cH4XM4jNK+AssefgFXaIbQoSx7dvYwSxOQVcJB4fvs4KsSxf4tupk2wTGHkXMDKsYpRL
+	zCnN1c1NzMwpTk3WLU5OzMtLLdI10svNLNFLTSndxAgJKt4djP/XyRxiFOBgVOLh7VyRFyjE
+	mlhWXJl7iFGSg0lJlNdySX6gEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHeR7JAOd6UxMqq1KJ8
+	mJQ0B4uSOK/aEnU/IYH0xJLU7NTUgtQimKwMB4eSBG8wyFDBotT01Iq0zJwShDQTByeI4ALZ
+	wAO0wR+kkLe4IDG3ODMdougUo6KUOG8KSEIAJJFRmgc3ABb/rxjFgf4R5o0FqeIBpg647ldA
+	g5mABh9YlQ0yuCQRISXVwOizXzn8xFwDmdVPp5zeOffrwcDmlXwfHKu0PZOMk+r3azhe/W6+
+	JsHt9syHM098vXBMfn5Vwxvb5qwEu+Pdk+SW2ofNeRtnXuikIv1ahttkX3pQ8lauJzIpQhnc
+	z5dvM1jJ4ie3mPfipy31b0/6S/vFbZhTZbrl4IcVs1dY7ctdeXXLTN9J4oJKLMUZ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221623>
 
-Philip Oakley wrote:
-> Would it be possible to summarise the key points and proposals of where the
-> subject is now?
+Document that the "no-" prefix can also be used for non-boolean
+options.
 
-Sure.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ Documentation/technical/api-parse-options.txt | 2 ++
+ 1 file changed, 2 insertions(+)
 
-If you want an update from the current approach, wait for a v2; I'm
-cooking it for some time, and getting some resulting ideas merged into
-upstream early (look for clone.submoduleGitDir on the list, for
-instance).  When upstream is in better shape to ease in a better
-fundamental design, I'll post my v2 to the list.  I'll refrain from
-posting any updates now, because I don't think the resulting
-discussion will generate any value.
-
-If you want to know what this thread was about, I think [1] and [2]
-summarize my arguments quite well.
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/220047/focus=220436
-[2]: http://thread.gmane.org/gmane.comp.version-control.git/220047/focus=220495
+diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
+index 32ddc1c..2ff368e 100644
+--- a/Documentation/technical/api-parse-options.txt
++++ b/Documentation/technical/api-parse-options.txt
+@@ -41,6 +41,8 @@ The parse-options API allows:
+ * Boolean long options can be 'negated' (or 'unset') by prepending
+   `no-`, e.g. `--no-abbrev` instead of `--abbrev`. Conversely,
+   options that begin with `no-` can be 'negated' by removing it.
++  Other long options can be unset (e.g., set string to NULL, set
++  integer to 0) by prepending `no-`.
+ 
+ * Options and non-option arguments can clearly be separated using the `--`
+   option, e.g. `-a -b --option -- --this-is-a-file` indicates that
+-- 
+1.8.2.1
