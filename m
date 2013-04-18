@@ -1,142 +1,99 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 2/2] submodule: drop the top-level requirement
-Date: Thu, 18 Apr 2013 15:56:18 +0100
-Message-ID: <20130418145617.GA2278@serenity.lan>
-References: <cover.1365364193.git.john@keeping.me.uk>
- <cover.1365539059.git.john@keeping.me.uk>
- <4a6394e9e7124c2ad5a3ce232dc746e85cb1c600.1365539059.git.john@keeping.me.uk>
- <CALkWK0==bnrRJDk1daANoZOOVLwZOPM+YhwOZs7yimoYBoyXyA@mail.gmail.com>
+From: Sivaram Kannan <siva.devel@gmail.com>
+Subject: Re: Git crash in Ubuntu 12.04
+Date: Thu, 18 Apr 2013 20:46:45 +0530
+Message-ID: <CAJiNi_HA5bNO8gMHkts_e+dWG26n=S7MRF5wc_L+v=rbnM91oQ@mail.gmail.com>
+References: <CAJiNi_FfU9Gsr2D9CcC0wWwgO1oKBXwxp87-wBUJBU2kyGaQNQ@mail.gmail.com>
+	<87mwt6ltia.fsf@linux-k42r.v.cablecom.net>
+	<CAJiNi_EgjgKs7oNJyGcamUFz=ARDAuBTb+bJ0uVsPFBMbZF3YA@mail.gmail.com>
+	<20130411170659.a35d2c581cf34ade13448bfa@domain007.com>
+	<CAJiNi_Gju2aJkVJJmoxnEAubfPvjaVhVF6DisaLn5kUJ3YRD=w@mail.gmail.com>
+	<20130412180525.aa5b8eacd691a427244d6ab5@domain007.com>
+	<CAJiNi_GQZf8BRkTR8+j6YjdcqUH1J1NATSrNUjZ=65V+ip6okQ@mail.gmail.com>
+	<CACsJy8AfVjhsBtfwJomRmoYsA3EMPja--y5Twq=T7-bCUQRU-w@mail.gmail.com>
+	<CAJiNi_FBzz2Tqp_P8BB=X7UnAaHiNH8s0FyzW4K9Xp6WZijECw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 16:56:35 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Konstantin Khomoutov <flatworm@users.sourceforge.net>,
+	Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 17:16:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USqGJ-0001Pn-5o
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 16:56:35 +0200
+	id 1USqZw-0000b5-5E
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 17:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967450Ab3DRO4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 10:56:31 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:53824 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965740Ab3DRO43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 10:56:29 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 7306760659B;
-	Thu, 18 Apr 2013 15:56:29 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Mw7H+zbEHldZ; Thu, 18 Apr 2013 15:56:29 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 5E8146064E0;
-	Thu, 18 Apr 2013 15:56:19 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0==bnrRJDk1daANoZOOVLwZOPM+YhwOZs7yimoYBoyXyA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S967297Ab3DRPQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 11:16:48 -0400
+Received: from mail-vb0-f47.google.com ([209.85.212.47]:37169 "EHLO
+	mail-vb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966917Ab3DRPQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 11:16:46 -0400
+Received: by mail-vb0-f47.google.com with SMTP id x13so2490208vbb.20
+        for <git@vger.kernel.org>; Thu, 18 Apr 2013 08:16:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=rwJZeHpwhnYLF7dDQl19NNr3/QrfNTcLhUd4davxak4=;
+        b=sCP+rE3CA/9TamU7wCLvic6a1/Hlp5lyvrLNfodnxteBf7cO2s6pK8qzdh3X5B908y
+         VQaN56O24RfsQhh7CNoTH56gd/i/fq8ET1R71bftnRmgAV2Uy8LttOoTwD8lXwR+dU+i
+         9if7vLmD8ypZ3eeCnsmtm44tg8R71q7olSkZkxJOo58BJh2K5F8JnMRESQYIFWObN6y6
+         zyoMg4/lpl68VVRCbFmCJhpHWi1vlZtZe79kDA4F3nFKHbOYYXajxYCRSu2ZP16i9jXd
+         tTcB/ymMudFOt+0ohxA38HiSzE/ImrfP3xp3WoL/j8mGbbJ/brMBNug0cUGs8+cvPoAp
+         UO6A==
+X-Received: by 10.58.85.134 with SMTP id h6mr8629333vez.18.1366298205570; Thu,
+ 18 Apr 2013 08:16:45 -0700 (PDT)
+Received: by 10.221.3.131 with HTTP; Thu, 18 Apr 2013 08:16:45 -0700 (PDT)
+In-Reply-To: <CAJiNi_FBzz2Tqp_P8BB=X7UnAaHiNH8s0FyzW4K9Xp6WZijECw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221663>
 
-On Thu, Apr 18, 2013 at 08:16:42PM +0530, Ramkumar Ramachandra wrote:
-> John Keeping wrote:
-> > Use the new rev-parse --prefix option to process all paths given to the
-> > submodule command, dropping the requirement that it be run from the
-> > top-level of the repository.
-> 
-> Yay!
-> 
-> > diff --git a/git-submodule.sh b/git-submodule.sh
-> > index 79bfaac..bbf7983 100755
-> > --- a/git-submodule.sh
-> > +++ b/git-submodule.sh
-> > @@ -112,6 +115,7 @@ resolve_relative_url ()
-> >  #
-> >  module_list()
-> >  {
-> > +       eval "set $(git rev-parse --sq --prefix "$wt_prefix" -- "$@")"
-> 
-> Nit: Why not use "--" to disambiguate between options and arguments,
-> like you showed in your intended usage?
+Hi,
 
-Erm... it does.  What's before "$@"?
+The git crashed during one of the commits by a developer I think, the
+remote is not even showing the working branch. The local branch of is
+all right, but the remote repo is corrupted and could not git fsck
+also. Is restoring the last night's backup is my only option??
 
-Ah, you mean after "set".  In this case, rev-parse will keep the "--" we
-supply to it, so we get that from there and do not want to give set an
-extra one.
+$ git remote show origin
+* remote origin
+  Fetch URL: git@gitserver:sggroup/sgrid.git
+  Push  URL: git@gitserver:sggroup/sgrid.git
+  HEAD branch: master
+  Remote branches:
+    SGRID_5_5_0_BRANCH                 tracked
+    master                                 tracked
+    refs/remotes/origin/4_4_Release_Branch stale (use 'git remote prune' to remo
+ve)
+  Local branch configured for 'git pull':
+    4_4_Release_Branch merges with remote 4_4_Release_Branch
 
-> So, this essentially converts all the paths specified in "$@" to
-> toplevel-relative paths.  Beautiful, as this is practically the only
-> change you require in each function.
-> 
-> > +       sm_path="$wt_prefix$sm_path"
-> 
-> Wait, isn't sm_path the value of submodule.<name>.path in .gitmodules?
->  Why does it need to be prefixed?
+Thanks,
+./Siva.
 
-I think you've lost too much context here.  This is in cmd_add and at
-this point sm_path holds the argument supplied by the user, which we
-must adjust as it will be relative to the current directory.
-
-We should probably be testing for an absolute path here though.
-
-> > @@ -942,6 +948,7 @@ cmd_summary() {
-> >         fi
-> >
-> >         cd_to_toplevel
-> > +       eval "set $(git rev-parse --sq --prefix "$wt_prefix" -- "$@")"
-> 
-> Um, what about other functions?  Yeah, it looks like all of them
-> except this one call module_list().
-
-Exactly.  Apart from this and cmd_add everything uses module_list.
-
-> > diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> > index ff26535..7795f21 100755
-> > --- a/t/t7400-submodule-basic.sh
-> > +++ b/t/t7400-submodule-basic.sh
-> > @@ -212,6 +212,23 @@ test_expect_success 'submodule add with ./, /.. and // in path' '
-> >         test_cmp empty untracked
-> >  '
-> >
-> > +test_expect_success 'submodule add in subdir' '
-> > +       echo "refs/heads/master" >expect &&
-> > +       >empty &&
-> 
-> Nit: Use : >empty.  It's clearer.
-> 
-> > +       (
-> > +               mkdir addtest/sub &&
-> 
-> Why is the mkdir inside the subshell?  The next statement (cd) onwards
-> should be in the subshell, to save you cd'ing back.
+On Thu, Apr 18, 2013 at 5:02 PM, Sivaram Kannan <siva.devel@gmail.com> wrote:
+> Hi,
 >
-> > +               cd addtest/sub &&
-> > +               git submodule add "$submodurl" ../realsubmod3 &&
-> > +               git submodule init
-> > +       ) &&
-> > +
-> > +       rm -f heads head untracked &&
-> 
-> Huh?  What is this in the middle?  The next statement (call to
-> inspect) write-truncates them anyway, so this is unnecessary.
-
-I just followed the surrounding tests here.  I think it's better for
-follow the pattern of the surrounding code here than get this one test
-perfect.  A cleanup can follow on top if someone wants to do it.
+>> Probably not because there are no debugging symbols. Not sure how
+>> ubuntu packages these symbols..
+>
+> Would recompiling the source packages and debugging would give
+> different results?
+>
+>>
+>> Any chance you could publish the repository that causes the crash?
+>> --
+>> Duy
+>
+> I don't think I can publish the repo online. But I am willing to try
+> any steps on the repo to get more info. Most likely I would restore
+> the latest repo to the stanby server I tested which works with any
+> crash. Let me know what I can do to get more information.
+>
+> ./Siva.
