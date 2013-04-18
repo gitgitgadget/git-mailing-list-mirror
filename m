@@ -1,119 +1,57 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 1/6] transport-helper: clarify *:* refspec
-Date: Thu, 18 Apr 2013 10:45:31 +0100
-Message-ID: <20130418094531.GU2278@serenity.lan>
-References: <1366258473-12841-1-git-send-email-felipe.contreras@gmail.com>
- <1366258473-12841-2-git-send-email-felipe.contreras@gmail.com>
- <20130418082441.GR2278@serenity.lan>
- <CAMP44s0cJwHSJrWKkWAwKSv8OE=OqVRdKEtBNdAvQ7YAE5-JKw@mail.gmail.com>
+From: Konstantin Khomoutov <kostix+git@007spb.ru>
+Subject: Pushing/fetching from/into a shallow-cloned repository
+Date: Thu, 18 Apr 2013 13:52:33 +0400
+Message-ID: <20130418135233.87aa23896fa48dc2d87d80fb@domain007.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Max Horn <max@quendi.de>, Jonathan Nieder <jrnieder@gmail.com>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 11:45:55 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 18 11:52:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USlPe-0003QF-LY
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 11:45:54 +0200
+	id 1USlWE-0003Zf-1N
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 11:52:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967162Ab3DRJpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 05:45:50 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:39080 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967049Ab3DRJpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 05:45:49 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 0BB82866004;
-	Thu, 18 Apr 2013 10:45:48 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Y0nayJu5FrrS; Thu, 18 Apr 2013 10:45:46 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id 8947ECDA596;
-	Thu, 18 Apr 2013 10:45:45 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 7780C161E405;
-	Thu, 18 Apr 2013 10:45:45 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VqYZEp5Z0raE; Thu, 18 Apr 2013 10:45:44 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id EE2AB161E413;
-	Thu, 18 Apr 2013 10:45:33 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CAMP44s0cJwHSJrWKkWAwKSv8OE=OqVRdKEtBNdAvQ7YAE5-JKw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S966886Ab3DRJwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 05:52:37 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:56989 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966220Ab3DRJwg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 05:52:36 -0400
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r3I9qWfB028142
+	for <git@vger.kernel.org>; Thu, 18 Apr 2013 13:52:33 +0400
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221634>
 
-On Thu, Apr 18, 2013 at 04:27:57AM -0500, Felipe Contreras wrote:
-> On Thu, Apr 18, 2013 at 3:24 AM, John Keeping <john@keeping.me.uk> wrote:
-> > On Wed, Apr 17, 2013 at 11:14:28PM -0500, Felipe Contreras wrote:
-> >> diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-> >> index f506031..0c91aba 100644
-> >> --- a/Documentation/gitremote-helpers.txt
-> >> +++ b/Documentation/gitremote-helpers.txt
-> >> @@ -174,8 +174,8 @@ ref.
-> >>  This capability can be advertised multiple times.  The first
-> >>  applicable refspec takes precedence.  The left-hand of refspecs
-> >>  advertised with this capability must cover all refs reported by
-> >> -the list command.  If a helper does not need a specific 'refspec'
-> >> -capability then it should advertise `refspec *:*`.
-> >> +the list command.  If no 'refspec' capability is advertised,
-> >> +there is an implied `refspec *:*`.
-> >
-> > This is wrong.
-> 
-> It has been like that since v1.7.0.
+The git-clone manual page, both [1] and my local copy coming with
+Git for Windows 1.8.1, say about the --depth command-line option:
 
-That doesn't mean it's right.  I suspect that it was originally correct,
-but then 'export' was added at which point this became stale.
+   --depth <depth>
 
-> > As your later patch makes clearer, there is no implied
-> > refspec for push - it only works for fetch.  I found the wording you've
-> > reverted to extremely misleading.  How about something like this:
-> >
-> >     For historical reasons, 'import' treats the absence of a 'refspec'
-> >     line as equivalent to `refspec *:*`; remote helpers should always
-> >     specify an explicit refspec.
-> 
-> Maybe my version was "misleading" because it didn't mention it was for
-> historical reasons, but yours is plain wrong; remote helpers might not
-> be using 'import' or 'export' at all, so not all remote helpers should
-> always specify an explicit refspec. And if the previous text "It is
-> recommended that all importers providing the 'import' capability use
-> this. It's mandatory for 'export'." does not convey the idea these
-> remote helpers should always specify an explicit refspec, I don't know
-> what it does.
+     Create a shallow clone with a history truncated to the specified
+     number of revisions. A shallow repository has a number of
+     limitations (you cannot clone or fetch from it, nor push from nor
+     into it), but is adequate if you are only interested in the recent
+     history of a large project with a long history, and would want to
+     send in fixes as patches.
 
-I didn't say mine was correct, but there was a reason that I wanted to
-change the existing text.  Just going back to what was there before is
-not a good way to make things better.
+But having done a shallow clone (--depth=1) of one of my repositories,
+I was able to record a new commit, push it out to a "reference" bare
+repository and then fetch back to another clone of the same repository
+just fine.  I have then killed my test commit doing a forced push from
+another clone and subsequently was able to do `git fetch` in my shallow
+clone just fine.
 
-In my copy of pu I don't see the text "It's mandatory for 'export'", it
-just stops after "It is recommended that all importers providing the
-'import' capability use this".  That paragraph also starts with "This
-modifies the 'import' capability" making no mention of export.
+So I observe pushing/fetching works OK at least for a simple case like
+this one.
 
-Perhaps we need a slightly more extensive re-write of the documentation
-for refspec to make it very clear where it applies and when it is
-needed.
+Hence I'd like to ask: if the manual page is wrong or I'm observing
+some corner case?
