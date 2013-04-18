@@ -1,97 +1,69 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 3/6] transport-helper: clarify pushing without refspecs
-Date: Thu, 18 Apr 2013 19:35:40 +0100
-Message-ID: <20130418183540.GB2278@serenity.lan>
-References: <1366258473-12841-1-git-send-email-felipe.contreras@gmail.com>
- <1366258473-12841-4-git-send-email-felipe.contreras@gmail.com>
- <20130418101133.GW2278@serenity.lan>
- <7v38un7nnp.fsf@alter.siamese.dyndns.org>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: [PATCH 3/6] transport-helper: clarify pushing without refspecs
+Date: Thu, 18 Apr 2013 20:56:47 +0200
+Message-ID: <517041EF.5060000@gmail.com>
+References: <1366243524-18202-1-git-send-email-felipe.contreras@gmail.com> <1366243524-18202-4-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Max Horn <max@quendi.de>, Jonathan Nieder <jrnieder@gmail.com>,
 	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 18 20:36:02 2013
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 18 20:57:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UStgf-00085O-0W
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 20:36:01 +0200
+	id 1USu0y-0007AQ-20
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Apr 2013 20:57:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936364Ab3DRSf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 14:35:56 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:39900 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932200Ab3DRSfz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 14:35:55 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 008F360650A;
-	Thu, 18 Apr 2013 19:35:55 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2PjzMJOkAB1y; Thu, 18 Apr 2013 19:35:54 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 6078D6064CA;
-	Thu, 18 Apr 2013 19:35:54 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 50A12161E413;
-	Thu, 18 Apr 2013 19:35:54 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YF6Yw+p01Zq9; Thu, 18 Apr 2013 19:35:53 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id EC528161E405;
-	Thu, 18 Apr 2013 19:35:42 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7v38un7nnp.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754358Ab3DRS4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 14:56:55 -0400
+Received: from mail-ee0-f50.google.com ([74.125.83.50]:43138 "EHLO
+	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751045Ab3DRS4z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 14:56:55 -0400
+Received: by mail-ee0-f50.google.com with SMTP id e53so1483424eek.9
+        for <git@vger.kernel.org>; Thu, 18 Apr 2013 11:56:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=SKAhEqMdAAytnH/oYWf4bPbWhxxsXX+fbpG2cCh2Kl4=;
+        b=yLkbpHdDr8gk0s/w11m6/UVb6Mv2kFnT8IwWQPRFmH6oHpZio1ouX45jBTrUQc6k3S
+         gJsJcwIFVch0irvqRGaxlq3lVRiDqrnn+Nh4EJjfWShHGAG7fOI9P+tAppX4S5YraFbL
+         BY50SMxGsjrD3mhv2Y7pDgkgI4Qiv1pwdwA4bBnfvCtjx4mgqa0qwAmDw2GmumY30r+V
+         Gtg6f2q4qP7ictzRosaQHU+6//XfBQZiAPlp9FEaeb91odpgGL6HVQm9cyEGZYPTSJc5
+         JPfoAvxIZWQOqpOdiiXGEawZCVEjaQlg6tLXNsYiJKsMsanTlW8olnLf3Qpj55F5KJmt
+         YObA==
+X-Received: by 10.15.75.70 with SMTP id k46mr33350907eey.4.1366311414013;
+        Thu, 18 Apr 2013 11:56:54 -0700 (PDT)
+Received: from [192.168.178.20] (host93-95-dynamic.6-79-r.retail.telecomitalia.it. [79.6.95.93])
+        by mx.google.com with ESMTPS id ch6sm17814293eeb.17.2013.04.18.11.56.50
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 18 Apr 2013 11:56:53 -0700 (PDT)
+In-Reply-To: <1366243524-18202-4-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221682>
 
-On Thu, Apr 18, 2013 at 10:29:30AM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> >> diff --git a/transport-helper.c b/transport-helper.c
-> >> index cea787c..4d98567 100644
-> >> --- a/transport-helper.c
-> >> +++ b/transport-helper.c
-> >> @@ -785,6 +785,9 @@ static int push_refs_with_export(struct transport *transport,
-> >>  	struct string_list revlist_args = STRING_LIST_INIT_NODUP;
-> >>  	struct strbuf buf = STRBUF_INIT;
-> >>  
-> >> +	if (!data->refspecs)
-> >> +		die("remote-helper doesn't support push; refspec needed");
-> >
-> > I think the "refspec needed" text is likely to be confusing if an
-> > end-user ever sees this message.  I'm not sure how we can provide useful
-> > feedback for both remote helper authors and end-users though.
-> 
-> This "refspecs" only come via the helper and not directly from the
-> end user, no?
-> 
-> If that is the case, I do not think "confusing" is much of an issue.
-> Not _("localizing") is also the right thing to do.  We may want to
-> say "BUG: " at front to clarify it is not the end-user's fault, but
-> a problem they may want to report.  If we at this point know what
-> helper attempted export without giving refspecs, it may help to show
-> it here, so that developers will know with what helper the user
-> had problems with.
+On 04/18/2013 02:05 AM, Felipe Contreras wrote:
+> This has never worked, since it's inception the code simply skips all
+>
+s/it's/its/ (sorry for nitpicking)
 
-I like this idea.  Perhaps we should say "Bug in remote helper; refspec
-needed with export", so that it clearly indicates to both end-users and
-remote helper authors that the error is in the remote helper.
+> the refs, essentially telling fast-export to do nothing.
+> 
+> Let's at least tell the user what's going on.
+> 
+> [SNIP]
+>
+
+Regards,
+  Stefano
