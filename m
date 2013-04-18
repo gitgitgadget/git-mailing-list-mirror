@@ -1,139 +1,96 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] help.c: add a compatibility comment to cmd_version()
-Date: Fri, 19 Apr 2013 00:00:07 +0100
-Organization: OPDS
-Message-ID: <046DF03A85924057935F3EB1064DC27B@PhilipOakley>
-References: <1366144405-61438-1-git-send-email-davvid@gmail.com><3D6BDB8830FC44A38B1AC508488049C0@PhilipOakley><7vvc7mhzok.fsf@alter.siamese.dyndns.org><EAD161814DB34F5AAC61A9EF06873314@PhilipOakley> <7vehe8d7bq.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v4 00/13] nd/pretty-formats
+Date: Fri, 19 Apr 2013 09:08:39 +1000
+Message-ID: <1366326532-28517-1-git-send-email-pclouds@gmail.com>
+References: <1366100702-31745-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "David Aguilar" <davvid@gmail.com>, <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 01:00:12 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 19 01:09:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1USxoK-0007gH-6F
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 01:00:12 +0200
+	id 1USxx2-00074V-Jw
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 01:09:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754080Ab3DRXAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 19:00:05 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:59578 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753557Ab3DRXAE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Apr 2013 19:00:04 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvQNACV6cFFZ8Yje/2dsb2JhbABQgwY2iHC3ZwQBAwGBBhd0ghoFAQEEAQgBAS4eAQEhBQYCAwUCAQMVAQslFAEEGgYHFwYTCAIBAgMBA4d6Cgi+MI1hGjNfC4JtYQOIT4NCgjKJZ4VWgwKHGYMMO4Ev
-X-IronPort-AV: E=Sophos;i="4.87,504,1363132800"; 
-   d="scan'208";a="426148562"
-Received: from host-89-241-136-222.as13285.net (HELO PhilipOakley) ([89.241.136.222])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 19 Apr 2013 00:00:02 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1754135Ab3DRXJH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Apr 2013 19:09:07 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:62187 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753871Ab3DRXJG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 19:09:06 -0400
+Received: by mail-pa0-f42.google.com with SMTP id kq13so1889122pab.1
+        for <git@vger.kernel.org>; Thu, 18 Apr 2013 16:09:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=NF6WXMv7yt0l8+7hnUfnTzD+AHZJlJDiQXLnx8ZCCFM=;
+        b=g5a4vlT1MnXxtyac8YWo7XGXPXtR7JYuFnuaKaLtwRvqV5l4Ic9ONDHe7J781UyN2j
+         7lRBr9TssWPTiEVlKLIZqGVfck4Ldb+sVH7q2KCP/wS8zowiPNn97DT/t9kWnCQpSdr5
+         I5ZyceiZfQqtwiB8HX50jlC4k62mZ8fQjMrK+TkrbEz2CKhYSfFOFWKFFZixcNmlQJsi
+         8fhiX5YihB1swaKDGSCEuE++ugUCJ1ZHZyXfoFa4nifoVyTvHPbMvcI2fzr8BQdxLWKb
+         XmDAk0ZCH3kShz5VapuqzfyvrYo6EFj6e4KwBhcm031GQksiBsWXEoEIEuh7IjvbydS3
+         sA6w==
+X-Received: by 10.68.138.7 with SMTP id qm7mr15968516pbb.169.1366326544701;
+        Thu, 18 Apr 2013 16:09:04 -0700 (PDT)
+Received: from pclouds@gmail.com (dektec3.lnk.telstra.net. [165.228.202.174])
+        by mx.google.com with ESMTPS id zv4sm11179309pbb.28.2013.04.18.16.09.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Apr 2013 16:09:03 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 19 Apr 2013 09:08:54 +1000
+X-Mailer: git-send-email 1.8.2.82.gc24b958
+In-Reply-To: <1366100702-31745-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221702>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Thursday, April 18, 2013 1:13 AM
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> How about
->>    * E.g. git gui uses the extended regular expression "^git version
->> [1-9]+(\.[0-9]+)+.*"
->>    * to check for an acceptable version string.
->>
->> The ERE is from git-gui.sh:L958.
->
-> That is exactly the kind of guarantee we do _not_ want to give.
->
+v4 fixes comments from v3, mainly in the auto-coloring patch, and uses
+qz_to_tab_space for changes in t4205. It also fixes a coding style
+issue in 06/13, spotted in v2 but I missed it in v3.
 
-So you are trying to avoid giving _any_ "guarantee" about what visible 
-manifestation a user may obtain about a system that passes the test 
-suite we have set out. I was hoping we could give a basic minimum 
-indication of the expected style of the version string for a git which 
-*passes* our tests. But like you say, it doesn't form a real guarantee - 
-caveat emptor still applies.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (13):
+  pretty: save commit encoding from logmsg_reencode if the caller needs=
+ it
+  pretty: get the correct encoding for --pretty:format=3D%e
+  pretty-formats.txt: wrap long lines
+  pretty: share code between format_decoration and show_decorations
+  utf8.c: move display_mode_esc_sequence_len() for use by other functio=
+ns
+  utf8.c: add utf8_strnwidth() with the ability to skip ansi sequences
+  utf8.c: add reencode_string_len() that can handle NULs in string
+  pretty: two phase conversion for non utf-8 commits
+  pretty: split color parsing into a separate function
+  pretty: add %C(auto) for auto-coloring
+  pretty: support padding placeholders, %< %> and %><
+  pretty: support truncating in %>, %< and %><
+  pretty: support %>> that steal trailing spaces
 
->> ... Hence my suggestion of the basic test that a "passing" git
->> would produce a consistent version string.
->
-> I have been assuming that you are trying to avoid an exchange like
-> this one we had in the past:
->
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/216923/focus=217007
->
-In a sense yes. As David noted, others do attempt to trust us via our 
-current version string format. I thought it worthwhile (given my earlier 
-'mistake' in 216923/focus=216925) to suggest such a basic indication of 
-our current string style.
+ Documentation/pretty-formats.txt |  35 +++-
+ builtin/blame.c                  |   2 +-
+ builtin/commit.c                 |   2 +-
+ commit.h                         |   1 +
+ compat/precompose_utf8.c         |   2 +-
+ log-tree.c                       |  48 ++++--
+ log-tree.h                       |   1 +
+ pretty.c                         | 358 +++++++++++++++++++++++++++++++=
++-------
+ revision.c                       |   2 +-
+ t/t4205-log-pretty-formats.sh    | 175 +++++++++++++++++++
+ t/t4207-log-decoration-colors.sh |   8 +-
+ t/t6006-rev-list-format.sh       |  12 +-
+ utf8.c                           | 104 +++++++++---
+ utf8.h                           |  23 ++-
+ 14 files changed, 648 insertions(+), 125 deletions(-)
 
-> I also have been assuming that you are pushing to limit the possible
-> versioning scheme, but I do not know what that extra limitation
-> would achieve in the real world.
->
-> By sticking to the pattern "git gui" happens to use, "git gui" may
-> be able to guess that the next version of Git says it is verison
-> "1.8.3".  That is the _only_ thing your "test" buys.
->
-> But having parsed the "1.8.3" substring out of it, "git gui" does
-> not know anything about what 1.8.3 gives it.  As far as it is
-> concerned, it is a version whose "git version" output it has never
-> seen (unless it has been kept up to date with the development of
-> Git).
-
-You are focusssing on the wrong side of issue (from my viewpoint).
-If my earlier patch had gone in, it would have passsed our tests but not 
-played nicely with the community tools. That would have been IMHO a 
-regression, so from my viewpoint I believed it was worth having a test 
-to avoid such a 'regression'.
-
->
-> By matching against "git version [1-9]+(\.[0-9]+)+", it is accepting
-> that future versions may break assumptions it makes for some known
-> versions (which is warranted) and all future versions (which is
-> unwarranted) of Git.  Maybe the version 2.0 of Git adds all changes
-> in the directory "d", including removals, when you say "git add d",
-> but it may have assumed that with Git version 1.5.0 or newer, saying
-> "git add d" would result in added and modified inside that directory
-> getting updated in the index, but paths removed from the working
-> tree will stay in the index.
-
-If it was a gross incompatibility then (a) we are likley to be 
-signalling it for a while, and (b) other tools would need updating as 
-well, and they would hope that they could 'read' the version in a 
-consistent style. We would also still have the choice of changing our 
-existing string style, which would explicitly signal a change via the 
-test fail.
-
->
-> The only thing the scripts that read from the output of "git
-> version" can reliably tell is if it is interacting with a version of
-> Git it knows about.  If it made any unwarranted assumption on the
-> versions it hasn't seen, it has to be fixed in "git gui" _anyway_.
->
-> Of course, we would not change the output of "git version"
-> willy-nilly without good reason, but that is a different topic.
-Ah. I thought it was the [original] topic. I was calibrating the 
-willy-nillyness ;-)
-
->
-> So I do not know what you want to achieve in the real world with
-> that extra limitation on the "git version" output format.
->
-> Maybe you are proposing something else.  I dunno.
-I was just using a slightly different philosophical approach.
-
-> --
-Philip
+--=20
+1.8.2.82.gc24b958
