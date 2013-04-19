@@ -1,89 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t6200: avoid path mangling issue on Windows
-Date: Fri, 19 Apr 2013 14:22:21 -0700
-Message-ID: <7va9ouz04y.fsf@alter.siamese.dyndns.org>
-References: <1365348344-1648-1-git-send-email-ralf.thielow@gmail.com>
-	<1365348344-1648-2-git-send-email-ralf.thielow@gmail.com>
-	<516F95D1.5070209@viscovery.net>
-	<7v38un93br.fsf@alter.siamese.dyndns.org>
-	<5170DA96.9000300@viscovery.net>
-	<7vr4i632fp.fsf@alter.siamese.dyndns.org> <51719F18.3020508@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] receive-pack: close sideband fd on early pack errors
+Date: Fri, 19 Apr 2013 17:24:29 -0400
+Message-ID: <20130419212429.GA20873@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Apr 19 23:22:34 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 19 23:24:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTIlK-0003Up-7b
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 23:22:30 +0200
+	id 1UTInN-00054u-MJ
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 23:24:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933494Ab3DSVW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 17:22:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55226 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932804Ab3DSVWZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 17:22:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14C46180B9;
-	Fri, 19 Apr 2013 21:22:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZruTpbeMZW3OT+fmveviqy1AWv8=; b=J5r24s
-	QKMKSkOB/VwGGI37Jl7E+DRbiBw33w+DZgwKVkeKUolh1KvOrVTAfKypkylK1Z4r
-	yOX0NW8X/XnJc3bDPFwKvUxtKiO01OKL8j4cWxqMee+8wtZU2P5geQHHQIeyspHl
-	dHX0KChdo6WjvsxmIqe+UsDhtYqn0YJlj4aQc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U73JOQaziVqmjLXoL4HV9eLh1eI0jsiw
-	IrrStGUbR8kaHLfDXlFk5ZKzJ5hyh7rFdoH+uRNUSyeJIlYoGNLs1JwiSTRmhT6e
-	45mY741x7ZNpZcOfuI8itdvNOEWiZiVdtTB+zydH0BGuOCeq59hjpFoP2EBiDLVw
-	P5mnkSgeUVE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 04D9B180B8;
-	Fri, 19 Apr 2013 21:22:24 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 770A1180B5;
-	Fri, 19 Apr 2013 21:22:23 +0000 (UTC)
-In-Reply-To: <51719F18.3020508@kdbg.org> (Johannes Sixt's message of "Fri, 19
-	Apr 2013 21:46:32 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 39F161D6-A937-11E2-AB66-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754640Ab3DSVYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 17:24:33 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44343 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754413Ab3DSVYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 17:24:32 -0400
+Received: (qmail 21059 invoked by uid 102); 19 Apr 2013 21:24:37 -0000
+Received: from 99-108-225-125.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.225.125)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 19 Apr 2013 16:24:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Apr 2013 17:24:29 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221822>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Since commit a22e6f8 (receive-pack: send pack-processing
+stderr over sideband, 2012-09-21), receive-pack will start
+an async sideband thread to copy the stderr from our
+index-pack or unpack-objects child to the client. We hand
+the thread's input descriptor to unpack(), which puts it in
+the "err" member of the "struct child_process".
 
-> A patch auther whose first instinct is to write 'foo=/' will never write
-> 'foo=x', let alone 'foo="""/"""'. Someone will have to discover the
-> issue eventually and write a patch to fix it, and someone will have to
-> apply it.
+After unpack() returns, we use finish_async() to reap the
+sideband thread. The thread is only ready to die when it
+gets EOF on its pipe, which is connected to the err
+descriptor. So we expect all of the write ends of that pipe
+to be closed as part of unpack().
 
-That is a separate issue.  Didn't I say I'll apply it as-is at the
-very beginning?
+Normally, this works fine. After start_command forks, it
+closes the parent copy of the descriptor. Then once the
+child exits (whether it was successful or not), that closes
+the only remaining writer.
 
-Our _tests_ can afford to use an unrealistic setting like
+However, there is one code-path in unpack() that does not
+handle this. Before we decide which of unpack-objects or
+index-pack to use, we read the pack header ourselves to see
+how many objects it contains. If there is an error here, we
+exit without running either sub-command, the pipe descriptor
+remains open, and we are in a deadlock, waiting for the
+sideband thread to die (which is in turn waiting for us to
+close the pipe).
 
-    git -c core.commentchar="x" fmt-merge-msg
+We can fix this by making sure that unpack() always closes
+the pipe before returning.
 
-to work it around, because the tests do not _care_ how the final
-outcome looks like. It only cares what we specified gets used.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This was triggered in the real world by attempting to push a ref from
+a corrupted repository. pack-objects dies on the local end, we get an
+eof on the receive-pack end without any data, notice that it's a bogus
+packfile, and hit the deadlock.
 
-But a _real user_ who wants to use a slash there has no way of doing
-so.  It is still not realistic, as it is more likely that she would
-want to use a double-slash, but that would not fit in a commentchar,
-and she is a lot more likely to have it in the configuration file,
-but I wouldn't imagine that there are things other than "-c var=val"
-that are more commonly given on the command line that share the same
-pain point as this one.
+The bug was introduced by a22e6f8, which is in v1.7.12.3, so it should
+be maint-worthy.
 
-That is what I meant by "feels painful to the users" and wondered if
-bash on Windows can be more helpful to them.
+ builtin/receive-pack.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index ccebd74..e3eb5fc 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -826,8 +826,11 @@ static const char *unpack(int err_fd)
+ 			    : 0);
+ 
+ 	hdr_err = parse_pack_header(&hdr);
+-	if (hdr_err)
++	if (hdr_err) {
++		if (err_fd > 0)
++			close(err_fd);
+ 		return hdr_err;
++	}
+ 	snprintf(hdr_arg, sizeof(hdr_arg),
+ 			"--pack_header=%"PRIu32",%"PRIu32,
+ 			ntohl(hdr.hdr_version), ntohl(hdr.hdr_entries));
+-- 
+1.8.2.11.g379c3d8
