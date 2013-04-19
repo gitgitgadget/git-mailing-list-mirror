@@ -1,87 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/6] transport-helper: clarify pushing without refspecs
-Date: Thu, 18 Apr 2013 20:41:17 -0700
-Message-ID: <7v4nf34276.fsf@alter.siamese.dyndns.org>
-References: <1366258473-12841-1-git-send-email-felipe.contreras@gmail.com>
-	<1366258473-12841-4-git-send-email-felipe.contreras@gmail.com>
-	<CAPig+cRp7J+HYBA=2OL-CdA3NiQFjuUMZEjE+i+SnNrrPBAZ6Q@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Fri, 19 Apr 2013 00:14:24 -0400
+Message-ID: <20130419041424.GA377@sigill.intra.peff.net>
+References: <20130417201056.GA2914@sigill.intra.peff.net>
+ <7va9owd3d1.fsf@alter.siamese.dyndns.org>
+ <20130418172714.GA24690@sigill.intra.peff.net>
+ <7vd2tr6833.fsf@alter.siamese.dyndns.org>
+ <20130418180017.GA5714@sigill.intra.peff.net>
+ <7v61zj66wu.fsf@alter.siamese.dyndns.org>
+ <20130418203035.GB24690@sigill.intra.peff.net>
+ <7vvc7j4j0u.fsf@alter.siamese.dyndns.org>
+ <20130418214427.GA10119@sigill.intra.peff.net>
+ <7vobdb4hii.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	John Keeping <john@keeping.me.uk>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Max Horn <max@quendi.de>, Jonathan Nieder <jrnieder@gmail.com>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 05:41:39 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 19 06:14:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UT2Ce-0006K0-JR
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 05:41:36 +0200
+	id 1UT2ih-0008TE-Qz
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 06:14:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967891Ab3DSDlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 23:41:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56117 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S967859Ab3DSDlU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 23:41:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 279D711C5E;
-	Fri, 19 Apr 2013 03:41:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AOiVNwK5MkbvuVX0/8vnZVZVZuQ=; b=F9XfpH
-	Tpn0ssTzg056X9znOpps+nyFZLYtUv2NqxdEfY/cOF+7Yabq47J+sOyFtjdbiuPX
-	4Lz5Ai29fnFwBWIxF73uT7sfPzQuS9uzKwxTdBFOwt5uyQgcZzi+3V1WBp9uFbEC
-	X/SI0zeNV7jvc8C8VExsO/Gf0YDQcD6vfbkYE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TU9IsGhs/C4IwQwjITEwXwIPk7Jjr164
-	ptNDNN6i93mOPdRcvXN7O0yMz+IrwsyySGER5RzyP1p9ZF7FJVN8ZPNJs7CZ2dPf
-	7RMVRuxcH8CZBBB2YGdJYgJ2FenX7sZ8N0j7t79x6dgEwcGPkht5oVbCHy7Khs+3
-	JITOBhNQsNM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C92C11C5C;
-	Fri, 19 Apr 2013 03:41:20 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6AAF111C5A;
-	Fri, 19 Apr 2013 03:41:19 +0000 (UTC)
-In-Reply-To: <CAPig+cRp7J+HYBA=2OL-CdA3NiQFjuUMZEjE+i+SnNrrPBAZ6Q@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 18 Apr 2013 20:27:45 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FF4629B6-A8A2-11E2-ADE2-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751309Ab3DSEO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 00:14:29 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43758 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750945Ab3DSEO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 00:14:28 -0400
+Received: (qmail 4889 invoked by uid 102); 19 Apr 2013 04:14:33 -0000
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (75.15.5.89)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 18 Apr 2013 23:14:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Apr 2013 00:14:24 -0400
+Content-Disposition: inline
+In-Reply-To: <7vobdb4hii.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221726>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Thu, Apr 18, 2013 at 03:10:29PM -0700, Junio C Hamano wrote:
 
->> +       grep "remote-helper doesn.t support push; refspec needed" error
->
-> Is "doesn.t" intentional? It certainly works by accident in grep, but
-> did you mean s/doesn.t/doesn't/ ?
+> Jeff King <peff@peff.net> writes:
+> 
+> > I am expecting a reaction more like "Hmm, I never thought about it
+> > before. Does that make sense to me or not? Let me think about which
+> > paths it pertains to and decide".
+> 
+> Let's step back and re-review the main text.
 
-The pattern matching the expected string is not by accident, but by
-design.
+Good idea. I was very caught up in the existing message and what it made
+me expect, and not in what we are trying to accomplish overall.
 
-It of course can be made more strict to reject "doesnot" and require
-"doesn't" by doing something like this:
+> It currently says:
+> 
+>     In Git 2.0, 'git add <pathspec>...' will also update the
+>     index for paths removed from the working tree that match
+>     the given pathspec. If you want to 'add' only changed
+>     or newly created paths, say 'git add --no-all <pathspec>...'
+>     instead.
+> 
+> This was written for the old "we may want to warn" logic that did
+> not even check if we would be omitting a removal.  The new logic
+> will show the text _only_ when the difference matters, we have an
+> opportunity to tighten it a lot, for example:
+> 
+>     You ran 'git add' with neither '-A (--all)' or '--no-all', whose
+>     behaviour will change in Git 2.0 with respect to paths you
+>     removed from your working tree.
+> 
+>     * 'git add --no-all <pathspec>', which is the current default,
+>       ignores paths you removed from your working tree.
+> 
+>     * 'git add --all <pathspec>' will let you also record the
+>       removals.
+> 
+>     The removed paths (e.g. '%s') are ignored with this version of Git.
+>     Run 'git status' to remind yourself what paths you have removed
+>     from your working tree.
+> 
+> or something?
 
-       grep "remote-helper doesn'\''t support push; refspec needed" error
+Yes, I like that much better. It reads more clearly than the original,
+and it is more obvious why we are mentioning the path at all.
 
-but at some point, it simply stops being worth it to tighten the
-pattern.
+And I think the hint of "git status" is good. I had considered before
+that the user would simply run "git status" after the message to get
+more data, but I didn't want to rely on them knowing to do that.
+Actually mentioning it is a good solution. :)
 
-For that matter, it could be as loose as
+Thanks for pointing us in the right direction.
 
-	grep "support push; refspec needed" error
-
-if you know the string is unique enough.
+-Peff
