@@ -1,88 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/8] Add new git-cc-cmd helper to contrib
-Date: Fri, 19 Apr 2013 12:56:23 -0700
-Message-ID: <7vr4i6z448.fsf@alter.siamese.dyndns.org>
-References: <1366348458-7706-1-git-send-email-felipe.contreras@gmail.com>
-	<1366348458-7706-2-git-send-email-felipe.contreras@gmail.com>
-	<7vfvym30t8.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3YAq66MrOR5a4ydujKR5+ZNMVV4i=JzPCxLXC244b52g@mail.gmail.com>
-	<7v8v4e1fyz.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2gA0JbfxA1UQW_pnizGBpmbQem3Qg0FpWP_Wi6eYwVjw@mail.gmail.com>
+From: Jed Brown <jed@59A2.org>
+Subject: Re: Find/prune local branches after upstream branch is deleted?
+Date: Fri, 19 Apr 2013 14:30:32 -0500
+Message-ID: <87vc7i2u93.fsf@mcs.anl.gov>
+References: <87ehe64f91.fsf@mcs.anl.gov> <20130419173717.GA26964@sigill.intra.peff.net> <87bo9a4dfr.fsf@mcs.anl.gov> <20130419180520.GA22865@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 21:56:35 2013
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 19 22:01:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTHQ9-0006tQ-TH
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 21:56:34 +0200
+	id 1UTHUx-0002B9-Eq
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 22:01:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754020Ab3DST42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 15:56:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50147 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753962Ab3DST41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 15:56:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6CB417797;
-	Fri, 19 Apr 2013 19:56:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ekGJJhwdQO2hnA+P+fssmSzF5Wg=; b=fmhYqY
-	hnWpfsp5to6bAY57e5D8G1xzjLsxqxc/kddg8JHJb5BJYAlWqZHgWrU7MqnGJKWn
-	lWpqpmb0V/EN7ioYgD4DUo9kvneQaDRzIVZ+KGYQSbVXVVyj92ok5O4BVvUIE6Gp
-	W4EP5KO3EIVaXbyPgsAvWrnhRN8o2KyBUE6mc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZQsB0OSDqmhWMuGQBYW4jbw4hV5HNL6E
-	Bcunf5T+dLauH/EuNd/C1w9oDr7JQR12vig6ExtaM85xnTPuT3x58Q7ejNVs8wnB
-	lJlC34LbCYYWBpn+apyP78neGh6JLK3RKR3m+DQaOsSaTi7smi4HefoCBniG2kca
-	Rri5RM2U/+8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A801C17796;
-	Fri, 19 Apr 2013 19:56:25 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 16CF117794;
-	Fri, 19 Apr 2013 19:56:25 +0000 (UTC)
-In-Reply-To: <CAMP44s2gA0JbfxA1UQW_pnizGBpmbQem3Qg0FpWP_Wi6eYwVjw@mail.gmail.com>
-	(Felipe Contreras's message of "Fri, 19 Apr 2013 14:35:57 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 374D4B0E-A92B-11E2-BDC7-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754127Ab3DSUB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 16:01:27 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:59744 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753980Ab3DSUB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 16:01:26 -0400
+Received: by mail-vc0-f174.google.com with SMTP id kw10so4187814vcb.19
+        for <git@vger.kernel.org>; Fri, 19 Apr 2013 13:01:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:sender:from:to:cc:subject:in-reply-to:references
+         :user-agent:date:message-id:mime-version:content-type;
+        bh=CgIHD/ImBeGkx0OwhwTYv760Tw0m7HnyN9xWP7rZ34U=;
+        b=GcsI3l1j2pLvb8BdZT9a7vTUy4M9+rD1NYLvJ03Irs91fHjkgKPZE4OCf8ZYKYevlk
+         3j/J7Iv5dvIcJz+FMS7QIaNlsPesuzHQYqXApFkh75+ObxYJzDPjj8vV7MgF7aDH6QAt
+         +pbHzuBBGes5d6SxemouphQlbCyzuCgwVg9XQqOaS2Bz3lZe0wQtT1l6+Fd4rmYCIvYO
+         xaFXdx+dZuo9Gtdn5NADZuZwZ6VvFO2wtkGZguCKvxO/32ayDJaRV3XdRpuC9DeXiHhK
+         UxSYeCfmNmNreFiAsZ7SrDpe9RpGMZNua2BUY1lM+wLgE9DWCDPAjZPoFbzqgIS4KiI2
+         lndQ==
+X-Received: by 10.220.167.9 with SMTP id o9mr12635647vcy.25.1366401685629;
+        Fri, 19 Apr 2013 13:01:25 -0700 (PDT)
+Received: from localhost (m872436d0.tmodns.net. [208.54.36.135])
+        by mx.google.com with ESMTPS id 6sm15044523vei.0.2013.04.19.13.01.23
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 19 Apr 2013 13:01:24 -0700 (PDT)
+In-Reply-To: <20130419180520.GA22865@sigill.intra.peff.net>
+User-Agent: Notmuch/0.15.2+78~g5404ac5 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221815>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> If this were _only_ to be used within send-email (i.e. replacing the
->> "then send it out" above with "then use send-email" to limit the
->> usecase), "git cc-cmd" would be a reasonable name.  But if that is
->> the intended use case, it would even be more reasonable to make this
->> logic part of send-email and trigger it with --auto-cc-reviewers
->> option or something.
+> On Fri, Apr 19, 2013 at 12:50:48PM -0500, Jed Brown wrote:
 >
-> Yeap, but I wouldn't want to be the one that implements that in perl.
-
-That is OK.  None of this has to be done by you.
-
-And we seem to be in agreement that the feature deserves to be its
-own command, so it does not have to be in Perl, either.
-
->> But I think it can be useful outside the context of send-email as
->> well, and having one independent tool that does one single job well
->> is a better design.  Perhaps it is better to name it less specific
->> to send-email's cc-cmd option.  "git people"?  "git whom"?  "git
->> reviewers"?  I dunno, but along those lines.
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > Try "git branch --merged master" to get a list of branches that have
+>> > already been merged.
+>> 
+>> That's what I use, but I was hoping for something more precise.  For
+>> example, a branch that started at 'maint' would show up there, but its
+>> integration hasn't completed until it makes it back to 'maint'.
 >
-> 'git relevant'? 'git related'? It's not only people, also commits.
+> Yeah, git has no way of knowing that. You can tell it by asking "git
+> branch --merged maint" and looking for such topics, of course, but I
+> think you are trying to remove as much thinking as possible from the
+> process.
+>
+> So what is the clue that you would like to use to know that the branch
+> is stale. Deletion of the branch on the remote?
 
-Let's let it simmer on the list for a few days so that other people
-can come up with a better name.
+I was hoping for ("has an upstream set" AND "upstream branch deleted").
+
+> For that, I don't think there is a single command. You can do "git push
+> --dry-run --all" and look for new branches that would be pushed, but
+> that is kind of hacky.  The answer you want is:
+>
+>   comm -23 \
+>     <(git for-each-ref --format='%(refname:short)' refs/heads) \
+>     <(git for-each-ref --format='%(refname:short)' refs/remotes/origin |
+>       sed s,origin/,,)
+
+This also finds my private branches that I just haven't pushed yet.  The
+following has what I think are good semantics.
+
+  git for-each-ref --format='%(refname:short) %(upstream)' refs/heads |
+    while read ref upstream; do
+      test -n "$upstream" && (git show-ref -q --verify "$upstream" || echo $ref)
+    done
+
+
+FWIW, Git sorts non-alpha characters differently from 'sort'.  This
+means that Git output can't be sent to comm without first '| sort'.
+
+$ git branch xy
+$ git branch x-y
+$ git branch
+* master
+  x-y
+  xy
+$ git branch | sort
+* master
+  xy
+  x-y
