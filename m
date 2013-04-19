@@ -1,110 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/8] Add new git-cc-cmd helper to contrib
-Date: Fri, 19 Apr 2013 10:08:51 -0700
-Message-ID: <7vfvym30t8.fsf@alter.siamese.dyndns.org>
-References: <1366348458-7706-1-git-send-email-felipe.contreras@gmail.com>
-	<1366348458-7706-2-git-send-email-felipe.contreras@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Fri, 19 Apr 2013 19:08:56 +0200
+Message-ID: <51717A28.5040106@web.de>
+References: <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com> <20130407170201.GH2222@serenity.lan> <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com> <20130407175210.GI2222@serenity.lan> <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com> <20130407182112.GJ2222@serenity.lan> <5161BC33.8060707@web.de> <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com> <5161D3C5.9060804@web.de> <CALkWK0k_vmXZr-x8=ZctouWbuVgv-1sptC0WX2aJ+yYD-T8cxA@mail.gmail.com> <20130407212342.GA19857@elie.Belkin> <CACsJy8BoWfng7p=kHbiF9s6XYH1mPMtAGW6BRz54uYM5454O0w@mail.gmail.com> <CALkWK0mcnA8Qss3uxRXhfHst65RLkv43wje9xdFxmFKi7MtZvA@mail.gmail.com> <CACsJy8Bz+yNefiiwEivaaUgRymHTmUUKEFs8_uuonhmRfT3UGg@mail.gmail.com> <CALkWK0m9QmZaSDruY=+2F-Kkw+fd6E1TYC
+ TBpVQHRJrzq2VjCQ@mail.gmail.com> <BCD944518C304D7D9809346DD899B68F@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 19:09:01 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	John Keeping <john@keeping.me.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Apr 19 19:09:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTEo1-0001su-0m
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 19:09:01 +0200
+	id 1UTEoP-0002EP-Jl
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 19:09:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751095Ab3DSRI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 13:08:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37821 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750846Ab3DSRIz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 13:08:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19E2C17BF1;
-	Fri, 19 Apr 2013 17:08:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mBfUWgfgFjjo5RsUMFfWq/kySZU=; b=jMF21I
-	T3Nuya6A4grXeUB1qxVTxBhskqIiGLcIlagds910O8aBfs2j85WcIhT41GpPg2g6
-	elYkxhOuwjGECIILIrFavXFdR9aSoT1WO8bD/mId8hepiDC0Ps6Cd/rBpf1fU8su
-	ptp8oySQcN5iPqGW0B3VaixUMDWqC/dvpLCaU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T4eViHgn2IpK8NGtRFY5neZXhHzDzBNK
-	DPGatMA0LuNtAGrs+BiR1y+ae3dRep41WFaat/11H0CW+35ZwKwpKGnN7qIQNfRb
-	pZ5EAOHUVMqA1h6aASZ6kkQO8LV+02YKaagRkNPOrP+CpBkPLQ7s+Oy96RYor8CU
-	dvHxFARfRl0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EA3F17BF0;
-	Fri, 19 Apr 2013 17:08:54 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6F8BC17BEF;
-	Fri, 19 Apr 2013 17:08:53 +0000 (UTC)
-In-Reply-To: <1366348458-7706-2-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Fri, 19 Apr 2013 00:14:11 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D00EE6C6-A913-11E2-9D4A-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751385Ab3DSRJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 13:09:12 -0400
+Received: from mout.web.de ([212.227.17.11]:58490 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751110Ab3DSRJI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 13:09:08 -0400
+Received: from [192.168.178.41] ([91.3.191.33]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0MJCAc-1UVycw2vc2-002pXE; Fri, 19 Apr 2013 19:09:01 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <BCD944518C304D7D9809346DD899B68F@PhilipOakley>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:GFSxGmYmGRkew1/bFCL3K7wPQcOcQMOBLoY0RQ4dXMT
+ EnW6/RkkXq1JNPrKELiP4J1UnW1YWTiXfGWmUjSs7gJAGGr9J/
+ f7HTMUi4Gl+SHCkpYdMVuR2gOIia7HzWn7x1b84xSG0FYgFaVq
+ X41a2WEu6Q+GWzN/UjT4yqqVogQSz8+IMIAbTOpvHyo+gqMWCA
+ HtEfKzX9hHbUNldH4cQRg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221779>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-> The code finds the changes of a commit, runs 'git blame' for each chunk
-> to see which other commits are relevant, and then reports the author and
-> signers.
+Am 18.04.2013 01:17, schrieb Philip Oakley:
+> Would it be possible to summarise the key points and proposals of where the subject is now?
 
-In general, I am not all that interested in adding anything new to
-contrib/ as git.git has matured enough, but even if this will stay
-outside my tree, there are a few interesting things to note to help
-its eventual users.
+Here you go, time to post our third iteration of the comparison
+list, containing two updates:
 
-> +    roles = roles.map do |person, role|
-> +      address = "%s <%s>" % person
-> +      [person, role]
-> +    end
+- "easier coding" was removed from the advantages
 
-Is address being used elsewhere, or is this a remnant from an
-earlier debugging or something?
+- "git submodule foreach" was retired from the disadvantages
 
-> +    [id, roles]
-> +  end
-> +
-> +end
-> ...
-> +    File.open(file) do |f|
-> +      f.each do |line|
-> +        case line
-> +        when /^From (\h+) (.+)$/
-> +          from = $1
-> +        when /^---\s+(\S+)/
-> +          source = $1 != '/dev/null' ? $1[2..-1] : nil
+As in the two first versions, the issues in parentheses had been
+brought up but were dismissed and are only kept for reference
+together with the reason why they aren't relevant anymore. Only
+those preceded by a '*' are still considered valid.
 
-This may need to be tightened if you want to use this on a
-real-world project (git.git itself does not count ;-); you may see
-something like:
 
-    diff --git "a/a\"b" "b/a\"b"
+Advantages:
 
-(I did an insane pathname 'a"b' to get the above example, but a more
-realistic is a character outside ASCII).
+* Information is stored in one place, no need to lookup stuff in
+  another file/blob.
 
-> +        when /^@@\s-(\d+),(\d+)/
-> +          get_blame(source, $1, $2, from)
+* No need to cd-to-toplevel to change configuration in the
+  .gitmodules file, the special tools to edit link information
+  will work in any subdirectory.
 
-This may want to be a bit more careful for a hunk that adds to an
-empty file, which will give you something like
+(It is all but clear that this approach will lead to "easier
+coding", some parts of the code - like rm and mv - will profit
+from that while others won't, e.g. we have to implement the link
+object manipulation tools that are not needed for .gitmodules
+and we get another indirection retrieving the submodule commit
+from the link object. And then there is the fact that the new
+code would have to catch up with functionality already coded
+using .gitmodules, like the status/diff ignore and the fetch
+flags).
 
-    @@ -0,0 +1 @@
-    @@ -0,0 +1,200 @@
+(We currently need a checked out work tree to access the
+.gitmodules file, but there is ongoing work to read the
+configuration directly from the database)
 
-Nobody sane would use -U0 when doing a format-patch, but if this
-wants to accomodate such a patch as well, it needs to ignore a hunk
-that only adds new lines.
+(While it is easier to merge the link object, a .gitmodules
+aware merge driver would work just as well)
+
+
+Disadvantages:
+
+* Changes in user visible behavior, compatibility problems when
+  Git versions are mixed.
+
+* Special tools are needed to edit submodule information where
+  currently a plain editor is sufficient and a standard format
+  is used.
+
+* merge conflicts are harder to resolve and require special git
+  commands, solving them in .gitmodules is way more intuitive
+  as users are already used to conflict markers.
+
+* With .gitmodules we lose a central spot where configuration
+  concerning many submodules can be stored
+
+("git submodule foreach" becomes harder to implement" is not the
+case, as that command currently also walks all tree objects and
+does not read the list of submodules from the .gitmodules file)
+
+(When we also put the submodule name in the link object we could
+also retain the ability to repopulated moved submodules from
+their old repo, which is found by that name)
+
+(That a link object can have no unstaged counterpart that a file
+easily has can be fixed by special casing this, e.g. in using a
+file in .git/link-specs/)
+
+
+As no new arguments have been brought up, it all boils down to a
+change that'll hurt users badly and won't fix any issue relevant
+to them. It'll bring them a flag day after which the .gitmodules
+is gone and they'll have to learn new tools to update and merge
+the submodule metadata (and not only the users, GUIs have to
+follow and implement support for something which currently is a
+perfectly normal merge conflict in a file). You'd have to smoke
+really weird stuff to even consider such a change under these
+circumstances (or you don't care one bit about your users).
+
+> The submodules does need 'fixing', as does agreeing the problem and abuse cases.
+
+Sure, but almost all problems I know about are work tree related,
+so changing the internal representation buys us nothing here. It
+will not magically do a bisect over submodules or will recursively
+update submodule work trees, and all that stuff won't be easier to
+code either just because we have to get the information from a new
+object instead of a gitlink/.gitmodules combo.
+
+Let's just close this case and get back to working on things that
+users will actually profit from.
