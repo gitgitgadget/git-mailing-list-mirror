@@ -1,372 +1,126 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 1/8] Add new git-cc-cmd helper to contrib
-Date: Fri, 19 Apr 2013 11:30:17 -0500
-Message-ID: <CAMP44s0sXk9xCXjY5bYsy2mrvkKrPPWqAVhZHChv+MHpNySPsg@mail.gmail.com>
-References: <1366348458-7706-1-git-send-email-felipe.contreras@gmail.com>
-	<1366348458-7706-2-git-send-email-felipe.contreras@gmail.com>
-	<CALkWK0n+cWspBJtH7JFvsvoeHHuiWR0bGpYVU63e7O74XY=4sQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t6200: avoid path mangling issue on Windows
+Date: Fri, 19 Apr 2013 09:33:46 -0700
+Message-ID: <7vr4i632fp.fsf@alter.siamese.dyndns.org>
+References: <1365348344-1648-1-git-send-email-ralf.thielow@gmail.com>
+	<1365348344-1648-2-git-send-email-ralf.thielow@gmail.com>
+	<516F95D1.5070209@viscovery.net>
+	<7v38un93br.fsf@alter.siamese.dyndns.org>
+	<5170DA96.9000300@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 18:30:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Apr 19 18:33:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTECu-00049M-Ky
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 18:30:41 +0200
+	id 1UTEG3-0006tl-3L
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 18:33:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030917Ab3DSQad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 12:30:33 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:40460 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S968422Ab3DSQaT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 12:30:19 -0400
-Received: by mail-lb0-f169.google.com with SMTP id p11so3941982lbi.0
-        for <git@vger.kernel.org>; Fri, 19 Apr 2013 09:30:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=ZPlxkdP/EIEtlSK0hbZuAq9pA+t+yVus6YWE0+bbK2o=;
-        b=kpEcjGfHLSvHMQCvc+4qbjK3zEHApOP7Y7lgEyiHlkaXXFBwLW1N/QtNA7Bqb52qz8
-         3vRIxHoh3w2wemsGWksUAFfFBuK74rR5FRmKnISKo5G5H9DVmlgJlWAJwKQNyQSUFB0Y
-         pDVIn4zuCa9rSB1JlB2jPcwyFi2MJkfOoh8nh+tM7jsTCtvI/yr/eomSlHtYhIrq/rGv
-         dgf7Xz/G+ZgRpWwx+Wp9slg1WTRDRqZNWqPQX+nnlcQ+A48RovON0QUGeh0l48tmLzlG
-         x3t/tPQSMC2MAdBM4dHBDYf0phMTlJIFe2l1sMjVSA9D2M77a/MKc+ikUggq4mTW8fo/
-         Ypzg==
-X-Received: by 10.112.22.198 with SMTP id g6mr4406275lbf.135.1366389017920;
- Fri, 19 Apr 2013 09:30:17 -0700 (PDT)
-Received: by 10.114.59.210 with HTTP; Fri, 19 Apr 2013 09:30:17 -0700 (PDT)
-In-Reply-To: <CALkWK0n+cWspBJtH7JFvsvoeHHuiWR0bGpYVU63e7O74XY=4sQ@mail.gmail.com>
+	id S967876Ab3DSQdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 12:33:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62276 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758506Ab3DSQdt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 12:33:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D85DE156E1;
+	Fri, 19 Apr 2013 16:33:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vfJuqS2HuaqBpkcvX3oBXwXE3YY=; b=CcWzbG
+	yOQxazaVAJjkvOH7fb0pv0Dy8HQbBJAa1FVkyQB74AgDsbnviFfjS+5jdR6AYxeZ
+	rNj28nCQ6M0+b0yHej1QroEM7CMGJeQnRFJCtSS2HsXyXfftlTYP5lXxpId3hShC
+	OUwsOBqXEGyR2aRSIqT1+0PSWGnf1L0GwiScQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TlkBr/6BeTreRfm6Qj6U65DCvH3r1T9E
+	Anb5VPaZcx1WU1h8MTl/YnbN3Qg1cevf51R13JeTnH2vwosP3d6Avwv8lR/EVtrG
+	oR/e+aiRsp/R/wwlpAxD5SWARZ3YX9tTrwv53Q3QLD1EzMmo8BecebdHv/PHThif
+	3RUmaHANVVk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D00A8156E0;
+	Fri, 19 Apr 2013 16:33:48 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4F75F156DD;
+	Fri, 19 Apr 2013 16:33:48 +0000 (UTC)
+In-Reply-To: <5170DA96.9000300@viscovery.net> (Johannes Sixt's message of
+	"Fri, 19 Apr 2013 07:48:06 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E94D477C-A90E-11E2-8ECD-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221769>
 
-On Fri, Apr 19, 2013 at 8:26 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Felipe Contreras wrote:
->> The code finds the changes of a commit, runs 'git blame' for each chunk
->> to see which other commits are relevant, and then reports the author and
->> signers.
->>
->> Finally, it calculates what percentage of the total relevant commits
->> each person was involved in, and show only the ones that pass the
->> threshold.
+Johannes Sixt <j.sixt@viscovery.net> writes:
+
+> Am 4/18/2013 19:05, schrieb Junio C Hamano:
+>> Johannes Sixt <j.sixt@viscovery.net> writes:
+>> 
+>>> From: Johannes Sixt <j6t@kdbg.org>
+>>>
+>>> MSYS bash interprets the slash in the argument core.commentchar="/"
+>>> as root directory and mangles it into a Windows style path. Use a
+>>> different core.commentchar to dodge the issue.
+>>>
+>>> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+>>> ...
+>>> -	git -c core.commentchar="/" fmt-merge-msg --log=5 <.git/FETCH_HEAD >actual &&
+>>> +	git -c core.commentchar="x" fmt-merge-msg --log=5 <.git/FETCH_HEAD >actual &&
+>> 
+>> Sigh... Again?
+>> 
+>> Are folks working on Msys bash aware that sometimes the users may
+>> want to say key=value on their command line without the value
+>> getting molested in any way and giving them some escape hatch would
+>> help them?  Perhaps they have already decided that it is not
+>> feasible after thinking about the issue, in which case I do not have
+>> new ideas to offer.
 >
-> Um, this didn't really explain it to me.  How about:
->
-> This command takes a patch prepared by 'git format-patch' as an
-> argument, and runs 'git blame' on every hunk of the diff to determine
-> the commits that added/removed those lines.  It then aggregates the
-> authors and signers of all the commits, and prints out these people in
-> descending order of the percentage of commits they were responsible
-> for.  It omits people are below a certain threshold.
+> What is "the issue"? And in which way would an escape hatch help us here?
 
-Fine by me.
+When the user passes key=value and value begins with a slash, value
+may be a path in the filesystem very often, and adjusting it to the
+local filesystem convention helps Windows users a lot.
 
->>   % git cc-cmd 0001-remote-hg-trivial-cleanups.patch
->>   Felipe Contreras <felipe.contreras@gmail.com> (author: 100%)
->>   Jeff King <peff@peff.net> (signer: 83%)
->>   Max Horn <max@quendi.de> (signer: 16%)
->>   Junio C Hamano <gitster@pobox.com> (signer: 16%)
->
-> Won't my name appear as the first one on each of my patches?  Will I
-> be CC'ed on every patch that I send out?
+But there are cases outside that very often when the user wants the
+value passed literally.  There seems to be no way to do so.
 
-No. The patches being analyzed are ignored. Either way, you are the
-s-o-b, so send-email Cc's you by default.
+That is the issue I was wondering. If there is a clean solution to
+disable path mangling per token, we could cleanly solve it.
 
->>  contrib/cc-cmd/git-cc-cmd | 140 ++++++++++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 140 insertions(+)
->>  create mode 100755 contrib/cc-cmd/git-cc-cmd
->
-> No README?
+For example, while making sure that a value that begins with slash
+in normal cases is still adjusted, i.e. mangling all of the
+following,
 
-No README. Half the stuff in contrib doesn't have one. And I don't see
-what stuff of value we could have there.
+	xyzzy key=/a/b/c
+        xyzzy key="/a/b/c"
+        value=/a/b/c; xyzzy key="$value"
+        value=/a/b/c; xyzzy "key=$value"
 
->> diff --git a/contrib/cc-cmd/git-cc-cmd b/contrib/cc-cmd/git-cc-cmd
->> new file mode 100755
->> index 0000000..c7ecf79
->> --- /dev/null
->> +++ b/contrib/cc-cmd/git-cc-cmd
->> @@ -0,0 +1,140 @@
->> +#!/usr/bin/env ruby
->
-> What is the minimum required version of Ruby, by the way?
 
-I don't know.
+if bash could be told with a very unnatural and not so hard to type
+way that the particular value is not to be mangled, e.g.
 
-> I see you
-> haven't used any fancy lazy enumerators
+	xyzzy key="""/a/b/c"""
+        value=/a/b/c; xyzzy """key=$value"""
 
-I did, but they are implicit.
+which a normal bash would interpret as the concatenation of an empty
+string inside dq, /a/b/c/ (or key=$value) inside dq, and an empty
+string inside dq, which is the same as /a/b/c (or key=$value) inside
+dq, it would help the less common case.  Nobody would type a string
+surrounded by two empty strings to be concatenated on purpose
+(i.e. very unnatural) and typing the same dq four more times than
+you would normally do is not too much of a hassle (not so hard to
+type).  The problematic case can then be fixed to
 
->> +$since = '3-years-ago'
->> +$min_percent = 5
->
-> Do I get to configure these two?
+	git -c core.commentchar="""/""" fmt-merge-msg ...
 
-Patience. That's for another patch.
-
-> Also, the '$' prefix from your Perl
-> habit?  It's not idiomatic in Ruby afaik.
-
-It is for global variables.
-
->> +class Commit
->> +
->> +  attr_reader :id
->> +  attr_accessor :roles
->> +
->> +  def initialize(id)
->> +    @id = id
->> +    @roles = []
->
-> What are id, roles exactly?  This isn't C where we have types, so
-> you're going to have to use some (rdoc-parseable) comments, if you
-> want me to be able to read the code without jumping around too much.
-
-The id of the commit, of course (aka. SHA-1), and the roles people had
-in this commit. We are after all in the Commit class.
-
->> +  end
->> +
->> +  def self.parse(data)
->> +    id = author = msg = nil
->
-> This is not C.  You don't need to initialize stuff, unless you're
-> going to start accessing it using a .append() or similar.  In that
-> case, you need to initialize it as an empty list, so the compiler
-> knows what you're appending to.
-
-You need to define them if you are going to modify them in a block,
-and access them after the block.
-
->> +    roles = {}
->
-> Shouldn't this be @roles?
-
-No, we are in a class method, we don't have instance variables; we
-don't have an instance.
-
-> Didn't you initialize it as an empty list
-> in initialize()?
-
-No, that's for the instance; we don't have an instance yet.
-
-> Why did you suddenly change your mind and make it a
-> hashtable now?
-
-It's a completely different variable; it's local to the method.
-
->> +    data.each_line do |line|
->> +      if not msg
->> +        case line
->> +        when /^commit (.+)$/
->> +          id = $1
->
-> Okay, I have no idea what you're parsing yet.  There's some commit
-> line, so I know this is not a raw commit object, as the name of the
-> class Commit would've indicated.
-
-Yeah, it's parsing a raw commit object.
-
->> +        when /^author ([^<>]+) <(\S+)>$/
->> +          author = $1, $2
->> +          roles[author] = 'author'
->
-> Huh?  the key is a two-item list, and the value is a hard-coded
-> 'author' string?  If it's meant to be a sematic value, use a symbol.
-
-Yeah, that might make sense.
-
-> Also, why don't you just collect the authors and signers in two
-> separate lists, instead of doing this and burdening yourself with
-> accumulation later?
-
-Go ahead and try this change. How are you going to group persons by
-the role they took in the relevant commits? It's much simpler to have
-generic code that is agnostic of the types of roles there are. Also,
-this would make it simpler to add other roles.
-
->> +        when /^$/
->> +          msg = true
->
-> I can't see msg being used later in the function, so I don't know what
-> you're doing.
-
-It's used before.
-
->> +    roles = roles.map do |person, role|
->> +      address = "%s <%s>" % person
->> +      [person, role]
->
-> What?!  If you wanted address in the first place, why did you stuff a
-> two-member list into roles as the key?
-
-What difference does it make? 'person' could be an object, it could be anything.
-
-> Where is address being used?
-
-In a later patch. This line creeped in.
-
->> +  def import
->> +    return if @items.empty?
->> +    format = [ 'commit %H', 'author %an <%ae>', '', '%B' ].join('%n')
->> +    File.popen(['git', 'show', '-z', '-s', '--format=format:' + format] + @items.keys) do |p|
->
-> Ah, you're using 'git show'.  I thought cat-file --batch was
-> especially well-suited for this task.
-
-Perhaps, but the code might end more complicated though.
-
-> What do you need the
-> pretty-printing for?
-
-To generate a raw commit; the raw format is not really so.
-
->> +      p.each("\0") do |data|
->> +        next if data == "\0" # bug in git show?
->
-> What is the bug exactly?  It displays two consecutive \0 characters
-> sometimes, when given a bunch of items to display?
-
-Apparently.
-
->> +        id, roles = Commit.parse(data)
->> +        commit = @items[id]
->> +        commit.roles = roles
->
-> @items[id].roles = roles
-
-NoMethodError: undefined method `roles=' for nil:NilClass
-
->> +  def each_person_role
->> +    commit_roles = @items.values.map { |commit| commit.roles }.flatten(1)
->> +    commit_roles.group_by { |person, role| person }.each do |person, commit_roles|
->> +      commit_roles.group_by { |person, role| role }.each do |role, commit_roles|
->> +        yield person, role, commit_roles.size
->
-> Unnecessary work if you'd chosen a better way to store the person =>
-> role mapping in the first place.
-
-No. The contents of the person key are irrelevant here, they are
-merely used as that: a key.
-
-It's trivial to get the role a person took in a given commit; we are
-not interested in that. We want the sum of all the author roles a
-person had, and the signer roles, and any other rules that might be
-specified in the future. *And* we want that count to be grouped first
-by person, and then by role, because that's precisely what we will
-show the user.
-
-There's no better way to represent the data of each commit than by a
-Commit object, and there's no better way to represent the roles each
-person took in a certain commit, than a Hash. Which is exactly what we
-have.
-
->> +  def get_blame(source, start, offset, from)
->> +    return unless source
->> +    File.popen(['git', 'blame', '--incremental', '-C',
->> +               '-L', '%u,+%u' % [start, offset],
->> +               '--since', $since, from + '^',
->> +               '--', source]) do |p|
->
-> While at it, why not blame -M -CCC?
-
--C implies -M, but the three times might make sense.
-
->> +  def from_patch(file)
->
-> You're not going to 'git mailsplit', like am does, first?
-
-Could be added later.
-
->> +        when /^@@\s-(\d+),(\d+)/
->> +          get_blame(source, $1, $2, from)
->
-> Okay, so this is where you get the arguments for the -L in blame.
->
->> +exit 1 if ARGV.size != 1
->
-> No usage?
-
-Later patch.
-
->> +commits.each_person_role do |person, role, count|
->> +  persons[person][role] = count
->
-> Oh dear.  Don't you think you're over-engineering here?  Just because
-> you can stuff anything into hashes/lists in Ruby, doesn't mean that
-> you should and kill efficiency.
-
-Write the changes and show me the numbers. Ruby hashes are extremely
-efficient, it hardly matters for less than ten people you are going to
-Cc, and any other code would be more complicated, if at all possible,
-I tried.
-
->> +persons.each do |person, roles|
->> +  roles = roles.map do |role, count|
->> +    percent = count.to_f * 100 / commits.size
->
-> Interesting.  You also take into account the size of the commits when
-> calculating the final score.
-
-No, it's the total number of commits, like any array.size.
-
->> +    next if percent < $min_percent
->> +    "%s: %u%%" % [role, percent]
->> +  end.compact
->
-> What are these nil elements you're filtering out with .compact?
-
-The ones that are below the threshold.
-
-> Overall, it looks like the whole thing is one giant first draft
-> written in a big rush.
-
-It's not. The first draft was sent more than three years ago[1]. I
-have literally been developing this for years, fixing related bugs in
-git along the way [2], and shaping some features [3]. I sent the
-previous version last year, which was basically the same design, and
-you thought it was great and even asked why it wasn't merged[4].
-
-I have written and rewritten this code, simplified and refactored it.
-And I'm fairly certain this version is clean and tidy, and could
-hardly be made any simpler.
-
-> For a relatively simple task,
-
-That is the problem right there; you don't understand what the code is
-doing, so you think because the code is relatively small, you do
-understand it, and the task must be simple. I assure you, it's not.
-
-But you have hands, go ahead and try to simplify it. If the task is so
-simple, you can remove all the code you don't like, and see how it
-fares. Then you'll see.
-
-> I'm sorry, but this giant mess wasn't at all a pleasure to read.
-
-It wasn't meant to be. It was meant to solve a problem in the simplest
-way possible.
-
-Surely the code can have some cosmetic changes to explain better what
-it's doing, but I doubt you find a way to substantially improve _how_
-it's doing it. Certainly none of the suggestions above did help in
-that regard.
-
-Cheers.
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/130391
-[2] http://article.gmane.org/gmane.comp.version-control.git/189897
-[3] http://article.gmane.org/gmane.comp.version-control.git/210059
-[4] http://article.gmane.org/gmane.comp.version-control.git/209419
-
--- 
-Felipe Contreras
+and it will work the same way on and off Windows.
