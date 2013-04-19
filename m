@@ -1,91 +1,87 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] cat-file: print tags raw for "cat-file -p"
-Date: Thu, 18 Apr 2013 23:03:30 -0400
-Message-ID: <CAPig+cSn1fQGwqrP6aoVbf9D_JzB30s3c_N_v8sc2VFPUyxfzg@mail.gmail.com>
-References: <CANKwXW1EXLiWgdVM4+k_11wu1Nyixp05PUXmQYP_gUXQKek_OA@mail.gmail.com>
-	<516D93C4.1000100@lsrfire.ath.cx>
-	<7v61zml0ow.fsf@alter.siamese.dyndns.org>
-	<516DBE2E.4060201@lsrfire.ath.cx>
-	<7vzjwyi0ba.fsf@alter.siamese.dyndns.org>
-	<7vli8hhgmn.fsf@alter.siamese.dyndns.org>
-	<20130417063942.GA27703@sigill.intra.peff.net>
-	<516EE300.7020200@lsrfire.ath.cx>
-	<20130417180248.GA1839@sigill.intra.peff.net>
-	<516EF2AD.9090403@lsrfire.ath.cx>
-	<20130417210048.GA635@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/6] transport-helper: clarify pushing without refspecs
+Date: Thu, 18 Apr 2013 20:41:17 -0700
+Message-ID: <7v4nf34276.fsf@alter.siamese.dyndns.org>
+References: <1366258473-12841-1-git-send-email-felipe.contreras@gmail.com>
+	<1366258473-12841-4-git-send-email-felipe.contreras@gmail.com>
+	<CAPig+cRp7J+HYBA=2OL-CdA3NiQFjuUMZEjE+i+SnNrrPBAZ6Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ivan Lyapunov <dront78@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
 	Git List <git@vger.kernel.org>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 19 05:03:49 2013
+	John Keeping <john@keeping.me.uk>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Max Horn <max@quendi.de>, Jonathan Nieder <jrnieder@gmail.com>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Apr 19 05:41:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UT1c5-0000uR-5R
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 05:03:49 +0200
+	id 1UT2Ce-0006K0-JR
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 05:41:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967855Ab3DSDDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Apr 2013 23:03:34 -0400
-Received: from mail-la0-f41.google.com ([209.85.215.41]:54293 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967546Ab3DSDDd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Apr 2013 23:03:33 -0400
-Received: by mail-la0-f41.google.com with SMTP id er20so3173400lab.14
-        for <git@vger.kernel.org>; Thu, 18 Apr 2013 20:03:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=s+mofljAhlEIugjbDq/dtObMjhYIdZ5xbiYbE2X0/ZM=;
-        b=uhoY3Lv1VxJCq5KjwGnfnsiC4hft1xmNQXcCObpagQJ+rINJUtzHvK5/6BXc1dzf+5
-         f21l0YSUZ5sXlUxQCBJgugWP7UT3smvERyBGkqSNOWS2RiYX7S7rxLSpqVujYiHprUGO
-         BAoHvAm7rYcOjap0nscaOaPXQJyXTRf5wLd95uDRCcPShrDyHsW9e+4KofnDTvRb0AQl
-         onCJsy3+Y7E54bnhlR8lQJPkDf+tuJg7e2b9zeNSFkVi1fxXUvlwLn26OMLl6TJzz/qE
-         ifRkKbp2BYZ1iqONYVi1B98aTiWFUKIZoSEWRW9GgM9kgxKmg6WlVbFyVN7L3ayUgjQt
-         ONBg==
-X-Received: by 10.112.148.65 with SMTP id tq1mr7092907lbb.104.1366340610466;
- Thu, 18 Apr 2013 20:03:30 -0700 (PDT)
-Received: by 10.114.199.11 with HTTP; Thu, 18 Apr 2013 20:03:30 -0700 (PDT)
-In-Reply-To: <20130417210048.GA635@sigill.intra.peff.net>
-X-Google-Sender-Auth: h_LFYMGY2TYAIQIVY-TVEVm9RiU
+	id S967891Ab3DSDlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Apr 2013 23:41:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56117 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S967859Ab3DSDlU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Apr 2013 23:41:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 279D711C5E;
+	Fri, 19 Apr 2013 03:41:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AOiVNwK5MkbvuVX0/8vnZVZVZuQ=; b=F9XfpH
+	Tpn0ssTzg056X9znOpps+nyFZLYtUv2NqxdEfY/cOF+7Yabq47J+sOyFtjdbiuPX
+	4Lz5Ai29fnFwBWIxF73uT7sfPzQuS9uzKwxTdBFOwt5uyQgcZzi+3V1WBp9uFbEC
+	X/SI0zeNV7jvc8C8VExsO/Gf0YDQcD6vfbkYE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TU9IsGhs/C4IwQwjITEwXwIPk7Jjr164
+	ptNDNN6i93mOPdRcvXN7O0yMz+IrwsyySGER5RzyP1p9ZF7FJVN8ZPNJs7CZ2dPf
+	7RMVRuxcH8CZBBB2YGdJYgJ2FenX7sZ8N0j7t79x6dgEwcGPkht5oVbCHy7Khs+3
+	JITOBhNQsNM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C92C11C5C;
+	Fri, 19 Apr 2013 03:41:20 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6AAF111C5A;
+	Fri, 19 Apr 2013 03:41:19 +0000 (UTC)
+In-Reply-To: <CAPig+cRp7J+HYBA=2OL-CdA3NiQFjuUMZEjE+i+SnNrrPBAZ6Q@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 18 Apr 2013 20:27:45 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FF4629B6-A8A2-11E2-ADE2-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221725>
 
-On Wed, Apr 17, 2013 at 5:00 PM, Jeff King <peff@peff.net> wrote:
-> Subject: [PATCH] cat-file: print tags raw for "cat-file -p"
->
-> When "cat-file -p" prints commits, it shows them in their
-> raw format, since git's format is already human-readable.
-> For tags, however, we print the whole thing raw except for
-> one thing: we convert the timestamp on the tagger line into a
-> human-readable date.
-> [...]
-> Let's drop the tagger-date formatting for "cat-file -p". It
-> makes us more consistent with cat-file's commit
-> pretty-printer, and as a bonus, we can drop the hand-rolled
-> tag parsing code in cat-file (which happened to behave
-> inconsistently with the tag pretty-printing code elsewhere).
->
-> This is a change of output format, so it's possible that
-> some callers could considered this a regression. However,
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-s/considered/consider/
-
-> the original behavior was arguably a bug (due to the
-> inconsistency with commits), likely nobody was relying on it
-> (even we do not use it ourselves these days), and anyone
-> relying on the "-p" pretty-printer should be able to expect
-> a change in the output format (i.e., while "cat-file" is
-> plumbing, the output format of "-p" was never guaranteed to
-> be stable).
+>> +       grep "remote-helper doesn.t support push; refspec needed" error
 >
-> Signed-off-by: Jeff King <peff@peff.net>
+> Is "doesn.t" intentional? It certainly works by accident in grep, but
+> did you mean s/doesn.t/doesn't/ ?
+
+The pattern matching the expected string is not by accident, but by
+design.
+
+It of course can be made more strict to reject "doesnot" and require
+"doesn't" by doing something like this:
+
+       grep "remote-helper doesn'\''t support push; refspec needed" error
+
+but at some point, it simply stops being worth it to tighten the
+pattern.
+
+For that matter, it could be as loose as
+
+	grep "support push; refspec needed" error
+
+if you know the string is unique enough.
