@@ -1,95 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/6] grep with textconv
-Date: Fri, 19 Apr 2013 11:24:16 -0700
-Message-ID: <7vhaj21ir3.fsf@alter.siamese.dyndns.org>
-References: <cover.1366389739.git.git@drmicha.warpmail.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 5/8] contrib: cc-cmd: add option to parse from committish
+Date: Fri, 19 Apr 2013 13:29:10 -0500
+Message-ID: <CAMP44s0ASLAaRMbGHsahHONzuGMC96rw5m72fM5EWpkYp==5uA@mail.gmail.com>
+References: <1366348458-7706-1-git-send-email-felipe.contreras@gmail.com>
+	<1366348458-7706-6-git-send-email-felipe.contreras@gmail.com>
+	<7vtxn21jvt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Apr 19 20:24:24 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 19 20:29:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTFyy-0003D6-Bn
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 20:24:24 +0200
+	id 1UTG3h-0006vg-4e
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 20:29:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753381Ab3DSSYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 14:24:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58486 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753041Ab3DSSYT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 14:24:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E071159F7;
-	Fri, 19 Apr 2013 18:24:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UKDfIh55zH56RWiCcLEddiowLVU=; b=oVPvFy
-	V+0iW6EuK/SI0n2MjUzQx9ZDAHKLibKJg5JX4ZD6dKbE5qkTMhDHjfVMgpdpvpIL
-	qiXvL76x8b9g1lue26v6kP3SuA3uMsZmSfloXmVrNH1ZYk8jNAU2YJydUJv3vfLv
-	3zidKl2KuBuDG+eRh04mRHXl6Q3EUU1xTLW0k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wnqV3U5895rRPzKq8/Rj8JVrdiWE1pad
-	cjP4tppue6oeBu5/K60wc2OvBUwL2o6cEvhDPsiFPleVYcTZS1ednzQPJj1/U5bL
-	cmkNgvLSfGrFpHZ3LMLQBBF7JQsTTAhT1Axehwk6n3tL/fk74chSbIIQDCCeqpkq
-	0zJ5b8/5Zuk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31BDE159F6;
-	Fri, 19 Apr 2013 18:24:18 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A943D159F2;
-	Fri, 19 Apr 2013 18:24:17 +0000 (UTC)
-In-Reply-To: <cover.1366389739.git.git@drmicha.warpmail.net> (Michael
-	J. Gruber's message of "Fri, 19 Apr 2013 18:44:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 58B6EBA4-A91E-11E2-A513-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753391Ab3DSS3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 14:29:13 -0400
+Received: from mail-la0-f47.google.com ([209.85.215.47]:37610 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753173Ab3DSS3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 14:29:12 -0400
+Received: by mail-la0-f47.google.com with SMTP id fk20so3566381lab.20
+        for <git@vger.kernel.org>; Fri, 19 Apr 2013 11:29:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=AeldMSdbaXSc3UMFqfBiGD9/H4JHc6/F5r8KoNCFXm0=;
+        b=WOUbkUXq+vvyovOe7A6G48AwHrsodXxeNUBGEa6R2IR81futglqg2o4xX0UFV9S2cS
+         0osopsNOovMcVnU168mVFy/8T9avi1kK41DRXt8fM7QhBWNJNexDCUYvvKPSjGbPBhST
+         Siihm7Lr5IXwgTSz2JDQWgGISaj3yw8AGg8jzEcg0JnBBa7CMU2nv2VLvwpizUAnPSlB
+         q12XaWM9EVxtmBwta29GKVYHSKfvrIDDpvrfO9yH7XRj0UTITdMDaR4RVPrPcUQRA1cz
+         WWKsSk92nfPW0/amnwhtsCYciGFZqKVn/ZzbiJDa8eOBt87K9hbPZrN7AR2RbPr1TaUg
+         euGw==
+X-Received: by 10.112.135.3 with SMTP id po3mr5457648lbb.103.1366396150843;
+ Fri, 19 Apr 2013 11:29:10 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Fri, 19 Apr 2013 11:29:10 -0700 (PDT)
+In-Reply-To: <7vtxn21jvt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221793>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
-
-> This series teaches show and grep to obey textconv: show by
-> default (like diff), grep only on request (--textconv).  We might
-> switch the default for the latter also, of course.  I'd actually
-> like that.
+On Fri, Apr 19, 2013 at 12:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> Compared to an earlier (historic) series this one comes with tests.
+>> For example master..feature-a.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>  contrib/cc-cmd/git-cc-cmd | 36 ++++++++++++++++++++++++++++++++++--
+>>  1 file changed, 34 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/contrib/cc-cmd/git-cc-cmd b/contrib/cc-cmd/git-cc-cmd
+>> index f13ed8f..462f22c 100755
+>> --- a/contrib/cc-cmd/git-cc-cmd
+>> +++ b/contrib/cc-cmd/git-cc-cmd
+>> @@ -5,11 +5,13 @@ require 'optparse'
+>>  $since = '3-years-ago'
+>>  $min_percent = 5
+>>  $show_commits = false
+>> +$files = []
+>> +$rev_args = []
+>>
+>>  begin
+>>    OptionParser.new do |opts|
+>>      opts.program_name = 'git cc-cmd'
+>> -    opts.banner = 'usage: git cc-cmd [options] <files>'
+>> +    opts.banner = 'usage: git cc-cmd [options] <files | rev-list options>'
+>>
+>>      opts.on('-p', '--min-percent N', Integer, 'Minium percentage of role participation') do |v|
+>>        $min_percent = v
+>> @@ -134,10 +136,40 @@ class Commits
+>>      end
+>>    end
+>>
+>> +  def from_rev_args(args)
+>> +    return if args.empty?
+>> +    source = nil
+>> +    File.popen(%w[git rev-list --reverse] + args) do |p|
+>> +      p.each do |e|
+>> +        id = e.chomp
+>> +        @main_commits[id] = true
+>> +        File.popen(%w[git --no-pager show -C --oneline] + [id]) do |p|
+>
+> When you know you are sending its output to a pipe, does --no-pager matter,
+> or is there anything more subtle going on here?
+>
+> An extra --no-pager does not hurt, but it just caught/distracted my
+> attention while reading this patch.
 
-It would have been nicer if you referred to the previous thread
+It probably doesn't matter, I might have been using something else
+when I copied that code.
 
-cf.
-
-  http://thread.gmane.org/gmane.comp.version-control.git/215385
-
->   grep: allow to use textconv filters
-
-This looked mostly sensible except for one minor "eh, do we really
-need to assume textconv output is text, or wouldn't using the same
-codepath for raw blob and textconv result to make them consistently
-honor opt->binary easier to explain?".
-
->   t4030: demonstrate behavior of show with textconv
->   t7008: demonstrate behavior of grep with textconv
-
-It somehow felt they are better together in the patches that
-implement the features they exercise.
-
->   show: obey --textconv for blobs
->   cat-file: do not die on --textconv without textconv filters
->   grep: obey --textconv for the case rev:path
-
-I just let my eyes coast over these but didn't see anything
-obviously wrong.
-
-By the way, "git log --no-merges | grep obey | wc -l" shows that we
-say "honor an option" a lot more than "obey an option".  We may want
-to be consistent here.
+-- 
+Felipe Contreras
