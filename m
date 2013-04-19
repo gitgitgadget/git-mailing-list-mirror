@@ -1,74 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Find/prune local branches after upstream branch is deleted?
-Date: Fri, 19 Apr 2013 14:05:20 -0400
-Message-ID: <20130419180520.GA22865@sigill.intra.peff.net>
-References: <87ehe64f91.fsf@mcs.anl.gov>
- <20130419173717.GA26964@sigill.intra.peff.net>
- <87bo9a4dfr.fsf@mcs.anl.gov>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] cat-file: do not die on --textconv without textconv filters
+Date: Fri, 19 Apr 2013 11:15:57 -0700
+Message-ID: <7vli8e1j4y.fsf@alter.siamese.dyndns.org>
+References: <cover.1366389739.git.git@drmicha.warpmail.net>
+	<06f2d51bf0479f3231b707d88d8d04fcd306c973.1366389739.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>
-To: Jed Brown <jed@59A2.org>
-X-From: git-owner@vger.kernel.org Fri Apr 19 20:05:30 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Apr 19 20:16:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTFge-0004wk-Cd
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 20:05:28 +0200
+	id 1UTFqv-0004qg-JG
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 20:16:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752513Ab3DSSFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 14:05:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44205 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751741Ab3DSSFX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 14:05:23 -0400
-Received: (qmail 11234 invoked by uid 102); 19 Apr 2013 18:05:28 -0000
-Received: from 99-108-225-125.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.225.125)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 19 Apr 2013 13:05:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Apr 2013 14:05:20 -0400
-Content-Disposition: inline
-In-Reply-To: <87bo9a4dfr.fsf@mcs.anl.gov>
+	id S1752979Ab3DSSQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 14:16:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50076 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752947Ab3DSSP7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 14:15:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 598E515515;
+	Fri, 19 Apr 2013 18:15:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+48rbBWufUcRrXMGiw21hBFK8m8=; b=wME+So
+	J/oI0om0CRkoMniwMzu5JZJUiNrhz0krio4J1MbvrZ6c2+vta/hyTGWyiMmdRvBE
+	RKwVEZYgZDe/kCNeAtCXRlfmde5izjcCBe36EagslWFu+kfrNUU8wiC6odRi2Cvz
+	0UHdCAP1qaObHoMOKrHodVdP55wgKlibYwNRM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=d2aVPaNfIxKNVMp5YaAUojPbGJXfmnEL
+	YS8WPTyp78mRiswQsrDSMMlcZQSii7qWBkn2yqIGk8kMqEx+Va8cfU8RYtrM6kiG
+	Ca6OSGqEkOZ7yVJaM/i4OIaWpXIG0Fej9EUDxASrMwYFDPLk4XXu8rmMLUDbqWDz
+	z4RzPb4misU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5045615513;
+	Fri, 19 Apr 2013 18:15:59 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C1CA115511;
+	Fri, 19 Apr 2013 18:15:58 +0000 (UTC)
+In-Reply-To: <06f2d51bf0479f3231b707d88d8d04fcd306c973.1366389739.git.git@drmicha.warpmail.net>
+	(Michael J. Gruber's message of "Fri, 19 Apr 2013 18:44:46 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2F589ECA-A91D-11E2-B876-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221790>
 
-On Fri, Apr 19, 2013 at 12:50:48PM -0500, Jed Brown wrote:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Try "git branch --merged master" to get a list of branches that have
-> > already been merged.
-> 
-> That's what I use, but I was hoping for something more precise.  For
-> example, a branch that started at 'maint' would show up there, but its
-> integration hasn't completed until it makes it back to 'maint'.
+> When a command is supposed to use textconv filters (by default or with
+> "--textconv") and none are configured then the blob is output without
+> conversion; the only exception to this rule is "cat-file --textconv".
 
-Yeah, git has no way of knowing that. You can tell it by asking "git
-branch --merged maint" and looking for such topics, of course, but I
-think you are trying to remove as much thinking as possible from the
-process.
+I am of two minds.  Because cat-file is mostly a low-level plumbing,
+I do not necessarily think it is a bad behaviour for it to error out
+when it was asked to apply textconv where there is no filter or when
+the filter fails to produce an output.  On the other hand, it
+certainly makes it more convenient for callers that do not care too
+deeply, taking textconv as a mere hint just like Porcelains do.
 
-So what is the clue that you would like to use to know that the branch
-is stale. Deletion of the branch on the remote?
+But assuming that this is the direction we would want to go...
 
-For that, I don't think there is a single command. You can do "git push
---dry-run --all" and look for new branches that would be pushed, but
-that is kind of hacky.  The answer you want is:
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index 40f87b4..dd4e063 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -146,10 +146,11 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+>  			die("git cat-file --textconv %s: <object> must be <sha1:path>",
+>  			    obj_name);
+>  
+> -		if (!textconv_object(obj_context.path, obj_context.mode, sha1, 1, &buf, &size))
+> -			die("git cat-file --textconv: unable to run textconv on %s",
+> -			    obj_name);
+> -		break;
+> +		if (textconv_object(obj_context.path, obj_context.mode, sha1, 1, &buf, &size))
+> +			break;
+> +
+> +		/* otherwise expect a blob */
+> +		exp_type = "blob";
 
-  comm -23 \
-    <(git for-each-ref --format='%(refname:short)' refs/heads) \
-    <(git for-each-ref --format='%(refname:short)' refs/remotes/origin |
-      sed s,origin/,,)
-
-You said you didn't want to script, but I think that is the only option
-to answer that question cleanly.
-
-Note that if you wrap that in an alias, you would want to use "bash -c",
-as the <() syntax is not understood by many /bin/sh implementations.
-
--Peff
+Please use the constant string blob_type that is available for all
+callers including this one.
