@@ -1,137 +1,109 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Teach git to change to a given directory using -C option
-Date: Fri, 19 Apr 2013 12:12:50 -0400
-Message-ID: <20130419161250.GC14263@sigill.intra.peff.net>
-References: <1366374108-23725-1-git-send-email-ayiehere@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t3400 (rebase): add failing test for a peculiar rev spec
+Date: Fri, 19 Apr 2013 09:21:24 -0700
+Message-ID: <7vvc7i330b.fsf@alter.siamese.dyndns.org>
+References: <1366275155-26244-1-git-send-email-artagnon@gmail.com>
+	<7vmwsv94jo.fsf@alter.siamese.dyndns.org>
+	<CALkWK0=RDCCSxOJ2TU4=tniSRTg9VJohJ8Pf6uN9E=fd3jg=_Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Nazri Ramliy <ayiehere@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 18:12:58 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 19 18:21:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTDvl-00062E-Tp
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 18:12:58 +0200
+	id 1UTE48-0004ym-L9
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 18:21:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967565Ab3DSQMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 12:12:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44117 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S967459Ab3DSQMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 12:12:52 -0400
-Received: (qmail 4616 invoked by uid 102); 19 Apr 2013 16:12:57 -0000
-Received: from 99-108-225-125.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.225.125)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 19 Apr 2013 11:12:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Apr 2013 12:12:50 -0400
-Content-Disposition: inline
-In-Reply-To: <1366374108-23725-1-git-send-email-ayiehere@gmail.com>
+	id S1757385Ab3DSQVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 12:21:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59146 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756221Ab3DSQV3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 12:21:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8976515003;
+	Fri, 19 Apr 2013 16:21:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iYVKJR/1wYvzQo065v1e2eTuK90=; b=R4ApoH
+	lLRGRdelZdAAy+lBTu26yatx9O/Efk33Jhtoj6zWBx93GA9lb/c6IvLEKoXjC76D
+	dN5oGq3tzhk9mI1ehKni2AKC8pHhf6V3z6KMGI3PXURKl8aZwpR6f21Y1F1ejF6z
+	tZlGs8+dTfTZmugLkqyaTZJXAUe9PRb+DyHkA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dS5GFCF1k0Zhr7kerzNrKgGXfZyTHtBg
+	V1XfxxNyfqXxXSGTT9Rni5PC6szrePn4Vib5VQPLrTzeKixqxXce/8+DSZrO1Tyz
+	9XzMZXqTG2K0X9p0j/DA81Iyn4JiDRzMaZIO8WlLLZhOXttK68ZU0mlmpiVCwbbL
+	5qIoETjt554=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 818AF15002;
+	Fri, 19 Apr 2013 16:21:27 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D622E16FFA;
+	Fri, 19 Apr 2013 16:21:26 +0000 (UTC)
+In-Reply-To: <CALkWK0=RDCCSxOJ2TU4=tniSRTg9VJohJ8Pf6uN9E=fd3jg=_Q@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Fri, 19 Apr 2013 13:13:46 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2F5D3C1A-A90D-11E2-A6EF-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221767>
 
-On Fri, Apr 19, 2013 at 08:21:48PM +0800, Nazri Ramliy wrote:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> This is similar in spirit to to "make -C dir ..." and "tar -C dir ...".
-> 
-> Signed-off-by: Nazri Ramliy <ayiehere@gmail.com>
-> ---
-> Often I find myself needing to find out quickly the status of a repository that
-> is not in my currenct working directory, like this:
-> 
->          $ (cd ~/foo; git log -1)
-> 
-> With this patch now i can simply do:
-> 
->          $ git -C ~/.zsh log -1 
-> 
-> That's just one example. I think those who are familiar with the -C arguments
-> to "make" and "tar" commands would get the "handiness" of having this option in
-> git.
+> I'm more interested in knowing what you think of my first point: is
+> :/text fundamentally broken, as it can't be combined with other
+> operators like the other rev specs can?  If so, how do you think we
+> should fix it?
 
-This motivation should probably go into the commit message.
+The question :/string wants to ask is fundamentally ambiguous once
+you start wanting to give arbitrary string to it.
 
-I think it's worth pausing for a moment and considering if we can do
-this already with existing features.
+Think what this asks:
 
-You can _almost_ do this with "git --git-dir". But it expects the actual
-git directory, not a starting point for finding the git directory. And
-it remains in your same working dir. So with a bare repository, these
-two are equivalent:
+    git show ":/Fix regression introduced by commit v1.5.1-rc1"~113^2
 
-  $ git --git-dir=/path/to/foo.git ...
-  $ git -C /path/to/foo.git ...
+Is it looking for a commit that fixes v1.5.1-rc1 and then locate the
+side branch that waas merged by the 113th-generation parent of that
+fix?  Or is it looking for the commit that fixes v1.5.1-rc1~113^2?
 
-But with a non-bare repo, this does not work:
+When we introduced a postfix $rev^{/string} operator at 32574b68c57f
+(get_sha1: support $commit^{/regex} syntax, 2010-12-13) to dig from
+a given rev, we designed it so that we can disambiguate between the
+two: HEAD^{/Fix v1.5.1~113^2} vs HEAD^{/Fix v1.5.1}~113^2.
 
-  $ git --git-dir=/path/to/non-bare ...
+But the tradeoff made with 28a4d9404438 (object name: introduce
+':/<oneline prefix>' notation, 2007-02-24), which is much older than
+the $rev^{/string} syntax, is to help casual interactive use by not
+requiring sometimes-hard-to-type line noise characters.
 
-You must instead say:
+Even back then, I did not want to paint us into a corner we cannot
+escape from, and made sure the syntax has an escape hatch built-in.
 
-  $ git --git-dir=/path/to/non-bare/.git ...
+cf.
 
-and even then, I think it will treat your current directory as the
-working tree, not /path/to/non-bare.
+  http://thread.gmane.org/gmane.comp.version-control.git/40460/focus=40477
 
-So I think "-C" is a worthwhile addition compared to just "--git-dir".
+If you cared deeply enough, you could activate it, to take something
+like:
 
-It is redundant with "(cd foo && git ...)" in the shell, as you note,
-but sometimes it is more convenient to use "-C" (especially if you are
-exec-ing git from another program and want to avoid the shell entirely
-for quoting reasons).
+    git show ":/!(s=Fix regression by v1.5.1-rc1~113^2)~20"
 
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index 6a875f2..20bba86 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -379,6 +379,9 @@ displayed. See linkgit:git-help[1] for more information,
->  because `git --help ...` is converted internally into `git
->  help ...`.
->  
-> +-C <directory>::
-> +	Change to given directory before doing anything else.
-> +
+to say "The 20th-generation parent of the commit whose subject says
+it fixed regression at v1.5.1-rc1~113^2".
 
-It might make sense to clarify this as "...anything else, including
-determining the location of the git repository directory". If you think
-hard about it, doing anything else would not really make much sense, but
-spelling it out makes it clear what the option can be used for.
+That would make this
 
-> +		if (!prefixcmp(cmd, "-C")) {
+	":/!(a=Ramkumar)(s=move diff.wordRegex)~4"
 
-Should this be strcmp? You do not seem to handle "-Cfoo" below.
-
-> +			if (*argc < 2) {
-> +				fprintf(stderr, "No directory given for -C.\n" );
-> +				usage(git_usage_string);
-> +			}
-
-I know you are copying this from the other options in the same function,
-but I wonder if they should all be calling "error()" (and dropping the
-terminating ".") to better match our usual error messages.
-
-> +			if (chdir((*argv)[1]))
-> +				die_errno("Cannot change to '%s'", (*argv)[1]);
-> +			(*argv)++;
-> +			(*argc)--;
-
-You would want to set "*envchanged = 1" here. The intent of that flag is
-that git would need to throw away things it has looked up already (like
-the git dir) in order to correctly utilize the options (and since we
-haven't implemented that "throw away" step, it just complains and dies).
-
-I didn't try it, but I suspect your patch would be broken with:
-
-  $ git config alias.logfoo '-C /path/to/foo log'
-  $ cd /some/other/repo
-  $ git logfoo
-
-It would still use /some/other/repo as a $GIT_DIR, having looked it up
-before processing the "-C".
-
--Peff
+a way to find the fourth-generation parent of 2ead7a674d7f (t5516
+(fetch-push): update test description, 2013-04-02) as a natural
+extension, I guess.
