@@ -1,197 +1,155 @@
 From: Johan Herland <johan@herland.net>
-Subject: [RFD/PATCH 3/5] checkout: Use remote refspecs when DWIMming tracking branches
-Date: Fri, 19 Apr 2013 08:20:40 +0200
-Message-ID: <1366352442-501-4-git-send-email-johan@herland.net>
+Subject: [RFD/PATCH 5/5] RFD: Disallow out-of-refspec refs within refs/remotes/* to be used as upstream
+Date: Fri, 19 Apr 2013 08:20:42 +0200
+Message-ID: <1366352442-501-6-git-send-email-johan@herland.net>
 References: <1366352442-501-1-git-send-email-johan@herland.net>
 Cc: johan@herland.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 19 08:21:54 2013
+X-From: git-owner@vger.kernel.org Fri Apr 19 08:21:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UT4hl-0002ou-UP
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 08:21:54 +0200
+	id 1UT4hl-0002ou-FJ
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 08:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756968Ab3DSGVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 02:21:46 -0400
-Received: from mail-la0-f44.google.com ([209.85.215.44]:43105 "EHLO
-	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756664Ab3DSGVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 02:21:43 -0400
-Received: by mail-la0-f44.google.com with SMTP id ed20so257085lab.17
-        for <git@vger.kernel.org>; Thu, 18 Apr 2013 23:21:42 -0700 (PDT)
+	id S967886Ab3DSGVs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 02:21:48 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:63962 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756965Ab3DSGVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 02:21:47 -0400
+Received: by mail-la0-f46.google.com with SMTP id ej20so1065987lab.33
+        for <git@vger.kernel.org>; Thu, 18 Apr 2013 23:21:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=g7TgUlXSOPtxCBBwSzw1NJ9wG34pTpwGraPZhifo/1k=;
-        b=SmlBBh2a3y4Zl7TvPR35jwFp5PpuDeZHpAKgVtfaqSyhVA2JoaHV5xqD2T0hElDJu+
-         stqi3qEaZEfmmxoteOuCLSwAS3ogpdRDLhfaL8tAGtQMx1P02Bnu7uwz7i2PaFBe0uIR
-         nqC3UaWxtpsRqlSh0WNjErHKKIm1aTQnI+vpX5NHORyBUr77BvRATKOVDldsd9cX2pSJ
-         gSQoN2z8OnldqGwfzzWAvjtCi+LJNxTJ24MB0SytkaQXYFz0JA5CsDRIkYlXWNDv6ARG
-         UfAoiqjrxVLRqkgzdfFYW0qL2huNKqPxEWuV5VkgpeADs3jVHN5ByOjCJnnPhc8s5DGr
-         9hkg==
-X-Received: by 10.152.120.6 with SMTP id ky6mr7409265lab.19.1366352501988;
-        Thu, 18 Apr 2013 23:21:41 -0700 (PDT)
+        bh=wwCA6LfpevHKLVRWPkkMkr/eXp93+BH/TTcyvqOvGs4=;
+        b=CyJRRdSS2geLF3mtTVYIQ77+wJRnanUW/bJJhJRatkizP5PfNamiuJoEXXk7ag92YX
+         zTyEN0SXONF3FfVh1sKE1wdHv/kN7KNPSmmEUy6vzvLXwWPHRtjpoMChKukD8Bd8GQlX
+         ieYEHQZo8ng6j4dG4+OrmILv4YVyCWkvhLk4hZajKqCTrvaHsSAnq2ArojS6MIxU5mM+
+         hZOijoTGnfUrqv3p6SXf6U+NNk8issaIVISBIYdT9INRE565DnJTgkXlf/xzdM5uJ2w3
+         ipVb0zOMK48ZEsrKCxGeeW0lXbG2INlzUfQlJSthmMu5CePdIwBMHv5FwLVg5r2CQ1EB
+         Vx6Q==
+X-Received: by 10.152.116.52 with SMTP id jt20mr7394889lab.52.1366352505341;
+        Thu, 18 Apr 2013 23:21:45 -0700 (PDT)
 Received: from gamma.herland (cm-84.208.177.71.getinternet.no. [84.208.177.71])
-        by mx.google.com with ESMTPS id f4sm2076904lbw.6.2013.04.18.23.21.40
+        by mx.google.com with ESMTPS id f4sm2076904lbw.6.2013.04.18.23.21.43
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 18 Apr 2013 23:21:41 -0700 (PDT)
+        Thu, 18 Apr 2013 23:21:44 -0700 (PDT)
 X-Mailer: git-send-email 1.8.1.3.704.g33f7d4f
 In-Reply-To: <1366352442-501-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221746>
 
-The DWIM mode of checkout allows you to run "git checkout foo" when there is
-no existing local ref or path called "foo", and there is exactly one remote
-with a remote-tracking branch called "foo". Git will then automatically
-create a new local branch called "foo" using the remote-tracking "foo" as
-its starting point and configured upstream.
+The previous patch adds validation of upstream remote-tracking branches by
+parsing the configured refspecs, and making sure that the candidate upstream
+(if not already matching refs/heads/* or refs/remotes/*) is indeed a
+remote-tracking branch according to some remote's refspec. For a
+default/conventional setup, this check would automatically also cover
+everything within refs/remotes/*, meaning that the preceding check for
+refs/remotes/* is redundant (although quicker than the validation against
+refspecs). One could also argue that not everything inside refs/remotes/*
+should be automatically acceptable as an upstream, if one were to keep
+other (non-branch) type of remote-tracking refs there.
 
-However, the current code hardcodes the assumption that all remote-tracking
-branches are located at refs/remotes/$remote/*, and that "git checkout foo"
-must find exactly one ref matching "refs/remotes/*/foo" to succeed.
-This approach fails if a user has customized the refspec of a given remote to
-place remote-tracking branches elsewhere.
+This patch removes the simple check for refs/remotes/*, to make sure that
+_only_ validated remote-tracking branches (in addition to local branches)
+are allowed as upstreams.
 
-The better way to find a tracking branch is to use the fetch refspecs for the
-configured remotes to deduce the available candidate remote-tracking branches
-corresponding to a remote branch of the requested name, and if exactly one of
-these exists (and points to a valid SHA1), then that is the remote-tracking
-branch we will use.
-
-For example, in the case of "git checkout foo", we map "refs/heads/foo"
-through each remote's refspec to find the available candidate remote-tracking
-branches, and if exactly one of these candidates exist in our local repo, then
-we have found the upstream for the new local branch "foo".
-
-This fixes most of the failing tests introduced in the previous patch.
-
-Signed-off-by: Johan Herland <johan@herland.net>
+However, this means that for unconventional setups that place refs within
+refs/remotes/* without configuring a corresponding refspec, those refs will
+no longer be usable as upstreams. This breaks a few existing tests, which
+are marked as test_expect_failure by this patch, to make them easy to find.
 ---
- Documentation/git-checkout.txt |  6 +++---
- builtin/checkout.c             | 42 ++++++++++++++++++++++--------------------
- t/t2024-checkout-dwim.sh       |  6 +++---
- 3 files changed, 28 insertions(+), 26 deletions(-)
+ branch.c                         | 1 -
+ t/t3200-branch.sh                | 2 +-
+ t/t7201-co.sh                    | 2 +-
+ t/t9114-git-svn-dcommit-merge.sh | 8 ++++----
+ 4 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 8edcdca..bf0c99c 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -131,9 +131,9 @@ entries; instead, unmerged entries are ignored.
- 	"--track" in linkgit:git-branch[1] for details.
- +
- If no '-b' option is given, the name of the new branch will be
--derived from the remote-tracking branch.  If "remotes/" or "refs/remotes/"
--is prefixed it is stripped away, and then the part up to the
--next slash (which would be the nickname of the remote) is removed.
-+derived from the remote-tracking branch, by looking at the local part of
-+the refspec configured for the corresponding remote, and then stripping
-+the initial part up to the "*".
- This would tell us to use "hack" as the local branch when branching
- off of "origin/hack" (or "remotes/origin/hack", or even
- "refs/remotes/origin/hack").  If the given name has no slash, or the above
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f8033f4..d6f9c01 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -822,38 +822,40 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
- }
- 
- struct tracking_name_data {
--	const char *name;
--	char *remote;
-+	/* const */ char *src_ref;
-+	char *dst_ref;
-+	unsigned char *dst_sha1;
- 	int unique;
- };
- 
--static int check_tracking_name(const char *refname, const unsigned char *sha1,
--			       int flags, void *cb_data)
-+static int check_tracking_name(struct remote *remote, void *cb_data)
- {
- 	struct tracking_name_data *cb = cb_data;
--	const char *slash;
--
--	if (prefixcmp(refname, "refs/remotes/"))
--		return 0;
--	slash = strchr(refname + 13, '/');
--	if (!slash || strcmp(slash + 1, cb->name))
-+	struct refspec query;
-+	memset(&query, 0, sizeof(struct refspec));
-+	query.src = cb->src_ref;
-+	if (remote_find_tracking(remote, &query) ||
-+	    get_sha1(query.dst, cb->dst_sha1))
- 		return 0;
--	if (cb->remote) {
-+	if (cb->dst_ref) {
- 		cb->unique = 0;
- 		return 0;
- 	}
--	cb->remote = xstrdup(refname);
-+	cb->dst_ref = xstrdup(query.dst);
- 	return 0;
- }
- 
--static const char *unique_tracking_name(const char *name)
-+static const char *unique_tracking_name(const char *name, unsigned char *sha1)
- {
--	struct tracking_name_data cb_data = { NULL, NULL, 1 };
--	cb_data.name = name;
--	for_each_ref(check_tracking_name, &cb_data);
-+	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1 };
-+	char src_ref[PATH_MAX];
-+	snprintf(src_ref, PATH_MAX, "refs/heads/%s", name);
-+	cb_data.src_ref = src_ref;
-+	cb_data.dst_sha1 = sha1;
-+	for_each_remote(check_tracking_name, &cb_data);
- 	if (cb_data.unique)
--		return cb_data.remote;
--	free(cb_data.remote);
-+		return cb_data.dst_ref;
-+	free(cb_data.dst_ref);
- 	return NULL;
- }
- 
-@@ -916,8 +918,8 @@ static int parse_branchname_arg(int argc, const char **argv,
- 		if (dwim_new_local_branch_ok &&
- 		    !check_filename(NULL, arg) &&
- 		    argc == 1) {
--			const char *remote = unique_tracking_name(arg);
--			if (!remote || get_sha1(remote, rev))
-+			const char *remote = unique_tracking_name(arg, rev);
-+			if (!remote)
- 				return argcount;
- 			*new_branch = arg;
- 			arg = remote;
-diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
-index 36bf52f..fc6edc9 100755
---- a/t/t2024-checkout-dwim.sh
-+++ b/t/t2024-checkout-dwim.sh
-@@ -95,15 +95,15 @@ test_expect_success 'setup more remotes with unconventional refspecs' '
- 	git fetch repo_d
+diff --git a/branch.c b/branch.c
+index c9f9dec..beaf11d 100644
+--- a/branch.c
++++ b/branch.c
+@@ -274,7 +274,6 @@ void create_branch(const char *head,
+ 	case 1:
+ 		/* Unique completion -- good, only if it is a real branch */
+ 		if (prefixcmp(real_ref, "refs/heads/") &&
+-		    prefixcmp(real_ref, "refs/remotes/") &&
+ 		    validate_remote_tracking_branch(real_ref)) {
+ 			if (explicit_tracking)
+ 				die(_(upstream_not_branch), start_name);
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index d969f0e..41d293d 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -317,7 +317,7 @@ test_expect_success 'test tracking setup (non-wildcard, matching)' '
+ 	test $(git config branch.my4.merge) = refs/heads/master
  '
  
--test_expect_failure 'checkout of branch from multiple remotes fails #2' '
-+test_expect_success 'checkout of branch from multiple remotes fails #2' '
- 	test_must_fail git checkout bar
+-test_expect_success 'test tracking setup (non-wildcard, not matching)' '
++test_expect_failure 'test tracking setup (non-wildcard, not matching)' '
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/s:refs/remotes/local/s &&
+ 	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index be9672e..7267ee2 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -429,7 +429,7 @@ test_expect_success 'detach a symbolic link HEAD' '
+     test "z$(git rev-parse --verify refs/heads/master)" = "z$here"
  '
  
--test_expect_failure 'checkout of branch from multiple remotes fails #3' '
-+test_expect_success 'checkout of branch from multiple remotes fails #3' '
- 	test_must_fail git checkout baz
- '
+-test_expect_success \
++test_expect_failure \
+     'checkout with --track fakes a sensible -b <name>' '
+     git update-ref refs/remotes/origin/koala/bear renamer &&
  
--test_expect_failure 'checkout of branch from a single remote succeeds #3' '
-+test_expect_success 'checkout of branch from a single remote succeeds #3' '
- 	git checkout spam &&
- 	test_tracking_branch spam repo_c refs/remotes/extra_dir/repo_c/extra_dir/spam
- '
+diff --git a/t/t9114-git-svn-dcommit-merge.sh b/t/t9114-git-svn-dcommit-merge.sh
+index 3077851..ef274fd 100755
+--- a/t/t9114-git-svn-dcommit-merge.sh
++++ b/t/t9114-git-svn-dcommit-merge.sh
+@@ -45,7 +45,7 @@ test_expect_success 'setup svn repository' '
+ 	)
+ 	'
+ 
+-test_expect_success 'setup git mirror and merge' '
++test_expect_failure 'setup git mirror and merge' '
+ 	git svn init "$svnrepo" -t tags -T trunk -b branches &&
+ 	git svn fetch &&
+ 	git checkout --track -b svn remotes/trunk &&
+@@ -67,7 +67,7 @@ test_expect_success 'setup git mirror and merge' '
+ 
+ test_debug 'gitk --all & sleep 1'
+ 
+-test_expect_success 'verify pre-merge ancestry' "
++test_expect_failure 'verify pre-merge ancestry' "
+ 	test x\`git rev-parse --verify refs/heads/svn^2\` = \
+ 	     x\`git rev-parse --verify refs/heads/merge\` &&
+ 	git cat-file commit refs/heads/svn^ | grep '^friend$'
+@@ -79,7 +79,7 @@ test_expect_success 'git svn dcommit merges' "
+ 
+ test_debug 'gitk --all & sleep 1'
+ 
+-test_expect_success 'verify post-merge ancestry' "
++test_expect_failure 'verify post-merge ancestry' "
+ 	test x\`git rev-parse --verify refs/heads/svn\` = \
+ 	     x\`git rev-parse --verify refs/remotes/trunk \` &&
+ 	test x\`git rev-parse --verify refs/heads/svn^2\` = \
+@@ -87,7 +87,7 @@ test_expect_success 'verify post-merge ancestry' "
+ 	git cat-file commit refs/heads/svn^ | grep '^friend$'
+ 	"
+ 
+-test_expect_success 'verify merge commit message' "
++test_expect_failure 'verify merge commit message' "
+ 	git rev-list --pretty=raw -1 refs/heads/svn | \
+ 	  grep \"    Merge branch 'merge' into svn\"
+ 	"
 -- 
 1.8.1.3.704.g33f7d4f
