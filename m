@@ -1,73 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t3400 (rebase): add failing test for a peculiar rev spec
-Date: Fri, 19 Apr 2013 10:28:08 -0700
-Message-ID: <7v7gjy2zx3.fsf@alter.siamese.dyndns.org>
-References: <1366275155-26244-1-git-send-email-artagnon@gmail.com>
-	<7vmwsv94jo.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=RDCCSxOJ2TU4=tniSRTg9VJohJ8Pf6uN9E=fd3jg=_Q@mail.gmail.com>
-	<7vvc7i330b.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 1/8] Add new git-cc-cmd helper to contrib
+Date: Fri, 19 Apr 2013 12:35:09 -0500
+Message-ID: <CAMP44s3YAq66MrOR5a4ydujKR5+ZNMVV4i=JzPCxLXC244b52g@mail.gmail.com>
+References: <1366348458-7706-1-git-send-email-felipe.contreras@gmail.com>
+	<1366348458-7706-2-git-send-email-felipe.contreras@gmail.com>
+	<7vfvym30t8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 19:28:17 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 19 19:35:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTF6d-0000sF-Ta
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 19:28:16 +0200
+	id 1UTFDc-0006dW-Vm
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 19:35:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550Ab3DSR2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 13:28:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49954 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751054Ab3DSR2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 13:28:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE22115753;
-	Fri, 19 Apr 2013 17:28:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=A9b7jBQPck9ZBpfyMyp64pb8uNM=; b=Tp/QPT
-	wyMTKLO4d1QHGSFYvF18kKYwlvvSrt4qnfoQ9kTXXE38n2s6Z4tmE38pZHrQHLoS
-	46h3Whd5h4BPBqtRL6slYjILzcUuMizi7ssFqsxM9gWlMtkNYuS1BUw8v1YHnGx7
-	bAlhFB3t/f60Hg8tgXKSugEEUs93sVEYZvp30=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fb+E9p1qS6QmBUStzTiFu/n40mhIfwa7
-	nkmIyhie4f7orAW47JzSKHHEGguQNkqmzii4ohf3kAnQuoyIMpJQgFK/xZKUM0bF
-	QRJhHlxQ1b3hJOezeNeHOfDvy2vn6Ims1ZnTEkyKXwfDVMxLGUh/HkwNawkBdF9c
-	cVIGcMW+buA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B46F515752;
-	Fri, 19 Apr 2013 17:28:10 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 346441574F;
-	Fri, 19 Apr 2013 17:28:10 +0000 (UTC)
-In-Reply-To: <7vvc7i330b.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 19 Apr 2013 09:21:24 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8189F88A-A916-11E2-8150-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752789Ab3DSRfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 13:35:17 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:42032 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751170Ab3DSRfP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 13:35:15 -0400
+Received: by mail-lb0-f172.google.com with SMTP id u10so3974067lbi.3
+        for <git@vger.kernel.org>; Fri, 19 Apr 2013 10:35:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=RE0SJzMe0kzs+oMNXF81srZzZqr8lzgEXTgAdViecWM=;
+        b=NooD/QZxBbd2ktSQTS//Hi0jDmZ3uTDU2hyfjZHk+Fc94snOKp29znz9mCSWbuhiKV
+         31TqHSYZByptZDTtRNb9h6/ChWvWlmU88ecis6bjLuIgNmOYXvx5b29aNYW+avFZ9tu0
+         ofJHX78ym/fKopBtOAAIlgmZJFfoSPwB9eG2hRjZXtvS5emj5EXoqvPKd9W9eZ1gYz4B
+         WLKFoJFBbV3MBv6nfTWn9YYfiiYC5ZIkn4QVYnCNlR7iK7nS6RY73B3gQy1o+UXsu7gs
+         RLPAkVFup3WQTwvYQnvoHj14eQkjvbDlmn5lNbhMUxgpJEeOwcdmeFW+xWQcgwH9ZcYd
+         JZpg==
+X-Received: by 10.112.139.226 with SMTP id rb2mr7579051lbb.12.1366392909868;
+ Fri, 19 Apr 2013 10:35:09 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Fri, 19 Apr 2013 10:35:09 -0700 (PDT)
+In-Reply-To: <7vfvym30t8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221783>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> That would make this
+On Fri, Apr 19, 2013 at 12:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> The code finds the changes of a commit, runs 'git blame' for each chunk
+>> to see which other commits are relevant, and then reports the author and
+>> signers.
 >
-> 	":/!(a=Ramkumar)(s=move diff.wordRegex)~4"
+> In general, I am not all that interested in adding anything new to
+> contrib/ as git.git has matured enough, but even if this will stay
+> outside my tree, there are a few interesting things to note to help
+> its eventual users.
+
+Why not add it to mainline git then? This tool, or a similar one,
+would certainly be useful in the git arsenal.
+
+>> +    roles = roles.map do |person, role|
+>> +      address = "%s <%s>" % person
+>> +      [person, role]
+>> +    end
 >
-> a way to find the fourth-generation parent of ...
+> Is address being used elsewhere, or is this a remnant from an
+> earlier debugging or something?
 
-... 0b830ac52137 (Documentation: move diff.wordRegex from config.txt
-to diff-config.txt, 2012-11-13)
+It's used later on; it creeped in.
 
-I had a log output on another terminal and cut&paste a wrong one in
-the original message.
+>> +    [id, roles]
+>> +  end
+>> +
+>> +end
+>> ...
+>> +    File.open(file) do |f|
+>> +      f.each do |line|
+>> +        case line
+>> +        when /^From (\h+) (.+)$/
+>> +          from = $1
+>> +        when /^---\s+(\S+)/
+>> +          source = $1 != '/dev/null' ? $1[2..-1] : nil
+>
+> This may need to be tightened if you want to use this on a
+> real-world project (git.git itself does not count ;-); you may see
+> something like:
+>
+>     diff --git "a/a\"b" "b/a\"b"
+>
+> (I did an insane pathname 'a"b' to get the above example, but a more
+> realistic is a character outside ASCII).
+
+Suggestions on how to do that are welcome.
+
+>> +        when /^@@\s-(\d+),(\d+)/
+>> +          get_blame(source, $1, $2, from)
+>
+> This may want to be a bit more careful for a hunk that adds to an
+> empty file, which will give you something like
+>
+>     @@ -0,0 +1 @@
+>     @@ -0,0 +1,200 @@
+
+Simple:
+return unless source and start and offset
+
+> Nobody sane would use -U0 when doing a format-patch, but if this
+> wants to accomodate such a patch as well, it needs to ignore a hunk
+> that only adds new lines.
+
+I'm not going to worry about it now.
+
+Cheers.
+
+-- 
+Felipe Contreras
