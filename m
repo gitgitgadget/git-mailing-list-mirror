@@ -1,219 +1,112 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 01/11] Add new git-cc-cmd helper to contrib
-Date: Fri, 19 Apr 2013 14:30:21 -0500
-Message-ID: <1366399831-5964-2-git-send-email-felipe.contreras@gmail.com>
-References: <1366399831-5964-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 19 21:40:12 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFD/PATCH 3/5] checkout: Use remote refspecs when DWIMming tracking branches
+Date: Fri, 19 Apr 2013 12:44:00 -0700
+Message-ID: <7vzjwuz4ov.fsf@alter.siamese.dyndns.org>
+References: <1366352442-501-1-git-send-email-johan@herland.net>
+	<1366352442-501-4-git-send-email-johan@herland.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Apr 19 21:44:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTHAI-0002kV-SD
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 21:40:11 +0200
+	id 1UTHE9-0005o1-Hm
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 21:44:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753563Ab3DSTkF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 15:40:05 -0400
-Received: from mail-qc0-f180.google.com ([209.85.216.180]:39566 "EHLO
-	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753505Ab3DSTkE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 15:40:04 -0400
-Received: by mail-qc0-f180.google.com with SMTP id b40so2259158qcq.11
-        for <git@vger.kernel.org>; Fri, 19 Apr 2013 12:40:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=J6+rZdNfxS18xCyHoB/CjrfsowBQGDYMvYd0Npa8DvI=;
-        b=lcxMyfMd7gXuNO0f77B90k0QRUrln+SkGDj1KECYRe6G8q80rDtsI8CFB24OwvHKaT
-         bJGewQlDTwY2vW6OgAwIoYTMRzAxXhFcqR5ncRTPJRyJk2Z/rm/BLhSMBWzoh1sortMb
-         HNOWILXU+Xb2e489z5e0tXDE96rO14JhkZgmpSN79MiN3StFrhdQMkMzeOE2VCCGJwHu
-         pNK08PmADqnPD9MUjpZUqz6fGKfr2JUEtmdSBDaGK2ug+RaEeIxStdIVHRZ75jdwrQuH
-         CnSAihRrtSTySlIq+61QtmiUw7Jh+y1bQ5F2utO8HVrpHZ17IupVrjmrimqSI77NT1+G
-         q3/w==
-X-Received: by 10.229.114.217 with SMTP id f25mr1960660qcq.7.1366399907402;
-        Fri, 19 Apr 2013 12:31:47 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id n14sm19563300qaq.3.2013.04.19.12.31.45
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 19 Apr 2013 12:31:46 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.790.g4588561
-In-Reply-To: <1366399831-5964-1-git-send-email-felipe.contreras@gmail.com>
+	id S1753950Ab3DSToF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 15:44:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44959 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753715Ab3DSToD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 15:44:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E661170BD;
+	Fri, 19 Apr 2013 19:44:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HXbk5AwUoJFP6qroVW0hPcOcp7Q=; b=weNw8j
+	+cubeUmatJbO8YtWRtTRYZwXB75rIKBTuXvXZFfA29SMESbEtuqkc1/Z97KyVO8a
+	IQla4Q902TNsEOBrBGGhqjteYn1ISeKJ3INP22UisjtR2UUpGQ85Nn8O1TOzyycU
+	08dJKg49eudsT7mXt5di3BD3s0PCYtMBiymKc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IziKXxsJZRaoyOr97TymWvD90dDOTO9l
+	nkPhdTNQVWKr7+1iQnU9ZJIXWSifZ+OqbsABQogVenu8cB2HNYFlO2qKB/4jfdzo
+	5gF4VLNZ6OMKW4MXn1IxpMn4nxYVwIOLv8HHsTxrUD8C4E9x9lTz0ZvnF3R5q1Vh
+	G7ao3c9gt1U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46B37170BC;
+	Fri, 19 Apr 2013 19:44:02 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB7BD170B7;
+	Fri, 19 Apr 2013 19:44:01 +0000 (UTC)
+In-Reply-To: <1366352442-501-4-git-send-email-johan@herland.net> (Johan
+	Herland's message of "Fri, 19 Apr 2013 08:20:40 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7C346D6C-A929-11E2-B867-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221811>
 
-This script find people that might be interesting in a patch, by going
-back through the history for each single hunk modified, and finding
-people that reviewed, acknowledge, signed, or authored the code the
-patch is modifying.
+Johan Herland <johan@herland.net> writes:
 
-It does this by running 'git blame' incrementally on each hunk, and then
-parsing the commit message. After gathering all the relevant people, it
-groups them to show what exactly was their role when the participated in
-the development of the relevant commit, and on how many relevant commits
-they participated. They are only displayed if they pass a minimum
-threshold of participation.
+> The DWIM mode of checkout allows you to run "git checkout foo" when there is
+> no existing local ref or path called "foo", and there is exactly one remote
+> with a remote-tracking branch called "foo". Git will then automatically
+> create a new local branch called "foo" using the remote-tracking "foo" as
+> its starting point and configured upstream.
+>
+> However, the current code hardcodes the assumption that all remote-tracking
+> branches are located at refs/remotes/$remote/*, and that "git checkout foo"
+> must find exactly one ref matching "refs/remotes/*/foo" to succeed.
+> This approach fails if a user has customized the refspec of a given remote to
+> place remote-tracking branches elsewhere.
+>
+> The better way to find a tracking branch is to use the fetch refspecs for the
+> configured remotes to deduce the available candidate remote-tracking branches
+> corresponding to a remote branch of the requested name, and if exactly one of
+> these exists (and points to a valid SHA1), then that is the remote-tracking
+> branch we will use.
+>
+> For example, in the case of "git checkout foo", we map "refs/heads/foo"
+> through each remote's refspec to find the available candidate remote-tracking
+> branches, and if exactly one of these candidates exist in our local repo, then
+> we have found the upstream for the new local branch "foo".
 
-For example:
+Once you introduce a concrete "foo" as a name in the example, it
+would be far easier to understand if you spelled all the other
+assumptions in the example out.
 
-  % git cc-cmd 0001-remote-hg-trivial-cleanups.patch
-  Felipe Contreras <felipe.contreras@gmail.com> (author: 100%)
-  Jeff King <peff@peff.net> (signer: 83%)
-  Max Horn <max@quendi.de> (signer: 16%)
-  Junio C Hamano <gitster@pobox.com> (signer: 16%)
+I am _guessing_ that you mean a case like this:
 
-Thus it can be used for 'git send-email' as a cc-cmd.
+	[remote "origin"]
+		fetch = refs/heads/*:refs/remotes/origin/*
+	[remote "xyzzy"]
+		fetch = refs/heads/*:refs/remotes/xyzzy/nitfol/*
+	[remote "frotz"]
+		fetch = refs/heads/*:refs/remotes/frotz/nitfol/*
 
-Comments-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/cc-cmd/git-cc-cmd | 131 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 131 insertions(+)
- create mode 100755 contrib/cc-cmd/git-cc-cmd
+and refs/remotes/origin/foo or refs/remotes/frotz/nitfol/foo do not
+exist but refs/remotes/xyzzy/nitfol/foo does.  And the user says
+"git checkout foo".  Instead of finding a remote ref that matches
+"refs/remotes/*/foo" pattern (and assuming the part that matched *
+is the name of the remote), you can iterate the RHS of the refspecs
+to see if there is a unique match.
 
-diff --git a/contrib/cc-cmd/git-cc-cmd b/contrib/cc-cmd/git-cc-cmd
-new file mode 100755
-index 0000000..aa83a1a
---- /dev/null
-+++ b/contrib/cc-cmd/git-cc-cmd
-@@ -0,0 +1,131 @@
-+#!/usr/bin/env ruby
-+
-+$since = '3-years-ago'
-+$min_percent = 5
-+
-+class Commit
-+
-+  attr_reader :id, :roles
-+
-+  def initialize(id)
-+    @id = id
-+    @roles = []
-+  end
-+
-+  def parse(data)
-+    author = msg = nil
-+    roles = {}
-+    data.each_line do |line|
-+      if not msg
-+        case line
-+        when /^author ([^<>]+) <(\S+)>$/
-+          author = $1, $2
-+          roles[author] = :author
-+        when /^$/
-+          msg = true
-+        end
-+      else
-+        if line =~ /^(Signed-off|Reviewed|Acked)-by: ([^<>]+) <(\S+?)>$/
-+          person = $2, $3
-+          roles[person] = :signer if person != author
-+        end
-+      end
-+    end
-+    @roles = roles.map do |person, role|
-+      [person, role]
-+    end
-+  end
-+
-+end
-+
-+class Commits
-+
-+  attr_reader :items
-+
-+  def initialize()
-+    @items = {}
-+  end
-+
-+  def size
-+    @items.size
-+  end
-+
-+  def import
-+    return if @items.empty?
-+    File.popen(%w[git cat-file --batch], 'r+') do |p|
-+      p.write(@items.keys.join("\n"))
-+      p.close_write
-+      p.each do |l|
-+        if l =~ /^(\h{40}) commit (\d+)/
-+          id, len = $1, $2
-+          data = p.read($2.to_i)
-+          @items[id].parse(data)
-+        end
-+      end
-+    end
-+  end
-+
-+  def get_blame(source, start, offset, from)
-+    return unless source
-+    File.popen(['git', 'blame', '--incremental', '-C',
-+               '-L', '%u,+%u' % [start, offset],
-+               '--since', $since, from + '^',
-+               '--', source]) do |p|
-+      p.each do |line|
-+        if line =~ /^(\h{40})/
-+          id = $1
-+          @items[id] = Commit.new(id)
-+        end
-+      end
-+    end
-+  end
-+
-+  def from_patch(file)
-+    source = nil
-+    from = nil
-+    File.open(file) do |f|
-+      f.each do |line|
-+        case line
-+        when /^From (\h+) (.+)$/
-+          from = $1
-+        when /^---\s+(\S+)/
-+          source = $1 != '/dev/null' ? $1[2..-1] : nil
-+        when /^@@\s-(\d+),(\d+)/
-+          get_blame(source, $1, $2, from)
-+        end
-+      end
-+    end
-+  end
-+
-+end
-+
-+exit 1 if ARGV.size != 1
-+
-+commits = Commits.new
-+commits.from_patch(ARGV[0])
-+commits.import
-+
-+# hash of hashes
-+persons = Hash.new { |hash, key| hash[key] = {} }
-+
-+commits.items.values.each do |commit|
-+  commit.roles.each do |person, role|
-+    persons[person][role] ||= 0
-+    persons[person][role] += 1
-+  end
-+end
-+
-+persons.each do |person, roles|
-+  roles = roles.map do |role, count|
-+    percent = count.to_f * 100 / commits.size
-+    next if percent < $min_percent
-+    '%s: %u%%' % [role, percent]
-+  end.compact
-+  next if roles.empty?
-+
-+  name, email = person
-+  # must quote chars?
-+  name = '"%s"' % name if name =~ /[^\w \-]/i
-+  person = name ? '%s <%s>' % [name, email] : email
-+  puts '%s (%s)' % [person, roles.join(', ')]
-+end
--- 
-1.8.2.1.790.g4588561
+Then the new branch can unambiguously find that its upstream is
+xyzzy's foo.
+
+I think it makes sense to update the semantics like that.
+
+Wouldn't the traditional case (i.e. without "nitfol/" in the
+xyzzy/frotz remotes above) be a mere special case for this new
+logic?  You mentioned there is a regression caught by existing tests
+if you go this route, but I do not see how that happens.
