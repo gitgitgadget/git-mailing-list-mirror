@@ -1,78 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git over HTTPS with basic authentication
-Date: Fri, 19 Apr 2013 11:36:39 -0400
-Message-ID: <20130419153639.GA14263@sigill.intra.peff.net>
-References: <1366314422.12299.3.camel@sibbo-laptop>
- <vpq8v4f62dj.fsf@grenoble-inp.fr>
- <20130418204320.GA6888@sigill.intra.peff.net>
- <1366361766.3873.4.camel@sibbo-laptop>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: Pushing/fetching from/into a shallow-cloned repository
+Date: Fri, 19 Apr 2013 20:02:34 +0400
+Message-ID: <20130419200234.215de8c7b5dc7510025847b9@domain007.com>
+References: <20130418135233.87aa23896fa48dc2d87d80fb@domain007.com>
+	<8BCCECD4CEEA4028AD97B851099F4C5E@PhilipOakley>
+	<7vbo9b4fuz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: Sebastian Schmidt <isibboi@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 17:36:50 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: "Philip Oakley" <philipoakley@iee.org>,
+	"Konstantin Khomoutov" <kostix+git@007spb.ru>,
+	<git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 19 18:02:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTDMn-0007on-M1
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 17:36:50 +0200
+	id 1UTDlw-00061r-7q
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 18:02:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030787Ab3DSPgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 11:36:44 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44096 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030772Ab3DSPgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 11:36:44 -0400
-Received: (qmail 3095 invoked by uid 102); 19 Apr 2013 15:36:48 -0000
-Received: from 99-108-225-125.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.225.125)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 19 Apr 2013 10:36:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Apr 2013 11:36:39 -0400
-Content-Disposition: inline
-In-Reply-To: <1366361766.3873.4.camel@sibbo-laptop>
+	id S1756726Ab3DSQCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 12:02:43 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:45746 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752336Ab3DSQCm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 12:02:42 -0400
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r3JG2YRU024890;
+	Fri, 19 Apr 2013 20:02:35 +0400
+In-Reply-To: <7vbo9b4fuz.fsf@alter.siamese.dyndns.org>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221765>
 
-On Fri, Apr 19, 2013 at 10:56:06AM +0200, Sebastian Schmidt wrote:
+On Thu, 18 Apr 2013 15:46:12 -0700
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> I tried switching to smart http now, but have the same error, I guess I
-> did something wrong. It seems like it is getting 401, but I also noticed
-> that info/refs is just an empty file. This is the config of my apache2:
+> "Philip Oakley" <philipoakley@iee.org> writes:
 > 
-> SetEnv GIT_PROJECT_ROOT /crypt/git
-> SetEnv GIT_HTTP_EXPORT_ALL
-> ScriptAlias /git/ /usr/lib/git
+> >> So I observe pushing/fetching works OK at least for a simple case
+> >> like this one.
+> >>
+> >> Hence I'd like to ask: if the manual page is wrong or I'm observing
+> >> some corner case?
+> >> --
+> > The manual is deliberately misleading.
+> 
+> Yes, it is erring on the safe side.
+> 
+> It was not coded with the case where the gap widens (e.g. either
+> side rewinds the history) in mind as you explained; for simple cases
+> the code just happens to work, but the users are encouraged not to
+> rely on it to be safe than sorry.
 
-This should point to /usr/lib/git/git-http-backend, which I think is the
-source of your problems.
+Well, actually my question arouse during the discussion which followed
+by this SO question [1] where someone asked if it's possible to update
+just one file in a remote repository without cloning it first (a-la
+Subversion, that is).  While I perfectly understand that Git data model
+does not support such "server-side commits" I'm able to envision a case
+when, say, a developer is asked to perform some minor tweak to the code
+while they're in a situation with no repository clone at hand and only a
+crappy/costly cellular link available for communication.  I think
+shallow cloning might be a palliative solution to this kind of problem
+(a one-off clone/edit/commit/push session).
 
-> <Directory /crypt/git>
-> 	Allow from all
-> 	Order deny,allow
-> 	
-> 	AuthType Basic
-> 	AuthName "Git global"
-> 	AuthUserFile /etc/apache2/auth/passwd
-> 	AuthGroupFile /etc/apache2/auth/groups
-> 	
-> 	Require group git-shared
-> </Directory>
+Taking into account what Duy Nguyen said on this topic, it seems that
+that description of the shallow cloning in the git-clone manual page
+could supposedly be made somewhat less denying about what could be done
+using a shallow clone.  May be a note that such a setup could be okay
+for very simple things like clone/edit/push would be just enough?
 
-I'm not sure this <Directory> match will do what you want, because from
-Apache's perspective, it is hitting /usr/lib/git/git-http-backend on the
-filesystem, and it is only git that actually touches the filesystem.
-
-I think you want to use
-
-  <Location /git>
-     ...
-  </Location>
-
-instead. But I am not an Apache expert, so maybe it does work.
-
--Peff
+1. http://stackoverflow.com/q/16077691/720999
