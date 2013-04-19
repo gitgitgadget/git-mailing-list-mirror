@@ -1,105 +1,91 @@
-From: Jed Brown <jed@59A2.org>
-Subject: Re: Find/prune local branches after upstream branch is deleted?
-Date: Fri, 19 Apr 2013 14:30:32 -0500
-Message-ID: <87vc7i2u93.fsf@mcs.anl.gov>
-References: <87ehe64f91.fsf@mcs.anl.gov> <20130419173717.GA26964@sigill.intra.peff.net> <87bo9a4dfr.fsf@mcs.anl.gov> <20130419180520.GA22865@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 11/11] contrib: cc-cmd: ignore chunks with no original lines
+Date: Fri, 19 Apr 2013 13:04:58 -0700
+Message-ID: <7vmwsuz3px.fsf@alter.siamese.dyndns.org>
+References: <1366399831-5964-1-git-send-email-felipe.contreras@gmail.com>
+	<1366399831-5964-12-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 19 22:01:32 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 19 22:05:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTHUx-0002B9-Eq
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 22:01:31 +0200
+	id 1UTHYU-0004sA-8y
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 22:05:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754127Ab3DSUB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 16:01:27 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:59744 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753980Ab3DSUB0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 16:01:26 -0400
-Received: by mail-vc0-f174.google.com with SMTP id kw10so4187814vcb.19
-        for <git@vger.kernel.org>; Fri, 19 Apr 2013 13:01:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:sender:from:to:cc:subject:in-reply-to:references
-         :user-agent:date:message-id:mime-version:content-type;
-        bh=CgIHD/ImBeGkx0OwhwTYv760Tw0m7HnyN9xWP7rZ34U=;
-        b=GcsI3l1j2pLvb8BdZT9a7vTUy4M9+rD1NYLvJ03Irs91fHjkgKPZE4OCf8ZYKYevlk
-         3j/J7Iv5dvIcJz+FMS7QIaNlsPesuzHQYqXApFkh75+ObxYJzDPjj8vV7MgF7aDH6QAt
-         +pbHzuBBGes5d6SxemouphQlbCyzuCgwVg9XQqOaS2Bz3lZe0wQtT1l6+Fd4rmYCIvYO
-         xaFXdx+dZuo9Gtdn5NADZuZwZ6VvFO2wtkGZguCKvxO/32ayDJaRV3XdRpuC9DeXiHhK
-         UxSYeCfmNmNreFiAsZ7SrDpe9RpGMZNua2BUY1lM+wLgE9DWCDPAjZPoFbzqgIS4KiI2
-         lndQ==
-X-Received: by 10.220.167.9 with SMTP id o9mr12635647vcy.25.1366401685629;
-        Fri, 19 Apr 2013 13:01:25 -0700 (PDT)
-Received: from localhost (m872436d0.tmodns.net. [208.54.36.135])
-        by mx.google.com with ESMTPS id 6sm15044523vei.0.2013.04.19.13.01.23
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 19 Apr 2013 13:01:24 -0700 (PDT)
-In-Reply-To: <20130419180520.GA22865@sigill.intra.peff.net>
-User-Agent: Notmuch/0.15.2+78~g5404ac5 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+	id S1754172Ab3DSUFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 16:05:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64755 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754114Ab3DSUFC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 16:05:02 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 061A317D39;
+	Fri, 19 Apr 2013 20:05:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sbm3VR+QLzEMFN67qPWLzv2H0y8=; b=oqaYiN
+	9cQukPoHRVCZeB7hNqO3cjFmGOpfgYb982VVjmwxR+fWYTZesq1PvAUnKkn2ezUB
+	J1CBqZhNMzk1RnGWOA4/c+C/2SgGxAcIeuKJJ0JrN1IawWbdMe5UPbjJDVL/aCmz
+	VsAbW5IEAh9awBKbEKDgtxc6X9sHCwvkZS6bE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tt9CTqp9oESAt1xIAzom2PfwOH8gmozQ
+	xbkHk2UfoFvGYB+7VGhc1NQ4dVvoWde+Vj7CDk6ccCw8TlxEN7YUeQn3Tftk2+Qn
+	akDQUDJB6pox2s1H/FUUePE46izWvLvngwH40aQTtfHUNVxeZ21KfldxtW/4sPhr
+	9kYWIL0XpXA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F133617D38;
+	Fri, 19 Apr 2013 20:05:00 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F02117D37;
+	Fri, 19 Apr 2013 20:05:00 +0000 (UTC)
+In-Reply-To: <1366399831-5964-12-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Fri, 19 Apr 2013 14:30:31 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6A70E2BA-A92C-11E2-8703-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221816>
 
-Jeff King <peff@peff.net> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> On Fri, Apr 19, 2013 at 12:50:48PM -0500, Jed Brown wrote:
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  contrib/cc-cmd/git-cc-cmd | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->> Jeff King <peff@peff.net> writes:
->> 
->> > Try "git branch --merged master" to get a list of branches that have
->> > already been merged.
->> 
->> That's what I use, but I was hoping for something more precise.  For
->> example, a branch that started at 'maint' would show up there, but its
->> integration hasn't completed until it makes it back to 'maint'.
->
-> Yeah, git has no way of knowing that. You can tell it by asking "git
-> branch --merged maint" and looking for such topics, of course, but I
-> think you are trying to remove as much thinking as possible from the
-> process.
->
-> So what is the clue that you would like to use to know that the branch
-> is stale. Deletion of the branch on the remote?
+> diff --git a/contrib/cc-cmd/git-cc-cmd b/contrib/cc-cmd/git-cc-cmd
+> index 9a2d2fd..02841c4 100755
+> --- a/contrib/cc-cmd/git-cc-cmd
+> +++ b/contrib/cc-cmd/git-cc-cmd
+> @@ -125,7 +125,7 @@ class Commits
+>    end
+>  
+>    def get_blame(source, start, offset, from)
+> -    return unless source
+> +    return unless source and offset
 
-I was hoping for ("has an upstream set" AND "upstream branch deleted").
+I do not think a separate patch at the end is a good idea for a
+fix-up like this, even if to give credit to others.
 
-> For that, I don't think there is a single command. You can do "git push
-> --dry-run --all" and look for new branches that would be pushed, but
-> that is kind of hacky.  The answer you want is:
->
->   comm -23 \
->     <(git for-each-ref --format='%(refname:short)' refs/heads) \
->     <(git for-each-ref --format='%(refname:short)' refs/remotes/origin |
->       sed s,origin/,,)
+Just squashing it in to the original would help reviewers; that way,
+they do not have to wonder "why is this broken" and later notice
+"ah, it is fixed at the end".
 
-This also finds my private branches that I just haven't pushed yet.  The
-following has what I think are good semantics.
+I do not know if that is an "offset", though.  It is the "offset"
+for the end of the block relative to its beginning, but people
+usually call that the "size" of the block, I think.
 
-  git for-each-ref --format='%(refname:short) %(upstream)' refs/heads |
-    while read ref upstream; do
-      test -n "$upstream" && (git show-ref -q --verify "$upstream" || echo $ref)
-    done
-
-
-FWIW, Git sorts non-alpha characters differently from 'sort'.  This
-means that Git output can't be sent to comm without first '| sort'.
-
-$ git branch xy
-$ git branch x-y
-$ git branch
-* master
-  x-y
-  xy
-$ git branch | sort
-* master
-  xy
-  x-y
+>      File.popen(['git', 'blame', '--incremental', '-C',
+>                 '-L', '%u,+%u' % [start, offset],
+>                 '--since', $since, from + '^',
