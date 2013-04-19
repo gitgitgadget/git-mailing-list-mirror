@@ -1,78 +1,137 @@
-From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-Subject: Re: Pushing/fetching from/into a shallow-cloned repository
-Date: Fri, 19 Apr 2013 20:02:34 +0400
-Message-ID: <20130419200234.215de8c7b5dc7510025847b9@domain007.com>
-References: <20130418135233.87aa23896fa48dc2d87d80fb@domain007.com>
-	<8BCCECD4CEEA4028AD97B851099F4C5E@PhilipOakley>
-	<7vbo9b4fuz.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Teach git to change to a given directory using -C option
+Date: Fri, 19 Apr 2013 12:12:50 -0400
+Message-ID: <20130419161250.GC14263@sigill.intra.peff.net>
+References: <1366374108-23725-1-git-send-email-ayiehere@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Philip Oakley" <philipoakley@iee.org>,
-	"Konstantin Khomoutov" <kostix+git@007spb.ru>,
-	<git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 18:02:50 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Nazri Ramliy <ayiehere@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 19 18:12:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTDlw-00061r-7q
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 18:02:48 +0200
+	id 1UTDvl-00062E-Tp
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 18:12:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756726Ab3DSQCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 12:02:43 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:45746 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752336Ab3DSQCm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 12:02:42 -0400
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r3JG2YRU024890;
-	Fri, 19 Apr 2013 20:02:35 +0400
-In-Reply-To: <7vbo9b4fuz.fsf@alter.siamese.dyndns.org>
-X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S967565Ab3DSQMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 12:12:53 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44117 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S967459Ab3DSQMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 12:12:52 -0400
+Received: (qmail 4616 invoked by uid 102); 19 Apr 2013 16:12:57 -0000
+Received: from 99-108-225-125.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.225.125)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 19 Apr 2013 11:12:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Apr 2013 12:12:50 -0400
+Content-Disposition: inline
+In-Reply-To: <1366374108-23725-1-git-send-email-ayiehere@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221766>
 
-On Thu, 18 Apr 2013 15:46:12 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Apr 19, 2013 at 08:21:48PM +0800, Nazri Ramliy wrote:
 
-> "Philip Oakley" <philipoakley@iee.org> writes:
+> This is similar in spirit to to "make -C dir ..." and "tar -C dir ...".
 > 
-> >> So I observe pushing/fetching works OK at least for a simple case
-> >> like this one.
-> >>
-> >> Hence I'd like to ask: if the manual page is wrong or I'm observing
-> >> some corner case?
-> >> --
-> > The manual is deliberately misleading.
+> Signed-off-by: Nazri Ramliy <ayiehere@gmail.com>
+> ---
+> Often I find myself needing to find out quickly the status of a repository that
+> is not in my currenct working directory, like this:
 > 
-> Yes, it is erring on the safe side.
+>          $ (cd ~/foo; git log -1)
 > 
-> It was not coded with the case where the gap widens (e.g. either
-> side rewinds the history) in mind as you explained; for simple cases
-> the code just happens to work, but the users are encouraged not to
-> rely on it to be safe than sorry.
+> With this patch now i can simply do:
+> 
+>          $ git -C ~/.zsh log -1 
+> 
+> That's just one example. I think those who are familiar with the -C arguments
+> to "make" and "tar" commands would get the "handiness" of having this option in
+> git.
 
-Well, actually my question arouse during the discussion which followed
-by this SO question [1] where someone asked if it's possible to update
-just one file in a remote repository without cloning it first (a-la
-Subversion, that is).  While I perfectly understand that Git data model
-does not support such "server-side commits" I'm able to envision a case
-when, say, a developer is asked to perform some minor tweak to the code
-while they're in a situation with no repository clone at hand and only a
-crappy/costly cellular link available for communication.  I think
-shallow cloning might be a palliative solution to this kind of problem
-(a one-off clone/edit/commit/push session).
+This motivation should probably go into the commit message.
 
-Taking into account what Duy Nguyen said on this topic, it seems that
-that description of the shallow cloning in the git-clone manual page
-could supposedly be made somewhat less denying about what could be done
-using a shallow clone.  May be a note that such a setup could be okay
-for very simple things like clone/edit/push would be just enough?
+I think it's worth pausing for a moment and considering if we can do
+this already with existing features.
 
-1. http://stackoverflow.com/q/16077691/720999
+You can _almost_ do this with "git --git-dir". But it expects the actual
+git directory, not a starting point for finding the git directory. And
+it remains in your same working dir. So with a bare repository, these
+two are equivalent:
+
+  $ git --git-dir=/path/to/foo.git ...
+  $ git -C /path/to/foo.git ...
+
+But with a non-bare repo, this does not work:
+
+  $ git --git-dir=/path/to/non-bare ...
+
+You must instead say:
+
+  $ git --git-dir=/path/to/non-bare/.git ...
+
+and even then, I think it will treat your current directory as the
+working tree, not /path/to/non-bare.
+
+So I think "-C" is a worthwhile addition compared to just "--git-dir".
+
+It is redundant with "(cd foo && git ...)" in the shell, as you note,
+but sometimes it is more convenient to use "-C" (especially if you are
+exec-ing git from another program and want to avoid the shell entirely
+for quoting reasons).
+
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 6a875f2..20bba86 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -379,6 +379,9 @@ displayed. See linkgit:git-help[1] for more information,
+>  because `git --help ...` is converted internally into `git
+>  help ...`.
+>  
+> +-C <directory>::
+> +	Change to given directory before doing anything else.
+> +
+
+It might make sense to clarify this as "...anything else, including
+determining the location of the git repository directory". If you think
+hard about it, doing anything else would not really make much sense, but
+spelling it out makes it clear what the option can be used for.
+
+> +		if (!prefixcmp(cmd, "-C")) {
+
+Should this be strcmp? You do not seem to handle "-Cfoo" below.
+
+> +			if (*argc < 2) {
+> +				fprintf(stderr, "No directory given for -C.\n" );
+> +				usage(git_usage_string);
+> +			}
+
+I know you are copying this from the other options in the same function,
+but I wonder if they should all be calling "error()" (and dropping the
+terminating ".") to better match our usual error messages.
+
+> +			if (chdir((*argv)[1]))
+> +				die_errno("Cannot change to '%s'", (*argv)[1]);
+> +			(*argv)++;
+> +			(*argc)--;
+
+You would want to set "*envchanged = 1" here. The intent of that flag is
+that git would need to throw away things it has looked up already (like
+the git dir) in order to correctly utilize the options (and since we
+haven't implemented that "throw away" step, it just complains and dies).
+
+I didn't try it, but I suspect your patch would be broken with:
+
+  $ git config alias.logfoo '-C /path/to/foo log'
+  $ cd /some/other/repo
+  $ git logfoo
+
+It would still use /some/other/repo as a $GIT_DIR, having looked it up
+before processing the "-C".
+
+-Peff
