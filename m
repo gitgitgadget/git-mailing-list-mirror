@@ -1,101 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/8] Add new git-cc-cmd helper to contrib
-Date: Fri, 19 Apr 2013 12:24:20 -0700
-Message-ID: <7v8v4e1fyz.fsf@alter.siamese.dyndns.org>
-References: <1366348458-7706-1-git-send-email-felipe.contreras@gmail.com>
-	<1366348458-7706-2-git-send-email-felipe.contreras@gmail.com>
-	<7vfvym30t8.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3YAq66MrOR5a4ydujKR5+ZNMVV4i=JzPCxLXC244b52g@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v3 00/11] Add new git-cc-cmd helper to contrib
+Date: Fri, 19 Apr 2013 14:30:20 -0500
+Message-ID: <1366399831-5964-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 21:24:30 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 19 21:32:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTGv7-0007ZM-1n
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 21:24:29 +0200
+	id 1UTH2O-0004rb-Ab
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 21:32:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753890Ab3DSTYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 15:24:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61429 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753711Ab3DSTYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 15:24:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B787D1884A;
-	Fri, 19 Apr 2013 19:24:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CE1gpRYBwhjTRMQOM5sAR0vAAxE=; b=QkngEQ
-	vwFEIFV31vcizG/3K5/m5WbG6VzRRpkIBoAWNhJZ9uPP/4DeExMYZ7HfjHGkJW1f
-	nBgDtK7F5DG0irxvABTy8YCekwZPmhi1GLHjE1j0sUx2doAKfg4713MPhWyx9er7
-	1MZ04oHarbDRz5on5XQipqu8G47MP8lUrwA3s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pXnQBWXWhuwU3snW+Y7OD+1kP8vlewnx
-	4SuJ8j9gnsjSSIZATj2JPFseUJyoKiCVWjDyVz1f7lT2DKdrlTFBiIAOBDE2yFWP
-	CSuPUgTlXgnq7PG+MYlCRN0ACLpVCvwO66gc+EcgUlY6ubtlmC6brGsnykrHw4Tj
-	EQxmkdcgS2s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD5AD18849;
-	Fri, 19 Apr 2013 19:24:22 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 090D318847;
-	Fri, 19 Apr 2013 19:24:21 +0000 (UTC)
-In-Reply-To: <CAMP44s3YAq66MrOR5a4ydujKR5+ZNMVV4i=JzPCxLXC244b52g@mail.gmail.com>
-	(Felipe Contreras's message of "Fri, 19 Apr 2013 12:35:09 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BD122B42-A926-11E2-A4AE-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753868Ab3DSTbq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Apr 2013 15:31:46 -0400
+Received: from mail-qc0-f181.google.com ([209.85.216.181]:42899 "EHLO
+	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753506Ab3DSTbp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 15:31:45 -0400
+Received: by mail-qc0-f181.google.com with SMTP id a22so2223648qcs.40
+        for <git@vger.kernel.org>; Fri, 19 Apr 2013 12:31:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=SDC80s4GJkerdjxNSBLn1FSQF138gvvhK/kKZ7IBVHI=;
+        b=GlI+MUAElYSdxjnyOAZNb+zBfk+MhLnTr40usqe/mwNx+0P/b4hEN039piH1VwSqID
+         8WbBreclfeXXMw10Hf24v1aWY88TEypY9+KpDRqiNy4y5d45AnLUE4fFbteDLspy+FTk
+         wXbNQpCAr5sj1NGHL1G/HQCw0I0RewlLkxicLMg3vDK6ATPnjDU+WR9L2Ug/07KPURVp
+         8f9Q5rTlQv1X68Yo08RtgntBU1XZMJrYjV0qZO59/LCQyVlfb9M3gobVmoNFcMdZcPru
+         Bua8ztPHOh0papiXyyStx+De87uTQWqAq8r6HiFgmEUPiDFj8yjIMZvvWHUfBwgHXtVH
+         K4kg==
+X-Received: by 10.49.107.193 with SMTP id he1mr17324870qeb.2.1366399904596;
+        Fri, 19 Apr 2013 12:31:44 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPS id en8sm18658895qeb.0.2013.04.19.12.31.42
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 19 Apr 2013 12:31:43 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.1.790.g4588561
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221797>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Hi,
 
-> On Fri, Apr 19, 2013 at 12:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>> The code finds the changes of a commit, runs 'git blame' for each chunk
->>> to see which other commits are relevant, and then reports the author and
->>> signers.
->>
->> In general, I am not all that interested in adding anything new to
->> contrib/ as git.git has matured enough, but even if this will stay
->> outside my tree, there are a few interesting things to note to help
->> its eventual users.
->
-> Why not add it to mainline git then? This tool, or a similar one,
-> would certainly be useful in the git arsenal.
+Here goes another try, I made some changes based on comments, and shoul=
+d be
+simpler now. Plus a few improvements. The interdiff will be on the patc=
+hes, but
+only the first one changed substantially.
 
-As to this particular "feature" (the goal it tries to achieve, not
-necessarily the implementation), that actually was the first thing
-that came to my mind.  It helps the "develop, review locally,
-format-patch, decide whom to ask reviews and then send it out"
-workflow in general to have a tool that tells you who are the people
-involved in the code you are touching.
+This script allows you to get a list of relevant persons to Cc when sen=
+ding a
+patch series.
 
-If this were _only_ to be used within send-email (i.e. replacing the
-"then send it out" above with "then use send-email" to limit the
-usecase), "git cc-cmd" would be a reasonable name.  But if that is
-the intended use case, it would even be more reasonable to make this
-logic part of send-email and trigger it with --auto-cc-reviewers
-option or something.
+  % git cc-cmd v1.8.1.6^^1..v1.8.1.6^^2
+  "Henrik Grubbstr=C3=B6m" <grubba@grubba.org> (author: 7%)
+  junio (signer: 84%, author: 15%)
+  "Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy" <pclouds@gmail.com> (auth=
+or: 30%, signer: 7%)
+  "Jean-No=C3=ABl AVILA" <avila.jn@gmail.com> (author: 7%)
+  Jean-Noel Avila <jn.avila@free.fr> (signer: 7%)
+  Duy Nguyen <pclouds@gmail.com> (author: 7%)
+  Michael Haggerty <mhagger@alum.mit.edu> (author: 15%)
+  Clemens Buchacher <drizzd@aon.at> (author: 7%)
+  Joshua Jensen <jjensen@workspacewhiz.com> (author: 7%)
+  Johannes Sixt <j6t@kdbg.org> (signer: 7%)
 
-But I think it can be useful outside the context of send-email as
-well, and having one independent tool that does one single job well
-is a better design.  Perhaps it is better to name it less specific
-to send-email's cc-cmd option.  "git people"?  "git whom"?  "git
-reviewers"?  I dunno, but along those lines.
+It find people that might be interesting in a patch, by going back thro=
+ugh the
+history for each single hunk modified, and finding people that reviewed=
+,
+acknowledge, signed, or authored the code the patch is modifying.
 
-It is OK for a design demonstration prototype to be written in any
-language others (who can comment on the design) can read, but the
-version to be a first-class citizen needs to be written in one of
-the languages such as C, POSIX shell, or Perl to avoid adding extra
-dependencies to the users.
+It does this by running 'git blame' incrementally on each hunk, and the=
+n
+parsing the commit message. After gathering all the relevant people, it=
+ groups
+them to show what exactly was their role when the participated in the
+development of the relevant commit, and on how many relevant commits th=
+ey
+participated. They are only displayed if they pass a minimum threshold =
+of
+participation.
+
+The code finds the changes in each commit in the list, runs 'git blame'
+to see which other commits are relevant to those lines, and then adds
+the author and signer to the list.
+
+=46inally, it calculates what percentage of the total relevant commits
+each person was involved in, and if it passes the threshold, it goes in=
+=2E
+
+You can also choose to show the commits themselves:
+
+  % git cc-cmd --commits v1.8.1.6^^1..v1.8.1.6^^2
+  9db9eec attr: avoid calling find_basename() twice per path
+  94bc671 Add directory pattern matching to attributes
+  82dce99 attr: more matching optimizations from .gitignore
+  593cb88 exclude: split basename matching code into a separate functio=
+n
+  b559263 exclude: split pathname matching code into a separate functio=
+n
+  4742d13 attr: avoid searching for basename on every match
+  f950eb9 rename pathspec_prefix() to common_prefix() and move to dir.[=
+ch]
+  4a085b1 consolidate pathspec_prefix and common_prefix
+  d932f4e Rename git_checkattr() to git_check_attr()
+  2d72174 Extract a function collect_all_attrs()
+  8cf2a84 Add string comparison functions that respect the ignore_case =
+variable.
+  407a963 Merge branch 'rr/remote-helper-doc'
+  ec775c4 attr: Expand macros immediately when encountered.
+
+But wait, there's more: you can also specify a list of patch files, whi=
+ch means
+this can be used for git send-emails --cc-cmd option.
+
+=46elipe Contreras (11):
+  Add new git-cc-cmd helper to contrib
+  contrib: cc-cmd: add option parsing
+  contrib: cc-cmd: add support for multiple patches
+  contrib: cc-cmd: add option to show commits
+  contrib: cc-cmd: add option to parse from committish
+  contrib: cc-cmd: parse committish like format-patch
+  contrib: cc-cmd: fix parsing of rev-list args
+  contrib: cc-cmd: add option to fetch aliases
+  contrib: cc-cmd: support multiple roles
+  contrib: cc-cmd: sort by participation
+  contrib: cc-cmd: ignore chunks with no original lines
+
+ contrib/cc-cmd/git-cc-cmd | 258 ++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 file changed, 258 insertions(+)
+ create mode 100755 contrib/cc-cmd/git-cc-cmd
+
+--=20
+1.8.2.1.790.g4588561
