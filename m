@@ -1,95 +1,101 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v3 2/2] submodule: drop the top-level requirement
-Date: Fri, 19 Apr 2013 21:23:23 +0200
-Message-ID: <517199AB.50109@kdbg.org>
-References: <cover.1365539059.git.john@keeping.me.uk> <cover.1366314439.git.john@keeping.me.uk> <cover.1366314439.git.john@keeping.me.uk> <6e4122f3eedec3f520028b5598b78e0d59e5d12b.1366314439.git.john@keeping.me.uk> <7vfvyn4g46.fsf@alter.siamese.dyndns.org> <20130419074632.GC2278@serenity.lan> <7vmwsu31vh.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/8] Add new git-cc-cmd helper to contrib
+Date: Fri, 19 Apr 2013 12:24:20 -0700
+Message-ID: <7v8v4e1fyz.fsf@alter.siamese.dyndns.org>
+References: <1366348458-7706-1-git-send-email-felipe.contreras@gmail.com>
+	<1366348458-7706-2-git-send-email-felipe.contreras@gmail.com>
+	<7vfvym30t8.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3YAq66MrOR5a4ydujKR5+ZNMVV4i=JzPCxLXC244b52g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 21:23:40 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 19 21:24:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTGuI-0006v0-TY
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 21:23:39 +0200
+	id 1UTGv7-0007ZM-1n
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 21:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754052Ab3DSTXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 15:23:30 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:61202 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753711Ab3DSTX3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 15:23:29 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 4B1FDCDF83;
-	Fri, 19 Apr 2013 21:23:25 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 80D5719F5A8;
-	Fri, 19 Apr 2013 21:23:24 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <7vmwsu31vh.fsf@alter.siamese.dyndns.org>
+	id S1753890Ab3DSTYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 15:24:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61429 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753711Ab3DSTYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 15:24:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B787D1884A;
+	Fri, 19 Apr 2013 19:24:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CE1gpRYBwhjTRMQOM5sAR0vAAxE=; b=QkngEQ
+	vwFEIFV31vcizG/3K5/m5WbG6VzRRpkIBoAWNhJZ9uPP/4DeExMYZ7HfjHGkJW1f
+	nBgDtK7F5DG0irxvABTy8YCekwZPmhi1GLHjE1j0sUx2doAKfg4713MPhWyx9er7
+	1MZ04oHarbDRz5on5XQipqu8G47MP8lUrwA3s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pXnQBWXWhuwU3snW+Y7OD+1kP8vlewnx
+	4SuJ8j9gnsjSSIZATj2JPFseUJyoKiCVWjDyVz1f7lT2DKdrlTFBiIAOBDE2yFWP
+	CSuPUgTlXgnq7PG+MYlCRN0ACLpVCvwO66gc+EcgUlY6ubtlmC6brGsnykrHw4Tj
+	EQxmkdcgS2s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD5AD18849;
+	Fri, 19 Apr 2013 19:24:22 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 090D318847;
+	Fri, 19 Apr 2013 19:24:21 +0000 (UTC)
+In-Reply-To: <CAMP44s3YAq66MrOR5a4ydujKR5+ZNMVV4i=JzPCxLXC244b52g@mail.gmail.com>
+	(Felipe Contreras's message of "Fri, 19 Apr 2013 12:35:09 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BD122B42-A926-11E2-A4AE-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221796>
 
-Am 19.04.2013 18:45, schrieb Junio C Hamano:
-> John Keeping <john@keeping.me.uk> writes:
-> 
->> On Thu, Apr 18, 2013 at 03:40:41PM -0700, Junio C Hamano wrote:
->>> John Keeping <john@keeping.me.uk> writes:
->>>
->>>> +relative_path ()
->>>> +{
->>>> +	local target curdir result
->>>> +	target=$1
->>>> +	curdir=${2-$wt_prefix}
->>>> +	curdir=${curdir%/}
->>>> +	result=
->>>> +
->>>> +	while test -n "$curdir"
->>>> +	do
->>>> +		case "$target" in
->>>> +		"$curdir/"*)
->>>> +			target=${target#$curdir/}
->>>> +			break
->>>> +			;;
->>>> +		esac
->>>
->>> Could $curdir have glob wildcard to throw this part of the logic
->>> off?  It is OK to have limitations like "you cannot have a glob
->>> characters in your path to submodule working tree" (at least until
->>> we start rewriting these in C or Perl or Python), but we need to be
->>> aware of them.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> On Fri, Apr 19, 2013 at 12:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>> The code finds the changes of a commit, runs 'git blame' for each chunk
+>>> to see which other commits are relevant, and then reports the author and
+>>> signers.
 >>
->> I think the use of "#" instead of "##" saves us here because even with a
->> wildcard in $curdir the case statement matches literally, 
-> 
-> If you have curdir=a*b and target=adropb/c/d/e, the chopping itself
-> 
-> 	target=${target#$curdir/}
-> 
-> would happily chop "adropb/" from the target, but because the dq
-> around "$curdir/"* in the case arm label enforces that target must
-> literally match curdir followed by a slash, we do not even come to
-> the chomping part.
-> 
-> I still have not convinced myself that it is impossible for somebody
-> more clever than I to craft a pair of target and curdir that breaks
-> it, though.  (target="a*b/c/d", curdir="a*b") is correctly chopped,
-> so that is not it.
+>> In general, I am not all that interested in adding anything new to
+>> contrib/ as git.git has matured enough, but even if this will stay
+>> outside my tree, there are a few interesting things to note to help
+>> its eventual users.
+>
+> Why not add it to mainline git then? This tool, or a similar one,
+> would certainly be useful in the git arsenal.
 
-Why not just replace the six-liner by this one-liner:
+As to this particular "feature" (the goal it tries to achieve, not
+necessarily the implementation), that actually was the first thing
+that came to my mind.  It helps the "develop, review locally,
+format-patch, decide whom to ask reviews and then send it out"
+workflow in general to have a tool that tells you who are the people
+involved in the code you are touching.
 
-		target=${target#"$curdir"/}
+If this were _only_ to be used within send-email (i.e. replacing the
+"then send it out" above with "then use send-email" to limit the
+usecase), "git cc-cmd" would be a reasonable name.  But if that is
+the intended use case, it would even be more reasonable to make this
+logic part of send-email and trigger it with --auto-cc-reviewers
+option or something.
 
--- Hannes
+But I think it can be useful outside the context of send-email as
+well, and having one independent tool that does one single job well
+is a better design.  Perhaps it is better to name it less specific
+to send-email's cc-cmd option.  "git people"?  "git whom"?  "git
+reviewers"?  I dunno, but along those lines.
+
+It is OK for a design demonstration prototype to be written in any
+language others (who can comment on the design) can read, but the
+version to be a first-class citizen needs to be written in one of
+the languages such as C, POSIX shell, or Perl to avoid adding extra
+dependencies to the users.
