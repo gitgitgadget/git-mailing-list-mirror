@@ -1,97 +1,91 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH] receive-pack: close sideband fd on early pack errors
-Date: Fri, 19 Apr 2013 17:24:29 -0400
-Message-ID: <20130419212429.GA20873@sigill.intra.peff.net>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Fri, 19 Apr 2013 17:34:55 -0400
+Message-ID: <20130419213455.GB20873@sigill.intra.peff.net>
+References: <20130418172714.GA24690@sigill.intra.peff.net>
+ <7vd2tr6833.fsf@alter.siamese.dyndns.org>
+ <20130418180017.GA5714@sigill.intra.peff.net>
+ <7v61zj66wu.fsf@alter.siamese.dyndns.org>
+ <20130418203035.GB24690@sigill.intra.peff.net>
+ <7vvc7j4j0u.fsf@alter.siamese.dyndns.org>
+ <20130418214427.GA10119@sigill.intra.peff.net>
+ <7vobdb4hii.fsf@alter.siamese.dyndns.org>
+ <20130419043142.GA5055@elie.Belkin>
+ <7vbo9a3011.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 23:24:42 2013
+X-From: git-owner@vger.kernel.org Fri Apr 19 23:35:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTInN-00054u-MJ
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 23:24:38 +0200
+	id 1UTIxX-0003ru-Aw
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 23:35:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754640Ab3DSVYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 17:24:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44343 "EHLO peff.net"
+	id S933958Ab3DSVfB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 17:35:01 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44352 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754413Ab3DSVYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 17:24:32 -0400
-Received: (qmail 21059 invoked by uid 102); 19 Apr 2013 21:24:37 -0000
+	id S933914Ab3DSVfA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 17:35:00 -0400
+Received: (qmail 21507 invoked by uid 102); 19 Apr 2013 21:35:03 -0000
 Received: from 99-108-225-125.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.225.125)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 19 Apr 2013 16:24:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Apr 2013 17:24:29 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 19 Apr 2013 16:35:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Apr 2013 17:34:55 -0400
 Content-Disposition: inline
+In-Reply-To: <7vbo9a3011.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221823>
 
-Since commit a22e6f8 (receive-pack: send pack-processing
-stderr over sideband, 2012-09-21), receive-pack will start
-an async sideband thread to copy the stderr from our
-index-pack or unpack-objects child to the client. We hand
-the thread's input descriptor to unpack(), which puts it in
-the "err" member of the "struct child_process".
+On Fri, Apr 19, 2013 at 10:25:46AM -0700, Junio C Hamano wrote:
 
-After unpack() returns, we use finish_async() to reap the
-sideband thread. The thread is only ready to die when it
-gets EOF on its pipe, which is connected to the err
-descriptor. So we expect all of the write ends of that pipe
-to be closed as part of unpack().
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+> > Junio C Hamano wrote:
+> >
+> >>     You ran 'git add' with neither '-A (--all)' or '--no-all', whose
+> >>     behaviour will change in Git 2.0 with respect to paths you
+> >>     removed from your working tree.
+> >>
+> >>     * 'git add --no-all <pathspec>', which is the current default,
+> >>       ignores paths you removed from your working tree.
+> >>
+> >>     * 'git add --all <pathspec>' will let you also record the
+> >>       removals.
+> >>
+> >>     The removed paths (e.g. '%s') are ignored with this version of Git.
+> >>     Run 'git status' to remind yourself what paths you have removed
+> >>     from your working tree.
+> >>
+> >> or something?
+> >
+> > That looks good. :)
+> 
+> I think the direction may be good but the above is too tall to be
+> the final version. of the message.  Somebody good at phrasing needs
+> to trim it down without losing the essense.
 
-Normally, this works fine. After start_command forks, it
-closes the parent copy of the descriptor. Then once the
-child exits (whether it was successful or not), that closes
-the only remaining writer.
+Hmph. I actually like it as it is. It says:
 
-However, there is one code-path in unpack() that does not
-handle this. Before we decide which of unpack-objects or
-index-pack to use, we read the pack header ourselves to see
-how many objects it contains. If there is an error here, we
-exit without running either sub-command, the pipe descriptor
-remains open, and we are in a deadlock, waiting for the
-sideband thread to die (which is in turn waiting for us to
-close the pipe).
+  1. Here's what triggered this warning (removed paths without -A).
 
-We can fix this by making sure that unpack() always closes
-the pipe before returning.
+  2. Here is how you tell git what you want to do (--all/--no-all)
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This was triggered in the real world by attempting to push a ref from
-a corrupted repository. pack-objects dies on the local end, we get an
-eof on the receive-pack end without any data, notice that it's a bogus
-packfile, and hit the deadlock.
+  3. Here is how you get more information about what you wanted to do
+     (mention one such path, point to "git status").
 
-The bug was introduced by a22e6f8, which is in v1.7.12.3, so it should
-be maint-worthy.
+I would not want to cut out any of those three. You could perhaps cut
+out the bullet points in the middle, which reduces (2), but the user may
+be able to figure it out from the first sentence. However, I like the
+explicitness of those bullet points (and I prefer them to a wall of text
+which is more daunting to read).
 
- builtin/receive-pack.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index ccebd74..e3eb5fc 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -826,8 +826,11 @@ static const char *unpack(int err_fd)
- 			    : 0);
- 
- 	hdr_err = parse_pack_header(&hdr);
--	if (hdr_err)
-+	if (hdr_err) {
-+		if (err_fd > 0)
-+			close(err_fd);
- 		return hdr_err;
-+	}
- 	snprintf(hdr_arg, sizeof(hdr_arg),
- 			"--pack_header=%"PRIu32",%"PRIu32,
- 			ntohl(hdr.hdr_version), ntohl(hdr.hdr_entries));
--- 
-1.8.2.11.g379c3d8
+-Peff
