@@ -1,82 +1,77 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: t6200: avoid path mangling issue on Windows
-Date: Fri, 19 Apr 2013 07:48:06 +0200
-Message-ID: <5170DA96.9000300@viscovery.net>
-References: <1365348344-1648-1-git-send-email-ralf.thielow@gmail.com> <1365348344-1648-2-git-send-email-ralf.thielow@gmail.com> <516F95D1.5070209@viscovery.net> <7v38un93br.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] stash: tighten IS_STASH_LIKE logic
+Date: Fri, 19 Apr 2013 11:27:04 +0530
+Message-ID: <CALkWK0m_Nt8SFdjGKWWHtBJ+HVsk095ukjZ0N=KBt5q+or5XFQ@mail.gmail.com>
+References: <1366270717-19929-1-git-send-email-artagnon@gmail.com> <7vk3nz4h20.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Brandon Casey <drafnel@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 07:48:23 2013
+X-From: git-owner@vger.kernel.org Fri Apr 19 07:57:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UT4BL-0000Fn-Bu
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 07:48:23 +0200
+	id 1UT4KX-0008Pn-0g
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 07:57:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752775Ab3DSFsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 01:48:19 -0400
-Received: from so.liwest.at ([212.33.55.23]:55541 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752625Ab3DSFsS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 01:48:18 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UT4B5-000433-OJ; Fri, 19 Apr 2013 07:48:08 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 50CFD1660F;
-	Fri, 19 Apr 2013 07:48:07 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <7v38un93br.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1754356Ab3DSF5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 01:57:46 -0400
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:37566 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753618Ab3DSF5p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 01:57:45 -0400
+Received: by mail-ie0-f173.google.com with SMTP id k5so4256284iea.32
+        for <git@vger.kernel.org>; Thu, 18 Apr 2013 22:57:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=RnhOYXyLzYtbFiBsu229hrAQuzNoefsbRw3hFA09U2w=;
+        b=ffdvn9Kyjn4o807v2KRJqCAuNmypQxtkGx8/kkzMGvDURtgLbS5SX7Of4o0SDyDEsT
+         p3AJCb5Fw+OkJG+Hfig2OM614SDyc9ggzuiJL7aLI9ppIOgXcL1voAwgwHEkcBMWoQwD
+         ZK7m7/dV+dqLPT3ZCQBT7FSWa0o/NvaPzxA3bb17vCXmRLsH+qwfB3/ewSVcTAZfnmF8
+         XjovGcbYJHkzspg+oy0j9M4ix9OqkH6V/2S5mX2Vb/EB9u/XlSw3nprSYyHWNNHtR0DK
+         LHY58r7oA+UTxgNLG0+gplJYiwUg+dMxM11BsjiLattW+FEFR7IpbIi6HZZgooM5j1QT
+         UWdA==
+X-Received: by 10.50.119.102 with SMTP id kt6mr8645681igb.12.1366351064297;
+ Thu, 18 Apr 2013 22:57:44 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Thu, 18 Apr 2013 22:57:04 -0700 (PDT)
+In-Reply-To: <7vk3nz4h20.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221740>
 
-Am 4/18/2013 19:05, schrieb Junio C Hamano:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> 
->> From: Johannes Sixt <j6t@kdbg.org>
->>
->> MSYS bash interprets the slash in the argument core.commentchar="/"
->> as root directory and mangles it into a Windows style path. Use a
->> different core.commentchar to dodge the issue.
->>
->> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
->> ...
->> -	git -c core.commentchar="/" fmt-merge-msg --log=5 <.git/FETCH_HEAD >actual &&
->> +	git -c core.commentchar="x" fmt-merge-msg --log=5 <.git/FETCH_HEAD >actual &&
-> 
-> Sigh... Again?
-> 
-> Are folks working on Msys bash aware that sometimes the users may
-> want to say key=value on their command line without the value
-> getting molested in any way and giving them some escape hatch would
-> help them?  Perhaps they have already decided that it is not
-> feasible after thinking about the issue, in which case I do not have
-> new ideas to offer.
+Junio C Hamano wrote:
+> [...]
 
-What is "the issue"? And in which way would an escape hatch help us here?
-We would have to apply a patch anyway after a glitch like this shows up,
-because disabling path mangling whole-sale (if there were a method --
-there is none currently) is a no-go in the context of our test suite, let
-a lone in our scripted tool set.
+I'm curious.  Why are you going back on what you said just one day
+ago?  What changed?
 
-When "foo=/" appears on the command line, the most obvious interpretation
-of the slash for a program without mind-reading mode is that it is an
-absolute path, and then path mangling must happen (if and only if the
-invoked program is a non-MSYS program such as git).
+In a previous email, you wrote:
+> You are free to try to think of a way to tighten the implemention to
+> reject a random two-or-three parent merge commit that is not a
+> product of "stash create".  People already have looked at this code
+> since it was written, and didn't find a reasonable way to tighten it
+> without triggering false negatives, so I wouldn't be surprised if
+> anybody tried it again today and failed.
 
-> I'll apply the patch as-is, but this feels really painful to the
-> users.
+So, my patch is not a "reasonable" way to achieve this?
 
-No, generally, path mangling is a service for the user.
+> When was the last time you tried to run "git stash apply next"?
 
--- Hannes
+My patch is not solving an end-user problem.  Think of it as a source
+code comment: to answer the question "what kind of commit does stash
+create make?", the reader simple has to look at when IS_STASH_LIKE is
+set.  It's helping make the source code clearer.  Previously,
+IS_STASH_LIKE might as well have been named IS_MERGE_COMMIT, and
+nothing would've changed.  The reader will wonder what IS_MERGE_COMMIT
+has to do with stashes, so we named it IS_STASH_LIKE.  This is another
+minor improvement in the same spirit.
+
+> Is it worth it?
+
+Is it worth what?  What are we losing?
