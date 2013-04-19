@@ -1,104 +1,210 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 1/8] Add new git-cc-cmd helper to contrib
-Date: Fri, 19 Apr 2013 14:35:57 -0500
-Message-ID: <CAMP44s2gA0JbfxA1UQW_pnizGBpmbQem3Qg0FpWP_Wi6eYwVjw@mail.gmail.com>
-References: <1366348458-7706-1-git-send-email-felipe.contreras@gmail.com>
-	<1366348458-7706-2-git-send-email-felipe.contreras@gmail.com>
-	<7vfvym30t8.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3YAq66MrOR5a4ydujKR5+ZNMVV4i=JzPCxLXC244b52g@mail.gmail.com>
-	<7v8v4e1fyz.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v3 01/11] Add new git-cc-cmd helper to contrib
+Date: Fri, 19 Apr 2013 14:38:42 -0500
+Message-ID: <CAMP44s0H-2nafJiV33_6xPH2WzT+=c0ULGg8XqB-mHOc2cHomg@mail.gmail.com>
+References: <1366399831-5964-1-git-send-email-felipe.contreras@gmail.com>
+	<1366399831-5964-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 19 21:36:04 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 19 21:38:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTH6J-0007yW-R4
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 21:36:04 +0200
+	id 1UTH8z-0001jv-80
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Apr 2013 21:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753543Ab3DSTf7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 15:35:59 -0400
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:63618 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753430Ab3DSTf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 15:35:59 -0400
-Received: by mail-lb0-f177.google.com with SMTP id r10so3998995lbi.8
-        for <git@vger.kernel.org>; Fri, 19 Apr 2013 12:35:57 -0700 (PDT)
+	id S1753549Ab3DSTip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Apr 2013 15:38:45 -0400
+Received: from mail-la0-f53.google.com ([209.85.215.53]:33138 "EHLO
+	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753430Ab3DSTio (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Apr 2013 15:38:44 -0400
+Received: by mail-la0-f53.google.com with SMTP id eg20so32428lab.40
+        for <git@vger.kernel.org>; Fri, 19 Apr 2013 12:38:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
          :subject:from:to:cc:content-type;
-        bh=/wsJixPWSVCZ/6W+I9V/W+lZQhx7RILKujwk/Z/PrPg=;
-        b=YXs0yyaKalHO8c9F0NOo/3Sqji8iCewUI9IjYJi5qVoWVTveG8B0yukuPDvzoJ+Xkr
-         ee9caIdJPyem085eRLvFvbjCxh+qwksEFXr1G3Yl6bgr7eN3MtGJcOj9MItdyiA7/WYk
-         qgKRylKgMBs9sPgvzTVEMAs7/n/iiLl5Wxq/BKhekJF3fwG+m6A9/cWw1NE/p5ln1Jrk
-         IFOyF4q+SO6tbZEoGc/DZdteAKLW2RBCbs3w7HfygKGox/PyQAn3Os2NIVc3T0FrupyU
-         NG+/E20blG3PDsQcM9pJrcXYY8muapsUjdQkGVZr4//v6IOAgwq/5pSybJNgNaDYN8VT
-         whGg==
-X-Received: by 10.112.163.6 with SMTP id ye6mr8607746lbb.59.1366400157510;
- Fri, 19 Apr 2013 12:35:57 -0700 (PDT)
-Received: by 10.114.59.210 with HTTP; Fri, 19 Apr 2013 12:35:57 -0700 (PDT)
-In-Reply-To: <7v8v4e1fyz.fsf@alter.siamese.dyndns.org>
+        bh=CzBGdfA/Al1C7qQmXzkN8JPFMM1+6a/LCUng/Ux9ues=;
+        b=EYjEYG0P5rYtYSG2UozyWADBNieA0gyBv5sX1v5MHXMDMydOb077vUX0dr8r/VNuDO
+         XjLRt1WImfPlHgL+R0p8QPrqgZ5deeLpPvIODv312rfVQDxFmRQDt5fWeuCqShoro/Gl
+         vA9NgOFYZvaY8og+3oAX8hWWnrJTL6v5IjkFLX0gg9Z8l04TgXKq1Mstfy8/JmnyJhaW
+         eI4BLL5ss/t6wPkOuYNWFarIXZ6AUHhkW0eMEj/tcHgSc2HtXAyLUtn293VzKt9K6Mz9
+         3vBrE6kg6foTB+eWFrlJ5C27bB7imf5f0XAXkFVt/ICt+VgPeS5IeiJeIbZRZKsPcc6Q
+         pP8A==
+X-Received: by 10.112.22.198 with SMTP id g6mr4712113lbf.135.1366400322868;
+ Fri, 19 Apr 2013 12:38:42 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Fri, 19 Apr 2013 12:38:42 -0700 (PDT)
+In-Reply-To: <1366399831-5964-2-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221809>
 
-On Fri, Apr 19, 2013 at 2:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Fri, Apr 19, 2013 at 2:30 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> This script find people that might be interesting in a patch, by going
+> back through the history for each single hunk modified, and finding
+> people that reviewed, acknowledge, signed, or authored the code the
+> patch is modifying.
 >
->> On Fri, Apr 19, 2013 at 12:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>> The code finds the changes of a commit, runs 'git blame' for each chunk
->>>> to see which other commits are relevant, and then reports the author and
->>>> signers.
->>>
->>> In general, I am not all that interested in adding anything new to
->>> contrib/ as git.git has matured enough, but even if this will stay
->>> outside my tree, there are a few interesting things to note to help
->>> its eventual users.
->>
->> Why not add it to mainline git then? This tool, or a similar one,
->> would certainly be useful in the git arsenal.
+> It does this by running 'git blame' incrementally on each hunk, and then
+> parsing the commit message. After gathering all the relevant people, it
+> groups them to show what exactly was their role when the participated in
+> the development of the relevant commit, and on how many relevant commits
+> they participated. They are only displayed if they pass a minimum
+> threshold of participation.
 >
-> As to this particular "feature" (the goal it tries to achieve, not
-> necessarily the implementation), that actually was the first thing
-> that came to my mind.  It helps the "develop, review locally,
-> format-patch, decide whom to ask reviews and then send it out"
-> workflow in general to have a tool that tells you who are the people
-> involved in the code you are touching.
+> For example:
 >
-> If this were _only_ to be used within send-email (i.e. replacing the
-> "then send it out" above with "then use send-email" to limit the
-> usecase), "git cc-cmd" would be a reasonable name.  But if that is
-> the intended use case, it would even be more reasonable to make this
-> logic part of send-email and trigger it with --auto-cc-reviewers
-> option or something.
+>   % git cc-cmd 0001-remote-hg-trivial-cleanups.patch
+>   Felipe Contreras <felipe.contreras@gmail.com> (author: 100%)
+>   Jeff King <peff@peff.net> (signer: 83%)
+>   Max Horn <max@quendi.de> (signer: 16%)
+>   Junio C Hamano <gitster@pobox.com> (signer: 16%)
+>
+> Thus it can be used for 'git send-email' as a cc-cmd.
 
-Yeap, but I wouldn't want to be the one that implements that in perl.
+Here's the interdiff with the previous one:
 
-> But I think it can be useful outside the context of send-email as
-> well, and having one independent tool that does one single job well
-> is a better design.  Perhaps it is better to name it less specific
-> to send-email's cc-cmd option.  "git people"?  "git whom"?  "git
-> reviewers"?  I dunno, but along those lines.
+diff --git a/contrib/cc-cmd/git-cc-cmd b/contrib/cc-cmd/git-cc-cmd
+index c7ecf79..aa83a1a 100755
+--- a/contrib/cc-cmd/git-cc-cmd
++++ b/contrib/cc-cmd/git-cc-cmd
+@@ -5,40 +5,35 @@ $min_percent = 5
 
-'git relevant'? 'git related'? It's not only people, also commits.
+ class Commit
 
-> It is OK for a design demonstration prototype to be written in any
-> language others (who can comment on the design) can read, but the
-> version to be a first-class citizen needs to be written in one of
-> the languages such as C, POSIX shell, or Perl to avoid adding extra
-> dependencies to the users.
+-  attr_reader :id
+-  attr_accessor :roles
++  attr_reader :id, :roles
 
-That is going to be though.
+   def initialize(id)
+     @id = id
+     @roles = []
+   end
 
-Cheers.
+-  def self.parse(data)
+-    id = author = msg = nil
++  def parse(data)
++    author = msg = nil
+     roles = {}
+     data.each_line do |line|
+       if not msg
+         case line
+-        when /^commit (.+)$/
+-          id = $1
+         when /^author ([^<>]+) <(\S+)>$/
+           author = $1, $2
+-          roles[author] = 'author'
++          roles[author] = :author
+         when /^$/
+           msg = true
+         end
+       else
+         if line =~ /^(Signed-off|Reviewed|Acked)-by: ([^<>]+) <(\S+?)>$/
+           person = $2, $3
+-          roles[person] = 'signer' if person != author
++          roles[person] = :signer if person != author
+         end
+       end
+     end
+-    roles = roles.map do |person, role|
+-      address = "%s <%s>" % person
++    @roles = roles.map do |person, role|
+       [person, role]
+     end
+-    [id, roles]
+   end
+
+ end
+@@ -57,22 +52,15 @@ class Commits
+
+   def import
+     return if @items.empty?
+-    format = [ 'commit %H', 'author %an <%ae>', '', '%B' ].join('%n')
+-    File.popen(['git', 'show', '-z', '-s', '--format=format:' +
+format] + @items.keys) do |p|
+-      p.each("\0") do |data|
+-        next if data == "\0" # bug in git show?
+-        id, roles = Commit.parse(data)
+-        commit = @items[id]
+-        commit.roles = roles
+-      end
+-    end
+-  end
+-
+-  def each_person_role
+-    commit_roles = @items.values.map { |commit| commit.roles }.flatten(1)
+-    commit_roles.group_by { |person, role| person }.each do |person,
+commit_roles|
+-      commit_roles.group_by { |person, role| role }.each do |role,
+commit_roles|
+-        yield person, role, commit_roles.size
++    File.popen(%w[git cat-file --batch], 'r+') do |p|
++      p.write(@items.keys.join("\n"))
++      p.close_write
++      p.each do |l|
++        if l =~ /^(\h{40}) commit (\d+)/
++          id, len = $1, $2
++          data = p.read($2.to_i)
++          @items[id].parse(data)
++        end
+       end
+     end
+   end
+@@ -107,34 +95,37 @@ class Commits
+         end
+       end
+     end
+-    import
+   end
+
+ end
+
+ exit 1 if ARGV.size != 1
+
+-commits = Commits.new()
++commits = Commits.new
+ commits.from_patch(ARGV[0])
++commits.import
+
+ # hash of hashes
+ persons = Hash.new { |hash, key| hash[key] = {} }
+
+-commits.each_person_role do |person, role, count|
+-  persons[person][role] = count
++commits.items.values.each do |commit|
++  commit.roles.each do |person, role|
++    persons[person][role] ||= 0
++    persons[person][role] += 1
++  end
+ end
+
+ persons.each do |person, roles|
+   roles = roles.map do |role, count|
+     percent = count.to_f * 100 / commits.size
+     next if percent < $min_percent
+-    "%s: %u%%" % [role, percent]
++    '%s: %u%%' % [role, percent]
+   end.compact
+   next if roles.empty?
+
+   name, email = person
+   # must quote chars?
+   name = '"%s"' % name if name =~ /[^\w \-]/i
+-  person = name ? "%s <%s>" % [name, email] : email
+-  puts "%s (%s)" % [person, roles.join(', ')]
++  person = name ? '%s <%s>' % [name, email] : email
++  puts '%s (%s)' % [person, roles.join(', ')]
+ end
 
 -- 
 Felipe Contreras
