@@ -1,87 +1,70 @@
-From: Ilya Basin <basinilya@gmail.com>
-Subject: Re[2]: State of CVS-to-git conversion tools (Was: Re: cvsps: bad usage: invalid argument --norc)
-Date: Sat, 20 Apr 2013 14:22:51 +0400
-Message-ID: <214169596.20130420142251@gmail.com>
-References: <323381594.20130414121834@gmail.com> <673219382.20130414124800@gmail.com> <20130414113351.GA1299@thyrsus.com> <1762779000.20130415215818@gmail.com> <20130418094326.GB11038@thyrsus.com>
-Reply-To: Ilya Basin <basinilya@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH/RFC] upload-pack: ignore 'shallow' lines with unknown obj-ids
+Date: Sat, 20 Apr 2013 20:34:41 +1000
+Message-ID: <CACsJy8B6OYC-Qcwc53BsVtUSHw1ag6LWF2rBSP6agO6yTXQo+g@mail.gmail.com>
+References: <CAJDSCnN6Ekp3wF9hX9Dbt3+CLNg1_aBz8nPGUuCu0WS9MF8aXA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Eric S. Raymond" <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Sat Apr 20 12:24:47 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael Heemskerk <mheemskerk@atlassian.com>
+X-From: git-owner@vger.kernel.org Sat Apr 20 12:35:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTUyJ-0002RH-UA
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 12:24:44 +0200
+	id 1UTV8e-0008BU-1H
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 12:35:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754813Ab3DTKY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Apr 2013 06:24:29 -0400
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:33996 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754770Ab3DTKY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Apr 2013 06:24:28 -0400
-Received: by mail-lb0-f176.google.com with SMTP id y8so4349251lbh.7
-        for <git@vger.kernel.org>; Sat, 20 Apr 2013 03:24:24 -0700 (PDT)
+	id S1754954Ab3DTKfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Apr 2013 06:35:15 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:43528 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754942Ab3DTKfN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Apr 2013 06:35:13 -0400
+Received: by mail-ob0-f180.google.com with SMTP id un3so4260184obb.11
+        for <git@vger.kernel.org>; Sat, 20 Apr 2013 03:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
-         :subject:in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=RoaZ5OYgMIdrKqPfL8Roz67Ryn8UK7f/EKet/c7a7oI=;
-        b=dWi6skYqINVw7RxUw+7vVCVJdw7Yr1GL2XyaVJ75rr2I/WVkPIAEsND2FS/xCKqkKB
-         t5FrbvyejbBIhzELrr4qai5h9eEh0WPO6cLsbh5IVnYiSfuU/D6MIi8X3QXbVR72L3Yt
-         7dVIZuX5lsVx1GohnKitt2Uq/b80YCRVeqFZj1o24fdAlsY7b+OpdDHZV8R2m3iCnHRU
-         ovwleJF1bBZc/FHmwOrv3/yciX28Ior0rqLuleRuiN1W+1gxcljOp8BrltnKO9iaEbh4
-         hY3rSXnrIRMTGLeNfjIy2+XeFfMIRZFpCX13i8J3UOHkekkZZAjVYU1o/DLF+VXWBxDz
-         CWUg==
-X-Received: by 10.112.144.165 with SMTP id sn5mr3363891lbb.48.1366453464011;
-        Sat, 20 Apr 2013 03:24:24 -0700 (PDT)
-Received: from [192.168.0.78] (92-100-227-51.dynamic.avangarddsl.ru. [92.100.227.51])
-        by mx.google.com with ESMTPS id w6sm7448418law.8.2013.04.20.03.24.21
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 20 Apr 2013 03:24:22 -0700 (PDT)
-X-Mailer: Voyager (v3.99.4) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <20130418094326.GB11038@thyrsus.com>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=ZGDoqYn/yCmLVeAhY/ORRm7Q0zbrI/C5NxhFdHNLrNM=;
+        b=JsAWYtlYK4cBF67JTpaY99hSh0ggYOZHQ6+T7zusjxRbeLK0DbHoOzEwgih64/6zM/
+         O0FOWHu952hI6U4XKTHIwdJpOJ6B179V157bS5e+TL4aGZVZEL+cEfoSmvZPC8ppuihp
+         DHRbmycg5bELHrS3YQ3zWyTWagqH8dKzMymYE2U4eI/DCCNkJNJ3kk7GQxeWgWZO+5ql
+         YgV1DWIlHSww0SSnwRKct5auqdYNZtioLOy4GbNNegv/5O4AHNyDzatrm+fYCo69Zhxh
+         HSuXNU/ZST1/wQNyruXW6n/w3FRFPWAprgbms05it0nPI6I11l6/9jPj+bsfZnOwwtGC
+         2K+A==
+X-Received: by 10.60.135.103 with SMTP id pr7mr6030267oeb.142.1366454112312;
+ Sat, 20 Apr 2013 03:35:12 -0700 (PDT)
+Received: by 10.76.122.163 with HTTP; Sat, 20 Apr 2013 03:34:41 -0700 (PDT)
+In-Reply-To: <CAJDSCnN6Ekp3wF9hX9Dbt3+CLNg1_aBz8nPGUuCu0WS9MF8aXA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221842>
 
-Hi Eric.
+On Sat, Apr 20, 2013 at 8:05 PM, Michael Heemskerk
+<mheemskerk@atlassian.com> wrote:
+> When the client sends a 'shallow' line for an object that the server does
+> not have, the server currently dies with the error: "did not find object
+> for shallow <obj-id>". The client may have received the object from a
+> different server, or the object may have been garbage collected by the
+> server. In either case, the object is not relevant for calculating the pack
+> that is to be sent and can be safely ignored.
+>
+> The documentation in technical/pack-protocol.txt has been updated to
+> remove the restriction that "Clients MUST NOT mention an obj-id which it
+> does not know exists on the server". This requirement is not realistic
+> because clients cannot know whether an object has been garbage collected
+> by the server.
+>
+> Signed-off-by: Michael Heemskerk <mheemskerk@atlassian.com>
 
-ESR> cvs-fast-export does not have incremental-import support.
-ESR> Whether git-cvs-import has it depend on which version you have
-ESR> and what backend it it is using. I don't maintain that wrapper.
-Did you mean "git-fast-import"? Or do you know any wrapper that
-already uses cvsps3 --fast-export?
+I'm not an expert in git protocol (or shallow extension in particular)
+but the reasoning sounds right and the implemention looks correct.
 
-
->> I need it, because full import takes too long.
->> The central repo of my employer is CVS, other people commit to it and
->> I use git internally to be able to tidy my commit history before
->> exporting to CVS.
-
-ESR> You are out of luck. That feature was dependent on a very fragile
-ESR> coupling...
-OK, OK, I get it.
-
-
-First of all, I think cvsps3 has almost everithing required for
-incremental import: one could just take the date of the last commit
-and invoke cvs ps with the '-d' flag. However, to import new commits
-into existing branches the stream should contain the "from" command in
-oldest commits in each branch (now missing).
-If the branch already exists in the target git repo, it's easy to
-refer it in the stream:
-    from refs/heads/branchname^0
-
-But if the branch is new, but it's parent commit is already imported,
-I guess, the only way to refer it is by its SHA-1
-Eric, what parent information can cvsps provide for the first commit
-in a branch, when invoked with the '-d' flag?
+Acked-by: Duy Nguyen <pclouds@gmail.com>
+--
+Duy
