@@ -1,104 +1,90 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 0/6] grep with textconv
-Date: Sat, 20 Apr 2013 15:32:04 +0200
-Message-ID: <517298D4.3030802@drmicha.warpmail.net>
-References: <cover.1366389739.git.git@drmicha.warpmail.net> <7vhaj21ir3.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 20 16:55:55 2013
+From: Johan Herland <johan@herland.net>
+Subject: [PATCHv2 0/8] Improving the search for remote-tracking branches
+Date: Sat, 20 Apr 2013 17:05:55 +0200
+Message-ID: <1366470363-22309-1-git-send-email-johan@herland.net>
+Cc: johan@herland.net, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 20 17:06:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTZCk-00022x-L9
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 16:55:54 +0200
+	id 1UTZMu-0008Pa-Ub
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 17:06:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755379Ab3DTOzo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Apr 2013 10:55:44 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:36413 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755320Ab3DTOze (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Apr 2013 10:55:34 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C68522082C;
-	Sat, 20 Apr 2013 10:44:21 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute5.internal (MEProxy); Sat, 20 Apr 2013 10:44:21 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=D0C6Yi0T5vL+W4ZYF9tikR
-	82i1M=; b=GhmPRZNX3RJ7FM3HkcY5Ks4s4c4AufCeZGQV7GWbnDU9dWv1M1YunD
-	/4Az1SurJWzjTECj9v8aYU2F83DgIYIXWbzu2Bnsr7dSAYOUAap5UuLzpGychcOq
-	mbYdIA0rBrMWfyiOpt72hRjjlohkun12XTdueUIo1ZVdq7DJADvhQ=
-X-Sasl-enc: nzGOPgyUdmpqlQgXutL6bFYeYQ04UTK+8u4JU42L2WAl 1366469061
-Received: from localhost.localdomain (unknown [88.70.147.219])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 0E3CAC80004;
-	Sat, 20 Apr 2013 10:44:20 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130402 Thunderbird/17.0.5
-In-Reply-To: <7vhaj21ir3.fsf@alter.siamese.dyndns.org>
+	id S1755340Ab3DTPGT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Apr 2013 11:06:19 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:55859 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755302Ab3DTPGS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Apr 2013 11:06:18 -0400
+Received: by mail-la0-f48.google.com with SMTP id eo20so485658lab.7
+        for <git@vger.kernel.org>; Sat, 20 Apr 2013 08:06:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=6pho/SqRGNvqXBmzEcCZ0TAzD8EweGlv/5NjrKP5tz0=;
+        b=b4uquSbOI1BubS/hXI+uQQQwS/EJ6IFbsMH8PJGCi4/DFMk7R6v1NZHEDkMEzVPegs
+         rPFx51Yg3PrdnnUUhJBh2gl4VVNLNwjv8yka1LFR1sQcyGvb3nRRetWi0KKl36CJG66x
+         hm7uY0T4o+QQVjWAnexD/NHdbG5tfxcTWjj/plWFlAsbPSprK4Vo6igbSPyTSjdCruyg
+         iUVNawHd/ohBOW8tseZO38gApiYeeI03oVWoirFzIoVDdO/otIWQRiRqMgZgnbH2uY7a
+         mYBQ3P1NxZB7l6pjHuDDiAqwNaGhCKDs7RKjgfPtheI17Om4IP1jnGcP9wDzJd+HGLlj
+         06bQ==
+X-Received: by 10.112.19.7 with SMTP id a7mr10134250lbe.0.1366470376915;
+        Sat, 20 Apr 2013 08:06:16 -0700 (PDT)
+Received: from gamma.herland (cm-84.208.177.71.getinternet.no. [84.208.177.71])
+        by mx.google.com with ESMTPS id sl5sm7539983lbb.10.2013.04.20.08.06.14
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 20 Apr 2013 08:06:15 -0700 (PDT)
+X-Mailer: git-send-email 1.8.1.3.704.g33f7d4f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221860>
 
-Junio C Hamano venit, vidit, dixit 19.04.2013 20:24:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> This series teaches show and grep to obey textconv: show by
->> default (like diff), grep only on request (--textconv).  We might
->> switch the default for the latter also, of course.  I'd actually
->> like that.
->>
->> Compared to an earlier (historic) series this one comes with tests.
-> 
-> It would have been nicer if you referred to the previous thread
-> 
-> cf.
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/215385
+Hi,
 
-Yes, sorry, I was on a slow mobile connection due to DSL breakage...
+This is second iteration of this series. The initial three patches are
+unchanged, although the commit message of #3 has been rephrased based
+on Junio's comments.
 
->>   grep: allow to use textconv filters
-> 
-> This looked mostly sensible except for one minor "eh, do we really
-> need to assume textconv output is text, or wouldn't using the same
-> codepath for raw blob and textconv result to make them consistently
-> honor opt->binary easier to explain?".
->
+Patches #4-#6 fixes existing tests in preparation for patch #7, which
+changes the validation of the remote-tracking branch passed to --track:
+We now require the --track argument to refer to a ref that matches a
+configured refspec - otherwise, we can not reliably deduce the upstream
+information to store into branch.<name>.remote and branch.<name>.merge.
 
-I think we assume in general that textconv produces text, which is maybe
-not completely surprising given its name ;)
+Finally, patch #8 updates the paragraph on remote-tracking branches in
+the glossary to be somewhat closer to the current state of things.
 
->>   t4030: demonstrate behavior of show with textconv
->>   t7008: demonstrate behavior of grep with textconv
-> 
-> It somehow felt they are better together in the patches that
-> implement the features they exercise.
 
-I added them after the fact. They can be squashed in, of course. On the
-other hand you don't see the change in behavior that the latter patches
-introduce any more if you that; which is why I left them separate at
-least for review purposes and for camparing to the previous series which
-I had failed to reference.
+Have fun! :)
 
->>   show: obey --textconv for blobs
->>   cat-file: do not die on --textconv without textconv filters
->>   grep: obey --textconv for the case rev:path
-> 
-> I just let my eyes coast over these but didn't see anything
-> obviously wrong.
-> 
-> By the way, "git log --no-merges | grep obey | wc -l" shows that we
-> say "honor an option" a lot more than "obey an option".  We may want
-> to be consistent here.
+...Johan
 
-Okay, let's be honorable rather than obedient.
 
-Michael
+Johan Herland (8):
+  t2024: Add tests verifying current DWIM behavior of 'git checkout <branch>'
+  t2024: Show failure to use refspec when DWIMming remote branch names
+  checkout: Use remote refspecs when DWIMming tracking branches
+  t3200.39: tracking setup should fail if there is no matching refspec.
+  t7201.24: Add refspec to keep --track working
+  t9114.2: Don't use --track option against "svn-remote"-tracking branches
+  branch.c: Validate tracking branches with refspecs instead of refs/remotes/*
+  glossary: Update and rephrase the definition of a remote-tracking branch
+
+ Documentation/git-checkout.txt     |   6 +-
+ Documentation/glossary-content.txt |  13 +++--
+ branch.c                           |  17 +++++-
+ builtin/checkout.c                 |  42 +++++++-------
+ t/t2024-checkout-dwim.sh           | 116 +++++++++++++++++++++++++++++++++++++
+ t/t3200-branch.sh                  |   8 +--
+ t/t7201-co.sh                      |   1 +
+ t/t9114-git-svn-dcommit-merge.sh   |   2 +-
+ 8 files changed, 170 insertions(+), 35 deletions(-)
+ create mode 100755 t/t2024-checkout-dwim.sh
+
+-- 
+1.8.1.3.704.g33f7d4f
