@@ -1,97 +1,77 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/6] t4030: demonstrate behavior of show with textconv
-Date: Sat, 20 Apr 2013 15:35:24 +0200
-Message-ID: <5172999C.1050407@drmicha.warpmail.net>
-References: <cover.1366389739.git.git@drmicha.warpmail.net> <a3162a9df3055532a818db264f43abc994325049.1366389739.git.git@drmicha.warpmail.net> <20130420040400.GA24970@sigill.intra.peff.net>
+Subject: Re: [PATCH 3/6] cat-file: do not die on --textconv without textconv
+ filters
+Date: Sat, 20 Apr 2013 16:27:48 +0200
+Message-ID: <5172A5E4.7020902@drmicha.warpmail.net>
+References: <cover.1366389739.git.git@drmicha.warpmail.net> <06f2d51bf0479f3231b707d88d8d04fcd306c973.1366389739.git.git@drmicha.warpmail.net> <20130420041737.GC24970@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 20 16:55:41 2013
+X-From: git-owner@vger.kernel.org Sat Apr 20 16:55:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTZCX-0001sz-1v
+	id 1UTZCX-0001sz-HS
 	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 16:55:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755362Ab3DTOzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Apr 2013 10:55:36 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:60807 "EHLO
+	id S1755333Ab3DTOzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Apr 2013 10:55:35 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:60867 "EHLO
 	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754967Ab3DTOze (ORCPT
+	by vger.kernel.org with ESMTP id S1751481Ab3DTOze (ORCPT
 	<rfc822;git@vger.kernel.org>); Sat, 20 Apr 2013 10:55:34 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 18D9B2072C;
-	Sat, 20 Apr 2013 10:44:24 -0400 (EDT)
+X-Greylist: delayed 672 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Apr 2013 10:55:34 EDT
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 62CD32093C;
+	Sat, 20 Apr 2013 10:44:28 -0400 (EDT)
 Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute3.internal (MEProxy); Sat, 20 Apr 2013 10:44:24 -0400
+  by compute4.internal (MEProxy); Sat, 20 Apr 2013 10:44:28 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=message-id:date:from:mime-version:to:cc
 	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=0lO05rzwqKoccDiX+9U2W9
-	Bh21Q=; b=qNDNiPN6SSbb5pdrNovYfkR8tbBsvm65Yfz4zrN+J7XVh7FEB5M38S
-	Ir9kRsBn7cfNGH3hyCiLgqYkT/iRS7WWCskxmxlViCCwU0C0UG7zbLThIeOTKV/1
-	GCQ1LAQCHFuAXC1UKu9632lHbsz/ONMMKVsTPD4lHwYG1LbcPjUWA=
-X-Sasl-enc: gwemFR+BmnFiMHnaWLNojgHr/0+wjI53ospozF4UeoHN 1366469063
+	:content-transfer-encoding; s=smtpout; bh=47T2vi0y98Wmk+boivtaMp
+	kKz1I=; b=q5MMbGTeM0YdZbEZ5ztAo7zJpp6RMcIwxqoG+gr5hHRIDPvmYyk8Wp
+	FoX6Qi78lcgI5TBJbx0U/G7c9KDjs+LirQbnYFHrI3eVyAS0Qs6OTffI2W6zyyas
+	ShiqgKSGtH8pNjDRHWenSQLFnp8HObqbAdZwazYfF9qgRX1Fb8Ab8=
+X-Sasl-enc: kV22jfvDvBZawxZNli409maezr/qqmxoPdvcK/znxRV0 1366469068
 Received: from localhost.localdomain (unknown [88.70.147.219])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 6596BC80004;
-	Sat, 20 Apr 2013 10:44:23 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id AFA71C80005;
+	Sat, 20 Apr 2013 10:44:27 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130402 Thunderbird/17.0.5
-In-Reply-To: <20130420040400.GA24970@sigill.intra.peff.net>
+In-Reply-To: <20130420041737.GC24970@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221856>
 
-Jeff King venit, vidit, dixit 20.04.2013 06:04:
-> On Fri, Apr 19, 2013 at 06:44:44PM +0200, Michael J Gruber wrote:
+Jeff King venit, vidit, dixit 20.04.2013 06:17:
+> On Fri, Apr 19, 2013 at 06:44:46PM +0200, Michael J Gruber wrote:
 > 
->> "git show <commit>" obeys the textconc setting while "git show <blob>"
->> does not. Demonstrate this in the test.
-> 
-> s/textconc/textconv
-
-Thanks, plus s/obey/honor/
-
->> diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
->> index 53ec330..f314ced 100755
->> --- a/t/t4030-diff-textconv.sh
->> +++ b/t/t4030-diff-textconv.sh
->> @@ -58,6 +58,12 @@ test_expect_success 'diff produces text' '
->>  	test_cmp expect.text actual
->>  '
+>> -			die("git cat-file --textconv: unable to run textconv on %s",
+>> -			    obj_name);
+>> -		break;
+>> +		if (textconv_object(obj_context.path, obj_context.mode, sha1, 1, &buf, &size))
+>> +			break;
+>> +
+>> +		/* otherwise expect a blob */
+>> +		exp_type = "blob";
 >>  
->> +test_expect_success 'show commit produces text' '
->> +	git show HEAD >diff &&
->> +	find_diff <diff >actual &&
->> +	test_cmp expect.text actual
->> +'
+>>  	case 0:
+>>  		if (type_from_string(exp_type) == OBJ_BLOB) {
 > 
-> Makes sense.
+> I'm not sure this is right. What happens with:
 > 
->> +test_expect_success 'show blob produces binary' '
->> +	git show HEAD:file >actual &&
->> +	printf "\\0\\n\\1\\n" >expect &&
->> +	test_cmp expect actual
->> +'
+>   git cat-file --textconv HEAD:Documentation
 > 
-> I think this is probably the right thing. I can see instances where one
-> would want the converted contents, but we have "cat-file --textconv" for
-> that.
-> 
+> We have failed to textconv, but should we be expecting a blob?
 
-By that you mean that this behavior is to stay as is?
-
-My reasoning is twofold:
-
-- consistency between "git show commit" and "git show blob"
-
-- "git show" is a user facing command, and as such should produce output
-consumable by humans; whereas "git cat-file" is plumbing and should
-produce raw data unless told otherwise (-p, --textconv).
+Very true, thanks. I'll reorder so that the --textconv case continues
+(without break) into the -p case. I think it makes sense to consider
+"--textconv" to be "at least as pretty as -p".
 
 Michael
