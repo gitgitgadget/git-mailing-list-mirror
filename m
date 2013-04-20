@@ -1,89 +1,139 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCHv2 8/8] glossary: Update and rephrase the definition of a remote-tracking branch
-Date: Sat, 20 Apr 2013 17:06:03 +0200
-Message-ID: <1366470363-22309-9-git-send-email-johan@herland.net>
-References: <1366470363-22309-1-git-send-email-johan@herland.net>
-Cc: johan@herland.net, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 20 17:06:51 2013
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: Some observations on log -L
+Date: Sat, 20 Apr 2013 17:24:59 +0200
+Message-ID: <87bo99usvo.fsf@hexa.v.cablecom.net>
+References: <CALkWK0k+LYro8jpmfRPmX8Wsj6aEWzyq3DYa6waDMsh5B=X7Tg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 20 17:25:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTZNK-0000Ee-No
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 17:06:51 +0200
+	id 1UTZf9-0003Ay-K1
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 17:25:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755435Ab3DTPGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Apr 2013 11:06:48 -0400
-Received: from mail-la0-f41.google.com ([209.85.215.41]:63627 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755427Ab3DTPGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Apr 2013 11:06:46 -0400
-Received: by mail-la0-f41.google.com with SMTP id ee20so488465lab.14
-        for <git@vger.kernel.org>; Sat, 20 Apr 2013 08:06:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=dBf7d5lqPbtfnRrK6oJ2J0M6Nimno1gnprU+/9sSbb0=;
-        b=EmFqvl2Qwqe2ADgfgck/DHZGqZb2A7sfJlFb+lZ4zsYJKCjxvLgS5ZNRdf5w4ZuFNv
-         MGylW4U9dAJtrvMRup9d47Q+S39c8Pro7Mf4NT0ucHvXznIaMelyWn4RhjW/bsxL4K+q
-         yR02GhEcOAqh2TYHlOf7XZMh63NhE+z5Y7Jh0jqyHbU+DRN5RB/qYcjqXmmiqAG+7kcL
-         A/gkJfhwHDfOyjWAdHARqcUUDN21b1eiXkL8CvJK0ubUGTbE4SiJLKciVEI5Fa5wt6Jv
-         XOE7zAxAD8gBpA7r8p5UPRhYebgmpUNDPhbIWFvpjNzWYRXOofVIYShthhXWdEZBJNRM
-         pwjg==
-X-Received: by 10.152.116.52 with SMTP id jt20mr10145336lab.52.1366470404748;
-        Sat, 20 Apr 2013 08:06:44 -0700 (PDT)
-Received: from gamma.herland (cm-84.208.177.71.getinternet.no. [84.208.177.71])
-        by mx.google.com with ESMTPS id sl5sm7539983lbb.10.2013.04.20.08.06.42
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 20 Apr 2013 08:06:43 -0700 (PDT)
-X-Mailer: git-send-email 1.8.1.3.704.g33f7d4f
-In-Reply-To: <1366470363-22309-1-git-send-email-johan@herland.net>
+	id S1755396Ab3DTPZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Apr 2013 11:25:07 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:15320 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755367Ab3DTPZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Apr 2013 11:25:06 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 20 Apr
+ 2013 17:24:57 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 20 Apr
+ 2013 17:25:02 +0200
+In-Reply-To: <CALkWK0k+LYro8jpmfRPmX8Wsj6aEWzyq3DYa6waDMsh5B=X7Tg@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Sat, 20 Apr 2013 15:26:09 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221869>
 
-The definition of a remote-tracking branch in the glossary have been
-out-of-date for a while (by e.g. referring to "Pull:" from old-style
-$GIT_DIR/remotes files).
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Also, the preceding patches have formalized that a remote-tracking branch
-must match a configured refspec in order to be usable as an upstream.
+> Ever since 'git log -L' made it to `pu`, I've been playing with it to
+> see how it can be useful.  Here are some of my observations:
+>
+> 1. Specifying line ranges by hand are too painful.  I would really
+> love it if it could parse the lines off a patch prepared by
+> format-patch or something.
 
-This patch rewrites the paragraph on remote-tracking branches accordingly.
+True, but I'm not sure that starting from a patch is the right thing.
+At least in my case, when I have a patch ready, I longer need to
+investigate anything ;-)
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
- Documentation/glossary-content.txt | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+Perhaps a "line-log all the ranges touched by this commit" would be more
+useful.
 
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index 2478a39..7a79f26 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -423,12 +423,13 @@ should not be combined with other pathspec.
- 	linkgit:git-push[1].
- 
- [[def_remote_tracking_branch]]remote-tracking branch::
--	A regular Git <<def_branch,branch>> that is used to follow changes from
--	another <<def_repository,repository>>. A remote-tracking
--	branch should not contain direct modifications or have local commits
--	made to it. A remote-tracking branch can usually be
--	identified as the right-hand-side <<def_ref,ref>> in a Pull:
--	<<def_refspec,refspec>>.
-+	A <<def_ref,ref>> that is used to follow changes from another
-+	<<def_repository,repository>>. It typically looks like
-+	'refs/remotes/foo/bar' (indicating that it tracks a branch named
-+	'bar' in a remote named 'foo'), and matches the right-hand-side of
-+	a configured fetch <<def_refspec,refspec>>. A remote-tracking
-+	branch should not contain direct modifications or have local
-+	commits made to it.
- 
- [[def_repository]]repository::
- 	A collection of <<def_ref,refs>> together with an
+You can achieve both with some hack like
+
+  eval git log 1640632 $(git show 1640632 | perl -ne '
+    $h=1 if /^diff /;
+    $f=$1 if $h and m{\+\+\+ ./(.*)$};
+    if (/@@ .* \+(\d+)(?:,(\d+))/) {
+      print " -L$1,+$2:$f"; $h=0;
+    };
+  ')
+
+Note that you need to specify the commit in two places.  I think I'll
+actually make that a script and try it to see if it's worth
+implementing.  Quoting of the -L args is of course an exercise left to
+the reader ;-)
+
+> 2. Specifying regex ranges are really useful to see the history of a
+> function.  But I think it could really benefit from a tool that
+> actually understands the language (using Clang Tooling).  If we were
+> to build such a tool, git-core could benefit immensely from it: we'd
+> have smarter merges too, for instance.
+
+Is there any research on this?
+
+I imagine you would use whatever parser you have at hand to process the
+input into a syntax tree, then run diff over those trees.  There should
+be some research on how to get meaningful diffs of them?  And then you
+somehow have to turn the tree-diff into a human-readable output.
+
+In any case you could start by prototyping such a diff algorithm on a
+file basis; people could then start using it as an external diff driver.
+
+> 3. Often, I want to know the people to contact for a segment of code.
+> Blame is useless here, because it only considers the most recent
+> commit, when I want to know the authors of all the commits that helped
+> shaped that segment of code.  So, I think shortlog could really
+> benefit from a -L.  Is this easily doable?
+
+Not really.  You're touching on a sore point of the current
+implementation, which is that it's not properly tied into the log and
+diff infrastructures.  I figured that would block it for too long, so I
+gave up on trying to do that for the first version.
+
+So it just runs captures the history that log walks, does a separate
+processing step and handcrafts a diff in its own output machinery, which
+isn't very nice for many reasons, including that we can't run any other
+diff- or log-like stuff on top of log -L output.
+
+That precludes many uses, like shortlog you mentioned, or color-words.
+I think Junio and me hashed out some ideas for how it *should* be tied
+together in some earlier thread.  The gist of it is that there are
+really three separate things going on here:
+
+* Pathspec-like filtering with proper -M support.  This should be
+  unified with --follow.  That's actually the next thing I want to try,
+  because it should give a properly implemented --follow along the way.
+
+* A pass of commit filtering based on intersecting the ranges we're
+  interested in with the diffs of commits, and mapping them "across".
+  This should be hooked as a cleanly separated step into the log
+  machinery.
+
+* Diff output filtering based on the ranges that we found.  This should
+  be done as a filter somewhere in the diff machinery, preferably before
+  word-diff.
+
+(The first step is actually a performance optimization, but it would not
+be a practical algorithm without it.)
+
+Thanks for the input.  Let me know if you manage to break it somehow :-)
+
+
+And for a bit of shameless pluggery (you probably saw it on IRC already,
+but mainly for other curious readers):
+
+  git://github.com/trast/git.git tr/gitk-line-log
+
+has a version of gitk that supports -L.  I hacked it up yesterday, and
+while it seems to work, I want to play with it a little until I'm
+satisfied that I didn't break gitk for other uses.
+
 -- 
-1.8.1.3.704.g33f7d4f
+Thomas Rast
+trast@{inf,student}.ethz.ch
