@@ -1,80 +1,89 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [QUERY] Why do we have git-completion.zsh?
-Date: Sat, 20 Apr 2013 11:53:29 -0700
-Message-ID: <20130420185329.GB8586@elie.Belkin>
-References: <CALkWK0=NrJ-9mxSkOBw=kJ0CTJLUFNWBoGdqGcHEU6YqR-foFg@mail.gmail.com>
- <20130420184539.GA8586@elie.Belkin>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/8] Add new git-cc-cmd helper to contrib
+Date: Sat, 20 Apr 2013 13:22:22 -0700
+Message-ID: <7vip3hx88x.fsf@alter.siamese.dyndns.org>
+References: <1366348458-7706-1-git-send-email-felipe.contreras@gmail.com>
+	<1366348458-7706-2-git-send-email-felipe.contreras@gmail.com>
+	<7vfvym30t8.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3YAq66MrOR5a4ydujKR5+ZNMVV4i=JzPCxLXC244b52g@mail.gmail.com>
+	<7v8v4e1fyz.fsf@alter.siamese.dyndns.org> <5171A387.808@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 20 20:53:43 2013
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Apr 20 22:22:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTcut-0003Ao-2d
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 20:53:43 +0200
+	id 1UTeIy-0006kp-US
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 22:22:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751359Ab3DTSxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Apr 2013 14:53:38 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:40858 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750992Ab3DTSxh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Apr 2013 14:53:37 -0400
-Received: by mail-pd0-f174.google.com with SMTP id p12so2823337pdj.19
-        for <git@vger.kernel.org>; Sat, 20 Apr 2013 11:53:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=RijoC9pCd764hPYW27DF3vNSzrFpU/CoVr72YDvHUrc=;
-        b=zf3UjoygzaVd4Jqe4Lquvahm7M8UuJAxcRRa50wX1p6t/KudmT7UOzJeNm6V11TnRi
-         8DHvfeEuyESjpCYZ/AZG+ZamL97bDi/7M+uKBeE00mslw+XNWraSS5rTSg+X8bdBODmf
-         I8r7ufSjKV/atffgOhvabcB4f0DBT8er9Jj7K2RKhSZ6UYg44FxtzdsLuUx+Y3bjxCUx
-         nGixQJZWtKLE+ekd9kUV/vwMfkUtTMmSRIamjcKh7BUi61JugClo0Mdo/WP1e4W+4uS1
-         fzEhbAUzQsz1dqgNeGMZE7D5liv0lHli3S9bk8yU/x3KqdKukJgIyKsz6BGzay7904+T
-         Arew==
-X-Received: by 10.66.89.199 with SMTP id bq7mr8518926pab.202.1366484017136;
-        Sat, 20 Apr 2013 11:53:37 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id fq1sm18118847pbb.33.2013.04.20.11.53.35
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 20 Apr 2013 11:53:36 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20130420184539.GA8586@elie.Belkin>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1754599Ab3DTUW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Apr 2013 16:22:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59284 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754314Ab3DTUWZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Apr 2013 16:22:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2016C18B70;
+	Sat, 20 Apr 2013 20:22:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HyxQtvk+FmCo2xkxFJvB+xCY2HA=; b=m2d42+
+	CDoXB4K+qXTNtLUXS8ZNw53HpPBvZhQ9tOJ/96l5Q8WvEk+/8gUpffF08O4c7YBn
+	/GVN2vlkf9pRvVMYLYZUHkNtM8J78uBkup31Fo3+pWozPvQIFkLxM7mhjwmNJlxF
+	yYTQZ0MeOQeeXgkTlaoaEurRK6bbh4dqJKnew=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lxvPiOJdyKghijoKZTtWMT3Tw+WkGFPW
+	HxcltheIWIXBVDfJo9o8ZiHZoYMjs8Ev3XSyqnz3KJ7VzbRfG64jcfYnilXDUQ+Z
+	Avu28aW5ct/WAtSfd1LK68WKwxVJ1apba89ShZPkq4EppevOm84e7o0hMrajWiRR
+	xVvy1iVrGIc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17D2618B6F;
+	Sat, 20 Apr 2013 20:22:24 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72D0918B6E;
+	Sat, 20 Apr 2013 20:22:23 +0000 (UTC)
+In-Reply-To: <5171A387.808@kdbg.org> (Johannes Sixt's message of "Fri, 19 Apr
+	2013 22:05:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 029499C6-A9F8-11E2-9027-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221873>
 
-Jonathan Nieder wrote:
-> Ramkumar Ramachandra wrote:
+Johannes Sixt <j6t@kdbg.org> writes:
 
->>                             However, I don't understand why we
->> maintain it, because there's a comprehensive first-class completer in
->> ZSH core [1] which I use all the time.  Shouldn't the completion folks
->> be contributing to this instead?
+>> But I think it can be useful outside the context of send-email as
+>> well, and having one independent tool that does one single job well
+>> is a better design.  Perhaps it is better to name it less specific
+>> to send-email's cc-cmd option.  "git people"?  "git whom"?  "git
+>> reviewers"?  I dunno, but along those lines.
 >
-> Only if they want to.
-[...]
-> http://thread.gmane.org/gmane.comp.version-control.git/210022/focus=210024
+> Would it make sense to integrate this in git shortlog, which already
+> does something similar?
 
-Sorry, wrong link.  Here's a better one:
+Conceptually, yes, but the end result will be much larger in scope.
+I am not sure if "shortlog" is still a good label for it.
 
-http://www.zsh.org/mla/workers/2011/msg00497.html
+"shortlog", when it internally runs "log" [*1*], is still about the
+commits within the range given to the command; "shortlog A..B" talks
+only about commits within A..B range.  This new thing is about what
+happened to the part of the code A..B touches in the past
+(i.e. before A happened), which feels a bit different.
 
-More fundamentally, your question seems to assume some kind of shared
-plan regarding what people work on, rather than each person choosing
-to work on what they consider valuable without having to justify it to
-others.  I am very happy with Felipe's work on git's completion code
-and don't think it does any harm to efforts elsewhere.
 
-Thanks for your interest,
-Jonathan
+[Footnote]
+
+*1* It can be used as a filter to "git log" output, which is a bit
+    different animal, but it still is about shortening that incoming
+    log, not about independently digging the history using the input
+    as a starting point.
