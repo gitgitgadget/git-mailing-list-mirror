@@ -1,77 +1,104 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 3/6] cat-file: do not die on --textconv without textconv
- filters
-Date: Sat, 20 Apr 2013 16:27:48 +0200
-Message-ID: <5172A5E4.7020902@drmicha.warpmail.net>
-References: <cover.1366389739.git.git@drmicha.warpmail.net> <06f2d51bf0479f3231b707d88d8d04fcd306c973.1366389739.git.git@drmicha.warpmail.net> <20130420041737.GC24970@sigill.intra.peff.net>
+Subject: Re: [PATCH 6/6] grep: obey --textconv for the case rev:path
+Date: Sat, 20 Apr 2013 16:42:49 +0200
+Message-ID: <5172A969.9000106@drmicha.warpmail.net>
+References: <cover.1366389739.git.git@drmicha.warpmail.net> <717ec305e9bd056a44b1da5cc478d314db2920e5.1366389739.git.git@drmicha.warpmail.net> <20130420042445.GD24970@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 20 16:55:43 2013
+X-From: git-owner@vger.kernel.org Sat Apr 20 16:55:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTZCX-0001sz-HS
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 16:55:41 +0200
+	id 1UTZCY-0001sz-1K
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 16:55:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755333Ab3DTOzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Apr 2013 10:55:35 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:60867 "EHLO
+	id S1755366Ab3DTOzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Apr 2013 10:55:40 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:38984 "EHLO
 	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751481Ab3DTOze (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Apr 2013 10:55:34 -0400
-X-Greylist: delayed 672 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Apr 2013 10:55:34 EDT
+	by vger.kernel.org with ESMTP id S1755328Ab3DTOzf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Apr 2013 10:55:35 -0400
 Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 62CD32093C;
-	Sat, 20 Apr 2013 10:44:28 -0400 (EDT)
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C9D3D203DE;
+	Sat, 20 Apr 2013 10:44:30 -0400 (EDT)
 Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute4.internal (MEProxy); Sat, 20 Apr 2013 10:44:28 -0400
+  by compute4.internal (MEProxy); Sat, 20 Apr 2013 10:44:30 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=message-id:date:from:mime-version:to:cc
 	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=47T2vi0y98Wmk+boivtaMp
-	kKz1I=; b=q5MMbGTeM0YdZbEZ5ztAo7zJpp6RMcIwxqoG+gr5hHRIDPvmYyk8Wp
-	FoX6Qi78lcgI5TBJbx0U/G7c9KDjs+LirQbnYFHrI3eVyAS0Qs6OTffI2W6zyyas
-	ShiqgKSGtH8pNjDRHWenSQLFnp8HObqbAdZwazYfF9qgRX1Fb8Ab8=
-X-Sasl-enc: kV22jfvDvBZawxZNli409maezr/qqmxoPdvcK/znxRV0 1366469068
+	:content-transfer-encoding; s=smtpout; bh=+85KSvZgG/SoAgMXuiulmj
+	kZ9vk=; b=IqdyZRuf9n1M2mx9LodXONSAfYh/Y55hgudbB/FbSkJCgEogFbj9xL
+	OyhkQdsoESIaxK9KhFI2Z3OcrxDkoBv5++ObYYcsR/hHAXWefHZ35c5Kz3+2kS4+
+	gmIQGVtwBsak41V8JULJ2MPTmgv+WhcxwPKl7Mbhsk3XnFIfSn97Y=
+X-Sasl-enc: 2u/FzR+vgLK5hqYwacZY5rMypKU0FnyPr+kxaPKc//hd 1366469070
 Received: from localhost.localdomain (unknown [88.70.147.219])
-	by mail.messagingengine.com (Postfix) with ESMTPA id AFA71C80005;
-	Sat, 20 Apr 2013 10:44:27 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 235D6C80004;
+	Sat, 20 Apr 2013 10:44:30 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130402 Thunderbird/17.0.5
-In-Reply-To: <20130420041737.GC24970@sigill.intra.peff.net>
+In-Reply-To: <20130420042445.GD24970@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221857>
 
-Jeff King venit, vidit, dixit 20.04.2013 06:17:
-> On Fri, Apr 19, 2013 at 06:44:46PM +0200, Michael J Gruber wrote:
+Jeff King venit, vidit, dixit 20.04.2013 06:24:
+> On Fri, Apr 19, 2013 at 06:44:49PM +0200, Michael J Gruber wrote:
 > 
->> -			die("git cat-file --textconv: unable to run textconv on %s",
->> -			    obj_name);
->> -		break;
->> +		if (textconv_object(obj_context.path, obj_context.mode, sha1, 1, &buf, &size))
->> +			break;
+>> @@ -820,12 +820,13 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>>  	for (i = 0; i < argc; i++) {
+>>  		const char *arg = argv[i];
+>>  		unsigned char sha1[20];
+>> +		struct object_context oc;
+>>  		/* Is it a rev? */
+>> -		if (!get_sha1(arg, sha1)) {
+>> +		if (!get_sha1_with_context(arg, 0, sha1, &oc)) {
+>>  			struct object *object = parse_object_or_die(sha1, arg);
+>>  			if (!seen_dashdash)
+>>  				verify_non_filename(prefix, arg);
+>> -			add_object_array(object, arg, &list);
+>> +			add_object_array_with_context(object, arg, &list, xmemdupz(&oc, sizeof(struct object_context)));
+> 
+> Hrm. I'm not excited about the extra allocation here. Who frees it?
+> 
+>> +void add_object_array(struct object *obj, const char *name, struct object_array *array)
+>> +{
+>> +	add_object_array_with_mode(obj, name, array, S_IFINVALID);
+>> +}
 >> +
->> +		/* otherwise expect a blob */
->> +		exp_type = "blob";
->>  
->>  	case 0:
->>  		if (type_from_string(exp_type) == OBJ_BLOB) {
+>> +void add_object_array_with_mode(struct object *obj, const char *name, struct object_array *array, unsigned mode)
+>> +{
+>> +	add_object_array_with_mode_context(obj, name, array, mode, NULL);
+>> +}
+>> +
+>> +void add_object_array_with_context(struct object *obj, const char *name, struct object_array *array, struct object_context *context)
+>> +{
+>> +	if (context)
+>> +		add_object_array_with_mode_context(obj, name, array, context->mode, context);
+>> +	else
+>> +		add_object_array_with_mode_context(obj, name, array, S_IFINVALID, context);
+>> +}
 > 
-> I'm not sure this is right. What happens with:
-> 
->   git cat-file --textconv HEAD:Documentation
-> 
-> We have failed to textconv, but should we be expecting a blob?
+> And this mass of almost-the-same functions is gross, too, especially
+> given that the object_context contains a mode itself.
 
-Very true, thanks. I'll reorder so that the --textconv case continues
-(without break) into the -p case. I think it makes sense to consider
-"--textconv" to be "at least as pretty as -p".
+Well, it's just providing different ways to call into the one and only
+function, in order to satisfy different callers' needs. It's not unheard
+of (or rather: unseen) in our code, is it?
+
+> Unfortunately, I'm not sure if I have a more pleasant suggestion. I seem
+> to recall wrestling with this issue during the last round, too.
+
+Yes, I think that's what we ended up with. At least it's just one
+context struct per argument to grep, so it's not that bad after all.
+
+I vaguely seem to recall we had some more general framework cooking but
+I may be wrong (I was offline due to sickness for a while). It was about
+attaching some additional info to something. Yes, I said "vaguely" ...
 
 Michael
