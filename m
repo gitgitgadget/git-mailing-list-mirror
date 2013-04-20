@@ -1,67 +1,87 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Some observations on log -L
-Date: Sat, 20 Apr 2013 15:26:09 +0530
-Message-ID: <CALkWK0k+LYro8jpmfRPmX8Wsj6aEWzyq3DYa6waDMsh5B=X7Tg@mail.gmail.com>
+From: Ilya Basin <basinilya@gmail.com>
+Subject: Re[2]: State of CVS-to-git conversion tools (Was: Re: cvsps: bad usage: invalid argument --norc)
+Date: Sat, 20 Apr 2013 14:22:51 +0400
+Message-ID: <214169596.20130420142251@gmail.com>
+References: <323381594.20130414121834@gmail.com> <673219382.20130414124800@gmail.com> <20130414113351.GA1299@thyrsus.com> <1762779000.20130415215818@gmail.com> <20130418094326.GB11038@thyrsus.com>
+Reply-To: Ilya Basin <basinilya@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <trast@inf.ethz.ch>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 20 11:58:51 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Sat Apr 20 12:24:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTUZH-00059s-Gk
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 11:58:51 +0200
+	id 1UTUyJ-0002RH-UA
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 12:24:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932237Ab3DTJ53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Apr 2013 05:57:29 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:33773 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753666Ab3DTJ4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Apr 2013 05:56:50 -0400
-Received: by mail-ie0-f179.google.com with SMTP id 16so5586623iea.10
-        for <git@vger.kernel.org>; Sat, 20 Apr 2013 02:56:50 -0700 (PDT)
+	id S1754813Ab3DTKY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Apr 2013 06:24:29 -0400
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:33996 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754770Ab3DTKY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Apr 2013 06:24:28 -0400
+Received: by mail-lb0-f176.google.com with SMTP id y8so4349251lbh.7
+        for <git@vger.kernel.org>; Sat, 20 Apr 2013 03:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:from:date:message-id:subject:to:cc
-         :content-type;
-        bh=XQpZZWCBnfar7Lrra7eH9n3Lypxftrbr0VpdAugvjEg=;
-        b=y8+CpRNuLrG49yX/WLUMVUOl5gbCAicMXdqOgI6Y/Akb/XxDmvgZuXzcsVnl6K6PYJ
-         hUOBBiB33pQBra8eZR+8e//ZqomE3BdA29O/rAK67NgnYyUo7MQ33V83IyWDWc481a0k
-         HzGJur7QvbOdMh8FVN25bQPGLHi3UiS8U7i9wrPojtfz2VuZF3QtktFz0Aortvdma6j+
-         KfqjCq1oXGCrAYUZtI8OcjCKRia6foX0RIsaE2xhVhx+4k658eX67CT2yZIgzPkSQ+Qr
-         2xjVMUM0yPq2zcdSj5pqb2SBYX1FxEoknInlChsZUPxxFtRqYbUefR6CFDqbbcdUB4+P
-         LI1w==
-X-Received: by 10.50.50.71 with SMTP id a7mr17322588igo.14.1366451809955; Sat,
- 20 Apr 2013 02:56:49 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Sat, 20 Apr 2013 02:56:09 -0700 (PDT)
+        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
+         :subject:in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=RoaZ5OYgMIdrKqPfL8Roz67Ryn8UK7f/EKet/c7a7oI=;
+        b=dWi6skYqINVw7RxUw+7vVCVJdw7Yr1GL2XyaVJ75rr2I/WVkPIAEsND2FS/xCKqkKB
+         t5FrbvyejbBIhzELrr4qai5h9eEh0WPO6cLsbh5IVnYiSfuU/D6MIi8X3QXbVR72L3Yt
+         7dVIZuX5lsVx1GohnKitt2Uq/b80YCRVeqFZj1o24fdAlsY7b+OpdDHZV8R2m3iCnHRU
+         ovwleJF1bBZc/FHmwOrv3/yciX28Ior0rqLuleRuiN1W+1gxcljOp8BrltnKO9iaEbh4
+         hY3rSXnrIRMTGLeNfjIy2+XeFfMIRZFpCX13i8J3UOHkekkZZAjVYU1o/DLF+VXWBxDz
+         CWUg==
+X-Received: by 10.112.144.165 with SMTP id sn5mr3363891lbb.48.1366453464011;
+        Sat, 20 Apr 2013 03:24:24 -0700 (PDT)
+Received: from [192.168.0.78] (92-100-227-51.dynamic.avangarddsl.ru. [92.100.227.51])
+        by mx.google.com with ESMTPS id w6sm7448418law.8.2013.04.20.03.24.21
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 20 Apr 2013 03:24:22 -0700 (PDT)
+X-Mailer: Voyager (v3.99.4) Professional
+X-Priority: 3 (Normal)
+In-Reply-To: <20130418094326.GB11038@thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221841>
 
-Hi,
+Hi Eric.
 
-Ever since 'git log -L' made it to `pu`, I've been playing with it to
-see how it can be useful.  Here are some of my observations:
+ESR> cvs-fast-export does not have incremental-import support.
+ESR> Whether git-cvs-import has it depend on which version you have
+ESR> and what backend it it is using. I don't maintain that wrapper.
+Did you mean "git-fast-import"? Or do you know any wrapper that
+already uses cvsps3 --fast-export?
 
-1. Specifying line ranges by hand are too painful.  I would really
-love it if it could parse the lines off a patch prepared by
-format-patch or something.
 
-2. Specifying regex ranges are really useful to see the history of a
-function.  But I think it could really benefit from a tool that
-actually understands the language (using Clang Tooling).  If we were
-to build such a tool, git-core could benefit immensely from it: we'd
-have smarter merges too, for instance.
+>> I need it, because full import takes too long.
+>> The central repo of my employer is CVS, other people commit to it and
+>> I use git internally to be able to tidy my commit history before
+>> exporting to CVS.
 
-3. Often, I want to know the people to contact for a segment of code.
-Blame is useless here, because it only considers the most recent
-commit, when I want to know the authors of all the commits that helped
-shaped that segment of code.  So, I think shortlog could really
-benefit from a -L.  Is this easily doable?
+ESR> You are out of luck. That feature was dependent on a very fragile
+ESR> coupling...
+OK, OK, I get it.
 
-Thanks for listening.
+
+First of all, I think cvsps3 has almost everithing required for
+incremental import: one could just take the date of the last commit
+and invoke cvs ps with the '-d' flag. However, to import new commits
+into existing branches the stream should contain the "from" command in
+oldest commits in each branch (now missing).
+If the branch already exists in the target git repo, it's easy to
+refer it in the stream:
+    from refs/heads/branchname^0
+
+But if the branch is new, but it's parent commit is already imported,
+I guess, the only way to refer it is by its SHA-1
+Eric, what parent information can cvsps provide for the first commit
+in a branch, when invoked with the '-d' flag?
