@@ -1,68 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] receive-pack: close sideband fd on early pack errors
-Date: Fri, 19 Apr 2013 15:30:07 -0700
-Message-ID: <7vr4i6xifk.fsf@alter.siamese.dyndns.org>
-References: <20130419212429.GA20873@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 00/11] Add new git-cc-cmd helper to contrib
+Date: Sat, 20 Apr 2013 11:16:31 +1000
+Message-ID: <CACsJy8Dt2++tRUYcJk3jXuHUAv9jRmYYSYyVwHXQeo5O_3WQLw@mail.gmail.com>
+References: <1366399831-5964-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 20 00:30:20 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 20 03:17:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTJov-0005tt-Lx
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 00:30:18 +0200
+	id 1UTMQb-0003LT-LZ
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 03:17:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934470Ab3DSWaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Apr 2013 18:30:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61572 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933870Ab3DSWaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Apr 2013 18:30:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95607182E2;
-	Fri, 19 Apr 2013 22:30:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ODExWUU2baPIgwJ8CScXU0meYA4=; b=bjrA7k
-	5WQQjvIFGkIVhhXG4QDzDFX23rfLi6weme1zw4PtqWBYPgqFqOSDEq0cWLLBmtI6
-	NEKyui52l0N89xOR6pOFeiDGCewexHC/IujUPf2cdR/O/AsmWbtOARoa3fe/R8y1
-	o8vOfxVlU/zLtFIBtXvtrI2+xQ6M5qEDE0tSw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tc21LSIM1sKCGQdWLSjf6EGKcsssp2q0
-	reekh1rWbYo6NI42tlIplJNO3C5oySwEAQRs5+7cyVX3mY9cARvya+Oshd61xLVP
-	E+CRXkTZ420duhfo9KQL/nvVE2wOQwPl6ISrulsBdf7Vw0jxbzTtqAgn6IM9pBQN
-	A2uW8R/sGsM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C485182E0;
-	Fri, 19 Apr 2013 22:30:09 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB334182DF;
-	Fri, 19 Apr 2013 22:30:08 +0000 (UTC)
-In-Reply-To: <20130419212429.GA20873@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 19 Apr 2013 17:24:29 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B1002902-A940-11E2-87D5-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S965252Ab3DTBRE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Apr 2013 21:17:04 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:54530 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965210Ab3DTBRD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Apr 2013 21:17:03 -0400
+Received: by mail-ob0-f175.google.com with SMTP id wp18so739390obc.20
+        for <git@vger.kernel.org>; Fri, 19 Apr 2013 18:17:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=HmdOKVWwaUW1iAZm9COPU/FO5DhIWm2sCahhqWIgbMQ=;
+        b=jO9FlsRCjfdwF5VHiiZ8lyigvELZFSbL6YWhzTWh4fxcCENO/AqYdOpJA8vimLS7If
+         jREdKFbHQ3sU3tWN23ptLVlOJ1MCV1teKZoLt4QxLPtBwaZtMa4WWXLF49+AXHC/yCOU
+         U6Z3kzUtRKTjQJTDvByMfIFBVHVbGLfjYaUuUtfij13cA7YCtRh52pQNpiZv0X3tDD6r
+         DKG6ezk6zyrJJBOtgV6ioVtxe7Fw76pAK2/hAf8x/TMF2nChMOpPdAmKIoThMiejasy9
+         OMf7m8R9iesOaOYRCleuEQsdfSmCJlgULAKHRVbxND2XGdaDaGKoXr1bxzc2WdYyi9bm
+         599A==
+X-Received: by 10.182.204.5 with SMTP id ku5mr5569142obc.22.1366420621879;
+ Fri, 19 Apr 2013 18:17:01 -0700 (PDT)
+Received: by 10.76.122.163 with HTTP; Fri, 19 Apr 2013 18:16:31 -0700 (PDT)
+In-Reply-To: <1366399831-5964-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221828>
 
-Jeff King <peff@peff.net> writes:
-
-> This was triggered in the real world by attempting to push a ref from
-> a corrupted repository. pack-objects dies on the local end, we get an
-> eof on the receive-pack end without any data, notice that it's a bogus
-> packfile, and hit the deadlock.
+On Sat, Apr 20, 2013 at 5:30 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> This script allows you to get a list of relevant persons to Cc when s=
+ending a
+> patch series.
 >
-> The bug was introduced by a22e6f8, which is in v1.7.12.3, so it should
-> be maint-worthy.
+>   % git cc-cmd v1.8.1.6^^1..v1.8.1.6^^2
+>   "Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy" <pclouds@gmail.com> (au=
+thor: 30%, signer: 7%)
+>   Duy Nguyen <pclouds@gmail.com> (author: 7%)
 
-Hmm, well spotted.  Will queue.  Thanks.
+You see, I like to cause confusion. These two are the same person.
+Maybe you should check based on email only instead.
+
+>   "Jean-No=C3=ABl AVILA" <avila.jn@gmail.com> (author: 7%)
+>   Jean-Noel Avila <jn.avila@free.fr> (signer: 7%)
+
+And these two are like the same. Perhaps mailmap support will help?
+--
+Duy
