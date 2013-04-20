@@ -1,72 +1,91 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: is git-p4 compatible with p4/linux?
-Date: Sat, 20 Apr 2013 09:22:33 -0400
-Message-ID: <20130420132233.GA2094@padd.com>
-References: <7BF81DF9-941D-400B-8304-6DA5F5C82D4F@aivor.com>
- <20130419000947.GB9048@padd.com>
- <CAJDDKr4gLWev=N-yMw3j0norzVxBp99ie_EYAbNcUvWcL-_70w@mail.gmail.com>
+From: Simon Ruderich <simon@ruderich.org>
+Subject: Re: git log -p unexpected behaviour - security risk?
+Date: Sat, 20 Apr 2013 16:00:52 +0200
+Message-ID: <20130420140051.GB29454@ruderich.org>
+References: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alexander Tomlinson <alex@aivor.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 20 15:22:43 2013
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>, Tay Ray Chuan <rctay89@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 20 16:01:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTXkX-0003sK-TI
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 15:22:42 +0200
+	id 1UTYLn-0004Tf-Pe
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 16:01:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755233Ab3DTNWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Apr 2013 09:22:37 -0400
-Received: from honk.padd.com ([74.3.171.149]:50103 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755015Ab3DTNWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Apr 2013 09:22:37 -0400
-Received: from arf.padd.com (unknown [50.55.134.154])
-	by honk.padd.com (Postfix) with ESMTPSA id 81B1431E7;
-	Sat, 20 Apr 2013 06:22:36 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id C6DE92D192; Sat, 20 Apr 2013 09:22:33 -0400 (EDT)
+	id S932101Ab3DTOAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Apr 2013 10:00:55 -0400
+Received: from zucker.schokokeks.org ([178.63.68.96]:43904 "EHLO
+	zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755244Ab3DTOAz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Apr 2013 10:00:55 -0400
+Received: from localhost (pD9E968B7.dip0.t-ipconnect.de [::ffff:217.233.104.183])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by zucker.schokokeks.org with ESMTPSA; Sat, 20 Apr 2013 16:00:52 +0200
+  id 0000000000000022.0000000051729F94.00007F8D
 Content-Disposition: inline
-In-Reply-To: <CAJDDKr4gLWev=N-yMw3j0norzVxBp99ie_EYAbNcUvWcL-_70w@mail.gmail.com>
+In-Reply-To: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2013-03-19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221853>
 
-davvid@gmail.com wrote on Sat, 20 Apr 2013 03:50 -0700:
-> On Thu, Apr 18, 2013 at 5:09 PM, Pete Wyckoff <pw@padd.com> wrote:
-> >> First issue
-> >> -----------
-> >>
-> >> git-p4 assumes the output of 'p4 print' adds a newline to the
-> >> target.  To work around this, git-p4.py strips the last char from
-> >> symlinks as shown in the following snippet:
-> >>
-> >>     if type_base == "symlink":
-> >>         git_mode = "120000"
-> >>         # p4 print on a symlink contains "target\n"; remove the newline
-> >>         data = ''.join(contents)
-> >>         contents = [data[:-1]]
-> 
-> This line could be made more robust by changing it to:
-> 
->     contents = [data.rstrip('\n')]
-> 
-> That way it only strips off newlines if they exist, which essentially
-> papers over these rogue depot files.
-> Alternatively, it could use rstrip() with no arguments to cast a wider
-> net and catch all whitespace.
+On Thu, Apr 11, 2013 at 11:36:26AM +0100, John Tapsell wrote:
+> Is there a way to make --cc default?
 
-I was tempted to do that, but it is possible to put \n and other
-space characters in the target of symlinks.  It's unfortunate
-that p4 always appears to tack on a newline itself.
+If you use aliases, something like this is easy:
 
-We'll see if Alex comes up with a pattern that shows how he ended
-up with the odd symlinks.
+    git config --global --add alias.lp 'log --patch --cc'
 
-		-- Pete
+I use aliases heavily, so that's my fix for now.
+
+
+But I think the current behaviour is unexpected for most (new?)
+users (including me). I thought -p would display all changes in
+all commits, including merges.
+
+I guess changing -p's default behaviour to imply --cc is
+problematic, so I think we should document that -p doesn't
+generate patches for merges. Maybe something like this:
+
+-- 8< --
+Subject: [PATCH] Documentation/diff-options.txt: -p doesn't display merge changes
+
+Signed-off-by: Simon Ruderich <simon@ruderich.org>
+---
+ Documentation/diff-options.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 104579d..cd35ec7 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -24,6 +24,10 @@ ifndef::git-format-patch[]
+ --patch::
+ 	Generate patch (see section on generating patches).
+ 	{git-diff? This is the default.}
++ifdef::git-log[]
++	Changes introduced in merge commits are not displayed. Use `-c`,
++	`--cc` or `-m` to include them.
++endif::git-log[]
+ endif::git-format-patch[]
+ 
+ -U<n>::
+-- 
+1.8.2.1.513.gdedbb69.dirty
+
+-- 8< --
+
+Regards
+Simon
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
