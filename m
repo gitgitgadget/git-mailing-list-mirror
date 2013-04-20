@@ -1,89 +1,119 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv2 1/8] t2024: Add tests verifying current DWIM behavior of
- 'git checkout <branch>'
-Date: Sun, 21 Apr 2013 00:53:46 +0200
-Message-ID: <CALKQrgcKErD79e_TKJ7yMjvQYE45gD=tT_g_ZqQmeLTPueMsrA@mail.gmail.com>
-References: <1366470363-22309-1-git-send-email-johan@herland.net>
-	<1366470363-22309-2-git-send-email-johan@herland.net>
-	<20130420204449.GC8586@elie.Belkin>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Is there a way to speed up remote-hg?
+Date: Sat, 20 Apr 2013 18:07:41 -0500
+Message-ID: <CAMP44s3Rh6Ef8aSif39UXgr5tqBCCMj92vo_MFoDOupu3Xj8Hw@mail.gmail.com>
+References: <CAEBDL5XO4oU9QL1=kQ_f8_MM9jHAKQojMQr_6VSZsEYNY7PLpA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 21 00:54:00 2013
+Cc: git@vger.kernel.org
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Sun Apr 21 01:07:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTgfP-0005nR-3n
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 00:53:59 +0200
+	id 1UTgsw-0004EI-0j
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 01:07:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755845Ab3DTWxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Apr 2013 18:53:53 -0400
-Received: from mail10.copyleft.no ([188.94.218.231]:59246 "EHLO
-	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755833Ab3DTWxx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Apr 2013 18:53:53 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UTgfH-0004hd-Je
-	for git@vger.kernel.org; Sun, 21 Apr 2013 00:53:51 +0200
-Received: from mail-ob0-f179.google.com ([209.85.214.179])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UTgfH-0001FB-Af
-	for git@vger.kernel.org; Sun, 21 Apr 2013 00:53:51 +0200
-Received: by mail-ob0-f179.google.com with SMTP id x4so2585454obh.38
-        for <git@vger.kernel.org>; Sat, 20 Apr 2013 15:53:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+	id S1755872Ab3DTXHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Apr 2013 19:07:44 -0400
+Received: from mail-la0-f43.google.com ([209.85.215.43]:50199 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755841Ab3DTXHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Apr 2013 19:07:43 -0400
+Received: by mail-la0-f43.google.com with SMTP id ea20so1007765lab.30
+        for <git@vger.kernel.org>; Sat, 20 Apr 2013 16:07:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
          :subject:from:to:cc:content-type;
-        bh=LCQHObcSgxkXhiCvgRERk7WEHDr62Bc77rmRY/dQT1c=;
-        b=Ad/3RFOwf7NPDM3ep5D4GQBpiqgmPIjVYvrlqJXERUrQaoGlhOll2VCbRX4jRWx2a3
-         e41ZSKJW4JjSPcm5ww48oDmoCXCMCZ6bkv0qAtJzq6BmtlcoFaJfZ0Yg+vNegWW7uhkv
-         2iPdBi81ffZBnLft9zedvtySMJjPDtKfb6BFIFgDjNtkA8r+tlMUle5evB/fVrL6sOn7
-         Z3i7+Niy6NDnKR05O1MFDhv1NMwFH6Qf7DgYq4D0c76DOhenElpuG9t9MUzdHF6UzcKj
-         rm3XEuBwvu8JQRj1cQmMzkyvMfDXbYlcLPXMCTgF45F2k2J91GOCoECE/GQdOC6hNKqE
-         tllQ==
-X-Received: by 10.60.29.37 with SMTP id g5mr7328394oeh.140.1366498426700; Sat,
- 20 Apr 2013 15:53:46 -0700 (PDT)
-Received: by 10.182.210.233 with HTTP; Sat, 20 Apr 2013 15:53:46 -0700 (PDT)
-In-Reply-To: <20130420204449.GC8586@elie.Belkin>
+        bh=y0AAwY/MZBFSIz1SzfdpSWqrSRVOATeIjUNG7siE4vg=;
+        b=DDmfefOUVcEKMu6D+J70/AjWMhGqp359FVwQ6oe+xfNmYvo8t4NN+R8ttat3+NP4SN
+         RsSNYpGg4Hu5EwHs5Y6Qtasz/RpFvX6NYOWUjkrl+KZVk4yHLXkoue5AQBVKlx975jq9
+         ReCZMGuABRACb8T6JADwGCiuMpiTuNuDh4ima19aXw7IU0s1BBWCTDqcuTmLZVmAITJb
+         qhoi5Mo4zrW0I1l2tzx+BoSGlawpVoe1fbREkOiZPrIityQ6KfLOYuJwvxnO13XtWhzc
+         Ob2HQVZoVJqOBGBYgJHOEJc38jh+kD6LN0Zb1hzIoQHPSqhxLdzWj+RQ4TwdSsXzA0su
+         Zw5A==
+X-Received: by 10.112.135.3 with SMTP id po3mr7360903lbb.103.1366499261733;
+ Sat, 20 Apr 2013 16:07:41 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Sat, 20 Apr 2013 16:07:41 -0700 (PDT)
+In-Reply-To: <CAEBDL5XO4oU9QL1=kQ_f8_MM9jHAKQojMQr_6VSZsEYNY7PLpA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221882>
 
-On Sat, Apr 20, 2013 at 10:44 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Johan Herland wrote:
->
->> The DWIM mode of checkout allows you to run "git checkout foo" when there is
->> no existing local ref or path called "foo" and there is exactly one remote
->> with a remote-tracking branch called "foo".
->
-> Thanks for testing this.  I'm surprised no one suggested a test since
-> v1.7.0-rc0~51^2~6 (2009-10-18).
->
-> Maybe it would also be worthwhile to also test --no-guess?  (c.f.
-> 46148dd7, 2009-10-18)
+On Sat, Apr 20, 2013 at 6:07 AM, John Szakmeister <john@szakmeister.net> wrote:
+> I really like the idea of remote-hg, but it appears to be awfully slow
+> on the clone step:
 
-[...]
+The short answer is no. I do have a couple of patches that improve
+performance, but not by a huge factor.
 
-> Sane?
+I have profiled the code, and there are two significant places where
+performance is wasted:
 
-Yes. Thanks!
+1) Fetching the file contents
 
-Will incorporate your suggestions into the next iteration.
+Extracting, decompressing, transferring, and then compressing and
+storing the file contents is mostly unavoidable, unless we already
+have the contents of such file, which in Git, it would be easy to
+check by analyzing the checksum (SHA-1). Unfortunately Mercurial
+doesn't have that information. The SHA-1 that is stored is not of the
+contents, but the contents and the parent checksum, which means that
+if you revert a modification you made to a file, or move a file, any
+operation that ends up in the same contents, but from a different
+path, the SHA-1 is different. This means the only way to know if the
+contents are the same, is by extracting, and calculating the SHA-1
+yourself, which defeats the purpose of what you want the calculation
+for.
 
+I've tried, calculating the SHA-1 and use a previous reference to
+avoid the transfer, or do the transfer, and let Git check for existing
+objects doesn't make a difference.
 
-...Johan
+This is by Mercurial's stupid design, and there's nothing we, or
+anybody could do about it until they change it.
 
---
-Johan Herland, <johan@herland.net>
-www.herland.net
+2) Checking for file changes
+
+For each commit (or revision), we need to figure out which files were
+modified, and for that, Mercurial has a neat shortcut that stores such
+modifications in the commit context itself, so it's easy to retrieve.
+Unfortunately, it's sometimes wrong.
+
+Since the Mercurial tools never use this information for any real
+work, simply to show the changes to the users, Mercurial folks never
+noticed the contents they were storing were wrong. Which means if you
+have a repository that started with old versions of mercurial, chances
+are this information would be wrong, and there's no real guarantee
+that future versions won't have this problem, since to this day this
+information continues to be used only display stuff to the user.
+
+So, since we cannot rely on this, we need to manually check for
+differences the way Mercurial does, which blows performance away,
+because you need to get the contents of the two parent revisions, and
+compare them away. My content I mean the the manifest, or list of
+files, which takes considerable amount of time.
+
+For 1) there's nothing we can do, and for 2) we could trust the files
+Mercurial thinks were modified, and that gives us a very significant
+boost, but the repository will sometimes end up wrong. Most of the
+time is spent on 2).
+
+So unfortunately there's nothing we can do, that's just Mercurial
+design, and it really has nothing to do with Git. Any other tool would
+have the same problems, even a tool that converts a Mercurial
+repository to Mercurial (without using tricks).
+
+It seems Bazaar is more sensible in this regard; 1) the checksums are
+try of the file contents, and 2) each revision does store the file
+modifications correctly. So a clone in Bazaar is much faster. In my
+opinion Mercurial just screwed up their design.
+
+Cheers.
+
+-- 
+Felipe Contreras
