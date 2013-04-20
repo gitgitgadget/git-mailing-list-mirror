@@ -1,70 +1,70 @@
-From: greened@obbligato.org
-Subject: Subtree: My Status
-Date: Sat, 20 Apr 2013 12:59:36 -0500
-Message-ID: <87d2tp9j7b.fsf@waller.obbligato.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [QUERY] Why do we have git-completion.zsh?
+Date: Sat, 20 Apr 2013 11:45:39 -0700
+Message-ID: <20130420184539.GA8586@elie.Belkin>
+References: <CALkWK0=NrJ-9mxSkOBw=kJ0CTJLUFNWBoGdqGcHEU6YqR-foFg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 20 20:44:55 2013
+Cc: Git List <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 20 20:45:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTcmH-0005nX-PC
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 20:44:50 +0200
+	id 1UTcnL-0006Yf-Rr
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Apr 2013 20:45:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751088Ab3DTSop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Apr 2013 14:44:45 -0400
-Received: from li209-253.members.linode.com ([173.255.199.253]:50899 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750992Ab3DTSoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Apr 2013 14:44:44 -0400
-X-Greylist: delayed 2647 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Apr 2013 14:44:44 EDT
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <greened@obbligato.org>)
-	id 1UTc68-0000Q1-2U
-	for git@vger.kernel.org; Sat, 20 Apr 2013 13:01:16 -0500
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Hi folks, I apologize for being off the grid for a while.
-   We had a baby and unexpectedly ended up in the NICU. We just got him home
-   a week ago. Everyone is doing fine but I had to pretty much drop all non-essential
-    work for a month or so. [...] 
- Content analysis details:   (-2.9 points, 5.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
- -1.9 BAYES_00               BODY: Bayes s 
+	id S1751220Ab3DTSpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Apr 2013 14:45:52 -0400
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:64097 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750992Ab3DTSpv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Apr 2013 14:45:51 -0400
+Received: by mail-pd0-f171.google.com with SMTP id t12so683239pdi.2
+        for <git@vger.kernel.org>; Sat, 20 Apr 2013 11:45:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=e2prTBMzb5FXHLmHx/sZ0IDYN4tA3mMmnE+gy9V9ju8=;
+        b=GHDDELttWCzx+LKqn4d1pwR8d0thdzWw8FNIjwfE/NDA4Ea+FOu8bjVwDZMmAgpr6y
+         HkOq9MwRy35+Q3vpf6RQF2w1nPlxi77XiaCrpGeyd4Tf+5RT9rwQx60/Vn0zs7jljjFu
+         u/qZ7ZH5MvhMcUvazuNrFjX1j/74eudXJAKStPme1K5WMPXnPLBGkLGMKTNevL9FZ9K5
+         C5y6Lz6C+houX0Df8nFDEZlTUd1td2GpZMOWn3guZPYEzDG9NCbz0QvCrSVldP+P2asm
+         C5NVdUs0fQWWKkluYvmWP72q40FBDUassrhuEEDEvGXnZdT1HUn3N+jl8S4fUO1FDKpl
+         YjfQ==
+X-Received: by 10.66.250.230 with SMTP id zf6mr8535868pac.153.1366483551030;
+        Sat, 20 Apr 2013 11:45:51 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id t16sm18101554pbs.32.2013.04.20.11.45.48
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 20 Apr 2013 11:45:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=NrJ-9mxSkOBw=kJ0CTJLUFNWBoGdqGcHEU6YqR-foFg@mail.gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221871>
 
-Hi folks,
+Hi,
 
-I apologize for being off the grid for a while.  We had a baby and
-unexpectedly ended up in the NICU.  We just got him home a week ago.
-Everyone is doing fine but I had to pretty much drop all non-essential
-work for a month or so.
+Ramkumar Ramachandra wrote:
 
-Rest assured that I have all of the git-subtree-related mail sitting in
-my inbox.  It will take me some time to process it all -- looks ike
-there has been a lot of good work!
+>                             However, I don't understand why we
+> maintain it, because there's a comprehensive first-class completer in
+> ZSH core [1] which I use all the time.  Shouldn't the completion folks
+> be contributing to this instead?
 
-Please remember that I don't consider myself a gatekeeper to git
-subtree.  In fact I could use some help reviewing and approving patches.
-If anyone thinks a patch looks good, let Junio know.  It's my
-responsibility to object to things, not your responsibility to wait for
-me.  :) Life happens and I want to make sure git-subtree moves forward.
+Only if they want to.
 
-Thanks everyone for understanding.
+Kind regards,
+Jonathan
 
-                       -David
+http://thread.gmane.org/gmane.comp.version-control.git/210022/focus=210024
