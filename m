@@ -1,105 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/7] git-shortlog.txt: make SYNOPSIS match log, update OPTIONS
-Date: Sun, 21 Apr 2013 12:06:51 -0700
-Message-ID: <7vip3fsnxw.fsf@alter.siamese.dyndns.org>
-References: <1366534252-12099-1-git-send-email-artagnon@gmail.com>
-	<1366534252-12099-8-git-send-email-artagnon@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 0/1] git-multimail: a replacement for post-receive-email
+Date: Sun, 21 Apr 2013 22:02:45 +0200
+Message-ID: <517445E5.3080304@alum.mit.edu>
+References: <1366541380-10786-1-git-send-email-mhagger@alum.mit.edu> <20130421105612.GA28959@elie.Belkin> <7vhaizu3j5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 21 21:07:00 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Chris Hiestand <chrishiestand@gmail.com>,
+	Marc Branchaud <mbranchaud@xiplink.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Michiel Holtkamp <git@elfstone.nl>,
+	=?ISO-8859-1?Q?Stefan_N=E4we?= <stefan.naewe@gmail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmas?= =?ISO-8859-1?Q?on?= 
+	<avarab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 21 22:03:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTzbG-00015A-Ri
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 21:06:59 +0200
+	id 1UU0TS-0001lL-68
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 22:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754071Ab3DUTGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Apr 2013 15:06:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48753 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754039Ab3DUTGy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Apr 2013 15:06:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9882A17828;
-	Sun, 21 Apr 2013 19:06:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=inWeDhvplppm37RN8dM7/VwGVDE=; b=b1va4druIXYJjB7MMTSr
-	f1VOiw9KVxJrfKb7roRClWI1Mc/n9z3aNxAaRmI7cfi9A5JlsIQ4gNWjODoOAN2L
-	ILPSOGbCOUluauja4FhuGeWZw1X0TWpY/gCBlujqaIXM3UxFt13Do1rH0DXqsLmf
-	99Ed5Ds0ELkddxPpEH2KwPA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=oVTTaPkbW72uU0aI81jc3muLf0KVZeH5mquRhAQFiz72Sp
-	h/J42yoRYV6OOTcLWa43BPncRaU0o6NK0uIa1Tym/G6SWMkmWefGsny5/PcanV7b
-	efNVNAuQD5Lhhc26OCk31d5fMgjYMIV+sEAMFrzmEB670EpZnlaPBa96YLJBo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 905FE17827;
-	Sun, 21 Apr 2013 19:06:53 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9627517824;
-	Sun, 21 Apr 2013 19:06:52 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A064358A-AAB6-11E2-AC9C-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754369Ab3DUUCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Apr 2013 16:02:54 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:65327 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754315Ab3DUUCx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Apr 2013 16:02:53 -0400
+X-AuditID: 1207440f-b7f0e6d000000957-3b-517445ec2553
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id EE.BB.02391.CE544715; Sun, 21 Apr 2013 16:02:52 -0400 (EDT)
+Received: from [192.168.69.140] (p4FDD49D6.dip0.t-ipconnect.de [79.221.73.214])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3LK2jpP012994
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 21 Apr 2013 16:02:49 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <7vhaizu3j5.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrFKsWRmVeSWpSXmKPExsUixO6iqPvGtSTQoOOzisXaZ3eYLK6dXMxi
+	sbe7k9Wi60o3k0VD7xVmi7c3lzBaXPq8ntWi8UmRxfuz/5kdOD3O7V3I4rFz1l12j4lfjrN6
+	XLyk7PF5k5zHgcuP2QLYorhtkhJLyoIz0/P07RK4MzY1sBWs4qpYtvg6SwNjN0cXIyeHhICJ
+	xOnNXSwQtpjEhXvr2boYuTiEBC4zSkxZ8ZQJwjnPJLHz5jZWkCpeAW2JTxvXMIHYLAKqEss3
+	/GAHsdkEdCUW9TSDxUUFwiRWrV/GDFEvKHFy5hOwDSICahIT2w6xgAxlFljJLLHh7GywocIC
+	/hKrT19kgdg2mVFi5c8/YFM5Bcwk/jzpZgOxmQV0JN71PWCGsOUltr+dwzyBUWAWkiWzkJTN
+	QlK2gJF5FaNcYk5prm5uYmZOcWqybnFyYl5eapGuiV5uZoleakrpJkZIXPDvYOxaL3OIUYCD
+	UYmHt+BHUaAQa2JZcWXuIUZJDiYlUd7vTiWBQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4fdiA
+	crwpiZVVqUX5MClpDhYlcV71Jep+QgLpiSWp2ampBalFMFkZDg4lCV4jYPwLCRalpqdWpGXm
+	lCCkmTg4QYZzSYkUp+alpBYllpZkxIOiNb4YGK8gKR6gvZ4g7bzFBYm5QFGI1lOMuhwrrzx5
+	zSjEkpeflyolzpsGUiQAUpRRmge3ApYEXzGKA30szBsIUsUDTKBwk14BLWECWvKZuxBkSUki
+	QkqqgVFdlXlxw1W9o7vn3jtj51Wwo//QcR5Xe7bCioXpO1nfHAo8/1x5/uzt4s+/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221967>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On 04/21/2013 08:44 PM, Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+>> My personal preference is that patches come on the git list, are
+>> reviewed here, and then go to your fork of the Git project that Junio
+>> can periodically pull from at your request (like git-svn).  But of
+>> course this is up to you, too.
+> 
+> And also me ;-)
+> 
+> Yes, I very much prefer the way how git-svn is managed.
 
-> diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
-> index c7f7f51..2a66518 100644
-> --- a/Documentation/git-shortlog.txt
-> +++ b/Documentation/git-shortlog.txt
-> @@ -8,8 +8,8 @@ git-shortlog - Summarize 'git log' output
->  SYNOPSIS
->  --------
->  [verse]
-> -git log --pretty=short | 'git shortlog' [-h] [-n] [-s] [-e] [-w]
-> -'git shortlog' [-n|--numbered] [-s|--summary] [-e|--email] [-w[<width>[,<indent1>[,<indent2>]]]] <commit>...
-> +git log --pretty=short | 'git shortlog' [<options>]
-> +'git shortlog' [<options>] [<revision range>] [[\--] <path>...]
+Let me see if I understand what that means:
 
-You will need to update what you added in [PATCH 2/7] to
-builtin/shortlog.c to match this in this patch.
+* I maintain my own Git clone
 
->  DESCRIPTION
->  -----------
-> @@ -56,6 +56,23 @@ OPTIONS
->  If width is `0` (zero) then indent the lines of the output without wrapping
->  them.
->  
-> +<revision range>::
-> +	Consider only commits in the specified revision range.  When no
-> +	<revision range> is specified, it defaults to 'HEAD' (ie. the
-> +	whole history leading to the current commit).  master..next
-> +	specifies all the commits reachable from 'next, but not from
-> +	'master'. For a complete list of ways to spell
-> +	<revision range>, see the "Specifying Ranges" section of
-> +	linkgit:gitrevisions[7].
+* Patches to git-multimail would go to the Git mailing list like patches
+to other patches to the Git project, but I would be the one to git-am
+them, monitor discussion, help with review, etc.  I would presumably
+apply the patches near your master (or near maint when necessary).
 
-Match the text you modified in 'log.txt' in [PATCH 5/7], perhaps?
+* When I think a batch of patches is ready, I merge them to my master
+and publish my master somewhere.  (Or is it better I publish the feature
+branch and leave it to you to merge directly to your master?)  Then I
+send a merge request to you and the Git mailing list with the URL and
+SHA-1 of the branch that I would like you to merge.
 
-> +[\--] <path>...::
-> +	Consider only commits that are enough to explain how the files
-> +	that match the specified paths came to be.  See "History
-> +	Simplification" below for details and other simplification
-> +	modes.
+That seems very workable.
 
-Have you read the resulting "git shortlog --help"?  Do we even have
-"below"?
+What is your preference regarding the history to date?
 
-> ++
-> +Paths may need to be prefixed with "\-- " to separate them from
-> +options or the revision range, when confusion arises.
->  
->  MAPPING AUTHORS
->  ---------------
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
