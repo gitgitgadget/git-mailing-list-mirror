@@ -1,12 +1,14 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git log -p unexpected behaviour - security risk?
-Date: Sun, 21 Apr 2013 11:25:44 -0700
-Message-ID: <7vzjwru4ev.fsf@alter.siamese.dyndns.org>
+Date: Sun, 21 Apr 2013 11:42:13 -0700
+Message-ID: <7vli8bu3ne.fsf@alter.siamese.dyndns.org>
 References: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
 	<20130420140051.GB29454@ruderich.org>
 	<7vd2towdiq.fsf@alter.siamese.dyndns.org>
 	<CAHQ6N+pKb-44rOM7ocYMvSDyimvAGZppX1Gc=st59aVKzJSBKw@mail.gmail.com>
 	<20130421102150.GJ10429@elie.Belkin>
+	<CAHQ6N+rXE42NOyQPfLiDN8jYfL8w06hEE5MFLeFNxMR4ORD0aw@mail.gmail.com>
+	<20130421160939.GA29341@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: John Tapsell <johnflux@gmail.com>,
@@ -14,79 +16,90 @@ Cc: John Tapsell <johnflux@gmail.com>,
 	Git List <git@vger.kernel.org>,
 	Tay Ray Chuan <rctay89@gmail.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 21 20:25:55 2013
+X-From: git-owner@vger.kernel.org Sun Apr 21 20:42:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTyxU-0005WJ-OJ
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 20:25:53 +0200
+	id 1UTzDR-0008Nl-OI
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 20:42:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753890Ab3DUSZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Apr 2013 14:25:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34074 "EHLO
+	id S1753950Ab3DUSmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Apr 2013 14:42:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49925 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753741Ab3DUSZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Apr 2013 14:25:48 -0400
+	id S1753934Ab3DUSmQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Apr 2013 14:42:16 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5298A1629A;
-	Sun, 21 Apr 2013 18:25:46 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B79816B6B;
+	Sun, 21 Apr 2013 18:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f1tFwgTfyu0Aji4B3g5tjkE85WQ=; b=soPYNt
-	0jQcXi+GtpXKht5QbidkaLpGVGyH9/SVWgjvog9+5dSk/yt+FQ1eUHGk83KeDCQc
-	eihBCSyLL7oXXf6W/qcuYXQHk6rsHzQ+cNpNakNXUJY8Bjevw6CQk+RFukPRMfUQ
-	uEnLr0O863Tk41hyDSI3Go8zDfIPUpbo7i9rw=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=px8GC+omnRIRGeDyzuHtSzz20TE=; b=xIk22M60UOldbusYE7L/
+	BlGytqfvb5jhJIaLoR0N4yuCVoc9cPLfnQWrTOluXF68/eyo831XBTcMtjZ7Fa2h
+	TpNmhm360M32qKAlXX7dm82ykxYSQpAxgLFJtcv6OeJ47nCNepYk9gLEx7tvc5Et
+	oCDc7sz7uYQOKU/pcq04pxk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H2ktiAJUVXyV6XS8ZSlI3JIlogI9cyd1
-	EShf3ujCzPXyfZl+Q5gS9xfEynf4mS/15oG5PdoeOsa/1syxtyx2wHLyQiCyUXhU
-	13MGzNIyMbk/wnG5hFZOk7ZdIroqkFJbPW2RBvfdim3YCPA9cpRK8rfA659j8F+R
-	k8vyvl/T3Dw=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=oFpxV1rhFGb9buhZa/FrJ9dnfFqrO3eRF7Jaiu3PRppLJ6
+	Wvf45a+kkUzw9UQRFwRU+VhzqP9XRNo728sux+I7/byav/UTAXHqIrWeQL7dvPmv
+	5QsuYVSQrX+3csSh4SutAz3tBwlBX2fwM/YFPiCHjl/gRWGEhQoqV6ocy0z5Q=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4872C16298;
-	Sun, 21 Apr 2013 18:25:46 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2EBAB16B6A;
+	Sun, 21 Apr 2013 18:42:15 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BFAD016296;
-	Sun, 21 Apr 2013 18:25:45 +0000 (UTC)
-In-Reply-To: <20130421102150.GJ10429@elie.Belkin> (Jonathan Nieder's message
-	of "Sun, 21 Apr 2013 03:21:50 -0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A217316B66;
+	Sun, 21 Apr 2013 18:42:14 +0000 (UTC)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E20C8146-AAB0-11E2-87A3-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2F77A526-AAB3-11E2-B3E1-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221961>
 
 Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> That's why if you want to review the code you are pulling in as a
-> whole, it is worthwhile to do
->
-> 	git diff HEAD...FETCH_HEAD
->
-> That is how you ask "What code changes does FETCH_HEAD introduce?"
-> before putting your stamp of approval on them by merging and pushing
-> out the result.
+> The thing is, I'm not convinced this is a bad default.  "Shows no diff
+> at all for merges" is easy for a person to understand.  It is much
+> easier to understand its limitations than -c and --cc.
 
-And the only way to retroactively review that a merge C did not do
-anything funly is to check "git diff C^1 C", assuming that you
-already trust C^1, the state before you performed the merge.
-Incidentally, this works for non-merge commits just as well.
+Making "log -p -m" a default before -c/--cc was introduced would
+have been the stupidest thing to do, as it would make the command
+mostly useless.  Nobody would want to see repetitious output from a
+merge that he would eventually get when the traversal drills down to
+individual commits on the merged side branch.
 
-"git log -m -p" is not the default because most of the time people
-are not interested in seeing what it shows over "--cc" or "-c".  It
-is a repetition of what you would get from individual patches on the
-side branch merged that you will later see in the traversal of that
-command. "--cc/-c" gives a representation for tricky merge cases
-where people could likely have made a mistake, or had correctly
-resolved semantic conflicts (e.g. one side renames a function, the
-other side adds a callsite, the merge result renames the function
-new caller calls).
+When I added -c/--cc, I contemplated making -p imply --cc, but
+decided against it primarily because it is a change in traditional
+behaviour, and it is easy for users to say --cc instead of -p from
+the command line.
 
-For the purpose of a "merge audit" John seems to want, the only way
-is to wade through "log -m -p" output.  
+On the other hand, "show" was a newer command and it was easy to
+turn its default to --cc without having to worry too much about
+existing users.
+
+> For that
+> reason, it is a much *better* default for security than --cc or -c
+> (even though I believe one of the latter would be a better default for
+> convenience).
+
+Yes.  I do not fundamentally oppose to the idea of "log -p" to imply
+"log --cc" when "-m" is not given ("log -p -m" is specifically
+declining the combined diff simplification).  It may be a usability
+improvement.
+
+But "--cc/-c" does not have anything to do with Tapsell's "security
+worries".  The only real audit he can do is with "log -m -p",
+possibly with --first-parent (only if he trusts his first-parent
+history).
+
+The "recreate mechanical merge and compare recorded merge against
+it" mode may highlight a malicious merger, but it will not show a
+cleanly merged hunk of malicious code in the merge, so it cannot be
+used with --first-parent when used as a "security audit tool".
+Tapsell still needs to drill down to the merged side branch that
+introduced the malicious change that merged cleanly with "-p".
