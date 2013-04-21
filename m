@@ -1,75 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] prompt: fix tracked files for zsh
-Date: Sun, 21 Apr 2013 01:48:08 -0700
-Message-ID: <7vli8cuv5j.fsf@alter.siamese.dyndns.org>
-References: <1366531890-19899-1-git-send-email-felipe.contreras@gmail.com>
-	<m2fvyk8fb8.fsf@igel.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Apr 21 10:48:17 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2 0/7] Documentation/shortlog improvements
+Date: Sun, 21 Apr 2013 14:20:45 +0530
+Message-ID: <1366534252-12099-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 21 10:51:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTpwV-0006js-RT
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 10:48:16 +0200
+	id 1UTpzD-0008AF-Gn
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 10:51:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752621Ab3DUIsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Apr 2013 04:48:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40871 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752435Ab3DUIsK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Apr 2013 04:48:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CDD013CB0;
-	Sun, 21 Apr 2013 08:48:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=87PaA09Ho5jGFVH3pLN3HaMyW9E=; b=WvVM9T
-	B3uXLaBE24zRls/ZoASfk6qRJ4rwPRwtB9Av/Bm50i0MLOVV7oBamokNIEvxVupe
-	2VRh+8GjZoHp4gbPJDbDLDDBstTFDx8d2vrp43jFKxZCRHp/yBiQnJNHuEnloF+i
-	4UhMbeOgVd0pTWVF6VTHtUPVDpW5f45xk8s2A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s2x54qbt3dS0kH/Ec7fMrwfVvAJiVGDI
-	JlyOlydZJ2HM0zVPvE4HO+vlwuqVlSswoIY205uGsfHV8zTktJ+gvFYnpbGhoJol
-	AJnAERjp7gLgZ3DkqwUdDm8krz9NGsajQkuI89MYUIR78nzJ6IPNVP4g+6gz/022
-	qDrUwz64YV8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34C9D13CAF;
-	Sun, 21 Apr 2013 08:48:10 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B520213CAD;
-	Sun, 21 Apr 2013 08:48:09 +0000 (UTC)
-In-Reply-To: <m2fvyk8fb8.fsf@igel.home> (Andreas Schwab's message of "Sun, 21
-	Apr 2013 10:21:15 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 316F9828-AA60-11E2-88B4-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752638Ab3DUIu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Apr 2013 04:50:59 -0400
+Received: from mail-da0-f49.google.com ([209.85.210.49]:45632 "EHLO
+	mail-da0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752195Ab3DUIu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Apr 2013 04:50:58 -0400
+Received: by mail-da0-f49.google.com with SMTP id t11so2570749daj.22
+        for <git@vger.kernel.org>; Sun, 21 Apr 2013 01:50:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=SZWWjotJxZZPd1YxWVhWJaTeNY8umRiRL2MtsBo5Wfs=;
+        b=Mg6NuTwNnP2NITNdXuu0ve/EuJUew904l5JrEpto4vhvlkAZxvgeKJ7uq0gur2vVLB
+         t7D7plbkj2eKTrVAFMRYdS+jXDyLXKBBsSQg180erAoWy5/dsbqkJWvqRHx+2APiFoFK
+         nGtHijiIlZbNsUapWnrtr5dfX5JBPJ2a3SUVt05REZqbEivOgk42FknFKjuSd5e3bxjm
+         dB/eiDbHep2E9dgdqn2RnQq7i/hDgAy/EKkXVFMN5WjUie/IykIfjDXzjLWjL2yD+7FV
+         848rZKIxno1LZiODKgx07FtcNBsowvd9vKrkVc0Yn62sWV0ZtiFCXaF0cahMxtCoyziq
+         LmfQ==
+X-Received: by 10.68.200.10 with SMTP id jo10mr26907036pbc.53.1366534258436;
+        Sun, 21 Apr 2013 01:50:58 -0700 (PDT)
+Received: from localhost.localdomain ([122.174.41.136])
+        by mx.google.com with ESMTPS id mm9sm20241909pbc.43.2013.04.21.01.50.56
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 21 Apr 2013 01:50:57 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.1.501.gd2949c7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221927>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+In this round, I've incorporated suggestions made by Junio:
 
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> +				if [ -n "${ZSH_VERSION-}" ]; then
->> +					u="%%"
->> +				else
->> +					u="%"
->> +				fi
->
-> aka u="%${ZSH_VERSION:+%}"
+[3/7] is entirely new.
 
-Do you need/want a colon there?  Even if it is empty, as long as it
-is defined we would want this, no?
+[4/7] and [5/7] together re-order and replace '<since>..<until>' with
+'<revision range>', in contrast to a single patch which attempted to
+fix '<since>..<until>' in-place in the previous version.
 
->
-> Andreas.
+[6/7] uses "the revision range" instad of "revisions".
+
+[7/7] copies the latest text from git-log.txt, and doesn't attempt to
+add rev-list-options.txt.
+
+There's a parallel discussion going on about fixing the meaning of
+"revision", but this series is entirely unrelated to that.
+
+Ramkumar Ramachandra (7):
+  git-shortlog.txt: remove (-h|--help) from OPTIONS
+  builtin/shortlog.c: make usage string consistent with log
+  revisions.txt: clarify the .. and ... syntax
+  git-log.txt: order OPTIONS properly; move <since>..<until>
+  git-log.txt: generalize <since>..<until>
+  git-log.txt: rewrite note on why "--" may be required
+  git-shortlog.txt: make SYNOPSIS match log, update OPTIONS
+
+ Documentation/git-log.txt      | 22 ++++++++++++----------
+ Documentation/git-shortlog.txt | 25 +++++++++++++++++++------
+ Documentation/revisions.txt    |  6 ++++--
+ builtin/shortlog.c             |  4 +---
+ 4 files changed, 36 insertions(+), 21 deletions(-)
+
+-- 
+1.8.2.1.501.gd2949c7
