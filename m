@@ -1,122 +1,69 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: Is there a way to speed up remote-hg?
-Date: Sun, 21 Apr 2013 08:59:06 -0400
-Message-ID: <CAEBDL5UD9Bedxbtp3H+m5J_0Hq0ddVa1OLxXjyX1CX-Dhd+jzA@mail.gmail.com>
-References: <CAEBDL5XO4oU9QL1=kQ_f8_MM9jHAKQojMQr_6VSZsEYNY7PLpA@mail.gmail.com>
-	<CAMP44s3Rh6Ef8aSif39UXgr5tqBCCMj92vo_MFoDOupu3Xj8Hw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 21 14:59:14 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 0/5] Minor additions to git-completion.bash
+Date: Sun, 21 Apr 2013 18:35:46 +0530
+Message-ID: <1366549551-18763-1-git-send-email-artagnon@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 21 15:06:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTtrO-0001k7-7E
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 14:59:14 +0200
+	id 1UTtxz-0006xx-D3
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 15:06:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753565Ab3DUM7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Apr 2013 08:59:09 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:60980 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753397Ab3DUM7I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Apr 2013 08:59:08 -0400
-Received: by mail-wi0-f172.google.com with SMTP id hq17so2948904wib.5
-        for <git@vger.kernel.org>; Sun, 21 Apr 2013 05:59:06 -0700 (PDT)
+	id S1753283Ab3DUNF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Apr 2013 09:05:59 -0400
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:63823 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753155Ab3DUNF6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Apr 2013 09:05:58 -0400
+Received: by mail-pb0-f50.google.com with SMTP id um15so163214pbc.23
+        for <git@vger.kernel.org>; Sun, 21 Apr 2013 06:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=SUH2lSs8B2DizjTAyTmvvKz+ioDyyHQ9il+KcZbfU0o=;
-        b=qNpldng5J1hfdX+/D0xePbxYbue0vh+zRYDwbLp2OSpSBb9ixedl9JlCPdGSHS4+Nh
-         GoULKmmnX+83VUTL+FmEBZlWH8+fZcrwqr4mZIAhayemfatkxdg6ONn7wcVBDsctmCgz
-         TtPKb7hXWCePIDOpBAUM5UK38/8yGOYMdgQbIlvTK5U7wVheGLiZuTlUZWQWEbfEpVCs
-         7Hc9KvKSdNXw//UTRKSNFcsBEtF5L51Tt09XRVvyzUSibbE0XFFIIYhn/nSNVFwD1Ps1
-         Xxmy7g6D+Ndp7+S6ux0MIWNW0q7JTwwD+BXdPLmvpdfwMUK77vbibU//l56rz5ve2Nc8
-         0O/A==
-X-Received: by 10.194.241.231 with SMTP id wl7mr35571927wjc.52.1366549146377;
- Sun, 21 Apr 2013 05:59:06 -0700 (PDT)
-Received: by 10.180.187.240 with HTTP; Sun, 21 Apr 2013 05:59:06 -0700 (PDT)
-In-Reply-To: <CAMP44s3Rh6Ef8aSif39UXgr5tqBCCMj92vo_MFoDOupu3Xj8Hw@mail.gmail.com>
-X-Google-Sender-Auth: e5tEO9XMu2LCRNdYn3YT4qjV2uc
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=6ZLYyyC2ksnSezKVe6a7xLWuRhz2eJ+3ODiJEiWdSiM=;
+        b=W2JATo/7T5EKXKjKCvQaBSYR2iEkGJ+XPT4kgttu3cz5uoLP0/seSQJDETnS9DvQyG
+         DPEICY0ZcqHdo2lPqPuVngQyazAcMvv64m3UB/94rK9bvLy3SHBrickmUxhP+bdAr/FJ
+         vdVWe69yuE3J98sXa1rfqJHktRkvxhJOdTcB1WTLih2r/vSwwlWS+EUcYDEUnIpHFfJb
+         BBqQz5Os5JCxACCJDrkZdkQw0F3jrjDLYlMwR3soU0dLYAaQUqjGtF7z+i9ZupqSAFdE
+         zNDGK90M7NP3WGy7l5qE7n2Hsg+xUB+sls9Q62WMsJ3Xh/fszH5Y1BU3jwMF525fTCQ7
+         9oEQ==
+X-Received: by 10.66.250.230 with SMTP id zf6mr11221574pac.153.1366549557956;
+        Sun, 21 Apr 2013 06:05:57 -0700 (PDT)
+Received: from localhost.localdomain ([122.174.41.136])
+        by mx.google.com with ESMTPS id aa8sm1570112pad.14.2013.04.21.06.05.54
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 21 Apr 2013 06:05:56 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.1.501.gd2949c7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221947>
 
-On Sat, Apr 20, 2013 at 7:07 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Sat, Apr 20, 2013 at 6:07 AM, John Szakmeister <john@szakmeister.net> wrote:
->> I really like the idea of remote-hg, but it appears to be awfully slow
->> on the clone step:
->
-> The short answer is no. I do have a couple of patches that improve
-> performance, but not by a huge factor.
->
-> I have profiled the code, and there are two significant places where
-> performance is wasted:
->
-> 1) Fetching the file contents
->
-> Extracting, decompressing, transferring, and then compressing and
-> storing the file contents is mostly unavoidable, unless we already
-> have the contents of such file, which in Git, it would be easy to
-> check by analyzing the checksum (SHA-1). Unfortunately Mercurial
-> doesn't have that information. The SHA-1 that is stored is not of the
-> contents, but the contents and the parent checksum, which means that
-> if you revert a modification you made to a file, or move a file, any
-> operation that ends up in the same contents, but from a different
-> path, the SHA-1 is different. This means the only way to know if the
-> contents are the same, is by extracting, and calculating the SHA-1
-> yourself, which defeats the purpose of what you want the calculation
-> for.
->
-> I've tried, calculating the SHA-1 and use a previous reference to
-> avoid the transfer, or do the transfer, and let Git check for existing
-> objects doesn't make a difference.
->
-> This is by Mercurial's stupid design, and there's nothing we, or
-> anybody could do about it until they change it.
+Hi,
 
-That's a bummer. :-(
+I just looked at the config section, and started writing patches, and
+kept going until I got bored.  So they're pretty random.
 
-> 2) Checking for file changes
->
-> For each commit (or revision), we need to figure out which files were
-> modified, and for that, Mercurial has a neat shortcut that stores such
-> modifications in the commit context itself, so it's easy to retrieve.
-> Unfortunately, it's sometimes wrong.
->
-> Since the Mercurial tools never use this information for any real
-> work, simply to show the changes to the users, Mercurial folks never
-> noticed the contents they were storing were wrong. Which means if you
-> have a repository that started with old versions of mercurial, chances
-> are this information would be wrong, and there's no real guarantee
-> that future versions won't have this problem, since to this day this
-> information continues to be used only display stuff to the user.
->
-> So, since we cannot rely on this, we need to manually check for
-> differences the way Mercurial does, which blows performance away,
-> because you need to get the contents of the two parent revisions, and
-> compare them away. My content I mean the the manifest, or list of
-> files, which takes considerable amount of time.
+Sorry about the triviality of the patches: I was just looking to kill
+some time on a lazy Sunday afternoon.
 
-Eek!
+Thanks.
 
-> For 1) there's nothing we can do, and for 2) we could trust the files
-> Mercurial thinks were modified, and that gives us a very significant
-> boost, but the repository will sometimes end up wrong. Most of the
-> time is spent on 2).
->
-> So unfortunately there's nothing we can do, that's just Mercurial
-> design, and it really has nothing to do with Git. Any other tool would
-> have the same problems, even a tool that converts a Mercurial
-> repository to Mercurial (without using tricks).
-[snip]
+Ramkumar Ramachandra (5):
+  git-completion.bash: lexical sorting for diff.statGraphWidth
+  git-completion.bash: add diff.submodule to config list
+  git-completion.bash: complete branch.*.rebase as boolean
+  git-completion.bash: add branch.*.pushremote to config list
+  git-completion.bash: add remote.pushdefault to config list
 
-That's unfortunate, but thank you for taking the time to explain!
+ contrib/completion/git-completion.bash | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
--John
+-- 
+1.8.2.1.501.gd2949c7
