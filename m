@@ -1,110 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Teach git to change to a given directory using -C option
-Date: Sat, 20 Apr 2013 23:58:58 -0400
-Message-ID: <20130421035857.GC18890@sigill.intra.peff.net>
-References: <1366374108-23725-1-git-send-email-ayiehere@gmail.com>
- <20130419161250.GC14263@sigill.intra.peff.net>
- <20130420221752.GA9980@elie.Belkin>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [QUERY] Why do we have git-completion.zsh?
+Date: Sun, 21 Apr 2013 10:06:05 +0530
+Message-ID: <CALkWK0=ay452TbW-O+uBwqqMjLgeYw0V-j67vvzMqtVO-PnrXw@mail.gmail.com>
+References: <CALkWK0=NrJ-9mxSkOBw=kJ0CTJLUFNWBoGdqGcHEU6YqR-foFg@mail.gmail.com>
+ <20130420184539.GA8586@elie.Belkin> <20130420185329.GB8586@elie.Belkin> <CAMP44s3yCW-pHVHc9WfL1BC7BKmnXxZ1WQyPRAMnx967=74_Kg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nazri Ramliy <ayiehere@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 21 05:59:19 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 21 06:37:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTlQn-0003nd-Vj
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 05:59:14 +0200
+	id 1UTm1M-0004Zt-B8
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 06:37:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751819Ab3DUD7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Apr 2013 23:59:00 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45273 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751731Ab3DUD7A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Apr 2013 23:59:00 -0400
-Received: (qmail 7186 invoked by uid 102); 21 Apr 2013 03:59:06 -0000
-Received: from 99-108-225-125.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.225.125)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 20 Apr 2013 22:59:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 20 Apr 2013 23:58:58 -0400
-Content-Disposition: inline
-In-Reply-To: <20130420221752.GA9980@elie.Belkin>
+	id S1751027Ab3DUEgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Apr 2013 00:36:46 -0400
+Received: from mail-ia0-f179.google.com ([209.85.210.179]:56032 "EHLO
+	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750926Ab3DUEgp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Apr 2013 00:36:45 -0400
+Received: by mail-ia0-f179.google.com with SMTP id p22so577572iad.38
+        for <git@vger.kernel.org>; Sat, 20 Apr 2013 21:36:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=sC+NDCsEvAFFGgTm9/9rhz7sHMcp6kRtfT/IKxPZxmQ=;
+        b=aVkY654/9EKVsNOq7PG/Q/oFsHOYFVhfzBFKSCZc8yGV6Kdv3SQT8yYKJuLablPE0U
+         MJyUaswBdiAnLl3bCVRd916jNkV0tsrDdml0mF84XRpujVb5wV2kZ/Yf6wY6r4tiZ8Xj
+         hYGdmBWlyweBekeB3fSxFJVqtiOiDGclTIou/GJhcq7w3RExNQ4qATKFDEA+UvuqpYuK
+         oPD99jy5+hvjbH4ydhueTtydXNcMNe9UiKnUJnJkDJIyYRXxtMLzOjntBz9qAJ9OQu/6
+         FfdaimAGBm5l30vBlV65FtTxAvv5nzBQ0Bh5RrK4yqGeiFNQ2HOBf2uFryi9k+JqvqLA
+         CVRA==
+X-Received: by 10.42.50.202 with SMTP id b10mr10827791icg.7.1366519005274;
+ Sat, 20 Apr 2013 21:36:45 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Sat, 20 Apr 2013 21:36:05 -0700 (PDT)
+In-Reply-To: <CAMP44s3yCW-pHVHc9WfL1BC7BKmnXxZ1WQyPRAMnx967=74_Kg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221890>
 
-On Sat, Apr 20, 2013 at 03:18:38PM -0700, Jonathan Nieder wrote:
+Felipe Contreras wrote:
+> To complement the reason; the zsh folks (or perhaps it's only one; who
+> works on the git stuff), absolutely prioritize "correctness" over
+> speed, that means if it takes ten seconds to list all the possible
+> files to complete, grouped nicely, that's exactly what they'll do,
+> instead of the way the bash completion does, which lists the most
+> likely files, which takes milliseconds.
 
-> The "sometimes you just want to pass a command to 'exec'" use case
-> does not convince me.  I equally well might want to run "git" after
-> another command, or run "git" if and only if a repository exists
-> there, or do any number of other things.
+I see.  Yes, I was looking for a reason like this.
 
-Sure. I don't claim that it solves every problem, just that I have
-wanted it in that situation before.
+True.  I've noticed that my shell just hangs when I attempt to
+tab-complete too early/ something wrong, and this would be nice to
+fix.  Does it have to be a hard trade-off between correctness and
+speed?  Is it not possible to reach a fair compromise?
 
-> So we're left with "--git-dir does not automatically append .git when
-> appropriate" as the problem being solved, which is a real problem.
-> Maybe that is worth fixing more directly?
+Now, I don't know anything about zsh's git completer versus the
+gitfast completer.  From a glance, it looks like zsh's git completer
+is much larger and stuffed with features that the gitfast completer
+doesn't have.  Although I agree that speed isn't the only parameter,
+can you shed some light on how these two compare on other parameters?
 
-I'm a little hesitant, because --git-dir is _not_ "pretend like I am in
-directory X". Even though people may use it that way for bare
-repositories, it explicitly does not change your working tree.
+Or you could help me figure all this out myself.  How do I
+profile/debug shell code?  I'm feeling a little lost without gdb and
+valgrind.
 
-I'm not sure what rule you are proposing. If it is:
+> And I'm not the only one, when I contributed this stuff to
+> oh-my-zsh[1] I got a very positive response.
 
-  1. When we get "--git-dir=a/b", look in "a/b/.git" (assuming a/b is
-     not a repo itself).
+Found it: https://github.com/robbyrussell/oh-my-zsh/commit/5a11228
 
-  2. When we get "--git-dir=a/b", do the usual repo search from a/b,
-     finding the first of "a/b", "a/b/.git", "a/.git".
+> If they wanted my contributions, that would be awesome, but that
+> doesn't appear to be the case. And I'm kind of relieved, because zsh's
+> completion is monstrous code, and the zsh development practices are
+> not good (e.g. all my logically independent patches get squashed into
+> one commit).
 
-The second one is what makes me nervous, as it seems too much like
-"pretend that we are in a/b". But the first one seems kind of hack-ish.
-I suppose it is similar to the enter_repo rule used to find remotes,
-though, so at least there is some precedence.
+I see.  I've just started poking them with patches.  I'll see what
+happens for myself.
 
-> It might also be convenient to be able to do something like
-> 
-> 	git --git-dir=~/src/git log -- Documentation/
-> 
-> which this -C option makes easy.  *checks*  Actually it works without,
-> but for subtle reasons.
-
-I'm not sure what subtle reason that is. It does not seem to work for
-me:
-
-  $ (cd git && git log -- Documentation | wc -l)
-  99152
-  $ git --git-dir=git log -- Documentation | wc -l
-  fatal: Not a git repository: 'git'
-  0
-
-A more interesting subtlety is this:
-
-  $ git --git-dir=git/.git log -- Documentation | wc -l
-  99152
-  $ git --git-dir=git/.git log Documentation | wc -l
-  fatal: ambiguous argument 'Documentation': unknown revision or path not in the working tree.
-  Use '--' to separate paths from revisions, like this:
-  'git <command> [<revision>...] -- [<file>...]'
-  0
-
-> All that said, I don't mind -C terribly as long as it can maintain
-> itself, which means including thorough documentation that covers the
-> purpose and how pathname parameters and envvars interact with the new
-> option and including tests under t/ to ensure it continues to work
-> correctly in the future.
-
-Yeah, I pretty much feel the same way. "git -C" is a concept that has
-occurred to me several times over the years, and I always dismissed it
-as "bah, you can do the same thing easily with one line of shell". It
-makes sense to me because of the precedence in other programs and I
-would probably use it, but I could also live without it. I do not mind
-it if it is not a maintenance burden.
-
--Peff
+Cheers.
