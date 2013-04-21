@@ -1,173 +1,83 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5] git-completion.bash: add support for path completion
-Date: Sun, 21 Apr 2013 05:14:38 -0500
-Message-ID: <CAMP44s1TjTiZ9HsXn9YiJ8E6+jC=s+g_tps6AY2ixrrgX=0jnw@mail.gmail.com>
-References: <1357930123-26310-1-git-send-email-manlio.perillo@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git log -p unexpected behaviour - security risk?
+Date: Sun, 21 Apr 2013 03:21:50 -0700
+Message-ID: <20130421102150.GJ10429@elie.Belkin>
+References: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
+ <20130420140051.GB29454@ruderich.org>
+ <7vd2towdiq.fsf@alter.siamese.dyndns.org>
+ <CAHQ6N+pKb-44rOM7ocYMvSDyimvAGZppX1Gc=st59aVKzJSBKw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, gitster@pobox.com, szeder@ira.uka.de,
-	peff@peff.net
-To: Manlio Perillo <manlio.perillo@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 21 12:14:45 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Simon Ruderich <simon@ruderich.org>,
+	Git List <git@vger.kernel.org>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 21 12:22:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTrID-0006zX-9C
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 12:14:45 +0200
+	id 1UTrPW-0003On-3H
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 12:22:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753071Ab3DUKOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Apr 2013 06:14:40 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:61013 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752826Ab3DUKOj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Apr 2013 06:14:39 -0400
-Received: by mail-lb0-f169.google.com with SMTP id p11so4847174lbi.28
-        for <git@vger.kernel.org>; Sun, 21 Apr 2013 03:14:38 -0700 (PDT)
+	id S1753023Ab3DUKWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Apr 2013 06:22:00 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:52290 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752885Ab3DUKV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Apr 2013 06:21:59 -0400
+Received: by mail-pa0-f49.google.com with SMTP id kp14so3017402pab.22
+        for <git@vger.kernel.org>; Sun, 21 Apr 2013 03:21:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=X5OAhm7KkrIUBHWxt7HfGOQ+oWuC7Xn7KXhOBeKa7VE=;
-        b=Y9zDxkjX3QVPKrDO2GsBznV7X20HMftM5P3qOqNYdj3Gz1nlsi1jAose1hT0II/wEo
-         cWziAZCw+Vi/TIjhawZV31EngvB/+vKAymXaADX8o+BL9SyvWYr5wUgQ8sHiDwADervO
-         77VP/ILOypPpiUF9FaE4W2VDGIRK8YTYSv7RRQtovCqxZoCLp8SBy8cSUWmpWpBf3Wpl
-         wU/Hc/2cS1UpqsryGdNAVly0+4O9Y/lWis2SoVbFHpcJizdMmmt3EftkQZikUiTFZKXJ
-         T3sSv0MDPMtrbZ9uvs1RkCfLFECj7oAJksou8ryviGoPZGq/1VhyeoQptSKeo32S+9QC
-         EZSA==
-X-Received: by 10.112.146.133 with SMTP id tc5mr11114006lbb.88.1366539278262;
- Sun, 21 Apr 2013 03:14:38 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Sun, 21 Apr 2013 03:14:38 -0700 (PDT)
-In-Reply-To: <1357930123-26310-1-git-send-email-manlio.perillo@gmail.com>
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=gePnJPF3dq5ot0onZCTRM0A67u2XhXVm8OOmKd6RNSE=;
+        b=b1ICIagfzJfId3eJoZAVY1qhb4its0hq4G1lPKmi7qME5m3TTQraH8UONKUx82veij
+         hqgDlQuO61hJCtFYIj5+jvqJQEgWE/ExvKJ06uyuDy7gNL9noUJpOvRoUeM5UhlV88xl
+         wTo/ljBeRoqIsz4x2lxpeTVo+HORzi+DLVKU2XUAKTRep9WDQ4W6fs/z54MZaujeODR2
+         ev4sGj7wSECxvPJeIrHni52CINTymO8lr92NbuiwqEC8SsqVCjhRcYEYRvrckw7Zxl4T
+         zwV7uZ9UY75rsKvgs8EHjGxyza7erGylMVxmhWfWKhTbSsMMX/7u9KdepPv+h+MyR2G7
+         apVA==
+X-Received: by 10.66.138.109 with SMTP id qp13mr6886588pab.127.1366539719089;
+        Sun, 21 Apr 2013 03:21:59 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id hp1sm22321349pac.3.2013.04.21.03.21.56
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 21 Apr 2013 03:21:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAHQ6N+pKb-44rOM7ocYMvSDyimvAGZppX1Gc=st59aVKzJSBKw@mail.gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221940>
 
-On Fri, Jan 11, 2013 at 12:48 PM, Manlio Perillo
-<manlio.perillo@gmail.com> wrote:
-> The git-completion.bash script did not implemented full, git aware,
-> support to complete paths, for git commands that operate on files within
-> the current working directory or the index.
+John Tapsell wrote:
 
-> +__git_index_file_list_filter_compat ()
-> +{
-> +       local path
-> +
-> +       while read -r path; do
-> +               case "$path" in
-> +               ?*/*) echo "${path%%/*}/" ;;
-> +               *) echo "$path" ;;
-> +               esac
-> +       done
-> +}
-> +
-> +__git_index_file_list_filter_bash ()
-> +{
-> +       local path
-> +
-> +       while read -r path; do
-> +               case "$path" in
-> +               ?*/*)
-> +                       # XXX if we append a slash to directory names when using
-> +                       # `compopt -o filenames`, Bash will append another slash.
-> +                       # This is pretty stupid, and this the reason why we have to
-> +                       # define a compatible version for this function.
-> +                       echo "${path%%/*}" ;;
+> I'm concerned that noone is taking this security risk seriously.
 
-Which version of bash is that? It works perfectly fine here with or
-without the /.
+If anyone relies on "git log -p" or "git log -p --cc" output to make
+sure that the untrusted code they use doesn't introduce unwanted
+behavior, they are making a serious mistake.  A merge can completely
+undo important changes made in a side branch and "-c" and "--cc" will
+not show it.  The lack of "-c" cannot be a security issue here,
+because in normal life adding "-c" isn't a secure deployment strategy.
 
-> +# __git_index_files accepts 1 or 2 arguments:
-> +# 1: Options to pass to ls-files (required).
-> +#    Supported options are --cached, --modified, --deleted, --others,
-> +#    and --directory.
-> +# 2: A directory path (optional).
-> +#    If provided, only files within the specified directory are listed.
-> +#    Sub directories are never recursed.  Path must have a trailing
-> +#    slash.
-> +__git_index_files ()
-> +{
-> +       local dir="$(__gitdir)" root="${2-.}"
-> +
-> +       if [ -d "$dir" ]; then
-> +               __git_ls_files_helper "$root" "$1" | __git_index_file_list_filter |
-> +                       sort | uniq
-> +       fi
-> +}
-> +
-> +# __git_diff_index_files accepts 1 or 2 arguments:
-> +# 1) The id of a tree object.
-> +# 2) A directory path (optional).
-> +#    If provided, only files within the specified directory are listed.
-> +#    Sub directories are never recursed.  Path must have a trailing
-> +#    slash.
-> +__git_diff_index_files ()
-> +{
-> +       local dir="$(__gitdir)" root="${2-.}"
-> +
-> +       if [ -d "$dir" ]; then
-> +               __git_diff_index_helper "$root" "$1" | __git_index_file_list_filter |
-> +                       sort | uniq
-> +       fi
-> +}
+That's why if you want to review the code you are pulling in as a
+whole, it is worthwhile to do
 
-These two are exactly the same, except one calls
-__git_ls_files_helper, and the other one __git_diff_index_helper,
-can't we make another argument that is and select one or the other
-based on that?
+	git diff HEAD...FETCH_HEAD
 
->  __git_heads ()
->  {
->         local dir="$(__gitdir)"
-> @@ -430,6 +543,46 @@ __git_complete_revlist_file ()
->  }
->
->
-> +# __git_complete_index_file requires 1 argument: the options to pass to
-> +# ls-file
-> +__git_complete_index_file ()
-> +{
-> +       local pfx cur_="$cur"
-> +
-> +       case "$cur_" in
-> +       ?*/*)
-> +               pfx="${cur_%/*}"
-> +               cur_="${cur_##*/}"
-> +               pfx="${pfx}/"
-> +
-> +               __gitcomp_file "$(__git_index_files "$1" "$pfx")" "$pfx" "$cur_"
-> +               ;;
-> +       *)
-> +               __gitcomp_file "$(__git_index_files "$1")" "" "$cur_"
-> +               ;;
-> +       esac
-> +}
-> +
-> +# __git_complete_diff_index_file requires 1 argument: the id of a tree
-> +# object
-> +__git_complete_diff_index_file ()
-> +{
-> +       local pfx cur_="$cur"
-> +
-> +       case "$cur_" in
-> +       ?*/*)
-> +               pfx="${cur_%/*}"
-> +               cur_="${cur_##*/}"
-> +               pfx="${pfx}/"
-> +
-> +               __gitcomp_file "$(__git_diff_index_files "$1" "$pfx")" "$pfx" "$cur_"
-> +               ;;
-> +       *)
-> +               __gitcomp_file "$(__git_diff_index_files "$1")" "" "$cur_"
-> +               ;;
-> +       esac
-> +}
+That is how you ask "What code changes does FETCH_HEAD introduce?"
+before putting your stamp of approval on them by merging and pushing
+out the result.  Unfortunately that doesn't protect you from
+maliciously written commits that will be encountered when bisecting.
+At some point you have to be able to trust people.
 
-These are also exactly the same, we could pass the argument to the
-function above.
-
--- 
-Felipe Contreras
+Hope that helps,
+Jonathan
