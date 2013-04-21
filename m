@@ -1,104 +1,119 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: t6200: avoid path mangling issue on Windows
-Date: Sat, 20 Apr 2013 23:35:50 -0700
-Message-ID: <20130421063550.GC10429@elie.Belkin>
-References: <1365348344-1648-1-git-send-email-ralf.thielow@gmail.com>
- <1365348344-1648-2-git-send-email-ralf.thielow@gmail.com>
- <516F95D1.5070209@viscovery.net>
- <7v38un93br.fsf@alter.siamese.dyndns.org>
- <5170DA96.9000300@viscovery.net>
- <7vr4i632fp.fsf@alter.siamese.dyndns.org>
- <51719F18.3020508@kdbg.org>
- <7va9ouz04y.fsf@alter.siamese.dyndns.org>
- <20130421000522.GB10043@elie.Belkin>
- <517385A6.8020908@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] git-log.txt: fix description of <since>..<until>
+Date: Sat, 20 Apr 2013 23:40:59 -0700
+Message-ID: <7vy5ccwflw.fsf@alter.siamese.dyndns.org>
+References: <1366458313-7186-1-git-send-email-artagnon@gmail.com>
+	<1366458313-7186-4-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Apr 21 08:36:06 2013
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 21 08:41:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTnsc-00042N-0v
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 08:36:06 +0200
+	id 1UTnxU-0006XL-KA
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 08:41:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751914Ab3DUGgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Apr 2013 02:36:00 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:55281 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751578Ab3DUGf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Apr 2013 02:35:59 -0400
-Received: by mail-pa0-f47.google.com with SMTP id bj1so1059472pad.20
-        for <git@vger.kernel.org>; Sat, 20 Apr 2013 23:35:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=FfxPQM2cDo8NGFLdhjVqmSpVQ4aTdLOWYMkTggSQ8hA=;
-        b=j6KUgX2BcTd+8W0TpwYDAwJo18s4Kan15fGFTLsDLeVBQ+PaJAdfbOf/KqUDfEsV4p
-         PdGYYcKfjOM8nNlPInC6uOYKiT9+kIded9e9oz4HXqHOb4A6MkGaFJjWww7VjF9CabDY
-         3lOYHzyp7R22kmteXIXpfcPdw1eRlmddlo4ZgbvpBzA9/v4XvTtrU0/Q0HCwqSnHduqQ
-         /MaEJT5h431Sa+3ARxKLujEwWrRDEiC8d63+pSKWGMg2FK3C1rLQOIFDS3o1JyPeHTyO
-         YuvWayi4mxxNahpfPQxAJwDyitzIs0zXRMPVV9h0Eo8h2RvGgdizTf/VGx5uaakOhbpN
-         20CA==
-X-Received: by 10.67.1.4 with SMTP id bc4mr6373571pad.109.1366526159399;
-        Sat, 20 Apr 2013 23:35:59 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id ba10sm19910580pbd.21.2013.04.20.23.35.57
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 20 Apr 2013 23:35:58 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <517385A6.8020908@kdbg.org>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1751853Ab3DUGlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Apr 2013 02:41:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61792 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751640Ab3DUGlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Apr 2013 02:41:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8EEA91312E;
+	Sun, 21 Apr 2013 06:41:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SkovABK0Cv9hFEzZAbFCHOPOB1Q=; b=O2/ryx
+	iyZUyHDZHrDrKGKflpP2e4Cuq/jM92M56iAJH9jqHjtXGDCLc9P8sp7u+yGauZ4V
+	mPWhUA8ozwbLFWqPuZasfnIwzE0OsmTqW7P6T6QwqyJFQ/KamxEahWEl0RpMBm9y
+	RzQDwGMNzvZe9ExbEnT1P2NMQ0PkCMSQf3IRU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eOVamk+TqnqPAlFiVmWu67yj+etx8Edc
+	fob9JAORsSXluLxZXzhkjlzdQu6b8m2kVavmjaSsshK8AKf+wNsZk+f81/ezfRQ5
+	tKRn6aNR17bzu1o/21X8oxL0eFehgkDADgR9XAVFKLyj8/8Z8/mrSUYoiVb3QSkO
+	AtEr+wvR7p8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81D211312D;
+	Sun, 21 Apr 2013 06:41:01 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB9701312C;
+	Sun, 21 Apr 2013 06:41:00 +0000 (UTC)
+In-Reply-To: <1366458313-7186-4-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Sat, 20 Apr 2013 17:15:11 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6E54B492-AA4E-11E2-992D-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221897>
 
-Johannes Sixt wrote:
-> Am 21.04.2013 02:05, schrieb Jonathan Nieder:
->> Junio C Hamano wrote:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
->>> But a _real user_ who wants to use a slash there has no way of doing
->>> so.
->>
->> Doesn't foo=// do that in the msys world?  If I am reading
->> mingw/msys/rt/src/winsup/cygwin/path.cc correctly then the way to pass
->> a true double-slash is foo=///.
+> First, <since> and <until> are ways to specify "revisions", not
+> "commits", as gitrevisions.txt would indicate.  Second,
+> '<since>..<until>' is simply indicative of how users would normally
+> want to specify the rev spec: it need not conform to this form, and
+> can take any form that gitrevisions.txt lists.  A 'git log :/quuxery'
+> is perfectly valid, for instance.  Make these two corrections to the
+> description of '<since>..<until>' under OPTIONS.
 >
-> That would be totally unexpected.
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  Documentation/git-log.txt | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+> index 69db578..f03ae74 100644
+> --- a/Documentation/git-log.txt
+> +++ b/Documentation/git-log.txt
+> @@ -25,11 +25,11 @@ OPTIONS
+>  -------
+>  
+>  <since>..<until>::
+> -	Show only commits between the named two commits.  When
+> +	Show only commits between the named two revisions.  When
+>  	either <since> or <until> is omitted, it defaults to
+>  	`HEAD`, i.e. the tip of the current branch.
+> -	For a more complete list of ways to spell <since>
+> -	and <until>, see linkgit:gitrevisions[7].
+> +	For a more complete list of ways to spell <since>..<until>,
+> +	see linkgit:gitrevisions[7].
 
-There is an exception to the path mangling for //unc/paths, if that's
-what you mean.
+A bigger issue is if it is a good idea to single out A..B like this
+in the enumeration of options and parameters.  We are listing this
+among the optoins and pathspec, so this is where we _ought_ to be
+saying that you can specify a revision range on the command line.
+We use A..B only because it is the most commonly used form, asking
+e.g. "show me the commit since v1.7.12 up to v1.8.0", but this
+existing headline makes it as if it is the _only_ form, which is
+somewhat misleading.
 
->From [1]:
+It might be better _not_ to say <since>..<until> here and on the
+synopsis part, replace it with <revision range>, and update the text
+to mention <since>..<until> as a more concrete "v1.0..v2.0" example.
+Perhaps like
 
-  if (path[0] == '/' && path[1] == '/')
-    {
-      int tidx = 2;
-      while (spath[tidx] && spath[tidx] == '/')
-	  tidx++;
-      if (strchr (&spath[tidx], '/'))
-	{
-	  retpathcpy (spath);
-	}
-      else
-	{
-	  retpathcpy (&spath[1]);
-	}
-      return ScrubRetpath (retpath);
-    }
+    <revision range>::
 
-I haven't tested, since I don't have easy access to a Windows test
-setup.
+	Show only commits in the specified revision range.  When no
+	<revision range> is specified, defaults to "HEAD" (i.e. the
+	whole history leading to the current commit).  v1.0..v2.0
+	asks for commits since the commit tagged as version 1.0 up
+	to the commit tagged as version 2.0.  For a more complete
+	list of ways to spell this parameter, see "Specifying
+	Ranges" section of linkgit:gitrevisions[7].
 
-Regards,
-Jonathan
+or something.
 
-[1] http://mingw.cvs.sourceforge.net/viewvc/mingw/msys/rt/src/winsup/cygwin/path.cc?content-type=text%2Fplain
+Documentation/gitrevisions.txt lists <rev1>..<rev2>, but does not
+mention that missing <rev1> (or <rev2>) defaults to HEAD, which is
+worth adding there with or without the above suggested update.
