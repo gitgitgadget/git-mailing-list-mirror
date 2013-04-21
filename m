@@ -1,92 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/1] git-multimail: a replacement for post-receive-email
-Date: Sun, 21 Apr 2013 15:28:35 -0700
-Message-ID: <7v61zfselo.fsf@alter.siamese.dyndns.org>
-References: <1366541380-10786-1-git-send-email-mhagger@alum.mit.edu>
-	<20130421105612.GA28959@elie.Belkin>
-	<7vhaizu3j5.fsf@alter.siamese.dyndns.org>
-	<517445E5.3080304@alum.mit.edu>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] prompt: fix tracked files for zsh
+Date: Sun, 21 Apr 2013 17:32:29 -0500
+Message-ID: <CAMP44s0xMX2-sDzouYtCRzqRQLHOCdUDR_+G-50Mv9wG2P+EFQ@mail.gmail.com>
+References: <1366531890-19899-1-git-send-email-felipe.contreras@gmail.com>
+	<m2fvyk8fb8.fsf@igel.home>
+	<7vli8cuv5j.fsf@alter.siamese.dyndns.org>
+	<m2a9or907f.fsf@igel.home>
+	<CAMP44s36TO6DQ_3j7rSOoOM6QS-Y0DW_z6WX_GF3ODFfupb6jg@mail.gmail.com>
+	<7vehe3sfwv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Chris Hiestand <chrishiestand@gmail.com>,
-	Marc Branchaud <mbranchaud@xiplink.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Michiel Holtkamp <git@elfstone.nl>,
-	Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Apr 22 00:28:51 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 22 00:32:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UU2kc-0003fb-EL
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 00:28:50 +0200
+	id 1UU2oG-0006zD-5q
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 00:32:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753283Ab3DUW2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Apr 2013 18:28:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45003 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753194Ab3DUW2p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Apr 2013 18:28:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39345184E4;
-	Sun, 21 Apr 2013 22:28:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=puf4bFxq5gR7XyGovHS2v4JWRdg=; b=FYvJdC
-	FblW2Ust0xK8HSlaR/TMwPI0anReffb7Fu6ejmAw2XrHxmXBBAbZqpBbcaIaBGFr
-	yQt9sgcSwWSvEXuVrwnR/GRxVILTxQYT1t6mChkr+LI9d/GoehhC6uDfZWin27AW
-	TLObalppif3R2TI7vBA927JaHfkSQ/9yAWST4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cbs4qO35o9dIA9vJa2FAIVylKq6hEQk+
-	3nufxozz5S7FJUpZp7OMZvK1vifxh1aH6KIDKWhxx4ezw6o5tDNurrPEOM37DMhq
-	Z0MqN1V1Tz1CJNh8nGiNTvaN/CejLPp2Lums8uyB/NRS3EDgrpX7MQYjwmiLXIZ2
-	EuIoqURGIlU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C889184E3;
-	Sun, 21 Apr 2013 22:28:40 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7860E184DF;
-	Sun, 21 Apr 2013 22:28:39 +0000 (UTC)
-In-Reply-To: <517445E5.3080304@alum.mit.edu> (Michael Haggerty's message of
-	"Sun, 21 Apr 2013 22:02:45 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D0B7244C-AAD2-11E2-905E-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753080Ab3DUWcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Apr 2013 18:32:32 -0400
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:36804 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752269Ab3DUWcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Apr 2013 18:32:31 -0400
+Received: by mail-lb0-f176.google.com with SMTP id y8so5067633lbh.21
+        for <git@vger.kernel.org>; Sun, 21 Apr 2013 15:32:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=WuZYNUrg6910fRdUgzPJ5gAUnERq8Y1lsIebjwHca8g=;
+        b=TpXGyjAaiDMvbIfzMNng2GnkJkEXQ4j73vjCsK0UNrvAqAryvS5mhCPnCWVUo5MT5C
+         AujSWE9Vc2iwAI2yUSpH3XZfCz440hUcNsy4uSPi6VBz93XvMh2A+hB0uNsfFuLsCgcA
+         cVAaJPmhykMT4c0NzTc4MhJtbIdqLo3hYZdA0UijHdPr00hzlSs1d8MuBHZXbUi493+Q
+         JOt0iFy1LhT9TUeOk1ogw4dnvvkWbhOSEi5Z55PbakY4Y8j4QIV0D1Qir+6W5cl/uir7
+         OTjKOV7EJf7A0dATZJwHleSjaeOPnK42ommtDZM62u6Ls5hS6vPQCxx1xCOVuJO8kwJC
+         rH+Q==
+X-Received: by 10.152.20.134 with SMTP id n6mr63045lae.19.1366583549975; Sun,
+ 21 Apr 2013 15:32:29 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Sun, 21 Apr 2013 15:32:29 -0700 (PDT)
+In-Reply-To: <7vehe3sfwv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221981>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Sun, Apr 21, 2013 at 5:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> On Sun, Apr 21, 2013 at 2:02 PM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>>
+>>>> Andreas Schwab <schwab@linux-m68k.org> writes:
+>>>>
+>>>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>>>
+>>>>>> +                           if [ -n "${ZSH_VERSION-}" ]; then
+>>>>>> +                                   u="%%"
+>>>>>> +                           else
+>>>>>> +                                   u="%"
+>>>>>> +                           fi
+>>>>>
+>>>>> aka u="%${ZSH_VERSION:+%}"
+>>>>
+>>>> Do you need/want a colon there?  Even if it is empty, as long as it
+>>>> is defined we would want this, no?
+>>>
+>>> The original wouldn't.
+>>
+>> I thought you were trying to improve the original ;)
+>
+> OK, so I _think_ everybody is in agreement that the patch should
+> look like this.  OK?
+>
+> -- >8 --
+> From: Felipe Contreras <felipe.contreras@gmail.com>
+> Subject: [PATCH] prompt: fix untracked files for zsh
+>
+> With "bash.showUntrackedFiles" option,
 
-> * When I think a batch of patches is ready, I merge them to my master
-> and publish my master somewhere.  (Or is it better I publish the feature
-> branch and leave it to you to merge directly to your master?)
+Not exactly correct, it can also be GIT_PS1_SHOWUNTRACKEDFILES.
 
-I think I missed this part, but in the case of git-svn, what we do
-is the former.  The branch Eric makes me pull may be called 'master'
-in his repository, but it does not contain anything unrelated to
-git-svn, so from _my_ viewpoint, it is a single "topic to improve
-git-svn".
+> presense of untracked files
+> is signalled by adding a per-cent sign '%' to the prompt.  But
+> because '%' is used as an escape character to introduce prompt
+> customization in zsh (just like bash prompt uses '\' to escape \u,
+> \h, etc.), we need to say '%%' to get a literal per-cent.
 
-But from Eric's point of view, it is an aggregation of different
-topics from many people on top of my tree, and each topic may tackle
-its own theme. I think most of the pulls from him so far were single
-strand of pearls without merges, but if two or more long topics were
-cooking in his tree, it would have been perfectly reasonable for him
-to resolve such inter-topic conflicts before telling me to pull the
-result.
+Otherwise it's fine.
 
-After all, that is what the sub-maintainer of an area is.  One who
-knows the area the best coordinates possibly conflicting changes
-brought in different topics to the area.
+Cheers.
 
-Ths same can go for multimail, or any contrib/ material for that
-matter.
+-- 
+Felipe Contreras
