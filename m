@@ -1,80 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git log -p unexpected behaviour - security risk?
-Date: Sun, 21 Apr 2013 00:26:05 -0700
-Message-ID: <7vd2towdiq.fsf@alter.siamese.dyndns.org>
-References: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
-	<20130420140051.GB29454@ruderich.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 4/5] git-log.txt: rewrite note on why "--" may be required
+Date: Sun, 21 Apr 2013 12:56:13 +0530
+Message-ID: <CALkWK0nFAzPPb0_jTRev6nuicCV81sRQAbe=277nhyyY8TnQ7A@mail.gmail.com>
+References: <1366458313-7186-1-git-send-email-artagnon@gmail.com>
+ <1366458313-7186-5-git-send-email-artagnon@gmail.com> <7vtxn0wf4j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>,
-	Tay Ray Chuan <rctay89@gmail.com>
-To: Simon Ruderich <simon@ruderich.org>
-X-From: git-owner@vger.kernel.org Sun Apr 21 09:26:16 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Thomas Rast <trast@inf.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 21 09:27:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTof9-0004Fz-22
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 09:26:15 +0200
+	id 1UTofr-0004cu-Pl
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 09:27:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752121Ab3DUH0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Apr 2013 03:26:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59205 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751993Ab3DUH0J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Apr 2013 03:26:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5F521405F;
-	Sun, 21 Apr 2013 07:26:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5UpntdGxlDMuWbHf8RP25cNLobQ=; b=BBl2X1
-	5zDXQ/Q/EAHF+EtvkTFqnQf0GqRsU2rq+xuYFQjnprq6A+oldUJNNinWIXVM6FYd
-	FCM10phfhMkrpxXj++giTMBPfW7ZpWwfaRwD2RsrZ3zUuYLqcRfrXu2vG6NK5dbs
-	LdbCP+wpjLiEjGameM6Pg8bCzfXWXG4xGBemg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p47eRFu5DJVLFLt8BftDnhw+rHfWxT0a
-	xj9qC5imrgr5W1YBOIvr/+G2LuckvMaRa7aATx3vc/Xhe7MoCHFwVlSKz2PtvUXT
-	970FuV1yrnBCpbQsITpucZhh80Bpz2MkqUQVNWi0nRQweTPlVQ5TKV+8opJlFdP6
-	cIzJsyIrLdM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9D591405E;
-	Sun, 21 Apr 2013 07:26:07 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D3401405C;
-	Sun, 21 Apr 2013 07:26:07 +0000 (UTC)
-In-Reply-To: <20130420140051.GB29454@ruderich.org> (Simon Ruderich's message
-	of "Sat, 20 Apr 2013 16:00:52 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BB7BA022-AA54-11E2-9491-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752269Ab3DUH0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Apr 2013 03:26:55 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:53994 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752114Ab3DUH0y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Apr 2013 03:26:54 -0400
+Received: by mail-ie0-f172.google.com with SMTP id c12so2069836ieb.17
+        for <git@vger.kernel.org>; Sun, 21 Apr 2013 00:26:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=YYGOadoU5YYIcfNASgDYd+SEWOEL40gi5bi14SD4ye0=;
+        b=MPBIWiPs5m8cgXD/55hImdQ4SZbJJ5Acu4zanZlYxmmSRsi2TWP1oc4lI+G/aXJIO0
+         anIGcViYzA5OYnCIjJg4JJEBU73ajR2ZYgP4v/oYcS8L2uL2q47KwNR9IyW5skBtnmLv
+         wUO4BaPtK8vvtqNosgpRLt0hbxKVW+CUF8+qxWnLaalwiuMOlMPtUxESmWtelR0OXI3/
+         LWLdsJrUoCsPQcDSnC4doD6DE8bd/MzkgcQsc+qjZZaNOH+kNTvdTMmhW5VVpNmIhZrk
+         2goElXBPVhR5D2qObzzP/sffaOG2K+4ifcfKBFKPVcrqgyKJdiPwSFO1ARh3YfMKxEEx
+         SfVQ==
+X-Received: by 10.50.17.166 with SMTP id p6mr5574624igd.12.1366529213934; Sun,
+ 21 Apr 2013 00:26:53 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Sun, 21 Apr 2013 00:26:13 -0700 (PDT)
+In-Reply-To: <7vtxn0wf4j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221905>
 
-Simon Ruderich <simon@ruderich.org> writes:
+Junio C Hamano wrote:
+> I think "branch names" was an attempt to make it more newbie
+> friendly by sacrificing technical accuracy.  With the suggested
+> update (see the review for the previous one), it would be easier to
+> read if this part said "options or the revision range".
 
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 104579d..cd35ec7 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -24,6 +24,10 @@ ifndef::git-format-patch[]
->  --patch::
->  	Generate patch (see section on generating patches).
->  	{git-diff? This is the default.}
-> +ifdef::git-log[]
-> +	Changes introduced in merge commits are not displayed. Use `-c`,
-> +	`--cc` or `-m` to include them.
-> +endif::git-log[]
-
-It probably is a better change to drop "Use `-c`..." and refer to
-the "Diff formatting" section.
-
-And then add '-p' and the fact that by default it will not show
-pairwise diff for merge commits to the "Diff Formatting" section.
-That is where -c/--cc/-m are already described.
+Why does it have to be a range?  It might well be a list of revisions,
+so I'm tempted to stick with the word "revisions".  As I wrote in the
+previous email, I think "revision" can be referenced by any one of the
+syntaxes specified in revisions.txt (this includes a "committish
+range").
