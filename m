@@ -1,91 +1,104 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [QUERY] Why do we have git-completion.zsh?
-Date: Sun, 21 Apr 2013 12:26:20 +0530
-Message-ID: <CALkWK0khqsPurJpeXjsBGbXi--1T+88w9edbSRCFSO75nUcUZw@mail.gmail.com>
-References: <CALkWK0=NrJ-9mxSkOBw=kJ0CTJLUFNWBoGdqGcHEU6YqR-foFg@mail.gmail.com>
- <20130420184539.GA8586@elie.Belkin> <20130420185329.GB8586@elie.Belkin>
- <CAMP44s3yCW-pHVHc9WfL1BC7BKmnXxZ1WQyPRAMnx967=74_Kg@mail.gmail.com>
- <CALkWK0=ay452TbW-O+uBwqqMjLgeYw0V-j67vvzMqtVO-PnrXw@mail.gmail.com> <CAMP44s0e=RTC_-JeFXxrdQ9Zhe8riqWKwdeae6rgwJccr_=7iA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] git-shortlog.txt: make SYNOPSIS match log, update OPTIONS
+Date: Sun, 21 Apr 2013 00:04:10 -0700
+Message-ID: <7vppxowej9.fsf@alter.siamese.dyndns.org>
+References: <1366458313-7186-1-git-send-email-artagnon@gmail.com>
+	<1366458313-7186-6-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 21 08:57:24 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 21 09:04:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UToD9-0005v7-Vv
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 08:57:20 +0200
+	id 1UToJu-00011A-Nj
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 09:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751948Ab3DUG5C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Apr 2013 02:57:02 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:57184 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751935Ab3DUG5B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Apr 2013 02:57:01 -0400
-Received: by mail-ie0-f172.google.com with SMTP id c12so2061551ieb.17
-        for <git@vger.kernel.org>; Sat, 20 Apr 2013 23:57:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=doII7kfrdwYXRsPygi9sJ7C9PqvNVYhuzM2Pb67z/tY=;
-        b=0wOgPi2BGZPto2j/kTw+q67Igv/BxDi0xYGxmf0K1cxH7CxczgAZP4B5mtkxHbFOeX
-         r52k/arDEwctF9KFXWSC/3c9pIRbIB87A3IezzMd62xyMJeL7p1VY/2fLtjOIAkoBv9t
-         ezuxe8mv1jL4LARot1glKMcZtDr0y0mvP3Lp3s/j+83xWEJSIHQzBasiXkSr0qdce/HL
-         iSZ86eZrggTOEhjDcM8jLlg8zz86Dh4Do8Kb7T9WsYpPGl4/iWZUp3TcCv4LPIC/QgLz
-         3TfP9qo0bZcM0qvV5XreAKfRlsi9HE4dcxACFSRCDcdGhXnQmla4/eCQBOdgVjxBzW4U
-         2nCA==
-X-Received: by 10.50.50.71 with SMTP id a7mr18723163igo.14.1366527420705; Sat,
- 20 Apr 2013 23:57:00 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Sat, 20 Apr 2013 23:56:20 -0700 (PDT)
-In-Reply-To: <CAMP44s0e=RTC_-JeFXxrdQ9Zhe8riqWKwdeae6rgwJccr_=7iA@mail.gmail.com>
+	id S1752003Ab3DUHEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Apr 2013 03:04:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43627 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751776Ab3DUHEN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Apr 2013 03:04:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB6D5138D7;
+	Sun, 21 Apr 2013 07:04:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8VIDYC4WBM9iSqBjdULBe5WnSRQ=; b=hneIRa
+	uKPv/kyHFpPNT/WR5fvX7moZ4rhprNWmNZtM5DhjAZUMEHz7zg2pAylIEHc253Xc
+	yV4IOQxi9PYIDIr7n7jxQiSbbnqLM1pRHB0TyStWU3scwnez/z+G23ZxPHsSaNmb
+	yOAPotfOFo8X8UwOMDtnrap/tw4ZgNJuGCzxw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=u6Da1G1I1xxsMcgR7LM6YwY98VjljQCk
+	AXyoZmhysqeOwDuHy1eAS+gn2JZdm9VWJ8Y3AmT9szJF71JepTK1jYo75a9DUkA+
+	Ub9DMCBislQqlxcsNxPNp9+NHqCMpQMC6QvbQzRsM0V21sjzstrtjN3eILeNDRZW
+	V+woW151jE4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B41E9138D6;
+	Sun, 21 Apr 2013 07:04:12 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 498BC138D2;
+	Sun, 21 Apr 2013 07:04:12 +0000 (UTC)
+In-Reply-To: <1366458313-7186-6-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Sat, 20 Apr 2013 17:15:13 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: ABA152F8-AA51-11E2-8C01-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221900>
 
-Felipe Contreras wrote:
-> First of all, 'gitfast' is just the name I gave to the oh-my-zsh
-> plugin that uses git.git's completion stuff. The zsh support in git's
-> bash completion has been working for years, I just copied the stuff to
-> oh-my-zsh so those guys can use it easily.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Yeah, I know.  I just used the name.
+> +<since>..<until>::
+> +	Consider only commits between the named two revisions.  When
+> +	either <since> or <until> is omitted, it defaults to `HEAD`,
+> +	i.e. the tip of the current branch.  For a more complete list
+> +	of ways to spell <since>..<until>, see
+> +	linkgit:gitrevisions[7].
+> +
 
-> Secondly, I don't see what "features" zsh's git completer might have
-> that we don't. Yes, some specific argument behaviors are nice, like
-> adding a '=' after --git-dir, and then complete only directories, and
-> completion descriptions, along with tag groupings, but all those
-> things are cosmetic, and they could be added relatively easy to my
-> thin wrapper (which wouldn't be so thin after all). It's mostly grunt
-> work, not something that requires a great mind.
->
-> Functionally I don't see any value.
+The same "revision range" comment, and also that this should be
+after all options and before "-- <pathspec>", apply to this.
 
-> Are these minor features worth all this slowness and complicated code?
-> I don't think so.
+> @@ -56,6 +63,16 @@ OPTIONS
+>  If width is `0` (zero) then indent the lines of the output without wrapping
+>  them.
+>  
+> +[\--] <path>...::
+> +	Consider only commits that are enough to explain how the files
+> +	that match the specified paths came to be.  See "History
+> +	Simplification" below for details and other simplification
+> +	modes.
+> ++
+> +Paths may need to be prefixed with "\-- " to separate them from
+> +options or revisions, when confusion arises.
+> +
+> +include::rev-list-options.txt[]
 
-Moved to using git.git's completer, and I see that you're absolutely
-right about the "minor features" missing part.  I just assumed that
-zsh's completer must be more complete because it's so much larger than
-git.git's bash/zsh completer.  Working backwards from zsh's completer
-would've been a nightmare.
+While it is true that this page is missing many options, including
+rev-list-options.txt as-is is more harmful than helpful and the
+patch needs more work (hint: with "ifdef::git-shortlog[]" sprinkled
+in rev-list-options.txt).
 
-> The reason why I prefer git.git's bash completion is that it has taken
-> years to develop, and using good development practices, borrowed from
-> the mainline git process. Many more people use them, have debugged
-> them through the years, and optimized them. It's relatively small
-> (compared to zsh's version), much more readable, and it even has tests
-> (which I helped to start), and it's much less buggy. It's basically
-> rock solid.
+Some of the earlier one in rev-list-options are fine, but some
+others are inappropriate in the context of shortlog.  For example,
+--grep=<pattern>, while it would internally work as it is told to
+do, is unlikely to be clear how well/correctly worked when viewing
+the end result.  So are many others, such as --all-match,
+--walk-reflogs, --sparse, etc.  Some e.g. --topo-order, do not make
+sense at all.
 
-Great!  I'll stop working on zsh's completer immediately, and try to
-redirect my attention on improving git.git's completer instead.
-
-Thanks for the information.
+I am not sure what the command would do if you give --stdin; the
+command wants to read from the standard input to operate as a filter
+for "git log" output, but the "--stdin" from rev-list family wants
+to read revision range specifiers from the standard input.  I do not
+think it is something any sane user would want to do.
