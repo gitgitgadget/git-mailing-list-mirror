@@ -1,67 +1,110 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 6/6] grep: obey --textconv for the case rev:path
-Date: Sat, 20 Apr 2013 23:41:52 -0400
-Message-ID: <20130421034152.GB18890@sigill.intra.peff.net>
-References: <cover.1366389739.git.git@drmicha.warpmail.net>
- <717ec305e9bd056a44b1da5cc478d314db2920e5.1366389739.git.git@drmicha.warpmail.net>
- <20130420042445.GD24970@sigill.intra.peff.net>
- <5172A969.9000106@drmicha.warpmail.net>
+Subject: Re: [PATCH] Teach git to change to a given directory using -C option
+Date: Sat, 20 Apr 2013 23:58:58 -0400
+Message-ID: <20130421035857.GC18890@sigill.intra.peff.net>
+References: <1366374108-23725-1-git-send-email-ayiehere@gmail.com>
+ <20130419161250.GC14263@sigill.intra.peff.net>
+ <20130420221752.GA9980@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sun Apr 21 05:42:01 2013
+Cc: Nazri Ramliy <ayiehere@gmail.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 21 05:59:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UTlA8-0004F1-CI
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 05:42:00 +0200
+	id 1UTlQn-0003nd-Vj
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 05:59:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751665Ab3DUDlz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Apr 2013 23:41:55 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45265 "EHLO peff.net"
+	id S1751819Ab3DUD7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Apr 2013 23:59:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45273 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751573Ab3DUDly (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Apr 2013 23:41:54 -0400
-Received: (qmail 6476 invoked by uid 102); 21 Apr 2013 03:42:01 -0000
+	id S1751731Ab3DUD7A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Apr 2013 23:59:00 -0400
+Received: (qmail 7186 invoked by uid 102); 21 Apr 2013 03:59:06 -0000
 Received: from 99-108-225-125.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.225.125)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 20 Apr 2013 22:42:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 20 Apr 2013 23:41:52 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 20 Apr 2013 22:59:06 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 20 Apr 2013 23:58:58 -0400
 Content-Disposition: inline
-In-Reply-To: <5172A969.9000106@drmicha.warpmail.net>
+In-Reply-To: <20130420221752.GA9980@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221889>
 
-On Sat, Apr 20, 2013 at 04:42:49PM +0200, Michael J Gruber wrote:
+On Sat, Apr 20, 2013 at 03:18:38PM -0700, Jonathan Nieder wrote:
 
-> > And this mass of almost-the-same functions is gross, too, especially
-> > given that the object_context contains a mode itself.
+> The "sometimes you just want to pass a command to 'exec'" use case
+> does not convince me.  I equally well might want to run "git" after
+> another command, or run "git" if and only if a repository exists
+> there, or do any number of other things.
+
+Sure. I don't claim that it solves every problem, just that I have
+wanted it in that situation before.
+
+> So we're left with "--git-dir does not automatically append .git when
+> appropriate" as the problem being solved, which is a real problem.
+> Maybe that is worth fixing more directly?
+
+I'm a little hesitant, because --git-dir is _not_ "pretend like I am in
+directory X". Even though people may use it that way for bare
+repositories, it explicitly does not change your working tree.
+
+I'm not sure what rule you are proposing. If it is:
+
+  1. When we get "--git-dir=a/b", look in "a/b/.git" (assuming a/b is
+     not a repo itself).
+
+  2. When we get "--git-dir=a/b", do the usual repo search from a/b,
+     finding the first of "a/b", "a/b/.git", "a/.git".
+
+The second one is what makes me nervous, as it seems too much like
+"pretend that we are in a/b". But the first one seems kind of hack-ish.
+I suppose it is similar to the enter_repo rule used to find remotes,
+though, so at least there is some precedence.
+
+> It might also be convenient to be able to do something like
 > 
-> Well, it's just providing different ways to call into the one and only
-> function, in order to satisfy different callers' needs. It's not unheard
-> of (or rather: unseen) in our code, is it?
+> 	git --git-dir=~/src/git log -- Documentation/
+> 
+> which this -C option makes easy.  *checks*  Actually it works without,
+> but for subtle reasons.
 
-No, we have instances of it already. And they're ugly, too. :) I think
-when we hit more than 2 or 3 wrappers it is time to start thinking
-whether they can be consolidated.  I think it is mostly the overlap in
-context and mode that makes me find this one particularly ugly. But it's
-probably not solvable without some pretty heavy refactoring.
+I'm not sure what subtle reason that is. It does not seem to work for
+me:
 
-> I vaguely seem to recall we had some more general framework cooking but
-> I may be wrong (I was offline due to sickness for a while). It was about
-> attaching some additional info to something. Yes, I said "vaguely" ...
+  $ (cd git && git log -- Documentation | wc -l)
+  99152
+  $ git --git-dir=git log -- Documentation | wc -l
+  fatal: Not a git repository: 'git'
+  0
 
-Yeah, I really wanted to keep the context inside the object_array, but
-it means either wasting a lot of space (due to over-large buffers) or
-having the array elements be variable-sized (with a flex-array for the
-pathname). And object_array entries already have a memory-leak problem
-from the "name" field, which I think we just punt on elsewhere. So I
-think this is probably the lesser of the possible evils.
+A more interesting subtlety is this:
+
+  $ git --git-dir=git/.git log -- Documentation | wc -l
+  99152
+  $ git --git-dir=git/.git log Documentation | wc -l
+  fatal: ambiguous argument 'Documentation': unknown revision or path not in the working tree.
+  Use '--' to separate paths from revisions, like this:
+  'git <command> [<revision>...] -- [<file>...]'
+  0
+
+> All that said, I don't mind -C terribly as long as it can maintain
+> itself, which means including thorough documentation that covers the
+> purpose and how pathname parameters and envvars interact with the new
+> option and including tests under t/ to ensure it continues to work
+> correctly in the future.
+
+Yeah, I pretty much feel the same way. "git -C" is a concept that has
+occurred to me several times over the years, and I always dismissed it
+as "bah, you can do the same thing easily with one line of shell". It
+makes sense to me because of the precedence in other programs and I
+would probably use it, but I could also live without it. I do not mind
+it if it is not a maintenance burden.
 
 -Peff
