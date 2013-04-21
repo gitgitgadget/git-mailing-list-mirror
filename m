@@ -1,98 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t6200: avoid path mangling issue on Windows
-Date: Sun, 21 Apr 2013 00:12:12 -0700
-Message-ID: <7vli8cwe5v.fsf@alter.siamese.dyndns.org>
-References: <1365348344-1648-1-git-send-email-ralf.thielow@gmail.com>
-	<1365348344-1648-2-git-send-email-ralf.thielow@gmail.com>
-	<516F95D1.5070209@viscovery.net>
-	<7v38un93br.fsf@alter.siamese.dyndns.org>
-	<5170DA96.9000300@viscovery.net>
-	<7vr4i632fp.fsf@alter.siamese.dyndns.org> <51719F18.3020508@kdbg.org>
-	<7va9ouz04y.fsf@alter.siamese.dyndns.org>
-	<20130421000522.GB10043@elie.Belkin>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 3/5] git-log.txt: fix description of <since>..<until>
+Date: Sun, 21 Apr 2013 12:48:25 +0530
+Message-ID: <CALkWK0n7e-GQ8eBjgd4pnB5AzLGN0bik-n8_McbK68CvJh6P=A@mail.gmail.com>
+References: <1366458313-7186-1-git-send-email-artagnon@gmail.com>
+ <1366458313-7186-4-git-send-email-artagnon@gmail.com> <20130420222528.GA10043@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 21 09:12:33 2013
+X-From: git-owner@vger.kernel.org Sun Apr 21 09:19:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UToRq-0005Hs-BB
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 09:12:30 +0200
+	id 1UToYT-0000bP-SC
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Apr 2013 09:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752104Ab3DUHMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Apr 2013 03:12:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56586 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751459Ab3DUHMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Apr 2013 03:12:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7C6613B4F;
-	Sun, 21 Apr 2013 07:12:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=em8XczPRruumYSYPPHyA5sfh+/E=; b=M7bzKr
-	SR4Pf+rNMV3co+aCZpedVTGEPCjhvtxoASG7VZ7b9+fNQV4EFGE9Xie0vCEnwBin
-	Gq6t2clw5kd5myh6HN0hsPn8dbQPdio/NElI4Z0wevWA+Qsi1s9UD1Qg7EfR1dgr
-	Nj7dgrNAHiWTVCG92qoRzkqqRYTATe80efdwY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e7nEi1J+9vhGe1O2WzXL2brwEWyj3CwZ
-	HGffu1gdNTSzBkDsySNAOG7rIHHRRdHKoz0LmNZntZn4aBwD4INYlwtLcqnim8Cc
-	G+/3PDeVQZFcHqANo5tLIg33PsDudYkrNrCd9JYeJ2pRR6rB5fVugkTpFxSAW2QI
-	zPv4PtBeT/k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB72613B4E;
-	Sun, 21 Apr 2013 07:12:14 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2A98913B4C;
-	Sun, 21 Apr 2013 07:12:14 +0000 (UTC)
-In-Reply-To: <20130421000522.GB10043@elie.Belkin> (Jonathan Nieder's message
-	of "Sat, 20 Apr 2013 17:05:22 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CADA23F6-AA52-11E2-9D02-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752132Ab3DUHTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Apr 2013 03:19:08 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:45148 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751944Ab3DUHTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Apr 2013 03:19:07 -0400
+Received: by mail-ie0-f174.google.com with SMTP id 10so5952924ied.19
+        for <git@vger.kernel.org>; Sun, 21 Apr 2013 00:19:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=aNK0rz8v/W3zld5U3SBJUC5ydhaxtowoAjDsQGP1hcg=;
+        b=bdML4XAoXoGQlnbzKV5QaFnnTID+zZk+9t80y/hIQ5qupiBgRXuxjN6VPcyXj8CNKA
+         ZElClZ1YdMb20Oz7O+5CtM4vm9JD2tQ+xbOfgrdyQQQtkAuJOzgtdFpukgVxogtxl8/D
+         j7S8tSEG5G/SA0BJ1rjqF4O9wGpj8D+RmWpdAIvz6TjPFgSPW3I1S0mOLziOgpCwYcHO
+         zeQgBXjrKra47VV+XfqI0eBaRkpY9gcBdeEzkexKgrKSMFDnCSCAVRh/NuG5HGEhdxy5
+         AiNNjFbxRf4qFZ4oWwSeL22dYHzksRgi0iHB99R8aP/9NAz6yrrWeiJYD82HPlfVKUtj
+         gDgg==
+X-Received: by 10.50.119.102 with SMTP id kt6mr12840338igb.12.1366528746038;
+ Sun, 21 Apr 2013 00:19:06 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Sun, 21 Apr 2013 00:18:25 -0700 (PDT)
+In-Reply-To: <20130420222528.GA10043@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221902>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Jonathan Nieder wrote:
+> What's the difference between a revision and a commit?  The definition
+> in gitglossary(7) only confuses me.
 
-> Junio C Hamano wrote:
->
->> But a _real user_ who wants to use a slash there has no way of doing
->> so.
->
-> Doesn't foo=// do that in the msys world?
+What's so confusing about it?
 
-"that" refers to...?  Do you mean:
+commit:: As a noun: A single point in the Git history; the entire
+history of a project is represented as a set of interrelated commits.
+The word "commit" is often used by Git in the same places other
+revision control systems use the words "revision" or "version". Also
+used as a short hand for commit object.
 
-    $ value=/; mycmd key="$value"
+revision:: A particular state of files and directories which was
+stored in the object database. It is referenced by a commit object.
 
-    breaks msys, but you can say
+-- 8< --
 
-    $ value=//; mycmd key="$value"
+There a reference to "revision" in the "commit" description which
+might be misleading.
 
-    instead to pass a value that is a single slash.
+Otherwise, these are quite accurate.  master~3:README is a valid revision,
+but not a commit, for instance.  Another problem with the word commit
+is that it doesn't encapsulate ranges like 'master~3..HEAD'.  It would
+probably help to add the terms "commitish" and "treeish" to the
+glossary to refer to "rev specs" (those in revisions.txt) that resolve
+to commits or trees.  I'll give you two simple examples:
 
-then that is not a valid workaround; it would work differently
-between Windows (passes one slash?) and everybody else (passes two
-slashes).
+1. In 'git show master:README', master is a treeish and master:README
+is a blob.  If we were to say 'git blame master: -- README', it would
+error out because master: is not a commitish, but a treeish.
 
-I do not mean to say the "'' (empty string) and what you want to say
-and '' (empty string) concatenated together" I suggested in the
-previous message is a workable (let alone the best) proposition, but
-if
-
-    $ value=/; mycmd key=''"$value"''
-
-worked as a way to temporarily turn off the path mangling, it at
-least would be a usable workaround that would work the same way
-between Windows and everybody else.
+2. In 'git log master~3.. -- README', master~3.. is a commitish.  In
+general, log can take only rev specs that resolve to a commits.
+Although 'git log master:' doesn't error out, it doesn't make any
+sense either.  Perhaps we should tighten it?
