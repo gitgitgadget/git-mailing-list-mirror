@@ -1,73 +1,101 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 04/16] remote-hg: properly mark branches up-to-date
-Date: Mon, 22 Apr 2013 16:55:12 -0500
-Message-ID: <1366667724-567-5-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 06/16] remote-hg: add support for tag objects
+Date: Mon, 22 Apr 2013 16:55:14 -0500
+Message-ID: <1366667724-567-7-git-send-email-felipe.contreras@gmail.com>
 References: <1366667724-567-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Simon Ruderich <simon@ruderich.org>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 22 23:58:19 2013
+X-From: git-owner@vger.kernel.org Mon Apr 22 23:58:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUOkb-0002E7-Lr
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 23:58:17 +0200
+	id 1UUOko-0002YA-Mv
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 23:58:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754040Ab3DVV54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 17:57:56 -0400
-Received: from mail-oa0-f51.google.com ([209.85.219.51]:53182 "EHLO
-	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753770Ab3DVV5z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 17:57:55 -0400
-Received: by mail-oa0-f51.google.com with SMTP id k14so6441160oag.24
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 14:57:54 -0700 (PDT)
+	id S1753878Ab3DVV60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 17:58:26 -0400
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:36216 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753600Ab3DVV6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 17:58:25 -0400
+Received: by mail-oa0-f44.google.com with SMTP id h1so1595508oag.3
+        for <git@vger.kernel.org>; Mon, 22 Apr 2013 14:58:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=Za4ZFOToKiENqOKzNsIBKK7r5H+OIANxglF6B4FHjh0=;
-        b=0a/ptSuBaYQGRIPdj3ydTA73aMwaOeHu40KPr7Cvok93LDQ9g2JNWk8B9BsOxD8tl3
-         EtHV2HMBrSXr5V3j/PyR9aTw/pSOcDaP+OdR7O6Zco8seH095OTV/T4EiJyQ8+1rZWCd
-         FFxmJiFyu690Ol8q9IlKfYUcO8DYCICwH0JcnYJKbnVgHnGHvBXZF1kW+X8zEUB2MSR+
-         1Oy3og753WDRChwwvUBkqrqDbDBMW6id6hXq8rsIvxmt9kEdgp7vQpf5roGE9kB/ehZ/
-         epx1gBWRXRdtvwWNOsfXViLHzY8zBJJmo923I5fMI8NGT94ZK02IsveTEln4r9H/kdBw
-         Kgcg==
-X-Received: by 10.60.15.98 with SMTP id w2mr11493817oec.128.1366667874689;
-        Mon, 22 Apr 2013 14:57:54 -0700 (PDT)
+        bh=5LXLjO/gEUGuaopas4T5EZVIEju+DnGHwI9oRcXeqmU=;
+        b=qkg3SM/r6Ksq1L9bn13NhLhpiBCBBShUWrjQEeUI/NdUPxA7aqkYX5hU5TlOIhC5m2
+         6A80tbOmA0o4kxRkjtQImmnvHXxWUW0MEppCNYjUN/e6OiWYVhAkPzfRrKIOydypKTsb
+         aIcXNkhFGysy3UnZ1KeuMIt2Sfkir9b201GschpdYWxvWkAPm07ShBKRGOkW2prvbjXf
+         n6gCrwPalDJIUKEk4FUg0ncPPu78v9OJLlqyzJJpom2lmUzeH48Gxy25T9uNvVBSvD3x
+         h1ZZnqUITV8DYc6fI3gIQQT0vvDLWiMD1I3TY4F/Yf7lGJSAVNcjT4m90/8KmoSu0pRA
+         YGYQ==
+X-Received: by 10.182.113.164 with SMTP id iz4mr1737613obb.87.1366667905057;
+        Mon, 22 Apr 2013 14:58:25 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id w7sm20056276obx.9.2013.04.22.14.57.45
+        by mx.google.com with ESMTPS id x10sm20867945oes.6.2013.04.22.14.58.19
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 22 Apr 2013 14:57:53 -0700 (PDT)
+        Mon, 22 Apr 2013 14:58:23 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.1.790.g4588561
 In-Reply-To: <1366667724-567-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222103>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/git-remote-hg | 4 ++++
- 1 file changed, 4 insertions(+)
+ contrib/remote-helpers/git-remote-hg | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index b6589a3..a4db5b0 100755
+index bd93f82..4a1c637 100755
 --- a/contrib/remote-helpers/git-remote-hg
 +++ b/contrib/remote-helpers/git-remote-hg
-@@ -742,6 +742,10 @@ def do_export(parser):
+@@ -722,7 +722,7 @@ def parse_tag(parser):
+     data = parser.get_data()
+     parser.next()
  
-     for ref, node in parsed_refs.iteritems():
-         if ref.startswith('refs/heads/branches'):
-+            branch = ref[len('refs/heads/branches/'):]
-+            if branch in branches and node in branches[branch]:
-+                # up to date
-+                continue
+-    # nothing to do
++    parsed_tags[name] = (tagger, data)
+ 
+ def do_export(parser):
+     global parsed_refs, bmarks, peer
+@@ -758,9 +758,11 @@ def do_export(parser):
+             continue
+         elif ref.startswith('refs/tags/'):
+             tag = ref[len('refs/tags/'):]
++            author, msg = parsed_tags.get(tag, (None, None))
+             if mode == 'git':
+-                msg = 'Added tag %s for changeset %s' % (tag, hghex(node[:6]));
+-                parser.repo.tag([tag], node, msg, False, None, {})
++                if not msg:
++                    msg = 'Added tag %s for changeset %s' % (tag, hghex(node[:6]));
++                parser.repo.tag([tag], node, msg, False, author[0], {})
+             else:
+                 parser.repo.tag([tag], node, None, True, None, {})
              print "ok %s" % ref
-         elif ref.startswith('refs/heads/'):
-             bmark = ref[len('refs/heads/'):]
+@@ -815,6 +817,7 @@ def main(args):
+     global marks, blob_marks, parsed_refs
+     global peer, mode, bad_mail, bad_name
+     global track_branches, force_push, is_tmp
++    global parsed_tags
+ 
+     alias = args[1]
+     url = args[2]
+@@ -857,6 +860,7 @@ def main(args):
+     blob_marks = {}
+     parsed_refs = {}
+     marks = None
++    parsed_tags = {}
+ 
+     repo = get_repo(url, alias)
+     prefix = 'refs/hg/%s' % alias
 -- 
 1.8.2.1.790.g4588561
