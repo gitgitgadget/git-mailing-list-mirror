@@ -1,73 +1,107 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
 Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
-Date: Mon, 22 Apr 2013 18:24:29 +0530
-Message-ID: <CALkWK0kS4Y-ERMn54J7O+kiQwNNGxqx1a_31y2JAO9UjeVZ7MQ@mail.gmail.com>
+Date: Mon, 22 Apr 2013 15:15:56 +0200
+Message-ID: <87ppxmogdv.fsf@linux-k42r.v.cablecom.net>
 References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
- <vpqa9oqpxx7.fsf@grenoble-inp.fr> <87r4i2pxo5.fsf@linux-k42r.v.cablecom.net> <CALkWK0kaYeOt3pdjae8rXPiPBWnfrAPOoOaQ73m2qktVxvoeTw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>,
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>,
 	Avery Pennarun <apenwarr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Apr 22 14:55:18 2013
+	"Junio C Hamano" <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 22 15:16:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUGH7-00012m-IO
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 14:55:17 +0200
+	id 1UUGbF-0001o0-4Y
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 15:16:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753855Ab3DVMzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 08:55:11 -0400
-Received: from mail-ia0-f177.google.com ([209.85.210.177]:55481 "EHLO
-	mail-ia0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753492Ab3DVMzK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 08:55:10 -0400
-Received: by mail-ia0-f177.google.com with SMTP id y26so2650097iab.8
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 05:55:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=d1/FbCvN+do597uueDKwxCj97M84vzzut88nn+dvm9Y=;
-        b=wkPZbNKN4fa72Tpv+gjq05qxXdC1ZZVpZqOJerXGNcG3Mwrv78LYlXb2i2hMlPE6re
-         cLpIdNkk6eqARM19eM+fd09cIBr5nFjDqF7C/xpBya+3e3vRxIqKc6lAJZBmIbaebp/6
-         cCAKhtlpi96WDlMDAEo/N0p0VQ2zYnt45tB3yELzQ6KPlaXxhKRkRP2plydjUXVH6cii
-         zBxoEdTlvdzXVmh9KQmDA9nghBGPvjFKo3uOVTsoPdx/y2LCmFPnn87A7tn2W/AdtsRD
-         i7OblNZQ0o/biJPZIk8d1Gb6WzypjrA/3nv5VvlOjTPl4BvzgB8mjR6XG3aGzUeXYjt+
-         PyvQ==
-X-Received: by 10.50.50.71 with SMTP id a7mr21180294igo.14.1366635309502; Mon,
- 22 Apr 2013 05:55:09 -0700 (PDT)
-Received: by 10.64.63.48 with HTTP; Mon, 22 Apr 2013 05:54:29 -0700 (PDT)
-In-Reply-To: <CALkWK0kaYeOt3pdjae8rXPiPBWnfrAPOoOaQ73m2qktVxvoeTw@mail.gmail.com>
+	id S1753232Ab3DVNQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 09:16:00 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:53607 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752542Ab3DVNP7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 09:15:59 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 22 Apr
+ 2013 15:15:56 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Mon, 22 Apr 2013 15:15:56 +0200
+In-Reply-To: <1366632487-28153-1-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Mon, 22 Apr 2013 17:38:07 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222013>
 
-Ramkumar Ramachandra wrote:
-> Unless there is a commit with the following diff
-> (with heuristically similar content), I don't see how --follow can
-> work:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 >
->     diff --git a/README b/README
->     deleted file mode 100644
->
->     diff --git a/subproject/README b/subproject/README
->     new file mode 100644
 
-In other words, git diff-tree HEAD^2 HEAD is absolute nonsense in the
-subtree case.
+So after a long IRC discussion trying to hash out what you *want* it to
+do, here's the summary for everyone else.  This test is wrong on several
+counts.  For simplicity I'll denote by M the subtree merge, called
+$new_h in the actual test.
 
-Let me outline how I think --follow works:
-A 'git log --follow foo' executes a diff-tree with historical trees
-until it finds one that removes (or adds, depending on which way you
-look at it) the 'foo' entry.  It then inspects all the trees in the
-corresponding commit for a blob that is heuristically similar to the
-HEAD:foo blob, and follows it.
+> +test_expect_failure 'log pathspec in tree read into prefix' '
+> +	git checkout --orphan subtree &&
+> +	git rm -rf . &&
+> +	echo foodle >ichi &&
 
-How can you logically extend this concept to handle my case?
+'ichi' also exists in M^1 because you reused a name from another test.
+So rename detection will never pair the eventual 'bar/ichi' with this
+'ichi', because the 'ichi' path was *modified*, not deleted, w.r.t. M^1.
+
+Just to clarify, rename detection is based on seeing
+
+  A foo
+  D bar
+
+and changing that to
+
+  R bar -> foo
+
+assuming the blobs were reasonably similar.  And indeed, *copy*
+detection (-C) is able to figure it out, because it considers all paths
+that were modified as possible candidates for a copy source.
+
+But --follow only uses rename detection.
+
+> +	git add ichi &&
+> +	test_tick &&
+> +	git commit -m foom &&
+> +	echo moodle >unrelated &&
+> +	git add unrelated &&
+> +	test_tick &&
+> +	git commit -m quux &&
+> +	subtree_h=$(git rev-parse HEAD) &&
+> +	git checkout master &&
+> +	orig_h=$(git rev-parse HEAD) &&
+> +	git read-tree --prefix=bar $subtree_h &&
+
+You need to supply a trailing / for the prefix, it's not implied.
+
+> +	new_t=$(git write-tree) &&
+> +	new_h=$(echo "new subtree" |
+> +	git commit-tree $new_t -p $orig_h -p $subtree_h) &&
+> +	git reset --hard $new_h &&
+> +	(
+> +		cd bar &&
+> +		git log --oneline ichi >../actual
+
+You need to use --follow, as otherwise the pathspec filtering is
+considered fixed.
+
+Note that as discussed in the rest of the thread, --follow is fairly
+limited and doesn't *really* solve the problem.  But it does work
+assuming the filenames are different and you only have one subtree
+merge, like in this case.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
