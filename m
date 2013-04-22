@@ -1,76 +1,78 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 7/7] builtin/shortlog.c: make usage string consistent with log
-Date: Mon, 22 Apr 2013 11:00:31 +0530
-Message-ID: <1366608631-21734-8-git-send-email-artagnon@gmail.com>
-References: <1366608631-21734-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 22 07:31:04 2013
+From: Jeremy Rosen <jeremy.rosen@openwide.fr>
+Subject: Re: Subtree: My Status
+Date: Mon, 22 Apr 2013 09:18:46 +0200 (CEST)
+Message-ID: <567618909.1800335.1366615126779.JavaMail.root@openwide.fr>
+References: <87d2tp9j7b.fsf@waller.obbligato.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: greened@obbligato.org
+X-From: git-owner@vger.kernel.org Mon Apr 22 09:19:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UU9LE-0005ug-Bo
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 07:31:04 +0200
+	id 1UUB1c-0001nX-L0
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 09:18:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753157Ab3DVFaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 01:30:52 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:35663 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752954Ab3DVFav (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 01:30:51 -0400
-Received: by mail-pd0-f171.google.com with SMTP id t12so1205640pdi.30
-        for <git@vger.kernel.org>; Sun, 21 Apr 2013 22:30:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=hmaoLGKmEw6x/N4bBEkWVkQxHxGT2s4AjiDoDqUQ1Zs=;
-        b=tFO7in86Y4Btc/WDeyn0uCCBbV3MGf20mCIu4in5bEKMmDi3eyLHl/WbakfHmVPnGi
-         pL93+ooUjzz1Gd3J7JOsTHR5jlu7RbYqeS2tPfOPMufhaOM6D8Z0E68oqqDe1N3E9MSK
-         +pLNAV8TctA5tNmnLTMYniAb2e1cRydMxAwqKrhj0t9KRdLrS8UDm5r2MEhjkae7ny/2
-         Z5dQUln6unztR1c9jK1NEgsUE296aY2rsEB4QA9ps1u8U4tZUbRJOjemdd9H+32tvZpm
-         tt2vAI7XSuqLSBl6nAX3OkUxaOFKYvKmDmJV//9053nJDEl5XHfw/DJvRNnmMrzG2LB6
-         k69A==
-X-Received: by 10.66.248.6 with SMTP id yi6mr27130964pac.20.1366608650846;
-        Sun, 21 Apr 2013 22:30:50 -0700 (PDT)
-Received: from localhost.localdomain ([122.174.41.136])
-        by mx.google.com with ESMTPS id em2sm11144653pbb.0.2013.04.21.22.30.49
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 21 Apr 2013 22:30:50 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.501.gd2949c7
-In-Reply-To: <1366608631-21734-1-git-send-email-artagnon@gmail.com>
+	id S1754800Ab3DVHSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 03:18:52 -0400
+Received: from zimbra3.corp.accelance.fr ([213.162.49.233]:48146 "EHLO
+	zimbra3.corp.accelance.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752607Ab3DVHSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 03:18:51 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id 5894F28049;
+	Mon, 22 Apr 2013 09:18:47 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at zimbra3.corp.accelance.fr
+Received: from zimbra3.corp.accelance.fr ([127.0.0.1])
+	by localhost (zimbra3.corp.accelance.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0aKJqQP1wVkS; Mon, 22 Apr 2013 09:18:46 +0200 (CEST)
+Received: from zimbra2.corp.accelance.fr (zimbra2.corp.accelance.fr [213.162.49.232])
+	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id DBA8928004;
+	Mon, 22 Apr 2013 09:18:46 +0200 (CEST)
+In-Reply-To: <87d2tp9j7b.fsf@waller.obbligato.org>
+X-Originating-IP: [213.162.49.238]
+X-Mailer: Zimbra 7.2.2_GA_2852 (ZimbraWebClient - GC26 (Linux)/7.2.2_GA_2852)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221996>
 
-"--" is used to separate pathspecs from the rev specs, and not rev
-specs from the options, as the shortlog_usage string currently
-indicates.  In correcting this usage string, make it consistent with
-the log_usage string.
+----- Mail original -----
+> Hi folks,
+> 
+> I apologize for being off the grid for a while.  We had a baby and
+> unexpectedly ended up in the NICU.  We just got him home a week ago.
+> Everyone is doing fine but I had to pretty much drop all
+> non-essential
+> work for a month or so.
+> 
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- builtin/shortlog.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Good to here that everything is well on your side and congratulation for the baby,
 
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 240bff3..1fd6f8a 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -10,9 +10,7 @@
- #include "parse-options.h"
- 
- static char const * const shortlog_usage[] = {
--	N_("git shortlog [-n] [-s] [-e] [-w] [rev-opts] [--] [<commit-id>... ]"),
--	"",
--	N_("[rev-opts] are documented in git-rev-list(1)"),
-+	N_("git shortlog [<options>] [<revision range>] [[--] [<path>...]]"),
- 	NULL
- };
- 
--- 
-1.8.2.1.501.gd2949c7
+
+
+> Rest assured that I have all of the git-subtree-related mail sitting
+> in
+> my inbox.  It will take me some time to process it all -- looks ike
+> there has been a lot of good work!
+> 
+
+no worries, there is no emergency here...
+
+
+> Please remember that I don't consider myself a gatekeeper to git
+> subtree.  In fact I could use some help reviewing and approving
+> patches.
+> If anyone thinks a patch looks good, let Junio know.  It's my
+> responsibility to object to things, not your responsibility to wait
+> for
+
+I guess it's more or less everybody's responsability to review patches, but
+it seems to me that for the actual gate-keeping, Junio considers you 
+in charge of git-subtree... Maybe there is an organisational quirk to sort-
+out here... Junio ?
