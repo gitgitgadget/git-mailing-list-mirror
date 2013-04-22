@@ -1,73 +1,86 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
-Date: Mon, 22 Apr 2013 23:30:21 +0530
-Message-ID: <CALkWK0madWxOSraZw6u8U_afVeK8tyMB_+D59n1vSBmobxGqqg@mail.gmail.com>
-References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
- <87ppxmogdv.fsf@linux-k42r.v.cablecom.net> <CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
- <87wqruk2pj.fsf@linux-k42r.v.cablecom.net> <7vk3nupltx.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/5] check-ignore: allow incremental streaming of queries via --stdin
+Date: Mon, 22 Apr 2013 11:03:44 -0700
+Message-ID: <7vbo96phmn.fsf@alter.siamese.dyndns.org>
+References: <20130411110511.GB24296@pacific.linksys.moosehall>
+	<1365681913-7059-1-git-send-email-git@adamspiers.org>
+	<1365681913-7059-4-git-send-email-git@adamspiers.org>
+	<20130411191132.GC3177@sigill.intra.peff.net>
+	<20130411203141.GB21091@pacific.linksys.moosehall>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 22 20:01:10 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Mon Apr 22 20:03:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUL37-0003iF-Mv
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 20:01:10 +0200
+	id 1UUL5m-0007V8-32
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 20:03:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754222Ab3DVSBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 14:01:04 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:49807 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753838Ab3DVSBC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 14:01:02 -0400
-Received: by mail-ie0-f177.google.com with SMTP id 9so7203917iec.8
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 11:01:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=7BqCwdgJRFIQbZW1Q/E+quOAadFFNqA/2U5MBs9olCg=;
-        b=IhxDUUJLJN+anSpnqUkw2vWoUT4S5XK7RWNZEpusz8EbgOwG7GTWlfN/7dYTCIxw2H
-         48/ZPllOyGqBGEyrLsKvAUsODOgoL/8OfnwogVd7qlqAC/gqlxPTg0MVUj/8C+UednzF
-         aKe2wWtfRfRgsvKRbYUWlp+bh/dHk30P5uN3VsF7O/wUvSuzQRGgLvPglSp6sCq/nPxq
-         8n9/gKX3wti1XFf0W9e+r5PjqT/2F4rStrckxdggts1qBEZL35PghDMiD+FuyJQbT8kD
-         dlCWSQ294e5Gly4xgff/7noO1gr1hvKZyT+1b5TVRUfkSBexMtJVY8gohSiHE5skZWTf
-         zAHQ==
-X-Received: by 10.50.50.71 with SMTP id a7mr21880781igo.14.1366653662045; Mon,
- 22 Apr 2013 11:01:02 -0700 (PDT)
-Received: by 10.64.63.48 with HTTP; Mon, 22 Apr 2013 11:00:21 -0700 (PDT)
-In-Reply-To: <7vk3nupltx.fsf@alter.siamese.dyndns.org>
+	id S1754462Ab3DVSDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 14:03:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38573 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754369Ab3DVSDt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 14:03:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DEB318E95;
+	Mon, 22 Apr 2013 18:03:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=txd4os0jdzXSGdbaWHWEnbJ/610=; b=jKCLHW
+	zQXNWus3RkaHv1L31huhivrdTKRGRKZFIQsSdoJt3RiehmAUplOheq02cU4Hse6d
+	wRrVHc82L5pUbk1SfS2bc/0/P6XGPUdPWdwt2J34bYxcmrVh3DotaICBupBMnLd4
+	eclzkyB1vywjUbENHeERACGBqbSmFSaeChcWQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XOgmGY/Ywxy2emNTDsuM5oKKS6oGK0oc
+	IFTRmCj6iUqo13QGzlg+ZUtCGeEuPh78CNmG9RVDyUYMZkepXeq4wFoRxaRzL5I/
+	zENMaTLpCPQOUMfdJVd8s6e3atEMPTDLyw359tNjWLncOIYHaR4mqiBgH4bN1WUP
+	VBB4SQ9HDao=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4557718E94;
+	Mon, 22 Apr 2013 18:03:47 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6AFC18E93;
+	Mon, 22 Apr 2013 18:03:46 +0000 (UTC)
+In-Reply-To: <20130411203141.GB21091@pacific.linksys.moosehall> (Adam Spiers's
+	message of "Thu, 11 Apr 2013 21:31:41 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FA36DE58-AB76-11E2-8A6B-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222043>
 
-Junio C Hamano wrote:
-> [...]
->  (3) When (1) notices that the path being followed did not exist in
->      any of the parents (be it a merge or a non-merge) and finds a
->      different path with a similar looking content, it _switches_
->      the pathspec to it, but the single pathspec it uses is a global
->      state and affects traversals of other ancestry paths at the
->      same time.  Because of this, "--follow" will not work correctly
->      in a history that contains merges.  It often _appears_ to work
->      only by accident.
+Adam Spiers <git@adamspiers.org> writes:
 
-This explanation is all very nice, but isn't it completely tangential
-to the issue at hand?
+> On Thu, Apr 11, 2013 at 03:11:32PM -0400, Jeff King wrote:
+>> I always get a little nervous with sleeps in the test suite, as they are
+>> indicative that we are trying to avoid some race condition, which means
+>> that the test can fail when the system is under load, or when a tool
+>> like valgrind is used which drastically alters the timing (e.g., if
+>> check-ignore takes longer than 1 second to produce its answer, we may
+>> fail here).
+>
+> Agreed, especially here where my btrfs filesystems see fit to kindly
+> freeze my system for a few seconds many times each day :-/
+> 
+>> Is there a simpler way to test this?
+>> 
+>> Like:
+>> ...
+> I'll re-roll using your approach.
 
-Let's say I have a subtree merge M located at HEAD~4.  I ask for the
-log of 'HEAD~4 -- README' with --follow.  It follows until it gets to
-M: at M, M^1:README is missing, but M^2:README is present.  Should it
-follow down and show the history of M^2:README?
+I think I missed this one and it already is in 'next'.
 
-You can reserve the discussion about --follow working in the general
-case for another thread.  Meanwhile, you're evading the issue of
-assuming that all trees are read into /, and are really representing
-the same project's history, while this is not the case.
+I'll hold it back so please make your re-roll into an incremental
+update.
+
+Thanks.
