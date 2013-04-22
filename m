@@ -1,116 +1,92 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
-Date: Mon, 22 Apr 2013 17:24:56 +0200
-Message-ID: <87wqruk2pj.fsf@linux-k42r.v.cablecom.net>
-References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
-	<87ppxmogdv.fsf@linux-k42r.v.cablecom.net>
-	<CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/6] show: obey --textconv for blobs
+Date: Mon, 22 Apr 2013 08:25:41 -0700
+Message-ID: <7vwqrupoy2.fsf@alter.siamese.dyndns.org>
+References: <cover.1366389739.git.git@drmicha.warpmail.net>
+	<5a8c85faddf7f93ca16d284bde415a32dd76779a.1366389739.git.git@drmicha.warpmail.net>
+	<20130420040643.GB24970@sigill.intra.peff.net>
+	<51729A6D.3030501@drmicha.warpmail.net>
+	<20130421033710.GA18890@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 22 17:25:10 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 22 17:25:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUIc8-0007ZN-Te
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 17:25:09 +0200
+	id 1UUIcm-0008WN-SJ
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 17:25:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753854Ab3DVPZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 11:25:01 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:5994 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753171Ab3DVPZA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 11:25:00 -0400
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 22 Apr
- 2013 17:24:56 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS22.d.ethz.ch (172.31.51.112) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Mon, 22 Apr 2013 17:24:56 +0200
-In-Reply-To: <CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Mon, 22 Apr 2013 20:00:47 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1753420Ab3DVPZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 11:25:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60156 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753134Ab3DVPZn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 11:25:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B23D16AC3;
+	Mon, 22 Apr 2013 15:25:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wQQU+rYlM7tWRZ9OZXt9wkTBA10=; b=G4MKsM
+	Nom3ZPehiiBl3uLM2WJjJs9gf21FnfOZTdmE96IrzxbDlAWGFFpxxSjVr3yZ8k0B
+	ZmlzhngXHl7KimJK4xErZLmNO9yNZKhJ35wMNOtBB47BnP156xuc/COa6yGtGizw
+	En2xXq0fewDBlVU+5p2eR6kiIbQfJPPXlGETQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EE0fc1BWP4v3MTxHZFrtDFQwUC/zCjE/
+	1KZyJrrCX/d+aMAd3CHV8FqkLb3zAhe3ZXYc0ffVAnuVw/684GRwsdQXSjhdx9dc
+	hQbfXTJnfkt35ksgQ+dyM6rt8xTERQo/9/1i4Ls/E5Mo1PbyKZdlryzgSy20dNhr
+	RCni6VcUcY8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 338A316AC2;
+	Mon, 22 Apr 2013 15:25:43 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFF1E16AC0;
+	Mon, 22 Apr 2013 15:25:42 +0000 (UTC)
+In-Reply-To: <20130421033710.GA18890@sigill.intra.peff.net> (Jeff King's
+	message of "Sat, 20 Apr 2013 23:37:10 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E5551B28-AB60-11E2-ACDE-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222026>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Thomas Rast wrote:
->> [...]
+> Just my two cents as a reviewer.
 >
-> I think you've misunderstood the whole thing.  The histories of M^1
-> and M^2 are completely unrelated: they're from different projects
-> altogether.  Considering the /ichi in M^2 a "rename" of the /ichi in
-> M^1 is completely wrong.  They have nothing to do with each other.  I
-> intentionally named it "ichi" in my orphan branch just to drive my
-> point.  I suspect you've got confused because I used an orphan branch
-> to emulate a different project's history.  If you want an end-user
-> understanding of the problem, use git subtree:
+>> My reasoning is twofold:
+>> 
+>> - consistency between "git show commit" and "git show blob"
 >
->     $ cd /tmp
->     $ git clone gh:artagnon/varlog
->     $ cd varlog
->     $ git subtree add --prefix=clayoven \
->        gh:artagnon/clayoven master
->     $ cd clayoven
->     $ git log README.md
->
-> What do you expect?  The same output you would get if you cloned
-> gh:artagnon/clayoven separately and executed 'git log README.md' on
-> it.
+> I'm not sure I agree with this line of reasoning. "git show commit" is
+> showing a diff, not the file contents; textconv has always been about
+> munging the contents to produce a textual diff. It may be reasonable to
+> extend its definition to "this is the preferred human view of this
+> content, and that happens to be what you would want to produce a diff".
+> But I do not think it is necessarily inconsistent not to apply it for
+> the blob case.
 
-No, I don't.  But that's probably because I know a few things about how
-git-log works that your hypothetical $USER doesn't.
+True.  Applying textconv to otherwise unreadable blobs is often
+useful, but I agree that it is unexpected if it is done by default,
+especially given that many people have learned to do:
 
-At the risk of restating what everyone agrees on: It's a design
-principle of git that it only stores tree states, and anything about
-diffs, files, renames, etc. is purely in the imagination of the user.
+	git show HEAD~4:binary-gob >old-binary-gob
 
-We support that imagination by having analysis tools with which some
-things can be found out, but others can't.
+to recover old version of binary contents to a temporary file when
+checking the sanity of or restoring the breakage in the new one.
 
-So (I think?) in the above you claim that $USER interprets
+It of course does _not_ forbid
 
-  git log -- README.md
+	git show --textconv HEAD~4:binary-gob | less
 
-as
-
-  Show me the history of README.md.
-
-But there's no such thing as the history of a file!  The command instead
-says
-
-  If I filter all history for only changes affecting a path 'README.md'
-  in the root of the repository[1], then what does it look like?
-
-
-So please don't write tests that go contrary to that definition, because
-they're *wrong*.  The current implementation precisely matches the
-current definition of pathspec filtering.
-
-You can try arguing for changing the definition, but unless you find one
-that can be implemented fast enough to be generally usable, I will
-oppose that change.
-
-
-The only thing that's broken in any of this is that I think, as
-explained on IRC, that a hypothetical fixed --follow -C should be able
-to figure out this case.  By spending extra cycles on analysis,
-naturally.
-
-
-[1]  and also skipping lines of history that seem uninteresting at this
-point already, compare --simplify-merges
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+but I doubt it is a good idea to turn it on by default this late in
+the game.
