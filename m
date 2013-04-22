@@ -1,72 +1,86 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Staging Individual Lines
-Date: Sun, 21 Apr 2013 18:52:52 -0500
-Message-ID: <CAMP44s0Mj+inGX24=-RuV+oT5MZB==HZZvu6_5uZrP68qdPoZw@mail.gmail.com>
-References: <517466B9.8010607@blueyonder.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: jc/add-2.0-delete-default (Re: What's cooking in git.git (Apr 2013, #05; Mon, 15))
+Date: Sun, 21 Apr 2013 18:51:37 -0700
+Message-ID: <7vsj2jqqmu.fsf@alter.siamese.dyndns.org>
+References: <7vd2tr6833.fsf@alter.siamese.dyndns.org>
+	<20130418180017.GA5714@sigill.intra.peff.net>
+	<7v61zj66wu.fsf@alter.siamese.dyndns.org>
+	<20130418203035.GB24690@sigill.intra.peff.net>
+	<7vvc7j4j0u.fsf@alter.siamese.dyndns.org>
+	<20130418214427.GA10119@sigill.intra.peff.net>
+	<7vobdb4hii.fsf@alter.siamese.dyndns.org>
+	<20130419043142.GA5055@elie.Belkin>
+	<7vbo9a3011.fsf@alter.siamese.dyndns.org>
+	<20130419213455.GB20873@sigill.intra.peff.net>
+	<20130421073918.GD10429@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: ode <ode5002@blueyonder.co.uk>
-X-From: git-owner@vger.kernel.org Mon Apr 22 01:53:13 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>,
+	git@vger.kernel.org, Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 22 03:51:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UU44G-0001RO-7i
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 01:53:12 +0200
+	id 1UU5v4-0005J3-E0
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 03:51:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751717Ab3DUXwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Apr 2013 19:52:54 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:62502 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751222Ab3DUXwy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Apr 2013 19:52:54 -0400
-Received: by mail-lb0-f182.google.com with SMTP id z13so5158974lbh.13
-        for <git@vger.kernel.org>; Sun, 21 Apr 2013 16:52:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=8PsthJN0hgS1XCjUY6ykJ9Rok6dMdueVsebxIwbk3d0=;
-        b=1Jhl/oGRKOZLD1uQOTVjutz3KHBqP0f088PC2jh9Xkohr8nEJcTSCnhgiGncj4W+ie
-         ibZ6E/8So1xey7/ig3v2jSk6x1BCYQvP5tRTQzsSq6jQg1Q5OqE2gfFSyCZajI5qx0Gw
-         TqnhVwVtdTRLwh4Bht55GudWGZ/5ygXZ6uWRViqoTB/ZW4dcRXRSiWsDTB4jD0k5D6lC
-         MBDkYjoXXQz9NlN4DpGWvAt82AF9KmShuXixiE11csFxQPijIk6LElCZV5A5YhYIP1OJ
-         CIHcGT4knXWE6W4Qf3EHVzfHX0uCQgTdxI3b1OumA+NcL01kijzm6mOkBgRWYgSj/yzs
-         qdww==
-X-Received: by 10.152.6.162 with SMTP id c2mr11998018laa.20.1366588372723;
- Sun, 21 Apr 2013 16:52:52 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Sun, 21 Apr 2013 16:52:52 -0700 (PDT)
-In-Reply-To: <517466B9.8010607@blueyonder.co.uk>
+	id S1753416Ab3DVBvn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Apr 2013 21:51:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52242 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753350Ab3DVBvm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Apr 2013 21:51:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B29FE913;
+	Mon, 22 Apr 2013 01:51:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1B1T08JmP43E3wVsVi3gqks5+Nk=; b=qsv8RY
+	bFObz2HKSifz2NMQlkpQcePKJhAvrROLpB3tbnTUSPEw017lVfyEtjltNQ2btmax
+	Y0JJ03Fdkdt0HlyuZrp2EUygF10yGoZFdXBOAerCepbeMER5ckBLoU1KKycpnr8R
+	bUqkB7B8gebvlkYHcF3fc32MI872xhKiDXNFw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=haiTMiuSUKZXq2yNniuG1MW8gdNdbMZQ
+	nOC4lj4eCf2fjHq4jOoSN+J7NuZLCYwKa8uI1LIX/gH6qgtnYXYHqNtKN2vMjSEw
+	RWbNbosuR2x2w3go6zZhj9RU5vQnQW7jKe1f1bw2MTGsLPwHqKU4VKR/FA/E/Gie
+	GRFJHVn7Y9w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D656E912;
+	Mon, 22 Apr 2013 01:51:39 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D193CE911;
+	Mon, 22 Apr 2013 01:51:38 +0000 (UTC)
+In-Reply-To: <20130421073918.GD10429@elie.Belkin> (Jonathan Nieder's message
+	of "Sun, 21 Apr 2013 00:39:18 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2C1F5388-AAEF-11E2-91B8-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221985>
 
-On Sun, Apr 21, 2013 at 5:22 PM, ode <ode5002@blueyonder.co.uk> wrote:
-> Hi,
->
-> I had a big commit I wanted to break up and was wondering if there is
-> any way to stage individual lines from the command line.
->
-> I am using git add -i but it couldn't split the hunks any smaller.
->
-> I went looking on Google and found git-cola gui client which works for
-> staging individual lines to the commit.
->
-> But it's a bit clumsy to do this with the mouse and I was wondering if
-> there is a way to do this without having manually editing the file and
-> changing the diff numbers in git add -i when it can't break the hunks
-> smaller.
->
-> Why must we still manually edit the diff numbers when git-cola seems to
-> be able to work out the changes automatically when adding single lines?
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-There is an 'edit' option. 'git add -p' might be faster.
+> How about something like this?
+>
+> 	warning: "git add" run on path with files removed (e.g., '%s')
+> 	hint: use "git add --ignore-removals <pathspec>" to ignore removals
+> 	hint: or "git add --no-ignore-removals <pathspec>" to notice them
+> 	hint: --ignore-removals is the default but this will change soon
+> 	hint: see git-add(1) for details
+>
+> Then the --ignore-removals option could be added using a patch like
+> the following.
 
-Cheers.
+adding ignore-removals as a synonym (and keeping it) would be a good
+idea.
 
--- 
-Felipe Contreras
+We would still need to carry --all and --no-all that have been with
+us ever since we added "-A" option, though.
