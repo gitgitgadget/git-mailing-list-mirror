@@ -1,71 +1,123 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
-Date: Mon, 22 Apr 2013 22:00:01 +0100
-Organization: OPDS
-Message-ID: <B91DA87BC1F548ECB1FDB9550F4AB017@PhilipOakley>
-References: <1366632487-28153-1-git-send-email-artagnon@gmail.com> <87ppxmogdv.fsf@linux-k42r.v.cablecom.net> <CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com> <87wqruk2pj.fsf@linux-k42r.v.cablecom.net> <CALkWK0mUH2m5zJ4MwPWC85CsZZ=2RODumLvsF9q3rLj-+d7vBw@mail.gmail.com> <CALkWK0n5gaz3A7kHT6+5z3YkYdpgU5p6Pv4heMbLzikTbROwkA@mail.gmail.com> <CALkWK0k0LbAnkhAAqdeAvBnCig_HO+bT+WiQuQQ3Fgc=FzFtRw@mail.gmail.com> <87zjwqpebl.fsf@hexa.v.cablecom.net> <CALkWK0kVDbyQBTSTbEDoVFs8E6JKWw3Z6L77NCXSb=FU8GNDkw@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Torstein Hegge <hegge@resisty.net>
+Subject: Re: [PATCH] bisect: Store first bad commit as comment in log file
+Date: Mon, 22 Apr 2013 23:02:29 +0200
+Message-ID: <20130422210229.GE5650@pvv.ntnu.no>
+References: <20130413152257.GB16040@pvv.ntnu.no>
+ <20130415.063809.1055555229072260139.chriscool@tuxfamily.org>
+ <20130415095339.GA28480@pvv.ntnu.no>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>,
-	"Avery Pennarun" <apenwarr@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Ramkumar Ramachandra" <artagnon@gmail.com>,
-	"Thomas Rast" <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Apr 22 22:59:59 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Apr 22 23:02:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUNqB-0000j4-5n
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 22:59:59 +0200
+	id 1UUNsi-0004jV-0H
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 23:02:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753559Ab3DVU7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 16:59:54 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:21357 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753082Ab3DVU7x (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Apr 2013 16:59:53 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvANABGkdVFOl3ma/2dsb2JhbABQgwaDZ4U/uBQEAQMBgQUXdIIaBQEBBQgBARkVHgEBIQsCAwUCAQMOBwECAgIFIQICFAEECBIGBxcGARIIAgECAwGHcQMTqkqIVQ2IRoEji0WBbWpqgVEyYQOOToZjjWCFHoJ/Djs
-X-IronPort-AV: E=Sophos;i="4.87,529,1363132800"; 
-   d="scan'208";a="421589419"
-Received: from host-78-151-121-154.as13285.net (HELO PhilipOakley) ([78.151.121.154])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 22 Apr 2013 21:59:51 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1754247Ab3DVVCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 17:02:31 -0400
+Received: from microbel.pvv.ntnu.no ([129.241.210.179]:52727 "EHLO
+	microbel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751870Ab3DVVCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 17:02:30 -0400
+Received: from torstehe by microbel.pvv.ntnu.no with local (Exim 4.72)
+	(envelope-from <torstehe@pvv.ntnu.no>)
+	id 1UUNsb-0005Od-LA; Mon, 22 Apr 2013 23:02:29 +0200
+Content-Disposition: inline
+In-Reply-To: <20130415095339.GA28480@pvv.ntnu.no>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222091>
 
-From: "Ramkumar Ramachandra" <artagnon@gmail.com>
-Sent: Monday, April 22, 2013 8:54 PM
-> Thomas Rast wrote:
->> There is a market for a rename detection that works at the tree 
->> level.
->
-> Exactly.  And making it auto-follow with a low threshold would be a
-> great default.  We'll have to deal with D/F conflicts that Junio was
-> talking about in (2), every once in a while.  We'll have a lot more
-> incentive to build the D/F conflict resolution process a nice UI.
->
-> git-core will actually start working with trees the way it works with 
-> blobs.
-> --
+On Mon, Apr 15, 2013 at 11:53:39 +0200, Torstein Hegge wrote:
+> On Mon, Apr 15, 2013 at 06:38:09 +0200, Christian Couder wrote:
+> > I wonder if we should also write something into the bisect log if for
+> > example the bisection stopped because there are only 'skip'ped commits
+> > left to test. But maybe this could go into another patch after this
+> > one.
+> 
+> Yes, that would be useful, but I wasn't able to determine all the cases
+> that would be relevant to log. Only skipped commits left to test is one,
+> but bisect--helper also exits on various problems related to merge base
+> handling. The handling of problems related to inconsistent user input is
+> probably not relevant to log.
 
-Is this not similar to the previous attempts at bulk rename detection? 
-Such as $gmane/160233.
+I took another look at this. I wasn't able to come up with anything
+useful for the "The merge base $rev is bad" case, but for the "only
+skipped commits left to test" case one could do something like this.
 
-A practical bulk rename detection would be good. It doesn't have to be 
-perfect.
+There has to be a better way to get the range of possible first bad
+commits, similar to the output of 'git log --bisect --format="%H"'.
 
-Philip 
+--- >8 ---
+Subject: [PATCH] bisect: Log possibly bad, skipped commits at bisection end
+
+If the bisection completes with only skipped commits left to as possible
+first bad commit, output the list of possible first bad commits to human
+readers of the bisection log.
+
+Signed-off-by: Torstein Hegge <hegge@resisty.net>
+---
+ git-bisect.sh               |   10 ++++++++++
+ t/t6030-bisect-porcelain.sh |   20 ++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index c58eea7..d7518e9 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -317,6 +317,16 @@ bisect_next() {
+ 		bad_commit=$(git show-branch $bad_rev)
+ 		echo "# first bad commit: $bad_commit" >>"$GIT_DIR/BISECT_LOG"
+ 		exit 0
++	elif test $res -eq 2
++	then
++		echo "# only skipped commits left to test" >>"$GIT_DIR/BISECT_LOG"
++		good_revs=$(git for-each-ref --format="--not %(objectname)" "refs/bisect/good-*")
++		for skipped in $(git rev-list refs/bisect/bad $good_revs)
++		do
++			skipped_commit=$(git show-branch $skipped)
++			echo "# possible first bad commit: $skipped_commit" >>"$GIT_DIR/BISECT_LOG"
++		done
++		exit $res
+ 	fi
+ 
+ 	# Check for an error in the bisection process
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 4d3074a..064f5ce 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -759,4 +759,24 @@ test_expect_success 'bisect log: successfull result' '
+ 	git bisect reset
+ '
+ 
++cat > expected.bisect-skip-log <<EOF
++# bad: [32a594a3fdac2d57cf6d02987e30eec68511498c] Add <4: Ciao for now> into <hello>.
++# good: [7b7f204a749c3125d5224ed61ea2ae1187ad046f] Add <2: A new day for git> into <hello>.
++git bisect start '32a594a3fdac2d57cf6d02987e30eec68511498c' '7b7f204a749c3125d5224ed61ea2ae1187ad046f'
++# skip: [3de952f2416b6084f557ec417709eac740c6818c] Add <3: Another new day for git> into <hello>.
++git bisect skip 3de952f2416b6084f557ec417709eac740c6818c
++# only skipped commits left to test
++# possible first bad commit: [32a594a3fdac2d57cf6d02987e30eec68511498c] Add <4: Ciao for now> into <hello>.
++# possible first bad commit: [3de952f2416b6084f557ec417709eac740c6818c] Add <3: Another new day for git> into <hello>.
++EOF
++
++test_expect_success 'bisect log: only skip commits left' '
++	git bisect reset &&
++	git bisect start $HASH4 $HASH2 &&
++	test_must_fail git bisect skip &&
++	git bisect log >bisect-skip-log.txt &&
++	test_cmp expected.bisect-skip-log bisect-skip-log.txt &&
++	git bisect reset
++'
++
+ test_done
+-- 
+1.7.10.4
