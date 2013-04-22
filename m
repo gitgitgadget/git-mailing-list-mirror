@@ -1,63 +1,68 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
-Date: Tue, 23 Apr 2013 02:09:44 +0530
-Message-ID: <CALkWK0n20f+cBpKWo9E3OVu_OAxNqiz8tkfspFBTBEaQTfE8NA@mail.gmail.com>
-References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
- <87ppxmogdv.fsf@linux-k42r.v.cablecom.net> <CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
- <87wqruk2pj.fsf@linux-k42r.v.cablecom.net> <7vk3nupltx.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 22 22:40:31 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] "git add -A/--no-all" finishing touches
+Date: Mon, 22 Apr 2013 13:43:53 -0700
+Message-ID: <1366663435-13598-1-git-send-email-gitster@pobox.com>
+References: <7vehe3qi5m.fsf@alter.siamese.dyndns.org>
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 22 22:44:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUNXK-0005VQ-GH
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 22:40:30 +0200
+	id 1UUNan-0002KJ-3Z
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 22:44:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755223Ab3DVUkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 16:40:25 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:38586 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755011Ab3DVUkZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 16:40:25 -0400
-Received: by mail-ie0-f170.google.com with SMTP id at1so4046798iec.1
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 13:40:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=JvmcCOeljsAlQhskUSvmJ6ZrnlNhb8PlqzIlWVmvwC4=;
-        b=T4RVdXaKPwAArgF7sE470jN8odWxHfBEKj7zxx6nqGGAb5hrEa0UMW3zNit3DIh0Gl
-         j1FIkZq2R+nscgFk8Z0KkiUyKzYxjDKlgutJvFuXe0WirOFFfIOa3OcVHRo8nJzSWP5g
-         ExKXVHlGdK6qKUG1n4vD4WQwgdoZgyDUJd34ly+FVeIJVKvvPgWUqGOAPs6y4IsUrPZ+
-         hKa4uPzmTuKnq7eR7nHVouywBrAm6lEtDs4H97C/NcEO7BFsH9WzeKsoPPYKJWvw3+JR
-         AYsoIspL3E6diny80R2488lPsu8meUDylexTVGJh5lz03ZYutGT3hJQ0NfSPbBtGd+G1
-         Yozg==
-X-Received: by 10.50.50.71 with SMTP id a7mr22201293igo.14.1366663224715; Mon,
- 22 Apr 2013 13:40:24 -0700 (PDT)
-Received: by 10.64.63.48 with HTTP; Mon, 22 Apr 2013 13:39:44 -0700 (PDT)
-In-Reply-To: <7vk3nupltx.fsf@alter.siamese.dyndns.org>
+	id S1755148Ab3DVUoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 16:44:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51363 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754852Ab3DVUn7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 16:43:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 78DFA18182;
+	Mon, 22 Apr 2013 20:43:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=ccKO
+	abJPAMTQj84n0/Pzlsh6Iuc=; b=xy32qFxLDT7bp3i1oGvnm0o94i+uCMonSJtk
+	jDMk3Et/tp+VGvkmPoGDcxJ51f8n/+TmiVrkfCM6vx+CYW4Hw0ZncAh9mfNBmIQj
+	qnlVTmE5A24hz5DPG6DYYhoCyHhCHKblu4FkWrWv70kXi+qOX7LP51RxOAbp9/l5
+	VK+1xiw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+	W9GiTslaqS1OJL5JiK1EPIZ5J5YhDFw1ny6OQXy92p15uxVO8MDI8JfN54DTGRgQ
+	SmOdO3C1To0h5DdTIDKNUz6oD7J1rbGSM2HOp0wuUvJ0AokCMYT6i2WiZjB1C4wW
+	qRi/jjEJjZ61CuksvHcXcUYD07neNylS4oP+7wThC1I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F8A718181;
+	Mon, 22 Apr 2013 20:43:57 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E697C1817D;
+	Mon, 22 Apr 2013 20:43:56 +0000 (UTC)
+X-Mailer: git-send-email 1.8.2.1-683-g39c426e
+In-Reply-To: <7vehe3qi5m.fsf@alter.siamese.dyndns.org>
+X-Pobox-Relay-ID: 5A604C2C-AB8D-11E2-8C8C-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222087>
 
-Junio C Hamano wrote:
->  (1) It uses the given pathname as single pathspec and drill down
->      the same way without "--follow" until it notices the path
->      disappears and until then there is no attempt to detect renames
->      is made.  And it only does -M variant of rename detection
+Applying Jonathan's idea on top of the early part that has graduated
+to 'master', here is to add "--ignore-removal" (which is a more
+natural way to say "--no-all") and use it in the warning message.
 
-On this.  It might be profitable to auto-follow at a low threshold
-(and change --follow to a number  argument like -M, -C).  I'm not
-asking you to do it for more than one-file at a time, but I often view
-one file's history: I was just going through the history of
-builtin/merge-trees.c (what I was looking for was mostly in the
-builtin-* variant), and it would've been nice if I didn't have to quit
-and come back with a --follow.
+Junio C Hamano (2):
+  git add: --ignore-removal is a better named --no-all
+  git add: rephrase -A/--no-all warning
+
+ Documentation/git-add.txt | 10 ++++++----
+ builtin/add.c             | 23 +++++++++++++++++------
+ 2 files changed, 23 insertions(+), 10 deletions(-)
+
+-- 
+1.8.2.1-683-g39c426e
