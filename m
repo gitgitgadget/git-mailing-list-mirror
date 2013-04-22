@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 21/33] repack_without_ref(): write peeled refs in the rewritten file
-Date: Mon, 22 Apr 2013 21:52:29 +0200
-Message-ID: <1366660361-21831-22-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 17/33] repack_without_ref(): silence errors for dangling packed refs
+Date: Mon, 22 Apr 2013 21:52:25 +0200
+Message-ID: <1366660361-21831-18-git-send-email-mhagger@alum.mit.edu>
 References: <1366660361-21831-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
@@ -11,154 +11,143 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUMoT-0005Bt-Is
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 21:54:09 +0200
+	id 1UUMoS-0005Bt-JV
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 21:54:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755170Ab3DVTyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 15:54:00 -0400
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:43666 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755155Ab3DVTx6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Apr 2013 15:53:58 -0400
-X-AuditID: 12074413-b7f226d000000902-4d-51759555b99d
+	id S1755149Ab3DVTxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 15:53:54 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:53461 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755116Ab3DVTxw (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Apr 2013 15:53:52 -0400
+X-AuditID: 1207440f-b7f0e6d000000957-b2-517595509901
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id B2.3E.02306.55595715; Mon, 22 Apr 2013 15:53:57 -0400 (EDT)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id FA.0D.02391.05595715; Mon, 22 Apr 2013 15:53:52 -0400 (EDT)
 Received: from michael.fritz.box (p57A2598E.dip0.t-ipconnect.de [87.162.89.142])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3MJrEOY008578
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3MJrEOU008578
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 22 Apr 2013 15:53:56 -0400
+	Mon, 22 Apr 2013 15:53:51 -0400
 X-Mailer: git-send-email 1.8.2.1
 In-Reply-To: <1366660361-21831-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMIsWRmVeSWpSXmKPExsUixO6iqBs6tTTQ4Pk9NYuuK91MFg29V5gt
-	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M5YO6ePueCwSsXtA4/ZGxjX
-	ynYxcnJICJhIvJ55ig3CFpO4cG89kM3FISRwmVHi/Nr7LBDOBSaJu7NvsYBUsQnoSizqaWYC
-	sUUE1CQmth0CizMLOEhs/tzICGILC4RLHO+czQ5iswioSixr2c8KYvMKuErc/DOXEWKbgsTx
-	7dvAbE6g+OmOE2BzhARcJFYcnMoygZF3ASPDKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdc73c
-	zBK91JTSTYyQYBHewbjrpNwhRgEORiUeXgH30kAh1sSy4srcQ4ySHExKorwcU4BCfEn5KZUZ
-	icUZ8UWlOanFhxglOJiVRHhF84FyvCmJlVWpRfkwKWkOFiVxXrUl6n5CAumJJanZqakFqUUw
-	WRkODiUJ3lcgQwWLUtNTK9Iyc0oQ0kwcnCCCC2QDD9CGSJBC3uKCxNzizHSIolOMilLivNWT
-	gBICIImM0jy4AbC4fsUoDvSPMO9BkHYeYEqA634FNJgJaHBmQgnI4JJEhJRUA6PT7uO2jFM+
-	rJ3Lqut8nNv4t+v3B5O764PMSwNnzVig8CU3LujcmsVeX9J3vNPsr1dveyykJXFfR3JKXuZn
-	D0fWtfOCF7CkF3VMmbMic35cvOct+7ccNzwD5Q6dE9A5/PZYvg6/55cg3qVGxw2n1V2Vz2fS
-	dG3Ycog/QqDu7R/L3dMKctfubVZiKc5INNRiLipOBAAKfhd4xgIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIIsWRmVeSWpSXmKPExsUixO6iqBswtTTQYOlsbouuK91MFg29V5gt
+	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M5onjSbpWChXMXv93INjK/F
+	uxg5OCQETCR2HBHoYuQEMsUkLtxbz9bFyMUhJHCZUeLexD1MEM4FJokFE76zglSxCehKLOpp
+	ZgKxRQTUJCa2HWIBsZkFHCQ2f25kBLGFBcIlXu+6xQZiswioSvRda2UGsXkFXCXObJnLBLFN
+	QeL49m1g9ZxA8dMdJ8DmCAm4SKw4OJVlAiPvAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6
+	Jnq5mSV6qSmlmxghgcK/g7FrvcwhRgEORiUe3gzP0kAh1sSy4srcQ4ySHExKorwcU4BCfEn5
+	KZUZicUZ8UWlOanFhxglOJiVRHhF84FyvCmJlVWpRfkwKWkOFiVxXvUl6n5CAumJJanZqakF
+	qUUwWRkODiUJ3gyQoYJFqempFWmZOSUIaSYOThDBBbKBB2hDJEghb3FBYm5xZjpE0SlGRSlx
+	XrdJQAkBkERGaR7cAFhMv2IUB/pHmNcDpJ0HmA7gul8BDWYCGpyZUAIyuCQRISXVwCi0qurX
+	MTNfy7Wir325b3PXLDu9IJnpvIvC++vvel7GynWcvbNIb4Kv8+HPIk7va0v6uFY4a8Rd4skz
+	6nCN9PVeLGadesP3RcYtjyOXTQSP8e5k0J83qcZJsTy1x3b78o7rzWzFP45/8TmR45/ollTq
+	dMr5vYsxX4rNx0O20Vkc51rz9D7xK7EUZyQaajEXFScCAPcw9PbEAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222064>
 
-When a reference that existed in the packed-refs file is deleted, the
-packed-refs file must be rewritten.  Previously, the file was
-rewritten without any peeled refs, even if the file contained peeled
-refs when it was read.  This was not a bug, because the packed-refs
-file header didn't claim that the file contained peeled values.  But
-it had a performance cost, because the repository would lose the
-benefit of having precomputed peeled references until pack-refs was
-run again.
+Stop emitting an error message when deleting a packed reference if we
+find another dangling packed reference that is overridden by a loose
+reference.  See the previous commit for a longer explanation of the
+issue.
 
-Teach repack_without_ref() to write peeled refs to the packed-refs
-file (regardless of whether they were present in the old version of
-the file).
+We have to be careful to make sure that the invalid packed reference
+really *is* overridden by a loose reference; otherwise what we have
+found is repository corruption, which we *should* report.
 
-This means that if the old version of the packed-refs file was not
-fully peeled, then repack_without_ref() will have to peel references.
-To avoid the expense of reading lots of loose references, we take two
-shortcuts relative to pack-refs:
+Please note that this approach is vulnerable to a race condition
+similar to the race conditions already known to affect packed
+references [1]:
 
-* If the peeled value of a reference is already known (i.e., because
-  it was read from the old version of the packed-refs file), then
-  output that peeled value again without any checks.  This is the
-  usual code path and should avoid any noticeable overhead.  (This is
-  different than pack-refs, which always re-peels references.)
+* Process 1 tries to peel packed reference X as part of deleting
+  another packed reference.  It discovers that X does not refer to a
+  valid object (because the object that it referred to has been
+  garbage collected).
 
-* We don't verify that the packed ref is still current.  It could be
-  that a packed references is overridden by a loose reference, in
-  which case the packed ref is no longer needed and might even refer
-  to an object that has been garbage collected.  But we don't check;
-  instead, we just try to peel all references.  If peeling is
-  successful, the peeled value is written out (even though it might
-  not be needed any more); if not, then the reference is silently
-  omitted from the output.
+* Process 2 tries to delete reference X.  It starts by deleting the
+  loose reference X.
 
-The extra overhead of peeling references in repack_without_ref()
-should only be incurred the first time the packed-refs file is written
-by a version of Git that knows about the "fully-peeled" attribute.
+* Process 1 checks whether there is a loose reference X.  There is not
+  (it has just been deleted by process 2), so process 1 reports a
+  spurious error "X does not point to a valid object!"
+
+The worst case seems relatively harmless, and the fix is identical to
+the fix that will be needed for the other race conditions (namely
+holding a lock on the packed-refs file during *all* reference
+deletions), so we leave the cleaning up of all of them as a future
+project.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/211956
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c              | 23 +++++++++++++++++++++++
- t/t3211-peel-ref.sh |  2 +-
- 2 files changed, 24 insertions(+), 1 deletion(-)
+ refs.c               | 37 +++++++++++++++++++++++++++++++++++--
+ t/t3210-pack-refs.sh |  2 +-
+ 2 files changed, 36 insertions(+), 3 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 51915a8..ff4c5f1 100644
+index ed54ed4..2957f6d 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -876,6 +876,13 @@ void invalidate_ref_cache(const char *submodule)
- #define PEELED_LINE_LENGTH 42
+@@ -1901,8 +1901,41 @@ static int repack_without_ref_fn(struct ref_entry *entry, void *cb_data)
  
- /*
-+ * The packed-refs header line that we write out.  Perhaps other
-+ * traits will be added later.  The trailing space is required.
-+ */
-+static const char PACKED_REFS_HEADER[] =
-+	"# pack-refs with: peeled fully-peeled \n";
+ 	if (!strcmp(data->refname, entry->name))
+ 		return 0;
+-	if (!ref_resolves_to_object(entry))
+-		return 0; /* Skip broken refs */
++	if (entry->flag & REF_ISBROKEN) {
++		/* This shouldn't happen to packed refs. */
++		error("%s is broken!", entry->name);
++		return 0;
++	}
++	if (!has_sha1_file(entry->u.value.sha1)) {
++		unsigned char sha1[20];
++		int flags;
 +
-+/*
-  * Parse one line from a packed-refs file.  Write the SHA1 to sha1.
-  * Return a pointer to the refname within the line (null-terminated),
-  * or NULL if there was a problem.
-@@ -1390,6 +1397,12 @@ static enum peel_status peel_object(const unsigned char *name, unsigned char *sh
- 
- /*
-  * Peel the entry (if possible) and return its new peel_status.
-+ *
-+ * It is OK to call this function with a packed reference entry that
-+ * might be stale and might even refer to an object that has since
-+ * been garbage-collected.  In such a case, if the entry has
-+ * REF_KNOWS_PEELED then leave the status unchanged and return
-+ * PEEL_PEELED or PEEL_NON_TAG; otherwise, return PEEL_INVALID.
-  */
- static enum peel_status peel_entry(struct ref_entry *entry)
- {
-@@ -1992,6 +2005,15 @@ static int repack_ref_fn(struct ref_entry *entry, void *cb_data)
- 	if (len > sizeof(line))
- 		die("too long a refname '%s'", entry->name);
- 	write_or_die(*fd, line, len);
-+	if (!peel_entry(entry)) {
-+		/* This reference could be peeled; write the peeled value: */
-+		if (snprintf(line, sizeof(line), "^%s\n",
-+			     sha1_to_hex(entry->u.value.peeled)) !=
-+		    PEELED_LINE_LENGTH)
-+			die("internal error");
-+		write_or_die(*fd, line, PEELED_LINE_LENGTH);
++		if (read_ref_full(entry->name, sha1, 0, &flags))
++			/* We should at least have found the packed ref. */
++			die("Internal error");
++		if ((flags & REF_ISSYMREF) || !(flags & REF_ISPACKED))
++			/*
++			 * This packed reference is overridden by a
++			 * loose reference, so it is OK that its value
++			 * is no longer valid; for example, it might
++			 * refer to an object that has been garbage
++			 * collected.  For this purpose we don't even
++			 * care whether the loose reference itself is
++			 * invalid, broken, symbolic, etc.  Silently
++			 * omit the packed reference from the output.
++			 */
++			return 0;
++		/*
++		 * There is no overriding loose reference, so the fact
++		 * that this reference doesn't refer to a valid object
++		 * indicates some kind of repository corruption.
++		 * Report the problem, then omit the reference from
++		 * the output.
++		 */
++		error("%s does not point to a valid object!", entry->name);
++		return 0;
 +	}
 +
- 	return 0;
- }
- 
-@@ -2022,6 +2044,7 @@ static int repack_without_ref(const char *refname)
- 		rollback_lock_file(&packlock);
- 		return 0;
- 	}
-+	write_or_die(fd, PACKED_REFS_HEADER, strlen(PACKED_REFS_HEADER));
- 	do_for_each_entry_in_dir(packed, 0, repack_ref_fn, &fd);
- 	return commit_lock_file(&packlock);
- }
-diff --git a/t/t3211-peel-ref.sh b/t/t3211-peel-ref.sh
-index cca1acb..3b7caca 100755
---- a/t/t3211-peel-ref.sh
-+++ b/t/t3211-peel-ref.sh
-@@ -61,7 +61,7 @@ test_expect_success 'refs are peeled outside of refs/tags (old packed)' '
- 	test_cmp expect actual
+ 	len = snprintf(line, sizeof(line), "%s %s\n",
+ 		       sha1_to_hex(entry->u.value.sha1), entry->name);
+ 	/* this should not happen but just being defensive */
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index c032d88..559f602 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -142,7 +142,7 @@ test_expect_success 'delete ref with dangling packed version' '
+ 	test_cmp /dev/null result
  '
  
--test_expect_failure 'peeled refs survive deletion of packed ref' '
-+test_expect_success 'peeled refs survive deletion of packed ref' '
+-test_expect_failure 'delete ref while another dangling packed ref' '
++test_expect_success 'delete ref while another dangling packed ref' '
+ 	git branch lamb &&
+ 	git commit --allow-empty -m "future garbage" &&
  	git pack-refs --all &&
- 	cp .git/packed-refs fully-peeled &&
- 	git branch yadda &&
 -- 
 1.8.2.1
