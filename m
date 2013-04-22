@@ -1,83 +1,113 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: [PATCH] zlib: fix compilation failures with Sun C Compilaer
-Date: Mon, 22 Apr 2013 18:18:40 +0200
-Message-ID: <97eabaedd6cd7d876812474a35fa2d3d63dfec4a.1366647415.git.stefano.lattarini@gmail.com>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 22 18:18:59 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
+Date: Mon, 22 Apr 2013 09:32:58 -0700
+Message-ID: <7vk3nupltx.fsf@alter.siamese.dyndns.org>
+References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
+	<87ppxmogdv.fsf@linux-k42r.v.cablecom.net>
+	<CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
+	<87wqruk2pj.fsf@linux-k42r.v.cablecom.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Avery Pennarun <apenwarr@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Apr 22 18:33:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUJSE-0005ig-2l
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 18:18:58 +0200
+	id 1UUJg3-0008Uj-2w
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 18:33:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753360Ab3DVQSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 12:18:53 -0400
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:41716 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753301Ab3DVQSx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 12:18:53 -0400
-Received: by mail-wg0-f52.google.com with SMTP id k13so1042358wgh.31
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 09:18:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=Ao+cBzC/sR4Rdd1XALB5qiYLD9QMYMRQSCUqEbEb38c=;
-        b=nujRrPz9y7pKkgLwuaipQlxOF13jXRJbdjFgk00r58fFqPFJhHy0H0/1q0GTSvOAu+
-         g+x7lnjnsYoJltxIUhVs3f+RBRiXZ7k1S2biy0wIRVyuackqW/R3Cwwk87MJ6SVv6LDl
-         iWio0yql8napdG5GMSSdpBjfYwFDwdLfkVyODlHkqAOXlRTfenBB0navLF7noAqUfpHG
-         BzkbNamHZ2xrJcqrVV0eEFVaSVkjuWubz9A6y0y1nPpYRpoCpgRFCrUby/Il5ZbzdLyy
-         uq3/nFJom/Hq9W9CTxfQEhcMIDjptiyMPxl9lUNjWtrgKh9ZQpaYJUDWJiq4XWSwfDFl
-         F/mQ==
-X-Received: by 10.180.21.193 with SMTP id x1mr30172876wie.31.1366647528851;
-        Mon, 22 Apr 2013 09:18:48 -0700 (PDT)
-Received: from localhost.localdomain (host93-95-dynamic.6-79-r.retail.telecomitalia.it. [79.6.95.93])
-        by mx.google.com with ESMTPS id d8sm23036171wiv.10.2013.04.22.09.18.46
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 22 Apr 2013 09:18:47 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.389.gcaa7d79
+	id S1752840Ab3DVQdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 12:33:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65523 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752209Ab3DVQdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 12:33:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D27E316C37;
+	Mon, 22 Apr 2013 16:33:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Pwa+ozTLH2whZgtn0cmi+e6ZCeA=; b=CwREde
+	b+bDGQbCeyzKRWBH5jKQoBGGOHMamK51AikhxZnkk0R/1QL0JEsNrQcWSdRTd4wI
+	/nZPF0+BU9UMq+5U93+VqsDt/uVVrxSrZnRhptM09ITABTivxYlCmFbC6N+xPEFp
+	jYswtBn2JtsCwFCtPOoN+2kBmehqgMRgOhrX0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WfcF1f9hX6LtJ4quX1lF3O3IjihbAru9
+	Vckd6d2jrINnWDNfhBGV0OfDiigJIgi4yGfdd7urN4DHK5PdAHmKg95CeVZAPDWD
+	TiuFnkb9GsYDmNA+rWfoxItvtDVQ8efipS1UzQMc5tluKX8mv5F6Vf28ya2/Xggo
+	Vf4IYrFclmw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6C9D16C34;
+	Mon, 22 Apr 2013 16:33:06 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DC09C16C27;
+	Mon, 22 Apr 2013 16:32:59 +0000 (UTC)
+In-Reply-To: <87wqruk2pj.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
+	of "Mon, 22 Apr 2013 17:24:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4BAE0520-AB6A-11E2-B781-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222037>
 
-Do this by removing a couple of useless return statements.  Without this
-change, compilation with Sun C Compiler 5.9 (SunOS_i386 Patch 124868-15
-2010/08/11) fails with the following message:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-  "zlib.c", line 192: void function cannot return value
-  "zlib.c", line 201: void function cannot return value
-  cc: acomp failed for zlib.c
+> So (I think?) in the above you claim that $USER interprets
+>
+>   git log -- README.md
+>
+> as
+>
+>   Show me the history of README.md.
+>
+> But there's no such thing as the history of a file!  The command instead
+> says
+>
+>   If I filter all history for only changes affecting a path 'README.md'
+>   in the root of the repository[1], then what does it look like?
 
-Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
----
- zlib.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Correct.  The "design principle" I did not quote from your message
+comes from one of the most important messages in the list archive
+($gmane/217).
 
-diff --git a/zlib.c b/zlib.c
-index bbaa081..61e6df0 100644
---- a/zlib.c
-+++ b/zlib.c
-@@ -189,7 +189,7 @@ void git_deflate_init_gzip(git_zstream *strm, int level)
- 	 * Use default 15 bits, +16 is to generate gzip header/trailer
- 	 * instead of the zlib wrapper.
- 	 */
--	return do_git_deflate_init(strm, level, 15 + 16);
-+	do_git_deflate_init(strm, level, 15 + 16);
- }
- 
- void git_deflate_init_raw(git_zstream *strm, int level)
-@@ -198,7 +198,7 @@ void git_deflate_init_raw(git_zstream *strm, int level)
- 	 * Use default 15 bits, negate the value to get raw compressed
- 	 * data without zlib header and trailer.
- 	 */
--	return do_git_deflate_init(strm, level, -15);
-+	do_git_deflate_init(strm, level, -15);
- }
- 
- int git_deflate_abort(git_zstream *strm)
--- 
-1.8.1.rc3.897.gb3600c3
+Three issues with "--follow" are:
+
+ (1) It uses the given pathname as single pathspec and drill down
+     the same way without "--follow" until it notices the path
+     disappears and until then there is no attempt to detect renames
+     is made.  And it only does -M variant of rename detection
+
+ (2) The "same way" in (1) includes the merge simplification to cull
+     side branches if one parent matches the end result.  In a
+     history where the first parent of a merge M, i.e. M^1, did not
+     have path F, its second parent M^2 had path F, and the merge
+     result M deposited the contents of M^2:F at M:D/F, then running
+     "log --follow F" starting from M would notice that the end
+     result M did not have F in it, which is shared with its first
+     parent M^1, and culls the side branch M^2.  The --full-history
+     option may let you keep the history leading to M^2, though.
+
+ (3) When (1) notices that the path being followed did not exist in
+     any of the parents (be it a merge or a non-merge) and finds a
+     different path with a similar looking content, it _switches_
+     the pathspec to it, but the single pathspec it uses is a global
+     state and affects traversals of other ancestry paths at the
+     same time.  Because of this, "--follow" will not work correctly
+     in a history that contains merges.  It often _appears_ to work
+     only by accident.
+
+The first two are relatively minor (the second is not even an
+issue).
+
+To solve the last one, you would need to keep track of which path it
+is following per traversal path.
