@@ -1,113 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
-Date: Mon, 22 Apr 2013 09:32:58 -0700
-Message-ID: <7vk3nupltx.fsf@alter.siamese.dyndns.org>
-References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
-	<87ppxmogdv.fsf@linux-k42r.v.cablecom.net>
-	<CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
-	<87wqruk2pj.fsf@linux-k42r.v.cablecom.net>
+Subject: Re: [PATCH] zlib: fix compilation failures with Sun C Compilaer
+Date: Mon, 22 Apr 2013 09:48:16 -0700
+Message-ID: <7vfvyipl4f.fsf@alter.siamese.dyndns.org>
+References: <97eabaedd6cd7d876812474a35fa2d3d63dfec4a.1366647415.git.stefano.lattarini@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Apr 22 18:33:16 2013
+Cc: git@vger.kernel.org
+To: Stefano Lattarini <stefano.lattarini@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 22 18:48:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUJg3-0008Uj-2w
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 18:33:15 +0200
+	id 1UUJui-0005VK-4g
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 18:48:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752840Ab3DVQdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 12:33:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65523 "EHLO
+	id S1753942Ab3DVQsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 12:48:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60875 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752209Ab3DVQdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 12:33:08 -0400
+	id S1753642Ab3DVQsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 12:48:19 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D27E316C37;
-	Mon, 22 Apr 2013 16:33:06 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 10DE5184BE;
+	Mon, 22 Apr 2013 16:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Pwa+ozTLH2whZgtn0cmi+e6ZCeA=; b=CwREde
-	b+bDGQbCeyzKRWBH5jKQoBGGOHMamK51AikhxZnkk0R/1QL0JEsNrQcWSdRTd4wI
-	/nZPF0+BU9UMq+5U93+VqsDt/uVVrxSrZnRhptM09ITABTivxYlCmFbC6N+xPEFp
-	jYswtBn2JtsCwFCtPOoN+2kBmehqgMRgOhrX0=
+	:content-type; s=sasl; bh=n/FHxQWMAB8p48ftIwJ6apza3ks=; b=j2InQF
+	Iy97IcelIvu3f+s0eXU6ikPai6GLIL1wW4+KcwuCaV8dnDodH6gKEFyaGKvi+7wM
+	fshGqOnzQ1qvHxOEAaZnvIwoEfPCfcMoVOCELA7Xp0McqxVdHuNwF7uVEYyA1A/q
+	1M58N+8nP5YVG7A6BYwViImhkvOqLN9lM2wew=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WfcF1f9hX6LtJ4quX1lF3O3IjihbAru9
-	Vckd6d2jrINnWDNfhBGV0OfDiigJIgi4yGfdd7urN4DHK5PdAHmKg95CeVZAPDWD
-	TiuFnkb9GsYDmNA+rWfoxItvtDVQ8efipS1UzQMc5tluKX8mv5F6Vf28ya2/Xggo
-	Vf4IYrFclmw=
+	:content-type; q=dns; s=sasl; b=PIcYjGGzeg0qWuDWlyj9NbkJuZ/S20HR
+	5gZeTWj3nuvFCMycMlYJ3TsEgq42A7SAGcwE7h6BRFFF+pUvXvtNXIlZviWFQtBO
+	mEVHX/GhX0njkQmBJocrjJCoQl3NOmfbkv2KrKGOLVQnUE7k37GmeewIBJ4+K/ib
+	32zczr3xG9U=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6C9D16C34;
-	Mon, 22 Apr 2013 16:33:06 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05607184BC;
+	Mon, 22 Apr 2013 16:48:19 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DC09C16C27;
-	Mon, 22 Apr 2013 16:32:59 +0000 (UTC)
-In-Reply-To: <87wqruk2pj.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
-	of "Mon, 22 Apr 2013 17:24:56 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E31D184BA;
+	Mon, 22 Apr 2013 16:48:18 +0000 (UTC)
+In-Reply-To: <97eabaedd6cd7d876812474a35fa2d3d63dfec4a.1366647415.git.stefano.lattarini@gmail.com>
+	(Stefano Lattarini's message of "Mon, 22 Apr 2013 18:18:40 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4BAE0520-AB6A-11E2-B781-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6F2D2362-AB6C-11E2-802C-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222038>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+Stefano Lattarini <stefano.lattarini@gmail.com> writes:
 
-> So (I think?) in the above you claim that $USER interprets
+> Do this by removing a couple of useless return statements.  Without this
+> change, compilation with Sun C Compiler 5.9 (SunOS_i386 Patch 124868-15
+> 2010/08/11) fails with the following message:
 >
->   git log -- README.md
+>   "zlib.c", line 192: void function cannot return value
+>   "zlib.c", line 201: void function cannot return value
+>   cc: acomp failed for zlib.c
+
+Thanks for catching a recent regression in the mainline before any
+tagged release is made out of it.  Very much appreciated.
+
 >
-> as
+> Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
+> ---
+>  zlib.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
->   Show me the history of README.md.
->
-> But there's no such thing as the history of a file!  The command instead
-> says
->
->   If I filter all history for only changes affecting a path 'README.md'
->   in the root of the repository[1], then what does it look like?
-
-Correct.  The "design principle" I did not quote from your message
-comes from one of the most important messages in the list archive
-($gmane/217).
-
-Three issues with "--follow" are:
-
- (1) It uses the given pathname as single pathspec and drill down
-     the same way without "--follow" until it notices the path
-     disappears and until then there is no attempt to detect renames
-     is made.  And it only does -M variant of rename detection
-
- (2) The "same way" in (1) includes the merge simplification to cull
-     side branches if one parent matches the end result.  In a
-     history where the first parent of a merge M, i.e. M^1, did not
-     have path F, its second parent M^2 had path F, and the merge
-     result M deposited the contents of M^2:F at M:D/F, then running
-     "log --follow F" starting from M would notice that the end
-     result M did not have F in it, which is shared with its first
-     parent M^1, and culls the side branch M^2.  The --full-history
-     option may let you keep the history leading to M^2, though.
-
- (3) When (1) notices that the path being followed did not exist in
-     any of the parents (be it a merge or a non-merge) and finds a
-     different path with a similar looking content, it _switches_
-     the pathspec to it, but the single pathspec it uses is a global
-     state and affects traversals of other ancestry paths at the
-     same time.  Because of this, "--follow" will not work correctly
-     in a history that contains merges.  It often _appears_ to work
-     only by accident.
-
-The first two are relatively minor (the second is not even an
-issue).
-
-To solve the last one, you would need to keep track of which path it
-is following per traversal path.
+> diff --git a/zlib.c b/zlib.c
+> index bbaa081..61e6df0 100644
+> --- a/zlib.c
+> +++ b/zlib.c
+> @@ -189,7 +189,7 @@ void git_deflate_init_gzip(git_zstream *strm, int level)
+>  	 * Use default 15 bits, +16 is to generate gzip header/trailer
+>  	 * instead of the zlib wrapper.
+>  	 */
+> -	return do_git_deflate_init(strm, level, 15 + 16);
+> +	do_git_deflate_init(strm, level, 15 + 16);
+>  }
+>  
+>  void git_deflate_init_raw(git_zstream *strm, int level)
+> @@ -198,7 +198,7 @@ void git_deflate_init_raw(git_zstream *strm, int level)
+>  	 * Use default 15 bits, negate the value to get raw compressed
+>  	 * data without zlib header and trailer.
+>  	 */
+> -	return do_git_deflate_init(strm, level, -15);
+> +	do_git_deflate_init(strm, level, -15);
+>  }
+>  
+>  int git_deflate_abort(git_zstream *strm)
