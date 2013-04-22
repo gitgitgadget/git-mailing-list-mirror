@@ -1,86 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/5] check-ignore: allow incremental streaming of queries via --stdin
-Date: Mon, 22 Apr 2013 11:03:44 -0700
-Message-ID: <7vbo96phmn.fsf@alter.siamese.dyndns.org>
-References: <20130411110511.GB24296@pacific.linksys.moosehall>
-	<1365681913-7059-1-git-send-email-git@adamspiers.org>
-	<1365681913-7059-4-git-send-email-git@adamspiers.org>
-	<20130411191132.GC3177@sigill.intra.peff.net>
-	<20130411203141.GB21091@pacific.linksys.moosehall>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
+Date: Mon, 22 Apr 2013 20:18:56 +0200
+Message-ID: <vpqzjwqzawf.fsf@grenoble-inp.fr>
+References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
+	<87ppxmogdv.fsf@linux-k42r.v.cablecom.net>
+	<CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
+	<87wqruk2pj.fsf@linux-k42r.v.cablecom.net>
+	<7vk3nupltx.fsf@alter.siamese.dyndns.org>
+	<CALkWK0madWxOSraZw6u8U_afVeK8tyMB_+D59n1vSBmobxGqqg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Mon Apr 22 20:03:55 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Git List <git@vger.kernel.org>,
+	Avery Pennarun <apenwarr@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 22 20:19:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUL5m-0007V8-32
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 20:03:54 +0200
+	id 1UULKt-0003JJ-6C
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 20:19:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754462Ab3DVSDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 14:03:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38573 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754369Ab3DVSDt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 14:03:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DEB318E95;
-	Mon, 22 Apr 2013 18:03:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=txd4os0jdzXSGdbaWHWEnbJ/610=; b=jKCLHW
-	zQXNWus3RkaHv1L31huhivrdTKRGRKZFIQsSdoJt3RiehmAUplOheq02cU4Hse6d
-	wRrVHc82L5pUbk1SfS2bc/0/P6XGPUdPWdwt2J34bYxcmrVh3DotaICBupBMnLd4
-	eclzkyB1vywjUbENHeERACGBqbSmFSaeChcWQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XOgmGY/Ywxy2emNTDsuM5oKKS6oGK0oc
-	IFTRmCj6iUqo13QGzlg+ZUtCGeEuPh78CNmG9RVDyUYMZkepXeq4wFoRxaRzL5I/
-	zENMaTLpCPQOUMfdJVd8s6e3atEMPTDLyw359tNjWLncOIYHaR4mqiBgH4bN1WUP
-	VBB4SQ9HDao=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4557718E94;
-	Mon, 22 Apr 2013 18:03:47 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6AFC18E93;
-	Mon, 22 Apr 2013 18:03:46 +0000 (UTC)
-In-Reply-To: <20130411203141.GB21091@pacific.linksys.moosehall> (Adam Spiers's
-	message of "Thu, 11 Apr 2013 21:31:41 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FA36DE58-AB76-11E2-8A6B-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754513Ab3DVSTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 14:19:14 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50311 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754496Ab3DVSTK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 14:19:10 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r3MIIst8021019
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 22 Apr 2013 20:18:54 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UULKK-0000th-O0; Mon, 22 Apr 2013 20:18:56 +0200
+In-Reply-To: <CALkWK0madWxOSraZw6u8U_afVeK8tyMB_+D59n1vSBmobxGqqg@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 22 Apr 2013 23:30:21 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 22 Apr 2013 20:18:54 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r3MIIst8021019
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1367259536.65039@7lq4vpdQX9LKa1F569yxgw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222044>
 
-Adam Spiers <git@adamspiers.org> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> On Thu, Apr 11, 2013 at 03:11:32PM -0400, Jeff King wrote:
->> I always get a little nervous with sleeps in the test suite, as they are
->> indicative that we are trying to avoid some race condition, which means
->> that the test can fail when the system is under load, or when a tool
->> like valgrind is used which drastically alters the timing (e.g., if
->> check-ignore takes longer than 1 second to produce its answer, we may
->> fail here).
->
-> Agreed, especially here where my btrfs filesystems see fit to kindly
-> freeze my system for a few seconds many times each day :-/
-> 
->> Is there a simpler way to test this?
->> 
->> Like:
->> ...
-> I'll re-roll using your approach.
+> Meanwhile, you're evading the issue of assuming that all trees are
+> read into /, and are really representing the same project's history,
+> while this is not the case.
 
-I think I missed this one and it already is in 'next'.
+This is fundamenally how Git works. Git works with commit objects, each
+commit object points to a tree object that represent "/" at this commit.
 
-I'll hold it back so please make your re-roll into an incremental
-update.
+When you do a subtree merge, you include the tree that was in "/" in a
+subtree of the master project. Files used to exist as /file, and now
+exist as /subtree/file. There is nothing recording that the new
+/subtree/file comes from /file in its second parent. Call this a
+renaming or not, but "git log subtree/file" won't show you changes
+touching "/file" by default, and this is the case for the history of the
+subproject you are merging.
 
-Thanks.
+A subtree merge is really a rename of the subproject's file plus a
+merge, done in the same commit. Try doing something like
+
+mkdir -p subproject
+git mv * subproject/
+git commit
+
+in your subproject before doing a merge, you'll get the same result,
+except there will be one more commit.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
