@@ -1,94 +1,92 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 00/16] remote-hg: second round of improvements
-Date: Mon, 22 Apr 2013 16:55:08 -0500
-Message-ID: <1366667724-567-1-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 01/16] remote-helpers: avoid has_key
+Date: Mon, 22 Apr 2013 16:55:09 -0500
+Message-ID: <1366667724-567-2-git-send-email-felipe.contreras@gmail.com>
+References: <1366667724-567-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Simon Ruderich <simon@ruderich.org>,
+	Dusty Phillips <dusty@linux.ca>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 22 23:57:02 2013
+X-From: git-owner@vger.kernel.org Mon Apr 22 23:57:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUOjN-0000Mt-HE
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 23:57:01 +0200
+	id 1UUOjz-0001Cs-I7
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 23:57:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753283Ab3DVV4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 17:56:51 -0400
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:37367 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752865Ab3DVV4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 17:56:50 -0400
-Received: by mail-oa0-f45.google.com with SMTP id o17so6430619oag.18
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 14:56:49 -0700 (PDT)
+	id S1753826Ab3DVV5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 17:57:08 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:53419 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753115Ab3DVV5G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 17:57:06 -0400
+Received: by mail-oa0-f41.google.com with SMTP id g12so5644613oah.0
+        for <git@vger.kernel.org>; Mon, 22 Apr 2013 14:57:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=ksaX7GBvLpR+WSxSWdJRvxyMrZSCa2TLLxjsHAZB+GQ=;
-        b=KHH5v9b00iyrh7JVV0BuIc10hOERkpND0KNpZ+yah6mrqRCQeL+YTG/9eaqHrOUyvK
-         daPvdkWFddAjehaf/wbYS1vjq+mYvS6UgCiGDBqu8BxQUCs3XWUeGrdXzI2+f4axqxha
-         068w8sALFNOHJqB6mxHnY5h/iARpB1YIt1/5pcVajRDpCULsxOl8aaL/2BXLsRlGCQde
-         9+u+E30mkJ+2HtXjhcr0XAq13hFoXcPqQCTcTS26Tv7ES2rIjHZgf4uYP8Ke4OIw73tB
-         Cfua/nJjSg1b72D2noFbgfa9XLv3X5P7k2jB60uwgH2kgFuG5nCZzrpGUo5IyePuG0Go
-         QlUQ==
-X-Received: by 10.60.162.102 with SMTP id xz6mr16046558oeb.69.1366667809323;
-        Mon, 22 Apr 2013 14:56:49 -0700 (PDT)
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=G8Ar5MFLY32wE6W7z36Suvm468YqLGdONJQLYuaGy6Y=;
+        b=SK0xjhWhcYwz6e92X1noKCxYbPGevfmKVRtWzyNqX9dAKCiB1CqRBzx7Bs7EBy6fCP
+         R5+0r8UqW0PXPmitpgPbC0P7UWJ/rddgXfNViP8Np+xCzNsspUs4eQ5Efg8DaFjhy2GT
+         FliOAGM3Z07bhQ5rwSZhEJtmD5vGlW89mVRr2GWT3FyH2KS4HE3pAXPVUxMc5lmhJ6K/
+         sTertFa9tFDspLfSDj38G8N2vCTKWNtwbfyMVP8zxlGM/DCzG5rNLF/XzY8Vc24QlAjV
+         CdFQ3Kou3LbwlOXxGPrk/RbafF+ZViaEqI5qbCr4tKjFbOX/wnwgX+LMQXnEAURTzKux
+         yDgw==
+X-Received: by 10.182.44.227 with SMTP id h3mr13327600obm.16.1366667825160;
+        Mon, 22 Apr 2013 14:57:05 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id dt3sm19780218obb.12.2013.04.22.14.56.41
+        by mx.google.com with ESMTPS id fl7sm19108496obb.0.2013.04.22.14.56.56
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 22 Apr 2013 14:56:48 -0700 (PDT)
+        Mon, 22 Apr 2013 14:57:04 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.1.790.g4588561
+In-Reply-To: <1366667724-567-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222098>
 
-Hi,
+From: Dusty Phillips <dusty@linux.ca>
 
-Now that the safter first round is merged to master, it's time for the second
-round which is a little tricker. Most of the patches should be safe, but the
-later ones might be not. All the tests pass, even gitifyhg ones, so everything
-seems to be fine, but we shall see.
+It is deprecated.
 
-Among the important changes are:
+[fc: do the same in remote-bzr]
 
- * Proper support for tags (they are global, and we can push them)
- * Improved e-mail sanitaztion (a bit similar to gitifyhg, but better)
- * Support for hg schemes (like bb://felipec/repo)
- * Support for tags, bookmarks and branches with spaces
- * Performance improvements
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/remote-helpers/git-remote-bzr | 2 +-
+ contrib/remote-helpers/git-remote-hg  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Good stuff we should probably merge to master if there are no issues.
-
-Cheers.
-
-Dusty Phillips (1):
-  remote-helpers: avoid has_key
-
-Felipe Contreras (15):
-  remote-hg: safer bookmark pushing
-  remote-hg: use python urlparse
-  remote-hg: properly mark branches up-to-date
-  remote-hg: add branch_tip() helper
-  remote-hg: add support for tag objects
-  remote-hg: custom method to write tags
-  remote-hg: write tags in the appropriate branch
-  remote-hg: add custom local tag write code
-  remote-hg: improve email sanitation
-  remote-hg: add support for schemes extension
-  remote-hg: don't update bookmarks unnecessarily
-  remote-hg: allow refs with spaces
-  remote-hg: small performance improvement
-  remote-hg: use marks instead of inlined files
-  remote-hg: strip extra newline
-
- contrib/remote-helpers/git-remote-bzr |   2 +-
- contrib/remote-helpers/git-remote-hg  | 167 +++++++++++++++++++++++++++-------
- contrib/remote-helpers/test-hg.sh     |   8 +-
- 3 files changed, 141 insertions(+), 36 deletions(-)
-
+diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+index aa7bc97..cc6609b 100755
+--- a/contrib/remote-helpers/git-remote-bzr
++++ b/contrib/remote-helpers/git-remote-bzr
+@@ -94,7 +94,7 @@ class Marks:
+         return self.last_mark
+ 
+     def is_marked(self, rev):
+-        return self.marks.has_key(rev)
++        return str(rev) in self.marks
+ 
+     def new_mark(self, rev, mark):
+         self.marks[rev] = mark
+diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+index 5481331..2cd1996 100755
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -129,7 +129,7 @@ class Marks:
+         self.last_mark = mark
+ 
+     def is_marked(self, rev):
+-        return self.marks.has_key(str(rev))
++        return str(rev) in self.marks
+ 
+     def get_tip(self, branch):
+         return self.tips.get(branch, 0)
 -- 
 1.8.2.1.790.g4588561
