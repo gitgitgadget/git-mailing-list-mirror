@@ -1,68 +1,72 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
-Date: Mon, 22 Apr 2013 22:59:48 +0530
-Message-ID: <CALkWK0k0LbAnkhAAqdeAvBnCig_HO+bT+WiQuQQ3Fgc=FzFtRw@mail.gmail.com>
-References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
- <87ppxmogdv.fsf@linux-k42r.v.cablecom.net> <CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
- <87wqruk2pj.fsf@linux-k42r.v.cablecom.net> <CALkWK0mUH2m5zJ4MwPWC85CsZZ=2RODumLvsF9q3rLj-+d7vBw@mail.gmail.com>
- <CALkWK0n5gaz3A7kHT6+5z3YkYdpgU5p6Pv4heMbLzikTbROwkA@mail.gmail.com>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: [PATCH] zlib: fix compilation failures with Sun C Compilaer
+Date: Mon, 22 Apr 2013 19:50:02 +0200
+Message-ID: <5175784A.5060805@gmail.com>
+References: <97eabaedd6cd7d876812474a35fa2d3d63dfec4a.1366647415.git.stefano.lattarini@gmail.com> <7vfvyipl4f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Apr 22 19:30:37 2013
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 22 19:50:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUKZW-00047n-CJ
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 19:30:34 +0200
+	id 1UUKsZ-0005Ks-Dl
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 19:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754011Ab3DVRaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 13:30:30 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:54392 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753080Ab3DVRa3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 13:30:29 -0400
-Received: by mail-ie0-f178.google.com with SMTP id aq17so5836914iec.23
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 10:30:28 -0700 (PDT)
+	id S1753735Ab3DVRuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 13:50:08 -0400
+Received: from mail-we0-f181.google.com ([74.125.82.181]:37706 "EHLO
+	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753536Ab3DVRuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 13:50:07 -0400
+Received: by mail-we0-f181.google.com with SMTP id m1so231390wea.40
+        for <git@vger.kernel.org>; Mon, 22 Apr 2013 10:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=1osmFy7lg7M8XrB+zNHP3PnLiIo/8ueaauYvom7v3zQ=;
-        b=B8fBKxJ8+WA3keXu7s1t3xK6D2KNRvd6lnd+pp2Ve7lKygP8p/IXh5+4VL8Ym6P6Ti
-         SHna5gUXDP4wOQ5b/vPEjxuHiFdj98uLgNtzKRsV+0VxIB5j+nKH+/UXqNnPNxgcj02g
-         q0fV/KRWSSu059nlf2kdWoO1g55uL297zFef38Vct5gFzPPE5kEIR0PIJllOyjVuXzpo
-         1WieYdWBPQgrApf7mzPOKAuz/eEfA2tZL8RZwjC+RA8T2PkcX45qG/jvcFkbz8ruTrKc
-         JyAhnD9mw7MEV0w/KhTDlIbaYjXOSZbLqJuQhjhLUkhJ+rz9ImXtj6JaIp9F4xxNN/aL
-         Lu7g==
-X-Received: by 10.50.17.166 with SMTP id p6mr8667133igd.12.1366651828841; Mon,
- 22 Apr 2013 10:30:28 -0700 (PDT)
-Received: by 10.64.63.48 with HTTP; Mon, 22 Apr 2013 10:29:48 -0700 (PDT)
-In-Reply-To: <CALkWK0n5gaz3A7kHT6+5z3YkYdpgU5p6Pv4heMbLzikTbROwkA@mail.gmail.com>
+        h=x-received:message-id:date:from:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Pn4HYgRp7MzspslTEjLQss6UDvf+f5cvjhuvow2LnY0=;
+        b=dQhWpKU8Z0DRslCtQbdy1cdcVRyZx/liXDlOwOGJRHynZuv+PTYqdF+BobSOCdXTC7
+         AozW/ROaBYSyuu1B7CX9qdt3e/vpqSDlK04mS+y2V4jhqy3eSfeX5DWXUhxvvVf8W1YO
+         awQSON4BKfC8ow9Lh8bE2FcW/zzFOi+W6C6C7Ie3JKIbRShrVlr734rwxTsAvx9p0D7H
+         MziwD4s5RwVtJxJpjufkJs3PJSalnhhebzEan4RJpDFGJXIYmS+7B2l6GkTscjKBqYfa
+         OcGU+5gxt4mBMNJZL2RhfQcaW51waNjNeEAg7dsmAvzVlA3hisB3pdAlGXZzQte4MAwj
+         WVHQ==
+X-Received: by 10.180.21.167 with SMTP id w7mr31294647wie.2.1366653005283;
+        Mon, 22 Apr 2013 10:50:05 -0700 (PDT)
+Received: from [192.168.178.20] (host93-95-dynamic.6-79-r.retail.telecomitalia.it. [79.6.95.93])
+        by mx.google.com with ESMTPS id d8sm23559135wiv.10.2013.04.22.10.50.03
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 22 Apr 2013 10:50:04 -0700 (PDT)
+In-Reply-To: <7vfvyipl4f.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222041>
 
-Ramkumar Ramachandra wrote:
-> And if you're still not convinced, run 'git log HEAD^2 -- README.md'
-> from the toplevel directory.  You'll get the log of README.md from the
-> subproject.
+On 04/22/2013 06:48 PM, Junio C Hamano wrote:
+> Stefano Lattarini <stefano.lattarini@gmail.com> writes:
+> 
+>> Do this by removing a couple of useless return statements.  Without this
+>> change, compilation with Sun C Compiler 5.9 (SunOS_i386 Patch 124868-15
+>> 2010/08/11) fails with the following message:
+>>
+>>   "zlib.c", line 192: void function cannot return value
+>>   "zlib.c", line 201: void function cannot return value
+>>   cc: acomp failed for zlib.c
+> 
+> Thanks for catching a recent regression in the mainline before any
+> tagged release is made out of it.  Very much appreciated.
+>
+Actually, I tried to build the bleeding-edge git on Solaris to use it
+myself, rather than to test it ;-)  So, thanks to you and all the git
+contributors for continuously improving the package, thus making it
+worth to try to build and use the bleeding-edge version.
 
-On IRC, Thomas explained to me that mixing in changes from various
-branches into the pathspec will break this so-called determinism.  To
-try it out for yourself, do:
-
-    $ cd /tmp
-    $ git clone gh:trast/subtree-mainline-example
-    $ cd subtree-mainline-example
-    $ git log HEAD^2 -- sub # only lists the side changes
-    $ git log -- dir/sub # only lists the mainline changes
-
-What we should really expect is a mix of the two.
+Best regards,
+  Stefano
