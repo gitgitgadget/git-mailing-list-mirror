@@ -1,91 +1,129 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: [BUG] Silent data loss on merge with uncommited changes + renames
-Date: Mon, 22 Apr 2013 11:24:45 +0200
-Message-ID: <vpqobd6q5nm.fsf@grenoble-inp.fr>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 4/5] git-log.txt: rewrite note on why "--" may be required
+Date: Mon, 22 Apr 2013 11:36:22 +0200
+Message-ID: <871ua2sy95.fsf@linux-k42r.v.cablecom.net>
+References: <1366458313-7186-1-git-send-email-artagnon@gmail.com>
+	<1366458313-7186-5-git-send-email-artagnon@gmail.com>
+	<7vtxn0wf4j.fsf@alter.siamese.dyndns.org>
+	<7vmwsrqocu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 22 11:24:54 2013
+Cc: Git List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 22 11:36:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUCzV-0003vB-SK
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 11:24:54 +0200
+	id 1UUDAk-0006xb-SA
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 11:36:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755477Ab3DVJYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 05:24:49 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:58289 "EHLO shiva.imag.fr"
+	id S1754819Ab3DVJg0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 05:36:26 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:2535 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754733Ab3DVJYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 05:24:49 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r3M9OicM027986
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 22 Apr 2013 11:24:45 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UUCzN-0006NT-On; Mon, 22 Apr 2013 11:24:45 +0200
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 22 Apr 2013 11:24:45 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r3M9OicM027986
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1367227485.28312@0hLV5JtZpUIM6HwNslNPwQ
+	id S1753157Ab3DVJgZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 05:36:25 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 22 Apr
+ 2013 11:36:22 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS12.d.ethz.ch (172.31.38.212) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Mon, 22 Apr 2013 11:36:22 +0200
+In-Reply-To: <7vmwsrqocu.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 21 Apr 2013 19:40:49 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222002>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Following the discussion on "merge with uncommited changes" inside the
-"git pull --autostash" thread, I did a bit of testing, and encountered a
-case with silent data loss. In short: merge a branch introducing changes
-to a file. If the file has been renamed in the current branch, then "git
-merge" follows the rename and brings changes to the renamed file, but
-uncommited changes in this file are overriden silently.
+> This is a minimalistic patch to fix the formatting.  I removed the
+> extra sentence after the enumeration and moved it to the end of the
+> main text, but somebody may have a better idea to persuade AsciiDoc
+> to format it in a more reasonable way while keeping the sentence
+> there.
+>
+> -- >8 --
+> Subject: line-log: fix documentation formatting
+>
+> The second paragraph of the added description for the -L option
+> "<start> and <end> can take one of these forms:", and the list of
+> forms that follow the headline, were indented one level too short,
+> due to the missing "+" to signal that the next paragraph continues
+> the previous one.
+>
+> Also "You can specify this option more than once" is about the -L
+> option, not about its various forms of starting and ending points.
+> Move it to the end of the main text.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/git-log.txt | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+> index 4850226..0959f9d 100644
+> --- a/Documentation/git-log.txt
+> +++ b/Documentation/git-log.txt
+> @@ -76,12 +76,11 @@ produced by --stat etc.
+>  	not give any pathspec limiters.  This is currently limited to
+>  	a walk starting from a single revision, i.e., you may only
+>  	give zero or one positive revision arguments.
+> -
+> +	You can specify this option more than once.
+> ++
+>  <start> and <end> can take one of these forms:
+>  
+>  include::line-range-format.txt[]
+> -You can specify this option more than once.
+> -
+>  
 
-I could have expected "git merge --abort" to fail, but the problem is
-really more serious here: data loss is done silently before giving me an
-opportunity to do or abort anything.
+Sorry for being a bit late to this.  I think it's a good solution;
+putting "You can specify this option more than once" after all the other
+text was probably worse because it gets lost down there.
 
-Reproduction script below:
+As for
 
-#! /bin/sh
+>  --full-line-diff::
+>  	Always print the interesting range even if the current commit
 
-# Create repo
-git init git.$$
-cd git.$$
-echo init > test.txt
-git add test.txt
-git commit -m init
+That's just stale and not currently implemented.  Sigh.  We should
+remove it.
 
-# Make a branch changing test.txt
-git checkout -b branch
-echo new > test.txt
-git commit -am new
+-- >8 --
+Subject: [PATCH] git-log(1): remove --full-line-diff description
 
-# Move test.txt on master
-git checkout master
-git mv test.txt moved.txt
-git commit -m move
+This option is a remnant of an earlier log -L version, and not
+currently implemented.  Remove it until (if at all) it is implemented
+again.
 
-# Make uncommited changes to moved.txt
-echo precious > moved.txt
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+---
+ Documentation/git-log.txt | 4 ----
+ 1 file changed, 4 deletions(-)
 
-# Merge loses uncommited content "precious" in "moved.txt" silently
-git merge --no-edit branch
-ls # lists just moved.txt
-git status # nothing to commit, working directory clean
-cat moved.txt # Says "new".
-
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 0959f9d..65707ce 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -82,10 +82,6 @@ produced by --stat etc.
+ 
+ include::line-range-format.txt[]
+ 
+---full-line-diff::
+-	Always print the interesting range even if the current commit
+-	does not change any line of the range.
+-
+ [\--] <path>...::
+ 	Show only commits that are enough to explain how the files
+ 	that match the specified paths came to be.  See "History
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.8.2.1.844.g59e84de.dirty
