@@ -1,127 +1,91 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: Premerging topics (was: [RFD] annnotating a pair of commit objects?)
-Date: Mon, 22 Apr 2013 11:23:37 +0200
-Message-ID: <CALWbr2ys4G=Dz+gOqT7-qxjX6KL5FqgfEJqrfmqUmW9HzGLESg@mail.gmail.com>
-References: <CALWbr2wocjqs1mpa+yuQ_Zw8m+SX24q6Pby3E3v3-jd-0w1pvQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: [BUG] Silent data loss on merge with uncommited changes + renames
+Date: Mon, 22 Apr 2013 11:24:45 +0200
+Message-ID: <vpqobd6q5nm.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 22 11:23:51 2013
+Content-Type: text/plain
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 22 11:24:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUCyQ-0002st-O8
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 11:23:47 +0200
+	id 1UUCzV-0003vB-SK
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 11:24:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755437Ab3DVJXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 05:23:40 -0400
-Received: from mail-qc0-f169.google.com ([209.85.216.169]:44775 "EHLO
-	mail-qc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753001Ab3DVJXi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 05:23:38 -0400
-Received: by mail-qc0-f169.google.com with SMTP id t2so2038646qcq.14
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 02:23:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=j9mNdwnWPM32QC5S2b5sExssffikCU54nF5Vnp2cFtI=;
-        b=HXhMXxZ/Iikq1m/l9TZ6BxQ6ZchjqX0AlYHAcdciGb8NRyzagn9uYBp6IooVc6kREY
-         PMh2RTDLF4otbaT6qIElqmuZ2NSn9ZCDcpyN5g+vQCugJyxSxsjgqycGxzQPIQD4g98B
-         xYWgXzraggn8+i041Ps6S0/IpKW/HzTTsX+9PPUetH8AB16JzDODbSSrZm6eGDlkrO0a
-         M/TueZ7nTDmp+Z6X73dtZvifJ58QKMEP5n6qz84UxlJME7sbD0BR+Yuiap+723e7w/9S
-         TAm6aQcw4RWYVkMkIcZXPGdmJoue91y1CihFDLDp/vHlcKQ2BTXPZRHlBxddjsr63eVj
-         WbdQ==
-X-Received: by 10.49.62.3 with SMTP id u3mr17519787qer.25.1366622617675; Mon,
- 22 Apr 2013 02:23:37 -0700 (PDT)
-Received: by 10.49.118.42 with HTTP; Mon, 22 Apr 2013 02:23:37 -0700 (PDT)
-In-Reply-To: <CALWbr2wocjqs1mpa+yuQ_Zw8m+SX24q6Pby3E3v3-jd-0w1pvQ@mail.gmail.com>
+	id S1755477Ab3DVJYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 05:24:49 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:58289 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754733Ab3DVJYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 05:24:49 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r3M9OicM027986
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 22 Apr 2013 11:24:45 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UUCzN-0006NT-On; Mon, 22 Apr 2013 11:24:45 +0200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 22 Apr 2013 11:24:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r3M9OicM027986
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1367227485.28312@0hLV5JtZpUIM6HwNslNPwQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222001>
 
-Any comment on that ? I think anyone using a "Topic Workflow" could
-use that feature and that it would be a nice addition to the project.
-Maybe I'm totally wrong in the proposal below (please tell me !), but
-there are some unanswered question that prevents me from starting (and
-I'd really like this to be discussed before actually starting).
+Hi,
 
-On Wed, Apr 10, 2013 at 10:35 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
->
-> The goal is to propose a structure for storing and pre-merging pairs of commits.
->
-> Data-structure
-> ==============
->
-> We could use a note ref to store the pre-merge information. Each commit
-> would be annotated with a blob containing the list of pre-merges (one
-> sha1 per line with sha1 pointing to a merge commit). The commit on the
-> other side of a merge would also be annotated.
->
-> The choice of the refname could be done like we do with notes:
-> - Have a default value
-> - Have a default value configured in config
-> - Use a specific value when merging/creating the pre-merges
->
-> Here are my concerns:
->
-> Pros
-> ----
-> 1. Notes allow dynamic annotation a commit
-> 2. If we manage to fix 4, we can easily download all pre-merges from a
-> remote host by fetching the ref (or clean by deleting the ref).
-> 3. Conflicts on pre-merge notes could probably be resolved by concatenation.
->
-> Cons
-> ----
-> 4. Checking connectivity means opening the blob and parsing it
-> 5. Regular notes and pre-merge notes have to be handled separately
-> because of 4.
->
-> I'm hoping we can keep the pros and avoid the cons, but I'm kind of
-> stuck here. Help would be really appreciated (or maybe this is a totally
-> wrong direction, and I would also like to know ;)
->
-> Merging (Using what we saved)
-> =============================
-> The goal is to merge branches J and B using existing pre-merges.
->
-> E0. Create an empty stack S
-> E1. Create set of commits 'J..B' and 'B..J' (that is probably already done)
-> E2. For each commit C in smallest(J..B, B..J), execute E3
-> E3. For each premerge P in notes-premerge(C), execute E4
-> E4. If one of both parents of P belongs to biggest(J..B, B..J), stack P in S
-> E5. Merge J and B using all pre-merges from S
->
-> Let's consider that |J..B| is smaller than |B..J|.
-> E0 is executed only once
-> E1 is O(|J..B| + |B..J|)
-> E2 is O(|J..B|)
-> E3 is O(|J..B| x the average number of pre-merge per commits P_avg)
-> E4 is executed for each parent (let's say it's two/constant, after all
-> the topic is "pair" of commits), so still O(|J..B| x P_avg)
-> E5 I don't know (how it can be done, and what would be the resulting
-> time complexity)
->
-> So the time cost for steps E0 to E4 is O(|J..B| + |B..J| x P_avg)
->
-> Tools (Save the pre-merges)
-> ===========================
->
-> Of course we need several tools to maintain the list of premerges, and
-> to easily compute them. For example, it would be nice to be able to do
-> something like:
->
->     $ git pre-merge topicA topicB topicC
->
-> to find, resolve and store all interactions between the topics. We could
-> then easily derive to something that would allow to pre-merge a new
-> topic with all topics already merged in master..pu (for example).
->
-> Anyway, this task is left for latter.
+Following the discussion on "merge with uncommited changes" inside the
+"git pull --autostash" thread, I did a bit of testing, and encountered a
+case with silent data loss. In short: merge a branch introducing changes
+to a file. If the file has been renamed in the current branch, then "git
+merge" follows the rename and brings changes to the renamed file, but
+uncommited changes in this file are overriden silently.
+
+I could have expected "git merge --abort" to fail, but the problem is
+really more serious here: data loss is done silently before giving me an
+opportunity to do or abort anything.
+
+Reproduction script below:
+
+#! /bin/sh
+
+# Create repo
+git init git.$$
+cd git.$$
+echo init > test.txt
+git add test.txt
+git commit -m init
+
+# Make a branch changing test.txt
+git checkout -b branch
+echo new > test.txt
+git commit -am new
+
+# Move test.txt on master
+git checkout master
+git mv test.txt moved.txt
+git commit -m move
+
+# Make uncommited changes to moved.txt
+echo precious > moved.txt
+
+# Merge loses uncommited content "precious" in "moved.txt" silently
+git merge --no-edit branch
+ls # lists just moved.txt
+git status # nothing to commit, working directory clean
+cat moved.txt # Says "new".
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
