@@ -1,79 +1,62 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 06/33] do_for_each_ref_in_dirs(): remove dead code
-Date: Mon, 22 Apr 2013 21:52:14 +0200
-Message-ID: <1366660361-21831-7-git-send-email-mhagger@alum.mit.edu>
-References: <1366660361-21831-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 22 21:54:39 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
+Date: Tue, 23 Apr 2013 01:24:16 +0530
+Message-ID: <CALkWK0kVDbyQBTSTbEDoVFs8E6JKWw3Z6L77NCXSb=FU8GNDkw@mail.gmail.com>
+References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
+ <87ppxmogdv.fsf@linux-k42r.v.cablecom.net> <CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
+ <87wqruk2pj.fsf@linux-k42r.v.cablecom.net> <CALkWK0mUH2m5zJ4MwPWC85CsZZ=2RODumLvsF9q3rLj-+d7vBw@mail.gmail.com>
+ <CALkWK0n5gaz3A7kHT6+5z3YkYdpgU5p6Pv4heMbLzikTbROwkA@mail.gmail.com>
+ <CALkWK0k0LbAnkhAAqdeAvBnCig_HO+bT+WiQuQQ3Fgc=FzFtRw@mail.gmail.com> <87zjwqpebl.fsf@hexa.v.cablecom.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Apr 22 21:55:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUMoq-0005rg-36
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 21:54:32 +0200
+	id 1UUMpJ-0006VR-JD
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 21:55:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755208Ab3DVTyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 15:54:23 -0400
-Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:53458 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755086Ab3DVTxh (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Apr 2013 15:53:37 -0400
-X-AuditID: 1207440f-b7f0e6d000000957-87-517595408e1e
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id A7.0D.02391.04595715; Mon, 22 Apr 2013 15:53:36 -0400 (EDT)
-Received: from michael.fritz.box (p57A2598E.dip0.t-ipconnect.de [87.162.89.142])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3MJrEOJ008578
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 22 Apr 2013 15:53:35 -0400
-X-Mailer: git-send-email 1.8.2.1
-In-Reply-To: <1366660361-21831-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIIsWRmVeSWpSXmKPExsUixO6iqOswtTTQYPFCYYuuK91MFg29V5gt
-	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M7Y2+1QsJq14sr+XqYGxjaW
-	LkYODgkBE4lnS0W6GDmBTDGJC/fWs3UxcnEICVxmlHh6vZcRwrnAJHHl9Ac2kCo2AV2JRT3N
-	TCC2iICaxMS2QywgNrOAg8Tmz42MILawgKvEgT1LWEFsFgFViZdrzoPZvAIuEn0v7zBBbFOQ
-	OL59G1g9J1D96Y4TYHOEgGpWHJzKMoGRdwEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXRO9
-	3MwSvdSU0k2MkEDh38HYtV7mEKMAB6MSD2+GZ2mgEGtiWXFl7iFGSQ4mJVFejilAIb6k/JTK
-	jMTijPii0pzU4kOMEhzMSiK8ovlAOd6UxMqq1KJ8mJQ0B4uSOK/6EnU/IYH0xJLU7NTUgtQi
-	mKwMB4eSBG8GyFDBotT01Iq0zJwShDQTByeI4ALZwAO0IRKkkLe4IDG3ODMdougUo6KUOK/b
-	JKCEAEgiozQPbgAspl8xigP9I8zrAdLOA0wHcN2vgAYzAQ3OTCgBGVySiJCSamAs4pvty3Ca
-	6aDoRBkR0fhOVZlpjJ7TP3k+edDttXbp8d2v/y1/WiY7fYGb28Kipb5p0XNsWUS/sh6V4vx3
-	QZaVPfSauNna60rLZmnt17PvsmpeNqWO4c29Ffcr7suq8R28dqV1ZsuSk6sW+cq4NNWJrnNm
-	iXlRVtWwhP9m8/Rv9vaeTd93eDcqsRRnJBpqMRcVJwIAAIhwTcQCAAA=
+	id S1755214Ab3DVTy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 15:54:57 -0400
+Received: from mail-ia0-f175.google.com ([209.85.210.175]:49207 "EHLO
+	mail-ia0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755197Ab3DVTy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 15:54:56 -0400
+Received: by mail-ia0-f175.google.com with SMTP id i38so1567671iae.34
+        for <git@vger.kernel.org>; Mon, 22 Apr 2013 12:54:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=QG6kjf7uK9xT7Hav2w2sH+2KCf2i+ZOWnOn6/O8VxWo=;
+        b=L0GWOeo68CS5kpA9jdhgufgsUswoEtYiJzgQhISGxr2lYmE/riaqsE7XfwFJ8HEUKl
+         uQoifA1zxM6M+aRJcduI1RcYGNVMX3KkIU8jwe1/O/E+rWtnFSVUdS3RRW0IGgSlZ9CC
+         y3OOg3+OalVnZB2XaouYlN67GB6SDaOqOzq61zwksXIozD+hBJdrk9d72IBeJfjpe5rF
+         az2u5RDhQt8yBRdphDg6xNhTYqC6H7W5GFut+WcG3D/sRmwKD1hKDVnH73bdioOVp8fI
+         gr4Nr6yhebcgOzCFYdUGpeCAojId5tWGLsNvdqD77djuZTRWBxi6LQAvcwmv9sgGZTfh
+         vqnQ==
+X-Received: by 10.50.119.102 with SMTP id kt6mr16366222igb.12.1366660496051;
+ Mon, 22 Apr 2013 12:54:56 -0700 (PDT)
+Received: by 10.64.63.48 with HTTP; Mon, 22 Apr 2013 12:54:16 -0700 (PDT)
+In-Reply-To: <87zjwqpebl.fsf@hexa.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222069>
 
-There is no way to drop out of the while loop.  This code has been
-dead since 432ad41e.
+Thomas Rast wrote:
+> There is a market for a rename detection that works at the tree level.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c | 7 -------
- 1 file changed, 7 deletions(-)
+Exactly.  And making it auto-follow with a low threshold would be a
+great default.  We'll have to deal with D/F conflicts that Junio was
+talking about in (2), every once in a while.  We'll have a lot more
+incentive to build the D/F conflict resolution process a nice UI.
 
-diff --git a/refs.c b/refs.c
-index e1e9ddd..7260768 100644
---- a/refs.c
-+++ b/refs.c
-@@ -666,13 +666,6 @@ static int do_for_each_ref_in_dirs(struct ref_dir *dir1,
- 		if (retval)
- 			return retval;
- 	}
--	if (i1 < dir1->nr)
--		return do_for_each_ref_in_dir(dir1, i1,
--					      base, fn, trim, flags, cb_data);
--	if (i2 < dir2->nr)
--		return do_for_each_ref_in_dir(dir2, i2,
--					      base, fn, trim, flags, cb_data);
--	return 0;
- }
- 
- /*
--- 
-1.8.2.1
+git-core will actually start working with trees the way it works with blobs.
