@@ -1,98 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] Make --full-history consider more merges
-Date: Mon, 22 Apr 2013 12:49:23 -0700
-Message-ID: <7vzjwqny64.fsf@alter.siamese.dyndns.org>
-References: <7v4nfcj2kq.fsf@alter.siamese.dyndns.org>
-	<1366658602-12254-1-git-send-email-kevin@bracey.fi>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kevin Bracey <kevin@bracey.fi>
-X-From: git-owner@vger.kernel.org Mon Apr 22 21:49:57 2013
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 00/33] Various cleanups around reference packing and peeling
+Date: Mon, 22 Apr 2013 21:52:08 +0200
+Message-ID: <1366660361-21831-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 22 21:53:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUMkO-0007WI-7p
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 21:49:56 +0200
+	id 1UUMno-0004IU-5p
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 21:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754956Ab3DVTt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 15:49:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42832 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754927Ab3DVTt0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 15:49:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBFEB18C40;
-	Mon, 22 Apr 2013 19:49:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=//nHmr4bh3ydMJgZeSR6Q3nd5xo=; b=xHaU2Z
-	zhPxEgEGkaVPCfn17lDpG3Xmuyd1IwqzcWZEgoHdzm1htAkUO4BDM7juq89z08vG
-	7hCOtXwO4gh/PINo5dhsEkC1nE/03TZrzERHaVIy8F0AeMDaalKZ4S9wvdCNt1SP
-	Tq1M/42wSbZNUeTcNehq9J0zD73EjC556Ut7I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XfjwaNCdiJSYAMMTUzjANPbqWOMFZa85
-	eSW6GXtc2qCuppzZdeEv+OFeiNFzwt59oNvK067Acn2zkIrOYt9MSiBDrqYwbbf8
-	brDDpTr+IyfW5t46FogPCPu6rE82rT6J00wX5ZQbh+dcFe/0fW86OmExGoafgFtV
-	Xjyulz8WEdM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D020918C3F;
-	Mon, 22 Apr 2013 19:49:25 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3DD0C18C3E;
-	Mon, 22 Apr 2013 19:49:25 +0000 (UTC)
-In-Reply-To: <1366658602-12254-1-git-send-email-kevin@bracey.fi> (Kevin
-	Bracey's message of "Mon, 22 Apr 2013 22:23:22 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BC4BECB4-AB85-11E2-BA7B-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754964Ab3DVTxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 15:53:24 -0400
+Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:50314 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754910Ab3DVTxX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Apr 2013 15:53:23 -0400
+X-AuditID: 1207440c-b7ff06d0000008f7-bd-51759531a160
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 5B.64.02295.13595715; Mon, 22 Apr 2013 15:53:21 -0400 (EDT)
+Received: from michael.fritz.box (p57A2598E.dip0.t-ipconnect.de [87.162.89.142])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3MJrEOD008578
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 22 Apr 2013 15:53:19 -0400
+X-Mailer: git-send-email 1.8.2.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrDIsWRmVeSWpSXmKPExsUixO6iqGs4tTTQ4E2XrkXXlW4mi4beK8wW
+	t1fMZ3Zg9vj7/gOTx8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGcsuzSTvWC/bMWxDTeZGhg3
+	i3cxcnJICJhIPJ1znRnCFpO4cG89WxcjF4eQwGVGiTXvT7FCOBeYJGa0vmYCqWIT0JVY1NMM
+	ZosIqElMbDvEAmIzCzhIbP7cyAhiCwv4S3w5uxashkVAVeLA2g1Agzg4eAVcJKZ+NIZYpiBx
+	fPs2xgmM3AsYGVYxyiXmlObq5iZm5hSnJusWJyfm5aUW6Rrq5WaW6KWmlG5ihPieZwfjt3Uy
+	hxgFOBiVeHgF3EsDhVgTy4orcw8xSnIwKYnyckwBCvEl5adUZiQWZ8QXleakFh9ilOBgVhLh
+	Fc0HyvGmJFZWpRblw6SkOViUxHlVl6j7CQmkJ5akZqemFqQWwWRlODiUJHgzQIYKFqWmp1ak
+	ZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEgwI9vhgY6iApHqC9kSDtvMUFiblAUYjWU4y6HLO2
+	PnnNKMSSl5+XKiXOWz0JqEgApCijNA9uBSzSXzGKA30szDsJZBQPMEnATXoFtIQJaElmQgnI
+	kpJEhJRUA6OE3kWdsjuLn6jacL3esk69Oum7XLqSJ8MqwYfXGv91Gvb/M3igwf2pTead6bqf
+	1f+Es2VNJ2r19t664XZ63+FpJ+7nFAbZ/86WlS/59ln1+/2U1jkTvq1cMF8zvkDjYw6n5ecf
+	UpfXLOTpnrdy/pJLBpt+8c7zeC3KI7/DsN3KLnyFZdaXKeJKLMUZiYZazEXFiQDy 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222050>
 
-Kevin Bracey <kevin@bracey.fi> writes:
+Thanks for the feedback; here is a re-roll.  A number of points
+discussed on the mailing list were fixed.  The main change, in patch
+17, is how repack_without_ref() deals with references that cannot be
+peeled when re-writing the packed-refs file:
 
-> diff --git a/revision.c b/revision.c
-> index eb98128..96fe3f5 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -516,8 +516,14 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
->  		}
->  		die("bad tree compare for commit %s", sha1_to_hex(commit->object.sha1));
->  	}
-> -	if (tree_changed && !tree_same)
-> -		return;
-> +
-> +	if (tree_changed) {
-> +		if (!tree_same)
-> +			return;
-> +
-> +		if (!revs->simplify_history && !revs->simplify_merges)
-> +			return;
+if ISBROKEN:
+    emit an error and omit reference from the output
+else if !has_sha1_file(...):
+    if there is an overriding loose reference:
+        silently omit reference from the output
+    else:
+        emit an error and omit reference from the output
 
-So in addition to "have some change and there is no same parent"
-case, under _some_ condition we avoid marking a merge not worth
-showing (i.e. TREESAME) if there is any change.
+Please note that this creates a relatively harmless race condition
+very similar to the ones discussed for pack-refs; see the commit
+message for patch 17 for a long explanation.  I would like to fix all
+of the races as part of a separate patch series.
 
-And the condition is !simplify_history and !simplify_merges, which
-would cover --full-history, but I am not sure if requiring
-!simplify_merges is correct.
+For now I left the sleeps in t3210.  Given that the problem will be
+solved by topic jc/prune-all, building a fancier workaround into this
+test for the old broken --expire behavior seems like a waste of time.
+I propose that the sleeps be removed when this patch series is merged
+with jc/prune-all.  (In fact, when jc/prune-all is landed, other tests
+can also be simplified.)  If this suggestion is not ok, then the
+easiest thing would probably be to remove the sleeps immediately and
+declare jc/prune-all a prerequisite of this series.
 
-Do you need it and if so why?  The --simplify-merges option is
-defined as a post-processing operation over what full-history
-produces in the list limiting code (which involves the logic the
-patch is touching).  The --ancestry-path option works the same way
-but its post-processing is done inside the limit_list() function.
+I also removed the trailing comma from the "enum peel_status"
+definition, because a recent email on the mailing list claimed that
+some compilers don't like them.
 
-So it feels more natural if the patch were ignoring simplify_merges
-and paid attention only to simplify_history.
+Michael Haggerty (33):
+  refs: document flags constants REF_*
+  refs: document the fields of struct ref_value
+  refs: document do_for_each_ref() and do_one_ref()
+  refs: document how current_ref is used
+  refs: define constant PEELED_LINE_LENGTH
+  do_for_each_ref_in_dirs(): remove dead code
+  get_packed_ref(): return a ref_entry
+  peel_ref(): use function get_packed_ref()
+  repack_without_ref(): use function get_packed_ref()
+  refs: extract a function ref_resolves_to_object()
+  refs: extract function peel_object()
+  peel_object(): give more specific information in return value
+  peel_ref(): fix return value for non-peelable, not-current reference
+  refs: extract a function peel_entry()
+  refs: change the internal reference-iteration API
+  t3210: test for spurious error messages for dangling packed refs
+  repack_without_ref(): silence errors for dangling packed refs
+  search_ref_dir(): return an index rather than a pointer
+  refs: change how packed refs are deleted
+  t3211: demonstrate loss of peeled refs if a packed ref is deleted
+  repack_without_ref(): write peeled refs in the rewritten file
+  refs: extract a function write_packed_entry()
+  pack-refs: rename handle_one_ref() to pack_one_ref()
+  pack-refs: merge code from pack-refs.{c,h} into refs.{c,h}
+  pack_one_ref(): rename "path" parameter to "refname"
+  refs: use same lock_file object for both ref-packing functions
+  pack_refs(): change to use do_for_each_entry()
+  refs: inline function do_not_prune()
+  pack_one_ref(): use function peel_entry()
+  pack_one_ref(): use write_packed_entry() to do the writing
+  pack_one_ref(): do some cheap tests before a more expensive one
+  refs: change do_for_each_*() functions to take ref_cache arguments
+  refs: handle the main ref_cache specially
 
-> +	}
->  	commit->object.flags |= TREESAME;
->  }
+ Makefile             |   2 -
+ builtin/clone.c      |   1 -
+ builtin/pack-refs.c  |   2 +-
+ pack-refs.c          | 148 -----------
+ pack-refs.h          |  18 --
+ refs.c               | 733 +++++++++++++++++++++++++++++++++++++++------------
+ refs.h               |  35 +++
+ t/t3210-pack-refs.sh |  36 +++
+ t/t3211-peel-ref.sh  |   9 +
+ 9 files changed, 643 insertions(+), 341 deletions(-)
+ delete mode 100644 pack-refs.c
+ delete mode 100644 pack-refs.h
+
+-- 
+1.8.2.1
