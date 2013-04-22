@@ -1,61 +1,70 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
-Date: Mon, 22 Apr 2013 21:24:35 +0530
-Message-ID: <CALkWK0n5gaz3A7kHT6+5z3YkYdpgU5p6Pv4heMbLzikTbROwkA@mail.gmail.com>
-References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
- <87ppxmogdv.fsf@linux-k42r.v.cablecom.net> <CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
- <87wqruk2pj.fsf@linux-k42r.v.cablecom.net> <CALkWK0mUH2m5zJ4MwPWC85CsZZ=2RODumLvsF9q3rLj-+d7vBw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/6] show: obey --textconv for blobs
+Date: Mon, 22 Apr 2013 17:54:33 +0200
+Message-ID: <vpqfvyi7e86.fsf@grenoble-inp.fr>
+References: <1547528401.1826118.1366645060312.JavaMail.root@openwide.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Apr 22 17:55:24 2013
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeremy Rosen <jeremy.rosen@openwide.fr>
+X-From: git-owner@vger.kernel.org Mon Apr 22 17:56:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUJ5O-0006ya-O9
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 17:55:23 +0200
+	id 1UUJ6v-0000nv-1n
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 17:56:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751631Ab3DVPzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 11:55:16 -0400
-Received: from mail-ia0-f170.google.com ([209.85.210.170]:38508 "EHLO
-	mail-ia0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751069Ab3DVPzP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 11:55:15 -0400
-Received: by mail-ia0-f170.google.com with SMTP id 21so5420871iay.29
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 08:55:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=z4U6q/UqAtk+Si4HzIqR66AUi7tE5vCMuh5rEswYUTU=;
-        b=xP//67Zw0UNq16g/Mu9rNLSDqNWDReFbjSbB5WskASPErzdCNpiMtMm8h0rFnGDNFT
-         oW1or+ZgFUWXo0jHwckOqFEt536mjgksFMWWl+jho34Uc2KHtV1KlMQ3c6GXMs7uWFSv
-         9lC5Tp0jvHLA0u5xfwoukKLThDVfF2AhG0w+6U2BcHnHOuJrYXZbS7CjHAMzhfLetcC7
-         5uLjW0/9Qh337CqvFgZIZSNzCREZPZqajxD14jsCHg0BI6ZmpoYTMQPi5ZdJ7/GDm9Qy
-         XRd2B6FhjiO/yLtSw2njTDxpMSmOsFciULM0g4nRz1tI+zD/SymNGQA6XGZ4ZPiPHrDs
-         vMWQ==
-X-Received: by 10.50.50.71 with SMTP id a7mr21609611igo.14.1366646115321; Mon,
- 22 Apr 2013 08:55:15 -0700 (PDT)
-Received: by 10.64.63.48 with HTTP; Mon, 22 Apr 2013 08:54:35 -0700 (PDT)
-In-Reply-To: <CALkWK0mUH2m5zJ4MwPWC85CsZZ=2RODumLvsF9q3rLj-+d7vBw@mail.gmail.com>
+	id S1753895Ab3DVP4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 11:56:53 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:57368 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753559Ab3DVP4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 11:56:52 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r3MFsWgO003779
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 22 Apr 2013 17:54:32 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UUJ4c-00070P-7k; Mon, 22 Apr 2013 17:54:34 +0200
+In-Reply-To: <1547528401.1826118.1366645060312.JavaMail.root@openwide.fr>
+	(Jeremy Rosen's message of "Mon, 22 Apr 2013 17:37:40 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 22 Apr 2013 17:54:33 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r3MFsWgO003779
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1367250877.18485@9mkvkz4YwexBOOZgHcqG5A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222033>
 
-Ramkumar Ramachandra wrote:
-> For the 100th time, nothing has been "copied".  There is no need to
-> spend time on any analysis.  It's a very straightforward problem that
-> requires no computation or heuristics: it just requires you to strip
-> the leading "subproject/" when looking for pathspecs in the M^2
-> commit^{tree}s.  Done.
+Jeremy Rosen <jeremy.rosen@openwide.fr> writes:
 
-And if you're still not convinced, run 'git log HEAD^2 -- README.md'
-from the toplevel directory.  You'll get the log of README.md from the
-subproject.
+> some features detect if they are piping to a terminal... couldn't we do
+> something like that ?
+
+That's OK for convenience features like colors or so, but that would be
+really, really unexpected to have
+
+$ git show HEAD:file
+foo
+$ git show HEAD:file > tmp
+$ cat tmp
+bar
+
+IMHO.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
