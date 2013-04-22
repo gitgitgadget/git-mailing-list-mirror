@@ -1,72 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] Silent data loss on merge with uncommited changes + renames
-Date: Mon, 22 Apr 2013 08:19:50 -0700
-Message-ID: <7v61zer3s9.fsf@alter.siamese.dyndns.org>
-References: <vpqobd6q5nm.fsf@grenoble-inp.fr>
+Subject: Re: Patch-to-mail notes resurrected
+Date: Mon, 22 Apr 2013 08:20:04 -0700
+Message-ID: <7v1ua2r3rv.fsf@alter.siamese.dyndns.org>
+References: <87bo96rivt.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 22 17:19:59 2013
+Cc: <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Apr 22 17:20:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUIX7-0000Ih-UK
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 17:19:58 +0200
+	id 1UUIXO-0000jK-T4
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 17:20:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753522Ab3DVPTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 11:19:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49383 "EHLO
+	id S1753659Ab3DVPUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 11:20:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64420 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752711Ab3DVPTw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 11:19:52 -0400
+	id S1753485Ab3DVPUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 11:20:07 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2737616869;
-	Mon, 22 Apr 2013 15:19:52 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A749816885;
+	Mon, 22 Apr 2013 15:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QTUTOY86T3JzCsQHZK0MUQXP92s=; b=ilQKqZ
-	D676WGtOVu0bSzcIJaN14cgH7/PCSy1NF56K7T5YcSlkw4a8EWp3YSbMd0uq8aqf
-	66zg9xjnV78SZE8AKiQlBQlMbeKoRK7TQJmTDpZ6EUkEXoZqlS9Pe9EWBOmlWKFY
-	3LiJSzbXcZhWgYx4EPy07wmWzoo/24kb6Zsq0=
+	:content-type; s=sasl; bh=12QbIdIay+wkguXRzYN4gr5aUsQ=; b=Y/K3bW
+	EquCQgYlRvRDkL9L0yLeuFxBxtfLfIEJsc6dSR4YD67U5gBwrb2yFl5Y8zlowUAm
+	3CJ0HFWzsBbLfH8v+SEtzkijtwBHrI8zLWjZsgawi1N+Vhf+hIFGFbUGngKTRDFR
+	p7QfJewTluDyGIA0KFArShZuHD9D9nnf+oCFY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X5MxxhKHYjFZNmF8/uddaR/OXvHfTA6M
-	jqKjnL/zQp0tP8ChSeUZuDtcsRbs+ae+2lphf2BoO7Sq1EeUo9NIMF6Wx72xLIQ0
-	kE+uK0m292FSkzuM8j+6uu3jnj1HAWD+TGqJh7G/04ZRZFOKHkuR1mMcDXAdhY7E
-	zBm4+OJ7lUM=
+	:content-type; q=dns; s=sasl; b=QfxMHTL9rf4IyY/mzVgTdT5OXZ53XVSz
+	TVPuzOpLxpFrw5sbL4yuF3wjRPlgq7l6Q+zTjbHYaS59z5cnoyRe+bB9A1Uh2ZYr
+	Pb/Tnv1GtRV5oUAUJXmByUbBwpL6q4f39po6cYwhqFdYbFnheP1Etyh2UhQ0C1Ak
+	7vy+QDBqUkM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BB6A16866;
-	Mon, 22 Apr 2013 15:19:52 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F68716884;
+	Mon, 22 Apr 2013 15:20:06 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6D8F16865;
-	Mon, 22 Apr 2013 15:19:51 +0000 (UTC)
-In-Reply-To: <vpqobd6q5nm.fsf@grenoble-inp.fr> (Matthieu Moy's message of
-	"Mon, 22 Apr 2013 11:24:45 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 261D616883;
+	Mon, 22 Apr 2013 15:20:06 +0000 (UTC)
+In-Reply-To: <87bo96rivt.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
+	of "Mon, 22 Apr 2013 11:53:42 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1418ADF4-AB60-11E2-BFA8-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1CB93046-AB60-11E2-937E-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222024>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-> I could have expected "git merge --abort" to fail, but the problem is
-> really more serious here: data loss is done silently before giving me an
-> opportunity to do or abort anything.
+> As some might remember, I made a script that writes notes (as in
+> git-notes) linking patches to emails back in 2009:
+>
+>   http://thread.gmane.org/gmane.comp.version-control.git/109074
+>
+> I resurrected this idea the other week, using a faster implementation
+> (the N command in fast-import is great!) and generating better links.
+> I am regularly pushing the results to
+>
+>   git://github.com/trast/git.git
+>   git://repo.or.cz/git/trast.git
+>
+> branches
+>
+>   notes/gmane        a link to the gmane thread view, focused on this patch
+>   notes/message-id   the raw message-id
+>
+> Point your notes.displayRef at one or both to use them.
+>
+> It still fails to match some commits, so consider this WIP, but I think
+> it's quite useful already.
 
-I think this is a well known and longstanding failure case in the
-recursive merge.  As it does not perform its internal operation
-while handling renames in clean and distinct steps (i.e. figure out
-what goes to where before touching any index entry or working tree,
-then check if a proposed change to the index or the working tree
-conflicts with local changes, and finally carry out the proposed
-change), it is somewhat hard to fix it correctly in the current
-implementation, even though you probably could patch these up case
-by case basis.
+Thanks ;-)
