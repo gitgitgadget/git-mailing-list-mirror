@@ -1,77 +1,103 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [BUG] Silent data loss on merge with uncommited changes + renames
-Date: Mon, 22 Apr 2013 16:43:34 +0200
-Message-ID: <vpqtxmy7hih.fsf@grenoble-inp.fr>
-References: <vpqobd6q5nm.fsf@grenoble-inp.fr> <517547F8.3040004@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/5] git-log.txt: rewrite note on why "--" may be required
+Date: Mon, 22 Apr 2013 07:55:40 -0700
+Message-ID: <7va9oqr4wj.fsf@alter.siamese.dyndns.org>
+References: <1366458313-7186-1-git-send-email-artagnon@gmail.com>
+	<1366458313-7186-5-git-send-email-artagnon@gmail.com>
+	<7vtxn0wf4j.fsf@alter.siamese.dyndns.org>
+	<7vmwsrqocu.fsf@alter.siamese.dyndns.org>
+	<871ua2sy95.fsf@linux-k42r.v.cablecom.net>
+	<87vc7erjhc.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Apr 22 16:44:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Apr 22 16:55:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUHyI-0001Ba-L0
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 16:43:59 +0200
+	id 1UUI9q-0001EH-9m
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 16:55:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932181Ab3DVOnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 10:43:52 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:59657 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932120Ab3DVOnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 10:43:37 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r3MEhWM0010976
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 22 Apr 2013 16:43:32 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UUHxu-0005ly-BS; Mon, 22 Apr 2013 16:43:34 +0200
-In-Reply-To: <517547F8.3040004@viscovery.net> (Johannes Sixt's message of
-	"Mon, 22 Apr 2013 16:23:52 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 22 Apr 2013 16:43:32 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r3MEhWM0010976
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1367246614.27534@srxgUH+NfpwZlBrcron/jA
+	id S1756165Ab3DVOzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 10:55:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42989 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754468Ab3DVOzs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 10:55:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C96517CE8;
+	Mon, 22 Apr 2013 14:55:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WSvaVqBnWOswoVhS/4pBV++cKx0=; b=E1+am7
+	WuHO+EsgUWLltGb6PpgJKwfClyoWev8T7mr/XqvKzYxkyI2X1Q5kU3zS1s5Dp4sp
+	Fxr3jSsX1BS5au3+3elVDaWSCf3FxmoS23f6UVSRkUps63LwzSOYPNgPHx2bz0cZ
+	j7ibXHB0CUNXBI3CT55BTIebwOMnyQIOyZtCs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I0dFNUCvdiKQL0kjhmW/H1d4JS2m2glh
+	kOefFyqi0vVgweXxOXz4T9yTqRlJNZ0gaHFoFuDZbh7uNV5VeZs/Co6uoKbEL9Pb
+	EvJGe4cW2AUA+EA/frB3EEL67ysJChsZbI2sOUghCYQi6V6r3Vin0yRYXynJ5pL/
+	+805x9VKyxs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 73ABE17CE7;
+	Mon, 22 Apr 2013 14:55:45 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB9D717CE1;
+	Mon, 22 Apr 2013 14:55:44 +0000 (UTC)
+In-Reply-To: <87vc7erjhc.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
+	of "Mon, 22 Apr 2013 11:40:47 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B5C92858-AB5C-11E2-A0BE-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222020>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-> Am 4/22/2013 11:24, schrieb Matthieu Moy:
->> Following the discussion on "merge with uncommited changes" inside the
->> "git pull --autostash" thread, I did a bit of testing, and encountered a
->> case with silent data loss. In short: merge a branch introducing changes
->> to a file. If the file has been renamed in the current branch, then "git
->> merge" follows the rename and brings changes to the renamed file, but
->> uncommited changes in this file are overriden silently.
+> Thomas Rast <trast@inf.ethz.ch> writes:
 >
-> Can you check whether your case is already covered by one of:
+>> -- >8 --
+>> Subject: [PATCH] git-log(1): remove --full-line-diff description
 >
->   git grep expect_failure t/*merge*
+> BTW, I generated this with your jc/format-patch, but it stopped working
+> after fc/send-email-annotate made it into next; I need this on top.  Am
+> I missing something?
 
-Indeed, it's already here:
+No, the topic has been stalled and left behind and needs to be
+rebased on top of that other topic with your patch.  Thanks.
 
-test_expect_failure 'will not overwrite unstaged changes in renamed file' '
-	git reset --hard c1 &&
-	git mv c1.c other.c &&
-	git commit -m rename &&
-	cp important other.c &&
-	git merge c1a &&
-	test_cmp important other.c
-'
+It also needs a lot more work to de-mime its output to be eligible
+for 'next', though.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> -- >8 --
+> Subject: [PATCH] FIXUP jc/format-patch: adapt for fc/send-email-annotate
+>
+> 2a4c260 (format-patch: add format.coverLetter configuration variable,
+> 2013-04-07) changed the coverletter variable to -1 by default, so the
+> die("... incompatible") always triggers.  Test if it is >0 instead.
+> ---
+>  builtin/log.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 4804229..c972e62 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1247,7 +1247,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  	/* Set defaults and check incompatible options */
+>  	if (rev.inline_single) {
+>  		use_stdout = 1;
+> -		if (cover_letter)
+> +		if (cover_letter > 0)
+>  			die(_("inline-single and cover-letter are incompatible."));
+>  		if (thread)
+>  			die(_("inline-single and thread are incompatible."));
