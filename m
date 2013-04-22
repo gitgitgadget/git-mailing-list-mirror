@@ -1,62 +1,65 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [PATCH] zlib: fix compilation failures with Sun C Compilaer
-Date: Tue, 23 Apr 2013 00:06:07 +0200
-Message-ID: <5175B44F.4000303@gmail.com>
-References: <97eabaedd6cd7d876812474a35fa2d3d63dfec4a.1366647415.git.stefano.lattarini@gmail.com> <CAPig+cQQiwumaswnKf1A-e5Rk4BHpRQqhqbL0p8zkmDnZ=Cbtg@mail.gmail.com>
+From: Torstein Hegge <hegge@resisty.net>
+Subject: Re: [PATCH] bisect: Store first bad commit as comment in log file
+Date: Tue, 23 Apr 2013 00:20:58 +0200
+Message-ID: <20130422222058.GF5650@pvv.ntnu.no>
+References: <20130413152257.GB16040@pvv.ntnu.no>
+ <20130415.063809.1055555229072260139.chriscool@tuxfamily.org>
+ <20130415095339.GA28480@pvv.ntnu.no>
+ <20130422210229.GE5650@pvv.ntnu.no>
+ <7vr4i2nuar.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Apr 23 00:06:17 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 23 00:21:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUOsK-0006zo-0e
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 00:06:16 +0200
+	id 1UUP6n-0002jq-LL
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 00:21:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753986Ab3DVWGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 18:06:11 -0400
-Received: from mail-we0-f171.google.com ([74.125.82.171]:33807 "EHLO
-	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753839Ab3DVWGL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 18:06:11 -0400
-Received: by mail-we0-f171.google.com with SMTP id i48so6767367wef.2
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 15:06:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=zOQ2+ZQLFYO6Da3CHSgGSwje1fPFBF6aXouycbs4E+o=;
-        b=UF7uIFhEfSqRjZtVUvbiRQI906De4BbYDYsICjv95p5vx1i3Rc2Bg/uMK+XCzFgZux
-         v5F+Ss/DPLlZlpPIE65bjr+xD2DClLKkeuNgXs8DTNVMsgPa6HG8vI2mSvlWq0tz5A3q
-         JQQsIaMf721ybRcacSRrmmKa3BOHZW89NdUNCBq805SaLxYptWGfaeonK0z0ztNeSwHj
-         ghcvIazOiisQpqXGYGV+AUST6JpXuYCdESTsZm+K8LKMqut5qaCPyKUtTQGYVtzJxcBW
-         XLZktx69MX1oJ+YPqnS2YuuWezxRU+QWaz1u2e3SjpYdvNGtrIHzJ38l7LSX+hJPHK5P
-         nFTg==
-X-Received: by 10.180.189.205 with SMTP id gk13mr70280213wic.25.1366668369800;
-        Mon, 22 Apr 2013 15:06:09 -0700 (PDT)
-Received: from [192.168.178.20] (host93-95-dynamic.6-79-r.retail.telecomitalia.it. [79.6.95.93])
-        by mx.google.com with ESMTPS id s2sm24948466wib.4.2013.04.22.15.06.07
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 22 Apr 2013 15:06:08 -0700 (PDT)
-In-Reply-To: <CAPig+cQQiwumaswnKf1A-e5Rk4BHpRQqhqbL0p8zkmDnZ=Cbtg@mail.gmail.com>
+	id S1753064Ab3DVWVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 18:21:08 -0400
+Received: from microbel.pvv.ntnu.no ([129.241.210.179]:54789 "EHLO
+	microbel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752259Ab3DVWVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 18:21:07 -0400
+Received: from torstehe by microbel.pvv.ntnu.no with local (Exim 4.72)
+	(envelope-from <torstehe@pvv.ntnu.no>)
+	id 1UUP6Y-0004DK-Cb; Tue, 23 Apr 2013 00:20:58 +0200
+Content-Disposition: inline
+In-Reply-To: <7vr4i2nuar.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222116>
 
-On 04/22/2013 11:41 PM, Eric Sunshine wrote:
-> On Mon, Apr 22, 2013 at 12:18 PM, Stefano Lattarini
-> <stefano.lattarini@gmail.com> wrote:
->> zlib: fix compilation failures with Sun C Compilaer
+On Mon, Apr 22, 2013 at 14:13:00 -0700, Junio C Hamano wrote:
+> Torstein Hegge <hegge@resisty.net> writes:
 > 
-> s/Compilaer/compiler/
+> > I took another look at this. I wasn't able to come up with anything
+> > useful for the "The merge base $rev is bad" case, but for the "only
+> > skipped commits left to test" case one could do something like this.
 > 
-Oops, well spotted.  Junio, can you fix this locally?
+> We skipped them because we can gain _no_ information from testing
+> these commits. They are not even "possibly bad", but are "unknown".
+> 
+> So it feels to me that by definition listing them would not be
+> useful. What am I missing?
 
-Thanks, and sorry for the stupid typo,
-  Stefano
+The information lies in that those commits are the only commits with an
+unknown state. So if the bisecter hands off the bisect log to someone
+else when they can't test further, the current status is recorded.
+
+I think part of the reason I started looking at this is that there are
+no good way to see what git said after the previous 'git bisect
+good/bad' if the terminal output is lost. And lost terminal output is
+fairly likely if you are bisecting something that requires reboots for
+each test.
+
+But I don't feel very strongly about this. It was based on Christian's
+idea, so unless he comes up with some compelling arguments I'll drop it.
