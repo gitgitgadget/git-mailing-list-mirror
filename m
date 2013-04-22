@@ -1,70 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/6] show: obey --textconv for blobs
-Date: Mon, 22 Apr 2013 17:54:33 +0200
-Message-ID: <vpqfvyi7e86.fsf@grenoble-inp.fr>
-References: <1547528401.1826118.1366645060312.JavaMail.root@openwide.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] Filenames with single colon being treated as remote repository
+Date: Mon, 22 Apr 2013 09:00:00 -0700
+Message-ID: <7vobd6pncv.fsf@alter.siamese.dyndns.org>
+References: <20130421045329.GB30538@WST420>
+	<20130421060538.GB10429@elie.Belkin>
+	<20130421124511.GA1933@sigill.intra.peff.net>
+	<7vd2tnvk2x.fsf@alter.siamese.dyndns.org>
+	<20130422153516.GB11886@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeremy Rosen <jeremy.rosen@openwide.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 22 17:56:59 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	William Giokas <1007380@gmail.com>, git@vger.kernel.org,
+	fsckdaemon@gmail.com, Daniel Barkalow <barkalow@iabervon.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 22 18:00:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUJ6v-0000nv-1n
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 17:56:57 +0200
+	id 1UUJA4-0005Lz-DC
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 18:00:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753895Ab3DVP4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 11:56:53 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:57368 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753559Ab3DVP4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 11:56:52 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r3MFsWgO003779
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 22 Apr 2013 17:54:32 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UUJ4c-00070P-7k; Mon, 22 Apr 2013 17:54:34 +0200
-In-Reply-To: <1547528401.1826118.1366645060312.JavaMail.root@openwide.fr>
-	(Jeremy Rosen's message of "Mon, 22 Apr 2013 17:37:40 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 22 Apr 2013 17:54:33 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r3MFsWgO003779
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1367250877.18485@9mkvkz4YwexBOOZgHcqG5A
+	id S1752926Ab3DVQAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 12:00:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56898 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751168Ab3DVQAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 12:00:04 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE2C118BF2;
+	Mon, 22 Apr 2013 16:00:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Y5qPI5Z95sIRcZdTiLYYY/jj+bA=; b=J5/7M2
+	P8qMbJbF8i2Tq3tvmuIzbqSOR2r0eZNWU6TlkJ1gl731Gtu9kDodXptnXP5NDXJQ
+	/AmpbbjFKT0YMIShzOQHMNvOwM7cdEynZKGI2tnkbBUX6uZ7g6JZrP4WRnDbMr/8
+	6+TMHFHYVQW3NwvFePL6T0qiApQg5ArjSR/bQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JJZgCKWyuBUhV27ho+RJ/MqEowpFGbrM
+	Brl9dhY8rEYb0pZE6MmIxBlureMzlWtW3GMhaJmuZ0qEAa0QbhWt53YIpM39KDVw
+	CRW74SHgBN3ERiQ2VwBjUomueBBqsKVh/NZvy1hhT9YLASy9v3ZHF+E+cp29gLMM
+	dG8NqoeKZUs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4BC218BED;
+	Mon, 22 Apr 2013 16:00:02 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3538818BE6;
+	Mon, 22 Apr 2013 16:00:02 +0000 (UTC)
+In-Reply-To: <20130422153516.GB11886@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 22 Apr 2013 11:35:17 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B0EF1A78-AB65-11E2-A12B-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222034>
 
-Jeremy Rosen <jeremy.rosen@openwide.fr> writes:
+Jeff King <peff@peff.net> writes:
 
-> some features detect if they are piping to a terminal... couldn't we do
-> something like that ?
+> So I think one reasonable path would be:
+>
+>   1. Do not treat "host:path" as ssh if "host" has a slash, which should
+>      not regress anybody. It does not allow unadorned relative paths
+>      with colons, but it lets you use absolute paths or "./" to
+>      disambiguate.
+>
+>   2. Teach git-clone to ask the transport code to parse the source repo
+>      spec, and decide from that whether it is local or not. That would
+>      harmonize the implementations and avoid errors when you _did_ mean
+>      to use ssh, but "host:path" happens to exist in your filesystem. I
+>      also would not be surprised if there are problems with
+>      URL-encoding, but maybe clone handles that properly (I didn't
+>      check).
+>
+> And the "host contains slash" rule is pretty easy to explain in the
+> documentation, which is good.
 
-That's OK for convenience features like colors or so, but that would be
-really, really unexpected to have
-
-$ git show HEAD:file
-foo
-$ git show HEAD:file > tmp
-$ cat tmp
-bar
-
-IMHO.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Sounds like a good direction to take us.
