@@ -1,49 +1,77 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Re: Staging Individual Lines
-Date: Mon, 22 Apr 2013 08:35:02 -0600
-Message-ID: <51754A96.8050508@workspacewhiz.com>
-References: <517466B9.8010607@blueyonder.co.uk>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [BUG] Silent data loss on merge with uncommited changes + renames
+Date: Mon, 22 Apr 2013 16:43:34 +0200
+Message-ID: <vpqtxmy7hih.fsf@grenoble-inp.fr>
+References: <vpqobd6q5nm.fsf@grenoble-inp.fr> <517547F8.3040004@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: ode <ode5002@blueyonder.co.uk>
-X-From: git-owner@vger.kernel.org Mon Apr 22 16:41:58 2013
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Apr 22 16:44:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUHwM-0006oX-3Y
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 16:41:58 +0200
+	id 1UUHyI-0001Ba-L0
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 16:43:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755814Ab3DVOlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 10:41:46 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:55525 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754887Ab3DVOlp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 10:41:45 -0400
-X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Apr 2013 10:41:45 EDT
-Received: (qmail 7605 invoked by uid 399); 22 Apr 2013 08:35:03 -0600
-Received: from unknown (HELO SlamDunk) (jjensen@workspacewhiz.com@76.23.33.208)
-  by hsmail.qwknetllc.com with ESMTPAM; 22 Apr 2013 08:35:03 -0600
-X-Originating-IP: 76.23.33.208
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <517466B9.8010607@blueyonder.co.uk>
-X-Antivirus: avast! (VPS 130422-1, 04/22/2013), Outbound message
-X-Antivirus-Status: Clean
+	id S932181Ab3DVOnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 10:43:52 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:59657 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932120Ab3DVOnh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 10:43:37 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r3MEhWM0010976
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 22 Apr 2013 16:43:32 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UUHxu-0005ly-BS; Mon, 22 Apr 2013 16:43:34 +0200
+In-Reply-To: <517547F8.3040004@viscovery.net> (Johannes Sixt's message of
+	"Mon, 22 Apr 2013 16:23:52 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 22 Apr 2013 16:43:32 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r3MEhWM0010976
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1367246614.27534@srxgUH+NfpwZlBrcron/jA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222019>
 
------ Original Message -----
-From: ode
-Date: 4/21/2013 4:22 PM
-> I went looking on Google and found git-cola gui client which works for
-> staging individual lines to the commit.
-The 'git gui' that ships with Git also stages individual lines and 
-groups of lines, FWIW.
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
--Josh
+> Am 4/22/2013 11:24, schrieb Matthieu Moy:
+>> Following the discussion on "merge with uncommited changes" inside the
+>> "git pull --autostash" thread, I did a bit of testing, and encountered a
+>> case with silent data loss. In short: merge a branch introducing changes
+>> to a file. If the file has been renamed in the current branch, then "git
+>> merge" follows the rename and brings changes to the renamed file, but
+>> uncommited changes in this file are overriden silently.
+>
+> Can you check whether your case is already covered by one of:
+>
+>   git grep expect_failure t/*merge*
+
+Indeed, it's already here:
+
+test_expect_failure 'will not overwrite unstaged changes in renamed file' '
+	git reset --hard c1 &&
+	git mv c1.c other.c &&
+	git commit -m rename &&
+	cp important other.c &&
+	git merge c1a &&
+	test_cmp important other.c
+'
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
