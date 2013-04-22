@@ -1,82 +1,97 @@
-From: Barbu Paul - Gheorghe <barbu.paul.gheorghe@gmail.com>
-Subject: [PATCH] git-imap-send.txt: remove the use of sslverify=false
-Date: Mon, 22 Apr 2013 22:26:32 +0300
-Message-ID: <51758EE8.7030800@gmail.com>
-References: <20130420140802.GC29454@ruderich.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: [RFC/PATCH] Make --full-history consider more merges
+Date: Mon, 22 Apr 2013 22:23:22 +0300
+Message-ID: <1366658602-12254-1-git-send-email-kevin@bracey.fi>
+References: <7v4nfcj2kq.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Kevin Bracey <kevin@bracey.fi>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 22 21:26:41 2013
+X-From: git-owner@vger.kernel.org Mon Apr 22 21:47:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUMNs-0007R0-QX
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 21:26:41 +0200
+	id 1UUMi8-00048f-Tw
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Apr 2013 21:47:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754760Ab3DVT0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 15:26:36 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:36158 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754675Ab3DVT0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 15:26:35 -0400
-Received: by mail-wi0-f179.google.com with SMTP id l13so5022079wie.0
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 12:26:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=q2YwxIJp7kC3QLNCeG40mkrikO9dOzF53iWwqFF2MRo=;
-        b=CC6hqDDlMAAQCPpJ6GgeN/3lusiJXzSPfDTIs92gopQfmlsDatUBgP8Dx9tSohvBiR
-         e24mtpojqd5XApaJHiGhWEXjq3KfOP77wc4gWz3fud0O4asu8gVMqkfQARoA3tDcdREl
-         aExU5MxBzj2irS900d/qjFFPLwaR0VBNf3+1CeVOmrJh0yvY6HueTyzQnYhSwJvHRQso
-         eGm0wSOza9HwwzUs4XMuYyH2IweXU5LnL3ma3VNUp8+X/vN3geEIP8IeqInYHca6SUDk
-         zXga6px2Zuujc0PbKDhInBc5oRHyjXtAon5pI+omSM4R/DdIGk0WJCjHQumPmGKGypm+
-         /bcQ==
-X-Received: by 10.194.177.225 with SMTP id ct1mr16900121wjc.16.1366658794604;
-        Mon, 22 Apr 2013 12:26:34 -0700 (PDT)
-Received: from [192.168.16.100] (5-15-249-103.residential.rdsnet.ro. [5.15.249.103])
-        by mx.google.com with ESMTPS id ch6sm42654104eeb.17.2013.04.22.12.26.33
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 22 Apr 2013 12:26:33 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130403 Thunderbird/17.0.5
-In-Reply-To: <20130420140802.GC29454@ruderich.org>
+	id S1754912Ab3DVTrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 15:47:32 -0400
+Received: from 8.mo3.mail-out.ovh.net ([87.98.172.249]:42986 "EHLO
+	mo3.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754847Ab3DVTrb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 15:47:31 -0400
+Received: from mail91.ha.ovh.net (b7.ovh.net [213.186.33.57])
+	by mo3.mail-out.ovh.net (Postfix) with SMTP id B7A8DFF892E
+	for <git@vger.kernel.org>; Mon, 22 Apr 2013 21:23:27 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 22 Apr 2013 21:23:27 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 22 Apr 2013 21:23:25 +0200
+X-Ovh-Mailout: 178.32.228.3 (mo3.mail-out.ovh.net)
+X-Mailer: git-send-email 1.8.2.255.g39c5835
+In-Reply-To: <7v4nfcj2kq.fsf@alter.siamese.dyndns.org>
+X-Ovh-Tracer-Id: 10244563252597592286
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: 0
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrfeehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrfeehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222048>
 
-Since SSL provides no protection if the certificates aren't verified it's
-better not to include sslverify=false in the examples.
-Also in the post 1.8.2.1 era git is able to properly verify the validity of a
-certificate as well it's origin.
+History simplification previously always treated merges as TREESAME
+if they were TREESAME to any parent.
 
-Signed-off-by: Barbu Paul - Gheorghe <barbu.paul.gheorghe@gmail.com>
+While the desired default behaviour, this could be extremely unhelpful
+when searching detailed history, and could not be overridden. For
+example, if a merge had ignored a change, as if by "-s ours", then:
+
+  git log -m -p --full-history -Schange file
+
+would successfully locate "change"'s addition but would not locate the
+merge that resolved against it.
+
+This patch changes the simplification so that when --full-history is
+specified, a merge is treated as TREESAME only if it is TREESAME to
+_all_ parents. This means the command above locates a merge that dropped
+"change".
+
+Signed-off-by: Kevin Bracey <kevin@bracey.fi>
 ---
- Documentation/git-imap-send.txt | 2 --
- 1 file changed, 2 deletions(-)
+This would address my problem case - it passes existing tests, and covers
+my (all-too-common) problem. But it would also need documentation changes and
+a new test.
 
-diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
-index 875d283..0d72977 100644
---- a/Documentation/git-imap-send.txt
-+++ b/Documentation/git-imap-send.txt
-@@ -108,7 +108,6 @@ Using direct mode with SSL:
-     user = bob
-     pass = p4ssw0rd
-     port = 123
--    sslverify = false
- ..........................
-  @@ -123,7 +122,6 @@ to specify your account settings:
- 	host = imaps://imap.gmail.com
- 	user = user@gmail.com
- 	port = 993
--	sslverify = false
- ---------
-  You might need to instead use: folder = "[Google Mail]/Drafts" if you get an error
+ revision.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index eb98128..96fe3f5 100644
+--- a/revision.c
++++ b/revision.c
+@@ -516,8 +516,14 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
+ 		}
+ 		die("bad tree compare for commit %s", sha1_to_hex(commit->object.sha1));
+ 	}
+-	if (tree_changed && !tree_same)
+-		return;
++
++	if (tree_changed) {
++		if (!tree_same)
++			return;
++
++		if (!revs->simplify_history && !revs->simplify_merges)
++			return;
++	}
+ 	commit->object.flags |= TREESAME;
+ }
+ 
 -- 
-Barbu Paul - Gheorghe
-Common sense is not so common - Voltaire
-Visit My GitHub profile to see my open-source projects - https://github.com/paullik
+1.8.2.255.g39c5835
