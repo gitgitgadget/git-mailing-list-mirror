@@ -1,70 +1,81 @@
-From: Dusty Phillips <dusty@buchuki.com>
-Subject: Re: [PATCH 01/16] remote-helpers: avoid has_key
-Date: Mon, 22 Apr 2013 16:51:28 -0600
-Message-ID: <5175BEF0.7040509@buchuki.com>
-References: <1366667724-567-1-git-send-email-felipe.contreras@gmail.com> <1366667724-567-2-git-send-email-felipe.contreras@gmail.com> <7va9oqnqs9.fsf@alter.siamese.dyndns.org> <CAMP44s1XaOOnHCCAHL3C=ZQFe6v4vOD+n7mwzFT0nEZAwGfqrg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add .gitconfig variable commit.gpg-sign
+Date: Mon, 22 Apr 2013 16:43:19 -0700
+Message-ID: <7vip3em8rs.fsf@alter.siamese.dyndns.org>
+References: <CAASwCXf3YHmdQ_eSkShyzn5VniO=ufm3VTqV1JVOUN610bzE_A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Apr 23 01:10:51 2013
+To: Joel Jacobson <joel@trustly.com>
+X-From: git-owner@vger.kernel.org Tue Apr 23 01:43:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUPsn-0006VB-1Z
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 01:10:49 +0200
+	id 1UUQON-0003R6-Re
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 01:43:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753628Ab3DVXKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 19:10:45 -0400
-Received: from sender1.zohomail.com ([72.5.230.103]:40947 "EHLO
-	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753039Ab3DVXKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 19:10:44 -0400
-Received: from [192.168.1.5] (S0106602ad0907ddb.mh.shawcable.net [70.73.103.32]) by mx.zohomail.com
-	with SMTPS id 1366671117908154.2207932330291; Mon, 22 Apr 2013 15:51:57 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130403 Thunderbird/17.0.5
-In-Reply-To: <CAMP44s1XaOOnHCCAHL3C=ZQFe6v4vOD+n7mwzFT0nEZAwGfqrg@mail.gmail.com>
-X-ZohoMailClient: External
-X-Zoho-Virus-Status: 2
+	id S1754045Ab3DVXnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 19:43:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43194 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753065Ab3DVXnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 19:43:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E44319833;
+	Mon, 22 Apr 2013 23:43:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uVD/FUfNVyxWrM+wCwEHI3blc+0=; b=ExqlWv
+	1KhFlukZcxnOYGNSI1CZ0OzMM0bqMioXWpx8p5qmo/80/C/wzhrf2yWFKG6aYrVO
+	EfMzfglYfil9L/JpKuFDkn+LxDBq6JitUKY28RdKrjlWqNChWFPB8eTjs9I0Mzk8
+	Sq1CL4h08yAVyxjBMyIsOLj1efGHUACWHgokk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aH0Rk5ntruWaRTEj0TbayAOZrvuSb+Ve
+	7TdLdi1hWZBUWnZdZrlGIYVozLGTtD6adGwxAWI4UvtkLja7YvR+8N+71YnrnUJb
+	t9KngxFLyzhi8Li+0rbo+UiKReYUy+wE/whlfBNzWK17qnzh3Xe8i5ML59myJLc/
+	vLSnqm8bgi0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 259A119832;
+	Mon, 22 Apr 2013 23:43:21 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9658A19830;
+	Mon, 22 Apr 2013 23:43:20 +0000 (UTC)
+In-Reply-To: <CAASwCXf3YHmdQ_eSkShyzn5VniO=ufm3VTqV1JVOUN610bzE_A@mail.gmail.com>
+	(Joel Jacobson's message of "Tue, 23 Apr 2013 00:23:53 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6A0664F4-ABA6-11E2-9F5B-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222130>
 
-On 04/22/2013 04:35 PM, Felipe Contreras wrote:
-> On Mon, Apr 22, 2013 at 5:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> From: Dusty Phillips <dusty@linux.ca>
->>>
->>> It is deprecated.
->>>
->>> [fc: do the same in remote-bzr]
->>>
->>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->>> ---
->> No sign-off by the author?
->>
->> It does not matter for something so trivial like this that there is
->> no other way to write, but it is a good habit you should encourage
->> your contributors to acquire, so that you do not have to waste time
->> with "please sign off" when their next contribution that is more
->> substantial comes.
-> He is not a contributor, he sent a few patches, and then immediately
-> started gitifyhg, I haven't heard a word from him.
+Joel Jacobson <joel@trustly.com> writes:
+
+> Signed-off-by: Joel Jacobson <joel@trustly.com>
+> ---
+>  builtin/commit.c | 4 +++-
+
+No docs?  No tests?
+
+As to the design, any regular configuration variable settings must
+be overridable from the command line for a single invocation. Please
+design an escape hatch in, for somebody who has this configuration
+variable set, but does not want to sign this commit he is about to
+make.
+
+Also do we generally use dash in the configuration variable names?
+I thought the norm was section.CamelCase.
+
+> +       if (!strcmp(k, "commit.gpg-sign"))
+> +               return git_config_string(&sign_commit, k, v);
+>         if (!strcmp(k, "commit.cleanup"))
+>                 return git_config_string(&cleanup_arg, k, v);
 >
-> Still, he was the original author, so...
-
-Acknowledged that I will not likely be contributing any more patches. I 
-apologize for the lack of signoffs on the pull requests; I wasn't 
-actually aware that they were going into git mainline already. I will 
-state for the record that all patches I submitted to Felipe's github 
-fork of git in November and December, 2012 were authored by me and only 
-me and I submitted them with the understanding and expectation that they 
-would be licensed under the GPL.
-
-Dusty
+> --
+> --to=gitster@pobox.com
