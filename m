@@ -1,107 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 4/7] t7008: demonstrate behavior of grep with textconv
-Date: Tue, 23 Apr 2013 08:16:29 -0700
-Message-ID: <7v1ua1l1ki.fsf@alter.siamese.dyndns.org>
-References: <517298D4.3030802@drmicha.warpmail.net>
-	<5137a5a48ae6c70ad716d985a22d53ec311ee05a.1366718624.git.git@drmicha.warpmail.net>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: Premerging topics
+Date: Tue, 23 Apr 2013 17:17:54 +0200
+Message-ID: <CALWbr2xAxkNMedbuS-+pPy+Zc5MEhoCWk3oW8BXS9db63DoGAg@mail.gmail.com>
+References: <CALWbr2wocjqs1mpa+yuQ_Zw8m+SX24q6Pby3E3v3-jd-0w1pvQ@mail.gmail.com>
+	<CALKQrgfO9fd+EEA=Vwe94tJbxkX89uDmMHm9rj6L=d4x7JJjaQ@mail.gmail.com>
+	<7vwqrtl2mk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr,
-	jeremy.rosen@openwide.fr, Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Apr 23 17:16:37 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 23 17:18:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUexQ-0001ol-Vf
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 17:16:37 +0200
+	id 1UUeyo-0003IQ-8I
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 17:18:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756675Ab3DWPQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Apr 2013 11:16:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43833 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756432Ab3DWPQc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Apr 2013 11:16:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D2B1193F0;
-	Tue, 23 Apr 2013 15:16:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qLBvjDXv0Tr8lzFCgP7lzhfIavA=; b=bkbGJA
-	Ge8hyhzcuJSP8y12S4jUlsHxOlH6q0jHAxKvtPI+xSUf4RDVm02OkEXsHs1UfdMa
-	Y1fXzt6PGOPVyRqH7hC1AzPyUNbGvu5znZAWBu9HgyXSRv8d+RKyImtAnQ0T/0Wr
-	sam8s1KUsCbL4Bbb0KA8S4yvjP6zjUlh22myM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KjL5n6Dgqs24IC5yF79d4FnmP/vITOpr
-	Xa9Rlg/JfCtZBYU7WKk4p1XTp54Bc3+ZABQD9Qt9fn21JkUHyQKvH7NfMrEJXbLN
-	KFX2mIqcoymPUcpmseqH5pYQ1WrVFtTEzk0FHVX3pNuW2qM9dOqXvjr0QpZpkZJF
-	wDFYh0DXKgo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80F42193EF;
-	Tue, 23 Apr 2013 15:16:31 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EF7E2193EC;
-	Tue, 23 Apr 2013 15:16:30 +0000 (UTC)
-In-Reply-To: <5137a5a48ae6c70ad716d985a22d53ec311ee05a.1366718624.git.git@drmicha.warpmail.net>
-	(Michael J. Gruber's message of "Tue, 23 Apr 2013 14:11:56 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C6E1D000-AC28-11E2-8B6D-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756698Ab3DWPR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Apr 2013 11:17:57 -0400
+Received: from mail-qe0-f48.google.com ([209.85.128.48]:57327 "EHLO
+	mail-qe0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756695Ab3DWPRz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Apr 2013 11:17:55 -0400
+Received: by mail-qe0-f48.google.com with SMTP id 9so456481qea.35
+        for <git@vger.kernel.org>; Tue, 23 Apr 2013 08:17:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=vsR/wSq1zZFQrIt7tm3MSfk+C/DmB4BqeNxaTTLqBgs=;
+        b=cZjqWYpiIbFxiRdHsJM5A9ZhOrwBpXyVbO3h/3zDmU+ddO2rKblHHg+lZ68KN+o+JO
+         NeWP0TPJehjrs6M23t1AVMfnHxxcUzeIVmZ6gki5WTzRPYfITzsl2jBr/iCeATFBwJ88
+         4VHyEa8cYpQttUiTPSAasDduQGSVPVaUnvOEuA1Q8016qIUeqBCPy99T4GrYoBUyMi5T
+         c7fCxGgcWtE58UQrXXMnw2pkXZnYPijZuRJZA505iAAR3hk/alv02VYrATU8TjKfddJc
+         SuDJec9+frZ6W+lE4jMiSGJ7D/Khn/GBTI050m94DKxGowAVFAXMzMt/qYpQeuyof0fJ
+         C1oQ==
+X-Received: by 10.224.179.6 with SMTP id bo6mr14051446qab.24.1366730274602;
+ Tue, 23 Apr 2013 08:17:54 -0700 (PDT)
+Received: by 10.49.30.9 with HTTP; Tue, 23 Apr 2013 08:17:54 -0700 (PDT)
+In-Reply-To: <7vwqrtl2mk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222177>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
-
-> Currently, "git grep" does not honor any textconv filters. Demonstrate
-> this in the tests.
+On Tue, Apr 23, 2013 at 4:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johan Herland <johan@herland.net> writes:
 >
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
->  t/t7008-grep-binary.sh | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
+>> Can you solve this problem with a tree object, instead of inventing a
+>> specially-formatted blob?
 >
-> diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
-> index 26f8319..126fe4c 100755
-> --- a/t/t7008-grep-binary.sh
-> +++ b/t/t7008-grep-binary.sh
-> @@ -145,4 +145,27 @@ test_expect_success 'grep respects not-binary diff attribute' '
->  	test_cmp expect actual
->  '
->  
-> +cat >nul_to_q_textconv <<'EOF'
-> +#!/bin/sh
-> +"$PERL_PATH" -pe 'y/\000/Q/' < "$1"
-> +EOF
-> +chmod +x nul_to_q_textconv
-> +
-> +test_expect_success 'setup textconv filters' '
-> +	echo a diff=foo >.gitattributes &&
-> +	git config diff.foo.textconv "\"$(pwd)\""/nul_to_q_textconv
-> +'
-> +
-> +test_expect_failure 'grep does not honor textconv' '
-> +	echo "a:binaryQfile" >expect &&
-> +	git grep Qfile >actual &&
+> Hmm.  What problem are you guys trying to solve?
+>
+> [snipped..]
+> And that was why I wanted to have a data structure that is quick to
+> query to answer "I am about to merge B.  Does the history already
+> have an A for which I have recorded a merge-fix for <A,B> pair?"
 
-This should pass --textconv to "git grep".
+That's exactly the problem I'm trying to solve.
+I'm willing to have an efficient way to merge topicC that has semantic
+conflicts with topicA and topicB.
+As topics will be merged together first in pu, then in next and
+finally in master, chances are that they won't be merged in the same
+order (or then, why would we even care about a topic workflow?). And I
+have the feeling that "merge-fix/B" or "merge-fix/A" doesn't hold
+enough information to do that accurately.
 
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_failure 'grep blob does not honor textconv' '
-> +	echo "HEAD:a:binaryQfile" >expect &&
-> +	git grep Qfile HEAD:a >actual &&
+The idea is then to store the <A, B> pair as a note, and to associate
+a "merge" to that (solving the semantic conflict). It would then be
+used as an implicit third parent for the merge of "branch containing
+A" and "branch containing B". This is pretty much what Michael said in
+the $gmane you talked about.
 
-Likewise.
-
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
+Cheers,
+Antoine
