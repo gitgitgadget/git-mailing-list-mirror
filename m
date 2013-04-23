@@ -1,123 +1,99 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] fixup! t3210: test for spurious error messages for dangling packed refs
-Date: Tue, 23 Apr 2013 11:15:56 +0200
-Message-ID: <1366708556-9172-1-git-send-email-mhagger@alum.mit.edu>
-References: <7vehe2nr16.fsf@alter.siamese.dyndns.org>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 23 11:16:33 2013
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] submodule.c: duplicate real_path's return value
+Date: Tue, 23 Apr 2013 21:00:02 +1000
+Message-ID: <1366714802-12010-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 23 13:00:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUZKy-0005ja-5I
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 11:16:32 +0200
+	id 1UUaxc-0004Bd-C9
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 13:00:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756564Ab3DWJQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Apr 2013 05:16:21 -0400
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:49161 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756003Ab3DWJQU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Apr 2013 05:16:20 -0400
-X-AuditID: 12074413-b7f226d000000902-83-517651635a06
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id DB.AA.02306.36156715; Tue, 23 Apr 2013 05:16:19 -0400 (EDT)
-Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3N9GAPQ010118
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 23 Apr 2013 05:16:18 -0400
-X-Mailer: git-send-email 1.8.2.1
-In-Reply-To: <7vehe2nr16.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrDIsWRmVeSWpSXmKPExsUixO6iqJscWBZoMPuRlkXXlW4mi4beK8wW
-	t1fMZ7b40dLD7MDi8ff9ByaPZ717GD0uXlL2+LxJLoAlitsmKbGkLDgzPU/fLoE74+On+4wF
-	54Qr2h7LNDCe4e9i5OSQEDCR2PusnwXCFpO4cG89WxcjF4eQwGVGiU8rG1ghnDNMEt+vzgCr
-	YhPQlVjU08wEYosIqElMbDsEFmcWSJF49XcXmC0sECGxavJsRhCbRUBVov3iJHYQm1fAWWJG
-	wywmiG0KEse3bwOr4RQwk3j2egcriC0kYCpxadIUxgmMvAsYGVYxyiXmlObq5iZm5hSnJusW
-	Jyfm5aUW6Zrr5WaW6KWmlG5ihISP8A7GXSflDjEKcDAq8fAKuJcGCrEmlhVX5h5ilORgUhLl
-	LfArCxTiS8pPqcxILM6ILyrNSS0+xCjBwawkwntNCijHm5JYWZValA+TkuZgURLnVVui7ick
-	kJ5YkpqdmlqQWgSTleHgUJLgTQ8AahQsSk1PrUjLzClBSDNxcIIILpANPEAbHEEKeYsLEnOL
-	M9Mhik4xKkqJ8/aDJARAEhmleXADYJH+ilEc6B9hXheQKh5gkoDrfgU0mAlocGZCCcjgkkSE
-	lFQDY9MvzyqumZueyv532Rx1yvaH2BnN16t43AtsDsa1bGlw+1l5LZVPYmFBJ+vq/kNBvz59
-	9FunusrI9kT5/5mXMk0msYXYTkrLuHVN4d0pxULb77ePrymy0WfeNj/itYDv8t1mS793Z07V
-	5r0spbI96NQ7X7FUrbmqS1bNzHFf+Dz7/b+UFSmcN5VYijMSDbWYi4oTAcbg1HjP 
+	id S1755264Ab3DWLA1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Apr 2013 07:00:27 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:42092 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755116Ab3DWLA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Apr 2013 07:00:26 -0400
+Received: by mail-pa0-f50.google.com with SMTP id bg4so421325pad.37
+        for <git@vger.kernel.org>; Tue, 23 Apr 2013 04:00:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=wKzek3SaNB2PpzUzL3ztCxo1LYJYOIQp0ysDFq3z9DA=;
+        b=YVEtnOHxZexK4Z/eN2ET0RV4RZUsXZhqMh7gb0EfmhEEmDgoW7RK5J0bCzDDfkQftA
+         PV0Q7M0TA8BHWciEp/eM+CxWfCyH0BKKS1L2Ri6oK2ZOuSOQyStFz2eLL9EgNpUcJh1d
+         G60mPEy8wKBoqqLadLoHV/qLBb+YqZAahXNlGSXFuGisfXfm89B6Tp5n9Qh8dMgSUjZM
+         fSsBFKFWnuVVeRlzI/WG/TFdtycMIRWTr0Pb4TCweDdqp8wHzhoLUiR/kxdPZMc1iRZA
+         aNr+uBqQbHFgpfZAUCtn7yeM3gCQmm81ChxES75Covyiq0aNDARTpbg8INGxz6N8WIKT
+         0bKg==
+X-Received: by 10.68.198.69 with SMTP id ja5mr40206683pbc.183.1366714826286;
+        Tue, 23 Apr 2013 04:00:26 -0700 (PDT)
+Received: from pclouds@gmail.com (xinyep.lnk.telstra.net. [110.143.18.114])
+        by mx.google.com with ESMTPS id fx2sm9635088pac.4.2013.04.23.04.00.22
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 23 Apr 2013 04:00:25 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 23 Apr 2013 21:00:05 +1000
+X-Mailer: git-send-email 1.8.2.82.gc24b958
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222140>
 
-On 04/23/2013 12:23 AM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> For now I left the sleeps in t3210.  Given that the problem will be
->> solved by topic jc/prune-all, building a fancier workaround into this
->> test for the old broken --expire behavior seems like a waste of time.
->> I propose that the sleeps be removed when this patch series is merged
->> with jc/prune-all.
-> 
-> I wouldn't mind to queue this on top of the "prune --expire=all" topic
-> at all, especially if that makes the tests easier.
+real_path returns the pointer to an internal buffer, which may be
+overwritten by the next real_path call. Duplicate the return value for
+safety.
 
-OK then let's do it that way.  The prune-all branch is not risky so I
-can't imagine that it will hold up my changes.
-
-If you rebase my patches on top of jc/prune-all, then you can
-autosquash this patch to remove the sleeps from
-
-    [PATCH v2 16/33] t3210: test for spurious error messages for dangling packed refs
-
-Let me know if you would prefer that I re-roll.
-
-Michael
-
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- t/t3210-pack-refs.sh | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ Apply on top of jl/submodule-mv.
+=20
+ Junio, I think this is the reason some tests failed when you merged
+ nd/magic-pathspecs in (I suspect you needed to do parse_pathspec
+ call, which may do real_path internaly).
 
-diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
-index 559f602..1a2080e 100755
---- a/t/t3210-pack-refs.sh
-+++ b/t/t3210-pack-refs.sh
-@@ -122,9 +122,8 @@ test_expect_success 'explicit pack-refs with dangling packed reference' '
- 	git commit --allow-empty -m "soon to be garbage-collected" &&
- 	git pack-refs --all &&
- 	git reset --hard HEAD^ &&
--	sleep 1 &&
--	git reflog expire --expire=now --all &&
--	git prune --expire=now &&
-+	git reflog expire --expire=all --all &&
-+	git prune --expire=all &&
- 	git pack-refs --all 2>result &&
- 	test_cmp /dev/null result
- '
-@@ -135,9 +134,8 @@ test_expect_success 'delete ref with dangling packed version' '
- 	git pack-refs --all &&
- 	git reset --hard HEAD^ &&
- 	git checkout master &&
--	sleep 1 &&
--	git reflog expire --expire=now --all &&
--	git prune --expire=now &&
-+	git reflog expire --expire=all --all &&
-+	git prune --expire=all &&
- 	git branch -d lamb 2>result &&
- 	test_cmp /dev/null result
- '
-@@ -147,9 +145,8 @@ test_expect_success 'delete ref while another dangling packed ref' '
- 	git commit --allow-empty -m "future garbage" &&
- 	git pack-refs --all &&
- 	git reset --hard HEAD^ &&
--	sleep 1 &&
--	git reflog expire --expire=now --all &&
--	git prune --expire=now &&
-+	git reflog expire --expire=all --all &&
-+	git prune --expire=all &&
- 	git branch -d lamb 2>result &&
- 	test_cmp /dev/null result
- '
--- 
-1.8.2.1
+ I think "bug" fix like this should go in early, hence this patch. I'm
+ going to rebase nd/magic-pathspecs after this series graduates to
+ master anyway, feel free to reject.
+
+ submodule.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/submodule.c b/submodule.c
+index 6b01a02..9f442d8 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1102,7 +1102,8 @@ void connect_work_tree_and_git_dir(const char *wo=
+rk_tree, const char *git_dir)
+ 	struct strbuf configfile_name =3D STRBUF_INIT;
+ 	struct strbuf gitfile_content =3D STRBUF_INIT;
+ 	struct strbuf gitfile_name =3D STRBUF_INIT;
+-	const char *real_work_tree =3D real_path(work_tree);
++	char *real_work_tree =3D xstrdup(real_path(work_tree));
++	char *to_free =3D real_work_tree;
+ 	const char *pathspec[] =3D { real_work_tree, git_dir, NULL };
+ 	const char *max_prefix =3D common_prefix(pathspec);
+ 	FILE *fp;
+@@ -1157,4 +1158,5 @@ void connect_work_tree_and_git_dir(const char *wo=
+rk_tree, const char *git_dir)
+=20
+ 	strbuf_release(&core_worktree_setting);
+ 	strbuf_release(&configfile_name);
++	free(to_free);
+ }
+--=20
+1.8.2.82.gc24b958
