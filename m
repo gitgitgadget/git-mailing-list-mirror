@@ -1,57 +1,69 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 7/7] rebase: implement --[no-]autostash and rebase.autostash
-Date: Tue, 23 Apr 2013 23:07:13 +0530
-Message-ID: <CALkWK0nbY6EcBmsOFPVtKoajiZnKacFKBVmpSYw9pJw3pQ4fgA@mail.gmail.com>
-References: <1366725724-1016-1-git-send-email-artagnon@gmail.com>
- <1366725724-1016-8-git-send-email-artagnon@gmail.com> <7vr4i1i3a9.fsf@alter.siamese.dyndns.org>
- <7vip3di21r.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fixup! t3210: test for spurious error messages for dangling packed refs
+Date: Tue, 23 Apr 2013 10:50:03 -0700
+Message-ID: <7vehe1i1bo.fsf@alter.siamese.dyndns.org>
+References: <7vehe2nr16.fsf@alter.siamese.dyndns.org>
+	<1366708556-9172-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Martin von Zweigbergk <martinvonz@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 23 19:38:02 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Apr 23 19:50:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUhAG-00085R-VP
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 19:38:01 +0200
+	id 1UUhM7-0003pD-AC
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 19:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757135Ab3DWRh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Apr 2013 13:37:56 -0400
-Received: from mail-ia0-f173.google.com ([209.85.210.173]:59593 "EHLO
-	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757000Ab3DWRhz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Apr 2013 13:37:55 -0400
-Received: by mail-ia0-f173.google.com with SMTP id j5so803297iaf.18
-        for <git@vger.kernel.org>; Tue, 23 Apr 2013 10:37:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=KDEuvyusKIHT6nnLLOhwobpLBxCtTsgd4lJIqfhVP3Y=;
-        b=OvnId4G+W2XDe1Cy74hUN5aLIdNNqM+bw06jQBQECfnFVhT89A1qN8aCaqWCabVWoW
-         amZs4cHYbXNA+WOlqNCilY3jhEzMpcFvUU4NDzA7j9Mbf4DnAbwgboEO7UylEbQzET/x
-         /TLz+BWmJIfmOtPpT/vEuE1hqznOYGfGhQkCX1AS9K1FK4P5iFWlHvTdF4QoDuPs25v1
-         nl/oF54rfzQSsl4b8hWrwo3k/O+nHm+4aAA6b/6lsHazg7/Tviy49f/+85uSIYomixXX
-         hjhcN4y5eVf2LxcWYbHwmtTOYKUnWe3286tsY8Fiy8U7BMwjEUTc+Z5hIufj0PGDS/ga
-         80cg==
-X-Received: by 10.50.119.102 with SMTP id kt6mr19238303igb.12.1366738675049;
- Tue, 23 Apr 2013 10:37:55 -0700 (PDT)
-Received: by 10.64.63.48 with HTTP; Tue, 23 Apr 2013 10:37:13 -0700 (PDT)
-In-Reply-To: <7vip3di21r.fsf@alter.siamese.dyndns.org>
+	id S1756685Ab3DWRuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Apr 2013 13:50:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38464 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756381Ab3DWRuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Apr 2013 13:50:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DBD019A7E;
+	Tue, 23 Apr 2013 17:50:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XCu52BJo+ynHyj6vX6I8qinLlVw=; b=XDgGUr
+	FUlSIdnlXd+TkepCTmPw4aFvfwLaIUpPGn6HG/fSH1AiWjaVUrUuPMk4GqA68+nx
+	Mp1Uc1JJ++hun38nMmetud6knz2vDsD3LCwNYZFg8M4lNGbHNEp1Q6ty5dqLzwFr
+	KEHdHo8WtwrBTlAMMw4LRRPBURJa/XvBH0wV8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KRB06LYBkSmPHU9w0aRaSMKhZSE2IauD
+	k91O205jo3/oF7691zUdSkNsDrMiTLlVTRPW71s+Tsu2MI1QSUYYeEoNsFsBQJ9G
+	sn9gvRl4yzbBHxvW3zK2oJmatnTaXnbYztEOJu2s2PI70FC03rk8+J6B8UhV4ixA
+	/75L+2bf9DE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 562B919A7D;
+	Tue, 23 Apr 2013 17:50:05 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D30EE19A7A;
+	Tue, 23 Apr 2013 17:50:04 +0000 (UTC)
+In-Reply-To: <1366708556-9172-1-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Tue, 23 Apr 2013 11:15:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3AC8DB66-AC3E-11E2-B3F6-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222201>
 
-Junio C Hamano wrote:
-> Perhaps "finish_rebase" or something?
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Sure.  That makes sense.
+> Let me know if you would prefer that I re-roll.
 
-I was too busy struggling with shell code to notice these things ;)
+Your fix-up cleanly applied to the result of applying the series up
+to 16/33 and it was trivial to squash it in.
+
+Please holler if what I push out on 'pu' in 8 hours or so looks
+wrong.
+
+Thanks.
