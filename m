@@ -1,86 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
-Date: Tue, 23 Apr 2013 09:03:42 -0700
-Message-ID: <7vobd5jktd.fsf@alter.siamese.dyndns.org>
-References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
-	<87ppxmogdv.fsf@linux-k42r.v.cablecom.net>
-	<CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
-	<87wqruk2pj.fsf@linux-k42r.v.cablecom.net>
-	<CALkWK0mUH2m5zJ4MwPWC85CsZZ=2RODumLvsF9q3rLj-+d7vBw@mail.gmail.com>
-	<CALkWK0n5gaz3A7kHT6+5z3YkYdpgU5p6Pv4heMbLzikTbROwkA@mail.gmail.com>
-	<CALkWK0k0LbAnkhAAqdeAvBnCig_HO+bT+WiQuQQ3Fgc=FzFtRw@mail.gmail.com>
-	<87zjwqpebl.fsf@hexa.v.cablecom.net> <vpqr4i2z35n.fsf@grenoble-inp.fr>
-	<7vmwsqns4p.fsf@alter.siamese.dyndns.org>
-	<CALkWK0mO0L4YrZFGmzWkiO4V18p-ydKyjVOe4vJ2H-d7Kz+qOw@mail.gmail.com>
-	<7vehe2m88a.fsf@alter.siamese.dyndns.org>
-	<CALkWK0noVfRoXAH75r4yBijXSHD5yusLcKgGC=8bjOW6=qCMng@mail.gmail.com>
+From: Ilya Basin <basinilya@gmail.com>
+Subject: git svn dcommit  doesn't work with useSvnsyncProps
+Date: Tue, 23 Apr 2013 20:07:34 +0400
+Message-ID: <163892758.20130423200734@gmail.com>
+Reply-To: Ilya Basin <basinilya@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Git List <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 23 18:03:52 2013
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 23 18:07:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUfh8-0001Rc-LR
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 18:03:50 +0200
+	id 1UUfl1-0005oP-Fa
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 18:07:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756927Ab3DWQDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Apr 2013 12:03:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45007 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756466Ab3DWQDp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Apr 2013 12:03:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C62D918CF9;
-	Tue, 23 Apr 2013 16:03:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=s9K/2sDEvVTFXOq38Cve10pCQWo=; b=ueWyM7
-	xQpMzGdPRbQcIqmec5+tOgsgBGZeSdb1gqkQB2iiLEKUP4C2lwHId2qhiRF3bTRa
-	STR9/VlUf06DJefpEVGw9w0yAM3qi0NUmXT/YMJOp5pA2PLO/vRVFr2X1kKNScvn
-	gj9Q/5Svilx358l30/20EhFgVjTAnPf6OcCV0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uiAVzEmq8yF05rHFIywTnAJmDmwoB2Fs
-	JxnLa4pO5CEc+ddpeQf/1BUUqArnAss9kvkyKj+P1SqDKBFMkDlyGaLcedJBXlXY
-	Q8M2TbuC6bVWISsyRKrqky56dRiL7Z/WsgXhd8UC8zfIWSg8YLURnfT/sjsUKhmg
-	6mYb5JnHO9g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC8AF18CF8;
-	Tue, 23 Apr 2013 16:03:44 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 25BBE18CF7;
-	Tue, 23 Apr 2013 16:03:44 +0000 (UTC)
-In-Reply-To: <CALkWK0noVfRoXAH75r4yBijXSHD5yusLcKgGC=8bjOW6=qCMng@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Tue, 23 Apr 2013 13:23:57 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5F96695E-AC2F-11E2-8199-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755761Ab3DWQHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Apr 2013 12:07:45 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:44192 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755450Ab3DWQHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Apr 2013 12:07:43 -0400
+Received: by mail-la0-f46.google.com with SMTP id ep20so708487lab.33
+        for <git@vger.kernel.org>; Tue, 23 Apr 2013 09:07:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to
+         :subject:mime-version:content-type:content-transfer-encoding;
+        bh=SmUaRw2yDvfqe1BA4XfBrS1qCMe+X8PBGSB/FQmjZAo=;
+        b=J9TGYHZnE4ZBOaaCOwfmeBNqoLenSWeiWGbTjlBrCNd5RM1peTu9Ap2OZQjVeEagfP
+         0xTZGXXFtLqpFqcjBr/VrBTbXPyvyODomY81ik/bGYw5i7x17z4b7qFWFO51H0PmVoNy
+         GFUFIGi1F3Z21H4qRlhovdc1BFJFUXDsA6Otlqrtz0J2ZDOudsyuZnxjzJuom4SfuYFz
+         vsLVloJcqk0P9UaLqvLmtmZCPJAhwcegCie+oSn6c5WkvQZB/KVKZhanlpKSXwvxXgny
+         Zxvk0urEDblYSXD9PZLP71jTQ6s1d5pTVEN7z3rAr3wZu+W81B5A3y3iyAdOU9DZaHUI
+         xGoQ==
+X-Received: by 10.112.147.170 with SMTP id tl10mr15489977lbb.100.1366733261588;
+        Tue, 23 Apr 2013 09:07:41 -0700 (PDT)
+Received: from BASIN.reksoft.ru ([2a00:1120:0:1001:4120:6166:deca:ee11])
+        by mx.google.com with ESMTPS id b2sm12470775lbv.4.2013.04.23.09.07.38
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 23 Apr 2013 09:07:39 -0700 (PDT)
+X-Mailer: Voyager (v3.99.4) Professional
+X-Priority: 3 (Normal)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222184>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Hi list.
+Things often go wrong with git svn. Often you have to try different
+svn layouts and path ignores.
+This is why I prefer to do the long lasting svn mirror once and then
+clone the mirror to git with --use-svnsync-props. Why use this option
+at all? Because without it the commits have different commit message
+and are are valid only on local machine.
 
-> Further, this can speed up tree-rename detection greatly (in fact, I'm
-> thinking the first implementation will depend on this information
-> being present).  I inspect M^{tree} and I want to know how it's
-> composed from M^1^{tree} and M^2^{tree}.  Simple.  In M^{tree}, look
-> for trees that have this additional data filled in: then we can just
-> short-circuit the rename detection to matching the similarity of this
-> tree with M^1^{tree} and M^2^{tree}.
+Till now I only imported from svn and never exported. And today I get
+this:
+    $ git svn info # or rebase, or dcommit
+    Unable to determine upstream SVN information
 
-If you need the history context (i.e. M, M^1, M^2) around it to
-interpret that additional information, isn't it essentially the same
-as storing renames in the merge commit M?
+I found a workaround:
+    - delete .git/svn/.metadata (once).
+    - to do 'git svn dcommit'  temporarily change the svn url to the
+    real one
+    - to do 'git svn fetch' temporarily change the svn url to the
+    mirror
 
-Not very impressed, at least not yet.
+or
+    - import a few commits from the upstream svn repo to init the
+    metadata
+    - switch to the mirror
+
+    
+test script:
+
+    testdir=`mktemp -d`
+    echo "testdir = $testdir"
+    cd "$testdir"
+    
+    pushurl="file://$testdir/test.svn"
+    echo "creating repo test.svn"
+    svnadmin create test.svn
+    svn mkdir -m "" "$pushurl/trunk" "$pushurl/tags" "$pushurl/branches"
+    
+    echo "checking out"
+    svn checkout "$pushurl/trunk" "test"
+    cd "test"
+    
+    echo "committing"
+    echo x > f
+    svn add f
+    svn commit -mx >/dev/null
+    
+    svn cp -m"create testbranch" "$pushurl/trunk" "$pushurl/branches/testbranch"
+    
+    for ((i=0; i<4; i++)); do
+    echo $i > f
+      svn commit -m"$i" >/dev/null
+    done
+    
+    svn cp -m"create testtag" "$pushurl/trunk" "$pushurl/tags/testtag"
+    
+    cd ..
+    rm -rf test
+    
+    mkdir gitsvn
+    cd gitsvn
+    
+    rourl=file://`pwd`/test.svn
+    
+    svnadmin create "test.svn"
+    echo '#!/bin/sh' > "test.svn/hooks/pre-revprop-change"
+    chmod +x "test.svn/hooks/pre-revprop-change"
+    
+    svnsync init "$rourl" "$pushurl"
+    svnsync sync "$rourl"
+    
+    
+    git svn init --stdlayout $pushurl test
+    cd test
+    git config svn-remote.svn.pushurl "$pushurl"
+    
+    # need to fetch one revision from pushurl for proper metadata init
+    git svn fetch --revision BASE:1
+    
+    # switching to mirror
+    git config svn-remote.svn.useSvnsyncProps 1
+    git config svn-remote.svn.url "$rourl"
+    
+    # hiding real repo
+    mv $testdir/test.svn{,.1}
+    
+    # feetching from mirror
+    git svn fetch
+    
+    # restoring real repo
+    mv $testdir/test.svn{.1,}
+    
+    # here's the error: Unable to determine upstream SVN information from working tree history
+    git svn info
+    git svn rebase
+    
+    # switching to real repo
+    git config svn-remote.svn.useSvnsyncProps 0
+    git config svn-remote.svn.url "$pushurl"
+    
+    # now it works:
+    git svn info
+    git svn rebase
