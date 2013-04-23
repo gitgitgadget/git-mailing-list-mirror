@@ -1,117 +1,101 @@
-From: Ilya Basin <basinilya@gmail.com>
-Subject: Re[2]: State of CVS-to-git conversion tools (Was: Re: cvsps: bad usage: invalid argument --norc)
-Date: Tue, 23 Apr 2013 22:30:07 +0400
-Message-ID: <538486753.20130423223007@gmail.com>
-References: <323381594.20130414121834@gmail.com> <673219382.20130414124800@gmail.com> <20130414113351.GA1299@thyrsus.com> <1762779000.20130415215818@gmail.com> <20130418094326.GB11038@thyrsus.com> <214169596.20130420142251@gmail.com> <20130423175000.GA25994@thyrsus.com>
-Reply-To: Ilya Basin <basinilya@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2013, #05; Mon, 15)
+Date: Wed, 24 Apr 2013 00:19:26 +0530
+Message-ID: <CALkWK0m05nWS=fQVCkFhNx7BT6_7qHN8W2WVW=6mGFeKKfN1Mw@mail.gmail.com>
+References: <7vhaj7r116.fsf@alter.siamese.dyndns.org> <CAMP44s2_wiNr4RaBOEnKnZzT4CF0qKK+bp+Lyi=Nfx3Q9ggqOQ@mail.gmail.com>
+ <7vip3npet0.fsf@alter.siamese.dyndns.org> <CAMP44s3NE3yrQoa1nZXAgy3KFXGF56Ki8icJ2z2TDigzax0nWg@mail.gmail.com>
+ <8761zm4wzg.fsf@linux-k42r.v.cablecom.net> <CAMP44s0a2VsPBMd9Vrrhwdw=SPp2HrvDdXZ9Dmzhr9A6T+Sz7w@mail.gmail.com>
+ <CABURp0qGYG4T+t36=Us328YdLzy9KjBOWot2gSOk=FgCRUCLnQ@mail.gmail.com>
+ <CAMP44s3pZt3QVjS7GbXqjMS4ti3p=Vs2DmFXQjsMM3rs9qURmw@mail.gmail.com>
+ <CALkWK0nji4m0zJPf_s0G5jfWaAN_RTGFZ6dSxfahq2OcRsu5xQ@mail.gmail.com>
+ <CAMP44s1RpgM5U0ySsof_sgEHNS1p-seQ=ciVCth9gOJMG0cpHw@mail.gmail.com>
+ <CALkWK0krWM4kJ5GTnQ2SL7HoNfNMNA0-xdRVbeatAFpyKW_RtA@mail.gmail.com>
+ <CAMP44s0KW4_Q6-d-3=M7GzWmHwy4H--FcemK4UF5FS0t3wnOgg@mail.gmail.com>
+ <CALkWK0ncfuzuYSKjkT2uQy4dGR=TSnHoJNdhU9ownDUytysL6w@mail.gmail.com> <CAMP44s162msct=W0eV93LX15Bho=DA1baLZcgFCouSRH=z0mDQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Eric S. Raymond" <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Tue Apr 23 20:31:51 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Phil Hord <phil.hord@gmail.com>, Thomas Rast <trast@inf.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 23 20:50:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUi0L-0005Br-PQ
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 20:31:50 +0200
+	id 1UUiIA-0008Av-VS
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 20:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757107Ab3DWSbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Apr 2013 14:31:45 -0400
-Received: from mail-la0-f41.google.com ([209.85.215.41]:60468 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756508Ab3DWSbo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Apr 2013 14:31:44 -0400
-Received: by mail-la0-f41.google.com with SMTP id fq13so851780lab.0
-        for <git@vger.kernel.org>; Tue, 23 Apr 2013 11:31:42 -0700 (PDT)
+	id S1757204Ab3DWSuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Apr 2013 14:50:08 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:39147 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757023Ab3DWSuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Apr 2013 14:50:07 -0400
+Received: by mail-ie0-f177.google.com with SMTP id 9so1096608iec.36
+        for <git@vger.kernel.org>; Tue, 23 Apr 2013 11:50:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
-         :subject:in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=4KEHCMPDzR2Z1F8uGG4lXQI/eHzSEJTvTOqiFKRZnF8=;
-        b=EyTGIncs0Nm3GflceU8jGvQwu30nd02an8HQHer3zKClj6Vo5Z6sbGaiCNCF6ptdq9
-         VrgJrxgq9bPFFTlrpAYLmcoLmNUG2pMhvlcPfnwZV/+IcgO22LRSLTmuG+wasQUmcDJN
-         1O+Lc59ZBKPVuQ3Z8h6BsMjTSKA807AO9Fe++2dO1x7w1iQqLUGrsn1lZqwXEQ7KgJaP
-         yqpV2fz8u7ekGErLU2U12xqfIPdSq3BQTxJsTmpxrnipD9eIeBgDi8LuIw/yuMjpdMQp
-         +t7V/yRF2J5zvRyun8AHZojalW8cH+bLNSzydy3LWVnhGuXh+Ai63+m/zjzbQx/eh2Xj
-         fMMQ==
-X-Received: by 10.112.137.9 with SMTP id qe9mr15882999lbb.126.1366741902724;
-        Tue, 23 Apr 2013 11:31:42 -0700 (PDT)
-Received: from [192.168.0.78] (92-100-225-174.dynamic.avangarddsl.ru. [92.100.225.174])
-        by mx.google.com with ESMTPS id a9sm13256473laf.2.2013.04.23.11.31.40
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 23 Apr 2013 11:31:41 -0700 (PDT)
-X-Mailer: Voyager (v3.99.4) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <20130423175000.GA25994@thyrsus.com>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=9KJms+Z0s6XjklZIa/r27SDETNUANt28552ZcfRt6qc=;
+        b=FizeXB1ZTrHcxcN3cV3e7YLFFKGaGzdvfa4f/TVlQYG4K0D6YcAOfNP13+Wwv5sFTA
+         riShl91QynPMTX9ho6AhVQB/zMKF0Umn5dSJ5PzDUGkM4TC0Ic/kndjd/s0ywaUn+HOW
+         yodOm45Qgs1XRIQ4hEewRIZf03reszrSFwsny/lqvXds1gVyzr3WV5VDCcCNqlPvAqsn
+         Vh1ws/xAP1y1MHasysZWTuU5MNQEpKf0g8saeftFn3R2UIcUCgF6INUcw6nYLMIkoIyg
+         ZJbAWAMg1hwp2kW4T9eJ6eq9MngzJxiw1K4NKQSKXNO6VkWLKjVl3j4oef2eukLWnvGm
+         1gmQ==
+X-Received: by 10.42.204.79 with SMTP id fl15mr16349566icb.57.1366743006671;
+ Tue, 23 Apr 2013 11:50:06 -0700 (PDT)
+Received: by 10.64.63.48 with HTTP; Tue, 23 Apr 2013 11:49:26 -0700 (PDT)
+In-Reply-To: <CAMP44s162msct=W0eV93LX15Bho=DA1baLZcgFCouSRH=z0mDQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222206>
 
->> But if the branch is new, but it's parent commit is already imported,
->> I guess, the only way to refer it is by its SHA-1
->> Eric, what parent information can cvsps provide for the first commit
->> in a branch, when invoked with the '-d' flag?
+[off-topic; what happened/happens to your series is entirely unrelated
+to the issue]
 
-ESR> At the moment it doesn't provide any at all.  That case wasn't on my
-ESR> radar when I was fixing the code.  If you can specify a behavior you
-ESR> think would be useful, I'm listening.
+Felipe Contreras wrote:
+> Nobody knows how life began, and it doesn't matter now, what matters
+> is how life evolves. It doesn't matter if the chicken was first, or
+> the egg, what matters is that if all the chickens and eggs are gone,
+> there won't be more.
+>
+> Plenty of projects have died because they stopped caring about their
+> users, and without users there's no new developers, and the old
+> developers eventually move on, and all the literary quality of commit
+> messages have no eyes to see it.
 
-For new branches the 'from' command can refer the common ancestor in
-an existing branch. For example:
+I was a pure end-user of git until about Jan 2010.  I was initially
+impressed with git because it behaved in a beautiful consistent
+manner.  Then I dug in and found out that it had a beautiful codebase,
+excellent mailing list (content and conventions), and large
+development community.  I could literally read through the commit
+messages and code with ease.  I do bounce between a few projects, but
+always come back to git because nothing else fits the criterion.  What
+I do not consider (as much as the other things) is the
+number-of-end-users.
 
-         /----------E thebranch
-        /
-    A---B---C---D master
+Then again, you would argue that I came across git only because of a
+large enough user-base.  I agree with that, but you're practically
+idolizing user-base as the most important thing.
 
-Commit E is newer than D; we already imported D; thebranch is new.
-Instead of:
-    from refs/heads/thebranch^0
-refer the parent as:
-    from refs/heads/master^2
+My point is simple: yes, it's nice to have a big user base.  We
+already do.  Now, what's the point of pitching to end-users who only
+use the most basic functionality?  Their inputs are likely to be
+useless (arising from misunderstandings) anyway.  They're not going to
+be the next developers.  And they're not going to help create what our
+next developer is looking for in us either (i.e. codebase, community).
 
+Our primary customers are each other, because that's how we get a
+tight community and great codebase.  And because the next potential
+developer looks like one of us.
 
-
-ESR> Look at the -i option.  That may do what you need.
-ESR>
-
-OK, something's wrong with the man page: starting with '-A' the
-description is unstructured:
-
-       -A authormap
-           Apply an author-map file to the attribution lines. Each line must be of the form
-
-               ferd = Ferd J. Foonly <foonly@foo.com> America/Chicago
-
-           and will be applied to map the Unix username ferd to the DVCS-style user identity specified after the equals
-           sign. The timezone field (after > and whitespace) is optional and (if present) is used to set the timezone
-           offset to be attached to the date; acceptable formats for the timezone field are anything that can be in the TZ
-           environment variable, including a [+-]hhmm offset. Whitespace around the equals sign is stripped. Lines
-           beginning with a # or not containing an equals sign are silently ignored. -R revmap:: Write a revision map to
-           the specified argument filename. Each line of the revision map consists of three whitespace-separated fields: a
-           filename, an RCS revision number, and the mark of the commit to which that filename-revision pair was assigned.
-           -v:: show very verbose parsing messages. -t:: show some brief memory usage statistics. --summary-first:: when
-           multiple patchset diffs are being generated, put the patchset summary for all patchsets at the beginning of the
-           output. --diffs-opts option string:: send a custom set of options to diff, for example to increase the number
-           of context lines, or change the diff format. --debuglvl bitmask:: enable various debug output channels. -Z
-           compression:: A value 1-9 which specifies amount of compression. A value of 0 disables compression. --root
-           cvsroot:: Override the setting of CVSROOT (overrides working directory and environment). -i:: Incremental
-           export. Each commit with no ancestor gets a from pointer name. When importing to an existing repository, this
-           will attach each such commit as a child of the last commit on $BRANCH in the existing repository. -k:: Kill
-           keywords: will extract files with -kk from the CVS archive to avoid noisy changesets. -T:: Force deterministic
-           dates for regression testing. Each patchset will have a monotonic-increasing attributed date computed from its
-           patchset ID. --fast-export:: Emit the report as a git import stream. --convert-ignores:: Convert ..cvsignore
-           files to .gitignore files. --reposurgeon:: Emit for each commit a list of the CVS file:revision pairs composing
-           it as a bzr-style commit property named "cvs-revisions". From version 2.12 onward, reposurgeon can interpret
-           these and use them as hints for reference-lifting. -V:: Emit the program version and exit.  module-path::
-           Operate on the specified module. If this option is not given, either the CVSROOT environment variable must be
-           set to point directly at the module or cvsps must be run in a checkout directory or repository module
-           subdirectory.
-
---
- 
+That does _not_ mean: live only within the community.  Everyone should
+have a healthy interaction with the outside world, otherwise they risk
+turning into researchers and suffering engineering myopia.  And
+ofcourse not attract a large userbase.
