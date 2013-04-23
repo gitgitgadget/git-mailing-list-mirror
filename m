@@ -1,124 +1,181 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: git fetch refs and tags
-Date: Tue, 23 Apr 2013 14:16:18 +0200
-Message-ID: <CALKQrgf2UxC3h2ApJ-ug=B-Pg_gxf_4=FV1MSmfdt9S2Ut5YFA@mail.gmail.com>
-References: <1366714421.2899.10.camel@lws-weitzel>
-	<CALKQrge2vHqA1HitpdJKYQu0KY5+XkFdrN_Gg254gW_ih57o=Q@mail.gmail.com>
-	<1366717552.2899.17.camel@lws-weitzel>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, sitaramc@gmail.com
-To: J.Weitzel@phytec.de
-X-From: git-owner@vger.kernel.org Tue Apr 23 14:16:35 2013
+From: Zoltan Klinger <zoltan.klinger@gmail.com>
+Subject: [PATCH] git-prompt.sh: Show where rebase is at when interrupted by a merge conflict
+Date: Tue, 23 Apr 2013 22:35:07 +1000
+Message-ID: <1366720507-16504-1-git-send-email-zoltan.klinger@gmail.com>
+Cc: felipe.contreras@gmail.com,
+	Zoltan Klinger <zoltan.klinger@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 23 14:35:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUc9B-0006Sg-9d
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 14:16:33 +0200
+	id 1UUcRv-0000Bx-Mw
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 14:35:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754660Ab3DWMQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Apr 2013 08:16:29 -0400
-Received: from mail10.copyleft.no ([188.94.218.231]:62831 "EHLO
-	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753357Ab3DWMQ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Apr 2013 08:16:28 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UUc92-000CoY-OF
-	for git@vger.kernel.org; Tue, 23 Apr 2013 14:16:26 +0200
-Received: from mail-oa0-f46.google.com ([209.85.219.46])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UUc8z-000NCM-UH
-	for git@vger.kernel.org; Tue, 23 Apr 2013 14:16:24 +0200
-Received: by mail-oa0-f46.google.com with SMTP id k3so486361oag.19
-        for <git@vger.kernel.org>; Tue, 23 Apr 2013 05:16:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=MIC6sm2uUyBpq1KbsG9oYwhNH+lu2RZgvGPSqYqEIJs=;
-        b=YtmBABGCfqt/7nOpH9s3xPZXoyiZLNhH6cc0GAV7PpaBzYBkO6XRLNBeF1d3m5Noq5
-         IX6kPCwwZVaqlhy7qtPW8YctqGDVZLu+cW4A2MeErAbM3GQ+GNEsaqw4THXNG/tV3TeC
-         o8GSZ1K8frqqeyc4d+NbqwhF5kKkzYxujbr6JOXZiSNfrq4O1AHq06ofK0v3bFE6c/MW
-         CmD21Gkv7462tN4gMKICGOwoO8IzEfXZFtWdm1t1zUDeCiEouz3o5z2F1JTHezMml/C/
-         pCFmzt2/QyRvkk8CEN6Xss2s80oSeKHxfzJ4nLke4jFEcx9Ov+z6nbPgmsvHAadOzHiC
-         ghyw==
-X-Received: by 10.60.29.37 with SMTP id g5mr12227029oeh.140.1366719378443;
- Tue, 23 Apr 2013 05:16:18 -0700 (PDT)
-Received: by 10.182.210.233 with HTTP; Tue, 23 Apr 2013 05:16:18 -0700 (PDT)
-In-Reply-To: <1366717552.2899.17.camel@lws-weitzel>
+	id S1756114Ab3DWMfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Apr 2013 08:35:51 -0400
+Received: from mail-da0-f49.google.com ([209.85.210.49]:59397 "EHLO
+	mail-da0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756107Ab3DWMfu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Apr 2013 08:35:50 -0400
+Received: by mail-da0-f49.google.com with SMTP id t11so318601daj.22
+        for <git@vger.kernel.org>; Tue, 23 Apr 2013 05:35:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=kftzrrr/yHTiY3mBLZwd5g2plPlGSp31tu64vi8AbwQ=;
+        b=h6YRB88Sj6TanpLvcau+B82yLSvMuxsfFUN5xqEAhcJT8GnC7s4gJiaidBX7VhSvO/
+         BqlEdgnMGr2TSJjibAZHJsLdZL1YqpO+6/TpD6Rcj+ldAz9NjC4HBBlOVUfz5FcEyZV9
+         Spw+DtqZv2QLQTprR1YbovS2xPEhJm47UgQscjTGogmMd2VaDE/Gsy3VDWuhrvGzVqAM
+         OFVjvAVBCaqCztN0gDm6ytecFN69sse/XHgUQHfCHBNI2pjOtC7XgITf0UnCFzMPjupq
+         1C7Hd3z5vEvAqMKrn0HTkl/cYWf9erRQ5LetXf8orlQQT0mW74w24uosvtG8bksi3jEY
+         k7yA==
+X-Received: by 10.68.20.138 with SMTP id n10mr40451362pbe.140.1366720549679;
+        Tue, 23 Apr 2013 05:35:49 -0700 (PDT)
+Received: from localhost.localdomain (ppp121-44-192-99.lns20.syd7.internode.on.net. [121.44.192.99])
+        by mx.google.com with ESMTPS id mm9sm29367175pbc.43.2013.04.23.05.35.47
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 23 Apr 2013 05:35:49 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222155>
 
-On Tue, Apr 23, 2013 at 1:45 PM, Jan Weitzel <J.Weitzel@phytec.de> wrote:
-> Am Dienstag, den 23.04.2013, 13:25 +0200 schrieb Johan Herland:
->> On Tue, Apr 23, 2013 at 12:53 PM, Jan Weitzel <J.Weitzel@phytec.de> wrote:
->> > Hello,
->> > I have the following problem: I have 2 bare git repositories one has
->> > several branches and tags.
->> > If I try this in the second repository:
->> > git fetch -f ../main.git refs/heads/master:refs/heads/master
->> > I'm getting also tags from other branches, if I have an old object from
->> > one of the other branches.
->> > I would expect to have only tags pointing to master ref. (Although the
->> > man pages points to the behaviour regarding dangling objects). Is there
->> > a way to avoid this? I only find --no-tags which results in having no
->> > tags at all. Or need I git purge to remove the old objects first?
->> > My goal is to fetch only specific branches and the related tags.
->>
->> AFAIK, Git should only auto-follow tags that are reachable from the
->> branches you fetch (in this case master). Are you saying that you get
->> tags pointing to other history that is NOT reachable from the master
->> branch? (i.e. are you getting tags for which "git merge-base $tag
->> master" is not equal to "git rev-parse $tag")?
->>
-> exactly. I reproduced it by coping a object from an other branch to the
-> locale repository. This results in fetching the not reachable tags.
->
->> Re-reading the man page, I do see the following:
->>
->> "if the repository has objects that are pointed by remote tags that it
->> does not yet have, then fetch those missing tags. If the other end has
->> tags that point at branches you are not interested in, you will not
->> get them."
->>
->> This can be interpreted as saying that even unreachable objects in
->> your local repo that are pointed to by some remote tag will cause that
->> tag to be fetched, and in effect resuscitate the
->> previously-unreachable object. If this is indeed how it works, I would
->> be tempted to label this a bug in the auto-following behavior, as it's
->> probably not what most people would expect. In that case, yes, you
->
-> Yes my first understanding of auto-following behaviour was wrong ;)
->
->> should be able to get your desired behavior by first purging all
->> unreachable objects. Something like "git gc --prune=now" should do the
->> job.
->
-> Because I run this by scripts is there a way without porcelain commands?
-> I saw even git prune is one.
+When a rebase is interrupted by a merge conflict it could be useful to
+know how far a rebase has progressed and how many commits in total this
+rebase will apply. Teach the __git_ps1() command to display the number
+of commits so far applied and the total number of commits to be applied.
 
-git prune is not sufficient, since it only removes _unpacked_ and
-unreachable objects. You first need to create a new pack that does not
-contain unreachable objects (git rebase -a -d), but before that you
-also need to expire reflogs (git reflog expire ...) and you should
-also prune packed refs (git pack-refs --prune ...).
+Below is a sample output of the improved __git_ps1() command:
+  ((3ec0a6a...)|REBASE|2/5)
 
-In short there are a number of commands you need to run, and in the
-right order and with the right options, but "git gc --prune=now" is
-basically just a wrapper around these that Does The Right Thing(tm). I
-would just use that instead.
+In the example above the rebase has stopped at the second commit due to
+a merge conflict and there are a total number of five commits to be
+applied by this rebase.
 
-...Johan
+This information can be alredy obtained from the following files which are
+being generated during the rebase:
+    GIT_DIR/.git/rebase-merge/msgnum (git-rebase--merge.sh)
+    GIT_DIR/.git/rebase-merge/end    (git-rebase--merge.sh)
+    GIT_DIR/.git/rebase-apply/next   (git-am.sh)
+    GIT_DIR/.git/rebase-apply/last   (git-am.sh)
 
+1) Modify git-rebase--interactive.sh to also create
+      GIT_DIR/.git/rebase-merge/msgnum
+      GIT_DIR/.git/rebase-merge/end
+   files for the number of commits so far applied and the total number of
+   commits to be applied.
+2) Modify git-prompt.sh to read and display info from the above files
+3) Update test t9903-bash-prompt.sh to reflect changes introduced by
+   this patch.
+
+Signed-off-by: Zoltan Klinger <zoltan.klinger@gmail.com>
+---
+ contrib/completion/git-prompt.sh |   21 ++++++++++++++++-----
+ git-rebase--interactive.sh       |    5 +++++
+ t/t9903-bash-prompt.sh           |    6 +++---
+ 3 files changed, 24 insertions(+), 8 deletions(-)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 756a951..49f7742 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -263,14 +263,21 @@ __git_ps1 ()
+ 	else
+ 		local r=""
+ 		local b=""
+-		if [ -f "$g/rebase-merge/interactive" ]; then
+-			r="|REBASE-i"
+-			b="$(cat "$g/rebase-merge/head-name")"
+-		elif [ -d "$g/rebase-merge" ]; then
+-			r="|REBASE-m"
++		local step=""
++		local total=""
++		if [ -d "$g/rebase-merge" ]; then
+ 			b="$(cat "$g/rebase-merge/head-name")"
++			step=$(cat "$g/rebase-merge/msgnum")
++			total=$(cat "$g/rebase-merge/end")
++			if [ -f "$g/rebase-merge/interactive" ]; then
++				r="|REBASE-i"
++			else
++				r="|REBASE-m"
++			fi
+ 		else
+ 			if [ -d "$g/rebase-apply" ]; then
++				step=$(cat "$g/rebase-apply/next")
++				total=$(cat "$g/rebase-apply/last")
+ 				if [ -f "$g/rebase-apply/rebasing" ]; then
+ 					r="|REBASE"
+ 				elif [ -f "$g/rebase-apply/applying" ]; then
+@@ -308,6 +315,10 @@ __git_ps1 ()
+ 			}
+ 		fi
+ 
++		if [ -n "$step" ] && [ -n "$total" ]; then
++			r="$r|$step/$total"
++		fi
++
+ 		local w=""
+ 		local i=""
+ 		local s=""
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 048a140..f76ff8f 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -57,6 +57,9 @@ rewritten="$state_dir"/rewritten
+ 
+ dropped="$state_dir"/dropped
+ 
++end="$state_dir"/end
++msgnum="$state_dir"/msgnum
++
+ # A script to set the GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and
+ # GIT_AUTHOR_DATE that will be used for the commit that is currently
+ # being rebased.
+@@ -109,7 +112,9 @@ mark_action_done () {
+ 	sed -e 1d < "$todo" >> "$todo".new
+ 	mv -f "$todo".new "$todo"
+ 	new_count=$(git stripspace --strip-comments <"$done" | wc -l)
++	echo $new_count > $msgnum
+ 	total=$(($new_count + $(git stripspace --strip-comments <"$todo" | wc -l)))
++	echo $total > $end
+ 	if test "$last_count" != "$new_count"
+ 	then
+ 		last_count=$new_count
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index e147a8d..2f8f9ab 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -243,7 +243,7 @@ test_expect_success 'prompt - inside bare repository' '
+ '
+ 
+ test_expect_success 'prompt - interactive rebase' '
+-	printf " (b1|REBASE-i)" > expected
++	printf " (b1|REBASE-i|1/1)" > expected
+ 	echo "#!$SHELL_PATH" >fake_editor.sh &&
+ 	cat >>fake_editor.sh <<\EOF &&
+ echo "edit $(git log -1 --format="%h")" > "$1"
+@@ -260,7 +260,7 @@ EOF
+ '
+ 
+ test_expect_success 'prompt - rebase merge' '
+-	printf " (b2|REBASE-m)" > expected &&
++	printf " (b2|REBASE-m|1/1)" > expected &&
+ 	git checkout b2 &&
+ 	test_when_finished "git checkout master" &&
+ 	test_must_fail git rebase --merge b1 b2 &&
+@@ -270,7 +270,7 @@ test_expect_success 'prompt - rebase merge' '
+ '
+ 
+ test_expect_success 'prompt - rebase' '
+-	printf " ((t2)|REBASE)" > expected &&
++	printf " ((t2)|REBASE|1/1)" > expected &&
+ 	git checkout b2 &&
+ 	test_when_finished "git checkout master" &&
+ 	test_must_fail git rebase b1 b2 &&
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.7.9.5
