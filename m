@@ -1,95 +1,98 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 3/2] git add <pathspec>... defaults to "-A"
-Date: Mon, 22 Apr 2013 20:42:13 -0400
-Message-ID: <CAPig+cTQyxacsCpUs+bSotusOb16kXwGgmxssongr237i=89iA@mail.gmail.com>
-References: <7vehe3qi5m.fsf@alter.siamese.dyndns.org>
-	<1366663435-13598-1-git-send-email-gitster@pobox.com>
-	<7vr4i2mbmb.fsf_-_@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] t4202 (log): add test for --follow over a merge
+Date: Mon, 22 Apr 2013 23:28:21 -0700
+Message-ID: <20130423062821.GA32683@elie.Belkin>
+References: <1366643912-3942-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 23 02:42:25 2013
+	Avery Pennarun <apenwarr@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 23 08:28:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UURJP-0004gz-Ja
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 02:42:23 +0200
+	id 1UUWiT-0007jW-Of
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 08:28:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754168Ab3DWAmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 20:42:17 -0400
-Received: from mail-la0-f49.google.com ([209.85.215.49]:60588 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752184Ab3DWAmP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 20:42:15 -0400
-Received: by mail-la0-f49.google.com with SMTP id ei20so54351lab.8
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 17:42:13 -0700 (PDT)
+	id S1755603Ab3DWG2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Apr 2013 02:28:30 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:36593 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755374Ab3DWG23 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Apr 2013 02:28:29 -0400
+Received: by mail-pd0-f174.google.com with SMTP id y14so219782pdi.33
+        for <git@vger.kernel.org>; Mon, 22 Apr 2013 23:28:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=2jFKYAXEeNSssdk/1IUhD4Ln33Ls8KmlvLW8eW17uQQ=;
-        b=U3j0a6wXFv5EqI/DWw2KAbTCN0NCbEIYpiNQMEmfjCi1nu+Y+/Nztep0wosVlEM0Pm
-         rhLliO/Uoop2idPPTboBcTCD1DBmgtMxYgPeqAWE38HaAdVlW+s0YlZHyB0S/P9S/V9o
-         BlrbQUYQY6lCXKKIB6wfeZ9SxeOveKJr9piEOHZuPN3KZ6QUIwwiSb+f5X4qnHYN1e5a
-         7oq4w3zPlkBWUTYbw1thdOt39MfBGBywbCLlFrNXsU9SKBwZGsJYqEhPoMrOAYZQ+qxo
-         tASLFHeujBZgDdThKAHI5m9tDRYBAaHRE6LYAK0OmlPdhl8cpP78xFsNYMMnU1W9xIIS
-         jJig==
-X-Received: by 10.112.172.68 with SMTP id ba4mr14312561lbc.11.1366677733870;
- Mon, 22 Apr 2013 17:42:13 -0700 (PDT)
-Received: by 10.114.199.11 with HTTP; Mon, 22 Apr 2013 17:42:13 -0700 (PDT)
-In-Reply-To: <7vr4i2mbmb.fsf_-_@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: TpaQBV_BXd6ANZBT6dUImzhv1QE
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=iphZ5QTISCBnEE+h5E03WUNupvNO75r07Kn1MjodMIs=;
+        b=nMM9TNWp7xT7Rc8zRcD/XlcJV0ZbRGTcG5xAeLIsD7HzwMtBlzfmIjHA+TaBClaCGs
+         WCQ2Y0FSMr7QgYdFZkG59MVsVz5giD6xcrQHei9C+RwdxqAW1jxH0aXMQfscyob5W1ze
+         zASdgnBchI21yFRlk1VJVWyGnAexNYkuBmT2j5ViuVTExf1Ux93pCOC1WSZ70TaPSQSF
+         6UvHeIKC044EfuPzPY2b2Jetly835wHMV3pAinSfYtTybt+fU8bzy0Az5u7xKbY+XU2f
+         yK1WhXVdeXf9VnEPnWKySp0PX4TofXIL2Cdqkdxb0NeCr49VcALJs6CzBFfSdxqkrMfQ
+         fpYg==
+X-Received: by 10.68.184.100 with SMTP id et4mr31641359pbc.48.1366698508787;
+        Mon, 22 Apr 2013 23:28:28 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id to7sm30473052pab.0.2013.04.22.23.28.26
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 22 Apr 2013 23:28:27 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1366643912-3942-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222134>
 
-On Mon, Apr 22, 2013 at 6:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-> index 48754cb..77ad391 100644
-> --- a/Documentation/git-add.txt
-> +++ b/Documentation/git-add.txt
-> @@ -53,8 +53,14 @@ OPTIONS
->         Files to add content from.  Fileglobs (e.g. `*.c`) can
->         be given to add all matching files.  Also a
->         leading directory name (e.g. `dir` to add `dir/file1`
-> -       and `dir/file2`) can be given to add all files in the
-> -       directory, recursively.
-> +       and `dir/file2`) can be given to update the index to
-> +       match the current state of the directory as a whole (e.g.
-> +       specifying `dir` will record not just a file `dir/file1`
-> +       modified in the working tree, a file `dir/file2` added to
-> +       the working tree, but also a file `dir/file3` removed from
-> +       the working tree.  Note that older versions of  Git used
+Hi,
 
-s/of\s+Git/of Git/
+Ramkumar Ramachandra wrote:
 
-> +       to ignore removed files; use `--no-all` option if you want
-> +       to add modified or new files but ignore removed ones.
->
->  -n::
->  --dry-run::
-> @@ -129,11 +135,9 @@ of Git, hence the form without <pathspec> should not be used.
->         files that have been removed from the working tree.  This
->         option is a no-op when no <pathspec> is used.
->  +
-> -This option is primarily to help the current users of Git, whose
-> -"git add <pathspec>..." ignores removed files.  In future versions
-> -of Git, "git add <pathspec>..." will be a synonym to "git add -A
-> -<pathspec>..." and "git add --ignore-removal <pathspec>..." will behave like
-> -today's "git add <pathspec>...", ignoring removed files.
-> +This option is primarily to help users who are used to older
-> +versions of Git, whose "git add <pathspec>..." was a synonym
-> +to "git add --no-all <pathspec>...", i.e. ignored removed files.
+> The --follow feature can be used to follow the history of a file over
+> a merge commit, and is useful even when the file hasn't been
+> copied/renamed.  Add a test to show off this feature.
 
-s/to/for/ [or] s/to/of/
+I can't claim to have followed the discussion, but I don't understand
+the above.  If the file's name hasn't changed, the most one can hope
+for is that --follow doesn't hurt, no?
 
->
->  -N::
->  --intent-to-add::
+[...]
+> +	cat >expect <<-\EOF &&
+> +	df26551 add a line to the beginning of ichi
+> +	882d8d9 add a line to the end of ichi
+> +	2fbe8c0 third
+> +	f7dab8e second
+> +	3a2fdcb initial
+> +	EOF
+> +	test_cmp expect actual
+
+t/README explains:
+
+| As with any programming projects, existing programs are the best
+| source of the information.  However, do _not_ emulate
+| t0000-basic.sh when writing your tests.  The test is special in
+| that it tries to validate the very core of GIT.
+[...]
+|          other tests that simply rely on basic parts of the core
+| GIT working properly should not have that level of intimate
+| knowledge of the core GIT internals.  If all the test scripts
+| hardcoded the object IDs like t0000-basic.sh does, that defeats
+| the purpose of t0000-basic.sh, which is to isolate that level of
+| validation in one place.
+
+Hard-coding object names makes it painful to tweak a given test and
+tests that come before it, lest a timestamp or the phase of moon
+change and cause the object names to drift.   Don't do it, except
+in t0000.
+
+Hope that helps,
+Jonathan
