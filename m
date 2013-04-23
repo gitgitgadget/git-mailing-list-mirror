@@ -1,103 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
-Date: Mon, 22 Apr 2013 16:55:01 -0700
-Message-ID: <7vehe2m88a.fsf@alter.siamese.dyndns.org>
-References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
-	<87ppxmogdv.fsf@linux-k42r.v.cablecom.net>
-	<CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
-	<87wqruk2pj.fsf@linux-k42r.v.cablecom.net>
-	<CALkWK0mUH2m5zJ4MwPWC85CsZZ=2RODumLvsF9q3rLj-+d7vBw@mail.gmail.com>
-	<CALkWK0n5gaz3A7kHT6+5z3YkYdpgU5p6Pv4heMbLzikTbROwkA@mail.gmail.com>
-	<CALkWK0k0LbAnkhAAqdeAvBnCig_HO+bT+WiQuQQ3Fgc=FzFtRw@mail.gmail.com>
-	<87zjwqpebl.fsf@hexa.v.cablecom.net> <vpqr4i2z35n.fsf@grenoble-inp.fr>
-	<7vmwsqns4p.fsf@alter.siamese.dyndns.org>
-	<CALkWK0mO0L4YrZFGmzWkiO4V18p-ydKyjVOe4vJ2H-d7Kz+qOw@mail.gmail.com>
+From: Joel Jacobson <joel@trustly.com>
+Subject: Re: [PATCH] Add .gitconfig variable commit.gpg-sign
+Date: Tue, 23 Apr 2013 01:00:50 +0100
+Message-ID: <CAASwCXcfCNqiMXD5JasTRKWZgCNsxnUY7k9E=f86xsTZjk37CA@mail.gmail.com>
+References: <CAASwCXf3YHmdQ_eSkShyzn5VniO=ufm3VTqV1JVOUN610bzE_A@mail.gmail.com>
+	<7vip3em8rs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Git List <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 23 01:55:15 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 23 02:00:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUQZm-0003tJ-0v
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 01:55:14 +0200
+	id 1UUQfI-0003ye-FC
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 02:00:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753354Ab3DVXzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Apr 2013 19:55:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39608 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752423Ab3DVXzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Apr 2013 19:55:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4E4C19CD5;
-	Mon, 22 Apr 2013 23:55:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pxz8/1REL/Zc4Tj7lv4hIuvzU9A=; b=oVWTqx
-	LR30SFX0GRCT7xz5Ax6CvxDdAOKwICurwkKu+IdNPu+N3C08mlB1H3Xu/6Bw2w2I
-	IV0du4U6dhhPQZJBFseFLdWpiR0hFIDbcW1/Oz+DbChShHwFwjzheLEsx2CIm23g
-	qt5J/iFU7WU0fpzcZF3gUQQ5pvhETtjKNEIDU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TT+7zX3YvwKqbWwNApHu9nZY/gV6OLYi
-	CoHu/yWJq7HrSxUjUlcmOitVvAk00xt71KyK0LfqdbGU09saZx2VYkfTDkgj8Buk
-	2ZMliqfxbv+wE4xCnXEpQNhdI4acMUtCmU9UULhTSf4d4eQXzxgi+g+QDVLrWQVM
-	HRbRjrm3bGQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC50519CD4;
-	Mon, 22 Apr 2013 23:55:03 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3138419CCE;
-	Mon, 22 Apr 2013 23:55:03 +0000 (UTC)
-In-Reply-To: <CALkWK0mO0L4YrZFGmzWkiO4V18p-ydKyjVOe4vJ2H-d7Kz+qOw@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Tue, 23 Apr 2013 04:22:05 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0CD9EDA8-ABA8-11E2-AC12-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752707Ab3DWAAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Apr 2013 20:00:52 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:58923 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752149Ab3DWAAv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Apr 2013 20:00:51 -0400
+Received: by mail-vc0-f174.google.com with SMTP id kw10so41654vcb.33
+        for <git@vger.kernel.org>; Mon, 22 Apr 2013 17:00:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:content-type:x-gm-message-state;
+        bh=UekncZNyr9r9IppLSxfNRKFn0wJxq/2Pt1kbeBFWSQA=;
+        b=TQX1cN3+QVX3eGVBV9HF3t+Sc9o9RYvyODR4jhnxXDg1cYX3B+/8dTEFzrvb/z5KV9
+         yzsQkZXzi7Xgk8arM3sJm6cVtiAfHpGDxfFOtAE8DqevbjufTz5be2j6wnynv9AFJtuv
+         MUJBE8gpgfw/as7Bg+QDmih4FhmYUESTFW/8F99E5KCv4HwDsYjm3ax4SdrI2mOWvNoE
+         6UHH65A6T65eT1nIqf47SV36e6+fVwGMlSlPTvyrsbS96uPbzeFDcMM8yMkNo0iUsH41
+         AqQdGDC/zNFXdrLQ4Qpt1y3wCKvecae1BqPzR3ng8pMld/274scrT8PlbfC2gIK+4+X5
+         Gpow==
+X-Received: by 10.52.111.100 with SMTP id ih4mr17392655vdb.98.1366675250621;
+ Mon, 22 Apr 2013 17:00:50 -0700 (PDT)
+Received: by 10.59.11.169 with HTTP; Mon, 22 Apr 2013 17:00:50 -0700 (PDT)
+In-Reply-To: <7vip3em8rs.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQnqXUNu9AHvp9WsbGOKv7CA/RG1+SeyCgNtyKZ2nQJyQYul+QFfTk6hWTCEx7afRO995Zyl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222132>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Tue, Apr 23, 2013 at 12:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> No docs?  No tests?
 
-> Am I making any sense?
+Maybe simply adding this text to git-commit.txt,
 
-I dunno.  Depends on the definition of "sense".
+The default can be changed by the 'commit.gpg-sign' configuration
+variable (see linkgit:git-config[1]).
 
-It sounds like you are repeating the same old "let's record renames
-in the commit", and in a system (not Git) where recording renames
-may make sense, you may be making sense.
+after,
 
-But we will not record renames in the commit.  Time to re-read
-$gmane/217, perhaps?
+-S[<keyid>]::
+--gpg-sign[=<keyid>]::
+GPG-sign commit.
 
-A subtree merge that slurps everything from a side branch under a
-single directory, say gitk/, is not at all different from a normal
-merge with many renames.
+would be sufficient?
 
-Imagine an alternate world where we had a small "git.git" project
-with 11 files totallying 1244 lines.  Then Paul Mackerras forks that
-project, remove everything from the top-level directory and adds a
-Tck/Tk script "gitk".  Linus merges that history as-is, keeping all
-our files intact (i.e. ignoring his removal) but taking the addition
-of "gitk" from him.
+Not sure what the proper way to test this,
+could you please suggest any other unit test I could look at for inspiration?
 
-Then after I inherit the project, I rename "gitk" to "gitk-git/git".
-Paul does not rename his.  We keep developing in parallel and I
-occassionally merge from his tree, which has "gitk" at the top,
-while mine has it in a directory "gitk-git".  The ordinary rename
-detection kicks in and integrates his updates to "gitk" into my
-"gitk-git/gitk".
+> As to the design, any regular configuration variable settings must
+> be overridable from the command line for a single invocation. Please
+> design an escape hatch in, for somebody who has this configuration
+> variable set, but does not want to sign this commit he is about to
+> make.
 
-The only difference the above imaginary history has from the reality
-is Paul's history does not share that root, but everything else is
-the same.
+Something like --no-gpg-sign?
+
+> Also do we generally use dash in the configuration variable names?
+> I thought the norm was section.CamelCase.
+
+Since the command line long option is "gpg-sign", I thought it was best
+to use exactly the same term in the configuration variable name to
+avoid confusion. Is there any problem with dashes in variable names?
