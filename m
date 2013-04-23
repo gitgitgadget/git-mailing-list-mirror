@@ -1,211 +1,138 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Premerging topics (was: [RFD] annnotating a pair of commit objects?)
-Date: Tue, 23 Apr 2013 08:34:42 +0200
-Message-ID: <CALKQrgfO9fd+EEA=Vwe94tJbxkX89uDmMHm9rj6L=d4x7JJjaQ@mail.gmail.com>
-References: <CALWbr2wocjqs1mpa+yuQ_Zw8m+SX24q6Pby3E3v3-jd-0w1pvQ@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] t4202 (log): add failing test for log with subtree
+Date: Tue, 23 Apr 2013 13:23:57 +0530
+Message-ID: <CALkWK0noVfRoXAH75r4yBijXSHD5yusLcKgGC=8bjOW6=qCMng@mail.gmail.com>
+References: <1366632487-28153-1-git-send-email-artagnon@gmail.com>
+ <87ppxmogdv.fsf@linux-k42r.v.cablecom.net> <CALkWK0m6vwR9rNNw_GjF4MOK1GZfwjB8ZA5Y0Lo8LbvfAg0g3g@mail.gmail.com>
+ <87wqruk2pj.fsf@linux-k42r.v.cablecom.net> <CALkWK0mUH2m5zJ4MwPWC85CsZZ=2RODumLvsF9q3rLj-+d7vBw@mail.gmail.com>
+ <CALkWK0n5gaz3A7kHT6+5z3YkYdpgU5p6Pv4heMbLzikTbROwkA@mail.gmail.com>
+ <CALkWK0k0LbAnkhAAqdeAvBnCig_HO+bT+WiQuQQ3Fgc=FzFtRw@mail.gmail.com>
+ <87zjwqpebl.fsf@hexa.v.cablecom.net> <vpqr4i2z35n.fsf@grenoble-inp.fr>
+ <7vmwsqns4p.fsf@alter.siamese.dyndns.org> <CALkWK0mO0L4YrZFGmzWkiO4V18p-ydKyjVOe4vJ2H-d7Kz+qOw@mail.gmail.com>
+ <7vehe2m88a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 23 08:35:08 2013
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Git List <git@vger.kernel.org>,
+	Avery Pennarun <apenwarr@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 23 09:54:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUWok-0008At-Bb
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 08:35:06 +0200
+	id 1UUY3m-0004oe-RM
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 09:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754902Ab3DWGev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Apr 2013 02:34:51 -0400
-Received: from mail10.copyleft.no ([188.94.218.231]:50471 "EHLO
-	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754797Ab3DWGeu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Apr 2013 02:34:50 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UUWoQ-0009Ra-PL
-	for git@vger.kernel.org; Tue, 23 Apr 2013 08:34:46 +0200
-Received: from mail-oa0-f49.google.com ([209.85.219.49])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UUWoQ-000A1j-DZ
-	for git@vger.kernel.org; Tue, 23 Apr 2013 08:34:46 +0200
-Received: by mail-oa0-f49.google.com with SMTP id j1so240121oag.22
-        for <git@vger.kernel.org>; Mon, 22 Apr 2013 23:34:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=tiGtyC+EYTUG2KAzp6VOC8uvGB5d1HlahU6+fItggRk=;
-        b=EqyEp5bIzzgMbT6ntntZwcH5M9Jk8UAYxOwMAKUaT7vbnVNa6oesDDIOlD6dzHvxIn
-         JYPQmzS3otKai+I8vMITG5/a1v5GMA40Xc+Zk212IgA2P+aYbkF7x/GdLpR16oaT4MZ9
-         uuV9qmZk04i57jqqml0ewsGsuQx1MhsMGsnHildkjksSzO0nbfVp4ewVeFJ1mx44WRwh
-         Cw7umaUe8IJjkVucLaxTHqTxxM9kmLj12Wou9Q5DYV1MwlLttU561VbTB3lhUgEQyJG2
-         Yj2a2UwHWOgdE1Zo5oyEJDtmR1VLbJjqYRw6E10HvngAwU7rbu8Kfbsq1WgFVeeJ23Fa
-         +N2Q==
-X-Received: by 10.60.28.2 with SMTP id x2mr16218155oeg.65.1366698883069; Mon,
- 22 Apr 2013 23:34:43 -0700 (PDT)
-Received: by 10.182.210.233 with HTTP; Mon, 22 Apr 2013 23:34:42 -0700 (PDT)
-In-Reply-To: <CALWbr2wocjqs1mpa+yuQ_Zw8m+SX24q6Pby3E3v3-jd-0w1pvQ@mail.gmail.com>
+	id S1755226Ab3DWHyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Apr 2013 03:54:38 -0400
+Received: from mail-ia0-f172.google.com ([209.85.210.172]:37829 "EHLO
+	mail-ia0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754752Ab3DWHyi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Apr 2013 03:54:38 -0400
+Received: by mail-ia0-f172.google.com with SMTP id i20so280251ian.17
+        for <git@vger.kernel.org>; Tue, 23 Apr 2013 00:54:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=M3fM2sCyd/dikjRJ9ooD9Cpz6gPguJsRv9BKpWhwD7Y=;
+        b=gdPUfMyUldSU2GobEmz32XKyjGboBT6E1SmLX2OUSw344zt/RJM3gIgkacGxY3rlAg
+         u+Q/EA5iBGTLopKoJmx5DLcSrENnr2xrnZuf8sdnU/KvfOLHSUbpZv9K9XDtNuYtAi1v
+         YpnbeBXQoZ9x3E2iiUZT5SslnOvT01XKPIHTtZ6v0JahvYUbQ9NEW5Q3MPlCTIlxfmuH
+         qIG/TRO8nNSyIH0m8NI/rAbmp2OsSt+I5bRiXcEY5iQk0kbMPu4u54cSxK6eD5kS/Mxc
+         winHZ74Llu/6o+q2gh3RJe101J3NHfFGefQ06iNpqpaoPAnU74aE3zAadfGKwIvlwzj+
+         bNZA==
+X-Received: by 10.50.117.3 with SMTP id ka3mr22449941igb.107.1366703677591;
+ Tue, 23 Apr 2013 00:54:37 -0700 (PDT)
+Received: by 10.64.63.48 with HTTP; Tue, 23 Apr 2013 00:53:57 -0700 (PDT)
+In-Reply-To: <7vehe2m88a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222137>
 
-On Wed, Apr 10, 2013 at 10:35 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
-> The goal is to propose a structure for storing and pre-merging pairs of commits.
+Junio C Hamano wrote:
+> It sounds like you are repeating the same old "let's record renames
+> in the commit", and in a system (not Git) where recording renames
+> may make sense, you may be making sense.
 >
-> Data-structure
-> ==============
->
-> We could use a note ref to store the pre-merge information. Each commit
-> would be annotated with a blob containing the list of pre-merges (one
-> sha1 per line with sha1 pointing to a merge commit). The commit on the
-> other side of a merge would also be annotated.
-> The choice of the refname could be done like we do with notes:
-> - Have a default value
-> - Have a default value configured in config
-> - Use a specific value when merging/creating the pre-merges
->
-> Here are my concerns:
->
-> Pros
-> ----
-> 1. Notes allow dynamic annotation a commit
-> 2. If we manage to fix 4, we can easily download all pre-merges from a
-> remote host by fetching the ref (or clean by deleting the ref).
-> 3. Conflicts on pre-merge notes could probably be resolved by concatenation.
->
-> Cons
-> ----
-> 4. Checking connectivity means opening the blob and parsing it
+> But we will not record renames in the commit.  Time to re-read
+> $gmane/217, perhaps?
 
-Can you solve this problem with a tree object, instead of inventing a
-specially-formatted blob?
+Yeah, you're right.  It makes no sense to record renames, although I
+have a different argument against it: any implementation that records
+renames will depend on the path that was taken to get to the final
+state, and this is completely wrong.  Subversion made this mistake,
+and users pay a very heavy price: if the user didn't explicitly rename
+a node (~= tree) and just did a delete + add, the repository is
+more-or-less screwed wrt merging.
 
-I.e. given pre-merge info P for a merge between commits A and B: A is
-annotated by a tree object that contains all pre-merges where A is
-involved. Each entry in the tree object has a filename and a blob
-SHA1; we store other commit involved in this pre-merge (B) in the
-filename, and the pre-merge data (P) in the blob SHA1.
+Forget everything that I said, and let's start over.
 
-Conversely, B is annotated with a tree object containing all pre-merge
-entries concerning B, and within there, is an entry called A, pointing
-to the same P.
+In the common usecase of subtrees, it might make sense to record some
+additional submodule-like parameters in the subtree's tree object.
+This additional information is entirely optional, and doesn't change
+the way merges happen: we can have it as merely a heuristic-helper
+(for git merge -s subtree).  Initially, let's just think of putting a
+ref field in the tree, so that I can have the following setup:
 
-You still need "special handling" in that you have to know that
-"refs/notes/pre-merge" (or whatever it's called) stores tree objects
-instead of blobs, and how to interpret the contents of those trees,
-but you'll need such knowledge in any case.
+- remote origin referring to my superproject.
+- remote git/origin referring to the fetchdefault of my subproject git.
+- remote git/ram referring to the pushdefault of my subproject.
+- the tree object corresponding to quux/baz/git is additionally filled
+in with the ref refs/remotes/git/origin/master.
 
-A nice side-effect of using tree objects to store pre-merge entries,
-is that you can do a tree-level merge of them, and it'll do the Right
-Thing (assuming two-way merge with no common history), i.e. perform a
-union merge, and leave you to handle conflicts of individual
-pre-merges (i.e. you'll only get conflicts when both sides offer
-different pre-merge data for A + B).
+Then, I can just say git pull quux/baz/git, and it will automatically
+fetch changes from the ref and merge it into the subtree.  It's not to
+say that I can't merge any other ref; just that I merge this ref most
+of the time, and I want a DWIM for this case.
 
-> 5. Regular notes and pre-merge notes have to be handled separately
-> because of 4.
+Further, this can speed up tree-rename detection greatly (in fact, I'm
+thinking the first implementation will depend on this information
+being present).  I inspect M^{tree} and I want to know how it's
+composed from M^1^{tree} and M^2^{tree}.  Simple.  In M^{tree}, look
+for trees that have this additional data filled in: then we can just
+short-circuit the rename detection to matching the similarity of this
+tree with M^1^{tree} and M^2^{tree}.
 
-Sort of, but you get that for any automated usage of notes for a
-specific purpose. Just look at the notes-cache mechanism in
-notes-cache.{h,c}. That's another example of functionality layered on
-top of notes that makes assumptions on how its notes trees are
-structured.
+When this aux data is present in the tree, we can do one more thing:
+have a symref tracking the commit-line corresponding to M^2. This
+means that we can DWIM for things like 'git commit' inside the subtree
+very easily.  When the aux information is not present, 'git commit'
+will obviously commit to HEAD, essentially making the superproject own
+those changes in the subtree (as it does now).
 
-> I'm hoping we can keep the pros and avoid the cons, but I'm kind of
-> stuck here. Help would be really appreciated (or maybe this is a totally
-> wrong direction, and I would also like to know ;)
->
-> Merging (Using what we saved)
-> =============================
-> The goal is to merge branches J and B using existing pre-merges.
->
-> E0. Create an empty stack S
-> E1. Create set of commits 'J..B' and 'B..J' (that is probably already done)
-> E2. For each commit C in smallest(J..B, B..J), execute E3
-> E3. For each premerge P in notes-premerge(C), execute E4
-> E4. If one of both parents of P belongs to biggest(J..B, B..J), stack P in S
+This might be the route to implementing narrow clones sensibly.  A
+narrow clone does not mean that any directory in the entire repository
+can be cloned separately: it just means that a tree with this aux data
+need not be fetched in the initial clone.  For this to work, instead
+of refs/remotes/git/origin/master, the aux data will need a
+combination of upstream URL and ref: we can then automatically figure
+out the name from the URL and deposit the fetched data in
+refs/remotes/<name>/origin/<ref>.
 
-I don't think _both_ parents of P can belong to biggest(J..B, B..J).
-AFAICS J..B and B..J must always be completely disjoint sets of
-commits (this is easier to see when you consider that "A..B" is
-equivalent to "B ^A" for any commits A and B), and in E2/E3, you have
-already made sure that P has a parent in one of them. There is then no
-way that the same parent can occur in the other set, so you have at
-most _one_ parent in the other set.
+Initializing nested submodules without the container is also easy: in
+the superproject, you need to have aux-trees corresponding to
+quux/baz/git and quux/baz/git/moo/clayoven.  It might additionally be
+a good idea to track these aux-trees: but even if we don't go down
+that route, we can always deposit a "template" file from the
+superproject that won't interfere with the subtree merging process.
 
-> E5. Merge J and B using all pre-merges from S
+Now, I'm not sure what the value of splitting the object stores at
+this point is.  The aux-tree can have a statthrough field to block
+stat() calls from going through, so there's really no performance
+issue.  If you want to separate one tree out of the superproject and
+work on it separately, all you have to do is fetch the corresponding
+ref.
 
-This is where things get complicated... :)
+On the issue of floating submodules.  It might make sense to zero out
+the hex of the tree, as seen by the superproject.  The limitation is
+that we can't introduce any changes to the submodule from the
+superproject: it's basically a dummy entry sitting in the
+superproject's tree.  It's a bit of a hack, but I think it's workable.
 
-First there is one important thing that I have not seen a decision on
-yet (maybe this was discussed in an earlier thread?):
-
-Given pre-merge data P for commit A and B, does P encode the merge of
-the entire history up to A with the entire history up to B, or does it
-only encode the merging of the changes introduced in A with the
-changes introduced in B? In other words, are we merging snapshots or
-diffs?
-
-In the former case, we only need to find the most recent commits A and
-B on their respective branches - for which P exists - and then execute
-that one P (or at most two Ps, if there is a criss-cross pre-merge
-situation). In the other case, however, we need to enumerate all Ps
-that apply to the two branches, and find a way to execute them
-chronologically, dealing with missing Ps and conflicting Ps along the
-way. IMHO, only the former approach seems practically solvable.
-
-So you do not need to enumerate all Ps in J..B vs. B..J, you only need
-to find the _most_ _recent_ P, and execute that one.
-
-> Let's consider that |J..B| is smaller than |B..J|.
-> E0 is executed only once
-> E1 is O(|J..B| + |B..J|)
-> E2 is O(|J..B|)
-> E3 is O(|J..B| x the average number of pre-merge per commits P_avg)
-> E4 is executed for each parent (let's say it's two/constant, after all
-> the topic is "pair" of commits), so still O(|J..B| x P_avg)
-> E5 I don't know (how it can be done, and what would be the resulting
-> time complexity)
->
-> So the time cost for steps E0 to E4 is O(|J..B| + |B..J| x P_avg)
->
-> Tools (Save the pre-merges)
-> ===========================
->
-> Of course we need several tools to maintain the list of premerges, and
-> to easily compute them. For example, it would be nice to be able to do
-> something like:
->
->     $ git pre-merge topicA topicB topicC
->
-> to find, resolve and store all interactions between the topics.
-
-Let's leave out octopus merges for now, and only concentrate on two
-branches at a time.
-
-
-Hope this helps,
-
-...Johan
-
-
-PS: Could you also use this mechanism to store rerere information?
-
-
-> We could
-> then easily derive to something that would allow to pre-merge a new
-> topic with all topics already merged in master..pu (for example).
-> Anyway, this task is left for latter.
-
---
-Johan Herland, <johan@herland.net>
-www.herland.net
+So, what do you think?
