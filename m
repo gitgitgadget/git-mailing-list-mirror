@@ -1,194 +1,135 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: Premerging topics (was: [RFD] annnotating a pair of commit objects?)
-Date: Tue, 23 Apr 2013 16:51:39 +0200
-Message-ID: <CALWbr2x5HDU2t7hpSCkZnuKjTJ1KxYC0v50wsDPT0fm4LyvzWw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Premerging topics
+Date: Tue, 23 Apr 2013 07:53:39 -0700
+Message-ID: <7vwqrtl2mk.fsf@alter.siamese.dyndns.org>
 References: <CALWbr2wocjqs1mpa+yuQ_Zw8m+SX24q6Pby3E3v3-jd-0w1pvQ@mail.gmail.com>
 	<CALKQrgfO9fd+EEA=Vwe94tJbxkX89uDmMHm9rj6L=d4x7JJjaQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
 	Jeff King <peff@peff.net>, git <git@vger.kernel.org>
 To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Apr 23 16:51:49 2013
+X-From: git-owner@vger.kernel.org Tue Apr 23 16:53:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUeZQ-0001YF-9p
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 16:51:48 +0200
+	id 1UUebM-0003fA-SW
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 16:53:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755600Ab3DWOvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Apr 2013 10:51:41 -0400
-Received: from mail-qe0-f50.google.com ([209.85.128.50]:54465 "EHLO
-	mail-qe0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755056Ab3DWOvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Apr 2013 10:51:40 -0400
-Received: by mail-qe0-f50.google.com with SMTP id a11so436947qen.9
-        for <git@vger.kernel.org>; Tue, 23 Apr 2013 07:51:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=ZEugxIhWVNkeVpFPhQyAlGyhvZDBBx4fopMXZ4ssL2Q=;
-        b=OOcOO6QeUFcEXmxGdvykZsBGUl/5eMUhCRuzyq9CaXvr2BjHydd590Hc56heJNcO+G
-         7BA9kJ9486owCFbqten5p4AQr6CfQ7Uy/0psoCqY7sfgTcHoHlqbKDsl1SxP71ZCu7/p
-         uknupFU45o38fxn9TaGt7Vl+0euO4CfW+26/bXBwRMftX0aXHweiY6Com5hQ0CEQFMfl
-         kv/2XY8hQzjZqzlKPovrdLxDhZS0FVz1Nfw1GuejpSfmMNipR9CBhGPx4qZQ4FnT0Vt0
-         ugSlvNHJgrrR47WY2AmR2CHJkWYjZH0MFIKZ/s0/UPZfhVxcYQCXWeH3afsn/+K/VDh7
-         zyyw==
-X-Received: by 10.229.180.2 with SMTP id bs2mr6486830qcb.52.1366728699326;
- Tue, 23 Apr 2013 07:51:39 -0700 (PDT)
-Received: by 10.49.30.9 with HTTP; Tue, 23 Apr 2013 07:51:39 -0700 (PDT)
+	id S1755584Ab3DWOxo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Apr 2013 10:53:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62879 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755056Ab3DWOxn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Apr 2013 10:53:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3AC0218714;
+	Tue, 23 Apr 2013 14:53:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=v2DKl8lL6cqJ3u4vp5iC/7nBw/k=; b=vScPce
+	Ftqqx+clN3exwMjQNjJRBGGDPfXjx0d+3QAn/hwuPJSqPpYHw5kLF0adTBKeuNCP
+	x+96Fp2oKl2obwZOICrofsLi1HvdeE2exRQV++7mp8WRSNRjd23ASvNZL/1t3ejg
+	F31IhEpI0F3sH8Ojw446mpsuxKOiV2XmErGwc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=W1fXpAeKrGn8OzkHiIbFZ6WusxJHg6yx
+	ok+wNfrp9GenIpxfddvNGboPjMmeoTTKC7HsmL1iBFSQn4AkcFAHNeAviu1Rkl48
+	LsvZk21TL72XH50n0QxCE4YSI5C48n+H9Mhil+G7scKCVnR0zJZBM+tqGn/v7+Gw
+	aaaRkkeEzu0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 323C818713;
+	Tue, 23 Apr 2013 14:53:43 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 645501870F;
+	Tue, 23 Apr 2013 14:53:42 +0000 (UTC)
 In-Reply-To: <CALKQrgfO9fd+EEA=Vwe94tJbxkX89uDmMHm9rj6L=d4x7JJjaQ@mail.gmail.com>
+	(Johan Herland's message of "Tue, 23 Apr 2013 08:34:42 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9727384E-AC25-11E2-9577-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222169>
 
-On Tue, Apr 23, 2013 at 8:34 AM, Johan Herland <johan@herland.net> wrote:
-> On Wed, Apr 10, 2013 at 10:35 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
->> Data-structure
->> ==============
->> We could use a note ref to store the pre-merge information. Each commit
->> would be annotated with a blob containing the list of pre-merges (one
->> sha1 per line with sha1 pointing to a merge commit). The commit on the
->> other side of a merge would also be annotated.
->> The choice of the refname could be done like we do with notes:
->> - Have a default value
->> - Have a default value configured in config
->> - Use a specific value when merging/creating the pre-merges
->>[snipped]
->> Cons
->> ----
->> 4. Checking connectivity means opening the blob and parsing it
->
+Johan Herland <johan@herland.net> writes:
+
 > Can you solve this problem with a tree object, instead of inventing a
 > specially-formatted blob?
 
-That looks like a good idea.
+Hmm.  What problem are you guys trying to solve?
 
-> I.e. given pre-merge info P for a merge between commits A and B: A is
-> annotated by a tree object that contains all pre-merges where A is
-> involved. Each entry in the tree object has a filename and a blob
-> SHA1; we store other commit involved in this pre-merge (B) in the
-> filename, and the pre-merge data (P) in the blob SHA1.
+I think Michael's use of a merge commit to record a merge result is
+sufficient as a means to record how to recreate an evil merge.
 
-But P is a commit(/merge with two parents), not a blob. Can we have trees
-pointing to commits instead of blobs ?
+  http://thread.gmane.org/gmane.comp.version-control.git/212570/focus=212578
 
-> A nice side-effect of using tree objects to store pre-merge entries,
-> is that you can do a tree-level merge of them, and it'll do the Right
-> Thing (assuming two-way merge with no common history), i.e. perform a
-> union merge, and leave you to handle conflicts of individual
-> pre-merges (i.e. you'll only get conflicts when both sides offer
-> different pre-merge data for A + B).
+FWIW, in the [RFD], I wasn't asking for ideas on that part.  When
+rebuiling 'pu', I use an even simpler solution to have rerere
+autoresolve the mechanical part of the merge, and then cherry-pick a
+separate commit from refs/merge-fix/ hierarchy on the result, and it
+works perfectly fine (this is done by the 'Reintegrate' script on
+the 'todo' branch; see Documentation/howto/maintain-git.txt).
 
-I'm definitely not sure what you mean here, especially with "tree-level
-merge". Also I think we could be doing three-way merges. But I'm
-no merge-strategies expert, so I'm kind of confused.
+When topic A is closer to be done than topic B (in other words, when
+I merge topic B to an integration branch, topic A is already merged
+there), and these topics have semantic conflicts (e.g. A renames a
+function foo() to bar(), while B adds a new callsite of foo()), a
+mechanical merge of B may succeed without any textual conflict (or
+if there is, rerere can resolve it), but a semantic fix-up needs to
+do "s/foo/bar/g" on the result.
 
->> 5. Regular notes and pre-merge notes have to be handled separately
->> because of 4.
->
-> Sort of, but you get that for any automated usage of notes for a
-> specific purpose. Just look at the notes-cache mechanism in
-> notes-cache.{h,c}. That's another example of functionality layered on
-> top of notes that makes assumptions on how its notes trees are
-> structured.
+I would do something like this for the first time:
 
-Thanks, I will have a look at it.
+	... while on 'pu', A has already been merged ...
+        git merge B ;# may conflict
+        edit textual conflicts away
+        git rerere ;# remember the textual resolution
+        git commit ;# commit _without_ semantics adjustment
+        edit semantic conflict away, i.e. s/foo/bar/g
+        git commit
+        git update-ref refs/merge-fix/B
 
->> The goal is to merge branches J and B using existing pre-merges.
->>
->> E0. Create an empty stack S
->> E1. Create set of commits 'J..B' and 'B..J' (that is probably already done)
->> E2. For each commit C in smallest(J..B, B..J), execute E3
->> E3. For each premerge P in notes-premerge(C), execute E4
->> E4. If one of both parents of P belongs to biggest(J..B, B..J), stack P in S
->
-> I don't think _both_ parents of P can belong to biggest(J..B, B..J).
-> AFAICS J..B and B..J must always be completely disjoint sets of
-> commits (this is easier to see when you consider that "A..B" is
-> equivalent to "B ^A" for any commits A and B), and in E2/E3, you have
-> already made sure that P has a parent in one of them. There is then no
-> way that the same parent can occur in the other set, so you have at
-> most _one_ parent in the other set.
+After that, next time I rebuild 'pu', when the automated procedure
+processes B, it would "git merge B", "git rerere", make sure textual
+conflicts are gone, and "git cherry-pick refs/merge-fix/B".  To make
+sure this would work, what I typically do immediately after doing
+all of the above is:
 
-I agree with that. After step E3, one of the parent belongs to one of
-the two branches. Step E4 makes sure the other parent belongs to the other
-branch (and not another unrelated branch).
+	git reset --hard HEAD^^
 
->> E5. Merge J and B using all pre-merges from S
->
-> This is where things get complicated... :)
->
-> First there is one important thing that I have not seen a decision on
-> yet (maybe this was discussed in an earlier thread?):
->
-> Given pre-merge data P for commit A and B, does P encode the merge of
-> the entire history up to A with the entire history up to B, or does it
-> only encode the merging of the changes introduced in A with the
-> changes introduced in B? In other words, are we merging snapshots or
-> diffs?
->
-> In the former case, we only need to find the most recent commits A and
-> B on their respective branches - for which P exists - and then execute
-> that one P (or at most two Ps, if there is a criss-cross pre-merge
-> situation). In the other case, however, we need to enumerate all Ps
-> that apply to the two branches, and find a way to execute them
-> chronologically, dealing with missing Ps and conflicting Ps along the
-> way. IMHO, only the former approach seems practically solvable.
->
-> So you do not need to enumerate all Ps in J..B vs. B..J, you only need
-> to find the _most_ _recent_ P, and execute that one.
+to drop the fix-up commit and merge of B, and actually tell the
+automated procedure to process B.  It should recreate the evil merge
+using the information I just recorded.
 
-Indeed, we only need to know the most recent. That's a good point.
+So "how a recipe to recreate an evil merge is recorded", as far as I
+am concerned, is an already solved problem.
 
-       B1   B2    B3
-    O---o---o-----o
-    |      / \      \
-    |    P1  P2     M
-    |    /    |     /
-     \__o_____o___o
-       J1   J2  J3
+The part of the existing solution I was not happy was deciding when
+to use which "merge-fix" commit to cherry-pick.  If I start merging
+topic B before topic A, the "merge-fix/B" needs to be renamed to
+"merge-fix/A" in the above.  Otherwise, when B is merged to 'pu',
+there is no 'A' merged to it yet, so merge-fix that munges its new
+call to foo() to call bar() instead will _break_ things [*1*].
 
-In this use-case, we can use P1 to compute P2, and then we only need P2
-to compute the real merge M. The idea would be to use P1 as an implicit
-third parent to the pre-merge P2, and then P2 as an implicit third
-parent to the real merge M.
+And that was why I wanted to have a data structure that is quick to
+query to answer "I am about to merge B.  Does the history already
+have an A for which I have recorded a merge-fix for <A,B> pair?"
 
->>     $ git pre-merge topicA topicB topicC
->>
->> to find, resolve and store all interactions between the topics.
->
-> Let's leave out octopus merges for now, and only concentrate on two
-> branches at a time.
 
-I was not thinking about octopus merge here, but an easy way to
-pre-merge many topic in a "single step", so it could be used like this:
+[Footnote]
 
-    $ git pre-merge $(git for-each-ref refs/heads/??/*)
-
-And that would pre-merge each pair of branches between each other. That
-is: "n choose 2" (with n the number of branches given)
-
-> Hope this helps,
-
-It does, thanks !
-
-> PS: Could you also use this mechanism to store rerere information?
-
-That's one of the primary goal. The problem it would solves are:
-- You could apply pre-merges even on clean merges, while rerere focuses
-on conflict resolution. (typical use case is: somebody renames a
-function in one topic, somebody decides to use that function in another
-topic. You won't have a conflict in this situation but the code no
-longer compiles.)
-- You could easily pull/push pre-merges while today there is not built-in
-mechanism to exchange/remote-save rerere's
-
-Cheers,
-Antoine
+*1* If A has other kinds of conflicts with other topics, it is not
+sufficient to just rename "merge-fix/B" to "merge-fix/A"---the
+effect of cherry-picking "merge-fix/B" needs to be merged to
+existing "merge-fix/A".  If a merge-fix is recorded for a pair of
+commits that necessitates an evil merge, this naturally goes away.
+I can keep a merge-fix for the <A,B> pair whether I merge A before
+or after B, and semantic conflicts A may have with another topic C
+would be stored in a separate merge-fix for <A,C> pair.
