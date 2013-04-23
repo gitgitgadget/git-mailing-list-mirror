@@ -1,209 +1,79 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: [PATCH v5] git-completion.bash: add support for path completion
-Date: Tue, 23 Apr 2013 17:25:24 +0200
-Message-ID: <5176A7E4.2070608@gmail.com>
-References: <1357930123-26310-1-git-send-email-manlio.perillo@gmail.com> <CAMP44s1TjTiZ9HsXn9YiJ8E6+jC=s+g_tps6AY2ixrrgX=0jnw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Premerging topics
+Date: Tue, 23 Apr 2013 08:29:40 -0700
+Message-ID: <7vsj2hjme3.fsf@alter.siamese.dyndns.org>
+References: <CALWbr2wocjqs1mpa+yuQ_Zw8m+SX24q6Pby3E3v3-jd-0w1pvQ@mail.gmail.com>
+	<CALKQrgfO9fd+EEA=Vwe94tJbxkX89uDmMHm9rj6L=d4x7JJjaQ@mail.gmail.com>
+	<7vwqrtl2mk.fsf@alter.siamese.dyndns.org>
+	<CALWbr2xAxkNMedbuS-+pPy+Zc5MEhoCWk3oW8BXS9db63DoGAg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, szeder@ira.uka.de,
-	peff@peff.net
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 23 17:26:53 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 23 17:29:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUf7N-0004NJ-3a
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 17:26:53 +0200
+	id 1UUfAD-0007S1-Ch
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 17:29:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756826Ab3DWP0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Apr 2013 11:26:49 -0400
-Received: from mail-ee0-f45.google.com ([74.125.83.45]:41031 "EHLO
-	mail-ee0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756259Ab3DWP0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Apr 2013 11:26:48 -0400
-Received: by mail-ee0-f45.google.com with SMTP id l10so335855eei.32
-        for <git@vger.kernel.org>; Tue, 23 Apr 2013 08:26:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=Hr9s2XxwHinGJVtpkfS2HMskmkaZ8j8SvtPZIC0EphE=;
-        b=LJkbG6vFK8rX0w/ymV66wyGem/jPklIUO/GINOD+Us+qC5jqI5ypNENnlc8pZJPY+P
-         4T9z5fZ4ERIUPWdw3ojSrQhfwA+OEbf/tMtND/WxKh9rHWPf9teVbRj52p2RgHOinctK
-         sl8tlV0E+16va/yXA56oUnAjO1OqN0I6FgvoqbEo5zK3haRh+x85weJHy+SN/8dWxO+t
-         BoPsMKIli9fSWwwTkqmS+LMFanty/oO5ZBrS2yTi+lCrXrR/KoYHfBYsDVVNgF6hYn5N
-         n6d21D8ZE7+daorpc8Idrqu/Pihf7/Mo1d3oZLbXDXaI01yuhUgPhX+OpcWZqURQEplr
-         G3gw==
-X-Received: by 10.14.5.72 with SMTP id 48mr52191204eek.19.1366730806627;
-        Tue, 23 Apr 2013 08:26:46 -0700 (PDT)
-Received: from [192.168.0.3] ([151.70.212.83])
-        by mx.google.com with ESMTPS id j43sm13050492eep.4.2013.04.23.08.26.41
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 23 Apr 2013 08:26:45 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-In-Reply-To: <CAMP44s1TjTiZ9HsXn9YiJ8E6+jC=s+g_tps6AY2ixrrgX=0jnw@mail.gmail.com>
-X-Enigmail-Version: 1.0.1
+	id S1756143Ab3DWP3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Apr 2013 11:29:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38578 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755983Ab3DWP3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Apr 2013 11:29:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF58E199D6;
+	Tue, 23 Apr 2013 15:29:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aA6d/DYpwlnlBi8dYYvyuhwUOGo=; b=qW7J8y
+	b1g9lf4AA71145A8bKG2zrQW+I67su9euwXuyxO0e2eHjRIUFGAA/zcg7TsPNYcD
+	nKtgoJ9QmEjloQTBdky7LLwoxcNIF460Tpd1quAcjPUirImPYB3axGCQ+pv1v9VP
+	uQ1hqLdsXAQRL3Cu96ZBMpE606VVIaqmv6Jzo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OYXs+Ck3wNrg2Z/WIGTEWGv/FNU6cxI3
+	40yPWoZGYcv6orSFo2sKf/HdQ/E0F59xZbEYwLMNUcqBGFnF+j6Svc78/eAi1uxT
+	qcSF6CFrfdKiXT3LyRaEpDu1wnkl5gU9R/0TKaJITCwXvXgj0KuaawoOTkWzVE3z
+	K4qRQko9OHY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6EE0199D5;
+	Tue, 23 Apr 2013 15:29:43 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C729199D2;
+	Tue, 23 Apr 2013 15:29:43 +0000 (UTC)
+In-Reply-To: <CALWbr2xAxkNMedbuS-+pPy+Zc5MEhoCWk3oW8BXS9db63DoGAg@mail.gmail.com>
+	(Antoine Pelisse's message of "Tue, 23 Apr 2013 17:17:54 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9F080C3C-AC2A-11E2-AA39-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222181>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-Il 21/04/2013 12:14, Felipe Contreras ha scritto:
-> On Fri, Jan 11, 2013 at 12:48 PM, Manlio Perillo
-> <manlio.perillo@gmail.com> wrote:
->> The git-completion.bash script did not implemented full, git aware,
->> support to complete paths, for git commands that operate on files within
->> the current working directory or the index.
-> 
->> +__git_index_file_list_filter_compat ()
->> +{
->> +       local path
->> +
->> +       while read -r path; do
->> +               case "$path" in
->> +               ?*/*) echo "${path%%/*}/" ;;
->> +               *) echo "$path" ;;
->> +               esac
->> +       done
->> +}
->> +
->> +__git_index_file_list_filter_bash ()
->> +{
->> +       local path
->> +
->> +       while read -r path; do
->> +               case "$path" in
->> +               ?*/*)
->> +                       # XXX if we append a slash to directory names when using
->> +                       # `compopt -o filenames`, Bash will append another slash.
->> +                       # This is pretty stupid, and this the reason why we have to
->> +                       # define a compatible version for this function.
->> +                       echo "${path%%/*}" ;;
-> 
-> Which version of bash is that? It works perfectly fine here with or
-> without the /.
-> 
+> And I
+> have the feeling that "merge-fix/B" or "merge-fix/A" doesn't hold
+> enough information to do that accurately.
 
-GNU bash, version 4.1.5(1)-release (i486-pc-linux-gnu)
-on a GNU Linux Debian 6
+Oh, you do not have to resort to feeling; these names do _not_ hold
+enough information, period.  We already know that, that was why I was
+unhappy, and that was why I sent the "annotating a pair of commit
+objects" RFD in the first place ;-).
 
->> +# __git_index_files accepts 1 or 2 arguments:
->> +# 1: Options to pass to ls-files (required).
->> +#    Supported options are --cached, --modified, --deleted, --others,
->> +#    and --directory.
->> +# 2: A directory path (optional).
->> +#    If provided, only files within the specified directory are listed.
->> +#    Sub directories are never recursed.  Path must have a trailing
->> +#    slash.
->> +__git_index_files ()
->> +{
->> +       local dir="$(__gitdir)" root="${2-.}"
->> +
->> +       if [ -d "$dir" ]; then
->> +               __git_ls_files_helper "$root" "$1" | __git_index_file_list_filter |
->> +                       sort | uniq
->> +       fi
->> +}
->> +
->> +# __git_diff_index_files accepts 1 or 2 arguments:
->> +# 1) The id of a tree object.
->> +# 2) A directory path (optional).
->> +#    If provided, only files within the specified directory are listed.
->> +#    Sub directories are never recursed.  Path must have a trailing
->> +#    slash.
->> +__git_diff_index_files ()
->> +{
->> +       local dir="$(__gitdir)" root="${2-.}"
->> +
->> +       if [ -d "$dir" ]; then
->> +               __git_diff_index_helper "$root" "$1" | __git_index_file_list_filter |
->> +                       sort | uniq
->> +       fi
->> +}
-> 
-> These two are exactly the same, except one calls
-> __git_ls_files_helper, and the other one __git_diff_index_helper,
-> can't we make another argument that is and select one or the other
-> based on that?
-> 
+> The idea is then to store the <A, B> pair as a note, and to associate
+> a "merge" to that (solving the semantic conflict).
 
-They are not exactly the same.
-
-The first function requires, as first parameter, (space separed) options
-to pass to ls-files command; the second function, instead, requires the
-id of a tree object.
-
-IMHO, using only one function may be confusing.
-
->>  __git_heads ()
->>  {
->>         local dir="$(__gitdir)"
->> @@ -430,6 +543,46 @@ __git_complete_revlist_file ()
->>  }
->>
->>
->> +# __git_complete_index_file requires 1 argument: the options to pass to
->> +# ls-file
->> +__git_complete_index_file ()
->> +{
->> +       local pfx cur_="$cur"
->> +
->> +       case "$cur_" in
->> +       ?*/*)
->> +               pfx="${cur_%/*}"
->> +               cur_="${cur_##*/}"
->> +               pfx="${pfx}/"
->> +
->> +               __gitcomp_file "$(__git_index_files "$1" "$pfx")" "$pfx" "$cur_"
->> +               ;;
->> +       *)
->> +               __gitcomp_file "$(__git_index_files "$1")" "" "$cur_"
->> +               ;;
->> +       esac
->> +}
->> +
->> +# __git_complete_diff_index_file requires 1 argument: the id of a tree
->> +# object
->> +__git_complete_diff_index_file ()
->> +{
->> +       local pfx cur_="$cur"
->> +
->> +       case "$cur_" in
->> +       ?*/*)
->> +               pfx="${cur_%/*}"
->> +               cur_="${cur_##*/}"
->> +               pfx="${pfx}/"
->> +
->> +               __gitcomp_file "$(__git_diff_index_files "$1" "$pfx")" "$pfx" "$cur_"
->> +               ;;
->> +       *)
->> +               __gitcomp_file "$(__git_diff_index_files "$1")" "" "$cur_"
->> +               ;;
->> +       esac
->> +}
-> 
-> These are also exactly the same, we could pass the argument to the
-> function above.
-> 
-
-See previous note.
-
-
-
-Regards  Manlio Perillo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAlF2p+QACgkQscQJ24LbaUQVcACfeYFO8umJDbgTrXWChqqbk69E
-CE4AniZFP7PQkOZCbBY+6hZ2gMpNIJTn
-=HqAf
------END PGP SIGNATURE-----
+OK, and as the datastore for <A, B> pair you were thinking about
+using a specially-formatted blob and Johan suggested to use a
+regular tree object?
