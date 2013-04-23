@@ -1,119 +1,124 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2 7/7] git grep: honor textconv by default
-Date: Tue, 23 Apr 2013 14:11:59 +0200
-Message-ID: <043047afd2915dd8f3a68cf164dc516d4c0bb5c2.1366718624.git.git@drmicha.warpmail.net>
-References: <517298D4.3030802@drmicha.warpmail.net>
-Cc: Matthieu.Moy@grenoble-inp.fr, jeremy.rosen@openwide.fr,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 23 14:12:26 2013
+From: Johan Herland <johan@herland.net>
+Subject: Re: git fetch refs and tags
+Date: Tue, 23 Apr 2013 14:16:18 +0200
+Message-ID: <CALKQrgf2UxC3h2ApJ-ug=B-Pg_gxf_4=FV1MSmfdt9S2Ut5YFA@mail.gmail.com>
+References: <1366714421.2899.10.camel@lws-weitzel>
+	<CALKQrge2vHqA1HitpdJKYQu0KY5+XkFdrN_Gg254gW_ih57o=Q@mail.gmail.com>
+	<1366717552.2899.17.camel@lws-weitzel>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, sitaramc@gmail.com
+To: J.Weitzel@phytec.de
+X-From: git-owner@vger.kernel.org Tue Apr 23 14:16:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUc58-0002Sj-RO
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 14:12:23 +0200
+	id 1UUc9B-0006Sg-9d
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Apr 2013 14:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755915Ab3DWMMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Apr 2013 08:12:13 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:59657 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755836Ab3DWMMG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Apr 2013 08:12:06 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 097082098D;
-	Tue, 23 Apr 2013 08:12:06 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 23 Apr 2013 08:12:06 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=cv
-	3ECRxlCaGSAYxC6jt2KtqwjUQ=; b=pyRv075vAZs9Ke7nwsNR5Km3NDQ61cApXk
-	oVQJo+4FnM3YVmf6Jt1h/69Rj7czso5hqktno8vJ8VwkHJe2V14mRlnQX5qASzwq
-	wyX61Y5BM7kk0AIueUv1jUizdgWZk2EKbgeyxPl3mqvel7UI/23umXIimw1tjATZ
-	p8VarCd7A=
-X-Sasl-enc: itIDqgmiGXUCqcY5BYmZI0d9ZLCR5HqAoeS3O6ZjQLw+ 1366719124
-Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 161C82001BB;
-	Tue, 23 Apr 2013 08:12:03 -0400 (EDT)
-X-Mailer: git-send-email 1.8.2.1.799.g1ac2534
-In-Reply-To: <517298D4.3030802@drmicha.warpmail.net>
-In-Reply-To: <cover.1366718624.git.git@drmicha.warpmail.net>
-References: <cover.1366718624.git.git@drmicha.warpmail.net>
+	id S1754660Ab3DWMQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Apr 2013 08:16:29 -0400
+Received: from mail10.copyleft.no ([188.94.218.231]:62831 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753357Ab3DWMQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Apr 2013 08:16:28 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UUc92-000CoY-OF
+	for git@vger.kernel.org; Tue, 23 Apr 2013 14:16:26 +0200
+Received: from mail-oa0-f46.google.com ([209.85.219.46])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UUc8z-000NCM-UH
+	for git@vger.kernel.org; Tue, 23 Apr 2013 14:16:24 +0200
+Received: by mail-oa0-f46.google.com with SMTP id k3so486361oag.19
+        for <git@vger.kernel.org>; Tue, 23 Apr 2013 05:16:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=MIC6sm2uUyBpq1KbsG9oYwhNH+lu2RZgvGPSqYqEIJs=;
+        b=YtmBABGCfqt/7nOpH9s3xPZXoyiZLNhH6cc0GAV7PpaBzYBkO6XRLNBeF1d3m5Noq5
+         IX6kPCwwZVaqlhy7qtPW8YctqGDVZLu+cW4A2MeErAbM3GQ+GNEsaqw4THXNG/tV3TeC
+         o8GSZ1K8frqqeyc4d+NbqwhF5kKkzYxujbr6JOXZiSNfrq4O1AHq06ofK0v3bFE6c/MW
+         CmD21Gkv7462tN4gMKICGOwoO8IzEfXZFtWdm1t1zUDeCiEouz3o5z2F1JTHezMml/C/
+         pCFmzt2/QyRvkk8CEN6Xss2s80oSeKHxfzJ4nLke4jFEcx9Ov+z6nbPgmsvHAadOzHiC
+         ghyw==
+X-Received: by 10.60.29.37 with SMTP id g5mr12227029oeh.140.1366719378443;
+ Tue, 23 Apr 2013 05:16:18 -0700 (PDT)
+Received: by 10.182.210.233 with HTTP; Tue, 23 Apr 2013 05:16:18 -0700 (PDT)
+In-Reply-To: <1366717552.2899.17.camel@lws-weitzel>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222154>
 
-Currently, "git grep" does not honor textconv settings by default.
-Make it honor them by default just like "git log --grep" does.
+On Tue, Apr 23, 2013 at 1:45 PM, Jan Weitzel <J.Weitzel@phytec.de> wrote:
+> Am Dienstag, den 23.04.2013, 13:25 +0200 schrieb Johan Herland:
+>> On Tue, Apr 23, 2013 at 12:53 PM, Jan Weitzel <J.Weitzel@phytec.de> wrote:
+>> > Hello,
+>> > I have the following problem: I have 2 bare git repositories one has
+>> > several branches and tags.
+>> > If I try this in the second repository:
+>> > git fetch -f ../main.git refs/heads/master:refs/heads/master
+>> > I'm getting also tags from other branches, if I have an old object from
+>> > one of the other branches.
+>> > I would expect to have only tags pointing to master ref. (Although the
+>> > man pages points to the behaviour regarding dangling objects). Is there
+>> > a way to avoid this? I only find --no-tags which results in having no
+>> > tags at all. Or need I git purge to remove the old objects first?
+>> > My goal is to fetch only specific branches and the related tags.
+>>
+>> AFAIK, Git should only auto-follow tags that are reachable from the
+>> branches you fetch (in this case master). Are you saying that you get
+>> tags pointing to other history that is NOT reachable from the master
+>> branch? (i.e. are you getting tags for which "git merge-base $tag
+>> master" is not equal to "git rev-parse $tag")?
+>>
+> exactly. I reproduced it by coping a object from an other branch to the
+> locale repository. This results in fetching the not reachable tags.
+>
+>> Re-reading the man page, I do see the following:
+>>
+>> "if the repository has objects that are pointed by remote tags that it
+>> does not yet have, then fetch those missing tags. If the other end has
+>> tags that point at branches you are not interested in, you will not
+>> get them."
+>>
+>> This can be interpreted as saying that even unreachable objects in
+>> your local repo that are pointed to by some remote tag will cause that
+>> tag to be fetched, and in effect resuscitate the
+>> previously-unreachable object. If this is indeed how it works, I would
+>> be tempted to label this a bug in the auto-following behavior, as it's
+>> probably not what most people would expect. In that case, yes, you
+>
+> Yes my first understanding of auto-following behaviour was wrong ;)
+>
+>> should be able to get your desired behavior by first purging all
+>> unreachable objects. Something like "git gc --prune=now" should do the
+>> job.
+>
+> Because I run this by scripts is there a way without porcelain commands?
+> I saw even git prune is one.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/git-grep.txt | 2 +-
- grep.c                     | 2 ++
- t/t7008-grep-binary.sh     | 4 ++--
- 3 files changed, 5 insertions(+), 3 deletions(-)
+git prune is not sufficient, since it only removes _unpacked_ and
+unreachable objects. You first need to create a new pack that does not
+contain unreachable objects (git rebase -a -d), but before that you
+also need to expire reflogs (git reflog expire ...) and you should
+also prune packed refs (git pack-refs --prune ...).
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index a5c5a27..f54ac0c 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -82,10 +82,10 @@ OPTIONS
- 
- --textconv::
- 	Honor textconv filter settings.
-+	This is the default.
- 
- --no-textconv::
- 	Do not honor textconv filter settings.
--	This is the default.
- 
- -i::
- --ignore-case::
-diff --git a/grep.c b/grep.c
-index c668034..161d3f0 100644
---- a/grep.c
-+++ b/grep.c
-@@ -31,6 +31,7 @@ void init_grep_defaults(void)
- 	opt->max_depth = -1;
- 	opt->pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED;
- 	opt->extended_regexp_option = 0;
-+	opt->allow_textconv = 1;
- 	strcpy(opt->color_context, "");
- 	strcpy(opt->color_filename, "");
- 	strcpy(opt->color_function, "");
-@@ -134,6 +135,7 @@ void grep_init(struct grep_opt *opt, const char *prefix)
- 	opt->pathname = def->pathname;
- 	opt->regflags = def->regflags;
- 	opt->relative = def->relative;
-+	opt->allow_textconv = def->allow_textconv;
- 
- 	strcpy(opt->color_context, def->color_context);
- 	strcpy(opt->color_filename, def->color_filename);
-diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
-index 10b2c8b..2fc9d9c 100755
---- a/t/t7008-grep-binary.sh
-+++ b/t/t7008-grep-binary.sh
-@@ -156,7 +156,7 @@ test_expect_success 'setup textconv filters' '
- 	git config diff.foo.textconv "\"$(pwd)\""/nul_to_q_textconv
- '
- 
--test_expect_failure 'grep does not honor textconv' '
-+test_expect_success 'grep does honor textconv' '
- 	echo "a:binaryQfile" >expect &&
- 	git grep Qfile >actual &&
- 	test_cmp expect actual
-@@ -172,7 +172,7 @@ test_expect_success 'grep --no-textconv does not honor textconv' '
- 	test_must_fail git grep --no-textconv Qfile
- '
- 
--test_expect_failure 'grep blob does not honor textconv' '
-+test_expect_success 'grep blob does honor textconv' '
- 	echo "HEAD:a:binaryQfile" >expect &&
- 	git grep Qfile HEAD:a >actual &&
- 	test_cmp expect actual
+In short there are a number of commands you need to run, and in the
+right order and with the right options, but "git gc --prune=now" is
+basically just a wrapper around these that Does The Right Thing(tm). I
+would just use that instead.
+
+...Johan
+
 -- 
-1.8.2.1.799.g1ac2534
+Johan Herland, <johan@herland.net>
+www.herland.net
