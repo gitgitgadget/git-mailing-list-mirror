@@ -1,66 +1,93 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Highly inconsistent diff UI
-Date: Thu, 25 Apr 2013 01:44:08 +0530
-Message-ID: <CALkWK0m5m4maMKYfyV=rr4TWDK1FZQXXwT=cPeGoMtx6+chJsw@mail.gmail.com>
-References: <CALkWK0n2ZZTgYxi3Fk2UxY8TXFAt1Xt3+11G98GKxbYdoMOT+Q@mail.gmail.com>
- <20130424164003.GB4119@elie.Belkin> <7va9ones4p.fsf@alter.siamese.dyndns.org>
- <20130424192339.GH29963@google.com> <7vli87bsu3.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 5/5] git-diff.txt: fix ordering of the [--no-index] form
+Date: Wed, 24 Apr 2013 13:37:32 -0700
+Message-ID: <20130424203732.GJ29963@google.com>
+References: <1366821216-20868-1-git-send-email-artagnon@gmail.com>
+ <1366821216-20868-6-git-send-email-artagnon@gmail.com>
+ <7vmwsndbve.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kaFc8cj-=1NbEwC_61U7qUCye70d9MZR66TpKB3i9XyA@mail.gmail.com>
+ <20130424190638.GE29963@google.com>
+ <CALkWK0n2zFp1t7qtKp8-Ohoz0QEn4BQrfvxzqt+qwLS5+sNdHQ@mail.gmail.com>
+ <20130424191453.GG29963@google.com>
+ <CALkWK0=KWu3=j5sLK3hr=Gx5xLnLaPAY+E=J0_izRCj9YcBTEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 22:14:56 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 24 22:37:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV65f-0005jA-Mm
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 22:14:56 +0200
+	id 1UV6Rj-0007Cc-Te
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 22:37:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757853Ab3DXUOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 16:14:51 -0400
-Received: from mail-ia0-f169.google.com ([209.85.210.169]:43886 "EHLO
-	mail-ia0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757814Ab3DXUOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 16:14:50 -0400
-Received: by mail-ia0-f169.google.com with SMTP id l29so2035938iag.14
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 13:14:50 -0700 (PDT)
+	id S1758009Ab3DXUhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 16:37:38 -0400
+Received: from mail-da0-f52.google.com ([209.85.210.52]:34695 "EHLO
+	mail-da0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758005Ab3DXUhh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 16:37:37 -0400
+Received: by mail-da0-f52.google.com with SMTP id j17so1061435dan.25
+        for <git@vger.kernel.org>; Wed, 24 Apr 2013 13:37:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=QuLSrjI+KMBWBo7FeQeLhws6Ihxr8rgDgvOknaPKrs4=;
-        b=orqSK6RkxdZMM+yohdD9lNsiOMaHeK15pE+btYg9CCmG61l0tNxtuaHcPiSwZYwCl4
-         DtVe/klsMkyRm9uv0e8iO1SDXw8D1u5IChbFd8Ao32GAoJ3XjVxtS3lOoGhR0imeXZQn
-         Zas4ji09CZnVG7NXD09qX15hlH19pNIx5AG2hVeIzCDAHgc6x4daji7614MD5O32e5rL
-         RYp1p0/AgRmZBKud8BWq9icB0mNU0nDw/62SGA/GKF1ha/9ccMZJgxGLFr4kB+kapS5K
-         ACdWD8dyTApnjO/a9WU8G92oJT3HPzsJw18VO0jXgz1HFSzKkRShpR0sulMS0e37sWCi
-         gRwg==
-X-Received: by 10.50.57.116 with SMTP id h20mr388735igq.49.1366834489974; Wed,
- 24 Apr 2013 13:14:49 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Wed, 24 Apr 2013 13:14:08 -0700 (PDT)
-In-Reply-To: <7vli87bsu3.fsf@alter.siamese.dyndns.org>
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=dQnf0mkGJyBE+iQlLu0OPcixTOYLs8cPK8ECM/n1BOQ=;
+        b=gBISlAsOrbiJReAUWdv0HfjpmLFXq03s7VXsWoLU19xxk54rTK2YVetSenldVN9oLG
+         ogsDaY4DjPuCkyyybL37F+EaS/SL7oc0MIVJBnde6+XfhpSyJaE0cOZhlk4TMQX/IGJx
+         IYao6ctXT9FsVvzIM5ooDnqf3qJBq1HsnwRitF1WJIA3FTqiT2WYZNk2xAcG87YlZ4wG
+         IL+ZvkFCczrBjImqNLfJJTDMYuP3dM9cUKuwjjHRzd8/9k+neudWKoxX+OWm7++qDz5Y
+         688PNxRUjmnIj4PrMl5I9d43bNxpVWwPP5ESmc75UkdxvU7bIxVUMWUNcxAhz7PEaNvg
+         K/NQ==
+X-Received: by 10.68.230.39 with SMTP id sv7mr22242517pbc.154.1366835857133;
+        Wed, 24 Apr 2013 13:37:37 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id 9sm4250607pbi.45.2013.04.24.13.37.35
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 24 Apr 2013 13:37:35 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=KWu3=j5sLK3hr=Gx5xLnLaPAY+E=J0_izRCj9YcBTEg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222316>
 
-Junio C Hamano wrote:
-> Yeah, I am not strongly opposed to have something like that, and
-> having a shorter (but not a single letter) option name might make it
-> more attractive than A...B at least to new users.
+Ramkumar Ramachandra wrote:
+> Jonathan Nieder wrote:
 
-I'm not married to the single character or tilde.  What I'm saying is
-that we should make it a rev spec, not a command-line option.
+>> Because typing paths does not make my intent perfectly clear.
+>
+> I'm not able to understand this.  Doesn't your prompt tell you which
+> directory you're in, and if you're in a git repository?  When you type
+> out paths, you know what is inside and what is outside your
+> repository.  By extension, you know when --no-index is implied and
+> when it isn't.
+>
+> Can you explain what your problem is?
 
-> Which by the way is nothing new.  "A" means the entire history
-> leading to the commit "A" in the context of specifying a range, and
-> the same "A" means a single commit "A" in the context of specifying
-> a revision.
+Are you wondering why I use --no-index or why I think we should
+eventually stop moving into --no-index mode by default?
 
-Exactly.  And I'm introducing a third context: "when specifying two
-trees to diff".  Changing meaning in different contexts is not a
-problem, as long as it is consistent and properly documented.
+The answers are different.  I use --no-index because it means I don't
+have to think about whether the files I am comparing are in a Git
+repository.  It's relaxing.  I'm not advocating that you follow suit;
+I'm just describing my own usage of the command.
+
+I think git should eventually stop doing --no-index implicitly because
+it is a very different mode using the same syntax triggered by
+external conditions.  That is
+
+ * hard to document
+ * problematic for scripts calling "git diff", can create lurking bugs
+ * unnecessarily complicated.  For example:
+   * "git diff -h" output depends on whether I am in a git worktree.
+   * git searches for a .git directory, possibly hitting filesystem
+     automount points, just to decide whether its arguments are inside
+     the current repository.
