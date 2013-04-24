@@ -1,77 +1,58 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: [PATCH 5/5] git-diff.txt: fix ordering of the [--no-index] form
-Date: Wed, 24 Apr 2013 12:14:53 -0700
-Message-ID: <20130424191453.GG29963@google.com>
+Date: Thu, 25 Apr 2013 00:50:21 +0530
+Message-ID: <CALkWK0mK=myPEsFrhVd2Xi3U10L+jZ+_WV=1JvxyvpnO3yUJGg@mail.gmail.com>
 References: <1366821216-20868-1-git-send-email-artagnon@gmail.com>
- <1366821216-20868-6-git-send-email-artagnon@gmail.com>
- <7vmwsndbve.fsf@alter.siamese.dyndns.org>
+ <1366821216-20868-6-git-send-email-artagnon@gmail.com> <7vmwsndbve.fsf@alter.siamese.dyndns.org>
  <CALkWK0kaFc8cj-=1NbEwC_61U7qUCye70d9MZR66TpKB3i9XyA@mail.gmail.com>
- <20130424190638.GE29963@google.com>
- <CALkWK0n2zFp1t7qtKp8-Ohoz0QEn4BQrfvxzqt+qwLS5+sNdHQ@mail.gmail.com>
+ <20130424190638.GE29963@google.com> <CALkWK0n2zFp1t7qtKp8-Ohoz0QEn4BQrfvxzqt+qwLS5+sNdHQ@mail.gmail.com>
+ <20130424191453.GG29963@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 21:15:04 2013
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 24 21:21:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV59k-0002fb-4S
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 21:15:04 +0200
+	id 1UV5Fc-00047f-PS
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 21:21:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757188Ab3DXTO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 15:14:59 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:37847 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757003Ab3DXTO6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 15:14:58 -0400
-Received: by mail-pd0-f178.google.com with SMTP id w10so795776pde.23
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 12:14:57 -0700 (PDT)
+	id S1757306Ab3DXTVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 15:21:04 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:58113 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757003Ab3DXTVC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 15:21:02 -0400
+Received: by mail-ie0-f182.google.com with SMTP id bn7so2599852ieb.13
+        for <git@vger.kernel.org>; Wed, 24 Apr 2013 12:21:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=f/zfeEfDKIScw2+B0XtUa5kF952Y6EyfnDnyRe1kjfU=;
-        b=uk3ptn0UIYPYgQhFIkeAuIB66CIAdU3rfAPJhnTO7Ro1OxvAdEzSjI6dZWLdjdtnFy
-         MhZhUn9QITN7eHcaE8o3B8ktLy4syOZj4aceL/abxrMpZDcoHkdL2jbjsJYcNUQ1BLQO
-         HLnTijl33GhOqMzogSueChllWwbQD5T/1mtw/z7Y1ZXtrdg+gAt/J8j5CQlwoYteC7Uq
-         REW3SAW/sbVg690sk79koAyByFvdVe/CRl9JoQlpEuDvC5+mxAtb4kW8SN1+Yv1RPQtq
-         08yCygYv9Yw+9kR86FmitldPENvGq9NWf++njKuMJHXlaM9KGnFFN8fTYhU7wq4KFmcp
-         139g==
-X-Received: by 10.68.129.162 with SMTP id nx2mr48759675pbb.178.1366830897748;
-        Wed, 24 Apr 2013 12:14:57 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id p5sm4091724pbl.17.2013.04.24.12.14.55
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 24 Apr 2013 12:14:56 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0n2zFp1t7qtKp8-Ohoz0QEn4BQrfvxzqt+qwLS5+sNdHQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=JNbsCKGL9xklTaF9oWJUUXrlXmMp70Xr4yE2W3vNa9M=;
+        b=Mwmd6J557bLVfnL2GCPQcwBHeVl7W2GuVrOk1wp7vWmUJ9iUCQYTQFK8yxtnLA1Env
+         eElfA/LE+toXEkeexco57zvgTDNm3t0nw+gkCu0jzdTgwY3E+axfNBOojeub1nwDfkp6
+         k5g5zfyp+0qsK3jjpzxnNiCYmaYFEnBa+H4ou/eKWdp7DXN9I6ypqu/kC5Ac0MgQ+lfq
+         526KzMzJsYwMwc6oIa6k55ilGeaRUhy9QcIYX8sKw+aPoZk6kyjU7Nskh/Xbv6IovkJo
+         s+1dm7mchZkeAlBrMhVxGqUbSA9uFEI2h4pAQj6hBITAcerVYZzY6sHCR9mgXuhyKIfb
+         VgCg==
+X-Received: by 10.50.57.200 with SMTP id k8mr29019167igq.44.1366831261686;
+ Wed, 24 Apr 2013 12:21:01 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Wed, 24 Apr 2013 12:20:21 -0700 (PDT)
+In-Reply-To: <20130424191453.GG29963@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222302>
 
-Ramkumar Ramachandra wrote:
-> Jonathan Nieder wrote:
+Jonathan Nieder wrote:
+> Oh please no.
 
->> Maybe it would make sense to move towards eliminating the "implicit
->> --no-index for paths outside the repository" trick.  I use "git diff
->> --no-index" all the time, but I always spell it out to be careful.
->
-> Huh?  Why do you want to endure the pain of spelling it out, when your
-> intent is perfectly clear?
+If I understand this correctly, you are horrified by this?
+https://github.com/artagnon/dotfiles/blob/master/.gitconfig#L30
 
-Because typing paths does not make my intent perfectly clear.
-
-> What would make sense is a tristate diff.no-index:
-
-Oh please no.
-
-Hope that helps,
-Jonathan
+By the way, my zsh aliases git to g.
