@@ -1,89 +1,107 @@
-From: Adam Stankiewicz <sheerun@sher.pl>
-Subject: Git submodule repository locatio
-Date: Wed, 24 Apr 2013 16:44:29 +0200
-Message-ID: <5177EFCD.1020300@sher.pl>
+From: Sivaram Kannan <siva.devel@gmail.com>
+Subject: Re: Git crash in Ubuntu 12.04
+Date: Wed, 24 Apr 2013 20:21:08 +0530
+Message-ID: <CAJiNi_HuqMu25VO-mZBL0N4RgveRdvZ=Bi2wviD4NNmibQg1Sg@mail.gmail.com>
+References: <CAJiNi_FfU9Gsr2D9CcC0wWwgO1oKBXwxp87-wBUJBU2kyGaQNQ@mail.gmail.com>
+	<87mwt6ltia.fsf@linux-k42r.v.cablecom.net>
+	<CAJiNi_EgjgKs7oNJyGcamUFz=ARDAuBTb+bJ0uVsPFBMbZF3YA@mail.gmail.com>
+	<20130411170659.a35d2c581cf34ade13448bfa@domain007.com>
+	<CAJiNi_Gju2aJkVJJmoxnEAubfPvjaVhVF6DisaLn5kUJ3YRD=w@mail.gmail.com>
+	<20130412180525.aa5b8eacd691a427244d6ab5@domain007.com>
+	<CAJiNi_GQZf8BRkTR8+j6YjdcqUH1J1NATSrNUjZ=65V+ip6okQ@mail.gmail.com>
+	<CACsJy8AfVjhsBtfwJomRmoYsA3EMPja--y5Twq=T7-bCUQRU-w@mail.gmail.com>
+	<CAJiNi_FBzz2Tqp_P8BB=X7UnAaHiNH8s0FyzW4K9Xp6WZijECw@mail.gmail.com>
+	<CACsJy8CVC4RBtgCFShoGLsVm-B49TcECtL_RRExzECF69Ak5cg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 24 16:45:13 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Konstantin Khomoutov <flatworm@users.sourceforge.net>,
+	Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 24 16:51:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV0wa-0003no-O3
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 16:45:13 +0200
+	id 1UV12R-0005Ju-6N
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 16:51:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756214Ab3DXOpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 10:45:01 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:37718 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756140Ab3DXOod (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 10:44:33 -0400
-Received: by mail-ee0-f46.google.com with SMTP id c13so787027eek.5
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 07:44:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding:x-gm-message-state;
-        bh=wopIzf1ju5SOUOpN3xtHAac5BW3ZZLuVpMIbjiF1uVA=;
-        b=aFDP1QHYjRk0MtMnT7pdIrGDi0JFwCelZDQK8QLBMEwD+sdcHWqq/Fu7NfpoGqW3M0
-         x9PCnsUFZporSVmmP6YYdLXl5aW1HIhpv+X9dCtmuI8DQTSKsKRp/uwQvYCUbLhaTStG
-         JydHK1xpssIkOI8KWkCHiUwwCA/NUYHNWoHeWb3OxMhgalIBLj6DVLlogf0sjO+GrGxj
-         AUFr3ds13JHN6MjRmyqvhLmvDFJgdkIiXO34fgX92ySoHxxYIcuvyWLDV18EQrwE9jq8
-         kVJf7v0kv+Xx9q3f1EOfa3Eg21NW8fyB9VB2ubJyOFzQrXz1TxddJfu6DuIfBXlTw5dh
-         nfHQ==
-X-Received: by 10.15.43.73 with SMTP id w49mr64478697eev.12.1366814672333;
-        Wed, 24 Apr 2013 07:44:32 -0700 (PDT)
-Received: from [192.168.1.109] (89-72-253-211.dynamic.chello.pl. [89.72.253.211])
-        by mx.google.com with ESMTPSA id ch6sm4612252eeb.17.2013.04.24.07.44.30
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 24 Apr 2013 07:44:30 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-X-Gm-Message-State: ALoCoQmXkF6GcdmrlFP4893QdAqKHBCcCWcfyNDOK19i7mqt4D2l23/11Xf37ORPNZHqkku3cCJc
+	id S1756604Ab3DXOvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 10:51:10 -0400
+Received: from mail-ve0-f169.google.com ([209.85.128.169]:49834 "EHLO
+	mail-ve0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756588Ab3DXOvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 10:51:09 -0400
+Received: by mail-ve0-f169.google.com with SMTP id jz10so764753veb.14
+        for <git@vger.kernel.org>; Wed, 24 Apr 2013 07:51:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=naXKxy2ggujx/lnQxVtVGAvu+LY/4RpUHkmfluc3Wfc=;
+        b=GL3cS2SWsC+Qzwh64u67DWv+2Rl1ooN1VJWBO4/2nGu437vIiQpQt9Pq/L6x/awtII
+         CYKVaa+1aO7G9DGl+rX95wCQNyBCshS50uiWKQnjVtnVntvUJoxNAsa6oBjddJyb1BE2
+         bdagVsPgJ/Rz6MKHiimFuPVTdiTkAW+cmMFWP5bu/cK6okmWCnzx0R8AXak1e8kJ4jtc
+         r1npLOA5/xMtgHLf+grISHL87RoX/TceY/dde7gKmTpzK3DSud+iOKv88uhld5XFpT2y
+         776IbxkGUnpMYW6vZkWk4CzOk3qabgQIYaCpdgOrkkB3O46hwtkd1F0w8SlZdS2Cuyf6
+         MJmA==
+X-Received: by 10.220.104.68 with SMTP id n4mr25388726vco.37.1366815068422;
+ Wed, 24 Apr 2013 07:51:08 -0700 (PDT)
+Received: by 10.221.3.131 with HTTP; Wed, 24 Apr 2013 07:51:08 -0700 (PDT)
+In-Reply-To: <CACsJy8CVC4RBtgCFShoGLsVm-B49TcECtL_RRExzECF69Ak5cg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222254>
 
-Currently each submodule contains single .git file (instead of directory)
-with only link to project's base repository, for example "gitdir:
-../../.git/modules/lib/neobundle.vim".
+Hi
 
-In git base repository we find .git/modules directory that contains bare
-repositories of all submodules, for example .git/modules/lib/neobundle.vim
-contains bare repository of neobundle submodule.
+After some struggle I finally got apport work and got some
+information. Please check whether it will be of any help. And you guys
+are right, I have started to get the same crash again right now after
+upgrading to latest git in Ubuntu.
 
-My proposal is to move default bare repository location from .git/modules
-to .git directory inside submodule, like every normal git repo do.
+> Yes. Please do. The reason is a backtrace without symbols gives very
+> little information (at least for people who do not use Ubuntu).
 
-These are my arguments:
 
-1. Why git submodule needs to know in which project it is embedded in? Or
-even that it's generally submodule? When cd to submodule, it behaves like
-normal repository. Only repository needs to know about its submodules.
-2. You can't move submodule outside git repository and use it as normal git
-repo. You have to copy bare repo from .git/modules dir.
-3. It's not enough to delete submodule from workingdir to "refresh" it
-later. You have to go to .git/modules directory and delete appropriate
-folder.
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+For bug reporting instructions, please see:
+<http://bugs.launchpad.net/gdb-linaro/>.
+Reading symbols from /tmp/tmp6_sJPS/usr/lib/git-core/git...(no
+debugging symbols found)...done.
+[New LWP 31469]
+[New LWP 31468]
+[New LWP 31466]
+[New LWP 31464]
+[New LWP 31467]
+warning: Can't read pathname for load map: Input/output error.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+warning: the debug information found in
+"/tmp/tmp6_sJPS/usr/lib/debug//lib/x86_64-linux-gnu/ld-2.15.so" does
+not match "/tmp/tmp6_sJPS/lib64/ld-linux-x86-64.so.2" (CRC mismatch).
 
-What about performance on checkouts?
+Core was generated by `git pack-objects --revs --all --stdout
+--delta-base-offset'.
+Program terminated with signal 11, Segmentation fault.
+#0  0x00000000004820f0 in ?? ()
+(gdb) bt
+#0  0x00000000004820f0 in ?? ()
+#1  0x000000000044b3aa in ?? ()
+#2  0x000000000044b641 in ?? ()
+#3  0x00007f077973de9a in start_thread (arg=0x7f0747fff700)
+    at pthread_create.c:308
+#4  0x00007f077946acbd in clone ()
+    at ../sysdeps/unix/sysv/linux/x86_64/clone.S:104
+#5  0x0000000000000000 in ?? ()
+(gdb)
 
-In systems supporting symlinks, the .git directory in submodule can be a
-symlink to the .git/modules subdirectory. In systems that do not support
-them, you can use mv-like command, that is very fast. Just move .git
-directory of submodule to .git/modules subdirectory, until you you need it
-(when you check out commit with "Subproject commit 55d868e(...) object").
-
-I propose introducing this change in next major version of git, as it can
-break some scripts that depend on git submodule repository location.
-
-Please consider this "feature request" seriously, most people I know think
-git submodules suck, and described issue is IMHO one of the reasons why.
-
-Sincerely,
-Adam Stankiewicz (@sheerun)
+./Siva.
