@@ -1,113 +1,93 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] submodule: fix quoting in relative_path()
-Date: Wed, 24 Apr 2013 09:15:36 +0100
-Message-ID: <20130424081536.GT2278@serenity.lan>
-References: <cover.1365539059.git.john@keeping.me.uk>
- <cover.1366314439.git.john@keeping.me.uk>
- <cover.1366314439.git.john@keeping.me.uk>
- <6e4122f3eedec3f520028b5598b78e0d59e5d12b.1366314439.git.john@keeping.me.uk>
- <7vfvyn4g46.fsf@alter.siamese.dyndns.org>
- <20130419074632.GC2278@serenity.lan>
- <7vmwsu31vh.fsf@alter.siamese.dyndns.org>
- <517199AB.50109@kdbg.org>
- <7vehe6z10t.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 7/7] rebase: implement --[no-]autostash and rebase.autostash
+Date: Wed, 24 Apr 2013 13:57:44 +0530
+Message-ID: <CALkWK0=JsR9txrrnWZKyrTpv-s+ZgVz-cL6ZsMn2R+wz6rE4FA@mail.gmail.com>
+References: <1366725724-1016-1-git-send-email-artagnon@gmail.com>
+ <1366725724-1016-8-git-send-email-artagnon@gmail.com> <CABURp0onypkDFiovYP4s0UuBV+oFp3rPv1Jq8dGbxZhKU_sgsQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 10:16:04 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 24 10:28:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUurz-0001zV-FG
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 10:16:04 +0200
+	id 1UUv44-0008QD-Bz
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 10:28:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758001Ab3DXIP4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 04:15:56 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:33958 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757704Ab3DXIPx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 04:15:53 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id C31D2606593;
-	Wed, 24 Apr 2013 09:15:52 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -10.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-10.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BYZhLsSrK6sR; Wed, 24 Apr 2013 09:15:52 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 45031198032;
-	Wed, 24 Apr 2013 09:15:51 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 34F2D161E568;
-	Wed, 24 Apr 2013 09:15:51 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id N7eoq+Yjo4OY; Wed, 24 Apr 2013 09:15:49 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 0DA22161E3F4;
-	Wed, 24 Apr 2013 09:15:38 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7vehe6z10t.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757743Ab3DXI20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 04:28:26 -0400
+Received: from mail-ia0-f173.google.com ([209.85.210.173]:42123 "EHLO
+	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754638Ab3DXI2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 04:28:24 -0400
+Received: by mail-ia0-f173.google.com with SMTP id j5so1372387iaf.18
+        for <git@vger.kernel.org>; Wed, 24 Apr 2013 01:28:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=6Q/tLN6/6oQWjzgkKVhkBtjurG4M4y1E2tY0vQFzoHE=;
+        b=QL16QFD+1z9Q7GC4/QB2kmvKzWRwHqq1JdiaQV4XAp/9LolH9ZqmJf73a9SaKHtDhN
+         kEkaz5SxE6eJtBYqaOQY82g7N1TlnWpAOvigObRvJg2L3J0M8I4+Y6orAd6n+hYCESGR
+         xXOuNIoRQ1DAP0WkykcBuFvcPAPWFkuL67X7alpHsNdJNxo33eZ+fG88oJ5VvSGtvU5k
+         NtxBld1ISRZmtdqGxIasexC2/FDCiowSsEfvZ2/Hsar+wccgJOXxIyC1Qmms5No9/BOd
+         5OkPSIOB8LHH1I+Arpv0WKYy9gECFbiT5y59Y1OK8qaa2kUvGq655beh4N+Sshj2alD9
+         ANMQ==
+X-Received: by 10.50.73.65 with SMTP id j1mr14226030igv.49.1366792104290; Wed,
+ 24 Apr 2013 01:28:24 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Wed, 24 Apr 2013 01:27:44 -0700 (PDT)
+In-Reply-To: <CABURp0onypkDFiovYP4s0UuBV+oFp3rPv1Jq8dGbxZhKU_sgsQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222238>
 
-Commit caca2c1 (submodule: drop the top-level requirement) introduced a
-relative_path helper but does not quote $curdir when it is stripped from
-the front of a target path.  In this particular case this should be safe
-even with special characters because we only do this after checking that
-$target begins with "$curdir/" which is quoted correctly, but we should
-quote the variable to be certain that there is not some obscure case
-where we this could strip more or less than we want.
+Phil Hord wrote:
+> Because I am in a git-rebase which has apparently failed, I would
+> expect 'git rebase --abort' would save me here.  But it does not and
+> you have given me some unique instructions to try to recover.  I
+> suppose rebase--abort cannot be made to recover in this case because
+> this is a rebase-wrapper and all of my rebase-state is already
+> discarded.  But I would much prefer to have the normal "undo"-ability
+> of git-rebase here, once I realize I have made a mistake or
+> encountered conflicts I am not prepared to handle right now.
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
-On Fri, Apr 19, 2013 at 02:03:14PM -0700, Junio C Hamano wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
-> > Why not just replace the six-liner by this one-liner:
-> >
-> > 		target=${target#"$curdir"/}
-> 
-> Simple enough ;-)
+You're asking for a hammer solution, when I'm advocating a solution
+that offers more flexibility and control.  Commits and worktree
+changes are fundamentally two different things, and I treat them
+differently.
 
-This seems to have arrived on next without this fix, so here's a patch
-on top.
+rebase.autostash is simply a shortcut for:
 
- git-submodule.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+    $ git stash && git rebase ... && git stash pop
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 0eee703..db9f260 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -127,7 +127,7 @@ relative_path ()
- 	do
- 		case "$target" in
- 		"$curdir/"*)
--			target=${target#$curdir/}
-+			target=${target#"$curdir"/}
- 			break
- 			;;
- 		esac
--- 
-1.8.2.1.715.gb260f47
+Except that your stash is not blocked during the rebase process: we
+use a special stash.  If the last 'git stash pop' fails, do you do
+this?
+
+    $ git reset --hard HEAD@{1}
+    $ git stash pop
+    # snip, snip ...
+    # redo the entire rebase
+
+I _never_ find myself doing this; in your hammer solution, you're
+advocating that we always do this.
+
+The stash is a powerful tool when used properly: a stash isn't
+attached to any branch, and therefore perfectly designed to keep small
+temporary worktree changes for a short period of time.
+rebase.autostash is _not_ a way to take away power from the user, or
+save the user from learning how to use stash.
+
+That said, the current implementation is very rough and I will improve
+it in the next iterations.  If the apply fails, I will push the
+changes onto stash@{0}, and let the user do a 'git stash pop' instead
+of having to remember (or copy out) a SHA-1 displayed in the terminal
+output.  Essentially, this leaves the user in the exact same state as
+if she had done a 'git stash && git rebase ... && git stash pop'.
