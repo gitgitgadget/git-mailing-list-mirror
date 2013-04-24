@@ -1,117 +1,78 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: Git submodule repository locatio
-Date: Wed, 24 Apr 2013 17:11:19 +0200
-Message-ID: <20130424151119.GB25888@paksenarrion.iveqy.com>
-References: <5177EFCD.1020300@sher.pl>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] fixup! t3210: test for spurious error messages for dangling
+ packed refs
+Date: Wed, 24 Apr 2013 17:25:53 +0200
+Message-ID: <5177F981.60105@alum.mit.edu>
+References: <7vehe2nr16.fsf@alter.siamese.dyndns.org> <1366708556-9172-1-git-send-email-mhagger@alum.mit.edu> <7vehe1i1bo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jens.lehmann@web.de
-To: Adam Stankiewicz <sheerun@sher.pl>
-X-From: git-owner@vger.kernel.org Wed Apr 24 17:07:33 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 24 17:26:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV1I7-0007f9-Sx
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 17:07:28 +0200
+	id 1UV1a9-0004lP-Im
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 17:26:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752980Ab3DXPHV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Apr 2013 11:07:21 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:59893 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751780Ab3DXPHU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 11:07:20 -0400
-Received: by mail-la0-f46.google.com with SMTP id ep20so1670309lab.5
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 08:07:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:sender:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=mOMsN5PbfphD1DqhaOkd5kBOJSS6LbyyWv1/aIht95E=;
-        b=exuQy9tcdVVgMyiQEN2/khtcFt6UhMYWlf+e4rsTMH3P2flDDIyZuG1GFNBlNXtTeU
-         AK6gTBUmaTDsiXBjbQJjt2SquKaAeOULc9Z3MyzatUtyHoG6VP3xyQTQuWbezHzErf8J
-         +0iOGLNZdoAueCAw41pntWQRPrVfzmu9sS+2LFGpIZ8zlza4dNme7Q6zyBkrGyeOTDPk
-         lQ+TQxc1mSfg20wfCKRCR2P09FOjZLn5+90yNfMjMOxx1OqpL9NNf5cJBNnBsympcTRC
-         2XGH6zgn/MlosfhwfIUY0N11X8L1Ub3Sf6Sho8eKfZZYmQoufHP22CEGPhdhpdyKF39R
-         uVww==
-X-Received: by 10.112.161.38 with SMTP id xp6mr17805615lbb.32.1366816038370;
-        Wed, 24 Apr 2013 08:07:18 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id xw14sm1311009lab.6.2013.04.24.08.07.16
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 24 Apr 2013 08:07:17 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UV1Lr-0007C8-52; Wed, 24 Apr 2013 17:11:19 +0200
-Content-Disposition: inline
-In-Reply-To: <5177EFCD.1020300@sher.pl>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756222Ab3DXP0A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 11:26:00 -0400
+Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:57076 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755928Ab3DXPZ7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Apr 2013 11:25:59 -0400
+X-AuditID: 1207440d-b7fd06d000000905-2d-5177f986fda5
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id A2.B7.02309.689F7715; Wed, 24 Apr 2013 11:25:58 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3OFPsbQ023426
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 24 Apr 2013 11:25:57 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <7vehe1i1bo.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsUixO6iqNv2szzQYGqHokXXlW4mi4beK8wW
+	P1p6mB2YPZ717mH0uHhJ2ePzJrkA5ihum6TEkrLgzPQ8fbsE7oyeo1vYCu6zVhzd846tgfEw
+	SxcjJ4eEgInEti997BC2mMSFe+vZuhi5OIQELjNKnJ3cwgLhHGeSWLj1DCNIFa+ApkR7YwMr
+	iM0ioCrx7+J9sG42AV2JRT3NTCC2qECYxKr1y5gh6gUlTs58ArZNREBNYmLbITCbWcBIYuaa
+	H2AzhQXiJP5OmQW1eTqjxIbOXWBDOQXMJO4/mM8G0aAj8a7vATOELS+x/e0c5gmMArOQ7JiF
+	pGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3SN9HIzS/RSU0o3MULCl3cH4/91MocY
+	BTgYlXh4dzwvDxRiTSwrrsw9xCjJwaQkylv5HSjEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhHfR
+	G6Acb0piZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mCd8UPoEbBotT01Iq0
+	zJwShDQTByfIcC4pkeLUvJTUosTSkox4ULTGFwPjFSTFA7QXrJ23uCAxFygK0XqK0Zhj1tYn
+	rxk5Vl4BkkIsefl5qVLivCdBSgVASjNK8+AWwRLXK0ZxoL+FeQ+CVPEAkx7cvFdAq5iAVtVO
+	B1tVkoiQkmpgNBAqetXQHW64gt3uswjDvb09X87OCGVIcP200kPVkevCBs6y9T8+mL15bHhp
+	pU6EkfTBM8rsir9S7ryS/7c5Y1eB7Y6yA43FkamuR1e0NRhIWGqfspq+meUq+2uf 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222256>
 
-On Wed, Apr 24, 2013 at 04:44:29PM +0200, Adam Stankiewicz wrote:
-> My proposal is to move default bare repository location from .git/mod=
-ules
-> to .git directory inside submodule, like every normal git repo do.
+On 04/23/2013 07:50 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> Let me know if you would prefer that I re-roll.
+> 
+> Your fix-up cleanly applied to the result of applying the series up
+> to 16/33 and it was trivial to squash it in.
+> 
+> Please holler if what I push out on 'pu' in 8 hours or so looks
+> wrong.
 
-That's the way it was in old versions of git. The git-file approach was
-implemented so git could deal with adding or removing submodules. For
-example, if a submodule is not in version HEAD~ and you do a checkout
-HEAD~ your working dir should not contain the submodule. (Unfortunately
-we are not there quite yet).
+It looks like you did the right thing, except using v1 of my patch
+series rather than v2.  Please do the same procedure with v2: apply the
+v2 series on top of jc/prune-all, apply the fixup commit "fixup! t3210",
+and rebase the fixup to autosquash it onto patch 16/33.
 
-> These are my arguments:
->=20
-> 1. Why git submodule needs to know in which project it is embedded in=
-? Or
-> even that it's generally submodule? When cd to submodule, it behaves =
-like
-> normal repository. Only repository needs to know about its submodules=
-=2E
+Thanks,
+Michael
 
-A git submodule doesn't know about it's superproject. All git repos can
-be used with git-files. I wouldn't say that a .git-file makes a git rep=
-o
-aware that it's a subproject (which doesn't even had to be true).
-
-The superproject needs to work with the working-tree, having repo data
-in the worktree like svn and cvs is a bad thing. I really like having
-all meta data in the same spot.
-
-And there's the "checkout old commit without submodule" problem but
-of course, your "mv-approach" would solve this.
-
-> 2. You can't move submodule outside git repository and use it as norm=
-al git
-> repo. You have to copy bare repo from .git/modules dir.
-
-You can, if you edit .git-file. However in either case your can't use
-your superrepo in a sane way if you move out your submodule. So why
-would you do that?
-
-If you only need the submodule repo, just clone the submodule repo.
-
-> 3. It's not enough to delete submodule from workingdir to "refresh" i=
-t
-> later. You have to go to .git/modules directory and delete appropriat=
-e
-> folder.
->=20
-> What about performance on checkouts?
-
-I think that performance penalty is too small to be cared about, if you
-look at all the other file access stuff that git does every time.
-
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
-
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
