@@ -1,79 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] Highly inconsistent diff UI
-Date: Wed, 24 Apr 2013 12:24:32 -0700
-Message-ID: <7vtxmvbukv.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0n2ZZTgYxi3Fk2UxY8TXFAt1Xt3+11G98GKxbYdoMOT+Q@mail.gmail.com>
-	<7va9ong9oa.fsf@alter.siamese.dyndns.org>
-	<CALkWK0mVDT5ESnVJAWQ83gQnmxmGDoM_Y0nE4FGybcjcenA_KA@mail.gmail.com>
-	<7v38ufer2x.fsf@alter.siamese.dyndns.org>
-	<CALkWK0m5Q_e3q6Yg94-K+jU_SS7ovR2wnz-_Nr3cMz_YM=SMDQ@mail.gmail.com>
-	<CALkWK0=5tE0pXj-XTe4g9LdCO78yrPNwyom5fupF1WTToY2TZw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 3/5] git-diff.txt: group the [--] and [<path>...] templates
+Date: Thu, 25 Apr 2013 00:54:01 +0530
+Message-ID: <CALkWK0kUmtXhEf90cs4yEj8_9FvxhDGZKS2crE6f-bpwrJ0fYg@mail.gmail.com>
+References: <1366821216-20868-1-git-send-email-artagnon@gmail.com>
+ <1366821216-20868-4-git-send-email-artagnon@gmail.com> <7vtxmvdc4d.fsf@alter.siamese.dyndns.org>
+ <CALkWK0nU-iTSF2DnmJAB=kj6w+VFv3rQrixEnHz0vyXf2d2=Mw@mail.gmail.com>
+ <7vbo93db25.fsf@alter.siamese.dyndns.org> <CALkWK0nN+9XOTCqiY+yB9moQSvFFpSO=OZjJtLphBd2eQ24uDw@mail.gmail.com>
+ <7vy5c7buqn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 21:24:43 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 24 21:24:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV5J1-0001Le-DF
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 21:24:39 +0200
+	id 1UV5J8-0001ag-Qy
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 21:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757378Ab3DXTYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 15:24:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53469 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756797Ab3DXTYe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 15:24:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31D46199E0;
-	Wed, 24 Apr 2013 19:24:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=x74v5RkmoqdM2XbIwnjN0tfi1pI=; b=h/a9A8
-	NJJfAEjehBxy9HPDNmB6SsrUjMgb3mfPL5dEExBrSYcA/qIHbNuEO5EqI0UOXSqQ
-	aG66ST/OlB9eSfbrF82SWqHEBI9chPUa5aVmEdgiA6D4IouYDxbpEfNbFB08hAdm
-	yuAg9ozE04vS4dJoDMtxqLHJiTUH+DJ3pWm2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Il/mpaQGfNHovFJObUwl4fO9NbiJ1T35
-	jOvO5p/NZ47qt5Dq77SINVQpxIHcgKoqSBAOjYOa525YmYWcxr8TxPHZY6HZUBzk
-	4mJXk1DOv2KJk2MEadOrXgVYK7mqwZj5WAmYlmFtuvHvLW+7QUk3C5EN6Gio5Qoz
-	NDA7hLb+8oQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2729A199DF;
-	Wed, 24 Apr 2013 19:24:34 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D90A199DE;
-	Wed, 24 Apr 2013 19:24:33 +0000 (UTC)
-In-Reply-To: <CALkWK0=5tE0pXj-XTe4g9LdCO78yrPNwyom5fupF1WTToY2TZw@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Thu, 25 Apr 2013 00:30:08 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 980DAD34-AD14-11E2-A197-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757360Ab3DXTYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 15:24:42 -0400
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:39705 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756797Ab3DXTYl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 15:24:41 -0400
+Received: by mail-ie0-f173.google.com with SMTP id k5so2616080iea.18
+        for <git@vger.kernel.org>; Wed, 24 Apr 2013 12:24:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=aKm81KucLA72T3s+iNsOQ57uqdHu+H6DnnhxsN4hP0A=;
+        b=pgwhXp8tM5LogzmShLaCREl5oP1YzbLsNzZdNraEgUY5T5k+rWMQOutoQsaAuAlFPF
+         6BeLrQJ4VUUcIzQkpSsdNiwcavVKT8ldF+Q1u04Pm7vAqk/gOCH2LSaXWHLyKe2pLDYU
+         1z3Qw/2QFksGLDp35KiiZZmrUNpYaoACQrmcNxVA7TEJzP24cNVA6KB7WnNXE0bjf6h7
+         dKWNqtMS4vwGP4bpopJzbL1c0E9kfhgUWIGm73g1a0wMQt/Jbk39vA6sm/Wpx4lI/HJO
+         9iNYHodsOuxIJp+ag31E6yNdoAzjmeQtRlyUnUbNEfQHc0SWKvmAa/rlYXwpNyokjEef
+         TAhw==
+X-Received: by 10.42.27.146 with SMTP id j18mr8409824icc.54.1366831481363;
+ Wed, 24 Apr 2013 12:24:41 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Wed, 24 Apr 2013 12:24:01 -0700 (PDT)
+In-Reply-To: <7vy5c7buqn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222306>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Junio C Hamano wrote:
+> You are missing the entire point.
 
-> Ramkumar Ramachandra wrote:
->> I'm also considering making the first
->> argument optional (just git log ~rebase.autostash), and defaulting to
->> mean [nearest fork point].
->
-> Actually both can be optional.  In A~B, A defaults to [nearest fork
-> point] and B defaults to HEAD.
->
->     git log ~
->
-> Isn't it beautiful?
-
-I now have to go and wash my eyes.
-
-You will stay in my killlist for the coming few days ;-).
+Yeah, okay: I'll drop this patch.  I was just saying; I don't feel
+strongly about it at all.
