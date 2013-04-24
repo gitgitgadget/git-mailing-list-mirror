@@ -1,62 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 5/5] git-diff.txt: fix ordering of the [--no-index] form
-Date: Thu, 25 Apr 2013 02:15:57 +0530
-Message-ID: <CALkWK0=-Bu-x=zg2f-uY7qUkwCp_8AdDAVv6=k0oyV4xYvBuWQ@mail.gmail.com>
-References: <1366821216-20868-1-git-send-email-artagnon@gmail.com>
- <1366821216-20868-6-git-send-email-artagnon@gmail.com> <7vmwsndbve.fsf@alter.siamese.dyndns.org>
- <CALkWK0kaFc8cj-=1NbEwC_61U7qUCye70d9MZR66TpKB3i9XyA@mail.gmail.com>
- <20130424190638.GE29963@google.com> <CALkWK0n2zFp1t7qtKp8-Ohoz0QEn4BQrfvxzqt+qwLS5+sNdHQ@mail.gmail.com>
- <20130424191453.GG29963@google.com> <CALkWK0=KWu3=j5sLK3hr=Gx5xLnLaPAY+E=J0_izRCj9YcBTEg@mail.gmail.com>
- <20130424203732.GJ29963@google.com>
+From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@gmail.com>
+Subject: [PATCH] completion: remove duplicate block for "git commit -c"
+Date: Wed, 24 Apr 2013 22:49:06 +0200
+Message-ID: <1366836546-11081-1-git-send-email-marten.kongstad@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 22:46:44 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, felipe.contreras@gmail.com, peff@peff.net,
+	manlio.perillo@gmail.com,
+	=?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 24 22:49:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV6aS-0004YF-B9
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 22:46:44 +0200
+	id 1UV6d5-0000IL-UL
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 22:49:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757739Ab3DXUqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 16:46:40 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:39662 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757598Ab3DXUqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 16:46:39 -0400
-Received: by mail-ie0-f171.google.com with SMTP id e11so2725458iej.2
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 13:46:39 -0700 (PDT)
+	id S1757852Ab3DXUtX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Apr 2013 16:49:23 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:55897 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757633Ab3DXUtW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 16:49:22 -0400
+Received: by mail-lb0-f169.google.com with SMTP id p11so2192090lbi.0
+        for <git@vger.kernel.org>; Wed, 24 Apr 2013 13:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=fCqWWoF1un441mnyNcf26ijK/76b+kLrCM6P7hAuKuE=;
-        b=ighaiM5mxEjT31ID5GT4IrGLypw7reB7Q7Xl6xuFBS9moyLFBznnzyOxWeA4LK8zHA
-         08OUtl+JQIpSGCKgJysDKhxKZt/+1gawfrYK7N3UifebB42We7vVFPFjfXcB9cb6F59f
-         M7FRz+Q4IQpnt6MiTcQ1QD8pWqv4j3u/SxxS2SW4PRXimE44sWTCFw+CoF5sVhz5akfh
-         +pvwLXGZOEzjZc0OUULR8JfEX1aqln6e1Y7UwGpOhG2fLExzF0lJ7OjGNE7uG1VyDhJc
-         r/xlpz5Gy2BGULOMQEuDlNMr9fRVKYbRV1fcwR+HNN9ttUcJaBFrdXsATPYuHZQBWQjT
-         dDBQ==
-X-Received: by 10.50.57.116 with SMTP id h20mr469847igq.49.1366836399219; Wed,
- 24 Apr 2013 13:46:39 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Wed, 24 Apr 2013 13:45:57 -0700 (PDT)
-In-Reply-To: <20130424203732.GJ29963@google.com>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=lMuRv88+E4Stx2n9ZEHQOPeIUxi/DpYqLrQzh1BCSU4=;
+        b=g4FmksOG2wRyiadrK5NeFPYlSR0K9ZtyzHcJY3zX9TyNCPxPzaqQ2WUywE+gDflaYS
+         6EjMWNV6KH6OarvYM/Gfc3rthXeMFyFrXVR68873Tfc2P7DkWK2OYVbe9HOjn65O8H8o
+         jKUOoxvTF9PLPtmPH3cVx4aAMrd68cMGPIRMwgTWFOhh1Zc626u/MSg3TGKg3G5PvDA+
+         AVO8Fr6ACXp7YhNSwIKH7qdJX8rmLt4JAVCQHoeBRKBBSS16Ym6kjiU2Pb2Ny1JC00g/
+         h7Fn2nSfIhXMv3RpfkSjVdwWvpWwZKhXgOjCHMdS9S6y5kQTLown/4BhVjxZ5+NTgOUt
+         G2TQ==
+X-Received: by 10.112.156.137 with SMTP id we9mr13336764lbb.44.1366836561468;
+        Wed, 24 Apr 2013 13:49:21 -0700 (PDT)
+Received: from localhost.localdomain ([95.109.106.222])
+        by mx.google.com with ESMTPSA id wc5sm1829576lbb.13.2013.04.24.13.49.19
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 24 Apr 2013 13:49:20 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222319>
 
-Jonathan Nieder wrote:
->  * hard to document
-> [...]
+Remove one of two consecutive, identical blocks for "git commit -c".
 
-I completely disagree, but we don't have to agree: make it a
-configuration variable.  Even if it's turned to "never" by default, I
-don't mind having one extra line in my .gitconfig.  But you went all
-"Oh please no" when I brought it up.  I thought you were claiming that
-nobody finds it useful.  Now, you seem to be claiming that people who
-find it useful must suffer.
+Signed-off-by: M=C3=A5rten Kongstad <marten.kongstad@gmail.com>
+---
+ contrib/completion/git-completion.bash |    7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 93eba46..f67b0f0 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1182,13 +1182,6 @@ _git_commit ()
+ 		;;
+ 	esac
+=20
+-	case "$prev" in
+-	-c|-C)
+-		__gitcomp_nl "$(__git_refs)" "" "${cur}"
+-		return
+-		;;
+-	esac
+-
+ 	case "$cur" in
+ 	--cleanup=3D*)
+ 		__gitcomp "default strip verbatim whitespace
+--=20
+1.7.9.5
