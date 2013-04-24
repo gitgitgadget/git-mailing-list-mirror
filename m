@@ -1,83 +1,87 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
+From: l.stelmach@samsung.com (=?utf-8?Q?=C5=81ukasz?= Stelmach)
 Subject: Re: [PATCH] send-email: support NNTP
-Date: Wed, 24 Apr 2013 03:19:43 -0400
-Message-ID: <CAPig+cT18z7Hs70XMF99ACOs5cy2S=FTapjQO=Mb+EMYc=6hJw@mail.gmail.com>
+Date: Wed, 24 Apr 2013 09:30:16 +0200
+Message-ID: <87y5c875dj.fsf@samsung.com>
 References: <1366715634-21790-1-git-send-email-l.stelmach@samsung.com>
+ <CAPig+cT18z7Hs70XMF99ACOs5cy2S=FTapjQO=Mb+EMYc=6hJw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>
-To: =?ISO-8859-2?Q?=A3ukasz_Stelmach?= <l.stelmach@samsung.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 09:19:51 2013
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Apr 24 09:30:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUtzZ-0003DA-Mp
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 09:19:50 +0200
+	id 1UUu9p-0006p4-GY
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 09:30:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754821Ab3DXHTp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Apr 2013 03:19:45 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:46970 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754620Ab3DXHTo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Apr 2013 03:19:44 -0400
-Received: by mail-lb0-f169.google.com with SMTP id p11so1412305lbi.28
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 00:19:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=R2/tWhUGXTKnclB/XqJSuwChwdLHeeLWUHJGHujkHdw=;
-        b=AEk9vewxNlubqq/H/66/zrdkdzlX+fuvKeDaeGCUI8Oz8GC3dLuLe5tJOW102G/W0F
-         CndII6axf21LyS1pbPXqgHjFq2f7Teq4JCNgddgQRHJmpl6JI4OoIidJ4pvnKaz/gJbt
-         2PaRE0V0BsTLEas1byPz031lirSZdUeeHZ8uu9Sx6h/BetBv6ZEtU+ddAk5Cz40d2q+o
-         phBc7iOi+I8ZdNk+nIuteORPfRr9vN1QNvf7EH+HxB07PUqJdNefZn+AYZNbpaVXdqpx
-         UBkUTr5UqE8a/5V1WnHdPkLQA7cS3BkTGQWu/qcNL3GuKzrnnobGntIs0s3Mo0aYQbCz
-         YRQg==
-X-Received: by 10.152.21.229 with SMTP id y5mr17081250lae.44.1366787983222;
- Wed, 24 Apr 2013 00:19:43 -0700 (PDT)
-Received: by 10.114.199.11 with HTTP; Wed, 24 Apr 2013 00:19:43 -0700 (PDT)
-In-Reply-To: <1366715634-21790-1-git-send-email-l.stelmach@samsung.com>
-X-Google-Sender-Auth: -Rv-6VdoiWMOzG-86gSDXFFGJHo
+	id S1757624Ab3DXHaV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Apr 2013 03:30:21 -0400
+Received: from mailout4.w1.samsung.com ([210.118.77.14]:65209 "EHLO
+	mailout4.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757380Ab3DXHaV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Apr 2013 03:30:21 -0400
+Received: from eucpsbgm1.samsung.com (unknown [203.254.199.244])
+ by mailout4.w1.samsung.com
+ (Oracle Communications Messaging Server 7u4-24.01(7.0.4.24.0) 64bit (built Nov
+ 17 2011)) with ESMTP id <0MLR0074P0O6HK70@mailout4.w1.samsung.com> for
+ git@vger.kernel.org; Wed, 24 Apr 2013 08:30:18 +0100 (BST)
+X-AuditID: cbfec7f4-b7fb86d000007679-e2-51778a0af56f
+Received: from eusync3.samsung.com ( [203.254.199.213])
+	by eucpsbgm1.samsung.com (EUCPMTA) with SMTP id EE.B2.30329.A0A87715; Wed,
+ 24 Apr 2013 08:30:18 +0100 (BST)
+Received: from localhost ([106.116.147.110])
+ by eusync3.samsung.com (Oracle Communications Messaging Server 7u4-23.01
+ (7.0.4.23.0) 64bit (built Aug 10 2011))
+ with ESMTPA id <0MLR008C10UIHS30@eusync3.samsung.com>; Wed,
+ 24 Apr 2013 08:30:18 +0100 (BST)
+In-reply-to: <CAPig+cT18z7Hs70XMF99ACOs5cy2S=FTapjQO=Mb+EMYc=6hJw@mail.gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprELMWRmVeSWpSXmKPExsVy+t/xq7pcXeWBBl9OKFh0XelmsjjzppHR
+	gclj8QMvj8+b5AKYorhsUlJzMstSi/TtErgyjl3Yx1ownb3i4Zq5bA2Me1i7GDk5JARMJC6e
+	a4GyxSQu3FvP1sXIxSEksJRR4uv97+wQThOTxMT27WwgVSIC2hIfNmxiBLGZBZQkfj+Yyw5i
+	CwvoSpxZuYMZoqGXUWLZg4tgY9kE7CXm/nvO0sXIwcEioCox6yMziMkpECwxZVc6SAWvgIbE
+	5E2zmEBsUQFLicY3V1gg4oISPybfA+tkFlCXmDIlF2KrtsSTdxdYJzAKzEJSNQuhahaSqgWM
+	zKsYRVNLkwuKk9JzDfWKE3OLS/PS9ZLzczcxQsLxyw7GxcesDjEKcDAq8fA6zi0LFGJNLCuu
+	zD3EKMHBrCTCG8NQHijEm5JYWZValB9fVJqTWnyIkYmDU6qBsXH1FOlDX1y7i69xCuoyeHVJ
+	zzn22Ofy0hPLeXN9s8Q1U9adzt2jPTmYweXl3xsurf9yqm5s1znu56M2e+k9Gzcu71cfjwj4
+	8ArM3zbhVG7dnj8fDL533GCS7d5Yum9dbIfRhUsuotfm/vU8Y2vBWeFdzHHBVivnovX6ieGB
+	HyK9/RSZd/HPVmIpzkg01GIuKk4EACsIkGElAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222230>
 
-On Tue, Apr 23, 2013 at 7:13 AM, =C5=81ukasz Stelmach <l.stelmach@samsu=
-ng.com> wrote:
-> Enable sending patches to NNTP servers (Usenet, Gmane).
-> ---
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index bd13cc8..0356635 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -1174,6 +1249,18 @@ X-Mailer: git-send-email $gitversion
+It was <2013-04-24 =C5=9Bro 09:19>, when Eric Sunshine wrote:
+> On Tue, Apr 23, 2013 at 7:13 AM, =C5=81ukasz Stelmach <l.stelmach@sam=
+sung.com> wrote:
+>> Enable sending patches to NNTP servers (Usenet, Gmane).
+>> ---
+>> diff --git a/git-send-email.perl b/git-send-email.perl
+>> index bd13cc8..0356635 100755
+>> --- a/git-send-email.perl
+>> +++ b/git-send-email.perl
+>> @@ -1174,6 +1249,18 @@ X-Mailer: git-send-email $gitversion
+>>
+>>         if ($dry_run) {
+>>                 # We don't want to send the email.
+>> +       } elsif ($email_protocol eq 'nntp') {
+>> +               if (!defined $nntp_server) {
+>> +                       die "The requires NNTP server is not properl=
+y defined."
 >
->         if ($dry_run) {
->                 # We don't want to send the email.
-> +       } elsif ($email_protocol eq 'nntp') {
-> +               if (!defined $nntp_server) {
-> +                       die "The requires NNTP server is not properly=
- defined."
+> s/requires/required/
 
-s/requires/required/
+Done. Waiting for more comments.
 
-> +               }
-> +               require Net::NNTP;
-> +               $nntp =3D  Net::NNTP->new(email_host_string(),
-> +                                       Debug =3D> $debug_net_nntp);
-> +               email_auth_maybe or die $nntp->message;
-> +               $nntp->post or die $nntp->message;
-> +               $nntp->datasend("$header\n$message") or die $nntp->me=
-ssage;
-> +               $nntp->dataend() or die $nntp->message;
-> +               $nntp->code eq "240" or die "Failed to send $subject\=
-n".$nntp->message;
->         } elsif ($smtp_server =3D~ m#^/#) {
->                 my $pid =3D open my $sm, '|-';
->                 defined $pid or die $!;
+--=20
+=C5=81ukasz Stelmach
+Software wizzard
+Samsung Poland R&D Center
+
+Al. Armii Ludowej 26, 00-609 Warszawa
+http://www.rd.samsung.pl
