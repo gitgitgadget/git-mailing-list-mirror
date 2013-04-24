@@ -1,81 +1,74 @@
-From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@gmail.com>
-Subject: [PATCH] completion: remove duplicate block for "git commit -c"
-Date: Wed, 24 Apr 2013 22:49:06 +0200
-Message-ID: <1366836546-11081-1-git-send-email-marten.kongstad@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 5/5] git-diff.txt: fix ordering of the [--no-index] form
+Date: Wed, 24 Apr 2013 13:50:46 -0700
+Message-ID: <20130424205046.GK29963@google.com>
+References: <1366821216-20868-1-git-send-email-artagnon@gmail.com>
+ <1366821216-20868-6-git-send-email-artagnon@gmail.com>
+ <7vmwsndbve.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kaFc8cj-=1NbEwC_61U7qUCye70d9MZR66TpKB3i9XyA@mail.gmail.com>
+ <20130424190638.GE29963@google.com>
+ <CALkWK0n2zFp1t7qtKp8-Ohoz0QEn4BQrfvxzqt+qwLS5+sNdHQ@mail.gmail.com>
+ <20130424191453.GG29963@google.com>
+ <CALkWK0=KWu3=j5sLK3hr=Gx5xLnLaPAY+E=J0_izRCj9YcBTEg@mail.gmail.com>
+ <20130424203732.GJ29963@google.com>
+ <CALkWK0=-Bu-x=zg2f-uY7qUkwCp_8AdDAVv6=k0oyV4xYvBuWQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, felipe.contreras@gmail.com, peff@peff.net,
-	manlio.perillo@gmail.com,
-	=?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 24 22:49:29 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 24 22:51:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV6d5-0000IL-UL
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 22:49:28 +0200
+	id 1UV6eg-0002ol-SV
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 22:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757852Ab3DXUtX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Apr 2013 16:49:23 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:55897 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757633Ab3DXUtW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 16:49:22 -0400
-Received: by mail-lb0-f169.google.com with SMTP id p11so2192090lbi.0
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 13:49:21 -0700 (PDT)
+	id S1758257Ab3DXUux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 16:50:53 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:42615 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758059Ab3DXUuv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 16:50:51 -0400
+Received: by mail-pa0-f51.google.com with SMTP id jh10so1431321pab.10
+        for <git@vger.kernel.org>; Wed, 24 Apr 2013 13:50:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=lMuRv88+E4Stx2n9ZEHQOPeIUxi/DpYqLrQzh1BCSU4=;
-        b=g4FmksOG2wRyiadrK5NeFPYlSR0K9ZtyzHcJY3zX9TyNCPxPzaqQ2WUywE+gDflaYS
-         6EjMWNV6KH6OarvYM/Gfc3rthXeMFyFrXVR68873Tfc2P7DkWK2OYVbe9HOjn65O8H8o
-         jKUOoxvTF9PLPtmPH3cVx4aAMrd68cMGPIRMwgTWFOhh1Zc626u/MSg3TGKg3G5PvDA+
-         AVO8Fr6ACXp7YhNSwIKH7qdJX8rmLt4JAVCQHoeBRKBBSS16Ym6kjiU2Pb2Ny1JC00g/
-         h7Fn2nSfIhXMv3RpfkSjVdwWvpWwZKhXgOjCHMdS9S6y5kQTLown/4BhVjxZ5+NTgOUt
-         G2TQ==
-X-Received: by 10.112.156.137 with SMTP id we9mr13336764lbb.44.1366836561468;
-        Wed, 24 Apr 2013 13:49:21 -0700 (PDT)
-Received: from localhost.localdomain ([95.109.106.222])
-        by mx.google.com with ESMTPSA id wc5sm1829576lbb.13.2013.04.24.13.49.19
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=/hNEsVX5ZcUVffthNMuAyQyDDBYVSE6aU1plKAd+XjE=;
+        b=J86XWkvRr71/OyjWVKOTCUXmBx3L+dnbBCBkisv5jshErqLpfEmUufEsDD51Y5gvvk
+         2slKkV0vAPlnuUawnEGx/0YDP5hebeCp35YfpoTMfTj+QCNJNCPUJzWEjb/XZvEyl7/K
+         sjD/8UKIl+/C8QFME9iExFD8bXXAWqvf1h2ndN0/Fbvayc2aQ/ihDMj1M3VnoOcReDPB
+         V3krK4ZIi3Th6rwtOAz/0gyY8aP7czG+Hvr6ac+SU1ptUrRfgjDGx4wbLM1dwY7nazk6
+         8nSVMDlj4s8evDCIbdsCM0XdjRiNCe318s8vIxq4yh+uNOAp/LMxtVZ8PAWr2LwujN/f
+         gmSg==
+X-Received: by 10.66.197.136 with SMTP id iu8mr25587271pac.0.1366836650743;
+        Wed, 24 Apr 2013 13:50:50 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id dg5sm4309139pbc.29.2013.04.24.13.50.48
         for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 24 Apr 2013 13:49:20 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9.5
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 24 Apr 2013 13:50:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=-Bu-x=zg2f-uY7qUkwCp_8AdDAVv6=k0oyV4xYvBuWQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222320>
 
-Remove one of two consecutive, identical blocks for "git commit -c".
+Ramkumar Ramachandra wrote:
 
-Signed-off-by: M=C3=A5rten Kongstad <marten.kongstad@gmail.com>
----
- contrib/completion/git-completion.bash |    7 -------
- 1 file changed, 7 deletions(-)
+> I completely disagree, but we don't have to agree: make it a
+> configuration variable.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 93eba46..f67b0f0 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1182,13 +1182,6 @@ _git_commit ()
- 		;;
- 	esac
-=20
--	case "$prev" in
--	-c|-C)
--		__gitcomp_nl "$(__git_refs)" "" "${cur}"
--		return
--		;;
--	esac
--
- 	case "$cur" in
- 	--cleanup=3D*)
- 		__gitcomp "default strip verbatim whitespace
---=20
-1.7.9.5
+I thought we had discussed before how every configuration variable
+costs quite a lot in terms of Git's teachability.
+
+What would that configuration variable even mean?  "Set this to make
+other people's scripts work when they assume --no-index won't be
+triggered automatically"?
