@@ -1,90 +1,99 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] send-email: support NNTP
-Date: Wed, 24 Apr 2013 11:29:49 +0200
-Message-ID: <8761zce0oi.fsf@linux-k42r.v.cablecom.net>
-References: <1366715634-21790-1-git-send-email-l.stelmach@samsung.com>
-	<87zjwofken.fsf@linux-k42r.v.cablecom.net>
-	<87bo94720r.fsf@samsung.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: =?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 11:30:00 2013
+From: Tair Sabirgaliev <tair.sabirgaliev@bee.kz>
+Subject: Re: [PATCH 1] gitk: on OSX bring the gitk window to front
+Date: Wed, 24 Apr 2013 15:48:27 +0600
+Message-ID: <3EE7D8B9-5FAE-43F5-9BE3-C4AE2A75B57D@bee.kz>
+References: <1l1scng.k9ly7ci7gjd2M%lists@haller-berlin.de>
+Mime-Version: 1.0 (Mac OS X Mail 6.3 \(1503\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, paulus@samba.org
+To: lists@haller-berlin.de (Stefan Haller)
+X-From: git-owner@vger.kernel.org Wed Apr 24 11:48:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUw1W-0003tW-Q4
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 11:29:59 +0200
+	id 1UUwJa-0000VF-VN
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 11:48:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758249Ab3DXJ3y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Apr 2013 05:29:54 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:47743 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757390Ab3DXJ3x convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Apr 2013 05:29:53 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 24 Apr
- 2013 11:29:49 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Wed, 24 Apr 2013 11:29:50 +0200
-In-Reply-To: <87bo94720r.fsf@samsung.com> (=?utf-8?Q?=22=C5=81ukasz?=
- Stelmach"'s message of
-	"Wed, 24 Apr 2013 10:42:44 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1757394Ab3DXJse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 05:48:34 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:47528 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753359Ab3DXJsd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 05:48:33 -0400
+Received: by mail-we0-f174.google.com with SMTP id t9so1011113wey.5
+        for <git@vger.kernel.org>; Wed, 24 Apr 2013 02:48:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bee.kz; s=beekz;
+        h=x-received:content-type:mime-version:subject:from:in-reply-to:date
+         :cc:content-transfer-encoding:message-id:references:to:x-mailer;
+        bh=f6W5hdN4oIkGdMalyaLbmLJzxOy8i0NLhH4WlKmf6yE=;
+        b=Ks4PrGUo3wRfslf3fyLYxuhqzfTzSK848JOncwzkz8ZLlXHptP84KUtCc5feWL+rkU
+         4didX8ThUNCjq4Q1xo8ktHF39ohR4TElSDIU9RFTojmj6Mp4iLBmry0XnqWNwGCkxi2c
+         nJ4SbCAmYwvVtZoPs5W7SmhKu59Qpus9pxqn8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:content-type:mime-version:subject:from:in-reply-to:date
+         :cc:content-transfer-encoding:message-id:references:to:x-mailer
+         :x-gm-message-state;
+        bh=f6W5hdN4oIkGdMalyaLbmLJzxOy8i0NLhH4WlKmf6yE=;
+        b=aKxWZTejBVpPeMuM29+iAZAc+JWo2Z/r0T7K4hGcZ/OoqjlBYPL2RGdoaL9mcJf2Jb
+         B/YoO4JODPp45o0kruTv82UwPelQHNBRxzROit2yU+D+Y6nVAufST2/TuJWPCydWza78
+         z9khWATj7l8pi0xR4vz08a55OIqo1YCin4bqd7a9Nx6Iq0jN704uVgYlmuIRwlIE13FZ
+         e38yIcFu1oU/CC0Qt1DuXs1m3JkdibiBz5rNJlpbCaJWfPHrqs3TlTp65p29PDruXLoD
+         iuCE6ASJE4HYXFA4p4L+BBr7GpGIzD6/fLMEKaZDImAsISX+fcXZe85KaYOJF2PwFJr/
+         iSww==
+X-Received: by 10.180.97.233 with SMTP id ed9mr25784665wib.32.1366796912018;
+        Wed, 24 Apr 2013 02:48:32 -0700 (PDT)
+Received: from [10.0.1.173] ([2.133.28.83])
+        by mx.google.com with ESMTPSA id o5sm2989201wix.3.2013.04.24.02.48.30
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 24 Apr 2013 02:48:31 -0700 (PDT)
+In-Reply-To: <1l1scng.k9ly7ci7gjd2M%lists@haller-berlin.de>
+X-Mailer: Apple Mail (2.1503)
+X-Gm-Message-State: ALoCoQkpF2Lv8aJi8aUvttdoJdweUlx0js8R/MylZdxGFChhn/Ga2fjw1oXC5KZ23nc8migH8hGQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222243>
 
-l.stelmach@samsung.com (=C5=81ukasz Stelmach) writes:
+On OSX Tcl/Tk application windows are created behind all
+the applications down the stack of windows. This is very
+annoying, because once a gitk window appears, it's the
+downmost window and switching to it is pain.
 
-> It was <2013-04-24 =C5=9Bro 09:38>, when Thomas Rast wrote:
->> =C5=81ukasz Stelmach <l.stelmach@samsung.com> writes:
->>> +	if ($email_protocol eq 'nntp') {
->>> +		$header =3D "Newsgroups: $to\n" . $header;
->>> +	} else {
->>> +		$header =3D "To: $to${ccline}\n" . $header;
->>> +	}
->>
->> Are you silently ignoring any Ccs that have been set if you're in NN=
-TP
->> mode?
->
-> Yes.
+The patch is: if we are on OSX, use osascript to
+bring the current Wish process window to front.
 
-So wouldn't it be preferable to complain and abort, at the very least i=
-f
-the user explicitly gave some --cc options?
+Signed-off-by: Tair Sabirgaliev <tair.sabirgaliev@gmail.com>
+Thanks-to: Stefan Haller <lists@haller-berlin.de>
+---
+ gitk | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-And in the documentation that you should write anyway :-), you can stat=
-e
-that --protocol nntp does not support Cc or Bcc.  That should be good
-enough.
-
->> At least in the git@vger world with a lot of etiquette surrounding t=
-he
->> use of Ccs, NNTP mode isn't very useful if you can't also send Ccs. =
- But
->> maybe you have another use-case where that is not a problem?
->
-> I've sent this patch vi NNTP :) You've got it.
-
-However, according to the etiquette here you would e.g. send the v2
-patch Cc: everyone who has reviewed the v1 patch.
-
-Don't let that hold you up though.  I'm fine with the feature as long a=
-s
-its limitations are clear and documented, and it catches the obvious
-user errors.  Someone who actually needs NNTP *and* Ccs in the same mai=
-l
-can implement the required support later.
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+diff --git a/gitk b/gitk
+index 572f73f..66e59b1 100755
+--- a/gitk
++++ b/gitk
+@@ -11687,6 +11687,15 @@ if {[catch {package require Tk 8.4} err]} {
+     exit 1
+ }
+ 
++# on OSX bring the current Wish process window to front
++if {[tk windowingsystem] eq "aqua"} {
++    exec osascript -e [format {
++        tell application "System Events"
++            set frontmost of processes whose unix id is %d to true
++        end tell
++    } [pid] ]
++}
++
+ # Unset GIT_TRACE var if set
+ if { [info exists ::env(GIT_TRACE)] } {
+     unset ::env(GIT_TRACE)
+-- 
+1.8.2.1
