@@ -1,99 +1,101 @@
-From: Tair Sabirgaliev <tair.sabirgaliev@bee.kz>
-Subject: Re: [PATCH 1] gitk: on OSX bring the gitk window to front
-Date: Wed, 24 Apr 2013 15:48:27 +0600
-Message-ID: <3EE7D8B9-5FAE-43F5-9BE3-C4AE2A75B57D@bee.kz>
-References: <1l1scng.k9ly7ci7gjd2M%lists@haller-berlin.de>
-Mime-Version: 1.0 (Mac OS X Mail 6.3 \(1503\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, paulus@samba.org
-To: lists@haller-berlin.de (Stefan Haller)
-X-From: git-owner@vger.kernel.org Wed Apr 24 11:48:41 2013
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] Add .gitconfig variable commit.gpg-sign
+Date: Wed, 24 Apr 2013 11:51:12 +0200
+Message-ID: <5177AB10.30209@drmicha.warpmail.net>
+References: <CAASwCXf3YHmdQ_eSkShyzn5VniO=ufm3VTqV1JVOUN610bzE_A@mail.gmail.com> <7vip3em8rs.fsf@alter.siamese.dyndns.org> <CAASwCXcfCNqiMXD5JasTRKWZgCNsxnUY7k9E=f86xsTZjk37CA@mail.gmail.com> <51767290.2010208@drmicha.warpmail.net> <7va9opi163.fsf@alter.siamese.dyndns.org> <CAASwCXdhgNPzm51MfWTCTNYQwT0gC-UbV7xTNGcXhs6k9f4wsQ@mail.gmail.com> <7v1ua1hwx6.fsf@alter.siamese.dyndns.org> <CAASwCXcs8Q7qGWSNKttEuk0zPetDWNCse4J-KSm20r9h5XSo3Q@mail.gmail.com> <51779DA1.7080606@physik.tu-berlin.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Joel Jacobson <joel@trustly.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?Sebastian_G=F6tte?= <jaseg@physik.tu-berlin.de>
+X-From: git-owner@vger.kernel.org Wed Apr 24 11:51:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUwJa-0000VF-VN
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 11:48:39 +0200
+	id 1UUwM4-0003YS-98
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 11:51:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757394Ab3DXJse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 05:48:34 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:47528 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753359Ab3DXJsd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 05:48:33 -0400
-Received: by mail-we0-f174.google.com with SMTP id t9so1011113wey.5
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 02:48:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bee.kz; s=beekz;
-        h=x-received:content-type:mime-version:subject:from:in-reply-to:date
-         :cc:content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=f6W5hdN4oIkGdMalyaLbmLJzxOy8i0NLhH4WlKmf6yE=;
-        b=Ks4PrGUo3wRfslf3fyLYxuhqzfTzSK848JOncwzkz8ZLlXHptP84KUtCc5feWL+rkU
-         4didX8ThUNCjq4Q1xo8ktHF39ohR4TElSDIU9RFTojmj6Mp4iLBmry0XnqWNwGCkxi2c
-         nJ4SbCAmYwvVtZoPs5W7SmhKu59Qpus9pxqn8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:content-type:mime-version:subject:from:in-reply-to:date
-         :cc:content-transfer-encoding:message-id:references:to:x-mailer
-         :x-gm-message-state;
-        bh=f6W5hdN4oIkGdMalyaLbmLJzxOy8i0NLhH4WlKmf6yE=;
-        b=aKxWZTejBVpPeMuM29+iAZAc+JWo2Z/r0T7K4hGcZ/OoqjlBYPL2RGdoaL9mcJf2Jb
-         B/YoO4JODPp45o0kruTv82UwPelQHNBRxzROit2yU+D+Y6nVAufST2/TuJWPCydWza78
-         z9khWATj7l8pi0xR4vz08a55OIqo1YCin4bqd7a9Nx6Iq0jN704uVgYlmuIRwlIE13FZ
-         e38yIcFu1oU/CC0Qt1DuXs1m3JkdibiBz5rNJlpbCaJWfPHrqs3TlTp65p29PDruXLoD
-         iuCE6ASJE4HYXFA4p4L+BBr7GpGIzD6/fLMEKaZDImAsISX+fcXZe85KaYOJF2PwFJr/
-         iSww==
-X-Received: by 10.180.97.233 with SMTP id ed9mr25784665wib.32.1366796912018;
-        Wed, 24 Apr 2013 02:48:32 -0700 (PDT)
-Received: from [10.0.1.173] ([2.133.28.83])
-        by mx.google.com with ESMTPSA id o5sm2989201wix.3.2013.04.24.02.48.30
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 24 Apr 2013 02:48:31 -0700 (PDT)
-In-Reply-To: <1l1scng.k9ly7ci7gjd2M%lists@haller-berlin.de>
-X-Mailer: Apple Mail (2.1503)
-X-Gm-Message-State: ALoCoQkpF2Lv8aJi8aUvttdoJdweUlx0js8R/MylZdxGFChhn/Ga2fjw1oXC5KZ23nc8migH8hGQ
+	id S932269Ab3DXJvH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Apr 2013 05:51:07 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:52887 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757617Ab3DXJvG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Apr 2013 05:51:06 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id B356420E33;
+	Wed, 24 Apr 2013 05:51:04 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute4.internal (MEProxy); Wed, 24 Apr 2013 05:51:04 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=ENfBuAFFQgZ/Mjc8tHRB9V
+	BnbVE=; b=DdZqI7NgcxAmymieheWKAx9zhO59hCmj10Y0IhK8Yo80ag+h7mltyd
+	9viPpxVAkdg5mMjkxeHfSMV060oFXVxpzuYNz+jVLOSm1d5Q0B+wvJZy3pYAMgwY
+	6XrZc/06c7ENJSdQ75w2Rt5RGhwvw4XMHqFdGegX13kMB1DbeP0Nw=
+X-Sasl-enc: wpG99qRM3rwS6KQdhuUUG6aUEK4cXj/W/UCLB/ZWH6nN 1366797064
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id F1E8DC8000E;
+	Wed, 24 Apr 2013 05:51:03 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130402 Thunderbird/17.0.5
+In-Reply-To: <51779DA1.7080606@physik.tu-berlin.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222244>
 
-On OSX Tcl/Tk application windows are created behind all
-the applications down the stack of windows. This is very
-annoying, because once a gitk window appears, it's the
-downmost window and switching to it is pain.
+Sebastian G=F6tte venit, vidit, dixit 24.04.2013 10:53:
+> On 04/23/2013 09:56 PM, Joel Jacobson wrote:
+>>> But stepping back a bit, I have a suspicion that your upstream
+>>> project _only_ cares about what you feed them (either by pushing
+>>> your work yourself to them, or telling them to pull from your
+>>> repository).  There is no reason for you to be constantly signing
+>>> your commits you make during your exploratory development that you
+>>> may throw-away in the end.
+>>
+>> Your suspicions are correct.
+>> But I'm a bit paranoid, so it feels better to sign even local commit=
+s.
+>>
+>>> It _might_ be a better option to just teach "-S" option to "git
+>>> rebase" that tells it to replay all the commits with "commit -S",
+>>> instead of adding commit.gpgSign configuration.
+>>
+>> In my case, I don't do that much exploratory development locally,
+>> so I usually just commit, pull and push.
+>>
+>> Always signing everything can't really hurt, can it? Takes a few clo=
+ck
+>> cycles more, and a few more bytes, but apart from that I don't see a=
+ny
+>> problems?
+> I have my GPG-keys password-protected, and I would be severely annoye=
+d by
+> GnuPG password prompts popping up on every commit. I think the -S opt=
+ion
+> to rebase would be the more elegant way. What could be nice would be =
+a
+> config option that makes "git push" warn/abort in case I try to push =
+an
+> unsigned head commit to a repo where I want to have signed commits:
+>> remote.<name>.abortUnsigned
+> This of course needs an command line override switch.
 
-The patch is: if we are on OSX, use osascript to
-bring the current Wish process window to front.
+This appears to be more suited for a server side hook (update), or a ne=
+w
+pre-push hook.
 
-Signed-off-by: Tair Sabirgaliev <tair.sabirgaliev@gmail.com>
-Thanks-to: Stefan Haller <lists@haller-berlin.de>
----
- gitk | 9 +++++++++
- 1 file changed, 9 insertions(+)
+> Something to be considered is whether "git rebase -S" should sign *ev=
+ery*
+> commit in the series or only the *head* commit.
 
-diff --git a/gitk b/gitk
-index 572f73f..66e59b1 100755
---- a/gitk
-+++ b/gitk
-@@ -11687,6 +11687,15 @@ if {[catch {package require Tk 8.4} err]} {
-     exit 1
- }
- 
-+# on OSX bring the current Wish process window to front
-+if {[tk windowingsystem] eq "aqua"} {
-+    exec osascript -e [format {
-+        tell application "System Events"
-+            set frontmost of processes whose unix id is %d to true
-+        end tell
-+    } [pid] ]
-+}
-+
- # Unset GIT_TRACE var if set
- if { [info exists ::env(GIT_TRACE)] } {
-     unset ::env(GIT_TRACE)
--- 
-1.8.2.1
+The idea is probably to sign a commit that used to signed?
+
+Otherwise, "git commit --amend -S" is your friend, either during rebase
+(for individual commits) or after (for the head commit).
+
+Michael
