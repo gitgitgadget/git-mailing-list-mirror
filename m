@@ -1,74 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 5/5] git-diff.txt: fix ordering of the [--no-index] form
-Date: Wed, 24 Apr 2013 13:50:46 -0700
-Message-ID: <20130424205046.GK29963@google.com>
-References: <1366821216-20868-1-git-send-email-artagnon@gmail.com>
- <1366821216-20868-6-git-send-email-artagnon@gmail.com>
- <7vmwsndbve.fsf@alter.siamese.dyndns.org>
- <CALkWK0kaFc8cj-=1NbEwC_61U7qUCye70d9MZR66TpKB3i9XyA@mail.gmail.com>
- <20130424190638.GE29963@google.com>
- <CALkWK0n2zFp1t7qtKp8-Ohoz0QEn4BQrfvxzqt+qwLS5+sNdHQ@mail.gmail.com>
- <20130424191453.GG29963@google.com>
- <CALkWK0=KWu3=j5sLK3hr=Gx5xLnLaPAY+E=J0_izRCj9YcBTEg@mail.gmail.com>
- <20130424203732.GJ29963@google.com>
- <CALkWK0=-Bu-x=zg2f-uY7qUkwCp_8AdDAVv6=k0oyV4xYvBuWQ@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [BUG] Highly inconsistent diff UI
+Date: Thu, 25 Apr 2013 02:24:17 +0530
+Message-ID: <CALkWK0kn7mEosWSdWs1Jjx-L32wmL51W=X7ny9BYQMttG1LPvQ@mail.gmail.com>
+References: <CALkWK0n2ZZTgYxi3Fk2UxY8TXFAt1Xt3+11G98GKxbYdoMOT+Q@mail.gmail.com>
+ <7va9ong9oa.fsf@alter.siamese.dyndns.org> <CALkWK0mVDT5ESnVJAWQ83gQnmxmGDoM_Y0nE4FGybcjcenA_KA@mail.gmail.com>
+ <7v38ufer2x.fsf@alter.siamese.dyndns.org> <CALkWK0m5Q_e3q6Yg94-K+jU_SS7ovR2wnz-_Nr3cMz_YM=SMDQ@mail.gmail.com>
+ <CALkWK0=5tE0pXj-XTe4g9LdCO78yrPNwyom5fupF1WTToY2TZw@mail.gmail.com> <877gjrpsk4.fsf@hexa.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 22:51:07 2013
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Apr 24 22:55:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV6eg-0002ol-SV
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 22:51:07 +0200
+	id 1UV6ig-0000dy-NC
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 22:55:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758257Ab3DXUux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 16:50:53 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:42615 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758059Ab3DXUuv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 16:50:51 -0400
-Received: by mail-pa0-f51.google.com with SMTP id jh10so1431321pab.10
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 13:50:50 -0700 (PDT)
+	id S1758077Ab3DXUzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 16:55:00 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:46854 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757759Ab3DXUy6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 16:54:58 -0400
+Received: by mail-ie0-f179.google.com with SMTP id 16so2732876iea.10
+        for <git@vger.kernel.org>; Wed, 24 Apr 2013 13:54:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=/hNEsVX5ZcUVffthNMuAyQyDDBYVSE6aU1plKAd+XjE=;
-        b=J86XWkvRr71/OyjWVKOTCUXmBx3L+dnbBCBkisv5jshErqLpfEmUufEsDD51Y5gvvk
-         2slKkV0vAPlnuUawnEGx/0YDP5hebeCp35YfpoTMfTj+QCNJNCPUJzWEjb/XZvEyl7/K
-         sjD/8UKIl+/C8QFME9iExFD8bXXAWqvf1h2ndN0/Fbvayc2aQ/ihDMj1M3VnoOcReDPB
-         V3krK4ZIi3Th6rwtOAz/0gyY8aP7czG+Hvr6ac+SU1ptUrRfgjDGx4wbLM1dwY7nazk6
-         8nSVMDlj4s8evDCIbdsCM0XdjRiNCe318s8vIxq4yh+uNOAp/LMxtVZ8PAWr2LwujN/f
-         gmSg==
-X-Received: by 10.66.197.136 with SMTP id iu8mr25587271pac.0.1366836650743;
-        Wed, 24 Apr 2013 13:50:50 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id dg5sm4309139pbc.29.2013.04.24.13.50.48
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 24 Apr 2013 13:50:49 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=-Bu-x=zg2f-uY7qUkwCp_8AdDAVv6=k0oyV4xYvBuWQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=hybte0l3mv7WAtoZAvbQ4mh6gR9hrQuXl/RTC9+j5z4=;
+        b=vaA4gPswm6HEPqKJILyci7I2zQm5MrFis5QcgziNcqdt5Olq79IMrIdWFckI42k3XQ
+         gVtiii06dKOfkeETWyrCdkZm3SPqZJCy7WmeQbiFvSRHRt6EP4+ZOGgqIFFiHkN+K7vj
+         SKPuTpUWToxJUshiCrzAoixkObARK13AzYmFtHBZ2KBfuMNA7fMZTX6XiDPwGMRzXoao
+         mPL53P+1YdZfDS4rghs47c//sDRHq+7R8dHlHng+i6Ms2GvcCU8Ooi3kQr7TZ95F95Ny
+         l4A5frq5ICjpFYuM0URZQKkuQgWfMrR7rSEiYCAvGheP5WNhBpIkfDB6aAT40EhZvJaw
+         cEPQ==
+X-Received: by 10.50.55.73 with SMTP id q9mr23566300igp.44.1366836898365; Wed,
+ 24 Apr 2013 13:54:58 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Wed, 24 Apr 2013 13:54:17 -0700 (PDT)
+In-Reply-To: <877gjrpsk4.fsf@hexa.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222321>
 
-Ramkumar Ramachandra wrote:
+Thomas Rast wrote:
+> * Looking for the nearest fork point is expensive and subject to change
+>   by simply fetching.  I hope you meant "... and exclude its upstream",
+>   i.e., A defaults to @{u}, which might be at least somewhat useful.
 
-> I completely disagree, but we don't have to agree: make it a
-> configuration variable.
+I'm not proposing anything different from :/ in this aspect.
 
-I thought we had discussed before how every configuration variable
-costs quite a lot in terms of Git's teachability.
+> * ~ is already taken; in your syntax, A~1234567 is ambiguous because
+>   1234567 can both be a SHA1 and a number of generations to go back.
 
-What would that configuration variable even mean?  "Set this to make
-other people's scripts work when they assume --no-index won't be
-triggered automatically"?
+I'm not married to ~.  It can be any character.
+
+> I personally think we have enough magic revision syntax to last at least
+> another decade.  If you propose to add some, please make a patch that we
+> can cook in next for a few release cycles and then conduct a straw poll
+> if people actually use it.
+
+Isn't it obviously incredibly useful?  I'm working on a topic branch I
+need to send out to git.git, and I want see how my WIP looks: should I
+have to rebase on master just to see this?
+
+Why such a huge resistance against such a small feature?  Can you
+think of ways in which it is myopic (and therefore a pain to keep
+supporting, if we find it undesirable)?
+
+On a related note- In my opinion, :/ is broken, because it blocks
+composition completely.  I would've really liked {:/quuxery}~3.
