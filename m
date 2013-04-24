@@ -1,69 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/5] git-diff.txt: strip the leading "--" from options template
-Date: Wed, 24 Apr 2013 11:15:52 -0700
-Message-ID: <7vy5c7dcbr.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 3/5] git-diff.txt: group the [--] and [<path>...] templates
+Date: Wed, 24 Apr 2013 11:20:18 -0700
+Message-ID: <7vtxmvdc4d.fsf@alter.siamese.dyndns.org>
 References: <1366821216-20868-1-git-send-email-artagnon@gmail.com>
-	<1366821216-20868-3-git-send-email-artagnon@gmail.com>
-	<20130424164300.GD4119@elie.Belkin>
-	<CALkWK0=YNcavQAEiS8-huZ98hp+FTwtU7gqQ7yaoCWA61uWo_w@mail.gmail.com>
+	<1366821216-20868-4-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>
+Cc: Git List <git@vger.kernel.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 20:16:03 2013
+X-From: git-owner@vger.kernel.org Wed Apr 24 20:20:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV4EZ-0001Rq-67
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 20:15:59 +0200
+	id 1UV4It-0000Dd-DK
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 20:20:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756190Ab3DXSPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 14:15:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42147 "EHLO
+	id S1756958Ab3DXSUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 14:20:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33842 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756069Ab3DXSPy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 14:15:54 -0400
+	id S1756676Ab3DXSUV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 14:20:21 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F1A315C26;
-	Wed, 24 Apr 2013 18:15:54 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C0EBC15E13;
+	Wed, 24 Apr 2013 18:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ff5zab3wGQ6iGGclO9WL0296+GI=; b=NFnIZG
-	kVAPXX+MBsdrWhsnUVCPJUwyVSsC3wy2yOhA21ji2jSJqtRgp5CfJwIkj85zLrHv
-	8UYo3HjtCbvW70N+tWFrvHiNXTyJGpyUFDXk1DsDtu4aMT5hDjBsaGZIUTtMkxOe
-	Xb27fcofiLAJzHMCqQ25Q4tvDKdAo9mPAhGto=
+	:content-type; s=sasl; bh=CmPecxFnQqDl2VmClbrZqSnpCcs=; b=Ouzl4D
+	6akzvm+1hgvqJCkzX+T+DxrEPXuIi0CbAvc0eNeV7xChC/T6USKmPSVR4mqjmsts
+	oxXQcUI4Wo+lhQ5At66+6X2dwlYvi16i+ueANST6Wa2YYRMSgd98BVZKaPbJMcp3
+	4V99EOZ7JBQ42QxKaZ+ZSvlERVAlvOzuw8LoI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H6nbBI8dz04Du5X7vcV9/tAE6BK11y1w
-	SY9s5wRt1omleZOnDEtEg3g6hezYIWHYZFodgY1gWLVGKdSWKhYMsfAHhEyjkJez
-	eQE+uBgMXM85GtCSHFqWmxDqI9Nv8GN1HZI5hbN7YQGlYGq6eDk3mZLZxZQ2Jppk
-	kDmsCXdmhoA=
+	:content-type; q=dns; s=sasl; b=amZOR4tyRpJ2ycBepCwTM6me4oDHhm7G
+	rmq4APWkcwSg74gyF64NDo1Mj2wubdOnDHzpipnHMseItWLZUZ9977mRmb5+PJ2H
+	L+HulGu1NIsq2fGrtESchdCfEHMSxcxHIlFZFk7ds4dGKG2K3uYvHYWeaC+YsqZK
+	wXGrfWCjg9A=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22C7015C25;
-	Wed, 24 Apr 2013 18:15:54 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B74D815E12;
+	Wed, 24 Apr 2013 18:20:20 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC36815C22;
-	Wed, 24 Apr 2013 18:15:53 +0000 (UTC)
-In-Reply-To: <CALkWK0=YNcavQAEiS8-huZ98hp+FTwtU7gqQ7yaoCWA61uWo_w@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Wed, 24 Apr 2013 22:14:08 +0530")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3EAB515E11;
+	Wed, 24 Apr 2013 18:20:20 +0000 (UTC)
+In-Reply-To: <1366821216-20868-4-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Wed, 24 Apr 2013 22:03:34 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0060DA14-AD0B-11E2-9FC7-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9F415A46-AD0B-11E2-82CE-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222285>
 
 Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> Jonathan Nieder wrote:
->> Why is it imperative?
->
-> Sorry about the thinko; s/imperative/idiomatic/
+> -'git diff' [options] [--] [<path>...]::
+> +'git diff' [options] [[--] [<path>...]]::
 
-Yeah, I think this step looks reasonable.
+You can say
+
+    "git diff A B --" without any path
+    "git diff A B pathspec" without any double-dashes
+    "git diff -- pathspec"
+
+and all three of them are expressed by versions before or after the
+patch, so there is no change in the semantics introduced by this
+patch.
+
+While the update might be logically more correct, it looks to me
+that the only end-user visibile effect of it is to make the end
+result harder to read.
