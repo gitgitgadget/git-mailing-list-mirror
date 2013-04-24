@@ -1,93 +1,162 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 7/7] rebase: implement --[no-]autostash and rebase.autostash
-Date: Wed, 24 Apr 2013 13:57:44 +0530
-Message-ID: <CALkWK0=JsR9txrrnWZKyrTpv-s+ZgVz-cL6ZsMn2R+wz6rE4FA@mail.gmail.com>
-References: <1366725724-1016-1-git-send-email-artagnon@gmail.com>
- <1366725724-1016-8-git-send-email-artagnon@gmail.com> <CABURp0onypkDFiovYP4s0UuBV+oFp3rPv1Jq8dGbxZhKU_sgsQ@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: What's cooking in git.git (Apr 2013, #08; Tue, 23)
+Date: Wed, 24 Apr 2013 10:30:02 +0200
+Message-ID: <5177980A.4090305@viscovery.net>
+References: <7vvc7enxco.fsf@alter.siamese.dyndns.org> <7vwqrtgi1r.fsf@alter.siamese.dyndns.org> <51779052.8020507@viscovery.net> <CAMP44s1oX_m0d+2Z3+VkafOhT1bZK_9Z5m1ex456DMdAidEKeg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Martin von Zweigbergk <martinvonz@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 10:28:32 2013
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 24 10:30:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUv44-0008QD-Bz
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 10:28:32 +0200
+	id 1UUv5o-000256-4r
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 10:30:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757743Ab3DXI20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 04:28:26 -0400
-Received: from mail-ia0-f173.google.com ([209.85.210.173]:42123 "EHLO
-	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754638Ab3DXI2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 04:28:24 -0400
-Received: by mail-ia0-f173.google.com with SMTP id j5so1372387iaf.18
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 01:28:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=6Q/tLN6/6oQWjzgkKVhkBtjurG4M4y1E2tY0vQFzoHE=;
-        b=QL16QFD+1z9Q7GC4/QB2kmvKzWRwHqq1JdiaQV4XAp/9LolH9ZqmJf73a9SaKHtDhN
-         kEkaz5SxE6eJtBYqaOQY82g7N1TlnWpAOvigObRvJg2L3J0M8I4+Y6orAd6n+hYCESGR
-         xXOuNIoRQ1DAP0WkykcBuFvcPAPWFkuL67X7alpHsNdJNxo33eZ+fG88oJ5VvSGtvU5k
-         NtxBld1ISRZmtdqGxIasexC2/FDCiowSsEfvZ2/Hsar+wccgJOXxIyC1Qmms5No9/BOd
-         5OkPSIOB8LHH1I+Arpv0WKYy9gECFbiT5y59Y1OK8qaa2kUvGq655beh4N+Sshj2alD9
-         ANMQ==
-X-Received: by 10.50.73.65 with SMTP id j1mr14226030igv.49.1366792104290; Wed,
- 24 Apr 2013 01:28:24 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Wed, 24 Apr 2013 01:27:44 -0700 (PDT)
-In-Reply-To: <CABURp0onypkDFiovYP4s0UuBV+oFp3rPv1Jq8dGbxZhKU_sgsQ@mail.gmail.com>
+	id S1757824Ab3DXIaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 04:30:10 -0400
+Received: from so.liwest.at ([212.33.55.23]:64012 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754609Ab3DXIaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 04:30:07 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1UUv5X-00072z-1E; Wed, 24 Apr 2013 10:30:03 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id C3FDB1660F;
+	Wed, 24 Apr 2013 10:30:02 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <CAMP44s1oX_m0d+2Z3+VkafOhT1bZK_9Z5m1ex456DMdAidEKeg@mail.gmail.com>
+X-Enigmail-Version: 1.5.1
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222239>
 
-Phil Hord wrote:
-> Because I am in a git-rebase which has apparently failed, I would
-> expect 'git rebase --abort' would save me here.  But it does not and
-> you have given me some unique instructions to try to recover.  I
-> suppose rebase--abort cannot be made to recover in this case because
-> this is a rebase-wrapper and all of my rebase-state is already
-> discarded.  But I would much prefer to have the normal "undo"-ability
-> of git-rebase here, once I realize I have made a mistake or
-> encountered conflicts I am not prepared to handle right now.
+Am 4/24/2013 10:04, schrieb Felipe Contreras:
+> On Wed, Apr 24, 2013 at 2:57 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>> Am 4/23/2013 21:31, schrieb Junio C Hamano:
+>>> * fc/transport-helper-error-reporting (2013-04-17) 9 commits
+>>>   (merged to 'next' on 2013-04-22 at 5ba6467)
+>>>  + transport-helper: update remote helper namespace
+>>>  + transport-helper: trivial code shuffle
+>>>  + transport-helper: warn when refspec is not used
+>>>  + transport-helper: clarify pushing without refspecs
+>>>  + transport-helper: update refspec documentation
+>>>  + transport-helper: clarify *:* refspec
+>>>  + transport-helper: improve push messages
+>>>  + transport-helper: mention helper name when it dies
+>>>  + transport-helper: report errors properly
+>>>
+>>>  Update transport helper to report errors and maintain ref hierarchy
+>>>  used to keep track of remote helper state better.
+>>>
+>>>  Will merge to 'master'.
+>>
+>> Please don't, yet. There is a new test case that fails on Windows. I'll
+>> have to figure out a work-around.
+> 
+> Which test case? If it it failed, it failed before this series. I
+> don't see how this new series would affect anything.
 
-You're asking for a hammer solution, when I'm advocating a solution
-that offers more flexibility and control.  Commits and worktree
-changes are fundamentally two different things, and I treat them
-differently.
+The test introduced in the commit at the tip: 'push update refs'.
+More precisely:
 
-rebase.autostash is simply a shortcut for:
+---- 8< ----
+D:\Src\mingw-git\t>sh t5801-remote-helpers.sh
+ok 1 - setup repository
+ok 2 - cloning from local repo
+ok 3 - create new commit on remote
+ok 4 - pulling from local repo
+ok 5 - pushing to local repo
+ok 6 - fetch new branch
+ok 7 - fetch multiple branches
+ok 8 - push when remote has extra refs
+ok 9 - push new branch by name
+not ok 10 - push new branch with old:new refspec # TODO known breakage
+ok 11 - cloning without refspec
+ok 12 - pulling without refspecs
+ok 13 - pushing without refspecs
+ok 14 - pulling without marks
+not ok 15 - pushing without marks # TODO known breakage
+ok 16 - push all with existing object
+ok 17 - push ref with existing object
+not ok 18 - push update refs
+#
+#               (cd local &&
+#               git checkout -b update master &&
+#               echo update >>file &&
+#               git commit -a -m update &&
+#               git push origin update
+#               git rev-parse --verify remotes/origin/update >expect &&
+#               git rev-parse --verify testgit/origin/heads/update >actual &&
+#               test_cmp expect actual
+#               )
+#
+ok 19 - proper failure checks for fetching
+ok 20 - proper failure checks for pushing
+ok 21 - push messages
+ok 22 - push signed tag
+ok 23 - push signed tag with signed-tags capability
+# still have 2 known breakage(s)
+# failed 1 among remaining 21 test(s)
+1..23
+---- 8< ----
 
-    $ git stash && git rebase ... && git stash pop
+The verbose failure is:
 
-Except that your stash is not blocked during the rebase process: we
-use a special stash.  If the last 'git stash pop' fails, do you do
-this?
+---- 8< ----
+expecting success:
+        (cd local &&
+        git checkout -b update master &&
+        echo update >>file &&
+        git commit -a -m update &&
+        git push origin update
+        git rev-parse --verify remotes/origin/update >expect &&
+        git rev-parse --verify testgit/origin/heads/update >actual &&
+        test_cmp expect actual
+        )
 
-    $ git reset --hard HEAD@{1}
-    $ git stash pop
-    # snip, snip ...
-    # redo the entire rebase
+Switched to a new branch 'update'
+[update 86cfeec] update
+ Author: A U Thor <author@example.com>
+ 1 file changed, 1 insertion(+)
+d:/Src/mingw-git/git-remote-testgit: cannot make pipe for process substitution: Function not implemented
+d:/Src/mingw-git/git-remote-testgit: cannot make pipe for process substitution: Function not implemented
+d:/Src/mingw-git/git-remote-testgit: line 97: join: command not found
+Everything up-to-date
+fatal: Needed a single revision
+not ok 18 - push update refs
+---- 8< ----
 
-I _never_ find myself doing this; in your hammer solution, you're
-advocating that we always do this.
+An example of a successful test is this:
 
-The stash is a powerful tool when used properly: a stash isn't
-attached to any branch, and therefore perfectly designed to keep small
-temporary worktree changes for a short period of time.
-rebase.autostash is _not_ a way to take away power from the user, or
-save the user from learning how to use stash.
+---- 8< ----
+expecting success:
+        (cd local &&
+         git checkout -b new-name  &&
+         echo content >>file &&
+         git commit -a -m seven &&
+         git push origin new-name
+        ) &&
+        compare_refs local HEAD server refs/heads/new-name
 
-That said, the current implementation is very rough and I will improve
-it in the next iterations.  If the apply fails, I will push the
-changes onto stash@{0}, and let the user do a 'git stash pop' instead
-of having to remember (or copy out) a SHA-1 displayed in the terminal
-output.  Essentially, this leaves the user in the exact same state as
-if she had done a 'git stash && git rebase ... && git stash pop'.
+Switched to a new branch 'new-name'
+[new-name 455466e] seven
+ Author: A U Thor <author@example.com>
+ 1 file changed, 1 insertion(+)
+d:/Src/mingw-git/git-remote-testgit: cannot make pipe for process substitution: Function not implemented
+d:/Src/mingw-git/git-remote-testgit: cannot make pipe for process substitution: Function not implemented
+d:/Src/mingw-git/git-remote-testgit: line 97: join: command not found
+Everything up-to-date
+ok 9 - push new branch by name
+---- 8< ----
+
+-- Hannes
