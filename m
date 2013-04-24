@@ -1,73 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] Highly inconsistent diff UI
-Date: Wed, 24 Apr 2013 14:27:41 -0700
-Message-ID: <7vobd3aab6.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0n2ZZTgYxi3Fk2UxY8TXFAt1Xt3+11G98GKxbYdoMOT+Q@mail.gmail.com>
-	<7va9ong9oa.fsf@alter.siamese.dyndns.org>
-	<CALkWK0mVDT5ESnVJAWQ83gQnmxmGDoM_Y0nE4FGybcjcenA_KA@mail.gmail.com>
-	<7v38ufer2x.fsf@alter.siamese.dyndns.org>
-	<CALkWK0m5Q_e3q6Yg94-K+jU_SS7ovR2wnz-_Nr3cMz_YM=SMDQ@mail.gmail.com>
-	<CALkWK0=5tE0pXj-XTe4g9LdCO78yrPNwyom5fupF1WTToY2TZw@mail.gmail.com>
-	<7vtxmvbukv.fsf@alter.siamese.dyndns.org>
-	<CALkWK0nmJPMJEotQ=-sSA5jXWd85mRk_Y+tbYHj1sr6ddJZsHg@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Fwd: [PATCH] git-svn: added an --include-path flag
+Date: Wed, 24 Apr 2013 21:28:56 +0000
+Message-ID: <20130424212856.GA23696@dcvr.yhbt.net>
+References: <CAHpQJx0iT_+pOzdEJ-uyn7GjkXs8ZwhfPoMYpQDxwAB5mQ1xrw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 23:27:50 2013
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Paul Walmsley <pjwhams@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 24 23:29:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV7EC-0001CE-Np
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 23:27:49 +0200
+	id 1UV7FS-00037M-UT
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 23:29:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758113Ab3DXV1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 17:27:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64805 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758030Ab3DXV1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 17:27:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F28619380;
-	Wed, 24 Apr 2013 21:27:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=NdyKuUmpRxXUCH1Vngx1348OAg0=; b=B4TinXfzVKIOeIUd1OTH
-	sQJhmG/xlm6i1+MHAAjbYPUurYW0R75eF9e9Ze0T6vk+CwuZb9e50Js5t88XYwub
-	nImfeaN+xWHkr9fFnzbkWKThy8sShe1vis3oadB258Hwx+mFb2KvsyFKF2INAXxd
-	No0r0Kl6+xszEm7meplmhZM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=MCuV2T+EzPaJk9erYpp18qwP25RgLQbxt6Y+WbI09Cosbv
-	k6sPvbey/p0nSLIJVqhr6Gf+ABUhoSD9FUPvwqfaW15XLyZCy91KSAfxfWj3i8Ci
-	xEt8Fu6kpcPUjvLrl2hJglyzy1UB4wxz4xNb7hsQg7bB0Bms5XEAbnXwAZLPg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 640BD1937F;
-	Wed, 24 Apr 2013 21:27:43 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DFE0B1937E;
-	Wed, 24 Apr 2013 21:27:42 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CC67FA2E-AD25-11E2-8A86-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758388Ab3DXV26 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 17:28:58 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:54140 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758073Ab3DXV25 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 17:28:57 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2594C1F5B5;
+	Wed, 24 Apr 2013 21:28:57 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <CAHpQJx0iT_+pOzdEJ-uyn7GjkXs8ZwhfPoMYpQDxwAB5mQ1xrw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222328>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Paul Walmsley <pjwhams@gmail.com> wrote:
+> Hi,
+> Please forgive the direct approach, but I submitted a git-svn patch to the
+> git list which sank without any comment. As major contributors to git-svn I
+> would like to solicit your feedback on it. The patch is so that git svn
+> clone supports '--include-path' as a complement to '--ignore-path'.  I had
+> a need for this as our SVN repository has many top level folders of which
+> only a few may be needed for any project.  I wanted to contribute the patch
+> back as I think it may be useful to others. I've included unit tests too.
 
-> Junio C Hamano wrote:
->> You will stay in my killlist for the coming few days ;-).
->
-> Now, now.  What is your objection, objectively?
+No forgivness necessary, it's standard practice to Cc maintainers in git
+(and Linux kernel) patch submissions :)
 
-I do not think any further explanation is necessary.
+(Re-adding git ML-as Cc)
 
-My Git time is more useful to the Git development community than
-educating somebody with demonstrated lack of design taste by calling
-the "log ~" that has an irregular default "beautiful".
+> --- /dev/null
+> +++ b/t/t9147-git-svn-include-paths.sh
+> @@ -0,0 +1,150 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2009 Vitaly Shukela
+> +# Copyright (c) 2009 Eric Wong
+
+Use your name (and current year) in copyright headers for your
+submissions.
+
+
+I'll take a closer look at the rest of the patch later, but your patch
+below appears line-wrapped and mangled (see
+Documentation/SubmittingPatches).
+
+Also, we'd greatly appreciate you omit HTML from emails in the future.
+
+Thanks.
