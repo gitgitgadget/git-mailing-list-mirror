@@ -1,119 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-imap-send.txt: remove the use of sslverify=false
-Date: Wed, 24 Apr 2013 10:18:05 -0700
-Message-ID: <7vr4hzetki.fsf@alter.siamese.dyndns.org>
-References: <20130420140802.GC29454@ruderich.org> <51758EE8.7030800@gmail.com>
+Subject: Re: [PATCHv2 4/7] t7008: demonstrate behavior of grep with textconv
+Date: Wed, 24 Apr 2013 10:29:55 -0700
+Message-ID: <7vmwsnet0s.fsf@alter.siamese.dyndns.org>
+References: <517298D4.3030802@drmicha.warpmail.net>
+	<5137a5a48ae6c70ad716d985a22d53ec311ee05a.1366718624.git.git@drmicha.warpmail.net>
+	<7v1ua1l1ki.fsf@alter.siamese.dyndns.org>
+	<5177AF62.30104@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Barbu Paul - Gheorghe <barbu.paul.gheorghe@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 19:18:23 2013
+Cc: git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr,
+	jeremy.rosen@openwide.fr, Jeff King <peff@peff.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Apr 24 19:30:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV3Kn-0005G1-4F
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 19:18:21 +0200
+	id 1UV3W9-00088o-Tt
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 19:30:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756234Ab3DXRSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 13:18:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36623 "EHLO
+	id S1756540Ab3DXR37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 13:29:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48268 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756213Ab3DXRSI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 13:18:08 -0400
+	id S1756000Ab3DXR37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 13:29:59 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B45F319062;
-	Wed, 24 Apr 2013 17:18:07 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4A1D19482;
+	Wed, 24 Apr 2013 17:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=jxAsaDZQnhNnsXKJoNmFbP9Ud/s=; b=mQgtfW9UoxlKzpS/WbjR
-	4jQVanX2R66B2f3TxLCAepbdD3xpIaZo5zccjo0zWpqngxL17w1dBDGQ8MHA+gmJ
-	+BxKw0MyN3RJH9DcUXbxTgFEsw6HLauUgLCynm7dMftM5MelMfSl5hhZpc1fL/7Q
-	IMbKmZiJK20P7H1ymeetymg=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qrxEGdIVTjuIl6Gl4DbhlaHt34w=; b=fa1/UA
+	ssmRrEcfJvHEk8R2jxidjG+njE5Wnu4VdUqXuaILc2Im29D6ONgcMNG/dqO1Q825
+	JUD404o9cn2+rSCxR2sGzMyrcG1pQf/a1w9PN4KO8qSN+KRB2a7GVBcz8qIdcHdK
+	7DTzGD94sDHz535aM+exgex+pBfdWd7LsNTb8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=TGNzYmwZBqx58A1EWoJoMT5FEDIJm3gf5qb59S8bYS7b5o
-	CLbUdzIkJ9xYjmRpkHzQ/V8DgnACR3Co0iazMG2JVIf24AqO8Zs+21yD/C52E//C
-	94fxazx0UvUdREfWe5hTI9iAkYG8DR5xL1+UQNnHwzVlAAqRRFkFbADCFElhA=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hc4GVV9hjn7YiSezUTLLk7wZes4yAwx1
+	i84CDP1+EhMuZpSAAPPRCKNv/aFN+HDd/T50bvtAQdm/Zxt1Iyw5DO23cFhqogaa
+	GCV64mGT0H9H6UyTdWLlZBKI1aolfwJgYXjhR34bW+/qht5P+Ir9yffxnxCklfit
+	+dC0tWMNFf8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB50119061;
-	Wed, 24 Apr 2013 17:18:07 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9728219481;
+	Wed, 24 Apr 2013 17:29:57 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2ADFE1905F;
-	Wed, 24 Apr 2013 17:18:07 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EF3F51947F;
+	Wed, 24 Apr 2013 17:29:56 +0000 (UTC)
+In-Reply-To: <5177AF62.30104@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Wed, 24 Apr 2013 12:09:38 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EE2AE392-AD02-11E2-9FB3-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 953E92CC-AD04-11E2-B839-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222274>
 
-Barbu Paul - Gheorghe <barbu.paul.gheorghe@gmail.com> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> Since SSL provides no protection if the certificates aren't verified it's
-> better not to include sslverify=false in the examples.
-> Also in the post 1.8.2.1 era git is able to properly verify the validity of a
-> certificate as well it's origin.
+>>> +test_expect_failure 'grep does not honor textconv' '
+>>> +	echo "a:binaryQfile" >expect &&
+>>> +	git grep Qfile >actual &&
+>> 
+>> This should pass --textconv to "git grep".
 >
-> Signed-off-by: Barbu Paul - Gheorghe <barbu.paul.gheorghe@gmail.com>
-> ---
->  Documentation/git-imap-send.txt | 2 --
->  1 file changed, 2 deletions(-)
+> But "git grep" does not know that option yet, so the test would fail for
+> the wrong reason.
 >
-> diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
-> index 875d283..0d72977 100644
-> --- a/Documentation/git-imap-send.txt
-> +++ b/Documentation/git-imap-send.txt
-> @@ -108,7 +108,6 @@ Using direct mode with SSL:
->      user = bob
->      pass = p4ssw0rd
->      port = 123
-> -    sslverify = false
->  ..........................
->   @@ -123,7 +122,6 @@ to specify your account settings:
->  	host = imaps://imap.gmail.com
->  	user = user@gmail.com
->  	port = 993
-> -	sslverify = false
->  ---------
->   You might need to instead use: folder = "[Google Mail]/Drafts" if you get an error
+> The point ist that I expect "git grep" to apply textconv filters by
+> default, which it does not. (I know I might be the only one with this
+> expectation.)
+>
+> Or do we want to document the absence of that option?
 
-It is amusing that an MTA can mangle such a short patch this badly.
+First, whether you write expect_failure or expec_success, please
+label the test to say what is expected to happen in the ideal world.
+The test in question says "grep does not honor textconv", but if you
+want it to honor textconv in the ideal world, it should be "grep
+honors textconv (when it should)".
 
-Count the number of preimage lines in the first hunk and you see
-only 5 lines but you claim it has 7.  Where did the other two go?
-The second hunk has the same problem.  "@@" that introduces the
-second hunk is not at the leftmost column.  Where did the leading SP
-come from?
+Now, from the point of view of testing "git grep honors textconv"
+missing support at the command line parser level and a buggy
+implementation of the command line parser that accepts but does not
+trigger the feature are the same thing.  The command would not honor
+textconv either way.
 
-The examples in the documentation are primarily to demonstrate how
-the supported configurations and options can be used and for what
-purpose. its secondary purpose is to nudge the readers into the best
-practice.
+Marking the above as "failure" without explicitly asking for the
+feature with "--textconv" means we want it to use textconv by
+default, but that is *not* what the test title says is testing.
 
-So I'd suggest a patch that does these things instead of just
-removing these two:
-
- (0) Remove the duplication between the Examples header with ~~~~~~
-     underline and the EXAMPLE header with ------ underline.
-
- (1) Use the second hunk of your patch to remove sslverify=false
-     from that imap.gmail.com example.  As a public service, it is
-     unlikely that the server side is configured to throw a
-     certificate that does not verify at you.
-
- (2) Instead of removing sslverify=false in the imap.example.com
-     example, comment it out like this:
-
-     -	sslverify = false
-     +	; sslverify = false
-
-     Then mention that the user may want to use sslverify=false
-     while troubleshooting, if he suspects that the reason he is
-     having trouble connecting is because the certificate he uses at
-     the private server at example.com he is trying to set up (or
-     has set up) may not be verified correctly.
+In your patch, what the body of the text is really expecting is
+"grep uses textconv by default".  If that is what it tests, then
+passing --textconv from the command line as I suggested would be
+wrong, but I was going by the title of the patch.
