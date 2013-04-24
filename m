@@ -1,124 +1,75 @@
-From: l.stelmach@samsung.com (=?utf-8?Q?=C5=81ukasz?= Stelmach)
-Subject: Re: [PATCH] send-email: support NNTP
-Date: Wed, 24 Apr 2013 10:42:44 +0200
-Message-ID: <87bo94720r.fsf@samsung.com>
-References: <1366715634-21790-1-git-send-email-l.stelmach@samsung.com>
-	<87zjwofken.fsf@linux-k42r.v.cablecom.net>
+From: =?ISO-8859-1?Q?Sebastian_G=F6tte?= <jaseg@physik.tu-berlin.de>
+Subject: Re: [PATCH] Add .gitconfig variable commit.gpg-sign
+Date: Wed, 24 Apr 2013 10:53:53 +0200
+Message-ID: <51779DA1.7080606@physik.tu-berlin.de>
+References: <CAASwCXf3YHmdQ_eSkShyzn5VniO=ufm3VTqV1JVOUN610bzE_A@mail.gmail.com> <7vip3em8rs.fsf@alter.siamese.dyndns.org> <CAASwCXcfCNqiMXD5JasTRKWZgCNsxnUY7k9E=f86xsTZjk37CA@mail.gmail.com> <51767290.2010208@drmicha.warpmail.net> <7va9opi163.fsf@alter.siamese.dyndns.org> <CAASwCXdhgNPzm51MfWTCTNYQwT0gC-UbV7xTNGcXhs6k9f4wsQ@mail.gmail.com> <7v1ua1hwx6.fsf@alter.siamese.dyndns.org> <CAASwCXcs8Q7qGWSNKttEuk0zPetDWNCse4J-KSm20r9h5XSo3Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 24 10:43:15 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Joel Jacobson <joel@trustly.com>
+X-From: git-owner@vger.kernel.org Wed Apr 24 10:53:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUvII-0000aN-VT
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 10:43:15 +0200
+	id 1UUvSU-00045j-Cs
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 10:53:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758175Ab3DXIm7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Apr 2013 04:42:59 -0400
-Received: from plane.gmane.org ([80.91.229.3]:51183 "EHLO plane.gmane.org"
+	id S1757983Ab3DXIxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 04:53:40 -0400
+Received: from mail.tu-berlin.de ([130.149.7.33]:1028 "EHLO mail.tu-berlin.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757748Ab3DXImy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 04:42:54 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UUvHw-0000CP-Kz
-	for git@vger.kernel.org; Wed, 24 Apr 2013 10:42:52 +0200
-Received: from 217-67-201-162.itsa.net.pl ([217.67.201.162])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 10:42:52 +0200
-Received: from l.stelmach by 217-67-201-162.itsa.net.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 10:42:52 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 217-67-201-162.itsa.net.pl
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
-Cancel-Lock: sha1:56oRrL+rm46/t5FFZVDFhzRgBgk=
+	id S1757725Ab3DXIxi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 04:53:38 -0400
+X-tubIT-Incoming-IP: 130.149.58.163
+Received: from mail.physik-pool.tu-berlin.de ([130.149.58.163] helo=mail.physik.tu-berlin.de)
+	by mail.tu-berlin.de (exim-4.75/mailfrontend-4) with esmtp 
+	id 1UUvSL-0005B6-Bv; Wed, 24 Apr 2013 10:53:37 +0200
+Received: from [141.23.96.137] (wlan-141-23-96-137.tubit.tu-berlin.de [141.23.96.137])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.physik.tu-berlin.de (Postfix) with ESMTPSA id D97F311401;
+	Wed, 24 Apr 2013 10:53:30 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130403 Thunderbird/17.0.5
+In-Reply-To: <CAASwCXcs8Q7qGWSNKttEuk0zPetDWNCse4J-KSm20r9h5XSo3Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222241>
 
-It was <2013-04-24 =C5=9Bro 09:38>, when Thomas Rast wrote:
-> =C5=81ukasz Stelmach <l.stelmach@samsung.com> writes:
->
->> Enable sending patches to NNTP servers (Usenet, Gmane).
->
-> I'm surprised Junio didn't mention this: your patch lacks the
-> Signed-off-by.
->
->> +	if ($email_protocol eq 'nntp') {
->> +		$header =3D "Newsgroups: $to\n" . $header;
->> +	} else {
->> +		$header =3D "To: $to${ccline}\n" . $header;
->> +	}
->
-> Are you silently ignoring any Ccs that have been set if you're in NNT=
-P
-> mode?
+On 04/23/2013 09:56 PM, Joel Jacobson wrote:
+>> But stepping back a bit, I have a suspicion that your upstream
+>> project _only_ cares about what you feed them (either by pushing
+>> your work yourself to them, or telling them to pull from your
+>> repository).  There is no reason for you to be constantly signing
+>> your commits you make during your exploratory development that you
+>> may throw-away in the end.
+> 
+> Your suspicions are correct.
+> But I'm a bit paranoid, so it feels better to sign even local commits.
+> 
+>> It _might_ be a better option to just teach "-S" option to "git
+>> rebase" that tells it to replay all the commits with "commit -S",
+>> instead of adding commit.gpgSign configuration.
+> 
+> In my case, I don't do that much exploratory development locally,
+> so I usually just commit, pull and push.
+> 
+> Always signing everything can't really hurt, can it? Takes a few clock
+> cycles more, and a few more bytes, but apart from that I don't see any
+> problems?
+I have my GPG-keys password-protected, and I would be severely annoyed by
+GnuPG password prompts popping up on every commit. I think the -S option
+to rebase would be the more elegant way. What could be nice would be a
+config option that makes "git push" warn/abort in case I try to push an
+unsigned head commit to a repo where I want to have signed commits:
+> remote.<name>.abortUnsigned
+This of course needs an command line override switch.
 
-Yes.
-
-> Would it be possible to instead send the Ccs by mail as usual, and on=
-ly
-> the main message over NNTP?  (You don't need to run off and implement
-> this, but I'm curious how hard you think it would be.)
-
-Currently you choose a code path with --protocol. The message is sent
-only once. It is possible to iterate over To/Cc/Bcc/Newsgroups and
-choose send it more than once. There are some tiny nasty bits though, I
-don't know how to handle. For example:
-
---8<---------------cut here---------------start------------->8---
-@@ -761,12 +807,21 @@ if (!defined $sender) {
- }
-=20
- my $prompting =3D 0;
--if (!@initial_to && !defined $to_cmd) {
-+
-+if ($email_protocol eq 'smtp' && !@initial_to && !defined $to_cmd) {
- 	my $to =3D ask("Who should the emails be sent to (if any)? ",
- 		     default =3D> "",
- 		     valid_re =3D> qr/\@.*\./, confirm_only =3D> 1);
- 	push @initial_to, parse_address_line($to) if defined $to; # sanitized=
-/validated later
- 	$prompting++;
-+} elsif ($email_protocol eq 'nntp' &&
-+	 !@initial_newsgroups &&
-+	 !defined $newsgroups_cmd) {
-+	my $newsgroup =3D ask("Which newsgroups should the message be sent to=
- (if any)? ",
-+		     default =3D> "",
-+		     valid_re =3D> qr/[\x20-\x7f]+/, confirm_only =3D> 1);
-+	push @initial_newsgroups, $newsgroup if defined $newsgroup; # sanitiz=
-ed/validated later
-+	$prompting++;
- }
---8<---------------cut here---------------end--------------->8---
-
-How to ask interactively where to send the message? With protocol set
-early it is clear what we are trying to do. Any suggestions?
-
-The other issue is that I am not sure (RFC?) if it is OK to send
-To/Cc/Bcc headers in a NNTP message. Theoretically they should not brea=
-k
-things but...
-
-> At least in the git@vger world with a lot of etiquette surrounding th=
-e
-> use of Ccs, NNTP mode isn't very useful if you can't also send Ccs.  =
-But
-> maybe you have another use-case where that is not a problem?
-
-I've sent this patch vi NNTP :) You've got it.
-
---=20
-=C5=81ukasz Stelmach
-Software wizzard
-Samsung Poland R&D Center
+Something to be considered is whether "git rebase -S" should sign *every*
+commit in the series or only the *head* commit.
