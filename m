@@ -1,29 +1,29 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [PATCH 1/3] remote: add a test for extra arguments, according to docs
-Date: Wed, 24 Apr 2013 15:54:35 +0200
-Message-ID: <372aa93e4a7a3583730c02543583ce93e095ec64.1366811347.git.trast@inf.ethz.ch>
+Subject: [PATCH 3/3] remote: 'show' and 'prune' take more than one remote
+Date: Wed, 24 Apr 2013 15:54:37 +0200
+Message-ID: <3c40e8ca9d85f5254c2ba7d6a42e1d0d196e6faf.1366811347.git.trast@inf.ethz.ch>
 References: <cover.1366811347.git.trast@inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 24 15:55:01 2013
+X-From: git-owner@vger.kernel.org Wed Apr 24 15:55:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV09z-0002hP-Th
+	id 1UV0A0-0002hP-D9
 	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 15:55:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755774Ab3DXNyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755765Ab3DXNyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 24 Apr 2013 09:54:47 -0400
 Received: from edge10.ethz.ch ([82.130.75.186]:34610 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754782Ab3DXNym (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 09:54:42 -0400
+	id S1755203Ab3DXNyn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 09:54:43 -0400
 Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
  (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 24 Apr
- 2013 15:54:37 +0200
+ 2013 15:54:38 +0200
 Received: from linux-k42r.v.cablecom.net (129.132.153.233) by CAS22.d.ethz.ch
  (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 24 Apr
  2013 15:54:39 +0200
@@ -34,61 +34,65 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222252>
 
-This adds one test or comment for each subcommand of git-remote
-according to its current documentation.  All but 'set-branches' and
-'update' are listed as taking only a fixed number of arguments; for
-those we can write a test with one more (bogus) argument, and see if
-the command notices that.
+The 'git remote show' and 'prune' subcommands are documented as taking
+only a single remote name argument, but that is not the case; they
+will simply iterate the action over all remotes given.  Update the
+documentation and tests to match.
 
-They fail on several counts: 'add' does not check for extra arguments,
-and 'show' and 'prune' actually iterate over remotes (i.e., take any
-number of args).  We'll fix them in the next two patches.
-
-The -f machinery is only there to make the tests readable while still
-ensuring they pass as a whole, and will be removed in the final patch.
+With the last user of the -f flag gone, we also remove the code
+supporting it.
 
 Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
 ---
- t/t5505-remote.sh | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ Documentation/git-remote.txt |  4 ++--
+ t/t5505-remote.sh            | 11 +++--------
+ 2 files changed, 5 insertions(+), 10 deletions(-)
 
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index e8c396b..7a6f354 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -18,8 +18,8 @@ SYNOPSIS
+ 'git remote set-url' [--push] <name> <newurl> [<oldurl>]
+ 'git remote set-url --add' [--push] <name> <newurl>
+ 'git remote set-url --delete' [--push] <name> <url>
+-'git remote' [-v | --verbose] 'show' [-n] <name>
+-'git remote prune' [-n | --dry-run] <name>
++'git remote' [-v | --verbose] 'show' [-n] <name>...
++'git remote prune' [-n | --dry-run] <name>...
+ 'git remote' [-v | --verbose] 'update' [-p | --prune] [(<group> | <remote>)...]
+ 
+ DESCRIPTION
 diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 6579a86..764ee97 100755
+index eea87fc..dd10ff0 100755
 --- a/t/t5505-remote.sh
 +++ b/t/t5505-remote.sh
-@@ -1003,4 +1003,31 @@ test_expect_success 'remote set-url --delete baz' '
- 	cmp expect actual
+@@ -1009,12 +1009,7 @@ test_expect_success 'extra args: setup' '
  '
  
-+test_expect_success 'extra args: setup' '
-+	# add a dummy origin so that this does not trigger failure
-+	git remote add origin .
-+'
-+
-+test_extra_arg () {
-+	expect="success"
-+	if test "z$1" = "z-f"; then
-+		expect=failure
-+		shift
-+	fi
-+	test_expect_$expect "extra args: $*" "
-+		test_must_fail git remote $* bogus_extra_arg 2>actual &&
-+		grep '^usage:' actual
-+	"
-+}
-+
-+test_extra_arg -f add nick url
-+test_extra_arg rename origin newname
-+test_extra_arg remove origin
-+test_extra_arg set-head origin master
-+# set-branches takes any number of args
-+test_extra_arg set-url origin newurl oldurl
-+test_extra_arg -f show origin
-+test_extra_arg -f prune origin
-+# update takes any number of args
-+
+ test_extra_arg () {
+-	expect="success"
+-	if test "z$1" = "z-f"; then
+-		expect=failure
+-		shift
+-	fi
+-	test_expect_$expect "extra args: $*" "
++	test_expect_success "extra args: $*" "
+ 		test_must_fail git remote $* bogus_extra_arg 2>actual &&
+ 		grep '^usage:' actual
+ 	"
+@@ -1026,8 +1021,8 @@ test_extra_arg remove origin
+ test_extra_arg set-head origin master
+ # set-branches takes any number of args
+ test_extra_arg set-url origin newurl oldurl
+-test_extra_arg -f show origin
+-test_extra_arg -f prune origin
++# show takes any number of args
++# prune takes any number of args
+ # update takes any number of args
+ 
  test_done
 -- 
 1.8.2.1.931.g0116868
