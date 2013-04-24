@@ -1,92 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] remote: add a test for extra arguments, according to docs
-Date: Wed, 24 Apr 2013 14:37:54 -0700
-Message-ID: <7vhaiva9u5.fsf@alter.siamese.dyndns.org>
-References: <cover.1366811347.git.trast@inf.ethz.ch>
-	<372aa93e4a7a3583730c02543583ce93e095ec64.1366811347.git.trast@inf.ethz.ch>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [BUG] Highly inconsistent diff UI
+Date: Thu, 25 Apr 2013 03:36:30 +0530
+Message-ID: <CALkWK0=6A8z9HkbE=giU1BRDBq=0Hmkvhu7Eh=vAyARbs9Qt3A@mail.gmail.com>
+References: <CALkWK0n2ZZTgYxi3Fk2UxY8TXFAt1Xt3+11G98GKxbYdoMOT+Q@mail.gmail.com>
+ <7va9ong9oa.fsf@alter.siamese.dyndns.org> <CALkWK0mVDT5ESnVJAWQ83gQnmxmGDoM_Y0nE4FGybcjcenA_KA@mail.gmail.com>
+ <7v38ufer2x.fsf@alter.siamese.dyndns.org> <CALkWK0m5Q_e3q6Yg94-K+jU_SS7ovR2wnz-_Nr3cMz_YM=SMDQ@mail.gmail.com>
+ <CALkWK0=5tE0pXj-XTe4g9LdCO78yrPNwyom5fupF1WTToY2TZw@mail.gmail.com>
+ <7vtxmvbukv.fsf@alter.siamese.dyndns.org> <CALkWK0nmJPMJEotQ=-sSA5jXWd85mRk_Y+tbYHj1sr6ddJZsHg@mail.gmail.com>
+ <7vobd3aab6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Apr 24 23:38:06 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 25 00:07:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV7O7-0000IY-BQ
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 23:38:03 +0200
+	id 1UV7qR-0002My-4V
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 00:07:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758283Ab3DXVh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 17:37:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41861 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758222Ab3DXVh6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 17:37:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 86136199AA;
-	Wed, 24 Apr 2013 21:37:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=3H//PCFYfnh807FRmhWVSxvV7A0=; b=pnelgN+qzue/OR3BTK7D
-	fKB9UVZ3NpgDmlexANcx9A11s7XC/4/T1H7hQ4Oj1I5xqiwirzaigz/Xu4K6eqha
-	q3JMTgzgbv1G/edXhIZjIZ4ydySBWb6wuaXxOTgj+0Kj0/FTdnpCT/OFDcJ+AMV5
-	jfjthASvISmpw0BSgBX1MZk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=MnbThY8/1UhEFwqxO83Ppyxx4Cmu46NBwElVbzmlpY7vNH
-	2jgIvg9A6wut8kMKYbU1VnL5C5SK24EK3/U/9j6PzvsRn8pdCUrwr0SCMW8WNaqx
-	5kPH3bMVKhqG/xYDfiDem/A7Rsfh6sT21NTaEOGd7wDI7/EDUNdbM/7NBlIIU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 796A1199A9;
-	Wed, 24 Apr 2013 21:37:56 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2BAE199A7;
-	Wed, 24 Apr 2013 21:37:55 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 39D36A70-AD27-11E2-84EB-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758476Ab3DXWHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 18:07:12 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:36503 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758424Ab3DXWHK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 18:07:10 -0400
+Received: by mail-ie0-f179.google.com with SMTP id 16so2812420iea.10
+        for <git@vger.kernel.org>; Wed, 24 Apr 2013 15:07:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=4YgobNxATHUZZd+yNFb1lH9mcrzl4T4F++ntqsURFak=;
+        b=SiXB3QLj75OGy3juAhkEXPwNXhMdipYbSNCgeE/3gEIYDq46mkmV+GjGJwWTv0PAgs
+         +iaZC6XT3GzND9Z1pTW2BUc0x7GFwdyYIE15jKv1wM9VUqXG5oXrKFMbJuVwP9dDfLAv
+         Bfl2koG8Yz8IHV7T4QGgwTA49YPw5EXmoEOWLHh4nt1CNPPjEXcjT1O3e6mK+LAvPnbO
+         RdzLEok6PuNuiXDg6yOhylKOiYBtthPeD5C1bZLkkYU/SswWtgEaOoL2qM0k5pQ2Cr70
+         as2AhzYH44G1EJ0ILLELXQ84BgNsyCRnLpS9CYf8zad421XMx9lyhcyABVBFDTu2WoM2
+         TClQ==
+X-Received: by 10.50.55.73 with SMTP id q9mr23744985igp.44.1366841230343; Wed,
+ 24 Apr 2013 15:07:10 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Wed, 24 Apr 2013 15:06:30 -0700 (PDT)
+In-Reply-To: <7vobd3aab6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222331>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+Junio C Hamano wrote:
+> My Git time is more useful to the Git development community than
+> educating somebody with demonstrated lack of design taste by calling
+> the "log ~" that has an irregular default "beautiful".
 
-> +test_extra_arg () {
-> +	expect="success"
-> +	if test "z$1" = "z-f"; then
-> +		expect=failure
-> +		shift
-> +	fi
-> +	test_expect_$expect "extra args: $*" "
-> +		test_must_fail git remote $* bogus_extra_arg 2>actual &&
-> +		grep '^usage:' actual
-> +	"
-> +}
-> +
-> +test_extra_arg -f add nick url
-> +test_extra_arg rename origin newname
-
-Perhaps just a taste in readability thing, but I would prefer to see
-them more like
-
-	test_extra_arg_expect failure add nick url
-	test_extra_arg_expect success rename origin newname
-
-than misunderstanding-inviting "-f" that often stands for "--force".
-
-Other than that, the whole series was a pleasant read.  Thanks.
-
-
-> +test_extra_arg remove origin
-> +test_extra_arg set-head origin master
-> +# set-branches takes any number of args
-> +test_extra_arg set-url origin newurl oldurl
-> +test_extra_arg -f show origin
-> +test_extra_arg -f prune origin
-> +# update takes any number of args
-> +
->  test_done
+Why are you caught up in the character and the defaults (I just put
+down the first thing that came to my mind)?  What I'm calling
+beautiful is the idea to be able to tersely express "I want to know
+what changes I made to this branch".  We can change the character and
+the defaults; do you think the feature is useful?
