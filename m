@@ -1,76 +1,149 @@
-From: Ilya Basin <basinilya@gmail.com>
-Subject: Re[2]: State of CVS-to-git conversion tools (Was: Re: cvsps: bad usage: invalid argument --norc)
-Date: Wed, 24 Apr 2013 08:47:18 +0400
-Message-ID: <9410348686.20130424084718@gmail.com>
-References: <323381594.20130414121834@gmail.com> <673219382.20130414124800@gmail.com> <20130414113351.GA1299@thyrsus.com> <1762779000.20130415215818@gmail.com> <20130418094326.GB11038@thyrsus.com> <214169596.20130420142251@gmail.com> <20130423175000.GA25994@thyrsus.com> <538486753.20130423223007@gmail.com> <20130423210657.GA32382@thyrsus.com>
-Reply-To: Ilya Basin <basinilya@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Premerging topics
+Date: Tue, 23 Apr 2013 22:48:30 -0700
+Message-ID: <7vzjwofpht.fsf@alter.siamese.dyndns.org>
+References: <CALWbr2wocjqs1mpa+yuQ_Zw8m+SX24q6Pby3E3v3-jd-0w1pvQ@mail.gmail.com>
+	<CALKQrgfO9fd+EEA=Vwe94tJbxkX89uDmMHm9rj6L=d4x7JJjaQ@mail.gmail.com>
+	<CALWbr2x5HDU2t7hpSCkZnuKjTJ1KxYC0v50wsDPT0fm4LyvzWw@mail.gmail.com>
+	<CALKQrgeGPo--cYoGZ30nSfASh4CPzqGXQojkG9Ve96NFr+LrjA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Eric S. Raymond" <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 06:49:07 2013
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Apr 24 07:48:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UUrdi-0004dN-KH
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 06:49:06 +0200
+	id 1UUsZL-0002bI-P3
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 07:48:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345Ab3DXEsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 00:48:55 -0400
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:45480 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890Ab3DXEsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 00:48:54 -0400
-Received: by mail-lb0-f176.google.com with SMTP id y8so1315137lbh.21
-        for <git@vger.kernel.org>; Tue, 23 Apr 2013 21:48:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
-         :subject:in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=peMfm8Oa98rLkQsqhYDD9jQilfKdM+epeMoIh+w5qJ8=;
-        b=uSCfTybTcOImVLZC6ZO+NZJc516MlBDQj97TbdDn9wPDJHJBXdAwKJV10hGUQAB22r
-         rooVofT4gC+SlWOfps6w69TGHRW6rRVWbsguzVFaapsEFjX3i4hR+24NGRupsxIy+Cxv
-         G0KiLzNoTVhRXOiQo+cBJLOYLAckcvD2SN///6sP4ZLAqiZzEYmSzTnChdpVU/QWAZgG
-         H5fdZiwLvrIOWdCxrYOKYDZN7CUXkIXCmgVFNo2JP2rQ3vGFNZ3PD/OK6fU7S+HEFOXM
-         cNWlCtLfbv3ztrRuXbn3Doq7q6r/BvJijaDw+gt4WDebBNrrHXo1lI/UlueYT6cK4Kzy
-         k8mQ==
-X-Received: by 10.112.154.233 with SMTP id vr9mr16993192lbb.23.1366778932719;
-        Tue, 23 Apr 2013 21:48:52 -0700 (PDT)
-Received: from [192.168.0.78] (92-100-236-105.dynamic.avangarddsl.ru. [92.100.236.105])
-        by mx.google.com with ESMTPSA id t17sm545792lbd.11.2013.04.23.21.48.50
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 23 Apr 2013 21:48:51 -0700 (PDT)
-X-Mailer: Voyager (v3.99.4) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <20130423210657.GA32382@thyrsus.com>
+	id S1752170Ab3DXFse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 01:48:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45759 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752017Ab3DXFse (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 01:48:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 08DC61472A;
+	Wed, 24 Apr 2013 05:48:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=UrWCK0JoIW+R8n4JxO/drBRi/3Q=; b=n1MSTKM5NxsTjhvEbb45
+	nFM2M2q+MPk6TzhuPIu4YRJ1bkcN3PcpZG3KT0q/WsDmzJjLlJF5q6PJKnuM1Amw
+	IqfuPAybcXItRDrNXpVZYeqAgVYZdAPGHJ3GHSAsVstx7t1LVfxNw8KNnxq11QJI
+	tY2SR3zJf4uDyYZTo8XvYSU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=Zeu9OuvmsMdrFFCkRQBTE04jR7ZZLP03sati7xLzyElxzt
+	SKCUfdJzAWxHQawAbdMz7wcwiD9CgGYOf+b9HF+KubBucule4nPRU48Qmae4XNbH
+	6iMpuFBoOIKnI3Iu/ULqx4at6tO5ghL/lRF5YpXShYeyPjrK6nuvC0VHnJ0/4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F045C14729;
+	Wed, 24 Apr 2013 05:48:32 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 27D5A14728;
+	Wed, 24 Apr 2013 05:48:32 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 98BD8F96-ACA2-11E2-B6AE-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222223>
 
-ESR> Ilya Basin <basinilya@gmail.com>:
->> For new branches the 'from' command can refer the common ancestor in
->> an existing branch. For example:
->> 
->>          /----------E thebranch
->>         /
->>     A---B---C---D master
->> 
->> Commit E is newer than D; we already imported D; thebranch is new.
->> Instead of:
->>     from refs/heads/thebranch^0
->> refer the parent as:
->>     from refs/heads/master^2
+Johan Herland <johan@herland.net> writes:
 
-ESR> Understood.  Do you actually need this much generality in practice, 
-ESR> or is it a theoretical case?
+>> But P is a commit(/merge with two parents), not a blob. Can we have trees
+>> pointing to commits instead of blobs ?
+>
+> Sort of. We do so when recording submodules in regular git trees.
 
-Such cases occur quite often.
+You are using notes to maintain reachability, aren't you?  Because
+commit objects that appears in trees are not treated as reachable
+from the trees, that won't fly.
 
--- 
+I think you guys are making it unnecessarily complex by using notes.
+To record a prepared evil merge for merging branch that contains A
+with another branch that contains B (assuming that the interation
+between A and B is what makes the evil merge necessary, e.g. A
+renames a function foo() to bar(), while B adds new callsite that
+calls foo()), we can store a single commit that records the prepared
+evil merge under "refs/merge-fix/$A-$B" where A and B are their
+object names.
+
+Then when merging a branch Y that contains B into our history X that
+already contains A (or vice versa),
+
+  ---o---o---A---o---X... ???
+      \                  .
+       \                .
+        \              .
+         o---B----o---Y
+
+we can enumerate the commits that appear in "log --left-right X...Y"
+on the left/right side and notice there is refs/merge-fix/$A-$B.
+
+So the simplest implementation of "an efficient data store to record
+a commit for <A,B> pair" turns out to be just a ref namespace ;-)
+
+There may be other <C,D> pairs in X...Y history, and it probably is
+the sane thing to do to replay prepackaged evil merges from older to
+newer in the topological sense, but that loop would be trivial, once
+we understand how to replay a single such evil merge.
+
+The actual merge-fix data should be just a commit with a single
+parent. The easiest way to prepare it would be like this:
+
+  ---o---o---A
+      \       \
+       \       M---F
+        \     /
+         o---B
+
+where M is the result of mechanical merge between A and B (there
+could be textual conflicts and you could choose to leave them in, or
+you could choose to have rerere resolve it.  As long as you do the
+same when replaying this prepackaged evil merge, this choice does
+not matter, but using rerere will make your life easier), and F is
+the final result you would want, with semantics conflicts resolved.
+In other words, in the ideal world, you would have resolved a merge
+between A and B to record the tree of F.
+
+Point "F" with refs/merge-fix/$A-$B and you are done.
+
+When you replay this prepackaged evil merge, first you mechanically
+merge X and Y without worrying about M or F to produce N.  If you
+allowed rerere to resolve textual conflicts between A and B when you
+recorded M, allow rerere to resolve this merge.  Otherwise leave the
+textual conflict in.
+
+  ---o---o---A---o---X
+      \               \
+       \               N
+        \             /
+         o---B---o---Y
+
+Then on top of N, you cherry-pick F, which will bring the semantic
+conflict resolution between M and F on top of N.
+
+  ---o---o---A---o---X
+      \               \
+       \               N---F'
+        \             /
+         o---B---o---Y
+
+Once you know the tree shape of F', then you no longer need N.  Just
+amend it away and make the tree recorded in F' the result of the
+merge between X and Y.
+
+  ---o---o---A---o---X---.
+      \                   \
+       \                  F''
+        \                /
+         o---B---o---Y--.
