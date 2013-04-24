@@ -1,65 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] completion: remove duplicate block for "git commit -c"
-Date: Wed, 24 Apr 2013 16:04:50 -0700
-Message-ID: <7vvc7b8r8t.fsf@alter.siamese.dyndns.org>
-References: <1366836546-11081-1-git-send-email-marten.kongstad@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [BUG] Highly inconsistent diff UI
+Date: Thu, 25 Apr 2013 04:47:45 +0530
+Message-ID: <CALkWK0ntZKaEzA0Jupj6poOMydqUumEGVVJ-uhBE12sPJ0ntjw@mail.gmail.com>
+References: <CALkWK0n2ZZTgYxi3Fk2UxY8TXFAt1Xt3+11G98GKxbYdoMOT+Q@mail.gmail.com>
+ <7va9ong9oa.fsf@alter.siamese.dyndns.org> <CALkWK0mVDT5ESnVJAWQ83gQnmxmGDoM_Y0nE4FGybcjcenA_KA@mail.gmail.com>
+ <7v38ufer2x.fsf@alter.siamese.dyndns.org> <CALkWK0m5Q_e3q6Yg94-K+jU_SS7ovR2wnz-_Nr3cMz_YM=SMDQ@mail.gmail.com>
+ <7vvc7baahc.fsf@alter.siamese.dyndns.org> <CALkWK0=NWSZsARu9w0DwpEmJHKnvpB8yoNfEa31LDQA=cV-90Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, felipe.contreras@gmail.com, peff@peff.net,
-	manlio.perillo@gmail.com
-To: =?utf-8?Q?M=C3=A5rten?= Kongstad <marten.kongstad@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 25 01:05:01 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 25 01:18:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV8kD-0004gb-Vh
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 01:04:58 +0200
+	id 1UV8xU-0007vH-Jv
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 01:18:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932193Ab3DXXEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 19:04:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49610 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932071Ab3DXXEw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 19:04:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 507F71926E;
-	Wed, 24 Apr 2013 23:04:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w3jjDZDNoZqn2IQGCyU5HJSw9uo=; b=w8liXv
-	yPlD5vcIzQwkJJzTHlo+IhWlZOt14BjrMY+ohDvtnJP/BNeQRbMQz1swJk53I2t9
-	7HO07DR82qFS9E7p3Sl5O4MDLZ2le3Nmgpv3TP5abcTWs42NAhlL0iASNRxWFDya
-	hV48u87TrFRWgM1m0DWt31F6LWDYe5HQH8Fqs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L90QH2aCl4S1Q2wwDuD6XvaOLbeCfNsB
-	q/o137tdTGQiazR72g8IA7zwEUuyR7jTB/IczbOcPqL0dDCxbBfKOmTKjnvXP6OX
-	Rwi+7el1QDUo449DKsGEMqN9MXEGQR6ihCCLySZHRma+pJKwVQjg9nBcRKgZOdPe
-	siif/IJfOnA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44C2B1926D;
-	Wed, 24 Apr 2013 23:04:52 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C25F51926C;
-	Wed, 24 Apr 2013 23:04:51 +0000 (UTC)
-In-Reply-To: <1366836546-11081-1-git-send-email-marten.kongstad@gmail.com>
-	(=?utf-8?Q?=22M=C3=A5rten?= Kongstad"'s message of "Wed, 24 Apr 2013
- 22:49:06 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5EB00B08-AD33-11E2-9E67-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758197Ab3DXXS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 19:18:26 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:58475 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757971Ab3DXXS0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 19:18:26 -0400
+Received: by mail-ie0-f172.google.com with SMTP id c12so2842240ieb.17
+        for <git@vger.kernel.org>; Wed, 24 Apr 2013 16:18:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=U1T3hv6x8hUyzGQHqzm1pZjTTu3KAJUmJ/UOZ3h4WmQ=;
+        b=bJAo03GrtTMO73bQvjniRh3605S98HwM9jz3IroDVtG0x0U9wltExVAs/vzBg2+b6W
+         ndh+arJfQKI7Vz+O16iRkSZpNnP6FHS0vFv6aujpzz7eKCS1Y3c3VARFthcRc851RsQF
+         Mpe2fUvpAFSLDYCpv8r5qxEt0g1dMDo0UMhVzwr10lWcamKPxM3LUD219LIc/KgE3IzM
+         dYIP9yWy+TdsIehT4OABMIVkYqKg5s89WvB+JwVVNJuJnzaVL5NIMWO81J38LpHsCdNZ
+         i5jrDZuV+7zpfYwB/QGwDpsxV/No8e8S8d8aZcnxn5vYEllZ64xX4X7nX6LvDuyHGVXk
+         GFjQ==
+X-Received: by 10.50.57.116 with SMTP id h20mr818308igq.49.1366845505506; Wed,
+ 24 Apr 2013 16:18:25 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Wed, 24 Apr 2013 16:17:45 -0700 (PDT)
+In-Reply-To: <CALkWK0=NWSZsARu9w0DwpEmJHKnvpB8yoNfEa31LDQA=cV-90Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222337>
 
-This was caused by a mechanical mismerge at d931e2fb252e (Merge
-branch 'mp/complete-paths', 2013-02-08), it seems.  The side branch
-fea16b47 wanted to add this block, of course, but the same fix was
-done independently in 685397585 already.
+Ramkumar Ramachandra wrote:
+> Ofcourse, I now see that this is probably useless, and .. fits my bill.
 
-Thanks for catching it.
+Would you find it potentially useful?  You do a lot of merging
+back-and-fourth juggling feature branches, pu, next, master.
+
+> When packaged with a good default for LHS (which .. currently doesn't
+> have), it might be a slightly better candidate.  I was thinking origin
+> instead of [nearest-fork-commit].
+
+Er, I meant HEAD@{u}, not origin.  HEAD@{u}~HEAD doesn't sound like a
+bad default at all.
