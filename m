@@ -1,58 +1,93 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 5/5] git-diff.txt: fix ordering of the [--no-index] form
-Date: Thu, 25 Apr 2013 00:50:21 +0530
-Message-ID: <CALkWK0mK=myPEsFrhVd2Xi3U10L+jZ+_WV=1JvxyvpnO3yUJGg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] git-diff.txt: group the [--] and [<path>...] templates
+Date: Wed, 24 Apr 2013 12:21:04 -0700
+Message-ID: <7vy5c7buqn.fsf@alter.siamese.dyndns.org>
 References: <1366821216-20868-1-git-send-email-artagnon@gmail.com>
- <1366821216-20868-6-git-send-email-artagnon@gmail.com> <7vmwsndbve.fsf@alter.siamese.dyndns.org>
- <CALkWK0kaFc8cj-=1NbEwC_61U7qUCye70d9MZR66TpKB3i9XyA@mail.gmail.com>
- <20130424190638.GE29963@google.com> <CALkWK0n2zFp1t7qtKp8-Ohoz0QEn4BQrfvxzqt+qwLS5+sNdHQ@mail.gmail.com>
- <20130424191453.GG29963@google.com>
+	<1366821216-20868-4-git-send-email-artagnon@gmail.com>
+	<7vtxmvdc4d.fsf@alter.siamese.dyndns.org>
+	<CALkWK0nU-iTSF2DnmJAB=kj6w+VFv3rQrixEnHz0vyXf2d2=Mw@mail.gmail.com>
+	<7vbo93db25.fsf@alter.siamese.dyndns.org>
+	<CALkWK0nN+9XOTCqiY+yB9moQSvFFpSO=OZjJtLphBd2eQ24uDw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 24 21:21:09 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 24 21:21:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UV5Fc-00047f-PS
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 21:21:09 +0200
+	id 1UV5Fj-0004CQ-KU
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Apr 2013 21:21:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757306Ab3DXTVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Apr 2013 15:21:04 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:58113 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757003Ab3DXTVC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Apr 2013 15:21:02 -0400
-Received: by mail-ie0-f182.google.com with SMTP id bn7so2599852ieb.13
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 12:21:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=JNbsCKGL9xklTaF9oWJUUXrlXmMp70Xr4yE2W3vNa9M=;
-        b=Mwmd6J557bLVfnL2GCPQcwBHeVl7W2GuVrOk1wp7vWmUJ9iUCQYTQFK8yxtnLA1Env
-         eElfA/LE+toXEkeexco57zvgTDNm3t0nw+gkCu0jzdTgwY3E+axfNBOojeub1nwDfkp6
-         k5g5zfyp+0qsK3jjpzxnNiCYmaYFEnBa+H4ou/eKWdp7DXN9I6ypqu/kC5Ac0MgQ+lfq
-         526KzMzJsYwMwc6oIa6k55ilGeaRUhy9QcIYX8sKw+aPoZk6kyjU7Nskh/Xbv6IovkJo
-         s+1dm7mchZkeAlBrMhVxGqUbSA9uFEI2h4pAQj6hBITAcerVYZzY6sHCR9mgXuhyKIfb
-         VgCg==
-X-Received: by 10.50.57.200 with SMTP id k8mr29019167igq.44.1366831261686;
- Wed, 24 Apr 2013 12:21:01 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Wed, 24 Apr 2013 12:20:21 -0700 (PDT)
-In-Reply-To: <20130424191453.GG29963@google.com>
+	id S1757357Ab3DXTVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Apr 2013 15:21:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50114 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757329Ab3DXTVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Apr 2013 15:21:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B45319843;
+	Wed, 24 Apr 2013 19:21:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=blGMLB3kf9U6SUjX3OBcIb0sBGw=; b=cG717F
+	YRIdnlFO97Gm+uZU3uWi4MwoAW+EOX3ruiJrq7+XUbjCK1mIhJCy4l7S4I0bf8Ew
+	A2YNGOZeW0uU2MwOzb9VMLwHAVuTswNdvJNZDMqJTVuXTlkcHQ3hjCNI8cMIQSm5
+	ykJ3+PZMCQMuztbGpl21zSbdl8JceFIZ1l994=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IY4Wl8XkdRFQ+oF1u+wU86cknDkL4Ar5
+	sgggKcyY+g+qYihBuZXTDGXQaEBW3XAlnCHXexw2OXYcpfMhT3prnsZYxz+zfOOd
+	Fw7hdyNAopGsjhFrWu4ajWaTgQJThVZPxEQnpRnwbihS6vRtThpp7LaPeU2eEdXw
+	NFAA2BmQJ5A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 202A919842;
+	Wed, 24 Apr 2013 19:21:07 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A26B19841;
+	Wed, 24 Apr 2013 19:21:06 +0000 (UTC)
+In-Reply-To: <CALkWK0nN+9XOTCqiY+yB9moQSvFFpSO=OZjJtLphBd2eQ24uDw@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Thu, 25 Apr 2013 00:23:38 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1C963D56-AD14-11E2-905B-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222303>
 
-Jonathan Nieder wrote:
-> Oh please no.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-If I understand this correctly, you are horrified by this?
-https://github.com/artagnon/dotfiles/blob/master/.gitconfig#L30
+> Junio C Hamano wrote:
+>> The same logic would apply to this semi-nonsense rewrite, no?
+>>
+>>         git diff [[options] [--]] [<path>...]
+>>
+>> Everything else comes before "--" (if exists) that separates it from
+>> the list of pathspecs.
+>
+> Yeah, except it's sometimes
+>
+>     [[options] [revision range] [--]] [<path>...]
+>
+> and other times
+>
+>     [[options] [<commit>...] [--]] [<path>...]
+>
+> and yet other times
+>
+>     [[options] [--]] [<path>...]
+>
+> Whereas mine is always
+>
+>     ... [[--] [<path>]]
+>
+> (everywhere in git)
 
-By the way, my zsh aliases git to g.
+You are missing the entire point.  Neither [[everything else][--]][path]
+or [everything else][[--][path]] is better than without the extra
+level of [], which does not help clarifying _anything_.
