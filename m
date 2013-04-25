@@ -1,76 +1,55 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] bisect: Store first bad commit as comment in log file
-Date: Thu, 25 Apr 2013 06:26:32 +0200 (CEST)
-Message-ID: <20130425.062632.630918480810226803.chriscool@tuxfamily.org>
-References: <20130422210229.GE5650@pvv.ntnu.no>
-	<7vr4i2nuar.fsf@alter.siamese.dyndns.org>
-	<20130422222058.GF5650@pvv.ntnu.no>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [BUG] Highly inconsistent diff UI
+Date: Thu, 25 Apr 2013 09:57:36 +0530
+Message-ID: <CALkWK0=AxKnbOhmM+wAdAb4vh9HANfLHZmJ6bTWxN_8B9p_-XQ@mail.gmail.com>
+References: <CALkWK0n2ZZTgYxi3Fk2UxY8TXFAt1Xt3+11G98GKxbYdoMOT+Q@mail.gmail.com>
+ <7va9ong9oa.fsf@alter.siamese.dyndns.org> <CALkWK0mVDT5ESnVJAWQ83gQnmxmGDoM_Y0nE4FGybcjcenA_KA@mail.gmail.com>
+ <7v38ufer2x.fsf@alter.siamese.dyndns.org> <CALkWK0m5Q_e3q6Yg94-K+jU_SS7ovR2wnz-_Nr3cMz_YM=SMDQ@mail.gmail.com>
+ <7vvc7baahc.fsf@alter.siamese.dyndns.org> <CALkWK0=NWSZsARu9w0DwpEmJHKnvpB8yoNfEa31LDQA=cV-90Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: hegge@resisty.net
-X-From: git-owner@vger.kernel.org Thu Apr 25 06:26:45 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 25 06:28:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVDlc-0006dZ-Ea
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 06:26:44 +0200
+	id 1UVDnA-0000QS-Sy
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 06:28:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750839Ab3DYE0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 00:26:36 -0400
-Received: from mail-1d.bbox.fr ([194.158.122.56]:45273 "EHLO mail-1d.bbox.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1749667Ab3DYE0g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 00:26:36 -0400
-Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1d.bbox.fr (Postfix) with ESMTP id 3303B33;
-	Thu, 25 Apr 2013 06:26:33 +0200 (CEST)
-In-Reply-To: <20130422222058.GF5650@pvv.ntnu.no>
-X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+	id S1750819Ab3DYE2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 00:28:17 -0400
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:38150 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1749667Ab3DYE2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 00:28:16 -0400
+Received: by mail-ie0-f171.google.com with SMTP id e11so3131105iej.30
+        for <git@vger.kernel.org>; Wed, 24 Apr 2013 21:28:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=9rjVmomc5RVdR4x7UZSfFwoUK9tVPB4KoCrk0/nAO9o=;
+        b=fOUbIQljqNgM69JzDQ9C/Vxuan9AaENudLSviaOamk+xcxI8qmxk3TjrFWmQ7XaN+n
+         DL0ZJtCuy9yTdEd97wabJ/4f9OpkTwt6Itrn4Iq677WHfgx+d1+Q9PcRCl3JmOBP+qb8
+         Dx8Nwkq8FH/AYSs/X9dc9I8Drs3awjsoiK8H4m2BU0ZY3SeP2WzMiLUS7Iij+UlKKKIC
+         Vn0WfQV/d40jigU4OUYLiEI7YnWnRKf0zOu4qD+IMIXsZE0W3xQO5mz+QTQYAeU73eLA
+         9CUDgtlpZXg6hpzGTB4JBqql1XNP12Vf+VAOiIdVePZG3RbZqNn8N2+BkyBqd1q4Cwtx
+         WIMg==
+X-Received: by 10.50.57.116 with SMTP id h20mr1445726igq.49.1366864096176;
+ Wed, 24 Apr 2013 21:28:16 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Wed, 24 Apr 2013 21:27:36 -0700 (PDT)
+In-Reply-To: <CALkWK0=NWSZsARu9w0DwpEmJHKnvpB8yoNfEa31LDQA=cV-90Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222342>
 
-From: Torstein Hegge <hegge@resisty.net>
-Subject: Re: [PATCH] bisect: Store first bad commit as comment in log file
-Date: Tue, 23 Apr 2013 00:20:58 +0200
+Ramkumar Ramachandra wrote:
+> We might still want it.  I mean what are we losing?
 
-> On Mon, Apr 22, 2013 at 14:13:00 -0700, Junio C Hamano wrote:
->> Torstein Hegge <hegge@resisty.net> writes:
->> 
->> > I took another look at this. I wasn't able to come up with anything
->> > useful for the "The merge base $rev is bad" case, but for the "only
->> > skipped commits left to test" case one could do something like this.
->> 
->> We skipped them because we can gain _no_ information from testing
->> these commits. They are not even "possibly bad", but are "unknown".
->> 
->> So it feels to me that by definition listing them would not be
->> useful. What am I missing?
-> 
-> The information lies in that those commits are the only commits with an
-> unknown state. So if the bisecter hands off the bisect log to someone
-> else when they can't test further, the current status is recorded.
-
-Yeah, I think it is a good enough reason for your patch.
- 
-> I think part of the reason I started looking at this is that there are
-> no good way to see what git said after the previous 'git bisect
-> good/bad' if the terminal output is lost. And lost terminal output is
-> fairly likely if you are bisecting something that requires reboots for
-> each test.
-
-Yeah, I agree.
-
-> But I don't feel very strongly about this. It was based on Christian's
-> idea, so unless he comes up with some compelling arguments I'll drop it.
-
-I think your arguments are good enough.
-
-Thanks,
-Christian.
+Actually, let's just look at extending the rev specs we currently
+have.  I'll gather up a list of real itches and post it to the list.
