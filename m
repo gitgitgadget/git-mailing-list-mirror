@@ -1,77 +1,63 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 9/9] remote-bzr: strip extra newline
-Date: Thu, 25 Apr 2013 06:20:49 -0500
-Message-ID: <1366888849-19607-10-git-send-email-felipe.contreras@gmail.com>
-References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christophe Simonis <christophe@kn.gl>,
-	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 25 13:23:09 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 0/5] Documentation/git-diff.txt improvements
+Date: Thu, 25 Apr 2013 16:55:10 +0530
+Message-ID: <CALkWK0nVZHwSMS_gtisiAguNhAMnDpdWmAtz_OgzP93YZtYfHQ@mail.gmail.com>
+References: <1366821216-20868-1-git-send-email-artagnon@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 25 13:26:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVKGZ-0004yr-32
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 13:23:07 +0200
+	id 1UVKJL-00012u-Qk
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 13:26:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758159Ab3DYLXC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 07:23:02 -0400
-Received: from mail-oa0-f41.google.com ([209.85.219.41]:33957 "EHLO
-	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758067Ab3DYLXA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 07:23:00 -0400
-Received: by mail-oa0-f41.google.com with SMTP id g12so2714094oah.0
-        for <git@vger.kernel.org>; Thu, 25 Apr 2013 04:23:00 -0700 (PDT)
+	id S1758198Ab3DYLZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 07:25:52 -0400
+Received: from mail-ia0-f181.google.com ([209.85.210.181]:51289 "EHLO
+	mail-ia0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756519Ab3DYLZv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 07:25:51 -0400
+Received: by mail-ia0-f181.google.com with SMTP id k38so2627658iah.12
+        for <git@vger.kernel.org>; Thu, 25 Apr 2013 04:25:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=9hVLAqURTKRM0CiT1p7Y9Wpwv/gJSh6mciNLDlpv47o=;
-        b=nMj+dsba28n9tzdJOg7UiC8qwHNzr2m/1JlqpvsaZsflv/cZaVm2bpMHQlgUQc82mV
-         Y56JzA991azXVMPcFLcmv6kOboCZUFuXmKdB7c54JaFDQE+jcG3D6HPJNTXThvuFN3LW
-         wyPyBuRYLmZt+qVgjae/XIIuPV59gUAmVp/WiTZoCOUkxAD4aC6HP2UYdtUXS3tt/rTA
-         rHK+uOTVgQFBm0U3x5hFN9VP6jXRdPSSEASwlBxe72ZI88ANkuj7ASlBdW5MVPEk+RJW
-         VCTxzNgRv7700IMVTLWoByx5A4E6lVhp0sGOaIJOvFnHM4NgYqajO/CR6iaMmn4Thlrc
-         Ky7A==
-X-Received: by 10.60.146.227 with SMTP id tf3mr7416329oeb.50.1366888980121;
-        Thu, 25 Apr 2013 04:23:00 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id b2sm3015695oby.5.2013.04.25.04.22.57
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Apr 2013 04:22:59 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1
-In-Reply-To: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=xEiA/jIHoSeEzWEr1NeffvE/aatSaaXCtKPDdmVtaZ4=;
+        b=zd5fdFRUU/KMNU/epxochi/LGVvNEbhQomDs9f/0LRMP+33RIs4N4mgulzX6dCIi8K
+         OBnOu8l9xe4Ekxf9beAXm2kfRSzDNwninZdKFiUBnEWZReKAGKfYwXvhRe6WwiD4wSxH
+         sxNyuzevUiivP/SFfP17wq24+fWiZSK6jODps3s6Vvq15ZyD++R5WORj2rKmjPOVPgC7
+         UbAKYD9yxaBCxRzd5LOFTSUGbQL0kMfWr1krDzPVoY8kXxOwFd8FhY5kLJEokAoTtp8n
+         9NjK27Es32TqH9JCFPfuX6vrNtJxDUjPdHgCQTMC+LdaPA6F53MAUjhLcBSLdx1eAQno
+         nFgA==
+X-Received: by 10.50.55.73 with SMTP id q9mr25557441igp.44.1366889150501; Thu,
+ 25 Apr 2013 04:25:50 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Thu, 25 Apr 2013 04:25:10 -0700 (PDT)
+In-Reply-To: <1366821216-20868-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222378>
 
-It's added by fast-export, the user didn't type it.
+So, I decided to drop everything and just submit the first two parts.
+Until we can decide what to do about the '<commit>..<commit>' and
+'<commit>...<commit>' forms (new rev spec? overload existing rev spec
+to change the meaning? deprecate without a viable alternative?), let's
+leave them as it is.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/git-remote-bzr | 4 ++++
- 1 file changed, 4 insertions(+)
+Nothing to resubmit.  Junio: can you just queue the first two parts?
 
-diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index 19668a9..8c316fe 100755
---- a/contrib/remote-helpers/git-remote-bzr
-+++ b/contrib/remote-helpers/git-remote-bzr
-@@ -549,6 +549,10 @@ def parse_commit(parser):
-         parents.append(parser.get_mark())
-         parser.next()
- 
-+    # fast-export adds an extra newline
-+    if data[-1] == '\n':
-+        data = data[:-1]
-+
-     files = {}
- 
-     for line in parser:
--- 
-1.8.2.1
+Thanks.
+
+Ramkumar Ramachandra (2):
+  git-diff.txt: reorder the <commit> <commit> form
+  git-diff.txt: strip the leading "--" from options template
+
+ Documentation/git-diff.txt | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
