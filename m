@@ -1,64 +1,72 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 5/9] remote-hg: use hashlib instead of hg sha1 util
-Date: Thu, 25 Apr 2013 23:55:50 +0530
-Message-ID: <CALkWK0=Q2KZPioYD21pYLzruBnFh_cpFLh_rDj7QDa3bOaCO6g@mail.gmail.com>
-References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com> <1366888849-19607-6-git-send-email-felipe.contreras@gmail.com>
+From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH] check-non-portable-shell: echo -e is not portable
+Date: Thu, 25 Apr 2013 20:48:04 +0200
+Message-ID: <201304252048.04553.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Christophe Simonis <christophe@kn.gl>,
-	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 25 20:26:37 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 25 20:48:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVQsN-0000tQ-86
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 20:26:35 +0200
+	id 1UVRDN-0007JA-4I
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 20:48:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759282Ab3DYS0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 14:26:31 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:63111 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758738Ab3DYS0a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 14:26:30 -0400
-Received: by mail-ie0-f178.google.com with SMTP id aq17so3945799iec.37
-        for <git@vger.kernel.org>; Thu, 25 Apr 2013 11:26:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=7d8CD6TyxlproOpI9vB2XL1Ku/EHuhgW85RmPZL0cpA=;
-        b=xCF9/J4GKl+QW/cUDIwqOTL8LnWxAeVr/XClTKN/RqtG5BELFB1LYeZwEq4IVsFBo/
-         EW3kyUGS5oVHZYM/1f3BUmLmwxwIavpoLdAq/SIjskSojD990XqgWd260PEUmKaXazWP
-         XYInJ1dI5XRYhUF2s2W7hDXmtOkKwwE0QBYqxKn6MxHddjFmw30Hh9Mx1Q1iw2S35mbD
-         /EendTDWplevbUJNEVfUcR2axD1T+G6NxUaQyYMukX/yzrblUlol+pUsEVxAVYktwxeh
-         FoMRdjyHOONL61RfAs0eNkbPsAA67L3qAdf5rnJr56D09/QCM/KTquOCfPYBLmWTP6aY
-         CWEw==
-X-Received: by 10.50.55.73 with SMTP id q9mr26648492igp.44.1366914390226; Thu,
- 25 Apr 2013 11:26:30 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Thu, 25 Apr 2013 11:25:50 -0700 (PDT)
-In-Reply-To: <1366888849-19607-6-git-send-email-felipe.contreras@gmail.com>
+	id S1759444Ab3DYSsM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Apr 2013 14:48:12 -0400
+Received: from mout.web.de ([212.227.17.11]:51968 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759441Ab3DYSsM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Apr 2013 14:48:12 -0400
+Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb002) with
+ ESMTPA (Nemesis) id 0Lj2TO-1V4DX225V8-00dZcd for <git@vger.kernel.org>; Thu,
+ 25 Apr 2013 20:48:10 +0200
+X-Provags-ID: V02:K0:cRD9PatUTNyiAZV8eTQgTMj86/qV2iiIEspdMw8iZdi
+ wK65uyX6iQ5NnbzbHyK96WeRlF4nyuEqx0mrXkfDkPNYB2XNHB
+ zOaWpk16nAY7l6xdNs2+7tpZy2DReJ1CBPxpRuncP86coYtUNA
+ 7WhmY2ol/K5n2Od+UlrW+pWqZ7yRzJc0S6Nsa89qhlksWIgNvH
+ FjLFqGoPvTPBtoyR4ox1Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222409>
 
-Felipe Contreras wrote:
-> To be in sync with remote-bzr.
+Depending on the implementation, the echo command may
+support options like -n -e -E or no options at all.
 
-Huh?  Why do you have to be in sync with remote-bzr?  Are you sharing
-code between remote-hg and remote-bzr?
+The only portable usage of echo is without any options,
+which means that no parameter may start with a hyphen.
 
-> @@ -830,7 +831,7 @@ def main(args):
->
->      if alias[4:] == url:
->          is_tmp = True
-> -        alias = util.sha1(alias).hexdigest()
-> +        alias = hashlib.sha1(alias).hexdigest()
+check-non-portable-shell.pl checks if echo -n is used.
+Improve it to reject any parameter starting with a hyphen
+and recommend the usage of printf instead
 
-Did you eve bother justifying this change with a line in the commit
-message?  How is the new form different from the old form?
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ t/check-non-portable-shell.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell=
+=2Epl
+index 8b5a71d..ff87611 100755
+--- a/t/check-non-portable-shell.pl
++++ b/t/check-non-portable-shell.pl
+@@ -17,7 +17,7 @@ sub err {
+ while (<>) {
+ 	chomp;
+ 	/^\s*sed\s+-i/ and err 'sed -i is not portable';
+-	/^\s*echo\s+-n/ and err 'echo -n is not portable (please use printf)'=
+;
++	/^\s*echo\s+-(\S)\s+/ and err "echo -$1 is not portable (please use p=
+rintf)";
+ 	/^\s*declare\s+/ and err 'arrays/declare not portable';
+ 	/^\s*[^#]\s*which\s/ and err 'which is not portable (please use type)=
+';
+ 	/test\s+[^=3D]*=3D=3D/ and err '"test a =3D=3D b" is not portable (pl=
+ease use =3D)';
+--=20
+1.8.2.1.614.g66d7af5
