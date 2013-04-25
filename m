@@ -1,100 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] Make --full-history consider more merges
-Date: Thu, 25 Apr 2013 11:19:21 -0700
-Message-ID: <7v1u9y4gnq.fsf@alter.siamese.dyndns.org>
-References: <7v4nfcj2kq.fsf@alter.siamese.dyndns.org>
-	<1366658602-12254-1-git-send-email-kevin@bracey.fi>
-	<7vzjwqny64.fsf@alter.siamese.dyndns.org> <5176B854.2000707@bracey.fi>
-	<7va9ona77d.fsf@alter.siamese.dyndns.org>
-	<7v61zb8j5d.fsf@alter.siamese.dyndns.org> <5179505F.2000108@bracey.fi>
-	<7vtxmu4kq2.fsf@alter.siamese.dyndns.org> <517963B4.30801@bracey.fi>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/9] remote-bzr: trivial cleanups
+Date: Thu, 25 Apr 2013 23:49:42 +0530
+Message-ID: <CALkWK0meg1FgU=-4MFoFGjpDq_oa9XR_+qeiseR0J85mS71dNg@mail.gmail.com>
+References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com> <1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kevin Bracey <kevin@bracey.fi>
-X-From: git-owner@vger.kernel.org Thu Apr 25 20:20:09 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Christophe Simonis <christophe@kn.gl>,
+	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 25 20:20:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVQm4-0007zk-Gi
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 20:20:04 +0200
+	id 1UVQmT-000094-9E
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 20:20:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759209Ab3DYSTt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 14:19:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59714 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759113Ab3DYSTY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 14:19:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F4FB1796A;
-	Thu, 25 Apr 2013 18:19:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rMxRC7u6Y7Jhme2ZhBGr2Q6veO0=; b=rAOrtR
-	0ODPx4qRAGvvyQkUVNAwFS29DQ7UtZU46SKyjVY08J4Do1f8ZpFNPnvoOHTJFyNL
-	6bm3arhGCrfhKoug4/iqxz6Zu1K1GS5Rj7u5b9TDXTnfk33EIWCdBbc0ZuP16lx2
-	bl+a3rKz8qTwTC1zk3S0FC34N0vSkCm1vJDt8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hyhoKjWZJLDfRsvLJ08EkLkr82DFXt08
-	YzL0SxqHI0fWZGTTkr0YfcATxCFBVd1K63pEdEDqXJSGbDBV/YXDMHu0iQ9aTi3C
-	ePtqVfkIUz5TGrlUSWYaeqNba7eIMYvXn2pQ3wluLkEMi1K/K4BndHZHwSre07k+
-	Cvwgq8iSBH8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20CD917969;
-	Thu, 25 Apr 2013 18:19:24 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7AD1C17963;
-	Thu, 25 Apr 2013 18:19:23 +0000 (UTC)
-In-Reply-To: <517963B4.30801@bracey.fi> (Kevin Bracey's message of "Thu, 25
-	Apr 2013 20:11:16 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A7D74282-ADD4-11E2-B3EE-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759226Ab3DYSUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 14:20:24 -0400
+Received: from mail-ia0-f171.google.com ([209.85.210.171]:59483 "EHLO
+	mail-ia0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759218Ab3DYSUX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 14:20:23 -0400
+Received: by mail-ia0-f171.google.com with SMTP id r13so2870556iar.16
+        for <git@vger.kernel.org>; Thu, 25 Apr 2013 11:20:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=QhpmGrSIYIRmmsEifrXKZpFG5jld1KfBdNsezC4SPV0=;
+        b=W02KLyrirNeae1okN+N9i/8mUlDR3KXPLOGA6tuegfDguUbV+j8PeQwmpqKergmYkS
+         7Hpw3+4RqqgrdnC9D8mESEFqJBaUie9YhKObIhq87j2U+qDWFtvHqs3E2klqo65j9P0d
+         wq6UgJop+yrvWBrqZ8Ft73kEX1Y4jiJWgfjby2HKML0EMWtQVXZnQ+PjlYY4QWrqGXnd
+         +FkPyGMQQtM3Ku7nRO7SHxz2qIJJ2gPzuq0OjIZLEYIq2wx+vL/eTYS/sKSWNxYuLBc6
+         1WQapox1c2Ta0LHYgrBMevrWrEYKB823yYIIt4WpIxxTRwSG96cX2XMFJkMsWqyGEZS9
+         /DLA==
+X-Received: by 10.50.55.73 with SMTP id q9mr26634303igp.44.1366914023031; Thu,
+ 25 Apr 2013 11:20:23 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Thu, 25 Apr 2013 11:19:42 -0700 (PDT)
+In-Reply-To: <1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222405>
 
-Kevin Bracey <kevin@bracey.fi> writes:
-
-> On 25/04/2013 19:51, Junio C Hamano wrote:
->> Kevin Bracey <kevin@bracey.fi> writes:
->>
->>> Thanks for the test addition. Maybe we will be able to satisfy your
->>> greed in this series. There could be more worth doing here, and I
->>> think getting TREESAME precise is key.
->> It is perfectly fine to do things one step at a time.  Let's get
->> the --full-history change into a good shape first and worry about
->> the more complex case after we are done.
+Felipe Contreras wrote:
+> diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+> index aa7bc97..82bf7c7 100755
+> --- a/contrib/remote-helpers/git-remote-bzr
+> +++ b/contrib/remote-helpers/git-remote-bzr
+> @@ -94,7 +94,7 @@ class Marks:
+>          return self.last_mark
 >
-> So do you see the rerun of try_to_simplify_commit() as acceptable? I'm
-> really not happy with it - it was fine for an initial
-> proof-of-concept, but it's an obvious waste of CPU cycles to recompute
-> something we already figured out, and I'm uncomfortable with the fact
-> that the function potentially does more than just compute TREESAME; by
-> inspection it seems safe given the known context inside
-> simplify_merges(), but it feels like something waiting to trip us
-> up.
+>      def is_marked(self, rev):
+> -        return self.marks.has_key(rev)
+> +        return rev in self.marks
 
-True.
+Why?  Is the new form faster than the older one?
 
-> The latter could be dealt with by breaking
-> try_to_simplify_commit() up, but that feels like a diversion. I'd
-> rather just get on and make this first patch store and use the
-> per-parent-treesame flags if feasible.
+> @@ -224,7 +224,7 @@ def export_files(tree, files):
+>              else:
+>                  mode = '100644'
+>
+> -            # is the blog already exported?
+> +            # is the blob already exported?
 
-OK.  We have survived with this corner case glitch for more than 6
-years, so a fix is not ultra-urgent.  Let's try to see if we can get
-it right.
+What is this?  Whitespace?
 
-How many decorations are we talking about here?  One for each merge
-commit in the entire history?  Do we have a cue that can tell us
-when we are really done with a commit that lets us discard the
-associated data as we go on digging, keeping the size of our working
-set somewhat bounded, perhaps proportional to the number of commits
-in our rev_info->commits queue?
+> @@ -521,7 +521,7 @@ def c_style_unescape(string):
+>      return string
+>
+>  def parse_commit(parser):
+> -    global marks, blob_marks, bmarks, parsed_refs
+> +    global marks, blob_marks, parsed_refs
+
+How is this trivial?  You just removed one argument.
+
+> @@ -555,7 +555,7 @@ def parse_commit(parser):
+>              mark = int(mark_ref[1:])
+>              f = { 'mode' : m, 'data' : blob_marks[mark] }
+>          elif parser.check('D'):
+> -            t, path = line.split(' ')
+> +            t, path = line.split(' ', 1)
+
+How on earth is this trivial?  It changes the entire meaning!
+
+> @@ -643,6 +643,7 @@ def do_export(parser):
+>                  wt = repo.bzrdir.open_workingtree()
+>                  wt.update()
+>          print "ok %s" % ref
+> +
+
+Whitespace?
+
+I'm outraged by this.  What kind of changes are you pushing to
+remote-hg?  A "trivial cleanups" bundling miscellaneous changes, with
+no commit message?  Why don't you just squash everything into one
+"miscellaneous changes" patch?
