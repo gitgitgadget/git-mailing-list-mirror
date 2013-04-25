@@ -1,72 +1,110 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Itches with the current rev spec
-Date: Thu, 25 Apr 2013 11:24:14 +0530
-Message-ID: <CALkWK0mr55QwrcsvyeRzq1K0RgEB7YOxMRhz2kjckRGZe-Tz7A@mail.gmail.com>
-References: <CALkWK0n97VLtiR96VEy86645NVoDL2rS-g7LBuLb=JpncdH6VA@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] git-remote-testgit: avoid process substitution
+Date: Thu, 25 Apr 2013 07:56:19 +0200
+Message-ID: <5178C583.6000703@viscovery.net>
+References: <7vvc7enxco.fsf@alter.siamese.dyndns.org> <7vwqrtgi1r.fsf@alter.siamese.dyndns.org> <51779052.8020507@viscovery.net> <CAMP44s1oX_m0d+2Z3+VkafOhT1bZK_9Z5m1ex456DMdAidEKeg@mail.gmail.com> <5177980A.4090305@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 25 07:55:00 2013
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 25 07:56:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVF92-0002NG-DF
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 07:55:00 +0200
+	id 1UVFAY-0004e4-UC
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 07:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751795Ab3DYFyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 01:54:55 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:38179 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751185Ab3DYFyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 01:54:54 -0400
-Received: by mail-ie0-f171.google.com with SMTP id e11so3171792iej.2
-        for <git@vger.kernel.org>; Wed, 24 Apr 2013 22:54:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=NzfUhpq8eHFKpnPz3s/aoOQhfI8hQQUa5QoRoWnmte0=;
-        b=R79bYvfpX9Ynw/Eq+QA78QqKPueQD9Iewbfax55hHCEAtqqU3ec1FXX+Tn8uWuWWTe
-         EvqihTYHB/2GxLUvrt3Do1PtI5C9xKJlHnvARVG7xH1i30utwjQIcASSw4t1wDdDKUV8
-         fI9ycl2zxfI31+xLb6i8cqNXc3Iw2uz4VGg7Km4/pXHr0arLmNFv8N7WVnx247RxIX//
-         ren0z9xZ90b6MbtZlohKi/gIoFt8ppgaVGkf/abaTW37VnKBuPsGzE3EyPXhtrcUH0o1
-         7Q0h3fps6FKspZfLQewnz50Fs/1CP/ehYRll7rdbPZc4C3IM/wKRT1+A3WX1ZRl/rFjk
-         5zlw==
-X-Received: by 10.50.57.116 with SMTP id h20mr1628183igq.49.1366869294345;
- Wed, 24 Apr 2013 22:54:54 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Wed, 24 Apr 2013 22:54:14 -0700 (PDT)
-In-Reply-To: <CALkWK0n97VLtiR96VEy86645NVoDL2rS-g7LBuLb=JpncdH6VA@mail.gmail.com>
+	id S1751973Ab3DYF4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 01:56:30 -0400
+Received: from so.liwest.at ([212.33.55.23]:22790 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751063Ab3DYF4a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 01:56:30 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1UVFAJ-0001sD-W9; Thu, 25 Apr 2013 07:56:22 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id A069D1660F;
+	Thu, 25 Apr 2013 07:56:19 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <5177980A.4090305@viscovery.net>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222346>
 
-Ramkumar Ramachandra wrote:
-> 3. Even though I lashed out strongly against 'git diff A..B' because
-> of inconsistency, I can't say that it's not useful (omit specifying
-> HEAD on one side).  If we were to start over today, I would argue that
-> 'git diff A ^B' and 'git diff B ^A' be handled as special cases to
-> mean 'git diff B $(git merge-base A B)' and 'git diff $(git merge-base
-> A B) B' respectively.  The normal 'git diff A B' should have nothing
-> to do with this.  Plus, 'git diff A...B' is really an eyesore.  So I
-> ask again: what can be done to improve the situation?
+From: Johannes Sixt <j6t@kdbg.org>
 
-Okay, so my solution to this is:
+Bash on Windows does not implement process substitution.
 
-1. Change the meaning of 'git diff A..B' (and A ^B, ^A B for
-consistency).  Existing users might be using 'git diff master..' on
-their feature branches to get meaningful output, and this will not
-change.  'git diff featurebranch1..' on another feature branch doesn't
-give meaningful output anyway, and I find it hard to believe that
-users will complain if we change the meaning of this.  Okay, maybe we
-want to do it in git 2.0?
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+Am 4/24/2013 10:30, schrieb Johannes Sixt:
+> Am 4/24/2013 10:04, schrieb Felipe Contreras:
+>> On Wed, Apr 24, 2013 at 2:57 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>>> Am 4/23/2013 21:31, schrieb Junio C Hamano:
+>>>> * fc/transport-helper-error-reporting (2013-04-17) 9 commits
+>>>>   (merged to 'next' on 2013-04-22 at 5ba6467)
+>>>>  + transport-helper: update remote helper namespace
+>>>>  + transport-helper: trivial code shuffle
+>>>>  + transport-helper: warn when refspec is not used
+>>>>  + transport-helper: clarify pushing without refspecs
+>>>>  + transport-helper: update refspec documentation
+>>>>  + transport-helper: clarify *:* refspec
+>>>>  + transport-helper: improve push messages
+>>>>  + transport-helper: mention helper name when it dies
+>>>>  + transport-helper: report errors properly
+>>>>
+>>>>  Update transport helper to report errors and maintain ref hierarchy
+>>>>  used to keep track of remote helper state better.
+>>>>
+>>>>  Will merge to 'master'.
+>>>
+>>> Please don't, yet. There is a new test case that fails on Windows. I'll
+>>> have to figure out a work-around.
+>>
+>> Which test case? If it it failed, it failed before this series. I
+>> don't see how this new series would affect anything.
+> 
+> The test introduced in the commit at the tip: 'push update refs'.
 
-2. Document (1) properly in gitrevisions.txt.
+Here is a fix. It assumes that the list of refs after the import is
+a superset of the refs before the import. (Can refs be deleted
+via fast-import?)
 
-3. Deprecate 'git diff A...B'.
+ git-remote-testgit | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-What do you think?
+diff --git a/git-remote-testgit b/git-remote-testgit
+index 23c9d40..e99d5fa 100755
+--- a/git-remote-testgit
++++ b/git-remote-testgit
+@@ -91,13 +91,15 @@ do
+ 
+ 		git fast-import "${testgitmarks_args[@]}" --quiet
+ 
+-		after=$(git for-each-ref --format='%(refname) %(objectname)')
+-
+ 		# figure out which refs were updated
+-		join -e 0 -o '0 1.2 2.2' -a 2 <(echo "$before") <(echo "$after") |
+-		while read ref a b
++		git for-each-ref --format='%(refname) %(objectname)' |
++		while read ref a
+ 		do
+-			test $a == $b && continue
++			case "$before" in
++			*"$ref $a"*)
++				continue
++				;;
++			esac
+ 			echo "ok $ref"
+ 		done
+ 
+-- 
+1.8.2.388.g36592d7
