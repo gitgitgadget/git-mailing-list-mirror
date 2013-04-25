@@ -1,169 +1,103 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/9] remote-bzr: trivial cleanups
-Date: Thu, 25 Apr 2013 16:35:48 -0500
-Message-ID: <CAMP44s1RdZ19y8v+_=gwBzq1Tg5v8+TWAYCAVR-ZzNwZ0_m_Ng@mail.gmail.com>
+Date: Thu, 25 Apr 2013 14:37:27 -0700
+Message-ID: <7vwqrq1eco.fsf@alter.siamese.dyndns.org>
 References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
 	<1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
 	<CALkWK0meg1FgU=-4MFoFGjpDq_oa9XR_+qeiseR0J85mS71dNg@mail.gmail.com>
 	<CAMP44s2nRHRFY_BRO7+x=CVKgrob78xZCpiV4Hk9sjWB_Q=vng@mail.gmail.com>
-	<7vip3a2vq0.fsf@alter.siamese.dyndns.org>
+	<87bo92l5el.fsf@hexa.v.cablecom.net>
+	<CAMP44s1uS23OvsDY+_YOBGMgc9t=FBEV3YvM34M9sLMEF9hnTg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@inf.ethz.ch>,
+	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
 	Christophe Simonis <christophe@kn.gl>,
 	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 25 23:35:56 2013
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 25 23:37:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVTpc-0003Wt-1Z
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 23:35:56 +0200
+	id 1UVTrE-0005Ny-89
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 23:37:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759230Ab3DYVfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 17:35:51 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:43959 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758883Ab3DYVfu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 17:35:50 -0400
-Received: by mail-lb0-f175.google.com with SMTP id w20so2357202lbh.34
-        for <git@vger.kernel.org>; Thu, 25 Apr 2013 14:35:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=Fj047Ew9hUt4Xr9RywLfg1y4TR1HeuHuz1/n1WvlYaQ=;
-        b=OVUsx92JC15lGGsx3MrbYO90MPbwwk0sY0D6wTfGmyd7NulD1BdNTSy+LVW0D0D211
-         OzxGga4qzlsR0Dq8jjxg5V5FRSPt0F19BS/JT8M7zIJwf0Ym8HawB46j3GB8IqJe8DD7
-         JLDgEcMZjjGDactPIj+JQqen0L6IixSf3O+waTjEfhGOEpqVdBXAgYYYKoG7EpI1IxP3
-         Wcjc6kLOteje0/ikO6y4f8zQ1M2qgGvGnBG3bmLtkEP6+m4bh8UmsLL+ZWboeWfyMzw5
-         VP9IInUkZ7+Mo0JHhjOHRCAD0RZszzPyms8Ifodof3ecm7sGs7ZrtC4HM7h6/IUGLKbv
-         jccQ==
-X-Received: by 10.112.154.98 with SMTP id vn2mr19171655lbb.8.1366925748583;
- Thu, 25 Apr 2013 14:35:48 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Thu, 25 Apr 2013 14:35:48 -0700 (PDT)
-In-Reply-To: <7vip3a2vq0.fsf@alter.siamese.dyndns.org>
+	id S1758769Ab3DYVhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 17:37:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41635 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758382Ab3DYVhb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 17:37:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FAA019568;
+	Thu, 25 Apr 2013 21:37:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Qai7Do6eUV97c0kqsG1vMu0qPnc=; b=E9VfW1
+	Xvplp8Kj3vwD6Iu4Ku60LfQG4fGckd3+iybxHQjiGdeftnTIcuwcRr2eNykKOP0c
+	Dc5x8pDSnSgnUywzuaK9cTqmExbKpwm4Gm9F1i1H5j4DLTtg4sL0W5XCLRVX3ulZ
+	8JTK0ZOG0vkD6kuelS850WYwAYUUk/zhebTpQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YwikncwuhEl3t/54rPXPHc/TY7wjBv9t
+	9T31tEbHwnFP0qyQjyCRyjezS8IH1w5DR4x5uSRZQNSJNaPlkI+AZlkrWDlbr1JL
+	WApEp3ep2IUVhltlCuhJJ15ig0rR+4btxCBJc71sUBo0sYQfheaYAQhat2MfwpJh
+	wyCV3aYq+kw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0428219566;
+	Thu, 25 Apr 2013 21:37:30 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63AA619565;
+	Thu, 25 Apr 2013 21:37:29 +0000 (UTC)
+In-Reply-To: <CAMP44s1uS23OvsDY+_YOBGMgc9t=FBEV3YvM34M9sLMEF9hnTg@mail.gmail.com>
+	(Felipe Contreras's message of "Thu, 25 Apr 2013 15:52:19 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5464F06A-ADF0-11E2-AAA0-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222453>
 
-On Thu, Apr 25, 2013 at 3:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> On Thu, Apr 25, 2013 at 3:30 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>
+>>> But I do not care that much really. The patch is good either way, if
+>>> you don't like it, you go ahead and fix it, because I won't. I have
+>>> 174 remote-helper related patches in my queue, and nobody benefits
+>>> from rambling about a one liner that is obviously correct, not you,
+>>> not me, not the users, not the developers.
+>>
+>> You don't stick to the rules of this project, which have been pointed
+>> out already:
 >
->> But I do not care that much really. The patch is good either way, if
->> you don't like it, you go ahead and fix it, because I won't. I have
->> 174 remote-helper related patches in my queue, and nobody benefits
->> from rambling about a one liner that is obviously correct, not you,
->> not me, not the users, not the developers.
->
-> Three random points.
->
->  * For this particular patch [1/9], especially because this would
->    land close to the corresponding remote-hg fixes (e.g. "has_key is
->    deprecated"), I think it is sufficient to say "port fixes from
->    corresponding remote-hg patches" (you said it in 0/9 and didn't
->    say it in 1/9, though) without going into individual details.
->    Anybody who wonders what these changes were about will have a
->    clue to check contemporary patches to remote-hg that way.
+> The rules of the contrib area are different from the ones of the rest
+> of the project.
 
-I don't see the value of pointing that out in the particular commit,
-since you are the only one that would do anything with that
-information, and it seems the message came across.
+Yes and no. 
 
-If there's any issues with that, just drop the patch, and if there's
-issues with the rest of the series, just drop them. I'll resend when
-the stuff is merged to master.
+A contrib/ material may not be held to the same high standard, but
+that does not mean a contrib/ area maintainer has a blank check to
+do anything there.
 
->  * You may want to hold onto those 174 patches and polish their
->    explanation up to save the list audiences' time by avoiding this
->    kind of useless "why no explanation" exchanges.
+It would be pretty obvious to people observing what happens in the
+area after a while, if the quality standard the area maintainer
+enforces is too out of whack, and at that point the area maintainer
+deserves to be ridiculed ;-)
 
-That's exactly what I've been doing.
+> And I don't recall Peff ever doing this "constructive
+> fine-let's-do-the-work-for-him" on any contrib/remote-helpers stuff.
 
-You are extrapolating from this particular patch, which I already
-admitted I made a mistake, and it's not really important in any way.
+I do not think Thomas was talking specific about contrib/ material
+but your interaction in general with other developers.
 
->  * If you do not want to keep a readable history, it would mean that
->    nobody but you will fix problems discovered in the future in
->    remote-hg, and there is no point carrying it in my tree for other
->    Git developers to look at it.  The users are better off getting
->    them from your tree and that will make it clear for them whom to
->    ask help/fix for when they hit a snag.
+Cf. http://thread.gmane.org/gmane.comp.version-control.git/220427/focus=220891
 
-The history *is* readable. If anybody has any problems with the commit
-messages, the place to mention such problems is IN THE PATCH REVIEW.
-Nobody has done that, because either nobody has any problems, or they
-are not interested. Either way, there's nothing I can do about it.
-
-*This* patch is an exception, and I'm not willing to waste time on
-this extremely trivial patch. Drop it.
-
->> Junio of course might disagree and drop this patch, but then he would
->> need to deal with the fallout of possible conflicts.
->
-> A much more sensible thing in such a case for me to do actually is
-> to drop the whole thing. I do not want to do that unless necessary.
-
-You want to drop the whole series because of a cleanup patch with a
-less-than-perfect commit message? Even though there quite likely won't
-be any conflicts if you drop the single patch. Fine, drop the whole
-series.
-
->> ... I think the less-than-perfect commit messages in a
->> *contrib* script that is extremely recent is a small price to pay for
->> having nice and workable bzr and mercurial remote-helpers as soon as
->> possible
->
-> I do not share this view at all. The users survived without it long
-> enough; they can wait for a well maintained version.  On the other
-> hand, shipping something that will not be maintainable is not the
-> way to help end users. It is being irresponsive to them.
-
-Are you saying that because *ONE PATCH*, introduces a fix without
-mentioning it in the commit message, *THE WHOLE* project becomes
-unmaintainable?
-
-If not, then why are we discussing about something that is not happening?
-
-> Helping other developers understand your code is a way to ensure
-> that your code that would help users will be kept maintained.  I do
-> not agree with Ram at all when he says that developers are more
-> important than users, and I agree with you that the project exists
-> for users, and not for developers.  But you need to help your fellow
-> developers anyway by spending effort to keep your history readable,
-> in order to help them help the users.
-
-And I am. Because I made a mistake in this patch doesn't mean the same
-happened in all the patches.
-
-I am helping my fellow developers by replying to the comments they
-make when I send the patches for review. Unfortunately, the only
-developer other than you that has made any comment at all, Ramkumar
-Ramachandra, did so in a bellicose tone, but I replied to all his
-comments either way, which where invalid. The only comment where he is
-right and I acknowledged making a small mistake, is trivial, does not
-cause any issues, and can be easily dropped.
-
-> Do not take the "users matter" mantra to the extreme. You need other
-> developers to put users first.
-
-No, I don't. It would be nice, yes, but not necessary.
-
-Now, let's drop this pointless discussion and deal with the actual
-issue. What do you want to do?
-
-1) Drop this patch
-2) Drop the whole series
-3) I reroll without the change that was not described
-
-Anything else, I'm not interested in doing. There's tasks with actual
-value to do.
-
-Cheers.
-
--- 
-Felipe Contreras
+FWIW, I thought "that person was me" response from him was more than
+reasonable, and I still do.
