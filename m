@@ -1,137 +1,134 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/9] remote-bzr: trivial cleanups
-Date: Thu, 25 Apr 2013 17:58:10 -0500
-Message-ID: <CAMP44s1CTzO6J+QTDw_tmbkf-jfVxBzpfqY08_6RXrMuPr+CFw@mail.gmail.com>
-References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
-	<1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
-	<CALkWK0meg1FgU=-4MFoFGjpDq_oa9XR_+qeiseR0J85mS71dNg@mail.gmail.com>
-	<CAMP44s2nRHRFY_BRO7+x=CVKgrob78xZCpiV4Hk9sjWB_Q=vng@mail.gmail.com>
-	<7vip3a2vq0.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1RdZ19y8v+_=gwBzq1Tg5v8+TWAYCAVR-ZzNwZ0_m_Ng@mail.gmail.com>
-	<7vsj2e1d83.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] "git add -A/--no-all" finishing touches
+Date: Thu, 25 Apr 2013 16:06:30 -0700
+Message-ID: <7vhaiu1a89.fsf@alter.siamese.dyndns.org>
+References: <7vehe3qi5m.fsf@alter.siamese.dyndns.org>
+	<1366663435-13598-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Christophe Simonis <christophe@kn.gl>,
-	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 00:58:19 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 26 01:06:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVV7J-000591-PN
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 00:58:18 +0200
+	id 1UVVFZ-00061q-Fx
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 01:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758591Ab3DYW6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 18:58:13 -0400
-Received: from mail-la0-f50.google.com ([209.85.215.50]:62455 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758042Ab3DYW6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 18:58:12 -0400
-Received: by mail-la0-f50.google.com with SMTP id fl20so1104360lab.23
-        for <git@vger.kernel.org>; Thu, 25 Apr 2013 15:58:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=PkyqpObIeQXjb/sFU/cUW9OmdjgNF/gQv8N3mBiBnAA=;
-        b=xJYeoUce4Z4WMTVyJvCgGZzB6cyD4C4jZqNrrgWPSEuyatx/iuthLxJ5u2vGlNqgef
-         Y+v1AH2KFYx8VRoTWeYAHfvxHQX+Uwf9xYanCjx6iQ6eiThyGdo/f8DzdsvgK5MPkdBo
-         eW1JPoETaaEwpspVZPjNJBMGWvmj4yecwDLNWw+Z/bXQMw8O4h801uTT6TW2YExzxBDI
-         aUPMCm+aYnabJbKn0w46dmyyQLMKPZWQlQiy/WLWVC/DUCbrdfvnwPd/gUEznIEoX9kq
-         fcTvN4hgc3VVdsNF77Ag8+N8oB4c7fx+bfa55ZFbYRWty+p1z1OHiuUW+EwUga5O5yal
-         1Kkw==
-X-Received: by 10.152.19.10 with SMTP id a10mr21255329lae.8.1366930690331;
- Thu, 25 Apr 2013 15:58:10 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Thu, 25 Apr 2013 15:58:10 -0700 (PDT)
-In-Reply-To: <7vsj2e1d83.fsf@alter.siamese.dyndns.org>
+	id S1758745Ab3DYXGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 19:06:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38934 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758712Ab3DYXGn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 19:06:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37D9819DFE;
+	Thu, 25 Apr 2013 23:06:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=THOlIoJVwKqtysx+3vc5wL6OC7M=; b=IWemNh
+	7BzNSmPFZxTntVd051ovR9ir9FFfU3wzWF5mdT20ATBsaS5BCsH+1M+cNIqH0qZi
+	/mHsyxn9qYFaNsbtos/dV6f2IA9h5dXvbvaTjlUygaZrignmnYb66Uzy6LPzR1D8
+	PAkiwHORJbTTMGch7Du4d99xFhLj3HIbLNgvM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dRQJhV/69ZsVAUzaEc0uiwPEfXVFR2aP
+	NKOA0hi7l2KiZLzpljMN9Y2a4RSAEJlUE1Vf6sU+ddzm/o6D1PkD8EXnRHj9x7UM
+	Ne5hq+5hfXxXiL1rm8MqATTP+Is7kw+FOgYlQm8NcmqXL/6i6ezRFww8Yc9hGJwR
+	AyuyGMaOyOc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B40C19DFB;
+	Thu, 25 Apr 2013 23:06:32 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 83DF819DF7;
+	Thu, 25 Apr 2013 23:06:31 +0000 (UTC)
+In-Reply-To: <1366663435-13598-1-git-send-email-gitster@pobox.com> (Junio
+	C. Hamano's message of "Mon, 22 Apr 2013 13:43:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C48CF908-ADFC-11E2-9C29-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222460>
 
-On Thu, Apr 25, 2013 at 5:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Having said that, I am more worried about wasting everybody's time
-> (and this includes your time) with the impedance mismatch between
-> you and the rest of us.
+> Applying Jonathan's idea on top of the early part that has graduated
+> to 'master', here is to add "--ignore-removal" (which is a more
+> natural way to say "--no-all") and use it in the warning message.
 >
-> Our standard for explaining the change (either in the log or in the
-> comment) is to err on the descriptive side to be helpful even to
-> people new to the codebase.  We do not require or encourage to state
-> the obvious. The issue is the definition of "obviousness" varies
-> even among the rest of us and even for a single person depending on
-> how familiar that person is with the area of the code in question.
-> But the divide between you (alone) and the rest of us seems to be
-> far more vast than differences among the people other than you.
+> Junio C Hamano (2):
+>   git add: --ignore-removal is a better named --no-all
+>   git add: rephrase -A/--no-all warning
+>
+>  Documentation/git-add.txt | 10 ++++++----
+>  builtin/add.c             | 23 +++++++++++++++++------
+>  2 files changed, 23 insertions(+), 10 deletions(-)
 
-You are missing my point, this is *ONE INSTANCE*. Show me another
-instance where a reviewer complained about the lack of a descriptive
-commit messages on *remote-helpers*.
+I am planning to fast-track this to 'master' for 1.8.3, to
+complement Jonathan's "add -u/-A without pathspec" warning.
 
-> Especially the criteria I used in the above example for "bmarks"
-> need to be used carefully.  If a reviewer needs to follow a very
-> deep callchain to convince himself why a change does not break
-> things, it is no longer obvious and deserves to be explained.
+It would be nice if people can eyeball the behaviour of tonight's
+'next', find glitches (if any) and help polishing it before the
+feature freeze.
 
-So if I'm not willing to describe every little trivial cleanup change
-I do, what should I do then? Avoid those trivial changes?
+One thing I noticed about Jonathan's warn_pathless_add() thing is
+that even though it knows for which path we would behave differently
+between the current version and Git 2.0, the warning message does
+not say which path outside the current directory would be added if
+not restricted with an explicit ".", and leaves the reader in
+suspense.
 
-If your true purpose of having descriptive commit messages is to
-improve maintainability, then actually doing these cleanups should
-have priority over a descriptive commit message, because doing the
-cleanups improves the maintainability even without a detailed
-description.
+We may want to fix it by tweaking the end of the message, perhaps?
 
-Clearly, your reasoning is incomplete.
+ builtin/add.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-> So I dunno.  If you are not willing to change your ways and try to
-> be more descriptive to help others to understand what you are doing,
-> there is nothing I can do to help you.
-
-I'm willing to change my ways when there's reason to change my ways,
-and so far, nobody has provided any evidence that my commit messages
-are indeed lacking, only *opinions*.
-
-Other people are perfectly fine with them:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/?qt=author&q=felipe.contreras
-
-And the only reason we are wasting time, is that *you* make us waste
-time. Any sensible reviewer would be context aware, notice that this
-is a contrib patch, and focus on behavioral changes, notice the
-mistake I made, and point that *one* of the changes was changing the
-behavior, at which point I would agree and reroll either without that
-change, or with the change in a separate commit (which I don't want to
-do right now). The maintainer (you), wouldn't even have to reply at
-all.
-
-But the reviewer failed to do so, and other contributors went even
-further, so the ball is in now in your court. IMO a sensible
-maintainer would simply say "Guys, stay on topic, what do we do with
-this patch?", but no, you allow people to suggest that not only the
-whole series, but the whole sub-project be dropped, and to do so with
-totally unrelated facts, and generalizing from *ONE INSTANCE* in the
-actual sub-project, and generally from ad hominem arguments.
-
-This doesn't help anybody.
-
-Show me a systemic problem with the commit messages *in
-remote-helpers*, and then perhaps it would be worth to start *a new
-thread* to discuss them, but nobody has done so. We are still talking
-about a *single patch*.
-
-And if you really really don't like the patch, say "do X, or I drop
-the patch", or the series, and there would be no need for other
-reviewers to waste their time (if their comments were truly valid and
-correct, which they are not). There's no need to say anything more.
-And even if the reviewers were correct in their comments, allowing
-suggestions such as that the whole sub-project should be dropped
-because of one patch is going to waste people's times, no matter what.
-
-Cheers.
-
--- 
-Felipe Contreras
+diff --git a/builtin/add.c b/builtin/add.c
+index d4b40f2..24a2d6f 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -36,7 +36,7 @@ struct update_callback_data {
+ static const char *option_with_implicit_dot;
+ static const char *short_option_with_implicit_dot;
+ 
+-static void warn_pathless_add(void)
++static void warn_pathless_add(const char *path)
+ {
+ 	static int shown;
+ 	assert(option_with_implicit_dot && short_option_with_implicit_dot);
+@@ -67,12 +67,16 @@ static void warn_pathless_add(void)
+ 		  "  git add %s .\n"
+ 		  "  (or git add %s .)\n"
+ 		  "\n"
+-		  "With the current Git version, the command is restricted to "
+-		  "the current directory.\n"
++		  "With the current Git version, the command is limited to the current"
++		  "directory, and paths like '%s'\n"
++		  "that %s are not added.\n"
+ 		  ""),
+ 		option_with_implicit_dot, short_option_with_implicit_dot,
+ 		option_with_implicit_dot, short_option_with_implicit_dot,
+-		option_with_implicit_dot, short_option_with_implicit_dot);
++		option_with_implicit_dot, short_option_with_implicit_dot,
++		path,
++		(!strcmp(short_option_with_implicit_dot, "-u")
++		 ? _("are modified") : _("are new")));
+ }
+ 
+ static int fix_unmerged_status(struct diff_filepair *p,
+@@ -136,7 +140,7 @@ static void update_callback(struct diff_queue_struct *q,
+ 		 */
+ 		if (implicit_dot &&
+ 		    strncmp_icase(path, implicit_dot, implicit_dot_len)) {
+-			warn_pathless_add();
++			warn_pathless_add(path);
+ 			continue;
+ 		}
+ 		switch (fix_unmerged_status(p, data)) {
