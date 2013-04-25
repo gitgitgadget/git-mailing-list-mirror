@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 5/9] remote-hg: use hashlib instead of hg sha1 util
-Date: Thu, 25 Apr 2013 06:20:45 -0500
-Message-ID: <1366888849-19607-6-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 6/9] remote-bzr: store converted URL
+Date: Thu, 25 Apr 2013 06:20:46 -0500
+Message-ID: <1366888849-19607-7-git-send-email-felipe.contreras@gmail.com>
 References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Christophe Simonis <christophe@kn.gl>,
@@ -14,70 +14,89 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVKGL-0004fJ-Rm
+	id 1UVKGM-0004fJ-AQ
 	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 13:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758053Ab3DYLWk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 07:22:40 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:60959 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756038Ab3DYLWi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 07:22:38 -0400
-Received: by mail-ob0-f178.google.com with SMTP id 16so2343296obc.23
-        for <git@vger.kernel.org>; Thu, 25 Apr 2013 04:22:38 -0700 (PDT)
+	id S1758180Ab3DYLWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 07:22:46 -0400
+Received: from mail-oa0-f45.google.com ([209.85.219.45]:65017 "EHLO
+	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758054Ab3DYLWo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 07:22:44 -0400
+Received: by mail-oa0-f45.google.com with SMTP id o17so2640972oag.4
+        for <git@vger.kernel.org>; Thu, 25 Apr 2013 04:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=bI7KMypGDFjQj+r5qCEGEOQS/4r6VUkSKgYRB+qouuQ=;
-        b=JGiZqVbJHOJJHJnA4BuoVI6kfn+N0OFV0Wjf9FS2x6Y3XtUno/7AQTw5oV6TAXIOnq
-         o44QM5pn7E+eYaRN10Pl9Xb6Np6rR4xBnAXD7M3LuPfjEwuOVWesyF/pUFDSnAkq2tBq
-         +oV4ZDx8gR7LXMRrBFlYvmBvqyrDRHKnS6d7mNw85dcT1H9pWnQNMrJKUtDTdkYY+w/e
-         41YZLUwVwZ2cYK24bTer5DIT8elm5Zt2rdsTah4OSw+3gmOhuXBxwCaKWXtVW/e4dT9Q
-         i8TZpMn3VheY2YaZPQ6f7HYbt80mOuUX20v7+MsYckWryBI+Pb8RcVZ7ZFSB74TJm3c6
-         ExGA==
-X-Received: by 10.182.112.202 with SMTP id is10mr19257856obb.8.1366888958270;
-        Thu, 25 Apr 2013 04:22:38 -0700 (PDT)
+        bh=BnopwiP4AX7ZIG1ypOBAAXKLbvvd3WnnbeN/CMAYcu4=;
+        b=YjAaL6aPv74qshf1MacOABLT3z1D9JPvQB86K00wKjRCkmihgh/L37s1WacOCfIxQH
+         YXMb79ZKk4/Jir7ZJmsQ3dq2tQlRGLgna8IPgKR2gUzs8MURZ964Mm+9W1tGxoPegNxL
+         ImUP7iLIjOLiPDVB9dlhPFguHQunAGi20orACBOgl5Bf4QJExwkIKN68pemsG7+iiXY8
+         hBLMiTtbjuWaec4LIUGDJp94xLNfDy8b0KfVpTFywEhqEGx4WRo8Yr3RfXuF1u4gsvs9
+         9KWvuhPDzXYT4ipLK3HoSQQwd8uhLEo6/33WkY8FxIqaNv4JcqaSrZRLR3GN6pywkH1x
+         qSGw==
+X-Received: by 10.60.34.232 with SMTP id c8mr2937472oej.45.1366888963662;
+        Thu, 25 Apr 2013 04:22:43 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id qt5sm3191373oeb.4.2013.04.25.04.22.34
+        by mx.google.com with ESMTPSA id xz9sm3191852oeb.5.2013.04.25.04.22.40
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Apr 2013 04:22:37 -0700 (PDT)
+        Thu, 25 Apr 2013 04:22:42 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.1
 In-Reply-To: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222374>
 
-To be in sync with remote-bzr.
+Mercurial might convert the URL to something more appropriate, like an
+absolute path. Lets store that instead of the original URL, which won't
+work from a different working directory if it's relative.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/git-remote-hg | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ contrib/remote-helpers/git-remote-bzr | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index 0b7c81f..99abda4 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -22,6 +22,7 @@ import shutil
- import subprocess
- import urllib
- import atexit
-+import hashlib
+diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+index d6319d6..3d3b1c1 100755
+--- a/contrib/remote-helpers/git-remote-bzr
++++ b/contrib/remote-helpers/git-remote-bzr
+@@ -32,7 +32,7 @@ import os
+ import json
+ import re
+ import StringIO
+-import atexit, shutil, hashlib
++import atexit, shutil, hashlib, urlparse, subprocess
  
- #
- # If you want to switch to hg-git compatibility mode:
-@@ -830,7 +831,7 @@ def main(args):
+ NAME_RE = re.compile('^([^<>]+)')
+ AUTHOR_RE = re.compile('^([^<>]+?)? ?<([^<>]*)>$')
+@@ -713,6 +713,14 @@ def get_repo(url, alias):
  
-     if alias[4:] == url:
-         is_tmp = True
--        alias = util.sha1(alias).hexdigest()
-+        alias = hashlib.sha1(alias).hexdigest()
-     else:
-         is_tmp = False
+     return branch
+ 
++def fix_path(alias, orig_url):
++    url = urlparse.urlparse(orig_url, 'file')
++    if url.scheme != 'file' or os.path.isabs(url.path):
++        return
++    abs_url = urlparse.urljoin("%s/" % os.getcwd(), orig_url)
++    cmd = ['git', 'config', 'remote.%s.url' % alias, "bzr::%s" % abs_url]
++    subprocess.call(cmd)
++
+ def main(args):
+     global marks, prefix, dirname
+     global tags, filenodes
+@@ -741,6 +749,9 @@ def main(args):
+     gitdir = os.environ['GIT_DIR']
+     dirname = os.path.join(gitdir, 'bzr', alias)
+ 
++    if not is_tmp:
++        fix_path(alias, url)
++
+     if not os.path.exists(dirname):
+         os.makedirs(dirname)
  
 -- 
 1.8.2.1
