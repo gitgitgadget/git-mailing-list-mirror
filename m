@@ -1,140 +1,129 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t9501: Do not use export X=Y
-Date: Thu, 25 Apr 2013 13:46:32 -0700
-Message-ID: <7va9om2v9z.fsf@alter.siamese.dyndns.org>
-References: <201304252049.00811.tboegi@web.de>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/9] remote-bzr: trivial cleanups
+Date: Thu, 25 Apr 2013 15:52:19 -0500
+Message-ID: <CAMP44s1uS23OvsDY+_YOBGMgc9t=FBEV3YvM34M9sLMEF9hnTg@mail.gmail.com>
+References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
+	<1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0meg1FgU=-4MFoFGjpDq_oa9XR_+qeiseR0J85mS71dNg@mail.gmail.com>
+	<CAMP44s2nRHRFY_BRO7+x=CVKgrob78xZCpiV4Hk9sjWB_Q=vng@mail.gmail.com>
+	<87bo92l5el.fsf@hexa.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Apr 25 22:47:04 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Christophe Simonis <christophe@kn.gl>,
+	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Apr 25 22:52:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVT4J-0006mH-KB
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 22:47:04 +0200
+	id 1UVT9W-0005XP-EN
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 22:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759217Ab3DYUqg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Apr 2013 16:46:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38482 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758772Ab3DYUqf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Apr 2013 16:46:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B5F019A95;
-	Thu, 25 Apr 2013 20:46:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=7o7w5wgvKARO
-	DnyonZph+Yb+jT4=; b=lEVomMtwB1OdPIBmjTSOGpE/pT7sBnALOwZbALIC9y2y
-	wVDKz+Agggtqg8SVpD5ctgk72R4Fdj+f1t/8Iu76gvRCRCCJSFGSzcFefCTw4nJj
-	g25ZfBpbN+5Mn+mN2LRP3BbWcMFeArHro/bCxbPvFBxSdTJ/0Br0jKdLIuriOaQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=UzqbiO
-	GwK5AoO2bTGlnnhGWWArYG1T0h40x1msHP0BFZ+FJZZvTMNnPRoQL1NWnNLGZcQ0
-	PZ8uZfqbclRb+WeenEfIl1ZvvWIYfYre9qbR3nMqH5GdydAFRFkeoVHcE/Ue3rRd
-	S2/ivylkTgeJKzC46beC74vo4LplhMAX0HLmM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2267819A94;
-	Thu, 25 Apr 2013 20:46:35 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 41DB519A91;
-	Thu, 25 Apr 2013 20:46:34 +0000 (UTC)
-In-Reply-To: <201304252049.00811.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?=
-	message of "Thu, 25 Apr 2013 20:49:00 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 376384EC-ADE9-11E2-BD1F-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759314Ab3DYUwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 16:52:22 -0400
+Received: from mail-la0-f47.google.com ([209.85.215.47]:43087 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758748Ab3DYUwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 16:52:21 -0400
+Received: by mail-la0-f47.google.com with SMTP id ez20so2960420lab.6
+        for <git@vger.kernel.org>; Thu, 25 Apr 2013 13:52:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=U+AuNb3+R/zK53sLPGHjrySxZDA+mseQBVRd+EClYtQ=;
+        b=Wy8LA0KgwQDMK1rZRYMVEBA3duHqZValfBfJlCd8cl7koj4JWpjeBEVql8ktVx+YzY
+         X0pZeDXVnZRKPewxuLEp0M/6201ZPtQY4rl0WufE7a+cF2Kzf3DRIgSJE0cUCKnPfoYD
+         I11krn89yLWupzK7mH8OtxoE7483jqje4IwgvMYfOZ8zDFiOKnZ9JzbMa+jDJIlyWA+i
+         tMijfqaFgWlD+ME6K+BH0vaT19g6KRUUQEHFaV76Pm5U8J2Rm8iM327I9mxRtzYya6lD
+         Nvv9cPgoKFW1xGNREKucs3y+U4JyRSiPQNP9zX/m1dzqyKazzAJvbFU/CFIIzrst+rx8
+         eYvA==
+X-Received: by 10.112.135.3 with SMTP id po3mr17353407lbb.103.1366923139477;
+ Thu, 25 Apr 2013 13:52:19 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Thu, 25 Apr 2013 13:52:19 -0700 (PDT)
+In-Reply-To: <87bo92l5el.fsf@hexa.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222447>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
-
-> Spilt lines like export X=3DY into 2 lines:
-> X=3DY
-> export X
-
-That can be read from the patch text.
-
-If you are going to spend three lines, please describe why it has to
-be split; that would help educate developers new to the codebase.
-
-Thanks.
-
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
->  t/t9501-gitweb-standalone-http-status.sh | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
+On Thu, Apr 25, 2013 at 3:30 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitwe=
-b-standalone-http-status.sh
-> index ef86948..d3a5bac 100755
-> --- a/t/t9501-gitweb-standalone-http-status.sh
-> +++ b/t/t9501-gitweb-standalone-http-status.sh
-> @@ -130,7 +130,8 @@ test_expect_success DATE_PARSER 'modification: fe=
-ed last-modified' '
->  test_debug 'cat gitweb.headers'
-> =20
->  test_expect_success DATE_PARSER 'modification: feed if-modified-sinc=
-e (modified)' '
-> -	export HTTP_IF_MODIFIED_SINCE=3D"Wed, 6 Apr 2005 22:14:13 +0000" &&
-> +	HTTP_IF_MODIFIED_SINCE=3D"Wed, 6 Apr 2005 22:14:13 +0000" &&
-> +	export HTTP_IF_MODIFIED_SINCE &&
->  	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
->  	gitweb_run "p=3D.git;a=3Datom;h=3Dmaster" &&
->  	grep "Status: 200 OK" gitweb.headers
-> @@ -138,7 +139,8 @@ test_expect_success DATE_PARSER 'modification: fe=
-ed if-modified-since (modified)
->  test_debug 'cat gitweb.headers'
-> =20
->  test_expect_success DATE_PARSER 'modification: feed if-modified-sinc=
-e (unmodified)' '
-> -	export HTTP_IF_MODIFIED_SINCE=3D"Thu, 7 Apr 2005 22:14:13 +0000" &&
-> +	HTTP_IF_MODIFIED_SINCE=3D"Thu, 7 Apr 2005 22:14:13 +0000" &&
-> +	export HTTP_IF_MODIFIED_SINCE &&
->  	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
->  	gitweb_run "p=3D.git;a=3Datom;h=3Dmaster" &&
->  	grep "Status: 304 Not Modified" gitweb.headers
-> @@ -153,7 +155,8 @@ test_expect_success DATE_PARSER 'modification: sn=
-apshot last-modified' '
->  test_debug 'cat gitweb.headers'
-> =20
->  test_expect_success DATE_PARSER 'modification: snapshot if-modified-=
-since (modified)' '
-> -	export HTTP_IF_MODIFIED_SINCE=3D"Wed, 6 Apr 2005 22:14:13 +0000" &&
-> +	HTTP_IF_MODIFIED_SINCE=3D"Wed, 6 Apr 2005 22:14:13 +0000" &&
-> +	export HTTP_IF_MODIFIED_SINCE &&
->  	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
->  	gitweb_run "p=3D.git;a=3Dsnapshot;h=3Dmaster;sf=3Dtgz" &&
->  	grep "Status: 200 OK" gitweb.headers
-> @@ -161,7 +164,8 @@ test_expect_success DATE_PARSER 'modification: sn=
-apshot if-modified-since (modif
->  test_debug 'cat gitweb.headers'
-> =20
->  test_expect_success DATE_PARSER 'modification: snapshot if-modified-=
-since (unmodified)' '
-> -	export HTTP_IF_MODIFIED_SINCE=3D"Thu, 7 Apr 2005 22:14:13 +0000" &&
-> +	HTTP_IF_MODIFIED_SINCE=3D"Thu, 7 Apr 2005 22:14:13 +0000" &&
-> +	export HTTP_IF_MODIFIED_SINCE &&
->  	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
->  	gitweb_run "p=3D.git;a=3Dsnapshot;h=3Dmaster;sf=3Dtgz" &&
->  	grep "Status: 304 Not Modified" gitweb.headers
-> @@ -170,7 +174,8 @@ test_debug 'cat gitweb.headers'
-> =20
->  test_expect_success DATE_PARSER 'modification: tree snapshot' '
->  	ID=3D`git rev-parse --verify HEAD^{tree}` &&
-> -	export HTTP_IF_MODIFIED_SINCE=3D"Wed, 6 Apr 2005 22:14:13 +0000" &&
-> +	HTTP_IF_MODIFIED_SINCE=3D"Wed, 6 Apr 2005 22:14:13 +0000" &&
-> +	export HTTP_IF_MODIFIED_SINCE &&
->  	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
->  	gitweb_run "p=3D.git;a=3Dsnapshot;h=3D$ID;sf=3Dtgz" &&
->  	grep "Status: 200 OK" gitweb.headers &&
+>> But I do not care that much really. The patch is good either way, if
+>> you don't like it, you go ahead and fix it, because I won't. I have
+>> 174 remote-helper related patches in my queue, and nobody benefits
+>> from rambling about a one liner that is obviously correct, not you,
+>> not me, not the users, not the developers.
+>
+> You don't stick to the rules of this project, which have been pointed
+> out already:
+
+The rules of the contrib area are different from the ones of the rest
+of the project.
+
+> Your project is moving too fast to put up with the established
+> procedures in this community.
+
+That's one of the reasons it's in the contrib area.
+
+> In fact you are pretty much holding us hostage with a "take it or keep
+> it broken while causing more work" attitude:
+
+I'm the maintainer of this code, so it's my call. If Junio has a
+problem with that, I would gladly take my code somewhere else. I doubt
+that's in the best interest of anyone.
+
+But if the problem is this particular patch (reaally?), Junio could
+just drop this particular patch. Are you seriously suggesting that the
+whole contrib/remote-helpers should be dropped because this patch
+introduces a one-liner fix without mentioning it in the commit
+message? Really? I haven't seen anybody complain about *any* of the
+other patches where I "held the project hostage" and refused to fix
+the commit message or change the patch.
+
+Other than this instance, show me where exactly did I do that.
+
+>> Junio of course might disagree and drop this patch, but then he would
+>> need to deal with the fallout of possible conflicts.
+>
+> You did not respond well to reviews and criticism.  Even the
+> constructive fine-let's-do-the-work-for-him kind that Peff offered.
+
+Define "respond well". If your idea to "respond well" is to say "Yes
+sir!" to every criticism, then no, I didn't. OTOH, if it's to reply
+and address the issues with objective reasoning and an open mind, I
+did.
+
+I don't understand this notion that every review criticism is valid
+and correct. They are not, and it's OK to point that out.. really. If
+they turn to be valid and correct, the reviewer can surely
+counter-argue and substantiate his/her claims.
+
+And I don't recall Peff ever doing this "constructive
+fine-let's-do-the-work-for-him" on any contrib/remote-helpers stuff.
+
+> So why is this in git.git?
+>
+> Why should we take any more contrib additions from you?
+
+Because it's good for the users.
+
+If you are seriously suggesting to drop contrib/remote-helpers, I
+suggest that 1) don't do it in the review thread of a trivial patch 2)
+start a new thread where you point multiple instances where the
+maintainer of the code (me) failed to respond correctly to criticism
+(of remote-helpers's code), 3) show how this affects negatively the
+project, and 4) ask for new maintainers if the job of the current one
+is not deemed up-to-par, and only if no maintainer steps up, drop the
+code.
+
+Cheers.
+
+-- 
+Felipe Contreras
