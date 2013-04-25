@@ -1,110 +1,128 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] git-remote-testgit: avoid process substitution
-Date: Thu, 25 Apr 2013 07:56:19 +0200
-Message-ID: <5178C583.6000703@viscovery.net>
-References: <7vvc7enxco.fsf@alter.siamese.dyndns.org> <7vwqrtgi1r.fsf@alter.siamese.dyndns.org> <51779052.8020507@viscovery.net> <CAMP44s1oX_m0d+2Z3+VkafOhT1bZK_9Z5m1ex456DMdAidEKeg@mail.gmail.com> <5177980A.4090305@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] Highly inconsistent diff UI
+Date: Wed, 24 Apr 2013 22:59:08 -0700
+Message-ID: <7vppxj6thv.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0n2ZZTgYxi3Fk2UxY8TXFAt1Xt3+11G98GKxbYdoMOT+Q@mail.gmail.com>
+	<7va9ong9oa.fsf@alter.siamese.dyndns.org>
+	<CALkWK0mVDT5ESnVJAWQ83gQnmxmGDoM_Y0nE4FGybcjcenA_KA@mail.gmail.com>
+	<7v38ufer2x.fsf@alter.siamese.dyndns.org>
+	<CALkWK0m5Q_e3q6Yg94-K+jU_SS7ovR2wnz-_Nr3cMz_YM=SMDQ@mail.gmail.com>
+	<7vvc7baahc.fsf@alter.siamese.dyndns.org>
+	<CALkWK0=NWSZsARu9w0DwpEmJHKnvpB8yoNfEa31LDQA=cV-90Q@mail.gmail.com>
+	<CALkWK0ntZKaEzA0Jupj6poOMydqUumEGVVJ-uhBE12sPJ0ntjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 25 07:56:35 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 25 07:59:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVFAY-0004e4-UC
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 07:56:35 +0200
+	id 1UVFDB-0000Bc-8b
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 07:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751973Ab3DYF4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 01:56:30 -0400
-Received: from so.liwest.at ([212.33.55.23]:22790 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751063Ab3DYF4a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 01:56:30 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UVFAJ-0001sD-W9; Thu, 25 Apr 2013 07:56:22 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id A069D1660F;
-	Thu, 25 Apr 2013 07:56:19 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <5177980A.4090305@viscovery.net>
-X-Spam-Score: -1.0 (-)
+	id S1752002Ab3DYF7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 01:59:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36535 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750991Ab3DYF7M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 01:59:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9195149AC;
+	Thu, 25 Apr 2013 05:59:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xRFWZfD8LwlOZlPbwRr1uYVjTHw=; b=FUDpJT
+	+CFUyf/TzT4dickdQVCyWQMxMefV59neJPDcwb4PHph4pWMnEQYqmRDHWgknziyP
+	gy1WbWOVNDaXl8xt+v0Q9GFgGoaVW7eNeRFG8h4sy80Qj8T0FOMWwA7I/Q8dlGpR
+	C7W2sE17cW+A1NTIjvQGlRFnZpLsI1v4EMHhw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ofi7u/9Yanwq/PAhhnD9vrJP8N+IgJWg
+	hGFhWTtUjfuCUEGdGiK8DTp0F0UP0LtMzHk/MAcVtC8Njp9NCcZXcrMiHLQIrNZN
+	pIY3lIYdPXDAR1xISF1gXelXN1FZhditlSjUfsuqTudY6+NfTNns1OE9Oe1Co+Wj
+	QItic2lGw0A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBB13149AB;
+	Thu, 25 Apr 2013 05:59:10 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 17395149A7;
+	Thu, 25 Apr 2013 05:59:09 +0000 (UTC)
+In-Reply-To: <CALkWK0ntZKaEzA0Jupj6poOMydqUumEGVVJ-uhBE12sPJ0ntjw@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Thu, 25 Apr 2013 04:47:45 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3F638E84-AD6D-11E2-A36D-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222347>
 
-From: Johannes Sixt <j6t@kdbg.org>
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Bash on Windows does not implement process substitution.
+> Ramkumar Ramachandra wrote:
+>> Ofcourse, I now see that this is probably useless, and .. fits my bill.
+>
+> Would you find it potentially useful?
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
-Am 4/24/2013 10:30, schrieb Johannes Sixt:
-> Am 4/24/2013 10:04, schrieb Felipe Contreras:
->> On Wed, Apr 24, 2013 at 2:57 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->>> Am 4/23/2013 21:31, schrieb Junio C Hamano:
->>>> * fc/transport-helper-error-reporting (2013-04-17) 9 commits
->>>>   (merged to 'next' on 2013-04-22 at 5ba6467)
->>>>  + transport-helper: update remote helper namespace
->>>>  + transport-helper: trivial code shuffle
->>>>  + transport-helper: warn when refspec is not used
->>>>  + transport-helper: clarify pushing without refspecs
->>>>  + transport-helper: update refspec documentation
->>>>  + transport-helper: clarify *:* refspec
->>>>  + transport-helper: improve push messages
->>>>  + transport-helper: mention helper name when it dies
->>>>  + transport-helper: report errors properly
->>>>
->>>>  Update transport helper to report errors and maintain ref hierarchy
->>>>  used to keep track of remote helper state better.
->>>>
->>>>  Will merge to 'master'.
->>>
->>> Please don't, yet. There is a new test case that fails on Windows. I'll
->>> have to figure out a work-around.
->>
->> Which test case? If it it failed, it failed before this series. I
->> don't see how this new series would affect anything.
-> 
-> The test introduced in the commit at the tip: 'push update refs'.
+I dunno.  The description you gave was insufficient for me to answer
+that question.
 
-Here is a fix. It assumes that the list of refs after the import is
-a superset of the refs before the import. (Can refs be deleted
-via fast-import?)
+The part of your message that outlines the scenario you thought A~B
+might help you was read by me like the following.
 
- git-remote-testgit | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+    >  pu is based on master~10.  rebase.autostash is based on
+    >  master~5 and master~3 merges in pu.
 
-diff --git a/git-remote-testgit b/git-remote-testgit
-index 23c9d40..e99d5fa 100755
---- a/git-remote-testgit
-+++ b/git-remote-testgit
-@@ -91,13 +91,15 @@ do
- 
- 		git fast-import "${testgitmarks_args[@]}" --quiet
- 
--		after=$(git for-each-ref --format='%(refname) %(objectname)')
--
- 		# figure out which refs were updated
--		join -e 0 -o '0 1.2 2.2' -a 2 <(echo "$before") <(echo "$after") |
--		while read ref a b
-+		git for-each-ref --format='%(refname) %(objectname)' |
-+		while read ref a
- 		do
--			test $a == $b && continue
-+			case "$before" in
-+			*"$ref $a"*)
-+				continue
-+				;;
-+			esac
- 			echo "ok $ref"
- 		done
- 
--- 
-1.8.2.388.g36592d7
+    So which one is 'pu' based on?  master~10, or master~3?  You cannot
+    have both.
+
+    >  I merge pu into rebase.autostash while working.  
+
+    So from pu the top two commit on 'master' are missing, but your
+    branch was forked way before that from 'master', so these two do not
+    concern you.
+
+    >  Now, master..rebase.autostash will exclude commits reachable
+    >  from master (and therefore pu),
+
+    Whoa. Earlier you said 'pu' is based on master~10, but changed your
+    mind to say master~3 is in 'pu', and now you mean the tip of
+    'master' is also in 'pu'?  What is going on?
+
+Can you draw a picture to illustrate the topology you are trying to
+describe, like I did in a few message upthread?  E.g.
+
+        ---o---*---a---a---a---a---A (master)
+                \       \
+                 b---Y---X---B (topic)
+                    / 
+
+shows a topic B that forked from master and merged from irrelevant
+branch at Y and merged from master at X [*1*].
+
+In the above sample topology, even if you pulled irrelevant (for the
+purpose of completing your topic) commits at X from 'master',
+neither "log A..B" or "log $(merge-base A B)..B" (aka "log A~B")
+would exclude any of your commit that is not yet in the 'master', so
+I do not think there is anything you gain by using A~B over A..B.
+
+If you pulled something unrelated to your topic that is not in
+'master', both "log A..B" and "log A~B" would show these unrelated
+changes, so again I do not see how A~B would help you over A..B,
+either.
+
+Perhaps in a particular topology you have in mind, it might make a
+difference, but I cannot read what that topology is from your
+description.
+
+[Footnote]
+
+*1* I do not think this particular topology is what you have in
+    mind. It is meant to demonstrate one way to illustrate the
+    history to help other people understand the example you are
+    trying to give.
