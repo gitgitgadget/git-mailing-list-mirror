@@ -1,87 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-bzr: use proper push method
-Date: Thu, 25 Apr 2013 15:32:26 -0700
-Message-ID: <7vobd21bt1.fsf@alter.siamese.dyndns.org>
-References: <1366889137-19700-1-git-send-email-felipe.contreras@gmail.com>
-	<87haiu7jgn.fsf@linux-k42r.v.cablecom.net>
-	<7v1u9y2u4q.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2-QZxuV-bXc_0zeqxJDy=Y6AAC0iwgbjNDNuCaaMcErA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/9] remote-bzr: trivial cleanups
+Date: Thu, 25 Apr 2013 17:58:10 -0500
+Message-ID: <CAMP44s1CTzO6J+QTDw_tmbkf-jfVxBzpfqY08_6RXrMuPr+CFw@mail.gmail.com>
+References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
+	<1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0meg1FgU=-4MFoFGjpDq_oa9XR_+qeiseR0J85mS71dNg@mail.gmail.com>
+	<CAMP44s2nRHRFY_BRO7+x=CVKgrob78xZCpiV4Hk9sjWB_Q=vng@mail.gmail.com>
+	<7vip3a2vq0.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1RdZ19y8v+_=gwBzq1Tg5v8+TWAYCAVR-ZzNwZ0_m_Ng@mail.gmail.com>
+	<7vsj2e1d83.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 00:32:37 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	Christophe Simonis <christophe@kn.gl>,
+	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 26 00:58:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVUiP-00038r-Uu
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 00:32:34 +0200
+	id 1UVV7J-000591-PN
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 00:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933299Ab3DYWca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 18:32:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54135 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932396Ab3DYWc3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 18:32:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6D8419FE8;
-	Thu, 25 Apr 2013 22:32:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=H88SK2vn/H39X3F2CaHPm96bLss=; b=jF/b5K
-	g6Mmn7ah6thqiXvrxmX2hkIF9k0WtZzUugYYUfvowu40xu+M/hLUJH9Hlh6ynVh9
-	d8IsMAQjvwez/URl3rN7d+05dwCShL4f+B1pEeVqcO0t9APLAczCmMw0echbFNAR
-	Gyc94a7AqPMkBlzoWFTpIgeZQjx2Vbv1Sa4sg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CQXt7aVJhzSwLXuAY957ECosalWLFno1
-	x8FRLPpq8iCdJF6Pll6bma2szUgXBLo/recVWRJc43vMxNmHLB7a5/v8pw8XkOY7
-	EklWy+etkcIjkBto1EAWZcHRrNmojm8KaAIlNcMoPKCXdnsVplH9fDMphS5qGjUV
-	73371d+rW38=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DAA0D19FE7;
-	Thu, 25 Apr 2013 22:32:28 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3DB0A19FE4;
-	Thu, 25 Apr 2013 22:32:28 +0000 (UTC)
-Importance: high
-In-Reply-To: <CAMP44s2-QZxuV-bXc_0zeqxJDy=Y6AAC0iwgbjNDNuCaaMcErA@mail.gmail.com>
-	(Felipe Contreras's message of "Thu, 25 Apr 2013 16:41:47 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 02A8B146-ADF8-11E2-81E8-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758591Ab3DYW6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 18:58:13 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:62455 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758042Ab3DYW6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 18:58:12 -0400
+Received: by mail-la0-f50.google.com with SMTP id fl20so1104360lab.23
+        for <git@vger.kernel.org>; Thu, 25 Apr 2013 15:58:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=PkyqpObIeQXjb/sFU/cUW9OmdjgNF/gQv8N3mBiBnAA=;
+        b=xJYeoUce4Z4WMTVyJvCgGZzB6cyD4C4jZqNrrgWPSEuyatx/iuthLxJ5u2vGlNqgef
+         Y+v1AH2KFYx8VRoTWeYAHfvxHQX+Uwf9xYanCjx6iQ6eiThyGdo/f8DzdsvgK5MPkdBo
+         eW1JPoETaaEwpspVZPjNJBMGWvmj4yecwDLNWw+Z/bXQMw8O4h801uTT6TW2YExzxBDI
+         aUPMCm+aYnabJbKn0w46dmyyQLMKPZWQlQiy/WLWVC/DUCbrdfvnwPd/gUEznIEoX9kq
+         fcTvN4hgc3VVdsNF77Ag8+N8oB4c7fx+bfa55ZFbYRWty+p1z1OHiuUW+EwUga5O5yal
+         1Kkw==
+X-Received: by 10.152.19.10 with SMTP id a10mr21255329lae.8.1366930690331;
+ Thu, 25 Apr 2013 15:58:10 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Thu, 25 Apr 2013 15:58:10 -0700 (PDT)
+In-Reply-To: <7vsj2e1d83.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222459>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Thu, Apr 25, 2013 at 5:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> My gut feeling is that we should do it the way the Bazaar UI does it,
-> I don't have any evidence that there's anything wrong with the current
-> code, which Bazaar seems to but have, but for different purposes which
-> are hard to explain. I would rather avoid surprises.
+> Having said that, I am more worried about wasting everybody's time
+> (and this includes your time) with the impedance mismatch between
+> you and the rest of us.
+>
+> Our standard for explaining the change (either in the log or in the
+> comment) is to err on the descriptive side to be helpful even to
+> people new to the codebase.  We do not require or encourage to state
+> the obvious. The issue is the definition of "obviousness" varies
+> even among the rest of us and even for a single person depending on
+> how familiar that person is with the area of the code in question.
+> But the divide between you (alone) and the rest of us seems to be
+> far more vast than differences among the people other than you.
 
-That is actually a very fine description for this change ;-).
+You are missing my point, this is *ONE INSTANCE*. Show me another
+instance where a reviewer complained about the lack of a descriptive
+commit messages on *remote-helpers*.
 
-commit 473b7aac9f542dc22cfff0c264e96d8dbbd9d895
-Author: Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Thu Apr 25 06:25:37 2013 -0500
+> Especially the criteria I used in the above example for "bmarks"
+> need to be used carefully.  If a reviewer needs to follow a very
+> deep callchain to convince himself why a change does not break
+> things, it is no longer obvious and deserves to be explained.
 
-    remote-bzr: use proper push method
-    
-    Do not just randomly synchronize the revisions with no checks at
-    all.
-    
-    I don't have any evidence that there's anything wrong with the
-    current code, which Bazaar seems to use, but for different purposes.
-    Let's use the logic Bazaar UI uses to avoid surprises.
-    
-    Also, add a non-ff check.
-    
-    Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+So if I'm not willing to describe every little trivial cleanup change
+I do, what should I do then? Avoid those trivial changes?
+
+If your true purpose of having descriptive commit messages is to
+improve maintainability, then actually doing these cleanups should
+have priority over a descriptive commit message, because doing the
+cleanups improves the maintainability even without a detailed
+description.
+
+Clearly, your reasoning is incomplete.
+
+> So I dunno.  If you are not willing to change your ways and try to
+> be more descriptive to help others to understand what you are doing,
+> there is nothing I can do to help you.
+
+I'm willing to change my ways when there's reason to change my ways,
+and so far, nobody has provided any evidence that my commit messages
+are indeed lacking, only *opinions*.
+
+Other people are perfectly fine with them:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/?qt=author&q=felipe.contreras
+
+And the only reason we are wasting time, is that *you* make us waste
+time. Any sensible reviewer would be context aware, notice that this
+is a contrib patch, and focus on behavioral changes, notice the
+mistake I made, and point that *one* of the changes was changing the
+behavior, at which point I would agree and reroll either without that
+change, or with the change in a separate commit (which I don't want to
+do right now). The maintainer (you), wouldn't even have to reply at
+all.
+
+But the reviewer failed to do so, and other contributors went even
+further, so the ball is in now in your court. IMO a sensible
+maintainer would simply say "Guys, stay on topic, what do we do with
+this patch?", but no, you allow people to suggest that not only the
+whole series, but the whole sub-project be dropped, and to do so with
+totally unrelated facts, and generalizing from *ONE INSTANCE* in the
+actual sub-project, and generally from ad hominem arguments.
+
+This doesn't help anybody.
+
+Show me a systemic problem with the commit messages *in
+remote-helpers*, and then perhaps it would be worth to start *a new
+thread* to discuss them, but nobody has done so. We are still talking
+about a *single patch*.
+
+And if you really really don't like the patch, say "do X, or I drop
+the patch", or the series, and there would be no need for other
+reviewers to waste their time (if their comments were truly valid and
+correct, which they are not). There's no need to say anything more.
+And even if the reviewers were correct in their comments, allowing
+suggestions such as that the whole sub-project should be dropped
+because of one patch is going to waste people's times, no matter what.
+
+Cheers.
+
+-- 
+Felipe Contreras
