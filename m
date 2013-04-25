@@ -1,58 +1,62 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 5/7] rebase -i: return control to the caller, for housekeeping
-Date: Thu, 25 Apr 2013 20:00:44 +0530
-Message-ID: <CALkWK0n6gDTBk0G+gm6UHgMb_ueLGMZQyYVP_D24G8uXCyjXvw@mail.gmail.com>
-References: <1366725724-1016-1-git-send-email-artagnon@gmail.com>
- <1366725724-1016-6-git-send-email-artagnon@gmail.com> <CANiSa6hmh1d7ECBCAm+AKFV4KXh7eoHfk7pL0RjaqZj4XbKhpw@mail.gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] remote-bzr: use proper push method
+Date: Thu, 25 Apr 2013 16:50:32 +0200
+Message-ID: <87haiu7jgn.fsf@linux-k42r.v.cablecom.net>
+References: <1366889137-19700-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 25 16:31:31 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 25 16:50:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVNCs-0005Sk-KJ
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 16:31:30 +0200
+	id 1UVNVZ-0006XE-Aq
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 16:50:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758137Ab3DYObZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 10:31:25 -0400
-Received: from mail-ia0-f171.google.com ([209.85.210.171]:53944 "EHLO
-	mail-ia0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757413Ab3DYObZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 10:31:25 -0400
-Received: by mail-ia0-f171.google.com with SMTP id r13so2667077iar.30
-        for <git@vger.kernel.org>; Thu, 25 Apr 2013 07:31:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=8R5Wu0wkU3HnmkHhyos/xOEeh7GnGM3aXiQ0jJAJTvk=;
-        b=oo5imlqPQSVuK13GdYtXs0bWdJtrgXWq2ajkz5Hht3gH40064lHX+rVXhtMPwxtOCK
-         2khfApD9VnqdwzIHSsgr9HCFAUDI/FYQZVKu6Fmi6SfIcxMraEMM4R52b6oqdISWFUdx
-         LKGD+23TTeIMHQTnrjVIpEG1LthNwsPTxP9KH/0CY/WpFAIFGGw+Pw8imAgFSbkuLIWI
-         V88lfdNXREecwhCppOXFtgOu7jaQZcew2qzmQOWeTt64edUwWGV3BLqYpR1pCnj8HOaq
-         Oj2ChI0ipRdum9WLSAA55PnkP7QMxxSP9zQPzjp62fbQceT6Awhf6016QzFPxor/b7VF
-         DkPg==
-X-Received: by 10.50.66.197 with SMTP id h5mr8616341igt.63.1366900284832; Thu,
- 25 Apr 2013 07:31:24 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Thu, 25 Apr 2013 07:30:44 -0700 (PDT)
-In-Reply-To: <CANiSa6hmh1d7ECBCAm+AKFV4KXh7eoHfk7pL0RjaqZj4XbKhpw@mail.gmail.com>
+	id S932581Ab3DYOug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 10:50:36 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:6424 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932559Ab3DYOue (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 10:50:34 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 25 Apr
+ 2013 16:50:30 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 25 Apr 2013 16:50:32 +0200
+In-Reply-To: <1366889137-19700-1-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Thu, 25 Apr 2013 06:25:37 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222385>
 
-Martin von Zweigbergk wrote:
-> Normally one would break if unsuccessful. What would fail if this was
-> replaced by "do_next || break" and the above ".. && return 1" was "..
-> && return". I assume that was your first attempt, but why did it not
-> work?
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Thanks.  This was a major thinko on my part, but I don't remember
-exactly why I got confused.  I'll explain this patch properly in the
-next iteration.
+> Not just randomly synchronize the revisions with no checks at all. This
+> is the way bazaar's UI does it.
+>
+> Also, add a non-ff check.
+>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>
+> This patch should probably go to maint, as the results of pushing the way we
+> currently push are not really understood. Perhaps it's similar to a 'git push
+>  --force', or perhaps it can potentially screw the repository.
+>
+> It's better to be safe and just do what bazaar does.
+
+Other than "this patch should probably go to maint", this should be in
+the commit message.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
