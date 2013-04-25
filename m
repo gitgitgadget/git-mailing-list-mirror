@@ -1,124 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5801: properly test the test shell
-Date: Thu, 25 Apr 2013 09:22:08 -0700
-Message-ID: <7vli8660nj.fsf@alter.siamese.dyndns.org>
-References: <ff7ccf22012f069ceca054d90aa0f72666cc11c2.1366884583.git.git@drmicha.warpmail.net>
-	<51790C9D.8080901@viscovery.net>
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: Re: [RFC/PATCH] Make --full-history consider more merges
+Date: Thu, 25 Apr 2013 18:48:47 +0300
+Message-ID: <5179505F.2000108@bracey.fi>
+References: <7v4nfcj2kq.fsf@alter.siamese.dyndns.org> <1366658602-12254-1-git-send-email-kevin@bracey.fi> <7vzjwqny64.fsf@alter.siamese.dyndns.org> <5176B854.2000707@bracey.fi> <7va9ona77d.fsf@alter.siamese.dyndns.org> <7v61zb8j5d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Apr 25 18:22:18 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 25 18:24:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVOw5-0004Re-Lq
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 18:22:17 +0200
+	id 1UVOy0-0007Lm-De
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 18:24:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758862Ab3DYQWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 12:22:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55739 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758855Ab3DYQWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 12:22:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A0DB6179B5;
-	Thu, 25 Apr 2013 16:22:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Nmj/UmkbPPd8270Nw4TtVdivTrw=; b=FDz9D2
-	0OcE+7igdL/1IIMqXo59twXNJRPskAsjcOfriCnwbDn2p4TxKD97bHDSScX3dPOv
-	S3InLw9H3kpS1rFJ6DWpe7GUaTUTInQ/03NzPQpw6eGQG/vOMyxrcm1gs+odk+uZ
-	TPWgfe6HCPtEIUT+carRlnQXiN+ZFAeNyNugs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dJHDGGZkabWe3yfClP0l/mEph7vhjbMe
-	vYW0ZYgt8UOvOtREb5Vga8VicmuWhbv+tcfnrJEVCnoIWXHQ9npKhZQzEaDNp48s
-	jE/qBPklhhDdWxa2+Q+BbjLweEicS4mKUzB4TX3Tj4Lp9tV8ikwRks2M58Z7PQTH
-	8g7cZ/YhmOc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9797A179B4;
-	Thu, 25 Apr 2013 16:22:10 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CEFE3179AE;
-	Thu, 25 Apr 2013 16:22:09 +0000 (UTC)
-In-Reply-To: <51790C9D.8080901@viscovery.net> (Johannes Sixt's message of
-	"Thu, 25 Apr 2013 12:59:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 47747E74-ADC4-11E2-A238-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758894Ab3DYQYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 12:24:12 -0400
+Received: from 17.mo1.mail-out.ovh.net ([87.98.179.142]:36984 "EHLO
+	mo1.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757968Ab3DYQYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 12:24:11 -0400
+Received: from mail425.ha.ovh.net (b9.ovh.net [213.186.33.59])
+	by mo1.mail-out.ovh.net (Postfix) with SMTP id 4079CFF98E6
+	for <git@vger.kernel.org>; Thu, 25 Apr 2013 17:48:58 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 25 Apr 2013 17:49:15 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 25 Apr 2013 17:49:14 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+X-Ovh-Mailout: 178.32.228.1 (mo1.mail-out.ovh.net)
+In-Reply-To: <7v61zb8j5d.fsf@alter.siamese.dyndns.org>
+X-Ovh-Tracer-Id: 5798947470878609624
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: 0
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrgeegucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrgeegucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222390>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
-
-> Am 4/25/2013 12:09, schrieb Michael J Gruber:
->> fc407f9 (Add new simplified git-remote-testgit, 2012-11-28) introduced a
->> test which was meant to skip the test unless the test shell is bash.
->> Unfortunately, it tests for the availability of bash only. But users can
->> opt to use a different shell (using SHELL_PATH) for the tests even though
->> bash is available.
+On 25/04/2013 04:59, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> After my patch this morning ("avoid process substitution"), there is not
-> much bashism left in git-remote-testgit:
-
-Not much, or no more?  I think the latter is a very worthy goal.
-
-Even if it is only a test helper, we would prefer to have a portable
-one.
-
-> diff --git a/git-remote-testgit b/git-remote-testgit
-> index e99d5fa..178d030 100755
-> --- a/git-remote-testgit
-> +++ b/git-remote-testgit
-> @@ -1,4 +1,4 @@
-> -#!/usr/bin/env bash
-> +#!/bin/sh
->  # Copyright (c) 2012 Felipe Contreras
->  
->  alias=$1
-> @@ -23,7 +23,6 @@ then
->  	testgitmarks="$dir/testgit.marks"
->  	test -e "$gitmarks" || >"$gitmarks"
->  	test -e "$testgitmarks" || >"$testgitmarks"
-> -	testgitmarks_args=( "--"{import,export}"-marks=$testgitmarks" )
->  fi
->  
->  while read line
-> @@ -70,7 +69,10 @@ do
->  		fi
->  
->  		echo "feature done"
-> -		git fast-export "${testgitmarks_args[@]}" $refs |
-> +		git fast-export \
-> +			${testgitmarks:+"--import-marks=$testgitmarks"} \
-> +			${testgitmarks:+"--export-marks=$testgitmarks"} \
-> +			$refs |
->  		sed -e "s#refs/heads/#${prefix}/heads/#g"
->  		echo "done"
->  		;;
-> @@ -89,7 +91,10 @@ do
->  
->  		before=$(git for-each-ref --format='%(refname) %(objectname)')
->  
-> -		git fast-import "${testgitmarks_args[@]}" --quiet
-> +		git fast-import \
-> +			${testgitmarks:+"--import-marks=$testgitmarks"} \
-> +			${testgitmarks:+"--export-marks=$testgitmarks"} \
-> +			--quiet
->  
->  		# figure out which refs were updated
->  		git for-each-ref --format='%(refname) %(objectname)' |
+>>> So, given all that, revised patch below:
+> I tried to squeeze the minimum test I sent $gmane/220919 to the test
+> suite.  I think the "do not use --parents option for this test"
+> switch needs to be cleaned up a bit more, but it fails without your
+> patch and does pass with your patch.
 >
-> What's left is to take care of the shbang line, remove the bash
-> check from t5801, make a proper commit from this patch. But I leave
-> that to the interested reader. :-)
->
-> -- Hannes
+> I somehow was hoping that your fix to TREESAME semantics would also
+> correct the known breakage documented in that test, but it seems
+> that I was too greedy ;-)
+Thanks for the test addition. Maybe we will be able to satisfy your 
+greed in this series. There could be more worth doing here, and I think 
+getting TREESAME precise is key.
+
+I think I do want to take the step of storing "treesame per parent". And 
+once we do that, as well as avoiding the expensive re-diff, we have much 
+richer information readily available as a simplification input (and output).
+
+I'm working on a patch that does this - filling in an initial treesame[] 
+array as a decoration in try_to_simplify_commit() is easy, and 
+maintaining the array through later parent rewrites isn't as onerous as 
+I feared - there are only a few places that rewrite parents after the 
+initial scan. With a couple of helper functions to do things like 
+"delete nth", I think it'll be quite tidy.
+
+I believe that simplify_merges itself needs at least one addition, and 
+could use the treesame[] array to do it: if after doing reduce_heads, a 
+commit is now different to all remaining parents, but there was a 
+TREESAME parent eliminated, that parent should be reinstated. That would 
+clearly highlight missed merges, showing both that "older" TREESAME 
+parent and the newer !TREESAME parent that would have been taken in a 
+normal merge.
+
+And maybe there's more simplify_merges could do, if it had this full 
+TREESAME information available.
+
+(But even after you do all this stuff to get the right commits out, we 
+then hit a niggle of mine that gitk forces --cc diffs - even if it shows 
+shows the offending merge commit, you can't get it to do a diff...)
+
+Kevin
