@@ -1,92 +1,91 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] Hold an 'unsigned long' chunk of the sha1 in obj_hash
-Date: Thu, 25 Apr 2013 23:09:33 +0200
-Message-ID: <87bo92gvw2.fsf@hexa.v.cablecom.net>
-References: <6c2b67a2f0b67ee796c7676e3febe4c61ab85d4a.1366912627.git.trast@inf.ethz.ch>
-	<7vobd22wto.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remote-bzr: use proper push method
+Date: Thu, 25 Apr 2013 14:11:17 -0700
+Message-ID: <7v1u9y2u4q.fsf@alter.siamese.dyndns.org>
+References: <1366889137-19700-1-git-send-email-felipe.contreras@gmail.com>
+	<87haiu7jgn.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 25 23:09:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	<git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Apr 25 23:11:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVTQD-000066-9q
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 23:09:41 +0200
+	id 1UVTRu-0002Cb-P9
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 23:11:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932068Ab3DYVJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 17:09:37 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:27619 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756707Ab3DYVJg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 17:09:36 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 25 Apr
- 2013 23:09:31 +0200
-Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 25 Apr
- 2013 23:09:33 +0200
-In-Reply-To: <7vobd22wto.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 25 Apr 2013 13:13:07 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+	id S1759318Ab3DYVLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 17:11:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43274 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759250Ab3DYVLV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 17:11:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BDCA91971E;
+	Thu, 25 Apr 2013 21:11:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZtP3zfXfzpHLuzWCeMRB2QJflmI=; b=aR1k2/
+	KHhy81zNRHuP1Hylxiyi57xT6tdM9SlGeZI9FUeZSkHjX7fghG/RV8ngYIkmazUk
+	589IilZ3HYZCoD3dL/5B5dOR1fNnc6G7UQbKLiZmvll4BeMbDWCvKHI7AmDn44WW
+	EeWarbFR50Mpx7hXzvvYbLqDTIxAB9wfzQ6wk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Vxdk18R2W3+A7IvAX05MmsS8gSfuwofV
+	Zy+hUL5icnThIwzuPMC+tVKwkjzi50XrSeAjIdrWAr+tNIPYBd8STX8ePtOBDOIU
+	rsdCQwJE8T4nNdhhCkK/elK9M5ogfpSxXYIQLKpiF5PZp6S2RWS0sgTlQwCAvR9O
+	zJ6CawBL0dE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B52841971C;
+	Thu, 25 Apr 2013 21:11:19 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05CB61971A;
+	Thu, 25 Apr 2013 21:11:18 +0000 (UTC)
+In-Reply-To: <87haiu7jgn.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
+	of "Thu, 25 Apr 2013 16:50:32 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AC5F5EE4-ADEC-11E2-A35E-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222449>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-> Thomas Rast <trast@inf.ethz.ch> writes:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
->> So we take a slightly different approach, and trade some memory for
->> better cache locality.
+>> Not just randomly synchronize the revisions with no checks at all. This
+>> is the way bazaar's UI does it.
+>>
+>> Also, add a non-ff check.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>
+>> This patch should probably go to maint, as the results of pushing the way we
+>> currently push are not really understood. Perhaps it's similar to a 'git push
+>>  --force', or perhaps it can potentially screw the repository.
+>>
+>> It's better to be safe and just do what bazaar does.
 >
-> Interesting.  It feels somewhat bait-and-switch to reveal that the
-> above "some" turns out to be "double" later, but the resulting code
-> does not look too bad, and the numbers do not look insignificant.
+> Other than "this patch should probably go to maint", this should be in
+> the commit message.
 
-Oh, that wasn't the intent.  I was too lazy to gather some memory
-numbers, so here's an estimate on the local effect and some measurements
-on the global one.
+Hmph, should it?
 
-struct object is at least 24 bytes (flags etc. and sha1).  We grow the
-hash by 2x whenever it reaches 50% load, so it is always at least 25%
-loaded.
+I do not quite understand what "... are not really understood.
+Perhaps..." wants to say.  Understood by whom?  By the author of the
+patch?  By the author of the original code?
 
-A 25% loaded hash-table used to consist of 75% pointers (8 bytes) and
-25% pointers-to-struct-object (32 bytes), for 14 bytes per average slot.
-Now it's 22 bytes (one more unsigned long) per slot, i.e., a 60%
-increase for the data managed by the hash table.
-
-But that's using the crudest estimates I could think of.  If we assume
-that an average blob and tree is at least as big as the smallest
-possible commit, we'd guess that objects are at least ~240 bytes (this
-is still somewhat of an estimate and assumes that you don't go and
-handcraft commits with single-digit timestamps).  So the numbers above
-go up by 25% * 240 per average slot, and work out to an about 11%
-overall increase.
-
-Here are some real numbers from /usr/bin/time git rev-list --all --objects:
-
-before:
-
-  2.30user 0.02system 0:02.33elapsed 99%CPU (0avgtext+0avgdata 247760maxresident)k
-  0inputs+0outputs (0major+17844minor)pagefaults 0swaps
-
-after:
-
-  2.18user 0.02system 0:02.21elapsed 99%CPU (0avgtext+0avgdata 261936maxresident)k                       
-  0inputs+0outputs (0major+18202minor)pagefaults 0swaps
-
-So that would be about 14MB or 5.7% of extra memory.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+The log would end up saying "Doing the same as bazaar should be the
+right thing to do(TM), but don't ask me why.  I do not know what I
+am doing, or why checking is better than not checking, but it seems
+to work".  That _could_ be the truth, but it won't help people who
+are reading the code later, will it?
