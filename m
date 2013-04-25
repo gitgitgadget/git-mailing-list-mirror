@@ -1,100 +1,100 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH] Fix segfault for insane ident line
-Date: Thu, 25 Apr 2013 18:52:13 +0800
-Message-ID: <CANYiYbGC0VqtsPH8H4wmarJC-Y480+zE7irf1Y1RNLR2jA=EjA@mail.gmail.com>
-References: <cover.1366885748.git.worldhello.net@gmail.com>
-	<e7453e2b99517ebed045d82be4d5f2c9388bb002.1366885748.git.worldhello.net@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] t5801: properly test the test shell
+Date: Thu, 25 Apr 2013 12:59:41 +0200
+Message-ID: <51790C9D.8080901@viscovery.net>
+References: <ff7ccf22012f069ceca054d90aa0f72666cc11c2.1366884583.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=GB2312
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 25 12:52:26 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Apr 25 12:59:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVJmq-0007ul-8l
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 12:52:24 +0200
+	id 1UVJu5-0002jb-3I
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 12:59:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757931Ab3DYKwR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Apr 2013 06:52:17 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:61314 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757898Ab3DYKwP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Apr 2013 06:52:15 -0400
-Received: by mail-wi0-f175.google.com with SMTP id h11so8473385wiv.2
-        for <git@vger.kernel.org>; Thu, 25 Apr 2013 03:52:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=Zv7GN66iF+9K/EC4eqquQyZhhBsb6jIhJz+zXEta9O0=;
-        b=Y33gN4Mb3GFyN4a29AM8cgESx5DATiZtnROTcSRLYD5VTUFmIYtqXHOAqMDQdjL/7F
-         dApSViXxmkihBuPioBqlylfv9teqaQ4ZCwrEI9WdeHv/81PpWoJtEYKq4Z4yVqo5h105
-         hkr/QTPfuWRww8rD369liCX4/JhMXCs4UhSYHNbOfcEx6O+MlwQvNbBdgaxZ0MEwmize
-         zz4zCaYJKw0mM08bwqmfbSdRONwk01qoOvoOa61Zk9+liUq0bydASqkbVWYD/Sy0Vue4
-         Rg7xfsNC774GCxPnSGdBWhAFi1CWuHRA0DgvHONd+ow7W1OL8DVGwT+9Hnfo7DH5EfVw
-         D1oQ==
-X-Received: by 10.180.12.235 with SMTP id b11mr71757791wic.13.1366887134062;
- Thu, 25 Apr 2013 03:52:14 -0700 (PDT)
-Received: by 10.194.175.72 with HTTP; Thu, 25 Apr 2013 03:52:13 -0700 (PDT)
-In-Reply-To: <e7453e2b99517ebed045d82be4d5f2c9388bb002.1366885748.git.worldhello.net@gmail.com>
+	id S1755847Ab3DYK7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 06:59:49 -0400
+Received: from so.liwest.at ([212.33.55.23]:44905 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753778Ab3DYK7s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 06:59:48 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1UVJtt-0002Z0-PV; Thu, 25 Apr 2013 12:59:41 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 756051660F;
+	Thu, 25 Apr 2013 12:59:41 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <ff7ccf22012f069ceca054d90aa0f72666cc11c2.1366884583.git.git@drmicha.warpmail.net>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222365>
 
-Oops, Ignore this patch please, I found they were already fixed by the
-following commits
-of next branch. Maybe next time I should patch something in next branch=
-=2E
+Am 4/25/2013 12:09, schrieb Michael J Gruber:
+> fc407f9 (Add new simplified git-remote-testgit, 2012-11-28) introduced a
+> test which was meant to skip the test unless the test shell is bash.
+> Unfortunately, it tests for the availability of bash only. But users can
+> opt to use a different shell (using SHELL_PATH) for the tests even though
+> bash is available.
 
-commit 9dbe7c3d7f4424cf0c27c2d4efabf72e58fa76b9
-Author: Ren=A8=A6 Scharfe <rene.scharfe@lsrfire.ath.cx>
-Date:   Wed Apr 17 20:33:35 2013 +0200
+After my patch this morning ("avoid process substitution"), there is not
+much bashism left in git-remote-testgit:
 
-    pretty: handle broken commit headers gracefully
+diff --git a/git-remote-testgit b/git-remote-testgit
+index e99d5fa..178d030 100755
+--- a/git-remote-testgit
++++ b/git-remote-testgit
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env bash
++#!/bin/sh
+ # Copyright (c) 2012 Felipe Contreras
+ 
+ alias=$1
+@@ -23,7 +23,6 @@ then
+ 	testgitmarks="$dir/testgit.marks"
+ 	test -e "$gitmarks" || >"$gitmarks"
+ 	test -e "$testgitmarks" || >"$testgitmarks"
+-	testgitmarks_args=( "--"{import,export}"-marks=$testgitmarks" )
+ fi
+ 
+ while read line
+@@ -70,7 +69,10 @@ do
+ 		fi
+ 
+ 		echo "feature done"
+-		git fast-export "${testgitmarks_args[@]}" $refs |
++		git fast-export \
++			${testgitmarks:+"--import-marks=$testgitmarks"} \
++			${testgitmarks:+"--export-marks=$testgitmarks"} \
++			$refs |
+ 		sed -e "s#refs/heads/#${prefix}/heads/#g"
+ 		echo "done"
+ 		;;
+@@ -89,7 +91,10 @@ do
+ 
+ 		before=$(git for-each-ref --format='%(refname) %(objectname)')
+ 
+-		git fast-import "${testgitmarks_args[@]}" --quiet
++		git fast-import \
++			${testgitmarks:+"--import-marks=$testgitmarks"} \
++			${testgitmarks:+"--export-marks=$testgitmarks"} \
++			--quiet
+ 
+ 		# figure out which refs were updated
+ 		git for-each-ref --format='%(refname) %(objectname)' |
 
-    Centralize the parsing of the date and time zone strings in the new
-    helper function show_ident_date() and make sure it checks the point=
-ers
-    provided by split_ident_line() for NULL before use.
+What's left is to take care of the shbang line, remove the bash
+check from t5801, make a proper commit from this patch. But I leave
+that to the interested reader. :-)
 
-    Reported-by: Ivan Lyapunov <dront78@gmail.com>
-    Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-
-commit de5abe9fe91a496d019d62abefe23df9d72fad30
-Author: Ren=A8=A6 Scharfe <rene.scharfe@lsrfire.ath.cx>
-Date:   Wed Apr 17 20:33:54 2013 +0200
-
-    blame: handle broken commit headers gracefully
-
-    split_ident_line() can leave us with the pointers date_begin, date_=
-end,
-    tz_begin and tz_end all set to NULL.  Check them before use and sup=
-ply
-    the same fallback values as in the case of a negative return code f=
-rom
-    split_ident_line().
-
-    The "(unknown)" is not actually shown in the output, though, becaus=
-e it
-    will be converted to a number (zero) eventually.
-
-    Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-
-
---
-=BD=AF=F6=CE
-
-=B1=B1=BE=A9=C8=BA=D3=A2=BB=E3=D0=C5=CF=A2=BC=BC=CA=F5=D3=D0=CF=DE=B9=AB=
-=CB=BE
-=D3=CA=BC=FE: worldhello.net@gmail.com
-=CD=F8=D6=B7: http://www.ossxp.com/
-=B2=A9=BF=CD: http://www.worldhello.net/
-=CE=A2=B2=A9: http://weibo.com/gotgit/
-=B5=E7=BB=B0: 18601196889
+-- Hannes
