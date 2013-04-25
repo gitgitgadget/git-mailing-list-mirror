@@ -1,64 +1,73 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Hold an 'unsigned long' chunk of the sha1 in obj_hash
-Date: Fri, 26 Apr 2013 04:12:10 +0700
-Message-ID: <CACsJy8CJO+rLHgMo+F_fsWBj7Nm0rbpVNHTLXbi7u60+rT0OJQ@mail.gmail.com>
-References: <6c2b67a2f0b67ee796c7676e3febe4c61ab85d4a.1366912627.git.trast@inf.ethz.ch>
+Subject: Re: [PATCH] inotify to minimize stat() calls
+Date: Fri, 26 Apr 2013 04:20:26 +0700
+Message-ID: <CACsJy8ChXRMR93r2R5NoTL7Ly1HqWCXq=t=Kj4ma5+MyYvESpg@mail.gmail.com>
+References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
+ <7vehgqzc2p.fsf@alter.siamese.dyndns.org> <7va9rezaoy.fsf@alter.siamese.dyndns.org>
+ <7vsj56w5y9.fsf@alter.siamese.dyndns.org> <9AF8A28B-71FE-4BBC-AD55-1DD3FDE8FFC3@gmail.com>
+ <CALkWK0mttn6E+D-22UBbvDCuNEy_jNOtBaKPS-a8mTbO2uAF3g@mail.gmail.com>
+ <7vliaxwa9p.fsf@alter.siamese.dyndns.org> <CAKXa9=qQwJqxZLxhAS35QeF1+dwH+ukod0NfFggVCuUZHz-USg@mail.gmail.com>
+ <51781455.9090600@gmail.com> <CACsJy8AuQFGCwOBTXU48T65+7DTmCw31RZc0Z-2YBpkKYcoAoA@mail.gmail.com>
+ <CAKXa9=pt2mxwFtepoOLZ-Atw3Ey5_OHh6rzk43kVTs8=vcVuRw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Apr 25 23:12:47 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Robert Zeh <robert.allan.zeh@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 25 23:21:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVTTC-0003f0-Eb
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 23:12:46 +0200
+	id 1UVTbF-00041k-L4
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 23:21:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759224Ab3DYVMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 17:12:42 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:63843 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754080Ab3DYVMl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 17:12:41 -0400
-Received: by mail-ob0-f173.google.com with SMTP id xn12so2982722obc.32
-        for <git@vger.kernel.org>; Thu, 25 Apr 2013 14:12:41 -0700 (PDT)
+	id S1759655Ab3DYVVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 17:21:00 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:55803 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758873Ab3DYVU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 17:20:59 -0400
+Received: by mail-oa0-f49.google.com with SMTP id j1so3279551oag.22
+        for <git@vger.kernel.org>; Thu, 25 Apr 2013 14:20:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=yC6Ajrhr0G0mQUOPDlT+Hr53gbwz+0qalcKN0LWekPM=;
-        b=NT/Q9/Z3mSF7fnDChZ7KGn55fC8DyByp5hzZfEHrzP83n5D0M8bIt0MhEoUjbrEzb1
-         twjPrjFBTkziBLx/VUwi/NNvhzjpEH5uz8T3PUEHghgjGnLrYF+CewaIrg5BGauZYD3x
-         YVE9p53iTCmaxwJwwRsWYfuauz24n2g7MEVExaikWimS1oSEcfHJGNOT/HeXzDbv9J/2
-         U/FDTzyZ+4f9uWtRtUhI5Hk9ZrcTEbLx+0Hgg9Sl0eg/5NKj67gOIvZNFBALD5O5JxzU
-         0T5LArqWN8o8lCGN6xgh7hykbqq2SChjIApW0u+oMwGJw+oCSM0I+QzoHq1uRjAux7jT
-         Rxig==
-X-Received: by 10.60.135.234 with SMTP id pv10mr21272657oeb.101.1366924361228;
- Thu, 25 Apr 2013 14:12:41 -0700 (PDT)
-Received: by 10.76.142.74 with HTTP; Thu, 25 Apr 2013 14:12:10 -0700 (PDT)
-In-Reply-To: <6c2b67a2f0b67ee796c7676e3febe4c61ab85d4a.1366912627.git.trast@inf.ethz.ch>
+        bh=3kwU/2x+418/Gv3TXTLaAGl6e8NxzhbUpqO0KzMUWfg=;
+        b=i/mxJqpqd2l1EXx946DChdQsWymUu05LvRhvrLAzdvdCADwtu3FBc7J5GioNAm2H2C
+         oKMhguy4N5hh6YeZ4QE/hGmoxW99couoY4dtt/Pkx4kRHSYGHJBjvF2T9rcjeJUFXW9q
+         kz4Eb7mBhMSeVeNNSdO5whlT2edSf61S3+NRwFl1cOzMHGJdf4wsUyyLgqVGQiENJrgz
+         rgQh1zCqXAnZcwtxCvncKpFqWfs17h80qeLSPmxeRMU64hyatRgGQCUn1aorIVK2t1+x
+         qHcoCxoj3XlR5laWUSA/5bBNGQJGbefgtegsZTeBjXghZZzQuHMqf0xhj1hPcMImYaqE
+         11FA==
+X-Received: by 10.60.84.102 with SMTP id x6mr3994766oey.73.1366924857901; Thu,
+ 25 Apr 2013 14:20:57 -0700 (PDT)
+Received: by 10.76.142.74 with HTTP; Thu, 25 Apr 2013 14:20:26 -0700 (PDT)
+In-Reply-To: <CAKXa9=pt2mxwFtepoOLZ-Atw3Ey5_OHh6rzk43kVTs8=vcVuRw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222451>
 
-On Fri, Apr 26, 2013 at 1:04 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> So we take a slightly different approach, and trade some memory for
-> better cache locality.  Namely, we change the hash table slots to
-> contain
+On Fri, Apr 26, 2013 at 2:44 AM, Robert Zeh <robert.allan.zeh@gmail.com> wrote:
+>> Can you just replace lstat/stat with cached_lstat/stat inside
+>> git-compat-util.h and not touch all files at once? I think you may
+>> need to deal with paths outside working directory. But because you're
+>> using lookup table, that should be no problem.
 >
->   struct object *obj;
->   unsigned long sha1prefix;
->
-> We use this new 'sha1prefix' field to store the first part of the
-> object's sha1, from which its hash table slot is computed.
+> That's a good idea; but there are a few places where you want to call
+> the uncached stat because calling the cache leads to recursion or
+> you bump into things that haven't been setup yet.  Any ideas how to
+> handle that?
 
-Clever. I went a similar road before. But I put the whole 20-byte
-sha-1 in obj_hash, which makes obj_hash even bigger and less
-cache-friendly.
+On second thought, no my idea was stupid. We only need to optimize
+lstat for certain cases and naming cached_lstat is much clearer. I
+suspect read-cache.c and maybe dir.c and unpack-trees.c are the only
+places that need cached_lstat. Other places should not issue many
+lstats and we don't need to touch them.
 --
 Duy
