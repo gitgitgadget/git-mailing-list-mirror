@@ -1,235 +1,143 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [PATCH] Hold an 'unsigned long' chunk of the sha1 in obj_hash
-Date: Thu, 25 Apr 2013 20:04:01 +0200
-Message-ID: <6c2b67a2f0b67ee796c7676e3febe4c61ab85d4a.1366912627.git.trast@inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] prune: introduce OPT_EXPIRY_DATE() and use it
+Date: Thu, 25 Apr 2013 11:13:49 -0700
+Message-ID: <7v61za4gwy.fsf_-_@alter.siamese.dyndns.org>
+References: <7vbo9ceqb3.fsf@alter.siamese.dyndns.org>
+	<1366271195-4276-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 25 20:04:16 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Apr 25 20:13:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVQWh-0001Py-Rc
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 20:04:12 +0200
+	id 1UVQgA-0007bT-NU
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 20:13:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933193Ab3DYSEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 14:04:06 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:19267 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932420Ab3DYSEF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 14:04:05 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 25 Apr
- 2013 20:03:59 +0200
-Received: from hexa.v.cablecom.net (46.126.8.85) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 25 Apr
- 2013 20:04:01 +0200
-X-Mailer: git-send-email 1.8.2.1.961.g06c38a5.dirty
-X-Originating-IP: [46.126.8.85]
+	id S1758426Ab3DYSNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 14:13:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54570 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756171Ab3DYSNx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 14:13:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3935D176FA;
+	Thu, 25 Apr 2013 18:13:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zgjAY6RGzpnrp6MenjdXxNbODbg=; b=QLvepH
+	YN71732e6W9UipuFNocJIniPvPKg1s2P+7k20b4i1dODtzQQ7SbzFQJyKe/SvQ+c
+	Wzy/xW9oQseOwCrVAgqY0PlT3qoaAszRbP3nvKEPJLArnOb9vYHtL1fsRiUqTyf5
+	3c5Ygozi+Z1yvR0pZ2YC6yVLORAX5cAwJWmfc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xBhw+8p/iBV0SF5Ix6FRrqSX3iCKLv6h
+	u63Eo9cnQXmS8QeIHPVl52NwYhNoP2qdcfxl1mPNUtmIoMkAmBuEK0Zm/bWJB5M5
+	brN21emA4js3CstfIPuqIzRaJH9SX+AsnA/GfaCmY98e0B/mv7ipj2a9gtVjB/lL
+	EE/fp6m2ZoU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C909176F9;
+	Thu, 25 Apr 2013 18:13:52 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 38B36176F5;
+	Thu, 25 Apr 2013 18:13:51 +0000 (UTC)
+In-Reply-To: <1366271195-4276-1-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Thu, 18 Apr 2013 09:46:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E1CB3260-ADD3-11E2-9372-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222403>
 
-The existing obj_hash is really straightforward: it holds a struct
-object * and spills into the subsequent slots (linear probing), which
-is good enough because it doesn't need to support deletion.
+Earlier we added support for --expire=all (or --expire=now) that
+considers all crufts, regardless of their age, as eligible for
+garbage collection by turning command argument parsers that use
+approxidate() to use parse_expiry_date(), but "git prune" used a
+built-in parse-options facility OPT_DATE() and did not benefit from
+the new function.
 
-However, this arrangement has pretty bad cache locality in the case of
-collisions.  Because the sha1 is contained in the object itself, it
-resides in a different memory region from the hash table.  So whenever
-we have to process a hash collision, we need to access (and
-potentially fetch from slower caches or memory) an object that we are
-not going to use again.
-
-And probing lookups happen a lot: some simple instrumentation shows
-that 'git rev-list --all --objects' on my git.git,
-
-* 19.4M objects are accessed in lookup_object and grow_object_hash
-  combined, while
-
-* the linear probing loops in lookup_object and insert_obj_hash run a
-  total of 9.4M times.
-
-So we take a slightly different approach, and trade some memory for
-better cache locality.  Namely, we change the hash table slots to
-contain
-
-  struct object *obj;
-  unsigned long sha1prefix;
-
-We use this new 'sha1prefix' field to store the first part of the
-object's sha1, from which its hash table slot is computed.  This
-allows us to do two things with data that resides inside the hash
-table:
-
-* In lookup_object(), we can do a pre-filtering of the probed slots;
-  the probability that we need to actually peek inside any colliding
-  object(s) is very small.
-
-* In grow_object_hash(), we actually do not need to look inside the
-  objects at all.  This should give a substantial speedup during
-  hashtable resizing.
-
-The choice of 'long' makes it the same size as a pointer (to which any
-smaller data type would be padded anyway) on x86 and x86_64 Linuxen,
-and probably many others.  So the hash table will be twice as big as
-before.
-
-I get a decent speedup, for example using git.git as a test
-repository:
-
-Test                               before              after
----------------------------------------------------------------------------------
-0001.1: rev-list --all             0.42(0.40+0.01)     0.41(0.39+0.01)   -1.5%**
-0001.2: rev-list --all --objects   2.40(2.37+0.03)     2.28(2.25+0.03)   -5.0%***
----------------------------------------------------------------------------------
-
-And even more in linux.git:
-
----------------------------------------------------------------------------------
-0001.1: rev-list --all             3.31(3.19+0.12)     3.21(3.09+0.11)   -2.9%**
-0001.2: rev-list --all --objects   27.99(27.70+0.26)   25.99(25.71+0.25) -7.1%***
----------------------------------------------------------------------------------
-
-Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
+ Documentation/technical/api-parse-options.txt | 4 ++++
+ builtin/prune.c                               | 4 ++--
+ parse-options-cb.c                            | 6 ++++++
+ parse-options.h                               | 4 ++++
+ 4 files changed, 16 insertions(+), 2 deletions(-)
 
-I expected the big win to be in grow_object_hash(), but perf says that
-'git rev-list --all --objects' spends a whopping 33.6% of its time in
-lookup_object(), and this change gets that down to 30.0%.
-
- object.c | 58 ++++++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 36 insertions(+), 22 deletions(-)
-
-diff --git a/object.c b/object.c
-index 20703f5..6b84c87 100644
---- a/object.c
-+++ b/object.c
-@@ -5,7 +5,12 @@
- #include "commit.h"
- #include "tag.h"
+diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
+index facc8c8..a8bae69 100644
+--- a/Documentation/technical/api-parse-options.txt
++++ b/Documentation/technical/api-parse-options.txt
+@@ -176,6 +176,10 @@ There are some macros to easily define options:
+ 	Introduce an option with date argument, see `approxidate()`.
+ 	The timestamp is put into `int_var`.
  
--static struct object **obj_hash;
-+struct obj_hash_ent {
-+	struct object *obj;
-+	unsigned long sha1prefix;
-+};
++`OPT_EXPIRY_DATE(short, long, &int_var, description)`::
++	Introduce an option with expiry date argument, see `parse_expiry_date()`.
++	The timestamp is put into `int_var`.
 +
-+static struct obj_hash_ent *obj_hash;
- static int nr_objs, obj_hash_size;
- 
- unsigned int get_max_object_index(void)
-@@ -15,7 +20,7 @@ unsigned int get_max_object_index(void)
- 
- struct object *get_indexed_object(unsigned int idx)
- {
--	return obj_hash[idx];
-+	return obj_hash[idx].obj;
+ `OPT_CALLBACK(short, long, &var, arg_str, description, func_ptr)`::
+ 	Introduce an option with argument.
+ 	The argument will be fed into the function given by `func_ptr`
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 85843d4..b90e5cc 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -132,8 +132,8 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
+ 		OPT__VERBOSE(&verbose, N_("report pruned objects")),
+ 		OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
+-		OPT_DATE(0, "expire", &expire,
+-			 N_("expire objects older than <time>")),
++		OPT_EXPIRY_DATE(0, "expire", &expire,
++				N_("expire objects older than <time>")),
+ 		OPT_END()
+ 	};
+ 	char *s;
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 0de5fb1..be8c413 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -33,6 +33,12 @@ int parse_opt_approxidate_cb(const struct option *opt, const char *arg,
+ 	return 0;
  }
  
- static const char *object_type_strings[] = {
-@@ -43,43 +48,52 @@ int type_from_string(const char *str)
- 	die("invalid object type \"%s\"", str);
- }
- 
--static unsigned int hash_obj(struct object *obj, unsigned int n)
-+static unsigned long hash_sha1(const unsigned char *sha1)
- {
--	unsigned int hash;
--	memcpy(&hash, obj->sha1, sizeof(unsigned int));
--	return hash % n;
-+	unsigned long sha1prefix;
-+	memcpy(&sha1prefix, sha1, sizeof(unsigned long));
-+	return sha1prefix;
- }
- 
--static void insert_obj_hash(struct object *obj, struct object **hash, unsigned int size)
-+static unsigned long hash_obj(struct object *obj)
- {
--	unsigned int j = hash_obj(obj, size);
-+	return hash_sha1(obj->sha1);
-+}
- 
--	while (hash[j]) {
-+static void insert_obj_hash_1(struct object *obj, struct obj_hash_ent *hash, unsigned int size,
-+			      unsigned long sha1prefix)
++int parse_opt_expiry_date_cb(const struct option *opt, const char *arg,
++			     int unset)
 +{
-+	unsigned int j = (unsigned int) sha1prefix % size;
++	return parse_expiry_date(arg, (unsigned long *)opt->value);
++}
 +
-+	while (hash[j].obj) {
- 		j++;
- 		if (j >= size)
- 			j = 0;
- 	}
--	hash[j] = obj;
-+	hash[j].obj = obj;
-+	hash[j].sha1prefix = sha1prefix;
- }
- 
--static unsigned int hashtable_index(const unsigned char *sha1)
-+static void insert_obj_hash(struct object *obj, struct obj_hash_ent *table, unsigned int size)
+ int parse_opt_color_flag_cb(const struct option *opt, const char *arg,
+ 			    int unset)
  {
--	unsigned int i;
--	memcpy(&i, sha1, sizeof(unsigned int));
--	return i % obj_hash_size;
-+	unsigned long sha1prefix = hash_obj(obj);
-+	insert_obj_hash_1(obj, table, size, sha1prefix);
- }
- 
- struct object *lookup_object(const unsigned char *sha1)
- {
-+	unsigned long sha1prefix;
- 	unsigned int i;
- 	struct object *obj;
- 
- 	if (!obj_hash)
- 		return NULL;
- 
--	i = hashtable_index(sha1);
--	while ((obj = obj_hash[i]) != NULL) {
--		if (!hashcmp(sha1, obj->sha1))
-+	sha1prefix = hash_sha1(sha1);
-+	i = (unsigned int) sha1prefix % obj_hash_size;
-+	while ((obj = obj_hash[i].obj) != NULL) {
-+		if (obj_hash[i].sha1prefix == sha1prefix
-+		    && !hashcmp(sha1, obj->sha1))
- 			break;
- 		i++;
- 		if (i == obj_hash_size)
-@@ -92,14 +106,14 @@ static void grow_object_hash(void)
- {
- 	int i;
- 	int new_hash_size = obj_hash_size < 32 ? 32 : 2 * obj_hash_size;
--	struct object **new_hash;
-+	struct obj_hash_ent *new_hash;
- 
--	new_hash = xcalloc(new_hash_size, sizeof(struct object *));
-+	new_hash = xcalloc(new_hash_size, sizeof(struct obj_hash_ent));
- 	for (i = 0; i < obj_hash_size; i++) {
--		struct object *obj = obj_hash[i];
-+		struct object *obj = obj_hash[i].obj;
- 		if (!obj)
- 			continue;
--		insert_obj_hash(obj, new_hash, new_hash_size);
-+		insert_obj_hash_1(obj, new_hash, new_hash_size, obj_hash[i].sha1prefix);
- 	}
- 	free(obj_hash);
- 	obj_hash = new_hash;
-@@ -302,7 +316,7 @@ void clear_object_flags(unsigned flags)
- 	int i;
- 
- 	for (i=0; i < obj_hash_size; i++) {
--		struct object *obj = obj_hash[i];
-+		struct object *obj = obj_hash[i].obj;
- 		if (obj)
- 			obj->flags &= ~flags;
- 	}
--- 
-1.8.2.1.961.g06c38a5.dirty
+diff --git a/parse-options.h b/parse-options.h
+index 71a39c6..8541811 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -140,6 +140,9 @@ struct option {
+ #define OPT_DATE(s, l, v, h) \
+ 	{ OPTION_CALLBACK, (s), (l), (v), N_("time"),(h), 0,	\
+ 	  parse_opt_approxidate_cb }
++#define OPT_EXPIRY_DATE(s, l, v, h) \
++	{ OPTION_CALLBACK, (s), (l), (v), N_("expiry date"),(h), 0,	\
++	  parse_opt_expiry_date_cb }
+ #define OPT_CALLBACK(s, l, v, a, h, f) \
+ 	{ OPTION_CALLBACK, (s), (l), (v), (a), (h), 0, (f) }
+ #define OPT_NUMBER_CALLBACK(v, h, f) \
+@@ -215,6 +218,7 @@ extern int parse_options_concat(struct option *dst, size_t, struct option *src);
+ /*----- some often used options -----*/
+ extern int parse_opt_abbrev_cb(const struct option *, const char *, int);
+ extern int parse_opt_approxidate_cb(const struct option *, const char *, int);
++extern int parse_opt_expiry_date_cb(const struct option *, const char *, int);
+ extern int parse_opt_color_flag_cb(const struct option *, const char *, int);
+ extern int parse_opt_verbosity_cb(const struct option *, const char *, int);
+ extern int parse_opt_with_commit(const struct option *, const char *, int);
