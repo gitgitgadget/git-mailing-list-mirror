@@ -1,149 +1,224 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 00/11] Add new git-related helper to contrib
-Date: Thu, 25 Apr 2013 14:59:32 -0500
-Message-ID: <1366919983-27521-1-git-send-email-felipe.contreras@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Subject: [PATCH v4 01/11] Add new git-related  helper to contrib
+Date: Thu, 25 Apr 2013 14:59:33 -0500
+Message-ID: <1366919983-27521-2-git-send-email-felipe.contreras@gmail.com>
+References: <1366919983-27521-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Duy Nguyen <pclouds@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 25 22:01:14 2013
+X-From: git-owner@vger.kernel.org Thu Apr 25 22:01:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVSLv-0003ei-BL
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 22:01:11 +0200
+	id 1UVSM1-0003mg-SF
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 22:01:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757716Ab3DYUBG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Apr 2013 16:01:06 -0400
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:35664 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754317Ab3DYUBF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 16:01:05 -0400
-Received: by mail-ob0-f170.google.com with SMTP id eh20so2903415obb.1
-        for <git@vger.kernel.org>; Thu, 25 Apr 2013 13:01:04 -0700 (PDT)
+	id S1758260Ab3DYUBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 16:01:09 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:39455 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754317Ab3DYUBH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 16:01:07 -0400
+Received: by mail-ob0-f180.google.com with SMTP id uk5so2819864obc.25
+        for <git@vger.kernel.org>; Thu, 25 Apr 2013 13:01:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=5m+haTwaggMZDkw8mi1y/nVS8IyZcx9p+DPR22gzwQg=;
-        b=qjvv8asEyeeIVhKaAyZJB6Z7w2La6C8kK6Otc31RwWzav2y04KbOZj5EIGGwiEt15q
-         kXRilEtcFThD+Hx62Mwxzpuewd4fJU32CBlf/0YB6ibcEl3WDQ53jhNvoQTKdYfNtRla
-         2vH54YJ8nt8Hyn2ZP1QGaoW3Q2UeHvrCZ/68Df4kuT2Hi8sAaiTAG3maQJA/LcdWlCBK
-         fcMP5v6JFkPjZ2IKCzt2XsKzSaNsQQIJyWEBAeROr5wD6rV0tJK3sYu8S2yZtflArkG4
-         QZw9AntuPCBz63MfMAJhnOgPM/BYfIvco5llwhHhU45XTqyJDEmIY2BECcL4n0BRKEWd
-         lXpw==
-X-Received: by 10.60.27.136 with SMTP id t8mr6917593oeg.92.1366920064136;
-        Thu, 25 Apr 2013 13:01:04 -0700 (PDT)
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=HxVrqu1IRQI9/BB4kVRB9J1tFaIIAMrqfTo3MJXFY4E=;
+        b=I6aApJL2DIHfzRJUtaoSDOQKBh+1VP2kHQspr/xM/8uHb18FfWOuYVnctWH1abHSJW
+         ITcs9A47hL8AQIFA5Q1M5THYgH30gZHgpd7w+Mr53poxm4OzX3jSPeidyeI0+PrUKokZ
+         Z5lqrJBMd1Yfd6ujSEOcjE08xGK2TLUGIFK+meSXrHGEskiNLSxuL957ojpjsli9wb4Q
+         3y4NDBfizTGeynzsv7BlOMcSlxhoBiilTES4cCvDCYNTWcuPiIPLzWaDqQXsXneDdGs0
+         6phlo1Ne6ISh6X1sst0Sv2cs/XOa9o/eGgKXmrf1ykV8nlGoD6ft0PuKQMg4hZXfpmr0
+         bKSg==
+X-Received: by 10.60.149.129 with SMTP id ua1mr6118899oeb.56.1366920067180;
+        Thu, 25 Apr 2013 13:01:07 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id w7sm4723057obx.9.2013.04.25.13.01.02
+        by mx.google.com with ESMTPSA id jv10sm4949953oeb.3.2013.04.25.13.01.05
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Apr 2013 13:01:03 -0700 (PDT)
+        Thu, 25 Apr 2013 13:01:06 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.1
+In-Reply-To: <1366919983-27521-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222429>
 
-Hi,
+This script find people that might be interested in a patch, by going
+back through the history for each single hunk modified, and finding
+people that reviewed, acknowledge, signed, or authored the code the
+patch is modifying.
 
-Previously known as git-cc-cmd, I've renamed it git-related (tentativel=
-y). I
-removed support for aliases, as I don't think it's very useful, and I'v=
-e added
-support for mailmap, which I think covers similar use-cases.
+It does this by running 'git blame' incrementally on each hunk, and then
+parsing the commit message. After gathering all the relevant people, it
+groups them to show what exactly was their role when the participated in
+the development of the relevant commit, and on how many relevant commits
+they participated. They are only displayed if they pass a minimum
+threshold of participation.
 
-This script allows you to get a list of relevant persons to Cc when sen=
-ding a
-patch series.
+For example:
 
-  % git cc-cmd v1.8.1.6^^1..v1.8.1.6^^2
-  Junio C Hamano <gitster@pobox.com> (signer: 84%, author: 15%)
-  "Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy" <pclouds@gmail.com> (auth=
-or: 38%, signer: 7%)
-  Michael Haggerty <mhagger@alum.mit.edu> (author: 15%)
-  Jean-Noel Avila <jn.avila@free.fr> (signer: 7%)
-  "Jean-No=C3=ABl AVILA" <avila.jn@gmail.com> (author: 7%)
-  "Henrik Grubbstr=C3=B6m" <grubba@grubba.org> (author: 7%)
-  Clemens Buchacher <drizzd@aon.at> (author: 7%)
-  Joshua Jensen <jjensen@workspacewhiz.com> (author: 7%)
-  Johannes Sixt <j6t@kdbg.org> (signer: 7%)
+  % git related 0001-remote-hg-trivial-cleanups.patch
+  Felipe Contreras <felipe.contreras@gmail.com> (author: 100%)
+  Jeff King <peff@peff.net> (signer: 83%)
+  Max Horn <max@quendi.de> (signer: 16%)
+  Junio C Hamano <gitster@pobox.com> (signer: 16%)
 
-It finds people that might be interesting in a patch, by going back thr=
-ough the
-history for each single hunk modified, and finding people that reviewed=
-,
-acknowledge, signed, or authored the code the patch is modifying.
+Thus it can be used for 'git send-email' as a cc-cmd.
 
-It does this by running 'git blame' incrementally on each hunk, and the=
-n
-parsing the commit message. After gathering all the relevant people, it=
- groups
-them to show what exactly was their role when the participated in the
-development of the relevant commit, and on how many relevant commits th=
-ey
-participated. They are only displayed if they pass a minimum threshold =
-of
-participation.
+There might be some other related functions to this script, not just to
+be used as a cc-cmd.
 
-The code finds the changes in each commit in the list, runs 'git blame'
-to see which other commits are relevant to those lines, and then adds
-the author and signer to the list.
-
-=46inally, it calculates what percentage of the total relevant commits
-each person was involved in, and if it passes the threshold, it goes in=
-=2E
-
-You can also choose to show the commits themselves:
-
-  % git cc-cmd --commits v1.8.1.6^^1..v1.8.1.6^^2
-  9db9eec attr: avoid calling find_basename() twice per path
-  94bc671 Add directory pattern matching to attributes
-  82dce99 attr: more matching optimizations from .gitignore
-  593cb88 exclude: split basename matching code into a separate functio=
-n
-  b559263 exclude: split pathname matching code into a separate functio=
-n
-  4742d13 attr: avoid searching for basename on every match
-  f950eb9 rename pathspec_prefix() to common_prefix() and move to dir.[=
-ch]
-  4a085b1 consolidate pathspec_prefix and common_prefix
-  d932f4e Rename git_checkattr() to git_check_attr()
-  2d72174 Extract a function collect_all_attrs()
-  8cf2a84 Add string comparison functions that respect the ignore_case =
-variable.
-  407a963 Merge branch 'rr/remote-helper-doc'
-  ec775c4 attr: Expand macros immediately when encountered.
-
-But wait, there's more: you can also specify a list of patch files, whi=
-ch means
-this can be used for 'git send-emails' --cc-cmd option.
-
-
-=46elipe Contreras (11):
-  Add new git-related  helper to contrib
-  contrib: related: add option parsing
-  contrib: related: add support for multiple patches
-  contrib: related: add option to show commits
-  contrib: related: add option to parse from committish
-  contrib: related: parse committish like format-patch
-  contrib: related: fix parsing of rev-list args
-  contrib: related: support multiple roles
-  contrib: related: sort by participation
-  contrib: related: group persons with same email
-  contrib: related: add support for mailmap
-
- contrib/related/git-related | 272 ++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 file changed, 272 insertions(+)
+Comments-by: Ramkumar Ramachandra <artagnon@gmail.com>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/related/git-related | 131 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 131 insertions(+)
  create mode 100755 contrib/related/git-related
 
---=20
+diff --git a/contrib/related/git-related b/contrib/related/git-related
+new file mode 100755
+index 0000000..2d47efa
+--- /dev/null
++++ b/contrib/related/git-related
+@@ -0,0 +1,131 @@
++#!/usr/bin/env ruby
++
++$since = '3-years-ago'
++$min_percent = 5
++
++class Commit
++
++  attr_reader :id, :roles
++
++  def initialize(id)
++    @id = id
++    @roles = []
++  end
++
++  def parse(data)
++    author = msg = nil
++    roles = {}
++    data.each_line do |line|
++      if not msg
++        case line
++        when /^author ([^<>]+) <(\S+)> (.+)$/
++          author = $1, $2
++          roles[author] = :author
++        when /^$/
++          msg = true
++        end
++      else
++        if line =~ /^(Signed-off|Reviewed|Acked)-by: ([^<>]+) <(\S+?)>$/
++          person = $2, $3
++          roles[person] = :signer if person != author
++        end
++      end
++    end
++    @roles = roles.map do |person, role|
++      [person, role]
++    end
++  end
++
++end
++
++class Commits
++
++  attr_reader :items
++
++  def initialize()
++    @items = {}
++  end
++
++  def size
++    @items.size
++  end
++
++  def import
++    return if @items.empty?
++    File.popen(%w[git cat-file --batch], 'r+') do |p|
++      p.write(@items.keys.join("\n"))
++      p.close_write
++      p.each do |l|
++        if l =~ /^(\h{40}) commit (\d+)/
++          id, len = $1, $2
++          data = p.read($2.to_i)
++          @items[id].parse(data)
++        end
++      end
++    end
++  end
++
++  def get_blame(source, start, offset, from)
++    return unless source and offset
++    File.popen(['git', 'blame', '--incremental', '-C',
++               '-L', '%u,+%u' % [start, offset],
++               '--since', $since, from + '^',
++               '--', source]) do |p|
++      p.each do |line|
++        if line =~ /^(\h{40})/
++          id = $1
++          @items[id] = Commit.new(id)
++        end
++      end
++    end
++  end
++
++  def from_patch(file)
++    source = nil
++    from = nil
++    File.open(file) do |f|
++      f.each do |line|
++        case line
++        when /^From (\h+) (.+)$/
++          from = $1
++        when /^---\s+(\S+)/
++          source = $1 != '/dev/null' ? $1[2..-1] : nil
++        when /^@@\s-(\d+),(\d+)/
++          get_blame(source, $1, $2, from)
++        end
++      end
++    end
++  end
++
++end
++
++exit 1 if ARGV.size != 1
++
++commits = Commits.new
++commits.from_patch(ARGV[0])
++commits.import
++
++# hash of hashes
++persons = Hash.new { |hash, key| hash[key] = {} }
++
++commits.items.values.each do |commit|
++  commit.roles.each do |person, role|
++    persons[person][role] ||= 0
++    persons[person][role] += 1
++  end
++end
++
++persons.each do |person, roles|
++  roles = roles.map do |role, count|
++    percent = count.to_f * 100 / commits.size
++    next if percent < $min_percent
++    '%s: %u%%' % [role, percent]
++  end.compact
++  next if roles.empty?
++
++  name, email = person
++  # must quote chars?
++  name = '"%s"' % name if name =~ /[^\w \-]/i
++  person = name ? '%s <%s>' % [name, email] : email
++  puts '%s (%s)' % [person, roles.join(', ')]
++end
+-- 
 1.8.2.1
