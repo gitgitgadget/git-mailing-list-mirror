@@ -1,101 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: support NNTP
-Date: Thu, 25 Apr 2013 10:35:10 -0700
-Message-ID: <7vbo924ipd.fsf@alter.siamese.dyndns.org>
-References: <1366715634-21790-1-git-send-email-l.stelmach@samsung.com>
-	<7vobd5l277.fsf@alter.siamese.dyndns.org> <87txmw75bb.fsf@samsung.com>
-	<7vip3bgax9.fsf@alter.siamese.dyndns.org> <87sj2fhzdx.fsf@samsung.com>
-	<7vppxi4kkv.fsf@alter.siamese.dyndns.org>
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: Re: [RFC/PATCH] Make --full-history consider more merges
+Date: Thu, 25 Apr 2013 20:11:16 +0300
+Message-ID: <517963B4.30801@bracey.fi>
+References: <7v4nfcj2kq.fsf@alter.siamese.dyndns.org> <1366658602-12254-1-git-send-email-kevin@bracey.fi> <7vzjwqny64.fsf@alter.siamese.dyndns.org> <5176B854.2000707@bracey.fi> <7va9ona77d.fsf@alter.siamese.dyndns.org> <7v61zb8j5d.fsf@alter.siamese.dyndns.org> <5179505F.2000108@bracey.fi> <7vtxmu4kq2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: l.stelmach@samsung.com (=?utf-8?Q?=C5=81ukasz?= Stelmach)
-X-From: git-owner@vger.kernel.org Thu Apr 25 19:35:29 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 25 19:49:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVQ4r-0001B4-Ex
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 19:35:25 +0200
+	id 1UVQIG-0002ay-Ig
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 19:49:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933024Ab3DYRfR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Apr 2013 13:35:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35060 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932340Ab3DYRfP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Apr 2013 13:35:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C1E419242;
-	Thu, 25 Apr 2013 17:35:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=6tOhJLNyR+I7
-	NQQIGGCAEP7W+mM=; b=oY0etC/y0IEq5j6GjhG+kshMbGuWaSUmC33KtcCxzI6L
-	5Z0iyOuEVJcCC03zNuXdfYhI92IjWwvNcyBYOrRuapH8Mjc7h5CrNuDckzCXP53v
-	ai7ym3LG9o7wOAv4CRC/hdKph0VFiOKNqromfgUixsC6CmEu0jd3v7O6rpvupFE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=o6S62X
-	6dfNlyvpUkZQPykeyViSZib1MkGUWSjI502jEzPA47h9DVSV5QC2Hu3lkLzWK2uj
-	IjA/mCM9uyUYPfee8HLT9TBZQIFs6OqcjdSvNC8qyKCpRYAQ0iWpx+epUNVwea4t
-	vX5cq2jnSWiOdB/yyv+jCD7XQ7vYyItYjwFzo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1DA3A19241;
-	Thu, 25 Apr 2013 17:35:13 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6B4E21923D;
-	Thu, 25 Apr 2013 17:35:12 +0000 (UTC)
-In-Reply-To: <7vppxi4kkv.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 25 Apr 2013 09:54:40 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7BAEF692-ADCE-11E2-A459-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S933116Ab3DYRtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 13:49:12 -0400
+Received: from 16.mo1.mail-out.ovh.net ([178.33.104.224]:56776 "EHLO
+	mo1.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932737Ab3DYRtL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 13:49:11 -0400
+Received: from mail425.ha.ovh.net (b9.ovh.net [213.186.33.59])
+	by mo1.mail-out.ovh.net (Postfix) with SMTP id 2632CFF90FE
+	for <git@vger.kernel.org>; Thu, 25 Apr 2013 19:11:19 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 25 Apr 2013 19:11:36 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 25 Apr 2013 19:11:34 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+X-Ovh-Mailout: 178.32.228.1 (mo1.mail-out.ovh.net)
+In-Reply-To: <7vtxmu4kq2.fsf@alter.siamese.dyndns.org>
+X-Ovh-Tracer-Id: 7189433856946639064
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: 0
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrgeegucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+X-Spam-Check: DONE|U 0.500658/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrgeegucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222400>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> l.stelmach@samsung.com (=C5=81ukasz Stelmach) writes:
+On 25/04/2013 19:51, Junio C Hamano wrote:
+> Kevin Bracey <kevin@bracey.fi> writes:
 >
->> OK, I see. Good point. Where would you recommend me to put these mod=
-ules
->> and how to name them? I mean I don't want to make to much mess here =
-(;
->
-> I would not recommend you to do any of the above now.  As I said, the
-> open-coded if/elsif cascade version you posted is fine as a starting
-> point.  I'd prefer to see it made work correctly as advertised first
-> with documentation updates and tests.
->
-> A Perl guru might want to come and refactor the result once the code
-> solidifies, but that should be left as a separate series.
+>> Thanks for the test addition. Maybe we will be able to satisfy your
+>> greed in this series. There could be more worth doing here, and I
+>> think getting TREESAME precise is key.
+> It is perfectly fine to do things one step at a time.  Let's get
+> the --full-history change into a good shape first and worry about
+> the more complex case after we are done.
 
-An alternative structure of the patch, if you are feeling brave,
-could go like this:
+So do you see the rerun of try_to_simplify_commit() as acceptable? I'm 
+really not happy with it - it was fine for an initial proof-of-concept, 
+but it's an obvious waste of CPU cycles to recompute something we 
+already figured out, and I'm uncomfortable with the fact that the 
+function potentially does more than just compute TREESAME; by inspection 
+it seems safe given the known context inside simplify_merges(), but it 
+feels like something waiting to trip us up. The latter could be dealt 
+with by breaking try_to_simplify_commit() up, but that feels like a 
+diversion. I'd rather just get on and make this first patch store and 
+use the per-parent-treesame flags if feasible.
 
- (1) With a thought process similar to what I illustrated in my
-     message you responded with "OK, I see. Good point.", identify
-     all the codepaths that will need to become methods that are
-     specific to the transport (SMTP or NNTP).
-
- (2) Without adding any NNTP goodies, refactor the current code to
-     use a single class for driving conversation with a SMTP server.
-     You will implement all the methods you identified in the
-     previous step and the result will become "[PATCH 1/2]
-     send-email: refactor to use a transport-specific class".
-
- (3) Implement a new class to drive conversation with an NNTP
-     server, that has the same set of methods as the SMTP one you
-     wrote in the previous step.  The result will become "[PATCH
-     2/2] send-email: introduce NNTP transport".  This would need
-     updates to the documentation.
-
-I do not necessarily suggest you to go this route, by the way. It is
-up to you and depends on how proficient you are (and how comfortable
-you feel) dealing with modular Perl programs.
+Kevin
