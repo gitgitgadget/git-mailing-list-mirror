@@ -1,63 +1,59 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: Itches with the current rev spec
-Date: Thu, 25 Apr 2013 11:09:03 +0200
-Message-ID: <m2obd3ou34.fsf@igel.home>
+Date: Thu, 25 Apr 2013 14:43:32 +0530
+Message-ID: <CALkWK0m-CKN6rW_rr4=M0J5Wf5g-ng6Z_rXM3q-DThY=H1+xVg@mail.gmail.com>
 References: <CALkWK0n97VLtiR96VEy86645NVoDL2rS-g7LBuLb=JpncdH6VA@mail.gmail.com>
+ <m2obd3ou34.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 25 11:09:19 2013
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Thu Apr 25 11:14:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVIB4-0000i5-2e
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 11:09:18 +0200
+	id 1UVIFt-0008NM-Q9
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Apr 2013 11:14:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755269Ab3DYJJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 05:09:14 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:58500 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752716Ab3DYJJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 05:09:13 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3ZxCJ43vFHz4KK3C;
-	Thu, 25 Apr 2013 11:09:08 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3ZxCJ43Dfrzbc6v;
-	Thu, 25 Apr 2013 11:09:08 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id jJJHHo1WIb81; Thu, 25 Apr 2013 11:09:05 +0200 (CEST)
-X-Auth-Info: kOQlXSzO25+UcHikUJxyoTA5GubiQGii0eUJrw0SwK0=
-Received: from igel.home (ppp-88-217-100-223.dynamic.mnet-online.de [88.217.100.223])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Thu, 25 Apr 2013 11:09:05 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 1E8F5CA2B6; Thu, 25 Apr 2013 11:09:04 +0200 (CEST)
-X-Yow: Yes, Private DOBERMAN!!
-In-Reply-To: <CALkWK0n97VLtiR96VEy86645NVoDL2rS-g7LBuLb=JpncdH6VA@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Thu, 25 Apr 2013 10:37:16 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755989Ab3DYJON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 05:14:13 -0400
+Received: from mail-ia0-f180.google.com ([209.85.210.180]:33836 "EHLO
+	mail-ia0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753841Ab3DYJON (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 05:14:13 -0400
+Received: by mail-ia0-f180.google.com with SMTP id t4so1505204iag.25
+        for <git@vger.kernel.org>; Thu, 25 Apr 2013 02:14:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=dD0iyqRr1MaGqwc/V0vdHYkeG+AZpbeNfKIH2kc3hw8=;
+        b=Ah0cJEMnKZR8jqiOcNkQLUTddYxFO5IvEoTV0db+TZlqmXCXbtUBdEeNhBdb6TTJS9
+         ivEQDuLxY7bwhxnRf5CGP7ehkdH4iUf0DKSE0y9Ca/AKraU/I37XYWdfZxTYMWd0Rn8Q
+         xY+KwT60puC/fA6Pt/l/vk4iXT3MuZwN1Ehkw6/fpffaVefhNezu72SGvpRtdfWkQdbM
+         PJUySH04nSQoALcemai4QPKwALPsdqK50M4NN93BiyW81VfEU30o55pPgFgXNbhzWC6K
+         +doIwMUIC91ZS4lsPEdPgeF4XSWi+A17ybwy0oZ01eaJzS2/a10gc3aGGCVOT5bmEuRq
+         0neA==
+X-Received: by 10.50.73.65 with SMTP id j1mr18308929igv.49.1366881252688; Thu,
+ 25 Apr 2013 02:14:12 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Thu, 25 Apr 2013 02:13:32 -0700 (PDT)
+In-Reply-To: <m2obd3ou34.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222358>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Andreas Schwab wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>
+>> you might argue that ~<n> normally refers to a /home/<n>, but who uses
+>> numbers in place of usernames?
+>
+> ~<n> expands to the <n>th element of the dir stack.
 
-> you might argue that ~<n> normally refers to a /home/<n>, but who uses
-> numbers in place of usernames?
+Oh, ouch.  And this is bash.
 
-~<n> expands to the <n>th element of the dir stack.
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Have to think of something else.
