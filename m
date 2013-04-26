@@ -1,120 +1,72 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 15/20] remote-bzr: add option to specify branches
-Date: Thu, 25 Apr 2013 20:08:03 -0500
-Message-ID: <1366938488-25425-16-git-send-email-felipe.contreras@gmail.com>
-References: <1366938488-25425-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 26 03:10:44 2013
+Subject: Re: [PATCH v2 6/9] remote-bzr: store converted URL
+Date: Thu, 25 Apr 2013 20:12:08 -0500
+Message-ID: <CAMP44s0csoD7y-YND-VyVWuZc+GxK7JPf5DLibXZxnFHNakjDw@mail.gmail.com>
+References: <1366934902-18704-1-git-send-email-felipe.contreras@gmail.com>
+	<1366934902-18704-7-git-send-email-felipe.contreras@gmail.com>
+	<CAEBDL5XmrxV3SdtdyjJq=HxUqVcLCMz_Fcq9=POm=oaWtrO4LQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Christophe Simonis <christophe@kn.gl>,
+	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Fri Apr 26 03:12:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVXBT-0004aO-U3
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 03:10:44 +0200
+	id 1UVXCz-0006Cj-9g
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 03:12:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932965Ab3DZBKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 21:10:38 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:60779 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932672Ab3DZBKG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 21:10:06 -0400
-Received: by mail-ob0-f179.google.com with SMTP id oi10so3017595obb.38
-        for <git@vger.kernel.org>; Thu, 25 Apr 2013 18:10:06 -0700 (PDT)
+	id S1758773Ab3DZBML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 21:12:11 -0400
+Received: from mail-la0-f44.google.com ([209.85.215.44]:63763 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757652Ab3DZBMK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 21:12:10 -0400
+Received: by mail-la0-f44.google.com with SMTP id ed20so3150709lab.31
+        for <git@vger.kernel.org>; Thu, 25 Apr 2013 18:12:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=J9++4BaOoLBAMJE6LWiYTawIR0lDDricnmExmv11Qx4=;
-        b=xDGA9r7V9iiRG5950Sqidi6KznE9pRE7uRH3GBy4AdnBg3yTPzZZSjQVF+T5Y1mM1q
-         mtZxhwCA1cbZJOdm1lLSNgSiMrnyE3VT8bCTBqoEs9GRVvBXh+cZ6soSfSpny0eY1xa6
-         RSygi7ehaRQnYx6KqrQ4IuOGsiPbAfVd/NqjOEln/X0k91TeCnVfy2vtjVT3dIht91r0
-         vVp1qMl8gLOvTAS6N5fW1tEGIiiJKuLKaT+3i/cTbf3NzOYE5IMJUzRjcCQcLf9AUokL
-         WkZg36o+7hgMCS3MkiqJ9H/blLCV9v2NcYRtvIbYo1f52/tEMp+DklWZHsmvkO5TABGO
-         dsSQ==
-X-Received: by 10.60.169.212 with SMTP id ag20mr6011935oec.102.1366938606302;
-        Thu, 25 Apr 2013 18:10:06 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id jv10sm6106835oeb.3.2013.04.25.18.10.04
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Apr 2013 18:10:05 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.884.g3532a8d
-In-Reply-To: <1366938488-25425-1-git-send-email-felipe.contreras@gmail.com>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=2Ny1ggbBzjxC338ATpLOoIekzEk5BLgl5+HkpeNlpYg=;
+        b=tr6KNKR7iQHhbKn0SUF0oAY25DqYLSwtdpcq22pZB2/6UeFOlOoNoMDJ7orPhm8rOf
+         FZEnACw/5jvVQOlvan4Sio+vGN4xxfEIRbcrOvyQYe+X6dB1cmnlvVPy2VuN4hEN+H7S
+         q/fiifHum/+BnlNwMyubo7/2vdmFpkgxoMrcY/h4J3XchA9RZR0ngu0s+d9nFA4YLFLm
+         r7J94iKrokY1UiCAgVb6Z9DZHumv8paPT+heSTvlohjQpkl3BOPZEYHCQlJrBL/dGzxQ
+         Rp57o9rcvst+95H61f5ZFzCQlEYRb6gLmioppeiOrgVlSPQuhQ828TRoSmVuzyhXGbHD
+         76hA==
+X-Received: by 10.112.139.226 with SMTP id rb2mr20102207lbb.12.1366938728522;
+ Thu, 25 Apr 2013 18:12:08 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Thu, 25 Apr 2013 18:12:08 -0700 (PDT)
+In-Reply-To: <CAEBDL5XmrxV3SdtdyjJq=HxUqVcLCMz_Fcq9=POm=oaWtrO4LQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222503>
 
-We might not want all the branches. And branch handling in bazaar is
-rather tricky, so it's safer to simply specify them.
+On Thu, Apr 25, 2013 at 7:58 PM, John Szakmeister <john@szakmeister.net> wrote:
+> On Thu, Apr 25, 2013 at 8:08 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> Mercurial might convert the URL to something more appropriate, like an
+>> absolute path. Lets store that instead of the original URL, which won't
+>> work from a different working directory if it's relative.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>  contrib/remote-helpers/git-remote-bzr | 13 ++++++++++++-
+>>  1 file changed, 12 insertions(+), 1 deletion(-)
+>
+>
+> FWIW, it feels weird to be talking about Mercurial when you're
+> patching git-remote-bzr. :-)
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/git-remote-bzr | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+Yeah, it happens all the time in my local repos. I'm surprised it took
+so long to send a patch with this mistake =/
 
-diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index 5155b93..06d9d24 100755
---- a/contrib/remote-helpers/git-remote-bzr
-+++ b/contrib/remote-helpers/git-remote-bzr
-@@ -13,6 +13,9 @@
- # or
- # % git clone bzr::lp:myrepo
- #
-+# If you want to specify which branches you want track (per repo):
-+# git config remote-bzr.branches 'trunk, devel, test'
-+#
- 
- import sys
- 
-@@ -51,6 +54,12 @@ def warn(msg, *args):
- def gittz(tz):
-     return '%+03d%02d' % (tz / 3600, tz % 3600 / 60)
- 
-+def get_config(config):
-+    cmd = ['git', 'config', '--get', config]
-+    process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-+    output, _ = process.communicate()
-+    return output
-+
- class Marks:
- 
-     def __init__(self, gitdir, dirname):
-@@ -779,7 +788,7 @@ def get_remote_branch(origin, remote_branch, name):
- 
-     return branch
- 
--def find_branches(repo):
-+def find_branches(repo, wanted):
-     transport = repo.user_transport
- 
-     for fn in transport.iter_files_recursive():
-@@ -790,6 +799,9 @@ def find_branches(repo):
-         name = name if name != '' else 'master'
-         name = name.replace('/', '+')
- 
-+        if wanted and not name in wanted:
-+            continue
-+
-         try:
-             cur = transport.clone(subdir)
-             branch = bzrlib.branch.Branch.open_from_transport(cur)
-@@ -838,7 +850,11 @@ def get_repo(url, alias):
-     else:
-         # repository
- 
--        for name, branch in find_branches(repo):
-+        wanted = get_config('remote-bzr.branches').rstrip().split(', ')
-+        # stupid python
-+        wanted = [e for e in wanted if e]
-+
-+        for name, branch in find_branches(repo, wanted):
- 
-             if not is_local:
-                 peers[name] = branch
 -- 
-1.8.2.1.884.g3532a8d
+Felipe Contreras
