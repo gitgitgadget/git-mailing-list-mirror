@@ -1,30 +1,33 @@
 From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH 1/2] t/Makefile: fix result handling with TEST_OUTPUT_DIRECTORY
-Date: Fri, 26 Apr 2013 19:55:52 +0100
-Message-ID: <7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
+Subject: [PATCH 2/2] test output: respect $TEST_OUTPUT_DIRECTORY
+Date: Fri, 26 Apr 2013 19:55:53 +0100
+Message-ID: <47c9ba4200a22e865040208628357d9bc4bcf3f4.1367002553.git.john@keeping.me.uk>
+References: <7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
 	John Keeping <john@keeping.me.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 26 20:56:20 2013
+X-From: git-owner@vger.kernel.org Fri Apr 26 20:56:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVnoh-00020R-Fu
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 20:56:19 +0200
+	id 1UVnor-0002Bo-90
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 20:56:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757549Ab3DZS4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 14:56:15 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:60341 "EHLO
+	id S1757552Ab3DZS4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 14:56:25 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:60415 "EHLO
 	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753754Ab3DZS4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 14:56:14 -0400
+	with ESMTP id S1753754Ab3DZS4Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 14:56:24 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 5DD7260657F;
-	Fri, 26 Apr 2013 19:56:14 +0100 (BST)
+	by coyote.aluminati.org (Postfix) with ESMTP id E637E198008;
+	Fri, 26 Apr 2013 19:56:23 +0100 (BST)
+X-Quarantine-ID: <B207BzWD6JOk>
 X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
 X-Spam-Flag: NO
 X-Spam-Score: -10.999
 X-Spam-Level: 
@@ -33,74 +36,94 @@ X-Spam-Status: No, score=-10.999 tagged_above=-9999 required=6.31
 	autolearn=ham
 Received: from coyote.aluminati.org ([127.0.0.1])
 	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QyVJTMsAMiBS; Fri, 26 Apr 2013 19:56:14 +0100 (BST)
+	with ESMTP id B207BzWD6JOk; Fri, 26 Apr 2013 19:56:23 +0100 (BST)
 Received: from river.lan (tg1.aluminati.org [10.0.16.53])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 9012D606518;
-	Fri, 26 Apr 2013 19:56:06 +0100 (BST)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id C2586606584;
+	Fri, 26 Apr 2013 19:56:14 +0100 (BST)
 X-Mailer: git-send-email 1.8.2.1.715.gb260f47
+In-Reply-To: <7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
+In-Reply-To: <7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
+References: <7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222556>
 
-When TEST_OUTPUT_DIRECTORY is set, the test results will be generated in
-"$TEST_OUTPUT_DIRECTORY/test-results", which may not be the same as
-"test-results" in t/Makefile.  This causes the aggregate-results target
-to fail as it finds no count files.
+Most test results go in $TEST_OUTPUT_DIRECTORY, but the output files for
+tests run with --tee or --valgrind just use bare "test-results".
+Changes these so that they do respect $TEST_OUTPUT_DIRECTORY.
 
-Fix this by introducing TEST_RESULTS_DIRECTORY and using it wherever
-test-results is referenced.
+As a result of this, the valgrind/analyze.sh script may no longer
+inspect the correct files so it is also updated to respect
+$TEST_OUTPUT_DIRECTORY by adding it to GIT-BUILD-OPTIONS.  This may be a
+regression for people who have TEST_OUTPUT_DIRECTORY in their config.mak
+but want to override it in the environment, but this change merely
+brings it into line with GIT_TEST_OPTS which already cannot be
+overridden if it is specified in config.mak.
 
 Signed-off-by: John Keeping <john@keeping.me.uk>
 ---
- t/Makefile | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ Makefile              | 3 +++
+ t/test-lib.sh         | 4 ++--
+ t/valgrind/analyze.sh | 8 ++++++--
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/t/Makefile b/t/Makefile
-index 44ca7d3..0e1408d 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -15,9 +15,16 @@ PROVE ?= prove
- DEFAULT_TEST_TARGET ?= test
- TEST_LINT ?= test-lint-duplicates test-lint-executable
- 
+diff --git a/Makefile b/Makefile
+index 90661a2..d4d95fa 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2166,6 +2166,9 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
+ 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@
+ 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@
 +ifdef TEST_OUTPUT_DIRECTORY
-+TEST_RESULTS_DIRECTORY = $(TEST_RESULTS_DIRECTORY)/test-results
-+else
-+TEST_RESULTS_DIRECTORY = test-results
++	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@
 +endif
+ ifdef GIT_TEST_OPTS
+ 	@echo GIT_TEST_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_OPTS)))'\' >>$@
+ endif
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index ca6bdef..70ad085 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -54,8 +54,8 @@ done,*)
+ 	# do not redirect again
+ 	;;
+ *' --tee '*|*' --va'*)
+-	mkdir -p test-results
+-	BASE=test-results/$(basename "$0" .sh)
++	mkdir -p "$(TEST_OUTPUT_DIRECTORY)/test-results"
++	BASE="$(TEST_OUTPUT_DIRECTORY)/test-results/$(basename "$0" .sh)"
+ 	(GIT_TEST_TEE_STARTED=done ${SHELL_PATH} "$0" "$@" 2>&1;
+ 	 echo $? > $BASE.exit) | tee $BASE.out
+ 	test "$(cat $BASE.exit)" = 0
+diff --git a/t/valgrind/analyze.sh b/t/valgrind/analyze.sh
+index d8105d9..7b58f01 100755
+--- a/t/valgrind/analyze.sh
++++ b/t/valgrind/analyze.sh
+@@ -1,6 +1,10 @@
+ #!/bin/sh
+ 
+-out_prefix=$(dirname "$0")/../test-results/valgrind.out
++# Get TEST_OUTPUT_DIRECTORY from GIT-BUILD-OPTIONS if it's there...
++. "$(dirname "$0")/../../GIT-BUILD-OPTIONS"
++# ... otherwise set it to the default value.
++: ${TEST_OUTPUT_DIRECTORY=$(dirname "$0")/..}
 +
- # Shell quote;
- SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
- PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
-+TEST_RESULTS_DIRECTORY_SQ = $(subst ','\'',$(TEST_RESULTS_DIRECTORY))
+ output=
+ count=0
+ total_count=0
+@@ -115,7 +119,7 @@ handle_one () {
+ 	finish_output
+ }
  
- T = $(sort $(wildcard t[0-9][0-9][0-9][0-9]-*.sh))
- TSVN = $(sort $(wildcard t91[0-9][0-9]-*.sh))
-@@ -36,10 +43,10 @@ $(T):
- 	@echo "*** $@ ***"; GIT_CONFIG=.git/config '$(SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
- 
- pre-clean:
--	$(RM) -r test-results
-+	$(RM) -r '$(TEST_RESULTS_DIRECTORY_SQ)'
- 
- clean-except-prove-cache:
--	$(RM) -r 'trash directory'.* test-results
-+	$(RM) -r 'trash directory'.* '$(TEST_RESULTS_DIRECTORY_SQ)'
- 	$(RM) -r valgrind/bin
- 
- clean: clean-except-prove-cache
-@@ -65,7 +72,7 @@ aggregate-results-and-cleanup: $(T)
- 	$(MAKE) clean
- 
- aggregate-results:
--	for f in test-results/t*-*.counts; do \
-+	for f in '$(TEST_RESULTS_DIRECTORY_SQ)'/t*-*.counts; do \
- 		echo "$$f"; \
- 	done | '$(SHELL_PATH_SQ)' ./aggregate-results.sh
- 
+-for test_script in "$(dirname "$0")"/../test-results/*.out
++for test_script in "$(TEST_OUTPUT_DIRECTORY)"/test-results/*.out
+ do
+ 	handle_one $test_script
+ done
 -- 
 1.8.2.1.715.gb260f47
