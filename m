@@ -1,161 +1,162 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/9] remote-bzr: trivial cleanups
-Date: Fri, 26 Apr 2013 14:19:21 -0500
-Message-ID: <CAMP44s2SaKe7F-3H=b3ZBgDPDT+TrVPUBLrXg0XDY7n5ppdS0Q@mail.gmail.com>
-References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
-	<1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
-	<CALkWK0meg1FgU=-4MFoFGjpDq_oa9XR_+qeiseR0J85mS71dNg@mail.gmail.com>
-	<CAMP44s2nRHRFY_BRO7+x=CVKgrob78xZCpiV4Hk9sjWB_Q=vng@mail.gmail.com>
-	<7vip3a2vq0.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1RdZ19y8v+_=gwBzq1Tg5v8+TWAYCAVR-ZzNwZ0_m_Ng@mail.gmail.com>
-	<CALkWK0mRfj1FGYymDrBqQ=d02mhPkevJKr5Ozhgurp8DMhiNjQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "git grep" parallelism question
+Date: Fri, 26 Apr 2013 12:19:46 -0700
+Message-ID: <7vip39w14d.fsf@alter.siamese.dyndns.org>
+References: <CA+55aFxY2PJ+L=vCfvQ39UGBr7E6m5q76hO=z3Mqm6vTQmmMbw@mail.gmail.com>
+	<7vr4hxw2mp.fsf@alter.siamese.dyndns.org>
+	<CA+55aFw+6pL5DoEPsPZpJCAbqEGaWYYKcdjZzbsHVzSSMrQmww@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christophe Simonis <christophe@kn.gl>,
-	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 21:19:30 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Apr 26 21:19:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVoB7-000345-9t
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 21:19:29 +0200
+	id 1UVoBX-0003Xv-4f
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 21:19:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758013Ab3DZTTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 15:19:24 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:46885 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757499Ab3DZTTX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 15:19:23 -0400
-Received: by mail-lb0-f182.google.com with SMTP id v20so4121338lbc.13
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 12:19:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=/aswy7UQ9nzntLDVzpLB714JfDT9LfitgfvvaJMmoxk=;
-        b=uuq9j0WJ9SSoOb60kmZPoTBrm4gJDrKc7VJVQiaNlomCK5YzNvtQidvamUvQ8b+yjS
-         gwwa7UzJEFDaGnNeFuXu4doWpZIJJOthyZhF1ODS3M4EXJupeSKiHo7ecFGgsLNV8bZ3
-         hxji6kywkAPdanFFtyLbg78XYDumSs6SdfbGkXRnwv3ZG5ICD1SbO+ZdfQ8V1cE6IHLX
-         dYF6bAL/SG0OYnx+jXG5UcK/inRJxAOy5GqumoW4km6PFKJQq/eJW0Vnp2HcBq/ysSk8
-         9purKnGf2jpJtV1Vf6UKHo8v4qzsqur2Fl60VwZYu7zePVmBuKxXAkn+YOreAgLg8Foz
-         /3eg==
-X-Received: by 10.152.29.132 with SMTP id k4mr1262760lah.46.1367003961509;
- Fri, 26 Apr 2013 12:19:21 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Fri, 26 Apr 2013 12:19:21 -0700 (PDT)
-In-Reply-To: <CALkWK0mRfj1FGYymDrBqQ=d02mhPkevJKr5Ozhgurp8DMhiNjQ@mail.gmail.com>
+	id S1757464Ab3DZTTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 15:19:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40356 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755365Ab3DZTTs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 15:19:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C5811A776;
+	Fri, 26 Apr 2013 19:19:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CWOQuty48Sa6tQFCeamhc18HmVU=; b=JcRpnE
+	6IoeVKnCwEh3tmSKBKjkJoNldTzaonEaBIOKifWqJjA4TBOpdNatk0L5fyhblZLp
+	6K8ABh5VPOuUIe8RSzbhYBCV8MFYXOKKhSZ5aRHgBxXVNPATEGaKHJRozi1R6bbD
+	amIi9xC1JbEKu6cXLFnh8TYvX/2hyi2xT4TKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=b35rOwXttMrmHmYDO4neuq+vVTW9kt/V
+	eoR8ZE535PROlON4pqTPlKSmCWIYx70EVYNKVfiduc8zWNMV+HAhjFS9JCDlLh9w
+	F9MIpXqaqQ6B96KP1SVPIIdJvw/zwj5sg8mr+8a5Cb4HMUFiFN+wYlI6Al77b5qU
+	dvIfXOQ7c+s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6FBE11A775;
+	Fri, 26 Apr 2013 19:19:48 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9DB041A774;
+	Fri, 26 Apr 2013 19:19:47 +0000 (UTC)
+In-Reply-To: <CA+55aFw+6pL5DoEPsPZpJCAbqEGaWYYKcdjZzbsHVzSSMrQmww@mail.gmail.com>
+	(Linus Torvalds's message of "Fri, 26 Apr 2013 11:54:09 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 426998BE-AEA6-11E2-8F59-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222559>
 
-On Fri, Apr 26, 2013 at 4:32 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Felipe Contreras wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Junio C Hamano wrote:
->> I do
->> not agree with Ram at all when he says that developers are more
->> important than users, and I agree with you that the project exists
->> for users, and not for developers.
->
-> On this.
->
-> If Peff were to suddenly stop working on git one day (because he was
-> frustrated with the community/ development practices), we'd all lose a
-> lot more than if one random end-user switches to using hg for his tiny
-> personal projects.
+> Yes. Also, I'm not sure if the 15% possible improvement on my SSD case
+> is even worth it for something that in the end isn't necessarily the
+> common case.
 
-Yeah but that's not happening is it? This is yet another hypothetical.
-Last I checked Peff never threatened to leave the project. Did I miss
-a memo?
+Cold cache being uncommon case would be forever true but more and
+more people are on SSD, and 15% is not a trivial improvement.
 
-The last time somebody announced he was going to leave the project we
-did what was reasonable; investigate the reasons. And that's what we
-would do if Peff threatened to leave.
+> Are there people out there who use "git grep" over NFS and have been
+> unhappy with performance? If are willing to recompile git with a
+> different THREAD value in builtin/grep.c,...
 
-But fine, lets assume there's a hypothetical Peff, with hypothetical
-reasons to leave the project...
+OK, you have to recompile at least once for experiment, so perhaps
+building the test binary with this patch may help.
 
-> I'm _not_ claiming that there's a split between
-> users and users that are developers (we have one mailing list for
-> everyone, and I like that).  What I'm claiming is that we cannot (and
-> should not) pay equal attention to every user of git.  Some users are
-> more important than others.  Again, that does _not_ mean that we push
-> a change that benefits one important user but breaks everyone else's
-> setup.
+ builtin/grep.c | 30 ++++++++++++++++++++++--------
+ 1 file changed, 22 insertions(+), 8 deletions(-)
 
-The importance of users changes all the time. The 15 year old kid in
-Sao Paulo might not be important today, but he might be the single
-most important contributor ten years from now. Hell, he might even
-replace Junio as the maintainer.
-
-Who are you to decide which users are important, and which are not?
-
-> Ofcourse the project exists for its users; we're not doing research.
-> However, we don't all have to write tutorials to keep in touch with
-> end-users who are completely detached from the development process
-> (our time is better spent elsewhere),
-
-Maybe we should, and maybe we would see then some areas of
-improvement. In fact, I have done so, and I do see lots of areas of
-improvement in git's UI.
-
-I agree that there are more important areas, or rather, more fun to
-work with, but the fact that most git developers don't pay too much
-attention to the pain of newcomers shows, and it's a very common
-criticism of git; it's difficult to learn, it doesn't have a
-consistent UI, many commands don't make sense. And I happen to agree
-with that claim, but it's not an easy problem to solve, specially when
-you care about *all* users, both old and new, which we do.
-
-We should keep in mind the problems in git's UI for newcomers. There's
-no reason no to.
-
-> or even have an
-> end-user-friendly bug tracker (where the SNR is very low).  We don't
-> have to consciously reach out to people we're not connected to
-> directly: if we're all sufficiently connected to the real world, the
-> itches/ bugs worth working on will always find their way to us.  We
-> live in a connected world.
-
-Nobody is claiming we need a bug tracker, there's no point in arguing
-about that. The rate at which we fix bugs or our tracking of them is
-not a problem.
-
-> Yes, I know.  You're going to respond to this email arguing about why
-> you're Right and why I (and everyone else) is Wrong, either by quoting
-> what Linus (TM) said and twisting it to mean what you want, belaboring
-> over what you've already said, or something similar.
-
-Where did I twist anything? You can see Linus talk himself:
-http://www.youtube.com/watch?v=kzKzUBLEzwk
-
-Point me exactly where does he say some users are more important than
-others, in fact, he is saying the opposite, the amount of people that
-needed the Linux version compatibility flag was really really small,
-yet they did it, why? Because *all* users matter. Not that it matters
-what Linus says, what matters is that it's right; the moment you start
-balkanizing your user base, the moment you start giving some them
-reason to fork the project. When was the last time Linux was forked?
-GNOME did exactly that, they said; you, users over there, we don't
-care about you anymore, what did they do? Fork. They lost so many
-users they had to revert their decision.
-
-Should we willingly and knowingly neglect some git user-base? No, why
-would you want them to fork? In a way, git's UI has been so bad, that
-some kind-of-forks have happened, that tells us something; the UI
-needs some love, fortunately none of those forks worked, which tells
-us something too; it's not too atrocious.
-
-That's not to say we shouldn't fix the UI, we should, in a way that
-everyone's happy, which is hard, but we will do it, eventually.
-
-Cheers.
-
--- 
-Felipe Contreras
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 159e65d..f635cd5 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -26,12 +26,14 @@ static char const * const grep_usage[] = {
+ static int use_threads = 1;
+ 
+ #ifndef NO_PTHREADS
+-#define THREADS 8
+-static pthread_t threads[THREADS];
++#define MAX_THREADS 100
++static int num_threads = 8;
++static pthread_t threads[MAX_THREADS];
+ 
+-/* We use one producer thread and THREADS consumer
+- * threads. The producer adds struct work_items to 'todo' and the
+- * consumers pick work items from the same array.
++/*
++ * We use one producer thread and THREADS consumer threads. The
++ * producer adds struct work_items to 'todo' and the consumers pick
++ * work items from the same array.
+  */
+ struct work_item {
+ 	struct grep_source source;
+@@ -205,7 +207,7 @@ static void start_threads(struct grep_opt *opt)
+ 		strbuf_init(&todo[i].out, 0);
+ 	}
+ 
+-	for (i = 0; i < ARRAY_SIZE(threads); i++) {
++	for (i = 0; i < num_threads; i++) {
+ 		int err;
+ 		struct grep_opt *o = grep_opt_dup(opt);
+ 		o->output = strbuf_out;
+@@ -237,7 +239,7 @@ static int wait_all(void)
+ 	pthread_cond_broadcast(&cond_add);
+ 	grep_unlock();
+ 
+-	for (i = 0; i < ARRAY_SIZE(threads); i++) {
++	for (i = 0; i < num_threads; i++) {
+ 		void *h;
+ 		pthread_join(threads[i], &h);
+ 		hit |= (int) (intptr_t) h;
+@@ -636,6 +638,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	int i;
+ 	int dummy;
+ 	int use_index = 1;
++	int num_threads_explicit = -1;
+ 	int pattern_type_arg = GREP_PATTERN_TYPE_UNSPECIFIED;
+ 
+ 	struct option options[] = {
+@@ -743,6 +746,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			    N_("allow calling of grep(1) (ignored by this build)")),
+ 		{ OPTION_CALLBACK, 0, "help-all", &options, NULL, N_("show usage"),
+ 		  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, help_callback },
++		OPT_INTEGER(0, "threads", &num_threads_explicit,
++			    N_("use threads when searching")),
+ 		OPT_END()
+ 	};
+ 
+@@ -773,6 +778,15 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			     PARSE_OPT_NO_INTERNAL_HELP);
+ 	grep_commit_pattern_type(pattern_type_arg, &opt);
+ 
++	if (MAX_THREADS <= num_threads_explicit) {
++		warning("limiting --threads to %d", MAX_THREADS);
++		num_threads = MAX_THREADS;
++	} else if (num_threads_explicit < 0) {
++		; /* keep num_threads to compiled-in default */
++	} else {
++		num_threads = num_threads_explicit;
++	}
++
+ 	if (use_index && !startup_info->have_repository)
+ 		/* die the same way as if we did it at the beginning */
+ 		setup_git_directory();
+@@ -834,7 +848,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ #ifndef NO_PTHREADS
+-	if (list.nr || cached || online_cpus() == 1)
++	if ((list.nr || cached || online_cpus() == 1) && num_threads_explicit < 0)
+ 		use_threads = 0;
+ #else
+ 	use_threads = 0;
