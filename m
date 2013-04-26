@@ -1,129 +1,109 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH 2/2] test output: respect $TEST_OUTPUT_DIRECTORY
-Date: Fri, 26 Apr 2013 19:55:53 +0100
-Message-ID: <47c9ba4200a22e865040208628357d9bc4bcf3f4.1367002553.git.john@keeping.me.uk>
-References: <7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
-	John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 26 20:56:32 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] clean: confirm before cleaning files and directories
+Date: Fri, 26 Apr 2013 12:06:49 -0700
+Message-ID: <7vmwslw1py.fsf@alter.siamese.dyndns.org>
+References: <1826d070612808b301f9295838e226e02d8097ad.1366963586.git.worldhello.net@gmail.com>
+	<vpqfvydhfbx.fsf@grenoble-inp.fr>
+	<CANYiYbFzEoEgJzKsB_hiKNy2JCxaTDX30wXNjnzComOzJJF_cw@mail.gmail.com>
+	<7vbo91z30e.fsf@alter.siamese.dyndns.org>
+	<vpqzjwl9se7.fsf@grenoble-inp.fr>
+	<7vppxhxltk.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Apr 26 21:06:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVnor-0002Bo-90
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 20:56:29 +0200
+	id 1UVnz0-0005ic-3G
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 21:06:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757552Ab3DZS4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 14:56:25 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:60415 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753754Ab3DZS4Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 14:56:24 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id E637E198008;
-	Fri, 26 Apr 2013 19:56:23 +0100 (BST)
-X-Quarantine-ID: <B207BzWD6JOk>
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
-X-Spam-Flag: NO
-X-Spam-Score: -10.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-10.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id B207BzWD6JOk; Fri, 26 Apr 2013 19:56:23 +0100 (BST)
-Received: from river.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1757953Ab3DZTGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 15:06:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49095 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757846Ab3DZTGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 15:06:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F14971A389;
+	Fri, 26 Apr 2013 19:06:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=L9n7//z7Ad42Wnd+WNFcalefuPQ=; b=tmstgj
+	C0XEjjJbo3T5Ep1f0Hdv0CTdwwhbZkh7XKMFvIi3N9CbV+CGl0WxKfH+izYxhSXW
+	e1Uc4HE43oyB4Z0LlhNrdf8ZtFFqiD2AwnAZ15mYJItA2EEuLUcZbYH3xpHWBJY5
+	r4vzJ72QmaqyVJBKUzNwmXMJstw43EwsObjRI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=apNKeu0cOS2FFiW1Xu0UuT9cd8hqGuiD
+	bT8plhCAMrcqneQGd5IxY26EBSaXguVA6AZTPfEKaeNIgooQGhmLxdBnEKy4f+Av
+	97vo2uniM98izQh06jXfHi93okNPy5F6iwjHu5iN1mFB4hnB52DV/tDeADS0o76J
+	iNSclnbYhhw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E79881A388;
+	Fri, 26 Apr 2013 19:06:51 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id C2586606584;
-	Fri, 26 Apr 2013 19:56:14 +0100 (BST)
-X-Mailer: git-send-email 1.8.2.1.715.gb260f47
-In-Reply-To: <7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
-In-Reply-To: <7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
-References: <7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 57D521A387;
+	Fri, 26 Apr 2013 19:06:51 +0000 (UTC)
+In-Reply-To: <7vppxhxltk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 26 Apr 2013 10:07:19 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 73B5E83E-AEA4-11E2-A777-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222557>
 
-Most test results go in $TEST_OUTPUT_DIRECTORY, but the output files for
-tests run with --tee or --valgrind just use bare "test-results".
-Changes these so that they do respect $TEST_OUTPUT_DIRECTORY.
+Junio C Hamano <gitster@pobox.com> writes:
 
-As a result of this, the valgrind/analyze.sh script may no longer
-inspect the correct files so it is also updated to respect
-$TEST_OUTPUT_DIRECTORY by adding it to GIT-BUILD-OPTIONS.  This may be a
-regression for people who have TEST_OUTPUT_DIRECTORY in their config.mak
-but want to override it in the environment, but this change merely
-brings it into line with GIT_TEST_OPTS which already cannot be
-overridden if it is specified in config.mak.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> The nice thing with the confirmation dialog is that it shows the list
+>> before asking (and unlike 'rm -i', it asks only once).
+>
+> I wouldn't object to having "clean -i", which automatically defeats
+> the requireforce option.
+>
+> As to a huge single list you have to approve or reject as a whole, I
+> am on the fence.  When running "rm -i", I often wished to see
+> something like that, but I am fairly sure that I'll call it unusable
+> the first time I see a list with a few items I want to keep while
+> removing all others.
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- Makefile              | 3 +++
- t/test-lib.sh         | 4 ++--
- t/valgrind/analyze.sh | 8 ++++++--
- 3 files changed, 11 insertions(+), 4 deletions(-)
+Elaborating on this a bit more, hoping it would help people who want
+to design the "--confirm-before-doing" option...
 
-diff --git a/Makefile b/Makefile
-index 90661a2..d4d95fa 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2166,6 +2166,9 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
- 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@
- 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@
-+ifdef TEST_OUTPUT_DIRECTORY
-+	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@
-+endif
- ifdef GIT_TEST_OPTS
- 	@echo GIT_TEST_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_OPTS)))'\' >>$@
- endif
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ca6bdef..70ad085 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -54,8 +54,8 @@ done,*)
- 	# do not redirect again
- 	;;
- *' --tee '*|*' --va'*)
--	mkdir -p test-results
--	BASE=test-results/$(basename "$0" .sh)
-+	mkdir -p "$(TEST_OUTPUT_DIRECTORY)/test-results"
-+	BASE="$(TEST_OUTPUT_DIRECTORY)/test-results/$(basename "$0" .sh)"
- 	(GIT_TEST_TEE_STARTED=done ${SHELL_PATH} "$0" "$@" 2>&1;
- 	 echo $? > $BASE.exit) | tee $BASE.out
- 	test "$(cat $BASE.exit)" = 0
-diff --git a/t/valgrind/analyze.sh b/t/valgrind/analyze.sh
-index d8105d9..7b58f01 100755
---- a/t/valgrind/analyze.sh
-+++ b/t/valgrind/analyze.sh
-@@ -1,6 +1,10 @@
- #!/bin/sh
- 
--out_prefix=$(dirname "$0")/../test-results/valgrind.out
-+# Get TEST_OUTPUT_DIRECTORY from GIT-BUILD-OPTIONS if it's there...
-+. "$(dirname "$0")/../../GIT-BUILD-OPTIONS"
-+# ... otherwise set it to the default value.
-+: ${TEST_OUTPUT_DIRECTORY=$(dirname "$0")/..}
-+
- output=
- count=0
- total_count=0
-@@ -115,7 +119,7 @@ handle_one () {
- 	finish_output
- }
- 
--for test_script in "$(dirname "$0")"/../test-results/*.out
-+for test_script in "$(TEST_OUTPUT_DIRECTORY)"/test-results/*.out
- do
- 	handle_one $test_script
- done
--- 
-1.8.2.1.715.gb260f47
+The primary reason I think the user will find "We are going to
+remove these.  OK?" irritating is that most of the time, there are
+only a few items that the user would want to keep.
+
+	$ rm --confirm-before-doing -r path
+	... list of three dozens of items, among which
+        ... there may be two items that should be kept
+        Remove all? [Y/n]
+
+After seeing this prompt and saying 'n', the user would _not_ thank
+the command for reminding about these precious two items, because
+the only next step available to the user is to remove the remaining
+34 items manually.
+
+"Confirm in bulk before doing" feature can become useful if it had a
+"line item veto" option in the confirmation time.  The interaction
+then could go like this:
+
+	$ rm --confirm-before-doing -r path
+	path/foo    path/frotz/nitfol    path/sotto
+        path/bar    path/frotz/xyzzy     path/trail
+        ...            ...               ...     
+        Remove (list items you want to keep)? path/frotz
+
+and the user could instruct it to remove everything other than those
+inside path/fortz.  If the user do not want to remove anything,
+there is an option to ^C out of the command.
