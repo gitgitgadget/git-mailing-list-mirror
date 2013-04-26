@@ -1,113 +1,101 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 4/9] remote-bzr: add support to push URLs
-Date: Fri, 26 Apr 2013 16:12:34 -0500
-Message-ID: <1367010759-17928-5-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v3 6/9] remote-bzr: store converted URL
+Date: Fri, 26 Apr 2013 16:12:36 -0500
+Message-ID: <1367010759-17928-7-git-send-email-felipe.contreras@gmail.com>
 References: <1367010759-17928-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 26 23:14:21 2013
+X-From: git-owner@vger.kernel.org Fri Apr 26 23:14:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVpyE-0007Ij-EY
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 23:14:18 +0200
+	id 1UVpyL-0007SY-LM
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 23:14:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757475Ab3DZVOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 17:14:10 -0400
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:52421 "EHLO
+	id S1757521Ab3DZVOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 17:14:20 -0400
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:43348 "EHLO
 	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754987Ab3DZVOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 17:14:08 -0400
-Received: by mail-oa0-f53.google.com with SMTP id m6so4458000oag.12
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 14:14:07 -0700 (PDT)
+	with ESMTP id S1754987Ab3DZVON (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 17:14:13 -0400
+Received: by mail-oa0-f53.google.com with SMTP id m6so4405225oag.26
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 14:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=aO2I1lpX0pAus7vf3P8PPCGQw4ltYah0xvsZwfk5gx4=;
-        b=qCKUvAJafIgNu0orDzu48kTbUnWJ5vOL5dFzw8znYqMAPBrsEc/rkMdR1g79P63n/x
-         V6xDy34HcHiXlNXpiCpyA3erMJfVfQNdleFBkCxvnHP1AnS2zWY1MX2AXzNHhAM5z6wt
-         yv28lZ8wL9xJ8dV57WmH3h73eOMvvFtau49Advy0H0vpXtOrFLy/P+DNk9ViuD2zj5IM
-         4Aqt8maWTUVNfEhACcVe1arlrb0FG8ziRD7s7fcdGrujHJgzRIMd8OD5e4/2zaPr5buM
-         6PrLYLlFVc8QiXe7cx5eZrz3747Gvdpv97htHCjQ0XpIEMRTNbGmpnTyp7AE71iv1NYo
-         MVIA==
-X-Received: by 10.182.160.106 with SMTP id xj10mr23049672obb.98.1367010847034;
-        Fri, 26 Apr 2013 14:14:07 -0700 (PDT)
+        bh=eP8JPt3ilB/geD2KZIfOTBrYrZJTo/PYUYQRozaa6ng=;
+        b=CUssU/5QFVePyR6Xb8/VoU3yNtgh9O2gX+zz0lBFqFRPm7D4hAubM47duR4mnAWx7u
+         12ApH71alIpSF9vuqOunBFRgQTWdBkTTAPk+K8oyARoIHBOTI8yNsAbldc1fctwe9BEn
+         IVv8GpruCoocbpod13eIb8jTTK7/9nmbr87Jtq+JIPvV8h/bWEXahwHSO0MvStbJBYo7
+         JSwX7KBQBY/4FkRHGcYE3IXKAaJTJNGaceCYg/evUd3KSH4gbtipke6/DxCIOYUzm4tM
+         sEyGUFcpRWaTLS39xPZQkA/smsi91Ks5c41IWiv9h8PSrHW9FkzLuCkgckcUvY099SPF
+         o+cA==
+X-Received: by 10.60.45.8 with SMTP id i8mr18397956oem.78.1367010852828;
+        Fri, 26 Apr 2013 14:14:12 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id rn6sm6196159oeb.0.2013.04.26.14.14.05
+        by mx.google.com with ESMTPSA id jw8sm9381491obb.14.2013.04.26.14.14.11
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 26 Apr 2013 14:14:06 -0700 (PDT)
+        Fri, 26 Apr 2013 14:14:12 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.1.1031.g2ee5873
 In-Reply-To: <1367010759-17928-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222588>
 
-Just like in remote-hg.
+Bazaar might convert the URL to something more appropriate, like an
+absolute path. Lets store that instead of the original URL, which won't
+work from a different working directory if it's relative.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/git-remote-bzr | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ contrib/remote-helpers/git-remote-bzr | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index 7b6584e..f1d6d5e 100755
+index f1d6d5e..dda2932 100755
 --- a/contrib/remote-helpers/git-remote-bzr
 +++ b/contrib/remote-helpers/git-remote-bzr
 @@ -32,7 +32,7 @@ import os
  import json
  import re
  import StringIO
--import atexit
-+import atexit, shutil, hashlib
+-import atexit, shutil, hashlib
++import atexit, shutil, hashlib, urlparse, subprocess
  
  NAME_RE = re.compile('^([^<>]+)')
  AUTHOR_RE = re.compile('^([^<>]+?)? ?<([^<>]*)>$')
-@@ -719,11 +719,11 @@ def main(args):
-     global blob_marks
-     global parsed_refs
-     global files_cache
-+    global is_tmp
+@@ -713,6 +713,14 @@ def get_repo(url, alias):
  
-     alias = args[1]
-     url = args[2]
+     return branch
  
--    prefix = 'refs/bzr/%s' % alias
-     tags = {}
-     filenodes = {}
-     blob_marks = {}
-@@ -731,6 +731,13 @@ def main(args):
-     files_cache = {}
-     marks = None
- 
-+    if alias[5:] == url:
-+        is_tmp = True
-+        alias = hashlib.sha1(alias).hexdigest()
-+    else:
-+        is_tmp = False
++def fix_path(alias, orig_url):
++    url = urlparse.urlparse(orig_url, 'file')
++    if url.scheme != 'file' or os.path.isabs(url.path):
++        return
++    abs_url = urlparse.urljoin("%s/" % os.getcwd(), orig_url)
++    cmd = ['git', 'config', 'remote.%s.url' % alias, "bzr::%s" % abs_url]
++    subprocess.call(cmd)
 +
-+    prefix = 'refs/bzr/%s' % alias
+ def main(args):
+     global marks, prefix, dirname
+     global tags, filenodes
+@@ -741,6 +749,9 @@ def main(args):
      gitdir = os.environ['GIT_DIR']
      dirname = os.path.join(gitdir, 'bzr', alias)
  
-@@ -759,7 +766,10 @@ def main(args):
- def bye():
-     if not marks:
-         return
--    marks.store()
 +    if not is_tmp:
-+        marks.store()
-+    else:
-+        shutil.rmtree(dirname)
++        fix_path(alias, url)
++
+     if not os.path.exists(dirname):
+         os.makedirs(dirname)
  
- atexit.register(bye)
- sys.exit(main(sys.argv))
 -- 
 1.8.2.1.1031.g2ee5873
