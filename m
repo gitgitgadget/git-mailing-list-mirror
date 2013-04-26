@@ -1,123 +1,81 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH] clean: confirm before cleaning files and directories
-Date: Fri, 26 Apr 2013 18:00:24 +0800
-Message-ID: <CANYiYbFTTGds3yU+-9BL=oTXFk5X4jR_MMR3cQVE4=qPgutWEg@mail.gmail.com>
-References: <1826d070612808b301f9295838e226e02d8097ad.1366963586.git.worldhello.net@gmail.com>
-	<vpqfvydhfbx.fsf@grenoble-inp.fr>
-	<CANYiYbFzEoEgJzKsB_hiKNy2JCxaTDX30wXNjnzComOzJJF_cw@mail.gmail.com>
-	<vpqwqrpfzez.fsf@grenoble-inp.fr>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [BUG] Highly inconsistent diff UI
+Date: Fri, 26 Apr 2013 16:17:20 +0530
+Message-ID: <CALkWK0kSWHS0JJ9E4PPihRru0-H13mNffJ5Hndg+LqvFzsYG8Q@mail.gmail.com>
+References: <CALkWK0n2ZZTgYxi3Fk2UxY8TXFAt1Xt3+11G98GKxbYdoMOT+Q@mail.gmail.com>
+ <7va9ong9oa.fsf@alter.siamese.dyndns.org> <CALkWK0mVDT5ESnVJAWQ83gQnmxmGDoM_Y0nE4FGybcjcenA_KA@mail.gmail.com>
+ <7v38ufer2x.fsf@alter.siamese.dyndns.org> <CALkWK0m5Q_e3q6Yg94-K+jU_SS7ovR2wnz-_Nr3cMz_YM=SMDQ@mail.gmail.com>
+ <7vvc7baahc.fsf@alter.siamese.dyndns.org> <CALkWK0=NWSZsARu9w0DwpEmJHKnvpB8yoNfEa31LDQA=cV-90Q@mail.gmail.com>
+ <CALkWK0ntZKaEzA0Jupj6poOMydqUumEGVVJ-uhBE12sPJ0ntjw@mail.gmail.com>
+ <7vppxj6thv.fsf@alter.siamese.dyndns.org> <CALkWK0n9xqQr30QWEuhuM9c1xrAJ=SpYVBjkiRk+tP5E7DtBGw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=GB2312
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Apr 26 12:00:33 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 26 12:48:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVfSA-0003JU-DT
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 12:00:30 +0200
+	id 1UVgCF-0005yU-Tb
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 12:48:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758702Ab3DZKA0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Apr 2013 06:00:26 -0400
-Received: from mail-we0-f169.google.com ([74.125.82.169]:42908 "EHLO
-	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756869Ab3DZKAZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Apr 2013 06:00:25 -0400
-Received: by mail-we0-f169.google.com with SMTP id p43so3435213wea.0
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 03:00:24 -0700 (PDT)
+	id S1758869Ab3DZKsC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 06:48:02 -0400
+Received: from mail-ia0-f182.google.com ([209.85.210.182]:37333 "EHLO
+	mail-ia0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751097Ab3DZKsA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 06:48:00 -0400
+Received: by mail-ia0-f182.google.com with SMTP id w33so1200238iag.41
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 03:48:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=dnyqXYA79vwzS0LNZXdboLAwyZ1v1zD2yI5iglvmUnY=;
-        b=UDFR7IGGRxMRZ2qr4BWOzBkajnM3afm5aanhVww/ROGSKOsFTQEX02kswpqNHyOklZ
-         audfRoNRBqbWr0y3BXoTWJhBOUHjr1UZwUJVmPEr+O6k7tN1l5Cq9lF5wrc/uai5e3Ud
-         wdOkcteS8lsbgkDkP+G6c6zQDYFH5id9v52gIdwimVVrftDgI2uY64U47+2Im2O9tSDm
-         CUNIL4LzaBfxdKf2VQueOJjT9p8z42lf6SOdQotskIei5RcO5ScISpjUkSWVZlVjbf73
-         1n5Qao1dDVdRvjXICMbbCodMK5dIi676ixfxf80GhYWY4M0lR6ZEokNHNfm3HDxqv7vR
-         po6Q==
-X-Received: by 10.180.83.199 with SMTP id s7mr2874228wiy.19.1366970424282;
- Fri, 26 Apr 2013 03:00:24 -0700 (PDT)
-Received: by 10.194.175.72 with HTTP; Fri, 26 Apr 2013 03:00:24 -0700 (PDT)
-In-Reply-To: <vpqwqrpfzez.fsf@grenoble-inp.fr>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=fQ6jGnBOBu/xcBT6lEaT53tpfMVfVysnsEaOvhQPu3k=;
+        b=JsSv10NzBOHY2zHI9B5ZzNw9tqd55QWDVevKIzty7l3Ba1UHhmXGtGYAPN57p9Tajx
+         PLwx9jhEzuMEijc5DXuoI+BD8/XpAcIc9NPuR9j/ytdz66eoyKANBZeRdAmPSJH4Xzcq
+         5HrAvTT2M6ng9/YtGehVA1oiSRd3MZpJLcSK4A667QybM1sp1OTRm/xJznkqxaZiXc6+
+         DdnRlvDVHBh2vytatsNT6/jW9DU6Ng+OLfo7YcB4d9wyAnMlnwpN2EwHJpkzwDTPH0U5
+         gSJmyhRNuKAefI7T5KnDjtYNA2/gT+EJvxmEUAJTgawwtwtH6cuHUdIY9t7G8Uhf2kse
+         NHeQ==
+X-Received: by 10.50.66.197 with SMTP id h5mr1422040igt.63.1366973280229; Fri,
+ 26 Apr 2013 03:48:00 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Fri, 26 Apr 2013 03:47:20 -0700 (PDT)
+In-Reply-To: <CALkWK0n9xqQr30QWEuhuM9c1xrAJ=SpYVBjkiRk+tP5E7DtBGw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222526>
 
-2013/4/26 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
-> Jiang Xin <worldhello.net@gmail.com> writes:
->
->> Maybe we can do like this:
->>
->> 1. Set the default value of 'clean.requireForce' to false.
->> 2. Show a error message and do nothing, if there is not 'clean.requi=
-reForce'
->>     setting, but the user called with a '--force' flag.
->>     ( like a transition for the change of push.default in git 2.0)
->
-> Perhaps introducing a new value for 'clean.requireForce':
->
-> $ git config --global clean.requireForce ask
-> $ git clean
-> .will remove ...
-> are you sure [y/N]?
->
-> The error message when clean.requireForce is unset and --force is not
-> given could point the user to clean.requireForce=3Dask.
+Ramkumar Ramachandra wrote:
+> The range version of $(git merge-base A B) B is B ^$(git merge-base A
+> B), and not B --not $(git merge-base --all A B) [which is equivalent
+> to B ^A or A..B].
 
-Add new value for clean.requireForce would break old git clent.
+Let me make this easier for you, and everyone else.
 
-   $ git clean
-   fatal: bad config value for 'clean.requireforce' in .git/config
+In git.git, checkout master and merge 9915605c^2 (rr/shortlog-doc).
+So, my changeset has graduated from 'pu' to 'master' (I know 'master'
+is directly ahead of 'pu', and this is not what you do; but this is
+just an exercise).  Now, I execute git log master..pu and search for
+the author "Ramkumar Ramachandra".  I can see that my shortlog-doc
+commits aren't present; so I infer that my changes have graduated to
+master.  I can also see the merge commit corresponding to
+rr/shortlog-doc, and infer that master merged in rr/shortlog-doc
+differently.
 
->
-> Then, maybe, later, this could become the default. But I tend to like
-> the non-interactive nature of most Git commands, so I'm a bit relucta=
-nt
-> here. My way of doing the confirmation dialog is
->
-> $ git clean -n
-> would remove ...
-> $ git clean -f
->
+If I execute git log pu ^$(git merge-base master pu), I see the merge
+commit rr/shortlog-doc _and_ the shortlog-doc commits.  Here, I don't
+want to know if my change graduated to master or not: I just want to
+know what changes were introduced by the pu branch since the last
+fork.  Think of it as a time-truncated version of git log pu: it has
+nothing to do with reachability.  The only reason that master even
+appears in the command is because I need to specify where pu forked
+off from.
 
-I try to put all cases in one table, but still looks weird.
-
-    | clean.requireForce  |     git clean     | git clean --force |
-    +---------------------+-------------------|-------------------|
-    | TRUE                | error             | delete...         |
-    +---------------------+-------------------|-------------------|
-    | FALSE               | delete...         | delete...         |
-    +---------------------+-------------------|-------------------|
-    | unset               | confirm           | warn + confirm    |
-    +---------------------+-------------------|-------------------|
-
-Does anyone really set and use "clean.requireForce" setting?
-And if there is a confirm dialog, do we need 'clean.requireForce' any m=
-ore?
-Or we can add a `--no-ask` option, in order to override the confirm dia=
-log.
-
-
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
-
-
-
---
-=BD=AF=F6=CE
-
-=B1=B1=BE=A9=C8=BA=D3=A2=BB=E3=D0=C5=CF=A2=BC=BC=CA=F5=D3=D0=CF=DE=B9=AB=
-=CB=BE
-=D3=CA=BC=FE: worldhello.net@gmail.com
-=CD=F8=D6=B7: http://www.ossxp.com/
-=B2=A9=BF=CD: http://www.worldhello.net/
-=CE=A2=B2=A9: http://weibo.com/gotgit/
-=B5=E7=BB=B0: 18601196889
+I would argue that this is incredibly useful: to see what changes were
+introduced by "my branch" independent of everything else.  What do you
+think?
