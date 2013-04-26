@@ -1,86 +1,140 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v4 01/11] Add new git-related helper to contrib
-Date: Fri, 26 Apr 2013 18:23:33 -0500
-Message-ID: <CAMP44s0XnEJWjzU-g=Gq2jJQu-9MJ8S84fAd-7bdomKWEeTCtw@mail.gmail.com>
-References: <1366919983-27521-1-git-send-email-felipe.contreras@gmail.com>
-	<1366919983-27521-2-git-send-email-felipe.contreras@gmail.com>
-	<CAMP44s0nvWvicFAJEqe0jC+zT3ZvA=Qx3MWXK36zYb2-uYV-aA@mail.gmail.com>
-	<7vhaisvqvl.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re* [PATCH] git-remote-testgit: avoid process substitution
+Date: Fri, 26 Apr 2013 16:26:48 -0700
+Message-ID: <7v8v44vpon.fsf_-_@alter.siamese.dyndns.org>
+References: <7vvc7enxco.fsf@alter.siamese.dyndns.org>
+	<7vwqrtgi1r.fsf@alter.siamese.dyndns.org>
+	<51779052.8020507@viscovery.net>
+	<CAMP44s1oX_m0d+2Z3+VkafOhT1bZK_9Z5m1ex456DMdAidEKeg@mail.gmail.com>
+	<5177980A.4090305@viscovery.net> <5178C583.6000703@viscovery.net>
+	<CAMP44s2nWs3XyaLQUnYd=A9u1=8tB7Qp+FN7gf+SrACxmtP8pw@mail.gmail.com>
+	<7vobd1udz2.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3j5Bk3eqPeN2qkGTWFLO2NKz0taTGYVNvEut_VM=0NXA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 27 01:23:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 27 01:27:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVrzQ-0008F5-DR
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 01:23:40 +0200
+	id 1UVs2Z-000310-Gn
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 01:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755933Ab3DZXXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 19:23:36 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:42491 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753672Ab3DZXXf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 19:23:35 -0400
-Received: by mail-lb0-f169.google.com with SMTP id p10so329186lbi.0
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 16:23:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=17v6p3a6Y+0D71qbYf/zlH6BPxuzjw1kpsPNPOqHlnc=;
-        b=yOfHtFjF+dVVjCU+I72bVyVLuhSr59kZ284p3rpFcMHa73OP5yWUmStk9bm3UYz9TJ
-         c64IyrhCOZ8ABosJBmMvKPyIaXWa2dsZQOsjm1rSbIdG1WpsbZ9rOJ1P6orLTDikzrGA
-         HbxgHNad2URVAFnXwI2wjx/PU5jtF9jU5Fs8xTQ8BwCx8JFptLzITZzqs6Zqtkx0Kioz
-         RRWhi7+WhxFjUL65txb6V6FgGfrcYFTwUJz2qMlsO/Hd8kTMZqVLMZwFfByaver6ICmh
-         LXtCAcWBBwXVXvA+yvjQUEpEmjy4KMFIrDFeswLoWMjbnStUDq1gkszk8V0zE0WamgWx
-         RhUg==
-X-Received: by 10.112.140.100 with SMTP id rf4mr13929221lbb.82.1367018614047;
- Fri, 26 Apr 2013 16:23:34 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Fri, 26 Apr 2013 16:23:33 -0700 (PDT)
-In-Reply-To: <7vhaisvqvl.fsf@alter.siamese.dyndns.org>
+	id S1755940Ab3DZX0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 19:26:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33315 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754111Ab3DZX0u (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 19:26:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 424BB1A3DC;
+	Fri, 26 Apr 2013 23:26:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0k3/PdBLUnRraxxeJOZhaFUhQ14=; b=pWv8kO
+	3Gaw+VzNAWU1ztCwTWEnJ94lVQFe7DnTTAY/n+40G61e5xjLZAIFFV637p6WmMV2
+	h89QV+ya9Rao9hvgkX5NQ669HPwtc+tB5GRg/f4MLxOKRSAbWUl/gdd9w3uljT37
+	eOjaBgoAhkvSmvCM/rMePVxuwtGBPWZkWx12c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=a9im8/lrQKEzSishlSuWTUk/JIFjSQCn
+	5jvznA0YCSX7c8cJOGPbkXIT9NbxDa84dxIFa1ckBSl4m4G5bc5KpVDri8uiOmih
+	PN5s+/Li8kEY+roL8XfcYez4Vvd5cjbNo/1Ugo525A4gezg31ID5AUo2OxADJke5
+	TiSHDMFlMjk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35D411A3DB;
+	Fri, 26 Apr 2013 23:26:50 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 892DF1A3DA;
+	Fri, 26 Apr 2013 23:26:49 +0000 (UTC)
+In-Reply-To: <CAMP44s3j5Bk3eqPeN2qkGTWFLO2NKz0taTGYVNvEut_VM=0NXA@mail.gmail.com>
+	(Felipe Contreras's message of "Fri, 26 Apr 2013 17:45:49 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C4F64774-AEC8-11E2-A6EE-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222606>
 
-On Fri, Apr 26, 2013 at 6:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> On Thu, Apr 25, 2013 at 2:59 PM, Felipe Contreras
->> <felipe.contreras@gmail.com> wrote:
->>> This script find people that might be interested in a patch, by going
->>> back through the history for each single hunk modified, and finding
->>> people that reviewed, acknowledge, signed, or authored the code the
->>> patch is modifying.
->>>
->>> It does this by running 'git blame' incrementally on each hunk, and then
->>> parsing the commit message. After gathering all the relevant people, it
->>> groups them to show what exactly was their role when the participated in
->>> the development of the relevant commit, and on how many relevant commits
->>> they participated. They are only displayed if they pass a minimum
->>> threshold of participation.
->>
->> Is this patch still not understandable?
->
-> Among the people who review patches here and give usable feedback,
-> earlier this week Peff said he is away from his mailbox for the rest
-> of the week, and I am not reviewing any new topics that are not in
-> 'next', being busy in preparation for -rc0, so I wouldn't be able to
-> answer that question.
->
-> I do not know about the others, but it is understandable from time
-> to time there is a period a series is not being reviewed by anybody.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-That's fine, I was mostly asking Ramkumar who earlier argued earlier
-versions of this patch were not understandable.
+> No, it wouldn't, but I don't think there's any way to do \<\> or \b in globs.
 
-Cheers.
+This should do in the meantime, but it further needs:
 
--- 
-Felipe Contreras
+ - J6t's sign off for the follow-up part to remove remaining
+   bash-isms to complete this patch (the last part of the patch is
+   from <5178C583.6000703@viscovery.net> and we can take half the
+   log message from there);
+
+ - Rename it to git-remote-testgit.sh and tell Makefile to replace
+   the shebang line with SHELL_PATH like other scripts;
+
+ - Remove the "we need to have bash because we will run remote-testgit"
+   logic from t5801
+
+
+
+diff --git a/git-remote-testgit b/git-remote-testgit
+index b395c8d..ffac950 100755
+--- a/git-remote-testgit
++++ b/git-remote-testgit
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env bash
++#!/bin/sh
+ # Copyright (c) 2012 Felipe Contreras
+ 
+ alias=$1
+@@ -23,7 +23,6 @@ then
+ 	testgitmarks="$dir/testgit.marks"
+ 	test -e "$gitmarks" || >"$gitmarks"
+ 	test -e "$testgitmarks" || >"$testgitmarks"
+-	testgitmarks_args=( "--"{import,export}"-marks=$testgitmarks" )
+ fi
+ 
+ while read line
+@@ -62,22 +61,31 @@ do
+ 			echo "feature export-marks=$gitmarks"
+ 		fi
+ 		echo "feature done"
+-		git fast-export "${testgitmarks_args[@]}" $refs |
++		git fast-export \
++			${testgitmarks:+"--import-marks=$testgitmarks"} \
++			${testgitmarks:+"--export-marks=$testgitmarks"} \
++			$refs |
+ 		sed -e "s#refs/heads/#${prefix}/heads/#g"
+ 		echo "done"
+ 		;;
+ 	export)
+ 		before=$(git for-each-ref --format='%(refname) %(objectname)')
+ 
+-		git fast-import "${testgitmarks_args[@]}" --quiet
+-
+-		after=$(git for-each-ref --format='%(refname) %(objectname)')
++		git fast-export \
++			${testgitmarks:+"--import-marks=$testgitmarks"} \
++			${testgitmarks:+"--export-marks=$testgitmarks"} \
++			--quiet
+ 
+ 		# figure out which refs were updated
+-		join -e 0 -o '0 1.2 2.2' -a 2 <(echo "$before") <(echo "$after") |
+-		while read ref a b
++		LF=$'\n'
++		git for-each-ref --format='%(refname) %(objectname)' |
++		while read ref a
+ 		do
+-			test $a == $b && continue
++			case "$LF$before$LF" in
++			*"$LF$ref $a$LF"*)
++				continue
++				;;
++			esac
+ 			echo "ok $ref"
+ 		done
+ 
