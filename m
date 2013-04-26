@@ -1,83 +1,104 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: Re: [RFC/PATCH] Make --full-history consider more merges
-Date: Fri, 26 Apr 2013 22:18:28 +0300
-Message-ID: <517AD304.6020807@bracey.fi>
-References: <7v4nfcj2kq.fsf@alter.siamese.dyndns.org> <1366658602-12254-1-git-send-email-kevin@bracey.fi> <7vzjwqny64.fsf@alter.siamese.dyndns.org> <5176B854.2000707@bracey.fi> <7va9ona77d.fsf@alter.siamese.dyndns.org> <7v61zb8j5d.fsf@alter.siamese.dyndns.org> <5179505F.2000108@bracey.fi> <7vtxmu4kq2.fsf@alter.siamese.dyndns.org> <517963B4.30801@bracey.fi> <7v1u9y4gnq.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/9] remote-bzr: trivial cleanups
+Date: Sat, 27 Apr 2013 01:00:29 +0530
+Message-ID: <CALkWK0=J2_mAViDwu2MJNvLsUbVpoR68-sQR9fs=4of+E5wAjg@mail.gmail.com>
+References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
+ <1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
+ <CALkWK0meg1FgU=-4MFoFGjpDq_oa9XR_+qeiseR0J85mS71dNg@mail.gmail.com>
+ <CAMP44s2nRHRFY_BRO7+x=CVKgrob78xZCpiV4Hk9sjWB_Q=vng@mail.gmail.com>
+ <7vip3a2vq0.fsf@alter.siamese.dyndns.org> <CAMP44s1RdZ19y8v+_=gwBzq1Tg5v8+TWAYCAVR-ZzNwZ0_m_Ng@mail.gmail.com>
+ <CALkWK0mRfj1FGYymDrBqQ=d02mhPkevJKr5Ozhgurp8DMhiNjQ@mail.gmail.com> <CAMP44s3WkfAuPjJ5Z91Hjx7Vp5P2C7n5Wh+7Rd49k9N_n+SxkA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 21:27:37 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christophe Simonis <christophe@kn.gl>,
+	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 26 21:31:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVoIy-0003yz-Cq
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 21:27:36 +0200
+	id 1UVoMX-0008GV-7C
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 21:31:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932210Ab3DZT1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 15:27:32 -0400
-Received: from 13.mo3.mail-out.ovh.net ([188.165.33.202]:37997 "EHLO
-	mo3.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757373Ab3DZT1b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 15:27:31 -0400
-Received: from mail422.ha.ovh.net (b9.ovh.net [213.186.33.59])
-	by mo3.mail-out.ovh.net (Postfix) with SMTP id 63A36FF8F97
-	for <git@vger.kernel.org>; Fri, 26 Apr 2013 21:18:31 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 26 Apr 2013 21:18:42 +0200
-Received: from 85-23-153-122.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@85.23.153.122)
-  by ns0.ovh.net with SMTP; 26 Apr 2013 21:18:40 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-X-Ovh-Mailout: 178.32.228.3 (mo3.mail-out.ovh.net)
-In-Reply-To: <7v1u9y4gnq.fsf@alter.siamese.dyndns.org>
-X-Ovh-Tracer-Id: 15208655942386225368
-X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: 0
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrgeejucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
-X-Spam-Check: DONE|U 0.500002/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrgeejucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+	id S1757441Ab3DZTbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 15:31:11 -0400
+Received: from mail-ia0-f175.google.com ([209.85.210.175]:49381 "EHLO
+	mail-ia0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757317Ab3DZTbK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 15:31:10 -0400
+Received: by mail-ia0-f175.google.com with SMTP id i38so3932578iae.20
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 12:31:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=EtwFZ7ngIsX2pZSWLZ2KVzo/5VZWF2Zx+utfJOTfrdE=;
+        b=CgxmEh8+JR1az7L4kB0ep6ZfXnVZKOzKGW473TBgx7EqQPGCcw/13Dqu0JVmAffSjG
+         oauGjwJlPE2UeNP0B9Oz7gEN7cMI190dVp488AKVNIPFi6oF2HCHlfPrwjHZGvschvx2
+         8N4DunnsrTY7A05GRAocPtORNLEhBk6RoP0EFMQ4/oZ+BuVMe0qOtohChhIDZrrfqDuy
+         6Mo3Sk64SLVsm09aRN+2D9YicP2fc0z4VkqAmux+dstFG0kMk12NJsKaIc6Eia++r+Pa
+         G7zyukIkZcHXCJXyp4myrv6gOhPbtpoHoYJV/HmmlG6Rd/7nqL93Sb1ziu0BpbBKtuXz
+         Rv7w==
+X-Received: by 10.50.66.197 with SMTP id h5mr2623585igt.63.1367004669471; Fri,
+ 26 Apr 2013 12:31:09 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Fri, 26 Apr 2013 12:30:29 -0700 (PDT)
+In-Reply-To: <CAMP44s3WkfAuPjJ5Z91Hjx7Vp5P2C7n5Wh+7Rd49k9N_n+SxkA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222561>
 
-On 25/04/2013 21:19, Junio C Hamano wrote:
-> How many decorations are we talking about here? One for each merge 
-> commit in the entire history? Do we have a cue that can tell us when 
-> we are really done with a commit that lets us discard the associated 
-> data as we go on digging, keeping the size of our working set somewhat 
-> bounded, perhaps proportional to the number of commits in our 
-> rev_info->commits queue? 
+[completely off-topic; don't worry, we're just having a friendly chat]
 
-As it stands, it's one decoration per interesting merge commit that's 
-processed by try_to_simplify_commit(), if simplify_merges is set. (Only 
-simplify_merges needs the information at present - conceivably 
-limit_to_ancestry could use it too). I don't know how to go about 
-discarding the data, or when it could be done - I'm not clear enough on 
-the wider sequencing machinery in revision.c yet.
+Felipe Contreras wrote:
+> If you are not prepared to defend your review, so are others, why to
+> you blame that on me? If you were right, you would be shown to be
+> right. Period.
 
-I have a first draft of a set of patches, which will follow this message.
+Felipe, there are some things that are worth arguing about for a long
+time (like the new revision spec I'm proposing in [1]), and others
+that are not.
 
-1/3 addresses the initial "get simplify_merges right", passing your 
-test. That patch is written to make it easy to extend with the next two, 
-which add a "never eliminate all our TREESAME parents" rule, and 
-reinstate your reverted"eliminate irrelevant side branches". The error I 
-spotted in that was that you weren't checking that you were eliminating 
-root commits - with that fixed it seems sound to me.
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/222248/focus=222526
 
-I need to create a new test for patch 2, but this version passes the 
-full test suite, including fixing the known failure in t6012, and it 
-also gets the examples in the manual right. (I've extended the examples 
-to include the irrelevant side branch - not sure this is worthwhile, as 
-it's such an unusual case, and I think that section is confusing enough 
-for newbies...)
+> No, we operate in evidence and reason, *not* opinion. Any reasonable
+> person would say "well, I *think* this commit message needs more
+> description, but I don't *know*, I don't have *evidence* for it, so
+> I'm not going to fight to the death, as if I had".
 
-Kevin
+Don't you think you're taking reason to an extreme here?  Reason is a
+tool that I use when I want.  I don't want reason when I'm browsing
+Google Art Project or listening to Gentle Giant.  Arguments like "is
+this commit message large enough?" are really not worth the time and
+effort.
+
+> Ultimately the decision to merge or not to merge comes to Junio, if
+> you don't like his decision, go complain to him, but I would be
+> prepared with points in time where people complained about these
+> patches, and there are no complains, so you have no ammunition at all
+> whatsoever.
+
+I have no desire to "attack" you, Felipe.  I respect you as a more
+experienced developer than myself, and am trying to offer constructive
+criticism.
+
+I don't have an ego (or consider myself important to the community).
+Whatever will happen will happen, with or without me.
+
+> And this is how communities die. When everybody thinks the same, and
+> everyone who thinks differently is displaced. A monoculture, a place
+> full of yes-men where nobody criticizes anybody, a circlejerk where
+> everyone palms the back of everyone else. Eventually things go south,
+> and nobody around you understands why.
+>
+> Diversity in a community is healthy. If you don't like people who
+> think differently, *you* have a problem. If you don't like standing up
+> and defending your ideas, *you* have a problem. If you don't like
+> discussing on the basis of evidence and reason, *you* have a problem.
+
+Diversity is certainly healthy, and I it would be nice to have you in
+the community.  We just have to find a way to keep the conflict down.
