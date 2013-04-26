@@ -1,244 +1,90 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: [RFC/PATCH 3/3] simplify-merges: drop merge from irrelevant side branch
-Date: Fri, 26 Apr 2013 22:31:58 +0300
-Message-ID: <1367004718-30048-3-git-send-email-kevin@bracey.fi>
-References: <517AD304.6020807@bracey.fi>
- <1367004718-30048-1-git-send-email-kevin@bracey.fi>
-Cc: Junio C Hamano <gitster@pobox.com>, Kevin Bracey <kevin@bracey.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 26 21:57:38 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/9] remote-bzr: trivial cleanups
+Date: Sat, 27 Apr 2013 01:26:57 +0530
+Message-ID: <CALkWK0nkt-uytJYpyZ94YCqV8L=m7v39TxKBaKfMJivh2COEng@mail.gmail.com>
+References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
+ <1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
+ <CALkWK0meg1FgU=-4MFoFGjpDq_oa9XR_+qeiseR0J85mS71dNg@mail.gmail.com>
+ <CAMP44s2nRHRFY_BRO7+x=CVKgrob78xZCpiV4Hk9sjWB_Q=vng@mail.gmail.com>
+ <7vip3a2vq0.fsf@alter.siamese.dyndns.org> <CAMP44s1RdZ19y8v+_=gwBzq1Tg5v8+TWAYCAVR-ZzNwZ0_m_Ng@mail.gmail.com>
+ <7vsj2e1d83.fsf@alter.siamese.dyndns.org> <CAMP44s1CTzO6J+QTDw_tmbkf-jfVxBzpfqY08_6RXrMuPr+CFw@mail.gmail.com>
+ <CALkWK0ndinJPeufokYUiPeC_Hs=9WA71Xpd=K6vimJseXJsAOA@mail.gmail.com>
+ <CAMP44s1MHUc_jw5EQviSYWc9phWCYD-FK_gRA-0QYNcLix098w@mail.gmail.com>
+ <CALkWK0mHCNdr7+QxmmB3jTnWTe8q0_ipXD0=1bKQdpLK07gnAg@mail.gmail.com> <CAMP44s0r52L0_r-tQWCkLjOvV7jBghHLqMi6rh_UyChXvx6J1g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christophe Simonis <christophe@kn.gl>,
+	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 26 21:57:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVom1-0004Xt-MU
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 21:57:38 +0200
+	id 1UVom8-0004eS-Bc
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 21:57:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756869Ab3DZT5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 15:57:32 -0400
-Received: from mo3.mail-out.ovh.net ([178.32.228.3]:54828 "EHLO
-	mo3.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756600Ab3DZT5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 15:57:31 -0400
-X-Greylist: delayed 1519 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Apr 2013 15:57:31 EDT
-Received: from mail422.ha.ovh.net (b9.ovh.net [213.186.33.59])
-	by mo3.mail-out.ovh.net (Postfix) with SMTP id 94CBCFF8FE6
-	for <git@vger.kernel.org>; Fri, 26 Apr 2013 21:32:13 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 26 Apr 2013 21:32:24 +0200
-Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
-  by ns0.ovh.net with SMTP; 26 Apr 2013 21:32:23 +0200
-X-Ovh-Mailout: 178.32.228.3 (mo3.mail-out.ovh.net)
-X-Mailer: git-send-email 1.8.2.1.632.gd2b1879
-In-Reply-To: <1367004718-30048-1-git-send-email-kevin@bracey.fi>
-X-Ovh-Tracer-Id: 15440028374407155936
-X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: 0
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrgeejucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
-X-Spam-Check: DONE|U 0.500032/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrgeejucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+	id S1757067Ab3DZT5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 15:57:39 -0400
+Received: from mail-ia0-f177.google.com ([209.85.210.177]:60164 "EHLO
+	mail-ia0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756167Ab3DZT5i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 15:57:38 -0400
+Received: by mail-ia0-f177.google.com with SMTP id y26so4013252iab.22
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 12:57:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=89Bivo27IXhRThbmK+9Ra6y+Uus0dk4OGru3cwAyODc=;
+        b=m9CDb8/c5vrG6cF6IVw2vD2FpIbXbYD5wA3FXPWIEqGiMtnQAcvse7iuUtgXOI9Csk
+         atvyB762mawg6Xnwkw0j0fTNWrH613MxMO8Il3/auQp2Yh66jdZ5O9shuv7zj1zggTnp
+         NuGjI5p+FpTLaQZoLhvkJD51v3/FDpuy4aWd5qwU/QaI90HKXAjFEUUoVctzD1jfbcCF
+         Vos2B/1vccdVo+ODd5/AE0mEp6TxfZsfcD8Z2ymfJXUWHbTvWrwnl38N4ALt77FuSRsl
+         N9N/99QkwLpFmStTYzMnco9gNKm3VjcUNDj3VR7077T/QNHu95BOBZhkHEy6nYzwjk5g
+         wr9w==
+X-Received: by 10.50.72.65 with SMTP id b1mr2772398igv.63.1367006258307; Fri,
+ 26 Apr 2013 12:57:38 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Fri, 26 Apr 2013 12:56:57 -0700 (PDT)
+In-Reply-To: <CAMP44s0r52L0_r-tQWCkLjOvV7jBghHLqMi6rh_UyChXvx6J1g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222568>
 
-Reimplement commit 4b7f53da on top of the new simplify-merges
-infrastructure, tightening the condition to only consider root parents;
-the original version incorrectly dropped parents that were TREESAME to
-anything.
+Felipe Contreras wrote:
+> We all benefit from these patches being reviewed in the git mailing
+> list, nobody has claimed otherwise. You are making the error of
+> assuming that your review was actionable, that I should have done
+> something, fix the commit message I suppose, but I don't think that's
+> important.
 
-Original log message follows.
+What I'm saying is that you can get more eyes.  A lot more eyes.  If
+you just write a proper commit message!
 
-The merge simplification rule stated in 6546b59 (revision traversal:
-show full history with merge simplification, 2008-07-31) still
-treated merge commits too specially.  Namely, in a history with this
-shape:
+Why are you hitting everyone's inboxes with such cryptic patches that
+require either:
+1. The reviewer to trust what you've done and move on.
+2. The reviewer to do a lot of digging before the patch becomes
+accessible to her.
 
-	---o---o---M
-	          /
-         x---x---x
+> You just got angry that your review didn't turn out to be helpful, is
+> that it? Why do you want to steal helpful review from the users of
+> remote-{bzr,hg}? If that's not the case, please stop doing that. All
+> review is welcome, not all review should be acted upon.
 
-where three 'x' were on a history completely unrelated to the main
-history 'o' and do not touch any of the paths we are following, we
-still said that after simplifying all of the parents of M, 'x'
-(which is the leftmost 'x' that rightmost 'x simplifies down to) and
-'o' (which would be the last commit on the main history that touches
-the paths we are following) are independent from each other, and
-both need to be kept.
+I'm not angry about anything, or trying to steal anything.
 
-That is incorrect; when the side branch 'x' never touches the paths,
-it should be removed to allow M to simplify down to the last commit
-on the main history that touches the paths.
+What happened:  New email.  Felipe's remote-hg fixes.  Okay, let's
+look at this.  Part 1.  What?!  [I wrote down what I was thinking as I
+was reading the email]
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Kevin Bracey <kevin@bracey.fi>
----
- Documentation/rev-list-options.txt | 35 ++++++++++++++++++++++-------------
- revision.c                         | 26 +++++++++++++++++++++++++-
- t/t6012-rev-list-simplify.sh       |  2 +-
- 3 files changed, 48 insertions(+), 15 deletions(-)
+This is where you _should_ apply reason: justify everything you've
+done in the patch in your commit message.  Why are you so stubborn
+about not wanting to change your ways despite so many people telling
+you?  Is it your pride*?
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 0832004..db45401 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -342,13 +342,13 @@ In the following, we will always refer to the same example history to
- illustrate the differences between simplification settings.  We assume
- that you are filtering for a file `foo` in this commit graph:
- -----------------------------------------------------------------------
--	  .-A---M---N---O---P
--	 /     /   /   /   /
--	I     B   C   D   E
--	 \   /   /   /   /
--	  `-------------'
-+	  .-A---M---N---O---P---Q
-+	 /     /   /   /   /   /
-+	I     B   C   D   E   Y
-+	 \   /   /   /   /   /
-+	  `-------------'   X
- -----------------------------------------------------------------------
--The horizontal line of history A---P is taken to be the first parent of
-+The horizontal line of history A---Q is taken to be the first parent of
- each merge.  The commits are:
- 
- * `I` is the initial commit, in which `foo` exists with contents
-@@ -370,6 +370,10 @@ each merge.  The commits are:
-   strings to "quux xyzzy".  Despite appearing interesting, `P` is
-   TREESAME to all parents.
- 
-+* `X` is an indpendent root commit that added a new file `side`, and `Y`
-+  modified it. `Y` is TREESAME to `X`. Its merge `Q` added `side` to `P`, and
-+  `Q` is TREESAME to all parents.
-+
- 'rev-list' walks backwards through history, including or excluding
- commits based on whether '\--full-history' and/or parent rewriting
- (via '\--parents' or '\--children') are used.  The following settings
-@@ -413,7 +417,7 @@ parent lines.
- 	I  A  B  N  D  O
- -----------------------------------------------------------------------
- +
--`P` and `M` were excluded because they are TREESAME to both parents.  `E`,
-+`Q`, `P` and `M` were excluded because they are TREESAME to both parents.  `E`,
- `C` and `B` were all walked, but only `B` was !TREESAME, so the others
- do not appear.
- +
-@@ -431,7 +435,7 @@ Along each parent, prune away commits that are not included
- themselves.  This results in
- +
- -----------------------------------------------------------------------
--	  .-A---M---N---O---P
-+	  .-A---M---N---O---P---Q
- 	 /     /   /   /   /
- 	I     B   /   D   /
- 	 \   /   /   /   /
-@@ -441,7 +445,8 @@ themselves.  This results in
- Compare to '\--full-history' without rewriting above.  Note that `E`
- was pruned away because it is TREESAME, but the parent list of P was
- rewritten to contain `E`'s parent `I`.  The same happened for `C` and
--`N`.  Note also that `P` was included despite being TREESAME.
-+`N`, and `X`, `Y` and `Q`.  Note also that `P` and `Q` were included despite
-+being TREESAME.
- 
- In addition to the above settings, you can change whether TREESAME
- affects inclusion:
-@@ -471,9 +476,9 @@ history according to the following rules:
- * Set `C'` to `C`.
- +
- * Replace each parent `P` of `C'` with its simplification `P'`.  In
--  the process, drop parents that are ancestors of other parents, and
--  remove duplicates, but take care to never drop all parents that
--  we are TREESAME to.
-+  the process, drop parents that are ancestors of other parents or that are
-+  root commits TREESAME to an empty tree, and remove duplicates, but take care
-+  to never drop all parents that we are TREESAME to.
- +
- * If after this parent rewriting, `C'` is a root or merge commit (has
-   zero or >1 parents), a boundary commit, or !TREESAME, it remains.
-@@ -491,7 +496,7 @@ The effect of this is best shown by way of comparing to
- 	  `---------'
- -----------------------------------------------------------------------
- +
--Note the major differences in `N` and `P` over '--full-history':
-+Note the major differences in `N`, `P` and `Q` over '--full-history':
- +
- --
- * `N`'s parent list had `I` removed, because it is an ancestor of the
-@@ -499,6 +504,10 @@ Note the major differences in `N` and `P` over '--full-history':
- +
- * `P`'s parent list similarly had `I` removed.  `P` was then
-   removed completely, because it had one parent and is TREESAME.
-++
-+* `Q`'s parent list had `Y` simplified to `X`. `X` was then removed, because it
-+  was a TREESAME root. `Q` was then removed completely, because it had one
-+  parent and is TREESAME.
- --
- 
- Finally, there is a fifth simplification mode available:
-diff --git a/revision.c b/revision.c
-index 4e27c9a..67608e0 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2102,6 +2102,22 @@ static int mark_redundant_parents(struct rev_info *revs, struct commit *commit)
- 	return marked;
- }
- 
-+static int mark_treesame_root_parents(struct rev_info *revs, struct commit *commit)
-+{
-+	struct commit_list *p;
-+	int marked = 0;
-+
-+	for (p = commit->parents; p; p = p->next) {
-+		struct commit *parent = p->item;
-+		if (!parent->parents && (parent->object.flags & TREESAME)) {
-+			parent->object.flags |= TMP_MARK;
-+			marked++;
-+		}
-+	}
-+
-+	return marked;
-+}
-+
- static int remove_marked_parents(struct rev_info *revs, struct commit *commit)
- {
- 	struct treesame_state *ts = lookup_decoration(&revs->treesame, &commit->object);
-@@ -2224,10 +2240,18 @@ static struct commit_list **simplify_one(struct rev_info *revs, struct commit *c
- 	 *     /    /		o: a commit that touches the paths;
- 	 * ---o----'
- 	 *
--	 * Detect and simplify this case.
-+	 * Further, a merge of an independent branch that doesn't
-+	 * touch the path will reduce to a treesame root parent:
-+	 *
-+	 *  ----o----X		X: the commit we are looking at;
-+	 *          /		o: a commit that touches the paths;
-+	 *         r		r: a root commit not touching the paths
-+	 *
-+	 * Detect and simplify both cases.
- 	 */
- 	if (1 < cnt) {
- 		int marked = mark_redundant_parents(revs, commit);
-+		marked += mark_treesame_root_parents(revs, commit);
- 		if (marked)
- 			remove_marked_parents(revs, commit);
- 	}
-diff --git a/t/t6012-rev-list-simplify.sh b/t/t6012-rev-list-simplify.sh
-index 4e55872..57ce239 100755
---- a/t/t6012-rev-list-simplify.sh
-+++ b/t/t6012-rev-list-simplify.sh
-@@ -110,7 +110,7 @@ check_result 'L K J I H G F E D C B A' --full-history
- check_result 'K I H E C B A' --full-history -- file
- check_result 'K I H E C B A' --full-history --topo-order -- file
- check_result 'K I H E C B A' --full-history --date-order -- file
--check_outcome failure 'I E C B A' --simplify-merges -- file
-+check_result 'I E C B A' --simplify-merges -- file
- check_result 'I B A' -- file
- check_result 'I B A' --topo-order -- file
- check_result 'H' --first-parent -- another-file
--- 
-1.8.2.1.632.gd2b1879
+* Yes, I noticed that you have a huge ego.  I consider it an undesirable trait.
