@@ -1,88 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/9] remote-helpers: fixes and cleanups
-Date: Fri, 26 Apr 2013 16:04:15 -0700
-Message-ID: <7vd2tgvqq8.fsf@alter.siamese.dyndns.org>
-References: <1367010759-17928-1-git-send-email-felipe.contreras@gmail.com>
-	<7vwqrpuedv.fsf@alter.siamese.dyndns.org>
-	<7vsj2due28.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v4 01/11] Add new git-related helper to contrib
+Date: Fri, 26 Apr 2013 18:23:33 -0500
+Message-ID: <CAMP44s0XnEJWjzU-g=Gq2jJQu-9MJ8S84fAd-7bdomKWEeTCtw@mail.gmail.com>
+References: <1366919983-27521-1-git-send-email-felipe.contreras@gmail.com>
+	<1366919983-27521-2-git-send-email-felipe.contreras@gmail.com>
+	<CAMP44s0nvWvicFAJEqe0jC+zT3ZvA=Qx3MWXK36zYb2-uYV-aA@mail.gmail.com>
+	<7vhaisvqvl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 27 01:04:23 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 27 01:23:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVrgk-0006HJ-PT
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 01:04:23 +0200
+	id 1UVrzQ-0008F5-DR
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 01:23:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754912Ab3DZXET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 19:04:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53001 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753986Ab3DZXES (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 19:04:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D2ACC1AD3A;
-	Fri, 26 Apr 2013 23:04:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Y3oqsiTjSsfIc3QyJFhEPOU5OaA=; b=iTyoF0
-	c5JXYGOMftbg3LHFj3D43EI/Rm7/j+lNM91rnJdqKD6PtejBfW7K7NajBPz2oCjF
-	YCb/23d4ArJIXyPiDm28Kpqongqo0xox3rA1h7dfMkLwxAaXh7NjIgkf0kq6lShb
-	srjBw5nPtnLIIDSXQjzVkaUL4JgL4vpwQ11b4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bxsacjLIs9+hYpFd2AxZy/jbVQF1fg/f
-	WVS2PVvLcgIXx0VLYW2+jtqKew55v0GXTGpp1JXnOzucj348KWRVJ9yOO0jnBnno
-	2+HdCKPviKuCHdC2NV0Ln9kPfktFtLhIMn1cVmbQba50/C8wQRXFExc/cz4tG6dp
-	giI2dw6ZePE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C81A21AD39;
-	Fri, 26 Apr 2013 23:04:17 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4CBDD1AD38;
-	Fri, 26 Apr 2013 23:04:17 +0000 (UTC)
-In-Reply-To: <7vsj2due28.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 26 Apr 2013 15:23:11 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9EF63960-AEC5-11E2-86DE-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755933Ab3DZXXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 19:23:36 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:42491 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753672Ab3DZXXf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 19:23:35 -0400
+Received: by mail-lb0-f169.google.com with SMTP id p10so329186lbi.0
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 16:23:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=17v6p3a6Y+0D71qbYf/zlH6BPxuzjw1kpsPNPOqHlnc=;
+        b=yOfHtFjF+dVVjCU+I72bVyVLuhSr59kZ284p3rpFcMHa73OP5yWUmStk9bm3UYz9TJ
+         c64IyrhCOZ8ABosJBmMvKPyIaXWa2dsZQOsjm1rSbIdG1WpsbZ9rOJ1P6orLTDikzrGA
+         HbxgHNad2URVAFnXwI2wjx/PU5jtF9jU5Fs8xTQ8BwCx8JFptLzITZzqs6Zqtkx0Kioz
+         RRWhi7+WhxFjUL65txb6V6FgGfrcYFTwUJz2qMlsO/Hd8kTMZqVLMZwFfByaver6ICmh
+         LXtCAcWBBwXVXvA+yvjQUEpEmjy4KMFIrDFeswLoWMjbnStUDq1gkszk8V0zE0WamgWx
+         RhUg==
+X-Received: by 10.112.140.100 with SMTP id rf4mr13929221lbb.82.1367018614047;
+ Fri, 26 Apr 2013 16:23:34 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Fri, 26 Apr 2013 16:23:33 -0700 (PDT)
+In-Reply-To: <7vhaisvqvl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222605>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Apr 26, 2013 at 6:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> Updated the commit messages, so we say Bazaar instead of Mercurial, and stuff.
+>> On Thu, Apr 25, 2013 at 2:59 PM, Felipe Contreras
+>> <felipe.contreras@gmail.com> wrote:
+>>> This script find people that might be interested in a patch, by going
+>>> back through the history for each single hunk modified, and finding
+>>> people that reviewed, acknowledge, signed, or authored the code the
+>>> patch is modifying.
 >>>
->>> Here's a bunch of cleanups mostly to synchronize remote-bzr and remote-hg.
+>>> It does this by running 'git blame' incrementally on each hunk, and then
+>>> parsing the commit message. After gathering all the relevant people, it
+>>> groups them to show what exactly was their role when the participated in
+>>> the development of the relevant commit, and on how many relevant commits
+>>> they participated. They are only displayed if they pass a minimum
+>>> threshold of participation.
 >>
->> Thanks.  Will queue on 'pu' without looking.
+>> Is this patch still not understandable?
 >
-> Actually, I was going to merge fc/remote-hg and fc/remote-bzr down
-> to master anyway, so I'll just apply them directly on 'master'.
-> 
-> By the way, I personally do not think the quality of the changes to
-> remote-bzr matters all that much ...
+> Among the people who review patches here and give usable feedback,
+> earlier this week Peff said he is away from his mailbox for the rest
+> of the week, and I am not reviewing any new topics that are not in
+> 'next', being busy in preparation for -rc0, so I wouldn't be able to
+> answer that question.
+>
+> I do not know about the others, but it is understandable from time
+> to time there is a period a series is not being reviewed by anybody.
 
-Just in case anybody get the wrong impression from the above quoted
-lines...
+That's fine, I was mostly asking Ramkumar who earlier argued earlier
+versions of this patch were not understandable.
 
-The "without looking" was a plan to "keep them on 'pu' for later
-inspection so that I do not have to go back to list archive when I
-declare patch review bankruptcy after the final 1.8.3 release".
+Cheers.
 
-I did read these patches I applied to 'master' and they all looked
-sensible.
+-- 
+Felipe Contreras
