@@ -1,81 +1,86 @@
-From: Robert Zeh <robert.allan.zeh@gmail.com>
-Subject: Re: [PATCH] inotify to minimize stat() calls
-Date: Fri, 26 Apr 2013 10:35:43 -0500
-Message-ID: <CAKXa9=rjQJMwgcAs9ic3XSqFh40NYrQt217QS_VUw7ifKihqdA@mail.gmail.com>
-References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
-	<7vehgqzc2p.fsf@alter.siamese.dyndns.org>
-	<7va9rezaoy.fsf@alter.siamese.dyndns.org>
-	<7vsj56w5y9.fsf@alter.siamese.dyndns.org>
-	<9AF8A28B-71FE-4BBC-AD55-1DD3FDE8FFC3@gmail.com>
-	<CALkWK0mttn6E+D-22UBbvDCuNEy_jNOtBaKPS-a8mTbO2uAF3g@mail.gmail.com>
-	<7vliaxwa9p.fsf@alter.siamese.dyndns.org>
-	<CAKXa9=qQwJqxZLxhAS35QeF1+dwH+ukod0NfFggVCuUZHz-USg@mail.gmail.com>
-	<51781455.9090600@gmail.com>
-	<CACsJy8AuQFGCwOBTXU48T65+7DTmCw31RZc0Z-2YBpkKYcoAoA@mail.gmail.com>
-	<CAKXa9=pt2mxwFtepoOLZ-Atw3Ey5_OHh6rzk43kVTs8=vcVuRw@mail.gmail.com>
-	<CACsJy8ChXRMR93r2R5NoTL7Ly1HqWCXq=t=Kj4ma5+MyYvESpg@mail.gmail.com>
+From: =?UTF-8?Q?Pierre=2DFran=C3=A7ois_CLEMENT?= <likeyn@gmail.com>
+Subject: Possible bug report
+Date: Fri, 26 Apr 2013 16:59:26 +0100
+Message-ID: <CANWD=rVdAVP0KSdai-tQf9VtVj7bOLMrENiG_fx-mD_R2f8SnQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 17:35:56 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 26 17:59:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVkgk-0005Ia-5i
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 17:35:54 +0200
+	id 1UVl3v-0007en-QO
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 17:59:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756685Ab3DZPft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 11:35:49 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:46056 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754296Ab3DZPfs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 11:35:48 -0400
-Received: by mail-wi0-f180.google.com with SMTP id h11so766608wiv.7
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 08:35:47 -0700 (PDT)
+	id S1756219Ab3DZP7r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Apr 2013 11:59:47 -0400
+Received: from mail-vc0-f182.google.com ([209.85.220.182]:54995 "EHLO
+	mail-vc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754558Ab3DZP7r convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Apr 2013 11:59:47 -0400
+Received: by mail-vc0-f182.google.com with SMTP id ht10so282538vcb.13
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 08:59:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=y8TAo/VSErfqd21eCzxONk+7l6P6IVxH6CiKoU5uAGE=;
-        b=yRDK46rY31ltvcDjGAMVlSK0V1afQFbiJyukqsQ/HwdFxksFs1ET8cB049rUkx7eff
-         n6aph+TGJa+G/LT5yKEM67QcRgDjG2gIwjsDC2gXcNGJktjsqL82XHdMYmwuK/YWBJ65
-         1cA5vIFdgC/NWEI+3rM5IH7TTTPtNogpdB+Vsmvz3DT6BhcLcMN0lcRjRtORchcFD9dI
-         KnoIvvE04i2qlsC9vR9k8CBEv5j53oY0NGBUqQawHNYoCGXH2JsQbDk4NcMm0rg7vHwW
-         VncOH8mL3imeMzooftpR4KYoKLV7MsI6xUIEV1z+AC/qwrZ7/kv4is6CiJImV8rGNZyo
-         EpjA==
-X-Received: by 10.180.189.205 with SMTP id gk13mr4791782wic.25.1366990543861;
- Fri, 26 Apr 2013 08:35:43 -0700 (PDT)
-Received: by 10.216.183.134 with HTTP; Fri, 26 Apr 2013 08:35:43 -0700 (PDT)
-In-Reply-To: <CACsJy8ChXRMR93r2R5NoTL7Ly1HqWCXq=t=Kj4ma5+MyYvESpg@mail.gmail.com>
+        h=x-received:mime-version:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=hjSa9YucmqkcNVRrzC45CRs07XRRQM6vVaXCLN5Ogk0=;
+        b=ne7srk4OaAKXapjF6iBLwbcVQQ9+HJzNCiYuGqqwC9+ZAx3+85L0i0XTtGDDVLtlvz
+         M2E1fxlDz1N4dw4XCsuCuLOr4LUS6zVKBCNf2gsuFWW97A/HcA4gvzFXNVY54pDvZYSR
+         U24/nOptnO4SW2dI+kwAfazng/hv5AaeG5o8JL/vC2PNd/S3jZhDs/By00t0GN71oC+U
+         C732G1yic/ljJ2fi1qpMjl8w87m0cdRtVo1qwfZyVJPDlX33YI3g/ACNG2VngdNDSdp/
+         fgB2IiZ/sQSaCgbCrA9YXXeR8y+yOPKNOu/iD217aB5BLIDDAmM1IUtDLhFjmdqon6cJ
+         jzXQ==
+X-Received: by 10.58.214.231 with SMTP id od7mr29399834vec.44.1366991986323;
+ Fri, 26 Apr 2013 08:59:46 -0700 (PDT)
+Received: by 10.58.106.42 with HTTP; Fri, 26 Apr 2013 08:59:26 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222534>
 
-On Thu, Apr 25, 2013 at 4:20 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Fri, Apr 26, 2013 at 2:44 AM, Robert Zeh <robert.allan.zeh@gmail.com> wrote:
->>> Can you just replace lstat/stat with cached_lstat/stat inside
->>> git-compat-util.h and not touch all files at once? I think you may
->>> need to deal with paths outside working directory. But because you're
->>> using lookup table, that should be no problem.
->>
->> That's a good idea; but there are a few places where you want to call
->> the uncached stat because calling the cache leads to recursion or
->> you bump into things that haven't been setup yet.  Any ideas how to
->> handle that?
->
-> On second thought, no my idea was stupid. We only need to optimize
-> lstat for certain cases and naming cached_lstat is much clearer. I
-> suspect read-cache.c and maybe dir.c and unpack-trees.c are the only
-> places that need cached_lstat. Other places should not issue many
-> lstats and we don't need to touch them.
+Hi guys, I get strange result when running the following command:
 
-ok.  The only reason I did it for all of them was the it was a simple search
-and replace, and I didn't know how often lstat was called from various
-locations.
+$ git diff develop..HEAD --shortstat --cumulative
+ 27 files changed, 886 insertions(+), 101 deletions(-)
+   9.2% apps/frontend/modules/conversionspecs/actions/
+  35.2% apps/frontend/modules/conversionspecs/templates/
+  45.0% apps/frontend/modules/conversionspecs/
+  45.2% apps/frontend/
+   8.7% config/doctrine/
+   4.8% lib/filter/doctrine/
+   8.1% lib/form/doctrine/
+  21.9% lib/migration/doctrine/
+  10.0% lib/model/doctrine/
+  44.9% lib/
+  12.9% apps/frontend/modules/conversionspecs/actions/
+  37.1% apps/frontend/modules/conversionspecs/templates/
+  50.6% apps/frontend/modules/conversionspecs/
+  50.7% apps/frontend/
+   6.6% config/doctrine/
+   3.2% lib/filter/doctrine/
+   9.1% lib/form/doctrine/
+  20.6% lib/migration/doctrine/
+   8.5% lib/model/doctrine/
+  41.5% lib/
+
+As you can see, the --cumulative lines seem to be duplicated, though
+the computed stats aren't exactly the same... It appears when you
+combine the --cumulative option with either --stat, --numstat or
+--shortstat (but not --dirstat) on any local or remote branches EXCEPT
+on both master and origin/master.
+
+I use git-flow and git v1.7.9.5 on Ubuntu 12.04 LTS.
+Let me know if you need any further informations.
+--
+Pierre-Fran=C3=A7ois CLEMENT
+Self-employed web developer
+Application developer @ Upcast Social
+Phone number (FR): +336.827.331.89
+Phone number (UK): +447.449.508.188
+http://www.linkedin.com/in/likeyn/en
+http://www.doyoubuzz.com/pierre-francois-clement/
