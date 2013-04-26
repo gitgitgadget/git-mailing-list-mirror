@@ -1,115 +1,115 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/9] remote-bzr: trivial cleanups
-Date: Fri, 26 Apr 2013 16:00:32 -0500
-Message-ID: <CAMP44s3F2npFuXDS-wpAP+TqHiGBPJfFYK4LohTg_Z4Ta4yoeQ@mail.gmail.com>
-References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
-	<1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
-	<CALkWK0meg1FgU=-4MFoFGjpDq_oa9XR_+qeiseR0J85mS71dNg@mail.gmail.com>
-	<CAMP44s2nRHRFY_BRO7+x=CVKgrob78xZCpiV4Hk9sjWB_Q=vng@mail.gmail.com>
-	<7vip3a2vq0.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1RdZ19y8v+_=gwBzq1Tg5v8+TWAYCAVR-ZzNwZ0_m_Ng@mail.gmail.com>
-	<CALkWK0mRfj1FGYymDrBqQ=d02mhPkevJKr5Ozhgurp8DMhiNjQ@mail.gmail.com>
-	<CAMP44s2SaKe7F-3H=b3ZBgDPDT+TrVPUBLrXg0XDY7n5ppdS0Q@mail.gmail.com>
-	<CALkWK0n5ASBvS_swZ3fj11Utt0XKPgpk-V--=gYVaWVi=O2N2A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Itches with the current rev spec
+Date: Fri, 26 Apr 2013 14:13:25 -0700
+Message-ID: <7v8v45vvuy.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0n97VLtiR96VEy86645NVoDL2rS-g7LBuLb=JpncdH6VA@mail.gmail.com>
+	<20130426101946.433f2d12@chalon.bertin.fr>
+	<517A3E47.6010606@viscovery.net>
+	<7v7gjpxjw0.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0-C_TRC_eD_ZbN3WFe4NKWVPQVhh+ME-F5yBBwKs2NdA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christophe Simonis <christophe@kn.gl>,
-	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 23:00:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Yann Dirson <dirson@bertin.fr>, git list <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 26 23:13:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVpl1-0001Mh-MZ
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 23:00:40 +0200
+	id 1UVpxa-0006et-Bm
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 23:13:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752978Ab3DZVAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 17:00:35 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:51068 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751213Ab3DZVAe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 17:00:34 -0400
-Received: by mail-lb0-f169.google.com with SMTP id p10so256578lbi.0
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 14:00:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=iaEK8F+Vh9PZAOlO7TRVUiSJ8sA5TPX+uTjlY3B0hOk=;
-        b=TW8FEJmX+CDMOlXs1XiHEvyjClKf2HX0pylqCxcCco5G86e2CVf5zEswHOZUmz0H/U
-         r4Zn3tGv7O2E7brwfxpM4lHQkoXfk7ZUm2bAKjd0daZ7a7btD3U0V0hBfK015/TKSfja
-         4p6seaJOQhwZIOUniGPN8yUd3IPkGxiaDixEfryxHLyFaedupfntZAKk0So213I+P4Y3
-         7WV6y4wDrJMr6dEEZOni6K6hfuVw6MOn5bw9yIBBaxl9O+mAFKu/gh6DbpxalSfRdRJR
-         +8kTwmAylosGXvz4IjipWgktqBmevOvs4DEpwgmjXW6aWeMlMsIEkIPxh99T6J+9LNXu
-         lmLw==
-X-Received: by 10.112.22.198 with SMTP id g6mr18649089lbf.135.1367010032663;
- Fri, 26 Apr 2013 14:00:32 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Fri, 26 Apr 2013 14:00:32 -0700 (PDT)
-In-Reply-To: <CALkWK0n5ASBvS_swZ3fj11Utt0XKPgpk-V--=gYVaWVi=O2N2A@mail.gmail.com>
+	id S1757381Ab3DZVN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 17:13:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36303 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754936Ab3DZVN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 17:13:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 940E5171E8;
+	Fri, 26 Apr 2013 21:13:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EfDdNt6qY3pocd+oALisEBzPYsc=; b=H5Y1ic
+	znIfXzVRS1Nmu4PAZnUxSSx0agq6+UKiEgVUVrZqV+TFOHWovdqrHOdY+sK5kYxa
+	PZjU1sKEzHqXMFYxq3ygxoPRRZNg3bORfioxTs1u1aIoisW4UV3UnUoqRb4+0i14
+	4ImCrvGyUloJS8YeJzenzzslTjDfexVt2g5ak=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WISDM/M00+adSXFZn/QWxSOG3PTns13l
+	uxGLyo21fTLeBZjg9+vHNCsjTs8Lr1NlFJ5d6Hf8mL/DENh0VO0Cp9IoBNoJ3K+h
+	vKurCCrfRLssSMGifhlsIj5hL5qzhr134K4ulhnE6ulPn6buhWZdeToPGWQt1PUE
+	o/QuvTXbIys=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89A2A171E7;
+	Fri, 26 Apr 2013 21:13:27 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 062E9171E4;
+	Fri, 26 Apr 2013 21:13:26 +0000 (UTC)
+In-Reply-To: <CAMP44s0-C_TRC_eD_ZbN3WFe4NKWVPQVhh+ME-F5yBBwKs2NdA@mail.gmail.com>
+	(Felipe Contreras's message of "Fri, 26 Apr 2013 14:48:38 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 231470F0-AEB6-11E2-BF90-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222581>
 
-On Fri, Apr 26, 2013 at 3:17 PM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Felipe Contreras wrote:
->> The importance of users changes all the time. The 15 year old kid in
->> Sao Paulo might not be important today, but he might be the single
->> most important contributor ten years from now. Hell, he might even
->> replace Junio as the maintainer.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> I don't know what 'git rebase master' does, but I would expect 'git
+> rebase --onto=master' to do the same thing. Then, if 'git rebase
+> --onto=next master..topic' makes sense, so should 'git rebase next
+> master..topic'.
 >
-> Yes, they do.  Did I say that they don't change?
+> Moreover, it often annoys me that 'git rebase master' does exactly
+> what I want, but 'git rebase --onto=master previous' doesn't find the
+> commits that are already into 'master'. One would expect the more
+> defined version to work better, but it doesn't =/
 
-But you implied we shouldn't care about Thiago (our hypothetical
-future overlord), because he is among the users we should't care for
-(right now).
+That all stems from the fact that rebase (not -i variant) predates
+these nice A..B, A...B, and $(merge-base A B) concepts have been
+ingrained in the user's mindset as the primary UI language of Git.
 
->> Should we willingly and knowingly neglect some git user-base? No, why
->> would you want them to fork? In a way, git's UI has been so bad, that
->> some kind-of-forks have happened, that tells us something; the UI
->> needs some love, fortunately none of those forks worked, which tells
->> us something too; it's not too atrocious.
->
-> No, we should never neglect.  I believe in including everyone.  In
-> fact I take it to an extreme: on many instances, I have pointed out
-> what I want specifically, and asked for a configuration option if it's
-> not necessarily a sane default.  Git is a toolkit, and should be
-> loaded with features that even a few users want.
->
->> That's not to say we shouldn't fix the UI, we should, in a way that
->> everyone's happy, which is hard, but we will do it, eventually.
->
-> On this, I think the way forward is complete-implicit'ness via
-> configuration variables.  I recently wrote remote.pushdefault to
-> simply 'git push', and proposed 'git push +ref1 ref2 ref3' to
-> automatically push to the correct pushdefaults (but that proposal was
-> rejected).
+ - The UI language of "rebase origin" comes more from the "workflow"
+   school.  "I have built on 'origin'; I want to catch up with its
+   current state".  To support that workflow, 'origin' is the only
+   thing you need to say, and "rebase origin" matches that nicely.
+   If you then add "By the way, that statement expresses my wish for
+   the 'topic' branch, not my current one", you get "rebase origin
+   topic".
 
-Indeed, I learned about that, and I tried to use it, but I think
-there's a lot that is missing, and I don't know myself what would be
-ideal. I'm starting to think that a branch should have two upstreams;
-one that is used for rebasing, and another that is used for pushing.
-But I'm not sure.
+ - If the UI language for "rebase" were designed following the
+   "composition using common elements like ranges and revisions"
+   school, it would have started from "rebase --onto=X A..B".
 
-Eventually, I would like to do 'git push' and I would push different
-branches to different repositories in different destination branches
-in a way that requires multiple commands right now 'git push github
-fc/remote-old/hg:fc/remote/hg', 'git push --prune backup
-refs/heads/*:refs/heads/* refs/tags/*:refs/tags/*'. And to figure
-things out I'm also helping; I added the --prune option to push, and I
-added color to visualize upstream branches in 'git branch'.
+Back then, we did not know which principle to design the UI language
+would prevail, but we needed something that works to support the end
+users.  So "git log" spoke "A..B" but "git rebase" took "origin".
 
-But I don't think any of those are as important as having a proper
-'git stage' command, and getting rid of --cached and --index, which
-will be a huge effort, but would pay even bigger dividends. Step by
-step.
+Over time, the "composition" school prevailed and these days we see
+many commands accept and act on revision ranges or discrete
+revisions.
 
-Cheers.
+The same thing happened to format-patch, whose original syntax was
 
--- 
-Felipe Contreras
+    format-patch origin
+
+which is still accepted, but we have adjusted it to understand the
+more prevalent
+
+    format-patch origin..
+
+because it is far more understandable if you know other commands
+that are based on "composition" UI language.  That adjustment
+started making sense after it has become clear that "composition"
+school of UI language is the way forward.
+
+It's just that "rebase" is waiting for the same kind of adjustment.
+
+Hint, hint.
