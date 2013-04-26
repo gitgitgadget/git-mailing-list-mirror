@@ -1,117 +1,123 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] t5801: properly test the test shell
-Date: Fri, 26 Apr 2013 11:55:17 +0200
-Message-ID: <517A4F05.5030609@drmicha.warpmail.net>
-References: <ff7ccf22012f069ceca054d90aa0f72666cc11c2.1366884583.git.git@drmicha.warpmail.net> <7vppxi60pj.fsf@alter.siamese.dyndns.org> <7vfvye4jrc.fsf@alter.siamese.dyndns.org>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] clean: confirm before cleaning files and directories
+Date: Fri, 26 Apr 2013 18:00:24 +0800
+Message-ID: <CANYiYbFTTGds3yU+-9BL=oTXFk5X4jR_MMR3cQVE4=qPgutWEg@mail.gmail.com>
+References: <1826d070612808b301f9295838e226e02d8097ad.1366963586.git.worldhello.net@gmail.com>
+	<vpqfvydhfbx.fsf@grenoble-inp.fr>
+	<CANYiYbFzEoEgJzKsB_hiKNy2JCxaTDX30wXNjnzComOzJJF_cw@mail.gmail.com>
+	<vpqwqrpfzez.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 11:55:22 2013
+Content-Type: text/plain; charset=GB2312
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Apr 26 12:00:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVfN8-00065l-06
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 11:55:18 +0200
+	id 1UVfSA-0003JU-DT
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 12:00:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932567Ab3DZJzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 05:55:11 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44448 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932563Ab3DZJzK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Apr 2013 05:55:10 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C127720B70;
-	Fri, 26 Apr 2013 05:55:09 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 26 Apr 2013 05:55:09 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=Lu4QiXA3cXzzf9vgB3oCm2
-	WHa04=; b=JyHki9L8ZIUjrDL8WKXDGQiUKAkQBWMvEBZpHcJo6kvfNvRwe+8GzF
-	ZumTiln3YFhwLiAKIiqOdjMbocvV+U8Ud6TNnbNuYS7fr6s+rmpX4pGeddb0/+fr
-	CTGHavThtguCytAHG81cNC0zoqgBw9Pkq8Z47rB07w7RB0zEMtYDQ=
-X-Sasl-enc: 2Qy5RE1tYuh4Xoff3F5+rg5xXKOHNKGSkek/VTUbjvk4 1366970109
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 26FECC80005;
-	Fri, 26 Apr 2013 05:55:09 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130402 Thunderbird/17.0.5
-In-Reply-To: <7vfvye4jrc.fsf@alter.siamese.dyndns.org>
+	id S1758702Ab3DZKA0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Apr 2013 06:00:26 -0400
+Received: from mail-we0-f169.google.com ([74.125.82.169]:42908 "EHLO
+	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756869Ab3DZKAZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Apr 2013 06:00:25 -0400
+Received: by mail-we0-f169.google.com with SMTP id p43so3435213wea.0
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 03:00:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=dnyqXYA79vwzS0LNZXdboLAwyZ1v1zD2yI5iglvmUnY=;
+        b=UDFR7IGGRxMRZ2qr4BWOzBkajnM3afm5aanhVww/ROGSKOsFTQEX02kswpqNHyOklZ
+         audfRoNRBqbWr0y3BXoTWJhBOUHjr1UZwUJVmPEr+O6k7tN1l5Cq9lF5wrc/uai5e3Ud
+         wdOkcteS8lsbgkDkP+G6c6zQDYFH5id9v52gIdwimVVrftDgI2uY64U47+2Im2O9tSDm
+         CUNIL4LzaBfxdKf2VQueOJjT9p8z42lf6SOdQotskIei5RcO5ScISpjUkSWVZlVjbf73
+         1n5Qao1dDVdRvjXICMbbCodMK5dIi676ixfxf80GhYWY4M0lR6ZEokNHNfm3HDxqv7vR
+         po6Q==
+X-Received: by 10.180.83.199 with SMTP id s7mr2874228wiy.19.1366970424282;
+ Fri, 26 Apr 2013 03:00:24 -0700 (PDT)
+Received: by 10.194.175.72 with HTTP; Fri, 26 Apr 2013 03:00:24 -0700 (PDT)
+In-Reply-To: <vpqwqrpfzez.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222525>
 
-Junio C Hamano venit, vidit, dixit 25.04.2013 19:12:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Michael J Gruber <git@drmicha.warpmail.net> writes:
+2013/4/26 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
+> Jiang Xin <worldhello.net@gmail.com> writes:
+>
+>> Maybe we can do like this:
 >>
->>> fc407f9 (Add new simplified git-remote-testgit, 2012-11-28) introduced a
->>> test which was meant to skip the test unless the test shell is bash.
->>> Unfortunately, it tests for the availability of bash only.
->>
->> True.
->>
->>> But users can
->>> opt to use a different shell (using SHELL_PATH) for the tests even though
->>> bash is available.
->>>
->>> At least for dash,
->>> 21610d8 (transport-helper: clarify pushing without refspecs, 2013-04-17)
->>> is the commit which actually introduces a test (pushing without refspec)
->>> which fails to fail even though it is supposed to. It uses the
->>> construct:
->>>
->>> VAR=value function arguments
->>
->> The right fix for that is to fix that line, so that the test itself
->> can run under any sane POSIX shell, isn't it?  The test in turn may
->> need to run git-remote-testgit, which, without J6t's updates, only
->> is usable under bash, but to make sure the test will choke on
->> absence of bash, the existing check should be sufficient, no?
-> 
-> Curiously enough, there were a few instances of the correct "set and
-> export environment explicitly during the life of subshell" construct
-> already in the script.  I found only this one as problematic.
-> 
-> Does it fix your issue without your change?
-> 
-> It is a separate issue to port git-remote-testgit to POSIX (J6t
-> already has a two part draft), move it to git-remote-testgit.sh, and
-> get its shebang line preprocessed like all other shell scripts.  I
-> think it is worth doing.
-> 
-> Takers?
-> 
->  t/t5801-remote-helpers.sh | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-> index 4dcf744..c956abd 100755
-> --- a/t/t5801-remote-helpers.sh
-> +++ b/t/t5801-remote-helpers.sh
-> @@ -118,7 +118,9 @@ test_expect_success 'pushing without refspecs' '
->  	(cd local2 &&
->  	echo content >>file &&
->  	git commit -a -m ten &&
-> -	GIT_REMOTE_TESTGIT_REFSPEC="" test_must_fail git push 2>../error) &&
-> +	GIT_REMOTE_TESTGIT_REFSPEC="" &&
-> +	export GIT_REMOTE_TESTGIT_REFSPEC &&
-> +	test_must_fail git push 2>../error) &&
->  	grep "remote-helper doesn.t support push; refspec needed" error
->  '
->  
-> 
+>> 1. Set the default value of 'clean.requireForce' to false.
+>> 2. Show a error message and do nothing, if there is not 'clean.requi=
+reForce'
+>>     setting, but the user called with a '--force' flag.
+>>     ( like a transition for the change of push.default in git 2.0)
+>
+> Perhaps introducing a new value for 'clean.requireForce':
+>
+> $ git config --global clean.requireForce ask
+> $ git clean
+> .will remove ...
+> are you sure [y/N]?
+>
+> The error message when clean.requireForce is unset and --force is not
+> given could point the user to clean.requireForce=3Dask.
 
-Perfect, I just failed to notice that the subshell would make the export
-local to that test.
+Add new value for clean.requireForce would break old git clent.
 
-Thanks!
+   $ git clean
+   fatal: bad config value for 'clean.requireforce' in .git/config
 
-Michael
+>
+> Then, maybe, later, this could become the default. But I tend to like
+> the non-interactive nature of most Git commands, so I'm a bit relucta=
+nt
+> here. My way of doing the confirmation dialog is
+>
+> $ git clean -n
+> would remove ...
+> $ git clean -f
+>
+
+I try to put all cases in one table, but still looks weird.
+
+    | clean.requireForce  |     git clean     | git clean --force |
+    +---------------------+-------------------|-------------------|
+    | TRUE                | error             | delete...         |
+    +---------------------+-------------------|-------------------|
+    | FALSE               | delete...         | delete...         |
+    +---------------------+-------------------|-------------------|
+    | unset               | confirm           | warn + confirm    |
+    +---------------------+-------------------|-------------------|
+
+Does anyone really set and use "clean.requireForce" setting?
+And if there is a confirm dialog, do we need 'clean.requireForce' any m=
+ore?
+Or we can add a `--no-ask` option, in order to override the confirm dia=
+log.
+
+
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
+
+
+
+--
+=BD=AF=F6=CE
+
+=B1=B1=BE=A9=C8=BA=D3=A2=BB=E3=D0=C5=CF=A2=BC=BC=CA=F5=D3=D0=CF=DE=B9=AB=
+=CB=BE
+=D3=CA=BC=FE: worldhello.net@gmail.com
+=CD=F8=D6=B7: http://www.ossxp.com/
+=B2=A9=BF=CD: http://www.worldhello.net/
+=CE=A2=B2=A9: http://weibo.com/gotgit/
+=B5=E7=BB=B0: 18601196889
