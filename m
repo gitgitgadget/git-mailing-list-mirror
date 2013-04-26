@@ -1,133 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] "git add -A/--no-all" finishing touches
-Date: Fri, 26 Apr 2013 13:44:14 -0700
-Message-ID: <7vd2thvx7l.fsf@alter.siamese.dyndns.org>
-References: <7vehe3qi5m.fsf@alter.siamese.dyndns.org>
-	<1366663435-13598-1-git-send-email-gitster@pobox.com>
-	<7vhaiu1a89.fsf@alter.siamese.dyndns.org>
-	<7v4neu19mj.fsf@alter.siamese.dyndns.org>
-	<20130425232410.GN29963@google.com>
-	<7vvc7ayy84.fsf@alter.siamese.dyndns.org>
-	<7vobd2yy3c.fsf@alter.siamese.dyndns.org>
-	<20130425235624.GO29963@google.com>
-	<7vhaiuywps.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/9] remote-bzr: trivial cleanups
+Date: Fri, 26 Apr 2013 15:46:15 -0500
+Message-ID: <CAMP44s1J1c7YfKZRwU6RwE8k1jFUvC_j77xQ-rzstvJimkxj_w@mail.gmail.com>
+References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
+	<1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0meg1FgU=-4MFoFGjpDq_oa9XR_+qeiseR0J85mS71dNg@mail.gmail.com>
+	<CAMP44s2nRHRFY_BRO7+x=CVKgrob78xZCpiV4Hk9sjWB_Q=vng@mail.gmail.com>
+	<7vip3a2vq0.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1RdZ19y8v+_=gwBzq1Tg5v8+TWAYCAVR-ZzNwZ0_m_Ng@mail.gmail.com>
+	<CALkWK0mRfj1FGYymDrBqQ=d02mhPkevJKr5Ozhgurp8DMhiNjQ@mail.gmail.com>
+	<CAMP44s3WkfAuPjJ5Z91Hjx7Vp5P2C7n5Wh+7Rd49k9N_n+SxkA@mail.gmail.com>
+	<CALkWK0=J2_mAViDwu2MJNvLsUbVpoR68-sQR9fs=4of+E5wAjg@mail.gmail.com>
+	<CAMP44s1RTm3LRaL71U1LQ=RvA1qyOSQKsk1ptXeNP-GRk3rVrw@mail.gmail.com>
+	<CALkWK0kTf_U3NMLTXS-spW-TbZ2x6-46EyEQtD6ZrZK2Tw-91w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Thomas Rast <trast@inf.ethz.ch>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 22:44:26 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christophe Simonis <christophe@kn.gl>,
+	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 26 22:46:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVpVH-0002Dm-3K
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 22:44:23 +0200
+	id 1UVpXB-0004Hc-Ms
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 22:46:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754441Ab3DZUoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 16:44:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35531 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752950Ab3DZUoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 16:44:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A387B1A7C5;
-	Fri, 26 Apr 2013 20:44:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=W0yvVFqTV16t/42I2xSv6iId0cA=; b=iaDZy9
-	ZhyhMxLiCO9Yfg4tY+EMs/h1Gvh5grW5g5BxRGI2Dd9skY+fNzhhW/qoFLD80LOJ
-	QUWnNisuLaJghkd+rJPtTCwo2TJqTSpqU4GrJiUSAvfYDEZnZ81YmmIjB2bmcuGB
-	o8bglORQkgB5cecTd/6majOXRyc7dfAYfqBA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mG5+x0VeoIlWza4djEsGPer39kYnXtRn
-	kB5ACaL/TridjslZka1xhWAaNUeEJsiMercbUfm++tKZ5mnVOeLu6R2lrsiKXGEm
-	837JItsZEm1lXxIv8IPivQy6UTi4KZ3/STrKsu9hxf80s026Zx5sT35smHWgR2jw
-	GKePkUvmxPk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97B5E1A7C3;
-	Fri, 26 Apr 2013 20:44:16 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D97D61A7C1;
-	Fri, 26 Apr 2013 20:44:15 +0000 (UTC)
-In-Reply-To: <7vhaiuywps.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 25 Apr 2013 17:14:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0F526A08-AEB2-11E2-B16D-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755938Ab3DZUqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 16:46:17 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:52914 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755721Ab3DZUqQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 16:46:16 -0400
+Received: by mail-lb0-f171.google.com with SMTP id v10so4175161lbd.16
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 13:46:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=N4i5MYDK6t7EPnirRepeaGAqUqddjpF46sKdlZ5auno=;
+        b=y+G0V3H/4yHWfyOpCChvMNRDAl8cHbwr3RNEqnd2hfKd0Q3ZR+SJa9hudUf8UXIr5l
+         twJk1Z+GT4iG16n/1KfmS+2NV6gq26/RO+5UwCIVasWfCt0iC1tn6iy2U94cHvaG9VKB
+         Xh0b4Dl/mOFEXh99gJmh6xExrdoY0GhyeistS9p2cgs+67gfx6CagpwM7IWaqK1G7/CH
+         PSlLwowl9fUkM0BvI0KtRbUX5bkvt51oVhVlS1NivXx0L2aMB8UjFGlNzRuVu3t2EA/c
+         tRDEs8Ovr2Op8vlAI/gRmxpvRscLRNjxrfqNSFUrPCyHb49BBh9csLDl6xYKALs53AUR
+         JBZw==
+X-Received: by 10.112.22.198 with SMTP id g6mr18631306lbf.135.1367009175200;
+ Fri, 26 Apr 2013 13:46:15 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Fri, 26 Apr 2013 13:46:15 -0700 (PDT)
+In-Reply-To: <CALkWK0kTf_U3NMLTXS-spW-TbZ2x6-46EyEQtD6ZrZK2Tw-91w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222579>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Apr 26, 2013 at 3:28 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+>> Reason is not a tool for appreciating art, reason is a tool for
+>> discovering truth, and if when arguing you are not interested in what
+>> is actually true, I'm not interested in arguing with you.
 >
->> Maybe the warning should happen after add_file_to_index() has run,
->> letting git compare the old and new index entries for that path?
+> There is no great truth to be discovered by arguing about the length
+> of commit messages, Felipe.  There are some "guidelines" or "axioms"
+> upon which we build reason.
+
+And based on what do you build these guidelines and axioms if not
+truth? Do you ask a computer to throw a number randomly from 0 to
+infinite and that shall be the new axiom for what the perfect number
+of words a commit message should have?
+
+No, you determine that based on experience, and convenience. You find
+a number that convenient to write, not hundreds of pages, and a number
+that would help the reader if the patch in case a bug in the changes
+is found on a later time, and that would help reviewers of code find
+issues, and understand it. But most importantly, the number depends on
+the complexity of the code changes. Note that I'm not saying on size,
+because even one-liners can be extremely complex.
+
+It's not arbitrary.
+
+> If you want to argue till everything
+> breaks down to Peano's Axioms, do Foundations of mathematics or
+> Analytical philosophy.  From personal experience, it's much more
+> satisfying than arguing with other humans (who aren't exact
+> creatures).
+
+I do not want to argue the fundamentals of logic and reason, but
+unfortunately most people don't have a strong grasp on them.
+
+So let me simply; truth matters, and how we find truth mattes. Which
+is why the degree of certainty we have on certain facts matters; you
+shouldn't act the same about a claim you are 10% sure it's true, than
+with a claim you are 90% sure.
+
+If you are 100% sure my commit messages are too short, then there's no
+point in arguing with you. Nor if you think it doesn't matter if it's
+90%, or 50%, or even 0%. Because it's an opinion, and an opinion
+doesn't need any facts, or certainty, it just needs a person to hold
+it, whatever unreasonable or unlikely it is.
+
+>> I appreciate your criticism, but that doesn't mean I must agree with
+>> it. And if I do agree, that doesn't mean I must act upon it.
 >
-> Yeah, new and deleted cases we do not have to worry about, so a
-> no-op add_file_to_index() is the only case we have to be careful.
-> There is a "if verbose, say 'add %s'" logic in the funciton, so it
-> should be possible to enhance the API without affecting existing
-> callers to extract that necessary information out of it.
+> Why not?  Am I being unreasonable in asking you to justify your
+> changes, so I can understand what you've done with one quick reading?
 
-I've thought about this a bit more.
+I did justify everything, I just didn't act the way you wanted. I
+didn't immediately resend the series with a full description of the
+changes, because the changes, as I described before, are trivial. I
+simply dropped the change you had a problem with, and moved on. It's
+perfectly reasonable.
 
-One possible solution would go like this:
+Cheers.
 
- - Extend add_file_to_index() (the logic is add_to_index() in
-   read-cache.c) so that it can return an extra boolean "I would add
-   it, but that would be a no-op---the index already has that
-   object" to the caller.
-
- - In update_callback(), when we are comparing _all_ paths due to
-   "implicit-dot" logic, check if the path is outside the current
-   directory, instead of unconditionally calling warn_pathless_add():
-
-   * If fix_unmerged_status() tells us that we would go to the
-     remove_file_from_index() codepath, instead of calling it, call
-     warn_pathless_add() instead.
-
-   * If we are going to call add_file_to_index(), call it with
-     ADD_CACHE_PRETEND on using the extended interface to see if it
-     is adding already up-to-date contents. If not, call
-     warn_pathless_add().
-
-But I think it is a much better solution to just refresh the index
-like the attached patch when implicit_dot is active and we are not
-at the top level directory.  The paths that are stat-dirty but have
-the up-to-date contents need to be hashed at least once _anyway_ to
-see if the current contents match with what is in the index.  If we
-use the approach outlined above, the rehashing will be done in the
-extended add_file_to_index(). If we simply refresh the entire cache,
-the same check will be done there.  The only performance penalty
-would be that we may end up running lstat() twice.
-
-Incidentally, I noticed that we set implicit_dot=1 even when we are
-already at the top-level directory.  I suspect the code may become
-somewhat simpler if we set it only when (prefix != NULL), but it
-probably would not matter.
-
-
- builtin/add.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/builtin/add.c b/builtin/add.c
-index daf02c6..ec2359c 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -495,6 +495,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		refresh(verbose, pathspec);
- 		goto finish;
- 	}
-+	if (implicit_dot && !prefix)
-+		refresh_cache(REFRESH_QUIET);
- 
- 	if (pathspec) {
- 		int i;
+-- 
+Felipe Contreras
