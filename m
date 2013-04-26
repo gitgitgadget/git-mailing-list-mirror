@@ -1,101 +1,82 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 6/9] remote-bzr: store converted URL
-Date: Fri, 26 Apr 2013 16:12:36 -0500
-Message-ID: <1367010759-17928-7-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v3 7/9] remote-bzr: tell bazaar to be quiet
+Date: Fri, 26 Apr 2013 16:12:37 -0500
+Message-ID: <1367010759-17928-8-git-send-email-felipe.contreras@gmail.com>
 References: <1367010759-17928-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 26 23:14:28 2013
+X-From: git-owner@vger.kernel.org Fri Apr 26 23:14:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVpyL-0007SY-LM
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 23:14:25 +0200
+	id 1UVpyR-0007W3-UB
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 23:14:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757521Ab3DZVOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 17:14:20 -0400
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:43348 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754987Ab3DZVON (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 17:14:13 -0400
-Received: by mail-oa0-f53.google.com with SMTP id m6so4405225oag.26
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 14:14:12 -0700 (PDT)
+	id S1757516Ab3DZVOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 17:14:19 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:36878 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757452Ab3DZVOR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 17:14:17 -0400
+Received: by mail-ob0-f180.google.com with SMTP id uk5so3994812obc.11
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 14:14:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=eP8JPt3ilB/geD2KZIfOTBrYrZJTo/PYUYQRozaa6ng=;
-        b=CUssU/5QFVePyR6Xb8/VoU3yNtgh9O2gX+zz0lBFqFRPm7D4hAubM47duR4mnAWx7u
-         12ApH71alIpSF9vuqOunBFRgQTWdBkTTAPk+K8oyARoIHBOTI8yNsAbldc1fctwe9BEn
-         IVv8GpruCoocbpod13eIb8jTTK7/9nmbr87Jtq+JIPvV8h/bWEXahwHSO0MvStbJBYo7
-         JSwX7KBQBY/4FkRHGcYE3IXKAaJTJNGaceCYg/evUd3KSH4gbtipke6/DxCIOYUzm4tM
-         sEyGUFcpRWaTLS39xPZQkA/smsi91Ks5c41IWiv9h8PSrHW9FkzLuCkgckcUvY099SPF
-         o+cA==
-X-Received: by 10.60.45.8 with SMTP id i8mr18397956oem.78.1367010852828;
-        Fri, 26 Apr 2013 14:14:12 -0700 (PDT)
+        bh=+bVXvgEo2TRvoyFcFlDiuYuAmLUgaz/lZsSBussYw9A=;
+        b=h+Q63M2of0Xc/dZlH6bkF9PcmSkfakuSFLF0ah36z87LSFCHa/sPM7GIrpQavN55co
+         cc/Bqq2giKHQ/0+SIx6mGV9eHjyGPZTeLhHg9oCZ1RBIsNzakFb+/24UFL/2PyYukX0C
+         ssPUQgB779LtDKCiff04yFgR8EfRMl9K+C3L78UQLxLEP9qKSv3Tb+LhIf01/GrEsFvm
+         qG2hgH8CcboUMlva2CaDHzbHaZdbJC4ZnCHxI2UfgNpXT3iIb1YklPn15SkIMsIiFRJ3
+         mlMeX8uNRcOconIKoCoU43BdMk9i5MqAJNMTjhrIvx958+fxpXMKM+iZfCvOGf2zuLmK
+         h8oA==
+X-Received: by 10.182.105.227 with SMTP id gp3mr22905574obb.81.1367010855919;
+        Fri, 26 Apr 2013 14:14:15 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id jw8sm9381491obb.14.2013.04.26.14.14.11
+        by mx.google.com with ESMTPSA id x5sm9738124oep.1.2013.04.26.14.14.14
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 26 Apr 2013 14:14:12 -0700 (PDT)
+        Fri, 26 Apr 2013 14:14:15 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.1.1031.g2ee5873
 In-Reply-To: <1367010759-17928-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222589>
 
-Bazaar might convert the URL to something more appropriate, like an
-absolute path. Lets store that instead of the original URL, which won't
-work from a different working directory if it's relative.
+Otherwise we get notification, progress bars, and what not.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/git-remote-bzr | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ contrib/remote-helpers/git-remote-bzr | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index f1d6d5e..dda2932 100755
+index dda2932..8617e25 100755
 --- a/contrib/remote-helpers/git-remote-bzr
 +++ b/contrib/remote-helpers/git-remote-bzr
-@@ -32,7 +32,7 @@ import os
- import json
- import re
- import StringIO
--import atexit, shutil, hashlib
-+import atexit, shutil, hashlib, urlparse, subprocess
+@@ -26,6 +26,7 @@ bzrlib.plugin.load_plugins()
+ import bzrlib.generate_ids
+ import bzrlib.transport
+ import bzrlib.errors
++import bzrlib.ui
  
- NAME_RE = re.compile('^([^<>]+)')
- AUTHOR_RE = re.compile('^([^<>]+?)? ?<([^<>]*)>$')
-@@ -713,6 +713,14 @@ def get_repo(url, alias):
- 
-     return branch
- 
-+def fix_path(alias, orig_url):
-+    url = urlparse.urlparse(orig_url, 'file')
-+    if url.scheme != 'file' or os.path.isabs(url.path):
-+        return
-+    abs_url = urlparse.urljoin("%s/" % os.getcwd(), orig_url)
-+    cmd = ['git', 'config', 'remote.%s.url' % alias, "bzr::%s" % abs_url]
-+    subprocess.call(cmd)
-+
- def main(args):
-     global marks, prefix, dirname
-     global tags, filenodes
-@@ -741,6 +749,9 @@ def main(args):
-     gitdir = os.environ['GIT_DIR']
-     dirname = os.path.join(gitdir, 'bzr', alias)
- 
-+    if not is_tmp:
-+        fix_path(alias, url)
-+
+ import sys
+ import os
+@@ -755,6 +756,8 @@ def main(args):
      if not os.path.exists(dirname):
          os.makedirs(dirname)
  
++    bzrlib.ui.ui_factory.be_quiet(True)
++
+     repo = get_repo(url, alias)
+ 
+     marks_path = os.path.join(dirname, 'marks-int')
 -- 
 1.8.2.1.1031.g2ee5873
