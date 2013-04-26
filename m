@@ -1,86 +1,86 @@
-From: =?UTF-8?Q?Pierre=2DFran=C3=A7ois_CLEMENT?= <likeyn@gmail.com>
-Subject: Possible bug report
-Date: Fri, 26 Apr 2013 16:59:26 +0100
-Message-ID: <CANWD=rVdAVP0KSdai-tQf9VtVj7bOLMrENiG_fx-mD_R2f8SnQ@mail.gmail.com>
+From: Thorsten Jolitz <tjolitz@gmail.com>
+Subject: Re: Zile as git core editor?
+Date: Fri, 26 Apr 2013 18:08:05 +0200
+Message-ID: <87ppxh6zru.fsf@gmail.com>
+References: <877gjp91w5.fsf@gmail.com>
+	<CALUzUxpZ9=8aVEMBfFUH2hN5ZkwzKVX31J79MVzkCEGRX++LPw@mail.gmail.com>
+	<87txmt7km9.fsf@gmail.com> <vpqppxhfz3i.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 26 17:59:53 2013
+X-From: git-owner@vger.kernel.org Fri Apr 26 18:08:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVl3v-0007en-QO
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 17:59:52 +0200
+	id 1UVlC8-0000c6-II
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 18:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756219Ab3DZP7r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Apr 2013 11:59:47 -0400
-Received: from mail-vc0-f182.google.com ([209.85.220.182]:54995 "EHLO
-	mail-vc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754558Ab3DZP7r convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Apr 2013 11:59:47 -0400
-Received: by mail-vc0-f182.google.com with SMTP id ht10so282538vcb.13
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 08:59:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        bh=hjSa9YucmqkcNVRrzC45CRs07XRRQM6vVaXCLN5Ogk0=;
-        b=ne7srk4OaAKXapjF6iBLwbcVQQ9+HJzNCiYuGqqwC9+ZAx3+85L0i0XTtGDDVLtlvz
-         M2E1fxlDz1N4dw4XCsuCuLOr4LUS6zVKBCNf2gsuFWW97A/HcA4gvzFXNVY54pDvZYSR
-         U24/nOptnO4SW2dI+kwAfazng/hv5AaeG5o8JL/vC2PNd/S3jZhDs/By00t0GN71oC+U
-         C732G1yic/ljJ2fi1qpMjl8w87m0cdRtVo1qwfZyVJPDlX33YI3g/ACNG2VngdNDSdp/
-         fgB2IiZ/sQSaCgbCrA9YXXeR8y+yOPKNOu/iD217aB5BLIDDAmM1IUtDLhFjmdqon6cJ
-         jzXQ==
-X-Received: by 10.58.214.231 with SMTP id od7mr29399834vec.44.1366991986323;
- Fri, 26 Apr 2013 08:59:46 -0700 (PDT)
-Received: by 10.58.106.42 with HTTP; Fri, 26 Apr 2013 08:59:26 -0700 (PDT)
+	id S1753781Ab3DZQIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 12:08:16 -0400
+Received: from plane.gmane.org ([80.91.229.3]:54793 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751387Ab3DZQIP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 12:08:15 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UVlC1-0000Su-VL
+	for git@vger.kernel.org; Fri, 26 Apr 2013 18:08:13 +0200
+Received: from g231235181.adsl.alicedsl.de ([92.231.235.181])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 18:08:13 +0200
+Received: from tjolitz by g231235181.adsl.alicedsl.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 18:08:13 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: g231235181.adsl.alicedsl.de
+User-Agent: Gnus/5.130002 (Ma Gnus v0.2) Emacs/24.3 (gnu/linux)
+Cancel-Lock: sha1:sreVLkBuWAAUc5YegAWl9CNLBbA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222535>
 
-Hi guys, I get strange result when running the following command:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-$ git diff develop..HEAD --shortstat --cumulative
- 27 files changed, 886 insertions(+), 101 deletions(-)
-   9.2% apps/frontend/modules/conversionspecs/actions/
-  35.2% apps/frontend/modules/conversionspecs/templates/
-  45.0% apps/frontend/modules/conversionspecs/
-  45.2% apps/frontend/
-   8.7% config/doctrine/
-   4.8% lib/filter/doctrine/
-   8.1% lib/form/doctrine/
-  21.9% lib/migration/doctrine/
-  10.0% lib/model/doctrine/
-  44.9% lib/
-  12.9% apps/frontend/modules/conversionspecs/actions/
-  37.1% apps/frontend/modules/conversionspecs/templates/
-  50.6% apps/frontend/modules/conversionspecs/
-  50.7% apps/frontend/
-   6.6% config/doctrine/
-   3.2% lib/filter/doctrine/
-   9.1% lib/form/doctrine/
-  20.6% lib/migration/doctrine/
-   8.5% lib/model/doctrine/
-  41.5% lib/
+> Thorsten Jolitz <tjolitz@gmail.com> writes:
+>
+>> BTW - would 'git config --global core.editor zile' or 'git config
+>> --global core.editor /usr/bin/zile' the right way to set it (both did
+>> not work)? I can start Zile simply with 'zile' on the command line. 
+>
+> What do you mean by "did not work"? Does the launching fail? Or is
+> another editor launched?
+>
+> Try:
+>
+> GIT_TRACE=true git commit -a
+>
+> to see what's going on.
+>
+> BTW, you may also try "emacs -nw -Q" instead of zile.
 
-As you can see, the --cumulative lines seem to be duplicated, though
-the computed stats aren't exactly the same... It appears when you
-combine the --cumulative option with either --stat, --numstat or
---shortstat (but not --dirstat) on any local or remote branches EXCEPT
-on both master and origin/master.
 
-I use git-flow and git v1.7.9.5 on Ubuntu 12.04 LTS.
-Let me know if you need any further informations.
---
-Pierre-Fran=C3=A7ois CLEMENT
-Self-employed web developer
-Application developer @ Upcast Social
-Phone number (FR): +336.827.331.89
-Phone number (UK): +447.449.508.188
-http://www.linkedin.com/in/likeyn/en
-http://www.doyoubuzz.com/pierre-francois-clement/
+Thanks for the tip, I found out that:
+
+1. on the command-line, zile actually works as core editor, but
+2. not from within Emacs (Magit) where I tried it
+
+ "emacs -nw -Q" is a nice tip, but I think what I really would like to
+ have it that, when I use GNU Emacs Magit and enter a git command 
+
+,-----------------------------
+| Run git like this: <command>
+`-----------------------------
+
+that calls an editor (e.g. commit --amend), the running Emacs instance
+is (re)used and a new buffer is opened for editing (instead of starting
+another Emacs instance).
+
+-- 
+cheers,
+Thorsten
