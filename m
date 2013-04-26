@@ -1,135 +1,133 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "git grep" parallelism question
-Date: Fri, 26 Apr 2013 13:31:41 -0700
-Message-ID: <CA+55aFx1t_MT+20Bbkse-wHeLz8E06yqaOhbb12GzHNDrE2tWA@mail.gmail.com>
-References: <CA+55aFxY2PJ+L=vCfvQ39UGBr7E6m5q76hO=z3Mqm6vTQmmMbw@mail.gmail.com>
-	<7vr4hxw2mp.fsf@alter.siamese.dyndns.org>
-	<CA+55aFw+6pL5DoEPsPZpJCAbqEGaWYYKcdjZzbsHVzSSMrQmww@mail.gmail.com>
-	<7vip39w14d.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] "git add -A/--no-all" finishing touches
+Date: Fri, 26 Apr 2013 13:44:14 -0700
+Message-ID: <7vd2thvx7l.fsf@alter.siamese.dyndns.org>
+References: <7vehe3qi5m.fsf@alter.siamese.dyndns.org>
+	<1366663435-13598-1-git-send-email-gitster@pobox.com>
+	<7vhaiu1a89.fsf@alter.siamese.dyndns.org>
+	<7v4neu19mj.fsf@alter.siamese.dyndns.org>
+	<20130425232410.GN29963@google.com>
+	<7vvc7ayy84.fsf@alter.siamese.dyndns.org>
+	<7vobd2yy3c.fsf@alter.siamese.dyndns.org>
+	<20130425235624.GO29963@google.com>
+	<7vhaiuywps.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 22:31:47 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 26 22:44:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVpJ5-0006nh-0k
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 22:31:47 +0200
+	id 1UVpVH-0002Dm-3K
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 22:44:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932198Ab3DZUbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 16:31:43 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:43502 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756836Ab3DZUbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 16:31:42 -0400
-Received: by mail-vb0-f46.google.com with SMTP id 11so3839145vbe.19
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 13:31:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=OcUTrO4qNcAgVN0A/XHWGjcoOKLG/pASgk4MBjXdEL4=;
-        b=iUCQyesdlrKpiNuO5uTOcyvthnM8sSdviSTmFpD/QerUUAcNrQLwC64+yX8DaO95G2
-         8HlIBAMxwhQ+QPRADrRKLkePJhyfKnkX6GwKTPg3nhF8ci3bcshvedexlcWfa0dqBI+/
-         7i7sYo9osMUOwh/bVOJ+B5rpbASSz7+LHe+H7ZDeH2fPLN1tvOEMNzUQ3Tj0GLgE2HVM
-         Ekg/u6EZIhX2ssurS7Gudq1Oh7EhIMY/W/6rgDGLWREroW+dHmi0N4MHEhqJoSA7RvxR
-         Tk6FSFzGPuQn6juGoG44DzruJ8QoCeQlxe+teaOKHy6mxmaqJBIkHOefCKCmuHdDEle9
-         gNyA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=OcUTrO4qNcAgVN0A/XHWGjcoOKLG/pASgk4MBjXdEL4=;
-        b=UZwt/chQ8GRUyyBrJUQ0rOxbFWT/WFPTDep7ZQmo4rKzKOeI0ifpLMVVco1l9lzIUL
-         rZm+aU40wOfi99kx222DwFM04yXw6ENxTK1RCR3wgmOwy5unjxEYeBSOgpPTwY+Zy7jn
-         MbxExUsXa3Vxk8gXWXNaEU+SL6RH578dKmQlo=
-X-Received: by 10.52.166.84 with SMTP id ze20mr24665949vdb.115.1367008301208;
- Fri, 26 Apr 2013 13:31:41 -0700 (PDT)
-Received: by 10.220.186.197 with HTTP; Fri, 26 Apr 2013 13:31:41 -0700 (PDT)
-In-Reply-To: <7vip39w14d.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: j-kj7nY9rYUGWQ4tA3jg8utIuEM
+	id S1754441Ab3DZUoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 16:44:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35531 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752950Ab3DZUoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 16:44:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A387B1A7C5;
+	Fri, 26 Apr 2013 20:44:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=W0yvVFqTV16t/42I2xSv6iId0cA=; b=iaDZy9
+	ZhyhMxLiCO9Yfg4tY+EMs/h1Gvh5grW5g5BxRGI2Dd9skY+fNzhhW/qoFLD80LOJ
+	QUWnNisuLaJghkd+rJPtTCwo2TJqTSpqU4GrJiUSAvfYDEZnZ81YmmIjB2bmcuGB
+	o8bglORQkgB5cecTd/6majOXRyc7dfAYfqBA8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mG5+x0VeoIlWza4djEsGPer39kYnXtRn
+	kB5ACaL/TridjslZka1xhWAaNUeEJsiMercbUfm++tKZ5mnVOeLu6R2lrsiKXGEm
+	837JItsZEm1lXxIv8IPivQy6UTi4KZ3/STrKsu9hxf80s026Zx5sT35smHWgR2jw
+	GKePkUvmxPk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97B5E1A7C3;
+	Fri, 26 Apr 2013 20:44:16 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D97D61A7C1;
+	Fri, 26 Apr 2013 20:44:15 +0000 (UTC)
+In-Reply-To: <7vhaiuywps.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 25 Apr 2013 17:14:23 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0F526A08-AEB2-11E2-B16D-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222578>
 
-On Fri, Apr 26, 2013 at 12:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> OK, you have to recompile at least once for experiment, so perhaps
-> building the test binary with this patch may help.
+>> Maybe the warning should happen after add_file_to_index() has run,
+>> letting git compare the old and new index entries for that path?
+>
+> Yeah, new and deleted cases we do not have to worry about, so a
+> no-op add_file_to_index() is the only case we have to be careful.
+> There is a "if verbose, say 'add %s'" logic in the funciton, so it
+> should be possible to enhance the API without affecting existing
+> callers to extract that necessary information out of it.
 
-So here's my experiment on my machine with this patch and the kernel
-tree. First I did the warm-cache case:
+I've thought about this a bit more.
 
-  for i in 1 4 8 16 32 64
-  do
-    echo $i:
-    for j in 1 2 3 4
-    do
-      t=$(sh -c "time git grep --threads=$i hjahsja" 2>&1 | grep real)
-      echo $i $t
-    done
-  done
+One possible solution would go like this:
 
-and the numbers are pretty stable, here's just he summary (best of
-four tries for each case):
+ - Extend add_file_to_index() (the logic is add_to_index() in
+   read-cache.c) so that it can return an extra boolean "I would add
+   it, but that would be a no-op---the index already has that
+   object" to the caller.
 
-   1 real 0m0.598s
-   4 real 0m0.253s
-   8 real 0m0.235s
-  16 real 0m0.269s
-  32 real 0m0.412s
-  64 real 0m0.420s
+ - In update_callback(), when we are comparing _all_ paths due to
+   "implicit-dot" logic, check if the path is outside the current
+   directory, instead of unconditionally calling warn_pathless_add():
 
-so for this machine, 8 threads (our old number) is actually optimal
-even if it has just four cores (actually, two cores with HT). I
-suspect it's just because the load is slightly unbalanced, so a few
-extra threads helps. Looks like anything in the 4-16 thread range is
-ok, though. But 32 threads is clearly too much.
+   * If fix_unmerged_status() tells us that we would go to the
+     remove_file_from_index() codepath, instead of calling it, call
+     warn_pathless_add() instead.
 
-Then I did the exact same thing, but with the "echo 3 >
-/proc/sys/vm/drop_caches" just before the timing of the git grep.
-Again, summarizing (best-of-four number, the variation wasn't that
-big):
+   * If we are going to call add_file_to_index(), call it with
+     ADD_CACHE_PRETEND on using the extended interface to see if it
+     is adding already up-to-date contents. If not, call
+     warn_pathless_add().
 
-   1 real 0m17.866s
-   4 real 0m6.367s
-   8 real 0m4.855s
-  16 real 0m4.307s
-  32 real 0m4.153s
-  64 real 0m4.128s
+But I think it is a much better solution to just refresh the index
+like the attached patch when implicit_dot is active and we are not
+at the top level directory.  The paths that are stat-dirty but have
+the up-to-date contents need to be hashed at least once _anyway_ to
+see if the current contents match with what is in the index.  If we
+use the approach outlined above, the rehashing will be done in the
+extended add_file_to_index(). If we simply refresh the entire cache,
+the same check will be done there.  The only performance penalty
+would be that we may end up running lstat() twice.
 
-here, the numbers continue to improve up to 64 threads, although the
-difference between 32 and 64 is starting to be in the noise. I suspect
-it's a combination of better IO overlap (although not all SSD's will
-even improve all that much from overlapping IO past a certain point)
-and probably a more noticeable imbalance between threads.
+Incidentally, I noticed that we set implicit_dot=1 even when we are
+already at the top-level directory.  I suspect the code may become
+somewhat simpler if we set it only when (prefix != NULL), but it
+probably would not matter.
 
-Anyway, for *my* machine and for *this* particular load, I'd say that
-we're already pretty close to optimal. I did some trials just to see,
-but the best hot-cache numbers were fairly reliably for 7 or 8
-threads.
 
-Looking at the numbers, I can't really convince myself that it would
-be worth it to do (say) 12 threads on this machine. Yes, the
-cold-cache case improves from the 8-thread case (best-of-four for 12
-threads: 0m4.467s), but the hot-cache case has gotten sufficiently
-worse (0m0.251s) that I'm not sure..
+ builtin/add.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Of course, in *absolute* numbers the cold-cache case is so much slower
-that a half-second improvement from going to 16 threads might be
-considered worth it, because while the the hot-cache case gets worse,
-we may just not care because it's fast enough that it's not
-noticeable.
-
-Anyway, I think your patch is good if for no other reason that it
-allows this kind of testing, but at least for my machine, clearly the
-current default of eight threads is actually "good enough". Maybe
-somebody with a very different machine might want to run the above
-script and see if how sensitive other machines are to this parameter..
-
-                   Linus
+diff --git a/builtin/add.c b/builtin/add.c
+index daf02c6..ec2359c 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -495,6 +495,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		refresh(verbose, pathspec);
+ 		goto finish;
+ 	}
++	if (implicit_dot && !prefix)
++		refresh_cache(REFRESH_QUIET);
+ 
+ 	if (pathspec) {
+ 		int i;
