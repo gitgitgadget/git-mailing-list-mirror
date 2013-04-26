@@ -1,146 +1,117 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/9] remote-bzr: trivial cleanups
-Date: Fri, 26 Apr 2013 15:02:33 +0530
-Message-ID: <CALkWK0mRfj1FGYymDrBqQ=d02mhPkevJKr5Ozhgurp8DMhiNjQ@mail.gmail.com>
-References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
- <1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
- <CALkWK0meg1FgU=-4MFoFGjpDq_oa9XR_+qeiseR0J85mS71dNg@mail.gmail.com>
- <CAMP44s2nRHRFY_BRO7+x=CVKgrob78xZCpiV4Hk9sjWB_Q=vng@mail.gmail.com>
- <7vip3a2vq0.fsf@alter.siamese.dyndns.org> <CAMP44s1RdZ19y8v+_=gwBzq1Tg5v8+TWAYCAVR-ZzNwZ0_m_Ng@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] t5801: properly test the test shell
+Date: Fri, 26 Apr 2013 11:55:17 +0200
+Message-ID: <517A4F05.5030609@drmicha.warpmail.net>
+References: <ff7ccf22012f069ceca054d90aa0f72666cc11c2.1366884583.git.git@drmicha.warpmail.net> <7vppxi60pj.fsf@alter.siamese.dyndns.org> <7vfvye4jrc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christophe Simonis <christophe@kn.gl>,
-	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 11:33:29 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 26 11:55:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVf20-000839-8J
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 11:33:28 +0200
+	id 1UVfN8-00065l-06
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 11:55:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758411Ab3DZJdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 05:33:22 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:58172 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759176Ab3DZJdO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 05:33:14 -0400
-Received: by mail-ie0-f169.google.com with SMTP id ar20so4706157iec.14
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 02:33:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=LQYXA+MB/DjcDTMG13Wk7TskPwLP/nCKQpR3Z8bSlsA=;
-        b=yiOAES0SeF2V2+3YL47qg1PvhUXD4clw3GkhIfmG0Jp3sj47dyHItdkr8dyLXPXxqb
-         0j/7yOrx7Nv6k84WAAkbA/zWgBscw+Z1UNyt2Kd0hYE3qeDodvZPI8TS3WmTpWzGkOkb
-         HVZLqJnqcvD4oEzqWjJtk19cdcmJx/GigQ7JSPd/SSUDGrYbkW/SgibitqAVvS8FYQe6
-         kGZD9a6167eAZu+N9CLp8MOuv4+WiQCj8f4rVOHXjRc8RP5r6iRqeD1fCxpq9UDrpEWi
-         11PlvP4K+rTtxSTTF2GlwS1LUNOWCH9y/d1RI1Gxx8imG0jxmMTt+nTk+RAvvmvzidrl
-         QoEA==
-X-Received: by 10.50.73.65 with SMTP id j1mr1389782igv.49.1366968793701; Fri,
- 26 Apr 2013 02:33:13 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Fri, 26 Apr 2013 02:32:33 -0700 (PDT)
-In-Reply-To: <CAMP44s1RdZ19y8v+_=gwBzq1Tg5v8+TWAYCAVR-ZzNwZ0_m_Ng@mail.gmail.com>
+	id S932567Ab3DZJzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 05:55:11 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44448 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932563Ab3DZJzK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Apr 2013 05:55:10 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C127720B70;
+	Fri, 26 Apr 2013 05:55:09 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute2.internal (MEProxy); Fri, 26 Apr 2013 05:55:09 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=Lu4QiXA3cXzzf9vgB3oCm2
+	WHa04=; b=JyHki9L8ZIUjrDL8WKXDGQiUKAkQBWMvEBZpHcJo6kvfNvRwe+8GzF
+	ZumTiln3YFhwLiAKIiqOdjMbocvV+U8Ud6TNnbNuYS7fr6s+rmpX4pGeddb0/+fr
+	CTGHavThtguCytAHG81cNC0zoqgBw9Pkq8Z47rB07w7RB0zEMtYDQ=
+X-Sasl-enc: 2Qy5RE1tYuh4Xoff3F5+rg5xXKOHNKGSkek/VTUbjvk4 1366970109
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 26FECC80005;
+	Fri, 26 Apr 2013 05:55:09 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130402 Thunderbird/17.0.5
+In-Reply-To: <7vfvye4jrc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222524>
 
-Felipe Contreras wrote:
-> I am helping my fellow developers by replying to the comments they
-> make when I send the patches for review. Unfortunately, the only
-> developer other than you that has made any comment at all, Ramkumar
-> Ramachandra, did so in a bellicose tone, but I replied to all his
-> comments either way, which where invalid.
+Junio C Hamano venit, vidit, dixit 25.04.2013 19:12:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>
+>>> fc407f9 (Add new simplified git-remote-testgit, 2012-11-28) introduced a
+>>> test which was meant to skip the test unless the test shell is bash.
+>>> Unfortunately, it tests for the availability of bash only.
+>>
+>> True.
+>>
+>>> But users can
+>>> opt to use a different shell (using SHELL_PATH) for the tests even though
+>>> bash is available.
+>>>
+>>> At least for dash,
+>>> 21610d8 (transport-helper: clarify pushing without refspecs, 2013-04-17)
+>>> is the commit which actually introduces a test (pushing without refspec)
+>>> which fails to fail even though it is supposed to. It uses the
+>>> construct:
+>>>
+>>> VAR=value function arguments
+>>
+>> The right fix for that is to fix that line, so that the test itself
+>> can run under any sane POSIX shell, isn't it?  The test in turn may
+>> need to run git-remote-testgit, which, without J6t's updates, only
+>> is usable under bash, but to make sure the test will choke on
+>> absence of bash, the existing check should be sufficient, no?
+> 
+> Curiously enough, there were a few instances of the correct "set and
+> export environment explicitly during the life of subshell" construct
+> already in the script.  I found only this one as problematic.
+> 
+> Does it fix your issue without your change?
+> 
+> It is a separate issue to port git-remote-testgit to POSIX (J6t
+> already has a two part draft), move it to git-remote-testgit.sh, and
+> get its shebang line preprocessed like all other shell scripts.  I
+> think it is worth doing.
+> 
+> Takers?
+> 
+>  t/t5801-remote-helpers.sh | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+> index 4dcf744..c956abd 100755
+> --- a/t/t5801-remote-helpers.sh
+> +++ b/t/t5801-remote-helpers.sh
+> @@ -118,7 +118,9 @@ test_expect_success 'pushing without refspecs' '
+>  	(cd local2 &&
+>  	echo content >>file &&
+>  	git commit -a -m ten &&
+> -	GIT_REMOTE_TESTGIT_REFSPEC="" test_must_fail git push 2>../error) &&
+> +	GIT_REMOTE_TESTGIT_REFSPEC="" &&
+> +	export GIT_REMOTE_TESTGIT_REFSPEC &&
+> +	test_must_fail git push 2>../error) &&
+>  	grep "remote-helper doesn.t support push; refspec needed" error
+>  '
+>  
+> 
 
-I've never wanted to pick fights with anyone, and I don't foresee
-having a desire to do so in the future.  I was just saying what was on
-my mind, which is along the lines of: you have written this patch with
-the attitude "I know what I'm doing, my users will benefit, and nobody
-else is going to look at this patch anyway"; I'm worried about what
-your other patches look like if this is your attitude towards
-development.  Junio is harping about the same thing: the impedance
-mismatch between you and the rest of us.
+Perfect, I just failed to notice that the subshell would make the export
+local to that test.
 
-> The history *is* readable. If anybody has any problems with the commit
-> messages, the place to mention such problems is IN THE PATCH REVIEW.
-> Nobody has done that, because either nobody has any problems, or they
-> are not interested. Either way, there's nothing I can do about it.
+Thanks!
 
-That's what I've been trying to say over and over again: _why_ are
-people not reviewing your patches?
-
-0. Because nobody has any problems with them.
-
-1. Because nobody on the git list cares about remote-hg.
-
-2. Because you're stubborn as a mule, and the resulting thread often
-results in long-winded discussions like this one (which wastes
-everyone's time).  Therefore, the potential reviewer's reasoning is
-that their review time is better spent elsewhere, where their review
-is actually appreciated.
-
-Hint: it's not (0).
-
-If you're claiming that (1) is the case, then why are you posting to
-the git list and hitting everyone's inboxes?  Maintain your project
-outside git.
-
-I'm claiming that it's (2).  In which case, it's you who needs changing.
-
-> I'm willing to change my ways when there's reason to change my ways,
-> and so far, nobody has provided any evidence that my commit messages
-> are indeed lacking, only *opinions*.
-
-You want a formal mathematical proof?  We operate on opinions, and
-freeze what we think we all agree with into "community guidelines".
-
-> Other people are perfectly fine with them:
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/?qt=author&q=felipe.contreras
-
-So you're now claiming that we're the ones at fault (Peff, Thomas,
-Junio, and me, among others).  Okay, so why are you forcing your
-changes and opinions down our throats?  You're in the wrong community:
-join a community of people who are more like you (or start your own
-project), and stop wasting our time.
-
-Junio C Hamano wrote:
-> I do
-> not agree with Ram at all when he says that developers are more
-> important than users, and I agree with you that the project exists
-> for users, and not for developers.
-
-On this.
-
-If Peff were to suddenly stop working on git one day (because he was
-frustrated with the community/ development practices), we'd all lose a
-lot more than if one random end-user switches to using hg for his tiny
-personal projects.  I'm _not_ claiming that there's a split between
-users and users that are developers (we have one mailing list for
-everyone, and I like that).  What I'm claiming is that we cannot (and
-should not) pay equal attention to every user of git.  Some users are
-more important than others.  Again, that does _not_ mean that we push
-a change that benefits one important user but breaks everyone else's
-setup.
-
-Ofcourse the project exists for its users; we're not doing research.
-However, we don't all have to write tutorials to keep in touch with
-end-users who are completely detached from the development process
-(our time is better spent elsewhere), or even have an
-end-user-friendly bug tracker (where the SNR is very low).  We don't
-have to consciously reach out to people we're not connected to
-directly: if we're all sufficiently connected to the real world, the
-itches/ bugs worth working on will always find their way to us.  We
-live in a connected world.
-
-Yes, I know.  You're going to respond to this email arguing about why
-you're Right and why I (and everyone else) is Wrong, either by quoting
-what Linus (TM) said and twisting it to mean what you want, belaboring
-over what you've already said, or something similar.
-
-I've given up on you, and I suspect a lot of other people have too.
+Michael
