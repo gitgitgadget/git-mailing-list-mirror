@@ -1,74 +1,84 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/9] remote-bzr: trivial cleanups
-Date: Sat, 27 Apr 2013 00:23:09 +0530
-Message-ID: <CALkWK0mHCNdr7+QxmmB3jTnWTe8q0_ipXD0=1bKQdpLK07gnAg@mail.gmail.com>
-References: <1366888849-19607-1-git-send-email-felipe.contreras@gmail.com>
- <1366888849-19607-2-git-send-email-felipe.contreras@gmail.com>
- <CALkWK0meg1FgU=-4MFoFGjpDq_oa9XR_+qeiseR0J85mS71dNg@mail.gmail.com>
- <CAMP44s2nRHRFY_BRO7+x=CVKgrob78xZCpiV4Hk9sjWB_Q=vng@mail.gmail.com>
- <7vip3a2vq0.fsf@alter.siamese.dyndns.org> <CAMP44s1RdZ19y8v+_=gwBzq1Tg5v8+TWAYCAVR-ZzNwZ0_m_Ng@mail.gmail.com>
- <7vsj2e1d83.fsf@alter.siamese.dyndns.org> <CAMP44s1CTzO6J+QTDw_tmbkf-jfVxBzpfqY08_6RXrMuPr+CFw@mail.gmail.com>
- <CALkWK0ndinJPeufokYUiPeC_Hs=9WA71Xpd=K6vimJseXJsAOA@mail.gmail.com> <CAMP44s1MHUc_jw5EQviSYWc9phWCYD-FK_gRA-0QYNcLix098w@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: "git grep" parallelism question
+Date: Fri, 26 Apr 2013 11:54:09 -0700
+Message-ID: <CA+55aFw+6pL5DoEPsPZpJCAbqEGaWYYKcdjZzbsHVzSSMrQmww@mail.gmail.com>
+References: <CA+55aFxY2PJ+L=vCfvQ39UGBr7E6m5q76hO=z3Mqm6vTQmmMbw@mail.gmail.com>
+	<7vr4hxw2mp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christophe Simonis <christophe@kn.gl>,
-	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 20:54:00 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 26 20:54:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVnmO-0007ct-5j
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 20:53:56 +0200
+	id 1UVnmi-0007zJ-7X
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 20:54:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757520Ab3DZSxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 14:53:51 -0400
-Received: from mail-ia0-f169.google.com ([209.85.210.169]:51460 "EHLO
-	mail-ia0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757117Ab3DZSxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 14:53:50 -0400
-Received: by mail-ia0-f169.google.com with SMTP id l29so3976726iag.14
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 11:53:50 -0700 (PDT)
+	id S1757521Ab3DZSyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 14:54:11 -0400
+Received: from mail-vc0-f177.google.com ([209.85.220.177]:53357 "EHLO
+	mail-vc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757117Ab3DZSyK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 14:54:10 -0400
+Received: by mail-vc0-f177.google.com with SMTP id gf12so1871808vcb.8
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 11:54:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=nQPfI52c48DVS1nxrxveGNl99Qn7JK3v1Ci5dN2IvsE=;
-        b=aIke8KC8TAQOPwsAgnathWi/UbcqnKnpBVHtbUKxczT912OVwk26Ewhmj4nOe8mSBJ
-         7tAV3nLkwhOxtZdJhzIkHFhGTTfl3ZQOHZJ5q5KxFw3QLt66ogqjefHzRhTO/qhiqMxu
-         A3R+MEVwYzpPCSpo3naI0W6X0YVseg5YVGO4RNf4cV5uTlGNoN8xwu78uZfYUlanlZYu
-         FbuT5j2NG5rM5/Ky2NQWts2CXKpj1wCfW19cedHUp6MqLOjyra3v0rjxaLix0cOk96sj
-         TsBKy9ZAybn2R2VxEit8W6Y6eRAZ4ptsLa0GVobYydl8w2QMC3SqIA6YEA2ekfkHdB9h
-         LuEg==
-X-Received: by 10.50.57.116 with SMTP id h20mr2655616igq.49.1367002430080;
- Fri, 26 Apr 2013 11:53:50 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Fri, 26 Apr 2013 11:53:09 -0700 (PDT)
-In-Reply-To: <CAMP44s1MHUc_jw5EQviSYWc9phWCYD-FK_gRA-0QYNcLix098w@mail.gmail.com>
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=SkT9bxulzDqzWkM/JZIrOhvqCJ/8S/gkz2ZxxEdM6Ks=;
+        b=mlRWq/H47sJUmydigk/4V3IuTznw1n82r4QoEk0vTMsSTD9GFp99vYgffR3UFVZcl9
+         KTUrfYik2ec5bXpzdqcKkoQ0gcnMxTbDOg8gPlRYBc6M5A6IMdRuIMw2rFtO/j3IhL+C
+         /uRB62Th3PfylIvQORzgHtcrT5WOYHbkytUyAD9ftJA3hjg5uDBG/HZVtfj9BbJ/H0IP
+         t2XDn5cwZCWtrZ2oNxxx7goTI3cmlBNfI4zj9oYcpOYM78AK1x+1qhrU3MshNtwaWytk
+         6La2TDqguB+T3cBmEImOXYB+bbcPBbethBELdJbK/LkyymFqZS2qCsEwrxG0Aw6SJS1W
+         jsjg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=SkT9bxulzDqzWkM/JZIrOhvqCJ/8S/gkz2ZxxEdM6Ks=;
+        b=WVupJc1454GW2LAQkwmqi+C/1eNMf4A0hSTNPuK9NCBeaX9bXMsRsIUpwlxkH4EvYK
+         DgTDbfqaKcDqrnqp1pYgUCfiAC4hElQrdhDN+oD9oaLWaRn0pQrP4DucgYMx705bXq0k
+         lYORpvcFXzI4k+hSiWYIcQewZwoaFVbtUabNs=
+X-Received: by 10.220.244.137 with SMTP id lq9mr29820926vcb.13.1367002449136;
+ Fri, 26 Apr 2013 11:54:09 -0700 (PDT)
+Received: by 10.220.186.197 with HTTP; Fri, 26 Apr 2013 11:54:09 -0700 (PDT)
+In-Reply-To: <7vr4hxw2mp.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 2JBAt5LQ9hE7yEBkEW8p6euqCP8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222554>
 
-Felipe Contreras wrote:
-> What is your objective, do you want to help this project move forward or not?
+On Fri, Apr 26, 2013 at 11:47 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> The real issue may be that we do not have a good estimate of how
+> many paths are involved in the request before starting these
+> threads, though.
 
-Forward, please.
+Yes. Also, I'm not sure if the 15% possible improvement on my SSD case
+is even worth it for something that in the end isn't necessarily the
+common case. I *suspect* that it might be a much bigger deal on NFS
+(IO parallelism really does end up being a big deal sometimes, and
+caching tends to be less aggressive too), but on rotational media it
+might be much less clear, or even a loss..
 
-I want a solution to this persistent problem of conflict though.  And
-I presented one in my previous email:
+Are there people out there who use "git grep" over NFS and have been
+unhappy with performance? If are willing to recompile git with a
+different THREAD value in builtin/grep.c, then on a Linux client you
+can try
 
-Here's my solution to the problem: maintain your project outside
-git.git and merge changes in every couple of months or so with a
-simple email containing a pull URL, addressing Junio.  If Junio trusts
-you enough to put the changes you send into contrib/ after a cursory
-glance, we're done.  Start a separate mailing list for your project/
-accept GitHub pull requests via which contributors can send you
-changes.  No more fuss or drama on the git list about this.  You can
-be as stubborn as you want, and we go back to our lives.  Everyone
-wins.
+    echo 3 > /proc/sys/vm/drop_caches
 
-I'll probably even contribute small patches once in a while.
+to largely force cold-cache behavior for testing (I say "largely",
+because it won't drop busy/dirty pages, but for "git grep" kind of
+loads it should be good).
+
+Of course, you need root for it, so..
+
+                  Linus
