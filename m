@@ -1,90 +1,75 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 9/9] remote-bzr: use proper push method
-Date: Thu, 25 Apr 2013 19:08:22 -0500
-Message-ID: <1366934902-18704-10-git-send-email-felipe.contreras@gmail.com>
-References: <1366934902-18704-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christophe Simonis <christophe@kn.gl>,
-	Simon Ruderich <simon@ruderich.org>, Max Horn <max@quendi.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 26 02:10:16 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] "git add -A/--no-all" finishing touches
+Date: Thu, 25 Apr 2013 17:14:23 -0700
+Message-ID: <7vhaiuywps.fsf@alter.siamese.dyndns.org>
+References: <7vehe3qi5m.fsf@alter.siamese.dyndns.org>
+	<1366663435-13598-1-git-send-email-gitster@pobox.com>
+	<7vhaiu1a89.fsf@alter.siamese.dyndns.org>
+	<7v4neu19mj.fsf@alter.siamese.dyndns.org>
+	<20130425232410.GN29963@google.com>
+	<7vvc7ayy84.fsf@alter.siamese.dyndns.org>
+	<7vobd2yy3c.fsf@alter.siamese.dyndns.org>
+	<20130425235624.GO29963@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 26 02:14:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVWEx-0003zV-1E
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 02:10:15 +0200
+	id 1UVWJ6-0008SF-8a
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 02:14:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933017Ab3DZAKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Apr 2013 20:10:10 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:48410 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932477Ab3DZAKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Apr 2013 20:10:04 -0400
-Received: by mail-ob0-f169.google.com with SMTP id tb18so3092075obb.0
-        for <git@vger.kernel.org>; Thu, 25 Apr 2013 17:10:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=1FGn8JuT9988fFd+1DB3buDEZr03dju5oauJcbkzEeo=;
-        b=S8v8SFP22/DTIYeOplgCYikP+tH2wTZE8OzHQOhqwBNHU+rMXCwPN7bGqed8LzbEKX
-         vLKPgv5m9UDqN1hAyt6qRntjStE3v6E34ha513M5h3FNlac4xys35OGVT8OLM35x0IHZ
-         +rAJqKQWdgOUihwKttOzNwPTKubp31OCMwaTlLNtL9zQuRws1uwuTUcAxXDBuKshqFCJ
-         F+iGvDMMgQNeB9Do500/UCakHesae0t6Ho5F0KoYki037qVum3gTVkBaMCH6Z7hRE6TO
-         XaI/hmKaeBTmHa4c16IdIhWuagZ5JF7yP6/Jo7I3SAAr0BzwA58w1Jqxp5IjXM6K4SWe
-         HkRw==
-X-Received: by 10.60.101.137 with SMTP id fg9mr17565094oeb.60.1366935004383;
-        Thu, 25 Apr 2013 17:10:04 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id qt5sm5888541oeb.4.2013.04.25.17.10.02
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Apr 2013 17:10:03 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.884.g3532a8d
-In-Reply-To: <1366934902-18704-1-git-send-email-felipe.contreras@gmail.com>
+	id S932554Ab3DZAO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Apr 2013 20:14:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62342 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758011Ab3DZAO0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Apr 2013 20:14:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 013F419B84;
+	Fri, 26 Apr 2013 00:14:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sCzEELbD481zIK4uEeovdSDMgzU=; b=kt8elh
+	a3j8Re7c0U7noxO0P9fmkCpKY073NSh1oZPoQpECAkW6j4RCgDOXgfszpPAlA0yZ
+	tCWYr3/fdb6cfMJdhnoecebqnawzjsfvpVtCFqzu1pYxvhcv5AxS1ItNqDW2Qn3p
+	q5zMDghyUeV++zclznJ574h3MxKrjWgL4kTLc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=L0sdFJuENjBjSMSR0NPtHQdqiQHIoYqk
+	POVYRzRLACfJmWOnMlAXTEZ+rNksDRsYzl6CXYxp1pY8ubQbNKk7/bYOYB1t3vwP
+	nMEwpkiU1RVE/5d/BeVyp5FQApd29SEQifZdAz26iXD6ZoHhUER57c9ozZx4q+0X
+	BZX/PuEaGig=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC6D419B83;
+	Fri, 26 Apr 2013 00:14:25 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6DF6F19B82;
+	Fri, 26 Apr 2013 00:14:25 +0000 (UTC)
+In-Reply-To: <20130425235624.GO29963@google.com> (Jonathan Nieder's message of
+	"Thu, 25 Apr 2013 16:56:24 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 40CAC9EC-AE06-11E2-8959-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222479>
 
-Do not just randomly synchronize the revisions with no checks at all.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I don't have any evidence that there's anything wrong with the current code,
-which Bazaar seems to use, but for different purposes. Let's use the logic
-Bazaar UI uses to avoid surprises.
+> Maybe the warning should happen after add_file_to_index() has run,
+> letting git compare the old and new index entries for that path?
 
-Also, add a non-ff check.
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/git-remote-bzr | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index 9f56297..c19ed0e 100755
---- a/contrib/remote-helpers/git-remote-bzr
-+++ b/contrib/remote-helpers/git-remote-bzr
-@@ -639,12 +639,12 @@ def do_export(parser):
-     for ref, revid in parsed_refs.iteritems():
-         if ref == 'refs/heads/master':
-             repo.generate_revision_history(revid, marks.get_tip('master'))
--            revno, revid = repo.last_revision_info()
-             if peer:
--                if hasattr(peer, "import_last_revision_info_and_tags"):
--                    peer.import_last_revision_info_and_tags(repo, revno, revid)
--                else:
--                    peer.import_last_revision_info(repo.repository, revno, revid)
-+                try:
-+                    repo.push(peer, stop_revision=revid)
-+                except bzrlib.errors.DivergedBranches:
-+                    print "error %s non-fast forward" % ref
-+                    continue
-             else:
-                 wt = repo.bzrdir.open_workingtree()
-                 wt.update()
--- 
-1.8.2.1.884.g3532a8d
+Yeah, new and deleted cases we do not have to worry about, so a
+no-op add_file_to_index() is the only case we have to be careful.
+There is a "if verbose, say 'add %s'" logic in the funciton, so it
+should be possible to enhance the API without affecting existing
+callers to extract that necessary information out of it.
