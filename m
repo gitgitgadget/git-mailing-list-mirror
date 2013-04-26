@@ -1,67 +1,68 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: Itches with the current rev spec
-Date: Fri, 26 Apr 2013 10:19:46 +0200
-Organization: Bertin Technologies
-Message-ID: <20130426101946.433f2d12@chalon.bertin.fr>
-References: <CALkWK0n97VLtiR96VEy86645NVoDL2rS-g7LBuLb=JpncdH6VA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] clean: confirm before cleaning files and directories
+Date: Fri, 26 Apr 2013 10:21:54 +0200
+Message-ID: <vpqfvydhfbx.fsf@grenoble-inp.fr>
+References: <1826d070612808b301f9295838e226e02d8097ad.1366963586.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 26 10:19:57 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 26 10:22:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVdso-0005ls-No
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 10:19:55 +0200
+	id 1UVdv2-0008Kf-Fm
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 10:22:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757471Ab3DZITs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 04:19:48 -0400
-Received: from blois.bertin.fr ([195.68.26.9]:61622 "EHLO blois.bertin.fr"
+	id S1753957Ab3DZIWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 04:22:06 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56803 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750979Ab3DZITq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 04:19:46 -0400
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 9BACA6AAE7
-	for <git@vger.kernel.org>; Fri, 26 Apr 2013 10:19:44 +0200 (CEST)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id 795E16AAD1
-	for <git@vger.kernel.org>; Fri, 26 Apr 2013 10:19:44 +0200 (CEST)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0MLU00DZTSGW8D50@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Fri, 26 Apr 2013 10:19:44 +0200 (CEST)
-In-reply-to: <CALkWK0n97VLtiR96VEy86645NVoDL2rS-g7LBuLb=JpncdH6VA@mail.gmail.com>
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8250-7.0.0.1014-19824.004
+	id S1752229Ab3DZIWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 04:22:04 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r3Q8LrbN020560
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 26 Apr 2013 10:21:53 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UVduk-0003tZ-Hj; Fri, 26 Apr 2013 10:21:54 +0200
+In-Reply-To: <1826d070612808b301f9295838e226e02d8097ad.1366963586.git.worldhello.net@gmail.com>
+	(Jiang Xin's message of "Fri, 26 Apr 2013 16:07:56 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 26 Apr 2013 10:21:53 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r3Q8LrbN020560
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1367569315.68408@5EdzdOv9ufYKBxFy/FtrJg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222509>
 
->2. git rebase -i master fails unless I've rebased my branch on top of
->master.  I always wished I could do the equivalent of 'git rebase -i
->master..', but I can't.  Can we give the A..B syntax a new meaning in
->the context of rebase, namely $(git merge-base A B)? 
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-If I understand well, you're refering to a problem that also annoys me,
-ie. using "rebase -i" to just edit your local commits, without rebasing
-onto the lastest revision on the upstream branch, right ?  That is, just
-another wart of having a single command for arguably-different use cases,
-or of having the single-argument version of rebase use that argument for
-2 very different things (cut-off point and destination), but I won't try
-to address either of these today :)
+>  * run `git clean` in interactive sessions,
+>  * not a dry run,
+>  * and not quiet.
 
-In that case, what about just adding a new flag to "rebase -i", that would
-prevent the single-argument to be interpreted as destination ?  I really
-consider this a workaround for a suboptimal CLI, but since we don't want
-to change the rebase CLI before at least 2.0, that could fill the gap for now.
+Err, does this mean I'll have:
 
-As for the flag itself, what about --here ?  Obviously it would only be
-meaninglful together with -i, and be exclusive with --onto.
+$ git clean
+fatal: clean.requireForce defaults to true and neither -n nor -f given; refusing to clean
+$ git clean --force
+Are you sure [y/n]?
+
+An optional confirmation dialog seems interesting, but activating it by
+default even with --force seems really weird.
 
 -- 
-Yann Dirson - Bertin Technologies
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
