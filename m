@@ -1,60 +1,91 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [BUG] Highly inconsistent diff UI
-Date: Fri, 26 Apr 2013 17:05:04 +0530
-Message-ID: <CALkWK0mLdGPAJZC=KgYrTS3pCOacEdNyS3XT1eOPKjTbvRk3cQ@mail.gmail.com>
-References: <CALkWK0n2ZZTgYxi3Fk2UxY8TXFAt1Xt3+11G98GKxbYdoMOT+Q@mail.gmail.com>
- <7va9ong9oa.fsf@alter.siamese.dyndns.org> <CALkWK0mVDT5ESnVJAWQ83gQnmxmGDoM_Y0nE4FGybcjcenA_KA@mail.gmail.com>
- <7v38ufer2x.fsf@alter.siamese.dyndns.org> <CALkWK0m5Q_e3q6Yg94-K+jU_SS7ovR2wnz-_Nr3cMz_YM=SMDQ@mail.gmail.com>
- <7vvc7baahc.fsf@alter.siamese.dyndns.org> <CALkWK0=NWSZsARu9w0DwpEmJHKnvpB8yoNfEa31LDQA=cV-90Q@mail.gmail.com>
- <CALkWK0ntZKaEzA0Jupj6poOMydqUumEGVVJ-uhBE12sPJ0ntjw@mail.gmail.com>
- <7vppxj6thv.fsf@alter.siamese.dyndns.org> <CALkWK0n9xqQr30QWEuhuM9c1xrAJ=SpYVBjkiRk+tP5E7DtBGw@mail.gmail.com>
- <CALkWK0kSWHS0JJ9E4PPihRru0-H13mNffJ5Hndg+LqvFzsYG8Q@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCHv2 7/7] git grep: honor textconv by default
+Date: Fri, 26 Apr 2013 13:59:08 +0200
+Message-ID: <517A6C0C.1020506@drmicha.warpmail.net>
+References: <517298D4.3030802@drmicha.warpmail.net> <043047afd2915dd8f3a68cf164dc516d4c0bb5c2.1366718624.git.git@drmicha.warpmail.net> <7vwqrtjmtx.fsf@alter.siamese.dyndns.org> <5177AE7F.1040400@drmicha.warpmail.net> <7vehdzesr9.fsf@alter.siamese.dyndns.org> <vpqwqrrolpl.fsf@grenoble-inp.fr> <7v38ufdaih.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	jeremy.rosen@openwide.fr, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 13:35:51 2013
+X-From: git-owner@vger.kernel.org Fri Apr 26 13:59:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVgwQ-0007UD-1K
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 13:35:50 +0200
+	id 1UVhIz-000823-CW
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 13:59:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750933Ab3DZLfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 07:35:46 -0400
-Received: from mail-ia0-f171.google.com ([209.85.210.171]:48968 "EHLO
-	mail-ia0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750709Ab3DZLfp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 07:35:45 -0400
-Received: by mail-ia0-f171.google.com with SMTP id r13so3489725iar.30
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 04:35:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=RmiZZkzhvnFbcuqRIJ/bqJHuDxWvLNa5gaCgUL14Nwc=;
-        b=XRzOPT2Oo8eI3RVN82triRTJlf5P0iwZKx653nHUNPPxWnynHcrHfrVDHfPOTXSSdz
-         wTovbSGjojkhfGASukKqBwA3OfvuDdj4TLtG8HP7M12xj591Xf0+4xwGwbWNW0x6VAWS
-         Ojx5lalSoQF18QNsm3f4IYb2O1hEiTC9S6WOA+OY+7k/eXWVol+aMgviCr2gKoeYAjuo
-         /fAg6omt91EY15puZWvxOGUqNgm2t5hK7e/C6Ib1fDnvL7DL0E0Jy91EF+0ouz83m/yy
-         uaCMIDUZN/GzT206162EOZFvtbPBK6xnEnV8+lRsmP7HPfSWQF0MY1Av8Qa0J64ZetZa
-         w+Cg==
-X-Received: by 10.50.57.116 with SMTP id h20mr1598419igq.49.1366976145119;
- Fri, 26 Apr 2013 04:35:45 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Fri, 26 Apr 2013 04:35:04 -0700 (PDT)
-In-Reply-To: <CALkWK0kSWHS0JJ9E4PPihRru0-H13mNffJ5Hndg+LqvFzsYG8Q@mail.gmail.com>
+	id S1752423Ab3DZL7E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 07:59:04 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:57757 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751387Ab3DZL7D (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Apr 2013 07:59:03 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 964C720A52;
+	Fri, 26 Apr 2013 07:59:02 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute5.internal (MEProxy); Fri, 26 Apr 2013 07:59:02 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=E1evX8kC3ajlQ8OlsDkejj
+	/9s1s=; b=gnJ7EITz5NyLm97ls5RYUuZ3zSMFVtEb/DQT6jQ5ejyY3YxIWxA5Nu
+	QRJbQSnpx5LTulppCtnQo89CsAj/o8zjWX/v4zcKw4odCTJnfYqtNTZNWENwsonn
+	fogm5NgGgULYMntIka5u9FoI7p7bSGbyvP4IZdp3Ha0nRXBGXAtz8=
+X-Sasl-enc: 3cWjd9kgzYlyQPRd5DvSgiZMwhXL2K7ELaxvgzuU3HKi 1366977542
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id B47942001CB;
+	Fri, 26 Apr 2013 07:59:01 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130402 Thunderbird/17.0.5
+In-Reply-To: <7v38ufdaih.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222528>
 
-Ramkumar Ramachandra wrote:
-> Think of it as a time-truncated version of git log pu: it has
-> nothing to do with reachability.
+Junio C Hamano venit, vidit, dixit 24.04.2013 20:55:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> 
+>> Grepping through the binary, on the other hand, can very well make
+>> sense, like:
+>>
+>> $ git grep foo
+>> file.txt: some instance of foo
+>> binary file bar.bin matches
 
-Er, scratch that out.  I don't like talking in vague terms, and this
-feature has nothing to do with git log --since (which is what
-time-truncated is).
+BTW, textconv does not have to be slow - just use textconv-cache.
+
+> Yes, 
+> 
+> I am moderately negative on making it the default, mostly because it
+> goes against established expectations, but I did not mean to say
+> that an ability to pass blob contents through textconv before
+> running grep should not exist.  It would be a good option to have.
+
+I'm still looking for a way to at least treat "git grep" and "git show
+blob" the same way. I understand that I cannot convince you to change
+the default here. The two options that I see are:
+
+- Implement the --textconv option but leave the default as is. I did
+that for "git grep" already (just drop 7/7) but it seems to be
+cumbersome for "git show blob". I have to recheck.
+
+- Implement a new attribute "show" analogous to "diff" which applies to
+the blob case ("git grep" is a blob case, and so is "git show blob")
+which can specify a "show" driver, which is like a "diff" driver but
+understands textconv and cachetextconv options only.
+Here, the default would be "--textconv" in any case, but unless you
+specify a "show" attribute and driver there is no change in current
+behavior.
+
+The second case is a bit like clean/smudge, so, alternatively, one could
+add a textconv and cachetextconv option to "filter" rather than
+introducing "show". I'm not sure how much the textconv machinery needs
+to change, though.
+
+Michael
