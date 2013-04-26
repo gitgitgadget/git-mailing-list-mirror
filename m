@@ -1,68 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] clean: confirm before cleaning files and directories
-Date: Fri, 26 Apr 2013 10:21:54 +0200
-Message-ID: <vpqfvydhfbx.fsf@grenoble-inp.fr>
-References: <1826d070612808b301f9295838e226e02d8097ad.1366963586.git.worldhello.net@gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Zile as git core editor?
+Date: Fri, 26 Apr 2013 16:28:25 +0800
+Message-ID: <CALUzUxpZ9=8aVEMBfFUH2hN5ZkwzKVX31J79MVzkCEGRX++LPw@mail.gmail.com>
+References: <877gjp91w5.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 10:22:14 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Thorsten Jolitz <tjolitz@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 26 10:28:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVdv2-0008Kf-Fm
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 10:22:12 +0200
+	id 1UVe1Y-0007Gg-8v
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 10:28:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753957Ab3DZIWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 04:22:06 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:56803 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752229Ab3DZIWE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 04:22:04 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r3Q8LrbN020560
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 26 Apr 2013 10:21:53 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UVduk-0003tZ-Hj; Fri, 26 Apr 2013 10:21:54 +0200
-In-Reply-To: <1826d070612808b301f9295838e226e02d8097ad.1366963586.git.worldhello.net@gmail.com>
-	(Jiang Xin's message of "Fri, 26 Apr 2013 16:07:56 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 26 Apr 2013 10:21:53 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r3Q8LrbN020560
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1367569315.68408@5EdzdOv9ufYKBxFy/FtrJg
+	id S932215Ab3DZI2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 04:28:52 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:37701 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932147Ab3DZI2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 04:28:45 -0400
+Received: by mail-ie0-f179.google.com with SMTP id 16so4587886iea.38
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 01:28:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=IgUlTSTRV53Hqz0Gxi10qpmup8UzZZHkzii6B5QhGgQ=;
+        b=K5rap7hl+c5USC6PH7zQPWqWe+l2fw0zP8aff0Z4SdQzjgctNa3HLSXavB7CJre+Yr
+         ciPJhc69fHhoM9mbTsZdd/iWnCj81qkQoOJAF+52SD/2ZRA/JxFHSJaRBWQxrfY17Kdp
+         KMNyOIUwrV9SNH/SAJsY2CfJIQjNZ8kojKbSgZB7u+Y9ADUkVlbbIb0deUP+n4yN/iST
+         dhM60XdsbhfvMErGZMw2wlqN7dHuX669Lv1Oov3ACcBTlZ2FmFL5Y/thBxyI8Jt6pNxD
+         EG4nWxNLZSmDWgSZDESiAb9Pl8OvyrWvhHH8kBO0me8UgNJ2OURLmvYRerClhb9aTmIp
+         WgKA==
+X-Received: by 10.50.154.105 with SMTP id vn9mr1246759igb.8.1366964925253;
+ Fri, 26 Apr 2013 01:28:45 -0700 (PDT)
+Received: by 10.64.44.165 with HTTP; Fri, 26 Apr 2013 01:28:25 -0700 (PDT)
+In-Reply-To: <877gjp91w5.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222510>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Hi,
 
->  * run `git clean` in interactive sessions,
->  * not a dry run,
->  * and not quiet.
+Is the GIT_EDITOR or EDITOR environment variable set? They may be
+overriding the core.editor setting.
 
-Err, does this mean I'll have:
+--
+Cheers,
+Ray Chuan
 
-$ git clean
-fatal: clean.requireForce defaults to true and neither -n nor -f given; refusing to clean
-$ git clean --force
-Are you sure [y/n]?
-
-An optional confirmation dialog seems interesting, but activating it by
-default even with --force seems really weird.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+On Fri, Apr 26, 2013 at 3:39 PM, Thorsten Jolitz <tjolitz@gmail.com> wrote:
+>
+> Hi List,
+>
+> after experiencing one crash to many, I'm back to Standard Emacs
+> (instead of Emacsserver/Emacsclient), thus using 'emacs' (instead of
+> emacsclient) as git core editor triggers reading my huge init file and
+> is way to slow.
+>
+> I would like to use Zile (a small Emacs clone) instead, and although
+> otherwise it works alright on my system, it does not seem to work as git
+> core editor.
+>
+> Is it possible to use 'git config --global core.editor zile'?
+>
+> --
+> cheers,
+> Thorsten
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
