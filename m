@@ -1,65 +1,82 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [BUG] Highly inconsistent diff UI
-Date: Fri, 26 Apr 2013 19:34:00 +0700
-Message-ID: <CACsJy8B1yfqVmaBZ0A=Yfxx+As_+JzBzWr4LqrEwhr5qGZ7+Aw@mail.gmail.com>
-References: <CALkWK0n2ZZTgYxi3Fk2UxY8TXFAt1Xt3+11G98GKxbYdoMOT+Q@mail.gmail.com>
- <7va9ong9oa.fsf@alter.siamese.dyndns.org> <CALkWK0mVDT5ESnVJAWQ83gQnmxmGDoM_Y0nE4FGybcjcenA_KA@mail.gmail.com>
- <7v38ufer2x.fsf@alter.siamese.dyndns.org> <CALkWK0m5Q_e3q6Yg94-K+jU_SS7ovR2wnz-_Nr3cMz_YM=SMDQ@mail.gmail.com>
- <CALkWK0=5tE0pXj-XTe4g9LdCO78yrPNwyom5fupF1WTToY2TZw@mail.gmail.com>
- <877gjrpsk4.fsf@hexa.v.cablecom.net> <CALkWK0kn7mEosWSdWs1Jjx-L32wmL51W=X7ny9BYQMttG1LPvQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCHv2 7/7] git grep: honor textconv by default
+Date: Fri, 26 Apr 2013 15:23:55 +0200
+Message-ID: <vpqk3npctn8.fsf@grenoble-inp.fr>
+References: <517298D4.3030802@drmicha.warpmail.net>
+	<043047afd2915dd8f3a68cf164dc516d4c0bb5c2.1366718624.git.git@drmicha.warpmail.net>
+	<7vwqrtjmtx.fsf@alter.siamese.dyndns.org>
+	<5177AE7F.1040400@drmicha.warpmail.net>
+	<7vehdzesr9.fsf@alter.siamese.dyndns.org>
+	<vpqwqrrolpl.fsf@grenoble-inp.fr>
+	<7v38ufdaih.fsf@alter.siamese.dyndns.org>
+	<517A6C0C.1020506@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 26 14:34:38 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	jeremy.rosen@openwide.fr, Jeff King <peff@peff.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Apr 26 15:24:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVhrI-0005YV-6m
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 14:34:36 +0200
+	id 1UVidY-0002XC-Hs
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Apr 2013 15:24:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756291Ab3DZMec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 08:34:32 -0400
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:55357 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755459Ab3DZMeb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 08:34:31 -0400
-Received: by mail-oa0-f45.google.com with SMTP id o17so3851451oag.4
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 05:34:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=0WonxP2X3crwyPyq3OT+nM2fs1CrfZkiZ7J0DQUI990=;
-        b=tH/yeHUIbLCiRtRJESO5XBZNIU4gQYihBk0Hn0bdKKZ0JX2kLKZPfT74yzUKrvbTyA
-         j7CY2lKSSGQzzFBVpQI2+tINSy9tmAhbdLys5VskDzfHPmDcItKUyHQ+J6BA2OAahmhy
-         972RC559Y1bd+ZlWSncgu/c5KKGdmTGyZANq/UHKOrypxdo1FuThcWgTxcfiCjxXU2AT
-         ebT7psz6/45kxiNNP0MTbO7wgmsnOy1YIjUMi8tloIcg7Fhn61xSZaksnx61SjU33bFH
-         xFh7iHbSeFMXzD4dkkG1RNK0U77N0RjaO6YKMWhYaDrZAE3wIPCP7QPcxJPS3LXycznN
-         SDfw==
-X-Received: by 10.182.156.20 with SMTP id wa20mr17719135obb.59.1366979670937;
- Fri, 26 Apr 2013 05:34:30 -0700 (PDT)
-Received: by 10.76.142.74 with HTTP; Fri, 26 Apr 2013 05:34:00 -0700 (PDT)
-In-Reply-To: <CALkWK0kn7mEosWSdWs1Jjx-L32wmL51W=X7ny9BYQMttG1LPvQ@mail.gmail.com>
+	id S1755031Ab3DZNYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 09:24:24 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:51726 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751341Ab3DZNYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 09:24:23 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r3QDNsQe020851
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 26 Apr 2013 15:23:54 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UVid2-0001wW-32; Fri, 26 Apr 2013 15:23:56 +0200
+In-Reply-To: <517A6C0C.1020506@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Fri, 26 Apr 2013 13:59:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 26 Apr 2013 15:23:56 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r3QDNsQe020851
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1367587439.66804@5yUumfa6d51Cnfox1oDtHQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222532>
 
-On Thu, Apr 25, 2013 at 3:54 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> On a related note- In my opinion, :/ is broken, because it blocks
-> composition completely.  I would've really liked {:/quuxery}~3.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-For composition, you should be able to combine a ref set with @{}
-syntax, so you can choose to apply @{} on refs/heads/*, or all refs. I
-guess it's not worth the trouble because, except the case of :/ that
-searches and returns 1 sha-1, other @{} may return multiple sha-1s on
-a ref set.
---
-Duy
+> BTW, textconv does not have to be slow - just use textconv-cache.
+
+Right, thanks for reminding me about this, I had forgotten its existance ;-).
+
+> I'm still looking for a way to at least treat "git grep" and "git show
+> blob" the same way.
+
+I agree they should be treated similarly.
+
+> - Implement the --textconv option but leave the default as is. I did
+> that for "git grep" already (just drop 7/7)
+
+That seems sensible.
+
+> but it seems to be cumbersome for "git show blob". I have to recheck.
+
+It should be possible to have a tri-state for the --[no-]textconv
+option: unset, set to true or set to false. But the code sharing between
+log, show and diff might make that non-trivial.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
