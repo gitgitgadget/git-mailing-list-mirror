@@ -1,135 +1,111 @@
-From: Knut Franke <Knut.Franke@gmx.de>
-Subject: [PATCH] gitk: Add menu item for reverting commits
-Date: Sat, 27 Apr 2013 16:36:13 +0200
-Message-ID: <1367073373.12513.3.camel@Vger>
+From: Patrik Gornicz <patrik-git@mail.pgornicz.com>
+Subject: Re: Making a (quick) commit to another branch
+Date: Sat, 27 Apr 2013 10:56:39 -0400
+Message-ID: <517BE727.1050000@mail.pgornicz.com>
+References: <517BDB6D.8040809@cedarsoft.com> <CALZVap=9Z=0DPM1fNwotn3sN-W7mXMPRSJ2aY5jzkQTBD6v=Kw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 27 16:36:26 2013
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Schneider <mailings@cedarsoft.com>
+To: Javier Domingo <javierdo1@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 27 17:05:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UW6Ef-0008IN-On
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 16:36:22 +0200
+	id 1UW6h3-0001E3-0I
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 17:05:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755767Ab3D0OgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Apr 2013 10:36:17 -0400
-Received: from mout.gmx.net ([212.227.17.22]:61351 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755595Ab3D0OgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Apr 2013 10:36:16 -0400
-Received: from mailout-de.gmx.net ([10.1.76.4]) by mrigmx.server.lan
- (mrigmx002) with ESMTP (Nemesis) id 0MLDZP-1UVpFe1VhZ-000IWg for
- <git@vger.kernel.org>; Sat, 27 Apr 2013 16:36:15 +0200
-Received: (qmail invoked by alias); 27 Apr 2013 14:36:15 -0000
-Received: from f051078105.adsl.alicedsl.de (EHLO [192.168.1.4]) [78.51.78.105]
-  by mail.gmx.net (mp004) with SMTP; 27 Apr 2013 16:36:15 +0200
-X-Authenticated: #377055
-X-Provags-ID: V01U2FsdGVkX1873i9TCvk7RoVrzs8Ad7zXV/rdlH5BXG61CGXgVz
-	EPKDS//bWi+k+0
-X-Mailer: Evolution 3.2.3-0ubuntu6 
-X-Y-GMX-Trusted: 0
+	id S1753859Ab3D0PFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Apr 2013 11:05:36 -0400
+Received: from li287-246.members.linode.com ([66.228.37.246]:54629 "EHLO
+	mail.pgornicz.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753549Ab3D0PFf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Apr 2013 11:05:35 -0400
+X-Greylist: delayed 523 seconds by postgrey-1.27 at vger.kernel.org; Sat, 27 Apr 2013 11:05:35 EDT
+Received: from [192.168.1.110] (CPEc0c1c09f18e2-CM0026f321196d.cpe.net.cable.rogers.com [99.236.108.68])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.pgornicz.com (Postfix) with ESMTPSA id 845D249C18;
+	Sat, 27 Apr 2013 10:56:51 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130406 Thunderbird/17.0.5
+In-Reply-To: <CALZVap=9Z=0DPM1fNwotn3sN-W7mXMPRSJ2aY5jzkQTBD6v=Kw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222655>
 
-Sometimes it's helpful (at least psychologically) to have this feature
-easily accessible. Code borrows heavily from cherrypick.
+I've also encountered this desire to quickly fix something in another 
+branch.
 
-Signed-off-by: Knut Franke <Knut.Franke@gmx.de>
----
- gitk |   62
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 62 insertions(+)
+My need is more driven by the fact that it's a large project and 
+stashing changes / switching branches frequently results in 2-6 minute 
+build times afterward. Thus the commit to another branch suggestion 
+would be quite neat as I wouldn't have to stash/switch.
 
-diff --git a/gitk b/gitk
-index 572f73f..fb1a6ce 100755
---- a/gitk
-+++ b/gitk
-@@ -2562,6 +2562,7 @@ proc makewindow {} {
- 	{mc "Compare with marked commit" command compare_commits}
- 	{mc "Diff this -> marked commit" command {diffvsmark 0}}
- 	{mc "Diff marked commit -> this" command {diffvsmark 1}}
-+	{mc "Revert this commit" command revert}
-     }
-     $rowctxmenu configure -tearoff 0
- 
-@@ -9347,6 +9348,67 @@ proc cherrypick {} {
-     notbusy cherrypick
- }
- 
-+proc revert {} {
-+    global rowmenuid curview
-+    global mainhead mainheadid
-+    global gitdir
-+
-+    set oldhead [exec git rev-parse HEAD]
-+    set dheads [descheads $rowmenuid]
-+    if { $dheads eq {} || [lsearch -exact $dheads $oldhead] == -1 } {
-+       set ok [confirm_popup [mc "Commit %s is not\
-+           included in branch %s -- really revert it?" \
-+                      [string range $rowmenuid 0 7] $mainhead]]
-+       if {!$ok} return
-+    }
-+    nowbusy revert [mc "Reverting"]
-+    update
-+
-+    if [catch {exec git revert --no-edit $rowmenuid} err] {
-+        notbusy revert
-+        if [regexp {files would be overwritten by merge:(\n(( |\t)+[^
-\n]+\n)+)}\
-+                $err match files] {
-+            regsub {\n( |\t)+} $files "\n" files
-+            error_popup [mc "Revert failed because of local changes to
-\
-+                the following files:%s Please commit, reset or stash \
-+                your changes and try again." $files]
-+        } elseif [regexp {error: could not revert} $err] {
-+            if [confirm_popup [mc "Revert failed because of merge
-conflict.\n\
-+                Do you wish to run git citool to resolve it?"]] {
-+                # Force citool to read MERGE_MSG
-+                file delete [file join $gitdir "GITGUI_MSG"]
-+                exec_citool {} $rowmenuid
-+            }
-+        } else { error_popup $err }
-+        run updatecommits
-+        return
-+    }
-+
-+    set newhead [exec git rev-parse HEAD]
-+    if { $newhead eq $oldhead } {
-+        notbusy revert
-+        error_popup [mc "No changes committed"]
-+        return
-+    }
-+
-+    addnewchild $newhead $oldhead
-+
-+    if [commitinview $oldhead $curview] {
-+        # XXX this isn't right if we have a path limit...
-+        insertrow $newhead $oldhead $curview
-+        if {$mainhead ne {}} {
-+            movehead $newhead $mainhead
-+            movedhead $newhead $mainhead
-+        }
-+        set mainheadid $newhead
-+        redrawtags $oldhead
-+        redrawtags $newhead
-+        selbyid $newhead
-+    }
-+
-+    notbusy revert
-+}
-+
- proc resethead {} {
-     global mainhead rowmenuid confirm_ok resettype NS
- 
--- 
-1.7.9.5
+Another possible approach would be to allow cherry-picking a change 
+into another branch (without the stash/switch need).
+
+Either way though, things might be a little weird if there's a 
+conflict. Most of the time with the types of changes I'd like to do 
+this simply won't be the case so perhaps just failing and requiring the 
+user to work around it with either of the suggested work arounds would 
+be effective enough . . .
+
+Patrik
+
+On Sat Apr 27 10:21:31 2013, Javier Domingo wrote:
+> 2013/4/27 Johannes Schneider <mailings@cedarsoft.com>:
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>>
+>> Hi guys,
+>>
+>> I love git. And I use it every day. But there is one minor thing, that
+>> bugs me a little bit:
+>> I am implementing something on a feature branch. Now I detect a minor
+>> typo/bug/whatever that just needs a one line commit.
+>>
+>> But of course I don't want to add that commit to my feature branch.
+>> Instead I'd like to commit that fix directly to another branch (e.g.
+>> master).
+>>
+>> Unfortunately that take a lot of steps to make this happen:
+>> - - comitting
+>> - - stashing other changes
+>> - - changing branch
+>> - - cherry-picking commit
+>> - - switching branches back
+>> - - reverting latest commit
+>> - - unstashing changes
+>>
+>> I'd love to solve this by having an option for git commit that gives
+>> me the possibility to commit to another branch:
+>>
+>>
+>> git commit thefixedfile.txt -m "fixed a typo" -b master
+>>
+>>
+>>
+>> Any ideas/hints?
+>>
+>
+> I would first recommend you, instead of cherry-picking the commit, you did this:
+> -- stash
+> -- go to the master branch
+> -- fix the line
+> -- commit the fix
+> -- got to the feature branch
+> -- unstash
+>
+> As when you merge with master, git will carry on with the changes. I
+> don't see the need to cherry pick that commit.
+>
+> Javier Domingo
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
