@@ -1,81 +1,61 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] fixup! t3210: test for spurious error messages for dangling
- packed refs
-Date: Sat, 27 Apr 2013 07:43:44 +0200
-Message-ID: <517B6590.2080101@alum.mit.edu>
-References: <7vehe2nr16.fsf@alter.siamese.dyndns.org> <1366708556-9172-1-git-send-email-mhagger@alum.mit.edu> <7vehe1i1bo.fsf@alter.siamese.dyndns.org> <5177F981.60105@alum.mit.edu>
+From: Ilya Basin <basinilya@gmail.com>
+Subject: git-svn --preserve-empty-dirs: Failed to strip path
+Date: Sat, 27 Apr 2013 11:28:32 +0400
+Message-ID: <917648658.20130427112832@gmail.com>
+Reply-To: Ilya Basin <basinilya@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 27 07:44:08 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 27 09:30:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVxvW-0004w4-PO
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 07:44:03 +0200
+	id 1UVzaT-0001oO-HP
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 09:30:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754356Ab3D0Fns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Apr 2013 01:43:48 -0400
-Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:47594 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753639Ab3D0Fnr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Apr 2013 01:43:47 -0400
-X-AuditID: 12074414-b7fb86d000000905-17-517b659260d4
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 61.32.02309.2956B715; Sat, 27 Apr 2013 01:43:46 -0400 (EDT)
-Received: from [192.168.69.140] (p4FDD48CC.dip0.t-ipconnect.de [79.221.72.204])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3R5hij9019783
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 27 Apr 2013 01:43:45 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <5177F981.60105@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsUixO6iqDsptTrQYPV3JYuuK91MFg29V5gt
-	frT0MDswezzr3cPocfGSssfnTXIBzFHcNkmJJWXBmel5+nYJ3BnLrhxjKnjDVvFz0wWWBsZt
-	rF2MnBwSAiYSb3buYIOwxSQu3FsPZHNxCAlcZpTY9OkJI4Rznkli3bX5LCBVvALaEo+eP2cH
-	sVkEVCU+rloINolNQFdiUU8zE4gtKhAmsWr9MmaIekGJkzOfgPWKCKhJTGw7BGYzCxhJzFzz
-	gxHEFhaIk/g7ZRbU5q2MEhdWvAVLcApoSby+PocZokFH4l3fAyhbXmL72znMExgFZiHZMQtJ
-	2SwkZQsYmVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Vro5WaW6KWmlG5ihISvyA7GIyflDjEK
-	cDAq8fA2LqkKFGJNLCuuzD3EKMnBpCTKuya2OlCILyk/pTIjsTgjvqg0J7X4EKMEB7OSCK/C
-	M6By3pTEyqrUonyYlDQHi5I477fF6n5CAumJJanZqakFqUUwWRkODiUJ3twUoKGCRanpqRVp
-	mTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoGiNLwbGK0iKB2jv/mSgdt7igsRcoChE6ylGY45Z
-	W5+8ZuRYeQVICrHk5eelSonz5oNsEgApzSjNg1sES1yvGMWB/hbmrQKp4gEmPbh5r4BWMQGt
-	qp1eDrKqJBEhJdXAaKFSPlPrP99O7pn/t0i9+671fVUp56fp0xeu2HB0ibEs95envVecL2j1
-	R27+5H30tfeF/Wv3WrYJ5/VE/L4tNHWpR//lRx/XJGo6Wfy+4MPg6rez6nn3HrmA 
+	id S1752231Ab3D0HaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Apr 2013 03:30:14 -0400
+Received: from mail-lb0-f177.google.com ([209.85.217.177]:51954 "EHLO
+	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751767Ab3D0HaN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Apr 2013 03:30:13 -0400
+Received: by mail-lb0-f177.google.com with SMTP id x10so4393124lbi.36
+        for <git@vger.kernel.org>; Sat, 27 Apr 2013 00:30:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to
+         :subject:mime-version:content-type:content-transfer-encoding;
+        bh=+aHdi8ex4h1JXCQNo8tAygwHnv8umnDo62Yj/3sT8eI=;
+        b=UAgh1ElSwstp8blGz0WP2N8+LOGMuWadjDE+rGq7QFkCyEFxUrdbhcwhTi+meehYwo
+         s0rDkvJcv8JOWunO/oBURQ9m25Bm+UcxFV6TmonAZeYPYOnxzDqb4F4MoDWyM/veyquo
+         1wUq13Sk0WLfJ8yzOU8WXQV/BJVptlrxWksYFu57S3P2WeKECdB8MlezaLKCo6EXiceU
+         om3DCKXAfCQ/IFQ8/pdUu8nsgaikG1riz27iSMfRI0aZUAbUfACzisW1DvBvnBSFWBCq
+         JmXS3neVyStayc/8KezWcBnWnyRMkYrduP3aN/qgW5bLbHINtdQc24OJSpsPk+5Qk2jD
+         GEEA==
+X-Received: by 10.112.147.38 with SMTP id th6mr6675981lbb.119.1367047809064;
+        Sat, 27 Apr 2013 00:30:09 -0700 (PDT)
+Received: from [192.168.0.78] (92-100-233-116.dynamic.avangarddsl.ru. [92.100.233.116])
+        by mx.google.com with ESMTPSA id w6sm5897590law.8.2013.04.27.00.30.07
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 27 Apr 2013 00:30:07 -0700 (PDT)
+X-Mailer: Voyager (v3.99.4) Professional
+X-Priority: 3 (Normal)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222623>
 
-On 04/24/2013 05:25 PM, Michael Haggerty wrote:
-> On 04/23/2013 07:50 PM, Junio C Hamano wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->>
->>> Let me know if you would prefer that I re-roll.
->>
->> Your fix-up cleanly applied to the result of applying the series up
->> to 16/33 and it was trivial to squash it in.
->>
->> Please holler if what I push out on 'pu' in 8 hours or so looks
->> wrong.
-> 
-> It looks like you did the right thing, except using v1 of my patch
-> series rather than v2.  Please do the same procedure with v2: apply the
-> v2 series on top of jc/prune-all, apply the fixup commit "fixup! t3210",
-> and rebase the fixup to autosquash it onto patch 16/33.
-
-The new version (0859ff6fe6) that I just fetched from you looks right.
-
-Thanks!
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Hi.
+I ran 'git svn init', then
+    git config svn-remote.svn.preserve-empty-dirs true
+    git config svn-remote.svn.placeholder-filename ".gitignore"
+then 'git svn fetch' and I get this:
+    ...
+    r897 = dc26a4628a0e1fb79452a3f1953fbdc1feae69d1 (refs/remotes/svn/trunk)
+            M       pom.xml
+    Failed to strip path 'ADDBackEnd/api/src/main/java/com/sicap/dmc/addbe/api/services/local/.gitignore' ((?-xism:^trunk(/|$)))
