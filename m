@@ -1,54 +1,59 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v3 0/9] remote-helpers: fixes and cleanups
-Date: Sat, 27 Apr 2013 08:26:26 +0530
-Message-ID: <CALkWK0kgL_kUSUc2Y8aKah85P_X5u5g0nYNOw32Di-1xWH6X_Q@mail.gmail.com>
-References: <1367010759-17928-1-git-send-email-felipe.contreras@gmail.com>
+Subject: Re: [PATCH v4 01/11] Add new git-related helper to contrib
+Date: Sat, 27 Apr 2013 08:31:21 +0530
+Message-ID: <CALkWK0ks0yveTus9w=4MFoCjB6ujUUax4_o48Gy_yevyT6BeyA@mail.gmail.com>
+References: <1366919983-27521-1-git-send-email-felipe.contreras@gmail.com>
+ <1366919983-27521-2-git-send-email-felipe.contreras@gmail.com>
+ <CAMP44s0nvWvicFAJEqe0jC+zT3ZvA=Qx3MWXK36zYb2-uYV-aA@mail.gmail.com>
+ <7vhaisvqvl.fsf@alter.siamese.dyndns.org> <CAMP44s0XnEJWjzU-g=Gq2jJQu-9MJ8S84fAd-7bdomKWEeTCtw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Duy Nguyen <pclouds@gmail.com>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 27 04:57:12 2013
+X-From: git-owner@vger.kernel.org Sat Apr 27 05:02:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UVvK4-0007q8-CV
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 04:57:12 +0200
+	id 1UVvOq-0003us-3R
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 05:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754846Ab3D0C5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Apr 2013 22:57:08 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:33892 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750839Ab3D0C5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Apr 2013 22:57:07 -0400
-Received: by mail-ie0-f173.google.com with SMTP id k5so5673190iea.32
-        for <git@vger.kernel.org>; Fri, 26 Apr 2013 19:57:06 -0700 (PDT)
+	id S1754879Ab3D0DCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Apr 2013 23:02:03 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:56727 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753103Ab3D0DCC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Apr 2013 23:02:02 -0400
+Received: by mail-ie0-f176.google.com with SMTP id x14so5544773ief.7
+        for <git@vger.kernel.org>; Fri, 26 Apr 2013 20:02:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=Cm7GSK7fTbzSoe1ARVtKf4k5no8sUxQJ5aJiFCqech4=;
-        b=HV9e43zs7lqrpNW6lhDwWkGE7uDPG5aXte4lhAd6AKWI36UFGYIMKIdrx7vlCVS5xe
-         p5lgB8ofgOPRLGIuWlsg3UKJm0McKbHw/DnSSfXKKp31bSPmMADFRq92dnwRjF5ASgbH
-         LP7M59NPzdHicRdoQ8C91tyeXXQxFnsdFY4IHwK+eJyxDHt8gX2RPyGdzc6QesEQRQIh
-         Qu+sFP6nWF2INe082JNW+fAHyucJfb8zgV9d9e4a5qeDJ9bJBl9Hhc8fl02mMtAVA+8Q
-         CGWQJsgeV4B75RXWJXIQ/+wy7p28mZmm2BfjB0VBhYUzjpWUWz1+oGYD1RZq19D0idfY
-         3Dcw==
-X-Received: by 10.42.27.146 with SMTP id j18mr14397473icc.54.1367031426242;
- Fri, 26 Apr 2013 19:57:06 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Fri, 26 Apr 2013 19:56:26 -0700 (PDT)
-In-Reply-To: <1367010759-17928-1-git-send-email-felipe.contreras@gmail.com>
+        bh=J8aXh6ijROESUtIVjJw37GR7mnvjShzQEJEu/ZsfDLc=;
+        b=RmysDO5qaWWpBxXXzJBa3Unvg4hDNpO2NCDoVgVQ46qh5jQIyUl3KvdPvfWUFPMxmw
+         DUuniIQbqXUH33AlD3magRxftAuoCixtnBZB4SsFZkBtJwHCH3pJOKGGrY22sabO1gzz
+         r0R0zlpAvGKBOY8z7oFyiSm3vkReQq3U7OxQEN4e+35JMIKmwzHoA9Ts3483524uzxxk
+         L3o1Z+y5AXEtI0ZQeKAn9AKT8Ez/mHRpRtM5UKlZp9tokj1zqjvg06uEPSuoWeZaLV13
+         mHtbnUoH+B943ee3aj+aMT86dzwpjnT6iekFOWX4rzwllfBHJ8HTkLW8/0v0f1c+Mo9M
+         GoVw==
+X-Received: by 10.50.72.65 with SMTP id b1mr3371553igv.63.1367031721324; Fri,
+ 26 Apr 2013 20:02:01 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Fri, 26 Apr 2013 20:01:21 -0700 (PDT)
+In-Reply-To: <CAMP44s0XnEJWjzU-g=Gq2jJQu-9MJ8S84fAd-7bdomKWEeTCtw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222618>
 
 Felipe Contreras wrote:
-> Updated the commit messages, so we say Bazaar instead of Mercurial, and stuff.
->
-> Here's a bunch of cleanups mostly to synchronize remote-bzr and remote-hg.
+> That's fine, I was mostly asking Ramkumar who earlier argued earlier
+> versions of this patch were not understandable.
 
-Looks reasonable.  Thanks.
+Sorry, still catching up with list emails.  At a glance, part 1 looks
+much better.  Will read through more carefully soon.
+
+Thanks.
