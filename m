@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 03/11] completion; remove unuseful comments
-Date: Sat, 27 Apr 2013 05:19:46 -0500
-Message-ID: <1367057994-19887-4-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 04/11] completion: use __gitcompadd for __gitcomp_file
+Date: Sat, 27 Apr 2013 05:19:47 -0500
+Message-ID: <1367057994-19887-5-git-send-email-felipe.contreras@gmail.com>
 References: <1367057994-19887-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Manlio Perillo <manlio.perillo@gmail.com>,
@@ -15,63 +15,62 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UW2GC-0003IE-Ks
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 12:21:40 +0200
+	id 1UW2GD-0003IE-3Y
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 12:21:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755638Ab3D0KV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Apr 2013 06:21:26 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:43746 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755670Ab3D0KVU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Apr 2013 06:21:20 -0400
-Received: by mail-ob0-f177.google.com with SMTP id ef5so4173762obb.22
-        for <git@vger.kernel.org>; Sat, 27 Apr 2013 03:21:19 -0700 (PDT)
+	id S1755740Ab3D0KV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Apr 2013 06:21:27 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:39176 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755685Ab3D0KVX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Apr 2013 06:21:23 -0400
+Received: by mail-oa0-f41.google.com with SMTP id g12so4721669oah.28
+        for <git@vger.kernel.org>; Sat, 27 Apr 2013 03:21:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=wSEDXNZx5Jqk35aF3dw6Ssz546PVj5N8JNGQBwjoglk=;
-        b=cmQKQtFUfF4r70x2enrOwKpUfsgQ8O3Sf+1qy21fYwl4WhNrZwZk1DfY9ZyC/54/XN
-         oZyRPZKIyDBYCBiK+i1JSYa9a8ao5xdcRdTc4JoPxf+/8gAM21Za5aDsZHP3VF/uRAEk
-         H5yxZDW/vaA0tosL+Ac5M/qTGuvtFYyYZC5UScFWaB/ITUMy3OMROnyRLbL/xtUzN0eg
-         oUUrre25p1HCr7q8p0CrarDEqf8HqhOWiDbjrvr3lCnXg+Mr7cKrctny7t3txFQz6dce
-         +nwsJ2C4bp/Ztmg3uslM4yfQnPei2kekXJVfjAmUd7G4AFKUOfJjGRq8Q5XWs2QeYDvJ
-         311Q==
-X-Received: by 10.60.79.161 with SMTP id k1mr5702368oex.106.1367058079891;
-        Sat, 27 Apr 2013 03:21:19 -0700 (PDT)
+        bh=zvj66VWhRy6mzQXQOdfA6Uu6hCIzEk+ziq+vXi/u/N4=;
+        b=xSTsJLK1J/zhrHvDhoO7bDSyOiR2PiWc5chkho4Zj3rsASEDdFZN6dBX5gjxGcmU29
+         krLJTGhf1CFFA8wxT8nyfy0gJJNxJSjP23VlkG2w9yWEHqk4K+SAzoNzTCLpYXuSmCd+
+         GYHahGwK32FbgAxLwl5yoWncDW0MbbQJ2mOkO/ygEkX++AG7eAXeDsSKwVzWd5Ejfu23
+         Fg8jWaU8WDWp95vwjMtcch8hhrpfMpq+fdTVAFVGh5HiLVnAneNvlCrcUs3gSb0LKoUe
+         94h1kSy6maatd/uR5fTois2cH+SGalz8IAmCQD4eywGfCQVAk950DntiJBO5m/i0sPAy
+         OpuQ==
+X-Received: by 10.60.134.147 with SMTP id pk19mr3034228oeb.4.1367058082608;
+        Sat, 27 Apr 2013 03:21:22 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id zc8sm11666532obc.8.2013.04.27.03.21.18
+        by mx.google.com with ESMTPSA id x10sm12077465oes.6.2013.04.27.03.21.20
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 27 Apr 2013 03:21:19 -0700 (PDT)
+        Sat, 27 Apr 2013 03:21:21 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.1.1031.g2ee5873
 In-Reply-To: <1367057994-19887-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222630>
 
-The only caller, __git_complete_index_file() doesn't specify any limits
-to the options for 'git ls-files', neither should this function.
+Like the rest of the script does; let's not access COMPREPLY directly.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 2 --
- 1 file changed, 2 deletions(-)
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index bc3fc9e..f7b0f3c 100644
+index f7b0f3c..7f1ebe4 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -323,8 +323,6 @@ __git_diff_index_helper ()
+@@ -252,7 +252,7 @@ __gitcomp_file ()
+ 	# since tilde expansion is not applied.
+ 	# This means that COMPREPLY will be empty and Bash default
+ 	# completion will be used.
+-	COMPREPLY=($(compgen -P "${2-}" -W "$1" -- "${3-$cur}"))
++	__gitcompadd "$1" "${2-}" "${3-$cur}" ""
  
- # __git_index_files accepts 1 or 2 arguments:
- # 1: Options to pass to ls-files (required).
--#    Supported options are --cached, --modified, --deleted, --others,
--#    and --directory.
- # 2: A directory path (optional).
- #    If provided, only files within the specified directory are listed.
- #    Sub directories are never recursed.  Path must have a trailing
+ 	# Tell Bash that compspec generates filenames.
+ 	compopt -o filenames 2>/dev/null
 -- 
 1.8.2.1.1031.g2ee5873
