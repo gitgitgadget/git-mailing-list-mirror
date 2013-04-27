@@ -1,104 +1,125 @@
-From: Ilya Basin <basinilya@gmail.com>
-Subject: Re: git-svn --preserve-empty-dirs: Failed to strip path
-Date: Sat, 27 Apr 2013 19:05:16 +0400
-Message-ID: <1603362637.20130427190516@gmail.com>
-References: <917648658.20130427112832@gmail.com>
-Reply-To: Ilya Basin <basinilya@gmail.com>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [PATCH 00/11] completion: general cleanups
+Date: Sat, 27 Apr 2013 17:40:23 +0200
+Message-ID: <517BF167.7090300@gmail.com>
+References: <1367057994-19887-1-git-send-email-felipe.contreras@gmail.com>	<517BB798.4070703@gmail.com>	<CAMP44s1od7W0OufMhn2TCZTAo0aK9D+7VLzwVy7BSGNxAMuk6w@mail.gmail.com> <CAMP44s3h43S=A7+QEWuv0iefxbXyKZsiJ2QMdc-XiouoO3yYng@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 27 17:07:25 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	=?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 27 17:40:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UW6ig-0003G8-4u
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 17:07:22 +0200
+	id 1UW7En-00005J-6m
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 17:40:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755114Ab3D0PHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Apr 2013 11:07:15 -0400
-Received: from mail-la0-f41.google.com ([209.85.215.41]:49403 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753646Ab3D0PHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Apr 2013 11:07:14 -0400
-Received: by mail-la0-f41.google.com with SMTP id fq13so4359069lab.14
-        for <git@vger.kernel.org>; Sat, 27 Apr 2013 08:07:12 -0700 (PDT)
+	id S1755085Ab3D0Pk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Apr 2013 11:40:29 -0400
+Received: from mail-ee0-f52.google.com ([74.125.83.52]:59232 "EHLO
+	mail-ee0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754808Ab3D0Pk2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Apr 2013 11:40:28 -0400
+Received: by mail-ee0-f52.google.com with SMTP id d41so2051764eek.39
+        for <git@vger.kernel.org>; Sat, 27 Apr 2013 08:40:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
-         :subject:in-reply-to:references:mime-version:content-type
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
          :content-transfer-encoding;
-        bh=DpZNgxr69RdCtDA2C59MwECX0QPXdSosdtKLHoU8FVo=;
-        b=VoZ4kfigVEHGXKid2xP1zLQjodD/ySUImU2AyqraBPMgpxdlXxHqUOAhQemw48YLnv
-         tXJrIZZBeUL2ro+MpWuDwxu3pzBd/G+zAJKsiMVBA3JTTA1yo5w+mwl7yKGh2UoKRftQ
-         aJxFgAyYNn/dJSjor3UCXj9Ro18pZLUxLStDSnEEp5QpzDLsckSp3GmV3NOUJ8fOjIR9
-         nhAFR0yNK2R3EisrlIm13DIQwMDLVn9Gp4VOvA+zzaRFa51x8VXWiremiVB5UomFq0Em
-         c2vRAIVWkGllh91uXhH438S+k0NKop8/9tPYGUeq1X0oSnZQxkKjFA19r38jQea0fm3/
-         HpNQ==
-X-Received: by 10.112.146.98 with SMTP id tb2mr23648157lbb.77.1367075232237;
-        Sat, 27 Apr 2013 08:07:12 -0700 (PDT)
-Received: from [192.168.0.78] (92-100-233-116.dynamic.avangarddsl.ru. [92.100.233.116])
-        by mx.google.com with ESMTPSA id u2sm6513491lag.7.2013.04.27.08.07.03
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 27 Apr 2013 08:07:09 -0700 (PDT)
-X-Mailer: Voyager (v3.99.4) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <917648658.20130427112832@gmail.com>
+        bh=3Bjr2JWlnh56Qd/p2WJFWuHreOe8Lb+S45sWnQNNY5Y=;
+        b=iyclH+EyRkvqH1XKq23/Ai3c6KNBwXGriYtmkAbonGNd4FTFCuq1/DlwzJ4HqWak96
+         hPahwDhL5Av0kTXpRsZcUlAw2eUtPI0kGoKtbHVgtCYaP+0zcX/L+8ph773lyP+bCnRs
+         lk6kw5rpVPjPl0yt1g4cFNwsOB7HOIz2V9u8XwIr4AeLvBOHWckpb6n8U0373806ckCd
+         c560KFf6HEEpxp2aVLFLRC0pRntczGKeBeMgL8ueX+3zBb71QTdrnYUKtRg8iwBw1/YU
+         iKcXkOQDzhRt1Kl02bn2RH3VRBazmudul0VSY/DNr5dwU+rmO58ERlcHKDBbYs3V91uu
+         IqaQ==
+X-Received: by 10.14.182.72 with SMTP id n48mr101565825eem.3.1367077226982;
+        Sat, 27 Apr 2013 08:40:26 -0700 (PDT)
+Received: from [192.168.0.3] ([151.70.212.83])
+        by mx.google.com with ESMTPSA id b5sm22348708eew.16.2013.04.27.08.40.24
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 27 Apr 2013 08:40:26 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <CAMP44s3h43S=A7+QEWuv0iefxbXyKZsiJ2QMdc-XiouoO3yYng@mail.gmail.com>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222657>
 
-Small test script:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-    rm -rf testrepo.svn testrepo.gitsvn
-    svnadmin create testrepo.svn
-    url=file://`pwd`/testrepo.svn
+Il 27/04/2013 15:07, Felipe Contreras ha scritto:
+> [...]
+> This should do the trick. No?
+> 
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -262,16 +262,17 @@ __git_ls_files_helper ()
+>  #    If provided, only files within the specified directory are listed.
+>  #    Sub directories are never recursed.  Path must have a trailing
+>  #    slash.
+> +# 3. Compat mode; set to enable.
+>  __git_index_files ()
+>  {
+> -       local dir="$(__gitdir)" root="${2-.}" file
+> +       local dir="$(__gitdir)" root="${2-.}" file old="${3-}"
+> 
+>         if [ -d "$dir" ]; then
+>                 __git_ls_files_helper "$root" "$1" |
+>                 while read -r file; do
+>                         case "$file" in
+> -                       ?*/*) echo "${file%%/*}/" ;;
+> -                       *) echo "$file " ;;
+> +                       ?*/*) echo "${file%%/*}${old:+/}" ;;
+> +                       *) echo "${file}${old:+ }" ;;
+>                         esac
+>                 done | sort | uniq
+>         fi
+> @@ -480,7 +481,7 @@ __git_complete_revlist_file ()
+>  # The exception is --committable, which finds the files appropriate commit.
+>  __git_complete_index_file ()
+>  {
+> -       local pfx="" cur_="$cur"
+> +       local pfx="" cur_="$cur" old
+> 
+>         case "$cur_" in
+>         ?*/*)
+> @@ -490,7 +491,8 @@ __git_complete_index_file ()
+>                 ;;
+>         esac
+> 
+> -       __gitcomp_nl "$(__git_index_files "$1" "$pfx")" "$pfx" "$cur_" ""
+> +       compopt -o filenames +o nospace 2> /dev/null || old=1
+> +       __gitcomp_nl "$(__git_index_files "$1" "$pfx" "$old")" "$pfx" "$cur_" ""
+>  }
+> 
+>  __git_complete_file ()
+> 
 
-    svn mkdir -m "" "$url/trunk" "$url/branches" "$url/tags"
-    rm -rf testrepo
-    svn co "$url" testrepo
-    cd testrepo/trunk
+I like the idea (but I have not tested it), however compopt is called
+two times, for each completion.
 
-    mkdir -p foo/bar/
-    svn add foo/
-    svn commit -mx
+Maybe we can test for `-o filenames` support when script is loaded,
+where currently there is a Bash version check, and set a global variable?
 
-    svn rm foo/bar/
-    svn commit -mx
 
-    svn up
-    mkdir -p baz/
-    svn add baz/
-    svn commit -mx
 
-    echo x > fil.txt
-    svn add fil.txt
-    svn commit -mx
+Regards   Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-    cd ../..
-
-    git svn clone --stdlayout --preserve-empty-dirs "$url" testrepo.gitsvn
-
-result:
-
-    Initialized empty Git repository in /tmp/testrepo.gitsvn/.git/
-    r1 = 677463d6218c2229f81a8d891479435250cb9c87 (refs/remotes/trunk)
-    r2 = f61c011cc800eaa9953026b8bd4534c9cc7825a8 (refs/remotes/trunk)
-            D       foo/bar/.gitignore
-            D       foo/bar/
-    W: -empty_dir: trunk/foo/bar
-    r3 = b674724183fe4960b1b10813c41a91c5b22e805e (refs/remotes/trunk)
-    r4 = 8b1c8fdbf9b43390efb37b053c868a5f40567249 (refs/remotes/trunk)
-            A       fil.txt
-    Failed to strip path 'foo/.gitignore' ((?-xism:^trunk(/|$)))
-    
-
-git version 1.8.2
-
--- 
+iEYEARECAAYFAlF78WcACgkQscQJ24LbaUSjzgCfWq26RMqFLgGU9B8C0mb+Wogu
+A5IAnjKpupGbdOZAKtYZkglYKSmbqtqK
+=iTzW
+-----END PGP SIGNATURE-----
