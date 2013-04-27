@@ -1,99 +1,85 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] complete: zsh: use zsh completion for the main cmd
-Date: Sat, 27 Apr 2013 16:53:49 -0500
-Message-ID: <CAMP44s1dEydqNWH+dFTCj13dfOCVym9XHCYnx12E5hosYNF9Rg@mail.gmail.com>
-References: <1367094846-9830-1-git-send-email-felipe.contreras@gmail.com>
-	<1367094846-9830-3-git-send-email-felipe.contreras@gmail.com>
-	<7vtxmrsleq.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 27 23:53:59 2013
+Subject: [PATCH] documentation: trivial whitespace cleanups
+Date: Sat, 27 Apr 2013 17:00:07 -0500
+Message-ID: <1367100007-13711-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 28 00:01:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWD48-0000Ej-2j
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 23:53:56 +0200
+	id 1UWDBc-0006By-DC
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Apr 2013 00:01:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754122Ab3D0Vxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Apr 2013 17:53:52 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:38252 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753521Ab3D0Vxv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Apr 2013 17:53:51 -0400
-Received: by mail-la0-f48.google.com with SMTP id eo20so4456854lab.21
-        for <git@vger.kernel.org>; Sat, 27 Apr 2013 14:53:49 -0700 (PDT)
+	id S1755178Ab3D0WB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Apr 2013 18:01:27 -0400
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:59706 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754835Ab3D0WB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Apr 2013 18:01:26 -0400
+Received: by mail-oa0-f53.google.com with SMTP id m6so5004569oag.26
+        for <git@vger.kernel.org>; Sat, 27 Apr 2013 15:01:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=Dp8qM/fS/DxZfjYgpBMmnrd6/0EKiqerwVDMQ8VVnbs=;
-        b=tUJqjzqsjBMnUfHAwyZI9UyMeFX/XWQIeRRUYEj7Ubu7alaVlfEZ7E/qiXRfC6UBJY
-         fljM0t15gDlZhUl5bhAnWG+JghMxKqPYXEyKA53DuLbO2qlFWtwvYdjZiWl2SQEwLbnt
-         TNZFXF/OVUNf13i/wjcRnDA8unWJVIPth24IyafU07swpX06axdwDRWpG3xKnX+XauI5
-         62d9zSvu80kVXMxB152kTEGfzsYYJqst/c037/bUnNbsA/IXE+KE91OsInpiZJ9fsVwG
-         UHFR5jR0+uZ4GAUiN4AIU0JrYIODdD0h2AOv3r5MJBbB74DnhmU7VXwFCyfOXdITUgb0
-         A6LQ==
-X-Received: by 10.112.154.98 with SMTP id vn2mr22808549lbb.8.1367099629804;
- Sat, 27 Apr 2013 14:53:49 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Sat, 27 Apr 2013 14:53:49 -0700 (PDT)
-In-Reply-To: <7vtxmrsleq.fsf@alter.siamese.dyndns.org>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=8d/NFw31vMhQbd3qP4/nIHA9DGHi6zMcBKTbPtvWTVg=;
+        b=fUa4INkM2PgiWCCaU9Bv8676qgUJYlPLB+Dwx6VPWNctAbtQGwhVC8xozivprDYxoq
+         OftQNefd8OZzXmF9YtJH4red4Exoz4g5OJSxxDel9g9bhdEWn+pGwVHK6AmTVLszVo/a
+         fgw55ByJmo8kJG64mlGPYFz3aEbrCY6qu9loCpwW0d5C5u0hHAp7Mqa83hQ90/FLhwJE
+         wPCzUrMjVzFONC8xXUT8VJR2FX6M7vpKYGsdkwuBqa71W3pvHGijfVsCL1fUEbiPYmGe
+         ZlYspNxaBX0KhQpYnB/Rakb2K1Uq9QjZAmF0HSeLxo48HB+xryvG1rJ43J0sVmRtpBFo
+         N+7g==
+X-Received: by 10.182.66.41 with SMTP id c9mr20123778obt.76.1367100085762;
+        Sat, 27 Apr 2013 15:01:25 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id ri8sm2173172oeb.0.2013.04.27.15.01.23
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 27 Apr 2013 15:01:24 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.1.1031.g2ee5873
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222708>
 
-On Sat, Apr 27, 2013 at 4:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> +__git_zsh_cmd_common ()
->> +{
->> +     local -a list
->> +     list=(
->> +     add:'add file contents to the index'
->> +     bisect:'find by binary search the change that introduced a bug'
->> +     branch:'list, create, or delete branches'
->> +     checkout:'checkout a branch or paths to the working tree'
->> +     clone:'clone a repository into a new directory'
->> +     commit:'record changes to the repository'
->> +     diff:'show changes between commits, commit and working tree, etc'
->> +     fetch:'download objects and refs from another repository'
->> +     grep:'print lines matching a pattern'
->> +     init:'create an empty Git repository or reinitialize an existing one'
->> +     log:'show commit logs'
->> +     merge:'join two or more development histories together'
->> +     mv:'move or rename a file, a directory, or a symlink'
->> +     pull:'fetch from and merge with another repository or a local branch'
->> +     push:'update remote refs along with associated objects'
->> +     rebase:'forward-port local commits to the updated upstream head'
->> +     reset:'reset current HEAD to the specified state'
->> +     rm:'remove files from the working tree and from the index'
->> +     show:'show various types of objects'
->> +     status:'show the working tree status'
->> +     tag:'create, list, delete or verify a tag object signed with GPG')
->
-> Maintaining this list feels somewhat painful.  Isn't this something
-> we can help by tweaking "git help"?
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Documentation/config.txt | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-Yes, that's the way Bazaar does it (bzr shell-complete), but for now
-this does the trick.
-
-Also, I've been carrying around the patches from Stephen Boyd that add
---dump-raw-long-options. I think it would be better if somehow 'git
-help' learned how to throw this output for both commands and
-arguments, and then use the first part for bash, or specify bash
-format somehow. Of course, we would need to add support for
-descriptions in the option parser.
-
-It's the big world-domination plan for completions, but I haven't had
-time to work on that.
-
-Cheers.
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index c67038b..6e53fc5 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1104,11 +1104,11 @@ format.thread::
+ 	value disables threading.
+ 
+ format.signoff::
+-    A boolean value which lets you enable the `-s/--signoff` option of
+-    format-patch by default. *Note:* Adding the Signed-off-by: line to a
+-    patch should be a conscious act and means that you certify you have
+-    the rights to submit this work under the same open source license.
+-    Please see the 'SubmittingPatches' document for further discussion.
++	A boolean value which lets you enable the `-s/--signoff` option of
++	format-patch by default. *Note:* Adding the Signed-off-by: line to a
++	patch should be a conscious act and means that you certify you have
++	the rights to submit this work under the same open source license.
++	Please see the 'SubmittingPatches' document for further discussion.
+ 
+ format.coverLetter::
+ 	A boolean that controls whether to generate a cover-letter when
+@@ -1225,7 +1225,7 @@ gitcvs.dbname::
+ 
+ gitcvs.dbdriver::
+ 	Used Perl DBI driver. You can specify any available driver
+-        for this here, but it might not work. git-cvsserver is tested
++	for this here, but it might not work. git-cvsserver is tested
+ 	with 'DBD::SQLite', reported to work with 'DBD::Pg', and
+ 	reported *not* to work with 'DBD::mysql'. Experimental feature.
+ 	May not contain double colons (`:`). Default: 'SQLite'.
 -- 
-Felipe Contreras
+1.8.2.1.1031.g2ee5873
