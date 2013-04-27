@@ -1,94 +1,135 @@
-From: Javier Domingo <javierdo1@gmail.com>
-Subject: Re: Making a (quick) commit to another branch
-Date: Sat, 27 Apr 2013 16:21:31 +0200
-Message-ID: <CALZVap=9Z=0DPM1fNwotn3sN-W7mXMPRSJ2aY5jzkQTBD6v=Kw@mail.gmail.com>
-References: <517BDB6D.8040809@cedarsoft.com>
+From: Knut Franke <Knut.Franke@gmx.de>
+Subject: [PATCH] gitk: Add menu item for reverting commits
+Date: Sat, 27 Apr 2013 16:36:13 +0200
+Message-ID: <1367073373.12513.3.camel@Vger>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schneider <mailings@cedarsoft.com>
-X-From: git-owner@vger.kernel.org Sat Apr 27 16:21:59 2013
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 27 16:36:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UW60j-0007fc-Aw
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 16:21:57 +0200
+	id 1UW6Ef-0008IN-On
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 16:36:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753854Ab3D0OVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Apr 2013 10:21:53 -0400
-Received: from mail-vb0-f45.google.com ([209.85.212.45]:58380 "EHLO
-	mail-vb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753315Ab3D0OVw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Apr 2013 10:21:52 -0400
-Received: by mail-vb0-f45.google.com with SMTP id p14so4270637vbm.18
-        for <git@vger.kernel.org>; Sat, 27 Apr 2013 07:21:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=k4oWRIMmO9tuWdvJ3EEM0llBK1xPk68t7WO8JJMnMvY=;
-        b=uxxZAfLO6aCteNBjS8Ax4g13Kc/0+38LJEEo/YtppxSY1oS8BSSUZnuDoj4bDc2spK
-         QLf8iKckShYrZsz8pC7SPGvsQ/JnEH9sgqPNLJ5nUTAnoSmTqGN+TKEWU9l5VQzXhj3c
-         jwZmDw4NRRoZMSPCpwlin9oevoBmaocIp63y0xl1B40XUYlyxB1wQrI724HZR1tGLdyo
-         BUgshTrv/WPJF0t7xdGfOaDqDjyxhMJ2sx/K/Z4wBgnsDS+p7yV0ov7HxpfB7eWdaOKm
-         OaatJnhcXSxNOQXbvdlRTD3z+u21f3xWY2LSnh4jtRgNCTvjiku3pY4SP1CcNLXZSPwc
-         hvRg==
-X-Received: by 10.52.75.8 with SMTP id y8mr26018896vdv.2.1367072511641; Sat,
- 27 Apr 2013 07:21:51 -0700 (PDT)
-Received: by 10.58.196.197 with HTTP; Sat, 27 Apr 2013 07:21:31 -0700 (PDT)
-In-Reply-To: <517BDB6D.8040809@cedarsoft.com>
+	id S1755767Ab3D0OgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Apr 2013 10:36:17 -0400
+Received: from mout.gmx.net ([212.227.17.22]:61351 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755595Ab3D0OgQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Apr 2013 10:36:16 -0400
+Received: from mailout-de.gmx.net ([10.1.76.4]) by mrigmx.server.lan
+ (mrigmx002) with ESMTP (Nemesis) id 0MLDZP-1UVpFe1VhZ-000IWg for
+ <git@vger.kernel.org>; Sat, 27 Apr 2013 16:36:15 +0200
+Received: (qmail invoked by alias); 27 Apr 2013 14:36:15 -0000
+Received: from f051078105.adsl.alicedsl.de (EHLO [192.168.1.4]) [78.51.78.105]
+  by mail.gmx.net (mp004) with SMTP; 27 Apr 2013 16:36:15 +0200
+X-Authenticated: #377055
+X-Provags-ID: V01U2FsdGVkX1873i9TCvk7RoVrzs8Ad7zXV/rdlH5BXG61CGXgVz
+	EPKDS//bWi+k+0
+X-Mailer: Evolution 3.2.3-0ubuntu6 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222654>
 
-2013/4/27 Johannes Schneider <mailings@cedarsoft.com>:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> Hi guys,
->
-> I love git. And I use it every day. But there is one minor thing, that
-> bugs me a little bit:
-> I am implementing something on a feature branch. Now I detect a minor
-> typo/bug/whatever that just needs a one line commit.
->
-> But of course I don't want to add that commit to my feature branch.
-> Instead I'd like to commit that fix directly to another branch (e.g.
-> master).
->
-> Unfortunately that take a lot of steps to make this happen:
-> - - comitting
-> - - stashing other changes
-> - - changing branch
-> - - cherry-picking commit
-> - - switching branches back
-> - - reverting latest commit
-> - - unstashing changes
->
-> I'd love to solve this by having an option for git commit that gives
-> me the possibility to commit to another branch:
->
->
-> git commit thefixedfile.txt -m "fixed a typo" -b master
->
->
->
-> Any ideas/hints?
->
+Sometimes it's helpful (at least psychologically) to have this feature
+easily accessible. Code borrows heavily from cherrypick.
 
-I would first recommend you, instead of cherry-picking the commit, you did this:
--- stash
--- go to the master branch
--- fix the line
--- commit the fix
--- got to the feature branch
--- unstash
+Signed-off-by: Knut Franke <Knut.Franke@gmx.de>
+---
+ gitk |   62
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
-As when you merge with master, git will carry on with the changes. I
-don't see the need to cherry pick that commit.
-
-Javier Domingo
+diff --git a/gitk b/gitk
+index 572f73f..fb1a6ce 100755
+--- a/gitk
++++ b/gitk
+@@ -2562,6 +2562,7 @@ proc makewindow {} {
+ 	{mc "Compare with marked commit" command compare_commits}
+ 	{mc "Diff this -> marked commit" command {diffvsmark 0}}
+ 	{mc "Diff marked commit -> this" command {diffvsmark 1}}
++	{mc "Revert this commit" command revert}
+     }
+     $rowctxmenu configure -tearoff 0
+ 
+@@ -9347,6 +9348,67 @@ proc cherrypick {} {
+     notbusy cherrypick
+ }
+ 
++proc revert {} {
++    global rowmenuid curview
++    global mainhead mainheadid
++    global gitdir
++
++    set oldhead [exec git rev-parse HEAD]
++    set dheads [descheads $rowmenuid]
++    if { $dheads eq {} || [lsearch -exact $dheads $oldhead] == -1 } {
++       set ok [confirm_popup [mc "Commit %s is not\
++           included in branch %s -- really revert it?" \
++                      [string range $rowmenuid 0 7] $mainhead]]
++       if {!$ok} return
++    }
++    nowbusy revert [mc "Reverting"]
++    update
++
++    if [catch {exec git revert --no-edit $rowmenuid} err] {
++        notbusy revert
++        if [regexp {files would be overwritten by merge:(\n(( |\t)+[^
+\n]+\n)+)}\
++                $err match files] {
++            regsub {\n( |\t)+} $files "\n" files
++            error_popup [mc "Revert failed because of local changes to
+\
++                the following files:%s Please commit, reset or stash \
++                your changes and try again." $files]
++        } elseif [regexp {error: could not revert} $err] {
++            if [confirm_popup [mc "Revert failed because of merge
+conflict.\n\
++                Do you wish to run git citool to resolve it?"]] {
++                # Force citool to read MERGE_MSG
++                file delete [file join $gitdir "GITGUI_MSG"]
++                exec_citool {} $rowmenuid
++            }
++        } else { error_popup $err }
++        run updatecommits
++        return
++    }
++
++    set newhead [exec git rev-parse HEAD]
++    if { $newhead eq $oldhead } {
++        notbusy revert
++        error_popup [mc "No changes committed"]
++        return
++    }
++
++    addnewchild $newhead $oldhead
++
++    if [commitinview $oldhead $curview] {
++        # XXX this isn't right if we have a path limit...
++        insertrow $newhead $oldhead $curview
++        if {$mainhead ne {}} {
++            movehead $newhead $mainhead
++            movedhead $newhead $mainhead
++        }
++        set mainheadid $newhead
++        redrawtags $oldhead
++        redrawtags $newhead
++        selbyid $newhead
++    }
++
++    notbusy revert
++}
++
+ proc resethead {} {
+     global mainhead rowmenuid confirm_ok resettype NS
+ 
+-- 
+1.7.9.5
