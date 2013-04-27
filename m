@@ -1,88 +1,102 @@
-From: Johannes Schneider <mailings@cedarsoft.com>
-Subject: Making a (quick) commit to another branch
-Date: Sat, 27 Apr 2013 16:06:37 +0200
-Message-ID: <517BDB6D.8040809@cedarsoft.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] git-gui: fix file name handling with non-empty prefix
+Date: Sat, 27 Apr 2013 15:18:39 +0100
+Message-ID: <20130427141839.GF472@serenity.lan>
+References: <264998b2b2201b7d6ab9bfa8b5518f712b3a6a08.1367069056.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 27 16:14:11 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Andrew Wong <andrew.kw.w@gmail.com>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sat Apr 27 16:18:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UW5tC-0006av-2M
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 16:14:10 +0200
+	id 1UW5xk-0003yL-Ff
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 16:18:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753477Ab3D0ONz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Apr 2013 10:13:55 -0400
-Received: from hosting.cedarsoft.com ([176.9.39.58]:44000 "EHLO
-	mail.cedarsoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752106Ab3D0ONy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Apr 2013 10:13:54 -0400
-X-Greylist: delayed 432 seconds by postgrey-1.27 at vger.kernel.org; Sat, 27 Apr 2013 10:13:54 EDT
-Received: from [192.168.0.81] (HSI-KBW-149-172-123-74.hsi13.kabel-badenwuerttemberg.de [149.172.123.74])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	id S1753859Ab3D0OSs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Apr 2013 10:18:48 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:35730 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753315Ab3D0OSr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Apr 2013 10:18:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id C7DC16064F2;
+	Sat, 27 Apr 2013 15:18:46 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vG1qVxCb8Yrk; Sat, 27 Apr 2013 15:18:46 +0100 (BST)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by mail.cedarsoft.com (Postfix) with ESMTPSA id D98421E0349
-	for <git@vger.kernel.org>; Sat, 27 Apr 2013 16:06:37 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-X-Enigmail-Version: 1.4.6
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 1E9AD6064D7;
+	Sat, 27 Apr 2013 15:18:41 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <264998b2b2201b7d6ab9bfa8b5518f712b3a6a08.1367069056.git.john@keeping.me.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222652>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I got a bounce with "550 no such user" for Pat's email address when
+sending this.  Does anyone have more up-to-date contact details?  Or is
+it just SourceForge being broken?
 
-Hi guys,
-
-I love git. And I use it every day. But there is one minor thing, that
-bugs me a little bit:
-I am implementing something on a feature branch. Now I detect a minor
-typo/bug/whatever that just needs a one line commit.
-
-But of course I don't want to add that commit to my feature branch.
-Instead I'd like to commit that fix directly to another branch (e.g.
-master).
-
-Unfortunately that take a lot of steps to make this happen:
-- - comitting
-- - stashing other changes
-- - changing branch
-- - cherry-picking commit
-- - switching branches back
-- - reverting latest commit
-- - unstashing changes
-
-I'd love to solve this by having an option for git commit that gives
-me the possibility to commit to another branch:
-
-
-git commit thefixedfile.txt -m "fixed a typo" -b master
-
-
-
-Any ideas/hints?
-
-
-Thanks,
-
-Johannes
-
-- -- 
-Johannes Schneider - blog.cedarsoft.com
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJRe9ttAAoJEAytD9R7Qv6dPakH/2WshAEXM9JW2+OFW/9ZxEeL
-IQuE4U1OiIH9BRT9XixHQ0+d+Nay/510nFJw0kLLtOl3wRx1ybMvaennYp17Aqi6
-yVnDuYbhIsjQD5lFAueLsfDgZdawmWMEOMf/Sk5pX5GLjo9k9+mi/J3KDCqH89Dc
-FofgMVsZcXtFB7WS9YzzabOhfomIWhY48R8CblSatzB/r5R4xsTk6eryAgBZvaIz
-d2Rh9a54OVRBGeGX3mdgIgVWRHbquU+b1h4Lm8QraTfNGy4uN0hRtzFb356j7xq9
-UlA3CqW+w6lyBK14fdQ232jgRTkAPfgms0IShtD9UgBV0o+RBTe1Oa9abZ7sskY=
-=J4Dg
------END PGP SIGNATURE-----
+On Sat, Apr 27, 2013 at 02:24:16PM +0100, John Keeping wrote:
+> Commit e3d06ca (git-gui: Detect full path when parsing arguments -
+> 2012-10-02) fixed the handling of absolute paths passed to the browser
+> and blame subcommands by checking whether the file exists without the
+> prefix before prepending the prefix and checking again.  Since we have
+> chdir'd to the top level of the working tree before doing this, this
+> does not work if a file with the same name exists in a subdirectory and
+> at the top level (for example Makefile in git.git's t/ directory).
+> 
+> Instead of doing this, revert that patch and fix absolute path issue by
+> using "file join" to prepend the prefix to the supplied path.  This will
+> correctly handle absolute paths by skipping the prefix in that case.
+> 
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+>  git-gui.sh | 14 +++-----------
+>  1 file changed, 3 insertions(+), 11 deletions(-)
+> 
+> diff --git a/git-gui.sh b/git-gui.sh
+> index e133331..a94ad7f 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -3003,19 +3003,11 @@ blame {
+>  	set jump_spec {}
+>  	set is_path 0
+>  	foreach a $argv {
+> -		if {[file exists $a]} {
+> -			if {$path ne {}} usage
+> -			set path [normalize_relpath $a]
+> -			break
+> -		} elseif {[file exists $_prefix$a]} {
+> -			if {$path ne {}} usage
+> -			set path [normalize_relpath $_prefix$a]
+> -			break
+> -		}
+> +		set p [file join $_prefix $a]
+>  
+> -		if {$is_path} {
+> +		if {$is_path || [file exists $p]} {
+>  			if {$path ne {}} usage
+> -			set path [normalize_relpath $_prefix$a]
+> +			set path [normalize_relpath $p]
+>  			break
+>  		} elseif {$a eq {--}} {
+>  			if {$path ne {}} {
+> -- 
+> 1.8.3.rc0.149.g98a72f2.dirty
