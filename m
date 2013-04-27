@@ -1,125 +1,158 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: [PATCH 00/11] completion: general cleanups
-Date: Sat, 27 Apr 2013 13:33:44 +0200
-Message-ID: <517BB798.4070703@gmail.com>
-References: <1367057994-19887-1-git-send-email-felipe.contreras@gmail.com>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH v2] merge-tree: don't print entries that match "local"
+Date: Sat, 27 Apr 2013 13:35:57 +0200
+Message-ID: <517BB81D.10909@lsrfire.ath.cx>
+References: <0a6a0c978569906b8c8d9209a85338554e503236.1364419952.git.john@keeping.me.uk> <7vk3osjwgv.fsf@alter.siamese.dyndns.org> <20130327225739.GT2286@serenity.lan> <20130328093458.GV2286@serenity.lan> <7vk3oe2j85.fsf@alter.siamese.dyndns.org> <20130407210751.GM2222@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	=?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 27 13:34:19 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sat Apr 27 13:36:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UW3OU-0000HM-AJ
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 13:34:18 +0200
+	id 1UW3QF-0002LS-Sv
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 13:36:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755638Ab3D0LeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Apr 2013 07:34:14 -0400
-Received: from mail-ee0-f41.google.com ([74.125.83.41]:64185 "EHLO
-	mail-ee0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755196Ab3D0LeN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Apr 2013 07:34:13 -0400
-Received: by mail-ee0-f41.google.com with SMTP id c50so1673337eek.14
-        for <git@vger.kernel.org>; Sat, 27 Apr 2013 04:34:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=+XxSBiYG1WtcjEmMsv2/kviq0W8mjt+OF4rv7sbQuh4=;
-        b=j+YB92g/fVaJodlt+LWi5oqPLZJZgCi7Mlf9xUHZgYP69blwSg1ZkI/YpzFkNhPXkF
-         EzEdtNOFiq0C441gZucM2kWoFTEuJ+Fp/+jmhkWe0IqD1gcxu/cX/gh7ZRXn5ATY6mTt
-         5Fppb4R976eqpuLuV5F16ybebho9ALIrRLIaWoaFRrTSANkTSd+uZEcyq2Ag3Dc85fjk
-         KHO9YZLOQnYeV3QgA2MKEXeU0+iNyhxZpv1GPmBG83BCcXiY6vdNWcKPotC1WB4BVLQ5
-         uIy9GWd5NP40cECOnRPe42ZlVKXNz3uehc+/XJehxu+ih7M7t21EfRQ9OfWGHZlT1DfB
-         dOCg==
-X-Received: by 10.14.219.8 with SMTP id l8mr77347638eep.40.1367062451757;
-        Sat, 27 Apr 2013 04:34:11 -0700 (PDT)
-Received: from [192.168.0.3] ([151.70.212.83])
-        by mx.google.com with ESMTPSA id j43sm21340840eep.4.2013.04.27.04.34.09
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 27 Apr 2013 04:34:10 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-In-Reply-To: <1367057994-19887-1-git-send-email-felipe.contreras@gmail.com>
-X-Enigmail-Version: 1.0.1
+	id S1755595Ab3D0LgD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Apr 2013 07:36:03 -0400
+Received: from india601.server4you.de ([85.25.151.105]:49278 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752637Ab3D0LgB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Apr 2013 07:36:01 -0400
+Received: from [192.168.2.105] (p579BE62C.dip0.t-ipconnect.de [87.155.230.44])
+	by india601.server4you.de (Postfix) with ESMTPSA id A5CB0324;
+	Sat, 27 Apr 2013 13:35:59 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <20130407210751.GM2222@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222639>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Am 07.04.2013 23:07, schrieb John Keeping:
+> The documentation says:
+>
+> 	the output from the command omits entries that match the
+> 	<branch1> tree.
+>
+> But currently "added in branch1" and "removed in branch1" (both while
+> unchanged in branch2) do print output.  Change this so that the
+> behaviour matches the documentation.
+>
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+>   builtin/merge-tree.c  | 26 +++++++++++++-------------
+>   t/t4300-merge-tree.sh | 10 ----------
+>   2 files changed, 13 insertions(+), 23 deletions(-)
+>
+> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+> index bc912e3..ed25d81 100644
+> --- a/builtin/merge-tree.c
+> +++ b/builtin/merge-tree.c
+> @@ -155,6 +155,11 @@ static int same_entry(struct name_entry *a, struct name_entry *b)
+>   		a->mode == b->mode;
+>   }
+>
+> +static int both_empty(struct name_entry *a, struct name_entry *b)
+> +{
+> +	return !(a->sha1 || b->sha1);
+> +}
+> +
+>   static struct merge_list *create_entry(unsigned stage, unsigned mode, const unsigned char *sha1, const char *path)
+>   {
+>   	struct merge_list *res = xcalloc(1, sizeof(*res));
+> @@ -297,13 +302,10 @@ static void unresolved(const struct traverse_info *info, struct name_entry n[3])
+>   static int threeway_callback(int n, unsigned long mask, unsigned long dirmask, struct name_entry *entry, struct traverse_info *info)
+>   {
+>   	/* Same in both? */
+> -	if (same_entry(entry+1, entry+2)) {
+> -		if (entry[0].sha1) {
+> -			/* Modified identically */
+> -			resolve(info, NULL, entry+1);
+> -			return mask;
+> -		}
+> -		/* "Both added the same" is left unresolved */
+> +	if (same_entry(entry+1, entry+2) || both_empty(entry+0, entry+2)) {
 
-Il 27/04/2013 12:19, Felipe Contreras ha scritto:
-> Hi,
-> 
-> Basically while trying to understand the code for path completion, I found that
-> a lot of code was duplicated, and for not much gain.
-> 
-> I also noticed that doing 'git add file' doesn't add the trailing space as
-> before. It's not clear if it should be possible to do that with -o filenames,
-> but after all, what do -o filenames gives us? Nothing we can't do ourselves,
-> apparently.
-> 
+Shouldn't this zero be a one instead?
 
-No, you can not do it yourself, as far as I know.
+> +		/* Modified, added or removed identically */
+> +		resolve(info, NULL, entry+1);
+> +		return mask;
+>   	}
+>
+>   	if (same_entry(entry+0, entry+1)) {
+> @@ -319,12 +321,10 @@ static int threeway_callback(int n, unsigned long mask, unsigned long dirmask, s
+>   		 */
+>   	}
+>
+> -	if (same_entry(entry+0, entry+2)) {
+> -		if (entry[1].sha1 && !S_ISDIR(entry[1].mode)) {
+> -			/* We modified, they did not touch -- take ours */
+> -			resolve(info, NULL, entry+1);
+> -			return mask;
+> -		}
+> +	if (same_entry(entry+0, entry+2) || both_empty(entry+0, entry+2)) {
 
-I added the `compopt -o filenames` on Junio request for something like
-"It  would be nice if completion for real files would behave like
-builtin bash completion", if I remember correctly.
+Otherwise the both_empty check here can be removed because we'd have 
+already returned above if it was true.
 
-Try `git rm contrib/completion/<TAB>`, in the git reporitory.
+But do we actually want to resolve the removal of a file on both sides 
+silently?  The added comment above says so, but the commit message 
+doesn't mention it.
 
-Using the new feature, bash will suggest:
-"git-completion.bash  git-completion.tcsh  git-completion.zsh
-git-prompt.sh"
-
-Old behaviour, instead, was to suggest:
-"contrib/completion/git-completion.bash
-contrib/completion/git-completion.zsh
-contrib/completion/git-completion.tcsh  contrib/completion/git-prompt.sh"
-
-I tried several things, but I was unable to emulate Bash builtin file
-completion, whithout having to use `compopt -o filenames`.
-
-
-
-As far as the "double slash" problem with the
-__git_index_file_list_filter_bash function, please try
-`git rm contrib<TAB>`.
-
-With current code, Bash will suggest:
-"blameview/ diffall/ git-shell-commands/"
-
-If you remove the __git_index_file_list_filter_bash function and use
-__git_index_file_list_filter_compat instead, Bash will suggest:
-
-"blameview// diffall// git-shell-commands//"
-
-I can confirm this on my system, and it was confirmed by another user.
-It only happens when you use `compopt -o filenames`. I don't know if
-this is a bug or a feature, but I can try to ask to Bash mailing list,
-so that we can update the comment to make more clear why a separate
-function was needed.
-
-
-> [...]
-
-
-Regards  Manlio
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAlF7t5gACgkQscQJ24LbaUSO5QCffllxM8RbGUP47kb7uL5J3drF
-hkUAn26ezKptTAC412EJZnxjh7RVcdAO
-=Piyz
------END PGP SIGNATURE-----
+> +		/* We added, modified or removed, they did not touch -- take ours */
+> +		resolve(info, NULL, entry+1);
+> +		return mask;
+>   	}
+>
+>   	unresolved(info, entry);
+> diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
+> index d0b2a45..bd43b3d 100755
+> --- a/t/t4300-merge-tree.sh
+> +++ b/t/t4300-merge-tree.sh
+> @@ -26,8 +26,6 @@ EXPECTED
+>
+>   test_expect_success 'file add !A, B' '
+>   	cat >expected <<\EXPECTED &&
+> -added in local
+> -  our    100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
+>   EXPECTED
+>
+>   	git reset --hard initial &&
+> @@ -38,9 +36,6 @@ EXPECTED
+>
+>   test_expect_success 'file add A, B (same)' '
+>   	cat >expected <<\EXPECTED &&
+> -added in both
+> -  our    100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
+> -  their  100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
+>   EXPECTED
+>
+>   	git reset --hard initial &&
+> @@ -181,9 +176,6 @@ AAA" &&
+>
+>   test_expect_success 'file remove A, !B' '
+>   	cat >expected <<\EXPECTED &&
+> -removed in local
+> -  base   100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
+> -  their  100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
+>   EXPECTED
+>
+>   	git reset --hard initial &&
+> @@ -283,8 +275,6 @@ test_expect_success 'turn tree to file' '
+>   	test_commit "make-file" "dir" "CCC" &&
+>   	git merge-tree add-tree add-another-tree make-file >actual &&
+>   	cat >expect <<-\EOF &&
+> -	added in local
+> -	  our    100644 ba629238ca89489f2b350e196ca445e09d8bb834 dir/another
+>   	removed in remote
+>   	  base   100644 43d5a8ed6ef6c00ff775008633f95787d088285d dir/path
+>   	  our    100644 43d5a8ed6ef6c00ff775008633f95787d088285d dir/path
+>
