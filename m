@@ -1,77 +1,116 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 8/9] completion: add space after completed filename
-Date: Sat, 27 Apr 2013 15:10:06 -0500
-Message-ID: <1367093407-8898-9-git-send-email-felipe.contreras@gmail.com>
-References: <1367093407-8898-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Manlio Perillo <manlio.perillo@gmail.com>,
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [PATCH 00/11] completion: general cleanups
+Date: Sat, 27 Apr 2013 22:13:15 +0200
+Message-ID: <517C315B.2080106@gmail.com>
+References: <1367057994-19887-1-git-send-email-felipe.contreras@gmail.com>	<517BB798.4070703@gmail.com>	<CAMP44s1od7W0OufMhn2TCZTAo0aK9D+7VLzwVy7BSGNxAMuk6w@mail.gmail.com>	<CAMP44s3h43S=A7+QEWuv0iefxbXyKZsiJ2QMdc-XiouoO3yYng@mail.gmail.com>	<517BF167.7090300@gmail.com> <CAMP44s32WrnFr9Lp03Wu8gC6=FaACBtDbi1rnu=bo94Aa73TBA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 27 22:12:00 2013
+	=?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 27 22:13:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWBTT-0000Wy-GZ
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 22:11:59 +0200
+	id 1UWBUq-0001n1-Fh
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 22:13:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756473Ab3D0ULv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Apr 2013 16:11:51 -0400
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:43651 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756392Ab3D0ULt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Apr 2013 16:11:49 -0400
-Received: by mail-ob0-f171.google.com with SMTP id er7so4468751obc.16
-        for <git@vger.kernel.org>; Sat, 27 Apr 2013 13:11:49 -0700 (PDT)
+	id S1754290Ab3D0UNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Apr 2013 16:13:20 -0400
+Received: from mail-ee0-f42.google.com ([74.125.83.42]:46621 "EHLO
+	mail-ee0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752141Ab3D0UNT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Apr 2013 16:13:19 -0400
+Received: by mail-ee0-f42.google.com with SMTP id c41so1875896eek.29
+        for <git@vger.kernel.org>; Sat, 27 Apr 2013 13:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=CkRachw7BQrFqpOMhIJ6+lR9sDw6lDnqZbkVfzoZDMo=;
-        b=bv/kH/s6MKQrUPnqa2HRdlBZrFrao9Bl5D4/SFoG33qjsq9TlEPl58KCDVU52JfNv6
-         9XGdgIkd6VNMWlPRvG1B5ZEMSQJ7OiVs0+lo1u/TOow5YKT8pwwwLFMQUqXy1auaTKZA
-         MNkSvoYypf2xuPbxzMJD3Ku1YceGwnuRg2xVEeOyfDrjUunXTqBhAqX88xI0m0nw2rIJ
-         BEtSyI6j8CsFEv9+M2wOR6Zx5jHIz6yXImazll1ZnzPyPQu3qP/2I8FFk6eqqd4pIVjw
-         QoBt3SFheAxG/YE8u9RyBbsoBwNeQkYTT3jkrNPYGe8eCBqdWoBCziymQ4ykBFQpRma4
-         hRfg==
-X-Received: by 10.60.132.36 with SMTP id or4mr20822614oeb.112.1367093509444;
-        Sat, 27 Apr 2013 13:11:49 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id zc8sm13338275obc.8.2013.04.27.13.11.47
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=gJIHcr0qtE2C+Jbk0O2Hks74GC3mKlmXWdQ+MVYlxNg=;
+        b=GOpG1RSCtx8GBHXGa5e1d71WHEsNcM/biYJSbP3hC544ufGZ+mLj4WAVC6YC9Xvf9L
+         0EYUTsR0pYgepUWCQDjU4VNk1Bx2tjS4ItgP2u1pCt7+3gzeGH+5SE4ureRDfVb1Sgh+
+         tIU60aSInY+ZBP0WSUvdWjpUgB4dsyNY00NPvw7/Ea5YZBKNCRd4a6w7eTDcoAH6FrMm
+         s6NgF6nGNFa9I25V6aFL0JcEp344W7AvdXZIn3aV2VdaS6caY/1/UgyOs38s7YuaLKu7
+         GMolbeeHcn7Gmwb9n34DtKN+LVlfejdNo6sfwGxprH5T5SqCirPQNRS8vlgToA1Lct1E
+         PDPA==
+X-Received: by 10.14.87.199 with SMTP id y47mr103897559eee.17.1367093598569;
+        Sat, 27 Apr 2013 13:13:18 -0700 (PDT)
+Received: from [192.168.0.3] ([151.70.212.83])
+        by mx.google.com with ESMTPSA id cd3sm23691126eeb.6.2013.04.27.13.13.16
         for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 27 Apr 2013 13:11:48 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.1031.g2ee5873
-In-Reply-To: <1367093407-8898-1-git-send-email-felipe.contreras@gmail.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 27 Apr 2013 13:13:17 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <CAMP44s32WrnFr9Lp03Wu8gC6=FaACBtDbi1rnu=bo94Aa73TBA@mail.gmail.com>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222692>
 
-Just like before fea16b4 (git-completion.bash: add support for path
-completion).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Il 27/04/2013 21:15, Felipe Contreras ha scritto:
+> [...]
+>>> @@ -480,7 +481,7 @@ __git_complete_revlist_file ()
+>>>  # The exception is --committable, which finds the files appropriate commit.
+>>>  __git_complete_index_file ()
+>>>  {
+>>> -       local pfx="" cur_="$cur"
+>>> +       local pfx="" cur_="$cur" old
+>>>
+>>>         case "$cur_" in
+>>>         ?*/*)
+>>> @@ -490,7 +491,8 @@ __git_complete_index_file ()
+>>>                 ;;
+>>>         esac
+>>>
+>>> -       __gitcomp_nl "$(__git_index_files "$1" "$pfx")" "$pfx" "$cur_" ""
+>>> +       compopt -o filenames +o nospace 2> /dev/null || old=1
+>>> +       __gitcomp_nl "$(__git_index_files "$1" "$pfx" "$old")" "$pfx" "$cur_" ""
+>>>  }
+>>>
+>>>  __git_complete_file ()
+>>>
+>>
+>> I like the idea (but I have not tested it), however compopt is called
+>> two times, for each completion.
+> 
+> Why two times?
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index f9e8e7d..20c9718 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -255,7 +255,7 @@ __gitcomp_file ()
- 	__gitcompadd "$1" "${2-}" "${3-$cur}" ""
- 
- 	# use a hack to enable file mode in bash < 4
--	compopt -o filenames 2>/dev/null ||
-+	compopt -o filenames +o nospace 2>/dev/null ||
- 	compgen -f /non-existing-dir/ > /dev/null
- }
- 
--- 
-1.8.2.1.1031.g2ee5873
+Ah, right; sorry.
+I missed the fact that you are using __gitcomp_nl instead of my
+__gitcomp_file.
+
+> 
+>> Maybe we can test for `-o filenames` support when script is loaded,
+>> where currently there is a Bash version check, and set a global variable?
+> 
+> Yeah, that's the way bash-completion used to do it. But I wonder if we
+> should be worrying about this at this point, even bash-completion
+> dropped support for bash < 4 more than two years ago, and even debian
+> stable is at 4.1.
+> 
+
+I'm +0.
+
+> [...]
+
+
+Regards  Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAlF8MVsACgkQscQJ24LbaUSY/wCgkq8CQeVGNpZFtchiLAKXYpxS
+wsAAnR0abrQzA1jW+Do7CSuJOZVMRuJu
+=zPgk
+-----END PGP SIGNATURE-----
