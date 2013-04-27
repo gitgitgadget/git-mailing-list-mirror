@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 5/9] completion: refactor diff_index wrappers
-Date: Sat, 27 Apr 2013 15:10:03 -0500
-Message-ID: <1367093407-8898-6-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 7/9] completion: add hack to enable file mode in bash < 4
+Date: Sat, 27 Apr 2013 15:10:05 -0500
+Message-ID: <1367093407-8898-8-git-send-email-felipe.contreras@gmail.com>
 References: <1367093407-8898-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Manlio Perillo <manlio.perillo@gmail.com>,
@@ -15,178 +15,131 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWBTI-0000Il-5v
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 22:11:48 +0200
+	id 1UWBTJ-0000Il-4k
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Apr 2013 22:11:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756325Ab3D0ULm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Apr 2013 16:11:42 -0400
-Received: from mail-oa0-f44.google.com ([209.85.219.44]:46475 "EHLO
-	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755093Ab3D0ULl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Apr 2013 16:11:41 -0400
-Received: by mail-oa0-f44.google.com with SMTP id h1so5008874oag.17
-        for <git@vger.kernel.org>; Sat, 27 Apr 2013 13:11:40 -0700 (PDT)
+	id S1756421Ab3D0ULr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Apr 2013 16:11:47 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:57947 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756348Ab3D0ULq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Apr 2013 16:11:46 -0400
+Received: by mail-ob0-f178.google.com with SMTP id 16so4393670obc.23
+        for <git@vger.kernel.org>; Sat, 27 Apr 2013 13:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=xA2XhJjsiHLNn4l9RYS0jnwJAprEo6tG98kMVINYUx0=;
-        b=P+Oq9bOV2NlHPlqBSmYTEGRGNK9Jf5OHSXpygMQKeFaiou9sw8mlbI0rV6l36Cf+zf
-         K984/6vnWAMjDAIXUwDfz82tm9hJBBJiaAEmfCXC0mxI7zpFl07IVXW68iex0wz8TiuY
-         chzky/wf2WMbjwCKMinYOVZU9ZlmDFCj00weDLxdnfIvzTx5BLic3eFYk4TNS4o+m0tp
-         eOGjY2GphuCoFNTIKxzw7YdjCLcQ2EiKLbfNcP3GjTkA9CYFL7umENmfjSbqLQlRjdX9
-         lQpruJsBeEeJeu/iAK+s9kEMNmC30tU06aiArkbYyMdER/lZlQgV8yMBU2fgDJvvDyMD
-         gXUw==
-X-Received: by 10.182.156.20 with SMTP id wa20mr20514193obb.59.1367093500323;
-        Sat, 27 Apr 2013 13:11:40 -0700 (PDT)
+        bh=Bo7BDmNcoPQiAootfIOoGye2wTZJCQNdiemd1tuzhRM=;
+        b=iSMJehPfflsnWaIlVvBlJmiCTD0N2Ba4h4qXiCSBHTuDhZKkWo435T8qar6rB7dD92
+         mjWDy/y2gP6WrP66PjtM5POPEFziblPR0eZEMfZVUCBAnMxodYu7Vt/z8IZ7bn2Vo8wL
+         heiOrD9nE0hMYaXsRDPUafcaLOXlbgWBAiXhez3KZAEn4EX23O3II1SNCl/wSjXMm61n
+         /uOTltG9xG/LazmqyVvRwQMWRM5oDtYJ6/BGq3C2bv/yvnZWWg0Lyd4vmZzfQklyZFu3
+         ObO/xJA6hQYMqUd89XMFGpH2MDz/9VePspIknsRIs3NJcRoyuvSKUAlT+0qE4tzc6bIM
+         jxaw==
+X-Received: by 10.60.60.227 with SMTP id k3mr25657502oer.97.1367093506102;
+        Sat, 27 Apr 2013 13:11:46 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id wq8sm13170142obb.7.2013.04.27.13.11.38
+        by mx.google.com with ESMTPSA id b2sm13341268oby.5.2013.04.27.13.11.44
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 27 Apr 2013 13:11:39 -0700 (PDT)
+        Sat, 27 Apr 2013 13:11:45 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.1.1031.g2ee5873
 In-Reply-To: <1367093407-8898-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222686>
 
-At the end of the day what we really need is to find out the files that
-have been staged, or modified, because those files are the ones that
-make sense to pass as arguments to 'git commit'.
+This way we don't need all the compat stuff, different filters, and so
+on. Also, now we complete exactly the same in bash 3 and bash 4.
 
-We need diff-index to find those out, since 'git ls-files' doesn't do
-that.
+This is the way bash-completion did it for quite some time, when bash 3
+was supported. For more information about the hack:
 
-But we don't need wrappers and wrappers basically identical to the ones
-used for 'git ls-files', when we can pretend it receives a --committable
-option that would return what we need.
-
-That way, we can remove a bunch of code without any functional changes.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=272660#64
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 71 ++++++++--------------------------
- 1 file changed, 16 insertions(+), 55 deletions(-)
+ contrib/completion/git-completion.bash | 43 ++++++----------------------------
+ 1 file changed, 7 insertions(+), 36 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 7f1ebe4..2561265 100644
+index 9cea170..f9e8e7d 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -297,30 +297,25 @@ __git_index_file_list_filter ()
- 	__git_index_file_list_filter_bash
+@@ -254,33 +254,21 @@ __gitcomp_file ()
+ 	# completion will be used.
+ 	__gitcompadd "$1" "${2-}" "${3-$cur}" ""
+ 
+-	# Tell Bash that compspec generates filenames.
+-	compopt -o filenames 2>/dev/null
++	# use a hack to enable file mode in bash < 4
++	compopt -o filenames 2>/dev/null ||
++	compgen -f /non-existing-dir/ > /dev/null
  }
  
--# Execute git ls-files, returning paths relative to the directory
--# specified in the first argument, and using the options specified in
--# the second argument.
-+# Execute 'git ls-files', unless the --committable option is specified, in
-+# which case it runs 'git diff-index' to find out the files that can be
-+# committed.  It return paths relative to the directory specified in the first
-+# argument, and using the options specified in the second argument.
- __git_ls_files_helper ()
- {
- 	(
- 		test -n "${CDPATH+set}" && unset CDPATH
--		# NOTE: $2 is not quoted in order to support multiple options
--		cd "$1" && git ls-files --exclude-standard $2
-+		cd "$1"
-+		if [ "$2" == "--committable" ]; then
-+			git diff-index --name-only --relative HEAD
-+		else
-+			# NOTE: $2 is not quoted in order to support multiple options
-+			git ls-files --exclude-standard $2
-+		fi
- 	) 2>/dev/null
- }
- 
- 
--# Execute git diff-index, returning paths relative to the directory
--# specified in the first argument, and using the tree object id
--# specified in the second argument.
--__git_diff_index_helper ()
+-__git_index_file_list_filter_compat ()
 -{
--	(
--		test -n "${CDPATH+set}" && unset CDPATH
--		cd "$1" && git diff-index --name-only --relative "$2"
--	) 2>/dev/null
+-	local path
+-
+-	while read -r path; do
+-		case "$path" in
+-		?*/*) echo "${path%%/*}/" ;;
+-		*) echo "$path" ;;
+-		esac
+-	done
 -}
 -
- # __git_index_files accepts 1 or 2 arguments:
- # 1: Options to pass to ls-files (required).
- # 2: A directory path (optional).
-@@ -337,22 +332,6 @@ __git_index_files ()
- 	fi
+-__git_index_file_list_filter_bash ()
++# Process path list returned by "ls-files" and "diff-index --name-only"
++# commands, in order to list only file names relative to a specified
++# directory, and append a slash to directory names.
++__git_index_file_list_filter ()
+ {
+ 	local path
+ 
+ 	while read -r path; do
+ 		case "$path" in
+ 		?*/*)
+-			# XXX if we append a slash to directory names when using
+-			# `compopt -o filenames`, Bash will append another slash.
+-			# This is pretty stupid, and this the reason why we have to
+-			# define a compatible version for this function.
+ 			echo "${path%%/*}" ;;
+ 		*)
+ 			echo "$path" ;;
+@@ -288,15 +276,6 @@ __git_index_file_list_filter_bash ()
+ 	done
  }
  
--# __git_diff_index_files accepts 1 or 2 arguments:
--# 1) The id of a tree object.
--# 2) A directory path (optional).
--#    If provided, only files within the specified directory are listed.
--#    Sub directories are never recursed.  Path must have a trailing
--#    slash.
--__git_diff_index_files ()
+-# Process path list returned by "ls-files" and "diff-index --name-only"
+-# commands, in order to list only file names relative to a specified
+-# directory, and append a slash to directory names.
+-__git_index_file_list_filter ()
 -{
--	local dir="$(__gitdir)" root="${2-.}"
+-	# Default to Bash >= 4.x
+-	__git_index_file_list_filter_bash
+-}
 -
--	if [ -d "$dir" ]; then
--		__git_diff_index_helper "$root" "$1" | __git_index_file_list_filter |
--			sort | uniq
+ # Execute 'git ls-files', unless the --committable option is specified, in
+ # which case it runs 'git diff-index' to find out the files that can be
+ # committed.  It return paths relative to the directory specified in the first
+@@ -2651,14 +2630,6 @@ if [[ -n ${ZSH_VERSION-} ]]; then
+ 
+ 	compdef _git git gitk
+ 	return
+-elif [[ -n ${BASH_VERSION-} ]]; then
+-	if ((${BASH_VERSINFO[0]} < 4)); then
+-		# compopt is not supported
+-		__git_index_file_list_filter ()
+-		{
+-			__git_index_file_list_filter_compat
+-		}
 -	fi
--}
--
- __git_heads ()
- {
- 	local dir="$(__gitdir)"
-@@ -550,8 +529,10 @@ __git_complete_revlist_file ()
- }
+ fi
  
- 
--# __git_complete_index_file requires 1 argument: the options to pass to
--# ls-file
-+# __git_complete_index_file requires 1 argument:
-+# 1: the options to pass to ls-file
-+#
-+# The exception is --committable, which finds the files appropriate commit.
- __git_complete_index_file ()
- {
- 	local pfx cur_="$cur"
-@@ -570,26 +551,6 @@ __git_complete_index_file ()
- 	esac
- }
- 
--# __git_complete_diff_index_file requires 1 argument: the id of a tree
--# object
--__git_complete_diff_index_file ()
--{
--	local pfx cur_="$cur"
--
--	case "$cur_" in
--	?*/*)
--		pfx="${cur_%/*}"
--		cur_="${cur_##*/}"
--		pfx="${pfx}/"
--
--		__gitcomp_file "$(__git_diff_index_files "$1" "$pfx")" "$pfx" "$cur_"
--		;;
--	*)
--		__gitcomp_file "$(__git_diff_index_files "$1")" "" "$cur_"
--		;;
--	esac
--}
--
- __git_complete_file ()
- {
- 	__git_complete_revlist_file
-@@ -1211,7 +1172,7 @@ _git_commit ()
- 	esac
- 
- 	if git rev-parse --verify --quiet HEAD >/dev/null; then
--		__git_complete_diff_index_file "HEAD"
-+		__git_complete_index_file "--committable"
- 	else
- 		# This is the first commit
- 		__git_complete_index_file "--cached"
+ __git_func_wrap ()
 -- 
 1.8.2.1.1031.g2ee5873
