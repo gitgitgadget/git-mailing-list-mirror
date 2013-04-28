@@ -1,143 +1,96 @@
 From: Ilya Basin <basinilya@gmail.com>
-Subject: [PATCH 1/5] git-svn: fix occasional "Failed to strip path" error on
- fetch next commit, try #3
-Date: Mon, 29 Apr 2013 00:10:35 +0400
-Message-ID: <5180046b.6905700a.65c8.00b4@mx.google.com>
+Subject: [PATCH 2/5] git-svn-test: don't test for possible bug "Failed to
+ strip path", try #3
+Date: Mon, 29 Apr 2013 00:10:53 +0400
+Message-ID: <5180046d.6905700a.65c8.00b5@mx.google.com>
 Cc: Ray Chen <rchen@cs.umd.edu>, Eric Wong <normalperson@yhbt.net>
 To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 30 19:50:45 2013
+X-From: git-owner@vger.kernel.org Tue Apr 30 19:50:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXEhQ-00044j-6M
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 19:50:44 +0200
+	id 1UXEhQ-00044j-Mb
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 19:50:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760751Ab3D3Ruj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1760848Ab3D3Ruk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 13:50:40 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:44857 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759165Ab3D3Ruj (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 30 Apr 2013 13:50:39 -0400
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:60021 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758951Ab3D3Rui (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 13:50:38 -0400
-Received: by mail-lb0-f177.google.com with SMTP id x10so773661lbi.8
-        for <git@vger.kernel.org>; Tue, 30 Apr 2013 10:50:36 -0700 (PDT)
+Received: by mail-lb0-f170.google.com with SMTP id r10so791068lbi.1
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 10:50:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:message-id:from:date:subject:to:cc;
-        bh=h0BV4GhJLKxd+OBWX6W6ah7BbnC+5N0gSx4OnfNSHTo=;
-        b=vH2coq1MKPaZHwPGZUs1SQsk+FM9ddTKGURLFHC6qNg5eE+49N1Q/jUI8DVTXknOlC
-         h8JnGrnHqBmIWX4l1hYm47Nt2QfhyAJpXogODSnZvBafZ0PHE+hpop7Zwvyut+uw/hVM
-         qaVyYcpMt5ZdbBjTPf92oimcprT/6tgOUh+jkFAqI6g9YRtcam62wAlhiXFAS/NKQRfH
-         4ODAtVb52Yn6LoHr6aKQ1xTpM5dbH5BMUX0HGFukA24xy3CGwEaq8cEFHUnIeWXqF+1H
-         Bm+d4cTWrrN06zJDudwK/NFFKKuDq521PsRAE7HXHLKeVgjzXan0NU7Een7C6+pzObB9
-         zBVg==
-X-Received: by 10.112.147.99 with SMTP id tj3mr29063786lbb.94.1367344236428;
-        Tue, 30 Apr 2013 10:50:36 -0700 (PDT)
+        bh=+wp9jN1SIFYZ37WrQcZtvtMUANpO675anj22Tq8GoN8=;
+        b=WSm32cnSrGe1Pf6WMCjA7vhUNMjZnGfNFFYDKHrT4cEspGfQ1XWXxNIs5Pa7ZV7NWO
+         gzEuE+iwqRdgrlORmhMBIw3tKqVM4Emi17VXHU4nNPo7FPY09EY+r+1d6q9HwBp+U/tG
+         PzbRteBXwOo5xomf7X4d8onrU6PjYRjxZsLk2Cxsfl5NPTL/Ufm4efqqyq8nUZfmi0Cd
+         f6dDaID6P9m+oVwYjNW899a7YceJcIJhuvftw6E96DS3vYs1c3Wbkj+5pxwWoDN9dWOC
+         OGrQ/xImHX56PAQr9lOA4mpyMllSaGvync1+94bRwY9BUtMLlyNTHpbeVtJjLNAO9fQq
+         +2Yg==
+X-Received: by 10.112.136.161 with SMTP id qb1mr14692729lbb.134.1367344238130;
+        Tue, 30 Apr 2013 10:50:38 -0700 (PDT)
 Received: from [192.168.0.78] ([178.71.111.32])
-        by mx.google.com with ESMTPSA id r9sm18577lbr.3.2013.04.30.10.50.34
+        by mx.google.com with ESMTPSA id r9sm18577lbr.3.2013.04.30.10.50.36
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Apr 2013 10:50:35 -0700 (PDT)
+        Tue, 30 Apr 2013 10:50:37 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222969>
 
-When --stdlayout and --preserve-empty-dirs flags are used and a
-directory becomes empty, two things happen:
-
-Sometimes find_empty_directories() returns empty list and no empty dir
-placeholder file created. This happens, because find_empty_directories()
-marks all directories as non-empty, if at least one updated directory is
-non-empty.
-
-Sometimes git-svn dies with "Failed to strip path" error. This happens,
-because find_empty_directories() returns git paths and
-add_placeholder_file() expects svn paths
+In the previous commit a showcase was added to
+t9160-git-svn-preserve-empty-dirs.sh for the "Failed to strip path" bug.
+Now the flag --stdlayout should be enough.
 ---
- perl/Git/SVN/Fetcher.pm                | 12 ++++++++----
- t/t9160-git-svn-preserve-empty-dirs.sh | 18 +++++++++++++-----
- 2 files changed, 21 insertions(+), 9 deletions(-)
+ t/t9160-git-svn-preserve-empty-dirs.sh | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/perl/Git/SVN/Fetcher.pm b/perl/Git/SVN/Fetcher.pm
-index 046a7a2..4f96076 100644
---- a/perl/Git/SVN/Fetcher.pm
-+++ b/perl/Git/SVN/Fetcher.pm
-@@ -129,6 +129,7 @@ sub is_path_ignored {
- 
- sub set_path_strip {
- 	my ($self, $path) = @_;
-+	$self->{pathprefix_strip} = length $path ? ($path . "/") : "";
- 	$self->{path_strip} = qr/^\Q$path\E(\/|$)/ if length $path;
- }
- 
-@@ -458,9 +459,12 @@ sub find_empty_directories {
- 		my $skip_added = 0;
- 		foreach my $t (qw/dir_prop file_prop/) {
- 			foreach my $path (keys %{ $self->{$t} }) {
--				if (exists $self->{$t}->{dirname($path)}) {
--					$skip_added = 1;
--					last;
-+				if (length $self->git_path($path)) {
-+					$path = dirname($path);
-+					if ($dir eq $self->git_path($path) && exists $self->{$t}->{$path}) {
-+						$skip_added = 1;
-+						last;
-+					}
- 				}
- 			}
- 			last if $skip_added;
-@@ -477,7 +481,7 @@ sub find_empty_directories {
- 		delete $files{$_} foreach (@deleted_gpath);
- 
- 		# Report the directory if there are no filenames left.
--		push @empty_dirs, $dir unless (scalar %files);
-+		push @empty_dirs, ($self->{pathprefix_strip} . $dir) unless (scalar %files);
- 	}
- 	@empty_dirs;
- }
 diff --git a/t/t9160-git-svn-preserve-empty-dirs.sh b/t/t9160-git-svn-preserve-empty-dirs.sh
-index b4a4434..1b5a286 100755
+index 1b5a286..43b1852 100755
 --- a/t/t9160-git-svn-preserve-empty-dirs.sh
 +++ b/t/t9160-git-svn-preserve-empty-dirs.sh
-@@ -51,13 +51,21 @@ test_expect_success 'initialize source svn repo containing empty dirs' '
+@@ -51,21 +51,13 @@ test_expect_success 'initialize source svn repo containing empty dirs' '
  		echo "Conflict file" > 5/.placeholder &&
  		mkdir 6/.placeholder &&
  		svn_cmd add 5/.placeholder 6/.placeholder &&
--		svn_cmd commit -m "Placeholder Namespace conflict"
-+		svn_cmd commit -m "Placeholder Namespace conflict" &&
-+
-+		echo x > fil.txt &&
-+		svn_cmd add fil.txt &&
-+		svn_cmd commit -m "this commit should not kill git-svn"
+-		svn_cmd commit -m "Placeholder Namespace conflict" &&
+-
+-		echo x > fil.txt &&
+-		svn_cmd add fil.txt &&
+-		svn_cmd commit -m "this commit should not kill git-svn"
++		svn_cmd commit -m "Placeholder Namespace conflict"
  	) &&
  	rm -rf "$SVN_TREE"
  '
  
--test_expect_success 'clone svn repo with --preserve-empty-dirs' '
--	git svn clone "$svnrepo"/trunk --preserve-empty-dirs "$GIT_REPO"
-+test_expect_success 'clone svn repo with --preserve-empty-dirs --stdlayout' '
-+	git svn clone "$svnrepo" --preserve-empty-dirs --stdlayout "$GIT_REPO" || (
-+		cd "$GIT_REPO"
-+		git svn fetch # fetch the rest can succeed even if clone failed
-+		false # this test still failed
-+	)
+ test_expect_success 'clone svn repo with --preserve-empty-dirs --stdlayout' '
+-	git svn clone "$svnrepo" --preserve-empty-dirs --stdlayout "$GIT_REPO" || (
+-		cd "$GIT_REPO"
+-		git svn fetch # fetch the rest can succeed even if clone failed
+-		false # this test still failed
+-	)
++	git svn clone "$svnrepo" --preserve-empty-dirs --stdlayout "$GIT_REPO"
  '
  
  # "$GIT_REPO"/1 should only contain the placeholder file.
-@@ -81,11 +89,11 @@ test_expect_success 'add entry to previously empty directory' '
+@@ -89,11 +81,11 @@ test_expect_success 'add entry to previously empty directory' '
  	test -f "$GIT_REPO"/4/a/b/c/foo
  '
  
--# The HEAD~2 commit should not have introduced .gitignore placeholder files.
-+# The HEAD~3 commit should not have introduced .gitignore placeholder files.
+-# The HEAD~3 commit should not have introduced .gitignore placeholder files.
++# The HEAD~2 commit should not have introduced .gitignore placeholder files.
  test_expect_success 'remove non-last entry from directory' '
  	(
  		cd "$GIT_REPO" &&
--		git checkout HEAD~2
-+		git checkout HEAD~3
+-		git checkout HEAD~3
++		git checkout HEAD~2
  	) &&
  	test_must_fail test -f "$GIT_REPO"/2/.gitignore &&
  	test_must_fail test -f "$GIT_REPO"/3/.gitignore
