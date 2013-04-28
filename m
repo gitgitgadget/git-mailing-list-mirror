@@ -1,66 +1,69 @@
-From: ryenus <ryenus@gmail.com>
-Subject: git merge/rebase ref -P ref
-Date: Sun, 28 Apr 2013 23:35:50 +0800
-Message-ID: <CAKkAvawit0L4JKKNs7Di46B=Y0VjPohKNbjnS=r07VhafXu4kQ@mail.gmail.com>
+From: John Gallagher <johnkgallagher@gmail.com>
+Subject: `git describe` in an export-subst format string?
+Date: Sun, 28 Apr 2013 14:02:04 -0400
+Message-ID: <CAFoDJR8RQExLwXcrViAJpWgvq+wBopY-Wq1keHxVqB3QwtAz4A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 28 17:36:18 2013
+X-From: git-owner@vger.kernel.org Sun Apr 28 20:02:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWTeD-00051b-7f
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Apr 2013 17:36:17 +0200
+	id 1UWVvP-0001cU-FX
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Apr 2013 20:02:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753774Ab3D1PgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Apr 2013 11:36:13 -0400
-Received: from mail-we0-f172.google.com ([74.125.82.172]:54438 "EHLO
-	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753314Ab3D1PgM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Apr 2013 11:36:12 -0400
-Received: by mail-we0-f172.google.com with SMTP id r6so729571wey.31
-        for <git@vger.kernel.org>; Sun, 28 Apr 2013 08:36:11 -0700 (PDT)
+	id S1754970Ab3D1SCG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Apr 2013 14:02:06 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:53206 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753958Ab3D1SCF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Apr 2013 14:02:05 -0400
+Received: by mail-ie0-f176.google.com with SMTP id x14so6430530ief.7
+        for <git@vger.kernel.org>; Sun, 28 Apr 2013 11:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:from:date:message-id:subject:to
+        h=mime-version:x-received:date:message-id:subject:from:to
          :content-type;
-        bh=gj+qXPWsXylLOYXJYsm5Sm4h7CzVvzqATQ2W0p1lBrg=;
-        b=gkd6KzY6666Yecof2uDgSCEyscOHM97oWUz/PvYyxRxTbNiHZ+Ul4mltRfPtMenkn1
-         hdnKVsNp91Dkl7F1spWwt7HY9cdy59Bhj24AMAwn3/y32U7ceMIjzkSYkQXFasP1vzA7
-         glD34s5etuFBnk0yo+hqeDIwogazZdRmgQjTQSCtOA0MfaTMi6K1WRsE8CfX4MgLJ/LD
-         a/o55zJP9j++owmrUrIIT+QTxgxvMjEv/7n1H5RcGs5Iu8UFcgFRhmqbIlJu5GNj8h9W
-         u4YZVRM8Na11IySnpbrdrCFU2sOhDhuMmXTeaGkX7Z8maDWGOqI6ToMkaWarTB9EUSty
-         muHw==
-X-Received: by 10.194.62.233 with SMTP id b9mr31585453wjs.37.1367163371008;
- Sun, 28 Apr 2013 08:36:11 -0700 (PDT)
-Received: by 10.194.92.48 with HTTP; Sun, 28 Apr 2013 08:35:50 -0700 (PDT)
+        bh=AD2orvQ412EKwuonPGQUYbA1ISyz6prniZR5+4lqChw=;
+        b=N/+vxPSpfx/eSKr8I/0hMuH+J2JF8TJ+cj9fD7QVSOc1uRVOpj7oI0DfTimDkkB/73
+         YI3xx5+DT3bL/yr8e9cpVUs6IUD4tfvPeTJJ6ErHmiD8HeqL1c+8MLB2SVRH3TTLg3Uu
+         PnGqkPlwbsZqJzSr08guZ8dRYZIuTfG5ImdEuq74yKmoYwc+drrCm5IFqcRkp4tFOmmM
+         QTu58XB7yRR0mJQI3XOLwBbMH80H9BiC5bXnNjZYpEkGxWDvrDzZdSc5+7reOqEaLhzF
+         /5CGHB9Cu1kPpVKeNnkxuL/dRAttAg+585Z3Ua2JLHD4mI7cgnzURVyGbvqfBnruvN3K
+         JeQQ==
+X-Received: by 10.50.7.42 with SMTP id g10mr28068iga.97.1367172124534; Sun, 28
+ Apr 2013 11:02:04 -0700 (PDT)
+Received: by 10.64.48.168 with HTTP; Sun, 28 Apr 2013 11:02:04 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222737>
 
-The inverted meaning of {ours,theirs} for rebase could be very
-confusing to some, especially to new uses, for me every time I
-merge/rebase I need to think about it to make sure I've made it right.
+I originally posted this as a question about getting `git log` to
+output the same thing that `git describe` does to the git-users
+mailing list, and was directed here. The actual thing I want to do is
+something like this:
 
-What about making it more intuitive?
+  static const char *project_version = "$Format:...$";
 
-We can and a new option (like '-P') for people to specify the
-preferred branch/ref by it's name.
+where "..." is something that `git archive` will replace with the
+output of `git describe`, given the file has the export-subst
+property, possibly with arguments to git describe (--tags, --all,
+etc.). In a normal build I can do this with the build system just
+calling git directly, but if I'm archiving a tarball off there doesn't
+seem to be a way to do this (other than manually replacing the format
+string myself as some secondary step).
 
-E.g. assume I have two branches, namely 'dev' and 'exp', and I prefer
-the changeset on the 'dev' branch when I merge or rebase, so that I
-can do it with
+Does this seem like a reasonable thing to do, or am I overlooking a
+better alternative? If this is something that seems reasonable, I
+wouldn't mind taking a stab at implementing it. If that sounds okay,
+could make sure I'm pointed in the right direction? E.g., should `git
+log --format=...` have options that spit out `git describe` strings
+since that's what export-subst currently uses, or should there be a
+separate $Format:...$ option that runs git describe?
 
-# using merge
-git checkout dev
-git merge exp -P dev
-
-OR
-
-# using rebase
-git checkout exp
-git rebase dev -P dev
+Thanks,
+John
