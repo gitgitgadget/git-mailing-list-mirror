@@ -1,103 +1,123 @@
 From: Ilya Basin <basinilya@gmail.com>
-Subject: [PATCH 2/3] git-svn-test: don't test for possible bug "Failed to strip path", try #2
-Date: Mon, 29 Apr 2013 00:10:53 +0400
-Message-ID: <488064812.20130429001053@gmail.com>
+Subject: [PATCH 3/3] git-svn: fix svn fetch erroneously recreating empty dir placeholder deleted earlier, try #2
+Date: Mon, 29 Apr 2013 00:11:02 +0400
+Message-ID: <991177798.20130429001102@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1251
 Content-Transfer-Encoding: 8bit
 Cc: Eric Wong <normalperson@yhbt.net>
 To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 28 22:12:38 2013
+X-From: git-owner@vger.kernel.org Sun Apr 28 22:12:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWXxc-0005Ib-Ox
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Apr 2013 22:12:37 +0200
+	id 1UWXxm-0005Os-1h
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Apr 2013 22:12:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756563Ab3D1UMc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Apr 2013 16:12:32 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:36195 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756344Ab3D1UMb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Apr 2013 16:12:31 -0400
-Received: by mail-la0-f48.google.com with SMTP id eo20so4894766lab.35
-        for <git@vger.kernel.org>; Sun, 28 Apr 2013 13:12:30 -0700 (PDT)
+	id S1756574Ab3D1UMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Apr 2013 16:12:42 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:52577 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756344Ab3D1UMl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Apr 2013 16:12:41 -0400
+Received: by mail-lb0-f175.google.com with SMTP id w20so4225198lbh.20
+        for <git@vger.kernel.org>; Sun, 28 Apr 2013 13:12:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:x-mailer:x-priority:message-id:to:cc:subject
          :mime-version:content-type:content-transfer-encoding;
-        bh=+wp9jN1SIFYZ37WrQcZtvtMUANpO675anj22Tq8GoN8=;
-        b=AXEGe4ZsmGHt1ijryctk1I/wmotpfRGS4EobhU/2mZeFE9dZXGd6NKcWH+WsosQdAo
-         AnbG1VIikKulRMTpxgQOXdCpEtN1zpz+qyNkP3l7CcDotAGxIKQzakUGmOfsFVXEL3aS
-         GwsjOrSz5sy+iaHnh+U67ZOd+7aKIjsCk90PiQHe6MkAC4HDIaKS83Na0uQTO5uYL6x/
-         Bw89fYflpBuL0kXRv9T4d2BqiGHrOh+90wBJ0IkydeZ4Qkg93JoAtY9aUlcnF8EciWb0
-         aE+fw2xjZ55T8ztiENSWUIS9ojURZIcrq9Zhc+nwq++GfkjKlnt8UKAZGDFN5qAU+zl5
-         kyeQ==
-X-Received: by 10.112.134.70 with SMTP id pi6mr25443982lbb.72.1367179950196;
-        Sun, 28 Apr 2013 13:12:30 -0700 (PDT)
+        bh=FVaH4o6EZ/cnPZOBRBko4BHTU1FxL5Q3MnXYLUFrB14=;
+        b=v4bDlrEBBl7NkGT+YtiL0v/bWIXdbfBUrCrEw/y+O64p3/OXRwt12zMJZbUctyjCA5
+         UQsPmniCObxHKCT3u5Xl24U6ypY3ZMEDhX/qWVvkXMa6cDFPoPeBHdgNTmSUqvUFt2aW
+         9p1KshKb+Q8wOW2QU3FTI8AbmIDMmTehaUpCVPcWD8N/aXGxviHj7lWoI8I+RdD64RZe
+         Ne2lyN+3mlqn7r5zS67R5XaDznHD3r+wSEtzL45dCtU8PGhW3GqBwNvS+PDL0I5VsH9K
+         8qx5CjkUugZlyNh0O+QsRzsT3NcNuKquV+08lLNITuArR12sws544/dqTpThr7z5aPOA
+         OZtA==
+X-Received: by 10.152.5.106 with SMTP id r10mr25936108lar.18.1367179959875;
+        Sun, 28 Apr 2013 13:12:39 -0700 (PDT)
 Received: from [192.168.0.78] (92-100-235-219.dynamic.avangarddsl.ru. [92.100.235.219])
-        by mx.google.com with ESMTPSA id r9sm5020647lbr.3.2013.04.28.13.12.28
+        by mx.google.com with ESMTPSA id c15sm963737lbj.17.2013.04.28.13.12.38
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 28 Apr 2013 13:12:29 -0700 (PDT)
+        Sun, 28 Apr 2013 13:12:39 -0700 (PDT)
 X-Mailer: Voyager (v3.99.4) Professional
 X-Priority: 3 (Normal)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222753>
 
-In the previous commit a showcase was added to
-t9160-git-svn-preserve-empty-dirs.sh for the "Failed to strip path" bug.
-Now the flag --stdlayout should be enough.
+The Fetcher accumulates deleted paths in an array and doesn't reset the
+array on next commit. This causes different results when interrupting
+and resuming the fetch.
+When --preserve-empty-dirs flag is used, a path in the array can be
+erroneously treated as just deleted (although it was deleted in the
+previous commit) and cause the creation of an empty dir placeholder.
 ---
- t/t9160-git-svn-preserve-empty-dirs.sh | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ perl/Git/SVN/Fetcher.pm                |  1 +
+ t/t9160-git-svn-preserve-empty-dirs.sh | 18 ++++++++++++++++--
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
+diff --git a/perl/Git/SVN/Fetcher.pm b/perl/Git/SVN/Fetcher.pm
+index 4f96076..e658889 100644
+--- a/perl/Git/SVN/Fetcher.pm
++++ b/perl/Git/SVN/Fetcher.pm
+@@ -19,6 +19,7 @@ sub new {
+ 	my ($class, $git_svn, $switch_path) = @_;
+ 	my $self = SVN::Delta::Editor->new;
+ 	bless $self, $class;
++	@deleted_gpath = ();
+ 	if (exists $git_svn->{last_commit}) {
+ 		$self->{c} = $git_svn->{last_commit};
+ 		$self->{empty_symlinks} =
 diff --git a/t/t9160-git-svn-preserve-empty-dirs.sh b/t/t9160-git-svn-preserve-empty-dirs.sh
-index 1b5a286..43b1852 100755
+index 43b1852..d50314d 100755
 --- a/t/t9160-git-svn-preserve-empty-dirs.sh
 +++ b/t/t9160-git-svn-preserve-empty-dirs.sh
-@@ -51,21 +51,13 @@ test_expect_success 'initialize source svn repo containing empty dirs' '
- 		echo "Conflict file" > 5/.placeholder &&
- 		mkdir 6/.placeholder &&
- 		svn_cmd add 5/.placeholder 6/.placeholder &&
--		svn_cmd commit -m "Placeholder Namespace conflict" &&
--
--		echo x > fil.txt &&
--		svn_cmd add fil.txt &&
--		svn_cmd commit -m "this commit should not kill git-svn"
-+		svn_cmd commit -m "Placeholder Namespace conflict"
- 	) &&
- 	rm -rf "$SVN_TREE"
- '
+@@ -15,18 +15,27 @@ say 'define NO_SVN_TESTS to skip git svn tests'
+ GIT_REPO=git-svn-repo
  
- test_expect_success 'clone svn repo with --preserve-empty-dirs --stdlayout' '
--	git svn clone "$svnrepo" --preserve-empty-dirs --stdlayout "$GIT_REPO" || (
--		cd "$GIT_REPO"
--		git svn fetch # fetch the rest can succeed even if clone failed
--		false # this test still failed
--	)
-+	git svn clone "$svnrepo" --preserve-empty-dirs --stdlayout "$GIT_REPO"
- '
- 
- # "$GIT_REPO"/1 should only contain the placeholder file.
-@@ -89,11 +81,11 @@ test_expect_success 'add entry to previously empty directory' '
- 	test -f "$GIT_REPO"/4/a/b/c/foo
- '
- 
--# The HEAD~3 commit should not have introduced .gitignore placeholder files.
-+# The HEAD~2 commit should not have introduced .gitignore placeholder files.
- test_expect_success 'remove non-last entry from directory' '
+ test_expect_success 'initialize source svn repo containing empty dirs' '
++	#exec 1>/dev/tty 2>&1
+ 	svn_cmd mkdir -m x "$svnrepo"/trunk &&
+ 	svn_cmd co "$svnrepo"/trunk "$SVN_TREE" &&
  	(
- 		cd "$GIT_REPO" &&
--		git checkout HEAD~3
-+		git checkout HEAD~2
- 	) &&
- 	test_must_fail test -f "$GIT_REPO"/2/.gitignore &&
- 	test_must_fail test -f "$GIT_REPO"/3/.gitignore
+ 		cd "$SVN_TREE" &&
+-		mkdir -p 1 2 3/a 3/b 4 5 6 &&
++		mkdir -p 1 2 3/a 3/b 4 5 6 7 &&
+ 		echo "First non-empty file"  > 2/file1.txt &&
+ 		echo "Second non-empty file" > 2/file2.txt &&
+ 		echo "Third non-empty file"  > 3/a/file1.txt &&
+ 		echo "Fourth non-empty file" > 3/b/file1.txt &&
+-		svn_cmd add 1 2 3 4 5 6 &&
++		echo "x" > 7/file.txt &&
++		svn_cmd add 1 2 3 4 5 6 7 &&
+ 		svn_cmd commit -m "initial commit" &&
+ 
++		svn_cmd del 7/file.txt &&
++		svn_cmd commit -m "delete last entry in directory" &&
++		svn_cmd up &&
++
++		svn_cmd del 7 &&
++		svn_cmd commit -m "delete empty dir that had files in it; subsequent commits should not recreate it" &&
++
+ 		mkdir 4/a &&
+ 		svn_cmd add 4/a &&
+ 		svn_cmd commit -m "nested empty directory" &&
+@@ -60,6 +69,11 @@ test_expect_success 'clone svn repo with --preserve-empty-dirs --stdlayout' '
+ 	git svn clone "$svnrepo" --preserve-empty-dirs --stdlayout "$GIT_REPO"
+ '
+ 
++# "$GIT_REPO"/7/ should not be recreated
++test_expect_success 'no recreating empty dir deleted earlier' '
++	test_must_fail test -d "$GIT_REPO"/7/
++'
++
+ # "$GIT_REPO"/1 should only contain the placeholder file.
+ test_expect_success 'directory empty from inception' '
+ 	test -f "$GIT_REPO"/1/.gitignore &&
 -- 
 1.8.1.5
