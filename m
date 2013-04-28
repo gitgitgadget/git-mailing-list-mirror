@@ -1,166 +1,79 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] Add support for -i/--interactive to git-clean
-Date: Sat, 27 Apr 2013 22:03:26 -0400
-Message-ID: <CAPig+cTRqB7pGcxmW_m=AGT_nRWxgR+X8z6FR3PgONJ-0kG2fA@mail.gmail.com>
-References: <7vmwslw1py.fsf@alter.siamese.dyndns.org>
-	<2a68239bfd3e6b9ea1842dd8e468ee3d3217af5b.1367079089.git.worldhello.net@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] clone: allow cloning local paths with colons in them
+Date: Sun, 28 Apr 2013 09:15:04 +0700
+Message-ID: <CACsJy8Brw8h6uL91NpE8S6o2K0HWQfWE0ghBEWg-QbfAZOT-FQ@mail.gmail.com>
+References: <20130422153516.GB11886@sigill.intra.peff.net> <1367033778-13923-1-git-send-email-pclouds@gmail.com>
+ <7vip37u11a.fsf@alter.siamese.dyndns.org> <CACsJy8DEMrv08D3wGvebV+W73TA8eTH58KHybXpQQbsSJ5NKZA@mail.gmail.com>
+ <CAPig+cQ+XQYyg2ihvfbZeSApBfWqpLYtq58Jv3iagS5w_iHXbQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 28 04:03:36 2013
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Jonathan Niedier <jrnieder@gmail.com>,
+	William Giokas <1007380@gmail.com>, fsckdaemon@gmail.com,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Apr 28 04:15:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWGxh-0004v6-Fx
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Apr 2013 04:03:33 +0200
+	id 1UWH9a-0006K2-IU
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Apr 2013 04:15:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756368Ab3D1CD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Apr 2013 22:03:29 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:64804 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756325Ab3D1CD2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Apr 2013 22:03:28 -0400
-Received: by mail-lb0-f179.google.com with SMTP id t1so4669441lbd.24
-        for <git@vger.kernel.org>; Sat, 27 Apr 2013 19:03:26 -0700 (PDT)
+	id S1755738Ab3D1CPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Apr 2013 22:15:35 -0400
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:50447 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753758Ab3D1CPe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Apr 2013 22:15:34 -0400
+Received: by mail-oa0-f53.google.com with SMTP id m6so5004270oag.40
+        for <git@vger.kernel.org>; Sat, 27 Apr 2013 19:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=rAHWNIRPWjedyzqUdToeKm8WEblY6QwBNSnizCf663E=;
-        b=0+IZ0p5anouikkE+69HElflFoaNEIqdceo9TGhjUFDxU3ETaAqC5splUus1vYgOunH
-         UB4juT9+QzW0Fugb88jS+UaK5iSXDtv/CHDIvnMOSZXpLlhIZUroYWpvrkRIvLOtOaWj
-         PxkgRlQPIl0nX/EdFoXec7fj6Y0dKrVFOcnMAo1PnNrimFD/HD4VdPOza6n7236z8UKW
-         0tdAVX9ocWTcJ+KfLCfZFYrGMOtexjFwuw/kRq6ITU5hXKHtbFdiLfkRZWK5o40bVBgZ
-         ao9CqnMG2/BuQmY9e4SikuIrygpDXagbjtmDqbDcK9D8koyow2wEm6hLKxCRdcn2xm6Y
-         EjcQ==
-X-Received: by 10.112.130.196 with SMTP id og4mr655988lbb.52.1367114606667;
- Sat, 27 Apr 2013 19:03:26 -0700 (PDT)
-Received: by 10.114.199.11 with HTTP; Sat, 27 Apr 2013 19:03:26 -0700 (PDT)
-In-Reply-To: <2a68239bfd3e6b9ea1842dd8e468ee3d3217af5b.1367079089.git.worldhello.net@gmail.com>
-X-Google-Sender-Auth: SLTcQ-7ELg72RVVmoB7Yiqh2hW8
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=s2Il1r6zmdeTsVSyOXkBW92MB21Kfg2fncni3Mb7KAU=;
+        b=ms86z1RnvbNKYXHv35VSbMHdWvoOOs0ZTBZYs1l6Uh506LvonxtPkZrnw3SHux45Hv
+         OqXvRdzUTEU11yqthIUUaeL+qtDSYkjssXKfvtnFj8voIbZU8OgcqEwG4/kkl2NNjCbQ
+         IqXiroj12pMjDEQ7lXWLdykuKi70IkZ5v3HaVZORMShQWYeY2DSflb4S6xfA2Lk854PX
+         yBhwsz6BBvBFxZ7zPmJIQXMVK6nCQSq7ni9R6+SZXNoclejWeXU/IKTkn1HThsqXZ2Cw
+         Q9JmlRmDcTIB4paaNdmmrm9LUfmDG++Hc3O5uspDB6ufrP+VPoh4orH+0Zlfb1wNVb75
+         mh5A==
+X-Received: by 10.60.65.68 with SMTP id v4mr21625326oes.13.1367115334445; Sat,
+ 27 Apr 2013 19:15:34 -0700 (PDT)
+Received: by 10.76.180.138 with HTTP; Sat, 27 Apr 2013 19:15:04 -0700 (PDT)
+In-Reply-To: <CAPig+cQ+XQYyg2ihvfbZeSApBfWqpLYtq58Jv3iagS5w_iHXbQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222725>
 
-On Sat, Apr 27, 2013 at 12:13 PM, Jiang Xin <worldhello.net@gmail.com> wrote:
-> --- a/builtin/clean.c
-> +++ b/builtin/clean.c
-> @@ -257,26 +261,92 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
->                 }
+On Sun, Apr 28, 2013 at 8:48 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sat, Apr 27, 2013 at 8:19 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Sun, Apr 28, 2013 at 4:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> That was fairly hard to grok. Is that equivalent to this?
+>>>
+>>>                 if (c == ':' && path < strchrnul(host, '/')) {
+>>>                         /* is the first slash past the colon? */
+>>>                         protocol = PROTO_SSH;
+>>>                         *path++ = '\0';
+>>>                 } else {
+>>>                         path = end;
+>>>                 }
+>>>
+>>
+>> The original code is already hard to grok so I may be mistaken here.
+>> But I think it's not the same. For the case when c == '/', it will do
+>> "path = end;", which is unintended. It should keep the current "path"
+>> value (i.e. == strchr(end, '/')). The use of "strchrnul(host, '/')" is
+>> good though.
 >
->                 if (S_ISDIR(st.st_mode)) {
-> -                       strbuf_addstr(&directory, ent->name);
->                         if (remove_directories || (matches == MATCHED_EXACTLY)) {
-> -                               if (remove_dirs(&directory, prefix, rm_flags, dry_run, quiet, &gone))
-> -                                       errors++;
-> -                               if (gone && !quiet) {
-> -                                       qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
-> -                                       printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
-> -                               }
-> +                               string_list_append(&dels, ent->name);
->                         }
-> -                       strbuf_reset(&directory);
->                 } else {
->                         if (pathspec && !matches)
->                                 continue;
-> -                       res = dry_run ? 0 : unlink(ent->name);
-> +                       string_list_append(&dels, ent->name);
-> +               }
-> +       }
-> +
-> +       if (interactive && dels.nr > 0 && !dry_run && isatty(0) && isatty(1)) {
-> +               struct strbuf confirm = STRBUF_INIT;
-> +
-> +               while (1) {
-> +                       struct strbuf **prefix_list, **prefix_list_head;
-> +
-> +                       /* dels list may become empty when we run string_list_remove_empty_items latter */
+> Do you want to take Windows '\' into account also?
 
-s/latter/later/
-
-> +                       if (!dels.nr)
-> +                               break;
-> +
-> +                       for_each_string_list_item(item, &dels) {
-> +                               qname = quote_path_relative(item->string, -1, &buf, prefix);
-> +                               printf(_(msg_would_remove), qname);
-> +                       }
-> +
-> +                       printf(_("Remove (press enter to confirm or input items you want to keep)? "));
-> +                       strbuf_getline(&confirm, stdin, '\n');
-> +                       strbuf_trim(&confirm);
-> +
-> +                       if (!confirm.len)
-> +                               break;
-> +
-> +                       printf("\n");
-> +
-> +                       prefix_list_head = strbuf_split_buf(confirm.buf, confirm.len, ' ', 0);
-> +                       for (prefix_list = prefix_list_head; *prefix_list; *prefix_list++)
-> +                       {
-> +                               int prefix_matched = 0;
-> +
-> +                               strbuf_trim(*prefix_list);
-> +                               if (!(*prefix_list)->len)
-> +                                       continue;
-> +
-> +                               for_each_string_list_item(item, &dels) {
-> +                                       if (!strncasecmp(item->string, (*prefix_list)->buf, (*prefix_list)->len)) {
-> +                                               *item->string = '\0';
-> +                                               prefix_matched++;
-> +                                       }
-> +                               }
-> +                               if (!prefix_matched) {
-> +                                       warning(_("Cannot find items start with the given prefix: %s"), (*prefix_list)->buf);
-
-s/start/starting/
-[...or...]
-s/items start with the given prefix/items prefixed by/
-
-> +                                       printf("\n");
-> +                               } else {
-> +                                       string_list_remove_empty_items(&dels, 0);
-> +                               }
-> +                       }
-> +
-> +                       strbuf_reset(&confirm);
-> +                       strbuf_list_free(prefix_list_head);
-> +               }
-> +               strbuf_release(&confirm);
-> +       }
-> +
-> +       for_each_string_list_item(item, &dels) {
-> +               struct stat st;
-> +
-> +               if (lstat(item->string, &st))
-> +                       continue;
-> +
-> +               if (S_ISDIR(st.st_mode)) {
-> +                       strbuf_addstr(&directory, item->string);
-> +                       if (remove_dirs(&directory, prefix, rm_flags, dry_run, quiet, &gone))
-> +                               errors++;
-> +                       if (gone && !quiet) {
-> +                               qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
-> +                               printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
-> +                       }
-> +                       strbuf_reset(&directory);
-> +               } else {
-> +                       res = dry_run ? 0 : unlink(item->string);
->                         if (res) {
-> -                               qname = quote_path_relative(ent->name, -1, &buf, prefix);
-> +                               qname = quote_path_relative(item->string, -1, &buf, prefix);
->                                 warning(_(msg_warn_remove_failed), qname);
->                                 errors++;
->                         } else if (!quiet) {
-> -                               qname = quote_path_relative(ent->name, -1, &buf, prefix);
-> +                               qname = quote_path_relative(item->string, -1, &buf, prefix);
->                                 printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
->                         }
->                 }
+Windows path does not allow ':' so it's a non-issue in the first place.
+--
+Duy
