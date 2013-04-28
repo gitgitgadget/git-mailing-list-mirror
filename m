@@ -1,136 +1,66 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 2/6] path: Make the 'get_st_mode_bits' symbol a file static
-Date: Sun, 28 Apr 2013 13:32:10 +0200
-Message-ID: <517D08BA.6060508@web.de>
-References: <517C1BF9.2050604@ramsay1.demon.co.uk> <517CBB6E.205@web.de>
+From: ryenus <ryenus@gmail.com>
+Subject: git merge/rebase ref -P ref
+Date: Sun, 28 Apr 2013 23:35:50 +0800
+Message-ID: <CAKkAvawit0L4JKKNs7Di46B=Y0VjPohKNbjnS=r07VhafXu4kQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Apr 28 13:32:26 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 28 17:36:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWPqA-00057E-Af
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Apr 2013 13:32:22 +0200
+	id 1UWTeD-00051b-7f
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Apr 2013 17:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754955Ab3D1LcS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Apr 2013 07:32:18 -0400
-Received: from mout.web.de ([212.227.15.3]:54036 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752373Ab3D1LcQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Apr 2013 07:32:16 -0400
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb003)
- with ESMTPA (Nemesis) id 0MRlJB-1U3ddT2oVl-00Te9Y; Sun, 28 Apr 2013 13:32:11
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <517CBB6E.205@web.de>
-X-Provags-ID: V02:K0:b34JDE+IBbkpQItt47FCaGFrKHv7Zmj+3xPyQTqKWKO
- wLSxPs2TfWvCuJbdTmFvo9csE71Qhl5TyPK5QIvFFMoA1FVMGU
- 7r+tYWbggQ96bNMNO6o76+4SB/SFfDWAs0WzWsZQcVmsS2X9UE
- yx3j9phBs5Va4qDd4vCih9p61nDC5OPs/czwu678DkwI+exZQJ
- FvWtkN132mMv0AY9lNEFg==
+	id S1753774Ab3D1PgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Apr 2013 11:36:13 -0400
+Received: from mail-we0-f172.google.com ([74.125.82.172]:54438 "EHLO
+	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753314Ab3D1PgM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Apr 2013 11:36:12 -0400
+Received: by mail-we0-f172.google.com with SMTP id r6so729571wey.31
+        for <git@vger.kernel.org>; Sun, 28 Apr 2013 08:36:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=gj+qXPWsXylLOYXJYsm5Sm4h7CzVvzqATQ2W0p1lBrg=;
+        b=gkd6KzY6666Yecof2uDgSCEyscOHM97oWUz/PvYyxRxTbNiHZ+Ul4mltRfPtMenkn1
+         hdnKVsNp91Dkl7F1spWwt7HY9cdy59Bhj24AMAwn3/y32U7ceMIjzkSYkQXFasP1vzA7
+         glD34s5etuFBnk0yo+hqeDIwogazZdRmgQjTQSCtOA0MfaTMi6K1WRsE8CfX4MgLJ/LD
+         a/o55zJP9j++owmrUrIIT+QTxgxvMjEv/7n1H5RcGs5Iu8UFcgFRhmqbIlJu5GNj8h9W
+         u4YZVRM8Na11IySnpbrdrCFU2sOhDhuMmXTeaGkX7Z8maDWGOqI6ToMkaWarTB9EUSty
+         muHw==
+X-Received: by 10.194.62.233 with SMTP id b9mr31585453wjs.37.1367163371008;
+ Sun, 28 Apr 2013 08:36:11 -0700 (PDT)
+Received: by 10.194.92.48 with HTTP; Sun, 28 Apr 2013 08:35:50 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222736>
 
-On 2013-04-28 08.02, Torsten B=F6gershausen wrote:
-> On 2013-04-27 20.42, Ramsay Jones wrote:
->>
->> On MinGW, sparse issues an "'get_st_mode_bits' not declared. Should
->> it be static?" warning. The MinGW and MSVC builds do not see the
->> declaration of this function, within git-compat-util.h, due to it's
->> placement within an preprocessor conditional. (So, one solution woul=
-d
->> be to simply move the declaration to the top level of the header.)
->>
->> In order to suppress the warning, since this symbol does not need
->> more than file visibility, we simply remove the declaration from
->> the header and add the static modifier to the function definition.
->>
->> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->> ---
->>  git-compat-util.h | 1 -
->>  path.c            | 2 +-
->>  2 files changed, 1 insertion(+), 2 deletions(-)
->>
->> diff --git a/git-compat-util.h b/git-compat-util.h
->> index e955bb5..3a990b3 100644
->> --- a/git-compat-util.h
->> +++ b/git-compat-util.h
->> @@ -163,7 +163,6 @@
->>  typedef long intptr_t;
->>  typedef unsigned long uintptr_t;
->>  #endif
->> -int get_st_mode_bits(const char *path, int *mode);
->>  #if defined(__CYGWIN__)
->>  #undef _XOPEN_SOURCE
->>  #include <grp.h>
->> diff --git a/path.c b/path.c
->> index 04ff148..cc2e9ac 100644
->> --- a/path.c
->> +++ b/path.c
->> @@ -11,7 +11,7 @@
->>   * may return wrong permission bits. Most of the time we do not car=
-e,
->>   * but the callsites of this wrapper do care.
->>   */
->> -int get_st_mode_bits(const char *path, int *mode)
->> +static int get_st_mode_bits(const char *path, int *mode)
->>  {
->>  	struct stat st;
->>  	if (lstat(path, &st) < 0)
->>
-> Sorry for breaking the MiNGW/MSVC builds.
-> It seams that the get_st_mode_bits is badly placed.
->=20
-> It should be in git compat-util.h, so that both compat/cygwin.c and p=
-ath.c can see it.
-> So from my understanding, it should be placed here:
-> (I will send an official patch later)
-> /Torsten
-> =20
->=20
-> diff -C 3 git-compat-util.h.~9526aa461f6c6900cb892a6fe248150ad436c0d~=
- git-compat-util.h.new
-> *** git-compat-util.h.~9526aa461f6c6900cb892a6fe248150ad436c0d~ 2013-=
-04-28 07:53:28.000000000 +0200
-> --- git-compat-util.h.new       2013-04-28 07:53:58.000000000 +0200
-> ***************
-> *** 127,132 ****
-> --- 127,133 ----
->   #else
->   #include <poll.h>
->   #endif
-> + int get_st_mode_bits(const char *path, int *mode);
->   #if defined(__MINGW32__)
->   /* pull in Windows compatibility stuff */
->   #include "compat/mingw.h"
-> ***************
-> *** 163,169 ****
->   typedef long intptr_t;
->   typedef unsigned long uintptr_t;
->   #endif
-> - int get_st_mode_bits(const char *path, int *mode);
->   #if defined(__CYGWIN__)
->   #undef _XOPEN_SOURCE
->   #include <grp.h>
+The inverted meaning of {ours,theirs} for rebase could be very
+confusing to some, especially to new uses, for me every time I
+merge/rebase I need to think about it to make sure I've made it right.
 
-I probably change my mind:
-  Declaring get_st_mode_bits() static in path.c makes sense.
+What about making it more intuitive?
 
-  And for cygwin we have the re-define in compat/cygwin.h:
-  int cygwin_get_st_mode_bits(const char *path, int *mode);
-  #define get_st_mode_bits(p,m) cygwin_get_st_mode_bits((p),(m))
+We can and a new option (like '-P') for people to specify the
+preferred branch/ref by it's name.
 
-So, (besides the typo found by Eric),
-Thanks. Reviewed,and tested OK here. In short:
+E.g. assume I have two branches, namely 'dev' and 'exp', and I prefer
+the changeset on the 'dev' branch when I merge or rebase, so that I
+can do it with
 
-Acked-By: Torsten B=F6gershausen <tboegi@web.de>
+# using merge
+git checkout dev
+git merge exp -P dev
+
+OR
+
+# using rebase
+git checkout exp
+git rebase dev -P dev
