@@ -1,96 +1,106 @@
-From: Yann Hodique <yann.hodique@gmail.com>
-Subject: consistency problem on ZFS
-Date: Sun, 28 Apr 2013 20:11:25 +0100
-Message-ID: <m2bo8yxyg2.fsf@jarvis.hodique.info>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] send-email: improve recipients_cmd()
+Date: Sun, 28 Apr 2013 12:18:03 -0700
+Message-ID: <7vbo8yqxas.fsf@alter.siamese.dyndns.org>
+References: <1367101561-14671-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 28 21:12:20 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Joe Perches <joe@perches.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 28 21:18:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWX1F-0002Ni-3C
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Apr 2013 21:12:17 +0200
+	id 1UWX72-0006vX-C7
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Apr 2013 21:18:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756450Ab3D1TMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Apr 2013 15:12:12 -0400
-Received: from plane.gmane.org ([80.91.229.3]:35557 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756416Ab3D1TML (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Apr 2013 15:12:11 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UWX17-0002Hh-B4
-	for git@vger.kernel.org; Sun, 28 Apr 2013 21:12:09 +0200
-Received: from cpc25-cmbg15-2-0-cust4.5-4.cable.virginmedia.com ([86.27.183.5])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 28 Apr 2013 21:12:09 +0200
-Received: from yann.hodique by cpc25-cmbg15-2-0-cust4.5-4.cable.virginmedia.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 28 Apr 2013 21:12:09 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: cpc25-cmbg15-2-0-cust4.5-4.cable.virginmedia.com
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (darwin)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAAXNSR0IArs4c6QAAACpQTFRF
- HBgXPyYdPSkeMiwmRkJBYT4sik8zZF1XqWpMx2RDk42MzYRYtrGw09DVySZyaAAAAklJREFUOMuF
- 0z9v00AUAPCHr/kANgowOi6hjFbOCImp1CdF6kaUCwEmkBJSdYmUSBZRGRMsske1MlKIFKVr5XAr
- U1TPSFX6XXjvnKp2KOLG97v3x3dnuP7Hgv/B+vLyLlivZkGwSP6GlXABvHmyDese0GIn2zBzNYCX
- bEGagOswycG6ewMsyMEVVTJMiyQHv2lzuTOSNrDPWfhF8FSpuGXt5IB6s6bCNfLOt8FoEMT1JAv7
- wFz25E7gtqFLqS856IJhl481/MyN27tnGe+wc1uprzn4fvS+MFYxwvDtLcyT1Y9oUhyri3ZHtTIg
- B7NP0WmDMo7VcJABKRvRtKNbq3hxC21ZKx2pMAWVgQt5H95MNSynKnMfZTzTQkSwjKLpPAN1H+CB
- zogmYaa5ED7eUzMeY+tw9HqRAcEBnoUhxYfFQZIBelRNhGjSKj6cb14kBH3hY5dCGI+XpzXTebzJ
- gY+CC47FHiGENQdXVfeBuvA55y5eYRgOnTJRdXC+6eFTiiHbHyplKVGoHGDQw1okzi5BCcUbXANn
- KL4WYAeyZJomJu0l4ALKZvlCvkrBOaG3dhOvdtlLjJt6AP2UN3DosoppOhr20v+Cwq4ncE8JwaLB
- gJpyPa/n0mQIJn0m0EExTHE5HgxUHAvnsjT41ARTnu8juAaUML5bSQHn8vkLBGYDUCkLS+tD577H
- qwjcpl8Le+BmIWgnHkrgws5BCvjTMbpaAsHPcK6+jXNhLfqGQND4XHhn4Ik5T8HCzKu+Bk98qwq+
- 6AFOimPZ8Aem5xXrk2gG/wAAAABJRU5ErkJggg==
-Cancel-Lock: sha1:1jQ+00QYkMsJCZyfi5NNkSsi9wU=
+	id S1756450Ab3D1TSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Apr 2013 15:18:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59606 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756416Ab3D1TSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Apr 2013 15:18:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2ED7718C6E;
+	Sun, 28 Apr 2013 19:18:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=c8TPJU+hXZrwye8pG3VZ5QUe6Hg=; b=n2sqba
+	TWWh1s5IFegvd1UgVcuavKOcmM2u5g3LKFdnAyPoaiNIAtjN6tntzIeIO4sPm+sm
+	vLMdjX/R4KBRMrJ2XMP4PJNqa7yEXW1xwGNAbtBkAcCwg1iog0oMyKS55Ahfu7mj
+	0I9pETNg51SSmrI2hjEJfJih5aiAv+7FdFvkY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dhePv4Kcu6Jip54+cH2j55NBJkrXjjiR
+	LPPq+Crp94BVY0/49Dv5l6Anw1eA9N0MytvHcxhtQf76ElmbSKFr9bzXVDDbT1Ap
+	7ukepn1OpvvMejJbELFqsfQJ20vOx4L9l38E0i9ixQggaHRnfWskiVsnpHxHlvP/
+	/l8Km4nIQjU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 261FE18C6D;
+	Sun, 28 Apr 2013 19:18:05 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 840A118C6A;
+	Sun, 28 Apr 2013 19:18:04 +0000 (UTC)
+In-Reply-To: <1367101561-14671-1-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Sat, 27 Apr 2013 17:26:01 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 59C8B0EC-B038-11E2-9595-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222745>
 
-Hi,
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-I have a weird problem that seems to manifest itself only on ZFS
-(actually the Zevo distribution, on OSX). With git 1.8.2.1 by the way.
-I just switched to ZFS, so I can't blame that particular version of git.
+> We don't need to quote the filename to pass to the command, we can use
+> an array of all the arguments to pass to the command, which is safer,
+> and more extensible.
+>
+> Commit a47eab0 (send-email: use the three-arg form of open in
+> recipients_cmd) stated we couldn't pass $file directly, but in fact, we
+> can, the multi-word string is passed as is, and we can pass an array
+> too.
 
-"Sometimes" (I'd say something like 10-15% of the time, fairly
-reproducible anyway), "git diff-files" will see changes that don't exist
-for some time, then will catch up with the actual state of the file:
+I think the comment is not about passing $file directly, but is
+about passing $cmd that could be multi-word string directly.  The
+caller expects it be split into command and its earlier part of
+command line parameters, so that you can say
 
-$ git checkout next; git diff-files; git checkout next; git diff-files
-Already on 'next'
-:100644 100644 bd774cccaa14e061c3c26996567ee28f4f77ec80 0000000000000000000000000000000000000000 M	magit.el
-Already on 'next'
-$
+    $cmd = "cccmd --frotz --nitfol"
 
-Here it was pretty quick, but sometimes I would see those phantom
-diffs for more than 5 seconds.
+but the non-string form of open would not give you that, unless you
+rewrite it to
 
-Interestingly, if I manage to run "git diff" during that time, this one
-reports no changes. See https://gist.github.com/sigma/5477827 for a more
-complex trace: "git merge" was complaining about changes, yet neither "git
-diff" nor "git status" did show any. That's the scenario I tried to
-minimize to the invocation above.
+	open $fh, "-|", qw(sh -c), $cmd, @args
 
-I'm willing to accept that the filesystem has some responsibility there,
-but the inconsistency bothers me. Anything I can provide to help finding
-the root cause of the issue ?
+or something, no?
 
-Thanks for any hint (and workarounds are highly welcome, as it breaks
-many of my scripts, and magit too :))
-
-Yann.
-
--- 
-A Duke must always take control of his household, for if he does not
-rule those closest to him, he cannot hope to govern a planet.
-
-  -- DUKE PAULUS ATREIDES
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  git-send-email.perl | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index bd13cc8..7880d12 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1452,11 +1452,11 @@ foreach my $t (@files) {
+>  # Execute a command (e.g. $to_cmd) to get a list of email addresses
+>  # and return a results array
+>  sub recipients_cmd {
+> -	my ($prefix, $what, $cmd, $file) = @_;
+> +	my ($prefix, $what, $cmd, @args) = @_;
+>  
+>  	my $sanitized_sender = sanitize_address($sender);
+>  	my @addresses = ();
+> -	open my $fh, "-|", "$cmd \Q$file\E"
+> +	open my $fh, "-|", $cmd, @args
+>  	    or die "($prefix) Could not execute '$cmd'";
+>  	while (my $address = <$fh>) {
+>  		$address =~ s/^\s*//g;
