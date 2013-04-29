@@ -1,188 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 7/7] git grep: honor textconv by default
-Date: Mon, 29 Apr 2013 08:04:56 -0700
-Message-ID: <7vy5c1l6nb.fsf@alter.siamese.dyndns.org>
-References: <517298D4.3030802@drmicha.warpmail.net>
-	<043047afd2915dd8f3a68cf164dc516d4c0bb5c2.1366718624.git.git@drmicha.warpmail.net>
-	<7vwqrtjmtx.fsf@alter.siamese.dyndns.org>
-	<5177AE7F.1040400@drmicha.warpmail.net>
-	<7vehdzesr9.fsf@alter.siamese.dyndns.org>
-	<vpqwqrrolpl.fsf@grenoble-inp.fr>
-	<7v38ufdaih.fsf@alter.siamese.dyndns.org>
-	<517A6C0C.1020506@drmicha.warpmail.net>
-	<vpqk3npctn8.fsf@grenoble-inp.fr>
-	<517E37A9.8040609@drmicha.warpmail.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Itches with the current rev spec
+Date: Mon, 29 Apr 2013 20:38:03 +0530
+Message-ID: <CALkWK0=W_FxDwc3Tby=h90yc5i8UEuT7maERahFRDQU=hQ633g@mail.gmail.com>
+References: <CALkWK0n97VLtiR96VEy86645NVoDL2rS-g7LBuLb=JpncdH6VA@mail.gmail.com>
+ <20130426101946.433f2d12@chalon.bertin.fr> <517A3E47.6010606@viscovery.net>
+ <7v7gjpxjw0.fsf@alter.siamese.dyndns.org> <CAMP44s0-C_TRC_eD_ZbN3WFe4NKWVPQVhh+ME-F5yBBwKs2NdA@mail.gmail.com>
+ <7v8v45vvuy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	jeremy.rosen@openwide.fr, Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Apr 29 17:05:11 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Yann Dirson <dirson@bertin.fr>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 29 17:08:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWpdd-0001Ij-Aj
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 17:05:09 +0200
+	id 1UWphB-0004IT-MY
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 17:08:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751633Ab3D2PFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 11:05:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58087 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750792Ab3D2PFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 11:05:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B14F1A418;
-	Mon, 29 Apr 2013 15:04:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y4vr/8dOaHMT2+bd670VZtB7TCQ=; b=Pv/FUL
-	OKl79510w1n83Gx8HmVz3UJbk2I0wvDLQ5ySM/tfgjIRWTAtOPro05FtJksMg7mI
-	M/qnBJ1y3azx3fc75Tdluu/wJcGq46ccETSlrqoCNjUpPzjmSUlc8IW1PhClisPB
-	uJRGLSIpKwXzj+McvFOXa/EA3DeBNDGd2oVjA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FouatH3eAakI41m+UQ+4RrTkU9CataDU
-	E1vVICMr2yGwbBUSIXx0QId4dGlb2CCKHjBa1hJJCHcvLruRL5INm8dbZMteO1CN
-	yl0FZug91tXIqXtmzOMcj6TTmKx5HIoqE7KewDX9z9gjntHx+EYwrm38gG7T3xTG
-	FtMtiacqwTU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F22B1A417;
-	Mon, 29 Apr 2013 15:04:59 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 722611A414;
-	Mon, 29 Apr 2013 15:04:58 +0000 (UTC)
-In-Reply-To: <517E37A9.8040609@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Mon, 29 Apr 2013 11:04:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 28973D9E-B0DE-11E2-ABF0-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751449Ab3D2PIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 11:08:45 -0400
+Received: from mail-ia0-f169.google.com ([209.85.210.169]:45592 "EHLO
+	mail-ia0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750792Ab3D2PIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 11:08:44 -0400
+Received: by mail-ia0-f169.google.com with SMTP id l29so5779889iag.0
+        for <git@vger.kernel.org>; Mon, 29 Apr 2013 08:08:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=e26D27AqYADq4JuMiuV4cfmHm6TlowVr53YLnvsqiqM=;
+        b=K0aZNECHcy0uirJP75DIcQLaDIlvNHCVFy4iwa11PboNhV24C8FCp5EwcLWCtFMlsb
+         6tI5RlRDnH70/+JW8tTDA7VQc5T6Acg5Sus+QBZnKDUC1gJ52IX9HKAUGB6gHog/Hzv0
+         E0IzhDdzxnAmGaylKuiD2SyMBQdOtQpOvZCzSZJQVWLIxvRj9og+xe/+hv0kPE95cONA
+         RtyjJyreWylJak87qjJ9VEaxVIjdAGLtO7rdJ5lAtBBGlvSEL5ePeR5aKL+C9+RResY1
+         B9Ntukt9eoMXe7IRMS4PKa0WPSKp38E6FVnZSztXWWIXX5RUTCqn5fHGwmZvGKVcL/Qx
+         5fEA==
+X-Received: by 10.50.57.200 with SMTP id k8mr7652940igq.44.1367248123498; Mon,
+ 29 Apr 2013 08:08:43 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Mon, 29 Apr 2013 08:08:03 -0700 (PDT)
+In-Reply-To: <7v8v45vvuy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222800>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Junio C Hamano wrote:
+>  - If the UI language for "rebase" were designed following the
+>    "composition using common elements like ranges and revisions"
+>    school, it would have started from "rebase --onto=X A..B".
 
->> It should be possible to have a tri-state for the --[no-]textconv
->> option: unset, set to true or set to false. But the code sharing between
->> log, show and diff might make that non-trivial.
->
-> Right now it's a diffopt bit...
+I think you're looking at the whole issue backwards from the way I
+look at it.  Let's try to lay out some fundamental principles and
+build a representations on top of that:
 
-I wonder if you can do something along the lines of the attached
-patch.  The following discussion assumes that your default wants
-textconv for generating patches, and no textconv for showing blobs,
-which is the case your "it is a bit" becomes an issue.
+1. All rev specs (those specified in revisions.txt) either emit a
+single positive/ negative (^) commit or multiple positive/ negative
+commits (where the ordering does not matter).
 
-The basic structure is that:
+2. Fundamentally, all commands require single/ multiple commits to
+operate on.  They might also require some additional information.
 
- * There is an extra "opt->touched_flags" that keeps track of all
-   the fields that have been touched by DIFF_OPT_SET and
-   DIFF_OPT_CLR;
+rebase requires three pieces of information: the commit onto which to
+replay, a list of commits to replay, and a refspec to update once the
+replaying is done.
 
- * You may continue setting the default values to the flags, like
-   commands in the "log" family do in cmd_log_init_defaults(), but
-   after you finished setting the defaults, you clear the
-   touched_flags field;
+log requires one piece of information: the list of commits.
 
- * And then you let the usual callchain to call diff_opt_parse(),
-   allowing the opt->flags be set or unset, while keeping track of
-   which bits the user touched;
+diff requires two pieces of information: two commits to diff.
 
- * There is an optional callback "opt->set_default" that is called
-   at the very beginning to lets you inspect touched_flags and
-   update opt->flags appropriately, before the remainder of the
-   diffcore machinery is set up, taking the opt->flags value into
-   account.
+3. "Range" is not an inherent property of A..B or A...B.  There are no
+"revision ranges".
 
-Your "git show" could start out with ALLOW_TEXTCONV set, but notice
-explicit requests to --[no-]textconv from the command line in your
-set_default() callback.  And then when it deals with a blob, check
-if the user touched ALLOW_TEXTCONV and appropriately act on that
-knowledge.
+4. Every command is free to interpret positive and negative commits as
+it sees fit.  Since there is no ordering, it must never treat one
+negative commit differently from another negative commit, or one
+positive commit differently from another positive commit.
 
-There would be three cases in your set_default callback:
+show takes a list of positive commits and shows all of them.
 
- * flags has ALLOW_TEXTCONV set, and the bit was touched: the user
-   explicitly said --textconv because she wants blobs to be mangled;
+log will show all the commits reachable from positive commits, and
+exclude all the commits reachable from negative commits.  Here, the
+"list of commits" are interpreted differently from the show case.
 
- * flags has ALLOW_TEXTCONV set, and the bit was not touched: the
-   user did not say --textconv; do not mangle blobs;
+diff can either take two positive commits or one positive + one
+negative commit.  In the latter case, it swaps the arguments and
+treats both as positive commits.
 
- * flags has ALLOW_TEXTCONV unset; the user did not say --textconv,
-   or explicitly said --no-textconv; do not mangle blobs.
+rebase can take one negative commit and one positive commit.  The
+commits reachable from the positive commit, but not from the negative
+commit are replayed onto the negative commit.  Now, we can use --onto=
+to override the commit onto which to replay.  But the fundamental
+constraint remains: rebase _cannot_ make this --onto= parameter part
+of the normal rev spec (we only have two types of commits: positive
+and negative to which we can assign different meanings).
+--
 
-The set_default callback can also be used to adjust defaults for
-fields that are not handled by the DIFF_OPT_SET/CLR/TST, by the way.
-You can remember the address of the default value you fed to a
-string field before entering the callchain to diff_opt_parse(), and
-in your set_default callback see if the value is still pointing at
-the same piece of memory (in which case the user did not touch it).
+This, I think, is the way forward.  In any command, forcing the user
+to differentiate between the two commits only using argv[0] and
+argv[1] is just horrible (diff with two positive commits is the only
+necessary exception to this rule).
 
- builtin/log.c | 1 +
- diff.c        | 3 +++
- diff.h        | 7 +++++--
- 3 files changed, 9 insertions(+), 2 deletions(-)
+Further, what I think is of utmost importance is consistency.
+Inventing loose mnemonics like in the diff case is the road to
+insanity.  All commands _must_ behave exactly the same way with all
+the different rev specs (or error out when the particular rev spec
+emits more commits than the command needs/ the wrong number of
+positive-negative commits).
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 6e56a50..c62ecd1 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -91,6 +91,7 @@ static void cmd_log_init_defaults(struct rev_info *rev)
- 
- 	if (default_date_mode)
- 		rev->date_mode = parse_date_format(default_date_mode);
-+	rev->diffopt.touched_flags = 0;
- }
- 
- static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
-diff --git a/diff.c b/diff.c
-index f0b3e7c..7c24872 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3213,6 +3213,9 @@ void diff_setup_done(struct diff_options *options)
- {
- 	int count = 0;
- 
-+	if (options->set_default)
-+		options->set_default(options);
-+
- 	if (options->output_format & DIFF_FORMAT_NAME)
- 		count++;
- 	if (options->output_format & DIFF_FORMAT_NAME_STATUS)
-diff --git a/diff.h b/diff.h
-index 78b4091..5c2f878 100644
---- a/diff.h
-+++ b/diff.h
-@@ -87,8 +87,8 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
- #define DIFF_OPT_PICKAXE_IGNORE_CASE (1 << 30)
- 
- #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
--#define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
--#define DIFF_OPT_CLR(opts, flag)    ((opts)->flags &= ~DIFF_OPT_##flag)
-+#define DIFF_OPT_SET(opts, flag)    (((opts)->flags |= DIFF_OPT_##flag),((opts)->touched_flags |= DIFF_OPT_##flag))
-+#define DIFF_OPT_CLR(opts, flag)    (((opts)->flags &= ~DIFF_OPT_##flag),((opts)->touched_flags |= DIFF_OPT_##flag))
- #define DIFF_XDL_TST(opts, flag)    ((opts)->xdl_opts & XDF_##flag)
- #define DIFF_XDL_SET(opts, flag)    ((opts)->xdl_opts |= XDF_##flag)
- #define DIFF_XDL_CLR(opts, flag)    ((opts)->xdl_opts &= ~XDF_##flag)
-@@ -109,6 +109,7 @@ struct diff_options {
- 	const char *single_follow;
- 	const char *a_prefix, *b_prefix;
- 	unsigned flags;
-+	unsigned touched_flags;
- 	int use_color;
- 	int context;
- 	int interhunkcontext;
-@@ -145,6 +146,8 @@ struct diff_options {
- 	/* to support internal diff recursion by --follow hack*/
- 	int found_follow;
- 
-+	void (*set_default)(struct diff_options *);
-+
- 	FILE *file;
- 	int close_file;
- 
+What's more?  I have a solution.  A brand new revspec is the _only_
+way to solve our problems without breaking consistency, or trading off
+terseness [Who wants to do git rebase --onto master $(git merge-base
+master topic)..topic every single time?].  I mentioned it on the other
+thread, but didn't get feedback :(
