@@ -1,156 +1,95 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: improvements to checks for core.notesRef / GIT_NOTES_REF / --ref
-Date: Mon, 29 Apr 2013 22:40:51 +0100
-Message-ID: <20130429214051.GA1704@pacific.linksys.moosehall>
-References: <20130427132118.GA25295@pacific.linksys.moosehall>
- <20130429133205.GA4672@pacific.linksys.moosehall>
- <20130429163909.GA19014@pacific.linksys.moosehall>
- <7vmwshjm4j.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Premerging topics
+Date: Mon, 29 Apr 2013 15:19:18 -0700
+Message-ID: <7v61z5geu1.fsf@alter.siamese.dyndns.org>
+References: <CALWbr2wocjqs1mpa+yuQ_Zw8m+SX24q6Pby3E3v3-jd-0w1pvQ@mail.gmail.com>
+	<CALKQrgfO9fd+EEA=Vwe94tJbxkX89uDmMHm9rj6L=d4x7JJjaQ@mail.gmail.com>
+	<CALWbr2x5HDU2t7hpSCkZnuKjTJ1KxYC0v50wsDPT0fm4LyvzWw@mail.gmail.com>
+	<CALKQrgeGPo--cYoGZ30nSfASh4CPzqGXQojkG9Ve96NFr+LrjA@mail.gmail.com>
+	<7vzjwofpht.fsf@alter.siamese.dyndns.org>
+	<CALKQrgd8jZQ__rnAT3wbfx-Y6mg-vrTdam53nS2ya2c=yMcS6Q@mail.gmail.com>
+	<7vppxkflhq.fsf@alter.siamese.dyndns.org>
+	<CALWbr2wiYkHMSihh-X-ToO-j4fty-P5OHicHa8ZUoqBkLS5mow@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git mailing list <git@vger.kernel.org>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Johan Herland <johan@herland.net>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 23:41:20 2013
+Cc: Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 30 00:19:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWvp1-0008Ut-Mm
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 23:41:20 +0200
+	id 1UWwPu-0004Nq-Vz
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 00:19:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759073Ab3D2VlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 17:41:15 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:41001 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758077Ab3D2VlO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 17:41:14 -0400
-Received: from localhost (4.3.1.2.f.7.0.2.5.1.9.5.4.a.0.0.0.d.3.7.6.a.1.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:11a6:73d0:a4:5915:207f:2134])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 133FB2EAD2;
-	Mon, 29 Apr 2013 22:40:52 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7vmwshjm4j.fsf@alter.siamese.dyndns.org>
-X-OS: GNU/Linux
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758484Ab3D2WTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 18:19:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46869 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757464Ab3D2WTV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 18:19:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A444E1AA74;
+	Mon, 29 Apr 2013 22:19:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ioI+LTD65RP8iVsti8vtSqOw6Pw=; b=EFLMtg
+	d+GOMOCvGPbb+TKLeoZnhqAh1quL7rzoAcew/FTRCXVWtqLOOzcbBjs6KKAlyHAh
+	VM0i6koJAVGI31y8s/VMttbjZNrrYNQlEYkwWRUSoWWTkdwnBZHvdQ22GWX9kkzy
+	33HQASSAts+sQictHzTa7/EkWf1MbB5osG04o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Tff+nWZUbYWEwD44NNWeGQ5c9y3JyLKJ
+	s+gM2YH6aqoNx8C8VvV9tUpa4h3HfAjZJ7khAY0f+wiqAbqYb5NJ+Wt3ddIUiWKm
+	epqQuR3xCYBfTQ8qboNqFtxq08M+OzQ5LX9+U9/Qe5ocFJYrbyegEmNWfZFsB7e7
+	pwB3dwz1Mhw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AE2D1AA73;
+	Mon, 29 Apr 2013 22:19:20 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 061DA1AA70;
+	Mon, 29 Apr 2013 22:19:19 +0000 (UTC)
+In-Reply-To: <CALWbr2wiYkHMSihh-X-ToO-j4fty-P5OHicHa8ZUoqBkLS5mow@mail.gmail.com>
+	(Antoine Pelisse's message of "Mon, 29 Apr 2013 21:06:59 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D67D5380-B11A-11E2-A9F1-8D009ADAE8A5-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222870>
 
-On Mon, Apr 29, 2013 at 10:13:32AM -0700, Junio C Hamano wrote:
-> Adam Spiers <git@adamspiers.org> writes:
-> 
-> >     static struct notes_tree *init_notes_check(const char *subcommand)
-> >     ...
-> > Can we relax this to "refs/", to allow better isolation of namespaces
-> > for remote notes?  Also, the check is applied for GIT_NOTES_REF and
-> > core.notesRef, but not for values passed via --ref.  Therefore I would
-> > propose that init_notes_check() is not only relaxed but also moved
-> > from builtin/notes.c to notes.c, so that it can be consumed by
-> > default_notes_ref().  Thoughts?
-> 
-> Such a policy decision at the application level should be done in
-> builtin/notes.c, and not notes.c, I think.  It is OK to have a
-> sharable check routine in notes.c and help different notes
-> applications to implement their own sanity checking, though.  "git
-> notes" that operates only on local notes might restrict its
-> operation to refs/notes, while "git notes-merge" may allow it to
-> read from other hierarchies but still write only into refs/notes,
-> for example.
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-OK, makes sense.
+> Should we think about adding some commands for that ?
+>
+> On the very top of my head (there is certainly more than that):
+> - Save such a change: By basically creating a ref to HEAD (HEAD being
+> the commit, HEAD^ the fixed merge) with merge-fix/HEAD^^1-HEAD^^2
+> - Apply the merge-fix: On top of a merge, find the most recent
+> merge-fix for HEAD^1/HEAD^2 (according to what was discussed), and
+> squash it.
 
-> I am not sure if it is a good idea in general to have a separate
-> remotes-notes/ hierarchy in the first place, though.  Wouldn't the
-> notes be less like branches (private view) and more like tags
-> (common world view)?
+Yeah, some nasties may live in the details, but these two operations
+are needed and probably sufficient as the end-user facing UI.
 
-I didn't have anything to do with the design, but the existence of
-certain "git notes" subcommands (in particular append, edit, and
-merge) gave me the distinct impression that users are expected to edit
-notes simultaneously, and handle any merge conflicts which may arise.
-These actions are modelled by commits to refs/notes/$GIT_NOTES_REF,
-which as a result is used as a sort of inferior 3rd-class branch.  In
-contrast, tags do not seem to be mutable (in the accumulative sense,
-at least), and have no history (not even in the reflog, AFAICS).
+The "save" step, when done manually, needs to be a two-step process
+that saves M and then F separately, but somebody _might_ be able to
+come up with a clever idea to let the user jump directly to F
+without recording M.  If such a triangle (A and B merges to F) can
+be recorded as merge-fix/A-B, that would certainly be less error
+prone and easier for the users to use.  Having said that, in the
+presense of possible textual conflicts when creating M, I do not
+think of a way that is easily implementable mechanically to
+internally sift changes for M and F when replaying it while
+resolving a merge between X and Y to produce N and eventually F'.
 
-As stated earlier in the thread, my particular use case is to use
-notes to mark commits which should be excluded from a long list of
-commits which "git cherry" says need to be upstreamed.  In our
-project, there are many commits for which it does not make sense to
-upstream them, and even for the ones which it does, cherry-picking can
-sometimes result in a different patch-id due to changed context.  In
-both of these cases, git notes is a great mechanism for blacklisting
-these commits from the upstreaming process, and I've already written
-"git icing" which wraps "git cherry" to support that.  However, the
-substantial size of the upstreaming work means that it needs to be
-done by multiple people across multiple clones of the repository,
-hence the need for branch-like tracking of notes.
-
-> > Also, are there any plans in the future for making "git notes merge"
-> > provide an index, so that a proper 3-way merge with ancestor can be
-> > done using git mergetool?
-> 
-> Are we committed that all notes leaves must be blobs (I do not
-> personally mind it)?
-
-No idea - perhaps someone else can comment on this.  Sounds reasonable
-to me too.
-
-> I do think we need a way to call a custom low level 3-way merge
-> driver once we identify which notes blobs correspond to each other
-> with what common ancestor notes blob while merging two notes trees.
-
-Right.
-
-> But I do not think that "an index" that we use for the usual working
-> tree merge is necessarily a good representation for driving such a
-> ll-merge driver and recording its result.  Each side likely has a
-> note for the same object to be merged in a different fan-out layout,
-> and fan-out is merely a performance hack to spread the objects in
-> smaller trees.  As mergetools only work with the usual working tree
-> with the usual index, they may be a poor substitute for ll-merge
-> drivers to handle merging notes trees.
-
-I won't pretend to have fully understood that ;-) I'm certainly not
-religious about how such a merge workflow would be implemented.  I
-just wanted to point out that the current mechanism doesn't readily
-expose the common ancestor in a way which makes the merge convenient.
-IMHO the more similar the merge's user experience is to a standard
-merge, the better, since that would minimise the number of merging
-workflows the user needs to learn.
-
-On this theme, I think ideally rebase should be supported too, and
-that does make me wonder if there's a good reason why notes shouldn't
-be stored in real branches, or at least something which looks more
-like a branch (even if "git branch" doesn't list it).  In particular,
-applying the concept of remote tracking branches to notes would be
-most useful.  Currently my "git rnotes" wrapper is faking remote
-tracking branches via refs/notes/$remote/$GIT_NOTES_REF, but that
-means that if I want to push a set of notes to a remote repository,
-it's not sufficient to do the following:
-
-    git push $remote refs/notes/$GIT_NOTES_REF:refs/notes/$GIT_NOTES_REF
-
-I also have to manually update the fake tracking "branch":
-
-    git update-ref refs/notes/$remote/$GIT_NOTES_REF refs/notes/$GIT_NOTES_REF
-
-    # or if I want to make really sure this only happens if the push worked
-    git fetch $remote refs/notes/$GIT_NOTES_REF:refs/notes/$remote/$GIT_NOTES_REF
-
-That's pretty ugly.  Couldn't we instead just reuse the existing
-mechanisms?
-
-    remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
-    remote.origin.fetch=+refs/notes/*:refs/note-remotes/origin/*
-    branch.notes/commits.remote=origin
-    branch.notes/commits.merge=refs/notes/commits
-
-Just an idea ...
-
-Adam
+The "apply" step should be a single step, and it should be easy to
+implement mechanically if M and F are recorded separately (but
+again, you may be able to re-synthesise M from A and B when you need
+to replay the evil merge).
