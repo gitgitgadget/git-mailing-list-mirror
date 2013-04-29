@@ -1,75 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re* [PATCH] git-remote-testgit: avoid process substitution
-Date: Mon, 29 Apr 2013 10:36:16 -0700
-Message-ID: <7vehdtjl2n.fsf@alter.siamese.dyndns.org>
-References: <7vvc7enxco.fsf@alter.siamese.dyndns.org>
-	<7vwqrtgi1r.fsf@alter.siamese.dyndns.org>
-	<51779052.8020507@viscovery.net>
-	<CAMP44s1oX_m0d+2Z3+VkafOhT1bZK_9Z5m1ex456DMdAidEKeg@mail.gmail.com>
-	<5177980A.4090305@viscovery.net> <5178C583.6000703@viscovery.net>
-	<CAMP44s2nWs3XyaLQUnYd=A9u1=8tB7Qp+FN7gf+SrACxmtP8pw@mail.gmail.com>
-	<7vobd1udz2.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3j5Bk3eqPeN2qkGTWFLO2NKz0taTGYVNvEut_VM=0NXA@mail.gmail.com>
-	<7v8v44vpon.fsf_-_@alter.siamese.dyndns.org>
-	<517C2349.3050609@kdbg.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Re* [PATCH 5/7] git-log.txt: rewrite note on why "--" may be required
+Date: Mon, 29 Apr 2013 23:08:56 +0530
+Message-ID: <CALkWK0=ZzE4gK4RZ8m9oAJgP76mWsYA2Z+Wasws8hnVgOQZR7Q@mail.gmail.com>
+References: <1366608631-21734-1-git-send-email-artagnon@gmail.com>
+ <1366608631-21734-6-git-send-email-artagnon@gmail.com> <7vmwsn8ok4.fsf_-_@alter.siamese.dyndns.org>
+ <CALkWK0m2__SZmpyQqLjkJuMWtPuD4=Oo7QrYovq_Fw6fpHEXXQ@mail.gmail.com> <7va9ohl2k7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Apr 29 19:36:26 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 29 19:39:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWs00-0007G7-Gp
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 19:36:24 +0200
+	id 1UWs3C-0001Zg-0L
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 19:39:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758018Ab3D2RgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 13:36:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50017 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757521Ab3D2RgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 13:36:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF8BA1A6F5;
-	Mon, 29 Apr 2013 17:36:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ST57XcFjk0aTKYDkLkap/qyunp4=; b=HwQQBc
-	TDrjXJ9+qGj2LMQi55h/G3o/6VdGbDb7zTE+BYHdpRExYraBYGLjDa4ECNE3H2uS
-	lRNc76AD/e+q6Bp+MupVWkyQebrdnRmWa09WCba5qZoO6UNvisTPeLfoGTqjj6Oi
-	QZ4qhGq/V5qbO69VetGlPdiRNv5XHtDBXeyUo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=m8LKs++kbrxt4or+OoJP9edhsSe8GtPn
-	qGQ5JwWgSLoI30VpkCtZqlGxnqpU1xdSlg5Vs11WGO832mEyXs9ewoyXvO+1pA0V
-	15dAf6sQvHUgwY/5Zwxtus2QIyO3UJIqS0vi4gPbNkBJqvxYJGeGw/EQjdZUKJQx
-	SoIWBmq+P4Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E63A91A6F2;
-	Mon, 29 Apr 2013 17:36:18 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E8971A6EE;
-	Mon, 29 Apr 2013 17:36:18 +0000 (UTC)
-In-Reply-To: <517C2349.3050609@kdbg.org> (Johannes Sixt's message of "Sat, 27
-	Apr 2013 21:13:13 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4CAF01A2-B0F3-11E2-BAED-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757191Ab3D2Rjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 13:39:37 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:51172 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753294Ab3D2Rjh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 13:39:37 -0400
+Received: by mail-ie0-f182.google.com with SMTP id bn7so7617548ieb.41
+        for <git@vger.kernel.org>; Mon, 29 Apr 2013 10:39:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=2UoNrNCa9f6FB9XpCkgWclMFFYC2O3tnFMVcVAx0cyE=;
+        b=lYnJtYcNQA1GrOYg2wT0X30GrQxT2mapF2lxqzkY8Zu0yEP+LNqEbj9Xqz8/C8yopB
+         bBtfLZBVEdE5j6JGpVNHE61T3zZGzZmnUtZgcCqTwmNSwH5Oi39ZQbBxCxPCAHb2ljaX
+         UgfSiadY8cQLNT29GItEqvOrUZ50BI1hh0cahLOXsqr2N2OJnc1gPen2HTDiuY0qNZpw
+         Hm2NK6BkNmT92Lya2/vnKHorhzZ99qc0CkhkNwXB0c52R/UCAf8Zrstk1WJj6mstf1uW
+         wekznMbbWCWLNMgQ+vAxnC65AvxkXe9jlBw7932pi0vAGN66M9yG8FQpXVNsiDwSetoS
+         0Sjg==
+X-Received: by 10.50.72.65 with SMTP id b1mr8053583igv.63.1367257176766; Mon,
+ 29 Apr 2013 10:39:36 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Mon, 29 Apr 2013 10:38:56 -0700 (PDT)
+In-Reply-To: <7va9ohl2k7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222821>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Junio C Hamano wrote:
+> That is not a problem.
+> [...]
+> A more important reason to have them as separate entries is to avoid
+> giving a wrong impression that "--" is somehow related to <path>,
 
-> The patch below doesn't remove the bash dependency, yet, but it addresses
-> the problematic mismatch you noticed without the need for $LF. Can you
-> please queue it to move the topic forward?
-
-I'll send three-patch series I have (including the two discussed in
-the thread) on top of fc/transport-helper-error-reporting as a reply
-to this message.  It seems to pass "make SHELL_PATH=/bin/dash test".
+Okay, makes sense then.  Queue it for this and shortlog; we can write
+it for the other manpages gradually.
