@@ -1,68 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix grammar in the 1.8.3 release notes.
-Date: Mon, 29 Apr 2013 14:20:38 -0700
-Message-ID: <7va9ohghjt.fsf@alter.siamese.dyndns.org>
-References: <7vvc78u8jl.fsf@alter.siamese.dyndns.org>
-	<1367262904-9885-1-git-send-email-marcnarc@xiplink.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] Add new @ shortcut for HEAD
+Date: Mon, 29 Apr 2013 16:36:21 -0500
+Message-ID: <CAMP44s0mHxv24GtpY2KzmrKQjZo+97FNN_T7tQk_peyWmusMWA@mail.gmail.com>
+References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
+	<7v61z5hzqg.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0rT1097=481aSH=Gy465zb2Bd_xLv=Xvte-GHcamWLyA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 23:21:02 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jon Seymour <jon.seymour@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 29 23:36:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWvVI-0000co-Ng
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 23:20:57 +0200
+	id 1UWvkL-0004jX-8c
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 23:36:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932555Ab3D2VUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 17:20:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63359 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932336Ab3D2VUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 17:20:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 063811A6E4;
-	Mon, 29 Apr 2013 21:20:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SvVM9VOkSJXjiIlLPRglwY2I4y4=; b=c+EQIE
-	a1XSBImVOJaKuOT8OtYNrm9vgrNWewqjAKCXEvoUMrdHGJcvFjIA2wuCuSX/Qc7S
-	q1XH/tMsmt7ZtfJG0jp7f43xI8yk0jnD45obr76D1A2J2nAcrO7jyKkFjhiG/r97
-	o+1hi29LSWZbNVIoYCectdNayeUpazfSWjocI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O76hCgUwBiz2lKi4aywYXBvdSee5DkPo
-	HEchjIcC3GcreXS/9FgmXIwFGaqKtcOtBPNVYbW/qAshVC8XBTvWQ8qj4YH/1m7m
-	vBUikrQJD+R8mDXvXuJHy2E4UENNIUT1ColRjghLhN8uJ35lGziJWMD7VD9JZ9Hr
-	hZVo63ejTFM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F153E1A6E3;
-	Mon, 29 Apr 2013 21:20:39 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7AC041A6E0;
-	Mon, 29 Apr 2013 21:20:39 +0000 (UTC)
-In-Reply-To: <1367262904-9885-1-git-send-email-marcnarc@xiplink.com> (Marc
-	Branchaud's message of "Mon, 29 Apr 2013 15:15:04 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A4186590-B112-11E2-95C4-8D009ADAE8A5-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758363Ab3D2VgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 17:36:24 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:48603 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757290Ab3D2VgX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 17:36:23 -0400
+Received: by mail-lb0-f175.google.com with SMTP id w20so5254396lbh.20
+        for <git@vger.kernel.org>; Mon, 29 Apr 2013 14:36:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=EUu/gZh62qjU/4vXGckol9H5cWmzEncSEN7dRMVXxW0=;
+        b=qe0s30mReLeryNIpPn7ktv7ewmdwO3eUhj9YuKz7gdHAZKs0x8dZ5xxW6tmkKtSpZa
+         4nuA+1evHG8Dq6hdqPzYFGRRRqPuKhdhXzYKZb+Bpf4FJko/tv/8P+ieXssmfbEUIzfT
+         h/Vp7M9HEtJMG+OEpsPkEEdgWmq7xUBFkJA53mBqTUbcaHJJ+2RmRuQ71MFVHTr5Olzp
+         pHZd7ZCRIE7Uzr63oQh53rGKQrXJ0otB+WGMxDcBC1/xMYQM4hK6OzefMFHuGHAdK6f4
+         rymkqCRFtfOkAH99cOyyYY+1C9zgeTzsV0um7t3QfBalAFV82m0sA3X98sn31BJWZKEV
+         9OYQ==
+X-Received: by 10.112.22.198 with SMTP id g6mr23679133lbf.135.1367271381520;
+ Mon, 29 Apr 2013 14:36:21 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Mon, 29 Apr 2013 14:36:21 -0700 (PDT)
+In-Reply-To: <CAMP44s0rT1097=481aSH=Gy465zb2Bd_xLv=Xvte-GHcamWLyA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222868>
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
-
-> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
+On Mon, Apr 29, 2013 at 3:23 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Mon, Apr 29, 2013 at 3:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>
+>>> So HEAD@{0}~0^0 is too much to type, but we can remove '^0', and we can
+>>> remove '~0', and we can remove 'HEAD', but we can't remove '{0}'?
+>>
+>> Another technical issue, even if you have reflogs.
+>>
+>> HEAD@{0} and @{0} are referring to two different reflogs, and means
+>> different things, even though they may refer to the same commit.
 >
-> ---
+> How? AFAICS the code substitutes @{0} with HEAD@{0}.
 >
-> This started out as an attempt to make the backward compatibility notes
-> more parsable, but then I just kept going...
+> Plus 'git show HEAD@{1}', 'git show current-branch@{1}', and 'git show
+> @{1}' all show the same thing, even though 'git relog HEAD' shows a
+> different commit for HEAD@{1}.
 
-Thanks; everything other than the "bundle" thing looked sensible.
+Never-mind, now I see the difference, still, I don't think it's
+relevant for this patch.
+
+-- 
+Felipe Contreras
