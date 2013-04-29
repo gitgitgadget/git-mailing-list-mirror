@@ -1,85 +1,73 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] send-email: improve recipients_cmd()
-Date: Mon, 29 Apr 2013 00:14:52 -0500
-Message-ID: <CAMP44s0x8fK-6vbY20eKA9QjWqhiOCvx+KFOgKOZ8q58bwk8Tw@mail.gmail.com>
-References: <1367101561-14671-1-git-send-email-felipe.contreras@gmail.com>
-	<7vbo8yqxas.fsf@alter.siamese.dyndns.org>
+From: Eric Cousineau <eacousineau@gmail.com>
+Subject: [ANNOUNCE] git-submodule-ext, git-new-workdir (updates for
+ supermodules), and git-emeld (using git-new-workdir)
+Date: Mon, 29 Apr 2013 00:17:57 -0500
+Message-ID: <CA+aSAWvPahFZuYTbpPMfRo5p7onxZ7L2CX571r7izczeBajxRA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Joe Perches <joe@perches.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 07:15:01 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 29 07:18:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWgQU-0002nT-LG
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 07:14:58 +0200
+	id 1UWgTV-0004xR-PA
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 07:18:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751262Ab3D2FOy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 01:14:54 -0400
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:48678 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751001Ab3D2FOy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 01:14:54 -0400
-Received: by mail-lb0-f176.google.com with SMTP id p10so145893lbv.21
-        for <git@vger.kernel.org>; Sun, 28 Apr 2013 22:14:52 -0700 (PDT)
+	id S1752062Ab3D2FSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 01:18:00 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:44633 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751001Ab3D2FR7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 01:17:59 -0400
+Received: by mail-lb0-f175.google.com with SMTP id w20so4377487lbh.6
+        for <git@vger.kernel.org>; Sun, 28 Apr 2013 22:17:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=8DRf2MCEa8rTuTkIWr6P2BOmvCnVs0JY7+8qBDS3fHA=;
-        b=kgFopfOSqewab0h0TIIt52O8v2R8Ot7DezpcUxpUFig9uqUaFRKdKUPqL/rlJD82O7
-         w9ZhXcgpXlC8Wu7UyDvyEixGD4LZ/uQITtx7dNeEzn/Pgdgsjc1CZ0pHknwSMvwCC2J5
-         KHe7NK1gV4RnWQ95igZMfVebBIaoB15pw+0yH0xwESGNcZJe090ZpS3qR5AZyyVQ/C4a
-         ykNg5PKYoteWONJPVzKfS1bFw2j/Y8vqcuH6RnBQgP3Pwy9PEBIKdJWdQ+8HkJodyKFR
-         O/p0KbURoBeBtT4BGw6f+fXU2a8oJGpMovBDBQqV5G+e2IkGqv0GRAoKKoU/M4PFXNC8
-         FCyQ==
-X-Received: by 10.112.154.98 with SMTP id vn2mr24651543lbb.8.1367212492305;
- Sun, 28 Apr 2013 22:14:52 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Sun, 28 Apr 2013 22:14:52 -0700 (PDT)
-In-Reply-To: <7vbo8yqxas.fsf@alter.siamese.dyndns.org>
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=cI5/JcFEqXrHgrPYzjUBrqu99oov05LlXm/DChZgXZU=;
+        b=bkdscV5bJktQJHvSzqNTPZ7sWR4iasxUKL96ZhFk/hIKtK7v2cc+UVbrNPXivT1OvL
+         joYdvmj00F8VVjVIpN0GKLisdTcTMGdozAD/1xR3yA2OZaOpdv7RAqCETtoJu2wI3lWM
+         VYKshqggPUclUNwmcfZuPpBVJyFtsGkVpjSrzJtzzDJ0nJaUt4O1CnHuRhKcQ2L30FDI
+         kw5mS+O56VYXxkYeE69tnazAiXoUIwnlqnL6x/ywLFpqjFUuRkTs29R0Vf6WeTzSbe1b
+         WFYM1TVdimwmCNT7yAWuk6Z3OPEZjXNnaN3qrkq4eSOd8Ucj08DeSk6eobL7xAOOVik2
+         /BMw==
+X-Received: by 10.112.140.100 with SMTP id rf4mr17269053lbb.82.1367212677791;
+ Sun, 28 Apr 2013 22:17:57 -0700 (PDT)
+Received: by 10.114.57.237 with HTTP; Sun, 28 Apr 2013 22:17:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222770>
 
-On Sun, Apr 28, 2013 at 2:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> We don't need to quote the filename to pass to the command, we can use
->> an array of all the arguments to pass to the command, which is safer,
->> and more extensible.
->>
->> Commit a47eab0 (send-email: use the three-arg form of open in
->> recipients_cmd) stated we couldn't pass $file directly, but in fact, we
->> can, the multi-word string is passed as is, and we can pass an array
->> too.
->
-> I think the comment is not about passing $file directly, but is
-> about passing $cmd that could be multi-word string directly.  The
-> caller expects it be split into command and its earlier part of
-> command line parameters, so that you can say
->
->     $cmd = "cccmd --frotz --nitfol"
+Hello,
 
-I see.
+I have been working on some of the following utilities for working
+with submodules:
 
-> but the non-string form of open would not give you that, unless you
-> rewrite it to
->
->         open $fh, "-|", qw(sh -c), $cmd, @args
+* git-submodule-ext - Experimental extensions to git-submodule.
+Includes 'foreach' with --top-level, --post-order, and --constrain
+options. (Been using this to prototype patches for git-submodule)
+* git-new-workdir - Modified from git/contrib, I've added support for
+using this on supermodules and submodules. It does so by changing some
+of the config (which I figured did not matter if the new workdir's are
+meant to be short-lived)
+* git-emeld - Inspired by git-meld / git-diffall, compare editable
+versions of your repos, so you can then go back and make commits.
+Since it uses git-new-workdir, it can be used for supermodules as
+well.
 
-That doesn't seem to work for me.
+These are available here: https://github.com/eacousineau/util [Kind of
+generic name, may change later]
 
-It would have to be:
+I have also put together a small primer on Git submodules:
+https://github.com/eacousineau/util/blob/master/SUBMODULES.md
 
-  open $fh, "-|", qw(sh -c), "$cmd \Q$args\E"
+Let me know of any suggestions you have for these tools or the primer.
+I plan to submit these modifications as patches in the future.
 
-So we end up in the same place.
-
--- 
-Felipe Contreras
+Thank you,
+- Eric Cousineau
