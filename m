@@ -1,112 +1,159 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 1/3] revision.c: tighten up TREESAME handling of merges
-Date: Mon, 29 Apr 2013 11:11:32 -0700
-Message-ID: <7v1u9tjjfv.fsf@alter.siamese.dyndns.org>
-References: <517AD304.6020807@bracey.fi>
-	<1367004718-30048-1-git-send-email-kevin@bracey.fi>
-	<7vppxfsirl.fsf@alter.siamese.dyndns.org> <517CC9AE.30407@bracey.fi>
-	<7v61z6sdpz.fsf@alter.siamese.dyndns.org> <517EB205.6090804@bracey.fi>
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH 2/2 v2] test output: respect $TEST_OUTPUT_DIRECTORY
+Date: Mon, 29 Apr 2013 19:16:21 +0100
+Message-ID: <20130429181621.GL472@serenity.lan>
+References: <7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
+ <7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
+ <47c9ba4200a22e865040208628357d9bc4bcf3f4.1367002553.git.john@keeping.me.uk>
+ <87fvy9dxok.fsf@hexa.v.cablecom.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Kevin Bracey <kevin@bracey.fi>
-X-From: git-owner@vger.kernel.org Mon Apr 29 20:11:42 2013
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Apr 29 20:16:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWsY8-0003G1-JY
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 20:11:40 +0200
+	id 1UWscy-0007Mv-4e
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 20:16:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757308Ab3D2SLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 14:11:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40473 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752942Ab3D2SLf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 14:11:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BAF441A0BA;
-	Mon, 29 Apr 2013 18:11:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GZoLzfFJKnGDEG8yMvXytYpgELs=; b=rtifmR
-	EQuHYxctSuj6PZXmRcSjCJw08KgbrcGdFOlFNa9UemWeG1zD4/fZAGWruGAZUWmn
-	9Unn4aWxDfpLXfEmHOAagl8DF9XGuDbNEQQlSy17qJn4+PsRkOAF4uZv9N7eW6m3
-	M20ubi3QANDeU0M6Uk5YfBPTMwPhwJ8aB2FqU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ameSAhP6UAH1jyMALgPM2N0lRSvEOj1r
-	qdzhVen04zsk3UMvpcpjdm/wDrZvRqlxxlap+5VhhjjQ7nJQN0D+iYa+CepL9eni
-	N+FPeo+wqeJuwE5GpDa/kOfaNkDH0SZUq2upqNOonvlLorJf+jDJq8wIOfeWmgRW
-	OTX2wKaY+QM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A97D51A0B9;
-	Mon, 29 Apr 2013 18:11:34 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1758378Ab3D2SQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 14:16:35 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:60763 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757519Ab3D2SQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 14:16:34 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 4F9B1CDA5B2;
+	Mon, 29 Apr 2013 19:16:34 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id IQjnNuZ1AEnq; Mon, 29 Apr 2013 19:16:33 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1A0771A0B8;
-	Mon, 29 Apr 2013 18:11:34 +0000 (UTC)
-In-Reply-To: <517EB205.6090804@bracey.fi> (Kevin Bracey's message of "Mon, 29
-	Apr 2013 20:46:45 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 39B617F2-B0F8-11E2-BEED-8D009ADAE8A5-77302942!b-pb-sasl-quonix.pobox.com
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 6EF10CDA569;
+	Mon, 29 Apr 2013 19:16:23 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <87fvy9dxok.fsf@hexa.v.cablecom.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222835>
 
-Kevin Bracey <kevin@bracey.fi> writes:
+Most test results go in $TEST_OUTPUT_DIRECTORY, but the output files for
+tests run with --tee or --valgrind just use bare "test-results".
+Changes these so that they do respect $TEST_OUTPUT_DIRECTORY.
 
-> At present, either query will show lots of really boring merge commits
-> of topic branches at the boundary, with 1 INTERESTING parent that
-> they're TREESAME too, and 1 UNINTERESTING parent that they may or may
-> not be TREESAME to, depending on how old the base of that topic branch
-> was. Most such commits are of no relevance to our history
-> whatsoever. In the case of "--simplify-merges", the fact that they're
-> UNINTERESTING actually _prevented_ their simplification - if it had
-> been allowed to follow the UNINTERESTING path back further, it would
-> have reached an ancestor, and been found redundant. So limiting the
-> rev-list actually increases the number of merges shown.
->
-> We can lose all those boring commits with these two changes:
->
-> 1) Previously TREESAME was defined as "this commit matches at least 1
-> parent". My first patch changes it to "this commit matches all
-> parents". It should be refined further to "this commit matches all
-> INTERESTING parents, if it has any, else all (UNINTERESTING)
-> parents". (Can we word that better?) Note that this fancy rule
-> collapses to the same straightforward TREESAME check as ever for 0- or
-> 1-parent commits.
->
-> 2) simplify_merges currently will not simplify commits unless they
-> have exactly 1 parent. That's not what we want. We only need to
-> preserve commits that don't have exactly 1 INTERESTING parent.
->
-> Those 2 rules produce the desirable result: if we have a merge commit
-> with exactly 1 INTERESTING parent it is TREESAME to, it is always
-> simplified away - any other UNINTERESTING parents it may have did not
-> affect our code, so we don't care about whether we were TREESAME to
-> them or not, and as we don't want to see any of the UNINTERESTING
-> parents themselves, the merge is not worth showing.
->
-> This makes a massive difference on some of my searches, reducing the
-> total commits shown by a factor of 5 to 10, greatly improving the
-> signal-to-noise ratio.
->
-> I'll put together a trial patch at the end of the next iteration of
-> the series that implements this logic. I need to think a bit more - I
-> think "get_commit_action" needs a similar INTERESTING check for merges
-> too, to get the same sort of effect without relying on
-> simplify_merges. Parent rewriting shouldn't necessitate keeping all
-> merges - only merges with 2+ INTERESTING parents.
+As a result of this, the valgrind/analyze.sh script may no longer
+inspect the correct files so it is also updated to respect
+$TEST_OUTPUT_DIRECTORY by adding it to GIT-BUILD-OPTIONS.  This may be a
+regression for people who have TEST_OUTPUT_DIRECTORY in their config.mak
+but want to override it in the environment, but this change merely
+brings it into line with GIT_TEST_OPTS which already cannot be
+overridden if it is specified in config.mak.
 
-Everything you wrote above makes tons of sense.
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+On Mon, Apr 29, 2013 at 08:00:27PM +0200, Thomas Rast wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index ca6bdef..70ad085 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -54,8 +54,8 @@ done,*)
+> >  	# do not redirect again
+> >  	;;
+> >  *' --tee '*|*' --va'*)
+> > -	mkdir -p test-results
+> > -	BASE=test-results/$(basename "$0" .sh)
+> > +	mkdir -p "$(TEST_OUTPUT_DIRECTORY)/test-results"
+> > +	BASE="$(TEST_OUTPUT_DIRECTORY)/test-results/$(basename "$0" .sh)"
+> >  	(GIT_TEST_TEE_STARTED=done ${SHELL_PATH} "$0" "$@" 2>&1;
+> >  	 echo $? > $BASE.exit) | tee $BASE.out
+> >  	test "$(cat $BASE.exit)" = 0
+> 
+> Hmm, I initially was too lazy to review this change, and now it's biting
+> me.  The above is Makefile-quoted, which to the shell reads like a
+> command substitution.
 
-One small worry is how this new simplification interacts with the
-first parent mode. For the purpose of showing the merge commit
-itself, the second and subsequent parents are treated as "not
-INTERESTING" in the above discussion, but that should not propagate
-back to their parents like the normal UNINTERESTING-ness does.
+Yeah, that's completely wrong - clearly it was too late on Friday
+evening when I wrote this.  There was another case of the same in
+t/valgrind/analyze.sh.
+
+All fixed in this version.
+
+ Makefile              | 3 +++
+ t/test-lib.sh         | 4 ++--
+ t/valgrind/analyze.sh | 8 ++++++--
+ 3 files changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 598d631..ef5be0f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2153,6 +2153,9 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
+ 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@
+ 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@
++ifdef TEST_OUTPUT_DIRECTORY
++	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@
++endif
+ ifdef GIT_TEST_OPTS
+ 	@echo GIT_TEST_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_OPTS)))'\' >>$@
+ endif
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 657b0bd..e7d169c 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -54,8 +54,8 @@ done,*)
+ 	# do not redirect again
+ 	;;
+ *' --tee '*|*' --va'*)
+-	mkdir -p test-results
+-	BASE=test-results/$(basename "$0" .sh)
++	mkdir -p "$TEST_OUTPUT_DIRECTORY/test-results"
++	BASE="$TEST_OUTPUT_DIRECTORY/test-results/$(basename "$0" .sh)"
+ 	(GIT_TEST_TEE_STARTED=done ${SHELL_PATH} "$0" "$@" 2>&1;
+ 	 echo $? > $BASE.exit) | tee $BASE.out
+ 	test "$(cat $BASE.exit)" = 0
+diff --git a/t/valgrind/analyze.sh b/t/valgrind/analyze.sh
+index d8105d9..2ffc80f 100755
+--- a/t/valgrind/analyze.sh
++++ b/t/valgrind/analyze.sh
+@@ -1,6 +1,10 @@
+ #!/bin/sh
+ 
+-out_prefix=$(dirname "$0")/../test-results/valgrind.out
++# Get TEST_OUTPUT_DIRECTORY from GIT-BUILD-OPTIONS if it's there...
++. "$(dirname "$0")/../../GIT-BUILD-OPTIONS"
++# ... otherwise set it to the default value.
++: ${TEST_OUTPUT_DIRECTORY=$(dirname "$0")/..}
++
+ output=
+ count=0
+ total_count=0
+@@ -115,7 +119,7 @@ handle_one () {
+ 	finish_output
+ }
+ 
+-for test_script in "$(dirname "$0")"/../test-results/*.out
++for test_script in "$TEST_OUTPUT_DIRECTORY"/test-results/*.out
+ do
+ 	handle_one $test_script
+ done
+-- 
+1.8.3.rc0.149.g98a72f2.dirty
