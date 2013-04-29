@@ -1,49 +1,72 @@
-From: shawn wilson <ag4ve.us@gmail.com>
-Subject: verify signature hook
-Date: Mon, 29 Apr 2013 12:32:41 -0400
-Message-ID: <CAH_OBieXyHuQBpG7Ge1wA4Q+MKBEy7MD-TpZmMLZjEF0jAzLwg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] Documentation/git-diff.txt improvements
+Date: Mon, 29 Apr 2013 09:33:35 -0700
+Message-ID: <7v38u9l2jk.fsf@alter.siamese.dyndns.org>
+References: <1366821216-20868-1-git-send-email-artagnon@gmail.com>
+	<CALkWK0nVZHwSMS_gtisiAguNhAMnDpdWmAtz_OgzP93YZtYfHQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 29 18:33:20 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 29 18:34:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWr0u-00059i-5T
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 18:33:16 +0200
+	id 1UWr1d-0005nC-NW
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 18:34:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757672Ab3D2QdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 12:33:06 -0400
-Received: from mail-vb0-f49.google.com ([209.85.212.49]:47790 "EHLO
-	mail-vb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757349Ab3D2QdC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 12:33:02 -0400
-Received: by mail-vb0-f49.google.com with SMTP id 12so1953341vbf.22
-        for <git@vger.kernel.org>; Mon, 29 Apr 2013 09:33:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=Jt7oHC8+N6NZOajLCX1LHiziz3C+Sqe3prIyBBnC7zM=;
-        b=rdBMyPMNNHzHYA6aZQ0Pbg3LVVdPbUcKLFQ7rqA8homLTupwS1RJVoPq8T1KFjNGky
-         x/TogZwNKBbu4eCC3NyX0u+tpZyBtUFSSv/KVfw9rQ0OYFib9eHLilJ6PikPQmqQiGHW
-         x5zIS9RR+ilXTCTmjdPrVWstGuJU4Psw2twpqfT+8r08hpKUBgdvszL+OTZXO16wxHZP
-         dMJx/KlkDqESzqBDY6LdRt5XIR/sH166Y+VTNTdL+ZOSnCUQ96zt0oK0gSr3f4lD4HA8
-         /m+xq7UPF1D2xn6ACesarBFZ7j+OFCDkdV7DC85/sIDdgeqexhee2ER8kM5kuQ8hHxIM
-         9k+g==
-X-Received: by 10.220.228.74 with SMTP id jd10mr33308426vcb.65.1367253181287;
- Mon, 29 Apr 2013 09:33:01 -0700 (PDT)
-Received: by 10.52.103.14 with HTTP; Mon, 29 Apr 2013 09:32:41 -0700 (PDT)
+	id S1758357Ab3D2Qdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 12:33:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52237 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758347Ab3D2Qdi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 12:33:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A72819CAD;
+	Mon, 29 Apr 2013 16:33:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=7rpq/RfWaaIr8xzLkbjfQ1kHPio=; b=xhGNhXPvZBq3pvTGef9A
+	cuMZMLZcBt6meO+La+mSdjcMvW7BITBF1rZruD986pETgXA+BToKiL0mVKrrkd5m
+	RZpnSTFsUjX/KtMehr5rWuh5+UaQUGu8YYsDFvMpo4dowiQsWLpLqMDJmaL1/phd
+	kThPasOhhHzF+eZBM54cKhQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=PPOaA3Eu9kR13QK67LQg1KZQCEmoE5YKrOaV+n4Kr18ArX
+	+TiVcEYhPAIfJsMfCpxi50zdtHIOiMfMZu/fCYAgUhj9MRj9sVI/Z5egt5axXMMl
+	oD07duPAs7Pyx79q5LR4+jSGNUwF3WYoalOx5uB468387dvyiwr5T7mEeweQA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E91519CAC;
+	Mon, 29 Apr 2013 16:33:38 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 89EFE19CAB;
+	Mon, 29 Apr 2013 16:33:37 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8B051116-B0EA-11E2-BD5E-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222810>
 
-How do I complain when a commit/merge/tag/etc aren't signed? Ie,
-everything should be signed and I'd like a hook that complains loudly
-if something isn't signed (or if a signature isn't verifiable).
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Also, how do I default to signing everything?
+> So, I decided to drop everything and just submit the first two parts.
+> Until we can decide what to do about the '<commit>..<commit>' and
+> '<commit>...<commit>' forms (new rev spec? overload existing rev spec
+> to change the meaning? deprecate without a viable alternative?), let's
+> leave them as it is.
+
+I had an impression that many of them, with the suggested fix-ups,
+were improvements, with or without the A~B discussion.  It seems
+that the entire review wasted many braincycles if you are to drop
+the ball at this point, which is very dissapointing.
+
+> Nothing to resubmit.  Junio: can you just queue the first two parts?
+
+I do not appreciate "Nothing to resubmit".  [1/5] needs fixes to the
+issue Jonathan pointed out, doesn't it?
