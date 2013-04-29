@@ -1,61 +1,93 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Yann Dirson <dirson@bertin.fr>
 Subject: Re: Itches with the current rev spec
-Date: Mon, 29 Apr 2013 20:50:44 +0530
-Message-ID: <CALkWK0n=K1PK64xAvCUOQwhMUUtdSLyOGxNLZuqWYvVddZgmKw@mail.gmail.com>
+Date: Mon, 29 Apr 2013 17:37:26 +0200
+Organization: Bertin Technologies
+Message-ID: <20130429173726.04cb5ac5@chalon.bertin.fr>
 References: <CALkWK0n97VLtiR96VEy86645NVoDL2rS-g7LBuLb=JpncdH6VA@mail.gmail.com>
  <20130426101946.433f2d12@chalon.bertin.fr> <517A3E47.6010606@viscovery.net>
- <7v7gjpxjw0.fsf@alter.siamese.dyndns.org> <CAMP44s0-C_TRC_eD_ZbN3WFe4NKWVPQVhh+ME-F5yBBwKs2NdA@mail.gmail.com>
+ <7v7gjpxjw0.fsf@alter.siamese.dyndns.org>
+ <CAMP44s0-C_TRC_eD_ZbN3WFe4NKWVPQVhh+ME-F5yBBwKs2NdA@mail.gmail.com>
  <7v8v45vvuy.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=W_FxDwc3Tby=h90yc5i8UEuT7maERahFRDQU=hQ633g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
 	Johannes Sixt <j.sixt@viscovery.net>,
-	Yann Dirson <dirson@bertin.fr>, git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 17:21:35 2013
+	Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 29 17:37:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWptS-0005pb-PH
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 17:21:31 +0200
+	id 1UWq91-0001YS-LR
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 17:37:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220Ab3D2PV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 11:21:26 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:44653 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750792Ab3D2PVZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 11:21:25 -0400
-Received: by mail-ie0-f169.google.com with SMTP id ar20so7478102iec.14
-        for <git@vger.kernel.org>; Mon, 29 Apr 2013 08:21:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=JvHnha9Vaa0+VaRbpvLawrPcCXkwnKkHW5U+7GRNbJY=;
-        b=TmOydaqWAM+QiEijLsOHfxBK2euO9gwMQKo1XCjraRSwiKhhgw7mzVYQv377jlD4be
-         CCpRwGwl9j9RZKquPFyneDWlPNwGzF3WDghdvezpdRu/WeeI0KogyXhJ4CxanG1nsYHd
-         82OE+rrXDlqfnA/KVhVGwBzprq1sIxNToyVLUBJ3j/OifsMTf4oEOXponO7w/eRZgD8g
-         TMxpcPuATqPTjwUgCum4kyeMUVZPAQ4m5Hs/+KFbgeGVsGa5NycezWienkCaKvqDsokd
-         ztCBNCM/N+G87x6hkRN5TO674ekyjWIn1lNTAhpfXEMvnxwxa8pHiGTPE4sd3SxK69cj
-         wIGQ==
-X-Received: by 10.50.66.197 with SMTP id h5mr7460745igt.63.1367248885275; Mon,
- 29 Apr 2013 08:21:25 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Mon, 29 Apr 2013 08:20:44 -0700 (PDT)
-In-Reply-To: <7v8v45vvuy.fsf@alter.siamese.dyndns.org>
+	id S1756869Ab3D2Phb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 11:37:31 -0400
+Received: from blois.bertin.fr ([195.68.26.9]:33310 "EHLO blois.bertin.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756851Ab3D2Pha (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 11:37:30 -0400
+Received: from blois.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id 41CEB6AB19
+	for <git@vger.kernel.org>; Mon, 29 Apr 2013 17:37:26 +0200 (CEST)
+Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
+	by blois.bertin.fr (Postfix) with ESMTP id 1C8E56AB16
+	for <git@vger.kernel.org>; Mon, 29 Apr 2013 17:37:25 +0200 (CEST)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0MM000HEFWQCF960@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Mon, 29 Apr 2013 17:37:25 +0200 (CEST)
+In-reply-to: <CALkWK0=W_FxDwc3Tby=h90yc5i8UEuT7maERahFRDQU=hQ633g@mail.gmail.com>
+X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8250-7.0.0.1014-19832.000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222803>
 
-Junio C Hamano wrote:
->  - If the UI language for "rebase" were designed following the
->    "composition using common elements like ranges and revisions"
->    school, it would have started from "rebase --onto=X A..B".
+On Mon, 29 Apr 2013 20:38:03 +0530 Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> 3. "Range" is not an inherent property of A..B or A...B.  There are no
+> "revision ranges".
 
-I will try to drive the point home one more time.  What do you really
-want to rebase?  B ^A or B ^$(git merge-base A B)?  They're two
-entirely different things as I've repeated countless times.  And the
-latter is what I always really mean.
+Well, that could be seen as a problem, the .. syntax being commonly associated
+with the concept of range.
+
+> 4. Every command is free to interpret positive and negative commits as
+> it sees fit.  Since there is no ordering, it must never treat one
+> negative commit differently from another negative commit, or one
+> positive commit differently from another positive commit.
+> 
+> show takes a list of positive commits and shows all of them.
+> 
+> log will show all the commits reachable from positive commits, and
+> exclude all the commits reachable from negative commits.  Here, the
+> "list of commits" are interpreted differently from the show case.
+> 
+> diff can either take two positive commits or one positive + one
+> negative commit.  In the latter case, it swaps the arguments and
+> treats both as positive commits.
+> 
+> rebase can take one negative commit and one positive commit.  The
+> commits reachable from the positive commit, but not from the negative
+> commit are replayed onto the negative commit.  Now, we can use --onto=
+> to override the commit onto which to replay.  But the fundamental
+> constraint remains: rebase _cannot_ make this --onto= parameter part
+> of the normal rev spec (we only have two types of commits: positive
+> and negative to which we can assign different meanings).
+> --
+
+Don't forget the particular situation of cherry-pick, which shows a situation
+where we may want to specify a set of single commits and ranges, but for which
+the current mechanisms cause a problem.
+
+See: http://thread.gmane.org/gmane.comp.version-control.git/199994/focus=200058
+
+
+-- 
+Yann Dirson - Bertin Technologies
