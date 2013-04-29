@@ -1,94 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] mingw: rename WIN32 cpp macro to GIT_NATIVE_WINDOWS
-Date: Sun, 28 Apr 2013 22:46:07 -0700
-Message-ID: <7v38u9opnk.fsf@alter.siamese.dyndns.org>
-References: <517C29BE.6050002@ramsay1.demon.co.uk>
-	<20130429051059.GC8031@elie.Belkin>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: Git.pm with recent File::Temp fail
+Date: Mon, 29 Apr 2013 07:46:20 +0200
+Message-ID: <20130429074620.17fbf129@pc09.procura.nl>
+References: <20130322205758.09ca9107@pc09.procura.nl>
+	<CAP30j14=_U8iEZAodnfACnBHgF0+j0_OK7n7PvsUnwSDj_Y40A@mail.gmail.com>
+	<20130428110933.436786bd@pc09.procura.nl>
+	<20130429021651.GA2751@sigill.intra.peff.net>
+	<7vr4hung17.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 07:46:18 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Ben Walton <bdwalton@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 29 07:46:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWgul-0006xy-Lj
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 07:46:15 +0200
+	id 1UWgvK-0007Om-MZ
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 07:46:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752023Ab3D2FqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 01:46:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53916 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750710Ab3D2FqK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 01:46:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DEC22139BB;
-	Mon, 29 Apr 2013 05:46:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=baC5EjPMmnRed+IX26YWCDMrA7U=; b=wJYo1d
-	7/LDjYs/o46lyWzajk5tFAAbC9xVQgwrbja+qKyY6ydC6q4MpwhjmPfjYc9LHB7K
-	6QOMIxCaYbRr8fdwkn7qUlGHtmzRTSqsgjwfEa1pZ/0eSXyTcHit4kWxoJ2vw8mh
-	w2BupTQjpx/1ElLTFn9vvbdhiV8mQJ4IdMWtQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WBXjmo/6iSzDvp6WEQe8B61DnfJj2rP+
-	1TACi+2EUAMvXgWwfPzP4ofV1hm7GmP9Ub8HOihLfAxq31YWX+E4x7Qotlas0BNJ
-	A4i1nf01bhg32+ZIDZ5htUsVXKcwOwV3tW8kzSUma77h4BZa9DZ0Qo+zkhO+QZtR
-	DmXuCn+l7hg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3541139B9;
-	Mon, 29 Apr 2013 05:46:09 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 35DF6139B7;
-	Mon, 29 Apr 2013 05:46:09 +0000 (UTC)
-In-Reply-To: <20130429051059.GC8031@elie.Belkin> (Jonathan Nieder's message of
-	"Sun, 28 Apr 2013 22:11:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 179AA29A-B090-11E2-87A1-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752059Ab3D2Fqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 01:46:46 -0400
+Received: from smtp-vbr12.xs4all.nl ([194.109.24.32]:3598 "EHLO
+	smtp-vbr12.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750780Ab3D2Fqq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 01:46:46 -0400
+Received: from pc09.procura.nl (adsl.procura.nl [82.95.216.30])
+	(authenticated bits=0)
+	by smtp-vbr12.xs4all.nl (8.13.8/8.13.8) with ESMTP id r3T5kYZ9052221
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 29 Apr 2013 07:46:36 +0200 (CEST)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <7vr4hung17.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.9.0-196-ge98c82 (GTK+ 2.24.10; x86_64-suse-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222776>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Sun, 28 Apr 2013 20:59:16 -0700, Junio C Hamano <gitster@pobox.com>
+wrote:
 
-> Ramsay Jones wrote:
->
->> After this change, it should be possible to drop the
->> CYGWIN_V15_WIN32API setting without any negative effect.
->>
->> [rj: %s/NATIVE_WINDOWS/GIT_NATIVE_WINDOWS/g ]
->>
->> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
->> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->
-> Yay!  Thanks for finishing it.
->
-> For what it's worth,
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Sun, Apr 28, 2013 at 11:09:33AM +0200, H.Merijn Brand wrote:
+> >
+> >> Still failing in 1.8.2.2
+> >> 
+> >> Short fix:
+> >> --8<---
+> >> diff --git a/perl/Git.pm b/perl/Git.pm
+> >> index dc48159..7a252ef 100644
+> >> --- a/perl/Git.pm
+> >> +++ b/perl/Git.pm
+> >> @@ -1265,7 +1265,7 @@ sub _temp_cache {
+> >>                         $tmpdir = $self->repo_path();
+> >>                 }
+> >> 
+> >> -               ($$temp_fd, $fname) = File::Temp->tempfile(
+> >> +               ($$temp_fd, $fname) = File::Temp::tempfile(
+> >>                         'Git_XXXXXX', UNLINK => 1, DIR => $tmpdir,
+> >>                         ) or throw Error::Simple("couldn't open new temp file");
+> >
+> > I think this fix is the right thing. Your patch probably didn't get
+> > applied because it did not follow the guidelines in SubmittingPatches.
+> 
+> It was more like "It managed to miss people's attention because the
+> subject didn't say [PATCH]", but yes you are right that the change
+> the patch text itself shows looks reasonable and that I cannot apply
+> a patch that is not signed off (and worse yet in multipart/mixed).
 
-Wait.  The proposed commit log message talks about native-windows
-but throughout the code it is windows-native [I'll reword when I
-rebase-i to add your reviewed-by].
+My first attempt (when git-1.8.2 was released) had the patch attached
+and the reply was
 
-While I really like seeing an unfinished topic completed by tying
-its loose ends like this patch does, it feels a bit too late for the
-cycle, especially given that we _know_ the changes still need to be
-tested on a platform that the series is expected to affect.
+On Sat, 23 Mar 2013 16:32:47 +0000, Ben Walton <bdwalton@gmail.com>
+wrote:
 
-Could somebody who builds regularly on Cygwin 1.7 try to see if
-these two patches are OK?
+> This list prefers patches to be inline so that they can easily be
+> commented on, etc.  I took a quick look at your patch and while it
+> looks fine to me, fwiw.
+> 
+> You may want to resubmit using git send-email though so that others
+> will look at it and possibly apply it.
 
-Reports from people without previous experience with Git on Cygwin
-who freshly install Cygwin 1.7 only to test these two patches do not
-count, because they do not know what is expected and cannot tell
-regressions from know limitations.
+So I retried inlining. No mention about *how* to inline or that the
+subject should have the word "PATCH".
 
-Thanks.
+I don't need any credits. I just want git to work from scratch :)
+
+> > ...
+> > So I think the right commit message is something like:
+> >
+> >   We call File::Temp's "tempfile" function as a class method, but it was
+> >   never designed to be called this way. Older versions seemed to
+> >   tolerate it, but as of File::Temp 0.23, it blows up like this:
+> >
+> >     $ git svn fetch
+> >     'tempfile' can't be called as a method at .../Git.pm line 1117.
+> >
+> >   Fix it by calling it as a regular function, just inside the File::Temp
+> >   namespace.
+
+Sounds about right.
+
+> > -Peff
+> 
+> Thanks.
+
+-- 
+H.Merijn Brand  http://tux.nl   Perl Monger  http://amsterdam.pm.org/
+using perl5.00307 .. 5.17   porting perl5 on HP-UX, AIX, and openSUSE
+http://mirrors.develooper.com/hpux/        http://www.test-smoke.org/
+http://qa.perl.org   http://www.goldmark.org/jeff/stupid-disclaimers/
