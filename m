@@ -1,82 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: consistency problem on ZFS
-Date: Mon, 29 Apr 2013 11:01:54 -0700
-Message-ID: <7v61z5jjvx.fsf@alter.siamese.dyndns.org>
-References: <m2bo8yxyg2.fsf@jarvis.hodique.info>
-	<7vk3nmpcgn.fsf@alter.siamese.dyndns.org>
-	<m2haip6x1z.fsf@jarvis.hodique.info>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: "git grep" parallelism question
+Date: Mon, 29 Apr 2013 20:04:10 +0200
+Message-ID: <877gjldxid.fsf@hexa.v.cablecom.net>
+References: <CA+55aFxY2PJ+L=vCfvQ39UGBr7E6m5q76hO=z3Mqm6vTQmmMbw@mail.gmail.com>
+	<7vr4hxw2mp.fsf@alter.siamese.dyndns.org>
+	<CA+55aFw+6pL5DoEPsPZpJCAbqEGaWYYKcdjZzbsHVzSSMrQmww@mail.gmail.com>
+	<7vip39w14d.fsf@alter.siamese.dyndns.org>
+	<CA+55aFx1t_MT+20Bbkse-wHeLz8E06yqaOhbb12GzHNDrE2tWA@mail.gmail.com>
+	<CALkWK0k6Gi_J6nDbrGPxDMmWC73CHXdj7a5ugC15YVrrycP=hA@mail.gmail.com>
+	<20130429161814.GJ472@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Yann Hodique <yann.hodique@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 20:02:07 2013
+Content-Type: text/plain
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Mon Apr 29 20:04:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWsOq-00040f-Mq
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 20:02:05 +0200
+	id 1UWsR0-0005pJ-FY
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 20:04:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757968Ab3D2SB6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 14:01:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34344 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752133Ab3D2SB6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 14:01:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AFDF19A95;
-	Mon, 29 Apr 2013 18:01:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aQyFNNaR7vZ+IrMX4C5Ec2u+s9A=; b=Y0oOlL
-	uYbN2nOb1JQJfthL9i5hkDtlQrQoReR3FiIByKu/aqbKmPiZppvANTqK1ggSBapr
-	dOPoqz4aC6mr8Eg84dW8ZyRwDS/ayWiXVMOMHk8Ty0bkQBuSiyBj/EEEqh7XSXEE
-	MpSPz1sQQxnHpMPzSJQWHO4As24x7Ku1RMFzU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f2PLdLWvaRL7r8UPST/l3blapkGphYgU
-	WKH7tiquDG+T806B6ZnSc0G971TR/sjbb30lWWGmIEg6icVt4G0SfgzmD5MlmyFU
-	Sg/9Mm6UEYDLd/qH0GEtf147ZBdZici4U4H9b2EjDSK5uJ17UuEIXA4Vd4udsVwg
-	UhxKQo+Bh3Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 409B119A94;
-	Mon, 29 Apr 2013 18:01:57 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B501019A92;
-	Mon, 29 Apr 2013 18:01:56 +0000 (UTC)
-In-Reply-To: <m2haip6x1z.fsf@jarvis.hodique.info> (Yann Hodique's message of
-	"Mon, 29 Apr 2013 18:55:52 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E192FD16-B0F6-11E2-A9A3-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756830Ab3D2SEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 14:04:13 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:25770 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751449Ab3D2SEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 14:04:12 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 29 Apr
+ 2013 20:04:09 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 29 Apr
+ 2013 20:04:10 +0200
+In-Reply-To: <20130429161814.GJ472@serenity.lan> (John Keeping's message of
+	"Mon, 29 Apr 2013 17:18:14 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222832>
 
-Yann Hodique <yann.hodique@gmail.com> writes:
+John Keeping <john@keeping.me.uk> writes:
 
->>>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
+> On Mon, Apr 29, 2013 at 07:35:01PM +0530, Ramkumar Ramachandra wrote:
+>> On a related note, one place that IO parallelism can provide massive
+>> benefits is in executing shell scripts.  Accordingly, I always use the
+>> following commands to compile and test git respectively:
+>> 
+>>     make -j 8 CFLAGS="-g -O0 -Wall"
+>>     make -j 8 DEFAULT_TEST_TARGET=prove GIT_PROVE_OPTS="-j 16" test
+>> 
+>> i.e. always use 8 threads when the task is known to be CPU intensive,
+>> and always use 16 threads when the task is known to be IO intensive.
 >
->> Yann Hodique <yann.hodique@gmail.com> writes:
->>> $ git checkout next; git diff-files; git checkout next; git diff-files
->>> Already on 'next'
->>> :100644 100644 bd774cccaa14e061c3c26996567ee28f4f77ec80 0000000000000000000000000000000000000000 M	magit.el
->>> Already on 'next'
->>> $
->
->> If you run "git update-index --refresh" between the first "checkout"
->> and "diff-files", do you still see the issue?
->
-> Yes, although *way* less often. I just ran a quick experiment and have
-> seen the issue 2 times in 2500 tries.
+> On this tangent, I recently added a TEST_OUTPUT_DIRECTORY line to my
+> config.mak which points into a tmpfs mount.  Keeping all of the test
+> repositories in RAM makes the tests significantly faster for me and
+> works nicely when you have the patches in jk/test-output (without those
+> patches the individual tests work but the reporting of aggregate results
+> doesn't).
 
-Hmph, that indicates somebody other than you or your Git is mucking
-with the inodes of your working tree files and perphas affecting
-ctime on them (we do not pay attention to atime because dirtying
-cached information due to somebody else reading from the file makes
-absolutely no sense, but we do notice ctime changes).  Perhaps
-background virus scanner or something silly like that?
+But that's been possible for quite some time now, using --root, or am I
+missing something?
+
+(Not that the fix as such is a bad idea, but other readers might not
+want to wait for it to hit master.)
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
