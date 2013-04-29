@@ -1,91 +1,100 @@
-From: Yann Hodique <yann.hodique@gmail.com>
-Subject: Re: consistency problem on ZFS
-Date: Mon, 29 Apr 2013 18:55:52 +0100
-Message-ID: <m2haip6x1z.fsf@jarvis.hodique.info>
-References: <m2bo8yxyg2.fsf@jarvis.hodique.info>
-	<7vk3nmpcgn.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] pretty: Fix bug in truncation support for %>, %< and %><
+Date: Mon, 29 Apr 2013 10:55:51 -0700
+Message-ID: <20130429175551.GA24467@google.com>
+References: <517C2A68.4030802@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 19:56:03 2013
+X-From: git-owner@vger.kernel.org Mon Apr 29 19:56:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWsIz-0007NK-MA
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 19:56:02 +0200
+	id 1UWsJ7-0007T2-3C
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 19:56:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758874Ab3D2Rz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 13:55:57 -0400
-Received: from mail-we0-f176.google.com ([74.125.82.176]:60572 "EHLO
-	mail-we0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758854Ab3D2Rz4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 13:55:56 -0400
-Received: by mail-we0-f176.google.com with SMTP id s10so5464126wey.21
-        for <git@vger.kernel.org>; Mon, 29 Apr 2013 10:55:55 -0700 (PDT)
+	id S1758890Ab3D2R4D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 13:56:03 -0400
+Received: from mail-da0-f43.google.com ([209.85.210.43]:62572 "EHLO
+	mail-da0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758854Ab3D2Rz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 13:55:59 -0400
+Received: by mail-da0-f43.google.com with SMTP id h21so594356dal.16
+        for <git@vger.kernel.org>; Mon, 29 Apr 2013 10:55:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:in-reply-to:references:user-agent
-         :face:date:message-id:mime-version:content-type;
-        bh=1cGQj6pJL+yvmvDlZ65wQS2fH3pBBoVXfNk4+y4YtZU=;
-        b=Blgv97TKtWK84wS721duU/uUttgejHqQb4gMknuDjUZbryDpVvqbzQDaSLFLgrrB30
-         42yEJUDCIQWUAZYkGUEuIt3qDFiPIYxXtAckv+oPXuAn6+6fVrsL9EaoH4NbgWksSslp
-         aploZivnuHNU5PGJ8P5F1iWaBD0n/H5YX0gXTEQsqg/P2jp7hztKLoiGAbUMUmQ13Ymp
-         Sey+1oczvHR5wPuVIedb4F4kwQCnafYAjDXacOVzOMx75rqTgNkPTmez0w7gv5rjHb5h
-         10whp0XzldKmGNCEmWKB1mH71TWhG9fZXZ3fi2iladdSAASMSNskyXzCA3juLjCH38D/
-         GiOg==
-X-Received: by 10.180.211.50 with SMTP id mz18mr19485655wic.24.1367258155495;
-        Mon, 29 Apr 2013 10:55:55 -0700 (PDT)
-Received: from jarvis.hodique.info.bromium.com (cpc25-cmbg15-2-0-cust4.5-4.cable.virginmedia.com. [86.27.183.5])
-        by mx.google.com with ESMTPSA id fp2sm21621872wib.7.2013.04.29.10.55.53
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=bHwL5Iqsu93WllGJMWY4YnnMO446+JcMX3t1Gw7kyM8=;
+        b=l7tz7H+ey1DDK4Relv6ESOTi6ioTr/3EF1Faoe23L4YNWEOeTWySUBEBMQyoAgZM21
+         jQcvSFhzduccW9szi7j4g+Uq007ecfSMdLEONMpj72o0KBNVSvcZGHdsu1l2GmZoD691
+         57AjLKBD/XpLaTBz3uqinTAzLII/rDXLzItK19uv2JlGvui7uEL89UKWNvIl4IH/HikP
+         Jibt7iEfccwZbnHoQRZKEqWiAG1fwy4HbW5ghfUh2oZClKADuBpI2fnIgBdgCr+08JiH
+         3pemyPZRjYPTcO5d0BV1XZDlag5u2IEyJSaMZAHepFdUCqFGoRCJqCJtlkm6j5p6PwbL
+         2Llg==
+X-Received: by 10.66.162.67 with SMTP id xy3mr43169884pab.94.1367258159196;
+        Mon, 29 Apr 2013 10:55:59 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id fx2sm26863941pac.4.2013.04.29.10.55.57
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 29 Apr 2013 10:55:54 -0700 (PDT)
-In-Reply-To: <7vk3nmpcgn.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 28 Apr 2013 14:33:28 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (darwin)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAAXNSR0IArs4c6QAAACpQTFRF
- HBgXPyYdPSkeMiwmRkJBYT4sik8zZF1XqWpMx2RDk42MzYRYtrGw09DVySZyaAAAAklJREFUOMuF
- 0z9v00AUAPCHr/kANgowOi6hjFbOCImp1CdF6kaUCwEmkBJSdYmUSBZRGRMsske1MlKIFKVr5XAr
- U1TPSFX6XXjvnKp2KOLG97v3x3dnuP7Hgv/B+vLyLlivZkGwSP6GlXABvHmyDese0GIn2zBzNYCX
- bEGagOswycG6ewMsyMEVVTJMiyQHv2lzuTOSNrDPWfhF8FSpuGXt5IB6s6bCNfLOt8FoEMT1JAv7
- wFz25E7gtqFLqS856IJhl481/MyN27tnGe+wc1uprzn4fvS+MFYxwvDtLcyT1Y9oUhyri3ZHtTIg
- B7NP0WmDMo7VcJABKRvRtKNbq3hxC21ZKx2pMAWVgQt5H95MNSynKnMfZTzTQkSwjKLpPAN1H+CB
- zogmYaa5ED7eUzMeY+tw9HqRAcEBnoUhxYfFQZIBelRNhGjSKj6cb14kBH3hY5dCGI+XpzXTebzJ
- gY+CC47FHiGENQdXVfeBuvA55y5eYRgOnTJRdXC+6eFTiiHbHyplKVGoHGDQw1okzi5BCcUbXANn
- KL4WYAeyZJomJu0l4ALKZvlCvkrBOaG3dhOvdtlLjJt6AP2UN3DosoppOhr20v+Cwq4ncE8JwaLB
- gJpyPa/n0mQIJn0m0EExTHE5HgxUHAvnsjT41ARTnu8juAaUML5bSQHn8vkLBGYDUCkLS+tD577H
- qwjcpl8Le+BmIWgnHkrgws5BCvjTMbpaAsHPcK6+jXNhLfqGQND4XHhn4Ik5T8HCzKu+Bk98qwq+
- 6AFOimPZ8Aem5xXrk2gG/wAAAABJRU5ErkJggg==
+        Mon, 29 Apr 2013 10:55:57 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <517C2A68.4030802@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222829>
 
->>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Yann Hodique <yann.hodique@gmail.com> writes:
->> $ git checkout next; git diff-files; git checkout next; git diff-files
->> Already on 'next'
->> :100644 100644 bd774cccaa14e061c3c26996567ee28f4f77ec80 0000000000000000000000000000000000000000 M	magit.el
->> Already on 'next'
->> $
+Ramsay Jones wrote:
 
-> If you run "git update-index --refresh" between the first "checkout"
-> and "diff-files", do you still see the issue?
+> Some systems experience failures in t4205-*.sh (tests 18-20, 27)
+> which all relate to the use of truncation with the %< padding
+> placeholder. This capability was added in the commit a7f01c6b
+> ("pretty: support truncating in %>, %< and %><", 19-04-2013).
 
-Yes, although *way* less often. I just ran a quick experiment and have
-seen the issue 2 times in 2500 tries.
+This is reproducible when running the test suite for 1.8.3-rc0 on some
+Debian test machines (ARM, ia64, powerpc) using gcc 4.6:
 
-Thanks,
+  https://buildd.debian.org/status/logs.php?pkg=git&ver=1%3A1.8.3~rc0-1
 
-Yann.
+> The truncation support was implemented with the assistance of a
+> new strbuf function (strbuf_utf8_replace). This function contains
+> the following code:
+>
+>        strbuf_attach(sb_src, strbuf_detach(&sb_dst, NULL),
+>                      sb_dst.len, sb_dst.alloc);
+>
+> Unfortunately, this code is subject to unspecified behaviour. In
+> particular, the order of evaluation of the argument expressions
+> (along with the associated side effects) is not specified by the
+> C standard. Note that the second argument expression is a call to
+> strbuf_detach() which, as a side effect, sets the 'len' and 'alloc'
+> fields of the sb_dst argument to zero.
 
--- 
-There exists no separation between gods and men:
-one blends softly casual into the other.
+Makes sense.
 
-  -- Proverbs of Muad'dib
+[...]
+> In order to remove the undesired behaviour, we replace the above
+> line of code with:
+>
+>        strbuf_swap(sb_src, &sb_dst);
+>        strbuf_release(&sb_dst);
+>
+> which achieves the desired effect without provoking unspecified
+> behaviour.
+
+Nice cleanup.  I haven't tested the patch but it looks obviously
+correct and I assume you've tested it, so for what it's worth,
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
