@@ -1,108 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fwd: [PATCH/RFC] upload-pack: ignore 'shallow' lines with unknown obj-ids
-Date: Sun, 28 Apr 2013 20:25:03 -0700
-Message-ID: <7v7gjmow6o.fsf@alter.siamese.dyndns.org>
-References: <CAJDSCnN6Ekp3wF9hX9Dbt3+CLNg1_aBz8nPGUuCu0WS9MF8aXA@mail.gmail.com>
-	<CACsJy8B6OYC-Qcwc53BsVtUSHw1ag6LWF2rBSP6agO6yTXQo+g@mail.gmail.com>
-	<7v7gjxx6w3.fsf@alter.siamese.dyndns.org>
-	<CACsJy8CT8r7ebE_q5ET+oicTY0NM4LAt1B61xwqfL8tLKc-4OA@mail.gmail.com>
-	<CAJDSCnPt=wgT0UQirahvTyen9w_v4XTn0ABHJVCLeKLmC8BsHQ@mail.gmail.com>
-	<CAJDSCnN_Va7r2BMLYSbsSzoUNs6YfYfihatb-u4jJw25w8qvZg@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v1.8.3-rc0
+Date: Sun, 28 Apr 2013 20:31:52 -0700
+Message-ID: <7vzjwinhav.fsf@alter.siamese.dyndns.org>
+References: <7vvc78u8jl.fsf@alter.siamese.dyndns.org>
+	<20130427091833.GB472@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael Heemskerk <mheemskerk@atlassian.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 05:25:28 2013
+Cc: git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Mon Apr 29 05:32:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWeiU-0007Yl-Hv
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 05:25:26 +0200
+	id 1UWep1-0003ij-Kq
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 05:32:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756860Ab3D2DZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Apr 2013 23:25:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56921 "EHLO
+	id S1756960Ab3D2Dbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Apr 2013 23:31:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57238 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756674Ab3D2DZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Apr 2013 23:25:06 -0400
+	id S1756727Ab3D2Dby (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Apr 2013 23:31:54 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 505B511D7C;
-	Mon, 29 Apr 2013 03:25:05 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BEB71204D;
+	Mon, 29 Apr 2013 03:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GMX1Cjv+BGPzesVl5EF0E5zd7WM=; b=n3Jd6y
-	z68yHHDlOdXnLXZBPZJbo34m8gP++Ki6QbZjv9HJQcpNmCKztROcNVcWH3gqQKCu
-	cCEBblOfGoFdtXSdL0+SYFpk4CoNC0mKtvTYk2+PA3j4ak2fyXNR2V8SinWx7snG
-	VvLX809YTEc2L562VehjyCvIvSkMFi4SYP14o=
+	:content-type; s=sasl; bh=9NJ6T20j2itp18/z4xkiI+R5n80=; b=od594f
+	Btnis3d+q98hZkIEvId2cMIEg2mMfWAOzz045uOe66opnbSVlVVWTK6Waui2268a
+	r0pPXAftxS9LK+L4VJaQ/RUdCpYrYysWrCXBpdtvuWwtXALvXyagi/GzUPVVVn8O
+	AH17bENm/U2WtBsPoCwEy/fh+5/lrCvB73VhA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xptxft5Ey13JsXE45D0jcbpRDa22wmod
-	vpZPu3ZisY4qxyW6Hq/szp6BmlodzSmg66PuvttLtWh0itJ8T8b3V/pPm2hoj0Ml
-	WUhK7Y2kjtIH5/j75jVSwtXYpdA7981HvJAUMYCVjopY7eqaMfT/urLxPfI9JnAE
-	o8/tTvbHqA8=
+	:content-type; q=dns; s=sasl; b=ycdlLIxV40FAog7t5i64pE8A+CYI+1PJ
+	8xryXQd13KBk7d6GNtDfnQa1xMILq+daMCdOxku69/vZzwY4UstI43g9tQvnV6Ei
+	si0sPdq/9wwtmGhaHkJtUMp7Hd6QJZqjAig8EwHWjDHx794Bfl6ZFfa6Tmu1vB5r
+	hac2pFjntgU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4397111D7A;
-	Mon, 29 Apr 2013 03:25:05 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 510621204C;
+	Mon, 29 Apr 2013 03:31:54 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9450511D79;
-	Mon, 29 Apr 2013 03:25:04 +0000 (UTC)
-In-Reply-To: <CAJDSCnN_Va7r2BMLYSbsSzoUNs6YfYfihatb-u4jJw25w8qvZg@mail.gmail.com>
-	(Michael Heemskerk's message of "Sun, 21 Apr 2013 11:08:27 +1000")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF28D12048;
+	Mon, 29 Apr 2013 03:31:53 +0000 (UTC)
+In-Reply-To: <20130427091833.GB472@serenity.lan> (John Keeping's message of
+	"Sat, 27 Apr 2013 10:18:33 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 624D16D8-B07C-11E2-B4B3-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 563021E6-B07D-11E2-A2FB-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222762>
 
-Michael Heemskerk <mheemskerk@atlassian.com> writes:
+John Keeping <john@keeping.me.uk> writes:
 
-> Re-sent to the mailing list because the original was bounced (HTML subpart):
-> ...
+> On Fri, Apr 26, 2013 at 05:22:22PM -0700, Junio C Hamano wrote:
+>>  * "git difftool" allows the user to write into the temporary files
+>>    being shown; if the user makes changes to the working tree at the
+>>    same time, one of the changes has to be lost in such a case, but it
+>>    tells the user what happened and refrains from overwriting the copy
+>>    in the working tree.
 >
-> With the patch applied, the server ignores the shallow line mentioned by
-> the server and will not send a "shallow" or "unshallow" line for it back to
-> the client. This scenario is not explicitly described in pack-protocol.txt
-> but I'd be happy to add it to. I'll also update the comment to cover this
-> aspect.
+> This feels slightly misleading to me, perhaps something like this would
+> be clearer?
 >
-> As Duy pointed out, it doesn't cause problems in the current C Git
-> implementation: the client adds a new entry to the shallow file for each
-> "shallow" line it receives from the server and removes an entry for each
-> "unshallow" line it receives. Any current shallow object that is not
-> mentioned by the server is still marked as shallow after the fetch.
->
-> I think that's how it should be: it should be the client's
-> responsibility to track
-> the list of objects it only has in shallow form. It should not rely on
-> the server
-> to tell it what that list is. Again, an extra line or two in pack-protocol.txt
-> would help to clear this up.
-> ...
->> > I do not seem to find the patch you are responding to, so I do not
->> > know how the patch handled the unshallowing part, but the impression
->> > I got from reading the log message quoted is that the patch was not
->> > even aware of the issue.
->>
->> I can't find it on gmane.org either. Patch quoted below.
+>    "git difftool" allows the user to write into the temporary files
+>    being shown; if the user makes changes to the working tree at the
+>    same time, it now refrains from overwriting the copy in the working
+>    tree and leaves the temporary file so that changes can be merged
+>    manually.
 
-OK, the change the patch text shows looks sensible to me.  Can you
-resend it in full, with the log message, your sign-off, and Duy's
-"Reviewed-by:", so that it can be applied?
+Probably.  I'll keep the above in my stash and roll it in by -rc1.
 
 Thanks.
-
->> On Sat, Apr 20, 2013 at 8:05 PM, Michael Heemskerk
->> <mheemskerk@atlassian.com> wrote:
->> > diff --git a/Documentation/technical/pack-protocol.txt
->> > b/Documentation/technical/pack-protocol.txt
->> > index f1a51ed..b898e97 100644
->> > --- a/Documentation/technical/pack-protocol.txt
->> > +++ b/Documentation/technical/pack-protocol.txt
->> > @@ -228,8 +228,7 @@ obtained through ref discovery.
->> ...
