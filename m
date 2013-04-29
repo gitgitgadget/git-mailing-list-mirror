@@ -1,168 +1,209 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [BUG] Highly inconsistent diff UI
-Date: Tue, 30 Apr 2013 02:42:23 +0530
-Message-ID: <CALkWK0nPrc41Z4-Jebwywx28x64QCm_010U_vpxa-K8XZOUpbA@mail.gmail.com>
-References: <CALkWK0n2ZZTgYxi3Fk2UxY8TXFAt1Xt3+11G98GKxbYdoMOT+Q@mail.gmail.com>
- <7va9ong9oa.fsf@alter.siamese.dyndns.org> <CALkWK0mVDT5ESnVJAWQ83gQnmxmGDoM_Y0nE4FGybcjcenA_KA@mail.gmail.com>
- <7v38ufer2x.fsf@alter.siamese.dyndns.org> <CALkWK0m5Q_e3q6Yg94-K+jU_SS7ovR2wnz-_Nr3cMz_YM=SMDQ@mail.gmail.com>
- <7vvc7baahc.fsf@alter.siamese.dyndns.org> <CALkWK0=NWSZsARu9w0DwpEmJHKnvpB8yoNfEa31LDQA=cV-90Q@mail.gmail.com>
- <CALkWK0ntZKaEzA0Jupj6poOMydqUumEGVVJ-uhBE12sPJ0ntjw@mail.gmail.com>
- <7vppxj6thv.fsf@alter.siamese.dyndns.org> <CALkWK0n9xqQr30QWEuhuM9c1xrAJ=SpYVBjkiRk+tP5E7DtBGw@mail.gmail.com>
- <7vhaipl2ks.fsf@alter.siamese.dyndns.org> <CALkWK0npQwFnFNpEzT5mgh5HvGUKf=Jz7v4Mn62BDBzb+qjY_A@mail.gmail.com>
- <7vmwshi3dv.fsf@alter.siamese.dyndns.org> <CALkWK0nNb1CSR6EHxtnvBd3VXVPNb_JDqk2Kfa5VA1RMG1u0Ng@mail.gmail.com>
- <7vehdti00w.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix grammar in the 1.8.3 release notes.
+Date: Mon, 29 Apr 2013 14:15:28 -0700
+Message-ID: <7vli81ghsf.fsf@alter.siamese.dyndns.org>
+References: <7vvc78u8jl.fsf@alter.siamese.dyndns.org>
+	<1367262904-9885-1-git-send-email-marcnarc@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 23:13:30 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Mon Apr 29 23:15:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWvO4-00032o-4Q
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 23:13:28 +0200
+	id 1UWvQ8-0004ig-RX
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 23:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759626Ab3D2VNI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 17:13:08 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:64151 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759618Ab3D2VNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 17:13:06 -0400
-Received: by mail-ie0-f178.google.com with SMTP id aq17so8120574iec.9
-        for <git@vger.kernel.org>; Mon, 29 Apr 2013 14:13:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=LguezZCTfk02lH6fFz/aGmanTvj0JWOLg4Ll6afkjqg=;
-        b=kcBQx+YlQOLHLFqmLUKId5i2IHwCV7wkMQJKZ+B+oAWHfXVTQQ+DxKvo2xl/Dwz2TM
-         cPPbjNWEM1knhzcicvD4rrjrWLMX0FK1XF3VbC6AHuSG0hIJev4virCs0mhGzwlXHXag
-         C3G7xp4Pc9dpjWpKcBROg388lcWEet/C0Uz0e4s+cSdUYKUKbt68Rm+DrdJFtL4gaFje
-         J3GwJtJqIgsMxLL0LstBLiapQ5k+1tJGa48gRpMB8wc0Lk668a7EwZPX+tZlEF07U8ya
-         36IMDnvVUTeHpCHCRl4CKdUEL3IVqm4BAgQIYsx2TJIjdpbNvXC1zh7f4cqjYmrvNeFT
-         /45A==
-X-Received: by 10.42.27.146 with SMTP id j18mr18944443icc.54.1367269984962;
- Mon, 29 Apr 2013 14:13:04 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Mon, 29 Apr 2013 14:12:23 -0700 (PDT)
-In-Reply-To: <7vehdti00w.fsf@alter.siamese.dyndns.org>
+	id S1759832Ab3D2VPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 17:15:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51609 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758869Ab3D2VPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 17:15:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3ECD51A36A;
+	Mon, 29 Apr 2013 21:15:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JRF42D3gdIbJFYpVKEjN22iKoRE=; b=Owqhs9
+	8JIM9p/RPGEbFAPmCySkIMGoY/71n1daDdGZ7sau71A1yWS8KH0h70tRIaCUoWQZ
+	mroCWj35cg82ZKLG8G5flEY5xrHjWcHH21bDT9X3WzNgHyyvD4ehYOYhMEiMKznS
+	FAISbLjTN68N7w59Cjd+wZAzntLOL9X1Z8ko4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iTijjOpjncTDcIHqFC9O23koYAD31sHS
+	vR87T++BDUcekD76F4ntC1hU7YSqJ8Ok+k6xLHHL4GIqHAuSGp/gFf17MzAeCtZq
+	rP22kxGWSol1iTX8hGfkRto9Ra4qNLkJ8SMfs3GVUu1Oslqcbvsx8uVQwoikBsLL
+	QJ9JE/4V4r8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 357DB1A369;
+	Mon, 29 Apr 2013 21:15:31 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 601621A364;
+	Mon, 29 Apr 2013 21:15:30 +0000 (UTC)
+In-Reply-To: <1367262904-9885-1-git-send-email-marcnarc@xiplink.com> (Marc
+	Branchaud's message of "Mon, 29 Apr 2013 15:15:04 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EBD9A11A-B111-11E2-AF46-8D009ADAE8A5-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222865>
 
-Junio C Hamano wrote:
-> Have you ever seen me saying "it sounds like a good idea" to a
-> solution that is looking for a problem? ;-)
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-I'll try to avoid that approach in the future.
+> This started out as an attempt to make the backward compatibility notes
+> more parsable, but then I just kept going...
 
-> "diff A...B" works already, and stopping to refer to "diff A..B"
-> (the documentation patch you sent out) hopefully will make it less
-> confusing.  I do not see a huge upside in replacing it with yet
-> another notation people need to learn (and possibly make them
-> unlearn a working notation). The downside of it feels far worse.
+Thanks.
 
-So, my question is about whether A..B is really that confusing.  We
-might exploit the differences between .. and ... in all the commands,
-and document it properly.  We just have to stop calling .. and ...
-canonical "range" commands.  We can stick to overriding these two for
-now.
+>   * "git bundle" did not like a bundle created using a commit without
+> -   any message as its one of the prerequistes.
+> +   any message, as it is one of the prerequistes.
 
-What does consistency even mean?  What does it mean for rebase A..B to
-have logical similarity to log A..B?  If this similarity cannot be
-precisely defined, consistency is just an illusion.
+This is actually saying a different thing.  
 
-> Not very interested [*0*], but I haven't thought things through.
+When you create a bundle, you can say "you can only unbundle this in
+a repository that has commit X", with "git bundle create $name ^X Y
+Z".  Such a commit X is called the bundle's prerequisite.  You can
+have more than one prerequisite, e.g. "... ^X ^W Y Z".
 
-Yeah, neither have I.  I'm asking for input.
+But if you create a bundle by using a commit that does not have any
+message as X (i.e. the bundle's prerequisite), the "git bundle" did
+not like to read the resulting bundle output.
 
-> In order to express only what we can currently express (i.e. not
-> extending for a DAG with a single bottom and multiple refs at tops),
-> I think it is sufficient to allow "rebase [--onto=$there] origin.."
-> [*1*]; we can infer what ref is being rebased from the range we get
-> from the command line by asking rev_cmdline, and it may be more
-> natural to people who grew up with "git log origin..".
+So <a commit <without any message> as its (bundle's) one of the
+prerequisites> is what the original wanted to say.  The rewrite
+makes it read like "For a commit, having a message is a requirement
+to be used in a bundle", at least to me.
 
-That's fine.  The tricky part is: what is it rebased onto?  origin?
-
-> That approach would express the DAG with the usual revision range
-> specifier on the command line, limited to those range notations that
-> have a single bottom and a single top.  That range defines the DAG
-> that will be replayed, and its single top defines what ref is
-> updated as the result.
-
-Okay.
-
-> When --onto is not specified, we could choose to use two- vs three-
-> dot notations to select what "onto" to use by default [*2*].  For
-> example, "rebase origin.." could be a way to replay your work on top
-> of their work you fetched, while "rebase -i origin..." could be a
-> way to identify your work since you forked from them, and tweak then
-> without changing the base, i.e. the fork point (the latter of which
-> would match what you would get from "diff A...B" naturally).
->
-> If we later want to add "a DAG with a single bottom and multiple
-> refs at tops", it could be spelled as "rebase --multi --onto=$there
-> ^origin rr/rebase-doc rr/triangle" or something [*3*].
-
-I'm an idiot.  What I was bouting as consistency was artificial
-constraints _I_ imposed on the rev spec.  Why shouldn't the command
-behave differently for:
-
-1. One positive and one negative.
-2. Multiple positives and one negative.
-2.1 When there are two positives, and --multi isn't on.
-2.2 When --multi is on.
-
-What is it violating?
-
-The UI you have proposed is very compelling, although I'm surprised
-you did it top-down.
-
-> [Footnote]
->
-> *0* "git rebase master~" would rebase your current history on top of
-> one commit before master, but you could choose to use some line
-> noise character other than tilde.
-
-Not urgent.
-
-> *1* This is similar to the way we taught "origin.." and "-3 HEAD" to
-> "format-patch" that originally only took "origin".
-
-Okay.
-
-> *2* Having said that, I do not particularly like the approach to
-> exploit the difference between two- and three-dot forms and use it
-> in choosing which commit to use as the default "onto".
->
-> It might be more useful to have the distinction between "rebase -i"
-> and "rebase" make that decision.
->
-> Replaying on top of the merge base would not be useful unless we are
-> doing "rebase -i" (it would be a no-op by definition). From that
-> point of view, "rebase origin" (or "rebase origin.." or "rebase
-> origin..."), because it is replaying your work on top of others, may
-> use --onto=origin by default. On the other hand, "rebase -i origin"
-> (or "rebase -i origin.." or "rebase -i origin..."), because you use
-> the command in order to tweak your work, and you mention 'origin'
-> merely to let Git know where your fork point is, may replay on the
-> original fork point it discovers with merge-base.
-
-I'll have to think about this.
-
-> Or something like that.  The above makes me think that focusing on
-> the revision range notation is not terribly productive when
-> exploring how to make "rebase" easier to use to end users.
-
-You managed a top-down version quite quickly, while I was stuck at
-consistency :)
-
-> *3* "--multi" is merely an example to make it easy to tell the
-> command line from the traditional form that has an extra "switch to
-> this branch before starting anything" argument.
-
-Cute way of putting it.
+>   * "index-pack --fix-thin" used an uninitialized value to compute
+> -   delta depths of objects it appends to the resulting pack.
+> +   the delta depths of objects it appends to the resulting pack.
+>  
+> - * "index-pack --verify-stat" used a few counters outside protection
+> -   of mutex, possibly showing incorrect numbers.
+> + * "index-pack --verify-stat" used a few counters outside the protection
+> +   of a mutex, possibly showing incorrect numbers.
+>  
+>   * The code to keep track of what directory names are known to Git on
+> -   platforms with case insensitive filesystems can get confused upon a
+> -   hash collision between these pathnames and looped forever.
+> +   platforms with case insensitive filesystems could get confused upon a
+> +   hash collision between these pathnames and would loop forever.
+>  
+> - * Annotated tags outside refs/tags/ hierarchy were not advertised
+> -   correctly to the ls-remote and fetch with recent version of Git.
+> + * Annotated tags outside the refs/tags/ hierarchy were not advertised
+> +   correctly to ls-remote and fetch with recent versions of Git.
+>  
+> - * Recent optimization broke shallow clones.
+> + * Recent optimizations broke shallow clones.
+>  
+>   * "git cmd -- ':(top'" was not diagnosed as an invalid syntax, and
+>     instead the parser kept reading beyond the end of the string.
+>  
+>   * "git tag -f <tag>" always said "Updated tag '<tag>'" even when
+> -   creating a new tag (i.e. not overwriting nor updating).
+> +   creating a new tag (i.e. neither overwriting nor updating).
+>  
+>   * "git p4" did not behave well when the path to the root of the P4
+>     client was not its real path.
+>     (merge bbd8486 pw/p4-symlinked-root later to maint).
+>  
+> - * "git archive" reports a failure when asked to create an archive out
+> -   of an empty tree.  It would be more intuitive to give an empty
+> + * "git archive" reported a failure when asked to create an archive out
+> +   of an empty tree.  It is more intuitive to give an empty
+>     archive back in such a case.
+>  
+> - * When "format-patch" quoted a non-ascii strings on the header files,
+> + * When "format-patch" quoted a non-ascii string in header files,
+>     it incorrectly applied rfc2047 and chopped a single character in
+> -   the middle of it.
+> +   the middle of the string.
+>  
+>   * An aliased command spawned from a bare repository that does not say
+> -   it is bare with "core.bare = yes" is treated as non-bare by mistake.
+> +   it is bare with "core.bare = yes" was treated as non-bare by mistake.
+>  
+> - * In "git reflog expire", REACHABLE bit was not cleared from the
+> + * In "git reflog expire", the REACHABLE bit was not cleared from the
+>     correct objects.
+>  
+>   * The logic used by "git diff -M --stat" to shorten the names of
+> @@ -347,9 +346,9 @@ details).
+>     common prefix and suffix between the two filenames overlapped.
+>  
+>   * The "--match=<pattern>" option of "git describe", when used with
+> -   "--all" to allow refs that are not annotated tags to be used as a
+> +   "--all" to allow refs that are not annotated tags to be a
+>     base of description, did not restrict the output from the command
+> -   to those that match the given pattern.
+> +   to those refs that match the given pattern.
+>  
+>   * Clarify in the documentation "what" gets pushed to "where" when the
+>     command line to "git push" does not say these explicitly.
+> @@ -357,7 +356,7 @@ details).
+>   * The "--color=<when>" argument to the commands in the diff family
+>     was described poorly.
+>  
+> - * The arguments given to pre-rebase hook were not documented.
+> + * The arguments given to the pre-rebase hook were not documented.
+>  
+>   * The v4 index format was not documented.
+>  
+> @@ -375,7 +374,7 @@ details).
+>  
+>   * In the v1.8.0 era, we changed symbols that do not have to be global
+>     to file scope static, but a few functions in graph.c were used by
+> -   CGit from sideways bypassing the entry points of the API the
+> +   CGit sideways, bypassing the entry points of the API the
+>     in-tree users use.
+>  
+>   * "git update-index -h" did not do the usual "-h(elp)" thing.
+> @@ -388,30 +387,30 @@ details).
+>     $msg already ended with one.
+>  
+>   * The SSL peer verification done by "git imap-send" did not ask for
+> -   Server Name Indication (RFC 4366), failing to connect SSL/TLS
+> +   Server Name Indication (RFC 4366), failing to connect to SSL/TLS
+>     sites that serve multiple hostnames on a single IP.
+>  
+>   * perl/Git.pm::cat_blob slurped everything in core only to write it
+>     out to a file descriptor, which was not a very smart thing to do.
+>  
+>   * "git branch" did not bother to check nonsense command line
+> -   parameters and issue errors in many cases.
+> +   parameters.  It now issues errors in many cases.
+>  
+> - * Verification of signed tags were not done correctly when not in C
+> + * Verification of signed tags was not done correctly when not in C
+>     or en/US locale.
+>  
+>   * Some platforms and users spell UTF-8 differently; retry with the
+>     most official "UTF-8" when the system does not understand the
+> -   user-supplied encoding name that are the common alternative
+> -   spellings of UTF-8.
+> +   user-supplied encoding name that is a common alternative
+> +   spelling of UTF-8.
+>  
+> - * When export-subst is used, "zip" output recorded incorrect
+> + * When export-subst is used, "zip" output recorded an incorrect
+>     size of the file.
+>  
+>   * "git am $maildir/" applied messages in an unexpected order; sort
+>     filenames read from the maildir/ in a way that is more likely to
+> -   sort messages in the order the writing MUA meant to, by sorting
+> -   numeric segment in numeric order and non-numeric segment in
+> +   sort the messages in the order the writing MUA meant to, by sorting
+> +   numeric segments in numeric order and non-numeric segments in
+>     alphabetical order.
+>  
+>   * "git submodule update", when recursed into sub-submodules, did not
