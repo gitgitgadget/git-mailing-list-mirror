@@ -1,72 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re* [PATCH 5/7] git-log.txt: rewrite note on why "--" may be required
-Date: Mon, 29 Apr 2013 09:33:12 -0700
-Message-ID: <7va9ohl2k7.fsf@alter.siamese.dyndns.org>
-References: <1366608631-21734-1-git-send-email-artagnon@gmail.com>
-	<1366608631-21734-6-git-send-email-artagnon@gmail.com>
-	<7vmwsn8ok4.fsf_-_@alter.siamese.dyndns.org>
-	<CALkWK0m2__SZmpyQqLjkJuMWtPuD4=Oo7QrYovq_Fw6fpHEXXQ@mail.gmail.com>
+From: Adam Spiers <git@adamspiers.org>
+Subject: improvements to checks for core.notesRef / GIT_NOTES_REF / --ref
+Date: Mon, 29 Apr 2013 17:39:09 +0100
+Message-ID: <20130429163909.GA19014@pacific.linksys.moosehall>
+References: <20130427132118.GA25295@pacific.linksys.moosehall>
+ <20130429133205.GA4672@pacific.linksys.moosehall>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 18:34:05 2013
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 29 18:39:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWr1a-0005nC-QO
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 18:33:59 +0200
+	id 1UWr6p-0002FT-W3
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 18:39:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758274Ab3D2QdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 12:33:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58790 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757469Ab3D2QdO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 12:33:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37CFD19C68;
-	Mon, 29 Apr 2013 16:33:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=JxGB4RxFzEsvmzm3s1f0AX7D4JE=; b=bEwkuoMuyUsMqGE8sMyN
-	+GFfXaveXUsxQKc7apNQSTBgOuFtrPVYzwy2bteByb7GwLSnIdnIX4HSq/RyNiXV
-	9oR+z+Ph4gFKAtPdgPYf4eAEn/TnupsKp/MM4Uhxj+KiiTUiDpbl2ZP8uOCOXE+W
-	8L3Q8CtnZArmoExnTGdZ2j4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=dS/CeJ7AE4l7Qy5glYD5Pt33xcP8NJ3YKFymI7v+QMo6lR
-	6pbzNojLMWKO3XU8tS0ifwcaUG2Q8TpBIr3bjOr0Uk0FNNfrZgzUJtGR65oEqK6R
-	CKssJRKY4ryRXY6zCuKnW4F6u3PTt437JhwKy//loI+CXxu4jwkxKbmigwSt0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C9D419C67;
-	Mon, 29 Apr 2013 16:33:14 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6ABF19C66;
-	Mon, 29 Apr 2013 16:33:13 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7CC88F06-B0EA-11E2-B824-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758457Ab3D2QjM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 12:39:12 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:40376 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757872Ab3D2QjL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 12:39:11 -0400
+Received: from localhost (4.3.1.2.f.7.0.2.5.1.9.5.4.a.0.0.0.d.3.7.6.a.1.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:11a6:73d0:a4:5915:207f:2134])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 07E1A2EAD2
+	for <git@vger.kernel.org>; Mon, 29 Apr 2013 17:39:10 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <20130429133205.GA4672@pacific.linksys.moosehall>
+X-OS: GNU/Linux
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222812>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Mon, Apr 29, 2013 at 02:32:05PM +0100, Adam Spiers wrote:
+> I've just written another quick wrapper around 'git notes' which makes
+> it less painless to share notes to and from remote repositories:
+> 
+>     https://github.com/aspiers/git-config/blob/master/bin/git-rnotes
+> 
+> This makes sharing of notes as easy as:
+> 
+>     git rnotes $remote push
+>     git rnotes $remote fetch
+>     git rnotes $remote merge
+>     git rnotes $remote pull
+> 
+> and was born from this discussion:
+> 
+>     http://stackoverflow.com/questions/12055303/merging-git-notes-when-there-are-merge-conflicts-in-them/
+> 
+> Once the Great Refs Namespace Debate is resolved[0], would this kind
+> of UI would be a candidate for pushing into git-notes itself?
 
-> I agree that the "confusion" paragraph after [--] [<path>] can be
-> improved, but putting [--] in a paragraph of its own sounds like an
-> overkill.  Apart from other things, it means that every single git
-> command would need an identical [--] paragraph for consistency.
+I just had a discussion on #git IRC with Thomas about how the above
+wrapper uses refs/notes/$remote/commits or similar to simulate a
+remote tracking branch for notes, and we agreed that it's not ideal
+due to potential collisions if --ref=$remote or refs/notes/* are ever
+used.  As has probably been discussed already in the Great Debate,
+something like refs/remote-notes/ might be a better namespace; however
+the current implementation of git notes prevents this:
 
-That is not a problem.  We need to say what command line argument X
-(e.g. <path>, but not limited to it) does in all pages for commands
-that pay attention to X anyway.
+    static struct notes_tree *init_notes_check(const char *subcommand)
+    {
+            struct notes_tree *t;
+            init_notes(NULL, NULL, NULL, 0);
+            t = &default_notes_tree;
 
-A more important reason to have them as separate entries is to avoid
-giving a wrong impression that "--" is somehow related to <path>,
-which is where the mistake in the synopsis "[[--] <path>...]" that
-started this thread comes from.
+            if (prefixcmp(t->ref, "refs/notes/"))
+                    die("Refusing to %s notes in %s (outside of refs/notes/)",
+                        subcommand, t->ref);
+            return t;
+    }
+
+Can we relax this to "refs/", to allow better isolation of namespaces
+for remote notes?  Also, the check is applied for GIT_NOTES_REF and
+core.notesRef, but not for values passed via --ref.  Therefore I would
+propose that init_notes_check() is not only relaxed but also moved
+from builtin/notes.c to notes.c, so that it can be consumed by
+default_notes_ref().  Thoughts?
+
+Also, are there any plans in the future for making "git notes merge"
+provide an index, so that a proper 3-way merge with ancestor can be
+done using git mergetool?
+
+Cheers,
+Adam
