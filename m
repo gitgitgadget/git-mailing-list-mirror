@@ -1,101 +1,75 @@
-From: Steffen Jaeckel <steffen.jaeckel@stzedn.de>
-Subject: Unexpected behavior of git-subtree
-Date: Mon, 29 Apr 2013 19:34:27 +0200
-Organization: Steinbeis Innovationszentrum Embedded Design und Networking
-Message-ID: <1003348467.20130429193427@stzedn.de>
-Reply-To: Steffen Jaeckel <steffen.jaeckel@stzedn.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Re* [PATCH] git-remote-testgit: avoid process substitution
+Date: Mon, 29 Apr 2013 10:36:16 -0700
+Message-ID: <7vehdtjl2n.fsf@alter.siamese.dyndns.org>
+References: <7vvc7enxco.fsf@alter.siamese.dyndns.org>
+	<7vwqrtgi1r.fsf@alter.siamese.dyndns.org>
+	<51779052.8020507@viscovery.net>
+	<CAMP44s1oX_m0d+2Z3+VkafOhT1bZK_9Z5m1ex456DMdAidEKeg@mail.gmail.com>
+	<5177980A.4090305@viscovery.net> <5178C583.6000703@viscovery.net>
+	<CAMP44s2nWs3XyaLQUnYd=A9u1=8tB7Qp+FN7gf+SrACxmtP8pw@mail.gmail.com>
+	<7vobd1udz2.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3j5Bk3eqPeN2qkGTWFLO2NKz0taTGYVNvEut_VM=0NXA@mail.gmail.com>
+	<7v8v44vpon.fsf_-_@alter.siamese.dyndns.org>
+	<517C2349.3050609@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 29 19:34:39 2013
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Apr 29 19:36:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWryC-0005ew-MU
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 19:34:33 +0200
+	id 1UWs00-0007G7-Gp
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 19:36:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757585Ab3D2Re2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 13:34:28 -0400
-Received: from mo-p00-ob.rzone.de ([81.169.146.162]:18229 "EHLO
-	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757547Ab3D2Re2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 13:34:28 -0400
-X-RZG-AUTH: :Jm0Bdkutd9+hmApeFfvVItwLAhvERWWdnqr6RNEtsBX+cJj9Jg197xtEQP6NGcQ=
-X-RZG-CLASS-ID: mo00
-Received: from [192.168.1.7] (pd956be74.dip0.t-ipconnect.de [217.86.190.116])
-	by smtp.strato.de (jored mo41) (RZmta 31.27 AUTH)
-	with ESMTPA id i03fa2p3THAilp for <git@vger.kernel.org>;
-	Mon, 29 Apr 2013 19:34:26 +0200 (CEST)
-X-Priority: 3 (Normal)
+	id S1758018Ab3D2RgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 13:36:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50017 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757521Ab3D2RgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 13:36:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF8BA1A6F5;
+	Mon, 29 Apr 2013 17:36:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ST57XcFjk0aTKYDkLkap/qyunp4=; b=HwQQBc
+	TDrjXJ9+qGj2LMQi55h/G3o/6VdGbDb7zTE+BYHdpRExYraBYGLjDa4ECNE3H2uS
+	lRNc76AD/e+q6Bp+MupVWkyQebrdnRmWa09WCba5qZoO6UNvisTPeLfoGTqjj6Oi
+	QZ4qhGq/V5qbO69VetGlPdiRNv5XHtDBXeyUo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=m8LKs++kbrxt4or+OoJP9edhsSe8GtPn
+	qGQ5JwWgSLoI30VpkCtZqlGxnqpU1xdSlg5Vs11WGO832mEyXs9ewoyXvO+1pA0V
+	15dAf6sQvHUgwY/5Zwxtus2QIyO3UJIqS0vi4gPbNkBJqvxYJGeGw/EQjdZUKJQx
+	SoIWBmq+P4Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E63A91A6F2;
+	Mon, 29 Apr 2013 17:36:18 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E8971A6EE;
+	Mon, 29 Apr 2013 17:36:18 +0000 (UTC)
+In-Reply-To: <517C2349.3050609@kdbg.org> (Johannes Sixt's message of "Sat, 27
+	Apr 2013 21:13:13 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4CAF01A2-B0F3-11E2-BAED-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222820>
 
-Hi,
+Johannes Sixt <j6t@kdbg.org> writes:
 
-lately I used git-subtree to integrate a submodule directly into a
-repository. Now I wanted to push the changes back to the original
-repository of the submodule and I was a bit surprised by what
-happened...
+> The patch below doesn't remove the bash dependency, yet, but it addresses
+> the problematic mismatch you noticed without the need for $LF. Can you
+> please queue it to move the topic forward?
 
-
----- snip ----
-sjaeckel@T7400-003 /h/projects/my_project (develop)
-$ GIT_TRACE=2 git subtree push --prefix=lib/com_lib/ git@git.local:com_lib develop -b develop
-trace: exec: 'git-subtree' 'push' '--prefix=lib/com_lib/' 'git@git.local:com_lib' 'develop' '-b' 'develop'
-trace: run_command: 'git-subtree' 'push' '--prefix=lib/com_lib/' 'git@git.local:com_lib' 'develop' '-b' 'develop'
-trace: built-in: git 'rev-parse' '--parseopt' '--' 'push' '--prefix=lib/com_lib/' 'git@git.local:com_lib' 'develop' '-b' 'develop'
-trace: built-in: git 'rev-parse' '--git-dir'
-trace: built-in: git 'rev-parse' '--show-cdup'
-git push using:  git@git.local:com_lib develop
-trace: exec: 'git-subtree' 'split' '--prefix=lib/com_lib/'
-trace: run_command: 'git-subtree' 'split' '--prefix=lib/com_lib/'
-trace: built-in: git 'rev-parse' '--parseopt' '--' 'split' '--prefix=lib/com_lib/'
-trace: built-in: git 'rev-parse' '--git-dir'
-trace: built-in: git 'rev-parse' '--show-cdup'
-trace: built-in: git 'rev-parse' '--default' 'HEAD' '--revs-only'
-trace: built-in: git 'rev-parse' '--no-revs' '--no-flags'
-trace: built-in: git 'log' '--grep=^git-subtree-dir: lib/com_lib/*$' '--pretty=format:START %H%n%s%n%n%b%nEND%n' '8068a810709f6284b04a18ff38dbb72c36b8d9c6'
-trace: built-in: git 'rev-list' '--topo-order' '--reverse' '--parents' '8068a810709f6284b04a18ff38dbb72c36b8d9c6'
-trace: built-in: git 'rev-list' '--topo-order' '--reverse' '--parents' '8068a810709f6284b04a18ff38dbb72c36b8d9c6'
-1/    102 (0)trace: built-in: git 'ls-tree' 'f6e1457d345029cf4d376ff3cf780cbb8c3080b4' '--' 'lib/com_lib'
-..... loads of more git 'ls-tree'...
-71/    102 (70)72/    102 (70)trace: built-in: git 'ls-tree' '48dc0efb9a148b1146b013554f8bf4635adf7a0d' '--' 'lib/com_lib'
-trace: built-in: git 'log' '-1' '--pretty=format:%T' '6299b48765e11302aca48cc9fca88735aeab7c54' '--'
-fatal: bad object 6299b48765e11302aca48cc9fca88735aeab7c54
-trace: built-in: git 'push' 'git@git.local:com_lib' ':refs/heads/develop'
-trace: run_command: 'ssh' 'git@git.local' 'git-receive-pack '\''com_lib'\'''
-Repository name is: com_lib.git
-Repository_Clean name is: com_lib
-Branch name is: com_lib/develop
-To git@git.local:com_lib
- - [deleted]         develop
-sjaeckel@T7400-003 /h/projects/my_project (develop)
-$ git version
-git version 1.8.1.msysgit.1
----- /snip ----
-
-
-I don't know if that's a bug or I used git-subtree's options incorrect,
-but what I read from its "manpage" 'git-subtree.txt', I would expect
-that this command should split out the commits of the prefix and push
-that to the remote of the former submodule.
-
-Even if it's my fault, because I used it incorrect, I think it should
-not delete the remote branch.
-
-Besides "git subtree push --prefix=lib/com_lib/ git@git.local:com_lib
-develop -b develop" I also tried "git subtree push
---prefix=lib/com_lib/ git@git.local:com_lib develop" with the same
-effect.
-
-Can someone tell me if that's a bug, and/or what I did wrong?
-
-
-Thanks
-Steffen
+I'll send three-patch series I have (including the two discussed in
+the thread) on top of fc/transport-helper-error-reporting as a reply
+to this message.  It seems to pass "make SHELL_PATH=/bin/dash test".
