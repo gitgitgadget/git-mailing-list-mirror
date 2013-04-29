@@ -1,109 +1,76 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: Git.pm with recent File::Temp fail
-Date: Mon, 29 Apr 2013 10:32:17 +0200
-Message-ID: <20130429103217.5f50525b@pc09.procura.nl>
-References: <20130322205758.09ca9107@pc09.procura.nl>
-	<CAP30j14=_U8iEZAodnfACnBHgF0+j0_OK7n7PvsUnwSDj_Y40A@mail.gmail.com>
-	<20130428110933.436786bd@pc09.procura.nl>
-	<20130429021651.GA2751@sigill.intra.peff.net>
-	<7vr4hung17.fsf@alter.siamese.dyndns.org>
-	<20130429074620.17fbf129@pc09.procura.nl>
-	<7vy5c1narj.fsf@alter.siamese.dyndns.org>
-	<7vd2tdn41h.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCHv2 7/7] git grep: honor textconv by default
+Date: Mon, 29 Apr 2013 11:04:41 +0200
+Message-ID: <517E37A9.8040609@drmicha.warpmail.net>
+References: <517298D4.3030802@drmicha.warpmail.net> <043047afd2915dd8f3a68cf164dc516d4c0bb5c2.1366718624.git.git@drmicha.warpmail.net> <7vwqrtjmtx.fsf@alter.siamese.dyndns.org> <5177AE7F.1040400@drmicha.warpmail.net> <7vehdzesr9.fsf@alter.siamese.dyndns.org> <vpqwqrrolpl.fsf@grenoble-inp.fr> <7v38ufdaih.fsf@alter.siamese.dyndns.org> <517A6C0C.1020506@drmicha.warpmail.net> <vpqk3npctn8.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Ben Walton <bdwalton@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 10:32:46 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	jeremy.rosen@openwide.fr, Jeff King <peff@peff.net>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Apr 29 11:04:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWjVu-0002dK-4u
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 10:32:46 +0200
+	id 1UWk0o-0003xR-Oj
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 11:04:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752920Ab3D2Icm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 04:32:42 -0400
-Received: from smtp-vbr13.xs4all.nl ([194.109.24.33]:3377 "EHLO
-	smtp-vbr13.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751206Ab3D2Icl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 04:32:41 -0400
-Received: from pc09.procura.nl (adsl.procura.nl [82.95.216.30])
-	(authenticated bits=0)
-	by smtp-vbr13.xs4all.nl (8.13.8/8.13.8) with ESMTP id r3T8WWMr031262
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 29 Apr 2013 10:32:33 +0200 (CEST)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <7vd2tdn41h.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.9.0-196-ge98c82 (GTK+ 2.24.10; x86_64-suse-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1752873Ab3D2JEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 05:04:35 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:46945 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751700Ab3D2JEe (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Apr 2013 05:04:34 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id E5C8D206DB;
+	Mon, 29 Apr 2013 05:04:33 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute5.internal (MEProxy); Mon, 29 Apr 2013 05:04:33 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=SBoiwyrm2oQ0X19PdtsI75
+	6DRe4=; b=RiKVN12175YMpwxpPqCTVx8xCl4PFgSNwhTKrEs//QapgK5tlKCVW4
+	ADZxDAwyR7L+O8W66pEHYzUW9sAb4tS/I7nNPneZ8y7QLqEyOyeaqcXkSHTNLubD
+	S/5bkNOPMxL+Rd6MOhkOexnaXv/ay3lIDglL4LCMTOKaI3hI20QNU=
+X-Sasl-enc: OJzC/bKQzBd7tNNThnAlB6ABLeejo6f+GRs3KBsy52vz 1367226273
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id E33D0C80003;
+	Mon, 29 Apr 2013 05:04:32 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130402 Thunderbird/17.0.5
+In-Reply-To: <vpqk3npctn8.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222783>
 
-On Mon, 29 Apr 2013 01:18:18 -0700, Junio C Hamano <gitster@pobox.com>
-wrote:
+Matthieu Moy venit, vidit, dixit 26.04.2013 15:23:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> BTW, textconv does not have to be slow - just use textconv-cache.
+> 
+> Right, thanks for reminding me about this, I had forgotten its existance ;-).
+> 
+>> I'm still looking for a way to at least treat "git grep" and "git show
+>> blob" the same way.
+> 
+> I agree they should be treated similarly.
+> 
+>> - Implement the --textconv option but leave the default as is. I did
+>> that for "git grep" already (just drop 7/7)
+> 
+> That seems sensible.
+> 
+>> but it seems to be cumbersome for "git show blob". I have to recheck.
+> 
+> It should be possible to have a tri-state for the --[no-]textconv
+> option: unset, set to true or set to false. But the code sharing between
+> log, show and diff might make that non-trivial.
 
-> Here is what I'll queue.
-> 
-> Thanks for the help, all of you.
+Right now it's a diffopt bit...
 
-Thank you. I will keep this conversation as a guide for possible next
-patches
-
-> -- >8 --
-> From: H. Merijn Brand <h.m.brand@xs4all.nl>
-> Subject: Git.pm: call tempfile from File::Temp as a regular function
-> 
-> We call File::Temp's "tempfile" function as a class method, but it was
-> never designed to be called this way. Older versions seemed to
-> tolerate it, but as of File::Temp 0.23, it blows up like this:
-> 
->   $ git svn fetch
->   'tempfile' can't be called as a method at .../Git.pm line 1117.
-> 
-> Fix it by calling it as a regular function, just inside the File::Temp
-> namespace.
-> 
-> Signed-off-by: H. Merijn Brand <h.m.brand@xs4all.nl>
-> Helped-by: Jeff King <peff@peff.net>
-> ---
->  perl/Git.pm | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/perl/Git.pm b/perl/Git.pm
-> index 497f420..76383b9 100644
-> --- a/perl/Git.pm
-> +++ b/perl/Git.pm
-> @@ -1039,7 +1039,7 @@ sub _temp_cache {
->  			$tmpdir = $self->repo_path();
->  		}
->  
-> -		($$temp_fd, $fname) = File::Temp->tempfile(
-> +		($$temp_fd, $fname) = File::Temp::tempfile(
->  			'Git_XXXXXX', UNLINK => 1, DIR => $tmpdir,
->  			) or throw Error::Simple("couldn't open new temp file");
->  
-
-
--- 
-H.Merijn Brand  http://tux.nl   Perl Monger  http://amsterdam.pm.org/
-using perl5.00307 .. 5.17   porting perl5 on HP-UX, AIX, and openSUSE
-http://mirrors.develooper.com/hpux/        http://www.test-smoke.org/
-http://qa.perl.org   http://www.goldmark.org/jeff/stupid-disclaimers/
+Michael
