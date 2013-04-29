@@ -1,83 +1,66 @@
-From: Ilya Basin <basinilya@gmail.com>
-Subject: Re: git-svn: problem with svn cp trunk/subdir tags/subdir_1.0
-Date: Mon, 29 Apr 2013 17:00:32 +0400
-Message-ID: <1531127990.20130429170032@gmail.com>
-References: <1826029946.20130429164645@gmail.com>
-Reply-To: Ilya Basin <basinilya@gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: Premerging topics
+Date: Mon, 29 Apr 2013 15:04:19 +0200
+Message-ID: <CALWbr2xD4i4kipp4XAdbZ7pVKD2vk_UdBdE04oU-8nhTc5Dtbw@mail.gmail.com>
+References: <CALWbr2wocjqs1mpa+yuQ_Zw8m+SX24q6Pby3E3v3-jd-0w1pvQ@mail.gmail.com>
+	<CALKQrgfO9fd+EEA=Vwe94tJbxkX89uDmMHm9rj6L=d4x7JJjaQ@mail.gmail.com>
+	<CALWbr2x5HDU2t7hpSCkZnuKjTJ1KxYC0v50wsDPT0fm4LyvzWw@mail.gmail.com>
+	<CALKQrgeGPo--cYoGZ30nSfASh4CPzqGXQojkG9Ve96NFr+LrjA@mail.gmail.com>
+	<7vzjwofpht.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Ray Chen <rchen@cs.umd.edu>, Eric Wong <normalperson@yhbt.net>
-To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 29 15:00:43 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 29 15:04:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWnhD-0004FX-5E
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 15:00:43 +0200
+	id 1UWnkn-0006vE-AW
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 15:04:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757236Ab3D2NAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 09:00:39 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:47155 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754695Ab3D2NAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 09:00:38 -0400
-Received: by mail-lb0-f173.google.com with SMTP id 10so5679216lbf.32
-        for <git@vger.kernel.org>; Mon, 29 Apr 2013 06:00:37 -0700 (PDT)
+	id S1756865Ab3D2NEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 09:04:21 -0400
+Received: from mail-qc0-f173.google.com ([209.85.216.173]:64903 "EHLO
+	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754661Ab3D2NEU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 09:04:20 -0400
+Received: by mail-qc0-f173.google.com with SMTP id b12so3137999qca.32
+        for <git@vger.kernel.org>; Mon, 29 Apr 2013 06:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
-         :subject:in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=6VzaznJ6e+8U7Dt3688FGsNPyPM8tfp6CHmyaSymN+M=;
-        b=NoEMe2HSoSZD+0v69VPRKfV7oalFJNkUhJAv6z5pj5VCzWsl4E0zXRsCjZOBAlrlgx
-         84ncbVMuRxKA5T6xtTXkhDwnFlfYg7/s0tX+UUMr+DY2fUdEomkGRqM1Y8eCMiQGRNVW
-         yhIIkypYslRx9FPLam+0WWtYdSn5uqnwLVOM0z9RpyEbNtZF+lz//m8W4sfjtDQz02qk
-         sxIO83QuO9gwvlWPuqgXUOYleIqYaSoiXqNbunXp/tKHvpwaA1KXGlu/lQiMOTk6PYeU
-         X64vWYtb1L6G3uzoLJT0oYGxldIx4rnTHEP+/F9c/LRA5nMc7cU/VXTPMFv5Lb+v8Fne
-         n0zw==
-X-Received: by 10.152.2.73 with SMTP id 9mr21955653las.45.1367240436896;
-        Mon, 29 Apr 2013 06:00:36 -0700 (PDT)
-Received: from BASIN.reksoft.ru ([2a00:1120:0:1001:e800:dcfc:85a:7bae])
-        by mx.google.com with ESMTPSA id s1sm7809508lag.2.2013.04.29.06.00.34
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 29 Apr 2013 06:00:35 -0700 (PDT)
-X-Mailer: Voyager (v3.99.4) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <1826029946.20130429164645@gmail.com>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=sND4MlNuEMyZvoDnTTwye2ae/n4cDEHySxATsy9K9HI=;
+        b=hVJc1NQCq+QZg34FvLJz3GUJMr0Nf+YA8EGI1e7PQ64qB0KrvXwgM5AZcTfEqaR9D7
+         HSExAu3Md2Z7SRMa7SFIGGqUdK04uCnEr3dcQs0ZbD6X7ezuCqm+ETlBvoVLRtVQrOCp
+         SpDqiR5Q+i+RdX69cj1pkGiETj/YvTQOpYTXNg+esThjqjSxWLPy06qs+1jK5ZHYYXBA
+         gy8JWiuHv0nG/zF1Focq3XfAF3pCroq5/eKGgL8gKR/15C9kQwEOfdi+VotNaLeJlwNl
+         vuuL8mvmgP0qT8EeArQYsJjXqlCCS0QNQoswfsS6/7sfSsaeGVU6pUhtBHztAoKMfILQ
+         GrTA==
+X-Received: by 10.49.95.163 with SMTP id dl3mr59680956qeb.38.1367240659687;
+ Mon, 29 Apr 2013 06:04:19 -0700 (PDT)
+Received: by 10.49.30.9 with HTTP; Mon, 29 Apr 2013 06:04:19 -0700 (PDT)
+In-Reply-To: <7vzjwofpht.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222793>
 
-IB> After fixing --preserve-empty-dirs plus --stdlayout a new problem
-IB> arised:
-IB> When creating a tag or branch from a subdir, a disjoint branch
-IB> is created. Then git-svn re-imports the commits using this dir as
-IB> strip path.
+On Wed, Apr 24, 2013 at 7:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> there
+> could be textual conflicts and you could choose to leave them in, or
+> you could choose to have rerere resolve it.  As long as you do the
+> same when replaying this prepackaged evil merge, this choice does
+> not matter, but using rerere will make your life easier
 
-IB> Why? I would instead keep the current commit as parent, delete
-IB> everything except the subdir and move its contents to root directory.
-
-IB> During this re-import the variable %added_placeholder is not up to
-IB> date. Because the branch is disjoint, this variable should be empty in
-IB> the beginning, but it's not.
-IB> Because of that git-svn tries to delete non-existent .gitignore files
-IB> and dies.
-
-IB> I think, if a disjoint branch is created, %added_placeholder should be
-IB> pushed and cleared. A new set of paths starting with "trunk/" will be
-IB> added to it during re-import.
-IB> When re-import is done, we should translate the paths to
-IB> "tags/subdir_1.0/" and merge with the original %added_placeholder.
-
-A simpler approach would be to store paths in %added_placeholder
-already translated from "trunk/subdir/" to "tags/subdir_1.0/".
-But in the beginning of re-import Fetcher doesn't know the new branch
-name.
-
--- 
+The problem is that rerere can not be easily shared, and I'm afraid it
+would be almost impossible to go without it (do you commit N with
+conflict markers hoping that F' will remove them?).
+But, as it looks like you would save F on top of M, it means that M
+would be reachable, and thus rerere would be "recomputable" from
+somewhere else.
