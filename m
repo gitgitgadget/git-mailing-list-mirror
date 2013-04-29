@@ -1,73 +1,101 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: git-rnotes: git-notes wrapper for sharing notes between repositories
-Date: Mon, 29 Apr 2013 14:32:05 +0100
-Message-ID: <20130429133205.GA4672@pacific.linksys.moosehall>
-References: <20130427132118.GA25295@pacific.linksys.moosehall>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Itches with the current rev spec
+Date: Mon, 29 Apr 2013 16:00:50 +0200
+Message-ID: <517E7D12.6020605@drmicha.warpmail.net>
+References: <CALkWK0n97VLtiR96VEy86645NVoDL2rS-g7LBuLb=JpncdH6VA@mail.gmail.com> <vpqehdzkoix.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 29 15:32:15 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Apr 29 16:00:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWoBh-0004BP-Vx
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 15:32:14 +0200
+	id 1UWodM-00010C-Tx
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 16:00:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757007Ab3D2NcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 09:32:09 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:40107 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756956Ab3D2NcH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 09:32:07 -0400
-Received: from localhost (5.a.1.1.6.d.5.2.6.0.7.e.c.a.8.2.0.d.3.7.6.a.1.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:11a6:73d0:28ac:e706:25d6:11a5])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 5957D2EAD2
-	for <git@vger.kernel.org>; Mon, 29 Apr 2013 14:32:06 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20130427132118.GA25295@pacific.linksys.moosehall>
-X-OS: GNU/Linux
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757485Ab3D2OAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 10:00:44 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:37427 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757115Ab3D2OAn (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Apr 2013 10:00:43 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id B6D31205FA;
+	Mon, 29 Apr 2013 10:00:42 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute4.internal (MEProxy); Mon, 29 Apr 2013 10:00:42 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=tqX2vbUOu79B0+PqAN/Ykb
+	c8+Jk=; b=QFIZJ4BFkKij0mp83woPUckvtX5Fj1mRb3v+U1igDsd7tXcudkKHE8
+	9ADTjsWFGJeaq8q1C+4dEDPlCriXy71VMwGpDtFtJgGKy6mP/BTrtaSPaw8r8C1m
+	07LtvP91hP+pAP3hZ/l/0N4hfacURUDECteEfzLTuqwcBQLE4dd0g=
+X-Sasl-enc: FiJGwjSO9jKwX9lhLIdWndaUG+yBrj1gtipJoPMAv9/M 1367244042
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id EF07BC8000A;
+	Mon, 29 Apr 2013 10:00:41 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130402 Thunderbird/17.0.5
+In-Reply-To: <vpqehdzkoix.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222795>
 
-On Sat, Apr 27, 2013 at 02:21:19PM +0100, Adam Spiers wrote:
-> Hi all,
+Matthieu Moy venit, vidit, dixit 25.04.2013 10:22:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
 > 
-> I just wrote a wrapper around git cherry which adds a splash of
-> colour, and facilitates exclusion of commits which should never be
-> upstreamed, by using a git-notes(1) namespace as a blacklist.
+>> Hi,
+>>
+>> So, I have three serious itches that would be nice to address:
+>>
+>> 1. git reset --hard HEAD~1/ git show HEAD~1 is a very common idiom
+>> that's unnecessarily cumbersome to type out.  We can make the <rev>
+>> part of <rev>~<n> optional without being ambiguous: you might argue
+>> that ~<n> normally refers to a /home/<n>, but who uses numbers in
+>> place of usernames?  Even if they do, how can that path possibly be
+>> inside our repository?
 > 
-> It's just a quick hack and Ruby probably won't be to everyone's taste,
-> but I thought I'd mention it just in case it's of use / interest.
+> It's a bit more complex than that: the ~<username> is expanded by the
+> shell, before Git has any opportunity to guess anything.
 > 
->     https://github.com/aspiers/git-config/blob/master/bin/git-icing
+> ~1 would be unusable for zsh users and tcsh users at least by default:
+> 
+> zsh% echo ~1
+> zsh: not enough directory stack entries.
+> 
+> tcsh% echo ~1
+> Unknown user: 1.
+> 
+> (An obvious workaround is to shell-quote it, but as the goal is to have
+> something easy to type, \~1 or '~1' do not give so much benefit over
+> HEAD~1)
+> 
+> That said, it seems to work fine for bash (even if the number is a PID,
+> it's not expanded), so it may be a good idea to add it as a shortcut,
+> with a warning in the doc about shell expansion.
 
-[snipped]
+I've been using a patch for that for ages without problems; it had been
+rejected because of the reasons above, plus:
 
-I've just written another quick wrapper around 'git notes' which makes
-it less painless to share notes to and from remote repositories:
+Note that even in bash ~1 has a different meaning when your directory
+stack is non-empty. It's just that I don't use that feature, and bash
+leaves '~1' as is when there is no stack (you haven't used pushd),
+whereas zsh errors out.
 
-    https://github.com/aspiers/git-config/blob/master/bin/git-rnotes
+So, I do understand that some consider this semi-broken, even though
+it's not. But we avoid clashes with shell expansion in most cases for
+most shells.
 
-This makes sharing of notes as easy as:
+As for rebase, I still have to look up what "git rebase A B" means. This
+would be much clearer with a range notation. I seem to recall I even
+suggested it, but that might have been in a parallel universe.
 
-    git rnotes $remote push
-    git rnotes $remote fetch
-    git rnotes $remote merge
-    git rnotes $remote pull
-
-and was born from this discussion:
-
-    http://stackoverflow.com/questions/12055303/merging-git-notes-when-there-are-merge-conflicts-in-them/
-
-Once the Great Refs Namespace Debate is resolved[0], would this kind
-of UI would be a candidate for pushing into git-notes itself?
-
-Cheers,
-Adam
-
-[0] Maybe it has been already; I haven't been following closely.
+Michael
