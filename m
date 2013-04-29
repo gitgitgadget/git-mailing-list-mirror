@@ -1,77 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Documentation/git-diff.txt improvements
-Date: Mon, 29 Apr 2013 10:40:44 -0700
-Message-ID: <7va9ohjkv7.fsf@alter.siamese.dyndns.org>
-References: <1366821216-20868-1-git-send-email-artagnon@gmail.com>
-	<CALkWK0nVZHwSMS_gtisiAguNhAMnDpdWmAtz_OgzP93YZtYfHQ@mail.gmail.com>
-	<7v38u9l2jk.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=aF2H4b9L32zvFQweYrzsJ-ZoBZ59TcECEasyy5TyvmQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 19:40:52 2013
+Subject: [PATCH 0/3] De-bashing remote-testgit
+Date: Mon, 29 Apr 2013 10:41:52 -0700
+Message-ID: <1367257315-12009-1-git-send-email-gitster@pobox.com>
+References: <7vehdtjl2n.fsf@alter.siamese.dyndns.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 29 19:42:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWs4J-0002TQ-Pv
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 19:40:52 +0200
+	id 1UWs5T-0003RS-5d
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 19:42:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757448Ab3D2Rkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 13:40:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55425 "EHLO
+	id S1757620Ab3D2Rl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 13:41:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44489 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757311Ab3D2Rkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 13:40:47 -0400
+	id S1757311Ab3D2Rl5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 13:41:57 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92A0D1AAEE;
-	Mon, 29 Apr 2013 17:40:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hldzd/UscpkxtEVl0k8RK6NyWxE=; b=xXbZQ7
-	iP7WUKBgKt8BHDMHt/FuIaZtGP2m70LOpcIp27+rQT/2wBAJO+hfdFFVBckj1Skm
-	IMbTrAol3xsZr/DVJEcFlay5VMpBHUCsHzPko7pFPqr/xLgESsvXCS1de2k9V4vd
-	sI/DUf535W0YWeRjn0fdenmFp9kLvHEev1oVs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iDuMyF96cxMptiJMtgNn+q0J4joC5Q4Z
-	KbSvOUH9e9RrEUlAvYkMohE8MDw9MrrfMsevmZ7GhuPCaW2Y/AHgjs8iF0ct4SMe
-	ckIsljUvibyX/iq7f+clrOSCfIArlmoQNLKFSND//YiDljK04t1vh6p5tFDjevQN
-	TZ7gi/orhyg=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 642C71AB9E
+	for <git@vger.kernel.org>; Mon, 29 Apr 2013 17:41:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=hZBS
+	tdNwhDOs6B46+iez+SdtW34=; b=CR9ItpD9BrLnphVIqHru6wY+v0EhxnuJj1ri
+	1v2d8qC4X7vOcvHW76x/nADy8/fttxPlwLLWywxvXoGuFBtrj8KRSJZ5o+uugixx
+	SoEwPbT44RVEVSk721WeFAgPd6m3FBdIlbeU8hDQE7tu6swmPXa0rzwqDYnbppVi
+	ct/Vssc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=m3Q09U
+	krkrV/vMVX8u3gcFswGFJefReyReUkYo2nZPc4jeqbSXE2BD56FNRmlLnMMqv9p3
+	TRfJsfaVS+QhV1BmuRcWdHaemPAtcOSk1MElSnccAGMBDeoSWxPCVZpXtFS2nVub
+	EodL38moraIWdzhOM6Y9EvhEdxYxlH6Hs6nSs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 896641AAED;
-	Mon, 29 Apr 2013 17:40:46 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 581E71AB9D
+	for <git@vger.kernel.org>; Mon, 29 Apr 2013 17:41:57 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0DB171AAEB;
-	Mon, 29 Apr 2013 17:40:45 +0000 (UTC)
-In-Reply-To: <CALkWK0=aF2H4b9L32zvFQweYrzsJ-ZoBZ59TcECEasyy5TyvmQ@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Mon, 29 Apr 2013 22:49:44 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EC3026A2-B0F3-11E2-B139-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CCD971AB9A
+	for <git@vger.kernel.org>; Mon, 29 Apr 2013 17:41:56 +0000 (UTC)
+X-Mailer: git-send-email 1.8.3-rc0-121-gda9b90f
+In-Reply-To: <7vehdtjl2n.fsf@alter.siamese.dyndns.org>
+X-Pobox-Relay-ID: 1660933A-B0F4-11E2-B71A-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222823>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+The two from J6t are what were discussed on the list.  The last one
+is to teach git-remote-testgit to honor SHELL_PATH like all the
+other shell scripts.
 
-> Junio C Hamano wrote:
->> I had an impression that many of them, with the suggested fix-ups,
->> were improvements, with or without the A~B discussion.  It seems
->> that the entire review wasted many braincycles if you are to drop
->> the ball at this point, which is very dissapointing.
->
-> No, I don't meant to drop the ball at all.  I'm _very_ annoyed by this
-> inconsistency, and have a burning desire to fix it.  It's just that I
-> don't want to fixup something now and regret it later, so I'm putting
-> it off until the A~B issue gets resolved.  In the meantime, the first
-> two patches are fine and can be applied as is.
+Johannes Sixt (2):
+  git-remote-testgit: avoid process substitution
+  git-remote-testgit: further remove some bashisms
 
-As far as I am concerned, there is no A~B issue.
+Junio C Hamano (1):
+  git-remote-testgit: build it to run under $SHELL_PATH
 
-Please don't let it take good changes hostage.
+ .gitignore                                  |  1 +
+ Makefile                                    |  1 +
+ git-remote-testgit => git-remote-testgit.sh | 26 ++++++++++++++++----------
+ t/t5801-remote-helpers.sh                   |  5 -----
+ 4 files changed, 18 insertions(+), 15 deletions(-)
+ rename git-remote-testgit => git-remote-testgit.sh (77%)
+
+-- 
+1.8.3-rc0-121-gda9b90f
