@@ -1,111 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Itches with the current rev spec
-Date: Mon, 29 Apr 2013 10:33:04 -0700
-Message-ID: <7vip35jl7z.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0n97VLtiR96VEy86645NVoDL2rS-g7LBuLb=JpncdH6VA@mail.gmail.com>
-	<20130426101946.433f2d12@chalon.bertin.fr>
-	<517A3E47.6010606@viscovery.net>
-	<7v7gjpxjw0.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0-C_TRC_eD_ZbN3WFe4NKWVPQVhh+ME-F5yBBwKs2NdA@mail.gmail.com>
-	<7v8v45vvuy.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=W_FxDwc3Tby=h90yc5i8UEuT7maERahFRDQU=hQ633g@mail.gmail.com>
-	<7vobcxl3ui.fsf@alter.siamese.dyndns.org>
-	<CALkWK0k7w4xuewnJFNJLk730NSiZOA_1UF0_Dqcnw5Or3GYOcA@mail.gmail.com>
+From: Steffen Jaeckel <steffen.jaeckel@stzedn.de>
+Subject: Unexpected behavior of git-subtree
+Date: Mon, 29 Apr 2013 19:34:27 +0200
+Organization: Steinbeis Innovationszentrum Embedded Design und Networking
+Message-ID: <1003348467.20130429193427@stzedn.de>
+Reply-To: Steffen Jaeckel <steffen.jaeckel@stzedn.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Yann Dirson <dirson@bertin.fr>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 29 19:33:16 2013
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 29 19:34:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWrwu-0004YJ-Ux
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 19:33:13 +0200
+	id 1UWryC-0005ew-MU
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 19:34:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757521Ab3D2RdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 13:33:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61613 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757181Ab3D2RdG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 13:33:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33C7D1A484;
-	Mon, 29 Apr 2013 17:33:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Cq1PNumgtu4j9L02Z2UVe4W1MV0=; b=j5AybF
-	bN4wNP4RyCcEGUt1MDQ7eMg6aoRkgoM78wxaLBIfDi1S1BkTRBdJI9vXaz3cttht
-	atf7tk+5oWaCqcOa4/T1GaFNZ2GlHKMj0EJ1OKk2N1An84PCre3SEOpdqURp9jLV
-	rRrAvxV3jMXCohZuzcwnzGFRNu84gqQiJlAd4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QiG+MX4qY37/uw1DrtmUctiXs1sBcnas
-	oIbchO4hOPOwnLHRqmVavK+j06oYCwia06aIthK11ztP036NzwkBT+uk8z9drEgd
-	D4SpelSPzNi9BwG7AGVKz1/nA4hHB12T3zULK7grJAUx7BUIKPg5SKSS0NE0ykib
-	hoV7HZmDyg8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26A941A483;
-	Mon, 29 Apr 2013 17:33:06 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D2D21A481;
-	Mon, 29 Apr 2013 17:33:05 +0000 (UTC)
-In-Reply-To: <CALkWK0k7w4xuewnJFNJLk730NSiZOA_1UF0_Dqcnw5Or3GYOcA@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Mon, 29 Apr 2013 22:44:39 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D9C523A6-B0F2-11E2-9ADD-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757585Ab3D2Re2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 13:34:28 -0400
+Received: from mo-p00-ob.rzone.de ([81.169.146.162]:18229 "EHLO
+	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757547Ab3D2Re2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 13:34:28 -0400
+X-RZG-AUTH: :Jm0Bdkutd9+hmApeFfvVItwLAhvERWWdnqr6RNEtsBX+cJj9Jg197xtEQP6NGcQ=
+X-RZG-CLASS-ID: mo00
+Received: from [192.168.1.7] (pd956be74.dip0.t-ipconnect.de [217.86.190.116])
+	by smtp.strato.de (jored mo41) (RZmta 31.27 AUTH)
+	with ESMTPA id i03fa2p3THAilp for <git@vger.kernel.org>;
+	Mon, 29 Apr 2013 19:34:26 +0200 (CEST)
+X-Priority: 3 (Normal)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222819>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Hi,
 
-> Junio C Hamano wrote:
->> That world view is broken, isn't it?  Perhaps you forgot to consider
->> symmetric differences, where left positives and right positives have
->> to be treated differently.
->
-> No, I did consider symmetric difference.  How is git log A B --not
-> $(git merge-base --all A B) different from git log B A --not $(git
-> merge-base --all A B)?
+lately I used git-subtree to integrate a submodule directly into a
+repository. Now I wanted to push the changes back to the original
+repository of the submodule and I was a bit surprised by what
+happened...
 
-Compare these (gitk will give you nicer picture):
 
-   $ git log --oneline --graph --left-right A...B
-   $ git log --oneline --graph --left-right B...A
+---- snip ----
+sjaeckel@T7400-003 /h/projects/my_project (develop)
+$ GIT_TRACE=2 git subtree push --prefix=lib/com_lib/ git@git.local:com_lib develop -b develop
+trace: exec: 'git-subtree' 'push' '--prefix=lib/com_lib/' 'git@git.local:com_lib' 'develop' '-b' 'develop'
+trace: run_command: 'git-subtree' 'push' '--prefix=lib/com_lib/' 'git@git.local:com_lib' 'develop' '-b' 'develop'
+trace: built-in: git 'rev-parse' '--parseopt' '--' 'push' '--prefix=lib/com_lib/' 'git@git.local:com_lib' 'develop' '-b' 'develop'
+trace: built-in: git 'rev-parse' '--git-dir'
+trace: built-in: git 'rev-parse' '--show-cdup'
+git push using:  git@git.local:com_lib develop
+trace: exec: 'git-subtree' 'split' '--prefix=lib/com_lib/'
+trace: run_command: 'git-subtree' 'split' '--prefix=lib/com_lib/'
+trace: built-in: git 'rev-parse' '--parseopt' '--' 'split' '--prefix=lib/com_lib/'
+trace: built-in: git 'rev-parse' '--git-dir'
+trace: built-in: git 'rev-parse' '--show-cdup'
+trace: built-in: git 'rev-parse' '--default' 'HEAD' '--revs-only'
+trace: built-in: git 'rev-parse' '--no-revs' '--no-flags'
+trace: built-in: git 'log' '--grep=^git-subtree-dir: lib/com_lib/*$' '--pretty=format:START %H%n%s%n%n%b%nEND%n' '8068a810709f6284b04a18ff38dbb72c36b8d9c6'
+trace: built-in: git 'rev-list' '--topo-order' '--reverse' '--parents' '8068a810709f6284b04a18ff38dbb72c36b8d9c6'
+trace: built-in: git 'rev-list' '--topo-order' '--reverse' '--parents' '8068a810709f6284b04a18ff38dbb72c36b8d9c6'
+1/    102 (0)trace: built-in: git 'ls-tree' 'f6e1457d345029cf4d376ff3cf780cbb8c3080b4' '--' 'lib/com_lib'
+..... loads of more git 'ls-tree'...
+71/    102 (70)72/    102 (70)trace: built-in: git 'ls-tree' '48dc0efb9a148b1146b013554f8bf4635adf7a0d' '--' 'lib/com_lib'
+trace: built-in: git 'log' '-1' '--pretty=format:%T' '6299b48765e11302aca48cc9fca88735aeab7c54' '--'
+fatal: bad object 6299b48765e11302aca48cc9fca88735aeab7c54
+trace: built-in: git 'push' 'git@git.local:com_lib' ':refs/heads/develop'
+trace: run_command: 'ssh' 'git@git.local' 'git-receive-pack '\''com_lib'\'''
+Repository name is: com_lib.git
+Repository_Clean name is: com_lib
+Branch name is: com_lib/develop
+To git@git.local:com_lib
+ - [deleted]         develop
+sjaeckel@T7400-003 /h/projects/my_project (develop)
+$ git version
+git version 1.8.1.msysgit.1
+---- /snip ----
 
-> Um, my point was again that "ordering does not matter"; therefore for
-> a third type of commit, you need a command-line parameter.
->
->>     git show A..B C..D
->
-> This is seriously bad.  We'll have to think about fixing this along the way.
 
-For the purpose of "doing one thing and well", we have drawn the
-line at "we operate on at most one DAG and specify what happens to
-it with various other parameters, which may include commits" long
-time ago.  If you want to operate on more than one DAG, the cleanest
-way is to do the set computation for A..B and C..D separately and
-combine them yourself (which is the example you omitted from the
-quote).
+I don't know if that's a bug or I used git-subtree's options incorrect,
+but what I read from its "manpage" 'git-subtree.txt', I would expect
+that this command should split out the commits of the prefix and push
+that to the remote of the former submodule.
 
-The setup_revisions() machinery that is the foundation of the
-current codebase has this design decision ingrained in it.  That is
-where the marking of commits with only two primary colors (i.e. the
-UNINTERESTING bit) comes from, and where the "single DAG" limitation
-originates.  You can extending it a little bit (e.g. by introducing
-a secondary color left/right) to enrich it, but fundamentally the
-infrastructure pretty much assumes we operate on one DAG and a
-commit is either outside or inside (or at the boundary) of it.
+Even if it's my fault, because I used it incorrect, I think it should
+not delete the remote branch.
 
-It may be nice if the low-level operated on more than one DAG, but
-it is very close to a proposition to throw the baby with the
-bathwater and restart from scratch.  It is a lot more than a little
-"as an aside" task.
+Besides "git subtree push --prefix=lib/com_lib/ git@git.local:com_lib
+develop -b develop" I also tried "git subtree push
+--prefix=lib/com_lib/ git@git.local:com_lib develop" with the same
+effect.
+
+Can someone tell me if that's a bug, and/or what I did wrong?
+
+
+Thanks
+Steffen
