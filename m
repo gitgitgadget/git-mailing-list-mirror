@@ -1,103 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: improvements to checks for core.notesRef / GIT_NOTES_REF / --ref
-Date: Mon, 29 Apr 2013 10:13:32 -0700
-Message-ID: <7vmwshjm4j.fsf@alter.siamese.dyndns.org>
-References: <20130427132118.GA25295@pacific.linksys.moosehall>
-	<20130429133205.GA4672@pacific.linksys.moosehall>
-	<20130429163909.GA19014@pacific.linksys.moosehall>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Itches with the current rev spec
+Date: Mon, 29 Apr 2013 22:44:39 +0530
+Message-ID: <CALkWK0k7w4xuewnJFNJLk730NSiZOA_1UF0_Dqcnw5Or3GYOcA@mail.gmail.com>
+References: <CALkWK0n97VLtiR96VEy86645NVoDL2rS-g7LBuLb=JpncdH6VA@mail.gmail.com>
+ <20130426101946.433f2d12@chalon.bertin.fr> <517A3E47.6010606@viscovery.net>
+ <7v7gjpxjw0.fsf@alter.siamese.dyndns.org> <CAMP44s0-C_TRC_eD_ZbN3WFe4NKWVPQVhh+ME-F5yBBwKs2NdA@mail.gmail.com>
+ <7v8v45vvuy.fsf@alter.siamese.dyndns.org> <CALkWK0=W_FxDwc3Tby=h90yc5i8UEuT7maERahFRDQU=hQ633g@mail.gmail.com>
+ <7vobcxl3ui.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git mailing list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Mon Apr 29 19:13:40 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Yann Dirson <dirson@bertin.fr>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 29 19:15:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWre0-0004oi-3F
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 19:13:40 +0200
+	id 1UWrfi-0006JJ-8W
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 19:15:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757191Ab3D2RNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 13:13:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35379 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756852Ab3D2RNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 13:13:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CA43196CD;
-	Mon, 29 Apr 2013 17:13:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cUxKYPGkOKlBEgCEfMfoyteOtkY=; b=scFQwr
-	stwDcJan656NOjhrykulBGLwonlGxBdOs8t3QFd18HvKBznuBPWSpfeTsqQvLK5X
-	3//UAfjY14Vc6sjLOU7rQLD8xkqdykeM76kQ+HL9RNCfbpNSBnAHUTs1adGY0PMh
-	Firosh2ZhHFQSEn+wB1lei3Pols6gNUW/th1M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ez/r71ay85QTGHQzqqmLAzyjRrWwQPpV
-	r/G1qOdKeU/w8ysxamJniZTP8r9q6OkScXca4Eo2oO/9Ngi7of8xjHjXpvGDP9qR
-	WEuyIaBgxb35vxKE+FnzSJbI0mi/kwekhSOd8tDZkZQdISun8GRmD9EwiW+HQ8WI
-	RoU2JLjrpsA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51241196CC;
-	Mon, 29 Apr 2013 17:13:34 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C30B8196C9;
-	Mon, 29 Apr 2013 17:13:33 +0000 (UTC)
-In-Reply-To: <20130429163909.GA19014@pacific.linksys.moosehall> (Adam Spiers's
-	message of "Mon, 29 Apr 2013 17:39:09 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1F494D1A-B0F0-11E2-A597-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757284Ab3D2RPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 13:15:22 -0400
+Received: from mail-ia0-f169.google.com ([209.85.210.169]:60963 "EHLO
+	mail-ia0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757014Ab3D2RPV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 13:15:21 -0400
+Received: by mail-ia0-f169.google.com with SMTP id l29so5894987iag.28
+        for <git@vger.kernel.org>; Mon, 29 Apr 2013 10:15:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=fcDr+qu5vdP5C+UGDbYUw341GJcwW83kWI/2Wv6aJFI=;
+        b=h6DAizbBYyhTKnYuF3/R7+3MAAdprrDRIw1AOVPfo7FWuksYcoFEHfVjgt0ztLHwOD
+         AvbEALq6e3tDshUc/G0NQvdNMev9W5P+6wtNRi/ephOz+p8udm+kWhuqojeLekxxhM3e
+         ay2Ug6PHJelVEnl3LC3PXXJn4nwhVN/Zebgqf8tWcjacBeg6dfY02QoD1x0DW6J8i14x
+         HqkB64B+xpEO6xCAhZ9TZqLFUJNCoQqQWesh0R/RYEMbdGXOvK/4uKDONnzRdiH/tkep
+         0Zml/yFiOc3UIpZu3ZPg5rso/wYMq1nj6f7aYdwIE5fn0ChQY/OdHVlAKjh70JLsgss/
+         nsCQ==
+X-Received: by 10.50.72.65 with SMTP id b1mr7997611igv.63.1367255720612; Mon,
+ 29 Apr 2013 10:15:20 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Mon, 29 Apr 2013 10:14:39 -0700 (PDT)
+In-Reply-To: <7vobcxl3ui.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222816>
 
-Adam Spiers <git@adamspiers.org> writes:
+Junio C Hamano wrote:
+> That world view is broken, isn't it?  Perhaps you forgot to consider
+> symmetric differences, where left positives and right positives have
+> to be treated differently.
 
->     static struct notes_tree *init_notes_check(const char *subcommand)
->     ...
-> Can we relax this to "refs/", to allow better isolation of namespaces
-> for remote notes?  Also, the check is applied for GIT_NOTES_REF and
-> core.notesRef, but not for values passed via --ref.  Therefore I would
-> propose that init_notes_check() is not only relaxed but also moved
-> from builtin/notes.c to notes.c, so that it can be consumed by
-> default_notes_ref().  Thoughts?
+No, I did consider symmetric difference.  How is git log A B --not
+$(git merge-base --all A B) different from git log B A --not $(git
+merge-base --all A B)?
 
-Such a policy decision at the application level should be done in
-builtin/notes.c, and not notes.c, I think.  It is OK to have a
-sharable check routine in notes.c and help different notes
-applications to implement their own sanity checking, though.  "git
-notes" that operates only on local notes might restrict its
-operation to refs/notes, while "git notes-merge" may allow it to
-read from other hierarchies but still write only into refs/notes,
-for example.
+> "diff A B" and "diff B A" mean very
+> different things, for that matter.
 
-I am not sure if it is a good idea in general to have a separate
-remotes-notes/ hierarchy in the first place, though.  Wouldn't the
-notes be less like branches (private view) and more like tags
-(common world view)?
+In fact, I would go so far as to claim that git diff A B is broken.
+diff should be forbidden from taking two positives (since it has no
+way to differentiate between them but for the ordering).  It should
+diff a positive against a negative.
 
-> Also, are there any plans in the future for making "git notes merge"
-> provide an index, so that a proper 3-way merge with ancestor can be
-> done using git mergetool?
+> A line of thought that begins
+> with "there is no ordering" may be a "brave proposal", perhaps, but
+> it is not "fundamental principles".
 
-Are we committed that all notes leaves must be blobs (I do not
-personally mind it)?
+My claim is very simple.  If a command _depends_ on A..B being
+resolved as ^A B, and not B ^A, we have have a big problem.  Why?
+Because we've already established that git log A B is exactly the same
+thing as git log B A.  To maintain consistency with this, ordering
+should never matter.
 
-I do think we need a way to call a custom low level 3-way merge
-driver once we identify which notes blobs correspond to each other
-with what common ancestor notes blob while merging two notes trees.
+> "rebase requires three: onto, list and a ref" (by the way, it is not
+> refspec, which has a specific meaning)
 
-But I do not think that "an index" that we use for the usual working
-tree merge is necessarily a good representation for driving such a
-ll-merge driver and recording its result.  Each side likely has a
-note for the same object to be merged in a different fan-out layout,
-and fan-out is merely a performance hack to spread the objects in
-smaller trees.  As mergetools only work with the usual working tree
-with the usual index, they may be a poor substitute for ll-merge
-drivers to handle merging notes trees.
+Sorry about that thinko: yes, I meant ref.
+
+After working on the implicit-push proposal for so long, I think I can
+tell the difference between a ref and refspec ;)
+
+> It is not far-fetched to allow rebase to handle a history with two
+> branches A and B that share the common initial part (i.e. ^X A B)
+> and replay that history on top of an unrelated point in history Y to
+> transform:
+>
+>              o---o---Y
+>             /
+>     ---o---X---C---C---A---A---A (tip of branch A)
+>                     \
+>                      B---B---B (tip of branch B)
+>
+> into
+>
+>              o---o---Y---C'--C'--A'--A'--A' (updated tip of branch A)
+>             /         \
+>     ---o---X           B'--B'--B' (updated tip of branch B)
+
+I wholeheartedly agree.
+
+However, I think you've misunderstood what I said: my goal is to
+define _everything_ in terms of how different commands interpret a
+list of positive and negative commits.  It's not that some commands
+take DAGs, other ranges, and yet others lists; all of them take rev
+specs that resolve to a list of positive-negative commits.  What to do
+with that information is up to the command (erroring out is a valid
+response).  In my above proposal, I'd like to change "rebase can take
+one negative commit and one positive commit" to "rebase can take one
+negative commit and multiple positive commits" (in fact, this was my
+original sentence, but I went back to "one positive commit" before
+sending out the email because I thought I was being crazy).
+
+> So what?  Why do you even _need_ to mix up all positive revisions,
+> some of which mean different things from others, into a single bag,
+> only to later differenciate some as special (i.e. used as the onto
+> commit) from the others (i.e. the tips in the DAG)?  If something is
+> special, you can say not just it is special and can say what it
+> means by saying "this is where I want to replay the DAG on top".
+
+Um, my point was again that "ordering does not matter"; therefore for
+a third type of commit, you need a command-line parameter.
+
+>     git show A..B C..D
+
+This is seriously bad.  We'll have to think about fixing this along the way.
