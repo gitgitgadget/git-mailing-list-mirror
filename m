@@ -1,71 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add new @ shortcut for HEAD
-Date: Mon, 29 Apr 2013 15:50:56 -0700
-Message-ID: <7vsj29eysv.fsf@alter.siamese.dyndns.org>
-References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
-	<7v61z5hzqg.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0rT1097=481aSH=Gy465zb2Bd_xLv=Xvte-GHcamWLyA@mail.gmail.com>
-	<CAMP44s0mHxv24GtpY2KzmrKQjZo+97FNN_T7tQk_peyWmusMWA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jon Seymour <jon.seymour@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 00:51:08 2013
+From: Adam Spiers <git@adamspiers.org>
+Subject: [PATCH] t0008: use named pipe (FIFO) to test check-ignore streaming
+Date: Mon, 29 Apr 2013 23:55:25 +0100
+Message-ID: <1367276125-15239-1-git-send-email-git@adamspiers.org>
+References: <20130424080235.GC17889@pacific.linksys.moosehall>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 30 00:55:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWwuZ-0003Mk-P2
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 00:51:08 +0200
+	id 1UWwyx-0006YR-Tt
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 00:55:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758794Ab3D2WvD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 18:51:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54360 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758190Ab3D2WvB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 18:51:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B79901A97F;
-	Mon, 29 Apr 2013 22:50:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/boaJLVG3xOBE37JwkVva873z3Q=; b=lyrj0/
-	0XS5Vy/KOntjUu9bihyb5foULSbNWvpRM2LgCNZ7HtnirbHPlDvlmNAGCj/+Vc0z
-	2eVCuFG3cOn0JvcVp1VZR/kANXg1FWtDPw4Sg5b6pq2rHD6cHpxGuhirJz5sr+88
-	pAGDAc6Ak7L22TShSefv8OI/88J00XKeS22TQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bprvwywc0NGQFYnqXhQrEtkgUkqQQr75
-	DvkiC+KEwjm/KLAaxrw4CJMt4c6vdfR5pe3m/rl1aZR0MX6AMgxKtG3MxYNBtY3T
-	V3RcqiVZb1eb68SyaxppK3w0GrNmtw1VdG9JI9AH/xRWWiq8FYFi3kEW+QuW7jjY
-	ZUPNUMmgsaU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADAE51A97C;
-	Mon, 29 Apr 2013 22:50:58 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 336161A97A;
-	Mon, 29 Apr 2013 22:50:58 +0000 (UTC)
-In-Reply-To: <CAMP44s0mHxv24GtpY2KzmrKQjZo+97FNN_T7tQk_peyWmusMWA@mail.gmail.com>
-	(Felipe Contreras's message of "Mon, 29 Apr 2013 16:36:21 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 41E55B96-B11F-11E2-B587-8D009ADAE8A5-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759133Ab3D2Wz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 18:55:29 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:41095 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759103Ab3D2Wz2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 18:55:28 -0400
+Received: from localhost (4.3.1.2.f.7.0.2.5.1.9.5.4.a.0.0.0.d.3.7.6.a.1.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:11a6:73d0:a4:5915:207f:2134])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 6A3282EAD2
+	for <git@vger.kernel.org>; Mon, 29 Apr 2013 23:55:26 +0100 (BST)
+X-Mailer: git-send-email 1.8.3.rc0.305.g6580fe1
+In-Reply-To: <20130424080235.GC17889@pacific.linksys.moosehall>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222875>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+sleeps in the check-ignore test suite are not ideal since they can
+fail when the system is under load, or when a tool like valgrind is
+used which drastically alters the timing.  Therefore we replace them
+with a more robust solution using a named pipe (FIFO).
 
-> Never-mind, now I see the difference, still, I don't think it's
-> relevant for this patch.
+Thanks to Jeff King for coming up with the redirection wizardry
+required to make this work.
 
-I don't either. With the precedence of @{u}, @ does not need to have
-anything to do with a reflog. It is just a random letter that casts
-a magic spell.
+http://article.gmane.org/gmane.comp.version-control.git/220916
+
+Signed-off-by: Adam Spiers <git@adamspiers.org>
+---
+ t/t0008-ignores.sh | 38 +++++++++++++++++---------------------
+ 1 file changed, 17 insertions(+), 21 deletions(-)
+
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index fbf12ae..a56db80 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -688,27 +688,23 @@ do
+ 	'
+ done
+ 
+-test_expect_success 'setup: have stdbuf?' '
+-	if which stdbuf >/dev/null 2>&1
+-	then
+-		test_set_prereq STDBUF
+-	fi
+-'
+-
+-test_expect_success STDBUF 'streaming support for --stdin' '
+-	(
+-		echo one
+-		sleep 2
+-		echo two
+-	) | stdbuf -oL git check-ignore -v -n --stdin >out &
+-	pid=$! &&
+-	sleep 1 &&
+-	grep "^\.gitignore:1:one	one" out &&
+-	test $( wc -l <out ) = 1 &&
+-	sleep 2 &&
+-	grep "^::	two" out &&
+-	test $( wc -l <out ) = 2 &&
+-	( wait $pid || kill $pid || : ) 2>/dev/null
++test_expect_success PIPE 'streaming support for --stdin' '
++	mkfifo in out &&
++	(git check-ignore -n -v --stdin <in >out &) &&
++
++	# We cannot just "echo >in" because check-ignore would get EOF
++	# after echo exited; instead we open the descriptor in our
++	# shell, and then echo to the fd. We make sure to close it at
++	# the end, so that the subprocess does get EOF and dies
++	# properly.
++	exec 9>in &&
++	test_when_finished "exec 9>&-" &&
++	echo >&9 one &&
++	read response <out &&
++	echo "$response" | grep "^\.gitignore:1:one	one" &&
++	echo >&9 two &&
++	read response <out &&
++	echo "$response" | grep "^::	two"
+ '
+ 
+ test_done
+-- 
+1.8.3.rc0.305.g6580fe1
