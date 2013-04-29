@@ -1,68 +1,82 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH 2/2] test output: respect $TEST_OUTPUT_DIRECTORY
-Date: Mon, 29 Apr 2013 20:00:27 +0200
-Message-ID: <87fvy9dxok.fsf@hexa.v.cablecom.net>
-References: <7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
-	<7c0618f3fa7f68b963bf483f1e97afed835bdb74.1367002553.git.john@keeping.me.uk>
-	<47c9ba4200a22e865040208628357d9bc4bcf3f4.1367002553.git.john@keeping.me.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: consistency problem on ZFS
+Date: Mon, 29 Apr 2013 11:01:54 -0700
+Message-ID: <7v61z5jjvx.fsf@alter.siamese.dyndns.org>
+References: <m2bo8yxyg2.fsf@jarvis.hodique.info>
+	<7vk3nmpcgn.fsf@alter.siamese.dyndns.org>
+	<m2haip6x1z.fsf@jarvis.hodique.info>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon Apr 29 20:00:52 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Yann Hodique <yann.hodique@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 29 20:02:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWsNf-0002uq-Qy
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 20:00:52 +0200
+	id 1UWsOq-00040f-Mq
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Apr 2013 20:02:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758454Ab3D2SAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 14:00:50 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:17616 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758183Ab3D2SAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 14:00:30 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 29 Apr
- 2013 20:00:27 +0200
-Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 29 Apr
- 2013 20:00:27 +0200
-In-Reply-To: <47c9ba4200a22e865040208628357d9bc4bcf3f4.1367002553.git.john@keeping.me.uk>
-	(John Keeping's message of "Fri, 26 Apr 2013 19:55:53 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+	id S1757968Ab3D2SB6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 14:01:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34344 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752133Ab3D2SB6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 14:01:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AFDF19A95;
+	Mon, 29 Apr 2013 18:01:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aQyFNNaR7vZ+IrMX4C5Ec2u+s9A=; b=Y0oOlL
+	uYbN2nOb1JQJfthL9i5hkDtlQrQoReR3FiIByKu/aqbKmPiZppvANTqK1ggSBapr
+	dOPoqz4aC6mr8Eg84dW8ZyRwDS/ayWiXVMOMHk8Ty0bkQBuSiyBj/EEEqh7XSXEE
+	MpSPz1sQQxnHpMPzSJQWHO4As24x7Ku1RMFzU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f2PLdLWvaRL7r8UPST/l3blapkGphYgU
+	WKH7tiquDG+T806B6ZnSc0G971TR/sjbb30lWWGmIEg6icVt4G0SfgzmD5MlmyFU
+	Sg/9Mm6UEYDLd/qH0GEtf147ZBdZici4U4H9b2EjDSK5uJ17UuEIXA4Vd4udsVwg
+	UhxKQo+Bh3Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 409B119A94;
+	Mon, 29 Apr 2013 18:01:57 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B501019A92;
+	Mon, 29 Apr 2013 18:01:56 +0000 (UTC)
+In-Reply-To: <m2haip6x1z.fsf@jarvis.hodique.info> (Yann Hodique's message of
+	"Mon, 29 Apr 2013 18:55:52 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E192FD16-B0F6-11E2-A9A3-BCFF4146488D-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222831>
 
-John Keeping <john@keeping.me.uk> writes:
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index ca6bdef..70ad085 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -54,8 +54,8 @@ done,*)
->  	# do not redirect again
->  	;;
->  *' --tee '*|*' --va'*)
-> -	mkdir -p test-results
-> -	BASE=test-results/$(basename "$0" .sh)
-> +	mkdir -p "$(TEST_OUTPUT_DIRECTORY)/test-results"
-> +	BASE="$(TEST_OUTPUT_DIRECTORY)/test-results/$(basename "$0" .sh)"
->  	(GIT_TEST_TEE_STARTED=done ${SHELL_PATH} "$0" "$@" 2>&1;
->  	 echo $? > $BASE.exit) | tee $BASE.out
->  	test "$(cat $BASE.exit)" = 0
+Yann Hodique <yann.hodique@gmail.com> writes:
 
-Hmm, I initially was too lazy to review this change, and now it's biting
-me.  The above is Makefile-quoted, which to the shell reads like a
-command substitution.
+>>>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Yann Hodique <yann.hodique@gmail.com> writes:
+>>> $ git checkout next; git diff-files; git checkout next; git diff-files
+>>> Already on 'next'
+>>> :100644 100644 bd774cccaa14e061c3c26996567ee28f4f77ec80 0000000000000000000000000000000000000000 M	magit.el
+>>> Already on 'next'
+>>> $
+>
+>> If you run "git update-index --refresh" between the first "checkout"
+>> and "diff-files", do you still see the issue?
+>
+> Yes, although *way* less often. I just ran a quick experiment and have
+> seen the issue 2 times in 2500 tries.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Hmph, that indicates somebody other than you or your Git is mucking
+with the inodes of your working tree files and perphas affecting
+ctime on them (we do not pay attention to atime because dirtying
+cached information due to somebody else reading from the file makes
+absolutely no sense, but we do notice ctime changes).  Perhaps
+background virus scanner or something silly like that?
