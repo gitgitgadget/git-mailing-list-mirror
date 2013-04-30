@@ -1,116 +1,82 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 6/6] sha1_name: allow @@{u} to work
-Date: Tue, 30 Apr 2013 16:49:14 -0500
-Message-ID: <1367358554-4257-7-git-send-email-felipe.contreras@gmail.com>
-References: <1367358554-4257-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>, "Duy Nguyen\"" <pclouds@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 30 23:51:03 2013
+Subject: Re: [PATCH] refs.c: interpret @ as HEAD
+Date: Tue, 30 Apr 2013 17:00:34 -0500
+Message-ID: <CAMP44s1LJg9kcBVMb8YxJDTEpKerJoN5td7276=JB7ZY6APpZw@mail.gmail.com>
+References: <1367324685-22788-1-git-send-email-artagnon@gmail.com>
+	<87zjwguq8t.fsf@linux-k42r.v.cablecom.net>
+	<20130430150430.GA13398@lanh>
+	<7vehdsf19m.fsf@alter.siamese.dyndns.org>
+	<CALkWK0kzjg+CPw8hq6ZAZxqVGdp7cf6HN-XHFCjbkNk9O=M5CA@mail.gmail.com>
+	<CAMP44s0=5KniGDnVtKPg5sp=G8M-mPcq+Mu1nXqODfhT-MaNyg@mail.gmail.com>
+	<CALkWK0kLZ9WLVcPBWuQZCjOku4A+WQ7=YeooPmKGpk9HuGYQnw@mail.gmail.com>
+	<7vwqrjdh6v.fsf@alter.siamese.dyndns.org>
+	<CALkWK0kcuaXTKbafmC72C3H+UZN6oeEY140T21LJUHveO=UBvA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 01 00:00:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXIRt-0003XS-WA
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 23:50:58 +0200
+	id 1UXIbI-0004ay-P9
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 00:00:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933857Ab3D3Vu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 17:50:56 -0400
-Received: from mail-ye0-f176.google.com ([209.85.213.176]:49652 "EHLO
-	mail-ye0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933839Ab3D3Vux (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 17:50:53 -0400
-Received: by mail-ye0-f176.google.com with SMTP id r9so162594yen.7
-        for <git@vger.kernel.org>; Tue, 30 Apr 2013 14:50:52 -0700 (PDT)
+	id S1755642Ab3D3WAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 18:00:37 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:62960 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753177Ab3D3WAf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 18:00:35 -0400
+Received: by mail-lb0-f181.google.com with SMTP id 13so988383lba.40
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 15:00:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=mNaH+nI/ZNWdEj+BDuWXv1j+NCIuEkQ1KUPCzp/EU2g=;
-        b=qn+1flxbrdKk2Yct4Xu5Q5U4xCsLpu/1by0wJDSPq5eKALkZOEFn/nfnyvRUfgH91q
-         SVEZQrVD/IV388sWpRmo4ORvWzxEg8TDYUCVaUm1ACN6shlaMSd4Xv8rSDlcKtI9mL32
-         +YlApLNot/JCd/f+w/EsBFMLo0kg0H7hCiIe+YCFqSR4VjvBzXPfebv4P+OMe9rUAXZu
-         cWJBLaFL2g7lmGj040Q2cMJQ8xUwh9YQ/3iHE3VR21eEox2JdX/mSJ4jZkPmQu6Ekrjn
-         siPwtFD8YlL1Q0e0r/If1BG9jA1UkzgucJViJWpETX0wyAoh/uIFXjjs5whpmpSlCheI
-         1qvw==
-X-Received: by 10.236.222.8 with SMTP id s8mr140208yhp.116.1367358652346;
-        Tue, 30 Apr 2013 14:50:52 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id i67sm291732yhq.25.2013.04.30.14.50.50
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Apr 2013 14:50:51 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc0.395.gfe9a10d
-In-Reply-To: <1367358554-4257-1-git-send-email-felipe.contreras@gmail.com>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=Lrp4xJ8ykJpc2WYtuo0ZeByxbD6TFLUTGL7lwFvKpKQ=;
+        b=BH+lS6uXSCyu1UXBVgWNM7DJIUINc+yX+C4Rm+jO0f5pGBOTZyKf/Sk+VA3EU2lfw8
+         WyQ164OskKvwdQslD6xHi2NNY4ZRVD19A9xSaGrgC3xspLMakD/f3eaz7QWATcIWs3wY
+         WTMuaAMmo2k9uID/VQSAnempy+HhrzJFcfgBVR1avO/TYtOHXNJ41zz/NVJ8tCiDHMJl
+         EcvfKWOGHpiLLXL/2keqEwMGSOF1xuAukBE2GA+HifSoRGWZyD5rGqwfIAaPyu/7+iOs
+         S7L5FNr3JdRjf5XGkj2I8VM1U3KdBhisCi/4vsxqrbr6jlGNkrstIj5DljALd+b0Nw3y
+         T+Ug==
+X-Received: by 10.112.22.198 with SMTP id g6mr257272lbf.135.1367359234124;
+ Tue, 30 Apr 2013 15:00:34 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Tue, 30 Apr 2013 15:00:34 -0700 (PDT)
+In-Reply-To: <CALkWK0kcuaXTKbafmC72C3H+UZN6oeEY140T21LJUHveO=UBvA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223020>
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- sha1_name.c                | 21 +++++++++++++++++++++
- t/t1508-at-combinations.sh |  2 +-
- 2 files changed, 22 insertions(+), 1 deletion(-)
+On Tue, Apr 30, 2013 at 1:22 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Junio C Hamano wrote:
+>> @{-1}@{0} does.  That means @{0} is a revision and not a ref, but @{-1}
+>> is.
+>
+> Right.  I missed that.
+>
+>> '"@" given alone' has to be a ref if we want @@{5.minutes.ago} to
+>> resolve.
+>
+> Yeah, I just realized that it's a bug in the @{u} implementation.
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 887de6c..8f65bad 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -969,6 +969,21 @@ int get_sha1_mb(const char *name, unsigned char *sha1)
- 	return st;
- }
- 
-+static int interpret_empty_at(const char *name, int namelen, int len, struct strbuf *buf)
-+{
-+	if (namelen - len <= 1 || name[len + 1] == '{')
-+		return -1;
-+
-+	strbuf_reset(buf);
-+	if (len == 0) {
-+		strbuf_add(buf, "HEAD", 4);
-+		return 1;
-+	} else {
-+		strbuf_add(buf, name, len);
-+		return len + 1;
-+	}
-+}
-+
- static int reinterpret(const char *name, int namelen, int len, struct strbuf *buf)
- {
- 	/* we have extra data, which might need further processing */
-@@ -1029,9 +1044,15 @@ int interpret_branch_name(const char *name, struct strbuf *buf)
- 	cp = strchr(name, '@');
- 	if (!cp)
- 		return -1;
-+
-+	len = interpret_empty_at(name, namelen, cp - name, buf);
-+	if (len > 0)
-+		return reinterpret(name, namelen, len, buf);
-+
- 	tmp_len = upstream_mark(cp, namelen - (cp - name));
- 	if (!tmp_len)
- 		return -1;
-+
- 	len = cp + tmp_len - name;
- 	cp = xstrndup(name, cp - name);
- 	upstream = branch_get(*cp ? cp : NULL);
-diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
-index 50035cd..65584c0 100755
---- a/t/t1508-at-combinations.sh
-+++ b/t/t1508-at-combinations.sh
-@@ -47,7 +47,7 @@ check "@{-1}@{u}" master-two
- check "@{-1}@{u}@{1}" master-one
- check "@" new-two
- check "HEAD@{u}" upstream-two
--check "@@{u}" upstream-two failure
-+check "@@{u}" upstream-two
- nonsense "@{u}@{-1}"
- nonsense "@{1}@{u}"
- 
+I don't think so. You probably need to modify branch_get(), because it
+has a special case for "HEAD", and who knows if it's hard-coded in
+other places. It's not just the @{u} implementation.
+
+If we do the magic at the rev-parsing phase, all these details become
+irrelevant.
+
+FTR. @@{upstream} and @@{now} works just fine in v2 of my patch series.
+
 -- 
-1.8.3.rc0.395.gfe9a10d
+Felipe Contreras
