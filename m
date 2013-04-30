@@ -1,95 +1,77 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 4/8] sha1_file: new object source for submodule's alt
- object database
-Date: Tue, 30 Apr 2013 02:07:43 -0400
-Message-ID: <CAPig+cRamwcEkdNYPr5EZnh83a1GpMKS-4bpLXKkotVMJwftkA@mail.gmail.com>
-References: <1367293372-1958-1-git-send-email-pclouds@gmail.com>
-	<1367293372-1958-5-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] Add new @ shortcut for HEAD
+Date: Tue, 30 Apr 2013 13:07:25 +0700
+Message-ID: <CACsJy8Af5Z6DzsAchu2MpMeanTEJiF-DwhdPMGE9n6QKf2K6Eg@mail.gmail.com>
+References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 08:07:50 2013
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jon Seymour <jon.seymour@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 30 08:08:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UX3jB-0002al-Vr
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 08:07:50 +0200
+	id 1UX3jN-0002jH-1U
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 08:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731Ab3D3GHq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Apr 2013 02:07:46 -0400
-Received: from mail-la0-f50.google.com ([209.85.215.50]:51975 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752680Ab3D3GHp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Apr 2013 02:07:45 -0400
-Received: by mail-la0-f50.google.com with SMTP id fl20so142157lab.9
-        for <git@vger.kernel.org>; Mon, 29 Apr 2013 23:07:43 -0700 (PDT)
+	id S1752847Ab3D3GH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 02:07:57 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:40940 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752680Ab3D3GH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 02:07:56 -0400
+Received: by mail-ob0-f177.google.com with SMTP id ef5so134995obb.36
+        for <git@vger.kernel.org>; Mon, 29 Apr 2013 23:07:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VJWcEjqvAgeTF4emkFE6eYHxqvDuwbVHHvG7CZSME/c=;
-        b=qboRVidCCU6QLgzKyHBvXlNGJ7lj1N+Ky8WotNgBXabKG13f3SfXR7iIB0mF8ELPCe
-         jz5kXIEnwRWiqt3tbVf24aX3C6SLddru1k8NQDYboeoKUg1EJ59cjPmv5fdIv3j3Tqa5
-         5VEj04snx2y5LY3ALGzPo06499FZDxeGbC0ix3O29qePaiOLwCTsXAhI3JvVwP2PJA4g
-         R+YuywdpC8XNgB/T0z9kToY4J89Islcmt5l5d8dwl5OlZ8z/Yu+Vz2XnwOlViwODtx9b
-         d7JcI0B7Oawd6VAhr703RT8lChpR3GLfC2Hkdfe3fMJsxPBVECF280kXqwwlKUi5SlrV
-         /1sA==
-X-Received: by 10.112.157.165 with SMTP id wn5mr27754355lbb.29.1367302063875;
- Mon, 29 Apr 2013 23:07:43 -0700 (PDT)
-Received: by 10.114.199.11 with HTTP; Mon, 29 Apr 2013 23:07:43 -0700 (PDT)
-In-Reply-To: <1367293372-1958-5-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: m7Ww35ymJcs_vPGQgJEUGnaWd0o
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=yC0buYj0lpnwetm1kKYpnVT33/ijM2XrjCjQnddphJ8=;
+        b=fZUFQE2H8B/LR54sQEmR89rEStzXkT/aWkDO+xGV9Eo4GbpDNXU1GjQ2UG6Zii2Jql
+         Jz6dnKxYuapkCqC8fEOcKYN95M50112PG9rLN5EGo62j9IuIQUC6v1NUY8J/CDpu03Li
+         33WsSG5N8zpYdr/oPw75WSwMOYuZcWlAAkSd6crQalyfiBNbw6FaL3at4rkLcSY0xU8t
+         6M9FVsga1zfv3mNtwoITgE10nsO9KhpUnzA71b3pSd0M4f0yJpEgJ8hcC2JK5DgLG5gd
+         Tdv4M5TerpkTA0hHHUChpIHt8MCEs5VfUDH+xcTc4Mbb+R7noVUlPC0tRAy5Hb6L0Bf4
+         yeFQ==
+X-Received: by 10.182.33.40 with SMTP id o8mr16008638obi.39.1367302076083;
+ Mon, 29 Apr 2013 23:07:56 -0700 (PDT)
+Received: by 10.76.180.138 with HTTP; Mon, 29 Apr 2013 23:07:25 -0700 (PDT)
+In-Reply-To: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222909>
 
-On Mon, Apr 29, 2013 at 11:42 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
- Duy
-<pclouds@gmail.com> wrote:
-> This patch separates submodule odb sources from ordinary alternate
-> sources. The new sources can be accessed with ODB_EXTALT (e.g. via
-> read_sha1_file_extended).
+On Tue, Apr 30, 2013 at 2:35 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> So HEAD@{0}~0^0 is too much to type, but we can remove '^0', and we can
+> remove '~0', and we can remove 'HEAD', but we can't remove '{0}'?
 >
-> ODB_EXTALT is only added to odb_default in certain cases. Basically:
+> This patch allows 'HEAD@' to be the same as 'HEAD@{0}', and similarly with
+> 'master@'.
 >
->  - External commands do not access submodule odb by default
->  - unpack-objects, index-pack and rev-list do not
->  - All other builtin commands do
->
-> unpack-objects, index-pack and rev-list take new objects from outside
-> and have to make sure the repository is still in good state. They
-> should not pay attention to submodule's odb, especially rev-list
-> because it does connectivity check.
->
-> External commands also do not have default access to submodule odb,
-> simply because I see no reasons why the should. They don't usually
+> So we can type '@' instead of 'HEAD@', or rather 'HEAD'. So now we can
+> use 'git show @~1', and all that goody goodness.
 
-s/the should/they should/
+This patch also allows funny things like @{-1}@ (wanted to try the
+cute syntax @{u}@ but too lazy to setup upstream)
 
-> play a big role in the user front, where submodule integration happen=
-s
-> and requires looking into submodule odb.
->
-> The die() in add_submodule_odb() may be too strong. There might be a
-> use case where somebody wants to add_submodule_odb() and look some up
-> with read_sha1_file_extended() even if odb_default does not contain
-> ODB_EXTALT. Right now such a use case may need to work around die() b=
-y
-> temporarily adding ODB_EXTALT to odb_default. Not nice, but as no suc=
-h
-
-s/as// perhaps?
-
-> use case exists yet to worry about.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+$ ./git rev-parse @{-1}
+7e6a0cc47da79dd22c0338aee8750fda92ced5d9
+$ ./git rev-parse @{-1}@
+7e6a0cc47da79dd22c0338aee8750fda92ced5d9
+$ ./git rev-parse @{-1}@{0}
+@{-1}@{0}
+fatal: ambiguous argument '@{-1}@{0}': unknown revision or path not in
+the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+--
+Duy
