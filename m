@@ -1,73 +1,86 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] refs.c: interpret @ as HEAD
-Date: Tue, 30 Apr 2013 23:26:44 +0700
-Message-ID: <CACsJy8B3PpzidvAHado=y3ZromzROidmHh_OW9ZCOoFegzmQ3Q@mail.gmail.com>
-References: <1367324685-22788-1-git-send-email-artagnon@gmail.com>
- <87zjwguq8t.fsf@linux-k42r.v.cablecom.net> <20130430150430.GA13398@lanh> <7vehdsf19m.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git log -p unexpected behaviour - security risk?
+Date: Tue, 30 Apr 2013 09:37:22 -0700
+Message-ID: <7va9ogezzx.fsf@alter.siamese.dyndns.org>
+References: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
+	<20130420140051.GB29454@ruderich.org>
+	<7vd2towdiq.fsf@alter.siamese.dyndns.org>
+	<CAHQ6N+pKb-44rOM7ocYMvSDyimvAGZppX1Gc=st59aVKzJSBKw@mail.gmail.com>
+	<20130421102150.GJ10429@elie.Belkin>
+	<CAHQ6N+rXE42NOyQPfLiDN8jYfL8w06hEE5MFLeFNxMR4ORD0aw@mail.gmail.com>
+	<20130421160939.GA29341@elie.Belkin>
+	<7vli8bu3ne.fsf@alter.siamese.dyndns.org>
+	<CAEBDL5VspccUmkkYBf17soGTyT3sinjnnNzRB_kytnOr3OBVQw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	John Tapsell <johnflux@gmail.com>,
+	Simon Ruderich <simon@ruderich.org>,
 	Git List <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 18:27:39 2013
+	Tay Ray Chuan <rctay89@gmail.com>
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Tue Apr 30 18:37:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXDOx-0004yS-EW
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 18:27:35 +0200
+	id 1UXDYv-00066n-Th
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 18:37:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932559Ab3D3Q1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 12:27:24 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:60296 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932267Ab3D3Q1P (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 12:27:15 -0400
-Received: by mail-ob0-f173.google.com with SMTP id xn12so608827obc.18
-        for <git@vger.kernel.org>; Tue, 30 Apr 2013 09:27:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=oKEBVb5o018dcPELlFn4JmhECbdGKljC0fHnS81AR1o=;
-        b=nyviWPW5bMcO6qBgK7TuzbGmbktfi/oZkC3r/hOTWW3MBIrzC2rNsS2ApbsdAujfSt
-         WBh+IoHXAuYuwpIdHGkjW5HwyGsqL8z7AtP3lja593LADbre843gn9wJNJBKs6SgMcvD
-         Jz9C/yab75ZEzM2X2OlXmRfYfhtLYYxKSy3xgg5vWWvZab3Ulc6kdLg2GMuBiIlqD7+d
-         dqRkSv35hD/TRFQvM1drzfF9UsMD1ST6pXtvmo3IJswF82vpA9FFbnFauomL+dp9AJpK
-         QN7mN03vV39OKkt+0i/1XM3Haz1zxLKIxeKim0if5hzaGpHVbRsUjKegXLFwXk6SDal9
-         aaEw==
-X-Received: by 10.182.148.231 with SMTP id tv7mr25304686obb.38.1367339234803;
- Tue, 30 Apr 2013 09:27:14 -0700 (PDT)
-Received: by 10.76.180.138 with HTTP; Tue, 30 Apr 2013 09:26:44 -0700 (PDT)
-In-Reply-To: <7vehdsf19m.fsf@alter.siamese.dyndns.org>
+	id S932751Ab3D3Qhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 12:37:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62452 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932723Ab3D3QhZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 12:37:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1D3E1A6B7;
+	Tue, 30 Apr 2013 16:37:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ODcoYZrKZtKkcaBjH8z5fjGtyfg=; b=leWjfk
+	4PMUXOgL19YLOPUnMKB3JSm8UWppJbZhXiKvbDonPILQiffqLVwQT8pp+4hPyeWx
+	+AMeSfc/tbH3Ewijw1lUbcjgZpTamguTho9SFQGTEluNjCBxnNSFC+2Zr/TeqYMN
+	32IX9TZmOmRGS/OuNC5VM02OO+rNkahRzpflQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Olmhn3iZTIHcB/01UKh5Kvp6Ef2BkJEE
+	QoNZraVVgnAxZdl4hHgJVvi1UQVKq/yCVcrxQmqjfNg3SH3vhe1LAQDzt+Aso711
+	SKUIsbM6hJifgU7CJXLXxkNF4JpKvv9j1ESeIXdzXiney/MQhhCwNZTHT9UtnDjt
+	T88jWRfzzZg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7E7A1A6B5;
+	Tue, 30 Apr 2013 16:37:24 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45D681A6B1;
+	Tue, 30 Apr 2013 16:37:24 +0000 (UTC)
+In-Reply-To: <CAEBDL5VspccUmkkYBf17soGTyT3sinjnnNzRB_kytnOr3OBVQw@mail.gmail.com>
+	(John Szakmeister's message of "Tue, 30 Apr 2013 06:09:17 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3C9238EA-B1B4-11E2-81E8-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222946>
 
-On Tue, Apr 30, 2013 at 11:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> It's not hard to do. The below patch makes "." equivalent to HEAD and
->> ".U" -> "@{u}". Refs are not supposed to have '.' at the beginning, so
->> it's easy ...
->
-> How is the equivalent of master..@{u} expressed?  master...U?  How is
-> it disambiguated from a symmetric difference between master and U?
->
-> There are reasons why some characters are forbidden from appearing
-> at certain places in refname component. Anybody who designs a new
-> syntax needs to think _why_.
+John Szakmeister <john@szakmeister.net> writes:
 
-I figured it had something to do with hidden filenames, not "..".
-There's only one char left for ref alias, the leading forward slash.
-But than opens another can of worms.. We could put still ref aliases
-into the same ref namespace, with lower precedence that actual refs,
-so no new syntax required.
---
-Duy
+>> When I added -c/--cc, I contemplated making -p imply --cc, but
+>> decided against it primarily because it is a change in traditional
+>> behaviour, and it is easy for users to say --cc instead of -p from
+>> the command line.
+>
+> FWIW, security aside, I would've like to have seen that.  I find it
+> confusing that merge commits that introduce code don't have a diff
+> shown when using -p.  And I find it hard to remember --cc.  BTW,
+> what's the mnemonic for it?  -p => patch, --cc => ?
+
+Compact combined.
+
+By the way, these options are _not_ about "showing merge commits
+that introduce code", and they do not help your kind of "security".
+As I repeatedly said, you would need "-p -m" for that.
