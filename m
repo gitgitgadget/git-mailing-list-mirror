@@ -1,83 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/6] sha1_name: avoid Yoda conditions
-Date: Tue, 30 Apr 2013 15:13:19 -0700
-Message-ID: <7v1u9rbrb4.fsf@alter.siamese.dyndns.org>
-References: <1367358554-4257-1-git-send-email-felipe.contreras@gmail.com>
-	<1367358554-4257-4-git-send-email-felipe.contreras@gmail.com>
-	<7vehdrbrvz.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3osZJO1P6_KoPVON0cOSAD5D-OZmL=aKGkcWReortiCw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] Add new @ shortcut for HEAD
+Date: Tue, 30 Apr 2013 17:17:48 -0500
+Message-ID: <CAMP44s2S4AtZUfH4NWCLt=p49QXeYSZKELYbahpBUgDofaFMsw@mail.gmail.com>
+References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
+	<CACsJy8D_gPpprETkAxf+eYp5DMt7uVt6nanCwthZO=vVfBT28Q@mail.gmail.com>
+	<7vppxcdjd1.fsf@alter.siamese.dyndns.org>
+	<7vhaindcuk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>,
-	"Duy Nguyen\" <pclouds@gmail.com>@b-sasl-quonix.pobox.com"@b-sasl-quonix.pobox.com
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 00:13:30 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jon Seymour <jon.seymour@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 01 00:17:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXInf-0007pn-DX
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 00:13:27 +0200
+	id 1UXIrz-0003cP-Ov
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 00:17:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760917Ab3D3WNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 18:13:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41563 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753781Ab3D3WNW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 18:13:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F32D61B8AB;
-	Tue, 30 Apr 2013 22:13:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/oTLphcix9ZNQBWxUbCrJKzyiYc=; b=B/Lhtv
-	Qr4mJ9pPp1/Mg67OXopDBff9X/0UD86VqAvvWFNqFQi+ZGPk9c6G/Ic9aJYOJofA
-	DH4pgayugw8NS8q81x8XkRcsZzvwWeUsKHdNhJ3fLPkRPLXvVjCwsfzorFVQHoro
-	jN2P7CLON9FdLR7WeiQe9gEd5XzAkxlgqV2tc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ofLyyHhU/8MuQ/tMyxk9vce070CJEP8h
-	9MwZcRe8c0Mtakhh152IqozQPbyIlZXXdlfZoKSA8SuFYuf3EDAeWt9qQ20VB6TX
-	aD8C8eIYDQ5d8IW/N+NKsiSfNQFQ9wvKGcGfhFMki/0RWc1mNzj2kmQitbKoW9Bw
-	sSY6BJ07gac=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E81D11B8AA;
-	Tue, 30 Apr 2013 22:13:21 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6CD521B8A9;
-	Tue, 30 Apr 2013 22:13:21 +0000 (UTC)
-In-Reply-To: <CAMP44s3osZJO1P6_KoPVON0cOSAD5D-OZmL=aKGkcWReortiCw@mail.gmail.com>
-	(Felipe Contreras's message of "Tue, 30 Apr 2013 17:04:57 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2B2C960C-B1E3-11E2-95F8-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
+	id S933746Ab3D3WRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 18:17:52 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:33834 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933600Ab3D3WRv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 18:17:51 -0400
+Received: by mail-la0-f48.google.com with SMTP id eo20so880024lab.7
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 15:17:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=vRi5rqluavjxWroFdItfzgjsgPPafwngWd8mrNvFGMA=;
+        b=JD+QSZB4KrfN/t/uBCjn7j8ZSEILvUIIIVqUj+SD7F+0+2QzO3r99ISFw6uqALWzUW
+         mHp78oscbE3hXwFet4dEzohN8uY5kXEY6zJgEuc+PUsL+hu10DKkuz481Bgo1+BKldjB
+         PIqBCXVl/nXfprijUfv4DmhdFeTH1bLdXuq+V6F6Ts45MdaK7HA8jm0nqXZL9GVDpDj1
+         xV+VqMOBeyoHJbEBbCX6ymH2P2mmZxhWwD5PPHCVwHVY6kz0lE9r83wFKrw4CwlFC9SK
+         PI113VLyyyVG7KncPH74niUq/XNpfDeS3mMUzU1H0CPmnkhy29HNMOhJ4JcYpK22iv+k
+         0QlA==
+X-Received: by 10.152.29.132 with SMTP id k4mr65134lah.46.1367360268536; Tue,
+ 30 Apr 2013 15:17:48 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Tue, 30 Apr 2013 15:17:48 -0700 (PDT)
+In-Reply-To: <7vhaindcuk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223027>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> On Tue, Apr 30, 2013 at 5:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> What is a Yoda condition?
+On Tue, Apr 30, 2013 at 2:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> ---
-> Using if (constant == variable) instead of if (variable == constant),
-> like if (4 == foo).
+>> Duy Nguyen <pclouds@gmail.com> writes:
+>>
+>>> On Tue, Apr 30, 2013 at 2:35 AM, Felipe Contreras
+>>> <felipe.contreras@gmail.com> wrote:
+>>>> So we can type '@' instead of 'HEAD@', or rather 'HEAD'. So now we can
+>>>> use 'git show @~1', and all that goody goodness.
+>>>
+>>> I like this. I haven't spent a lot of time on thinking about
+>>> ambiguation. But I think we're safe there. '@' is not overloaded much
+>>> like ':', '^' or '~'.
+>>>
+>>>> This patch allows 'HEAD@' to be the same as 'HEAD@{0}', and similarly with
+>>>> 'master@'.
+>>>
+>>> I'm a bit reluctant to this. It looks like incomplete syntax to me as
+>>> '@' has always been followed by '{'. Can we have the lone '@' candy
+>>> but reject master@ and HEAD@? There's no actual gain in writing
+>>> master@ vs master@{0}.
+>>
+>> Originally I was going to say the same, but after thinking about it
+>> a bit more, I changed my mind.
 >
-> Because it's like saying "if blue is the sky" or "if tall is the man".
+> Let me change my mind once again ;-)
+>
+> As @ has been a valid character in a ref, I think "git show master@"
+> and "git show HEAD@" _should_ error out, not because they suffix
+> 'master' and 'HEAD" in a funny way, but simply because there is no
+> branch called 'master@' (i.e. 'git for-each-ref | grep master@'
+> yields empty).  After you run "git branch master@ master~26", you
+> should see "git show master@" not to error out, because that is just
+> the name of a branch with somewhat an unusual name.
 
-That is an invalid analogy, as the sentences do not make sense.
+There is also no branch named master@{0}. And there are no branches
+with @{ in them, because we forbid them. So the question is what do we
+want to forbid? If we don't want to forbid 'master@', then sure
+'master@' should not evaluate to 'master'.
 
-A much better explanation I heard on this list is that people do not
-say "If 1 is smaller than the number of your wives, you have a big
-problem".
+> And we can still have "git show @" to do "git show HEAD", based on a
+> world model completely different from I (incorrectly) advocated in
+> the message I am replying to.
+>
+> The rule would be "You should be able to say '@' where-ever you
+> currently say HEAD" (aka '@' is a short-hand for 'HEAD').
+>
+> That means "git checout @" should work the same way as "git checkout
+> HEAD", "git log @~4" would work the same way as "git log HEAD~4",
+> "git update-ref @ $(git rev-parse master)" should update the HEAD
+> without creating $GIT_DIR/@, etc.
+>
+> You can't go any simpler than that rule, and there is no room for
+> confusion if that rule is properly implemented.
 
-I actually was not asking why people find the convention to visually
-align comparison with number lines unusual. We discussed this style
-long time ago on this list.  I haven't heard the "Yoda condtion"
-expression and was asking about the "Yoda" part.
+I disagree. I can do 'git log @{-1}-4', but I cannot do 'git
+update-ref @{-1}'. Why? Because the '@' notation is for revision
+parsing, and 'git update-ref' doesn't do revision parsing.
+
+I'd say, everywhere where you could do @{-1}, you should be able to do @.
+
+Cheers.
+
+-- 
+Felipe Contreras
