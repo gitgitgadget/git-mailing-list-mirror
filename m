@@ -1,8 +1,9 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH] Add new @ shortcut for HEAD
-Date: Tue, 30 Apr 2013 13:07:25 +0700
-Message-ID: <CACsJy8Af5Z6DzsAchu2MpMeanTEJiF-DwhdPMGE9n6QKf2K6Eg@mail.gmail.com>
+Date: Tue, 30 Apr 2013 01:10:06 -0500
+Message-ID: <CAMP44s35HcjZ0sMjbOxHZt96v8S8eEFF+Y9JF_K9FKnFe-S9Xg@mail.gmail.com>
 References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
+	<CACsJy8D_gPpprETkAxf+eYp5DMt7uVt6nanCwthZO=vVfBT28Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>,
@@ -10,68 +11,77 @@ Cc: Git Mailing List <git@vger.kernel.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Jon Seymour <jon.seymour@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 08:08:01 2013
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 30 08:10:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UX3jN-0002jH-1U
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 08:08:01 +0200
+	id 1UX3lY-0004Qq-Bd
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 08:10:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752847Ab3D3GH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 02:07:57 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:40940 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752680Ab3D3GH4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 02:07:56 -0400
-Received: by mail-ob0-f177.google.com with SMTP id ef5so134995obb.36
-        for <git@vger.kernel.org>; Mon, 29 Apr 2013 23:07:56 -0700 (PDT)
+	id S1752914Ab3D3GKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 02:10:09 -0400
+Received: from mail-la0-f43.google.com ([209.85.215.43]:47840 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752694Ab3D3GKI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 02:10:08 -0400
+Received: by mail-la0-f43.google.com with SMTP id ea20so142042lab.16
+        for <git@vger.kernel.org>; Mon, 29 Apr 2013 23:10:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=yC0buYj0lpnwetm1kKYpnVT33/ijM2XrjCjQnddphJ8=;
-        b=fZUFQE2H8B/LR54sQEmR89rEStzXkT/aWkDO+xGV9Eo4GbpDNXU1GjQ2UG6Zii2Jql
-         Jz6dnKxYuapkCqC8fEOcKYN95M50112PG9rLN5EGo62j9IuIQUC6v1NUY8J/CDpu03Li
-         33WsSG5N8zpYdr/oPw75WSwMOYuZcWlAAkSd6crQalyfiBNbw6FaL3at4rkLcSY0xU8t
-         6M9FVsga1zfv3mNtwoITgE10nsO9KhpUnzA71b3pSd0M4f0yJpEgJ8hcC2JK5DgLG5gd
-         Tdv4M5TerpkTA0hHHUChpIHt8MCEs5VfUDH+xcTc4Mbb+R7noVUlPC0tRAy5Hb6L0Bf4
-         yeFQ==
-X-Received: by 10.182.33.40 with SMTP id o8mr16008638obi.39.1367302076083;
- Mon, 29 Apr 2013 23:07:56 -0700 (PDT)
-Received: by 10.76.180.138 with HTTP; Mon, 29 Apr 2013 23:07:25 -0700 (PDT)
-In-Reply-To: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=jmlcmyr5MqUjTVRQ9boch7/WV2/xsNhHGkH5so0PT7A=;
+        b=YsvmAkV63gq+kmrzi8nU6kM1ZFYg/u957wf7ThPSaWUl8kRsMxWiIZaoTVo2aHfznr
+         FvmlYjxjV4flqj/kHTQBTFIAeOtBifGfMMhsT314UTObMYJ1EoNyGMGaFWIoOqVp6gAL
+         U8bCQgTcIndcmwhCHIvuT7jdI7EN64cMriLZkiZy+yXcxMyG+F1w9nZsOUgw1f7bGw4E
+         EstzskJUOU8PIqL6bZW24iWLfDP7KYiQdh5jTd7pEwxBlVYeJkHKNPu+cPbAIsFXfMv3
+         rvN9q0G1ypBzpB1ks9NTNvQjlb1RKQSH90IDxD1XZIKnSpZcDeGc9BNpLW59BEaRHtaw
+         GnFg==
+X-Received: by 10.112.22.198 with SMTP id g6mr24173772lbf.135.1367302206514;
+ Mon, 29 Apr 2013 23:10:06 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Mon, 29 Apr 2013 23:10:06 -0700 (PDT)
+In-Reply-To: <CACsJy8D_gPpprETkAxf+eYp5DMt7uVt6nanCwthZO=vVfBT28Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222910>
 
-On Tue, Apr 30, 2013 at 2:35 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> So HEAD@{0}~0^0 is too much to type, but we can remove '^0', and we can
-> remove '~0', and we can remove 'HEAD', but we can't remove '{0}'?
+On Tue, Apr 30, 2013 at 12:54 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Apr 30, 2013 at 2:35 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> So we can type '@' instead of 'HEAD@', or rather 'HEAD'. So now we can
+>> use 'git show @~1', and all that goody goodness.
 >
-> This patch allows 'HEAD@' to be the same as 'HEAD@{0}', and similarly with
-> 'master@'.
+> I like this. I haven't spent a lot of time on thinking about
+> ambiguation. But I think we're safe there. '@' is not overloaded much
+> like ':', '^' or '~'.
 >
-> So we can type '@' instead of 'HEAD@', or rather 'HEAD'. So now we can
-> use 'git show @~1', and all that goody goodness.
+>> This patch allows 'HEAD@' to be the same as 'HEAD@{0}', and similarly with
+>> 'master@'.
+>
+> I'm a bit reluctant to this. It looks like incomplete syntax to me as
+> '@' has always been followed by '{'. Can we have the lone '@' candy
+> but reject master@ and HEAD@? There's no actual gain in writing
+> master@ vs master@{0}.
 
-This patch also allows funny things like @{-1}@ (wanted to try the
-cute syntax @{u}@ but too lazy to setup upstream)
+That's what I tried first, but it just didn't feel elegant to have one
+check for this case only. foo@ does follow naturally, and it doesn't
+hurt.
 
-$ ./git rev-parse @{-1}
-7e6a0cc47da79dd22c0338aee8750fda92ced5d9
-$ ./git rev-parse @{-1}@
-7e6a0cc47da79dd22c0338aee8750fda92ced5d9
-$ ./git rev-parse @{-1}@{0}
-@{-1}@{0}
-fatal: ambiguous argument '@{-1}@{0}': unknown revision or path not in
-the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
---
-Duy
+>> +'@'::
+>> +  '@' alone is a shortcut for 'HEAD'
+>> +
+>
+> And this does not explain about HEAD@ or master@. But because I prefer
+> the candy part only. This documentation part looks good :)
+
+Yeah, there's no point in documenting things that are not useful for
+the user. The fact that HEAD@ is translated to HEAD is just an
+implementation detail.
+
+-- 
+Felipe Contreras
