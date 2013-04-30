@@ -1,80 +1,99 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH v2 0/8] Some object db protection when add_submodule_odb is used
-Date: Tue, 30 Apr 2013 10:43:18 +0200
-Message-ID: <87ehdsxvbt.fsf@linux-k42r.v.cablecom.net>
-References: <1367293372-1958-1-git-send-email-pclouds@gmail.com>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: git log -p unexpected behaviour - security risk?
+Date: Tue, 30 Apr 2013 06:09:17 -0400
+Message-ID: <CAEBDL5VspccUmkkYBf17soGTyT3sinjnnNzRB_kytnOr3OBVQw@mail.gmail.com>
+References: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
+	<20130420140051.GB29454@ruderich.org>
+	<7vd2towdiq.fsf@alter.siamese.dyndns.org>
+	<CAHQ6N+pKb-44rOM7ocYMvSDyimvAGZppX1Gc=st59aVKzJSBKw@mail.gmail.com>
+	<20130421102150.GJ10429@elie.Belkin>
+	<CAHQ6N+rXE42NOyQPfLiDN8jYfL8w06hEE5MFLeFNxMR4ORD0aw@mail.gmail.com>
+	<20130421160939.GA29341@elie.Belkin>
+	<7vli8bu3ne.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 10:43:31 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	John Tapsell <johnflux@gmail.com>,
+	Simon Ruderich <simon@ruderich.org>,
+	Git List <git@vger.kernel.org>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 30 12:09:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UX69q-0007TI-KH
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 10:43:30 +0200
+	id 1UX7Ux-0002ML-UC
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 12:09:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759453Ab3D3InZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Apr 2013 04:43:25 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:37572 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759146Ab3D3InW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Apr 2013 04:43:22 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 30 Apr
- 2013 10:43:16 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS12.d.ethz.ch (172.31.38.212) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Tue, 30 Apr 2013 10:43:18 +0200
-In-Reply-To: <1367293372-1958-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 30
- Apr 2013 10:42:44 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1760036Ab3D3KJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 06:09:19 -0400
+Received: from mail-we0-f182.google.com ([74.125.82.182]:52262 "EHLO
+	mail-we0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759863Ab3D3KJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 06:09:18 -0400
+Received: by mail-we0-f182.google.com with SMTP id s43so278243wey.13
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 03:09:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=yaVlgxGR3fYqNkM1sKGqda8j9S1cvIja4YfleiUxfco=;
+        b=FHgbi+z2GA4Ruc0367pYsjb1zDMbIVLVqa6qCe9dzZybYnvfX1mdmLzeW0RHnuPUmK
+         48b5Q3KduobWjG5nD8a2lusIbQasBFJWwD2cy97wDWotrdvHtT9wWTA7cy7Icj2Zmdcd
+         yTltlgi8v76rA3r6CoCAcU0jkiwxPg8F/6zt8EuJZooalGf3RZ7RFJP68U6AWYOj+xxL
+         EaCo7g9tNHH+5sg46BeyC+F7yDPElq7t2VB62gvi7jVsionNPYpYkxBNkPL7ev9y7xGQ
+         xTVAPmFMWKsBuPao0/8+KOu+IBsW4llSszXbqpNzOXx0M8WkcWe2sXuSxGNwtffdh2iO
+         +oxA==
+X-Received: by 10.194.90.108 with SMTP id bv12mr84546333wjb.4.1367316557177;
+ Tue, 30 Apr 2013 03:09:17 -0700 (PDT)
+Received: by 10.180.108.240 with HTTP; Tue, 30 Apr 2013 03:09:17 -0700 (PDT)
+In-Reply-To: <7vli8bu3ne.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: dNQzdRjRitKHtIEOZHqsYVdCYgM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222921>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+On Sun, Apr 21, 2013 at 2:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> The thing is, I'm not convinced this is a bad default.  "Shows no diff
+>> at all for merges" is easy for a person to understand.  It is much
+>> easier to understand its limitations than -c and --cc.
+>
+> Making "log -p -m" a default before -c/--cc was introduced would
+> have been the stupidest thing to do, as it would make the command
+> mostly useless.  Nobody would want to see repetitious output from a
+> merge that he would eventually get when the traversal drills down to
+> individual commits on the merged side branch.
+>
+> When I added -c/--cc, I contemplated making -p imply --cc, but
+> decided against it primarily because it is a change in traditional
+> behaviour, and it is easy for users to say --cc instead of -p from
+> the command line.
 
-> The idea behind this series is, after add_submodule_odb, odb may have
-> new temporary objects that only appear after the call. These temporar=
-y
-> objects may lead to repo corruption (e.g. some new objects are create=
-d
-> and point to these temporary objects). This series attempts to catch
-> those cases. It would make it safer to dig deeper into submodule's od=
-b,
-> e.g. to implement unified git-diff.
->
-> Previous approach [1] is record the odb source, then check if the
-> source is from submodule's odb. But that means we rely on the
-> lookup order in sha1_file.c. This approach instead allows the caller
-> to select what odb sources it wants to look up from.
->
-> The checks are also less drastic than before. Checks are now done at
-> higher level, e.g. commit_tree(), instead of at write_sha1_file,
-> because we do allow to write objects that point to nowhere.
->
-> Another new thing from previous round is I completely forbid the use
-> of add_submodule_odb in security sensitive commands like index-pack o=
-r
-> rev-list. We could loosen up later if we need to.
->
-> For fun, I set object_database_contaminated to 1 by default and ran
-> the test suite. It passed :)
+FWIW, security aside, I would've like to have seen that.  I find it
+confusing that merge commits that introduce code don't have a diff
+shown when using -p.  And I find it hard to remember --cc.  BTW,
+what's the mnemonic for it?  -p => patch, --cc => ?
 
-How does this interact with alternates set up by the user?  It's not
-immediately obvious from the commit messages (hint hint) or the comment=
-s
-near ODB_LOCAL etc.
+> On the other hand, "show" was a newer command and it was easy to
+> turn its default to --cc without having to worry too much about
+> existing users.
+>
+>> For that
+>> reason, it is a much *better* default for security than --cc or -c
+>> (even though I believe one of the latter would be a better default for
+>> convenience).
+>
+> Yes.  I do not fundamentally oppose to the idea of "log -p" to imply
+> "log --cc" when "-m" is not given ("log -p -m" is specifically
+> declining the combined diff simplification).  It may be a usability
+> improvement.
 
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Would you consider such a patch?
+
+-John
