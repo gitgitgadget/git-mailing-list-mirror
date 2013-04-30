@@ -1,83 +1,75 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2 8/8] sha1_file: do write objects even if found in ODB_EXTALT database
-Date: Tue, 30 Apr 2013 10:42:52 +0700
-Message-ID: <1367293372-1958-9-git-send-email-pclouds@gmail.com>
-References: <1367293372-1958-1-git-send-email-pclouds@gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Git 1.8.3 l10n round 2
+Date: Tue, 30 Apr 2013 11:45:07 +0800
+Message-ID: <CANYiYbHueuHFDeO19y6Qw8-con6o6y-vvq8zbiB_c=1YMJn6xw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 30 05:43:30 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Byrial Jensen <byrial@vip.cybercity.dk>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Vincent van Ravesteijn <vfr@lyx.org>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	=?UTF-8?B?RGF2aWQgSHJiw6HEjQ==?= <david@hrbac.cz>,
+	Harring Figueiredo <harringf@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 30 05:45:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UX1TT-0006UT-6c
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 05:43:27 +0200
+	id 1UX1VE-0007mv-QH
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 05:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758868Ab3D3DnW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Apr 2013 23:43:22 -0400
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:37275 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758796Ab3D3DnV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 23:43:21 -0400
-Received: by mail-pb0-f51.google.com with SMTP id rq13so50105pbb.24
-        for <git@vger.kernel.org>; Mon, 29 Apr 2013 20:43:20 -0700 (PDT)
+	id S1758870Ab3D3DpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Apr 2013 23:45:10 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:34401 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758796Ab3D3DpJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 23:45:09 -0400
+Received: by mail-wi0-f173.google.com with SMTP id c10so3450581wiw.0
+        for <git@vger.kernel.org>; Mon, 29 Apr 2013 20:45:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=tYigN8a/BS+OhZLhNrRxmVN7238jLht0I5A1yzG+zCg=;
-        b=ACenGukLlY/Gw3OArY6rkSy4nLaDvwjty0HrctwF0HfwX77nyqt8p2to8Z+98MBclJ
-         NSJp6dgu9cIpItjxM/5vP2NFgSZ1QrwVAfEtVJHw4rEUuKKa3Axx7I6qqCN6AwT8mqGq
-         Sf1sy3/PMFxltNhJOzWlb2mmkU+GiEcgAxmpJNn3yKIBZNIsM4BCkCE7q0flQwK3sl4Y
-         GvYJ+F7EMPOQTGdCKRarsG7CwRDZAB+3NCb/hOHeRw6boOFMNN8Ajkos/lhjLeQr1YDD
-         fpQ12l0fgXwZLISJIhQAsjPfWcEQMCfSj/c7KmqUGZsZ3NpxMtfdpZr+dcpYlu6UnIUg
-         Efmg==
-X-Received: by 10.68.202.104 with SMTP id kh8mr73341148pbc.74.1367293400808;
-        Mon, 29 Apr 2013 20:43:20 -0700 (PDT)
-Received: from lanh ([115.74.52.135])
-        by mx.google.com with ESMTPSA id li15sm28643066pab.2.2013.04.29.20.43.17
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 29 Apr 2013 20:43:20 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Tue, 30 Apr 2013 10:44:09 +0700
-X-Mailer: git-send-email 1.8.2.83.gc99314b
-In-Reply-To: <1367293372-1958-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:x-received:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=G/P+mH1uELpn0qPwAmNVdH+htqspJhYpP6AJaHzboM8=;
+        b=dvSJMutqyQ5+RxlTi/nt9HOc0dnTWlDoEXecTBJANS9Nr4ibTfk7naq1oezhSqWUbt
+         O6FnfWblsq868r0tYli2K4ATG8xBgjtOdkVu1etpHc/pXXs/kAdPVBmNuunQPyUIQNvJ
+         hIy4NbK/8Oru0tGYIBwBcTguY5LKzrGD7F7PFreIVKIwFnAuO/7kJXMEq6DEvUPYexr3
+         stHwPnlRqH1CRgxoWXczfYbBLERf3kcH4Jhhv43OAHah40yGCMZb/YfQJLX7UVKXOMvR
+         FVT2e+SUsvhxv6QTrMPZo5YLN7sSrSsdl03VvmrYLuqugHFSQ22FpgshR/xntk+y/y3M
+         KKAw==
+X-Received: by 10.180.86.230 with SMTP id s6mr21625855wiz.6.1367293508091;
+ Mon, 29 Apr 2013 20:45:08 -0700 (PDT)
+Received: by 10.194.175.72 with HTTP; Mon, 29 Apr 2013 20:45:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222903>
 
-Those in ODB_EXTALT are temporary and will be gone soon. Make a
-permanent copy for safety.
+Hi all,
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- sha1_file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Since Git v1.8.3-rc0 had already been released, it's time to start new round
+of git l10n. This time there are 44 new messages need to be translated.
 
-diff --git a/sha1_file.c b/sha1_file.c
-index b8f2afe..ce3698a 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2880,7 +2880,7 @@ int write_sha1_file(const void *buf, unsigned lon=
-g len, const char *type, unsign
- 	write_sha1_file_prepare(buf, len, type, sha1, hdr, &hdrlen);
- 	if (returnsha1)
- 		hashcpy(returnsha1, sha1);
--	if (has_sha1_file(sha1))
-+	if (has_sha1_file_proper(sha1))
- 		return 0;
- 	return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
- }
---=20
-1.8.2.83.gc99314b
+A new "git.pot" is generated in commit v1.8.3-rc0-20-gc6bc7:
+
+    l10n: git.pot: v1.8.3 round 2 (44 new, 12 removed)
+
+    Generate po/git.pot from v1.8.3-rc0-19-g7e6a0 for git v1.8.3
+    l10n round 2.
+
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+
+This update is for the l10n of the upcoming git 1.8.3. You can get it
+from the usual place:
+
+    https://github.com/git-l10n/git-po/
+
+--
+Jiang Xin
