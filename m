@@ -1,211 +1,321 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] git-svn: fix occasional "Failed to strip path" error on fetch next commit, try #3
-Date: Tue, 30 Apr 2013 12:10:37 -0700
-Message-ID: <7vobcvdec2.fsf@alter.siamese.dyndns.org>
-References: <5180046b.6905700a.65c8.00b4@mx.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git mailing list <git@vger.kernel.org>,
-	Ray Chen <rchen@cs.umd.edu>, Eric Wong <normalperson@yhbt.net>
-To: Ilya Basin <basinilya@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 21:10:50 2013
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH v3] Add support for -i/--interactive to git-clean
+Date: Wed,  1 May 2013 03:25:11 +0800
+Message-ID: <3ecc9ca1b1363b5bd27ae53cbf5899ce6d44cd48.1367349734.git.worldhello.net@gmail.com>
+References: <CANYiYbHKWv6R2vtwG=bTNhj8q0iC4EBt8usC3posBCtYBTXOvA@mail.gmail.com>
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Apr 30 21:25:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXFwu-0000tQ-TP
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 21:10:49 +0200
+	id 1UXGBE-00070A-T3
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 21:25:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932830Ab3D3TKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 15:10:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42983 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932711Ab3D3TKn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 15:10:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 362D41A22B;
-	Tue, 30 Apr 2013 19:10:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g+bVI41jEK4osnQezzHJqQ7ieHc=; b=LpAhez
-	8Psa7Gq2Uj1uOJmAs79KipOMm2FO+Px2NkiJglGezznHBco3yjXqdxN/gUHom5Ud
-	yEOfizjepkMRfiqblS7gpHwnW8C3UVDYmIINqMKMxBDwg5yOROgivgcXgwTeilix
-	eLCC0yDlFmbKtPyQ5pK6ItUgLGtVRAjQdbhjM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eIiz94rveFy2AipX8XlhHR5lghuWfl17
-	JHRBXpVknOwFLUd7OSrK69opWiyn0ftrBNtVuG1AwE867qWQoNo1SbMzHwgCOd6u
-	OgwrB7WjoGdQKiqstkphv15Buu102A8toEkV6ML5drCd5Yurxbne1+wrYEd6W+/X
-	Dk0fVzHVw7w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C5191A22A;
-	Tue, 30 Apr 2013 19:10:40 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6FEE91A229;
-	Tue, 30 Apr 2013 19:10:39 +0000 (UTC)
-In-Reply-To: <5180046b.6905700a.65c8.00b4@mx.google.com> (Ilya Basin's message
-	of "Mon, 29 Apr 2013 00:10:35 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A551B8D2-B1C9-11E2-A277-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
+	id S932830Ab3D3TZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 15:25:26 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:35217 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932724Ab3D3TZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 15:25:24 -0400
+Received: by mail-pa0-f52.google.com with SMTP id fb10so518157pad.25
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 12:25:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=P8ON0uyeDIR3rcR0R678uxP4usGM/I4uyPuN3m2ARxQ=;
+        b=X6BW5ZQ36dHbgP4MEDzfBo2r2sYh+UFSMAo0cTDHqq0uqoAZAXjfAn3U4oUcKWCHVG
+         WvFTjivrYjzhG8viSLjhwA05vC+z31zct04GYWrPzf5TcHzJ2OyG/kjYyDCe2Qnfm2dv
+         vqEmzAlCINxE3Ec2pimFZqSxDYMQJpuKQwzkQXd5mCnL6K4PQtNpk7FKEwPuJJ6e0Gez
+         2OaMs8WIda+APFYq1b/c5FFRQhdCQoqH3xPd/OXoXDLlJOmtizXTEjt+H9BPNVWcjFAW
+         LlvJ58Y9bMBWb2teKyZCCpwqum2PckujdwdAM+4qPvoPvd2/lAUY5uTYb/yD1mZWp5LS
+         AgVw==
+X-Received: by 10.66.146.232 with SMTP id tf8mr492420pab.32.1367349924232;
+        Tue, 30 Apr 2013 12:25:24 -0700 (PDT)
+Received: from localhost.localdomain ([114.246.126.106])
+        by mx.google.com with ESMTPSA id dg5sm29572258pbc.29.2013.04.30.12.25.19
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 30 Apr 2013 12:25:22 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc0.306.gee4c747
+In-Reply-To: <CANYiYbHKWv6R2vtwG=bTNhj8q0iC4EBt8usC3posBCtYBTXOvA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222993>
 
-Ilya Basin <basinilya@gmail.com> writes:
+Show what would be done and the user must confirm before actually
+cleaning. In the confirmation dialog, the user has three choices:
 
-    [PATCH 1/5] git-svn: fix occasional "Failed to strip path" error on fetch next commit, try #3
+ * Yes: Start to do cleaning.
+ * No:  Nothing will be deleted.
+ * Edit (default): Enter edit mode.
 
-Please make it like this.
+When the user chooses the edit mode, the user can input space-
+separated patterns (the same syntax as gitignore), and each clean
+candidate that matches with one of the patterns will be excluded
+from cleaning. When the user feels it's OK, presses ENTER to start
+cleaning.
 
-    [PATCH v3 1/5] git-svn: fix occasional "Failed to strip path" error on fetch next commit
+When in the edit mode, if the user wants to cancel the whole
+cleaning, simply inputs ctrl-c to abort the cleaning.
 
-    > When --stdlayout and --preserve-empty-dirs flags are used and a
-    > directory becomes empty, two things happen:
-    >
-    > Sometimes find_empty_directories() returns empty list and no empty dir
-    > placeholder file created. This happens, because find_empty_directories()
-    > marks all directories as non-empty, if at least one updated directory is
-    > non-empty.
-    >
-    > Sometimes git-svn dies with "Failed to strip path" error. This happens,
-    > because find_empty_directories() returns git paths and
-    > add_placeholder_file() expects svn paths
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+Reviewed-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/git-clean.txt |  16 ++++-
+ builtin/clean.c             | 141 +++++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 140 insertions(+), 17 deletions(-)
 
-Enumeration is easier to read if you did
-
-    ... two things happen:
-
-      * Thing one.
-
-      * Thing two.
-
-The above is a good description of the problem and your diagnosis,
-and readers may be able to guess a few approaches to fix them.
-
-Here, after the description of the problem and before the three-dash
-line, is the place to summarize the approach you took to fix it,
-followed by an empty line followed by your Signed-off-by: line.
-
-    > ---
-
-Here is a place to summarize what changed since the earlier
-iterations of the patch you sent (a single liner e.g. "with better
-log messages", "corrected an off-by-one error in function X in the
-previous round", is often sufficient).
-
-    >  perl/Git/SVN/Fetcher.pm                | 12 ++++++++----
-    >  t/t9160-git-svn-preserve-empty-dirs.sh | 18 +++++++++++++-----
-    >  2 files changed, 21 insertions(+), 9 deletions(-)
-
->
-> diff --git a/perl/Git/SVN/Fetcher.pm b/perl/Git/SVN/Fetcher.pm
-> index 046a7a2..4f96076 100644
-> --- a/perl/Git/SVN/Fetcher.pm
-> +++ b/perl/Git/SVN/Fetcher.pm
-> @@ -129,6 +129,7 @@ sub is_path_ignored {
->  
->  sub set_path_strip {
->  	my ($self, $path) = @_;
-> +	$self->{pathprefix_strip} = length $path ? ($path . "/") : "";
->  	$self->{path_strip} = qr/^\Q$path\E(\/|$)/ if length $path;
-
-The name of the field (should I call it an instance variable?) feels
-somewhat strange.  This is later used to be _added_ as a prefix to
-the files in the directory denoted by the $path. The only thing this
-is related to "strip" is because you have to prefix it because these
-files have their prefix stripped earlier, no?
-
->  }
->  
-> @@ -458,9 +459,12 @@ sub find_empty_directories {
->  		my $skip_added = 0;
->  		foreach my $t (qw/dir_prop file_prop/) {
->  			foreach my $path (keys %{ $self->{$t} }) {
-> -				if (exists $self->{$t}->{dirname($path)}) {
-> -					$skip_added = 1;
-> -					last;
-> +				if (length $self->git_path($path)) {
-> +					$path = dirname($path);
-> +					if ($dir eq $self->git_path($path) && exists $self->{$t}->{$path}) {
-> +						$skip_added = 1;
-> +						last;
-> +					}
-
-I am reading that this is a solution for your second issue (use
-git_path() to convert $path).  An empty $path would be a top-level
-and skipping it corresponds to the "next if $dir eq '.'" at the
-beginning of the loop, I guess.
-
-When "$dir ne $self->git_path(dirname($path))", what should happen?
-
->  				}
->  			}
->  			last if $skip_added;
-> @@ -477,7 +481,7 @@ sub find_empty_directories {
->  		delete $files{$_} foreach (@deleted_gpath);
->  
->  		# Report the directory if there are no filenames left.
-> -		push @empty_dirs, $dir unless (scalar %files);
-> +		push @empty_dirs, ($self->{pathprefix_strip} . $dir) unless (scalar %files);
-
-This makes me think "path_prefix" would be a better name.
-
->  	}
->  	@empty_dirs;
->  }
-> diff --git a/t/t9160-git-svn-preserve-empty-dirs.sh b/t/t9160-git-svn-preserve-empty-dirs.sh
-> index b4a4434..1b5a286 100755
-> --- a/t/t9160-git-svn-preserve-empty-dirs.sh
-> +++ b/t/t9160-git-svn-preserve-empty-dirs.sh
-> @@ -51,13 +51,21 @@ test_expect_success 'initialize source svn repo containing empty dirs' '
->  		echo "Conflict file" > 5/.placeholder &&
->  		mkdir 6/.placeholder &&
->  		svn_cmd add 5/.placeholder 6/.placeholder &&
-> -		svn_cmd commit -m "Placeholder Namespace conflict"
-> +		svn_cmd commit -m "Placeholder Namespace conflict" &&
-> +
-> +		echo x > fil.txt &&
-
-Not a new problem but we prefer to write this as
-
-		echo x >fil.txt &&
-
-That is, a SP before a redirection operator, but no SP before the
-redirection target.
-
-> +		svn_cmd add fil.txt &&
-> +		svn_cmd commit -m "this commit should not kill git-svn"
->  	) &&
->  	rm -rf "$SVN_TREE"
->  '
->  
-> -test_expect_success 'clone svn repo with --preserve-empty-dirs' '
-> -	git svn clone "$svnrepo"/trunk --preserve-empty-dirs "$GIT_REPO"
-> +test_expect_success 'clone svn repo with --preserve-empty-dirs --stdlayout' '
-> +	git svn clone "$svnrepo" --preserve-empty-dirs --stdlayout "$GIT_REPO" || (
-> +		cd "$GIT_REPO"
-> +		git svn fetch # fetch the rest can succeed even if clone failed
-> +		false # this test still failed
-> +	)
->  '
->  
->  # "$GIT_REPO"/1 should only contain the placeholder file.
-> @@ -81,11 +89,11 @@ test_expect_success 'add entry to previously empty directory' '
->  	test -f "$GIT_REPO"/4/a/b/c/foo
->  '
->  
-> -# The HEAD~2 commit should not have introduced .gitignore placeholder files.
-> +# The HEAD~3 commit should not have introduced .gitignore placeholder files.
->  test_expect_success 'remove non-last entry from directory' '
->  	(
->  		cd "$GIT_REPO" &&
-> -		git checkout HEAD~2
-> +		git checkout HEAD~3
->  	) &&
->  	test_must_fail test -f "$GIT_REPO"/2/.gitignore &&
->  	test_must_fail test -f "$GIT_REPO"/3/.gitignore
+diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+index bdc3a..6bc99 100644
+--- a/Documentation/git-clean.txt
++++ b/Documentation/git-clean.txt
+@@ -8,7 +8,7 @@ git-clean - Remove untracked files from the working tree
+ SYNOPSIS
+ --------
+ [verse]
+-'git clean' [-d] [-f] [-n] [-q] [-e <pattern>] [-x | -X] [--] <path>...
++'git clean' [-d] [-f] [-i] [-n] [-q] [-e <pattern>] [-x | -X] [--] <path>...
+ 
+ DESCRIPTION
+ -----------
+@@ -34,7 +34,19 @@ OPTIONS
+ -f::
+ --force::
+ 	If the Git configuration variable clean.requireForce is not set
+-	to false, 'git clean' will refuse to run unless given -f or -n.
++	to false, 'git clean' will refuse to run unless given -f, -n or
++	-i.
++
++-i::
++--interactive::
++	Show what would be done and the user must confirm before actually
++	cleaning. In the confirmation dialog, the user can choose to abort
++	the cleaning, or enter into an edit mode. In the edit mode, the
++	user can input space-separated patterns (the same syntax as
++	gitignore), and each clean candidate that matches with one of the
++	patterns will be excluded from cleaning. When the user feels it's
++	OK, presses ENTER to start cleaning. If the user wants to cancel
++	the whole cleaning in the edit mode, simply inputs ctrl-c to abort.
+ 
+ -n::
+ --dry-run::
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 04e39..b26c0 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -15,9 +15,10 @@
+ #include "quote.h"
+ 
+ static int force = -1; /* unset */
++static int interactive;
+ 
+ static const char *const builtin_clean_usage[] = {
+-	N_("git clean [-d] [-f] [-n] [-q] [-e <pattern>] [-x | -X] [--] <paths>..."),
++	N_("git clean [-d] [-f] [-i] [-n] [-q] [-e <pattern>] [-x | -X] [--] <paths>..."),
+ 	NULL
+ };
+ 
+@@ -142,6 +143,96 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
+ 	return ret;
+ }
+ 
++void interactive_clean(struct string_list *dels, const char *prefix)
++{
++	struct dir_struct dir;
++	struct strbuf confirm = STRBUF_INIT;
++	struct strbuf message = STRBUF_INIT;
++	struct strbuf buf = STRBUF_INIT;
++	struct strbuf **ignore_list;
++	struct string_list_item *item;
++	struct exclude_list *el;
++	const char *qname;
++	int edit_mode = 0, i;
++
++	while (1) {
++		int matches = 0;
++
++		/* dels list may become empty when we run string_list_remove_empty_items later */
++		if (!dels->nr)
++			break;
++
++		for_each_string_list_item(item, dels) {
++			qname = quote_path_relative(item->string, -1, &buf, prefix);
++			printf(_(msg_would_remove), qname);
++		}
++
++		if (message.len) {
++			printf("\n%s\n", message.buf);
++			strbuf_reset(&message);
++		}
++
++		if (!edit_mode) {
++			printf(_("Remove (yes/no/Edit) ? "));
++			strbuf_getline(&confirm, stdin, '\n');
++			strbuf_trim(&confirm);
++			if (confirm.len) {
++				if (!strncasecmp(confirm.buf, "yes", confirm.len)) {
++					break;
++				} else if (!strncasecmp(confirm.buf, "no", confirm.len)) {
++					string_list_clear(dels, 0);
++					break;
++				}
++			}
++			edit_mode = 1;
++		}
++
++		printf(_("Input ignore patterns to keep items, or press ENTER to confirm: "));
++		strbuf_getline(&confirm, stdin, '\n');
++		strbuf_trim(&confirm);
++		printf("\n");
++
++		if (!confirm.len)
++			break;
++
++		memset(&dir, 0, sizeof(dir));
++		el = add_exclude_list(&dir, EXC_CMDL, "manual exclude");
++		ignore_list = strbuf_split_buf(confirm.buf, confirm.len, ' ', 0);
++
++		for (i = 0; ignore_list[i]; i++)
++		{
++
++			strbuf_trim(*ignore_list);
++			if (!(*ignore_list)->len)
++				continue;
++
++			add_exclude(ignore_list[i]->buf, "", 0, el, -(i+1));
++		}
++
++		for_each_string_list_item(item, dels) {
++			int dtype = DT_UNKNOWN;
++			if (is_excluded(&dir, item->string, &dtype)) {
++				*item->string = '\0';
++				matches++;
++			}
++		}
++
++		if (!matches) {
++			strbuf_addf(&message, _("WARNING: Cannot find items prefixed by: %s"), confirm.buf);
++			strbuf_addch(&message, '\n');
++		} else {
++			string_list_remove_empty_items(dels, 0);
++		}
++
++		strbuf_reset(&confirm);
++		strbuf_list_free(ignore_list);
++		clear_directory(&dir);
++	}
++
++	strbuf_release(&confirm);
++	strbuf_release(&message);
++}
++
+ int cmd_clean(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, res;
+@@ -154,12 +245,15 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
+ 	struct exclude_list *el;
++	struct string_list dels = STRING_LIST_INIT_DUP;
++	struct string_list_item *item;
+ 	const char *qname;
+ 	char *seen = NULL;
+ 	struct option options[] = {
+ 		OPT__QUIET(&quiet, N_("do not print names of files removed")),
+ 		OPT__DRY_RUN(&dry_run, N_("dry run")),
+ 		OPT__FORCE(&force, N_("force")),
++		OPT_BOOL('i', "interactive", &interactive, N_("interactive cleaning")),
+ 		OPT_BOOLEAN('d', NULL, &remove_directories,
+ 				N_("remove whole directories")),
+ 		{ OPTION_CALLBACK, 'e', "exclude", &exclude_list, N_("pattern"),
+@@ -186,12 +280,12 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	if (ignored && ignored_only)
+ 		die(_("-x and -X cannot be used together"));
+ 
+-	if (!dry_run && !force) {
++	if (!dry_run && !force && !interactive) {
+ 		if (config_set)
+-			die(_("clean.requireForce set to true and neither -n nor -f given; "
++			die(_("clean.requireForce set to true and neither -i, -n nor -f given; "
+ 				  "refusing to clean"));
+ 		else
+-			die(_("clean.requireForce defaults to true and neither -n nor -f given; "
++			die(_("clean.requireForce defaults to true and neither -i, -n nor -f given; "
+ 				  "refusing to clean"));
+ 	}
+ 
+@@ -257,26 +351,42 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		}
+ 
+ 		if (S_ISDIR(st.st_mode)) {
+-			strbuf_addstr(&directory, ent->name);
+ 			if (remove_directories || (matches == MATCHED_EXACTLY)) {
+-				if (remove_dirs(&directory, prefix, rm_flags, dry_run, quiet, &gone))
+-					errors++;
+-				if (gone && !quiet) {
+-					qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
+-					printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
+-				}
++				string_list_append(&dels, ent->name);
+ 			}
+-			strbuf_reset(&directory);
+ 		} else {
+ 			if (pathspec && !matches)
+ 				continue;
+-			res = dry_run ? 0 : unlink(ent->name);
++			string_list_append(&dels, ent->name);
++		}
++	}
++
++	if (interactive && dels.nr > 0 && !dry_run && isatty(0) && isatty(1))
++		interactive_clean(&dels, prefix);
++
++	for_each_string_list_item(item, &dels) {
++		struct stat st;
++
++		if (lstat(item->string, &st))
++			continue;
++
++		if (S_ISDIR(st.st_mode)) {
++			strbuf_addstr(&directory, item->string);
++			if (remove_dirs(&directory, prefix, rm_flags, dry_run, quiet, &gone))
++				errors++;
++			if (gone && !quiet) {
++				qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
++				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
++			}
++			strbuf_reset(&directory);
++		} else {
++			res = dry_run ? 0 : unlink(item->string);
+ 			if (res) {
+-				qname = quote_path_relative(ent->name, -1, &buf, prefix);
++				qname = quote_path_relative(item->string, -1, &buf, prefix);
+ 				warning(_(msg_warn_remove_failed), qname);
+ 				errors++;
+ 			} else if (!quiet) {
+-				qname = quote_path_relative(ent->name, -1, &buf, prefix);
++				qname = quote_path_relative(item->string, -1, &buf, prefix);
+ 				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
+ 			}
+ 		}
+@@ -285,5 +395,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 
+ 	strbuf_release(&directory);
+ 	string_list_clear(&exclude_list, 0);
++	string_list_clear(&dels, 0);
+ 	return (errors != 0);
+ }
+-- 
+1.8.3.rc0.306.gee4c747
