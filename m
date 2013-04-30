@@ -1,87 +1,75 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: git log -p unexpected behaviour - security risk?
-Date: Tue, 30 Apr 2013 12:47:36 -0400
-Message-ID: <CAEBDL5W8YWu8_TV7o0s3ZZomETz8RPWnr8oOmy0xQ=U8o0xe0Q@mail.gmail.com>
-References: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
-	<20130420140051.GB29454@ruderich.org>
-	<7vd2towdiq.fsf@alter.siamese.dyndns.org>
-	<CAHQ6N+pKb-44rOM7ocYMvSDyimvAGZppX1Gc=st59aVKzJSBKw@mail.gmail.com>
-	<20130421102150.GJ10429@elie.Belkin>
-	<CAHQ6N+rXE42NOyQPfLiDN8jYfL8w06hEE5MFLeFNxMR4ORD0aw@mail.gmail.com>
-	<20130421160939.GA29341@elie.Belkin>
-	<7vli8bu3ne.fsf@alter.siamese.dyndns.org>
-	<CAEBDL5VspccUmkkYBf17soGTyT3sinjnnNzRB_kytnOr3OBVQw@mail.gmail.com>
-	<7va9ogezzx.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/6] path: Make the 'get_st_mode_bits' symbol a file static
+Date: Tue, 30 Apr 2013 10:00:02 -0700
+Message-ID: <7v1u9seyy5.fsf@alter.siamese.dyndns.org>
+References: <517C1BF9.2050604@ramsay1.demon.co.uk>
+	<7vip36qxui.fsf@alter.siamese.dyndns.org>
+	<517EF9D4.50105@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	John Tapsell <johnflux@gmail.com>,
-	Simon Ruderich <simon@ruderich.org>,
-	Git List <git@vger.kernel.org>,
-	Tay Ray Chuan <rctay89@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 18:47:46 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: tboegi@web.de, GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Apr 30 19:00:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXDiT-00084f-IS
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 18:47:45 +0200
+	id 1UXDuW-00042E-EQ
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 19:00:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761208Ab3D3Qri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 12:47:38 -0400
-Received: from mail-wg0-f51.google.com ([74.125.82.51]:37413 "EHLO
-	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760923Ab3D3Qrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 12:47:37 -0400
-Received: by mail-wg0-f51.google.com with SMTP id b12so684762wgh.30
-        for <git@vger.kernel.org>; Tue, 30 Apr 2013 09:47:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=ZELfW7OjJBkRR6d5U453yBFXisWefUuQ9ocjsKhz1t0=;
-        b=ocNwMnpEbUM1CTp0dw2ENcRe52DuQD8DIndx55Ujw3S3AEQY2vDJPZB6mlz89ib8di
-         oYz42NuYD76B5PJXnrQGTKp1i+iXXv3DtiQexqr5A6NDO8COPpQA3oUcOCYFq5r8hujR
-         Q5MF4z/pk0em7X66lQcmk25bm6O8lfvMokMKR2gJARbs35D8tGSvPB9BAiQnWh6d26ek
-         pkODzcaSy98Wo6NhkIt7XhZEOOSi6BF616l11NFvdzvHGYwYNkfANUbfwAxeuR48HMSF
-         Rz6RAzCKNjTItUjEQ3PBSIRxHBKR6WqcXTJOe4q5RYbyESvugv5DCti7+tbW63iadwBI
-         pXTA==
-X-Received: by 10.180.37.101 with SMTP id x5mr25905328wij.0.1367340456630;
- Tue, 30 Apr 2013 09:47:36 -0700 (PDT)
-Received: by 10.180.108.240 with HTTP; Tue, 30 Apr 2013 09:47:36 -0700 (PDT)
-In-Reply-To: <7va9ogezzx.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: qdyqh_LC6fZoH4IlZCPVbDrxLP8
+	id S1760825Ab3D3RAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 13:00:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40892 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759368Ab3D3RAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 13:00:04 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EF4D18534;
+	Tue, 30 Apr 2013 17:00:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1Zag1A+QKNO+jR/SvFlpo0wxZ5A=; b=lWLwlB
+	IzCFbaizXeJqlYcLhwxNuLD6veMGmo/o0S6jVmji1KDOFPSS3rIS/ruWqxhz6EE7
+	qQlMCcf2S/549ICxeu5EdRLuzHzBjq2+syE+ezFpf6xzJp+WFPlI3DNhEoYBadGf
+	8S4Ct6OHILcqYgkQ+Fn4IwrgE4X+/LAMpL1/c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UY4Xr3D7gs7CfGlgepUVCClQ2Rcf12EA
+	Ha7MMyvbBRlG1cSWiEdchhfrsjkyl01TZO5nwC+t0IkTBHc7/c4E5o+QxE7CwVqO
+	CAB62XTd+YHFnEQFvnKHubmI0jR05seupZMlvk8yY4Us8U3FtMLmU6JhHjOhvedH
+	spIcHJ609kQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75A4518533;
+	Tue, 30 Apr 2013 17:00:04 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E57841852F;
+	Tue, 30 Apr 2013 17:00:03 +0000 (UTC)
+In-Reply-To: <517EF9D4.50105@ramsay1.demon.co.uk> (Ramsay Jones's message of
+	"Mon, 29 Apr 2013 23:53:08 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 66FC2E1C-B1B7-11E2-B2B9-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222949>
 
-On Tue, Apr 30, 2013 at 12:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> John Szakmeister <john@szakmeister.net> writes:
->
->>> When I added -c/--cc, I contemplated making -p imply --cc, but
->>> decided against it primarily because it is a change in traditional
->>> behaviour, and it is easy for users to say --cc instead of -p from
->>> the command line.
->>
->> FWIW, security aside, I would've like to have seen that.  I find it
->> confusing that merge commits that introduce code don't have a diff
->> shown when using -p.  And I find it hard to remember --cc.  BTW,
->> what's the mnemonic for it?  -p => patch, --cc => ?
->
-> Compact combined.
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-Thank you.
+> However, I'm always a little wary when I hear someone say "this may be
+> useful to others in the future, so lets do X to make it easier ...".
+> I have noticed that, much more often than not, that future user never
+> does materialise ... ;-)
 
-> By the way, these options are _not_ about "showing merge commits
-> that introduce code", and they do not help your kind of "security".
-> As I repeatedly said, you would need "-p -m" for that.
+I do not think you are reading the reason for the function
+correctly.  It is not "We may find it useful elsewhere".
 
-I'm sorry, I didn't mean to imply that it's useful for security, just
-that it better meets my expectations when -p is turned on.  I realize
-there are some edges in the logic, but I'm fine with those edges.
-
--John
+It is "We knew Windows benefits from having a 'quick, incorrect, but
+the incorrectness happens not matter to the caller' hack, and we
+used to use it everywhere.  But we identified one location we need
+to disable the hack for correctness, hence this 'slow-but-correct'
+function.  There may still be other places that needs fixing by
+calling it".
