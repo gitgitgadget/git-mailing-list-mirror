@@ -1,89 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] cygwin: Remove the CYGWIN_V15_WIN32API build variable
-Date: Tue, 30 Apr 2013 10:05:35 -0700
-Message-ID: <7vtxmodk4g.fsf@alter.siamese.dyndns.org>
-References: <517C29F8.7090709@ramsay1.demon.co.uk>
-	<20130429060123.GD8031@elie.Belkin>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] refs.c: interpret @ as HEAD
+Date: Tue, 30 Apr 2013 22:37:52 +0530
+Message-ID: <CALkWK0mK9uW-Z7YfUY_Ms1WO9vkEKRV31H5dqAOFgb_7SrDG+w@mail.gmail.com>
+References: <1367324685-22788-1-git-send-email-artagnon@gmail.com>
+ <87zjwguq8t.fsf@linux-k42r.v.cablecom.net> <20130430150430.GA13398@lanh> <7vehdsf19m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 19:05:59 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>, Thomas Rast <trast@inf.ethz.ch>,
+	Git List <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 30 19:09:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXDzt-0000KW-MJ
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 19:05:46 +0200
+	id 1UXE2p-000413-6m
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 19:08:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761224Ab3D3RFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 13:05:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43960 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761097Ab3D3RFi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 13:05:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80BF2187E6;
-	Tue, 30 Apr 2013 17:05:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NzFjEVhmVyysLMFzb3r9Gu3ok5g=; b=HKlzNS
-	KGrF4Kx4iqE3Hbj9MS+MNdiqwS7iA9z6Y0EX2Ca01qh0spYDhn7rOD0CmlS1cXVO
-	joDMPYW74HhAGMHjo2eaUe1mMCcBSykO65M/0P2iWhECgBgAHlzwfBB+3iaAb271
-	gxzIM88J+qb2wdfq8tJRjysdx6eQ3EQNWrJhE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J1+Ra/oebpNX9v2kcCJaPYlEBtemoJYs
-	HcIUAggtIlHij9ADdm9NMjh6TnahMJNeIwBccuhFW43qmi5sY46BGWL/jj+apNBT
-	ZomCjXJXKx11nqAGEIusSsXu7qKaLOuzfj/1IPjF6zrcoZVKcXbvLHIOuJpZFC2t
-	uwo4+LAV8rA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74034187E5;
-	Tue, 30 Apr 2013 17:05:37 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D5420187E3;
-	Tue, 30 Apr 2013 17:05:36 +0000 (UTC)
-In-Reply-To: <20130429060123.GD8031@elie.Belkin> (Jonathan Nieder's message of
-	"Sun, 28 Apr 2013 23:01:24 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2D6E9ECC-B1B8-11E2-A4ED-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
+	id S933524Ab3D3RIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 13:08:41 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:56898 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761275Ab3D3RIe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 13:08:34 -0400
+Received: by mail-ie0-f176.google.com with SMTP id x14so919481ief.35
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 10:08:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=dzpFXvDuB99U7IZ3i//WxgOId+XzoQ5aCTRPkYPRXKI=;
+        b=AL9etsz4LgN4P7nxUOF9WEAh+Yuha+/cYHNeg/Zg7eb9WqXqciFl3lCvuhDRNVwaXI
+         aUlcuBaZMtyHwhpHia0bqU9HVBiun8IOhzGdHtAhqSg6TrdLzZh1dxc1Sg3+WTrfcVRx
+         52ob5U+NICCJS01OMDjK7iCJ8mM2lN02RI8i0hP7czsXjOBD2V+wJ3SNPryLqT4aR8L1
+         FISpwqawE4iH+fJNaGBr70E8xovMiCPz78Jj5jTrtCIW5iLwhTUi6CYSkSJ8PNNAeJ4Q
+         dJ0Ggf2uJ6Ql3MGZ7Pj7RtyNVjNiB34GtGdd+exhjRzIKB5zDKXPe9WvHJ8/m30UPpGj
+         rofg==
+X-Received: by 10.50.73.65 with SMTP id j1mr4555598igv.49.1367341713364; Tue,
+ 30 Apr 2013 10:08:33 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Tue, 30 Apr 2013 10:07:52 -0700 (PDT)
+In-Reply-To: <7vehdsf19m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222951>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Junio C Hamano wrote:
+> We need to see if we can make the explanation we will give
+> to end users is understandable.
 
-> The reordering made in v1.8.1.1~7^2~2 still seems like voodoo to me,
-> but at least it works.  This patch applies that same order for
-> everyone.  Systems that would previously use the "I have old win32api
-> and don't need that reordering" codepath don't need to be
-> special-cased any more, since *their* particular brand of trouble is
-> avoided by being careful about how to use the WIN32 macro.
->
-> The upshot:
->
->  - No change on modern setups.  To uninformed people like me I feel
->    like there is still something subtle going on that is not well
->    understood, but hey, this patch doesn't break it. :)
->
->  - Tested to still work on setups that previously needed
->    CYGWIN_V15_WIN32API.  Yay!
->
->  - This drops an #ifdef, which means less code that is never tested
->    to keep up to date.
->
-> With or without a few words of explanation in the commit message to
-> save some time for the next confused person looking this over,
->
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+I'll make an attempt.
 
-Thanks.  Ramsay, I tend to agree with Jonathan that this change
-deserves a bit more explanation.
+@ can be used in two contexts:
+1. When used without the {}, it means HEAD.
+2. When used with a {}, it means what those three forms individually
+mean.  @{} already implies HEAD: don't put an extra @.
+
+I think it's the cleanest.
