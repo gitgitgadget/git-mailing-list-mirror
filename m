@@ -1,94 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] refs.c: interpret @ as HEAD
-Date: Tue, 30 Apr 2013 09:09:57 -0700
-Message-ID: <7vehdsf19m.fsf@alter.siamese.dyndns.org>
-References: <1367324685-22788-1-git-send-email-artagnon@gmail.com>
-	<87zjwguq8t.fsf@linux-k42r.v.cablecom.net>
-	<20130430150430.GA13398@lanh>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: "git grep" parallelism question
+Date: Tue, 30 Apr 2013 17:12:08 +0100
+Message-ID: <20130430161207.GQ472@serenity.lan>
+References: <CA+55aFw+6pL5DoEPsPZpJCAbqEGaWYYKcdjZzbsHVzSSMrQmww@mail.gmail.com>
+ <7vip39w14d.fsf@alter.siamese.dyndns.org>
+ <CA+55aFx1t_MT+20Bbkse-wHeLz8E06yqaOhbb12GzHNDrE2tWA@mail.gmail.com>
+ <CALkWK0k6Gi_J6nDbrGPxDMmWC73CHXdj7a5ugC15YVrrycP=hA@mail.gmail.com>
+ <20130429161814.GJ472@serenity.lan>
+ <877gjldxid.fsf@hexa.v.cablecom.net>
+ <20130429180857.GK472@serenity.lan>
+ <7v1u9tgeov.fsf@alter.siamese.dyndns.org>
+ <20130430080848.GP472@serenity.lan>
+ <20130430155939.GA31881@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 18:10:08 2013
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 30 18:12:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXD83-0005fc-5t
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 18:10:07 +0200
+	id 1UXDAQ-0007t9-6g
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 18:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760934Ab3D3QKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 12:10:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47382 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760331Ab3D3QKA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 12:10:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26A4018757;
-	Tue, 30 Apr 2013 16:10:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iCA/PL6r7ngWT9o08Jt6UQxOU2E=; b=HVcX7e
-	PgO1FOZ5+kCnMn2DWD9/4EWGSGN4JdKelWXvF/r9xt7AjBmon1CExD7qbrCgMHYX
-	R7PE6SfORgOR3iuUbHB31i4An05/4J2bEL4rLrVhjG0si9UNhw0s193YQXkYvdYA
-	A9EOuwl9hOAL/BI6n7xgno/BAR+ksL+Y4VOKU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SzE2Qo7X+HCxZJUzKNUk2vY1vjG83D72
-	YpYp/+FPtmo7K1y1zpoCGIxiGiTCNULX2o4YLtTGuK814IANrtJ3Di7jJC7boM0B
-	u+Tk99JUTBHp1vUBuH8VQK8+Q+Gk//ZmMZ4JomdTCNPqoKkGP1thXTPWMFjqHE48
-	WqgVPiaBpGc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1DB5818755;
-	Tue, 30 Apr 2013 16:10:00 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1761067Ab3D3QMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 12:12:24 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:35530 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761010Ab3D3QMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 12:12:20 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id E0FCA60651A;
+	Tue, 30 Apr 2013 17:12:19 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9JHIH48NYbkH; Tue, 30 Apr 2013 17:12:19 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95A7C18753;
-	Tue, 30 Apr 2013 16:09:59 +0000 (UTC)
-In-Reply-To: <20130430150430.GA13398@lanh> (Duy Nguyen's message of "Tue, 30
-	Apr 2013 22:04:31 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 68447E70-B1B0-11E2-86E5-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 4B3B1606515;
+	Tue, 30 Apr 2013 17:12:09 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <20130430155939.GA31881@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222943>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Tue, Apr 30, 2013 at 11:59:39AM -0400, Jeff King wrote:
+> On Tue, Apr 30, 2013 at 09:08:49AM +0100, John Keeping wrote:
+> 
+> > > With your patch, doesn't "tXXXX-*.sh --root $there" automatically
+> > > use the fast $there temporary location as the result depot, too?
+> > 
+> > No, the current code uses:
+> > 
+> >     $TEST_OUTPUT_DIRECTORY/$root/trash\ directory.tXXXX
+> > 
+> > where we don't prepend $TEST_OUTPUT_DIRECTORY/ if $root is absolute.
+> > 
+> > > If it doesn't with the current code, shouldn't it?
+> > 
+> > I think the current behaviour is fine and the two options complement
+> > each other.
+> > 
+> > TEST_OUTPUT_DIRECTORY is something you set once and forget about which
+> > says "all of the test output should go over here", whereas --root is
+> > passed to a specific test and says "put your output here" but does not
+> > affect the result aggregation which is not specific to that test.
+> 
+> The original intent of "--root" (and how I use it) is to set and forget
+> it, too, via GIT_TEST_OPTS. I intentionally didn't move test results
+> with it, because to me the point was a pure optimization: put the trash
+> directories on a faster disk, and leave everything else identical.  With
+> "--root", any scripts which later want to look at test-results will find
+> them in the usual place.
+> 
+> Your patch updates all of the in-tree spots which look at the results,
+> but any third-party scripts would need to take it into account, too
+> (though I have no idea if any such scripts even exist).
+> 
+> I'm curious if there is a good reason to want to move the results. Some
+> possibilities I can think of are:
+> 
+>   1. More optimization, as results are written to the faster filesystem.
+>      I doubt this is noticeable, though, as the amount of data written
+>      is relatively small compared to the tests themselves (which are
+>      constantly creating and deleting repos).
+> 
+>   2. You can run tests in a read-only git checkout. I'm not sure how
+>      useful that is, though, since you would already need to compile
+>      git.
+> 
+>   3. You could have multiple sets of test results to keep or compare.
+>      I'd think you'd want to keep the built versions of git around, too,
+>      though. Which would mean that a full checkout like git-new-workdir
+>      would be a much simpler way to accomplish the same thing.
+> 
+> So I'm not against TEST_OUTPUT_DIRECTORY as a concept, but I'm having
+> trouble seeing how it is more useful than "--root".
 
-> It's not hard to do. The below patch makes "." equivalent to HEAD and
-> ".U" -> "@{u}". Refs are not supposed to have '.' at the beginning, so
-> it's easy ...
+I think the original intent of TEST_OUTPUT_DIRECTORY was to allow other
+users of the test framework (in contrib/ or the performance tests) to
+put their output in a sensible place for those tests, like you describe
+below.
 
-How is the equivalent of master..@{u} expressed?  master...U?  How is
-it disambiguated from a symmetric difference between master and U?
+The patch being discussed here [1] just makes sure that it applies
+to everything - previously it was applied to test-results/
+inconsistently; test-lib.sh used TEST_OUTPUT_DIRECTORY but the makefile
+didn't.  So we haven't actually changed where test-results/ live as a
+result of this change, just where the makefile looks in order to display
+the aggregate results and clean them up.
 
-There are reasons why some characters are forbidden from appearing
-at certain places in refname component. Anybody who designs a new
-syntax needs to think _why_.
+> > Note that setting TEST_OUTPUT_DIRECTORY in config.mak affects all tests
+> > no matter how you run them (via make or as ./tXXXX-yyyy.sh) whereas
+> > setting --root=... in GIT_TEST_OPTS only affect tests run via make.
+> 
+> I actually consider that a feature of "--root". When I run "make test"
+> everything happens fast. When I run the script manually (which is
+> usually because I'm debugging), the trash directory appears in the
+> current directory, so I can easily investigate it. And if you are
+> running a single test, the performance impact is usually negligible
+> (where you really notice it is when running "make -j32 test").
 
-The restriction that a @ in refname cannot be followed by { is for
-the same kind of disambiguation.  I do not mind a way to spell HEAD
-with shorter than 4 keystrokes, and as I said I suspect "@" may be
-the least bad one among what people may come up with in this thread,
-but I do not think we can explain it as "@ is a synonym to HEAD"
-[*1*].  We need to see if we can make the explanation we will give
-to end users is understandable.
+This confirms to me that the patch as it currently stands is correct: we
+have made TEST_OUTPUT_DIRECTORY consistent and --root still works as
+before.
 
-
-[Footnote]
-
-*1* I do not think "@ is a new synonym for HEAD" would not be a good
-explanation.  Some questions you should ask yourselves to see why:
-
-"git update-ref HEAD $commit" is accepted.  If @ is a synonym for
-HEAD, "git update-ref @ $commit" should work exactly the same way,
-but is it desirable?  Would we have $GIT_DIR/@ as the result?  How
-about "git symbolic-ref"?  Would @@{4} and HEAD@{4} be the same?
+[1] http://article.gmane.org/gmane.comp.version-control.git/222555
