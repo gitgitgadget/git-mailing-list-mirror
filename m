@@ -1,67 +1,138 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: git log -p unexpected behaviour
-Date: Tue, 30 Apr 2013 21:12:49 +0100
-Message-ID: <CAHQ6N+pgz3yzFCumgRd3yzpxpqFbkMSzB=tHxmY5hdhzTjeXAg@mail.gmail.com>
-References: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
- <20130420140051.GB29454@ruderich.org> <7vd2towdiq.fsf@alter.siamese.dyndns.org>
- <CAHQ6N+pKb-44rOM7ocYMvSDyimvAGZppX1Gc=st59aVKzJSBKw@mail.gmail.com>
- <20130421102150.GJ10429@elie.Belkin> <CAHQ6N+rXE42NOyQPfLiDN8jYfL8w06hEE5MFLeFNxMR4ORD0aw@mail.gmail.com>
- <20130421160939.GA29341@elie.Belkin> <7vli8bu3ne.fsf@alter.siamese.dyndns.org>
- <CAEBDL5VspccUmkkYBf17soGTyT3sinjnnNzRB_kytnOr3OBVQw@mail.gmail.com>
- <7va9ogezzx.fsf@alter.siamese.dyndns.org> <vpqy5c0oson.fsf@grenoble-inp.fr>
- <CAEBDL5W-xuNhyL81TBGhriAr2jM7CC3FtLhfcbEfEAf9GjCJAQ@mail.gmail.com>
- <CAHQ6N+pDeeZBabiArTXJy9POv10xCBU+=46YdYmW0Ge1qVgUCA@mail.gmail.com> <7vd2tbdcsa.fsf_-_@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http.c: Add config options/parsing for SSL engine vars
+Date: Tue, 30 Apr 2013 13:17:03 -0700
+Message-ID: <7vzjwfbwow.fsf@alter.siamese.dyndns.org>
+References: <1366758207-7724-1-git-send-email-jqassar@gmail.com>
+	<7v61z4ezlz.fsf@alter.siamese.dyndns.org>
+	<20130430182732.GB1972@sigill.intra.peff.net>
+	<CAJC3a=pU2m8LpUh0u0XXXgOiDiPo-QAdA471orGs9jcyDJTU5g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 22:13:19 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Jerry Qassar <jqassar@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 30 22:17:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXGvO-0002Z7-C2
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 22:13:18 +0200
+	id 1UXGzB-0006Oc-6w
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 22:17:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933600Ab3D3UNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 16:13:12 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:53130 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933325Ab3D3UNL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 16:13:11 -0400
-Received: by mail-ie0-f182.google.com with SMTP id bn7so1160457ieb.41
-        for <git@vger.kernel.org>; Tue, 30 Apr 2013 13:13:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=O62inyJmAmmKN7E55VcFLXFYDG5CYOVHq8UAOnw04B8=;
-        b=JvGjPM7zdajc+cQFBxaG8RwuhEUch6VGLonoNB4ADfJy3TA2C46hTQXKp9FO1fOazF
-         48eEWouzrZOV2XPBlfS5cKd9wIc8gEOgrxs448sfTGQZCmuYxmzPRuzip2/ZEhC6DGxi
-         NPRiTDYYtJQz9T34tScxzyOoCy5ToPly1vWc18k+IewEbRbcd+wM2hogwZZo2qNraZf1
-         l+ur89S2yEyQm3nCxQ64fA/+tO6oX2pa7OfH6YzTJlxRrZuNVxEn/x9jhQ3Cd1FA/N1I
-         nazaqoCFZuttOhZ16ijiXhnij8ABFwi5LdC9MpTAnE198MFzbT4U42Oxw4iAYLOJ3mbF
-         cjOw==
-X-Received: by 10.50.147.100 with SMTP id tj4mr3034762igb.19.1367352790685;
- Tue, 30 Apr 2013 13:13:10 -0700 (PDT)
-Received: by 10.64.8.235 with HTTP; Tue, 30 Apr 2013 13:12:49 -0700 (PDT)
-In-Reply-To: <7vd2tbdcsa.fsf_-_@alter.siamese.dyndns.org>
+	id S933058Ab3D3URI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 16:17:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64900 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932813Ab3D3URH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 16:17:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E82841BF7F;
+	Tue, 30 Apr 2013 20:17:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KMGK4OpmcCyhQTMhoRXMYbZCAbs=; b=SsKTFr
+	b4sQoYPmn/siiPh8EWKtQ+gHw+TXxCXuS3t4MsYLFm1hi2OOSKCF3aOdhyeFBfOq
+	23aHZm1P0i0DuvXUACmOf72HSown8hTMLgH5XpZALVNImx87+W5uNsyTYvH1oR7k
+	fBqKYobCZNjn6d4aFmgi6TLkM2Ge2cSAwzuLU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QYpGt7LpVVj5NQI2sfo1py4GHNepismm
+	/qe8tJHkPVsWOltboffU/GKFWCMdNtBTQgxBtVgkVtELIVWe7D/UHuT0RoDMmPAN
+	Y5k1sF2+Ti9nQu4jSCk8MFQXBiJ8f8B6Nzhhk+dA8TSIIN+758ticEsS/S6qohfO
+	y2DsnDKL1r4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC04B1BF7E;
+	Tue, 30 Apr 2013 20:17:05 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 314861BF7B;
+	Tue, 30 Apr 2013 20:17:05 +0000 (UTC)
+In-Reply-To: <CAJC3a=pU2m8LpUh0u0XXXgOiDiPo-QAdA471orGs9jcyDJTU5g@mail.gmail.com>
+	(Jerry Qassar's message of "Tue, 30 Apr 2013 13:04:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: ED0203C2-B1D2-11E2-9EA2-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223004>
 
-On 30 April 2013 20:44, Junio C Hamano <gitster@pobox.com> wrote:
-> John Tapsell <johnflux@gmail.com> writes:
+Jerry Qassar <jqassar@gmail.com> writes:
+
+> Curl already does support engine-based certificates (in code and
+> help).  Its problem is that a) it doesn't yet read your engine
+> defs out of OpenSSL config, and b) a bug in copying the engine
+> data, once that's patched, to the handle that calling apps use.
+
+So once the problem (a) is fixed, if the user has OpenSSL config
+then the user doesn't need configuration from setopt() side?  That
+makes it sound like you do not need to patch us at all, but there
+must be something else going on...
+
+> On git's side we just need to expose the proper options for setopt
+> configuration.  No special work is needed to support them
+> otherwise.
+
+... I am somewhat puzzled.
+
+>>> > +   if (ssl_keytype != NULL)
+>>> > +           curl_easy_setopt(result, CURLOPT_SSLKEYTYPE, ssl_keytype);
+>>> > +   if (ssl_certtype != NULL)
+>>> > +           curl_easy_setopt(result, CURLOPT_SSLCERTTYPE, ssl_certtype);
+>>
+>> Shouldn't we be checking the result of curl_easy_setopt for errors here
+>> (and when the engine cannot be loaded)?  I think we should probably die
+>> if the engine can't be loaded, but at the very least we'd want to warn
+>> the user that their settings are being ignored.
 >
->> Is there no way to fix --cc to work even in the edge cases?
+> Errors are handled by curl (up to this point):
 >
-> Can you clarify what you mean by "fix" and "edge cases"?
+> 1) Setting the cert type to FOO:
+> error: not supported file type 'FOO' for certificate...
+> fatal: HTTP request failed
+>
+> 2) Setting the key type to FOO:
+> error: not supported file type for private key...
+> fatal: HTTP request failed
+>
+> 3) Setting engine type to something invalid:
+>  * SSL Engine 'pkcsfoo' not found (only with GIT_CURL_VERBOSE set)
+> error: crypto engine not set, can't load certificate...
+> fatal: HTTP request failed
 
-My understanding is that even with -cc there will be changes that
-won't be seen - and hence why --cc could be even more of a "security
-risk", no?
+Where do "error:" and "fatal:" happen in the codeflow?
 
-John
+I am guessing that "error:" may come from these easy_setopt() calls, but
+the "fatal: HTTP request failed" come from us, much later in the
+callpath when we actually make http request.
+
+Between these two times, aren't we throwing user data at the cURL
+library and possibly over the wire to the remote side (with a SSL
+configuration that is different from what the user intended to use),
+no?
+
+That does not sound like a "managed by cURL" solution to me.
+Shouldn't we notice the first error and abort without doing any
+further damage?
+
+>> Overall, I think it is looking good. Aside from a few style/cleanup
+>> issues, my only real complaint is the lack of error-checking from
+>> curl_easy_setopt.
+>>
+>> And of course adding some tests while you are working in the area would
+>> be very nice. :)
+> ...
+> I guess my open question is, if you wish to wrap the
+> prop setting in a curl version #if, what version is desired?
+
+https://github.com/bagder/curl/blob/master/docs/libcurl/symbols-in-versions
+
+says that SSLKEYTYPE, SSLCERTTYPE, etc. come from 7.9.3, so it would
+be 
+
+        #if LIBCURL_VERSION_NUM >= 0x070903
+            ...
+        #endif
+
+Thanks.
