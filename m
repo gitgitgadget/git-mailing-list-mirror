@@ -1,76 +1,123 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Add new @ shortcut for HEAD
-Date: Mon, 29 Apr 2013 17:53:04 -0700
-Message-ID: <20130430005304.GG24467@google.com>
-References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
- <7v61z5hzqg.fsf@alter.siamese.dyndns.org>
- <CAMP44s0rT1097=481aSH=Gy465zb2Bd_xLv=Xvte-GHcamWLyA@mail.gmail.com>
- <CAMP44s0mHxv24GtpY2KzmrKQjZo+97FNN_T7tQk_peyWmusMWA@mail.gmail.com>
- <7vsj29eysv.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] unpack_entry: invalidate newly added cache entry in case of error
+Date: Tue, 30 Apr 2013 09:29:52 +0700
+Message-ID: <1367288992-14979-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jon Seymour <jon.seymour@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 02:53:16 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 30 04:29:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UWyol-0001Jh-6a
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 02:53:15 +0200
+	id 1UX0Jd-0002xx-5F
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 04:29:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759799Ab3D3AxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Apr 2013 20:53:10 -0400
-Received: from mail-da0-f52.google.com ([209.85.210.52]:44931 "EHLO
-	mail-da0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759744Ab3D3AxJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Apr 2013 20:53:09 -0400
-Received: by mail-da0-f52.google.com with SMTP id j17so3184703dan.39
-        for <git@vger.kernel.org>; Mon, 29 Apr 2013 17:53:09 -0700 (PDT)
+	id S1759875Ab3D3C3H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Apr 2013 22:29:07 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:60373 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759543Ab3D3C3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Apr 2013 22:29:06 -0400
+Received: by mail-pa0-f53.google.com with SMTP id kx1so76576pab.40
+        for <git@vger.kernel.org>; Mon, 29 Apr 2013 19:29:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=AVFNhxL88NVZOu+IbCPZ5jLJfB+l/Uuw0rLWbilo6sQ=;
-        b=qlxg0xUmu6VBhWNlswdG0JrCXvIdV4zA2M92XXi8c2Gf4pPUU+1yAS4L2lpqKH3NEi
-         UTe/EaEZHpVoHIPC/4hC0VezHOXCDT9+UHoLeQTul6d+U2A7X7KQmHfkKaIBPtG+ycyU
-         pbozS6JuLlEdlLaMg4HKFebsCXXyKySrUaJxfim6osPRCbnTathLNJX1crfXxH9DGGxr
-         KOzKiyUSswfNdsiHskPXuOcuDFNv98w4p870eJV4eTeq3X56zQ9DXEYZNJl1kc2MtfsQ
-         XQ31IH+l/9DxlPS+MMvopya8Z24PSYGRHLop4YeV6uk9q6jNXk/7MldlTqOylRQ/CjsC
-         Y0Ew==
-X-Received: by 10.66.147.103 with SMTP id tj7mr44582493pab.82.1367283189258;
-        Mon, 29 Apr 2013 17:53:09 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id uf2sm6005553pbc.41.2013.04.29.17.53.06
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=he0FxksrcWn83j46/rMMeHc+vaPt5FsIdLnRhAHd+Lw=;
+        b=OVi8m+BaDwnuaFvXTSCycJ2/uRI5be/x+FtYUgfiB0RW54zADXVPqrjHx96XTJ8hZQ
+         7hklNyzpF4AZbQ+6J3P734eDwMbHQs0E6PeQ8eRU7kB/aUJBv9N6JeUWo24yknO7u9PM
+         OHU1qVYWAs1BoTbs+0goAzOchQ5zpE6pkCaBA/cRaEULngOCTsw1QnMj0zjKjiiNCe12
+         AThbOQLzBeAsB5XSGl/jVvHMN/TxqQo3NixMtNUo0UnTwee4oLRm/oymPxi4Urm9JL1E
+         ybJ6+k+Ra7p0ruPsGEwlMlcFJCFpvkLk77Uk5CTi8pfzfhSW4OsbruJ5g6qTGvNo7u4W
+         Sjxg==
+X-Received: by 10.68.138.7 with SMTP id qm7mr75325258pbb.169.1367288945240;
+        Mon, 29 Apr 2013 19:29:05 -0700 (PDT)
+Received: from lanh ([115.74.52.135])
+        by mx.google.com with ESMTPSA id ze11sm28319541pab.22.2013.04.29.19.29.01
         for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 29 Apr 2013 17:53:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vsj29eysv.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 29 Apr 2013 19:29:04 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 30 Apr 2013 09:29:54 +0700
+X-Mailer: git-send-email 1.8.2.83.gc99314b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222892>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+In this particular code path, we add "base" to the delta base
+cache. Then decide to free it, but we forgot about a dangling pointer
+in the cache. Invalidate that entry when we free "base".
 
->> Never-mind, now I see the difference, still, I don't think it's
->> relevant for this patch.
->
-> I don't either. With the precedence of @{u}, @ does not need to have
-> anything to do with a reflog. It is just a random letter that casts
-> a magic spell.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Some of my changes triggered a double free fault at "free(base);" in
+ t5303. This looks like a correct thing to do, but I may be missing
+ something (I'm not even sure how it happened). Please check.
 
-I thought the convention was "^{...} is for operators that act on
-objects, @{...} for operators that act on refs or symrefs".
+ sha1_file.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-Which works fine here.
+diff --git a/sha1_file.c b/sha1_file.c
+index 64228a2..99ead7c 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1912,7 +1912,8 @@ void clear_delta_base_cache(void)
+ 		release_delta_base_cache(&delta_base_cache[p]);
+ }
+=20
+-static void add_delta_base_cache(struct packed_git *p, off_t base_offs=
+et,
++static struct delta_base_cache_entry *
++add_delta_base_cache(struct packed_git *p, off_t base_offset,
+ 	void *base, unsigned long base_size, enum object_type type)
+ {
+ 	unsigned long hash =3D pack_entry_hash(p, base_offset);
+@@ -1947,6 +1948,7 @@ static void add_delta_base_cache(struct packed_gi=
+t *p, off_t base_offset,
+ 	ent->lru.prev =3D delta_base_cache_lru.prev;
+ 	delta_base_cache_lru.prev->next =3D &ent->lru;
+ 	delta_base_cache_lru.prev =3D &ent->lru;
++	return ent;
+ }
+=20
+ static void *read_object(const unsigned char *sha1, enum object_type *=
+type,
+@@ -2086,12 +2088,13 @@ void *unpack_entry(struct packed_git *p, off_t =
+obj_offset,
+ 		void *delta_data;
+ 		void *base =3D data;
+ 		unsigned long delta_size, base_size =3D size;
++		struct delta_base_cache_entry *ent =3D NULL;
+ 		int i;
+=20
+ 		data =3D NULL;
+=20
+ 		if (base)
+-			add_delta_base_cache(p, obj_offset, base, base_size, type);
++			ent =3D add_delta_base_cache(p, obj_offset, base, base_size, type);
+=20
+ 		if (!base) {
+ 			/*
+@@ -2129,6 +2132,8 @@ void *unpack_entry(struct packed_git *p, off_t ob=
+j_offset,
+ 			      "at offset %"PRIuMAX" from %s",
+ 			      (uintmax_t)curpos, p->pack_name);
+ 			free(base);
++			if (ent)
++				ent->data =3D NULL;
+ 			data =3D NULL;
+ 			continue;
+ 		}
+--=20
+1.8.2.83.gc99314b
