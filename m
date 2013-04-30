@@ -1,76 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add new @ shortcut for HEAD
-Date: Tue, 30 Apr 2013 15:42:02 -0700
-Message-ID: <7vbo8vabet.fsf@alter.siamese.dyndns.org>
-References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8D_gPpprETkAxf+eYp5DMt7uVt6nanCwthZO=vVfBT28Q@mail.gmail.com>
-	<7vppxcdjd1.fsf@alter.siamese.dyndns.org>
-	<7vhaindcuk.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2S4AtZUfH4NWCLt=p49QXeYSZKELYbahpBUgDofaFMsw@mail.gmail.com>
-	<7vsj27ac2a.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3=frHWUh8rQ5kTooUJqwAtkEG37MaeY3Ho6G7-kwZQ_w@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 3/6] sha1_name: avoid Yoda conditions
+Date: Tue, 30 Apr 2013 17:45:26 -0500
+Message-ID: <CAMP44s26oZf0=xdqp5sr_J1TNhK83=88A7KH5n_LnstFe6o5gA@mail.gmail.com>
+References: <1367358554-4257-1-git-send-email-felipe.contreras@gmail.com>
+	<1367358554-4257-4-git-send-email-felipe.contreras@gmail.com>
+	<7vehdrbrvz.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3osZJO1P6_KoPVON0cOSAD5D-OZmL=aKGkcWReortiCw@mail.gmail.com>
+	<7v1u9rbrb4.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3K8BOfnUdc0514KgvYsbncSBO4DRSyfqhFQJomGrZN0A@mail.gmail.com>
+	<7vobcvabxi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jon Seymour <jon.seymour@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 00:42:12 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 01 00:45:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXJFT-0000DE-Pk
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 00:42:12 +0200
+	id 1UXJIi-0003Mo-US
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 00:45:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933874Ab3D3WmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 18:42:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39690 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933732Ab3D3WmF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 18:42:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A4651A64F;
-	Tue, 30 Apr 2013 22:42:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LBPveoqbClNaEM6LLs1Ero1pyRQ=; b=C0q4zx
-	rTqj+RaCwEOLLmL1aT1zMWE6x29w+lKKIiTmGMfbxOqUGoFx7ur0ldNcnbe2v/1i
-	ioFEWOn4+vQYtfQJqyi2hWissMCF+/I7evw8LFPvjoa3LDgTBy/DQviaQaON8945
-	F7ICFGT/jdEvqRvafAeCTDY5OGLGK8vXycLYw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y/zi3TtHP7oKIvPDz4trdCxTuP1dtzlf
-	xtDirKeQh2ZPkyJIbbcu9u6hVma3tcK8NHZoBFg2Dblnqoi1dpW2G5hUPQnyTdxQ
-	ct/y4MrTu5TPPTe35Gn94Tk1kPTwUVth8lJDe2v1uhvdwEixUc4E6SSlhlFJ7Nl5
-	2QE8dXAUe8g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DB611A64E;
-	Tue, 30 Apr 2013 22:42:04 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C26FC1A64C;
-	Tue, 30 Apr 2013 22:42:03 +0000 (UTC)
-In-Reply-To: <CAMP44s3=frHWUh8rQ5kTooUJqwAtkEG37MaeY3Ho6G7-kwZQ_w@mail.gmail.com>
-	(Felipe Contreras's message of "Tue, 30 Apr 2013 17:38:02 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2DD2934E-B1E7-11E2-8F4E-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
+	id S933874Ab3D3Wp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 18:45:29 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:46120 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933732Ab3D3Wp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 18:45:28 -0400
+Received: by mail-la0-f52.google.com with SMTP id fd20so914584lab.11
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 15:45:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=e07cN7jZmp5o8NhmSRNoFeXWQItR6+bR+PhX3b+q+28=;
+        b=Rz/jrojQIcLYwsFUXWPhWiqdWLvd/4JfMTxoT3YnKejCMIAiHmYW0stdUG+gpgaOdD
+         jr1abz7WG7ATCHhx68qB9G0tWRg2EGIAv0odaUPTvDS8vJTBh+NMwEMCilPcWJKfM1TL
+         QF8UHXEW7amy67zmkY4soGZKfI3D7rJlIvExbe4Fohe+C/Veo4Nx1Zfajvx5TEicSw1t
+         8r5E5AYSZYt/UsWj1iL3vSoRKqIyFrDm1LuOb2HODd7vLECfMwU0MfzVprr9BuO0BBz8
+         NYxDMioAFt1UXX3T8s8dqSwdZEMpAshbOFbmmM30+Vy69/JSaSo95FSPmwsN9kfKRLwc
+         pwKQ==
+X-Received: by 10.112.154.98 with SMTP id vn2mr375638lbb.8.1367361926740; Tue,
+ 30 Apr 2013 15:45:26 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Tue, 30 Apr 2013 15:45:26 -0700 (PDT)
+In-Reply-To: <7vobcvabxi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223036>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Tue, Apr 30, 2013 at 5:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> On Tue, Apr 30, 2013 at 5:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>
+>>>> On Tue, Apr 30, 2013 at 5:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>>> What is a Yoda condition?
+>>>>
+>>>> ---
+>>>> Using if (constant == variable) instead of if (variable == constant),
+>>>> like if (4 == foo).
+>>>>
+>>>> Because it's like saying "if blue is the sky" or "if tall is the man".
+>>>
+>>> That is an invalid analogy, as the sentences do not make sense.
+>>>
+>>> A much better explanation I heard on this list is that people do not
+>>> say "If 1 is smaller than the number of your wives, you have a big
+>>> problem".
+>>>
+>>> I actually was not asking why people find the convention to visually
+>>> align comparison with number lines unusual. We discussed this style
+>>> long time ago on this list.  I haven't heard the "Yoda condtion"
+>>> expression and was asking about the "Yoda" part.
+>>
+>> It's popular culture.
+>>
+>> http://en.wikipedia.org/wiki/Yoda
+>
+> I know who Yoda is.  What I was puzzled with was what it has to do
+> with "if blue is the sky" (which is a bad analogy for "if (0 < len)"
+> anyway)?
 
-> Since 'update-ref master' updates the 'master' ref, and not
-> 'refs/heads/master' (IOW; no parsing at all), I think it makes sense
-> that @{-1} is not parsed, and neither is @.
+Yoda speaks in reverse "Stopped they must be; on this all depends".
+"if (0 < len)" says "if zero is less than len", which is in reverse,
+as reverse as "if 1.50 is taller than you". It's all reversed: "if you
+are taller than 1.50", "if len is greater than zero", "They must be
+stopped; all depends on this".
 
-That is a very valid point.
+I don't understand what is not clear.
 
-What should "rev-parse --symbolic-full-name @" say?
+-- 
+Felipe Contreras
