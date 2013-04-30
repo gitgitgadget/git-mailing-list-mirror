@@ -1,84 +1,68 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Add new @ shortcut for HEAD
-Date: Tue, 30 Apr 2013 13:18:16 -0500
-Message-ID: <CAMP44s22Gz=fjregUE37r-V7R+eC_vLhdkefTybEpPDm680NBQ@mail.gmail.com>
-References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8D_gPpprETkAxf+eYp5DMt7uVt6nanCwthZO=vVfBT28Q@mail.gmail.com>
-	<7vppxcdjd1.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0PcB7nu_67p=hfMy4Kb2iYTSp5ZT6y2Gn24OAtDzR_sw@mail.gmail.com>
-	<20130430175635.GA1972@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] refs.c: interpret @ as HEAD
+Date: Tue, 30 Apr 2013 23:52:28 +0530
+Message-ID: <CALkWK0kcuaXTKbafmC72C3H+UZN6oeEY140T21LJUHveO=UBvA@mail.gmail.com>
+References: <1367324685-22788-1-git-send-email-artagnon@gmail.com>
+ <87zjwguq8t.fsf@linux-k42r.v.cablecom.net> <20130430150430.GA13398@lanh>
+ <7vehdsf19m.fsf@alter.siamese.dyndns.org> <CALkWK0kzjg+CPw8hq6ZAZxqVGdp7cf6HN-XHFCjbkNk9O=M5CA@mail.gmail.com>
+ <CAMP44s0=5KniGDnVtKPg5sp=G8M-mPcq+Mu1nXqODfhT-MaNyg@mail.gmail.com>
+ <CALkWK0kLZ9WLVcPBWuQZCjOku4A+WQ7=YeooPmKGpk9HuGYQnw@mail.gmail.com> <7vwqrjdh6v.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jon Seymour <jon.seymour@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 30 20:18:23 2013
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 30 20:23:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXF8A-0006cc-Kr
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 20:18:22 +0200
+	id 1UXFCs-00034n-UR
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 20:23:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760862Ab3D3SST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 14:18:19 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:37855 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760751Ab3D3SSR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 14:18:17 -0400
-Received: by mail-la0-f42.google.com with SMTP id eb20so707738lab.29
-        for <git@vger.kernel.org>; Tue, 30 Apr 2013 11:18:16 -0700 (PDT)
+	id S1760813Ab3D3SXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 14:23:10 -0400
+Received: from mail-ia0-f179.google.com ([209.85.210.179]:54179 "EHLO
+	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760203Ab3D3SXJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 14:23:09 -0400
+Received: by mail-ia0-f179.google.com with SMTP id p22so707055iad.24
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 11:23:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=U71aPRjujkYDOjYD+H3DTBQ4CCs0GbB30FFtnMlSqPU=;
-        b=Wn9Mvf6H7Sx7UINwJeb5N64g9TYYnl08Z//fEwwmfmvDpj2PQNDBiWAJaLTGIFjT3F
-         8COz0jk9WyAZt4SzzdB0J86gwBvRt6MwL019OvnCRBm2zbBwiSgV8Rumvdp1FBG1x/5G
-         rmqcKYvgQCVlvILz2sjuUQvB1H5YYRJHyHjZLtpgBnn4ciEiZD252f45pMtDyQpgtAHC
-         dBSR/ls8zNXRwyErwZcKphtA11aJ10XQga26EOIDekJAVYCVNLZItISN3bg/Lrst5Vrl
-         nPUnk6ck1Ty2A+fDwPsWOowC6WmcEd4hcdpdKSKk909vJU6nohWvHFaPpSH2temLgusT
-         RZBg==
-X-Received: by 10.112.139.226 with SMTP id rb2mr65245lbb.12.1367345896313;
- Tue, 30 Apr 2013 11:18:16 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Tue, 30 Apr 2013 11:18:16 -0700 (PDT)
-In-Reply-To: <20130430175635.GA1972@sigill.intra.peff.net>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=O1X/eNpg9war94X1kuwMAzjYbzQ+wohpnqWBlIs+u6Y=;
+        b=KaQda2ltcIZS0kkB5mmS9ItZO09079+0nJ/WBLbiGhC794v1iBF6DDWK3bcV1MVe6V
+         Jf3Jk1pUvTC/yHnqOiRGtk4+tO4r4NsSg+FvaAFIJf94t89QVF7zkDeafLI88PYgxUV5
+         7OzQbSouad72XJavRux0/dqLm3sbxZTrY6RMsah7DoX/AHOjtRidxoSl3eJpoqM0pe5a
+         7PfmoG/MPxcZpigum+WExoA7W2hGOO510AbCcHFAyW8fhkPM4tQ+MiQfh5dnPojX8kj0
+         lp7LLw0iDAbYG2cQRmA++Ore76p/hp5O2eFHgfgKzW/V6Voe9Y35e1B8NRA06rlwoQ3x
+         NMmg==
+X-Received: by 10.50.66.197 with SMTP id h5mr10712707igt.63.1367346188490;
+ Tue, 30 Apr 2013 11:23:08 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Tue, 30 Apr 2013 11:22:28 -0700 (PDT)
+In-Reply-To: <7vwqrjdh6v.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222981>
 
-On Tue, Apr 30, 2013 at 12:56 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Apr 30, 2013 at 12:47:57PM -0500, Felipe Contreras wrote:
->
->> > We should make sure that the code rejects "git update-ref @ foo"
->> > because that is "git update-ref @{0} ref", by the way.  I didn't
->> > check with Felipe's patch.
->>
->> Hmm, with or without my patch 'git update @ foo' does nothing, same
->> with 'git update blah foo'. No error, no non-zero exit code, just
->> doesn't do anything.
->
-> Are you sure?
->
->   $ git version
->   git version 1.8.2
->
->   $ git update-ref @ foo
->   fatal: foo: not a valid SHA1
->
->   $ git update-ref @ origin/master
->   $ echo $?
->   0
->   $ cat .git/@
->   89740333e8d398f1da701e9023675321bbb9a85b
+Junio C Hamano wrote:
+> @{-1}@{0} does.  That means @{0} is a revision and not a ref, but @{-1}
+> is.
 
-Right. I don't know why I expected it to show in 'git show-ref'.
+Right.  I missed that.
 
--- 
-Felipe Contreras
+> '"@" given alone' has to be a ref if we want @@{5.minutes.ago} to
+> resolve.
+
+Yeah, I just realized that it's a bug in the @{u} implementation.
+@@{5.minutes.ago} and @@{1} work perfectly fine on git.git master.
+Therefore, @@{5.minutes.ago} should work with my implementation too.
+Yes, it's just the default value of .git/@.
