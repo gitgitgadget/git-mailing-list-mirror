@@ -1,82 +1,61 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] refs.c: interpret @ as HEAD
-Date: Tue, 30 Apr 2013 17:00:34 -0500
-Message-ID: <CAMP44s1LJg9kcBVMb8YxJDTEpKerJoN5td7276=JB7ZY6APpZw@mail.gmail.com>
-References: <1367324685-22788-1-git-send-email-artagnon@gmail.com>
-	<87zjwguq8t.fsf@linux-k42r.v.cablecom.net>
-	<20130430150430.GA13398@lanh>
-	<7vehdsf19m.fsf@alter.siamese.dyndns.org>
-	<CALkWK0kzjg+CPw8hq6ZAZxqVGdp7cf6HN-XHFCjbkNk9O=M5CA@mail.gmail.com>
-	<CAMP44s0=5KniGDnVtKPg5sp=G8M-mPcq+Mu1nXqODfhT-MaNyg@mail.gmail.com>
-	<CALkWK0kLZ9WLVcPBWuQZCjOku4A+WQ7=YeooPmKGpk9HuGYQnw@mail.gmail.com>
-	<7vwqrjdh6v.fsf@alter.siamese.dyndns.org>
-	<CALkWK0kcuaXTKbafmC72C3H+UZN6oeEY140T21LJUHveO=UBvA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/6] sha1_name: avoid Yoda conditions
+Date: Tue, 30 Apr 2013 15:00:48 -0700
+Message-ID: <7vehdrbrvz.fsf@alter.siamese.dyndns.org>
+References: <1367358554-4257-1-git-send-email-felipe.contreras@gmail.com>
+	<1367358554-4257-4-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 00:00:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jeff King <peff@peff.net>,
+	"Duy Nguyen\" <pclouds@gmail.com>"@b-sasl-quonix.pobox.com
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 01 00:00:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXIbI-0004ay-P9
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 00:00:41 +0200
+	id 1UXIbY-0004ob-HR
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 00:00:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755642Ab3D3WAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 18:00:37 -0400
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:62960 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753177Ab3D3WAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 18:00:35 -0400
-Received: by mail-lb0-f181.google.com with SMTP id 13so988383lba.40
-        for <git@vger.kernel.org>; Tue, 30 Apr 2013 15:00:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=Lrp4xJ8ykJpc2WYtuo0ZeByxbD6TFLUTGL7lwFvKpKQ=;
-        b=BH+lS6uXSCyu1UXBVgWNM7DJIUINc+yX+C4Rm+jO0f5pGBOTZyKf/Sk+VA3EU2lfw8
-         WyQ164OskKvwdQslD6xHi2NNY4ZRVD19A9xSaGrgC3xspLMakD/f3eaz7QWATcIWs3wY
-         WTMuaAMmo2k9uID/VQSAnempy+HhrzJFcfgBVR1avO/TYtOHXNJ41zz/NVJ8tCiDHMJl
-         EcvfKWOGHpiLLXL/2keqEwMGSOF1xuAukBE2GA+HifSoRGWZyD5rGqwfIAaPyu/7+iOs
-         S7L5FNr3JdRjf5XGkj2I8VM1U3KdBhisCi/4vsxqrbr6jlGNkrstIj5DljALd+b0Nw3y
-         T+Ug==
-X-Received: by 10.112.22.198 with SMTP id g6mr257272lbf.135.1367359234124;
- Tue, 30 Apr 2013 15:00:34 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Tue, 30 Apr 2013 15:00:34 -0700 (PDT)
-In-Reply-To: <CALkWK0kcuaXTKbafmC72C3H+UZN6oeEY140T21LJUHveO=UBvA@mail.gmail.com>
+	id S1760582Ab3D3WAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 18:00:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64922 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758281Ab3D3WAv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 18:00:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD63F1B2BD;
+	Tue, 30 Apr 2013 22:00:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nRZDTPygZUfkKGvp+5vgUDBMj2o=; b=oeN3RR
+	mCN8FRtaO6EoAXvQ9l1+ZbA2KC5GHTW9c8R4tEZFfT0s+rfO43wvi6NsTAF9fhmS
+	CVwQn3fikGAkiYvajHwHK/HVDXSECTOYYZxNnkRjJpU/56OJSpeqzfUODt+6eTKc
+	36JSMQ4y1nkjId47Y4+WyQzUKhqAE+r7lot5A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sx8iApuF+2Ct8sRpgRQxl7ZaFZsDcA/+
+	5CfWwdvJV2ptJMYZsr6jnrFotkB4pjMkN+UvEmLoqMmWA8ql+/w71T9hEEul20Za
+	jMzoqKt5zT/phMdGA3bPZjmEqRNQES3a5c9idEKl8V1HU+qD09bw3iXs8MItBHwg
+	Ari0xqEdvZw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C44D11B2BC;
+	Tue, 30 Apr 2013 22:00:50 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4D9261B2BA;
+	Tue, 30 Apr 2013 22:00:50 +0000 (UTC)
+In-Reply-To: <1367358554-4257-4-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Tue, 30 Apr 2013 16:49:11 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6B779790-B1E1-11E2-BE31-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223021>
 
-On Tue, Apr 30, 2013 at 1:22 PM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Junio C Hamano wrote:
->> @{-1}@{0} does.  That means @{0} is a revision and not a ref, but @{-1}
->> is.
->
-> Right.  I missed that.
->
->> '"@" given alone' has to be a ref if we want @@{5.minutes.ago} to
->> resolve.
->
-> Yeah, I just realized that it's a bug in the @{u} implementation.
-
-I don't think so. You probably need to modify branch_get(), because it
-has a special case for "HEAD", and who knows if it's hard-coded in
-other places. It's not just the @{u} implementation.
-
-If we do the magic at the rev-parsing phase, all these details become
-irrelevant.
-
-FTR. @@{upstream} and @@{now} works just fine in v2 of my patch series.
-
--- 
-Felipe Contreras
+What is a Yoda condition?
