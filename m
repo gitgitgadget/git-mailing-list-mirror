@@ -1,65 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/8] History traversal refinements
-Date: Tue, 30 Apr 2013 14:28:33 -0700
-Message-ID: <7vip33btdq.fsf@alter.siamese.dyndns.org>
-References: <1367342788-7795-1-git-send-email-kevin@bracey.fi>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Kevin Bracey <kevin@bracey.fi>
-X-From: git-owner@vger.kernel.org Tue Apr 30 23:28:53 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 0/6] New @ shortcut for HEAD
+Date: Tue, 30 Apr 2013 16:49:08 -0500
+Message-ID: <1367358554-4257-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jeff King <peff@peff.net>, "Duy Nguyen\"" <pclouds@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 30 23:50:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXI6W-0007dc-PY
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 23:28:53 +0200
+	id 1UXIRY-0003D3-CT
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 23:50:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933827Ab3D3V2j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 17:28:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51378 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933825Ab3D3V2g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 17:28:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC70C1A0D8;
-	Tue, 30 Apr 2013 21:28:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=40TgRpiPiIqTvMj3SM4QSls0dao=; b=UcbnFE
-	fCst7p2JjsPS4SuDvOPY1gtbCpxsImkwBzR51r5ayL4RqvFlbyRUYDr4dTzvgQyf
-	51IYUF/grFl5c8dGCBExjmBwqUvgDo3p7UNkd2jka4QHpEL4n9VMEkiF1W4RWHch
-	+9tmuWE8tSg8V5Msbt6GtYhhmTpPCY9ywI5HU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DU0OZQ0YHPS9qJDpCxynccjeoxVrFTXM
-	EN5yRtkjX4FR4um6bWXmZik4YavzH2bA/r7/ga1z3YWcGbLcBwAxTKaGOcgTR5yJ
-	j70jqQYyfgHUS10XbOEQXnQnbLsCIqv2DxCkSP0g4zT1PyxcS5m5rK4qzrXHIeV6
-	ErCfe3mXZmI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A41901A0D7;
-	Tue, 30 Apr 2013 21:28:35 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF2D61A0D1;
-	Tue, 30 Apr 2013 21:28:34 +0000 (UTC)
-In-Reply-To: <1367342788-7795-1-git-send-email-kevin@bracey.fi> (Kevin
-	Bracey's message of "Tue, 30 Apr 2013 20:26:20 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E9E00964-B1DC-11E2-A47B-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
+	id S933750Ab3D3Vud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 17:50:33 -0400
+Received: from mail-ye0-f179.google.com ([209.85.213.179]:45737 "EHLO
+	mail-ye0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760697Ab3D3Vub (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 17:50:31 -0400
+Received: by mail-ye0-f179.google.com with SMTP id l2so163862yen.38
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 14:50:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=HfQtawXE4sWwCN7yYPLbre77n9LTYmFPQ4zxyLmaqnY=;
+        b=n+irKwNr8SMaKCtBKum5ixqXJXBS2dmDbhFXYKq273WxwlFn7JJiw752VXyzuCt2s2
+         FZGzuMwMYLwew45biUVryBJdJnnEw3D2pr4JRSTNc1Wj5BM99g06z0xfB4TVt27iqjJ6
+         BzjD9nvcdEP0H1YqqZIluasqECGSWeaL1MDxlswfTTMz+v/54VfRc7iqAcoQkC4746+8
+         UgCkhK9CVB1R+ncTPFZxn+JWBpY66LQwIDjETzRYUxwDB3CZLbQjJN4BQLWv1ttupriq
+         be7kKX2wGpEKsOAocfgIwSqaiu5uKqV0sqO+XcXDFkAY5kbZHvZWxRe3mzxTdnFu1GPq
+         WyGg==
+X-Received: by 10.236.198.73 with SMTP id u49mr213773yhn.35.1367358631201;
+        Tue, 30 Apr 2013 14:50:31 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id a24sm301675yhj.23.2013.04.30.14.50.29
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 30 Apr 2013 14:50:30 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc0.395.gfe9a10d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223013>
 
-Kevin Bracey <kevin@bracey.fi> writes:
+Hi,
 
-> Okay, here's what I'll call v2 of this series. In the 3 parts from
-> before (4,6 & 7), I've addressed the comments from Junio and David,
-> corrected some errors, reconstructed the main commit message, and made
-> some adjustments in preparation for part 8.
+Same as before, except that now only '@' changes, 'master@' remains the same as
+before.
 
-Overally, very nicely done.  Thanks.
+Also, cleanups for sha1_name, and an update so '@@{u}' works.
+
+Felipe Contreras (6):
+  sha1_name: remove no-op
+  sha1_name: remove unnecessary braces
+  sha1_name: avoid Yoda conditions
+  sha1_name: refactor reinterpret()
+  Add new @ shortcut for HEAD
+  sha1_name: allow @@{u} to work
+
+ Documentation/git-check-ref-format.txt |  2 +
+ Documentation/revisions.txt            |  3 ++
+ refs.c                                 |  4 ++
+ sha1_name.c                            | 78 +++++++++++++++++++++++-----------
+ t/t1508-at-combinations.sh             |  3 ++
+ 5 files changed, 65 insertions(+), 25 deletions(-)
+
+-- 
+1.8.3.rc0.395.gfe9a10d
