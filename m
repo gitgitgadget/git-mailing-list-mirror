@@ -1,74 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git log -p unexpected behaviour
-Date: Tue, 30 Apr 2013 12:44:05 -0700
-Message-ID: <7vd2tbdcsa.fsf_-_@alter.siamese.dyndns.org>
-References: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
-	<20130420140051.GB29454@ruderich.org>
-	<7vd2towdiq.fsf@alter.siamese.dyndns.org>
-	<CAHQ6N+pKb-44rOM7ocYMvSDyimvAGZppX1Gc=st59aVKzJSBKw@mail.gmail.com>
-	<20130421102150.GJ10429@elie.Belkin>
-	<CAHQ6N+rXE42NOyQPfLiDN8jYfL8w06hEE5MFLeFNxMR4ORD0aw@mail.gmail.com>
-	<20130421160939.GA29341@elie.Belkin>
-	<7vli8bu3ne.fsf@alter.siamese.dyndns.org>
-	<CAEBDL5VspccUmkkYBf17soGTyT3sinjnnNzRB_kytnOr3OBVQw@mail.gmail.com>
-	<7va9ogezzx.fsf@alter.siamese.dyndns.org>
-	<vpqy5c0oson.fsf@grenoble-inp.fr>
-	<CAEBDL5W-xuNhyL81TBGhriAr2jM7CC3FtLhfcbEfEAf9GjCJAQ@mail.gmail.com>
-	<CAHQ6N+pDeeZBabiArTXJy9POv10xCBU+=46YdYmW0Ge1qVgUCA@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] Add new @ shortcut for HEAD
+Date: Wed, 1 May 2013 01:23:29 +0530
+Message-ID: <CALkWK0kUOEygRE8uMJbW=fOV6iGPAap+mbS7mysTHT3Ri+9eGg@mail.gmail.com>
+References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
+ <CACsJy8D_gPpprETkAxf+eYp5DMt7uVt6nanCwthZO=vVfBT28Q@mail.gmail.com>
+ <7vppxcdjd1.fsf@alter.siamese.dyndns.org> <7vhaindcuk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 21:44:23 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jon Seymour <jon.seymour@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 30 21:54:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXGTM-0008D9-AH
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 21:44:20 +0200
+	id 1UXGcx-0000sc-Uo
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 21:54:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933290Ab3D3ToK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 15:44:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55147 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932553Ab3D3ToH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 15:44:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57C961B304;
-	Tue, 30 Apr 2013 19:44:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p6V8+jd9wDX7Pi2OF/UO+yxAsg0=; b=PLWrji
-	JDNQEkxWlkeelibgX4vpLnCtcS96u+2h3BiQjPj/Tkhsp8Kx7g4DabfmwJMOf+f7
-	ajgA108bg9Z97ci3T03upR9XpFo4wcRGjhythUZskurKSphKtjGixrg+iEtBxCgg
-	zCqPHzaeVarD85rEtmdmjpRZXc+gFDcD+0wRA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=C95pu7Rx00AYuqWmcN9hoaqSDdzETSt0
-	kxRldUwqITdzSNJXqqNf9/RJvuLla1OWpKzATVkAYLYx+gZz1emZzsmAWOgg4g+t
-	xayVBCO7fldN6TICGtZVzhjI/pA09MDbMRDuAa4WyPRokc34tYtBTM9dtylYUMPO
-	WwlCWUpXRnM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FC2D1B303;
-	Tue, 30 Apr 2013 19:44:07 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D5EE31B302;
-	Tue, 30 Apr 2013 19:44:06 +0000 (UTC)
-In-Reply-To: <CAHQ6N+pDeeZBabiArTXJy9POv10xCBU+=46YdYmW0Ge1qVgUCA@mail.gmail.com>
-	(John Tapsell's message of "Tue, 30 Apr 2013 20:31:03 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 51D57F18-B1CE-11E2-8F3C-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
+	id S933634Ab3D3TyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 15:54:12 -0400
+Received: from mail-ia0-f178.google.com ([209.85.210.178]:57683 "EHLO
+	mail-ia0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932661Ab3D3TyL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 15:54:11 -0400
+Received: by mail-ia0-f178.google.com with SMTP id j38so778198iad.23
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 12:54:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=MiFY9a3Do7u7r6xUU48GSigm+xbCdrDDvBGwGQPiwlA=;
+        b=WB+n8B05W+I9t/aI1vT8W5kWHaVCYxOG2hN8yH0JphPTlZjbxeM91WJ7C0BDco1B7u
+         omYfKykp84YBgnQNSse1yYDd3eajR73KnO5rvGeJbdSRn5wHBqIkKwrTHfwHft9zVSID
+         7haX68SjL3V5sX2BoKcJOGMr3woiyvHnogTlH860XxvsacPx7YoJw9BEyOKTH1s6Vm0x
+         uYS5mKyFOOAC0ju+AgCafloQ/feXZF/fYt9uZK4WTCYFR2GDrlEbcQpUqmfSgUL7t6qU
+         jJ4U735QYSVBzHiNO8exeR/KmwE8YfBoGYpT5gLVIJoVOe9xre2vthAzi3QcF9Pp9yAb
+         PKhw==
+X-Received: by 10.42.27.146 with SMTP id j18mr21361937icc.54.1367351650888;
+ Tue, 30 Apr 2013 12:54:10 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Tue, 30 Apr 2013 12:53:29 -0700 (PDT)
+In-Reply-To: <7vhaindcuk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222997>
 
-John Tapsell <johnflux@gmail.com> writes:
+Junio C Hamano wrote:
+> [...]
+> You can't go any simpler than that rule, and there is no room for
+> confusion if that rule is properly implemented.
 
-> Is there no way to fix --cc to work even in the edge cases?
+In other words: the sequence "@" is short for "HEAD".  Isn't that
+_exactly_ what I implemented in my two-liner?
 
-Can you clarify what you mean by "fix" and "edge cases"?
+However, I'm tilting towards respecting .git/@ as a manual override.
+Why?  Because we'd have to either claim that git symbolic-ref @ HEAD
+is a noop, or deny it altogether (by saying that @ is not a valid
+symbolic ref).  The latter approach obviously sounds more sensible,
+but I don't like unnecessarily eating up @.
