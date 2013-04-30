@@ -1,205 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] http.c: Add config options/parsing for SSL engine vars
-Date: Tue, 30 Apr 2013 09:45:44 -0700
-Message-ID: <7v61z4ezlz.fsf@alter.siamese.dyndns.org>
-References: <1366758207-7724-1-git-send-email-jqassar@gmail.com>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: git log -p unexpected behaviour - security risk?
+Date: Tue, 30 Apr 2013 12:47:36 -0400
+Message-ID: <CAEBDL5W8YWu8_TV7o0s3ZZomETz8RPWnr8oOmy0xQ=U8o0xe0Q@mail.gmail.com>
+References: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
+	<20130420140051.GB29454@ruderich.org>
+	<7vd2towdiq.fsf@alter.siamese.dyndns.org>
+	<CAHQ6N+pKb-44rOM7ocYMvSDyimvAGZppX1Gc=st59aVKzJSBKw@mail.gmail.com>
+	<20130421102150.GJ10429@elie.Belkin>
+	<CAHQ6N+rXE42NOyQPfLiDN8jYfL8w06hEE5MFLeFNxMR4ORD0aw@mail.gmail.com>
+	<20130421160939.GA29341@elie.Belkin>
+	<7vli8bu3ne.fsf@alter.siamese.dyndns.org>
+	<CAEBDL5VspccUmkkYBf17soGTyT3sinjnnNzRB_kytnOr3OBVQw@mail.gmail.com>
+	<7va9ogezzx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jerry Qassar <jqassar@gmail.com>
-To: git@vger.kernel.org, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 30 18:46:08 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	John Tapsell <johnflux@gmail.com>,
+	Simon Ruderich <simon@ruderich.org>,
+	Git List <git@vger.kernel.org>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 30 18:47:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXDgp-0006EK-W1
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 18:46:04 +0200
+	id 1UXDiT-00084f-IS
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 18:47:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761178Ab3D3Qpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 12:45:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51607 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761091Ab3D3Qpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 12:45:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AA161ACCA;
-	Tue, 30 Apr 2013 16:45:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QldmaDESIZwcvuWstiF7UylSqxY=; b=X2C0sq
-	XzeOGR4ntHq+NOKiAfr6e5qN0kGgUUlyQIWfLFye4nTbwrrfgcOrNxMz9yg12A90
-	H3/320b98ECbwrepapgqRYuN1zGTM5Ti7xD4naSiYWfZGwhmpa1JpnKtejAuczk3
-	k6twfFSRIU71vBDy4bYIJxfSq7Sam0Jk+K294=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CUPG55zmQQlFExlt327qa35O4S2EqrOw
-	bYPJ+hLFwk3KAa8KB3GD1p8HiyXV/15Uk+hiFZ3KRaolNblCFbS+Y/7IUMsuM9pj
-	UsGpivP6Zk/5DAAlXMP0t54UM232jAExu2k+KtIH/QHbpOhe7b6OQZnd3KG7oWFA
-	OvAK2YHJOP0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DAEB1ACC5;
-	Tue, 30 Apr 2013 16:45:46 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7E1E01ACC4;
-	Tue, 30 Apr 2013 16:45:45 +0000 (UTC)
-In-Reply-To: <1366758207-7724-1-git-send-email-jqassar@gmail.com> (Jerry
-	Qassar's message of "Tue, 23 Apr 2013 16:03:27 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 675373F4-B1B5-11E2-B21F-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
+	id S1761208Ab3D3Qri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 12:47:38 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:37413 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760923Ab3D3Qrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 12:47:37 -0400
+Received: by mail-wg0-f51.google.com with SMTP id b12so684762wgh.30
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 09:47:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=ZELfW7OjJBkRR6d5U453yBFXisWefUuQ9ocjsKhz1t0=;
+        b=ocNwMnpEbUM1CTp0dw2ENcRe52DuQD8DIndx55Ujw3S3AEQY2vDJPZB6mlz89ib8di
+         oYz42NuYD76B5PJXnrQGTKp1i+iXXv3DtiQexqr5A6NDO8COPpQA3oUcOCYFq5r8hujR
+         Q5MF4z/pk0em7X66lQcmk25bm6O8lfvMokMKR2gJARbs35D8tGSvPB9BAiQnWh6d26ek
+         pkODzcaSy98Wo6NhkIt7XhZEOOSi6BF616l11NFvdzvHGYwYNkfANUbfwAxeuR48HMSF
+         Rz6RAzCKNjTItUjEQ3PBSIRxHBKR6WqcXTJOe4q5RYbyESvugv5DCti7+tbW63iadwBI
+         pXTA==
+X-Received: by 10.180.37.101 with SMTP id x5mr25905328wij.0.1367340456630;
+ Tue, 30 Apr 2013 09:47:36 -0700 (PDT)
+Received: by 10.180.108.240 with HTTP; Tue, 30 Apr 2013 09:47:36 -0700 (PDT)
+In-Reply-To: <7va9ogezzx.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: qdyqh_LC6fZoH4IlZCPVbDrxLP8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222948>
 
-Does anybody familiar with the http codepath have comments on this?
+On Tue, Apr 30, 2013 at 12:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> John Szakmeister <john@szakmeister.net> writes:
+>
+>>> When I added -c/--cc, I contemplated making -p imply --cc, but
+>>> decided against it primarily because it is a change in traditional
+>>> behaviour, and it is easy for users to say --cc instead of -p from
+>>> the command line.
+>>
+>> FWIW, security aside, I would've like to have seen that.  I find it
+>> confusing that merge commits that introduce code don't have a diff
+>> shown when using -p.  And I find it hard to remember --cc.  BTW,
+>> what's the mnemonic for it?  -p => patch, --cc => ?
+>
+> Compact combined.
 
-The authoritative source
+Thank you.
 
-https://github.com/bagder/curl/blob/master/docs/libcurl/symbols-in-versions
+> By the way, these options are _not_ about "showing merge commits
+> that introduce code", and they do not help your kind of "security".
+> As I repeatedly said, you would need "-p -m" for that.
 
-tells me that the CURLOPT_* used in this patch are available since
-cURL 7.9.3, but I see a #if LIBCURL_VERSION_NUM < 0x070704 in http.h
-so these may have to be protected in a similar way.
+I'm sorry, I didn't mean to imply that it's useful for security, just
+that it better meets my expectations when -p is turned on.  I realize
+there are some edges in the logic, but I'm fine with those edges.
 
-[the entire message unsnipped for reference]
-Jerry Qassar <jqassar@gmail.com> writes:
-
-> curl provides many options for configuring the way it negotiates an SSL
-> connection (with its default OpenSSL support), including ways to define
-> the SSL engine used, and parameters to set the format of the key and
-> certificate used.  Unfortunately, git does not parse some of the
-> critical ones needed by curl to support PKCS#11.
->
-> Add the following git config variables (and direct env-set variables):
->
-> * http.sslengine
->   A string variable that sets CURLOPT_SSLENGINE on the back end.
->   Can be set from environment using GIT_SSL_ENGINE.
-> * http.sslkeytype
->   A string variable, either PEM/DER/ENG, that sets CURLOPT_SSLKEYTYPE.
->   Can be set from environment using GIT_SSL_KEYTYPE.
-> * http.sslcerttype
->   A string variable, either PEM/DER/ENG, that sets CURLOPT_SSLCERTTYPE.
->   Can be set from environment using GIT_SSL_CERTTYPE.
->
-> Parsing these new variables combined with related patches to curl
-> will allow git to support native authentication with smart cards.
->
-> Note: It's difficult to test this without the related curl patches,
-> which I will be submitting soon.  At the very least, leaving these new
-> options unset doesn't break anything, and setting them has little
-> effect without the back-end curl changes needed to 'turn on' PKCS#11.
-> Any suggestions would be greatly appreciated.
->
-> Signed-off-by: Jerry Qassar <jqassar@gmail.com>
-> ---
->  Documentation/config.txt | 13 +++++++++++++
->  http.c                   | 36 ++++++++++++++++++++++++++++++++++++
->  2 files changed, 49 insertions(+)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index c67038b..d155620 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1440,16 +1440,29 @@ http.sslVerify::
->  	over HTTPS. Can be overridden by the 'GIT_SSL_NO_VERIFY' environment
->  	variable.
->  
-> +http.sslEngine::
-> +	String specifying the SSL engine to be used by curl.  This can be used to
-> +	specify non-default or dynamically loaded engines.  Can be overridden by
-> +	the 'GIT_SSL_ENGINE' environment variable.
-> +
->  http.sslCert::
->  	File containing the SSL certificate when fetching or pushing
->  	over HTTPS. Can be overridden by the 'GIT_SSL_CERT' environment
->  	variable.
->  
-> +http.sslCertType::
-> +	Specifies the format of the certificate to curl as one of (PEM|DER|ENG).
-> +	Can be overridden by the 'GIT_SSL_CERTTYPE' environment variable.
-> +
->  http.sslKey::
->  	File containing the SSL private key when fetching or pushing
->  	over HTTPS. Can be overridden by the 'GIT_SSL_KEY' environment
->  	variable.
->  
-> +http.sslKeyType::
-> +	Specifies the format of the private key to curl as one of (PEM|DER|ENG).
-> +	Can be overridden by the 'GIT_SSL_KEYTYPE' environment variable.
-> +
->  http.sslCertPasswordProtected::
->  	Enable Git's password prompt for the SSL certificate.  Otherwise
->  	OpenSSL will prompt the user, possibly many times, if the
-> diff --git a/http.c b/http.c
-> index 92aba59..06cb22e 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -49,6 +49,10 @@ static struct credential http_auth = CREDENTIAL_INIT;
->  static int http_proactive_auth;
->  static const char *user_agent;
->  
-> +static const char *ssl_keytype;
-> +static const char *ssl_certtype;
-> +static const char *ssl_engine;
-> +
->  #if LIBCURL_VERSION_NUM >= 0x071700
->  /* Use CURLOPT_KEYPASSWD as is */
->  #elif LIBCURL_VERSION_NUM >= 0x070903
-> @@ -211,6 +215,17 @@ static int http_options(const char *var, const char *value, void *cb)
->  	if (!strcmp("http.useragent", var))
->  		return git_config_string(&user_agent, var, value);
->  
-> +	/* Adding parsing for curl options relating to engines and */
-> +	/* key/cert types.  This is necessary if attempting to     */
-> +	/* specify an external engine (e.g. for smartcards.)       */
-> +
-> +	if (!strcmp("http.sslkeytype", var))
-> +		return git_config_string(&ssl_keytype, var, value);
-> +	if (!strcmp("http.sslcerttype", var))
-> +		return git_config_string(&ssl_certtype, var, value);
-> +	if (!strcmp("http.sslengine", var))
-> +		return git_config_string(&ssl_engine, var, value);
-> +
->  	/* Fall back on the default ones */
->  	return git_default_config(var, value, cb);
->  }
-> @@ -321,6 +336,22 @@ static CURL *get_curl_handle(void)
->  		curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
->  	}
->  
-> +	/* Adding setting of engine-related curl SSL options. */
-> +	if (ssl_engine != NULL) {
-> +		curl_easy_setopt(result, CURLOPT_SSLENGINE, ssl_engine);
-> +
-> +		/* Within the lifetime of a single git execution, setting
-> +		 * the default does nothing interesting.  When curl properly
-> +		 * duplicates handles, the engine choice will propagate.
-> +		 */
-> +		/* curl_easy_setopt(result, CURLOPT_SSLENGINE_DEFAULT, 1L); */
-> +	}
-> +
-> +	if (ssl_keytype != NULL)
-> +		curl_easy_setopt(result, CURLOPT_SSLKEYTYPE, ssl_keytype);
-> +	if (ssl_certtype != NULL)
-> +		curl_easy_setopt(result, CURLOPT_SSLCERTTYPE, ssl_certtype);
-> +
->  	return result;
->  }
->  
-> @@ -405,6 +436,11 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
->  			ssl_cert_password_required = 1;
->  	}
->  
-> +	/* Added environment variables for expanded engine-related options. */
-> +	set_from_env(&ssl_keytype, "GIT_SSL_KEYTYPE");
-> +	set_from_env(&ssl_certtype, "GIT_SSL_CERTTYPE");
-> +	set_from_env(&ssl_engine, "GIT_SSL_ENGINE");
-> +
->  #ifndef NO_CURL_EASY_DUPHANDLE
->  	curl_default = get_curl_handle();
->  #endif
+-John
