@@ -1,140 +1,157 @@
-From: Jerry Qassar <jqassar@gmail.com>
-Subject: Re: [PATCH] http.c: Add config options/parsing for SSL engine vars
-Date: Tue, 30 Apr 2013 14:05:22 -0700
-Message-ID: <CAJC3a=qu8jxJ2pD=4kbPVqQDBgv6vxXVXkt6ezqRoPdtMEfjRA@mail.gmail.com>
-References: <1366758207-7724-1-git-send-email-jqassar@gmail.com>
-	<7v61z4ezlz.fsf@alter.siamese.dyndns.org>
-	<20130430182732.GB1972@sigill.intra.peff.net>
-	<CAJC3a=pU2m8LpUh0u0XXXgOiDiPo-QAdA471orGs9jcyDJTU5g@mail.gmail.com>
-	<7vzjwfbwow.fsf@alter.siamese.dyndns.org>
-	<20130430202908.GB3247@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 8/8] revision.c: discount UNINTERESTING parents
+Date: Tue, 30 Apr 2013 14:18:40 -0700
+Message-ID: <7vmwsfbtu7.fsf@alter.siamese.dyndns.org>
+References: <1367342788-7795-1-git-send-email-kevin@bracey.fi>
+	<1367342788-7795-9-git-send-email-kevin@bracey.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 30 23:05:31 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Kevin Bracey <kevin@bracey.fi>
+X-From: git-owner@vger.kernel.org Tue Apr 30 23:19:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXHjs-0001zn-Vi
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 23:05:29 +0200
+	id 1UXHx2-0006nX-Gx
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 23:19:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933738Ab3D3VFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 17:05:25 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:59263 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933613Ab3D3VFY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 17:05:24 -0400
-Received: by mail-la0-f52.google.com with SMTP id fd20so840296lab.39
-        for <git@vger.kernel.org>; Tue, 30 Apr 2013 14:05:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=l/2+phn/cBt66xGWpO062ycuxZJ8CM9wwIoeWQJA8Mo=;
-        b=VTharwKi4K36MVbtdLVsk+/l2fdvIK7RoASzQIWPcjm2BlB1dxtu1K6m/LHYouZu54
-         rGU9OI34+xZycLouG04dWbSvRAHLGIkXSTHqtiScCVVRHKaf44O32mFNcL7AlfVmjfN2
-         ZODp9mrPDnKu262d289837EI9JRn042V72Cl+dJY+I3rdTLE0Y+DGLXThEvyZrd8Sbio
-         ueezZ3oh1Q/cB1vtBuhqft1AKO3BCcGIyloPKN3hmB+Y/DHO0gtKva+vdG6wtSlxY76C
-         iVZM9c2JFkUhxnEZc9QB+Jn2A/nwCgCYg5QfS/hUquBDkYC6zJ970f81KYLgxv9PKSYW
-         +wSA==
-X-Received: by 10.152.19.10 with SMTP id a10mr33579lae.8.1367355922552; Tue,
- 30 Apr 2013 14:05:22 -0700 (PDT)
-Received: by 10.112.21.230 with HTTP; Tue, 30 Apr 2013 14:05:22 -0700 (PDT)
-In-Reply-To: <20130430202908.GB3247@sigill.intra.peff.net>
+	id S933058Ab3D3VS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 17:18:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47240 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933609Ab3D3VSn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 17:18:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C3911BBEA;
+	Tue, 30 Apr 2013 21:18:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vghfJqll5H39/4cmT2wX95vyfL8=; b=rCk/Tz
+	cAf/f208Sast/z56PREaKMcbFjRVcmg6BOURsSFxvlbcy9lbAfVYkk4ypSykvzPY
+	XtcKDmrzLuxI0HzGzKN/rBPD4KgdhqZ3rxBvttKCsQRQBhYBXqyIzJD/1Bn4NeV9
+	TwrZbrCrBhQ3kzcuzwGYzUxYRB4WXH5/5qj7w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fN2ImE9hRtvOMK4dqrrtx/W40tK76pit
+	WYTQdbjaM65SOi9fgF/5YAC3SnI6thHysku6m3vAEGVXuegJtRH4C2TajlUuoSjx
+	jd2dFRJ893YKkGc3paqblKYzLp6GwMgzeMi6j3/Ka/zmK+FWPwuw1JtbVMNsW9rw
+	6UInawPTPD8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 936FE1BBE9;
+	Tue, 30 Apr 2013 21:18:42 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C53DC1BBE8;
+	Tue, 30 Apr 2013 21:18:41 +0000 (UTC)
+In-Reply-To: <1367342788-7795-9-git-send-email-kevin@bracey.fi> (Kevin
+	Bracey's message of "Tue, 30 Apr 2013 20:26:28 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 885B9C72-B1DB-11E2-B506-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223011>
 
-On Tue, Apr 30, 2013 at 1:29 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Apr 30, 2013 at 01:17:03PM -0700, Junio C Hamano wrote:
->
->> Jerry Qassar <jqassar@gmail.com> writes:
->>
->> > Curl already does support engine-based certificates (in code and
->> > help).  Its problem is that a) it doesn't yet read your engine
->> > defs out of OpenSSL config, and b) a bug in copying the engine
->> > data, once that's patched, to the handle that calling apps use.
->>
->> So once the problem (a) is fixed, if the user has OpenSSL config
->> then the user doesn't need configuration from setopt() side?  That
->> makes it sound like you do not need to patch us at all, but there
->> must be something else going on...
->
-> My understanding is that we first have to tell curl "yes, use the
-> engine", and then the engine-specific OpenSSL config can be loaded by
-> curl. But I am just guessing from the conversation up until now; I know
-> nothing about ssl crypto engines.
+Kevin Bracey <kevin@bracey.fi> writes:
 
-That's correct.  Putting the engine definitions into OpenSSL
-configuration makes them available to OpenSSL only.  I made changes to
-have curl/libcurl read the config files (it didn't before).  git needs
-changes to let it set the appropriate libcurl parameters to set the
-engine and key/cert type.  Otherwise libcurl has the capability but
-git can't utilize it.
-
+> The simplification and rewriting logic previously paid little heed to
+> whether parents were UNINTERESTING, leading to situations where limited
+> histories could unnecessarily include a lot of irrelevant merges along
+> the boundary. Tighten up the rules to properly account for limited
+> lists:
 >
-> As an aside, curl can be linked against gnutls, too. Does any of this
-> work with gnutls? I think we don't have to care; curl abstracts all of
-> that away from us, and it is up to the user to choose an engine that
-> matches their library versions. But it might be a good point of
-> reference when somebody later comes to the list and says "I followed the
-> documentation, but it doesn't work".
+> 1) If a merge has INTERESTING parents, and it is TREESAME to them, then
+> do not let UNINTERESTING parents cause the merge to be treated as
+> !TREESAME. If we match our walked parents, we don't care if we don't
+> match unwalked parents.
 
-gnutls doesn't let you specify an 'engine' per se and the underlying
-engine calls return CURLE_NOT_BUILT_IN, so these changes would have no
-effect.  That doesn't mean that gnutls can't work (I know for a fact
-that it's possible for it to speak CAC), but I'm not sure that
-anything git does internally matters to it.
+OK.
 
-Maybe the documentation also needs to say specifically that it is for OpenSSL?
+> 2) Do not let UNINTERESTING parents prevent commits from being
+> simplified or omitted: merges with exactly 1 INTERESTING parent that
+> they are TREESAME to can be treated as a non-merge commit.
 
->> > Errors are handled by curl (up to this point):
->> >
->> > 1) Setting the cert type to FOO:
->> > error: not supported file type 'FOO' for certificate...
->> > fatal: HTTP request failed
->> >
->> > 2) Setting the key type to FOO:
->> > error: not supported file type for private key...
->> > fatal: HTTP request failed
->> >
->> > 3) Setting engine type to something invalid:
->> >  * SSL Engine 'pkcsfoo' not found (only with GIT_CURL_VERBOSE set)
->> > error: crypto engine not set, can't load certificate...
->> > fatal: HTTP request failed
->>
->> Where do "error:" and "fatal:" happen in the codeflow?
->>
->> I am guessing that "error:" may come from these easy_setopt() calls, but
->> the "fatal: HTTP request failed" come from us, much later in the
->> callpath when we actually make http request.
->
-> Those are almost certainly from curl_errorstr() when we make the
-> info/refs http request.
->
->> Between these two times, aren't we throwing user data at the cURL
->> library and possibly over the wire to the remote side (with a SSL
->> configuration that is different from what the user intended to use),
->> no?
->
-> I assume that curl is smart enough not to send any data over the wire,
-> and that it is noticing early in the process that something is wrong and
-> is barfing there.
->
-> It would be nicer to notice earlier (when we are setting up the handle),
-> but in practice I don't think it matters. We start off all http
-> conversations by making a short GET, and we don't do any significant
-> work beforehand. So as long as curl does not do significant work before
-> hitting those errors internally, it probably does not matter much either
-> way.
->
-> -Peff
+OK.
 
- Your surmise is correct here; you don't make it past the handshake.
+> 3) When rewriting parents, we don't need to show all merges - only merges
+> with 2 or more INTERESTING parents are required to hold topology together.
 
---Jerry
+OK.
+
+> These changes greatly increase simplification in pruned, limited
+> revision lists - irrelevant merges from unlisted or partially listed
+> side branches can be omitted.
+
+It is a bit unclear what "unlisted" and "partially listed" mean in
+this sentence.
+
+> These rules paying more attention to UNINTERESTING do add a tricky
+> wrinkle to behaviour. Because limited revision lists are conventionally
+> expressed as A..B (ie B ^A), the bottom commit is UNINTERESTING.
+
+OK.
+
+> Thus
+> its connection to the INTERESTING graph is not privileged over side
+> branches,
+
+I take that "its connection" refers to the "===" link below, the
+nodes connected with "---" form the "INTERESTING graph", and
+
+     ....Z...A===X---o---o---B
+          \\    /  
+           W---Y
+    
+"side branches" refer to the development that built W and Y and
+merged at X.  And you are saying that A===X is not "privileged" over
+"Y---X", with some definition of "privileged" I am not sure about.
+
+> and this can lead to its first descendant merge being shown
+> for no particularly good reason.
+
+Whose first descendant merge?  Sorry, I am lost at this point, and
+anything I would say in the remainder of this response may be
+nonsense coming from this confusion.
+
+> See t6019's "--ancestry-path G..M -- G.t" for an example of this effect.
+
+>  #          D---E-------F
+>  #         /     \       \
+> +#    B---C-G0-G--H---I---J
+>  #   /                     \
+>  #  A-------K---------------L--M
+>  #
+> +#  D..M                 == E F G G0 H I J K L M
+>  #  --ancestry-path D..M == E F H I J L M
+>  #
+>  #  D..M -- M.t                 == M
+>  #  --ancestry-path D..M -- M.t == M
+>  #
+>  #  G..M -- G.t                 == [nothing - was dropped in "-s ours" merge L]
+> -#  --ancestry-path G..M -- G.t == H J L
+> +#  --ancestry-path G0..M-- G.t == G L
+
+> Merges H and J are semantically identical and equally irrelevant, from
+> the point of view of tracking the history of G.t, but H is shown and J
+> isn't.
+> > Bottom commit G is marked UNINTERESTING, and thus isn't
+> privileged over E, so H is shown because it differs from E.
+
+Doesn't that suggest we should do --ancestry-path a lot earlier?
+
+Conceptually, the "ancestry-path" shouldn't get affected by any
+pathspec. The range "--ancestry-path G0..M" should be equivalent to
+the range "G0..M ^F ^E ^K", and with the rule to ignore non-sameness
+with uninteresting side branches, I would have expected that H and J
+would be equally irrelevant, because E and F would be outside the
+graph we would want to look at sameness.
+
+> Whereas
+> higher up the graph, I is INTERESTING and thus privileged over F, so we
+> don't care that J differs from F.
+>
+> So should we treat bottom commits as "interesting" for the rules above?
