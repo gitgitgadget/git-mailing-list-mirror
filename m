@@ -1,79 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] Add new @ shortcut for HEAD
-Date: Tue, 30 Apr 2013 10:56:30 -0700
-Message-ID: <7v1u9rewc1.fsf@alter.siamese.dyndns.org>
+Date: Tue, 30 Apr 2013 13:56:35 -0400
+Message-ID: <20130430175635.GA1972@sigill.intra.peff.net>
 References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8D_gPpprETkAxf+eYp5DMt7uVt6nanCwthZO=vVfBT28Q@mail.gmail.com>
-	<7vppxcdjd1.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=GbhALxX0G-ka5oAbixoJv4uKPHAx5LPezgTyGxW_3MQ@mail.gmail.com>
+ <CACsJy8D_gPpprETkAxf+eYp5DMt7uVt6nanCwthZO=vVfBT28Q@mail.gmail.com>
+ <7vppxcdjd1.fsf@alter.siamese.dyndns.org>
+ <CAMP44s0PcB7nu_67p=hfMy4Kb2iYTSp5ZT6y2Gn24OAtDzR_sw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Jon Seymour <jon.seymour@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 19:56:39 2013
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 30 19:56:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXEn8-0001ui-GS
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 19:56:38 +0200
+	id 1UXEnF-00027G-SC
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 19:56:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932611Ab3D3R4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 13:56:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44225 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932423Ab3D3R4c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 13:56:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81C3618787;
-	Tue, 30 Apr 2013 17:56:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CpBBSWwUH3GvWz8TZ4XUtiHrzVE=; b=FxU+Uf
-	Mu4DTGTtPCGAhjH/cxWlAdWc6oWz216aNjc1dR9JldCgCI47TeQDSXOY+9jYWtMH
-	9Q5rnr0oJX8qpPOyRtbFmD9Qxgr2PG0p/mH5Q4pGkKHhXglDqzJuvBsEdrwARs8T
-	C6vvinNeGljXV/+4wh48os3jNYVDk8TgHJM0o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SH/Jv4XjbUhVQRx8a5+bj9C4aHPlfE6S
-	Up4egJf5a312I8pGVBa0fGdEQQ01jH3io4xmn03bylbhvGWhxlKcb1UZwmS63cYw
-	ud7p4HINgSFix46oj4ClZ+T2NTRwYSeBi9kLpcHRVoGWVqMuC7ewMl4pIcsa+OK+
-	ADKBu4/vpdM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 796B818785;
-	Tue, 30 Apr 2013 17:56:32 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E52CE18783;
-	Tue, 30 Apr 2013 17:56:31 +0000 (UTC)
-In-Reply-To: <CALkWK0=GbhALxX0G-ka5oAbixoJv4uKPHAx5LPezgTyGxW_3MQ@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Tue, 30 Apr 2013 23:10:46 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4A63F228-B1BF-11E2-AB02-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
+	id S932617Ab3D3R4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 13:56:38 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40041 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932396Ab3D3R4i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 13:56:38 -0400
+Received: (qmail 14976 invoked by uid 102); 30 Apr 2013 17:56:53 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 30 Apr 2013 12:56:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Apr 2013 13:56:35 -0400
+Content-Disposition: inline
+In-Reply-To: <CAMP44s0PcB7nu_67p=hfMy4Kb2iYTSp5ZT6y2Gn24OAtDzR_sw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222975>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Tue, Apr 30, 2013 at 12:47:57PM -0500, Felipe Contreras wrote:
 
-> Junio C Hamano wrote:
->> If you accept only "@" but not "master@", that behaviour needs a
->> wrong world model to understand and justify (one of which is "@ is a
->> synonym for HEAD").  If your rule is "In $anything@{$n}, you can
->> drop {$n} when $n==0", then HEAD@{0} becomes HEAD@ and master@{0}
->> becomes master@, and @{0} becomes @ naturally.
->
-> Besides, you're going in the wrong direction this time.  You are
-> trying to fit an explanation to something that is useless.  How is
-> master@ useful?
+> > We should make sure that the code rejects "git update-ref @ foo"
+> > because that is "git update-ref @{0} ref", by the way.  I didn't
+> > check with Felipe's patch.
+> 
+> Hmm, with or without my patch 'git update @ foo' does nothing, same
+> with 'git update blah foo'. No error, no non-zero exit code, just
+> doesn't do anything.
 
-How else would you explain why "rev-parse --symbolic-full-name @"
-does not make sense and "update-ref @" does not update HEAD?
+Are you sure?
+
+  $ git version
+  git version 1.8.2
+
+  $ git update-ref @ foo
+  fatal: foo: not a valid SHA1
+
+  $ git update-ref @ origin/master
+  $ echo $?
+  0
+  $ cat .git/@
+  89740333e8d398f1da701e9023675321bbb9a85b
+
+-Peff
