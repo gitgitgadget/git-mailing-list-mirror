@@ -1,58 +1,79 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] refs.c: interpret @ as HEAD
-Date: Tue, 30 Apr 2013 23:02:22 +0530
-Message-ID: <CALkWK0kLZ9WLVcPBWuQZCjOku4A+WQ7=YeooPmKGpk9HuGYQnw@mail.gmail.com>
-References: <1367324685-22788-1-git-send-email-artagnon@gmail.com>
- <87zjwguq8t.fsf@linux-k42r.v.cablecom.net> <20130430150430.GA13398@lanh>
- <7vehdsf19m.fsf@alter.siamese.dyndns.org> <CALkWK0kzjg+CPw8hq6ZAZxqVGdp7cf6HN-XHFCjbkNk9O=M5CA@mail.gmail.com>
- <CAMP44s0=5KniGDnVtKPg5sp=G8M-mPcq+Mu1nXqODfhT-MaNyg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 30 19:33:12 2013
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: [PATCH v2 1/8] decorate.c: compact table when growing
+Date: Tue, 30 Apr 2013 20:26:21 +0300
+Message-ID: <1367342788-7795-2-git-send-email-kevin@bracey.fi>
+References: <1367342788-7795-1-git-send-email-kevin@bracey.fi>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Kevin Bracey <kevin@bracey.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 30 19:34:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXEQR-0003H0-EM
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 19:33:11 +0200
+	id 1UXERu-0004m7-Tw
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Apr 2013 19:34:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761097Ab3D3RdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 13:33:06 -0400
-Received: from mail-ia0-f173.google.com ([209.85.210.173]:60639 "EHLO
-	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760730Ab3D3RdE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 13:33:04 -0400
-Received: by mail-ia0-f173.google.com with SMTP id 21so671941iay.18
-        for <git@vger.kernel.org>; Tue, 30 Apr 2013 10:33:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=hrFSch5zO+sMKWDJmWnQWZUFqImNx0S/XaZcu37bwbY=;
-        b=ydw71YHDoWYa+lFd13j6F/u/+yI6qh2Ev1S3tWbH3t99YeVUY9s2fGoVD865NJZd9m
-         9FfSr7udXGG2Z9U/ze1VmS5SDuKm+dr6aVFCk4LY0CNGevwTW47wFHH/PiZVIylED6yp
-         m6AZZQmNKL8420BfDvMtJ7V979imA92CjE3G3KrFgJn4d7KItz8QpGnEvCXo86Jd8PAz
-         2ChslPATY1wxendOXVWNeKQrrxhOPWzqmTwCFiZI0IHWvh/32/2KzUgziNFaRPxWH5h2
-         qN66XitAzyAr9uLHCD4se878LAwlwEcqLlS4JcQUZpsp6165CrjzspI0QF8yGNjY7stO
-         qRIQ==
-X-Received: by 10.42.27.146 with SMTP id j18mr21066252icc.54.1367343183061;
- Tue, 30 Apr 2013 10:33:03 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Tue, 30 Apr 2013 10:32:22 -0700 (PDT)
-In-Reply-To: <CAMP44s0=5KniGDnVtKPg5sp=G8M-mPcq+Mu1nXqODfhT-MaNyg@mail.gmail.com>
+	id S1761278Ab3D3Rei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 13:34:38 -0400
+Received: from mo5.mail-out.ovh.net ([178.32.228.5]:54400 "EHLO
+	mo5.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761188Ab3D3Ree (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 13:34:34 -0400
+Received: from mail414.ha.ovh.net (b6.ovh.net [213.186.33.56])
+	by mo5.mail-out.ovh.net (Postfix) with SMTP id 68EDFFFA6A6
+	for <git@vger.kernel.org>; Tue, 30 Apr 2013 19:26:47 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 30 Apr 2013 19:26:47 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 30 Apr 2013 19:26:45 +0200
+X-Ovh-Mailout: 178.32.228.5 (mo5.mail-out.ovh.net)
+X-Mailer: git-send-email 1.8.2.1.632.gd2b1879
+In-Reply-To: <1367342788-7795-1-git-send-email-kevin@bracey.fi>
+X-Ovh-Tracer-Id: 18362583056713421023
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: -100
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrheehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrheehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/222958>
 
-Felipe Contreras wrote:
-> Why would HEAD^0^0~4 work? Because the syntax is recursive.
+When growing the table, take the opportunity to "compact" it by removing
+entries with NULL decoration.
 
-That's because you can compose with ^ and ^, while you can't with @
-and @.  Does @{0}@{0} resolve?
+Users may have "removed" decorations by passing NULL to
+insert_decoration. An object's table entry can't actually be removed
+during normal operation, as it would break the linear hash collision
+search. But we can remove NULL decoration entries when rebuilding the
+table.
+
+Signed-off-by: Kevin Bracey <kevin@bracey.fi>
+---
+ decorate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/decorate.c b/decorate.c
+index 2f8a63e..7cb5d29 100644
+--- a/decorate.c
++++ b/decorate.c
+@@ -49,7 +49,7 @@ static void grow_decoration(struct decoration *n)
+ 		const struct object *base = old_hash[i].base;
+ 		void *decoration = old_hash[i].decoration;
+ 
+-		if (!base)
++		if (!decoration)
+ 			continue;
+ 		insert_decoration(n, base, decoration);
+ 	}
+-- 
+1.8.2.1.632.gd2b1879
