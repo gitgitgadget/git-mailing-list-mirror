@@ -1,123 +1,106 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Add new @ shortcut for HEAD
-Date: Tue, 30 Apr 2013 18:00:52 -0500
-Message-ID: <CAMP44s3L6X=iWK7S-JFqp42PmNx4xbh-GnPJpAgur4FGoZYNbg@mail.gmail.com>
-References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8D_gPpprETkAxf+eYp5DMt7uVt6nanCwthZO=vVfBT28Q@mail.gmail.com>
-	<7vppxcdjd1.fsf@alter.siamese.dyndns.org>
-	<7vhaindcuk.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2S4AtZUfH4NWCLt=p49QXeYSZKELYbahpBUgDofaFMsw@mail.gmail.com>
-	<7vsj27ac2a.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3=frHWUh8rQ5kTooUJqwAtkEG37MaeY3Ho6G7-kwZQ_w@mail.gmail.com>
-	<7vbo8vabet.fsf@alter.siamese.dyndns.org>
-	<CAMP44s02QkL7QAuHHm_uT6B4QCzk9Mur0_w_D8t2A2u1go2F8A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/6] sha1_name: avoid Yoda conditions
+Date: Tue, 30 Apr 2013 16:02:44 -0700
+Message-ID: <7v7gjjaagb.fsf@alter.siamese.dyndns.org>
+References: <1367358554-4257-1-git-send-email-felipe.contreras@gmail.com>
+	<1367358554-4257-4-git-send-email-felipe.contreras@gmail.com>
+	<7vehdrbrvz.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3osZJO1P6_KoPVON0cOSAD5D-OZmL=aKGkcWReortiCw@mail.gmail.com>
+	<7v1u9rbrb4.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3K8BOfnUdc0514KgvYsbncSBO4DRSyfqhFQJomGrZN0A@mail.gmail.com>
+	<7vobcvabxi.fsf@alter.siamese.dyndns.org>
+	<CAMP44s26oZf0=xdqp5sr_J1TNhK83=88A7KH5n_LnstFe6o5gA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jon Seymour <jon.seymour@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 01 01:01:03 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 01 01:02:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXJXg-0000km-0M
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 01:01:00 +0200
+	id 1UXJZT-0002eh-PH
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 01:02:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933751Ab3D3XAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 19:00:55 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:34166 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933643Ab3D3XAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 19:00:54 -0400
-Received: by mail-lb0-f174.google.com with SMTP id t11so1031078lbd.33
-        for <git@vger.kernel.org>; Tue, 30 Apr 2013 16:00:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=Bzv2skxDkPuCj6JK9wLxbXaESE+gYlo1KPa49kruSOc=;
-        b=SsccB+nvZ3joT0BvhGP4lvoPpsvlXgIUh+t8Ruq8oKrTFrPRhUNe99xdlL+ea2fOBG
-         C9chbhTrgc0yPpSpGcqR8fhiw3foaSSKKVTlDi6tc2BtiZUYnrSmZjBuX6QiICarXJR+
-         pt/VEA47D5ZqsEyTvdKUagKvdShUkeq5lpdlW7uQril7PbR4RhYOW4u0gfQuMRQrtoKj
-         8CMyMKGn1D/bssonQInCdODF9c45ZZxDVDf3XGyfO64hMkDKNSqXmxwWZhRuNl8WQRJw
-         95tV17OkBf6RtawQiaIfq//ZpZ6YLIj3C7unOZmz8k2De3h22bQ2y8PcdsrBIMHGGQQV
-         Nypw==
-X-Received: by 10.112.22.198 with SMTP id g6mr312586lbf.135.1367362852956;
- Tue, 30 Apr 2013 16:00:52 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Tue, 30 Apr 2013 16:00:52 -0700 (PDT)
-In-Reply-To: <CAMP44s02QkL7QAuHHm_uT6B4QCzk9Mur0_w_D8t2A2u1go2F8A@mail.gmail.com>
+	id S933785Ab3D3XCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 19:02:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51827 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933643Ab3D3XCr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 19:02:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 380BF1B042;
+	Tue, 30 Apr 2013 23:02:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iMLRx04R8aLOAylSlw+eG8mcifY=; b=LynWBO
+	02X5lX2F4xUnXRJpWRnvOZIOIm+8cEdSJ5S1Uo1Yx5KDIuqz5aQDK2VcEGRhWv/M
+	LG8OoLaQY+Bh07d6DC43ZRG/PLn4YF2746m4lqBUxn6w+X9p0DdjE27m730A8sth
+	tykFQNrm3ML+Nh2/4VUQLxuZ/QejnVGn3H8r8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NZK3pk6Vg04lY+OiPiz/vWjmisBCFU0q
+	J6menK62jXTqt7XmscQ5krOjmziGsEpOsGc6N5W3KiEx8RF86c/r3IT1sePYGtHE
+	BVOCsORRcRgAD+6KQw/eyAskp9MEYDcGKQtkIN2eAFrlQLK+WmiP4KVobqWSVGB8
+	p1Y8UaPxQVs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A68E1B041;
+	Tue, 30 Apr 2013 23:02:46 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9AAA01B03F;
+	Tue, 30 Apr 2013 23:02:45 +0000 (UTC)
+In-Reply-To: <CAMP44s26oZf0=xdqp5sr_J1TNhK83=88A7KH5n_LnstFe6o5gA@mail.gmail.com>
+	(Felipe Contreras's message of "Tue, 30 Apr 2013 17:45:26 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 11F7D7D0-B1EA-11E2-A173-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223040>
 
-On Tue, Apr 30, 2013 at 5:53 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Tue, Apr 30, 2013 at 5:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> Since 'update-ref master' updates the 'master' ref, and not
->>> 'refs/heads/master' (IOW; no parsing at all), I think it makes sense
->>> that @{-1} is not parsed, and neither is @.
->>
->> That is a very valid point.
->>
->> What should "rev-parse --symbolic-full-name @" say?
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> Yoda speaks in reverse "Stopped they must be; on this all depends".
+> "if (0 < len)" says "if zero is less than len", which is in reverse,
+> as reverse as "if 1.50 is taller than you". It's all reversed: "if you
+> are taller than 1.50", "if len is greater than zero", "They must be
+> stopped; all depends on this".
 >
-> Probably the same as 'rev-parse --symbolic-full-name HEAD' (it doesn't
-> with my patch).
+> I don't understand what is not clear.
 
-The gist of my patch can be dropped, this does the trick:
+I never said anything is "not clear", did I [*1*]?
 
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -965,6 +965,21 @@ int get_sha1_mb(const char *name, unsigned char *sha1)
-        return st;
- }
+I've retitled it to "compare variable with constant, not constant
+with variable" to make it easier to understand to those who did not
+know the jargon (like me ;-).
 
-+static int interpret_empty_at(const char *name, int namelen, int len,
-struct strbuf *buf)
-+{
-+       if (namelen - len < 1 || name[len + 1] == '{')
-+               return -1;
-+
-+       strbuf_reset(buf);
-+       if (len == 0) {
-+               strbuf_add(buf, "HEAD", 4);
-+               return 1;
-+       } else {
-+               strbuf_add(buf, name, len);
-+               return len + 1;
-+       }
-+}
-+
- static int reinterpret(const char *name, int namelen, int len, struct
-strbuf *buf)
- {
-        /* we have extra data, which might need further processing */
-@@ -1025,9 +1040,15 @@ int interpret_branch_name(const char *name,
-struct strbuf *buf)
-        cp = strchr(name, '@');
-        if (!cp)
-                return -1;
-+
-+       len = interpret_empty_at(name, namelen, cp - name, buf);
-+       if (len > 0)
-+               return reinterpret(name, namelen, len, buf);
-+
-        tmp_len = upstream_mark(cp, namelen - (cp - name));
-        if (!tmp_len)
-                return -1;
-+
-        len = cp + tmp_len - name;
-        cp = xstrndup(name, cp - name);
-        upstream = branch_get(*cp ? cp : NULL);
+By the way, after web-searching "Yoda condition", all mentions of
+"Yoda condition" I found were of the
 
--- 
-Felipe Contreras
+	if (constant == variable)
+
+form, and people's justification why this form is bad, which I
+happen to agree with [*2*].
+
+
+[Footnote]
+
+*1* "zero is less than len" and "len is more than zero" are saying
+exactly the same thing, even though people may find it harder to
+read.  While "blue is the sky" and "the sky is blue" are not saying
+the same thing in the first place, and that is why I said it is not
+a good analogy.
+
+
+*2* I do not write equality comparison in the "constant == variable"
+order myself.  For people reading from sidelines, the previous
+thread on this topic is this:
+
+    http://thread.gmane.org/gmane.comp.version-control.git/3903/focus=3907
+
+which explains why these were written as "if (smaller < larger)".
