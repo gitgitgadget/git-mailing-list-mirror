@@ -1,100 +1,145 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Add new @ shortcut for HEAD
-Date: Tue, 30 Apr 2013 17:38:02 -0500
-Message-ID: <CAMP44s3=frHWUh8rQ5kTooUJqwAtkEG37MaeY3Ho6G7-kwZQ_w@mail.gmail.com>
-References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8D_gPpprETkAxf+eYp5DMt7uVt6nanCwthZO=vVfBT28Q@mail.gmail.com>
-	<7vppxcdjd1.fsf@alter.siamese.dyndns.org>
-	<7vhaindcuk.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2S4AtZUfH4NWCLt=p49QXeYSZKELYbahpBUgDofaFMsw@mail.gmail.com>
-	<7vsj27ac2a.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] unpack_entry: invalidate newly added cache entry in case of error
+Date: Tue, 30 Apr 2013 15:39:42 -0700
+Message-ID: <7vfvy7abip.fsf@alter.siamese.dyndns.org>
+References: <1367288992-14979-1-git-send-email-pclouds@gmail.com>
+	<87ppxcxw1i.fsf@linux-k42r.v.cablecom.net>
+	<CACsJy8Bi6UpfA-0BCFY6H=BAKMmWYgwbf-94yJXEn5Zi4gwPCA@mail.gmail.com>
+	<87d2tcw571.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Duy Nguyen <pclouds@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jon Seymour <jon.seymour@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 01 00:38:12 2013
+	Thomas Rast <trast@student.ethz.ch>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed May 01 00:39:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXJBa-00057V-TC
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 00:38:11 +0200
+	id 1UXJDC-0006aU-5z
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 00:39:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933838Ab3D3WiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 18:38:06 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:62686 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933732Ab3D3WiE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 18:38:04 -0400
-Received: by mail-lb0-f170.google.com with SMTP id r10so1023686lbi.1
-        for <git@vger.kernel.org>; Tue, 30 Apr 2013 15:38:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=Etw7TWW6+G/3p8DSZSc+2RLW60Een9bnQYXD2Q1oa8k=;
-        b=jhHn6FM9o2S+wkF3UN8wHByXyQzYfonkRzK6kiTMOggofCA0+f+gdFC2zRM+YfbaQR
-         z5tLqGFdjC03m3+SrD89lc/NdUD8g0X0D9opxUrX/zN/kaU9hYDlV1ExIEnPWqFD6fck
-         tk1YV3nsPVBm89lbEM+0TTJR5/5nhB3eKdnpxdre15pTOHlZeq3VeGF8Ckxfx4TdteWz
-         EtHiQI9tv55q/YR97Z5hbd4CZqpVABx5pvEv1MiJNO2Eapk+syQuQ0rhSvqZ8FidZoc8
-         HuS7ltIVaH3FIr2DhmTap6BxH9wWRJOcr1EDv8bCsxLXbNhtwZ52n38+fSDeuEGTUo0K
-         VhNA==
-X-Received: by 10.112.154.98 with SMTP id vn2mr369048lbb.8.1367361482746; Tue,
- 30 Apr 2013 15:38:02 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Tue, 30 Apr 2013 15:38:02 -0700 (PDT)
-In-Reply-To: <7vsj27ac2a.fsf@alter.siamese.dyndns.org>
+	id S933864Ab3D3Wjr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Apr 2013 18:39:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42237 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933732Ab3D3Wjp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Apr 2013 18:39:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD48A1A586;
+	Tue, 30 Apr 2013 22:39:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=6vRXBh63sgK8
+	oFgEwyPznynXL2g=; b=Iop8ijGZuSSUjCrOzDLWXEBRudPdj61qmjr93XwII784
+	AM+YgTDXN2c+y4IeSp7UabJskeRH5Zy4MpBGeTvx4PRwhqGhv9oOOxAZQvXyJtrq
+	ldAduRnJTc/dtLM2cHihOka6gaFmyqCZgelwtuEhTC23mGObmCiJ0E06HEHBHTE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gk4gLY
+	L0qADHXYnRRbF+5cAA01Ci4vrvBFgQo07oJOC8I6EDd2TYANHovjBQH1X7E+keqm
+	AQFlSm5Kme99BgfI0xN5l6905LKC6vmncRR6kEyYq1dZrHDMXbJKxssOBJg16A9f
+	HsOc4aspltq/zR6uNqJ+zFLcSXAxgZahIRhY0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D07BE1A585;
+	Tue, 30 Apr 2013 22:39:44 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 155441A57F;
+	Tue, 30 Apr 2013 22:39:43 +0000 (UTC)
+In-Reply-To: <87d2tcw571.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
+	of "Tue, 30 Apr 2013 14:53:06 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DA803138-B1E6-11E2-B49B-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223034>
 
-On Tue, Apr 30, 2013 at 5:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Thomas Rast <trast@inf.ethz.ch> writes:
+
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
->>> That means "git checout @" should work the same way as "git checkout
->>> HEAD", "git log @~4" would work the same way as "git log HEAD~4",
->>> "git update-ref @ $(git rev-parse master)" should update the HEAD
->>> without creating $GIT_DIR/@, etc.
->>>
->>> You can't go any simpler than that rule, and there is no room for
->>> confusion if that rule is properly implemented.
+>> Apply this patch on top of master (no need to apply full series) and=
+ run t5303
 >>
->> I disagree. I can do 'git log @{-1}-4', but I cannot do 'git
->> update-ref @{-1}'. Why? Because the '@' notation is for revision
->> parsing, and 'git update-ref' doesn't do revision parsing.
->>
->> I'd say, everywhere where you could do @{-1}, you should be able to do @.
+>> http://article.gmane.org/gmane.comp.version-control.git/222895
+> [...]
+>> OK since you know this code much better than me, I withdraw my patch
+>> (consider it a bug report) and let you work on a proper fix. I see y=
+ou
+>> already have the commit message ready :) Happy to test it for you if
+>> the above instruction is still not reproducible for you.
 >
-> Yes, @{-1} is about a ref, the branch that you were on previously.
-> That is why you can do
+> Ok.  So I really think just dropping the free() is the way to go.  Ca=
+n
+> you test this?  Your series didn't apply cleanly on anything I had
+> locally, and 'am -3' doesn't work.  A simpler reproducer, and using
+> valgrind to detect the use-after-free, didn't get me anywhere either.
 >
->         git checkout fc/at-head
->         git checkout master...
->         git am -s <./+fc-updated-at-head-series.mbox
->         git co -B @{-1}
+> -- >8 --
+> Subject: [PATCH] unpack_entry: avoid freeing objects in base cache
+> MIME-Version: 1.0
+> Content-Type: text/plain; charset=3DUTF-8
+> Content-Transfer-Encoding: 8bit
+
+I see you used "git-pu format-patch --inline-single" here, and the
+above is the reason why it is marked as "not ready for public
+consumption" ;-).
+
+> In the !delta_data error path of unpack_entry(), we run free(base).
+> This became a window for use-after-free() in abe601b (sha1_file:
+> remove recursion in unpack_entry, 2013-03-27), as follows:
 >
-> We wouldn't be able to do the last step, if @{-1} evaluated it down
-> to the object name, losing the refname.
+> Before abe601b, we got the 'base' from cache_or_unpack_entry(..., 0);
+> keep_cache=3D0 tells it to also remove that entry.  So the 'base' is =
+at
+> this point not cached, and freeing it in the error path is the right
+> thing.
 >
-> If "update-ref @{-1}" does not grok @{-1}, probably there needs a
-> call to interpret_nth_prior_checkout() in the codepath.
+> After abe601b, the structure changed: we use a three-phase approach
+> where phase 1 finds the innermost base or a base that is already in
+> the cache.  In phase 3 we therefore know that all bases we unpack are
+> not part of the delta cache yet.  (Observe that we pop from the cache
+> in phase 1, so this is also true for the very first base.)  So we mak=
+e
+> no further attempts to look up the bases in the cache, and just call
+> add_delta_base_cache() on every base object we have assembled.
+>
+> But the !delta_data error path remained unchanged, and now calls
+> free() on a base that has already been entered in the cache.  This
+> means that there is a use-after-free if we later use the same base
+> again.
+>
+> So remove that free().
 
-Maybe, but the closest thing would be dwim_ref(), which would also use
-rev parsing rules, so there might ambiguous refs.
+I wish I saw "We are still going to use it, and it will be freed
+after we are done" or something like that after this sentence.
 
-Since 'update-ref master' updates the 'master' ref, and not
-'refs/heads/master' (IOW; no parsing at all), I think it makes sense
-that @{-1} is not parsed, and neither is @.
+But other than that, I think the logic is correct.
 
-If the user really really wants rev parsing, she can use 'git rev-parse'.
-
-Cheers.
-
--- 
-Felipe Contreras
+> Reported-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+> Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+> ---
+>  sha1_file.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 64228a2..67e815b 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2128,7 +2128,6 @@ void *unpack_entry(struct packed_git *p, off_t =
+obj_offset,
+>  			error("failed to unpack compressed delta "
+>  			      "at offset %"PRIuMAX" from %s",
+>  			      (uintmax_t)curpos, p->pack_name);
+> -			free(base);
+>  			data =3D NULL;
+>  			continue;
+>  		}
