@@ -1,92 +1,80 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] Fix grammar in the 1.8.3 release notes.
-Date: Wed, 01 May 2013 10:06:26 -0400
-Message-ID: <51812162.3060801@xiplink.com>
-References: <7vvc78u8jl.fsf@alter.siamese.dyndns.org> <1367262904-9885-1-git-send-email-marcnarc@xiplink.com> <7vli81ghsf.fsf@alter.siamese.dyndns.org> <517FD505.9000706@xiplink.com> <20130501082434.GA19771@blizzard>
+From: Marc Branchaud <mbranchaud@xiplink.com>
+Subject: "lets" vs. "let's" (was: Re: [PATCH v3] Add new @ shortcut for HEAD)
+Date: Wed, 01 May 2013 10:23:56 -0400
+Message-ID: <5181257C.2050108@xiplink.com>
+References: <1367401888-21055-1-git-send-email-felipe.contreras@gmail.com> <CAPig+cSQeU8BaaPm7GfCUxtsVj1Ce31ygBLdkb5WN8o4aNMAow@mail.gmail.com> <CA+39Oz7gib+dpW1CNEHtD2M6JcOF1QuxpeOWLcyTxdVPGnS5+A@mail.gmail.com>
+Reply-To: marcnarc@xiplink.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Lukas Fleischer <git@cryptocrack.de>
-X-From: git-owner@vger.kernel.org Wed May 01 16:06:34 2013
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
+To: Thomas Adam <thomas@xteddy.org>
+X-From: git-owner@vger.kernel.org Wed May 01 16:24:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXXg2-0008Tg-64
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 16:06:34 +0200
+	id 1UXXxM-0007ZS-C3
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 16:24:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756833Ab3EAOGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 10:06:24 -0400
-Received: from smtp130.ord.emailsrvr.com ([173.203.6.130]:33646 "EHLO
-	smtp130.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754916Ab3EAOGW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 10:06:22 -0400
+	id S1755652Ab3EAOYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 10:24:24 -0400
+Received: from smtp182.dfw.emailsrvr.com ([67.192.241.182]:51646 "EHLO
+	smtp182.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751525Ab3EAOYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 10:24:23 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp17.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 967C2380174;
-	Wed,  1 May 2013 10:06:21 -0400 (EDT)
+	by smtp18.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id 09588268D1D
+	for <git@vger.kernel.org>; Wed,  1 May 2013 10:24:23 -0400 (EDT)
 X-Virus-Scanned: OK
-Received: by smtp17.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 52A40380135;
-	Wed,  1 May 2013 10:06:21 -0400 (EDT)
+Received: from smtp130.ord.emailsrvr.com (smtp130.ord.emailsrvr.com [173.203.6.130])
+	by smtp18.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTPS id E1C1A268CFE
+	for <git@vger.kernel.org>; Wed,  1 May 2013 10:24:22 -0400 (EDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp17.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 492DE3801EF;
+	Wed,  1 May 2013 10:23:51 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp17.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id B12453801C9;
+	Wed,  1 May 2013 10:23:50 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130404 Thunderbird/17.0.5
-In-Reply-To: <20130501082434.GA19771@blizzard>
+In-Reply-To: <CA+39Oz7gib+dpW1CNEHtD2M6JcOF1QuxpeOWLcyTxdVPGnS5+A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223092>
 
-On 13-05-01 04:24 AM, Lukas Fleischer wrote:
-> On Tue, Apr 30, 2013 at 10:28:21AM -0400, Marc Branchaud wrote:
->> On 13-04-29 05:15 PM, Junio C Hamano wrote:
->>> Marc Branchaud <marcnarc@xiplink.com> writes:
+On 13-05-01 06:31 AM, Thomas Adam wrote:
+> On 1 May 2013 11:12, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Wed, May 1, 2013 at 5:51 AM, Felipe Contreras
+>> <felipe.contreras@gmail.com> wrote:
+>>> So HEAD@{0}~0^0 is too much to type, but we can remove '^0', and we can
+>>> remove '~0', and we can remove 'HEAD', which leaves us with @{0}, but we
+>>> can't remove '{0}'?
 >>>
->>>> This started out as an attempt to make the backward compatibility notes
->>>> more parsable, but then I just kept going...
+>>> This patch allows '@' to be the same as 'HEAD'.
 >>>
->>> Thanks.
+>>> So now we can use 'git show @~1', and all that goody goodness.
 >>>
->>>>   * "git bundle" did not like a bundle created using a commit without
->>>> -   any message as its one of the prerequistes.
->>>> +   any message, as it is one of the prerequistes.
->>>
->>> This is actually saying a different thing.  
->>>
->>> When you create a bundle, you can say "you can only unbundle this in
->>> a repository that has commit X", with "git bundle create $name ^X Y
->>> Z".  Such a commit X is called the bundle's prerequisite.  You can
->>> have more than one prerequisite, e.g. "... ^X ^W Y Z".
->>>
->>> But if you create a bundle by using a commit that does not have any
->>> message as X (i.e. the bundle's prerequisite), the "git bundle" did
->>> not like to read the resulting bundle output.
->>>
->>> So <a commit <without any message> as its (bundle's) one of the
->>> prerequisites> is what the original wanted to say.  The rewrite
->>> makes it read like "For a commit, having a message is a requirement
->>> to be used in a bundle", at least to me.
+>>> Until now '@' was a valid name, but it conflicts with this idea, so lets
 >>
->> Thanks, I did get that wrong.
->>
->> CC'ing Lukas, who wrote the relevant commit (5446e33f35).
->>
->> How about:
->>
->> * "git bundle" can create a bundle that has a commit without a message as
->>   a prerequisite, but it could not work with such a bundle.
+>> s/lets/let's/  (contraction of "let us")
 > 
-> Looks fine to me.
-> 
-> Junio's version with the last part changed to "as one of its
-> prerequisites" sounds also good to me (in both cases, however, note the
-> missing "i" in "prerequisites").
-> 
-> A third suggestion:
-> 
->     "git bundle" erroneously bailed out when parsing a valid bundle
->     containing a prerequisite commit without a commit message.
+> Ah, the contraction versus the first person singular.  In this case
+> where the context is concluding in decision, rather than making a
+> statement ("Let's go to the shops", for example) then "lets" is the
+> correct word to use here.
 
-I like that best.
+You've lost me.  I think Eric is right.  If "lets" is a verb in this
+sentence, what is its subject?
+
+Besides, of which verb & tense is "lets" the first person singular?  Never
+have I "lets" anything in my life...  :)
 
 		M.
