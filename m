@@ -1,121 +1,160 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 5/5] refs.c: make @ a pseudo-ref alias to HEAD
-Date: Wed, 1 May 2013 13:20:38 -0500
-Message-ID: <CAMP44s3nzuecoM+h+pNknV4A68R1gZ6DZpehp3uKcJhppXo+1w@mail.gmail.com>
-References: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
-	<1367425235-14998-6-git-send-email-artagnon@gmail.com>
+From: Stephen Boyd <sboyd@codeaurora.org>
+Subject: Re: git rev-list | git cherry-pick --stdin is leaky
+Date: Wed, 01 May 2013 11:27:03 -0700
+Message-ID: <51815E77.8080601@codeaurora.org>
+References: <517F0C18.8060703@codeaurora.org> <51804A02.6080301@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 20:20:48 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Wed May 01 20:27:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXbe0-0003oa-KR
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 20:20:44 +0200
+	id 1UXbkF-0001Zs-5M
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 20:27:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755455Ab3EASUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 14:20:41 -0400
-Received: from mail-la0-f53.google.com ([209.85.215.53]:35640 "EHLO
-	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752703Ab3EASUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 14:20:40 -0400
-Received: by mail-la0-f53.google.com with SMTP id eg20so1519050lab.26
-        for <git@vger.kernel.org>; Wed, 01 May 2013 11:20:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=tWzW9rNWkIllbXHNjSn5YPqs7IL4vVTUcO5gnzyb/Zo=;
-        b=VrnromUa8Zvd+IwEqI+OHaBZ3a3exPfeYP9fUMdTAfZlPJXYz9xXew4cODUNTfeinq
-         RcCNL849x1MJ+8Cisqxa2avKw0xYyS4//OTFyWsLet6RXI2/xB/qLHauLKwNUg20k8pI
-         s58/+c3JkZyxLQbaW3U88aNlT4+Ux45g9LssOXCp6N1DGYGMIMkGouUBWHJS0mrNs17j
-         bjbxreELHCdHVOseCzf0FzXH46q0YnehjTbwSAC783Y8S38Z2elYFmgU8cgi+og0otk1
-         MlUp1Iata31blcHR/Qr1qoh5DPmatFFUCiv0BD8EEoIi8F26xm3oNRnJV8SoP7uc/SO6
-         8i2A==
-X-Received: by 10.112.135.70 with SMTP id pq6mr1544797lbb.82.1367432438542;
- Wed, 01 May 2013 11:20:38 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Wed, 1 May 2013 11:20:38 -0700 (PDT)
-In-Reply-To: <1367425235-14998-6-git-send-email-artagnon@gmail.com>
+	id S1755455Ab3EAS1H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 May 2013 14:27:07 -0400
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:7543 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752703Ab3EAS1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 14:27:05 -0400
+X-IronPort-AV: E=Sophos;i="4.87,590,1363158000"; 
+   d="scan'208";a="43209510"
+Received: from pdmz-ns-snip_114_130.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
+  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 01 May 2013 11:27:03 -0700
+Received: from [10.46.166.8] (pdmz-ns-snip_218_1.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id BDCE210004BF;
+	Wed,  1 May 2013 11:27:03 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <51804A02.6080301@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223111>
 
-On Wed, May 1, 2013 at 11:20 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> First, make sure that check_refname_format() rejects the a refname
-> beginning with a '@'.  Add a test to t1400 (update-ref) demonstrating
-> that update-ref forbids the user from updating a ref named "@".
+On 04/30/13 15:47, Ren=E9 Scharfe wrote:
+> Am 30.04.2013 02:11, schrieb Stephen Boyd:
+>> (resending since the attachment seems to make vger sad)
+>>
+>> Hi,
+>>
+>> I'm running git rev-list | git cherry-pick --stdin on a range of abo=
+ut
+>> 300 commits. Eventually the chery-pick dies with:
+>>
+>>      error: cannot fork() for commit: Cannot allocate memory
+>>
+>> Running valgrind shows me that the tree traversal code is leaking
+>> gigabytes of memory (particularly unpack_callback). Since cherry-pic=
+k is
+>> a very long running process all these allocations are never freed an=
+d
+>> eventually I run out of memory. The worst offender and summary is:
+>>
+>> =3D=3D7986=3D=3D 938,956,692 (929,961,582 direct, 8,995,110 indirect=
+) bytes in
+>> 7,765,439 blocks are definitely lost in loss record 257 of 257
+>> =3D=3D7986=3D=3D    at 0x4C267CC: calloc (vg_replace_malloc.c:467)
+>> =3D=3D7986=3D=3D    by 0x4FAF57: xcalloc (wrapper.c:119)
+>> =3D=3D7986=3D=3D    by 0x4F5281: unpack_callback (unpack-trees.c:539=
+)
+>> =3D=3D7986=3D=3D    by 0x4F40E5: traverse_trees (tree-walk.c:407)
+>> =3D=3D7986=3D=3D    by 0x4F586C: unpack_callback (unpack-trees.c:467=
+)
+>> =3D=3D7986=3D=3D    by 0x4F40E5: traverse_trees (tree-walk.c:407)
+>> =3D=3D7986=3D=3D    by 0x4F586C: unpack_callback (unpack-trees.c:467=
+)
+>> =3D=3D7986=3D=3D    by 0x4F40E5: traverse_trees (tree-walk.c:407)
+>> =3D=3D7986=3D=3D    by 0x4F586C: unpack_callback (unpack-trees.c:467=
+)
+>> =3D=3D7986=3D=3D    by 0x4F40E5: traverse_trees (tree-walk.c:407)
+>> =3D=3D7986=3D=3D    by 0x4F586C: unpack_callback (unpack-trees.c:467=
+)
+>> =3D=3D7986=3D=3D    by 0x4F40E5: traverse_trees (tree-walk.c:407)
+>> =3D=3D7986=3D=3D
+>> =3D=3D7986=3D=3D LEAK SUMMARY:
+>> =3D=3D7986=3D=3D    definitely lost: 2,514,117,692 bytes in 21,210,8=
+61 blocks
+>> =3D=3D7986=3D=3D    indirectly lost: 885,481,947 bytes in 10,165,801=
+ blocks
+>> =3D=3D7986=3D=3D      possibly lost: 650,712,395 bytes in 6,014,309 =
+blocks
+>> =3D=3D7986=3D=3D    still reachable: 7,734,870 bytes in 47,794 block=
+s
+>> =3D=3D7986=3D=3D         suppressed: 0 bytes in 0 blocks
+> I looked at that particular leak a year ago but couldn't convince mys=
+elf
+> to submit the patch below.  If the callback function we call through
+> call_unpack_fn does something strange like free()ing entries itself o=
+r
+> adding them to some list without duplication then the added free() ca=
+n
+> cause trouble.
 >
-> Now, resolve_ref_unsafe() is built to resolve any refs that have a
-> corresponding file inside $GITDIR.  Our "@" ref is a special
-> pseudo-ref and does not have a filesystem counterpart.  So,
-> hard-interpret "@" as "HEAD" and resolve .git/HEAD as usual.  This
-> means that we can drop the 'git symbolic-ref @ HEAD' line in t1508
-> (at-combinations), and everything will continue working as usual.
+> Looking at it again today I don't understand that concern any more.  =
+The
+> current callback functions don't do something like that, in any case.
+> Maybe I'm missing something.
 >
-> If the user does manage to create a '.git/@' unsafely (via
-> symbolic-ref or otherwise), it will be ignored.
->
-> In practice, this means that you will now be able to do:
->
->     $ git show @~1
->     $ git log @^2
->
-> Advertise these features in the tests and documentation.
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  Documentation/git-check-ref-format.txt |  2 ++
->  Documentation/revisions.txt            |  8 ++++++--
->  refs.c                                 | 12 ++++++++++--
->  t/t1400-update-ref.sh                  |  3 +++
->  t/t1508-at-combinations.sh             |  7 ++++---
->  5 files changed, 25 insertions(+), 7 deletions(-)
->
-> diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-> index ec1739a..3de9adc 100644
-> --- a/Documentation/git-check-ref-format.txt
-> +++ b/Documentation/git-check-ref-format.txt
-> @@ -52,6 +52,8 @@ Git imposes the following rules on how references are named:
->
->  . They cannot end with a dot `.`.
->
-> +. They cannot be the single character `@`.
-> +
->  . They cannot contain a sequence `@{`.
->
->  . They cannot contain a `\`.
-> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-> index d477b3f..9b2e653 100644
-> --- a/Documentation/revisions.txt
-> +++ b/Documentation/revisions.txt
-> @@ -27,6 +27,10 @@ blobs contained in a commit.
->    When ambiguous, a '<refname>' is disambiguated by taking the
->    first match in the following rules:
->
-> +  . '@' is a special pseudo-ref that refers to HEAD.
+> Anyway, could you please check if the patch helps with your use case?
 
-Does the user really cares if it's a pseudo-ref or not? Also, what
-does it mean that "refers" to HEAD?
+Ok I think I will make a copy of my .git first before I try out your
+patch. In case you're curious here are the next big leaks.
 
-> An '@' followed
-> +    by '\{' has no relationship to this and means something entirely
-> +    different (see below).
+=3D=3D7986=3D=3D 433,116,790 (432,950,308 direct, 166,482 indirect) byt=
+es in 4,146,402 blocks are definitely lost in loss record 253 of 257
+=3D=3D7986=3D=3D    at 0x4C267CC: calloc (vg_replace_malloc.c:467)
+=3D=3D7986=3D=3D    by 0x4FAF57: xcalloc (wrapper.c:119)
+=3D=3D7986=3D=3D    by 0x4F5281: unpack_callback (unpack-trees.c:539)
+=3D=3D7986=3D=3D    by 0x4F40E5: traverse_trees (tree-walk.c:407)
+=3D=3D7986=3D=3D    by 0x4F586C: unpack_callback (unpack-trees.c:467)
+=3D=3D7986=3D=3D    by 0x4F40E5: traverse_trees (tree-walk.c:407)
+=3D=3D7986=3D=3D    by 0x4F586C: unpack_callback (unpack-trees.c:467)
+=3D=3D7986=3D=3D    by 0x4F40E5: traverse_trees (tree-walk.c:407)
+=3D=3D7986=3D=3D    by 0x4F6FAE: unpack_trees (unpack-trees.c:1074)
+=3D=3D7986=3D=3D    by 0x4AD095: git_merge_trees (merge-recursive.c:241=
+)
+=3D=3D7986=3D=3D    by 0x4AF3D5: merge_trees (merge-recursive.c:1811)
+=3D=3D7986=3D=3D    by 0x4D9A7A: do_pick_commit (sequencer.c:311)
+=3D=3D7986=3D=3D
+=3D=3D7986=3D=3D 482,083,201 (46,465,928 direct, 435,617,273 indirect) =
+bytes in 93 blocks are definitely lost in loss record 255 of 257
+=3D=3D7986=3D=3D    at 0x4C267CC: calloc (vg_replace_malloc.c:467)
+=3D=3D7986=3D=3D    by 0x4FAF57: xcalloc (wrapper.c:119)
+=3D=3D7986=3D=3D    by 0x4C4AE4: read_index_from (read-cache.c:1452)
+=3D=3D7986=3D=3D    by 0x4D99BC: do_pick_commit (sequencer.c:297)
+=3D=3D7986=3D=3D    by 0x4DA750: pick_commits (sequencer.c:995)
+=3D=3D7986=3D=3D    by 0x4DAFD6: sequencer_pick_revisions (sequencer.c:=
+1124)
+=3D=3D7986=3D=3D    by 0x463E7C: cmd_cherry_pick (revert.c:236)
+=3D=3D7986=3D=3D    by 0x404C86: handle_internal_command (git.c:284)
+=3D=3D7986=3D=3D    by 0x40541C: main (git.c:492)
+=3D=3D7986=3D=3D
+=3D=3D7986=3D=3D 557,706,880 (548,062,684 direct, 9,644,196 indirect) b=
+ytes in 4,931,819 blocks are definitely lost in loss record 256 of 257
+=3D=3D7986=3D=3D    at 0x4C267CC: calloc (vg_replace_malloc.c:467)
+=3D=3D7986=3D=3D    by 0x4FAF57: xcalloc (wrapper.c:119)
+=3D=3D7986=3D=3D    by 0x4F5281: unpack_callback (unpack-trees.c:539)
+=3D=3D7986=3D=3D    by 0x4F40E5: traverse_trees (tree-walk.c:407)
+=3D=3D7986=3D=3D    by 0x4F586C: unpack_callback (unpack-trees.c:467)
+=3D=3D7986=3D=3D    by 0x4F40E5: traverse_trees (tree-walk.c:407)
+=3D=3D7986=3D=3D    by 0x4F586C: unpack_callback (unpack-trees.c:467)
+=3D=3D7986=3D=3D    by 0x4F40E5: traverse_trees (tree-walk.c:407)
+=3D=3D7986=3D=3D    by 0x4F586C: unpack_callback (unpack-trees.c:467)
+=3D=3D7986=3D=3D    by 0x4F40E5: traverse_trees (tree-walk.c:407)
+=3D=3D7986=3D=3D    by 0x4F6FAE: unpack_trees (unpack-trees.c:1074)
+=3D=3D7986=3D=3D    by 0x4AD095: git_merge_trees (merge-recursive.c:241=
+)
+=3D=3D7986=3D=3D
 
-If the user cares about that, the user can see that below, otherwise
-there's no point in mentioning that. Just like there's no point in
-mentioning that @{-N} means something totally different from @{N},
-because the user can see that. If it didn't mean something different,
-this bullet point wouldn't exist.
+=46ull report can be found at https://gist.github.com/bebarino/5497181
 
-Cheers.
-
--- 
-Felipe Contreras
+--=20
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+hosted by The Linux Foundation
