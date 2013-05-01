@@ -1,137 +1,107 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 00/18] remote-bzr: massive changes
-Date: Tue, 30 Apr 2013 20:09:52 -0500
-Message-ID: <1367370610-14250-1-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 01/18] remote-bzr: cleanup CustomTree
+Date: Tue, 30 Apr 2013 20:09:53 -0500
+Message-ID: <1367370610-14250-2-git-send-email-felipe.contreras@gmail.com>
+References: <1367370610-14250-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 01 03:11:48 2013
+X-From: git-owner@vger.kernel.org Wed May 01 03:12:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXLaF-0006ql-K7
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 03:11:47 +0200
+	id 1UXLaR-00073I-Jh
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 03:11:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933439Ab3EABLc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 21:11:32 -0400
-Received: from mail-yh0-f45.google.com ([209.85.213.45]:59937 "EHLO
-	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933306Ab3EABLa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 21:11:30 -0400
-Received: by mail-yh0-f45.google.com with SMTP id f43so209644yha.32
-        for <git@vger.kernel.org>; Tue, 30 Apr 2013 18:11:30 -0700 (PDT)
+	id S933946Ab3EABLq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 21:11:46 -0400
+Received: from mail-yh0-f43.google.com ([209.85.213.43]:45288 "EHLO
+	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933306Ab3EABLe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 21:11:34 -0400
+Received: by mail-yh0-f43.google.com with SMTP id a41so210308yho.30
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 18:11:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=do4584+MMYZxGS5IpD87xt1/XeKiMLtNxectFCXIaEg=;
-        b=kLnu6m3G7AZ+HwJzTcaUCe8AKuupXTVPN93ito39Ug4M/xSM/TCTrgqUc9rpngAqj3
-         iQzlMi/Pkf5TMRtYnsrzbZYmhMm0pXB8GNNIVmxtuXho1fLTRdBF2302JgEN1Na0FruU
-         14CG8n6nbo1fa1kMWdL3EAm61aPDSZxJJSL0AlaxfnV7k4Sq0p53/LcCfodJN0Mhlmbm
-         IxDUmUmdIY02yTix2kcqWF3vmIylWIdH66Wzjd9cHBdKYdbVKUn8vJ7BhZ4D3n+a4e4F
-         rBAuVSVAg+SVBamVbkRHlgthhAq1X/8JHXi/blLjf30afDENJer9dd8A/RJmX51y7SaG
-         jJiw==
-X-Received: by 10.236.91.226 with SMTP id h62mr568510yhf.167.1367370689994;
-        Tue, 30 Apr 2013 18:11:29 -0700 (PDT)
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=MgUcz8uviwQPgd8FvKBqSJmDjDF8YkteNLwFU057Z+I=;
+        b=PDJi4l2TvDX4rYMA/cO6HqSTPyJkn7zb+VhDqB2VorRqSPOhMitJlwu8Qg/f6V7WtZ
+         gDrVG6cdalbvlNNKLM36CPlIkXkpGplLEiNVZD17zZ7wqWKYLw/eyjl2mWIWhLcdg+3U
+         kQXrmTEeY1IY/DQz/mymyV8bxwlcDndtgxBNgL2XZnc9TUjmd3drtwVDC1/K4m3qxp6R
+         khE1L978lDlL2NC4vgIs18T0nveqKltUqyT9hHv2K+T+ifPdYUehE/NOPVwbPH+bvvG2
+         g9NmWJzk9KsugcJMgUdlU7WZ5bzeEkNQ9P/CCVZv4VRhe1kT0Gf/NM+m5wKccRqUizMA
+         4Iig==
+X-Received: by 10.236.163.163 with SMTP id a23mr588081yhl.132.1367370693528;
+        Tue, 30 Apr 2013 18:11:33 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id l70sm1672554yha.1.2013.04.30.18.11.27
+        by mx.google.com with ESMTPSA id i44sm1562405yhk.17.2013.04.30.18.11.31
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Apr 2013 18:11:28 -0700 (PDT)
+        Tue, 30 Apr 2013 18:11:32 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc0.399.gc96a135
+In-Reply-To: <1367370610-14250-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223045>
 
-Hi,
+This code was not used at all.
 
-This is the same as last series, except that I dropped a couple of conflicting
-patches, and added one test.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/remote-helpers/git-remote-bzr | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-
-After being contacted by the emacs developers and others who are stuck with
-Bazaar, which at this point seems to be utterly abandoned, I realized the
-current implementation is too crude.
-
-Bazaar branches are very simplistic, and our support for them is the same; we
-need to create one remote per branch. This works nicely if you work on small
-projects with few branches, but doesn't scale.
-
-Big projects like emacs take a lot of space, and creating a remote per branch
-is unrealistic, because each remote will have the whole Bazaar repository
-copied, wasting space, and time each time a remote (for a bzr branch) is set
-up.
-
-Moreoever, a developer needs to constantly reset the master branch to the
-commit he/she wants to push before pushing, since the transport-helper
-infraestructure doesn't support pushing with refspecs (xwidget:master).
-
-That is of course, if pushing actually worked (which in many cases doesn't).
-
-In short, our support for real-world projects suck.
-
-These patches fix all the issues I encountrered.
-
- 1) First of all, there are several improvements for pushing. Before, we failed
-    when trying to push a merge, now, even tricky merges work.
-
- 2) Secondly, bzr branches are tied to a transport, so they time out if not
-    used for a period of time, and importing/exporting huge chunks of a
-    repository do take some time. So now they are only opened when they are
-    about to be used.
-
- 3) Then the big one; now bzr repositories are supported. They are very simple:
-    basically an object store with no notion of branches, so to find the
-    branches we need to traverse a directory (sometimes) remote, to find them.
-    This is how Bazaar does it, ableit very slowly. Naturally, a lot of code
-    had to be changed to support more than one branch.
-
- 4) In addition, now remotes share all the objects, so adding a new remote
-    doesn't imply fetchng a bunch of duplicated objects. They are just re-used
-    automagically.
-
- 5) Since the bzr objects are shared now, it only makes sense to share the
-    remote-bzr marks, so we don't have to fast-import them again.
-
- 6) The code was also reorganized to keep referenced as few objects as
-    possible, since Bazaar seems to be need *a ton* of memory for them.
-
-Finally, after all these changes I was finally able to clone the whole emacs
-repository, all 130685 commits, and 56 branches without running out of memory
-in my modest laptop.
-
-Since the purpose of remote-bzr is to actually be usable for the poor souls
-stucks in DSCMs that are not git, these changes are a must. I propose they be
-merged for the next major version of git (v1.8.3) if no issues are found. They
-changes pass all the tests, and work on various repositories I've tried. I'll
-ask the emacs developers to give them a try, and let's see how it goes.
-
-Felipe Contreras (18):
-  remote-bzr: cleanup CustomTree
-  remote-bzr: delay blob fetching until the very end
-  remote-bzr: fix order of locking in CustomTree
-  remote-bzr: always try to update the worktree
-  remote-bzr: add support to push merges
-  remote-bzr: fixes for branch diverge
-  remote-bzr: fix partially pushed merge
-  remote-bzr: use branch variable when appropriate
-  remote-bzr: add support for bzr repos
-  remote-bzr: fix branch names
-  remote-bzr: add support for shared repo
-  remote-bzr: improve author sanitazion
-  remote-bzr: add custom method to find branches
-  remote-bzr: add option to specify branches
-  remote-bzr: improve progress reporting
-  remote-bzr: iterate revisions properly
-  remote-bzr: delay peer branch usage
-  remote-bzr: access branches only when needed
-
- contrib/remote-helpers/git-remote-bzr | 305 ++++++++++++++++++++++++----------
- contrib/remote-helpers/test-bzr.sh    |  72 ++++++++
- 2 files changed, 293 insertions(+), 84 deletions(-)
-
+diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+index c19ed0e..7452a57 100755
+--- a/contrib/remote-helpers/git-remote-bzr
++++ b/contrib/remote-helpers/git-remote-bzr
+@@ -385,9 +385,6 @@ class CustomTree():
+     def __init__(self, repo, revid, parents, files):
+         global files_cache
+ 
+-        self.repo = repo
+-        self.revid = revid
+-        self.parents = parents
+         self.updates = {}
+ 
+         def copy_tree(revid):
+@@ -435,7 +432,7 @@ class CustomTree():
+             if basename == '':
+                 return None
+             fid = bzrlib.generate_ids.gen_file_id(path)
+-            d = add_entry(fid, dirname, 'directory')
++            add_entry(fid, dirname, 'directory')
+             return fid
+ 
+         def add_entry(fid, path, kind, mode = None):
+@@ -458,7 +455,6 @@ class CustomTree():
+                     (None, executable))
+             self.files[path] = change[0]
+             changes.append(change)
+-            return change
+ 
+         def update_entry(fid, path, kind, mode = None):
+             dirname, basename = os.path.split(path)
+@@ -480,7 +476,6 @@ class CustomTree():
+                     (None, executable))
+             self.files[path] = change[0]
+             changes.append(change)
+-            return change
+ 
+         def remove_entry(fid, path, kind):
+             dirname, basename = os.path.split(path)
+@@ -495,7 +490,6 @@ class CustomTree():
+                     (None, None))
+             del self.files[path]
+             changes.append(change)
+-            return change
+ 
+         for fid, f in self.updates.iteritems():
+             path = f['path']
 -- 
 1.8.3.rc0.399.gc96a135
