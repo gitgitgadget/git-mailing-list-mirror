@@ -1,117 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add new @ shortcut for HEAD
-Date: Tue, 30 Apr 2013 16:24:08 -0700
-Message-ID: <7vy5bz8uw7.fsf@alter.siamese.dyndns.org>
-References: <1367264106-2351-1-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8D_gPpprETkAxf+eYp5DMt7uVt6nanCwthZO=vVfBT28Q@mail.gmail.com>
-	<7vppxcdjd1.fsf@alter.siamese.dyndns.org>
-	<7vhaindcuk.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2S4AtZUfH4NWCLt=p49QXeYSZKELYbahpBUgDofaFMsw@mail.gmail.com>
-	<7vsj27ac2a.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3=frHWUh8rQ5kTooUJqwAtkEG37MaeY3Ho6G7-kwZQ_w@mail.gmail.com>
-	<7vbo8vabet.fsf@alter.siamese.dyndns.org>
-	<CAMP44s02QkL7QAuHHm_uT6B4QCzk9Mur0_w_D8t2A2u1go2F8A@mail.gmail.com>
-	<CAMP44s3L6X=iWK7S-JFqp42PmNx4xbh-GnPJpAgur4FGoZYNbg@mail.gmail.com>
-	<CAMP44s3QT5z1iWsm0cvQDfmZBp_kWbXatQKGaj8H3kzgdK=QFw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jon Seymour <jon.seymour@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 01:24:17 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 00/18] remote-bzr: massive changes
+Date: Tue, 30 Apr 2013 20:09:52 -0500
+Message-ID: <1367370610-14250-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 01 03:11:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXJuC-0006Qs-S5
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 01:24:17 +0200
+	id 1UXLaF-0006ql-K7
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 03:11:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933943Ab3D3XYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Apr 2013 19:24:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46353 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933926Ab3D3XYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Apr 2013 19:24:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 186ED1B8BB;
-	Tue, 30 Apr 2013 23:24:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sBwRSwKpdEylCjAUshkFddk6a8s=; b=vh1BuL
-	MONKj5Yo6b+M77kJ9W8NFY76AuDWaoVB/NrdEQyMi+SaqqbBLJeTEMN9x2/KqPES
-	bC+gWQ1H3v6yhHxaYyaopjlMHWzgm+x/Jf7amB0o+ijHNZTXbXarETs5OUDqupJa
-	NdVSMHa8r9q7fMbuRxNkEiIhPh7Psh20HzW1Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pn+CGj4+aVFzQLh196vgQRZbYWWEXn2M
-	XW8R+7ZUgkW2ErJCy+rIlLSBAhg1KtdcuDenqLsQpJwng/4utsal+wIRvhriHY7B
-	EdVc+ofkjJHw4/xBhr8TRDzdizAcaEP2rb2OzlarEACTc0zM5rgF3I4qsOQ3Wg0U
-	f8GPLxdGYCU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F1571B8BA;
-	Tue, 30 Apr 2013 23:24:11 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6812C1B8B7;
-	Tue, 30 Apr 2013 23:24:10 +0000 (UTC)
-In-Reply-To: <CAMP44s3QT5z1iWsm0cvQDfmZBp_kWbXatQKGaj8H3kzgdK=QFw@mail.gmail.com>
-	(Felipe Contreras's message of "Tue, 30 Apr 2013 18:19:46 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0FC3910E-B1ED-11E2-BEF7-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
+	id S933439Ab3EABLc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Apr 2013 21:11:32 -0400
+Received: from mail-yh0-f45.google.com ([209.85.213.45]:59937 "EHLO
+	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933306Ab3EABLa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Apr 2013 21:11:30 -0400
+Received: by mail-yh0-f45.google.com with SMTP id f43so209644yha.32
+        for <git@vger.kernel.org>; Tue, 30 Apr 2013 18:11:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=do4584+MMYZxGS5IpD87xt1/XeKiMLtNxectFCXIaEg=;
+        b=kLnu6m3G7AZ+HwJzTcaUCe8AKuupXTVPN93ito39Ug4M/xSM/TCTrgqUc9rpngAqj3
+         iQzlMi/Pkf5TMRtYnsrzbZYmhMm0pXB8GNNIVmxtuXho1fLTRdBF2302JgEN1Na0FruU
+         14CG8n6nbo1fa1kMWdL3EAm61aPDSZxJJSL0AlaxfnV7k4Sq0p53/LcCfodJN0Mhlmbm
+         IxDUmUmdIY02yTix2kcqWF3vmIylWIdH66Wzjd9cHBdKYdbVKUn8vJ7BhZ4D3n+a4e4F
+         rBAuVSVAg+SVBamVbkRHlgthhAq1X/8JHXi/blLjf30afDENJer9dd8A/RJmX51y7SaG
+         jJiw==
+X-Received: by 10.236.91.226 with SMTP id h62mr568510yhf.167.1367370689994;
+        Tue, 30 Apr 2013 18:11:29 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id l70sm1672554yha.1.2013.04.30.18.11.27
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 30 Apr 2013 18:11:28 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc0.399.gc96a135
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223044>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Hi,
 
-> On Tue, Apr 30, 2013 at 6:00 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->
->> +static int interpret_empty_at(const char *name, int namelen, int len,
->> struct strbuf *buf)
->> +{
->> +       if (namelen - len < 1 || name[len + 1] == '{')
->> +               return -1;
->> +
->> +       strbuf_reset(buf);
->> +       if (len == 0) {
->> +               strbuf_add(buf, "HEAD", 4);
->> +               return 1;
->> +       } else {
->> +               strbuf_add(buf, name, len);
->> +               return len + 1;
->> +       }
->> +}
->
-> Hmm, it's not correct, and besides, if we don't parse 'master@', it's
-> much simpler:
->
-> /* parse @something syntax, when 'something' is not {.*} */
-> static int interpret_empty_at(const char *name, int namelen, int len,
-> struct strbuf *buf)
-> {
-> 	if (len || (namelen > 1 && name[1] == '{'))
-> 		return -1;
->
-> 	strbuf_reset(buf);
-> 	strbuf_add(buf, "HEAD", 4);
-> 	return 1;
-> }
+This is the same as last series, except that I dropped a couple of conflicting
+patches, and added one test.
 
-I'm done with today's integration cycle and pushed the series
-without these updates out on 'pu'.  Hopefully you will have a "drop
-the last N and replace them with this" update after finishing these
-experiments by tomorrow? ;-)
 
-Thanks.
+After being contacted by the emacs developers and others who are stuck with
+Bazaar, which at this point seems to be utterly abandoned, I realized the
+current implementation is too crude.
 
-People who wanted to see some form of typesaver for HEAD, please
-poke at the implementation and see if there are cases where @ should
-be interpreted as HEAD replacement but isn't (or vice-versa).
+Bazaar branches are very simplistic, and our support for them is the same; we
+need to create one remote per branch. This works nicely if you work on small
+projects with few branches, but doesn't scale.
+
+Big projects like emacs take a lot of space, and creating a remote per branch
+is unrealistic, because each remote will have the whole Bazaar repository
+copied, wasting space, and time each time a remote (for a bzr branch) is set
+up.
+
+Moreoever, a developer needs to constantly reset the master branch to the
+commit he/she wants to push before pushing, since the transport-helper
+infraestructure doesn't support pushing with refspecs (xwidget:master).
+
+That is of course, if pushing actually worked (which in many cases doesn't).
+
+In short, our support for real-world projects suck.
+
+These patches fix all the issues I encountrered.
+
+ 1) First of all, there are several improvements for pushing. Before, we failed
+    when trying to push a merge, now, even tricky merges work.
+
+ 2) Secondly, bzr branches are tied to a transport, so they time out if not
+    used for a period of time, and importing/exporting huge chunks of a
+    repository do take some time. So now they are only opened when they are
+    about to be used.
+
+ 3) Then the big one; now bzr repositories are supported. They are very simple:
+    basically an object store with no notion of branches, so to find the
+    branches we need to traverse a directory (sometimes) remote, to find them.
+    This is how Bazaar does it, ableit very slowly. Naturally, a lot of code
+    had to be changed to support more than one branch.
+
+ 4) In addition, now remotes share all the objects, so adding a new remote
+    doesn't imply fetchng a bunch of duplicated objects. They are just re-used
+    automagically.
+
+ 5) Since the bzr objects are shared now, it only makes sense to share the
+    remote-bzr marks, so we don't have to fast-import them again.
+
+ 6) The code was also reorganized to keep referenced as few objects as
+    possible, since Bazaar seems to be need *a ton* of memory for them.
+
+Finally, after all these changes I was finally able to clone the whole emacs
+repository, all 130685 commits, and 56 branches without running out of memory
+in my modest laptop.
+
+Since the purpose of remote-bzr is to actually be usable for the poor souls
+stucks in DSCMs that are not git, these changes are a must. I propose they be
+merged for the next major version of git (v1.8.3) if no issues are found. They
+changes pass all the tests, and work on various repositories I've tried. I'll
+ask the emacs developers to give them a try, and let's see how it goes.
+
+Felipe Contreras (18):
+  remote-bzr: cleanup CustomTree
+  remote-bzr: delay blob fetching until the very end
+  remote-bzr: fix order of locking in CustomTree
+  remote-bzr: always try to update the worktree
+  remote-bzr: add support to push merges
+  remote-bzr: fixes for branch diverge
+  remote-bzr: fix partially pushed merge
+  remote-bzr: use branch variable when appropriate
+  remote-bzr: add support for bzr repos
+  remote-bzr: fix branch names
+  remote-bzr: add support for shared repo
+  remote-bzr: improve author sanitazion
+  remote-bzr: add custom method to find branches
+  remote-bzr: add option to specify branches
+  remote-bzr: improve progress reporting
+  remote-bzr: iterate revisions properly
+  remote-bzr: delay peer branch usage
+  remote-bzr: access branches only when needed
+
+ contrib/remote-helpers/git-remote-bzr | 305 ++++++++++++++++++++++++----------
+ contrib/remote-helpers/test-bzr.sh    |  72 ++++++++
+ 2 files changed, 293 insertions(+), 84 deletions(-)
+
+-- 
+1.8.3.rc0.399.gc96a135
