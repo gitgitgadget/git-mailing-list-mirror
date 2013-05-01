@@ -1,86 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] t1508 (at-combinations): more tests; document failures
-Date: Wed, 01 May 2013 11:53:39 -0700
-Message-ID: <7va9oe5y6k.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/5] sha1_name.c: simplify @-parsing in get_sha1_basic()
+Date: Wed, 1 May 2013 11:54:14 -0700
+Message-ID: <20130501185414.GN24467@google.com>
 References: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
-	<1367425235-14998-2-git-send-email-artagnon@gmail.com>
+ <1367425235-14998-4-git-send-email-artagnon@gmail.com>
+ <CAMP44s1tHC+i+Wug_UuPnprZNvaPgLMNBX9MZi49SFv4iO62SQ@mail.gmail.com>
+ <CALkWK0nTSMYvh8VMgQ6Q0EoPMmRa2vyodz+tDmpPp1d6KYmq8w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 20:53:53 2013
+X-From: git-owner@vger.kernel.org Wed May 01 20:54:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXc9z-0000y6-I0
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 20:53:47 +0200
+	id 1UXcAa-0001Yn-Kn
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 20:54:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756074Ab3EASxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 14:53:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60034 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755776Ab3EASxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 14:53:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE1FC1BE0C;
-	Wed,  1 May 2013 18:53:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kheF9W3bXPy3Yr7VscY/YgYm7W4=; b=O8SjsU
-	amGmhrWjeDOjsdwi7q+y5hf/70Nt72yvGijjxUe/Iht5vOgQMaamec6Z/m3v/m1c
-	WJmANSG+N9Q25COSN5WPwBSE9J811SLRpo0gAt8N5plXhBHkBTGN8QcpKaPncScS
-	iGnLKrkEU+/1o8B1FLHPBuYhmR8nbOT0LeSNk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=t6KTqRur9G2k0+uzqKpdOouYV0WYYM+4
-	8D5cjmk4eiuWqpnIjFXLXDEDCBou3AjsWcmnYZckJNnZH/MsT6uLUWPNc5HU6iuP
-	u9bnzoUSSZXR4nJbxRhwmB5NK9oCI75f0XysGBzt+HEA8TrBIusUVv2YbVGEP7Mp
-	o+RrIsBWrnY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1CD31BE0B;
-	Wed,  1 May 2013 18:53:41 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 32F291BE05;
-	Wed,  1 May 2013 18:53:41 +0000 (UTC)
-In-Reply-To: <1367425235-14998-2-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Wed, 1 May 2013 21:50:31 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 70CF2F14-B290-11E2-B7AF-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756171Ab3EASyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 14:54:20 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:43004 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755776Ab3EASyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 14:54:19 -0400
+Received: by mail-pd0-f172.google.com with SMTP id 4so953694pdd.17
+        for <git@vger.kernel.org>; Wed, 01 May 2013 11:54:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=1ExeLXFLnfUArJv6Qzwox0aKhEXP6kNCvVvEfZeTAPs=;
+        b=Qf2fHYhy+7xUr1ud5cyKRUumNMZjJJU+j8LaQSaKVFWV7nepT/iyEK3/ZPhl8/ln1e
+         R8r7hkaXhsFoSU8RJq2Lms9QatKHY0T3RKpI7QMA07b4HHri5uYFEMGqrHk2+lAeUXr7
+         Twr1iuMHWks1wNqXgMKOhnd6a38U9bCsl645ji6ZW1jmQlubE3g0wAM/cLYQ/CC8tUmz
+         DiVB1z1I8ZFVghvGjrwr0bN4B591rWOCLYRB+qH7R/YurR4/0Z4QcgsLskEUgsq8NSWI
+         2y2XZaBzrkIiA4HExlSRji2591A57ZJ5gp/bdA+j/KUsN2oiObLX2b1LeOLJBgEZTpRQ
+         E/bw==
+X-Received: by 10.66.13.35 with SMTP id e3mr6304360pac.186.1367434458881;
+        Wed, 01 May 2013 11:54:18 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id z8sm3958964pbt.23.2013.05.01.11.54.16
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 01 May 2013 11:54:17 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0nTSMYvh8VMgQ6Q0EoPMmRa2vyodz+tDmpPp1d6KYmq8w@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223124>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Ramkumar Ramachandra wrote:
 
-> To emphasize what we're testing in @{1}@{u}, document that @{0}@{0} is
-> also nonsense.  This makes it clear that @{<n>} does not resolve to a
-> ref whose upstream we can determine with @{u}/ reflog we can dig with
-> @{0}.
->
-> Since HEAD is implicit in @{},...
+> [1]: https://www.ohloh.net/p/git/factoids#FactoidCommentsLow
 
-Just making sure.  HEAD@{$n} and @{$n} for non-negative $n mean
-totally different things.  @{0} and HEAD@{0} are almost always the
-same, and @{1} and HEAD@{1} may often happen to be the same, but as
-a blanket statement, I find "Since HEAD is implicit in @{}" very
-misleading.
+Since this has been coming up from time to time:
 
-As you and Felipe seem to be aiming for the same "Let's allow users
-to say '@' when they mean HEAD", I'll let you two figure the best
-approach out.
+I have nothing against including helpful comments where appropriate.
+But one aspect which that factoid misses is that git has some very
+detailed, very dense documentation available in its commit log.  Tools
+like "git gui blame" and "git log -S" can show detailed historical
+information about the purpose of every line of code.  A nice feature
+of such documentation is that it is in a context where it cannot fall
+out of date.
 
-One productive way forward might be to come up with a common test
-script pieces to document what constructs that spell @ in place of
-HEAD should be supported, and much more importantly, what constructs
-that happen to have @ in them should not mistakenly trigger the new
-machinery.
+So for example I can do
 
-Have fun ;-)
+	$ git log -S'if (len && ambiguous_path(str, len))' -- sha1_name.c
+	commit 11cf8801
+	Author: Nicolas Pitre <nico@cam.org>
+	Date:   Thu Feb 1 17:29:33 2007 -0500
+
+	    provide a nice @{...} syntax to always mean the current branch reflog
+
+	    This is shorter than HEAD@{...} and being nameless it has no semantic
+	    issues.
+
+	    Signed-off-by: Nicolas Pitre <nico@cam.org>
+	    Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+and then "git show 11cf8801" will show me exactly what change prompted
+that "len" test.
+
+The same is true of the Linux kernel, too.
+
+Hope that helps,
+Jonathan
