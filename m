@@ -1,195 +1,82 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 5/5] refs.c: make @ a pseudo-ref alias to HEAD
-Date: Wed,  1 May 2013 21:50:35 +0530
-Message-ID: <1367425235-14998-6-git-send-email-artagnon@gmail.com>
-References: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 01 18:20:48 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/18] remote-bzr: massive changes
+Date: Wed, 01 May 2013 09:39:57 -0700
+Message-ID: <7vli7y8xia.fsf@alter.siamese.dyndns.org>
+References: <1367370610-14250-1-git-send-email-felipe.contreras@gmail.com>
+	<7vppxb8d9k.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3zf0Hbx4-KHVH7+wCm_czTigJo2y=wqD5Ai-9cKxZcug@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 01 18:40:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXZlu-0006cT-Qy
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 18:20:47 +0200
+	id 1UXa4d-0007aI-HA
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 18:40:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761524Ab3EAQUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 12:20:41 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:62252 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761496Ab3EAQUi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 12:20:38 -0400
-Received: by mail-pa0-f48.google.com with SMTP id lb1so928924pab.35
-        for <git@vger.kernel.org>; Wed, 01 May 2013 09:20:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=I0JR40aJLOXOT9fy3EdlED5ISv6ub3OvHxQNy3S7gME=;
-        b=bqaXBhpAXevLmZ0W4KcLvhCkhHwfRXYpiOgh//AbThCl20VUNvuUrlIMbpchJPWxGN
-         WiuMZTSnEWM4qLSUT6F3Yckhe2zUnGncnPj/qrcrrzSTjAjUsZN47++Sbbmb66yG+Eqh
-         ivRBDVA2bI9jZuj/z8gtRpweZIXJKyQBHzIhMXhRwXL2vOm54PzsHHqd3fWfMYOxFY7/
-         JfEzdwzwh9I5/6culsAfZcvFNxGncw9uGkZRbfS1Fv9ZHIo8AJ6vuPjos2g4U0vql5Ua
-         oOeVfmRDR9BNOqLSAsjYXHjTpt3aWbOSnsvdwI6NW6sS7znalOUTxVjutv1gt5gyon6K
-         f2Yw==
-X-Received: by 10.66.166.107 with SMTP id zf11mr5720025pab.166.1367425237911;
-        Wed, 01 May 2013 09:20:37 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.132.210])
-        by mx.google.com with ESMTPSA id sg4sm3549741pbc.7.2013.05.01.09.20.34
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 01 May 2013 09:20:37 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc0.24.g6456091
-In-Reply-To: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
+	id S1755908Ab3EAQkC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 12:40:02 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59027 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751966Ab3EAQkB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 12:40:01 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 673691AF53;
+	Wed,  1 May 2013 16:40:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w32BY/rVmnvMUKg9TH2iAmaAZvo=; b=uNRPRQ
+	rf/GzQDYZbDxahUf2VtZofFSlhkAfhbTBbf3AYT6e815pyJ6YZifNcSeXA/JwRRa
+	NQIYCyYTm0MIC8OK7osubcB8sjpkuMjvL8mA4sNe+SuPpa7I+j7w7AZlRdIJxARa
+	2hrf8jYlBE5jzuHsnGRKN9MegDYCnqSHxc/3E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mau/oXLfJ7tB069n14jaNTCLkyvlt0mG
+	kT+NlD7oT38B22c+jqRnKCMYhJgtpvTXE4/RKjRXlA21a+Voq2uFOd7+lr1sUOlU
+	k1C52O2RcxqiynKQlqFbjhhJrry8oS2H2tM6hFbmrwMw0Wa7j+/sz9L6DuUQfOXE
+	rwgWVsLu6ZU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FF921AF4D;
+	Wed,  1 May 2013 16:40:00 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD9351AF4A;
+	Wed,  1 May 2013 16:39:59 +0000 (UTC)
+In-Reply-To: <CAMP44s3zf0Hbx4-KHVH7+wCm_czTigJo2y=wqD5Ai-9cKxZcug@mail.gmail.com>
+	(Felipe Contreras's message of "Wed, 1 May 2013 01:36:02 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C3B32ACC-B27D-11E2-9D0A-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223100>
 
-First, make sure that check_refname_format() rejects the a refname
-beginning with a '@'.  Add a test to t1400 (update-ref) demonstrating
-that update-ref forbids the user from updating a ref named "@".
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Now, resolve_ref_unsafe() is built to resolve any refs that have a
-corresponding file inside $GITDIR.  Our "@" ref is a special
-pseudo-ref and does not have a filesystem counterpart.  So,
-hard-interpret "@" as "HEAD" and resolve .git/HEAD as usual.  This
-means that we can drop the 'git symbolic-ref @ HEAD' line in t1508
-(at-combinations), and everything will continue working as usual.
+>> So let's go ahead and apply these directly on top of 'master', once
+>> we hear from Emacs folks and they are happy with it.  I'll queue it
+>> on 'pu' so that I do not have to go back to the list archive when it
+>> happens.
+>
+> I already heard that everything seems to be working correctly, except
+> one feature, the biggest change, which I screwed up with a one-liner
+> commit. That's why I added a test. Anyway, I've fixed it in my github
+> branch and in this patch series, and I've told them to try the fix.
 
-If the user does manage to create a '.git/@' unsafely (via
-symbolic-ref or otherwise), it will be ignored.
+Let us know when they make progress on that front.
 
-In practice, this means that you will now be able to do:
+If Emacs decides to switch to Git and decides to use this version of
+remote-bzr for their conversion, or at least a nontrivial group of
+developers favor to do so, without seeing concrete technical points
+that say remote-bzr is not yet ready (e.g. "the conversion is still
+wrong and X, Y and Z needs to be fixed"), that would be a very
+welcome solid vote of confidence in favor of us going ahead with
+this.
 
-    $ git show @~1
-    $ git log @^2
-
-Advertise these features in the tests and documentation.
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Documentation/git-check-ref-format.txt |  2 ++
- Documentation/revisions.txt            |  8 ++++++--
- refs.c                                 | 12 ++++++++++--
- t/t1400-update-ref.sh                  |  3 +++
- t/t1508-at-combinations.sh             |  7 ++++---
- 5 files changed, 25 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-index ec1739a..3de9adc 100644
---- a/Documentation/git-check-ref-format.txt
-+++ b/Documentation/git-check-ref-format.txt
-@@ -52,6 +52,8 @@ Git imposes the following rules on how references are named:
- 
- . They cannot end with a dot `.`.
- 
-+. They cannot be the single character `@`.
-+
- . They cannot contain a sequence `@{`.
- 
- . They cannot contain a `\`.
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index d477b3f..9b2e653 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -27,6 +27,10 @@ blobs contained in a commit.
-   When ambiguous, a '<refname>' is disambiguated by taking the
-   first match in the following rules:
- 
-+  . '@' is a special pseudo-ref that refers to HEAD.  An '@' followed
-+    by '\{' has no relationship to this and means something entirely
-+    different (see below).
-+
-   . If '$GIT_DIR/<refname>' exists, that is what you mean (this is usually
-     useful only for 'HEAD', 'FETCH_HEAD', 'ORIG_HEAD', 'MERGE_HEAD'
-     and 'CHERRY_PICK_HEAD');
-@@ -93,7 +97,7 @@ some output processing may assume ref names in UTF-8.
-   refers to the branch that the branch specified by branchname is set to build on
-   top of.  A missing branchname defaults to the current one.
- 
--'<rev>{caret}', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
-+'<rev>{caret}', e.g. '@{caret}2', 'HEAD{caret}', 'v1.5.1{caret}0'::
-   A suffix '{caret}' to a revision parameter means the first parent of
-   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
-   '<rev>{caret}'
-@@ -101,7 +105,7 @@ some output processing may assume ref names in UTF-8.
-   '<rev>{caret}0' means the commit itself and is used when '<rev>' is the
-   object name of a tag object that refers to a commit object.
- 
--'<rev>{tilde}<n>', e.g. 'master{tilde}3'::
-+'<rev>{tilde}<n>', e.g. '@{tilde}1', 'master{tilde}3'::
-   A suffix '{tilde}<n>' to a revision parameter means the commit
-   object that is the <n>th generation ancestor of the named
-   commit object, following only the first parents.  I.e. '<rev>{tilde}3' is
-diff --git a/refs.c b/refs.c
-index de2d8eb..6a75f77 100644
---- a/refs.c
-+++ b/refs.c
-@@ -72,6 +72,9 @@ int check_refname_format(const char *refname, int flags)
- {
- 	int component_len, component_count = 0;
- 
-+	if (!strcmp(refname, "@"))
-+		return -1;
-+
- 	while (1) {
- 		/* We are at the start of a path component. */
- 		component_len = check_refname_component(refname, flags);
-@@ -1093,8 +1096,13 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
- 	if (flag)
- 		*flag = 0;
- 
--	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
--		return NULL;
-+	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL) < 0) {
-+		/* Handle the pseudo-ref @ */
-+		if (!strcmp(refname, "@"))
-+			refname = "HEAD";
-+		else
-+			return NULL;
-+	}
- 
- 	for (;;) {
- 		char path[PATH_MAX];
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index e415ee0..ee93979 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -127,6 +127,9 @@ test_expect_success '(not) change HEAD with wrong SHA1' "
- test_expect_success "(not) changed .git/$m" "
- 	! test $B"' = $(cat .git/'"$m"')
- '
-+test_expect_success 'disallow creating a ref with name @' '
-+	test_must_fail git update-ref @ HEAD
-+'
- rm -f .git/$m
- 
- : a repository with working tree always has reflog these days...
-diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
-index 73c457d..8f8e32d 100755
---- a/t/t1508-at-combinations.sh
-+++ b/t/t1508-at-combinations.sh
-@@ -54,12 +54,13 @@ nonsense "@{0}@{0}"
- nonsense "@{1}@{u}"
- nonsense "HEAD@{-1}"
- 
--# Make sure that the @-parser isn't buggy; check things with
--# symbolic-ref @ pointing to HEAD.
--git symbolic-ref @ HEAD
-+# Check everything with the pseudo-ref @
- check "@@{1}" new-one
- check "@@{now}" new-two
- check "@@{u}" upstream-two
- nonsense "@@{-1}"
- 
-+check "@~1" new-one
-+check "@^0" new-two
-+
- test_done
--- 
-1.8.3.rc0.24.g6456091
+Thanks.
