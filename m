@@ -1,56 +1,73 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 5/5] refs.c: make @ a pseudo-ref alias to HEAD
-Date: Thu, 2 May 2013 01:21:56 +0530
-Message-ID: <CALkWK0=DajZwYuDYoVS7tJwHO276HXXZ2_z69FeY_w=Kk0V3hg@mail.gmail.com>
-References: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
- <1367425235-14998-6-git-send-email-artagnon@gmail.com> <CAMP44s3nzuecoM+h+pNknV4A68R1gZ6DZpehp3uKcJhppXo+1w@mail.gmail.com>
- <CALkWK0=WjctcYv30V9b3NMb5motYz=57OqmLU7pdW_fbOP40MA@mail.gmail.com> <CAMP44s3D3yPx6mfLvnkf3Ef55=kP1Jtx1P947uG7pg8_HrH3Vg@mail.gmail.com>
+From: Ilya Basin <basinilya@gmail.com>
+Subject: Re[2]: [PATCH 4/5] git-svn: fix bottleneck in stash_placeholder_list()
+Date: Wed, 1 May 2013 23:51:04 +0400
+Message-ID: <455264907.20130501235104@gmail.com>
+References: <1438528085.20130501090926@gmail.com> <1409591910.20130501123153@gmail.com> <7vhaim8w48.fsf@alter.siamese.dyndns.org>
+Reply-To: Ilya Basin <basinilya@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 21:52:41 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Git mailing list <git@vger.kernel.org>,
+	Ray Chen <rchen@cs.umd.edu>, Eric Wong <normalperson@yhbt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 01 21:52:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXd4y-0003CO-Uc
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 21:52:41 +0200
+	id 1UXd59-0003Ls-8O
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 21:52:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755986Ab3EATwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 15:52:37 -0400
-Received: from mail-ia0-f177.google.com ([209.85.210.177]:42859 "EHLO
-	mail-ia0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755919Ab3EATwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 15:52:36 -0400
-Received: by mail-ia0-f177.google.com with SMTP id y26so1671254iab.36
-        for <git@vger.kernel.org>; Wed, 01 May 2013 12:52:36 -0700 (PDT)
+	id S1756549Ab3EATws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 15:52:48 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:61504 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755919Ab3EATwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 15:52:46 -0400
+Received: by mail-la0-f45.google.com with SMTP id el20so1597775lab.4
+        for <git@vger.kernel.org>; Wed, 01 May 2013 12:52:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=aNBdkuyjZx8VIgUxy8FlAzKkD20kqq38eHhWS3xJR00=;
-        b=nUp0nQMoSOoHMW6HbjmJVWUXFBi6PYah+JeOBdE4MdM6EjgACh1NwFQ9aKf/sm81ul
-         3fgjjiX3V6P1FM6G6ghl8KBHoRh48oBDd/3k/0Tp9eF3PTFIP8GiYPBHAGZsNXV2oaxW
-         7xRQ6JSwlboch82r0k3juF5m/CjqFV1Cfld9LpaKoRkWH/43B/IY32g8thnnia4xB4Tf
-         bBL1DgqvXmWJ1sbMYXpT3jIH2oBFeIX4p3DqMZ5VL8fe2ok6RkdAGKMIbxs8xgeWOQ1i
-         +I6MVEnRipWgHEf3UEXPIuQhv9cpHE42oi5YDis+PNK0sfmq8rVcSYoJNucBZlugubQp
-         np/g==
-X-Received: by 10.50.73.65 with SMTP id j1mr2492827igv.49.1367437956106; Wed,
- 01 May 2013 12:52:36 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Wed, 1 May 2013 12:51:56 -0700 (PDT)
-In-Reply-To: <CAMP44s3D3yPx6mfLvnkf3Ef55=kP1Jtx1P947uG7pg8_HrH3Vg@mail.gmail.com>
+        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
+         :subject:in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=R9+I6a6E/09s8GIYA4+j9RgGbvJppQDQnNOwfk2CLDg=;
+        b=oa698ZFCsAFZ0ky6+FhKG8Cq9KnYRWzvikfCvsXpRJRyhyJ3AbYXAt9qNxS+Vg80Pr
+         zyBmZexRb7Ve0o1L9e0CT8fP0Lvcw4wXVu1l/Jcy2sgxfLAa6cqF5kPv4lzorO/OEIo9
+         fNX80BWBWEhOfC2w3I0yJzpznUynaobiWnR3PUhw9pd2ijmBtjUP8QvITCaWapQtCgjK
+         QNqkeUK6OMqVPls/tiVQ320xK5D5gkGYL+ZOTMTp8h0e7+IvV6EZxc07Y8I4W2M3Ip3t
+         XU4ZL6KRq2CObhyG7CZ4JeuD/+iyPUZnaw2wcijeRTGsNehmTRg3Lk0XP4XapRDSjAFy
+         xe3A==
+X-Received: by 10.112.125.164 with SMTP id mr4mr1238119lbb.116.1367437965099;
+        Wed, 01 May 2013 12:52:45 -0700 (PDT)
+Received: from [192.168.0.78] (92-100-238-23.dynamic.avangarddsl.ru. [92.100.238.23])
+        by mx.google.com with ESMTPSA id w9sm1731868lbe.6.2013.05.01.12.52.43
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 01 May 2013 12:52:43 -0700 (PDT)
+X-Mailer: Voyager (v3.99.4) Professional
+X-Priority: 3 (Normal)
+In-Reply-To: <7vhaim8w48.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223133>
 
-Felipe Contreras wrote:
-> If I put my user shoes, I don't care how @ is implemented, I just care
-> that it's a shortcut for HEAD, that's what it means to me, the common
-> user.
+JCH> ...and you want to perform a merge on the
+JCH> Git side of that branch with another Git branch that does have real
+JCH> contents in that directory, you would want the result to say "This
+JCH> directory no longer is just for a placeholder", but you cannot say
+JCH> that globally by updating the config file
+Placeholder files are managed when fetching from SVN. SVN doesn't
+support Git-like merges.
 
-Okay, we'll change this.
+JCH> comment line "# added by git-svn only to keep the directory" and
+JCH> consider a directory that has nothing but .gitignore that consists
+JCH> of only that exact comment line an "added placeholder" directory to
+JCH> work it around.
+Sounds good, but it's not I who decided to use the config file.
+
+
+-- 
