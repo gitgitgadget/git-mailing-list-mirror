@@ -1,92 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/18] remote-bzr: massive changes
-Date: Wed, 01 May 2013 11:38:47 -0700
-Message-ID: <7vehdq5yvc.fsf@alter.siamese.dyndns.org>
-References: <1367370610-14250-1-git-send-email-felipe.contreras@gmail.com>
-	<7vppxb8d9k.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3zf0Hbx4-KHVH7+wCm_czTigJo2y=wqD5Ai-9cKxZcug@mail.gmail.com>
-	<7vli7y8xia.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0n28ihRXf4f25Sx0jkg2u-eROR93bkO0Nm6X00tmkVMA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC] get_sha1: prefer 40-hex ref name over 40-hex SHA-1
+Date: Wed, 1 May 2013 11:43:27 -0700
+Message-ID: <20130501184327.GM24467@google.com>
+References: <1367377282-9862-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 20:39:09 2013
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 01 20:44:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXbvm-0004gm-FA
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 20:39:06 +0200
+	id 1UXc1C-0001CL-JW
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 20:44:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755670Ab3EASjD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 14:39:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46701 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753164Ab3EASjA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 14:39:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED0331B8A3;
-	Wed,  1 May 2013 18:38:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y2yQ1TnpLD19tlW8TOvx7bT9NyE=; b=xccX5Y
-	p3bYeIPWxHiARxxK6uKt2/9DI9KKqbdx+Isvf5zch9zZPXg89Msq/1UaLyDbQlWu
-	5OhMTGuxpOSy5y9jFgYZaEtcbkLZqjwU9w3vWkDNWIaFU7L2ZwUw6F+ufaX7023M
-	EagABdhNnYKHATBB53untNjw+oC9slzXrEFzM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SkyEiHK1dUbKkJFcqbhIUTUi3xWyfP42
-	2T1L0MxMc+VLMSritVRCSqNvaIlga4Bt23EpFrO/IWEMNunEB50glz/c1xLlbOSp
-	AkuVFuqeVEX2BDyA5V9i17jyp93qZQzU+XZbWHtXFedxvpah6SaVSOuZFrWrwbqF
-	CjZvo+ZkENQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4BB71B8A2;
-	Wed,  1 May 2013 18:38:59 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5DDEA1B8A1;
-	Wed,  1 May 2013 18:38:49 +0000 (UTC)
-In-Reply-To: <CAMP44s0n28ihRXf4f25Sx0jkg2u-eROR93bkO0Nm6X00tmkVMA@mail.gmail.com>
-	(Felipe Contreras's message of "Wed, 1 May 2013 13:35:38 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5D3D11AC-B28E-11E2-9FDB-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756625Ab3EASod convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 May 2013 14:44:33 -0400
+Received: from mail-da0-f44.google.com ([209.85.210.44]:51561 "EHLO
+	mail-da0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756053Ab3EASnb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 14:43:31 -0400
+Received: by mail-da0-f44.google.com with SMTP id z20so767691dae.31
+        for <git@vger.kernel.org>; Wed, 01 May 2013 11:43:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=RgtmRrKYaQJGBGHYuWH65u4x+hRemKyh32JPVdhjDOc=;
+        b=s1om0kDljA8v9BTV/LXl20Sw5IC9+QYB+7d1M3vbZIkIDOtw/BKHypWbGg9lKLh1fw
+         9XEVrAhzdpe5xl3/gEstv+FFem/aghs1VaMz19k3UAgkPqxxfyVkK3hSFkqkZkfuNgv/
+         sklfiqZ1Vj6SEaw736dWEgdSlUocasp7BtOqb9D4lXcD2iMAlCJetffrto3P5MBL5deC
+         oWrPP0M3DI2AnsQIqHU8khZSFkOyfWiZ73h4sck+Jwn192BIZE+AfGAbx17kme5PWK7I
+         v84AUHT0xtaAyFszA6QT9HyUbzkZiT0/e4DCAdGbqZcea96HJbilREpgTkyC/D+4u/x7
+         lW2w==
+X-Received: by 10.68.164.33 with SMTP id yn1mr5446683pbb.71.1367433811372;
+        Wed, 01 May 2013 11:43:31 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id aj6sm3942759pbd.14.2013.05.01.11.43.29
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 01 May 2013 11:43:30 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1367377282-9862-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223120>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-> On Wed, May 1, 2013 at 11:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>>> So let's go ahead and apply these directly on top of 'master', once
->>>> we hear from Emacs folks and they are happy with it.  I'll queue it
->>>> on 'pu' so that I do not have to go back to the list archive when it
->>>> happens.
->>>
->>> I already heard that everything seems to be working correctly, except
->>> one feature, the biggest change, which I screwed up with a one-liner
->>> commit. That's why I added a test. Anyway, I've fixed it in my github
->>> branch and in this patch series, and I've told them to try the fix.
->>
->> Let us know when they make progress on that front.
->>
->> If Emacs decides to switch to Git and decides to use this version of
->> remote-bzr for their conversion, or at least a nontrivial group of
->> developers favor to do so, without seeing concrete technical points
->> that say remote-bzr is not yet ready (e.g. "the conversion is still
->> wrong and X, Y and Z needs to be fixed"), that would be a very
->> welcome solid vote of confidence in favor of us going ahead with
->> this.
->
-> Seems unlikely for political reasons (isn't it always for GNU?), since
-> RMS is heavily involved in the decision.
+>                                              "git rev-parse 1234" wil=
+l
+> resolve refs/heads/1234 if exists even if there is an unambiguous
+> SHA-1 starting with 1234. However if it's full SHA-1, the SHA-1 takes
+> precedence and refs with the same name are ignored.
 
-I am very aware of that discussion (and the original one when they
-decided to use bzr).  That is exactly why I said "at least ... favor
-to do so".
+That's an important feature for safety.  When a script has created an
+object or learned about it some other way, as long as it doesn't
+abbreviate its name it can be sure that git commands will not
+misunderstand it.
+
+So I think this is a bad change.  Maybe check-ref-format should
+reject 40-hexdigit refnames?
+
+[...]
+> --- a/t/t1512-rev-parse-disambiguation.sh
+> +++ b/t/t1512-rev-parse-disambiguation.sh
+> @@ -261,4 +261,19 @@ test_expect_success 'rev-parse --disambiguate' '
+>  	test "$(sed -e "s/^\(.........\).*/\1/" actual | sort -u)" =3D 0000=
+00000
+>  '
+> =20
+> +test_expect_success 'rev-parse 20-hex ref' '
+> +	REF=3D`git rev-parse HEAD` &&
+> +	VAL=3D`echo| git commit-tree 4b825dc642cb6eb9a060e54bf8d69288fbee49=
+04` &&
+> +	git update-ref refs/heads/$REF $VAL &&
+> +	test `git rev-parse $REF` =3D $VAL
+> +'
+
+This is a good thing to test.  Nit: outside of t0000, please use
+
+	empty_tree=3D$(git mktree </dev/null) &&
+
+instead of hard-coding the hash.  Otherwise you are making my life
+hard when I write md5git. :)  And more importantly, this makes the
+meaning of the test easier to understand by reading it.
+
+Thanks,
+Jonathan
