@@ -1,70 +1,105 @@
-From: Vikrant Varma <vikrant.varma94@gmail.com>
-Subject: Re: [PATCH 0/2] Better advice on merge
-Date: Thu, 02 May 2013 04:36:46 +0530
-Message-ID: <5181A006.9050107@gmail.com>
-References: <1367407327-5216-1-git-send-email-vikrant.varma94@gmail.com> <20130501182726.GL24467@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] help: add help_unknown_ref
+Date: Wed, 01 May 2013 16:07:33 -0700
+Message-ID: <7vzjwe2tai.fsf@alter.siamese.dyndns.org>
+References: <1367407327-5216-1-git-send-email-vikrant.varma94@gmail.com>
+	<1367407327-5216-2-git-send-email-vikrant.varma94@gmail.com>
+	<7vppxa5z01.fsf@alter.siamese.dyndns.org> <5181967E.9020601@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 02 01:07:02 2013
+To: Vikrant Varma <vikrant.varma94@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 02 01:07:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXg71-0003ld-RY
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 01:07:00 +0200
+	id 1UXg7g-0004Ks-Gp
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 01:07:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758091Ab3EAXG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 19:06:56 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:57317 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757842Ab3EAXGz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 19:06:55 -0400
-Received: by mail-pd0-f181.google.com with SMTP id p11so10450pdj.26
-        for <git@vger.kernel.org>; Wed, 01 May 2013 16:06:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=X/nRc8WaaNJaVoBCP21sn56ZKdlz652oLc51O26RY8w=;
-        b=QEwUbW+/4XNersQVhNeXRx/S1S6I05JXD0GcuxVBKU7kSlDp31IT8WxlJOMLeTBIG9
-         RghEWjFXn6fqgz1gNi2rkyrMp8H602pqAFFhDYz6O+L2YLm9IYcB+UT6WPCiPrR9beyB
-         Hs0l6W+67YA4rh5eRaLAcoMCZzIpy7ZhKv7XNb4Y9r6N1kyUh4MQgd7AUY/W8fH7RrJZ
-         aGckds2oZfFitzt+Dsm3f1CQC8vLUwcAyeR+LVQyUYdOsi7Q05yp5CqffkB9SG8PKCmg
-         PjIICN0ELtka103WqTz/Gy42URaM3QIjl5nQovl9z4eF0wOd83oUo3IMK58rRxw9VZU6
-         J4rQ==
-X-Received: by 10.68.218.34 with SMTP id pd2mr6027481pbc.204.1367449614945;
-        Wed, 01 May 2013 16:06:54 -0700 (PDT)
-Received: from [192.168.1.109] (triband-mum-59.183.180.112.mtnl.net.in. [59.183.180.112])
-        by mx.google.com with ESMTPSA id ak1sm4629680pbc.10.2013.05.01.16.06.51
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 01 May 2013 16:06:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <20130501182726.GL24467@google.com>
+	id S1758147Ab3EAXHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 19:07:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62092 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757553Ab3EAXHg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 19:07:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A14B51B1B7;
+	Wed,  1 May 2013 23:07:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+DYr6StZs4f7vZK3bqAeG1ZJtbM=; b=v+YJ7p
+	KsU5Mk+OC1TgorF+g5iTXJMCV/CwPtknr4v95+ctJiOi1njM54LENd985BZqbH0G
+	KCy7hTUkS7onkyZOwYGP5WBrOumOGpQ9lF0XUFYmAlXleVchaW8xfVfpvmKW4LPj
+	mHWXOHR6+00nZzR3HbvYXA4RrYHaNerwzimGM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nzj39v1H3wuTVh+Jq1K0e3xoDXgQ/3Zq
+	PlBK1fSGIEMy5Y12WkzJOlfHQRNuiFxyXcVFxqDgAvG1eD5BwiPzujzbFSX+DHyl
+	tS/3OO9/JIYwmZpoxOOjCqtU+X4hZpgUweZ2h3iTQkp/em/tLXPAhxqZOu9G1ECN
+	MBJe72mFR5k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 98EC61B1B5;
+	Wed,  1 May 2013 23:07:35 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05C231B1B4;
+	Wed,  1 May 2013 23:07:34 +0000 (UTC)
+In-Reply-To: <5181967E.9020601@gmail.com> (Vikrant Varma's message of "Thu, 02
+	May 2013 03:56:06 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E8DE78B6-B2B3-11E2-9D61-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223165>
 
-On 01-05-2013 23:57, Jonathan Nieder wrote:
->   - It would be nice to add a test under t/
+Vikrant Varma <vikrant.varma94@gmail.com> writes:
+
+> On 02-05-2013 00:05, Junio C Hamano wrote:
+>> If you step back a bit, you would notice two things.
+>>
+>>   (1) Saying 'foo' when the user means 'origin/foo' is hardly the
+>>       only (or even the most common) kind of mistake that the code
+>>       you need to add to 'git merge' would encounter and could help
+>>       the user with.
 >
+> Yes. I like your suggestion of using levenshtein.c, similar to what's
+> been done in help.c:help_unknown_cmd. However, where do you draw the
+> line? Do you also suggest 'remotes/origin/foo' for 'remotes/foo'?
+> Also, which would you then prioritize for 'foo': 'fob' (this is local)
+> or 'origin/foo'? In other words, what kind of mistakes are you looking
+> to correct -  typos, or forgetful omissions, or both and something
+> more?
 
-Thanks, I'll do that.
+This is your itch, so you get to choose what you would propose to
+the list and have people tweak it ;-)
 
->   - Since the first patch isn't useful without or logically separate
->     from the second, this would probably be easier to read as a single
->     patch.
->
+I personally think the first version should not use levenshtein _at
+all_ (hence not solving my 'git checkout mastr'). I however want to
+make sure the code is structured in such a way that allows other
+people to build on top later.
 
-They are logically separate, even if the first isn't useful without the 
-second. I wanted to segregate the task of defining a helper function 
-that corrects the ref name, and changing the parts of the code that 
-should use it. The reason the second is separate is that once the first 
-is in place, even commands like 'checkout' can use the helper function.
+> However, making the caller responsible for printing the suggestions
+> may not be the best alternative.
+
+That "responsibility" could be encapsulated in a separate helper
+function the callers call instead of die().
+
+The lower level machinery to come up with a suggested list of refs,
+when the caller suspects that there is a typo in refs, is the same
+across different commands, and it is insufficient to have a single
+helper function that hardcodes "not something we can _MERGE_", and
+copy the function to create many other helpers that do the same
+thing but with different error messages.
+
+You would need two layers, one that collects suggested list of refs,
+and another that is directly called by the top-level caller that
+takes the refname and the die message, and the latter would use the
+former.  What I was showing was the lower level one, without the
+higher level one that takes die message and a suspicious user input
+(the higher level one would be trivial and do not need hand-holding
+while designing).
