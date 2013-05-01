@@ -1,73 +1,80 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 4/5] remote.c: teach branch_get() to treat symrefs other
- than HEAD
-Date: Thu, 2 May 2013 02:27:12 +0530
-Message-ID: <CALkWK0mz6+RS-fZAjz=1+kVN6WFTb+cX98V=8AGfzybacf28RQ@mail.gmail.com>
+Subject: Re: [PATCH 1/5] t1508 (at-combinations): more tests; document failures
+Date: Thu, 2 May 2013 02:34:01 +0530
+Message-ID: <CALkWK0nL+UvjsUKh6v4x_MaWJmsU6Uh_gh82iE7UT0UE-ZMt0g@mail.gmail.com>
 References: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
- <1367425235-14998-5-git-send-email-artagnon@gmail.com> <CAMP44s20F-QALd18VPHLF4Fj=eFFvXmkhC4XK__kxNhMoeN=ug@mail.gmail.com>
- <CALkWK0n2odCn=GnYSXv7g113PFEX42WF1d2GBGV=ye2TuY3CHA@mail.gmail.com>
- <CAMP44s34X+6c2V0iU_+dfNR9ULXD+Q0CDFk0S9qdK0n8AC81DQ@mail.gmail.com>
- <CALkWK0mfHVBLPdU7jyiBR=-kSguCBFOhsEsXYYthBuQbtX7MuA@mail.gmail.com> <CAMP44s1dWhpVhUar2-u1NAqK-TPssxZYgGMY9_SVxvuKSFT4QA@mail.gmail.com>
+ <1367425235-14998-2-git-send-email-artagnon@gmail.com> <7va9oe5y6k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+Cc: Git List <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
 	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 22:58:00 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 01 23:04:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXe6A-00024g-PC
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 22:57:59 +0200
+	id 1UXeCl-0007vj-Au
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 23:04:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757616Ab3EAU5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 16:57:55 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:59925 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756186Ab3EAU5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 16:57:54 -0400
-Received: by mail-ie0-f178.google.com with SMTP id aq17so2458629iec.9
-        for <git@vger.kernel.org>; Wed, 01 May 2013 13:57:53 -0700 (PDT)
+	id S1757217Ab3EAVEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 17:04:44 -0400
+Received: from mail-ia0-f171.google.com ([209.85.210.171]:43797 "EHLO
+	mail-ia0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756740Ab3EAVEm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 17:04:42 -0400
+Received: by mail-ia0-f171.google.com with SMTP id r13so1714279iar.16
+        for <git@vger.kernel.org>; Wed, 01 May 2013 14:04:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=zfPLycQav2LmvXja/BKjJO1XSCu/07kH9tJTAVRyyVw=;
-        b=ArP/B4mvi2MkudE8W2vDh7rs7ASNgOjtNcS5ojz9956cRw5Hh4oNVxdOboL5myfwA8
-         t8CU4uce5+oBd2uWs+xRQeTdmEPNqAQCd29UDtMhVoRjfvjNlN+MEExo7lgT22TMJkCU
-         Pr7xwkXNCQ4Gw7B8l61sIb2DzlB9fkwR2qAa+dQSsYWAAw3Bb2wk55b9Zt8ormvt3U8P
-         Vb3JsuKLm+cafayV2Hyut4HukiC0+0yI2XVQ4U7I61HHqTNGynLA5X/Mr3n/q+jie9Id
-         bcO2qruu9aueGPb/807u+MrFmbBW7hBce1SgLZiGA15YYwZ6d25+wMXbN15SWIjkTK2F
-         sFTg==
-X-Received: by 10.42.123.66 with SMTP id q2mr2179643icr.12.1367441873604; Wed,
- 01 May 2013 13:57:53 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Wed, 1 May 2013 13:57:12 -0700 (PDT)
-In-Reply-To: <CAMP44s1dWhpVhUar2-u1NAqK-TPssxZYgGMY9_SVxvuKSFT4QA@mail.gmail.com>
+        bh=44bdlqkILBwZgmV+aQuSMVb9vC/mkJ7tMQRILdZX2Ho=;
+        b=lrW07p0jag4EjiW1J7L0uEfpm/OGciPdq96RpZGLY0aDtLbEzLiAXoFfaiLITvrHtP
+         hJdQPOoEqzDQHM+Orj36lCwd2/jiRAcX5BiDLL1Jlfv8Opc51rHI3D76eiEtNxWfkTKG
+         Xz3iLgqb6iIYbUm87dhc2RPiWQ5HxyxPOjeLNvIdPgL0WHjexHIU6QSLnAumAOblkZX6
+         n+eQBEt/zPuqLoYaTKHqh0rdV9nX8T22mIAFa1LRSNh8MCNTDXGSf6eS9WR0hmZaiVBV
+         Hv2LmNEvrOWkIeqfs57cxUcxqVW1nc0jpasLeRsJix9Zyw7KJuR5bkd1HNdYFBMEPiv3
+         eaoA==
+X-Received: by 10.50.3.38 with SMTP id 6mr2628546igz.44.1367442282167; Wed, 01
+ May 2013 14:04:42 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Wed, 1 May 2013 14:04:01 -0700 (PDT)
+In-Reply-To: <7va9oe5y6k.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223144>
 
-Felipe Contreras wrote:
-> If you are arguing in favor of arbitrary symbolic refs plus @{u} to
-> work, a patch that allows that, and nothing else, should make sense.
-> Such patch would trigger further discussion, for example, if
-> get_branch() is the right place to achieve that.
+Junio C Hamano wrote:
+> Just making sure.  HEAD@{$n} and @{$n} for non-negative $n mean
+> totally different things.  @{0} and HEAD@{0} are almost always the
+> same, and @{1} and HEAD@{1} may often happen to be the same, but as
+> a blanket statement, I find "Since HEAD is implicit in @{}" very
+> misleading.
 
-What kind of absurd argument is this?  I am trying to solve the @ ->
-HEAD problem correctly.  In the process, I fixed general symbolic-ref
-handling and cleaned up the @-parsing logic.  Does anyone have a
-problem with the fix, or am I missing something?
+When will they be different?  I'm looking at this from the parser's
+point of view: when the part before @{} is missing, we dwim a "HEAD".
 
-So, start the discussion.  What are you waiting for?
+> As you and Felipe seem to be aiming for the same "Let's allow users
+> to say '@' when they mean HEAD", I'll let you two figure the best
+> approach out.
 
-> I still see this in the code:
->
->         if (!name || !*name || !strcmp(name, "HEAD"))
+I've solved the problem in the general case of symbolic-refs and made
+"@" a special case of that.
 
-Remove the !strcmp(name, "HEAD") and tell me what you see.  "HEAD"
-will get resolved just like any other symbolic ref, via the hunk I
-added.
+> One productive way forward might be to come up with a common test
+> script pieces to document what constructs that spell @ in place of
+> HEAD should be supported,
+
+It's sufficient to test that symbolic refs work properly.  @ is a
+trivial implementation of a pseudo symbolic-ref (see [5/5]).
+
+> and much more importantly, what constructs
+> that happen to have @ in them should not mistakenly trigger the new
+> machinery.
+
+At the parsing level, @ can only ever interfere with @{}; I've added
+tests for those.
