@@ -1,164 +1,131 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 3/5] sha1_name.c: simplify @-parsing in get_sha1_basic()
-Date: Wed, 1 May 2013 13:09:52 -0500
-Message-ID: <CAMP44s1tHC+i+Wug_UuPnprZNvaPgLMNBX9MZi49SFv4iO62SQ@mail.gmail.com>
+Subject: Re: [PATCH 4/5] remote.c: teach branch_get() to treat symrefs other
+ than HEAD
+Date: Wed, 1 May 2013 13:16:05 -0500
+Message-ID: <CAMP44s20F-QALd18VPHLF4Fj=eFFvXmkhC4XK__kxNhMoeN=ug@mail.gmail.com>
 References: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
-	<1367425235-14998-4-git-send-email-artagnon@gmail.com>
+	<1367425235-14998-5-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 20:10:02 2013
+X-From: git-owner@vger.kernel.org Wed May 01 20:16:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXbTa-0002CE-O4
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 20:09:59 +0200
+	id 1UXbZd-00086F-Gs
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 20:16:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753794Ab3EASJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 14:09:55 -0400
-Received: from mail-la0-f50.google.com ([209.85.215.50]:63716 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752073Ab3EASJy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 14:09:54 -0400
-Received: by mail-la0-f50.google.com with SMTP id fl20so1514204lab.23
-        for <git@vger.kernel.org>; Wed, 01 May 2013 11:09:52 -0700 (PDT)
+	id S1752703Ab3EASQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 14:16:10 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:61575 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752079Ab3EASQH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 14:16:07 -0400
+Received: by mail-lb0-f175.google.com with SMTP id w20so1690239lbh.34
+        for <git@vger.kernel.org>; Wed, 01 May 2013 11:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
          :subject:from:to:cc:content-type;
-        bh=iQr1rd3InISAGP7jMm4Y9MgHYNrpVg+o7pwCJRDKRVA=;
-        b=hj6C+cLbVJtumXQB+COkqe8YNC2DwnqbBsQ2IersO1EC3bbKk2pAFZPQJJVtXaRDnd
-         EVD78Xf7AArKcx992lQ9uqjWuAhGEZa+HhzJrcUrK8PdVBYBBGy26junxfYdqHBFFj8Y
-         ONggdJFlFjrdKkwRLsyX4tYKtPts5cba7mG56JXQMEqCgRt1z7t2kAZ+fiHO5ggoPeS8
-         KLjq20Rr63W0PTI0EGZcJvU7LNgBemIyYtY8ialL3mA2cm7ScCMps9uVUeOobub4SQRA
-         LN8D7xxt771ijX3cta/qA2z0nUWY7VR92Y9meH6evRNwlBG6DMshZXCc0Brwg8s2ws3D
-         EWnA==
-X-Received: by 10.152.29.132 with SMTP id k4mr1299447lah.46.1367431792304;
- Wed, 01 May 2013 11:09:52 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Wed, 1 May 2013 11:09:52 -0700 (PDT)
-In-Reply-To: <1367425235-14998-4-git-send-email-artagnon@gmail.com>
+        bh=x5ynj/SkrHVpLK2dtsFTkJE1C6/JzouHHVdp0+2i808=;
+        b=yb4tLDSeSzjTSCJr42Kz1CS/u5+kJgYZAxKgM/lG2IogcJj6abPPwD7u6sfA63FMYd
+         xn+MC0P8s4045f7NqDDcMon2fIGI4Lt1TJfwC65bAnifLHsMr84h1tKuAKq1x0OQ1iwN
+         OoBKZ7qgK3HMm+Bt8W3I5dIxf9z0VrwM3htbnKU81vUY58ShWBKGQzlD/r3n+TanGSWU
+         ADFEbmYLuL4TlSaNh6yGApQwOdxvKLnuTDubt72Z2fXozvMWPupfWQvU/BHLmPXZifAZ
+         CoxoaNabY7+hZpVsThcLnp+nYUONdFjcvgMOHZbm1aNjR3tK9odoOwoecZ9/7G96utGr
+         eoeQ==
+X-Received: by 10.152.3.137 with SMTP id c9mr1362101lac.5.1367432165148; Wed,
+ 01 May 2013 11:16:05 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Wed, 1 May 2013 11:16:05 -0700 (PDT)
+In-Reply-To: <1367425235-14998-5-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223109>
 
 On Wed, May 1, 2013 at 11:20 AM, Ramkumar Ramachandra
 <artagnon@gmail.com> wrote:
-> Presently, the logic for @-parsing is horribly convoluted.  Prove that
-> it is very straightforward by laying out the three cases (@{N},
-> @{u[upstream], and @{-N}) and explaining how each case should be
-> handled in comments.  All tests pass, and no functional changes have
-> been introduced.
-
-> @@ -463,9 +463,26 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->                  */
->                 for (at = len - 4; at >= 0; at--) {
->                         if (str[at] == '@' && str[at+1] == '{') {
-> +                               /* Set reflog_len only if we
-> +                                * don't see a @{u[pstream]}.  The
-> +                                * @{N} and @{-N} forms have to do
-> +                                * with reflog digging.
-> +                                */
-> +
-> +                               /* Setting len to at means that we are
-> +                                * only going to process the part
-> +                                * before the @ until we reach "if
-> +                                * (reflog)" at the end of the
-> +                                * function.  That is only applicable
-> +                                * in the @{N} case; in the @{-N} and
-> +                                * @{u[pstream]} cases, we will run it
-> +                                * through interpret_branch_name().
-> +                                */
-> +
-
-Overkill.
-
-/* set reflog_len when using the form: @{N} */
-
-> @@ -476,22 +493,34 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->         if (len && ambiguous_path(str, len))
->                 return -1;
+> Currently, branch_get() either accepts either a branch name, empty
+> string, or the magic four-letter word "HEAD".  Make it additionally
+> handle symbolic refs that point to a branch.
 >
-> -       if (!len && reflog_len) {
-> -               struct strbuf buf = STRBUF_INIT;
-> -               int ret;
-> -               /* try the @{-N} syntax for n-th checkout */
-> -               ret = interpret_branch_name(str+at, &buf);
-> -               if (ret > 0) {
-> -                       /* substitute this branch name and restart */
-> -                       return get_sha1_1(buf.buf, buf.len, sha1, 0);
-> -               } else if (ret == 0) {
-> -                       return -1;
-> +       if (reflog_len) {
-> +               if (!len)
-> +                       /* In the @{N} case where there's nothing
-> +                        * before the @.
-> +                        */
-
-I think !len makes it clear.
-
-> +                       refs_found = dwim_log("HEAD", 4, sha1, &real_ref);
-> +               else {
-> +                       /* The @{N} case where there is something
-> +                        * before the @ for dwim_log to figure out,
-> +                        * and the @{-N} case.
-> +                        */
-
-I think 'else' makes it clear.
-
-> +                       refs_found = dwim_log(str, len, sha1, &real_ref);
+> Update sha1_name.c:interpret_branch_name() to look for "@{", not '@'
+> (since '@' is a valid symbolic ref).
+>
+> These two changes together make the failing test in t1508
+> (at-combinations) pass.  In other words, you can now do:
+>
+>     $ git symbolic-ref @ HEAD
+>
+> And expect the following to work:
+>
+>     $ git rev-parse @@{u}
+>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  remote.c                   | 14 ++++++++++++++
+>  sha1_name.c                |  2 +-
+>  t/t1508-at-combinations.sh |  2 +-
+>  3 files changed, 16 insertions(+), 2 deletions(-)
+>
+> diff --git a/remote.c b/remote.c
+> index 68eb99b..0f44e2e 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -1470,6 +1470,20 @@ struct branch *branch_get(const char *name)
+>                 ret = current_branch;
+>         else
+>                 ret = make_branch(name, 0);
 > +
-> +                       if (!refs_found && str[2] == '-') {
+> +       if (name && *name && (!ret || !ret->remote_name)) {
+> +               /* Is this a symref pointing to a valid branch, other
+> +                * than HEAD?
+> +                */
+> +               const char *this_ref;
+> +               unsigned char sha1[20];
+> +               int flag;
+> +
+> +               this_ref = resolve_ref_unsafe(name, sha1, 0, &flag);
+> +               if (this_ref && (flag & REF_ISSYMREF) &&
+> +                       !prefixcmp(this_ref, "refs/heads/"))
+> +                       ret = make_branch(this_ref + strlen("refs/heads/"), 0);
+> +       }
 
-You are changing the behavior, there's no need for that in this
-reorganization patch.
+But why? I'm not familiar with branch_get, but my intuition tells me
+you are changing the behavior, and now branch_get() is doing something
+it wasn't intended to do. And for what?
 
-> +                               /* The @{-N} case that resolves to a
-> +                                * detached HEAD (ie. not a ref)
-> +                                */
+Your rationale is that it fixes the test cases below, but that's not
+reason enough, since there are other ways to fix them, as my patch
+series shows.
 
-This is not true, it resolves to a ref.
+>         if (ret && ret->remote_name) {
+>                 ret->remote = remote_get(ret->remote_name);
+>                 if (ret->merge_nr) {
+> diff --git a/sha1_name.c b/sha1_name.c
+> index f30e344..c4a3a54 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -1060,7 +1060,7 @@ int interpret_branch_name(const char *name, struct strbuf *buf)
+>                 return ret - used + len;
+>         }
+>
+> -       cp = strchr(name, '@');
+> +       cp = strstr(name, "@{");
 
-git rev-parse --symbolic-full-name @{-1}
+This might make sense, but it feels totally sneaked in.
 
-Also, you removed a useful comment:
+>         if (!cp)
+>                 return -1;
+>         tmp_len = upstream_mark(cp, namelen - (cp - name));
 
-/* try the @{-N} syntax for n-th checkout */
-
-> +                               struct strbuf buf = STRBUF_INIT;
-> +                               if (interpret_branch_name(str, &buf) > 0) {
-> +                                       get_sha1_hex(buf.buf, sha1);
-> +                                       refs_found = 1;
-> +                                       reflog_len = 0;
-> +                               }
-> +                               strbuf_release(&buf);
-
-I'm pretty sure this is doing something totally different now. This is
-certainly not "no functional changes".
-
-> +                       }
->                 }
-> -               /* allow "@{...}" to mean the current branch reflog */
-> -               refs_found = dwim_ref("HEAD", 4, sha1, &real_ref);
-> -       } else if (reflog_len)
-> -               refs_found = dwim_log(str, len, sha1, &real_ref);
-> -       else
-> +       } else
-> +               /* The @{u[pstream]} case */
-
-It's not true, there might not be any @{u} in there.
-
-Some of these changes might be good, but I would do them truly without
-introducing functional changes, without removing useful comments, and
-without adding paragraphs of explanation for what you are doing.
-
-With the principle of self-documenting code, if you need paragraphs to
-explain what you are doing, you already lost.
+I think these are two patches should be introduced separately, and
+with a reason for them to exist independent of each other.
 
 Cheers.
 
