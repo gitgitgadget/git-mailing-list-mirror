@@ -1,120 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Add new @ shortcut for HEAD
-Date: Wed, 01 May 2013 15:08:03 -0700
-Message-ID: <7vsj264am4.fsf@alter.siamese.dyndns.org>
-References: <1367401888-21055-1-git-send-email-felipe.contreras@gmail.com>
-	<7vr4hq7fjy.fsf@alter.siamese.dyndns.org>
-	<CAMP44s16X8c_5GgW=ZcA9wrd=oHAiVDZFWxqiGmysaUJckZ5wQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] help: add help_unknown_ref
+Date: Wed, 01 May 2013 15:12:13 -0700
+Message-ID: <7vobcu4af6.fsf@alter.siamese.dyndns.org>
+References: <1367407327-5216-1-git-send-email-vikrant.varma94@gmail.com>
+	<1367407327-5216-2-git-send-email-vikrant.varma94@gmail.com>
+	<CALkWK0nMMi-nmAMUGXCaJDCV29G3dOzYTosKqSw+bFzc0osiaA@mail.gmail.com>
+	<51817319.6060201@gmail.com>
+	<CALkWK0nJSoBoAXR=ViGan6keFzXjmDGkfKqqWkTHqF89mHDDOQ@mail.gmail.com>
+	<51818CFA.9030305@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 02 00:08:13 2013
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
+To: Vikrant Varma <vikrant.varma94@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 02 00:12:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXfC8-0006NO-JD
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 00:08:12 +0200
+	id 1UXfGA-0001R1-F7
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 00:12:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758068Ab3EAWII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 18:08:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63250 "EHLO
+	id S1757580Ab3EAWMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 18:12:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39088 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757580Ab3EAWIG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 18:08:06 -0400
+	id S1755978Ab3EAWMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 18:12:17 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FB671B29D;
-	Wed,  1 May 2013 22:08:06 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2F0B1B43A;
+	Wed,  1 May 2013 22:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7LLb/PBaGV4pnRRs7atX81aFDMk=; b=DCUPmb
-	BHkXHgKGSvNSuCOtHv34LkktHYBK8osilhCiynw9/wIfVNNsF2VDe1hC+SO0I7cL
-	aVq6TymWAV1/9el8EmesTK04niRy90qEFqzln7SUq5PciDEXhXqoPrLnkf2uDksT
-	I4rBByvnUdJzhH+qSGpWZ3eWsruGbUwt3cuLk=
+	:content-type; s=sasl; bh=fLeciEUanB4BYKdCiC0sC1xnmt8=; b=MAcBTj
+	ZLfcXm6I58dfM5j0ZOCWcd9c91uqLYSneg83b5T2yhdNPoQwkbG0kHRc/A7xDCkx
+	8AIzg0SYjupHhbLE5kHs33QSMk2RwDwsHbakV4zmbNpzs/z4eDAzJj+TVWp6EXeU
+	1ncQQ0fp8FVIzaqlpQSNyDCm9GGYGYG/nKgi8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WQHZjcKn3gmW48GkVIeRTCH/IFFKhK6O
-	L/f1saOTCxVbjULGV75aVROS3IFhyBGDDcEEeFEakWHuCfat2m8Y3Wi9UtJBV8n7
-	Awttc7HTkMX1SzoiXohS6iTIf5+hrPfIg71HkSsDZO8igKGa2VYPY+NE7oyeHupg
-	EqZgMeyGsdU=
+	:content-type; q=dns; s=sasl; b=Itpl1LZuFgPiv13lkiHhwmljsD2sX6eZ
+	Tvlm/W3WmPvfSMZYLrhx2olI5+MCKGNp2sFTVGTS7s0+5lsNHyu5JwLeOXtijKp4
+	RVdmABMIMOk/zwrpQ8ZxEzCbKWegeS03nC6klB5JSTHRR/SfAAp35zLRvg8wcrZY
+	5vzwCfK3FmE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 058ED1B29C;
-	Wed,  1 May 2013 22:08:06 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA17F1B439;
+	Wed,  1 May 2013 22:12:16 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78C6D1B29B;
-	Wed,  1 May 2013 22:08:05 +0000 (UTC)
-In-Reply-To: <CAMP44s16X8c_5GgW=ZcA9wrd=oHAiVDZFWxqiGmysaUJckZ5wQ@mail.gmail.com>
-	(Felipe Contreras's message of "Wed, 1 May 2013 13:33:43 -0500")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6C4BF1B432;
+	Wed,  1 May 2013 22:12:15 +0000 (UTC)
+In-Reply-To: <51818CFA.9030305@gmail.com> (Vikrant Varma's message of "Thu, 02
+	May 2013 03:15:30 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 994445CC-B2AB-11E2-A9E5-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2E3E9FEC-B2AC-11E2-8A73-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223154>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Vikrant Varma <vikrant.varma94@gmail.com> writes:
 
-> On Wed, May 1, 2013 at 12:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> So HEAD@{0}~0^0 is too much to type, but we can remove '^0', and we can
->>> remove '~0', and we can remove 'HEAD', which leaves us with @{0}, but we
->>> can't remove '{0}'?
+> On 02-05-2013 02:02, Ramkumar Ramachandra wrote:
+>>> ref_cb.similar_refs has already been defined. The compiler won't let me
+>>> assign to it unless I cast first. However, I think compound literals are a
+>>> C99/gcc feature. Is this better?
 >>>
->>> This patch allows '@' to be the same as 'HEAD'.
+>>>          struct similar_ref_cb ref_cb = {ref, STRING_LIST_INIT_NODUP};
 >>
->> While the above reasoning is cute, it is misleading.
+>> As Johannes pointed out, ref is a variable and that is problematic.
+>> Leave the cast on: I didn't notice the compiler warning in my head.
 >>
->> If you start from HEAD@{1}~0^0, we can remove '^0', we can remove
->> '~0', but you cannot remove HEAD from the remaining "HEAD@{1}"
->> without changing what it means.  @{1} is where the current branch
->> was, while HEAD@{1} is where you were---they are different when you
->> have just did "git checkout anotherbranch".  HEAD@{1} is the tip of
->> your previous branch, @{1} is where anotherbranch was before its tip
->> became the commit you have checked out.
->
-> Replace @{1} with @{u} and it holds.
+> Is it okay to use a compound literal? It's not supported in C89.
 
-Yes and no.  Starting from HEAD@{u}~0^0, we can remove ^0 and ~0,
-and you remove HEAD from the remaining "HEAD@{u}" to get @{u} and
-all of them still mean the same thing.  It is the other branch your
-current branch is integrating with.
+Building on top of what was suggested in the other message, the
+helper could be made more reusable by doing something like this:
 
-But that decomposition does not get you to HEAD which is the final
-destination you want to reach.  As soon as you drop the remaining
-{u}, it suddenly changes the meaning and start referring to the
-current branch.
+	int suggest_misspelt_ref(const char *ref, struct string_list *suggested);
 
->> So I'd suggest toning it down, perhaps something like this:
->>
->>         Even though we often can do without having to type "HEAD",
->>         e.g. "git log origin.." substitutes missing RHS with "HEAD",
->>         sometimes we still do need to type "HEAD" (thats six f*cking
->>         keystrokes "Caps Lock", "H", "E", "A", "D" and finally "Caps
->>         Lock").
->
-> I don't know what RHS means, and I don't use caps lock :)
+and the caller can do
 
-"right hand side"?  You can say "Hold down Shift", H, E, A, D and
-"Release Shift" ;-).
+	if (!commit) {
+		struct string_list suggested = STRING_LIST_INIT;
+                if (suggest_misspelt_ref(argv[1], &suggested)) {
+                	... Did you mean one of these??? ...
+			string_list_clear(&suggested);
+		}
+                die(_("'%s' is not something we can merge'), argv[1]);
+	}
 
->>         That is four keystrokes too many to name an often needed
->>         reference.  Make "@" usable as its synonym.
->
-> Yeah, that's nice, but doesn't explain why "@", and why not something else.
-
-The thing is, HEAD@{0}~0^0 nor HEAD@{u}~0^0 is not a valid
-explanation why it is "@", either.
-
-But that does _not_ mean "@" is a good choice.  Nor the explanation
-has to be based on the "starting from this and strip" progression.
-
-"@" is already special and is familiar to users when specifying a
-ref, and that is a good enough reason (you can of course say that in
-the log message).
+So I think this point is moot.  Of course, similar_ref_cb needs to
+be updated to keep a pointer to an existing string_list, not an
+instance of its own string_list.
