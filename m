@@ -1,116 +1,97 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3] Add support for -i/--interactive to git-clean
-Date: Wed, 01 May 2013 17:12:04 +0200
-Message-ID: <vpq38u6n397.fsf@grenoble-inp.fr>
-References: <CANYiYbHKWv6R2vtwG=bTNhj8q0iC4EBt8usC3posBCtYBTXOvA@mail.gmail.com>
-	<3ecc9ca1b1363b5bd27ae53cbf5899ce6d44cd48.1367349734.git.worldhello.net@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 0/5] A natural solution to the @ -> HEAD problem
+Date: Wed,  1 May 2013 21:50:30 +0530
+Message-ID: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 17:14:13 2013
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 01 18:20:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXYjS-0002at-T1
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 17:14:11 +0200
+	id 1UXZld-0006Jq-C3
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 18:20:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754134Ab3EAPOG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 11:14:06 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:36262 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752938Ab3EAPOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 11:14:04 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r41FC20O009634
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 1 May 2013 17:12:02 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UXYhQ-0004n9-MP; Wed, 01 May 2013 17:12:04 +0200
-In-Reply-To: <3ecc9ca1b1363b5bd27ae53cbf5899ce6d44cd48.1367349734.git.worldhello.net@gmail.com>
-	(Jiang Xin's message of "Wed, 1 May 2013 03:25:11 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 01 May 2013 17:12:03 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r41FC20O009634
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1368025924.0882@ZzHZq++aE9oIoY66NSzxoQ
+	id S1756269Ab3EAQUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 12:20:25 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:54490 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755774Ab3EAQUX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 12:20:23 -0400
+Received: by mail-pd0-f172.google.com with SMTP id 4so897832pdd.3
+        for <git@vger.kernel.org>; Wed, 01 May 2013 09:20:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=vGeOcrINroTAVQzCXKDxOI8BPU32sC28ZcrIIZTCq4U=;
+        b=lYhoQwiciEUWCg3DVPoPjQY+IA1HrUpJinad9bw59RbUJ7CcW0TuRU2gRwb71Tyg0L
+         Rk9xiKCf2lJSS5u0Ik6Ubtdb0uftE+omW9IIRqmAaSu07qiZTdLio9mDZ02IQ6Uxgll/
+         X8USTWOatiPzv7jne7medNHW9YY5rkdHFI6mD/y+pQxSghGqC1bwaU5McFftQ6P8KF/c
+         e+UYFFG8JxUwexnBv7gyfCqlKt6JIOXJAn5h0J/yxlAiZv+PNWzuI/AHeYjqlcWqYU6e
+         ImFtyUCOHSI7dcuEBFcesOBS+N7O8VGFAH2lT39Vr/OJ2m3gxHCWkudMOaKdlp4S52wQ
+         blsw==
+X-Received: by 10.68.224.65 with SMTP id ra1mr4840834pbc.103.1367425223243;
+        Wed, 01 May 2013 09:20:23 -0700 (PDT)
+Received: from localhost.localdomain ([122.164.132.210])
+        by mx.google.com with ESMTPSA id sg4sm3549741pbc.7.2013.05.01.09.20.20
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 01 May 2013 09:20:22 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc0.24.g6456091
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223094>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Hi,
 
-> Show what would be done and the user must confirm before actually
-> cleaning. In the confirmation dialog, the user has three choices:
->
->  * Yes: Start to do cleaning.
->  * No:  Nothing will be deleted.
->  * Edit (default): Enter edit mode.
+Felipe's approach to solving the problem is a recursive reinterpret()
+that relies on parsing the sequence @[^{].  Seems like quite a
+contrived hack, and I think we can do much better than this.
 
-I like this much more than the previous one. I played with it a bit, and
-found it much more pleasant than "rm -i": by default, only one querry,
-but still an option to select which files to clean.
+Here, I present my approach to solving the problem.  It interprets @
+just like a ref in resolve_ref_unsafe(), after everything else has
+been peeled off; the solution is just the few simple lines shown in
+[5/5].
 
-I'm wondering whether "Enter" in the edit mode should return to the
-yes/no/Edit querry instead of applying the clean. It would make it clear
-for the user that it's still possible to cancel completely (the
-Control-C hint is not visible in the UI otherwise).
+The core of the series tackles refactoring the @-parsing so that [5/5]
+becomes possible without doing anything contrived.  [1/5] introduces
+the problem I started solving: making symbolic refs work properly.
+[2/5] and [3/5] are a result of me reading through the horrible
+@-parsing code.  [4/5] finally solves the symbolic ref problem, and
+[5/5] becomes trivial.
 
-> Reviewed-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+A side-effect of the series is that you can now do:
 
-Please, no. I already mentionned it in my previous patch, but I did not
-review the patch. See SubmittingPatches:
+    $ git symbolic-ref H HEAD
+    $ git show H@{u}
 
-  3. "Reviewed-by:", unlike the other tags, can only be offered by the
-     reviewer and means that she is completely satisfied that the patch
-     is ready for application.  It is usually offered only after a
-     detailed review.
+In other words, symbolic refs actually work now and you can use them
+to achieve a lot of custom overrides.  I think it is a step in the
+right direction.
 
-Commenting != reviewing.
+Thanks for listening, and hope you enjoy reading the series as much as
+I enjoyed writing it.
 
-> +		/* dels list may become empty when we run string_list_remove_empty_items later */
-> +		if (!dels->nr)
-> +			break;
+Ramkumar Ramachandra (5):
+  t1508 (at-combinations): more tests; document failures
+  sha1_name.c: don't waste cycles in the @-parsing loop
+  sha1_name.c: simplify @-parsing in get_sha1_basic()
+  remote.c: teach branch_get() to treat symrefs other than HEAD
+  refs.c: make @ a pseudo-ref alias to HEAD
 
-This happens when the user removed everything from the list in the edit
-mode. This could print something before breaking (and then exiting
-silently). Maybe "No more files to clean, exiting." or so.
-
-> +			printf(_("Remove (yes/no/Edit) ? "));
-> +			strbuf_getline(&confirm, stdin, '\n');
-> +			strbuf_trim(&confirm);
-> +			if (confirm.len) {
-> +				if (!strncasecmp(confirm.buf, "yes", confirm.len)) {
-> +					break;
-> +				} else if (!strncasecmp(confirm.buf, "no", confirm.len)) {
-> +					string_list_clear(dels, 0);
-> +					break;
-> +				}
-> +			}
-> +			edit_mode = 1;
-
-It's weird that anything but "yes" and "no" enter the edit mode without
-complaining. It's safe, but surprising. If I type "foo", I'd rather get
-an error and be asked again.
-
-> +		if (!matches) {
-> +			strbuf_addf(&message, _("WARNING: Cannot find items prefixed by: %s"), confirm.buf);
-
-"prefixed" seems a remainder of the previous version of the patch. You
-probably mean "matched by: %s".
+ Documentation/git-check-ref-format.txt |  2 +
+ Documentation/revisions.txt            |  8 +++-
+ refs.c                                 | 12 ++++-
+ remote.c                               | 14 ++++++
+ sha1_name.c                            | 85 +++++++++++++++++++++++++---------
+ t/t1400-update-ref.sh                  |  3 ++
+ t/t1508-at-combinations.sh             | 15 ++++++
+ 7 files changed, 113 insertions(+), 26 deletions(-)
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.8.3.rc0.24.g6456091
