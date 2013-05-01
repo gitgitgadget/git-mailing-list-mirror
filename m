@@ -1,93 +1,89 @@
-From: Ilya Basin <basinilya@gmail.com>
-Subject: Re[2]: [PATCH 4/5] git-svn: fix bottleneck in stash_placeholder_list()
-Date: Wed, 1 May 2013 12:31:53 +0400
-Message-ID: <1409591910.20130501123153@gmail.com>
-References: <1438528085.20130501090926@gmail.com>
-Reply-To: Ilya Basin <basinilya@gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] refs.c: interpret @ as HEAD
+Date: Wed, 1 May 2013 10:35:00 +0200
+Message-ID: <87li7zcd3f.fsf@hexa.v.cablecom.net>
+References: <1367324685-22788-1-git-send-email-artagnon@gmail.com>
+	<87zjwguq8t.fsf@linux-k42r.v.cablecom.net>
+	<20130430150430.GA13398@lanh>
+	<7vehdsf19m.fsf@alter.siamese.dyndns.org>
+	<CACsJy8B3PpzidvAHado=y3ZromzROidmHh_OW9ZCOoFegzmQ3Q@mail.gmail.com>
+	<CALkWK0nnmzV0dcZ9avO9zDPhnQh9wkF7stA77cNycoXfecfUuw@mail.gmail.com>
+	<CACsJy8CZ8E-ASmo237rRbYR7pqoseo-NpU6jVrg6Rvd9qSY01w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Ray Chen <rchen@cs.umd.edu>,
-	Eric Wong <normalperson@yhbt.net>
-To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 01 10:33:43 2013
+Content-Type: text/plain
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 01 10:35:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXSTt-0007yA-1B
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 10:33:41 +0200
+	id 1UXSVQ-00018j-Cz
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 10:35:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754024Ab3EAIdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 04:33:37 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:51885 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751219Ab3EAIde (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 04:33:34 -0400
-Received: by mail-la0-f42.google.com with SMTP id eb20so1166449lab.29
-        for <git@vger.kernel.org>; Wed, 01 May 2013 01:33:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
-         :subject:in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=5r6P8hJWdePij4V9d8txGjEpbwX4lGH1iXRd1WwO5AE=;
-        b=Sd+q4e2l3cXPXoyoRLTw4JEvnXiTurjdqb0PdeHUxxGHgqiXEHYUbY2rc4QCQ9wRJy
-         3Ctbg4D5ja44OO1tyBopj8302StbCiPJrQZD+G9afcS63A3mWE1oWA/mH//dFNOf8wBo
-         L964ClbRE1nxcrHY6bUKZNlKYz7s9VHIW3V7ayaSlSmcbbU2QHyULF3mCZfXj/S3k3k/
-         XN4nAospzFPPh2Gg5yhTNRSaEFPt3JxI7EkKSuBwlAUngObe6KO0DUupDJurle+oFGwq
-         xhTgh1zfKFebjDpXe3H6a/ux18kzu5m6U+208Ie1X6G4WDIxEaE26u2LSYVHHvlUxA4G
-         58TQ==
-X-Received: by 10.112.5.137 with SMTP id s9mr859437lbs.68.1367397213008;
-        Wed, 01 May 2013 01:33:33 -0700 (PDT)
-Received: from [192.168.0.78] (92-100-238-23.dynamic.avangarddsl.ru. [92.100.238.23])
-        by mx.google.com with ESMTPSA id l20sm855023lbv.9.2013.05.01.01.33.30
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 01 May 2013 01:33:31 -0700 (PDT)
-X-Mailer: Voyager (v3.99.4) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <1438528085.20130501090926@gmail.com>
+	id S1754202Ab3EAIfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 04:35:12 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:45783 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751219Ab3EAIfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 04:35:09 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 1 May
+ 2013 10:35:01 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 1 May
+ 2013 10:35:05 +0200
+In-Reply-To: <CACsJy8CZ8E-ASmo237rRbYR7pqoseo-NpU6jVrg6Rvd9qSY01w@mail.gmail.com>
+	(Duy Nguyen's message of "Wed, 1 May 2013 09:18:41 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223076>
 
-IB> In my repo the placeholders change too often (in 1/4 commits). I'm
-IB> thinking of using:
-IB> 'git config --unset "svn-remote.$repo_id.added-placeholder" path_regex'
-IB> instead of full rewrite.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-I need your help. There are still problems:
+> On Wed, May 1, 2013 at 12:15 AM, Ramkumar Ramachandra
+> <artagnon@gmail.com> wrote:
+>> Duy Nguyen wrote:
+>>> We could put still ref aliases
+>>> into the same ref namespace, with lower precedence that actual refs,
+>>> so no new syntax required.
+>>
+>> Actually, ref-alises are the right way to solve the problem.
+>> Recursive symref peeling is a bad idea: I can't take my aliases with
+>> me, and they complicate unnecessarily.
+>>
+>> Any thoughts on how to implement it?  Should it go as deep as
+>> resolve_ref_unsafe()?
+>
+> Depends on how you define ref alias. resolve_ref_unsafe allows you to
+> substitute one ref with another. Thomas was talking about substituting
+> part of extended sha-1 syntax (U -> @{u}) so it can't be done down
+> there. I still think get_sha1_with_context_1() is the right place.
+> Still not so sure how to handle when we have both alias "U" and
+> refs/heads/U.
 
-    $ grep "define MAX_MATCHES" ~/builds/git/git-git/config.c
-    #define MAX_MATCHES 8192
+Well, I'm not sure about the semantics that I want.  But so far I am
+*pretty* sure that I don't want it to be parameterized / part of another
+ref.
 
-    $ grep added-placeholder .git/config | wc -l
-    4430
+So I'm fine with looking at *just* the alias, and resolving that to a
+SHA1, and going from there.  So assuming U = @{u} and H = HEAD, you'd be
+allowed to say U^ or U..H but not HU or H@U or whatever contortionate
+syntax that would need.
 
-1/4 commits change the list of placeholders, usually 1 folder changes.
-Clearing and re-adding the entries to the config takes ~1 minute.
-Pressing Ctrl-C at this time makes the list incomplete.
-
-Re-adding all entries using 'config --add' is slow.
-Does Git::config package have tools to modify multiple entries at once?
-I wonder why 'git config --get-all' is used instead of some
-Git::config routine.
-
-Otherwise, to make this atomic, I think, the modification should be made
-to a backup config file, then it should replace .git/config (or
-rewrite it with signals blocked).
-
-How to determine GIT_DIR from Fetcher.pm?
-
-maybe I can simply append a duplicate section
-'[svn-remote "svn"]'. But then I would need to escape the values
-myself.
-
-Also, git --unset-all leaves one empty section: '[svn-remote "svn"]'
-Is it a bug?
+As for the collisions, not sure which one is better.  Probably having
+the same semantics as command aliases would be less confusing, i.e.,
+existing refs take precedence.
 
 -- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
