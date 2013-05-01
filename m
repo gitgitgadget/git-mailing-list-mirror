@@ -1,96 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/5] sha1_name.c: simplify @-parsing in get_sha1_basic()
-Date: Wed, 1 May 2013 11:54:14 -0700
-Message-ID: <20130501185414.GN24467@google.com>
-References: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
- <1367425235-14998-4-git-send-email-artagnon@gmail.com>
- <CAMP44s1tHC+i+Wug_UuPnprZNvaPgLMNBX9MZi49SFv4iO62SQ@mail.gmail.com>
- <CALkWK0nTSMYvh8VMgQ6Q0EoPMmRa2vyodz+tDmpPp1d6KYmq8w@mail.gmail.com>
+From: Konstantin Khomoutov <kostix+git@007spb.ru>
+Subject: Re: Important articles on git-scm.com no more accessible
+Date: Wed, 1 May 2013 22:57:51 +0400
+Message-ID: <20130501225751.2959d21bf6dbf38579192315@domain007.com>
+References: <20130501212839.c3c5df55da71c69fe11bf5f3@domain007.com>
+	<20130501183801.GA2175@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 20:54:27 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Konstantin Khomoutov <kostix+git@007spb.ru>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 01 20:58:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXcAa-0001Yn-Kn
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 20:54:24 +0200
+	id 1UXcE9-0004wO-1h
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 20:58:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756171Ab3EASyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 14:54:20 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:43004 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755776Ab3EASyT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 14:54:19 -0400
-Received: by mail-pd0-f172.google.com with SMTP id 4so953694pdd.17
-        for <git@vger.kernel.org>; Wed, 01 May 2013 11:54:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=1ExeLXFLnfUArJv6Qzwox0aKhEXP6kNCvVvEfZeTAPs=;
-        b=Qf2fHYhy+7xUr1ud5cyKRUumNMZjJJU+j8LaQSaKVFWV7nepT/iyEK3/ZPhl8/ln1e
-         R8r7hkaXhsFoSU8RJq2Lms9QatKHY0T3RKpI7QMA07b4HHri5uYFEMGqrHk2+lAeUXr7
-         Twr1iuMHWks1wNqXgMKOhnd6a38U9bCsl645ji6ZW1jmQlubE3g0wAM/cLYQ/CC8tUmz
-         DiVB1z1I8ZFVghvGjrwr0bN4B591rWOCLYRB+qH7R/YurR4/0Z4QcgsLskEUgsq8NSWI
-         2y2XZaBzrkIiA4HExlSRji2591A57ZJ5gp/bdA+j/KUsN2oiObLX2b1LeOLJBgEZTpRQ
-         E/bw==
-X-Received: by 10.66.13.35 with SMTP id e3mr6304360pac.186.1367434458881;
-        Wed, 01 May 2013 11:54:18 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id z8sm3958964pbt.23.2013.05.01.11.54.16
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 01 May 2013 11:54:17 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0nTSMYvh8VMgQ6Q0EoPMmRa2vyodz+tDmpPp1d6KYmq8w@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756734Ab3EAS6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 14:58:01 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:51746 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756048Ab3EAS57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 14:57:59 -0400
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r41IvpP1031305;
+	Wed, 1 May 2013 22:57:52 +0400
+In-Reply-To: <20130501183801.GA2175@sigill.intra.peff.net>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223125>
 
-Ramkumar Ramachandra wrote:
+On Wed, 1 May 2013 14:38:02 -0400
+Jeff King <peff@peff.net> wrote:
 
-> [1]: https://www.ohloh.net/p/git/factoids#FactoidCommentsLow
+[...]
+> > Recently I discovered that a number of useful articles which sort of
+> > accompanied the "Pro Git" book are now inaccessible (404), namely:
+> > "Smart HTTP Transport" [1], "Reset Demystified" [2], "Note to
+> > Self" [3] and "Git Loves the Environment" [4].  I wonder if this is
+> > a known problem and/or whom I could contact about this issue?
+> > 
+> > 1. http://git-scm.com/2010/03/04/smart-http.html
+> > 2. http://git-scm.com/2011/07/11/reset.html
+> > 3. http://git-scm.com/2010/08/25/notes.html
+> > 4. http://git-scm.com/2010/04/11/environment.html
+> 
+> I think those links were broken by the site reorganization about a
+> year ago. You can get to them at:
+> 
+>   http://git-scm.com/blog/2010/03/04/smart-http.html
 
-Since this has been coming up from time to time:
+Oh, I was about to respond that links I referred to are returned by
+Google search for their respective article titles (it did so
+yesterday).  So I went to verify this and just observed that Google
+started to return liks pointing to (supposedly) Scott Chacon's site,
+like
 
-I have nothing against including helpful comments where appropriate.
-But one aspect which that factoid misses is that git has some very
-detailed, very dense documentation available in its commit log.  Tools
-like "git gui blame" and "git log -S" can show detailed historical
-information about the purpose of every line of code.  A nice feature
-of such documentation is that it is in a context where it cannot fall
-out of date.
+  http://scottchacon.com/2011/07/11/reset.html
 
-So for example I can do
+for the "Reset demystified" article.  Hence I suppose Scott was
+just transferring those articles to their new home.
 
-	$ git log -S'if (len && ambiguous_path(str, len))' -- sha1_name.c
-	commit 11cf8801
-	Author: Nicolas Pitre <nico@cam.org>
-	Date:   Thu Feb 1 17:29:33 2007 -0500
+> and so on. In general, problems with git-scm.com should be reported
+> at:
+> 
+>   https://github.com/github/gitscm-next
 
-	    provide a nice @{...} syntax to always mean the current branch reflog
-
-	    This is shorter than HEAD@{...} and being nameless it has no semantic
-	    issues.
-
-	    Signed-off-by: Nicolas Pitre <nico@cam.org>
-	    Signed-off-by: Junio C Hamano <junkio@cox.net>
-
-and then "git show 11cf8801" will show me exactly what change prompted
-that "len" test.
-
-The same is true of the Linux kernel, too.
-
-Hope that helps,
-Jonathan
+Thanks!
