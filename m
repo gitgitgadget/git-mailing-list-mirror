@@ -1,110 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5] git-svn: fix bottleneck in stash_placeholder_list()
-Date: Wed, 01 May 2013 10:09:59 -0700
-Message-ID: <7vhaim8w48.fsf@alter.siamese.dyndns.org>
-References: <1438528085.20130501090926@gmail.com>
-	<1409591910.20130501123153@gmail.com>
+Subject: Re: [PATCH] contrib/subtree: don't delete remote branches if split fails
+Date: Wed, 01 May 2013 10:13:49 -0700
+Message-ID: <7vd2ta8vxu.fsf@alter.siamese.dyndns.org>
+References: <397ab75eeb9d1c60f418b1ded23d8de04cf16251.1367396752.git.john@keeping.me.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git mailing list <git@vger.kernel.org>,
-	Ray Chen <rchen@cs.umd.edu>, Eric Wong <normalperson@yhbt.net>
-To: Ilya Basin <basinilya@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 01 19:10:23 2013
+Cc: git@vger.kernel.org, "David A. Greene" <greened@obbligato.org>,
+	Steffen Jaeckel <steffen.jaeckel@stzedn.de>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed May 01 19:13:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXaXo-0002bU-T4
-	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 19:10:17 +0200
+	id 1UXabM-00063G-Nh
+	for gcvg-git-2@plane.gmane.org; Wed, 01 May 2013 19:13:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754354Ab3EARKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 13:10:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53426 "EHLO
+	id S1754600Ab3EARNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 13:13:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51085 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753844Ab3EARKD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 13:10:03 -0400
+	id S1754053Ab3EARNv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 13:13:51 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E99DA1B964;
-	Wed,  1 May 2013 17:10:01 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D2DB1BA9D;
+	Wed,  1 May 2013 17:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YCqMCV3raU17MYEhbbFLMa1eKA4=; b=GNiVa4
-	kcaweV9zDcLAmlu8I0B2e9stC89FwPSesSWV+61QfrYaGHhRoyNTEfSD4FdBoqM8
-	s+8QMJOG9AqD2x3q2eclEj7j4dNGq1EIJ79zwHlVKTKuhiIzqGZE7RCvzusB1O65
-	dqCBGFkjCECp9chdN0tsa1w/Ll3jH4JWe0tOU=
+	:content-type; s=sasl; bh=HbcUaH+B8xq8Bm6nYDGeubSP8Y8=; b=d43sz2
+	MOYoF7wcVD2gIS7Cm+7kzQAXTRzB6MC48nLpfd8Q2WaZVb3PNIPd/Bi5y+sOAW8P
+	XbBALP1lnMNgrGCMHDI/d9B/1OvcUVgJEZPPZdVut4Ea142oVyOz+tsUM8QZQ8Uq
+	sghyGdoVE+ZTQti6tigQh9jrmM25kktLzDk+Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J1RVomeMaPZtdMfiolg0PSqmGb6C2Ubm
-	4ilNzKTnvQADFWhXmcbL2wW1mHZbYflemI8Xa4F26HiLuk7BUfSzi1x6iBUROAy4
-	DA2X+1aU/vTrZwzjhQSDGW0MeiO+DJfUlRYYA2YuvMP6nF7sz8IPu9PlOHrXu9I3
-	Ww6cURG8tTU=
+	:content-type; q=dns; s=sasl; b=s6MGM6PredEXoGuiN8YRBpHEoLDN3z2m
+	4zRoIl/veZ4F3fryEJHJbfbQHW6M9oIwzonRHMV9dmh7j+j+1i+gvS6+bvpwJhk4
+	WS6vGFzU7b/WkkpMl5dkHuVbsFiRbI0G2kmAC4jUXMN04AsMffZABt6qT15+8SWs
+	VU30rRqP1pM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E0CC01B963;
-	Wed,  1 May 2013 17:10:01 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6194A1BA9C;
+	Wed,  1 May 2013 17:13:51 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4B5881B95F;
-	Wed,  1 May 2013 17:10:01 +0000 (UTC)
-In-Reply-To: <1409591910.20130501123153@gmail.com> (Ilya Basin's message of
-	"Wed, 1 May 2013 12:31:53 +0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BFBFD1BA9B;
+	Wed,  1 May 2013 17:13:50 +0000 (UTC)
+In-Reply-To: <397ab75eeb9d1c60f418b1ded23d8de04cf16251.1367396752.git.john@keeping.me.uk>
+	(John Keeping's message of "Wed, 1 May 2013 09:25:52 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F5753736-B281-11E2-A3D9-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7E3D148A-B282-11E2-88DB-A3355732AFBB-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223102>
 
-Ilya Basin <basinilya@gmail.com> writes:
+John Keeping <john@keeping.me.uk> writes:
 
-> IB> In my repo the placeholders change too often (in 1/4 commits). I'm
-> IB> thinking of using:
-> IB> 'git config --unset "svn-remote.$repo_id.added-placeholder" path_regex'
-> IB> instead of full rewrite.
+> When using "git subtree push" to split out a subtree and push it to a
+> remote repository, we do not detect if the split command fails which
+> causes the LHS of the refspec to be empty, deleting the remote branch.
 >
-> I need your help. There are still problems:
+> Fix this by pulling the result of the split command into a variable so
+> that we can die if the command fails.
 >
->     $ grep "define MAX_MATCHES" ~/builds/git/git-git/config.c
->     #define MAX_MATCHES 8192
+> Reported-by: Steffen Jaeckel <steffen.jaeckel@stzedn.de>
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+>  contrib/subtree/git-subtree.sh | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
->     $ grep added-placeholder .git/config | wc -l
->     4430
->
-> 1/4 commits change the list of placeholders, usually 1 folder changes.
-> Clearing and re-adding the entries to the config takes ~1 minute.
+> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+> index 8a23f58..10daa8b 100755
+> --- a/contrib/subtree/git-subtree.sh
+> +++ b/contrib/subtree/git-subtree.sh
+> @@ -715,7 +715,8 @@ cmd_push()
+>  	    repository=$1
+>  	    refspec=$2
+>  	    echo "git push using: " $repository $refspec
+> -	    git push $repository $(git subtree split --prefix=$prefix):refs/heads/$refspec
+> +	    localrev=$(git subtree split --prefix="$prefix") || die
+> +	    git push $repository $localrev:refs/heads/$refspec
+>  	else
+>  	    die "'$dir' must already exist. Try 'git subtree add'."
+>  	fi
 
-While I agree both "git config"'s external interface and internal
-implementation are not suited for bulk update, I have a suspicion
-that the config mechanism is not the right place to store this
-information in the first place.  The config is a per-Git-repository
-state that is not versioned, which means it is applicable regardless
-of individual commits or trees (also it means it is designed not to
-be shared across repositories).  But "You may see a file here that
-otherwise should not be there only to mark that there should be an
-empty directory" is an attribute to a particular tree, isn't it?
-
-If you have a branch that git-svn adds a placeholder file (hence you
-want to annotate that tree with "This directory is there only to
-hold the placeholder file") and you want to perform a merge on the
-Git side of that branch with another Git branch that does have real
-contents in that directory, you would want the result to say "This
-directory no longer is just for a placeholder", but you cannot say
-that globally by updating the config file, as the config mechanism
-is also applied to the original branch that came from git-svn, in
-which the directory in question is still only to hold the placeholder
-file.
-
-A Subversion-only history does not have a reason to have .gitignore
-file tracked in it; wouldn't a cleaner implementation to consider a
-directory that has .gitignore and nothing else marked with "added
-placeholder", without (ab)using the config mechanism?  If you are
-worried about a corner case where the Subversion side adds the file,
-even though it is not used there, probably you can add a single
-comment line "# added by git-svn only to keep the directory" and
-consider a directory that has nothing but .gitignore that consists
-of only that exact comment line an "added placeholder" directory to
-work it around.  Either approach would tie the information to the
-tree state, which sounds like a much more correct approach to the
-"keep empty directory" problem to me.
+Looks trivially correct to me.
