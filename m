@@ -1,95 +1,315 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] help: add help_unknown_ref
-Date: Wed, 01 May 2013 15:12:13 -0700
-Message-ID: <7vobcu4af6.fsf@alter.siamese.dyndns.org>
-References: <1367407327-5216-1-git-send-email-vikrant.varma94@gmail.com>
-	<1367407327-5216-2-git-send-email-vikrant.varma94@gmail.com>
-	<CALkWK0nMMi-nmAMUGXCaJDCV29G3dOzYTosKqSw+bFzc0osiaA@mail.gmail.com>
-	<51817319.6060201@gmail.com>
-	<CALkWK0nJSoBoAXR=ViGan6keFzXjmDGkfKqqWkTHqF89mHDDOQ@mail.gmail.com>
-	<51818CFA.9030305@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 3/5] sha1_name.c: simplify @-parsing in get_sha1_basic()
+Date: Wed, 1 May 2013 17:18:47 -0500
+Message-ID: <CAMP44s2sRsJR9xxty9F4c7-G3HQrK3N=-o7KBSpG5TYpdhu-9w@mail.gmail.com>
+References: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
+	<1367425235-14998-4-git-send-email-artagnon@gmail.com>
+	<CAMP44s1tHC+i+Wug_UuPnprZNvaPgLMNBX9MZi49SFv4iO62SQ@mail.gmail.com>
+	<CALkWK0nTSMYvh8VMgQ6Q0EoPMmRa2vyodz+tDmpPp1d6KYmq8w@mail.gmail.com>
+	<CAMP44s0sRqsmhbv-GA5x0FPc5msouSoGaU_Wg51E0F9bNsmkjg@mail.gmail.com>
+	<CALkWK0=Z81f4c1X3uXO4O5q_Dj2hRJjSY-i-aDtZ0KqSyo5Wtg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
-To: Vikrant Varma <vikrant.varma94@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 02 00:12:23 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 02 00:18:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXfGA-0001R1-F7
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 00:12:22 +0200
+	id 1UXfMU-0006pa-NV
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 00:18:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757580Ab3EAWMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 18:12:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39088 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755978Ab3EAWMR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 18:12:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2F0B1B43A;
-	Wed,  1 May 2013 22:12:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fLeciEUanB4BYKdCiC0sC1xnmt8=; b=MAcBTj
-	ZLfcXm6I58dfM5j0ZOCWcd9c91uqLYSneg83b5T2yhdNPoQwkbG0kHRc/A7xDCkx
-	8AIzg0SYjupHhbLE5kHs33QSMk2RwDwsHbakV4zmbNpzs/z4eDAzJj+TVWp6EXeU
-	1ncQQ0fp8FVIzaqlpQSNyDCm9GGYGYG/nKgi8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Itpl1LZuFgPiv13lkiHhwmljsD2sX6eZ
-	Tvlm/W3WmPvfSMZYLrhx2olI5+MCKGNp2sFTVGTS7s0+5lsNHyu5JwLeOXtijKp4
-	RVdmABMIMOk/zwrpQ8ZxEzCbKWegeS03nC6klB5JSTHRR/SfAAp35zLRvg8wcrZY
-	5vzwCfK3FmE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA17F1B439;
-	Wed,  1 May 2013 22:12:16 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6C4BF1B432;
-	Wed,  1 May 2013 22:12:15 +0000 (UTC)
-In-Reply-To: <51818CFA.9030305@gmail.com> (Vikrant Varma's message of "Thu, 02
-	May 2013 03:15:30 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2E3E9FEC-B2AC-11E2-8A73-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759292Ab3EAWSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 18:18:51 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:49083 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757669Ab3EAWSt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 18:18:49 -0400
+Received: by mail-lb0-f170.google.com with SMTP id r10so1856991lbi.1
+        for <git@vger.kernel.org>; Wed, 01 May 2013 15:18:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=y9+BqBpUb3c7wGtONNXQz3bwE5VObMEJDgbax63QB/k=;
+        b=cA5v43gqLMOka6keQI4UkyVpS6WMV1oZ1KO1j5PlFu8d6yeCrngli6OfICPLtIuhO9
+         jwrqdewMq5bUKitsFFUHn6xpM3EY+mTy0qhBmvaoHw+J1bin6VLQS7GWm9y+SlrHGd5e
+         0vAblA+pxxU5TCIF9cHybG7nGFcFWoXcp+5PbnGRwh28u7p7nj4XsnKFhl7feJ0+5UgP
+         io483dB0+B09EBu9/kl6hIOZVunwWuUL7MMdBhaYnCKKMcWKPIHwqEDGPtE6SZkFrpn4
+         RkEqbWfP/eP+jY/WQozhfpZhREZJre8qKVNf0RYWPPMGXB4AJaZcTbi/3uQ9rmPpntDJ
+         FQ7g==
+X-Received: by 10.112.135.70 with SMTP id pq6mr1797716lbb.82.1367446727824;
+ Wed, 01 May 2013 15:18:47 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Wed, 1 May 2013 15:18:47 -0700 (PDT)
+In-Reply-To: <CALkWK0=Z81f4c1X3uXO4O5q_Dj2hRJjSY-i-aDtZ0KqSyo5Wtg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223155>
 
-Vikrant Varma <vikrant.varma94@gmail.com> writes:
+On Wed, May 1, 2013 at 2:40 PM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> Felipe Contreras wrote:
+>> On Wed, May 1, 2013 at 1:36 PM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+>>> This is not a reorganization patch.  I said "simplify": not refactor.
+>>
+>> I'd say you should start with a reorganization, and then a simplification.
+>
+> You don't think I already tried that?  There is no way to sensibly
+> reorganize the old logic sensibly, in a way that doesn't break
+> anything.
 
-> On 02-05-2013 02:02, Ramkumar Ramachandra wrote:
->>> ref_cb.similar_refs has already been defined. The compiler won't let me
->>> assign to it unless I cast first. However, I think compound literals are a
->>> C99/gcc feature. Is this better?
+There's always a way.
+
+See, I tried to split your patch into logical changes, so I started with this:
+
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -460,23 +460,26 @@ static int get_sha1_basic(const char *str, int
+len, unsigned char *sha1)
+        if (len && ambiguous_path(str, len))
+                return -1;
+
+-       if (!len && reflog_len) {
+-               struct strbuf buf = STRBUF_INIT;
+-               int ret;
+-               /* try the @{-N} syntax for n-th checkout */
+-               ret = interpret_branch_name(str+at, &buf);
+-               if (ret > 0) {
+-                       /* substitute this branch name and restart */
+-                       return get_sha1_1(buf.buf, buf.len, sha1, 0);
+-               } else if (ret == 0) {
+-                       return -1;
++       if (reflog_len) {
++               if (!len) {
++                       struct strbuf buf = STRBUF_INIT;
++                       int ret;
++                       /* try the @{-N} syntax for n-th checkout */
++                       ret = interpret_branch_name(str+at, &buf);
++                       if (ret > 0) {
++                               /* substitute this branch name and restart */
++                               return get_sha1_1(buf.buf, buf.len, sha1, 0);
++                       } else if (ret == 0) {
++                               return -1;
++                       }
++                       /* allow "@{...}" to mean the current branch reflog */
++                       refs_found = dwim_ref("HEAD", 4, sha1, &real_ref);
++               } else {
++                       refs_found = dwim_log(str, len, sha1, &real_ref);
+                }
+-               /* allow "@{...}" to mean the current branch reflog */
+-               refs_found = dwim_ref("HEAD", 4, sha1, &real_ref);
+-       } else if (reflog_len)
+-               refs_found = dwim_log(str, len, sha1, &real_ref);
+-       else
++       } else {
+                refs_found = dwim_ref(str, len, sha1, &real_ref);
++       }
+
+        if (!refs_found)
+                return -1;
+
+Truly no functional changes at this point, but then this:
+
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -473,7 +473,7 @@ static int get_sha1_basic(const char *str, int
+len, unsigned char *sha1)
+                                return -1;
+                        }
+                        /* allow "@{...}" to mean the current branch reflog */
+-                       refs_found = dwim_ref("HEAD", 4, sha1, &real_ref);
++                       refs_found = dwim_log("HEAD", 4, sha1, &real_ref);
+                } else {
+                        refs_found = dwim_log(str, len, sha1, &real_ref);
+                }
+
+Bam! Now we have a functional change. @{1} is different from HEAD@{1},
+but this change makes them the same. Not only is this a functional
+change, it's a behavioral change.
+
+Of course, this would be easy to see if you had bothered to split your
+patch into logical changes, but you didn't, so the change is lost in a
+mess. This is why it's not recommended to do that.
+
+>>> I'm claiming that there is no functional change at the program level,
+>>> with the commenting*.  If you want to disprove my claim, you have to
+>>> write a test that breaks after this patch.
+>>
+>> The burden of proof resides in the one that makes the claim, I don't
+>> need to prove that there are functional changes, merely that you
+>> haven't met your burden of proof.
+>
+> Oh, but I have.  All the tests (along with the new ones I added in [1/5]) pass.
+
+That is only proof that those tests pass.
+
+> Scientific theories stand until you can find one observation that disproves it.
+
+Yeah, I would like to see a scientist claiming "There are exactly
+three multiverses. You don't think so? Prove me wrong. Na na na na!".
+Not going to happen.
+
+You are the one making a claim, you are the one that has the burden of
+proof, and you haven't met it.
+
+And even though I don't have to prove your claim is false, I already
+did; @{1} is different now. If you want more, see below.
+
+>> That being said, perhaps there are no _behavioral_ changes, because
+>> you are relegating some of the current functionality to dwim_log, but
+>> the code most certainly is doing something completely different.
+>> Before, get_sha1_basic recursively called itself when @{-N} resolved
+>> to a branch name, now, you rely on dwim_log to do this for you without
+>> recursion, which is nice, but functionally different.
+>
+> Your point being?  That I shouldn't say "no functional changes"
+> because the logic is changing non-trivially at this level?
+
+Exactly. You shouldn't say there are no functional changes, if, in
+fact, there are functional changes.
+
+>>>> It's not true, there might not be any @{u} in there.
 >>>
->>>          struct similar_ref_cb ref_cb = {ref, STRING_LIST_INIT_NODUP};
+>>> This entire structure is a success-filter.  At the end of this, if
+>>> !refs_found, then there has been a failure.
 >>
->> As Johannes pointed out, ref is a variable and that is problematic.
->> Leave the cast on: I didn't notice the compiler warning in my head.
+>> That's irrelevant, this 'else' case is for !reflog_len, there might or
+>> might not be @{u} in there.
+>
+> There's no need to associate one comment with one line of code.
+> People can see clearly see the failure case following it.
+
+Is that the way you defend your comments? People can see that the
+comment is wrong?
+
+What is the point of the comment then? People can see the context, so
+there's no need for a comment, specially one that is wrong.
+
+>>> The Git project is already suffering from a severe shortage of
+>>> comments [1], and you're complaining about too many comments?
 >>
-> Is it okay to use a compound literal? It's not supported in C89.
+>> Irrelevant conclusion fallacy; let's suppose that the Git project is
+>> indeed suffering from a shortage of comments, that doesn't imply that
+>> *these* comments in their present form are any good.
+>
+> Is there anything _wrong_ with the comments, apart from the fact that
+> they seem to be too big?  I'm saying things that I cannot say in the
+> commit message.
 
-Building on top of what was suggested in the other message, the
-helper could be made more reusable by doing something like this:
+I just pointed to one comment being wrong. Other than that, yeah, they
+are unnecessary.
 
-	int suggest_misspelt_ref(const char *ref, struct string_list *suggested);
+Aside from the fact that there are wrong and unnecessary comments,
+unmentioned functionality changes, there are behavioral changes:
 
-and the caller can do
+1) @{1} has changed
 
-	if (!commit) {
-		struct string_list suggested = STRING_LIST_INIT;
-                if (suggest_misspelt_ref(argv[1], &suggested)) {
-                	... Did you mean one of these??? ...
-			string_list_clear(&suggested);
-		}
-                die(_("'%s' is not something we can merge'), argv[1]);
-	}
+2) @{-1}@{-1} now doesn't return an error
 
-So I think this point is moot.  Of course, similar_ref_cb needs to
-be updated to keep a pointer to an existing string_list, not an
-instance of its own string_list.
+3) @{-1}{0} returns an invalid object
+
+I wrote a test to show these changes:
+
+*** t1513-at-combinations-strict.sh ***
+ok 1 - setup
+ok 2 - HEAD = refs/heads/new-branch
+ok 3 - @{1} = commit
+ok 4 - HEAD@{3} = commit
+not ok 5 - @{3} is nonsensical
+#	
+#		test_must_fail git rev-parse --symbolic '@{3}'
+#	
+ok 6 - @{-1} = refs/heads/old-branch
+ok 7 - @{-1}@{1} = commit
+not ok 8 - @{-1}{0} = commit
+#	
+#		if [ 'commit' == 'commit' ]; then
+#			echo 'old-two' >expect &&
+#			git log -1 --format=%s '@{-1}{0}' >actual
+#		else
+#			echo 'commit' >expect &&
+#			git rev-parse --symbolic-full-name '@{-1}{0}' >actual
+#		fi &&
+#		test_cmp expect actual
+#	
+ok 9 - @{u} = refs/heads/upstream-branch
+ok 10 - @{u}@{1} = commit
+ok 11 - @{-1}@{u} = refs/heads/master
+ok 12 - @{-1}@{u}@{1} = commit
+ok 13 - @{u}@{-1} is nonsensical
+ok 14 - @{1}@{u} is nonsensical
+not ok 15 - @{-1}@{-1} is nonsensical
+#	
+#		test_must_fail git rev-parse --symbolic '@{-1}@{-1}'
+#	
+# failed 3 among 15 test(s)
+1..15
+
+They all pass without your patch. So yeah, there's a reason you were
+not able to show fulfill your burden of proof; your claim wasn't true.
+
+Here's the test:
+
+#!/bin/sh
+
+test_description='test various @{X} syntax combinations together'
+. ./test-lib.sh
+
+check() {
+test_expect_${4:-success} "$1 = $2" "
+	if [ '$2' == 'commit' ]; then
+		echo '$3' >expect &&
+		git log -1 --format=%s '$1' >actual
+	else
+		echo '$2' >expect &&
+		git rev-parse --symbolic-full-name '$1' >actual
+	fi &&
+	test_cmp expect actual
+"
+}
+
+nonsense() {
+test_expect_${2:-success} "$1 is nonsensical" "
+	test_must_fail git rev-parse --symbolic '$1'
+"
+}
+
+test_expect_success 'setup' '
+	test_commit master-one &&
+	test_commit master-two &&
+	git checkout -b upstream-branch &&
+	test_commit upstream-one &&
+	test_commit upstream-two &&
+	git checkout -b old-branch master &&
+	test_commit old-one &&
+	test_commit old-two &&
+	git checkout -b new-branch &&
+	test_commit new-one &&
+	test_commit new-two &&
+	git branch -u master old-branch &&
+	git branch -u upstream-branch new-branch
+'
+
+check HEAD refs/heads/new-branch
+check "@{1}" commit new-one
+check "HEAD@{3}" commit old-two
+nonsense "@{3}"
+check "@{-1}" refs/heads/old-branch
+check "@{-1}@{1}" commit old-one
+check "@{-1}{0}" commit old-two
+check "@{u}" refs/heads/upstream-branch
+check "@{u}@{1}" commit upstream-one
+check "@{-1}@{u}" refs/heads/master
+check "@{-1}@{u}@{1}" commit master-one
+nonsense "@{u}@{-1}"
+nonsense "@{1}@{u}"
+nonsense "@{-1}@{-1}"
+
+test_done
+
+-- 
+Felipe Contreras
