@@ -1,89 +1,68 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 5/9] t1508 (at-combinations): document @{N} versus HEAD@{N}
-Date: Thu, 2 May 2013 12:27:57 -0500
-Message-ID: <CAMP44s1Hkff1QU7undZvLfFOCeeiBrB4RRtVEOoNCsfoGZu7yg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/9] t1508 (at-combinations): test branches separately
+Date: Thu, 2 May 2013 22:58:25 +0530
+Message-ID: <CALkWK0=_zcO8K75YxmQVp9hog0yHJ_vH5QKRwpWN8QMUc2zm_Q@mail.gmail.com>
 References: <1367501974-6879-1-git-send-email-artagnon@gmail.com>
-	<1367501974-6879-6-git-send-email-artagnon@gmail.com>
+ <1367501974-6879-3-git-send-email-artagnon@gmail.com> <CAMP44s3up_xo=oU+5EajoFo7VzA3RDK+hR-maxN9cUw7y=b3Eg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 02 19:28:20 2013
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 02 19:29:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXxIj-0006nv-Kl
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 19:28:13 +0200
+	id 1UXxJy-0006nv-3a
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 19:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761125Ab3EBR2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 May 2013 13:28:05 -0400
-Received: from mail-la0-f51.google.com ([209.85.215.51]:39383 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760941Ab3EBR2B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 May 2013 13:28:01 -0400
-Received: by mail-la0-f51.google.com with SMTP id ep20so775803lab.38
-        for <git@vger.kernel.org>; Thu, 02 May 2013 10:27:57 -0700 (PDT)
+	id S1761423Ab3EBR3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 13:29:07 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:59037 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932428Ab3EBR3F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 13:29:05 -0400
+Received: by mail-ie0-f170.google.com with SMTP id aq17so951988iec.1
+        for <git@vger.kernel.org>; Thu, 02 May 2013 10:29:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=SrUtAsq8t64MYGCEyfVec4FBRlNorL9Gx5QBFrva5YI=;
-        b=hZQAVaFhVE1FacxK8eXzh/PxBMcY6Lp/Tli9Ik+AXOLPdxi7SiVUePRNIcjPERutyT
-         u8IwH7NarJoIrZqoed0o+7AHeYv1TbnvYNQG3p7buctqV1rZ4r3Mq/xLvhlhtQ1cXSY7
-         FDEyhf7bgzl6CoznHl+LmojGrScF5JbrH3gDYZFbuymc6LtlyYj4TyifWIGWsknYebtc
-         y339qyyvPWPgqo0ZXqQH9DnCazWDGoRUp4dhp5THiNZFqVYA1c9vsGR16isz3osqvK0y
-         bko57BHntYnSdQ6z7NRMYcCK9mC0sEbI1nzU46INEYNJ5Jla3m3+efwE8Th9+BQztBSF
-         Z52g==
-X-Received: by 10.112.146.133 with SMTP id tc5mr3014297lbb.88.1367515677798;
- Thu, 02 May 2013 10:27:57 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Thu, 2 May 2013 10:27:57 -0700 (PDT)
-In-Reply-To: <1367501974-6879-6-git-send-email-artagnon@gmail.com>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=tfIqL3II4nLJU1hi+7uqJvAcfu9rxujp6bbhnZ09a/M=;
+        b=PFsnumzNtCMPHyVtYMtA2e/nt6UHvXw1RQKemmp/Z9ISpkWwH7mwoE6YDEnJWcIVhQ
+         zvpXznkEJRiWJMHMK0h822mabvaeaCihwaMrn4tYFfzsKxc2C0P7yNvcKMecCXokqwb4
+         NRPrIQa5tBGYzio7AewZ+lMX79Y6AQ96TwwTe14qs4UcnBELRWYymMnFg2fffR7BXs/c
+         +S+32+4QIedCkyMFSer4I4A9G1VBo3pww/QgRBfottXjAbau6kauRPCmJHvYUlXH5S/y
+         dOtZ0xdnEkZjdwumc0UrOr3KbhT3JgAGBkbwtk9dRpukYXMoGMxFvBWzC83FiPQRKjaE
+         A3+w==
+X-Received: by 10.42.27.146 with SMTP id j18mr3555121icc.54.1367515745612;
+ Thu, 02 May 2013 10:29:05 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Thu, 2 May 2013 10:28:25 -0700 (PDT)
+In-Reply-To: <CAMP44s3up_xo=oU+5EajoFo7VzA3RDK+hR-maxN9cUw7y=b3Eg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223233>
 
-On Thu, May 2, 2013 at 8:39 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
-> All the tests so far check that @{N} is the same as HEAD@{N} (for
-> positive N).  However, this is not always the case: write a couple of
-> tests for this.
+Felipe Contreras wrote:
+> I'm not sure about this. If we introduce a check that fails, we would
+> have to do:
 >
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  t/t1508-at-combinations.sh | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+> check HEAD refs/heads/new-branch "" failure
 >
-> diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
-> index eaa5337..29ffd73 100755
-> --- a/t/t1508-at-combinations.sh
-> +++ b/t/t1508-at-combinations.sh
-> @@ -59,4 +59,18 @@ nonsense "@{1}@{u}"
->  nonsense "HEAD@{-1}"
->  nonsense "@{-1}@{-1}"
+> Which doesn't seem clean. Perhaps it makes more sense to always add
+> the type of check:
 >
-> +# Document differences between @{N} and HEAD@{N}.
+> check HEAD ref refs/heads/new-branch
 
-That's enough explanation, except that we not documenting them, we are
-testing them.
+I think you misunderstood.  Failure looks like this:
 
-> The former resolves
-> +# HEAD to a branch and looks up the logs for that branch, while the
-> +# latter looks for the logs of HEAD.
-> +check "HEAD@{3}" commit old-two
-> +nonsense "@{3}"
+    check "@@{u}" ref refs/heads/upstream-branch failure
 
-> +test_expect_success 'switch to old-branch' '
-> +       git checkout old-branch
-> +'
-> +
-> +check HEAD refs/heads/old-branch
-> +check "HEAD@{1}" commit new-two
-> +check "@{1}" commit old-one
+And corresponding success like this:
 
-And here we are testing something completely different.
+    check "@@{u}" refs/heads/upstream-branch
 
--- 
-Felipe Contreras
+We can make the "ref" compulsory if you like.  I thought about it too.
