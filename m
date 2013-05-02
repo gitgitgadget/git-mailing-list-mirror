@@ -1,71 +1,89 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2] sha1_name: reorganize get_sha1_basic()
-Date: Thu, 2 May 2013 13:02:48 -0500
-Message-ID: <CAMP44s1mm-uEnVQSwN5ORy8kqe9q7w_PKGYgOhKHcXbbkAtkUQ@mail.gmail.com>
-References: <1367516919-4735-1-git-send-email-felipe.contreras@gmail.com>
+From: Ilya Basin <basinilya@gmail.com>
+Subject: Re: git-svn: problem with svn cp trunk/subdir tags/subdir_1.0
+Date: Thu, 2 May 2013 22:19:26 +0400
+Message-ID: <603835689.20130502221926@gmail.com>
+References: <1826029946.20130429164645@gmail.com>
+Reply-To: Ilya Basin <basinilya@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 02 20:03:00 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Git mailing list <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 02 20:21:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXxqI-0007O9-Jl
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 20:02:54 +0200
+	id 1UXy82-0007mF-5l
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 20:21:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932296Ab3EBSCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 May 2013 14:02:50 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:41824 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760354Ab3EBSCu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 May 2013 14:02:50 -0400
-Received: by mail-la0-f48.google.com with SMTP id eg20so796040lab.21
-        for <git@vger.kernel.org>; Thu, 02 May 2013 11:02:48 -0700 (PDT)
+	id S1760668Ab3EBSVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 14:21:09 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:61221 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751746Ab3EBSVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 14:21:07 -0400
+Received: by mail-lb0-f170.google.com with SMTP id t11so832309lbd.1
+        for <git@vger.kernel.org>; Thu, 02 May 2013 11:21:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=a09u8cGOhsoJA/H3uyVxsVzQDqC4POkl3GGZO0d2eRw=;
-        b=rv4xfRC59IYFyLQRhsWX2jZOMbCih/MXg0zpCyx12WyRWMQ/5mBh0TNt6CKOJVowUh
-         DsU4BR9wM0fAU3zswHnRsg6bmdYD1sOfLKY6NckpU9a+ScrvLVPz8CsbHSdoQZTZ76jW
-         8sMwtP2LQmXVxJ37S3YqdXkF+6s7nY/p+XtGsZPyhgE1JvX1Nw1kOy3/hIeWU0p5UwGR
-         vhmLJfsx2O2mWgDN/4BNyF9KykooIONStRznXVl40KZyl9C97WIaNCiOK2nssJzFjcbu
-         hQZk0VPeKYZLXth3AsXCbOjiXCqHnmvXg4rklqTFCBC1SLqPOGYb1V0dinR5CaQxXHc+
-         aKvg==
-X-Received: by 10.152.22.168 with SMTP id e8mr2929703laf.20.1367517768422;
- Thu, 02 May 2013 11:02:48 -0700 (PDT)
-Received: by 10.114.83.167 with HTTP; Thu, 2 May 2013 11:02:48 -0700 (PDT)
-In-Reply-To: <1367516919-4735-1-git-send-email-felipe.contreras@gmail.com>
+        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
+         :subject:in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=z4laW2VmGCXAbeo2EnYbB7aazG0n1h0OrpiHD6dmyh8=;
+        b=O6Zdk/MXpGlYNcb5RjenmxJ5RFkz91MRClbjcL9KQTaTbgebmMqXEC0O20z/yoJZgs
+         StowpnMbmp7wbFj0iw8ar686V19SoM+VADHnJeQ/KCOFPNL0JYl7bLqABOWV/kFh3wXh
+         3i+G7DRM2cNA5SiZpSbogSHqd7yAG/l6/ePfddSryZJCLTF9RlxpEJRMLan/uJSD/FfA
+         Ng32i0qIU8LCKAD5Ca7A8IX59nLDwaokNccDFx2+d3DAYN6qDRyKSXYmzBxoUhhhEzCW
+         u3f1FNEBcM8SCjyiZ4JU8g/XipxmndEe8tJrpx56wakbrxodpFHaHvu4Rfcq9xvIZZby
+         REbw==
+X-Received: by 10.152.28.230 with SMTP id e6mr2940042lah.57.1367518866206;
+        Thu, 02 May 2013 11:21:06 -0700 (PDT)
+Received: from [192.168.0.78] (92-100-239-74.dynamic.avangarddsl.ru. [92.100.239.74])
+        by mx.google.com with ESMTPSA id t20sm3107084lbi.5.2013.05.02.11.21.04
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 02 May 2013 11:21:04 -0700 (PDT)
+X-Mailer: Voyager (v3.99.4) Professional
+X-Priority: 3 (Normal)
+In-Reply-To: <1826029946.20130429164645@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223244>
 
-On Thu, May 2, 2013 at 12:48 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Through the years the functionality to handle @{-N} and @{u} has moved
-> around the code, and as a result, code that once made sense, doesn't any
-> more.
->
-> There is no need to call this function recursively with the branch of
-> @{-N} substituted because dwim_{ref,log} already replaces it.
->
-> However, there's one corner-case where @{-N} resolves to a detached
-> HEAD, in which case we wouldn't get any ref back.
->
-> So we parse the nth-prior manually, and deal with it depending on
-> weather it's a SHA-1, or a ref.
+IB> When creating a tag or branch from a subdir, a disjoint branch
+IB> is created. Then git-svn re-imports the commits using this dir as
+IB> strip path.
 
-Forgot again: Inspired by a patch from Ramkumar Ramachandra.
+IB> Why? I would instead keep the current commit as parent, delete
+IB> everything except the subdir and move its contents to root directory.
 
--- 
-Felipe Contreras
+Even worse, git-svn does doble work, failing to find the parent branch:
+The revision is imported 3 times (2 times creating the same SHA)
+
+    r8803 = 7bfe8f8d950edd645c6f15193e639953c0b936ac (refs/remotes/trunk)
+    Found possible branch point: file:///home/il/builds/sicap/gitsvn/prd_dmc4.svn/trunk/GUI => file:///home/il/builds/sicap/gitsvn/prd_dmc4.svn/tags/GUI_4.0.25, 8803
+    Initializing parent: refs/remotes/tags/GUI_4.0.25@8803
+    r6 = de89d3fd4dff9c44f1c79a316364196d0c81c9f6 (refs/remotes/tags/GUI_4.0.25@8803)
+    ...
+    r8803 = ffc46ad0e967636f2000d354481c0419a4c6cec4 (refs/remotes/tags/GUI_4.0.25@8803)
+    Found branch parent: (refs/remotes/tags/GUI_4.0.25) ffc46ad0e967636f2000d354481c0419a4c6cec4
+    Following parent with do_switch
+    Successfully followed parent
+    r8804 = 2cbe962f0fb58c3f2d236ca918941e353da45af4 (refs/remotes/tags/GUI_4.0.25)
+    ...
+
+
+    r8923 = ad38e54ca9bb6b26654571bb14d17301484437dc (refs/remotes/tags/GUI_4.0.26)
+    r8924 = e1932e8fdeab291f54ed06064da3ae7eb1e3eddb (refs/remotes/trunk)
+    Found possible branch point: file:///home/il/builds/sicap/gitsvn/prd_dmc4.svn/trunk/GUI => file:///home/il/builds/sicap/gitsvn/prd_dmc4.svn/tags/GUI_4.0.26, 8925
+    Initializing parent: refs/remotes/tags/GUI_4.0.26@8925
+    r6 = de89d3fd4dff9c44f1c79a316364196d0c81c9f6 (refs/remotes/tags/GUI_4.0.26@8925)
+    ...
+    r8803 = ffc46ad0e967636f2000d354481c0419a4c6cec4 (refs/remotes/tags/GUI_4.0.26@8925)
+    r8805 = dac5886451f64e63d70b307bcc6f0c8ccf9c9882 (refs/remotes/tags/GUI_4.0.26@8925)
+    ...
