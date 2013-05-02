@@ -1,63 +1,82 @@
-From: Ilya Basin <basinilya@gmail.com>
-Subject: Re[2]: [PATCH 4/5] git-svn: fix bottleneck in stash_placeholder_list()
-Date: Thu, 2 May 2013 07:51:17 +0400
-Message-ID: <909519096.20130502075117@gmail.com>
-References: <1438528085.20130501090926@gmail.com> <1409591910.20130501123153@gmail.com> <7vhaim8w48.fsf@alter.siamese.dyndns.org> <455264907.20130501235104@gmail.com> <20130501213031.GA13056@dcvr.yhbt.net>
-Reply-To: Ilya Basin <basinilya@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] lookup_object: prioritize recently found objects
+Date: Thu, 02 May 2013 08:44:07 +0200
+Message-ID: <51820B37.8010503@viscovery.net>
+References: <20130501203449.GA12535@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Ray Chen <rchen@cs.umd.edu>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu May 02 05:53:19 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 02 08:44:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXka6-0003UO-6I
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 05:53:18 +0200
+	id 1UXnFa-0005c3-Ve
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 08:44:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757234Ab3EBDw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 23:52:59 -0400
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:63013 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755912Ab3EBDw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 23:52:58 -0400
-Received: by mail-lb0-f181.google.com with SMTP id w10so128850lbi.40
-        for <git@vger.kernel.org>; Wed, 01 May 2013 20:52:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
-         :subject:in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=YNW+DlzXVNWjksHpa3KqE6mVr9KNZuNVUKy4Z6LC/ac=;
-        b=k3DkD0ckOgKe6CbePVh/5WdbObi5RAStx8EU524boKCFhNhVjHE6fPP0nBvXw3e2Av
-         CBdQZhr0d7XlxrKTXW4iSyW5FK8QQPJ/P8US2Ydamp5kHbnI21SCfXqfyooI7TPC+BF3
-         4i5F6b3G5tjxcoESp40v10gHmxl3r7efYoeq2RdjPWH5EY5CS/jUGN6T9tMKJAa5+Thg
-         zalvNaqDglzfafBy5AKCDqtgqEmSyb9hHgAfodaOisEICsFl9FjdhFvpvwFaJ8q6Cuwl
-         0HmDXqpCYhxfyercxMDannoBu1+KPmMxzHwnxsidg/Un9KsbuAmERuMOdAsr7JpLty1h
-         xRfg==
-X-Received: by 10.152.87.69 with SMTP id v5mr1847328laz.24.1367466776404;
-        Wed, 01 May 2013 20:52:56 -0700 (PDT)
-Received: from [192.168.0.78] (92-100-225-116.dynamic.avangarddsl.ru. [92.100.225.116])
-        by mx.google.com with ESMTPSA id 6sm2111849lbp.0.2013.05.01.20.52.54
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 01 May 2013 20:52:55 -0700 (PDT)
-X-Mailer: Voyager (v3.99.4) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <20130501213031.GA13056@dcvr.yhbt.net>
+	id S1751062Ab3EBGoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 02:44:15 -0400
+Received: from so.liwest.at ([212.33.55.13]:31171 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750769Ab3EBGoO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 02:44:14 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1UXnFP-0003vA-R8; Thu, 02 May 2013 08:44:08 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 921311660F;
+	Thu,  2 May 2013 08:44:07 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <20130501203449.GA12535@sigill.intra.peff.net>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223178>
 
-EW> My personal philosophy has always been: git svn users should leave
-EW> no trace or indication they're using a non-standard SVN client.
-Placeholders aren't pushed back to svn.
+Am 5/1/2013 22:34, schrieb Jeff King:
+>  struct object *lookup_object(const unsigned char *sha1)
+>  {
+> -	unsigned int i;
+> +	unsigned int i, first;
+>  	struct object *obj;
+>  
+>  	if (!obj_hash)
+>  		return NULL;
+>  
+> -	i = hashtable_index(sha1);
+> +	first = i = hashtable_index(sha1);
+>  	while ((obj = obj_hash[i]) != NULL) {
+>  		if (!hashcmp(sha1, obj->sha1))
+>  			break;
+> @@ -85,6 +85,11 @@ struct object *lookup_object(const unsigned char *sha1)
+>  		if (i == obj_hash_size)
+>  			i = 0;
+>  	}
+> +	if (obj && i != first) {
+> +		struct object *tmp = obj_hash[i];
+> +		obj_hash[i] = obj_hash[first];
+> +		obj_hash[first] = tmp;
+> +	}
+>  	return obj;
+>  }
 
--- 
+This is one of the places where I think the code does not speak for itself
+and a comment is warranted: The new if statement is not about correctness,
+but about optimization:
+
+		/*
+		 * Move object to where we started to look for it
+		 * so that we do not need to walk the hash table
+		 * the next time we look for it.
+		 */
+
+or something.
+
+-- Hannes
