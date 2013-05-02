@@ -1,126 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/5] sha1_name.c: don't waste cycles in the @-parsing loop
-Date: Wed, 01 May 2013 17:04:58 -0700
-Message-ID: <7vmwse2qmt.fsf@alter.siamese.dyndns.org>
-References: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
-	<1367425235-14998-3-git-send-email-artagnon@gmail.com>
-	<CAMP44s1j6GdQBjgCdBrG3xvXr_XifCTRZWJAQUrzts-MzFg--g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 02 02:05:08 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] sha1_name: reorganize get_sha1_basic()
+Date: Wed,  1 May 2013 19:49:51 -0500
+Message-ID: <1367455791-30091-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 02 02:51:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXh1H-0008ME-Tu
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 02:05:08 +0200
+	id 1UXhjv-0002JF-O7
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 02:51:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752080Ab3EBAFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 20:05:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47397 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751790Ab3EBAFB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 20:05:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90712E17E;
-	Thu,  2 May 2013 00:05:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=q6vewhFHfh4ZmPqyr5L/2W0GBuA=; b=g273lv
-	tqBAxJlqf9RMozat3GqS+aH5D3Ooz8J4UNH6F2MSCyn/NasrRGSiIpBRO62uW0Nw
-	a8DGhfjkIA4a3YPHpd1oQYqKFbmpNJeZDBTQDjrJIFQSoltDHQ517Ax+JT0H3iTG
-	Tv0b/GjB9r5QxvF6Y5WKZMcZwEH68l/AhJ6OU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IsBnmMxHYDdAkSa7ulAK6Gc2Bw+aAjOJ
-	ejJWdzL1WSU4P8U/5kAvr2odqM7huMPcobWiPLyYrXfzersrAWuABOEvKpsv6AUx
-	N0s5y8cUTFsVkxMVUB57ER6kBxtNLHrvKvvrB2u0HZWd94lN+twcTGtCBeDjXNPP
-	HK4AKFfyzpw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 87F32E17C;
-	Thu,  2 May 2013 00:05:00 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9556E17A;
-	Thu,  2 May 2013 00:04:59 +0000 (UTC)
-In-Reply-To: <CAMP44s1j6GdQBjgCdBrG3xvXr_XifCTRZWJAQUrzts-MzFg--g@mail.gmail.com>
-	(Felipe Contreras's message of "Wed, 1 May 2013 12:57:50 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EE21949A-B2BB-11E2-8918-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759582Ab3EBAvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 20:51:12 -0400
+Received: from mail-yh0-f48.google.com ([209.85.213.48]:49737 "EHLO
+	mail-yh0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758055Ab3EBAvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 20:51:10 -0400
+Received: by mail-yh0-f48.google.com with SMTP id f35so16321yha.35
+        for <git@vger.kernel.org>; Wed, 01 May 2013 17:51:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=lCx2YLc36NOz8aVCa9j8zxrfcaXHFP9z2u5sEU7QpYU=;
+        b=ZFc+rLvJ7pPbDpGLspXF5vVug+SehAUXUbf59g1MTj5vTLkRBiMlrGnzPdMgtmKI2y
+         zg1Ebk4ZYE2zQit8wyxjWqSnxKCIYl4qegt7p4OUvYNw4gd+wHG6InzM/zznv4MSlQas
+         1tiyN5PomkdnNSsg5hDC9T5+QfAdlxt4u3jIBLCjZVvMSrKj+r4pkt5y4XKHRGXObN7/
+         t6zulfdYtomfCa8ROJugkW/JHGreHmMWugibI5oQzfqXs5be28AZ1X7tZ2fhvKPUj4JA
+         N/AT6oXw8Ou3jSRcJdUc8/sYBGAC52tWV3tdsv+/TzdBhW4JhNKqC/H5vCjdl6oKucsy
+         sf0A==
+X-Received: by 10.236.29.202 with SMTP id i50mr3364644yha.82.1367455869751;
+        Wed, 01 May 2013 17:51:09 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id n15sm9391284yhi.2.2013.05.01.17.51.08
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 01 May 2013 17:51:08 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc0.399.gc96a135
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223169>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Through the years the functionality to handle @{-N} and @{u} has moved
+around the code, and as a result, code that once made sense, doesn't any
+more.
 
-> On Wed, May 1, 2013 at 11:20 AM, Ramkumar Ramachandra
-> <artagnon@gmail.com> wrote:
->> The @-parsing loop unnecessarily checks for the sequence "@{" from
->> len - 2 unnecessarily.  We can safely check from len - 4: write out a
->> comment justifying this.
->>
->> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
->> ---
->>  sha1_name.c | 18 +++++++++++++++++-
->>  1 file changed, 17 insertions(+), 1 deletion(-)
->>
->> diff --git a/sha1_name.c b/sha1_name.c
->> index 3820f28..be1d12c 100644
->> --- a/sha1_name.c
->> +++ b/sha1_name.c
->> @@ -445,7 +445,23 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->>         /* basic@{time or number or -number} format to query ref-log */
->>         reflog_len = at = 0;
->>         if (len && str[len-1] == '}') {
->> -               for (at = len-2; at >= 0; at--) {
->> +               /* str = @}
->> +                *       ^
->> +                *       len - 2; expression is senseless
->> +                *
->> +                * str = @{}
->> +                *       ^
->> +                *       len - 3; expression is still senseless
->> +                *
->> +                * str = @{.}
->> +                *       ^
->> +                *       len - 4 where . is any character; expression
->> +                *       is worth investigating
->> +                *
->> +                * Therefore, if str ends with }, search three
->> +                * characters earlier for @{
->> +                */
->
-> I think this comment is overkill.
->
->> +               for (at = len - 4; at >= 0; at--) {
->
-> The change seems OK to me, but there's no need to explain where you
-> are starting, and if there's a need:
->
-> /* start from where reflogs can start: @{.} */
->
-> Does the trick nicely.
+There is no need to call this function recursively with the branch of
+@{-N} substituted because dwim_{ref,log} already replaces it.
 
-As the fact that nobody noticed nor bothered with the two-byte
-optimization opportunity shows that this is trickier than trivial, I
-agree with both of you that this change deserves an in-code comment.
+However, there's one corner-case where @{-N} resolves to a detached
+HEAD, in which case we wouldn't get any ref back.
 
-    Start checking at len - 4, because there has to be at least one
-    byte inside "@{.}" for it to be worth checking.
+So we parse the nth-prior manually, and deal with it depending on
+weather it's a SHA-1, or a ref.
 
-would be sufficient.  The 16-line comment is way overkill.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ sha1_name.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-Not that I think this change really matters, though.
-
->>                         if (str[at] == '@' && str[at+1] == '{') {
->>                                 if (!upstream_mark(str + at, len - at)) {
->>                                         reflog_len = (len-1) - (at+2);
->> --
+diff --git a/sha1_name.c b/sha1_name.c
+index 3820f28..110afbb 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -431,6 +431,7 @@ static inline int upstream_mark(const char *string, int len)
+ }
+ 
+ static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags);
++static int interpret_nth_prior_checkout(const char *name, struct strbuf *buf);
+ 
+ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ {
+@@ -438,6 +439,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 	char *real_ref = NULL;
+ 	int refs_found = 0;
+ 	int at, reflog_len;
++	struct strbuf buf = STRBUF_INIT;
+ 
+ 	if (len == 40 && !get_sha1_hex(str, sha1))
+ 		return 0;
+@@ -447,6 +449,9 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 	if (len && str[len-1] == '}') {
+ 		for (at = len-2; at >= 0; at--) {
+ 			if (str[at] == '@' && str[at+1] == '{') {
++				if (at == 0 && str[2] == '-')
++					/* @{-N} syntax */
++					continue;
+ 				if (!upstream_mark(str + at, len - at)) {
+ 					reflog_len = (len-1) - (at+2);
+ 					len = at;
+@@ -460,20 +465,19 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 	if (len && ambiguous_path(str, len))
+ 		return -1;
+ 
+-	if (!len && reflog_len) {
+-		struct strbuf buf = STRBUF_INIT;
+-		int ret;
+-		/* try the @{-N} syntax for n-th checkout */
+-		ret = interpret_branch_name(str+at, &buf);
+-		if (ret > 0) {
+-			/* substitute this branch name and restart */
+-			return get_sha1_1(buf.buf, buf.len, sha1, 0);
+-		} else if (ret == 0) {
+-			return -1;
+-		}
++	if (interpret_nth_prior_checkout(str, &buf) > 0) {
++		int detached;
++
++		detached = (buf.len == 40 && !get_sha1_hex(buf.buf, sha1));
++		strbuf_release(&buf);
++		if (detached)
++			return 0;
++	}
++
++	if (!len && reflog_len)
+ 		/* allow "@{...}" to mean the current branch reflog */
+ 		refs_found = dwim_ref("HEAD", 4, sha1, &real_ref);
+-	} else if (reflog_len)
++	else if (reflog_len)
+ 		refs_found = dwim_log(str, len, sha1, &real_ref);
+ 	else
+ 		refs_found = dwim_ref(str, len, sha1, &real_ref);
+-- 
+1.8.3.rc0.399.gc96a135
