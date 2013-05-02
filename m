@@ -1,71 +1,77 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 4/5] git-svn: fix bottleneck in stash_placeholder_list()
-Date: Thu, 2 May 2013 20:40:17 +0000
-Message-ID: <20130502204017.GB26623@dcvr.yhbt.net>
-References: <1438528085.20130501090926@gmail.com>
- <1409591910.20130501123153@gmail.com>
- <7vhaim8w48.fsf@alter.siamese.dyndns.org>
- <455264907.20130501235104@gmail.com>
- <20130501213031.GA13056@dcvr.yhbt.net>
- <7v1u9q5pu5.fsf@alter.siamese.dyndns.org>
- <20130502024926.GA12172@dcvr.yhbt.net>
- <12810110770.20130502213124@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/2] Remove the CYGWIN_V15_WIN32API build variable
+Date: Thu, 02 May 2013 13:41:45 -0700
+Message-ID: <7vy5bxyv06.fsf@alter.siamese.dyndns.org>
+References: <5182BD49.1070603@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Ray Chen <rchen@cs.umd.edu>
-To: Ilya Basin <basinilya@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 02 22:40:44 2013
+Cc: GIT Mailing-list <git@vger.kernel.org>, mlevedahl@gmail.com,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu May 02 22:41:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UY0Ii-0002cG-9W
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 22:40:24 +0200
+	id 1UY0K9-0004Qw-OU
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 22:41:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932787Ab3EBUkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 May 2013 16:40:19 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:59896 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932619Ab3EBUkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 May 2013 16:40:18 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB5201F42E;
-	Thu,  2 May 2013 20:40:17 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <12810110770.20130502213124@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932895Ab3EBUls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 16:41:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36191 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932843Ab3EBUls (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 16:41:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B19F1BA9E;
+	Thu,  2 May 2013 20:41:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7tPX/aaXH2VxbAAp1v7w2Bm6HWM=; b=LGvR+w
+	X54bSIV6JEsRctZ5hw3uBXVIsvoXG/v4XmgmfEcrn/f1XycDXj0TrJ4x8OOVpcG7
+	SiIOUUw+K/z/NZxjp4P2Z5n5vwzfZNxr4KPwiciA3/r84ouXk43a4sZxiZIxxEmL
+	o0575CmjwPbgutLtJQyk+bJDkda2Fn2tSRWJA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AOkBijBYDtBatwelE6M/LaDI9GFnuNIG
+	+mEpIF0S1rnxZtEyfxM0v2L0Is3E185kXplj30y3LWkfSDf+EhR3Tdtfr5QYIxeI
+	SXoqga6QmAHfXojFdX/Ejk/NBopJpFizVhpgg0Wa2FH5aMxIDy0u25IOGYD14YUf
+	c/GuKy3zqzY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E8A21BA9D;
+	Thu,  2 May 2013 20:41:47 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B591D1BA9C;
+	Thu,  2 May 2013 20:41:46 +0000 (UTC)
+In-Reply-To: <5182BD49.1070603@ramsay1.demon.co.uk> (Ramsay Jones's message of
+	"Thu, 02 May 2013 20:23:53 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B4E6C4EA-B368-11E2-A889-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223263>
 
-Ilya Basin <basinilya@gmail.com> wrote:
-> Hi. I won't send you updated patches until I import and test my huge
-> repo. Everything will be here:
-> https://github.com/basinilya/git/commits/v1.8.2.2-git-svn-fixes
-> 
-> At the moment I've decided not to implement the Junio's proposal:
-> > >> JCH> comment line "# added by git-svn only to keep the directory" and
-> > >> JCH> consider a directory that has nothing but .gitignore that consists
-> > >> JCH> of only that exact comment line an "added placeholder" directory to
-> > >> JCH> work it around.
-> 
-> But the config file is not an option too: I have 400 tags, each has
-> 200 empty folders.
-> 
-> Instead I decided to store the paths in a text file (see
-> https://github.com/basinilya/git/commit/a961aedd81cb8676a52cfe71ccb6eba0f9e64b90 ).
-> I'm not planning to push this change to you.
-> 
-> The last error I encountered is:
-> r7009 = 39805bb078983e34f2fc8d2c8c02d695d00d11c0 (refs/remotes/DMC4_Basic)
-> Too many open files: Can't open file '/home/il/builds/sicap/gitsvn/prd_dmc4.svn/db/revs/0/786': Too many open files at /.snapshots/persist/builds/git/git-git/perl/blib/lib/Git/SVN/Ra.pm line 282.
-> 
-> I think It's unrelated to empty dirs.
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-Can you get an lsof on the git-svn process right before this?
-What's your open files limit?
+> Version 2 changes:
+>
+>    - minor edit to commit message to Patch #1
+>      (s.%s/NATIVE_WINDOWS/.%s/WINDOWS_NATIVE/.) ;-)
+>
+>    - add some additional explanation to commit message
+>      of Patch #2.
+
+Thanks.
+
+> Note: Since I don't have a commit ID for the first patch,
+> I didn't know how to refer to it in the second patch.
+
+At least we know that it will be applied on top of the other one, so
+what I usually do in such a case is to say "Now the previous one
+fixed that glitch, we can do X, Y and Z to make the world a better
+place on top of it."
