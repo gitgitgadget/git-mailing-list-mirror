@@ -1,91 +1,99 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 4/9] t1508 (at-combinations): increase coverage
-Date: Thu,  2 May 2013 19:09:29 +0530
-Message-ID: <1367501974-6879-5-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 8/9] sha1_name.c: fix @-parsing bug in interpret_branch_name()
+Date: Thu,  2 May 2013 19:09:33 +0530
+Message-ID: <1367501974-6879-9-git-send-email-artagnon@gmail.com>
 References: <1367501974-6879-1-git-send-email-artagnon@gmail.com>
 Cc: Felipe Contreras <felipe.contreras@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 02 15:38:57 2013
+X-From: git-owner@vger.kernel.org Thu May 02 15:38:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXtip-0002b0-DE
+	id 1UXtio-0002b0-Hl
 	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 15:38:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759661Ab3EBNis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 May 2013 09:38:48 -0400
-Received: from mail-da0-f49.google.com ([209.85.210.49]:45587 "EHLO
-	mail-da0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750769Ab3EBNiM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 May 2013 09:38:12 -0400
-Received: by mail-da0-f49.google.com with SMTP id p5so313953dak.8
-        for <git@vger.kernel.org>; Thu, 02 May 2013 06:38:11 -0700 (PDT)
+	id S1759652Ab3EBNij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 09:38:39 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:41960 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759379Ab3EBNiV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 09:38:21 -0400
+Received: by mail-pd0-f173.google.com with SMTP id v10so360556pde.18
+        for <git@vger.kernel.org>; Thu, 02 May 2013 06:38:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=U4h/9lag9PrhiwzqjN19BGacjDkHsM0Ngy1e5r0CpgU=;
-        b=KNtfxZ8zV39HF5tNaEuR/qgYI8QQ7JYWZRAORWAUokThV8mSKqMsQcioGRRlaII+NB
-         iVHgY544t58falYO1RTK1DbAiNCyEUkzucSteMNhmkbpoQR/nZTzY0zUrjb1k4w8E9T0
-         hTYn79Xr2sktEQMQXl7+Jkc74OLydjqvUBClKHrev3UKmf+BUdN453HByaKwhpYE/NxK
-         if/nQIJCwlMik8BqfSXuPReTIHNjdpYsmiqSQA772IQgdhd/b4xKE0qmRI5n9bi+CsNv
-         tGixO4PFx4n5GXZr6W91IyYR0cu2bECKA3Ke+tJZIL+lZoULM2zThbptW2vhjrikS7zw
-         unkQ==
-X-Received: by 10.66.162.67 with SMTP id xy3mr9760926pab.94.1367501891700;
-        Thu, 02 May 2013 06:38:11 -0700 (PDT)
+        bh=UCtxwjslmUHf8rHf3jJbtEXHs89KkDmMAp4l24JQaMA=;
+        b=EG+AedqpLdHvax/OsOUzsN/1+baJFZzZgMNNTwKqg5U3Qx/PLkJoFdD/s9UEVhFY+c
+         OKuHJnG8tRKGJA/HeDtORW2EKccVy0tX9adbao2+DoCJXZ5FNuscTZ/tGCFcN0Ou5qu0
+         2BJT/XDbQHM3vFv3jO7u0Fb/2jY2b6SV0XZkm6n3nF2bluXsYpjQELR12D5KUmvGWM4L
+         7PmuO3TrURv/Q87qs/964qsdSjQl/6KofPDWbJMs0k8XG5TkpHHxcWtYSavdB1wddAxY
+         +qAMYSKNMWMXC0O1AsP1HPFcBTn106kNCm0y4kr+h1ExeLq3BCU9vo5PiQNeNSIH7ajd
+         BaIA==
+X-Received: by 10.68.59.167 with SMTP id a7mr8910424pbr.94.1367501901352;
+        Thu, 02 May 2013 06:38:21 -0700 (PDT)
 Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPSA id wi6sm7392889pbc.22.2013.05.02.06.38.09
+        by mx.google.com with ESMTPSA id wi6sm7392889pbc.22.2013.05.02.06.38.19
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 02 May 2013 06:38:11 -0700 (PDT)
+        Thu, 02 May 2013 06:38:20 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc0.40.g09a0447
 In-Reply-To: <1367501974-6879-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223206>
 
-Add more tests exercising documented functionality.
+Symbolic refs work in the general case, but making @ a symbolic-ref
+doesn't work due to a parsing bug in interpret_branch_name().  Update
+the function to parse "@{", not '@' (since '@' is a valid symbolic
+ref).
 
-It is worth nothing that HEAD@{-<n>} is senseless because @{-<n>}
-cannot be used with anything other than HEAD anyway.
+This makes a failing test in t1508 (at-combinations) pass.  In other
+words, you can now do:
 
-[fc: contribute a couple of tests]
+    $ git symbolic-ref @ HEAD
+
+And expect the following to work:
+
+    $ git rev-parse @@{u}
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- t/t1508-at-combinations.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sha1_name.c                | 2 +-
+ t/t1508-at-combinations.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/sha1_name.c b/sha1_name.c
+index 3820f28..850e6d7 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1019,7 +1019,7 @@ int interpret_branch_name(const char *name, struct strbuf *buf)
+ 		return ret - used + len;
+ 	}
+ 
+-	cp = strchr(name, '@');
++	cp = strstr(name, "@{");
+ 	if (!cp)
+ 		return -1;
+ 	tmp_len = upstream_mark(cp, namelen - (cp - name));
 diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
-index 55fdd0f..eaa5337 100755
+index 424caf5..6a69f9e 100755
 --- a/t/t1508-at-combinations.sh
 +++ b/t/t1508-at-combinations.sh
-@@ -42,13 +42,21 @@ test_expect_success 'setup' '
+@@ -70,7 +70,7 @@ check "H@{u}" refs/heads/upstream-branch
+ git symbolic-ref @ HEAD
+ check "@@{1}" commit new-one
+ check "@@{now}" commit new-two
+-check "@@{u}" ref refs/heads/upstream-branch failure
++check "@@{u}" refs/heads/upstream-branch
  
- check HEAD refs/heads/new-branch
- check "@{1}" commit new-one
-+check "HEAD@{1}" commit new-one
-+check "@{now}" commit new-two
-+check "HEAD@{now}" commit new-two
- check "@{-1}" refs/heads/old-branch
-+check "@{-1}@{0}" commit old-two
- check "@{-1}@{1}" commit old-one
- check "@{u}" refs/heads/upstream-branch
-+check "HEAD@{u}" refs/heads/upstream-branch
- check "@{u}@{1}" commit upstream-one
- check "@{-1}@{u}" refs/heads/master
- check "@{-1}@{u}@{1}" commit master-one
- nonsense "@{u}@{-1}"
-+nonsense "@{0}@{0}"
- nonsense "@{1}@{u}"
-+nonsense "HEAD@{-1}"
-+nonsense "@{-1}@{-1}"
- 
- test_done
+ # Document differences between @{N} and HEAD@{N}.  The former resolves
+ # HEAD to a branch and looks up the logs for that branch, while the
 -- 
 1.8.3.rc0.40.g09a0447
