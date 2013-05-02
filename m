@@ -1,88 +1,85 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] lookup_object: prioritize recently found objects
-Date: Thu, 02 May 2013 09:05:01 +0200
-Message-ID: <5182101D.4050807@viscovery.net>
-References: <20130501203449.GA12535@sigill.intra.peff.net> <51820B37.8010503@viscovery.net> <20130502064630.GA15208@sigill.intra.peff.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] Hold an 'unsigned long' chunk of the sha1 in obj_hash
+Date: Thu, 2 May 2013 10:52:04 +0200
+Message-ID: <87vc71u5l7.fsf@linux-k42r.v.cablecom.net>
+References: <6c2b67a2f0b67ee796c7676e3febe4c61ab85d4a.1366912627.git.trast@inf.ethz.ch>
+	<20130501204947.GA12789@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 02 09:07:28 2013
+X-From: git-owner@vger.kernel.org Thu May 02 10:52:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXnbz-0006ia-Jn
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 09:07:27 +0200
+	id 1UXpFO-0005OF-EG
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 10:52:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130Ab3EBHHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 May 2013 03:07:22 -0400
-Received: from so.liwest.at ([212.33.55.13]:50606 "EHLO so.liwest.at"
+	id S1751443Ab3EBIwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 04:52:09 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:53515 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753130Ab3EBHFE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 May 2013 03:05:04 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UXnZd-0000Gy-6v; Thu, 02 May 2013 09:05:01 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id EBF9F1660F;
-	Thu,  2 May 2013 09:05:00 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <20130502064630.GA15208@sigill.intra.peff.net>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1750822Ab3EBIwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 04:52:08 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 2 May
+ 2013 10:51:58 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS22.d.ethz.ch (172.31.51.112) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 2 May 2013 10:52:03 +0200
+In-Reply-To: <20130501204947.GA12789@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 1 May 2013 16:49:47 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223181>
 
-Am 5/2/2013 8:46, schrieb Jeff King:
-> On Thu, May 02, 2013 at 08:44:07AM +0200, Johannes Sixt wrote:
->> Am 5/1/2013 22:34, schrieb Jeff King:
->>>  struct object *lookup_object(const unsigned char *sha1)
->>>  {
->>> -	unsigned int i;
->>> +	unsigned int i, first;
->>>  	struct object *obj;
->>>  
->>>  	if (!obj_hash)
->>>  		return NULL;
->>>  
->>> -	i = hashtable_index(sha1);
->>> +	first = i = hashtable_index(sha1);
->>>  	while ((obj = obj_hash[i]) != NULL) {
->>>  		if (!hashcmp(sha1, obj->sha1))
->>>  			break;
->>> @@ -85,6 +85,11 @@ struct object *lookup_object(const unsigned char *sha1)
->>>  		if (i == obj_hash_size)
->>>  			i = 0;
->>>  	}
->>> +	if (obj && i != first) {
->>> +		struct object *tmp = obj_hash[i];
->>> +		obj_hash[i] = obj_hash[first];
->>> +		obj_hash[first] = tmp;
->>> +	}
->>>  	return obj;
->>>  }
->>
->> This is one of the places where I think the code does not speak for itself
->> and a comment is warranted: The new if statement is not about correctness,
->> but about optimization:
-> 
-> I figured the lengthy description in the commit message would be
-> sufficient,
+Jeff King <peff@peff.net> writes:
 
-It's absolutely sufficient *if* one reads the commit message. In this
-case, though it goes more like "this function should be trivial, and it is
--- up to this if statement; what the heck is it good for?" and the reader
-is forced to dig the history.
+> It _might_ still be advantageous to do your patch on top, but I suspect
+> it will diminish the returns from your patch (since the point of it is
+> to probe less far down the chain on average).
 
-BTW, do you notice that the function is now modifying an object (the hash
-table) even though this is rather unexpected from a "lookup" function?
+No, mine makes it slower again.  Apparently the increased size is no
+longer worth it.  You'll need a wide window to read this:
 
--- Hannes
+Test                                  next              tr/hash-speedup            jk/hash-speedup             both-hash-speedup        
+----------------------------------------------------------------------------------------------------------------------------------------
+0001.1: rev-list --all                0.66(0.63+0.02)   0.66(0.63+0.03) -0.4%      0.66(0.63+0.03) -0.6%       0.66(0.62+0.03) -0.6%    
+0001.2: rev-list --all --objects      4.12(4.05+0.05)   3.81(3.74+0.06) -7.6%***   3.50(3.43+0.05) -15.1%***   3.56(3.49+0.05) -13.7%***
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Note that the scripts always generate the percentages and significance
+w.r.t. the first column.  Comparing yours with both instead gives
+
+Test                               jk/hash-speedup   both-hash-speedup     
+---------------------------------------------------------------------------
+0001.1: rev-list --all             0.66(0.63+0.03)   0.66(0.62+0.03) +0.0% 
+0001.2: rev-list --all --objects   3.50(3.43+0.05)   3.56(3.49+0.05) +1.6%*
+---------------------------------------------------------------------------
+
+which is still significant (in the statistical p=5% sense).
+
+For kicks I also ran some other tests, which generally show that the
+speedups are limited to this specific workload:
+
+Test                                  next              tr/hash-speedup          jk/hash-speedup         both-hash-speedup     
+-------------------------------------------------------------------------------------------------------------------------------
+3201.1: branch --contains             0.76(0.74+0.02)   0.75(0.73+0.02) -1.0%*   0.77(0.74+0.02) +0.7%   0.76(0.73+0.02) -0.7% 
+4000.1: log -3000 (baseline)          0.12(0.09+0.02)   0.12(0.10+0.02) +3.2%    0.12(0.10+0.01) +0.0%   0.12(0.10+0.02) +3.2% 
+4000.2: log --raw -3000 (tree-only)   0.53(0.47+0.05)   0.52(0.46+0.05) -0.9%    0.53(0.46+0.06) +0.0%   0.52(0.45+0.06) -0.9% 
+4000.3: log -p -3000 (Myers)          2.39(2.23+0.14)   2.38(2.23+0.13) -0.4%    2.38(2.23+0.14) -0.4%   2.38(2.23+0.13) -0.5% 
+4000.4: log -p -3000 --histogram      2.43(2.28+0.13)   2.43(2.28+0.13) -0.0%    2.43(2.28+0.13) -0.1%   2.43(2.28+0.14) +0.1% 
+4000.5: log -p -3000 --patience       2.72(2.57+0.12)   2.74(2.59+0.12) +0.7%    2.72(2.57+0.13) +0.2%   2.74(2.59+0.13) +0.8%.
+-------------------------------------------------------------------------------------------------------------------------------
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
