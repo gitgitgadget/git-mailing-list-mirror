@@ -1,127 +1,269 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/5] index-pack, unpack-objects: add --not-so-strict for connectivity check
-Date: Thu, 02 May 2013 09:27:53 -0700
-Message-ID: <7vvc711h4m.fsf@alter.siamese.dyndns.org>
-References: <1364728148-7537-1-git-send-email-pclouds@gmail.com>
-	<1367405974-22190-1-git-send-email-pclouds@gmail.com>
-	<1367405974-22190-5-git-send-email-pclouds@gmail.com>
-	<7vvc722s0h.fsf@alter.siamese.dyndns.org>
-	<CACsJy8A2dYssdV7JHutYKgo-nZswBAuedXoJ=aygrVSR=JeTrw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/5] t1508 (at-combinations): more tests; document failures
+Date: Thu, 2 May 2013 11:45:57 -0500
+Message-ID: <CAMP44s2nqLrLRFM1bH028FpV+tPYUWYDz_AffaBhVfwwm4h=kg@mail.gmail.com>
+References: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
+	<1367425235-14998-2-git-send-email-artagnon@gmail.com>
+	<7va9oe5y6k.fsf@alter.siamese.dyndns.org>
+	<CAMP44s31jyuGGG1Wn9D=D9udkJJdXQfwVAnHuOg02FWinpmn7Q@mail.gmail.com>
+	<CALkWK0=B_Ym_ei181eV-WeqJZJyHPv-AmLzYwajm13wftJkB6g@mail.gmail.com>
+	<CAMP44s1x8pu2B2h3wKmuBDXz3Tqyk9qyijshcD6iN+NpYDCQdQ@mail.gmail.com>
+	<CALkWK0k5zyGwZaP84YMON8VZbfjRxQ3PG2ML2ds8GdQY38s7SA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 02 18:28:03 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 02 18:46:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXwMU-0008UH-8I
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 18:28:02 +0200
+	id 1UXwdy-0000E2-5x
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 18:46:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760696Ab3EBQ15 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 May 2013 12:27:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39584 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760689Ab3EBQ14 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 May 2013 12:27:56 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB7BF1BC18;
-	Thu,  2 May 2013 16:27:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=58mTu/YZIw6j
-	dt2Bb2f/LAD0BRY=; b=LZMGjEy6okinn22AL5HWRZrY4osDo6u+80dXS676E5ji
-	SZ7Y/lsxBD9FkRwKBLh6ySawYtBDLX2WskaT4xPeYisl7/iPm6YgbMSS/OgAgllq
-	Nb+1re+4SgnhDQS3A+UKklIAm/AvWeZy3540ZtV46AhuHR9R+f6TwAi2gb2smHY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MugVD5
-	0Bannft4iJnDsKia0edNFmPkRaQ65hcZkxyHPi5MSEoqWYhRtb8BdypiGPla2IJC
-	0O+S742BvAecaLgBuFS/sNzSJpUBpaD1LUC/83lDOhiJpcwRbQCuuVE5uWpWYfzu
-	0Lc2Vcieen+Z2DT0CL0b3N065HrvuWB3muxBk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E31211BC17;
-	Thu,  2 May 2013 16:27:55 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 56A011BC15;
-	Thu,  2 May 2013 16:27:55 +0000 (UTC)
-In-Reply-To: <CACsJy8A2dYssdV7JHutYKgo-nZswBAuedXoJ=aygrVSR=JeTrw@mail.gmail.com>
-	(Duy Nguyen's message of "Thu, 2 May 2013 16:53:16 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3E493052-B345-11E2-81D7-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760674Ab3EBQqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 12:46:00 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:47574 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752592Ab3EBQp7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 12:45:59 -0400
+Received: by mail-la0-f50.google.com with SMTP id fl20so730637lab.9
+        for <git@vger.kernel.org>; Thu, 02 May 2013 09:45:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=8CpEfTpzNqQPjT172kf5kgFKurFeOe2y6CMwA4kSbEE=;
+        b=trOZoAec7lt2yxzwzr7up4Aa77BmDkyllrJKlbUnMBhZsLExGQuoWota2dr3zyV6s5
+         zh2kmYVDbgn/jbfgfnbBzidgiKFxrQ6uDt4Io4XswaKf44TXmIZqKmkBc7AGGZwOWbah
+         AUoKSYGoxkwJ4vhw9VfXFSFwEJRSLrrVliKY78rVkgQa22QrYzP10tkVVzzFqaka1TZM
+         rYBP7a43+H0Vtj/yPj+M2nF3ta+3bRlTyfi6cilT3I44YeUPYSEi0ADRm+XN1QISvgAv
+         DIgyhsD/CeKolTymXkTrZmwb5z3RdEMxxLybbjZCPDe17yhKo9QPt7UBZ6KdG0O6JJGV
+         5nSQ==
+X-Received: by 10.112.146.133 with SMTP id tc5mr2951990lbb.88.1367513158124;
+ Thu, 02 May 2013 09:45:58 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Thu, 2 May 2013 09:45:57 -0700 (PDT)
+In-Reply-To: <CALkWK0k5zyGwZaP84YMON8VZbfjRxQ3PG2ML2ds8GdQY38s7SA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223219>
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> On Thu, May 2, 2013 at 6:35 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
-s:
->>
->>> --not-so-strict only checks if all links from objects in the pack
->>> point to real objects (either in current repo, or from the pack
->>> itself). It's like check_everything_connected() except that:
->>>
->>>  - it does not follow DAG in order
->>>  - it can detect incomplete object islands
->>
->> Could you clarify what this second point means?
->>
->> "rev-list --objects --all --not $this $that" does not detect
->> "islands" but checking with the updated index-pack does?
+On Thu, May 2, 2013 at 6:03 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> Felipe Contreras wrote:
+>> But HEAD is special, @ is not. HEAD is documented, @ is not.
 >
-> Object islands (in the new pack) by definition are not connected to
-> the main DAG and so invisible to/unreachable from rev-list. index-pac=
-k
-> examines all objects in the pack and checks links of each object. Wit=
-h
-> this approach, islands are no different than reachable objects.
+> Your point being?  That we should document @?  Yes, I agree.
 
-OK, so if you are fetching an updated tip of the main history, and a
-new tip of a history that is disjoint. If we imagine that my public
-repository just added the 'todo' branch and you are fecting them for
-the first time. The history of 'todo' branch is an island that is
-not connected anywhere from your refs namespace yet. In order to
-ensure that updating the tip of fetched 'todo' is safe, you would
-need to verify the island is free of dangling pointers and the only
-thing you need to be sure is the tip of 'todo' is _in_ that island.
+Where?
 
->> I am guessing that the code assumes that we are updating our refs to
->> objects that are in the pack that we are looking at, and I can see
->> how the new check in sha1_object() may detect an object that points
->> at another object that is missing.  But that assumption (which I
->> think is correct) is probably the most important thing to say in the
->> log message.
+>> Where is it documented that @ points to HEAD? Where is it documented
+>> that 'branch -u foo @' would replace @ with HEAD?
+>> Documentation/revisions.txt? Sorry, 'git branch -u foo' does not parse
+>> revisions, so that's not the answer. And there's many other places
+>> that don't do revision parsing either.
 >
-> Yes, we need to make sure the new value of our refs are existing
-> objects. But it does not need to be in the new pack.
+> You're confusing parsing revisions with parsing symbolic-refs.  I've
+> documented @ right next to HEAD, FETCH_HEAD and the other symbolic
+> refs in revisions.txt.  Yes, we have to update the documentation of
+> commands like 'git branch -u foo' to make it clear that they can
+> operate on symbolic-refs (not just "HEAD") that point to branches, not
+> just plain branch refs.
 
-It is a bit more tricky than that.  A malicious (or simply buggy)
-other side can send a subset of my 'todo' branch, which is an island
-that is free of dangling pointers (think: 'rev-list --objects
-todo~8').  Further imagine that you earlier attempted a fetch of the
-same history from me over a commit walker and you happen to have
-partial history near the tip of 'todo' but not connected to the
-island.  sha1_object() will find it, but that does not say anything
-useful.  The tip _must_ appear in the island for your check to yield
-a usable result, no?
+FETCH_HEAD is not a symbolic ref, there's no other special symbolic
+ref, HEAD is the only one.
 
-The existing "everything connected" was designed to protect against
-that kind of breakage as well.
+> Maybe even a fresh page on symbolic refs?
 
-I might be reading your change incorrectly, but I am not sure how
-the new code protects against such a breakage.
+Just for '@'? Then what? Are you going to manually inspect the whole
+code-base to find in which instances is '@' going to be resoled, and
+link the documentation of that command to this new symbolic ref?
 
-> After index-pack
-> is run, we're guaranteed that all objects in repo are connected and
-> any of them could be new ref. This is also why I add has_sha1_file()
-> in clone.c.
+Go ahead, let's see what you come up with.
+
+>> Your approach is more like a hack,
+>
+> Now you're just saying rubbish.  Neither of the approaches is more of
+> a "hack" than the other.  You've implemented @ as a revision, while
+> I've implemented it as a symbolic-ref.
+
+The former has precedents, the later doesn't. The former can be easily
+documented, the later can't. The former is a simple single patch, the
+later is bound to dubious changes. The former has no unintended
+consequences, the later can have many.
+
+So yeah, I'd say the later is a hack.
+
+> Your approach requires less effort to document,
+
+Your approach can NOT be documented.
+
+> and my approach yields
+> an implementation that is almost trivial.
+
+No, it requires multiple changes, THIS is trivial:
+
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1025,6 +1025,13 @@ int interpret_branch_name(const char *name,
+struct strbuf *buf)
+        cp = strchr(name, '@');
+        if (!cp)
+                return -1;
++
++       if (cp == name && name[1] != '{') {
++               strbuf_reset(buf);
++               strbuf_add(buf, "HEAD", 4);
++               return reinterpret(name, namelen, 1, buf);
++       }
++
+        tmp_len = upstream_mark(cp, namelen - (cp - name));
+        if (!tmp_len)
+                return -1;
+
+That's it, that's the whole patch that implements my approach.
+
+> That is not the basis for
+> determining which approach is "better".
+
+Yes it is. If it can be easily documented it's a sign that you are
+doing it in the right place. If it's *impossible* to document, it's a
+sign that what you are doing is a hack.
+
+If you need multiple changes all over the place it's a sign that what
+you are doing is not a natural extension of anything. If it follows
+naturally from what people have done in the past, it's a sign that it
+is a natural extension.
+
+>> it has the consequences we want,
+>> but it has many other unintentional and undocumented consequences.
+>
+> Who said it wasn't intentional?  Yes, I agree with your criticism
+> about it being undocumented: please help fixing this.
+
+Why? Why document a hack all over the place? Especially when we do NOT
+have to. We don't need this hack.
+
+> It's very much intentional.  I _want_ these to work:
+>
+> % git symbolic-ref M refs/heads/master
+> % git show M@{u}
+> % git branch -u ram/master M
+>
+> In other words, I want commands that operate on "HEAD" to also operate
+> on other symbolic refs similarly.  Is this an unreasonable request?
+
+That has absolutely nothing to do with the '@' shortcut. Nothing at all.
+
+The mere fact that we are discussing about random symbolic refs is
+proof that you can't focus on the issue at hand.
+
+>> If I find a single place where 'HEAD' is hard-coded, and your patch
+>> doesn't replace '@' correctly, would you then accept that there are
+>> unintentional consequences, and that this approach is no the best
+>> precisely for that reason?
+>
+> You'd have found a bug then, and we must fix it.
+
+So that's it. There's absolutely no way to convince you that your
+approach is the wrong one. No amount of evidence to the contrary will
+change your mind.
+
+There's no point in discussing then.
+
+> Why are you throwing
+> useful features out the window simply because of difficulty of
+> documentation/ historical inertia?
+
+I'm not throwing any useful features, I'm implementing them correctly.
+
+>> Ramkumar Ramachandra wrote:
+>>> git branch X <any
+>>> expression with or without a symbolic ref> works fine, and it has
+>>> nothing to do with my series.
+>>
+>> No, it doesn't.
+>>
+>> % git symbolic-ref TEST refs/heads/master
+>> % git branch -u origin/master TEST
+>> fatal: branch 'TEST' does not exist
+>> % git branch --edit-description TEST
+>> error: No branch named 'TEST'.
+>
+> Are you reading what you're responding to?  I said:
+>
+> % git branch X @{-1}
+> % git branch X HEAD
+> % git symbolic-ref M refs/heads/master
+> % git branch X M
+>
+> Will work with or without my patch.  This is because git branch <1>
+> <2> runs <2> through the revision parser.
+
+The branch commands that run through the revision parser are
+irrelevant. 'git branch foo @' will work with my patch too.
+
+> This will work with my patch:
+>
+> % git symbolic-ref M refs/heads/master
+> % git branch -u origin/master M
+
+Which is irrelevant to the discussion about '@'.
+
+> precisely because:
+>
+> % git branch -u origin/master HEAD
+>
+> works.  And precisely because this does not:
+>
+> % git branch -u origin/master @{-1}
+>
+> In other words, git branch -u <1> <2> expects <2> to be a ref or
+> symbolic-ref (currently limited to "HEAD"), not a revision.  It
+> doesn't run <2> through the revision parser to check if it resolves to
+> a ref.
+>
+> The following will not work:
+>
+> % git symbolic-ref M refs/heads/master
+> % git branch --edit-description M
+>
+> precisely because:
+>
+> % git branch --edit-description HEAD
+>
+> does not work.  This is because git branch --edit-description <1>
+> expects <1> to be a non-symbolic ref.  It doesn't even hard-code
+> "HEAD".
+>
+> Why are you blaming my patch for existing inconsistencies in the UI?
+
+Your patch is introducing more, and you can NOT document all the
+changes you are introducing.
+
+> There is one limitation worth nothing: a symbolic-ref can only point
+> to a ref (or another symbolic ref).  The revision parser doesn't kick
+> in at the resolve_ref_unsafe() stage.  So, it's quite non-trivial to
+> implement what Thomas asked for (git symbolic-ref U @{u}).  However, I
+> think my series is one step in the right direction.  I'd really love
+> symbolic refs I can take along with me (so M -> master can be in my
+> .gitconfig): we have to hook resolve_ref_unsafe() to the config API to
+> achieve this.
+>
+> In other words, I'm thinking about the future of symbolic refs.
+
+That has absolutely nothing to do with the '@' shortcut.
+
+Since you can't talk about the issue of the '@' without mentioning
+other random symlinks, it's basically impossible to have a fruitful
+discussion.
+
+And since there's absolutely no evidence or logical argument that
+would convince you that your approach is not the right one, there is
+no point in discussing.
+
+-- 
+Felipe Contreras
