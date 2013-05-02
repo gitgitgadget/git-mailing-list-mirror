@@ -1,63 +1,56 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 4/9] t1508 (at-combinations): increase coverage
-Date: Thu, 2 May 2013 10:26:02 -0400
-Message-ID: <CAPig+cQegm8PsskaWJ4F4+jz3mmwaQEhx5FAfatnLU3ar-FMAw@mail.gmail.com>
-References: <1367501974-6879-1-git-send-email-artagnon@gmail.com>
-	<1367501974-6879-5-git-send-email-artagnon@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 7/9] remote.c: teach branch_get() to treat symrefs other
+ than HEAD
+Date: Thu, 2 May 2013 20:07:09 +0530
+Message-ID: <CALkWK0=FbbCferG+q4qymvsm-t_rfSBRZfp7t3kO=z-EF5QYuA@mail.gmail.com>
+References: <1367501974-6879-1-git-send-email-artagnon@gmail.com> <1367501974-6879-8-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 02 16:26:25 2013
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 02 16:37:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXuSn-0003Qq-0Q
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 16:26:25 +0200
+	id 1UXudu-0004vV-Ue
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 16:37:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759226Ab3EBO0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 May 2013 10:26:06 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:50110 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757941Ab3EBO0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 May 2013 10:26:05 -0400
-Received: by mail-la0-f54.google.com with SMTP id fd20so561012lab.41
-        for <git@vger.kernel.org>; Thu, 02 May 2013 07:26:02 -0700 (PDT)
+	id S1758866Ab3EBOhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 10:37:50 -0400
+Received: from mail-ia0-f173.google.com ([209.85.210.173]:45244 "EHLO
+	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758008Ab3EBOht (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 10:37:49 -0400
+Received: by mail-ia0-f173.google.com with SMTP id l25so518288iad.18
+        for <git@vger.kernel.org>; Thu, 02 May 2013 07:37:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=ACVSnaro4Ouw6joDO7mimO0+Sn5k2/yjRZJytjeQMwE=;
-        b=xua2sXTR6FxxpvPdPOGSVEAwGeybpLbYK6kp60kXGRw7ujpVnKoWwkK9vPJaVCNW5e
-         4VnGrV7U61zoZJfwThA3r7UtvGfoTSMH2i+fxmvy1eKQZq1evOcUFmkaTJizLvhP5vjr
-         O9rZIYUG7XgYVmrCpw/GdTEPXdTLtiZnxUDxALXy5vegLQX3k7Vm12y5FnTtGocaSQQ7
-         Y+URGu7gF+Pmdbrwl8q8iDwm5VmLyRtfz1y4FtLn+V4wMIjEXuJcwm7oxA6FfZ/jlybE
-         GgZGM+1FXm03rYhC2svsctqjhl8dcahViaJRQRhavHEHmywqbL36F0AyWonMJLqL62SB
-         XV6g==
-X-Received: by 10.112.189.133 with SMTP id gi5mr2694530lbc.91.1367504762671;
- Thu, 02 May 2013 07:26:02 -0700 (PDT)
-Received: by 10.114.186.233 with HTTP; Thu, 2 May 2013 07:26:02 -0700 (PDT)
-In-Reply-To: <1367501974-6879-5-git-send-email-artagnon@gmail.com>
-X-Google-Sender-Auth: VXKeaBODx6tYyONZFdvbU50XPR4
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=DQFiOFYBenEYEvRTIiQiOedVJCFoNwAAg5LxlA1rnrc=;
+        b=HPXpqzQeMtlxFxwn1tNYeePFAFMs3UWH1YbAnbl/J3EmTBpjrXkDbnQs1msy8UJvso
+         DyxPni2xJlQQDX1dhH+DU0/PXVjiVaKam7QoI1j/HJyT94sujfAI1ayNYVP2ArKgtZFV
+         /ZsLB2bW9fIL+FpJg7Mkr4lUGgqPORtZa7302PpDB8vhnm1VlksX4nT+GRrYkrHdLxjw
+         5JsbzWO5GLOw499oYZhkHZyCvtQ0qrqT3lrI+sFQZLiENzwzUS/8vWmovE/ugpKde8qk
+         S5VTfyJeryRm2215IrSvaxGyPI7WcME52ZB/cHR+JCjFN+c/74YTWgHjwWw1wZElCO2e
+         EZPg==
+X-Received: by 10.50.66.197 with SMTP id h5mr14892154igt.63.1367505469379;
+ Thu, 02 May 2013 07:37:49 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Thu, 2 May 2013 07:37:09 -0700 (PDT)
+In-Reply-To: <1367501974-6879-8-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223209>
 
-On Thu, May 2, 2013 at 9:39 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
-> Add more tests exercising documented functionality.
->
-> It is worth nothing that HEAD@{-<n>} is senseless because @{-<n>}
+Ramkumar Ramachandra wrote:
+> [...]
 
-s/nothing/noting/
+So sorry about this, but this breaks some tests in t1507
+(rev-parse-upstream).  I'm looking into this now.
 
-> cannot be used with anything other than HEAD anyway.
->
-> [fc: contribute a couple of tests]
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+In the meantime, reviewers can focus on the commit message.
