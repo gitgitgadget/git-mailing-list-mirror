@@ -1,91 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 5/6] Add new @ shortcut for HEAD
-Date: Thu, 02 May 2013 09:49:48 -0700
-Message-ID: <7vobct1g43.fsf@alter.siamese.dyndns.org>
-References: <1367358554-4257-1-git-send-email-felipe.contreras@gmail.com>
-	<1367358554-4257-6-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8D_-S_BvQAa5b2+XpfM2-fJcEQ5EJa4RRtV1vQPEe1emA@mail.gmail.com>
+Subject: Re: [PATCH v2] upload-pack: ignore 'shallow' lines with unknown obj-ids
+Date: Thu, 02 May 2013 09:54:06 -0700
+Message-ID: <7vk3nh1fwx.fsf@alter.siamese.dyndns.org>
+References: <1367506567-36828-1-git-send-email-mheemskerk@atlassian.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 02 18:49:56 2013
+Cc: git@vger.kernel.org
+To: Michael Heemskerk <mheemskerk@atlassian.com>
+X-From: git-owner@vger.kernel.org Thu May 02 18:54:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXwhf-0003oO-Ly
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 18:49:56 +0200
+	id 1UXwlr-0007sq-TI
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 18:54:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760590Ab3EBQtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 May 2013 12:49:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35742 "EHLO
+	id S1760500Ab3EBQyK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 12:54:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32931 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752592Ab3EBQtu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 May 2013 12:49:50 -0400
+	id S1759204Ab3EBQyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 12:54:09 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07D20194D4;
-	Thu,  2 May 2013 16:49:50 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D2AD91968D;
+	Thu,  2 May 2013 16:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eP59Xg0ApowxYZmyA6RwbCnoXSQ=; b=EY8PBb
-	zRIdYHzT2t+/6+c4ev8Mxym3DgfxZnxOunZL6ZdnOd85ANKr1SvKzABo7K5WlrWe
-	sQp01hO+3edSRpCCTP0EFZc52ITd9B1rmY9P1mHHg/gifNV923Unz0E7asTQmuba
-	AsJSTcmJH0ZOr+I2CGOJcL+EkrOulrLR2s2+g=
+	:content-type; s=sasl; bh=EwM9yYk/8o5oUPNWkPh+zj03Ei8=; b=u61WIE
+	Hft7JMWgT79o+WShMIe6CbXE6Isixvn5VX+X8qgoWPnIQnVrhkZjSqSyKppU4LWu
+	BkM3zQhiqgWuUIGcIFqtDXdAYyiwEWL5o89JqEQHTzj9pzgUzArEVnPL6bjQcxBe
+	HxYeGYoKMtsr09+h8N65FJYnLXbfQSq9XnTvg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NYVWNNBHZESYjc9muI4wESa9yIZremDh
-	upVFweWO9GgnhSaVyfQl1wTRDrqNwwKhxk4qL7m/kDcR4EHa98AV5DZnyQi1SOws
-	EjslrDYEK2EZIdTYmxDeMuZOsgcRf4GIZWE7TDgcjNnX4cWoeWYiYSiNNxZuYqrf
-	czpWUFKTDZI=
+	:content-type; q=dns; s=sasl; b=cSHdedZ9dBZsQY2r3pdvwPA7MWDdkVuR
+	BW2t6rLsCOQLqx1CXa34BkSl91YrKL53/Dl931wqJvw+yvizaZgR1TFzflJF/B8d
+	aLK/hRGO9TNPkAjtlpMJ5X7q/j6/o7MtTVCBuyQGNmEhlHZe6dZhskCCZhfi/OAr
+	CYu11hOsHnk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EEC93194D3;
-	Thu,  2 May 2013 16:49:49 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA1E81968C;
+	Thu,  2 May 2013 16:54:08 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 67D3A194D0;
-	Thu,  2 May 2013 16:49:49 +0000 (UTC)
-In-Reply-To: <CACsJy8D_-S_BvQAa5b2+XpfM2-fJcEQ5EJa4RRtV1vQPEe1emA@mail.gmail.com>
-	(Duy Nguyen's message of "Wed, 1 May 2013 09:03:51 +0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5020E1968B;
+	Thu,  2 May 2013 16:54:08 +0000 (UTC)
+In-Reply-To: <1367506567-36828-1-git-send-email-mheemskerk@atlassian.com>
+	(Michael Heemskerk's message of "Fri, 3 May 2013 00:56:07 +1000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4D94B84E-B348-11E2-99AD-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E7D9B878-B348-11E2-B80D-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223221>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Michael Heemskerk <mheemskerk@atlassian.com> writes:
 
-> On Wed, May 1, 2013 at 4:49 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> So HEAD@{0}~0^0 is too much to type, but we can remove '^0', and we can
->> remove '~0', and we can remove 'HEAD', which leaves us with @{0}, but we
->> can't remove '{0}'?
->>
->> This patch allows '@' to be the same as 'HEAD'.
->>
->> So now we can use 'git show @~1', and all that goody goodness.
->>
->> Until now '@' was a valid name, but it conflicts with this idea, so lets
->> make it invalid. Very few people if any probably used this name, if they
->> did, they can rename it by using the full-path (e.g. refs/heads/@).
->
-> People can write master short for refs/heads/master, but can't with
-> refs/heads/@.
+> When the client sends a 'shallow' line for an object that the server does
+> not have, the server currently dies with the error: "did not find object
+> ...
+>  Documentation/technical/pack-protocol.txt |  3 +--
+>  t/t5500-fetch-pack.sh                     | 13 +++++++++++++
+>  upload-pack.c                             |  2 +-
+>  3 files changed, 15 insertions(+), 3 deletions(-)
 
-Is it a new problem?
+Thanks.
 
-You can not say HEAD to refer to refs/heads/HEAD, either.  To avoid
-confusion, we teach "git branch HEAD $commit" to error out (but it
-seems that "git checkout -b HEAD $commit" does not).
+The previous one (without the test) is already in 'next' so I'll
+pick only the test part and queue it as an update to the series.
 
-We probably would want to do the same for '@' when we refactor to
-have a central place that knows what the "make sense as refnames at
-the syntactic level, but are forbidden for operational purposes"
-branch names are. And use it to update "git checkout -b".
+> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+> index d574085..3f0ca10 100755
+> --- a/t/t5500-fetch-pack.sh
+> +++ b/t/t5500-fetch-pack.sh
+> @@ -373,6 +373,19 @@ test_expect_success 'clone shallow with packed refs' '
+>  	test_cmp count8.expected count8.actual
+>  '
+>  
+> +test_expect_success 'fetch in shallow repo unreachable shallow objects' '
+> +	(
+> +		git clone --bare --branch B --single-branch "file://$(pwd)/." no-reflog &&
+> +		git clone --depth 1 "file://$(pwd)/no-reflog" shallow9 &&
+> +		cd no-reflog &&
+> +		git tag -d TAGB1 TAGB2 &&
+> +		git update-ref refs/heads/B B~~ &&
+> +		git gc --prune=now &&
+> +		cd ../shallow9 &&
+> +		git fetch origin
+> +	)
+> +'
+> +
+>  test_expect_success 'setup tests for the --stdin parameter' '
+>  	for head in C D E F
+>  	do
