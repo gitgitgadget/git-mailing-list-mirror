@@ -1,68 +1,70 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4 3/3] Add colors to interactive git-clean
-Date: Thu, 02 May 2013 17:07:22 +0200
-Message-ID: <vpqhailfmj9.fsf@grenoble-inp.fr>
-References: <6e795640952cad0eb25cb0db4243b2712f11e957.1367500374.git.worldhello.net@gmail.com>
-	<3b80db3d2e8f31b1d9373406cce3cbdee2094a29.1367500374.git.worldhello.net@gmail.com>
-	<vpq38u6n397.fsf@grenoble-inp.fr>
-	<bb5463fa4ef09df08ad3bf5abf4660a5df414e64.1367500374.git.worldhello.net@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] lookup_object: prioritize recently found objects
+Date: Thu, 02 May 2013 08:38:33 -0700
+Message-ID: <7v4nel2xza.fsf@alter.siamese.dyndns.org>
+References: <20130501203449.GA12535@sigill.intra.peff.net>
+	<51820B37.8010503@viscovery.net>
+	<20130502064630.GA15208@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 02 17:07:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Duy Nguyen <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 02 17:38:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXv6f-0006ww-CN
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 17:07:37 +0200
+	id 1UXvaj-0003O8-MC
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 17:38:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756709Ab3EBPHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 May 2013 11:07:33 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:51596 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756042Ab3EBPHc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 May 2013 11:07:32 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r42F7LNw027562
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 2 May 2013 17:07:21 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UXv6R-0007cA-1C; Thu, 02 May 2013 17:07:23 +0200
-In-Reply-To: <bb5463fa4ef09df08ad3bf5abf4660a5df414e64.1367500374.git.worldhello.net@gmail.com>
-	(Jiang Xin's message of "Thu, 2 May 2013 21:15:04 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 02 May 2013 17:07:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r42F7LNw027562
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1368112044.62953@YcBA4vP3xIHBbaG7mmSwYw
+	id S932210Ab3EBPih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 11:38:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62307 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932201Ab3EBPig (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 11:38:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 811E8198E0;
+	Thu,  2 May 2013 15:38:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+B8bvbFTtYQ/3GzxAqrVg9SnTCQ=; b=Y6cU0T
+	PhDjX42tKGMK7Nn4BV32dlkUORjjWk/KJ0zfUMoAFuAMy9r7poQCiLdwCgaDnA3h
+	0NWY5Hc/Nkjzjc6wcDytFETgoAZKU5KQganAFZIQN0ym36YFGnFmK8QASQXmCMi0
+	VRlJQhFaY9+YOJsiLI4ax0PiIp7VckQhWSd7I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mga6LK1Olfbb1DxvelzMYfdHOlfI4W4x
+	Om5NTFnbmMN125B7T7C8F2/2tEOfJA/woC8zBhsoR3iZ2qz4SNL2PSakM6iJkw1h
+	dy6e8Ac89QveG8iofz8sdHZoWeuYdWmZUZbbHlZke0734WjlN3VxbClxV+D5SZg7
+	c7u8TzDdI+g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75F45198DF;
+	Thu,  2 May 2013 15:38:35 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EDA33198DA;
+	Thu,  2 May 2013 15:38:34 +0000 (UTC)
+In-Reply-To: <20130502064630.GA15208@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 2 May 2013 02:46:30 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 59C2F81A-B33E-11E2-A943-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223213>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Show help, error messages, and prompt in colors for interactive
-> git-clean.
+> I figured the lengthy description in the commit message would be
+> sufficient, but I don't mind adding something like your suggestion to
+> point readers of the code in the right direction when they see it.
 
-I find the red WARNING a bit agressive. Also, the NOTE: is the same
-color as the WARNING, hence visually similar. I first thought it was
-repeating the same message. I think it would make more sense to use
-default color, black, for the NOTE, by analogy with "git add -p" which
-uses it for patch hunk headers (somehow, this is the question you're
-replying to after the blue prompt below).
+Yeah, I'll squash J6t's comment in and requeue.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+If somebody is learning the internals by reading code, having a
+comment there would certainly help.
