@@ -1,69 +1,117 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/5] t1508 (at-combinations): more tests; document failures
-Date: Thu, 2 May 2013 22:32:41 +0530
-Message-ID: <CALkWK0nqoffHD3mfRqzanEuh4yG-cCO-YBGw8ApnG2uLKJaenw@mail.gmail.com>
-References: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
- <1367425235-14998-2-git-send-email-artagnon@gmail.com> <7va9oe5y6k.fsf@alter.siamese.dyndns.org>
- <CAMP44s31jyuGGG1Wn9D=D9udkJJdXQfwVAnHuOg02FWinpmn7Q@mail.gmail.com>
- <CALkWK0=B_Ym_ei181eV-WeqJZJyHPv-AmLzYwajm13wftJkB6g@mail.gmail.com>
- <CAMP44s1x8pu2B2h3wKmuBDXz3Tqyk9qyijshcD6iN+NpYDCQdQ@mail.gmail.com>
- <CALkWK0k5zyGwZaP84YMON8VZbfjRxQ3PG2ML2ds8GdQY38s7SA@mail.gmail.com>
- <CAMP44s2nqLrLRFM1bH028FpV+tPYUWYDz_AffaBhVfwwm4h=kg@mail.gmail.com> <CALkWK0m=gmf9g_O3uHmpGkSa165G-5VGROTgjQx87XwvDDQKSg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] upload-pack: ignore 'shallow' lines with unknown obj-ids
+Date: Thu, 02 May 2013 10:05:13 -0700
+Message-ID: <7vehdp1fee.fsf@alter.siamese.dyndns.org>
+References: <1367506567-36828-1-git-send-email-mheemskerk@atlassian.com>
+	<7vk3nh1fwx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 02 19:03:37 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Heemskerk <mheemskerk@atlassian.com>
+X-From: git-owner@vger.kernel.org Thu May 02 19:05:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXwum-0000Gi-VD
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 19:03:29 +0200
+	id 1UXwwe-000244-6o
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 19:05:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758325Ab3EBRDY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 May 2013 13:03:24 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:47065 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753432Ab3EBRDX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 May 2013 13:03:23 -0400
-Received: by mail-ie0-f169.google.com with SMTP id bn7so936469ieb.28
-        for <git@vger.kernel.org>; Thu, 02 May 2013 10:03:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=UoHNOqYN9BnBp2WBugRdEruJknc/svkukS0hSJ5gc9Y=;
-        b=UOl7oereoHN7fYlNYxNxON8T6lN/7+Kq6KEszMDMSUSMAbp/GDEfhBZy3cKpqhnsZX
-         wTVfXTGsZ2o91fbYbi2UwTMMoQHNc3iCtotwFARCqH8VhpRj2+AiptDqc2vZ2bTE4kq9
-         H3ThbRk9rWUR7GZz6KIK9+GxZSSMCPP1CMEy+Shfpsc5Xg3BK8ZynhM25ZaY4MZcR5Jg
-         0Vfk1D07fU+rqyL5m4lz+BTPbIMSARtKFtIUmjxJaiB925oWe3leeyfaKywO0Wf30iBV
-         S4XzO2+rHA209zDMVx1n+QZm1cKlNs9vSIAJNHQdNgzis7CRwSjd90PCihTPn16+/Kqw
-         3jCg==
-X-Received: by 10.50.72.65 with SMTP id b1mr4112411igv.63.1367514202143; Thu,
- 02 May 2013 10:03:22 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Thu, 2 May 2013 10:02:41 -0700 (PDT)
-In-Reply-To: <CALkWK0m=gmf9g_O3uHmpGkSa165G-5VGROTgjQx87XwvDDQKSg@mail.gmail.com>
+	id S1759155Ab3EBRFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 13:05:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36536 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757568Ab3EBRFQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 13:05:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B41519AE4;
+	Thu,  2 May 2013 17:05:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BYob8LVsoKPswwzg+a4R3jz8d5U=; b=DXnFlu
+	TZbhQ/GAf1xaONaf96w2qU9ASCOWONmp5gbFZy/KH5Fv8zUPgHqikXJ91sTrTVc/
+	ctGRXBKnhwPtdUgPW/Pe0Hh6omaAiKDva/hfKj9EQpJ6QOp0P88Bl5ehwv1oe8lr
+	QGsnOizdF4/nKOy5EDnntvYRyBd++fGCWUlm4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BRBC23sfHjd/irdp/v/+F4eK9evRw3Vj
+	Rv06PTsO8ERYTWaKWqrF9U9zleOEwoBmt6+EcuWbhb4SM/9RXSPX98ZFwG2DbmO3
+	lqJEkT6eFz/TocMcqMh+RXMKv6vg7YVQczwfpQbnF6q7HfkECSsNEZp5F7qhuxhu
+	mLsPCcrozxs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 50E4419AE3;
+	Thu,  2 May 2013 17:05:15 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A82FC19AE2;
+	Thu,  2 May 2013 17:05:14 +0000 (UTC)
+In-Reply-To: <7vk3nh1fwx.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 02 May 2013 09:54:06 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7508637E-B34A-11E2-B00D-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223226>
 
-Ramkumar Ramachandra wrote:
-> HEAD has been special right from the start, and we cannot elevate
-> anything else to its status now.
+Junio C Hamano <gitster@pobox.com> writes:
 
-As to why I agree with you: I audited the callers of branch_get() and
-found out there are some things that cannot be fixed just by fixing
-branch_get():
+> Michael Heemskerk <mheemskerk@atlassian.com> writes:
+>
+>> When the client sends a 'shallow' line for an object that the server does
+>> not have, the server currently dies with the error: "did not find object
+>> ...
+>>  Documentation/technical/pack-protocol.txt |  3 +--
+>>  t/t5500-fetch-pack.sh                     | 13 +++++++++++++
+>>  upload-pack.c                             |  2 +-
+>>  3 files changed, 15 insertions(+), 3 deletions(-)
+>
+> Thanks.
+>
+> The previous one (without the test) is already in 'next' so I'll
+> pick only the test part and queue it as an update to the series.
+>
+>> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+>> index d574085..3f0ca10 100755
+>> --- a/t/t5500-fetch-pack.sh
+>> +++ b/t/t5500-fetch-pack.sh
+>> @@ -373,6 +373,19 @@ test_expect_success 'clone shallow with packed refs' '
+>>  	test_cmp count8.expected count8.actual
+>>  '
+>>  
+>> +test_expect_success 'fetch in shallow repo unreachable shallow objects' '
+>> +	(
+>> +		git clone --bare --branch B --single-branch "file://$(pwd)/." no-reflog &&
+>> +		git clone --depth 1 "file://$(pwd)/no-reflog" shallow9 &&
+>> +		cd no-reflog &&
+>> +		git tag -d TAGB1 TAGB2 &&
+>> +		git update-ref refs/heads/B B~~ &&
+>> +		git gc --prune=now &&
+>> +		cd ../shallow9 &&
+>> +		git fetch origin
+>> +	)
+>> +'
 
-For instance, 'git fetch origin M' will not work, and it's not
-branch_get()'s fault.  And that is just one instance: there are tons
-of other instances; and going and changing each one of them will take
-forever, and totally not be worth the pain.
+It would also be good to make sure that shallow9 does not lose the
+shallow history boundary that the origin does not know about after
+this fetch, so I'll further squash this in.
 
-In other words; symbolic refs are a dead end.  The future is in
-getting everything to use the standard revision parser.
+ t/t5500-fetch-pack.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 3f0ca10..6133d9e 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -382,7 +382,8 @@ test_expect_success 'fetch in shallow repo unreachable shallow objects' '
+ 		git update-ref refs/heads/B B~~ &&
+ 		git gc --prune=now &&
+ 		cd ../shallow9 &&
+-		git fetch origin
++		git fetch origin &&
++		git fsck --no-dangling
+ 	)
+ '
+ 
