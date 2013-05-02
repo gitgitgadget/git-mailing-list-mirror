@@ -1,182 +1,106 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] sha1_name: reorganize get_sha1_basic()
-Date: Wed, 1 May 2013 20:00:59 -0500
-Message-ID: <CAMP44s0_9aXu0eZ0w_dkkoR4No3ZzKVsdzAb_E1wud-ZpOW6dg@mail.gmail.com>
-References: <1367455791-30091-1-git-send-email-felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/5] t1508 (at-combinations): more tests; document failures
+Date: Wed, 1 May 2013 21:22:28 -0500
+Message-ID: <CAMP44s31jyuGGG1Wn9D=D9udkJJdXQfwVAnHuOg02FWinpmn7Q@mail.gmail.com>
+References: <1367425235-14998-1-git-send-email-artagnon@gmail.com>
+	<1367425235-14998-2-git-send-email-artagnon@gmail.com>
+	<7va9oe5y6k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 02 03:01:09 2013
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 02 04:22:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXhtU-0001mG-3n
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 03:01:08 +0200
+	id 1UXjAJ-0008Bx-BM
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 04:22:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752582Ab3EBBBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 May 2013 21:01:03 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:34010 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751790Ab3EBBBB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 May 2013 21:01:01 -0400
-Received: by mail-wg0-f47.google.com with SMTP id e11so62326wgh.2
-        for <git@vger.kernel.org>; Wed, 01 May 2013 18:01:00 -0700 (PDT)
+	id S1758771Ab3EBCWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 May 2013 22:22:31 -0400
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:59411 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758255Ab3EBCWa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 May 2013 22:22:30 -0400
+Received: by mail-wg0-f50.google.com with SMTP id m15so102532wgh.29
+        for <git@vger.kernel.org>; Wed, 01 May 2013 19:22:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
          :subject:from:to:cc:content-type;
-        bh=EccW1vntOvs42Tq3HQr+D/FAppMUvG1BI5fSZP7BNC0=;
-        b=tD5aBi4zGbEyg0vg8zzKkRf9UTgBX95Bz96yA15vM1IJ3P9Ac6MXJkUOCgpGhravDO
-         tmPNtCuut7nBZ2Fum3kTQRfVZkrSWe3TUVaXyo1JkCVqT/FS+t85wVm0BvIlOkVeQlm8
-         JC+jFPjyv1kI9tNCpyRd1sDuQkNvimQBUSWmHUOo8qRtPDCprqyBJ/UnKA/uHv3KFXm7
-         zcsHyRYGIUYHtzflv7r6Jdrmk0nIgS+4ivD07fMEriaJAURMcEhL3UpT/iSxoLTKl8HU
-         PeaJ9YboBmVk1e7JYig++RWB9t4IhM43QCEBJ9ZrL+S76GVq/GaxiL07Y5dW4ATSB4dJ
-         +hKg==
-X-Received: by 10.180.83.199 with SMTP id s7mr4917309wiy.19.1367456460019;
- Wed, 01 May 2013 18:01:00 -0700 (PDT)
-Received: by 10.194.240.135 with HTTP; Wed, 1 May 2013 18:00:59 -0700 (PDT)
-In-Reply-To: <1367455791-30091-1-git-send-email-felipe.contreras@gmail.com>
+        bh=ylLGuea1/j2S2aNhk0cEJvpVtP2uZsfM03yEPrijE38=;
+        b=p83thGF6uPKLabfEwtNErz4SPSzt008CZ7JUIOLAfTJkedPJqMVABxf2BmzuAoJ2nU
+         fo+ml4w3iTVm0FxfZ/90cXKb/srFoxw27C8KsTnRV1nXXXNDiOHOJlHqtlyiVpmB56q6
+         ttNFEKzbbxHf+029y6KSmqi7mL8Ag9JtM18xsZ2mIzYrfC3TENbktF2JJxYa8TrATaHw
+         2xi24zMA5QmV9dWuQFVkZPpDFIprTOzJZQOn6825XJcaTCXdk812azkAZP8e/FC+CCbj
+         zi3wkm+Cr+7uYU9ork6P98Fa8sMoERBmkyb7J6nN5QENoGykGHlcSdUnWwcWMbRJGECh
+         NmSQ==
+X-Received: by 10.195.12.228 with SMTP id et4mr496990wjd.59.1367461348969;
+ Wed, 01 May 2013 19:22:28 -0700 (PDT)
+Received: by 10.194.240.135 with HTTP; Wed, 1 May 2013 19:22:28 -0700 (PDT)
+In-Reply-To: <7va9oe5y6k.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223173>
 
-On Wed, May 1, 2013 at 7:49 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Through the years the functionality to handle @{-N} and @{u} has moved
-> around the code, and as a result, code that once made sense, doesn't any
-> more.
->
-> There is no need to call this function recursively with the branch of
-> @{-N} substituted because dwim_{ref,log} already replaces it.
->
-> However, there's one corner-case where @{-N} resolves to a detached
-> HEAD, in which case we wouldn't get any ref back.
->
-> So we parse the nth-prior manually, and deal with it depending on
-> weather it's a SHA-1, or a ref.
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  sha1_name.c | 28 ++++++++++++++++------------
->  1 file changed, 16 insertions(+), 12 deletions(-)
->
-> diff --git a/sha1_name.c b/sha1_name.c
-> index 3820f28..110afbb 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -431,6 +431,7 @@ static inline int upstream_mark(const char *string, int len)
->  }
->
->  static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags);
-> +static int interpret_nth_prior_checkout(const char *name, struct strbuf *buf);
->
->  static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->  {
-> @@ -438,6 +439,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->         char *real_ref = NULL;
->         int refs_found = 0;
->         int at, reflog_len;
-> +       struct strbuf buf = STRBUF_INIT;
->
->         if (len == 40 && !get_sha1_hex(str, sha1))
->                 return 0;
-> @@ -447,6 +449,9 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->         if (len && str[len-1] == '}') {
->                 for (at = len-2; at >= 0; at--) {
->                         if (str[at] == '@' && str[at+1] == '{') {
-> +                               if (at == 0 && str[2] == '-')
-> +                                       /* @{-N} syntax */
-> +                                       continue;
->                                 if (!upstream_mark(str + at, len - at)) {
->                                         reflog_len = (len-1) - (at+2);
->                                         len = at;
-> @@ -460,20 +465,19 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->         if (len && ambiguous_path(str, len))
->                 return -1;
->
-> -       if (!len && reflog_len) {
-> -               struct strbuf buf = STRBUF_INIT;
-> -               int ret;
-> -               /* try the @{-N} syntax for n-th checkout */
-> -               ret = interpret_branch_name(str+at, &buf);
-> -               if (ret > 0) {
-> -                       /* substitute this branch name and restart */
-> -                       return get_sha1_1(buf.buf, buf.len, sha1, 0);
-> -               } else if (ret == 0) {
-> -                       return -1;
-> -               }
-> +       if (interpret_nth_prior_checkout(str, &buf) > 0) {
-> +               int detached;
-> +
-> +               detached = (buf.len == 40 && !get_sha1_hex(buf.buf, sha1));
-> +               strbuf_release(&buf);
-> +               if (detached)
-> +                       return 0;
-> +       }
-> +
-> +       if (!len && reflog_len)
->                 /* allow "@{...}" to mean the current branch reflog */
->                 refs_found = dwim_ref("HEAD", 4, sha1, &real_ref);
-> -       } else if (reflog_len)
-> +       else if (reflog_len)
->                 refs_found = dwim_log(str, len, sha1, &real_ref);
->         else
->                 refs_found = dwim_ref(str, len, sha1, &real_ref);
-> --
+On Wed, May 1, 2013 at 1:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-This might make more sense:
+> As you and Felipe seem to be aiming for the same "Let's allow users
+> to say '@' when they mean HEAD", I'll let you two figure the best
+> approach out.
+>
+> One productive way forward might be to come up with a common test
+> script pieces to document what constructs that spell @ in place of
+> HEAD should be supported, and much more importantly, what constructs
+> that happen to have @ in them should not mistakenly trigger the new
+> machinery.
 
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -438,8 +438,7 @@ static int get_sha1_basic(const char *str, int
-len, unsigned char *sha1)
-        static const char *warn_msg = "refname '%.*s' is ambiguous.";
-        char *real_ref = NULL;
-        int refs_found = 0;
--       int at, reflog_len;
--       struct strbuf buf = STRBUF_INIT;
-+       int at, reflog_len, nth_prior = 0;
+The difference is basically that my approach is less intrusive; it
+only touches code that is relevant for revision parsing. This means
+the scope and side-effects are known; the same as @{-N}.
 
-        if (len == 40 && !get_sha1_hex(str, sha1))
-                return 0;
-@@ -449,9 +448,10 @@ static int get_sha1_basic(const char *str, int
-len, unsigned char *sha1)
-        if (len && str[len-1] == '}') {
-                for (at = len-2; at >= 0; at--) {
-                        if (str[at] == '@' && str[at+1] == '{') {
--                               if (at == 0 && str[2] == '-')
--                                       /* @{-N} syntax */
-+                               if (at == 0 && str[2] == '-') {
-+                                       nth_prior = 1;
-                                        continue;
-+                               }
-                                if (!upstream_mark(str + at, len - at)) {
-                                        reflog_len = (len-1) - (at+2);
-                                        len = at;
-@@ -465,9 +465,12 @@ static int get_sha1_basic(const char *str, int
-len, unsigned char *sha1)
-        if (len && ambiguous_path(str, len))
-                return -1;
+Ramkumar's approach has no precedent, so it's not clear what
+side-effects could there be. His approach relies on modifying
+branch_get() a function that barely has been touched since 2007, and
+has other side-effects, plus there isn't even a proper patch with the
+isolated change, and an explanation why it makes sense.
 
--       if (interpret_nth_prior_checkout(str, &buf) > 0) {
-+       if (nth_prior) {
-+               struct strbuf buf = STRBUF_INIT;
-                int detached;
+While it might or might not make sense to teach branch_get() to accept
+symbolic refs, it's not needed to achieve the desired functionality,
+either on my approach, or his.
 
-+               interpret_nth_prior_checkout(str, &buf);
-+
-                detached = (buf.len == 40 && !get_sha1_hex(buf.buf, sha1));
-                strbuf_release(&buf);
-                if (detached)
+Moreover, the symbolic-ref 'HEAD' is quite special, it's mentioned
+everywhere in the documentation, and the code has special cases for
+it. It's not reasonable to expect all relevant places to be updated
+for this functionality, and certainly 'Documentation/revisions.txt' is
+not the only one.
+
+For example, in Ramkumar's approach:
+
+ % git branch -u master @
+
+Would replace '@' with HEAD, however:
+
+ % git branch --edit-description @
+
+Would not. These inconsistencies are not due to Ramkumar's code, but
+why would the user expect '@' to be replaced with anything if 'git
+branch' documentation doesn't mention any revision parsing, which is
+the only place where the '@' shortcut is documented.
+
+In my opinion, if 'git branch X @{-1}' doesn't work, neither should
+'git branch X @', and that's what my approach does.
+
+My approach is isolated to revision parsing, which means we minimize
+the potential for surprises and unintended consequences.
+
+Cheers.
 
 -- 
 Felipe Contreras
