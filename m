@@ -1,136 +1,80 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2] sha1_name: reorganize get_sha1_basic()
-Date: Thu,  2 May 2013 12:48:39 -0500
-Message-ID: <1367516919-4735-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
+Subject: Re: [PATCH] sha1_name: reorganize get_sha1_basic()
+Date: Thu, 2 May 2013 12:52:38 -0500
+Message-ID: <CAMP44s2HPRpbot2YhTmRNRmGj_1-+BdnjW9kTVXwq3Ni0YiObA@mail.gmail.com>
+References: <1367455791-30091-1-git-send-email-felipe.contreras@gmail.com>
+	<CACsJy8CWGJZByedxhzuU8OkPPBc0XmfZqE_e_ehmt55t-tHmsQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 02 19:50:06 2013
+	Thomas Rast <trast@student.ethz.ch>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 02 19:52:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UXxdt-0002ux-4W
-	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 19:50:05 +0200
+	id 1UXxgT-0005Wr-W1
+	for gcvg-git-2@plane.gmane.org; Thu, 02 May 2013 19:52:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759287Ab3EBRt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 May 2013 13:49:59 -0400
-Received: from mail-yh0-f51.google.com ([209.85.213.51]:56917 "EHLO
-	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758325Ab3EBRt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 May 2013 13:49:58 -0400
-Received: by mail-yh0-f51.google.com with SMTP id l109so136943yhq.10
-        for <git@vger.kernel.org>; Thu, 02 May 2013 10:49:57 -0700 (PDT)
+	id S1760312Ab3EBRwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 13:52:41 -0400
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:34973 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758400Ab3EBRwk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 13:52:40 -0400
+Received: by mail-lb0-f176.google.com with SMTP id v20so793267lbc.21
+        for <git@vger.kernel.org>; Thu, 02 May 2013 10:52:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=ZqzD+wVaiH2ysC036vU4AQnVeMxdODHY+1i9UxXMoUo=;
-        b=oP7eDrlO6iRU0ofDWpwS5QNkh/RsuUrw00GSHOCOLc70ovbT8a6sCZAKKUrf9NcfY5
-         FdpXszXtqZY8OaH/jdVRsTKJJUzwlPQNzRi4/hWzxCGzZGNGtAAMncc0SYjbhIxzIFTy
-         3M1bx4X4/++IazGWkgUGSlZDDIWtpMDYBnZWcM86IErA5ui+F2zVBr4ed0jvveiTrwIh
-         m/6j3DNYz4nGJ7ITi4VZ66UbuXd6Ya/zE+EAtrVH6o5Ma5ds6ajFvMOWkwtjC+rliO86
-         w/MxAF8YY/zxpOmPInA3Lx9kwqhL7YsJCLDvJfegru5IV1uQ2D1NHoTIeZUoUTmV5Ubi
-         poPw==
-X-Received: by 10.236.221.201 with SMTP id r69mr5682288yhp.99.1367516997787;
-        Thu, 02 May 2013 10:49:57 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id w62sm14006216yhd.27.2013.05.02.10.49.55
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 02 May 2013 10:49:56 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc0.401.g45bba44
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=ATod/ABhwX2v9AU0s8XhrgJwtydOUQMTQTr1RFzMYAM=;
+        b=s1v0sRuMM4Xg/lS8v9COCra022GXse4YwscHdyObduv8oTbmMDF8JxCOrqgni8wpll
+         +/JyWVtdPhgM2xkA77KYmWy4kERZU5zglwxS39KRgkrUVMsEzES/BklEDbDCzBj0PljX
+         Y6gLl0rm1Uy4f0a3mZbOeT8NW/tSoCDfZrr9zOVvBhgHSnL4aDAN92UA320nL9cWtO4c
+         22CwCBSF+HB2kSCKsPUur5fIVZiLqZJNpdoXMxd+kLyvmjAKc8rsZUsLcMz0vSNGLbda
+         EiIRb4QcuxiuUNlzko6NxWkMeWRMiJmgFLvr51nd+91Ea7SQQDwihpsoTxcyUEs4bV8m
+         nNXw==
+X-Received: by 10.112.135.70 with SMTP id pq6mr3121475lbb.82.1367517159015;
+ Thu, 02 May 2013 10:52:39 -0700 (PDT)
+Received: by 10.114.83.167 with HTTP; Thu, 2 May 2013 10:52:38 -0700 (PDT)
+In-Reply-To: <CACsJy8CWGJZByedxhzuU8OkPPBc0XmfZqE_e_ehmt55t-tHmsQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223241>
 
-Through the years the functionality to handle @{-N} and @{u} has moved
-around the code, and as a result, code that once made sense, doesn't any
-more.
+On Thu, May 2, 2013 at 5:19 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Thu, May 2, 2013 at 7:49 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> Through the years the functionality to handle @{-N} and @{u} has moved
+>> around the code, and as a result, code that once made sense, doesn't any
+>> more.
+>>
+>> There is no need to call this function recursively with the branch of
+>> @{-N} substituted because dwim_{ref,log} already replaces it.
+>>
+>> However, there's one corner-case where @{-N} resolves to a detached
+>> HEAD, in which case we wouldn't get any ref back.
+>>
+>> So we parse the nth-prior manually, and deal with it depending on
+>> weather it's a SHA-1, or a ref.
+>
+> If you are brave, reorganize the whole extended sha-1 parsing code. I
+> think the right-to-left parsing is confusing, not to mention it has to
+> treat ":path" differently. But may be that's too big work for little
+> gain.
 
-There is no need to call this function recursively with the branch of
-@{-N} substituted because dwim_{ref,log} already replaces it.
+Yeah, it took me a while to figure it was the other way around to what
+I thought was natural. Maybe after the dust with '@' is settled.
 
-However, there's one corner-case where @{-N} resolves to a detached
-HEAD, in which case we wouldn't get any ref back.
+FTR. This doesn't work @{u}@{u}.
 
-So we parse the nth-prior manually, and deal with it depending on
-weather it's a SHA-1, or a ref.
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- sha1_name.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
-
-diff --git a/sha1_name.c b/sha1_name.c
-index 3820f28..6428001 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -431,13 +431,14 @@ static inline int upstream_mark(const char *string, int len)
- }
- 
- static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags);
-+static int interpret_nth_prior_checkout(const char *name, struct strbuf *buf);
- 
- static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- {
- 	static const char *warn_msg = "refname '%.*s' is ambiguous.";
- 	char *real_ref = NULL;
- 	int refs_found = 0;
--	int at, reflog_len;
-+	int at, reflog_len, nth_prior = 0;
- 
- 	if (len == 40 && !get_sha1_hex(str, sha1))
- 		return 0;
-@@ -447,6 +448,10 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 	if (len && str[len-1] == '}') {
- 		for (at = len-2; at >= 0; at--) {
- 			if (str[at] == '@' && str[at+1] == '{') {
-+				if (at == 0 && str[2] == '-') {
-+					nth_prior = 1;
-+					continue;
-+				}
- 				if (!upstream_mark(str + at, len - at)) {
- 					reflog_len = (len-1) - (at+2);
- 					len = at;
-@@ -460,20 +465,22 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 	if (len && ambiguous_path(str, len))
- 		return -1;
- 
--	if (!len && reflog_len) {
-+	if (nth_prior) {
- 		struct strbuf buf = STRBUF_INIT;
--		int ret;
--		/* try the @{-N} syntax for n-th checkout */
--		ret = interpret_branch_name(str+at, &buf);
--		if (ret > 0) {
--			/* substitute this branch name and restart */
--			return get_sha1_1(buf.buf, buf.len, sha1, 0);
--		} else if (ret == 0) {
--			return -1;
-+		int detached;
-+
-+		if (interpret_nth_prior_checkout(str, &buf) > 0) {
-+			detached = (buf.len == 40 && !get_sha1_hex(buf.buf, sha1));
-+			strbuf_release(&buf);
-+			if (detached)
-+				return 0;
- 		}
-+	}
-+
-+	if (!len && reflog_len)
- 		/* allow "@{...}" to mean the current branch reflog */
- 		refs_found = dwim_ref("HEAD", 4, sha1, &real_ref);
--	} else if (reflog_len)
-+	else if (reflog_len)
- 		refs_found = dwim_log(str, len, sha1, &real_ref);
- 	else
- 		refs_found = dwim_ref(str, len, sha1, &real_ref);
 -- 
-1.8.3.rc0.401.g45bba44
+Felipe Contreras
