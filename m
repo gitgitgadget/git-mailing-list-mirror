@@ -1,10 +1,9 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v5 3/3] Add colors to interactive git-clean
-Date: Fri,  3 May 2013 11:49:55 +0800
-Message-ID: <6e5487033b0f2cef49bd19e35825e3b0ddd1f58e.1367551846.git.worldhello.net@gmail.com>
+Subject: [PATCH v5 2/3] Show items of interactive git-clean in columns
+Date: Fri,  3 May 2013 11:49:54 +0800
+Message-ID: <4f3bc9f30c0f544d16bef5b2a5ea4f5412ca3b36.1367551846.git.worldhello.net@gmail.com>
 References: <cover.1367551846.git.worldhello.net@gmail.com>
  <63984814a9679ca8eedecda308bd1131658e95d6.1367551846.git.worldhello.net@gmail.com>
- <4f3bc9f30c0f544d16bef5b2a5ea4f5412ca3b36.1367551846.git.worldhello.net@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jiang Xin <worldhello.net@gmail.com>
 To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
@@ -16,224 +15,186 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UY710-0000lZ-Ny
+	id 1UY711-0000lZ-BY
 	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 05:50:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761426Ab3ECDuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 May 2013 23:50:22 -0400
-Received: from mail-da0-f49.google.com ([209.85.210.49]:38846 "EHLO
-	mail-da0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762388Ab3ECDuU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 May 2013 23:50:20 -0400
-Received: by mail-da0-f49.google.com with SMTP id p5so614660dak.36
-        for <git@vger.kernel.org>; Thu, 02 May 2013 20:50:19 -0700 (PDT)
+	id S1762545Ab3ECDuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 23:50:23 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:54373 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761475Ab3ECDuR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 23:50:17 -0400
+Received: by mail-pb0-f42.google.com with SMTP id up7so685248pbc.15
+        for <git@vger.kernel.org>; Thu, 02 May 2013 20:50:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:in-reply-to:references;
-        bh=B36fOcZWoHscrciMPf2nwVjTQ9VpnnRUFURtUJdnoe4=;
-        b=jdMdCN27Sk8XFmsDAXFnTw4cLxV/yXFY7l8gvYIL7JjvzOhZR57dRDiFbs0cuPap2F
-         iXyBvrB6m5Hk6/Gn49jrzo6rsNjRz6pA+4U3u4QC2WvRm+hqRseWaprYGvVoUUVI0a5j
-         Y5VsIlSvmnNCy8lVj+tgJLeUZGApoh3OeltEimU5YiiKdNbb7KU5umT0HSwiy+4mp+9b
-         T2moBxGi+I0vyXaXaeoIb7d8ihD1yZTTE2ALYl/3gKabh8QR5OzcP4iYVyoPIrntdqlq
-         SSbBEeuemvHahEswSKdoXl/pJ1QTtZDwu/zPI/57QEGAVxZzbmFu0glCwQDhRpAEaexz
-         0E8A==
-X-Received: by 10.66.251.161 with SMTP id zl1mr12764232pac.54.1367553019559;
-        Thu, 02 May 2013 20:50:19 -0700 (PDT)
+        bh=/BXLj1inhsgHNcEOgka4QjXMN/FFbqATECrZcnevpHk=;
+        b=lTvNF2R4pjhL/OQM7RLDurkSTNzhLHiIULbtwSYdwSHif5UaFifclvsP1eKgc42zLx
+         RMBCjmBsv9fDkw9ozd8rfB+59IvV+7yh2dEftHAtbAuNjLa1XVTqW8vFbwgMHtW3fxlk
+         3Wmxl9YXbK93cv0vsEJTG5qPZ19l+FLNS3mUw+4lHbgY0rUw0fkzGb9cFj98nFB627vp
+         1tJewK00VFbMw/EwhEmjBq8a952sUEmJkIdQWh2OFU4+HCq4FKchwDYFaxRO9zOn5oHt
+         RQTwtS5AsIe34+IRBoKrGxDZXmW13qJPZLmodTzqSJ0XOQcL4P6YAJNLWBxUBFHn6oUl
+         +2IA==
+X-Received: by 10.66.175.73 with SMTP id by9mr12558288pac.191.1367553016920;
+        Thu, 02 May 2013 20:50:16 -0700 (PDT)
 Received: from localhost.localdomain ([114.246.126.106])
-        by mx.google.com with ESMTPSA id qb1sm9819651pbb.33.2013.05.02.20.50.17
+        by mx.google.com with ESMTPSA id qb1sm9819651pbb.33.2013.05.02.20.50.14
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 02 May 2013 20:50:19 -0700 (PDT)
+        Thu, 02 May 2013 20:50:16 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc0.364.g6e54870
-In-Reply-To: <4f3bc9f30c0f544d16bef5b2a5ea4f5412ca3b36.1367551846.git.worldhello.net@gmail.com>
+In-Reply-To: <63984814a9679ca8eedecda308bd1131658e95d6.1367551846.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1367551846.git.worldhello.net@gmail.com>
 References: <cover.1367551846.git.worldhello.net@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223274>
 
-Show header, help, error messages, and prompt in colors for interactive
-git-clean. Re-use config variables for other git commands, such as
-git-add--interactive and git-stash:
+When there are lots of items to be cleaned, it is hard to see them all
+in one screen. Show them in columns instead of in one column will solve
+this problem.
 
- * color.interactive: When set to always, always use colors for
-   interactive prompts and displays. When false (or never),
-   never. When set to true or auto, use colors only when the
-   output is to the terminal.
-
- * color.interactive.<slot>: Use customized color for interactive
-   git-clean output (like git add --interactive). <slot> may be
-   prompt, header, help or error.
+Since no longer show items to be cleaned using the "Would remove ..."
+format (only plain filenames) in interactive mode, we add instructions
+and warnings as header before them.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 Comments-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- builtin/clean.c | 80 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 79 insertions(+), 1 deletion(-)
+ builtin/clean.c | 64 ++++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 47 insertions(+), 17 deletions(-)
 
 diff --git a/builtin/clean.c b/builtin/clean.c
-index 6ee7..1692b 100644
+index 12489..6ee7 100644
 --- a/builtin/clean.c
 +++ b/builtin/clean.c
-@@ -14,6 +14,7 @@
+@@ -13,9 +13,11 @@
+ #include "refs.h"
  #include "string-list.h"
  #include "quote.h"
- #include "column.h"
-+#include "color.h"
++#include "column.h"
  
  static int force = -1; /* unset */
  static int interactive;
-@@ -30,17 +31,82 @@ static const char *msg_skip_git_dir = N_("Skipping repository %s\n");
- static const char *msg_would_skip_git_dir = N_("Would skip repository %s\n");
- static const char *msg_warn_remove_failed = N_("failed to remove %s");
++static unsigned int colopts;
  
-+static int clean_use_color = -1;
-+static char clean_colors[][COLOR_MAXLEN] = {
-+	GIT_COLOR_RESET,
-+	GIT_COLOR_NORMAL,	/* PLAIN */
-+	GIT_COLOR_BOLD_BLUE,	/* PROMPT */
-+	GIT_COLOR_BOLD,		/* HEADER */
-+	GIT_COLOR_BOLD_RED,	/* HELP */
-+	GIT_COLOR_BOLD_RED,	/* ERROR */
-+};
-+enum color_clean {
-+	CLEAN_COLOR_RESET = 0,
-+	CLEAN_COLOR_PLAIN = 1,
-+	CLEAN_COLOR_PROMPT = 2,
-+	CLEAN_COLOR_HEADER = 3,
-+	CLEAN_COLOR_HELP = 4,
-+	CLEAN_COLOR_ERROR = 5,
-+};
-+
-+static int parse_clean_color_slot(const char *var, int ofs)
-+{
-+	if (!strcasecmp(var+ofs, "reset"))
-+		return CLEAN_COLOR_RESET;
-+	if (!strcasecmp(var+ofs, "plain"))
-+		return CLEAN_COLOR_PLAIN;
-+	if (!strcasecmp(var+ofs, "prompt"))
-+		return CLEAN_COLOR_PROMPT;
-+	if (!strcasecmp(var+ofs, "header"))
-+		return CLEAN_COLOR_HEADER;
-+	if (!strcasecmp(var+ofs, "help"))
-+		return CLEAN_COLOR_HELP;
-+	if (!strcasecmp(var+ofs, "error"))
-+		return CLEAN_COLOR_ERROR;
-+	return -1;
-+}
-+
+ static const char *const builtin_clean_usage[] = {
+ 	N_("git clean [-d] [-f] [-i] [-n] [-q] [-e <pattern>] [-x | -X] [--] <paths>..."),
+@@ -30,8 +32,14 @@ static const char *msg_warn_remove_failed = N_("failed to remove %s");
+ 
  static int git_clean_config(const char *var, const char *value, void *cb)
  {
- 	/* honors the column.ui config variable only */
- 	if (!prefixcmp(var, "column."))
- 		return git_column_config(var, value, NULL, &colopts);
- 
-+	/* honors the color.interactive* config variables which also
-+	   applied in git-add--interactive and git-stash */
-+	if (!strcmp(var, "color.interactive")) {
-+		clean_use_color = git_config_colorbool(var, value);
-+		return 0;
-+	}
-+	if (!prefixcmp(var, "color.interactive.")) {
-+		int slot = parse_clean_color_slot(var, 18);
-+		if (slot < 0)
-+			return 0;
-+		if (!value)
-+			return config_error_nonbool(var);
-+		color_parse(value, var, clean_colors[slot]);
-+		return 0;
-+	}
+-	if (!strcmp(var, "clean.requireforce"))
++	/* honors the column.ui config variable only */
++	if (!prefixcmp(var, "column."))
++		return git_column_config(var, value, NULL, &colopts);
 +
- 	if (!strcmp(var, "clean.requireforce")) {
++	if (!strcmp(var, "clean.requireforce")) {
  		force = !git_config_bool(var, value);
- 		return 0;
- 	}
--	return git_default_config(var, value, cb);
-+
-+	/* inspect the color.ui config variable and others */
-+	return git_color_default_config(var, value, cb);
-+}
-+
-+static const char *clean_get_color(enum color_clean ix)
-+{
-+	if (want_color(clean_use_color))
-+		return clean_colors[ix];
-+	return "";
-+}
-+
-+static void clean_print_color(enum color_clean ix)
-+{
-+	printf("%s", clean_get_color(ix));
++		return 0;
++	}
+ 	return git_default_config(var, value, cb);
  }
  
- static int exclude_cb(const struct option *opt, const char *arg, int unset)
-@@ -189,16 +255,20 @@ void interactive_clean_edit(struct string_list *dels, const char *prefix)
+@@ -143,6 +151,33 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
+ 	return ret;
+ }
+ 
++void pretty_print_dels(struct string_list *dels, const char *prefix)
++{
++	struct string_list list = STRING_LIST_INIT_DUP;
++	struct string_list_item *item;
++	struct strbuf buf = STRBUF_INIT;
++	const char *qname;
++	struct column_options copts;
++
++	for_each_string_list_item(item, dels) {
++		qname = quote_path_relative(item->string, -1, &buf, prefix);
++		string_list_append(&list, qname);
++	}
++
++	/*
++	 * always enable column display, we only consult column.*
++	 * about layout strategy and stuff
++	 */
++	colopts = (colopts & ~COL_ENABLE_MASK) | COL_ENABLED;
++	memset(&copts, 0, sizeof(copts));
++	copts.indent = "  ";
++	copts.padding = 2;
++	print_columns(&list, colopts, &copts);
++	putchar('\n');
++	strbuf_release(&buf);
++	string_list_clear(&list, 0);
++}
++
+ void interactive_clean_edit(struct string_list *dels, const char *prefix)
+ {
+ 	struct dir_struct dir;
+@@ -151,7 +186,6 @@ void interactive_clean_edit(struct string_list *dels, const char *prefix)
+ 	struct strbuf **ignore_list;
+ 	struct string_list_item *item;
+ 	struct exclude_list *el;
+-	const char *qname;
  	int changed = -1, i;
  
  	putchar('\n');
-+	clean_print_color(CLEAN_COLOR_HELP);
- 	printf_ln(_(
- 		    "NOTE: Will remove the following items. You can input space-seperated\n"
- 		    "NOTE: patterns (just like .gitignore) to exclude items from deletion,\n"
- 		    "NOTE: or press ENTER to continue."
- 		   ));
-+	clean_print_color(CLEAN_COLOR_RESET);
- 
- 	while (1) {
- 		/* dels list may become empty when we run string_list_remove_empty_items later */
- 		if (!dels->nr) {
-+			clean_print_color(CLEAN_COLOR_ERROR);
- 			printf_ln(_("No more files to clean, exiting."));
-+			clean_print_color(CLEAN_COLOR_RESET);
- 			break;
- 		}
- 
-@@ -209,7 +279,9 @@ void interactive_clean_edit(struct string_list *dels, const char *prefix)
- 			pretty_print_dels(dels, prefix);
- 		}
- 
-+		clean_print_color(CLEAN_COLOR_PROMPT);
- 		printf(_("Input ignore patterns> "));
-+		clean_print_color(CLEAN_COLOR_RESET);
- 		strbuf_getline(&confirm, stdin, '\n');
- 		strbuf_trim(&confirm);
- 
-@@ -245,7 +317,9 @@ void interactive_clean_edit(struct string_list *dels, const char *prefix)
+@@ -171,12 +205,8 @@ void interactive_clean_edit(struct string_list *dels, const char *prefix)
  		if (changed) {
- 			string_list_remove_empty_items(dels, 0);
- 		} else {
-+			clean_print_color(CLEAN_COLOR_ERROR);
- 			printf_ln(_("WARNING: Cannot find items matched by: %s"), confirm.buf);
-+			clean_print_color(CLEAN_COLOR_RESET);
+ 			putchar('\n');
+ 
+-			/* Display dels in "Would remove ..." format */
+-			for_each_string_list_item(item, dels) {
+-				qname = quote_path_relative(item->string, -1, &buf, prefix);
+-				printf(_(msg_would_remove), qname);
+-			}
+-			putchar('\n');
++			/* Display dels in columns */
++			pretty_print_dels(dels, prefix);
  		}
  
- 		strbuf_list_free(ignore_list);
-@@ -264,19 +338,23 @@ void interactive_clean(struct string_list *dels, const char *prefix)
+ 		printf(_("Input ignore patterns> "));
+@@ -229,21 +259,22 @@ void interactive_clean_edit(struct string_list *dels, const char *prefix)
+ void interactive_clean(struct string_list *dels, const char *prefix)
+ {
+ 	struct strbuf confirm = STRBUF_INIT;
+-	struct strbuf buf = STRBUF_INIT;
+-	struct string_list_item *item;
+-	const char *qname;
+ 	int count = 0;
+ 
  	/* dels list may become empty after return back from edit mode */
  	while (dels->nr) {
+-		/* Display dels in "Would remove ..." format */
  		putchar('\n');
-+		clean_print_color(CLEAN_COLOR_HEADER);
- 		printf_ln(_(
- 			    "WARNING: The following items will be removed permanently. Press \"y\"\n"
- 			    "WARNING: to start cleaning, and press \"n\" to abort the cleaning.\n"
- 			    "WARNING: You can also enter the \"edit\" mode, and select items\n"
- 			    "WARNING: to be excluded from the cleaning."
- 			   ));
-+		clean_print_color(CLEAN_COLOR_RESET);
+-		for_each_string_list_item(item, dels) {
+-			qname = quote_path_relative(item->string, -1, &buf, prefix);
+-			printf(_(msg_would_remove), qname);
+-		}
++		printf_ln(_(
++			    "WARNING: The following items will be removed permanently. Press \"y\"\n"
++			    "WARNING: to start cleaning, and press \"n\" to abort the cleaning.\n"
++			    "WARNING: You can also enter the \"edit\" mode, and select items\n"
++			    "WARNING: to be excluded from the cleaning."
++			   ));
  		putchar('\n');
  
- 		/* Display dels in columns */
- 		pretty_print_dels(dels, prefix);
- 
++		/* Display dels in columns */
++		pretty_print_dels(dels, prefix);
++
  		/* Confirmation dialog */
-+		clean_print_color(CLEAN_COLOR_PROMPT);
  		printf(count > 0 ? _("Remove (Yes/no/edit) ? ") : _("Remove (yes/no/Edit) ? "));
-+		clean_print_color(CLEAN_COLOR_RESET);
  		strbuf_getline(&confirm, stdin, '\n');
- 		strbuf_trim(&confirm);
+@@ -271,7 +302,6 @@ void interactive_clean(struct string_list *dels, const char *prefix)
+ 		count++;
+ 	}
+ 
+-	strbuf_release(&buf);
+ 	strbuf_release(&confirm);
+ }
  
 -- 
 1.8.3.rc0.364.gc6aefbf
