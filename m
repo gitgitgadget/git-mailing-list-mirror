@@ -1,337 +1,580 @@
-From: Paul Walmsley <pjwhams@gmail.com>
-Subject: [PATCH] git-svn: added an --include-path flag
-Date: Sat,  4 May 2013 00:10:18 +0100
-Message-ID: <1367622618-28220-1-git-send-email-pjwhams@gmail.com>
-References: <20130501204616.GA12203@dcvr.yhbt.net>
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Paul Walmsley <pjwhams@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git v1.8.3-rc1
+Date: Fri, 03 May 2013 16:13:21 -0700
+Message-ID: <7vzjwbwtbi.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 04 01:11:10 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+X-From: linux-kernel-owner@vger.kernel.org Sat May 04 01:13:40 2013
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYP89-0002Y9-RS
-	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 01:11:10 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1UYPAY-0004nQ-7X
+	for glk-linux-kernel-3@plane.gmane.org; Sat, 04 May 2013 01:13:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755512Ab3ECXKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 May 2013 19:10:50 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:32859 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763664Ab3ECXKl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 May 2013 19:10:41 -0400
-Received: by mail-wi0-f181.google.com with SMTP id ey16so1080123wid.2
-        for <git@vger.kernel.org>; Fri, 03 May 2013 16:10:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=2FjnBqWeomIK2fR/DOx7ZKIpX6VlOv4HcjUUxPFDtZI=;
-        b=Vp6Qzlo1KkH4b9+cgTc0Dp7mkFI4rBS9g/AFIyllbJDV3LuXW8iY5L8BwimVoLCxkJ
-         31Sq0zggpLMRc8rii9pE6f7CZnhTgpvFof6i15K1tOXDiuyCz5xBz+4nyzH4azBqqEB4
-         5GGsH1wVSJXjsweGzI+goNnVeZ5g16MokPYSXnmsuLJDHWMs9CnSBP/ISSfFi/PqEEZz
-         hK+uvHXKVSO+fg4WrdOxP1tgXpv4s264W2PgNVqQNazj2AguQpAiQc/DKeg1c9svsway
-         u5rhGlrcyUnecYU2XJYMfZpqrMPAoRRZiVZhYgt/6iDJpZnexbPKjrlG7nn5ZSqZQn/f
-         /CYA==
-X-Received: by 10.180.198.49 with SMTP id iz17mr185845wic.19.1367622639974;
-        Fri, 03 May 2013 16:10:39 -0700 (PDT)
-Received: from helix.localdomain ([149.241.136.217])
-        by mx.google.com with ESMTPSA id dj7sm103940wib.6.2013.05.03.16.10.38
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 03 May 2013 16:10:39 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <20130501204616.GA12203@dcvr.yhbt.net>
-Sender: git-owner@vger.kernel.org
+	id S1763694Ab3ECXN2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 3 May 2013 19:13:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40721 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761066Ab3ECXNZ convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 3 May 2013 19:13:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A6871CE0C;
+	Fri,  3 May 2013 23:13:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=5z82HGYGL3YO+71Cq6tlrc02B
+	3Q=; b=oSbrXety83iOa0VeHICrhJj6sjajKu1NENdx/H+xS/QPGkqYhN0dTSygi
+	mmB5SoTODcxA8R5rWgD/tKX6vtPCtE2hb+O6sd2g0Xe5+Z6CH30h3Vq9ly0SRTth
+	zzkOiTb8hEbbjsYZAF+tWRVjgpBta8NXGV299q2J0C8AwYLNgI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=vxzeiZClZISOG8SnPze
+	gxec4YJRuK0JA3I5EHymspT2zqADqJwRVl2V7PHCICbODI6DLJjEcnCHKIE+Ux5+
+	1W0xtkBa1TwNSMnOzpjL0I+ChAUlsg14k9NxiDHnHfA8gIiFBT3S+XXaepKJAMfp
+	BJM9OKr0NpZaNq+HaIbV8eIQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 11DAD1CE0B;
+	Fri,  3 May 2013 23:13:24 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB8171CE05;
+	Fri,  3 May 2013 23:13:22 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0D158302-B447-11E2-A683-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223331>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223332>
 
-The SVN::Fetcher module is now able to filter for inclusion as well
-as exclusion (as used by --ignore-path). Also added tests, documentation
-changes and git completion script.
+A release candidate Git v1.8.3-rc1 is now available for testing
+at the usual places.
 
-If you have an SVN repository with many top level directories and you
-only want a git-svn clone of some of them then using --ignore-path is
-difficult as it requires a very long regexp. In this case it's much
-easier to filter for inclusion.
+The release tarballs are found at:
 
-Signed-off-by: Paul Walmsley <pjwhams@gmail.com>
----
- Documentation/git-svn.txt              |   12 +++
- contrib/completion/git-completion.bash |    2 +-
- git-svn.perl                           |    4 +
- perl/Git/SVN/Fetcher.pm                |   16 +++-
- t/t9147-git-svn-include-paths.sh       |  149 ++++++++++++++++++++++++++++++++
- 5 files changed, 180 insertions(+), 3 deletions(-)
- create mode 100755 t/t9147-git-svn-include-paths.sh
+    http://code.google.com/p/git-core/downloads/list
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 1b8b649..698a6bb 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -85,6 +85,10 @@ COMMANDS
- 	When passed to 'init' or 'clone' this regular expression will
- 	be preserved as a config key.  See 'fetch' for a description
- 	of '--ignore-paths'.
-+--include-paths=<regex>;;
-+	When passed to 'init' or 'clone' this regular expression will
-+	be preserved as a config key.  See 'fetch' for a description
-+	of '--include-paths'.
- --no-minimize-url;;
- 	When tracking multiple directories (using --stdlayout,
- 	--branches, or --tags options), git svn will attempt to connect
-@@ -146,6 +150,14 @@ Skip "branches" and "tags" of first level directories;;
- ------------------------------------------------------------------------
- --
- 
-+--include-paths=<regex>;;
-+	This allows one to specify a Perl regular expression that will
-+	cause the inclusion of only matching paths from checkout from SVN.
-+	The '--include-paths' option should match for every 'fetch'
-+	(including automatic fetches due to 'clone', 'dcommit',
-+	'rebase', etc) on a given repository. '--ignore-paths' takes 
-+	precedence over '--include-paths'.
-+
- --log-window-size=<n>;;
-     Fetch <n> log entries per request when scanning Subversion history.
-     The default is 100. For very large Subversion repositories, larger
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 2ba1461..8427df2 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2451,7 +2451,7 @@ _git_svn ()
- 			--no-metadata --use-svm-props --use-svnsync-props
- 			--log-window-size= --no-checkout --quiet
- 			--repack-flags --use-log-author --localtime
--			--ignore-paths= $remote_opts
-+			--ignore-paths= --include-paths= $remote_opts
- 			"
- 		local init_opts="
- 			--template= --shared= --trunk= --tags=
-diff --git a/git-svn.perl b/git-svn.perl
-index 6c7bd95..5e56dc7 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -126,6 +126,7 @@ my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
-                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
-                     'no-auth-cache' => \$Git::SVN::Prompt::_no_auth_cache,
-                     'ignore-paths=s' => \$Git::SVN::Fetcher::_ignore_regex,
-+                    'include-paths=s' => \$Git::SVN::Fetcher::_include_regex,
-                     'ignore-refs=s' => \$Git::SVN::Ra::_ignore_refs_regex );
- my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
- 		'authors-file|A=s' => \$_authors,
-@@ -470,6 +471,9 @@ sub do_git_init_db {
- 	my $ignore_paths_regex = \$Git::SVN::Fetcher::_ignore_regex;
- 	command_noisy('config', "$pfx.ignore-paths", $$ignore_paths_regex)
- 		if defined $$ignore_paths_regex;
-+	my $include_paths_regex = \$Git::SVN::Fetcher::_include_regex;
-+	command_noisy('config', "$pfx.include-paths", $$include_paths_regex)
-+		if defined $$include_paths_regex;
- 	my $ignore_refs_regex = \$Git::SVN::Ra::_ignore_refs_regex;
- 	command_noisy('config', "$pfx.ignore-refs", $$ignore_refs_regex)
- 		if defined $$ignore_refs_regex;
-diff --git a/perl/Git/SVN/Fetcher.pm b/perl/Git/SVN/Fetcher.pm
-index 046a7a2..d25524c 100644
---- a/perl/Git/SVN/Fetcher.pm
-+++ b/perl/Git/SVN/Fetcher.pm
-@@ -1,6 +1,7 @@
- package Git::SVN::Fetcher;
--use vars qw/@ISA $_ignore_regex $_preserve_empty_dirs $_placeholder_filename
--            @deleted_gpath %added_placeholder $repo_id/;
-+use vars qw/@ISA $_ignore_regex $_include_regex $_preserve_empty_dirs 
-+            $_placeholder_filename @deleted_gpath %added_placeholder 
-+            $repo_id/;
- use strict;
- use warnings;
- use SVN::Delta;
-@@ -33,6 +34,10 @@ sub new {
- 	my $v = eval { command_oneline('config', '--get', $k) };
- 	$self->{ignore_regex} = $v;
- 
-+	$k = "svn-remote.$repo_id.include-paths";
-+	$v = eval { command_oneline('config', '--get', $k) };
-+	$self->{include_regex} = $v;
-+
- 	$k = "svn-remote.$repo_id.preserve-empty-dirs";
- 	$v = eval { command_oneline('config', '--get', '--bool', $k) };
- 	if ($v && $v eq 'true') {
-@@ -117,11 +122,18 @@ sub in_dot_git {
- }
- 
- # return value: 0 -- don't ignore, 1 -- ignore
-+# This will also check whether the path is explicitly included
- sub is_path_ignored {
- 	my ($self, $path) = @_;
- 	return 1 if in_dot_git($path);
- 	return 1 if defined($self->{ignore_regex}) &&
- 	            $path =~ m!$self->{ignore_regex}!;
-+	return 0 if defined($self->{include_regex}) &&
-+	            $path =~ m!$self->{include_regex}!;
-+	return 0 if defined($_include_regex) &&
-+	            $path =~ m!$_include_regex!;
-+	return 1 if defined($self->{include_regex});
-+	return 1 if defined($_include_regex);
- 	return 0 unless defined($_ignore_regex);
- 	return 1 if $path =~ m!$_ignore_regex!o;
- 	return 0;
-diff --git a/t/t9147-git-svn-include-paths.sh b/t/t9147-git-svn-include-paths.sh
-new file mode 100755
-index 0000000..6a7ce30
---- /dev/null
-+++ b/t/t9147-git-svn-include-paths.sh
-@@ -0,0 +1,149 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2013 Paul Walmsley - based on t9134 by Vitaly Shukela
-+#
-+
-+test_description='git svn property tests'
-+. ./lib-git-svn.sh
-+
-+test_expect_success 'setup test repository' '
-+	svn_cmd co "$svnrepo" s &&
-+	(
-+		cd s &&
-+		mkdir qqq www xxx &&
-+		echo test_qqq > qqq/test_qqq.txt &&
-+		echo test_www > www/test_www.txt &&
-+		echo test_xxx > xxx/test_xxx.txt &&
-+		svn_cmd add qqq &&
-+		svn_cmd add www &&
-+		svn_cmd add xxx &&
-+		svn_cmd commit -m "create some files" &&
-+		svn_cmd up &&
-+		echo hi >> www/test_www.txt &&
-+		svn_cmd commit -m "modify www/test_www.txt" &&
-+		svn_cmd up
-+	)
-+'
-+
-+test_expect_success 'clone an SVN repository with filter to include qqq directory' '
-+	git svn clone --include-paths="qqq" "$svnrepo" g &&
-+	echo test_qqq > expect &&
-+	for i in g/*/*.txt; do cat $i >> expect2; done &&
-+	test_cmp expect expect2
-+'
-+
-+
-+test_expect_success 'init+fetch an SVN repository with included qqq directory' '
-+	git svn init "$svnrepo" c &&
-+ 	( cd c && git svn fetch --include-paths="qqq" ) &&
-+ 	rm expect2 &&
-+ 	echo test_qqq > expect &&
-+ 	for i in c/*/*.txt; do cat $i >> expect2; done &&
-+ 	test_cmp expect expect2
-+'
-+
-+test_expect_success 'verify include-paths config saved by clone' '
-+	(
-+	    cd g &&
-+	    git config --get svn-remote.svn.include-paths | fgrep "qqq"
-+	)
-+'
-+
-+test_expect_success 'SVN-side change outside of www' '
-+	(
-+		cd s &&
-+		echo b >> qqq/test_qqq.txt &&
-+		svn_cmd commit -m "SVN-side change outside of www" &&
-+		svn_cmd up &&
-+		svn_cmd log -v | fgrep "SVN-side change outside of www"
-+	)
-+'
-+
-+test_expect_success 'update git svn-cloned repo (config include)' '
-+	(
-+		cd g &&
-+		git svn rebase &&
-+		printf "test_qqq\nb\n" > expect &&
-+		for i in */*.txt; do cat $i >> expect2; done &&
-+		test_cmp expect2 expect &&
-+		rm expect expect2
-+	)
-+'
-+
-+test_expect_success 'update git svn-cloned repo (option include)' '
-+	(
-+		cd c &&
-+		git svn rebase --include-paths="qqq" &&
-+		printf "test_qqq\nb\n" > expect &&
-+		for i in */*.txt; do cat $i >> expect2; done &&
-+		test_cmp expect2 expect &&
-+		rm expect expect2
-+	)
-+'
-+
-+test_expect_success 'SVN-side change inside of ignored www' '
-+	(
-+		cd s &&
-+		echo zaq >> www/test_www.txt
-+		svn_cmd commit -m "SVN-side change inside of www/test_www.txt" &&
-+		svn_cmd up &&
-+		svn_cmd log -v | fgrep "SVN-side change inside of www/test_www.txt"
-+	)
-+'
-+
-+test_expect_success 'update git svn-cloned repo (config include)' '
-+	(
-+		cd g &&
-+		git svn rebase &&
-+		printf "test_qqq\nb\n" > expect &&
-+		for i in */*.txt; do cat $i >> expect2; done &&
-+		test_cmp expect2 expect &&
-+		rm expect expect2
-+	)
-+'
-+
-+test_expect_success 'update git svn-cloned repo (option include)' '
-+	(
-+		cd c &&
-+		git svn rebase --include-paths="qqq" &&
-+		printf "test_qqq\nb\n" > expect &&
-+		for i in */*.txt; do cat $i >> expect2; done &&
-+		test_cmp expect2 expect &&
-+		rm expect expect2
-+	)
-+'
-+
-+test_expect_success 'SVN-side change in and out of included qqq' '
-+	(
-+		cd s &&
-+		echo cvf >> www/test_www.txt
-+		echo ygg >> qqq/test_qqq.txt
-+		svn_cmd commit -m "SVN-side change in and out of ignored www" &&
-+		svn_cmd up &&
-+		svn_cmd log -v | fgrep "SVN-side change in and out of ignored www"
-+	)
-+'
-+
-+test_expect_success 'update git svn-cloned repo again (config include)' '
-+	(
-+		cd g &&
-+		git svn rebase &&
-+		printf "test_qqq\nb\nygg\n" > expect &&
-+		for i in */*.txt; do cat $i >> expect2; done &&
-+		test_cmp expect2 expect &&
-+		rm expect expect2
-+	)
-+'
-+
-+test_expect_success 'update git svn-cloned repo again (option include)' '
-+	(
-+		cd c &&
-+		git svn rebase --include-paths="qqq" &&
-+		printf "test_qqq\nb\nygg\n" > expect &&
-+		for i in */*.txt; do cat $i >> expect2; done &&
-+		test_cmp expect2 expect &&
-+		rm expect expect2
-+	)
-+'
-+
-+test_done
--- 
-1.7.10.4
+and their SHA-1 checksums are:
+
+68160a9e9246a4857ccab0e68b466e0e442c1da5  git-1.8.3.rc1.tar.gz
+eecfe00a46a4b26b1f1a4a83f66aca2ab8b264f2  git-htmldocs-1.8.3.rc1.tar.gz
+4ea043cdf8c716dddb21f60f6941cda6a12fad9e  git-manpages-1.8.3.rc1.tar.gz
+
+Also the following public repositories all have a copy of the v1.8.3-rc=
+1
+tag and the master branch that the tag points at:
+
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://code.google.com/p/git-core/
+  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url =3D https://github.com/gitster/git
+
+Git v1.8.3 Release Notes (draft)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Backward compatibility notes (for Git 2.0)
+------------------------------------------
+
+When "git push [$there]" does not say what to push, we have used the
+traditional "matching" semantics so far (all your branches were sent
+to the remote as long as there already are branches of the same name
+over there).  In Git 2.0, the default will change to the "simple"
+semantics that pushes only the current branch to the branch with the sa=
+me
+name, and only when the current branch is set to integrate with that
+remote branch.  Use the user preference configuration variable
+"push.default" to change this.  If you are an old-timer who is used
+to the "matching" semantics, you can set the variable to "matching"
+to keep the traditional behaviour.  If you want to live in the future
+early, you can set it to "simple" today without waiting for Git 2.0.
+
+When "git add -u" (and "git add -A") is run inside a subdirectory and
+does not specify which paths to add on the command line, it
+will operate on the entire tree in Git 2.0 for consistency
+with "git commit -a" and other commands.  There will be no
+mechanism to make plain "git add -u" behave like "git add -u .".
+Current users of "git add -u" (without a pathspec) should start
+training their fingers to explicitly say "git add -u ."
+before Git 2.0 comes.  A warning is issued when these commands are
+run without a pathspec and when you have local changes outside the
+current directory, because the behaviour in Git 2.0 will be different
+from today's version in such a situation.
+
+In Git 2.0, "git add <path>" will behave as "git add -A <path>", so
+that "git add dir/" will notice paths you removed from the directory
+and record the removal.  Versions before Git 2.0, including this
+release, will keep ignoring removals, but the users who rely on this
+behaviour are encouraged to start using "git add --ignore-removal <path=
+>"
+now before 2.0 is released.
+
+
+Updates since v1.8.2
+--------------------
+
+=46oreign interface
+
+ * remote-hg and remote-bzr helpers (in contrib/) have been updated.
+
+
+UI, Workflows & Features
+
+ * The prompt string generator (in contrib/completion/) learned to
+   show how many changes there are in total and how many have been
+   replayed during a "git rebase" session.
+
+ * "git branch --vv" learned to paint the name of the branch it
+   integrates with in a different color (color.branch.upstream,
+   which defaults to blue).
+
+ * In a sparsely populated working tree, "git checkout <pathspec>" no
+   longer unmarks paths that match the given pathspec that were
+   originally ignored with "--sparse" (use --ignore-skip-worktree-bits
+   option to resurrect these paths out of the index if you really want
+   to).
+
+ * "git log --format" specifier learned %C(auto) token that tells Git
+   to use color when interpolating %d (decoration), %h (short commit
+   object name), etc. for terminal output.
+
+ * "git bisect" leaves the final outcome as a comment in its bisect
+   log file.
+
+ * "git clone --reference" can now refer to a gitfile "textual symlink"
+   that points at the real location of the repository.
+
+ * "git count-objects" learned "--human-readable" aka "-H" option to
+   show various large numbers in Ki/Mi/GiB scaled as necessary.
+
+ * "git cherry-pick $blob" and "git cherry-pick $tree" are nonsense,
+   and a more readable error message e.g. "can't cherry-pick a tree"
+   is given (we used to say "expected exactly one commit").
+
+ * The "--annotate" option to "git send-email" can be turned on (or
+   off) by default with sendemail.annotate configuration variable (you
+   can use --no-annotate from the command line to override it).
+
+ * The "--cover-letter" option to "git format-patch" can be turned on
+   (or off) by default with format.coverLetter configuration
+   variable. By setting it to 'auto', you can turn it on only for a
+   series with two or more patches.
+
+ * The bash completion support (in contrib/) learned that cherry-pick
+   takes a few more options than it already knew about.
+
+ * "git help" learned "-g" option to show the list of guides just like
+   list of commands are given with "-a".
+
+ * A triangular "pull from one place, push to another place" workflow
+   is supported better by new remote.pushdefault (overrides the
+   "origin" thing) and branch.*.pushremote (overrides the
+   branch.*.remote) configuration variables.
+
+ * "git status" learned to report that you are in the middle of a
+   revert session, just like it does for a cherry-pick and a bisect
+   session.
+
+ * The handling by "git branch --set-upstream-to" against various forms
+   of erroneous inputs was suboptimal and has been improved.
+
+ * When the interactive access to git-shell is not enabled, it issues
+   a message meant to help the system administrator to enable it.
+   An explicit way to help the end users who connect to the service by
+   issuing custom messages to refuse such an access has been added.
+
+ * In addition to the case where the user edits the log message with
+   the "e)dit" option of "am -i", replace the "Applying: this patch"
+   message with the final log message contents after applymsg hook
+   munges it.
+
+ * "git status" suggests users to look into using --untracked=3Dno opti=
+on
+   when it takes too long.
+
+ * "git status" shows a bit more information during a
+   rebase/bisect session.
+
+ * "git fetch" learned to fetch a commit at the tip of an unadvertised
+   ref by specifying a raw object name from the command line when the
+   server side supports this feature.
+
+ * Output from "git log --graph" works better with submodule log
+   output now.
+
+ * "git count-objects -v" learned to report leftover temporary
+   packfiles and other garbage in the object store.
+
+ * A new read-only credential helper (in contrib/) to interact with
+   the .netrc/.authinfo files has been added.
+
+ * "git send-email" can be used with the credential helper system.
+
+ * There was no Porcelain way to say "I no longer am interested in
+   this submodule", once you express your interest in a submodule with
+   "submodule init".  "submodule deinit" is the way to do so.
+
+ * "git pull --rebase" learned to pass "-v/-q" options to underlying
+   "git rebase".
+
+ * The new "--follow-tags" option tells "git push" to push relevant
+   annotated tags when pushing branches out.
+
+ * "git merge" and "git pull" can optionally be told to inspect and
+   reject when merging a commit that does not carry a trusted GPG
+   signature.
+
+ * "git mergetool" now feeds files to the "p4merge" backend in the
+   order that matches the p4 convention, where "theirs" is usually
+   shown on the left side, which is the opposite from what other backen=
+ds
+   expect.
+
+ * "show/log" now honors gpg.program configuration just like other
+   parts of the code that use GnuPG.
+
+ * "git log" that shows the difference between the parent and the
+   child has been optimized somewhat.
+
+ * "git difftool" allows the user to write into the temporary files
+   being shown; if the user makes changes to the working tree at the
+   same time, it now refrains from overwriting the copy in the working
+   tree and leaves the temporary file so that changes can be merged
+   manually.
+
+ * There was no good way to ask "I have a random string that came from
+   outside world. I want to turn it into a 40-hex object name while
+   making sure such an object exists".  A new peeling suffix ^{object}
+   can be used for that purpose, together with "rev-parse --verify".
+
+
+Performance, Internal Implementation, etc.
+
+ * Updates for building under msvc.
+
+ * A handful of issues in the code that traverses the working tree to f=
+ind
+   untracked and/or ignored files have been fixed, and the general
+   codepath involved in "status -u" and "clean" have been cleaned up
+   and optimized.
+
+ * The stack footprint of some codepaths that access an object from a
+   pack has been shrunk.
+
+ * The logic to coalesce the same lines removed from the parents in
+   the output from "diff -c/--cc" has been updated, but with O(n^2)
+   complexity, so this might turn out to be undesirable.
+
+ * The code to enforce permission bits on files in $GIT_DIR/ for
+   shared repositories has been simplified.
+
+ * A few codepaths know how much data they need to put in the
+   hashtables they use when they start, but still began with small tabl=
+es
+   and repeatedly grew and rehashed them.
+
+ * The API to walk reflog entries from the latest to older, which was
+   necessary for operations such as "git checkout -", was cumbersome
+   to use correctly and also inefficient.
+
+ * Codepaths that inspect log-message-to-be and decide when to add a
+   new Signed-off-by line in various commands have been consolidated.
+
+ * The pkt-line API, implementation and its callers have been cleaned
+   up to make them more robust.
+
+ * The Cygwin port has a faster-but-lying lstat(2) emulation whose
+   incorrectness does not matter in practice except for a few
+   codepaths, and setting permission bits on directories is a codepath
+   that needs to use a more correct one.
+
+ * "git checkout" had repeated pathspec matches on the same paths,
+   which have been consolidated.  Also a bug in "git checkout dir/"
+   that is started from an unmerged index has been fixed.
+
+ * A few bugfixes to "git rerere" working on corner case merge
+   conflicts have been applied.
+
+
+Also contains various documentation updates and code clean-ups.
+
+
+=46ixes since v1.8.2
+------------------
+
+Unless otherwise noted, all the fixes since v1.8.2 in the maintenance
+track are contained in this release (see release notes to them for
+details).
+
+ * Recent versions of File::Temp (used by "git svn") started blowing
+   up when its tempfile sub is called as a class method; updated the
+   callsite to call it as a plain vanilla function to fix it.
+   (merge eafc2dd hb/git-pm-tempfile later to maint).
+
+ * Various subcommands of "git remote" simply ignored extraneous
+   command line arguments instead of diagnosing them as errors.
+   (merge b17dd3f tr/remote-tighten-commandline-parsing later to maint)=
+=2E
+
+ * When receive-pack detects an error in the pack header it received in
+   order to decide which of unpack-objects or index-pack to run, it
+   returned without closing the error stream, which led to a hung
+   sideband thread.
+
+ * Zsh completion forgot that the '%' character used to signal untracke=
+d
+   files needs to be escaped with another '%'.
+
+ * A commit object whose author or committer ident are malformed
+   crashed some code that trusted that a name, an email and a
+   timestamp can always be found in it.
+
+ * When "upload-pack" fails while generating a pack in response to
+   "git fetch" (or "git clone"), the receiving side had
+   a programming error that triggered the die handler
+   recursively.
+
+ * "rev-list --stdin" and friends kept bogus pointers into the input
+   buffer around as human readable object names.  This was not a huge
+   problem but was exposed by a new change that uses these names in
+   error output.
+   (merge 70d26c6 tr/copy-revisions-from-stdin later to maint).
+
+ * Smart-capable HTTP servers were not restricted via the
+   GIT_NAMESPACE mechanism when talking with commit-walking clients,
+   like they are when talking with smart HTTP clients.
+   (merge 6130f86 jk/http-dumb-namespaces later to maint).
+
+ * "git merge-tree" did not omit a merge result that is identical to
+   the "our" side in certain cases.
+   (merge aacecc3 jk/merge-tree-added-identically later to maint).
+
+ * Perl scripts like "git-svn" closed (instead of redirecting to /dev/n=
+ull)
+   the standard error stream, which is not a very smart thing to do.
+   A later open may return file descriptor #2 for an unrelated purpose,=
+ and
+   error reporting code may write into it.
+
+ * "git show-branch" was not prepared to show a very long run of
+   ancestor operators e.g. foobar^2~2^2^2^2...^2~4 correctly.
+
+ * "git diff --diff-algorithm algo" is also understood as "git diff
+   --diff-algorithm=3Dalgo".
+
+ * The new core.commentchar configuration was not applied in a few
+   places.
+
+ * "git bundle" erroneously bailed out when parsing a valid bundle
+   containing a prerequisite commit without a commit message.
+
+ * "git log -S/-G" started paying attention to textconv filter, but
+   there was no way to disable this.  Make it honor the --no-textconv
+   option.
+
+ * When used with the "-d temporary-directory" option, "git filter-bran=
+ch"
+   failed to come back to the original working tree to perform the
+   final clean-up procedure.
+
+ * "git merge $(git rev-parse v1.8.2)" behaved quite differently from
+   "git merge v1.8.2", as if v1.8.2 were written as v1.8.2^0 and did
+   not pay much attention to the annotated tag payload.  Make the code
+   notice the type of the tag object, in addition to the dwim_ref()
+   based classification the current code uses (i.e. the name appears
+   in refs/tags/) to decide when to special-case tag merging.
+
+ * Fix a 1.8.1.x regression that stopped matching "dir" (without a
+   trailing slash) to a directory "dir".
+   (merge efa5f82 jc/directory-attrs-regression-fix later to maint-1.8.=
+1).
+
+ * "git apply --whitespace=3Dfix" was not prepared to see a line gettin=
+g
+   longer after fixing whitespaces (e.g. tab-in-indent aka Python).
+   (merge 329b26e jc/apply-ws-fix-tab-in-indent later to maint-1.8.1).
+
+ * The prompt string generator (in contrib/completion/) did not notice
+   when we are in a middle of a "git revert" session.
+
+ * "submodule summary --summary-limit" option did not support the
+   "--option=3Dvalue" form.
+
+ * "index-pack --fix-thin" used an uninitialized value to compute
+   the delta depths of objects it appends to the resulting pack.
+
+ * "index-pack --verify-stat" used a few counters outside the protectio=
+n
+   of a mutex, possibly showing incorrect numbers.
+
+ * The code to keep track of what directory names are known to Git on
+   platforms with case insensitive filesystems could get confused upon =
+a
+   hash collision between these pathnames and would loop forever.
+
+ * Annotated tags outside the refs/tags/ hierarchy were not advertised
+   correctly to ls-remote and fetch with recent versions of Git.
+
+ * Recent optimizations broke shallow clones.
+
+ * "git cmd -- ':(top'" was not diagnosed as an invalid syntax, and
+   instead the parser kept reading beyond the end of the string.
+
+ * "git tag -f <tag>" always said "Updated tag '<tag>'" even when
+   creating a new tag (i.e. neither overwriting nor updating).
+
+ * "git p4" did not behave well when the path to the root of the P4
+   client was not its real path.
+   (merge bbd8486 pw/p4-symlinked-root later to maint).
+
+ * "git archive" reported a failure when asked to create an archive out
+   of an empty tree.  It is more intuitive to give an empty
+   archive back in such a case.
+
+ * When "format-patch" quoted a non-ascii string in header files,
+   it incorrectly applied rfc2047 and chopped a single character in
+   the middle of the string.
+
+ * An aliased command spawned from a bare repository that does not say
+   it is bare with "core.bare =3D yes" was treated as non-bare by mista=
+ke.
+
+ * In "git reflog expire", the REACHABLE bit was not cleared from the
+   correct objects.
+
+ * The logic used by "git diff -M --stat" to shorten the names of
+   files before and after a rename did not work correctly when the
+   common prefix and suffix between the two filenames overlapped.
+
+ * The "--match=3D<pattern>" option of "git describe", when used with
+   "--all" to allow refs that are not annotated tags to be a
+   base of description, did not restrict the output from the command
+   to those refs that match the given pattern.
+
+ * Clarify in the documentation "what" gets pushed to "where" when the
+   command line to "git push" does not say these explicitly.
+
+ * The "--color=3D<when>" argument to the commands in the diff family
+   was described poorly.
+
+ * The arguments given to the pre-rebase hook were not documented.
+
+ * The v4 index format was not documented.
+
+ * The "--match=3D<pattern>" argument "git describe" takes uses glob
+   pattern but it wasn't obvious from the documentation.
+
+ * Some sources failed to compile on systems that lack NI_MAXHOST in
+   their system header (e.g. z/OS).
+
+ * Add an example use of "--env-filter" in "filter-branch"
+   documentation.
+
+ * "git bundle verify" did not say "records a complete history" for a
+   bundle that does not have any prerequisites.
+
+ * In the v1.8.0 era, we changed symbols that do not have to be global
+   to file scope static, but a few functions in graph.c were used by
+   CGit sideways, bypassing the entry points of the API the
+   in-tree users use.
+
+ * "git update-index -h" did not do the usual "-h(elp)" thing.
+
+ * "git index-pack" had a buffer-overflow while preparing an
+   informational message when the translated version of it was too
+   long.
+
+ * 'git commit -m "$msg"' used to add an extra newline even when
+   $msg already ended with one.
+
+ * The SSL peer verification done by "git imap-send" did not ask for
+   Server Name Indication (RFC 4366), failing to connect to SSL/TLS
+   sites that serve multiple hostnames on a single IP.
+
+ * perl/Git.pm::cat_blob slurped everything in core only to write it
+   out to a file descriptor, which was not a very smart thing to do.
+
+ * "git branch" did not bother to check nonsense command line
+   parameters.  It now issues errors in many cases.
+
+ * Verification of signed tags was not done correctly when not in C
+   or en/US locale.
+
+ * Some platforms and users spell UTF-8 differently; retry with the
+   most official "UTF-8" when the system does not understand the
+   user-supplied encoding name that is a common alternative
+   spelling of UTF-8.
+
+ * When export-subst is used, "zip" output recorded an incorrect
+   size of the file.
+
+ * "git am $maildir/" applied messages in an unexpected order; sort
+   filenames read from the maildir/ in a way that is more likely to
+   sort the messages in the order the writing MUA meant to, by sorting
+   numeric segments in numeric order and non-numeric segments in
+   alphabetical order.
+
+ * "git submodule update", when recursed into sub-submodules, did not
+   accumulate the prefix paths.
+
+----------------------------------------------------------------
+
+Changes since v1.8.3-rc0 are as follows:
+
+Anders Granskogen Bj=C3=B8rnstad (1):
+      Documentation/git-commit: Typo under --edit
+
+=46elipe Contreras (5):
+      completion: add missing format-patch options
+      documentation: trivial whitespace cleanups
+      complete: zsh: trivial simplification
+      complete: zsh: use zsh completion for the main cmd
+      completion: zsh: don't override suffix on _detault
+
+H. Merijn Brand (1):
+      Git.pm: call tempfile from File::Temp as a regular function
+
+John Keeping (2):
+      merge-tree: fix typo in "both changed identically"
+      t/Makefile: remove smoke test targets
+
+Junio C Hamano (2):
+      Update draft release notes to 1.8.3
+      Git 1.8.3-rc1
+
+Marc Branchaud (1):
+      Fix grammar in the 1.8.3 release notes.
+
+Ramkumar Ramachandra (5):
+      git-completion.bash: lexical sorting for diff.statGraphWidth
+      git-completion.bash: add diff.submodule to config list
+      git-completion.bash: complete branch.*.rebase as boolean
+      git-completion.bash: add branch.*.pushremote to config list
+      git-completion.bash: add remote.pushdefault to config list
+
+Ramsay Allan Jones (2):
+      clone: Make the 'junk_mode' symbol a file static
+      pretty: Fix bug in truncation support for %>, %< and %><
+
+Ren=C3=A9 Scharfe (3):
+      pretty: simplify input line length calculation in pp_user_info()
+      pretty: simplify output line length calculation in pp_user_info()
+      pretty: remove intermediate strbufs from pp_user_info()
+
+Thomas Rast (4):
+      remote: add a test for extra arguments, according to docs
+      remote: check for superfluous arguments in 'git remote add'
+      remote: 'show' and 'prune' can take more than one remote
+      unpack_entry: avoid freeing objects in base cache
+
+Zoltan Klinger (1):
+      bash-prompt.sh: show where rebase is at when stopped
