@@ -1,96 +1,87 @@
-From: Ilya Basin <basinilya@gmail.com>
-Subject: Re[3]: [PATCH 4/5] git-svn: fix bottleneck in stash_placeholder_list()
-Date: Fri, 3 May 2013 10:42:48 +0400
-Message-ID: <1379019858.20130503104248@gmail.com>
-References: <1438528085.20130501090926@gmail.com> <1409591910.20130501123153@gmail.com> <7vhaim8w48.fsf@alter.siamese.dyndns.org> <455264907.20130501235104@gmail.com> <20130501213031.GA13056@dcvr.yhbt.net> <7v1u9q5pu5.fsf@alter.siamese.dyndns.org> <20130502024926.GA12172@dcvr.yhbt.net> <12810110770.20130502213124@gmail.com> <20130502204017.GB26623@dcvr.yhbt.net> <77906182.20130503092642@gmail.com>
-Reply-To: Ilya Basin <basinilya@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Another use of "@"?
+Date: Fri, 3 May 2013 16:51:21 +1000
+Message-ID: <CACsJy8Btz6=4ZUjW3OR2v-LDaDcDaiK=7ucf8rO8MsG9cXt++g@mail.gmail.com>
+References: <CACsJy8AcWV8hmbhG27dw+GdnZf8NnQEctYmowqd3sSzOOHf+xg@mail.gmail.com>
+ <7vr4hozie1.fsf@alter.siamese.dyndns.org> <7vfvy4zhy5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Ray Chen <rchen@cs.umd.edu>
-To: Ilya Basin <basinilya@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 03 08:44:40 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 03 08:52:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UY9jS-0001g2-In
-	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 08:44:38 +0200
+	id 1UY9qW-0000Nt-Ir
+	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 08:51:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933103Ab3ECGoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 May 2013 02:44:34 -0400
-Received: from mail-la0-f47.google.com ([209.85.215.47]:52229 "EHLO
-	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762551Ab3ECGod (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 May 2013 02:44:33 -0400
-Received: by mail-la0-f47.google.com with SMTP id fh20so1240206lab.20
-        for <git@vger.kernel.org>; Thu, 02 May 2013 23:44:32 -0700 (PDT)
+	id S1762526Ab3ECGvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 May 2013 02:51:52 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:49588 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760176Ab3ECGvw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 May 2013 02:51:52 -0400
+Received: by mail-ob0-f170.google.com with SMTP id ef5so1186513obb.1
+        for <git@vger.kernel.org>; Thu, 02 May 2013 23:51:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
-         :subject:in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=6P/WDU/Vf4PI+szEod+HC9fxa3YBD0ZG04ZqaQwtYa0=;
-        b=BGgoKNGcv1KMA2KR9i5Pg9nxevfYZOJpd+X7mYp4OkDcYKuCMg/+1l3H8frUNXNkOb
-         IfR+jEEoX9n5NtEj1YRg/gRDv97fazkvFgKMZ0SCGRIF33KTp36iWSuKwS+Wo/0LXLm5
-         CMnNrRMeHY9Q52Pg08wZFSSM2xmafQt2pJGCTVpbTjPhIvVDAIRTr0PJJuDODzXopiER
-         uoVDebai94sAkdUAgDBzbc5DcZilPYwAh+A5a1vqyAk9R+Aei1iomXks9ogtb7zhZPPh
-         8Vmk0t81Ln4o7fT00Qii3eZvPCuImZnKJgLI/zpgTNR/hALBtVIEnON19KZ0GgbFhXWC
-         +aww==
-X-Received: by 10.112.89.36 with SMTP id bl4mr3413791lbb.94.1367563472137;
-        Thu, 02 May 2013 23:44:32 -0700 (PDT)
-Received: from [192.168.0.78] (92-100-233-8.dynamic.avangarddsl.ru. [92.100.233.8])
-        by mx.google.com with ESMTPSA id c15sm3693194lbj.17.2013.05.02.23.44.24
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 02 May 2013 23:44:30 -0700 (PDT)
-X-Mailer: Voyager (v3.99.4) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <77906182.20130503092642@gmail.com>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=D4XllBCkkC0Y3mJd3hrI54UcLjI01uGhUJdSlyE4CIc=;
+        b=i1sxNgE5529PMv9DoIVc2BZty/PdeHyjm+6Oyifxams+RvGgsOkUDM+C2Aptsl+vq1
+         qG1DvNzW5mRfwbVKYhbioXjj6Yyq+nB1Es17c1nwwTfGMvPYFGQITI6+3dWFNiQt3xRo
+         4gSJctdn5KrRD85aaj3s3y2wx84bJ4sGzRn9p/z1ebE7qXoHw1o57fc0jPLbqAj3dONn
+         BdhEGpwuGou/4Q8qtSvzchmvD8b4hu9P+C9bR8j3CrNq4qu9lgUNWqF5g+mm4MrDycU8
+         QRKMS2nbCHCakWJ8Zo+ueBqlYVACFkBJP6NhSWzcrBOOn4+Ik0cedBEGkTDeaBkFyD7R
+         rv0w==
+X-Received: by 10.182.156.20 with SMTP id wa20mr2657623obb.59.1367563911427;
+ Thu, 02 May 2013 23:51:51 -0700 (PDT)
+Received: by 10.76.180.138 with HTTP; Thu, 2 May 2013 23:51:21 -0700 (PDT)
+In-Reply-To: <7vfvy4zhy5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223290>
 
-EW>> Ilya Basin <basinilya@gmail.com> wrote:
->>> Hi. I won't send you updated patches until I import and test my huge
->>> repo. Everything will be here:
->>> https://github.com/basinilya/git/commits/v1.8.2.2-git-svn-fixes
->>> 
->>> At the moment I've decided not to implement the Junio's proposal:
->>> > >> JCH> comment line "# added by git-svn only to keep the directory" and
->>> > >> JCH> consider a directory that has nothing but .gitignore that consists
->>> > >> JCH> of only that exact comment line an "added placeholder" directory to
->>> > >> JCH> work it around.
->>> 
->>> But the config file is not an option too: I have 400 tags, each has
->>> 200 empty folders.
->>> 
->>> Instead I decided to store the paths in a text file (see
->>> https://github.com/basinilya/git/commit/a961aedd81cb8676a52cfe71ccb6eba0f9e64b90 ).
->>> I'm not planning to push this change to you.
->>> 
->>> The last error I encountered is:
->>> r7009 = 39805bb078983e34f2fc8d2c8c02d695d00d11c0 (refs/remotes/DMC4_Basic)
->>> Too many open files: Can't open file '/home/il/builds/sicap/gitsvn/prd_dmc4.svn/db/revs/0/786': Too many open files at /.snapshots/persist/builds/git/git-git/perl/blib/lib/Git/SVN/Ra.pm line 282.
->>> 
->>> I think It's unrelated to empty dirs.
+On Fri, May 3, 2013 at 4:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Duy Nguyen <pclouds@gmail.com> writes:
+>>
+>>> My setup is a bit peculiar where I do git development on three
+>>> different machines. Say I updated branch long-branch-name on machine
+>>> A. Then I continue my work on machine B. I would want to hard reset
+>>> that long-branch-name on machine B before resuming my work. What I
+>>> usually do is
+>>>
+>>> git co long-branch-name
+>>> git diff A/long-branch-name
+>>> git reset --hard A/long-branch-name
+>>
+>> Perhaps
+>>
+>>     git checkout long-bra<TAB>
+>>     git diff A/!$
+>>     git reset --hard !$
 
-EW>> Can you get an lsof on the git-svn process right before this?
-IB>     /.snapshots/persist/builds/sicap/gitsvn/aaa/.git/A4O_OTQxWc
-IB>     /.snapshots/persist/builds/sicap/gitsvn/aaa/.git/LfpcENJduN
-IB>     /.snapshots/persist/builds/sicap/gitsvn/aaa/.git/Dkk7pN4Mpz
-IB>     etc.
+"diff" does not have to follow "checkout".
 
-EW>> What's your open files limit?
-IB> 1024
+>> In any case, not a Git question, I would have to say.
+>
+> As a Git question, probably the answers are
+>
+>         git co long-bra<TAB>
+>         git diff @{u}
+>         git reset --hard @{u}
+>
+> with an appropriate setting of the upstream, perhaps?
 
-Why no call to close() from temp_release() in Git.pm?
-
-
--- 
+and @{u} can't be used because I might want to resume from machine C
+instead of A. I don't have a single upstream.
+--
+Duy
