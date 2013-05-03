@@ -1,78 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Another use of "@"?
-Date: Thu, 02 May 2013 23:28:54 -0700
-Message-ID: <7vr4hozie1.fsf@alter.siamese.dyndns.org>
-References: <CACsJy8AcWV8hmbhG27dw+GdnZf8NnQEctYmowqd3sSzOOHf+xg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] index-pack, unpack-objects: add --not-so-strict for connectivity check
+Date: Thu, 02 May 2013 23:33:19 -0700
+Message-ID: <7vk3ngzi6o.fsf@alter.siamese.dyndns.org>
+References: <1364728148-7537-1-git-send-email-pclouds@gmail.com>
+	<1367405974-22190-1-git-send-email-pclouds@gmail.com>
+	<1367405974-22190-5-git-send-email-pclouds@gmail.com>
+	<7vvc722s0h.fsf@alter.siamese.dyndns.org>
+	<CACsJy8A2dYssdV7JHutYKgo-nZswBAuedXoJ=aygrVSR=JeTrw@mail.gmail.com>
+	<7vvc711h4m.fsf@alter.siamese.dyndns.org>
+	<CACsJy8AXe-5o7EyEp_aFB=+Ny8GoqrObxzwbAhGD4w9h7Jhmog@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
 To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 03 08:29:11 2013
+X-From: git-owner@vger.kernel.org Fri May 03 08:33:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UY9US-0003Ve-EU
-	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 08:29:08 +0200
+	id 1UY9Ye-0007ld-Kz
+	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 08:33:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762676Ab3ECG27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 May 2013 02:28:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52061 "EHLO
+	id S1762865Ab3ECGdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 May 2013 02:33:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38135 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762674Ab3ECG25 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 May 2013 02:28:57 -0400
+	id S1762770Ab3ECGdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 May 2013 02:33:22 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5159B15B59;
-	Fri,  3 May 2013 06:28:56 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34F1415C2C;
+	Fri,  3 May 2013 06:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=78BA1Ou/xtsvAnZjs8Suy3LtlDw=; b=HWpi2/
-	59x9l9doJTSNMJjB2TNIcenolo5BBOseofnxV4kQWqF+Fr0glOykaPyAe5OlwDEj
-	bY87ESkeDMBzPonl8HCIzNTBLq5+Cl5oLdXlDDjJFqr1zT19HW3xCVlosSSJkluo
-	kdbICcro1DT/QRhKg2a4TMDXgarA+PPi0xV4U=
+	:content-type; s=sasl; bh=/XEQ/M/zxGrwENkPw0BHOhK4qXg=; b=Sk1yLH
+	/Q3k1jl3eIu/TYSPyORm2UG1hvbXsR2mIely9DcKgOMJQezZrl1eX5SAzPbPxefu
+	Puqpw11it+5/suDlsunUbZ1II8Uzr6IhKAUNYnCVaumIIFGXR6u+2rEJenQcSZ6N
+	UTODlbzdzdOrip0+dixCqihlAsCZ9FqDMfkSQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qrr/Y2TlGNd51BH9z4P2NPyzTweupSko
-	7ypR0wWLkUyO4eq+XVJttakRzRqIgb/H1icInn9SRkcKb8rwcYURkf7RvS9BRgMz
-	Z17sBRsI748UkC3dJ3oUO0krs2mtpd/Z6SHv6fujZLRdBkmqjZqabnnJ3yCzErsB
-	knx9gEISVsc=
+	:content-type; q=dns; s=sasl; b=iYpkwIQszhmZnh2NpGxdQG97nyJolY/y
+	5sDK/fOF7Izy9evapPJ+KOCVX404oX0mPnqw5HLPL/jDz6eNTNIPhw9GsAQW3iTd
+	2+b8EwGGFTcaZX6Ow/LgGjsQN7TkY0y1jRb3M5SH7Mbkf6jJP21vP95Va7SANU1d
+	c7ye/iPFtNo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 487E315B58;
-	Fri,  3 May 2013 06:28:56 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 280DA15C2B;
+	Fri,  3 May 2013 06:33:22 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BACA015B57;
-	Fri,  3 May 2013 06:28:55 +0000 (UTC)
-In-Reply-To: <CACsJy8AcWV8hmbhG27dw+GdnZf8NnQEctYmowqd3sSzOOHf+xg@mail.gmail.com>
-	(Duy Nguyen's message of "Fri, 3 May 2013 12:51:18 +1000")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A252B15C2A;
+	Fri,  3 May 2013 06:33:21 +0000 (UTC)
+In-Reply-To: <CACsJy8AXe-5o7EyEp_aFB=+Ny8GoqrObxzwbAhGD4w9h7Jhmog@mail.gmail.com>
+	(Duy Nguyen's message of "Fri, 3 May 2013 12:29:06 +1000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BB08A2CE-B3BA-11E2-A351-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5985E006-B3BB-11E2-BAFF-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223285>
 
 Duy Nguyen <pclouds@gmail.com> writes:
 
-> My setup is a bit peculiar where I do git development on three
-> different machines. Say I updated branch long-branch-name on machine
-> A. Then I continue my work on machine B. I would want to hard reset
-> that long-branch-name on machine B before resuming my work. What I
-> usually do is
->
-> git co long-branch-name
-> git diff A/long-branch-name
-> git reset --hard A/long-branch-name
+> What do you mean by "partial history"? Do we have dangling pointers
+> after doing that commit walker?
 
-Perhaps
+"^C" will leave the objects and it is safe because it will not
+update refs.
 
-    git checkout long-bra<TAB>
-    git diff A/!$
-    git reset --hard !$
-
-In any case, not a Git question, I would have to say.
+But your code that does not verify the full connectivity from such
+an object (that is outside the transferred pack) to the rest of the
+history will then make the resulting repository broken, if you
+update your ref to point at such an object, no?  Ading a single
+has_sha1_file() only verifies that single object, not the history
+behind it.
