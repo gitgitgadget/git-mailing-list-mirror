@@ -1,67 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: another packed-refs race
-Date: Fri, 3 May 2013 14:26:49 -0400
-Message-ID: <20130503182649.GA25379@sigill.intra.peff.net>
-References: <20130503083847.GA16542@sigill.intra.peff.net>
- <CALKQrgdHudF1fDLSXzaKfb2kne0B3rC5mM95CJGsLqL_2xemnA@mail.gmail.com>
- <20130503172853.GB21715@sigill.intra.peff.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: submodules
+Date: Fri, 03 May 2013 21:51:52 +0200
+Message-ID: <51841558.4080004@web.de>
+References: <CAH_OBieziOGOJrr=wFS-DbMOH=qzmECDziT9hQNX5GxKvNhGyw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri May 03 20:27:03 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: shawn wilson <ag4ve.us@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 03 21:52:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYKh6-0002ZF-Os
-	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 20:26:57 +0200
+	id 1UYM1R-0006gT-M5
+	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 21:52:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762990Ab3ECS0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 May 2013 14:26:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40638 "EHLO peff.net"
+	id S934151Ab3ECTv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 May 2013 15:51:57 -0400
+Received: from mout.web.de ([212.227.15.4]:49894 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754837Ab3ECS0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 May 2013 14:26:52 -0400
-Received: (qmail 8772 invoked by uid 102); 3 May 2013 18:27:10 -0000
-Received: from c-98-244-78-62.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.78.62)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 03 May 2013 13:27:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 May 2013 14:26:49 -0400
-Content-Disposition: inline
-In-Reply-To: <20130503172853.GB21715@sigill.intra.peff.net>
+	id S934031Ab3ECTv5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 May 2013 15:51:57 -0400
+Received: from [192.168.178.41] ([91.3.169.194]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0Lheqz-1UCmiY0xW5-00mc58; Fri, 03 May 2013 21:51:55
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <CAH_OBieziOGOJrr=wFS-DbMOH=qzmECDziT9hQNX5GxKvNhGyw@mail.gmail.com>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:GqtG8qPW99z1V4ygExMWJ/cOR+nud3m3z1A5F6R0T6x
+ BuLBPST3S20DzimAKzHgktboq9IvkX3Y5mwPDEumTYWzhVSGMa
+ XyRx49RuMBtWOMJh3BM5mjjoEGQ/USZfDDwahvd+AyROeLeOSO
+ 6phR1Mg5vtcvMUjXOMxU5opoilkBdAoNu1vzIxjvFZbMRE8v5n
+ hmTqzHzlwG3PKoIDZgWZQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223319>
 
-On Fri, May 03, 2013 at 01:28:53PM -0400, Jeff King wrote:
-
-> > The following solution might work in both the resolve-a-single-ref and
-> > enumerating-refs case:
-> > 
-> > 0. Look for ref already cached in memory. If found, OK.
-> > 
-> > 1. Look for loose ref. If found, OK.
-> > 
-> > 2. If not found, load all loose refs and packed-refs from disk (in
-> > that order), and store in memory for remainder of this process. Never
-> > reload packed-refs from disk (unless you also reload all loose refs
-> > first).
+Am 03.05.2013 15:45, schrieb shawn wilson:
+> So, I actually have another question I wasn't able to get to in this
+> example (which has color - sorry - less -F displays it decently)
 > 
-> I think that would be correct (modulo that step 1 cannot happen for
-> enumeration). But we would like to avoid loading all loose refs if we
-> can. Especially on a cold cache, it can be quite slow, and you may not
-> even care about those refs for the current operation (I do not recall
-> the exact original motivation for the lazy loading, but it was something
-> along those lines).
+> What is shown here is that trying to add submodules in this repo
+> doesn't add the .gitmodules file - I can do it manually, but why isn't
+> it adding the file? There's a .git/modules directory populated with
+> the right stuff, but no .gitmodules file.
+> 
+> The initial question I was trying to demonstrate was that I've got a
+> repo with submodules. When I push branches to most of the modules, a:
+> git branch -r shows them for everyone. However, in one repo/module (I
+> think it's a repo created with git --bare --shared) no one else can
+> see (or pull) the remote branches and if I make a new clone of that
+> repo as myself, I can't see them either. However, those branches are
+> there and if I check that repo out on its own (not as a submodule of
+> the main repo) I and everyone else can see those remote branches.
+> 
+> This is git 1.8.2.1 btw.
 
-Actually, forgetting about enumeration for a minute, that would make
-single-ref lookup quite painful. Running "git rev-parse foo" shouldn't
-have to even look at most loose refs in the first place. It should be a
-couple of open() calls looking for the right spot, and then fall back to
-loading packed-refs.
-
--Peff
+Thanks for your report. Unfortunately I'm not able to see much in
+your attachment, could you please try to reproduce your problem with
+a few shell commands and send these inline?
