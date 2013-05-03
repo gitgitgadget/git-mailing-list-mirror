@@ -1,113 +1,80 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 4/4] clone: open a shortcut for connectivity check
-Date: Fri, 3 May 2013 08:41:44 -0400
-Message-ID: <CAPig+cSvoahDBxg+SzEMPSbNUXfi18Q=iKmRTuznmz6qz6V-6g@mail.gmail.com>
-References: <1367405974-22190-1-git-send-email-pclouds@gmail.com>
-	<1367584514-19806-1-git-send-email-pclouds@gmail.com>
-	<1367584514-19806-5-git-send-email-pclouds@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v4 2/3] Show items of interactive git-clean in columns
+Date: Fri, 03 May 2013 14:54:59 +0200
+Message-ID: <vpqfvy4b4v0.fsf@grenoble-inp.fr>
+References: <6e795640952cad0eb25cb0db4243b2712f11e957.1367500374.git.worldhello.net@gmail.com>
+	<vpq38u6n397.fsf@grenoble-inp.fr>
+	<3b80db3d2e8f31b1d9373406cce3cbdee2094a29.1367500374.git.worldhello.net@gmail.com>
+	<vpqppx9fmpu.fsf@grenoble-inp.fr>
+	<CANYiYbGsMbJ=Ra6_fv12fnC_-Y5YfdWMgnROFWxo+Y=mkPKsiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 03 14:41:52 2013
+Content-Type: text/plain
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 03 14:55:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYFJ9-0000we-9N
-	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 14:41:51 +0200
+	id 1UYFW9-0006j0-T7
+	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 14:55:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755031Ab3ECMlr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 May 2013 08:41:47 -0400
-Received: from mail-la0-f51.google.com ([209.85.215.51]:61595 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753663Ab3ECMlq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 May 2013 08:41:46 -0400
-Received: by mail-la0-f51.google.com with SMTP id ep20so1483299lab.38
-        for <git@vger.kernel.org>; Fri, 03 May 2013 05:41:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PQ90TFGl6Adl8aZL3wnlseRwN/vWo4zrQ3sEkmyhdYs=;
-        b=wi9x+9obsigHPPw0xDxEHQCw0SSDsbw2J7Jwi3TRsee5E952yvQUqo/zXcnAB69kbZ
-         CD3EV2jSPtftfJV94W90F68JbhiXgmRVhVDq3FUgpPTMR+IGiSTJawQlYc8KiMIsthF6
-         nDFm8tBWWO8NxFRRU4TQjuqeh2Ndbc2HlBzcc9yU9eoq/WNFkrXQDQJSN9fJ6o2f01ZJ
-         KSynTUP4f8wmDJtrsYR4GMRrOw18lUZ8DZ8WqKyDrfNSPC6eSmw63L95WEnJqHNO2tEe
-         a6nDl+Zer17cTkk1Et0SBE7HZjjx7PTiZAYdwNNNdkwZoOLpYSPki5NSDUD/wSV0+whe
-         pN8g==
-X-Received: by 10.112.126.226 with SMTP id nb2mr4325428lbb.38.1367584904898;
- Fri, 03 May 2013 05:41:44 -0700 (PDT)
-Received: by 10.114.186.233 with HTTP; Fri, 3 May 2013 05:41:44 -0700 (PDT)
-In-Reply-To: <1367584514-19806-5-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: 5luC28zhBhbZRPG1Ypl7OEbrmXA
+	id S1761770Ab3ECMzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 May 2013 08:55:11 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43656 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761668Ab3ECMzJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 May 2013 08:55:09 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r43CswaV009803
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 3 May 2013 14:54:58 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UYFVr-0003jz-Rs; Fri, 03 May 2013 14:54:59 +0200
+In-Reply-To: <CANYiYbGsMbJ=Ra6_fv12fnC_-Y5YfdWMgnROFWxo+Y=mkPKsiA@mail.gmail.com>
+	(Jiang Xin's message of "Fri, 3 May 2013 09:26:21 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 03 May 2013 14:54:59 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r43CswaV009803
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1368190500.35704@P+WJegL7rl3qtolEN8bc0Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223311>
 
-On Fri, May 3, 2013 at 8:35 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
-> In order to make sure the cloned repository is good, we run "rev-list
-> --objects --not --all $new_refs" on the repository. This is expensive
-> on large repositories. This patch attempts to mitigate the impact in
-> this special case.
->
-> In the "good" clone case, we only have one pack. If all of the
-> following are met, we can be sure that all objects reachable from the
-> new refs exist, which is the intention of running "rev-list ...":
->
->  - all refs point to an object in the pack
->  - there are no dangling pointers in any object in the pack
->  - no objects in the pack point to objects outside the pack
->
-> The second and third checks can be done with the help of index-pack a=
-s
-> a slight variation of --strict check (which introduces a new conditio=
-n
-> for the shortcut: pack transfer must be used and the number of object=
-s
-> large enough to call index-pack). The first is checked in
-> check_everything_connected after we get an "ok" from index-pack.
->
-> "index-pack + new checks" is still faster than the current "index-pac=
-k
-> + rev-list", which is the whole point of this patch. If any of the
-> conditions fails, we fall back to the good old but expensive "rev-lis=
-t
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-s/fails/fail/
+> Rewrite the log as following:
 
-> ..". In that case it's even more expensive because we have to pay for
-> the new checks in index-pack. But that should only happen when the
-> other side is either buggy or malicious.
+That's probably more than needed ;-). Thanks,
+
+> Show items of interactive git-clean in columns
 >
-> Cloning linux-2.6 over file://
+> When there are lots of items to be cleaned, it is hard to see them all
+> in one screen. Show them in columns instead of in one column will solve
+> this problem.
 >
->         before         after
-> real    3m25.693s      2m53.050s
-> user    5m2.037s       4m42.396s
-> sys     0m13.750s      0m16.574s
->
-> A more realistic test with ssh:// over wireless
->
->         before         after
-> real    11m26.629s     10m4.213s
-> user    5m43.196s      5m19.444s
-> sys     0m35.812s      0m37.630s
->
-> This shortcut is not applied to shallow clones, partly because shallo=
-w
-> clones should have no more objects than a usual fetch and the cost of
-> rev-list is acceptable, partly to avoid dealing with corner cases whe=
-n
-> grafting is involved.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+> Since no longer show items to be cleaned using the "Would remove ..."
+
+"Since _we_ no longer ..."?
+
+> Will honors column.ui config variable only, not introduce new config variable.
+> So no more documentations needed ;-)
+
+I don't think it's a good idea. Usually, the *.ui variables are
+shortcuts for "set all the individual variables", and having things
+customizeable by column.ui and not by anything else breaks this.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
