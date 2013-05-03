@@ -1,90 +1,97 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Another use of "@"?
-Date: Sat, 04 May 2013 00:09:26 +0200
-Message-ID: <vpqy5bvaf6x.fsf@grenoble-inp.fr>
-References: <CACsJy8AcWV8hmbhG27dw+GdnZf8NnQEctYmowqd3sSzOOHf+xg@mail.gmail.com>
-	<7vr4hozie1.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 4/4] fast-import: only store commit objects
+Date: Fri, 3 May 2013 17:19:44 -0500
+Message-ID: <CAMP44s2o2EvmSwB0P_WkudxQWigUV20+ECio1rUGPt8qF5=0Ow@mail.gmail.com>
+References: <1367555502-4706-1-git-send-email-felipe.contreras@gmail.com>
+	<1367555502-4706-5-git-send-email-felipe.contreras@gmail.com>
+	<87y5bw3q1s.fsf@hexa.v.cablecom.net>
+	<7v61yzyavo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 04 00:09:45 2013
+X-From: git-owner@vger.kernel.org Sat May 04 00:20:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYOAh-0005dx-3k
-	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 00:09:43 +0200
+	id 1UYOKg-0006eg-G4
+	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 00:20:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934345Ab3ECWJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 May 2013 18:09:39 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:39711 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934311Ab3ECWJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 May 2013 18:09:38 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r43M9NCM007971
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 4 May 2013 00:09:23 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UYOAQ-0003kt-Ew; Sat, 04 May 2013 00:09:26 +0200
-In-Reply-To: <7vr4hozie1.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 02 May 2013 23:28:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 04 May 2013 00:09:24 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r43M9NCM007971
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1368223766.34413@K5+ajZOfc766rOufCTqViA
+	id S1760475Ab3ECWTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 May 2013 18:19:47 -0400
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:56791 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751282Ab3ECWTq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 May 2013 18:19:46 -0400
+Received: by mail-lb0-f176.google.com with SMTP id v20so1952379lbc.21
+        for <git@vger.kernel.org>; Fri, 03 May 2013 15:19:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=N6wXg5hkGO/c7aWvfuJiij3G/U+irgwoDb2m/AoVHDw=;
+        b=xxPm6NfDh+b4MeNMutxgqlnMWQPiRiQz7wXenR5KXKshAzZeGW9AHl/ElFgwWK1sXl
+         VDbgnT0jiA56at1jx2jjqamaHb+s1GpCdCtn1fopqGgQlmBH76uGvr6LnWvXQyxzFftt
+         GX6DxMFevRuNhfAj+3Aj89tRUKik0nYUuyK4WmLXUUiqcSPhfCP61EYlr+3J6ob4lxJq
+         fksG6WwsCFX+V/QrfI6kD25oPv8YJRTQ3jiDLbSedkBnlKViPWTd1ZoavjBnntltLvlO
+         VGis4gAQCmSKyUupBaLbTrkd8W5cRPbMsstD0PKljVFLuOkkIL09K0EISVXl0f5Ql2cm
+         vOWw==
+X-Received: by 10.112.145.72 with SMTP id ss8mr4224594lbb.12.1367619584848;
+ Fri, 03 May 2013 15:19:44 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Fri, 3 May 2013 15:19:44 -0700 (PDT)
+In-Reply-To: <7v61yzyavo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223329>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Duy Nguyen <pclouds@gmail.com> writes:
+On Fri, May 3, 2013 at 5:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Thomas Rast <trast@inf.ethz.ch> writes:
 >
->> My setup is a bit peculiar where I do git development on three
->> different machines. Say I updated branch long-branch-name on machine
->> A. Then I continue my work on machine B. I would want to hard reset
->> that long-branch-name on machine B before resuming my work. What I
->> usually do is
+>> IIUC, you are unconditionally storing only marks to commit objects.
 >>
->> git co long-branch-name
->> git diff A/long-branch-name
->> git reset --hard A/long-branch-name
+>> Are you allowed to do that at this point?  I notice that
+>> git-fast-export(1) says
+>>
+>>    --export-marks=<file>
+>>        Dumps the internal marks table to <file> when complete. Marks are
+>>        written one per line as :markid SHA-1. Only marks for revisions
+>>        are dumped[...]
+>>
+>> But git-fast-import(1) says nothing of the sort; I would even claim that
+>>
+>>    --export-marks=<file>
+>>        Dumps the internal marks table to <file> when complete.
+>>
+>> means that the *full* marks table is dumped.
+>>
+>> How do we know that this doesn't break any users of fast-import?  Your
+>> comment isn't very reassuring:
+>>
+>>> the vast majority of them will never be used again
+>>
+>> So what's with the minority?
+>>
+>> In any case, if this does go in, please update the documentation to
+>> match, probably by copying the sentence from git-fast-export(1).
 >
-> Perhaps
->
->     git checkout long-bra<TAB>
->     git diff A/!$
->     git reset --hard !$
+> A safe and sane approach may be to teach these an option to tell
+> them to omit non-commits or to emit all kinds, and make remote-bzr
+> use that to exclude non-commits.
 
-I think Duy meant
+This has nothing to do with remote-bzr, or any remote helper. These
+objects are not useful, not even to 'git fast-export'.
 
-  git diff A/$(git symbolic-ref --short HEAD)
+> If the defaults is matched to the
+> current behaviour, nobody will get hurt
 
-i.e. "the branch with the same name as the current one, but on a
-different remote". If this is the question, then it is a Git thing more
-than a shell one.
-
-The A/@ could make sense, but I'm wondering whether we're taking the
-direction of implementing some kind of Brainfuck dialect in Git revision
-specifiers. I'm not sure we want to add more special characters here and
-there with subtly different meanings (@ = HEAD, @{1} = HEAD@{1}, A/@ =
-A/$(git symbolic-ref --short HEAD)).
+Changing nothing always ensures that nobody will get hurt, but that
+doesn't improve anything either.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Felipe Contreras
