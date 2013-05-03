@@ -1,96 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] fast-import: only store commit objects
-Date: Fri, 03 May 2013 15:08:43 -0700
-Message-ID: <7v61yzyavo.fsf@alter.siamese.dyndns.org>
-References: <1367555502-4706-1-git-send-email-felipe.contreras@gmail.com>
-	<1367555502-4706-5-git-send-email-felipe.contreras@gmail.com>
-	<87y5bw3q1s.fsf@hexa.v.cablecom.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Another use of "@"?
+Date: Sat, 04 May 2013 00:09:26 +0200
+Message-ID: <vpqy5bvaf6x.fsf@grenoble-inp.fr>
+References: <CACsJy8AcWV8hmbhG27dw+GdnZf8NnQEctYmowqd3sSzOOHf+xg@mail.gmail.com>
+	<7vr4hozie1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	<git@vger.kernel.org>, Antoine Pelisse <apelisse@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat May 04 00:08:51 2013
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 04 00:09:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYO9r-0004o3-2T
-	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 00:08:51 +0200
+	id 1UYOAh-0005dx-3k
+	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 00:09:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934289Ab3ECWIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 May 2013 18:08:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39725 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752034Ab3ECWIq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 May 2013 18:08:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D2DE1C117;
-	Fri,  3 May 2013 22:08:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3tW78nqm4qjLIiiY7sv2i0b0wM4=; b=EWBi59
-	TMAu0k0KrVf0LVch0JAcnfxuoc6cx4+xJwWwYdzzLHGEQseZnV04cH564l1FHlh9
-	9S7Abct942IxqyUeUI1ARfWGbgbyn+FgM1H9PokHpFj1l0ZyJwgWW9VoW5UhLLGH
-	pyeInxdlJHi8HvDQ09usjoED1p3GFM0TsNzWM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QJYvzxuC5oCepmXNvqIm8fmS/L5Dh9Yb
-	wB5PpywbIRhN+3pEGRa76xlrfB7Qi6EjYZZwd1DVfGa9RsYPrE2wsJcIIXrHNPpf
-	WwbSAZLXzaEiZeJLSsaJ3LSHP4LEIW98Uo5hbVkLZwHVRH9lzTzZwpXsjT7cVqjj
-	g9/hiHcrLDk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8008D1C116;
-	Fri,  3 May 2013 22:08:45 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D1A871C115;
-	Fri,  3 May 2013 22:08:44 +0000 (UTC)
-In-Reply-To: <87y5bw3q1s.fsf@hexa.v.cablecom.net> (Thomas Rast's message of
-	"Fri, 3 May 2013 19:56:47 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 058D710C-B43E-11E2-BDE2-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S934345Ab3ECWJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 May 2013 18:09:39 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:39711 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934311Ab3ECWJi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 May 2013 18:09:38 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r43M9NCM007971
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 4 May 2013 00:09:23 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UYOAQ-0003kt-Ew; Sat, 04 May 2013 00:09:26 +0200
+In-Reply-To: <7vr4hozie1.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 02 May 2013 23:28:54 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 04 May 2013 00:09:24 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r43M9NCM007971
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1368223766.34413@K5+ajZOfc766rOufCTqViA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223328>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> IIUC, you are unconditionally storing only marks to commit objects.
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> Are you allowed to do that at this point?  I notice that
-> git-fast-export(1) says
+>> My setup is a bit peculiar where I do git development on three
+>> different machines. Say I updated branch long-branch-name on machine
+>> A. Then I continue my work on machine B. I would want to hard reset
+>> that long-branch-name on machine B before resuming my work. What I
+>> usually do is
+>>
+>> git co long-branch-name
+>> git diff A/long-branch-name
+>> git reset --hard A/long-branch-name
 >
->    --export-marks=<file>
->        Dumps the internal marks table to <file> when complete. Marks are
->        written one per line as :markid SHA-1. Only marks for revisions
->        are dumped[...]
+> Perhaps
 >
-> But git-fast-import(1) says nothing of the sort; I would even claim that
->
->    --export-marks=<file>
->        Dumps the internal marks table to <file> when complete.
->
-> means that the *full* marks table is dumped.
->
-> How do we know that this doesn't break any users of fast-import?  Your
-> comment isn't very reassuring:
->
->> the vast majority of them will never be used again
->
-> So what's with the minority?
->
-> In any case, if this does go in, please update the documentation to
-> match, probably by copying the sentence from git-fast-export(1).
+>     git checkout long-bra<TAB>
+>     git diff A/!$
+>     git reset --hard !$
 
-A safe and sane approach may be to teach these an option to tell
-them to omit non-commits or to emit all kinds, and make remote-bzr
-use that to exclude non-commits.  If the defaults is matched to the
-current behaviour, nobody will get hurt, and Felipe's Emacs import,
-knowing that it does not need marks to blobs, can take advantage of
-the new feature.
+I think Duy meant
+
+  git diff A/$(git symbolic-ref --short HEAD)
+
+i.e. "the branch with the same name as the current one, but on a
+different remote". If this is the question, then it is a Git thing more
+than a shell one.
+
+The A/@ could make sense, but I'm wondering whether we're taking the
+direction of implementing some kind of Brainfuck dialect in Git revision
+specifiers. I'm not sure we want to add more special characters here and
+there with subtly different meanings (@ = HEAD, @{1} = HEAD@{1}, A/@ =
+A/$(git symbolic-ref --short HEAD)).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
