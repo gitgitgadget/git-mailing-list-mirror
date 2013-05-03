@@ -1,118 +1,106 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Suggestion for improving the manual page for "git submodule"
-Date: Thu, 2 May 2013 21:23:55 -0400
-Message-ID: <201305030123.r431Nt6w015228@freeze.ariadne.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 4/5] index-pack, unpack-objects: add --not-so-strict
+ for connectivity check
+Date: Fri, 3 May 2013 12:29:06 +1000
+Message-ID: <CACsJy8AXe-5o7EyEp_aFB=+Ny8GoqrObxzwbAhGD4w9h7Jhmog@mail.gmail.com>
+References: <1364728148-7537-1-git-send-email-pclouds@gmail.com>
+ <1367405974-22190-1-git-send-email-pclouds@gmail.com> <1367405974-22190-5-git-send-email-pclouds@gmail.com>
+ <7vvc722s0h.fsf@alter.siamese.dyndns.org> <CACsJy8A2dYssdV7JHutYKgo-nZswBAuedXoJ=aygrVSR=JeTrw@mail.gmail.com>
+ <7vvc711h4m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 03 03:31:12 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 03 04:29:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UY4q8-0004vP-9m
-	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 03:31:12 +0200
+	id 1UY5kj-0005J2-OS
+	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 04:29:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760841Ab3ECBbH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 May 2013 21:31:07 -0400
-Received: from qmta12.westchester.pa.mail.comcast.net ([76.96.59.227]:50352
-	"EHLO qmta12.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750984Ab3ECBbG (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 May 2013 21:31:06 -0400
-X-Greylist: delayed 428 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 May 2013 21:31:06 EDT
-Received: from omta08.westchester.pa.mail.comcast.net ([76.96.62.12])
-	by qmta12.westchester.pa.mail.comcast.net with comcast
-	id XDB91l0020Fqzac5CDPxlK; Fri, 03 May 2013 01:23:57 +0000
-Received: from freeze.ariadne.com ([24.34.72.61])
-	by omta08.westchester.pa.mail.comcast.net with comcast
-	id XDPw1l00C1KKtkw3UDPwd8; Fri, 03 May 2013 01:23:57 +0000
-Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
-	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r431NtpV015229
-	for <git@vger.kernel.org>; Thu, 2 May 2013 21:23:56 -0400
-Received: (from worley@localhost)
-	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r431Nt6w015228;
-	Thu, 2 May 2013 21:23:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1367544237;
-	bh=vfyJtyRPszFjgAiYsJrPfFsS04r6iXdroipUQ8i/JYU=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject:MIME-version:Content-type;
-	b=c5Kd2BD+NOAHKW1XbJq5Q9h04jQTHVhZurnEUUHu8V5CoGFyWT9/5dLbe68DTMLmS
-	 VPrirGt+Tzdrb8VqzL0vZf8gT0ByL3QnXI82dRxff78p7rjjqYmB4od2PSXB+Mmuhc
-	 NeoYwIanCZKRP0bUaoTLEmmXOk/yY4mAm5Pczb7pHGr0j4KMafUyy7X1wd0Uh8v+R+
-	 Ku6Koi8JRz7MeMeN8ImW6L51YxiqEq1VftqKyjAxUIKLPRbAdysQ1TCl5g64K/fe5c
-	 BJrJkBW8aooV3XzTS7b1RXtfnyWNJugOG+a7zWe5jbOTdXt+eTN7iVyW/qA7dWFMi8
-	 3br+Py1pOjUbQ==
+	id S1762183Ab3ECC3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 May 2013 22:29:37 -0400
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:61489 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754950Ab3ECC3h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 May 2013 22:29:37 -0400
+Received: by mail-oa0-f44.google.com with SMTP id h1so1225275oag.31
+        for <git@vger.kernel.org>; Thu, 02 May 2013 19:29:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=LVHucPw63H/cmHHcpabRL4mVWSkBq/DM+TbhMxuoB+c=;
+        b=jb+LeiQj8s/zWR4gKHtkFd43hlZqaK/IHDwkUeeGBHCPZJcfuEHxSpsw7NYatJ+b5p
+         wgX1gDcn9Sz7fA7zJihEUqdXR6nMtsr7o4EgqLcDPQGfZ/heQ5chm3qAP822yGm4hlT2
+         skQHAFVhHDMc5f+B92nOCKfPzvxV/nLrH143sxHvovinJKKQJU37s83NGFh+/IWFMI0Y
+         cTAzscHCTThQ2sdM8cjmnFKQ6pNX17OHytTnPx7IBqR76oWCBOwHL0k+DQ7fDj1Z2+Wa
+         laMNba6ZSd4flelLxLA9PWDDbhqVDj+hUjyCgkCZU9jDa5AhbantlDxcDQPk0UEgnEVl
+         9xsQ==
+X-Received: by 10.60.83.103 with SMTP id p7mr966139oey.130.1367548176586; Thu,
+ 02 May 2013 19:29:36 -0700 (PDT)
+Received: by 10.76.180.138 with HTTP; Thu, 2 May 2013 19:29:06 -0700 (PDT)
+In-Reply-To: <7vvc711h4m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223268>
 
-Several people have made similar mistakes in beliving that "git
-submodule init" can be used for adding submodules to a working
-directory, whereas "git submodule add" is the command that should be
-used.  That *is* documented at the top of the manual page for "git
-submodule", but my error was enhanced by a subtle error in the
-documentation of "init".
+On Fri, May 3, 2013 at 2:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Object islands (in the new pack) by definition are not connected to
+>> the main DAG and so invisible to/unreachable from rev-list. index-pack
+>> examines all objects in the pack and checks links of each object. With
+>> this approach, islands are no different than reachable objects.
+>
+> OK, so if you are fetching an updated tip of the main history, and a
+> new tip of a history that is disjoint. If we imagine that my public
+> repository just added the 'todo' branch and you are fecting them for
+> the first time. The history of 'todo' branch is an island that is
+> not connected anywhere from your refs namespace yet. In order to
+> ensure that updating the tip of fetched 'todo' is safe, you would
+> need to verify the island is free of dangling pointers and the only
+> thing you need to be sure is the tip of 'todo' is _in_ that island.
 
-The text as it is written suggests that init's behavior is driven by
-the contents of .submodules.  But in fact, its behavior is driven by
-the existing gitlinks in the file tree, possibly limited by the <path>
-arguments.  (Which is *why* "git submodule init" can't *add*
-submodules; it only processes *existing* submodules.)
+Why tip must be in that island or any other islands? There is no way
+we know which island (or the main DAG) should be connected to any
+tips. It should be enough that the tip in question exists and do not
+contain any dangling pointers.
 
-I would like to suggest that the manual page be updated to remove the
-error in the description of the init subcommand, along with another
-addition to tell the submodule logical name that is used by the "add"
-subcommand:
+>>> I am guessing that the code assumes that we are updating our refs to
+>>> objects that are in the pack that we are looking at, and I can see
+>>> how the new check in sha1_object() may detect an object that points
+>>> at another object that is missing.  But that assumption (which I
+>>> think is correct) is probably the most important thing to say in the
+>>> log message.
+>>
+>> Yes, we need to make sure the new value of our refs are existing
+>> objects. But it does not need to be in the new pack.
+>
+> It is a bit more tricky than that.  A malicious (or simply buggy)
+> other side can send a subset of my 'todo' branch, which is an island
+> that is free of dangling pointers (think: 'rev-list --objects
+> todo~8').  Further imagine that you earlier attempted a fetch of the
+> same history from me over a commit walker and you happen to have
+> partial history near the tip of 'todo' but not connected to the
+> island.  sha1_object() will find it, but that does not say anything
+> useful.  The tip _must_ appear in the island for your check to yield
+> a usable result, no?
 
---- man1	2013-04-26 12:02:16.752702146 -0400
-+++ man3	2013-05-02 21:06:00.020353100 -0400
-@@ -61,6 +61,8 @@
-            to exist in the superproject. If <path> is not given, the
-            "humanish" part of the source repository is used ("repo" fo=
-r
-            "/path/to/repo.git" and "foo" for "host.xz:foo/.git").
-+           The <path> is used as the submodule's logical name in its
-+           configuration entries.
-=20
-            <repository> is the URL of the new submodule=E2=80=99s orig=
-in repository.
-            This may be either an absolute URL, or (if it begins with .=
-/ or
-@@ -109,7 +111,9 @@
-            too (and can also report changes to a submodule=E2=80=99s w=
-ork tree).
-=20
-        init
--           Initialize the submodules, i.e. register each submodule nam=
-e and
-+           Initialize the submodules, i.e. register each submodule for=
- which
-+           there is a gitlink recorded (or the specific gitlinks speci=
-fied by
-+           <path> ...) by copying the name and
-            url found in .gitmodules into .git/config. The key used in
-            .git/config is submodule.$name.url. This command does not a=
-lter
-            existing information in .git/config. You can then customize=
- the
-@@ -118,6 +122,10 @@
-            submodule update --init without the explicit init step if y=
-ou do
-            not intend to customize any submodule locations.
-=20
-+           (Because init only operates on existing gitlinks, it cannot
-+           be used to create submodules, regardless of the contents of
-+           .gitmodules.  Use the add subcommand to create submodules.)
-+
-        update
-            Update the registered submodules, i.e. clone missing submod=
-ules and
-            checkout the commit specified in the index of the containin=
-g
+What do you mean by "partial history"? Do we have dangling pointers
+after doing that commit walker?
 
-Dale
+> The existing "everything connected" was designed to protect against
+> that kind of breakage as well.
+>
+> I might be reading your change incorrectly, but I am not sure how
+> the new code protects against such a breakage.
+>
+>> After index-pack
+>> is run, we're guaranteed that all objects in repo are connected and
+>> any of them could be new ref. This is also why I add has_sha1_file()
+>> in clone.c.
+-- 
+Duy
