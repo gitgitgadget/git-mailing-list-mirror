@@ -1,74 +1,137 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 2/2] cygwin: Remove the CYGWIN_V15_WIN32API build variable
-Date: Fri, 3 May 2013 04:17:28 -0400
-Message-ID: <CAPig+cR3s4nzSOrG+=-MYEA4heTeMHpHQmAChWLEuFY2v+PhPA@mail.gmail.com>
-References: <5182BE80.7060400@ramsay1.demon.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: another packed-refs race
+Date: Fri, 3 May 2013 04:38:48 -0400
+Message-ID: <20130503083847.GA16542@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>, mlevedahl@gmail.com
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Fri May 03 10:17:39 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri May 03 10:38:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYBBR-0001Oh-4f
-	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 10:17:37 +0200
+	id 1UYBW5-0006R7-Ik
+	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 10:38:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761750Ab3ECIRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 May 2013 04:17:32 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:55117 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751018Ab3ECIRa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 May 2013 04:17:30 -0400
-Received: by mail-lb0-f182.google.com with SMTP id r11so1284726lbv.41
-        for <git@vger.kernel.org>; Fri, 03 May 2013 01:17:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=mHFJfTL4HdbZLaYXL3T8WVTcAdS4/kA5i+8EOtrZ1ME=;
-        b=dV9j9CDSpKTzuGyKC6YN+GQ3x9GBwzHETUW6nXRLa3Qs1fBHofAXxZ6mFVsnvy6cP1
-         aBdsDNF/CYYLh+QCvwxYp9QG6EM6SEkTvk+3nMx/vgoBwg/GPmNTQWgcjrgb+LlyliYY
-         e5hDkMRkPS5eIwIcnJ64DB5YXzH9goaKqLDthMnReKux4AkzMVWxs5FyWAos0CfD6diL
-         9cdQJvyUdzIJM9zbA73qE1fQLOUmicODeZEo+sLgMdNYi7ExddF/tYwTLIHHrhH+40AM
-         qPan3m4kpSVd4ft/k69CuCE0AVeYxDE0SrjmvIhCXl++ODrf8/NioCxOvbim9mI+Hp/4
-         uh1A==
-X-Received: by 10.112.159.1 with SMTP id wy1mr3832187lbb.80.1367569048404;
- Fri, 03 May 2013 01:17:28 -0700 (PDT)
-Received: by 10.114.186.233 with HTTP; Fri, 3 May 2013 01:17:28 -0700 (PDT)
-In-Reply-To: <5182BE80.7060400@ramsay1.demon.co.uk>
-X-Google-Sender-Auth: dWym59wvQApuYbUXHZdlIk51IAc
+	id S1762783Ab3ECIiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 May 2013 04:38:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36704 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751544Ab3ECIiu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 May 2013 04:38:50 -0400
+Received: (qmail 12878 invoked by uid 102); 3 May 2013 08:39:07 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 03 May 2013 03:39:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 May 2013 04:38:48 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223299>
 
-On Thu, May 2, 2013 at 3:29 PM, Ramsay Jones <ramsay@ramsay1.demon.co.uk> wrote:
-> Commit 380a4d92 ("Update cygwin.c for new mingw-64 win32 api headers",
-> 11-11-2012) solved an header include order problem on cygwin 1.7 when
-> using the new mingw-64 WIN32 API headers. The solution involved using
-> a new build variable (V15_MINGW_HEADERS) to conditionally compile the
-> cygwin.c source file to use an include order appropriate for the old
-> and new header files. (The build variable was later renamed in commit
-> 9fca6cff to CYGWIN_V15_WIN32API).
->
-> The include order used for cygwin 1.7 includes the "win32.h" header
-> before "../git-compat-util.h". This order was problematic on cygwin
-> 1.5, since it lead to the WIN32 symbol being defined along with the
+I found another race related to the packed-refs code. Consider for a
+moment what happens when we are looking at refs and another process does
+a simultaneous "git pack-refs --all --prune", updating packed-refs and
+deleting the loose refs.
 
-s/lead/led/
+If we are resolving a single ref, then we will either find its loose
+form or not. If we do, we're done. If not, we can fall back on what was
+in the packed-refs file. If we read the packed-refs file at that point,
+we're OK. If the loose ref existed before but was pruned before we could
+read it, then we know the packed-refs file is already in place, because
+pack-refs would not have deleted the loose ref until it had finished
+writing the new file. But imagine that we already loaded the packed-refs
+file into memory earlier. We may be looking at an _old_ version of it
+that has an irrelevant sha1 from the older packed-refs file. Or it might
+not even exist in the packed-refs file at all, and we think the ref does
+not resolve.
 
-> inclusion of some WIN32 API headers (e.g. <winsock2.h>) which cause
-> compilation errors.
->
-> The header include order problem on cygwin 1.5 has since been fixed
-> (see commit "mingw: rename WIN32 cpp macro to GIT_WINDOWS_NATIVE"),
-> so we can now remove the conditional compilation along with the
-> associated CYGWIN_V15_WIN32API build variable.
->
-> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+We could fix this by making sure our packed-refs file is up to date
+before using it. E.g., resolving a ref with the following sequence:
+
+  1. Look for loose ref. If found, OK.
+
+  2. Compare inode/size/mtime/etc of on-disk packed-refs to their values
+     from the last time we loaded it. If they're not the same, reload
+     packed-refs from disk. Otherwise, continue.
+
+  3. Look for ref in in-memory packed-refs.
+
+Not too bad. We introduce one extra stat() for a ref that has been
+packed, and the scheme isn't very complicated.
+
+But what about enumerating refs via for_each_ref? It's possible to have
+the same problem there, and the packed-refs file may be moved into place
+midway through the process of enumerating the loose refs. So we may see
+refs/heads/master, but when we get to refs/remotes/origin/master, it has
+now been packed and pruned. I _think_ we can get by with:
+
+  1. Generate the complete sorted list of loose refs.
+
+  2. Check that packed-refs is stat-clean, and reload if necessary, as
+     above.
+
+  3. Merge the sorted loose and packed lists, letting loose override
+     packed (so even if we get repacked halfway through our loose
+     traversal and get half of the refs there, it's OK to see duplicates
+     in packed-refs, which we will ignore).
+
+This is not very far off of what we do now. Obviously we don't do the
+stat-clean check in step 2. But we also don't generate the complete list
+of loose refs before hitting the packed-refs file. Instead we lazily
+load the loose directories as needed. And of course we cache that
+information in memory, even though it may go out of date. I think the
+best we could do is keep a stat() for each individual directory we see,
+and check it before using the in-memory contents. That may be a lot of
+stats, but it's still better than actually opening each loose ref
+separately.
+
+So I think it's possible to fix, but I thought you might have some
+insight on the simplest way to fit it into the current ref code.
+
+Did I explain the problem well enough to understand? Can you think of
+any simpler or better solutions (or is there a case where my proposed
+solutions don't work?).
+
+For reference, here's a script that demonstrates the problem during
+enumeration (sometimes for-each-ref fails to realize that
+refs/heads/master exists at all):
+
+  # run this in one terminal
+  git init repo &&
+  cd repo &&
+  git commit --allow-empty -m foo &&
+  base=`git rev-parse HEAD` &&
+  while true; do
+    # this re-creates the loose ref in .git/refs/heads/master
+    git update-ref refs/heads/master $base &&
+
+    # we can remove packed-refs safely, as we know that
+    # its only value is now stale. Real git would not do
+    # this, but we are simulating the case that "master"
+    # simply wasn't included in the last packed-refs file.
+    rm -f .git/packed-refs &&
+
+    # and now we repack, which will create an up-to-date
+    # packed-refs file, and then delete the loose ref
+    git pack-refs --all --prune
+  done
+
+  # then simultaneously run this in another
+  cd repo &&
+  while true; do
+    refs=`git for-each-ref`
+    echo "==> $refs"
+    test -z "$refs" && break
+  done
+
+Obviously the "rm -f packed-refs" above is contrived, but it does
+simulate a real possible state. You could also do it with a packed-refs
+file that has an outdated value for refs/heads/master, and demonstrate
+that for-each-ref sees the outdated value.
+
+-Peff
