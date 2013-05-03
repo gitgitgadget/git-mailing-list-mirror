@@ -1,111 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 4/4] clone: open a shortcut for connectivity check
-Date: Fri, 03 May 2013 09:15:15 -0700
-Message-ID: <7vwqrgxcoc.fsf@alter.siamese.dyndns.org>
-References: <1367405974-22190-1-git-send-email-pclouds@gmail.com>
-	<1367584514-19806-1-git-send-email-pclouds@gmail.com>
-	<1367584514-19806-5-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: another packed-refs race
+Date: Fri, 3 May 2013 13:28:53 -0400
+Message-ID: <20130503172853.GB21715@sigill.intra.peff.net>
+References: <20130503083847.GA16542@sigill.intra.peff.net>
+ <CALKQrgdHudF1fDLSXzaKfb2kne0B3rC5mM95CJGsLqL_2xemnA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 03 18:15:28 2013
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri May 03 19:29:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYIdo-0002JW-51
-	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 18:15:24 +0200
+	id 1UYJn3-0006rB-TY
+	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 19:29:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933005Ab3ECQPT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 May 2013 12:15:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55164 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759413Ab3ECQPR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 May 2013 12:15:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52C6E1B402;
-	Fri,  3 May 2013 16:15:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=kabOLvWBWajp
-	AKDIDVeQKcndMsk=; b=K0KVoKsO3aKNwD5w1BvkGD90fZofhRKRgNxNYAGT+sGV
-	pjapQz4cvlAeJTMNhRN2Ee48SUJQq7zYPRaV2wk9CmwhfcjH0xudwX/ox/k7PoMq
-	FW987psCyXnXob5WNF07rELOZMSKxS1NjvXcanTGAlv6KdMZq92JqlBSb8gDrlg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jMa4J4
-	0UeoR/YrC0h4cpFg9J06EUp4CPdafyn86Yxnvo06/jHvIkM4LyUZ+nPVIiMappF8
-	tama6ZqAUSYdsSq+X9QpEfjPPWZ39VHD9HGBCDqwqL0UCVpg4fvaqDjk5ZTEfVTv
-	44UGSJ8noMDwErA+EFiV7EMZePKOCYKqvjDHc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47BC31B401;
-	Fri,  3 May 2013 16:15:17 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A2A291B400;
-	Fri,  3 May 2013 16:15:16 +0000 (UTC)
-In-Reply-To: <1367584514-19806-5-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 3 May
- 2013 19:35:14 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A47C191C-B40C-11E2-8F79-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S933573Ab3ECR24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 May 2013 13:28:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40248 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758925Ab3ECR2z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 May 2013 13:28:55 -0400
+Received: (qmail 5806 invoked by uid 102); 3 May 2013 17:29:13 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 03 May 2013 12:29:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 May 2013 13:28:53 -0400
+Content-Disposition: inline
+In-Reply-To: <CALKQrgdHudF1fDLSXzaKfb2kne0B3rC5mM95CJGsLqL_2xemnA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223315>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Fri, May 03, 2013 at 11:26:11AM +0200, Johan Herland wrote:
 
-> In order to make sure the cloned repository is good, we run "rev-list
-> --objects --not --all $new_refs" on the repository. This is expensive
-> on large repositories. This patch attempts to mitigate the impact in
-> this special case.
->
-> In the "good" clone case, we only have one pack.
+> You don't really need to be sure that packed-refs is up-to-date. You
+> only need to make sure that don't rely on lazily loading loose refs
+> _after_ you have loaded packed-refs.
 
-If "On large repositories" is the focus, we need to take into
-account the fact that pack.packSizeLimit can split and store the
-incoming packstream to multiple packs, so "only have one pack" is
-misleading.
+True. As long as you load them both together, and always make sure you
+do loose first, you'd be fine. But I think there will be corner cases
+where you have loaded _part_ of the loose ref namespace. I think part of
+the point of Michael's ref work is that if you call "for_each_tag_ref",
+we would not waste time loading refs/remotes/ at all. If you then follow
+that with a call to "for_each_ref", you would want to re-use the cached
+work from traversing refs/tags/, and then traverse refs/remotes/. You
+know that your cached packed-refs is good with respect to refs/tags/,
+but you don't with respect to refs/remotes.
 
-I think you can still do the same trick even when we split the pack
-as index-pack will keep track of the objects it saw in the same
-incoming pack stream (but I am writing this from memory without
-looking at the original code you are touching, so please double
-check).
+> The following solution might work in both the resolve-a-single-ref and
+> enumerating-refs case:
+> 
+> 0. Look for ref already cached in memory. If found, OK.
+> 
+> 1. Look for loose ref. If found, OK.
+> 
+> 2. If not found, load all loose refs and packed-refs from disk (in
+> that order), and store in memory for remainder of this process. Never
+> reload packed-refs from disk (unless you also reload all loose refs
+> first).
 
-> If all of the
-> following are met, we can be sure that all objects reachable from the
-> new refs exist, which is the intention of running "rev-list ...":
->
->  - all refs point to an object in the pack
->  - there are no dangling pointers in any object in the pack
->  - no objects in the pack point to objects outside the pack
->
-> The second and third checks can be done with the help of index-pack a=
-s
-> a slight variation of --strict check (which introduces a new conditio=
-n
-> for the shortcut: pack transfer must be used and the number of object=
-s
-> large enough to call index-pack). The first is checked in
-> check_everything_connected after we get an "ok" from index-pack.
->
-> "index-pack + new checks" is still faster than the current "index-pac=
-k
-> + rev-list", which is the whole point of this patch. If any of the
+I think that would be correct (modulo that step 1 cannot happen for
+enumeration). But we would like to avoid loading all loose refs if we
+can. Especially on a cold cache, it can be quite slow, and you may not
+even care about those refs for the current operation (I do not recall
+the exact original motivation for the lazy loading, but it was something
+along those lines).
 
-Does the same check apply if we end up on the unpack-objects
-codepath?
+> My rationale for this approach is that if you have a packed-refs file,
+> you will likely have fewer loose refs, so loading all of them in
+> addition to the pack-refs file won't be that expensive. (Conversely,
+> if you do have a lot of loose refs, you're more likely to hit #1, and
+> not have to load all refs.)
+> 
+> That said, my intuition on the number of loose vs. packed refs, or the
+> relative cost of reading all loose refs might be off here...
 
-> This shortcut is not applied to shallow clones, partly because shallo=
-w
-> clones should have no more objects than a usual fetch and the cost of
-> rev-list is acceptable, partly to avoid dealing with corner cases whe=
-n
-> grafting is involved.
+I don't think that is necessarily true about the number of loose refs.
+In a busy repository, you may have many loose refs that have been
+updated.
+
+-Peff
