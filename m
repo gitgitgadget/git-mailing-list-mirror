@@ -1,147 +1,101 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Suggestion for improving the manual page for "git submodule"
-Date: Fri, 03 May 2013 22:48:18 +0200
-Message-ID: <51842292.9040400@web.de>
-References: <201305030123.r431Nt6w015228@freeze.ariadne.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: another packed-refs race
+Date: Fri, 3 May 2013 23:02:48 +0200
+Message-ID: <CALKQrgdG2QOs4Z0vAg7cZt8F5LKd4X8pMMAS0C2HcztbzaBBeQ@mail.gmail.com>
+References: <20130503083847.GA16542@sigill.intra.peff.net>
+	<CALKQrgdHudF1fDLSXzaKfb2kne0B3rC5mM95CJGsLqL_2xemnA@mail.gmail.com>
+	<20130503172853.GB21715@sigill.intra.peff.net>
+	<20130503182649.GA25379@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Dale R. Worley" <worley@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri May 03 22:48:32 2013
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 03 23:03:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYMu7-0004Ou-67
-	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 22:48:31 +0200
+	id 1UYN87-0001bU-Ch
+	for gcvg-git-2@plane.gmane.org; Fri, 03 May 2013 23:02:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763627Ab3ECUsX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 May 2013 16:48:23 -0400
-Received: from mout.web.de ([212.227.17.11]:65220 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763616Ab3ECUsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 May 2013 16:48:22 -0400
-Received: from [192.168.178.41] ([91.3.169.194]) by smtp.web.de (mrweb003)
- with ESMTPA (Nemesis) id 0LlWFD-1Tz2Hc0piJ-00adWU; Fri, 03 May 2013 22:48:19
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <201305030123.r431Nt6w015228@freeze.ariadne.com>
-X-Enigmail-Version: 1.5.1
-X-Provags-ID: V02:K0:7c1+wLewzrlBZNBkSURGA4Sc/O7cFxNA24CoBF5txTq
- SyvDS1U+XNJkLeZgBn18KaKnWAeO7mkOrCytLI0BdAQxURj2fv
- Z+HkkYqeOEFrLOTmZKM+F8zafaYHY7zgcufOVWHVnqvOO+Sa+E
- uy/hwBJW5igw5HBuVgwAoTZKQQlp41FkZ8w66AyolWfwwFtZNV
- 7HgoGEMvCGZgMDg9+U1og==
+	id S1761179Ab3ECVCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 May 2013 17:02:55 -0400
+Received: from mail10.copyleft.no ([188.94.218.231]:56679 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750729Ab3ECVCy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 May 2013 17:02:54 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UYN80-0002Xk-Ge
+	for git@vger.kernel.org; Fri, 03 May 2013 23:02:52 +0200
+Received: from mail-ob0-f175.google.com ([209.85.214.175])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UYN80-0006vu-4D
+	for git@vger.kernel.org; Fri, 03 May 2013 23:02:52 +0200
+Received: by mail-ob0-f175.google.com with SMTP id wd20so669420obb.34
+        for <git@vger.kernel.org>; Fri, 03 May 2013 14:02:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=0C96AyKNgFtePApsxO2ELPrKub/7NjBPtig6LGrMYB4=;
+        b=pcbs908vFPHwNBHMLqgPf4qgPTUgNp1GHVnBao0NXmG/bbXDT2SRmiB9WDcTHa5ptJ
+         0vRXKosEaD+GcUN5Fpj2PPTE31W7O4JRHtM2wYfSYsT8ARAZJV0n94sLPa9oYUUO2StX
+         3hw9PQ4ypTGpN4T5Utbarufni+oEgvIrJ/XHWqYq1jSwUR3ShhDtG6pO1Z7HwIGDDQ4s
+         9GO9ymJuX0Ggtia8OkiwT8Y5KTL5B1e4K/smasSCRQj8LUyCnS2I+9jhqDLy8FFcmFjk
+         Hh7Pc3d7ivyBK+vR5hRqH8KMpgzeIpGFf5nrqMVjfAzTTRAgJcXxmo67reDvxCcgIFMd
+         1uOg==
+X-Received: by 10.60.155.137 with SMTP id vw9mr1621663oeb.81.1367614968417;
+ Fri, 03 May 2013 14:02:48 -0700 (PDT)
+Received: by 10.182.129.110 with HTTP; Fri, 3 May 2013 14:02:48 -0700 (PDT)
+In-Reply-To: <20130503182649.GA25379@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223321>
 
-Am 03.05.2013 03:23, schrieb Dale R. Worley:
-> Several people have made similar mistakes in beliving that "git
-> submodule init" can be used for adding submodules to a working
-> directory, whereas "git submodule add" is the command that should be
-> used.  That *is* documented at the top of the manual page for "git
-> submodule", but my error was enhanced by a subtle error in the
-> documentation of "init".
-
-Thanks for bringing this up.
-
-> The text as it is written suggests that init's behavior is driven by
-> the contents of .submodules.  But in fact, its behavior is driven by
-> the existing gitlinks in the file tree, possibly limited by the <path=
+On Fri, May 3, 2013 at 8:26 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, May 03, 2013 at 01:28:53PM -0400, Jeff King wrote:
+>> > The following solution might work in both the resolve-a-single-ref and
+>> > enumerating-refs case:
+>> >
+>> > 0. Look for ref already cached in memory. If found, OK.
+>> >
+>> > 1. Look for loose ref. If found, OK.
+>> >
+>> > 2. If not found, load all loose refs and packed-refs from disk (in
+>> > that order), and store in memory for remainder of this process. Never
+>> > reload packed-refs from disk (unless you also reload all loose refs
+>> > first).
+>>
+>> I think that would be correct (modulo that step 1 cannot happen for
+>> enumeration). But we would like to avoid loading all loose refs if we
+>> can. Especially on a cold cache, it can be quite slow, and you may not
+>> even care about those refs for the current operation (I do not recall
+>> the exact original motivation for the lazy loading, but it was something
+>> along those lines).
 >
-> arguments.  (Which is *why* "git submodule init" can't *add*
-> submodules; it only processes *existing* submodules.)
+> Actually, forgetting about enumeration for a minute, that would make
+> single-ref lookup quite painful. Running "git rev-parse foo" shouldn't
+> have to even look at most loose refs in the first place. It should be a
+> couple of open() calls looking for the right spot, and then fall back to
+> loading packed-refs.
 
-That's correct (but I think "index" should be used here instead of
-"file tree").
+True. I was overemphasizing the case where we start looking up one
+ref, and later look up more refs from the same process (in which case
+the load-everything step would be amortized across the other lookups),
+but this is probably not the ref access pattern for most Git commands,
+and definitely not for "git rev-parse foo". I think your approach is
+better.
 
-> I would like to suggest that the manual page be updated to remove the
-> error in the description of the init subcommand, along with another
-> addition to tell the submodule logical name that is used by the "add"
-> subcommand:
 
-Good idea, care to provide a patch? ;-)
-(If so, please see Documentation/SubmittingPatches on how to do that)
+...Johan
 
-> --- man1	2013-04-26 12:02:16.752702146 -0400
-> +++ man3	2013-05-02 21:06:00.020353100 -0400
-> @@ -61,6 +61,8 @@
->             to exist in the superproject. If <path> is not given, the
->             "humanish" part of the source repository is used ("repo" =
-for
->             "/path/to/repo.git" and "foo" for "host.xz:foo/.git").
-> +           The <path> is used as the submodule's logical name in its
-> +           configuration entries.
-
-Nice, but I think you should append "unless the --name option is used
-to provide a different name" or such to that sentence.
-
->             <repository> is the URL of the new submodule=E2=80=99s or=
-igin repository.
->             This may be either an absolute URL, or (if it begins with=
- ./ or
-> @@ -109,7 +111,9 @@
->             too (and can also report changes to a submodule=E2=80=99s=
- work tree).
-> =20
->         init
-> -           Initialize the submodules, i.e. register each submodule n=
-ame and
-> +           Initialize the submodules, i.e. register each submodule f=
-or which
-> +           there is a gitlink recorded (or the specific gitlinks spe=
-cified by
-> +           <path> ...) by copying the name and
-
-This sounds very technical ... maybe we should rephrase that like this?
-
--           Initialize the submodules, i.e. register each submodule nam=
-e and
-+           Initialize the submodules recorded in the index (by having =
-been
-+           added and committed somewhere else), i.e. register each sub=
-module
-+           name and
-
-(Not being a native speaker I would appreciate if somebody else comes u=
-p
-with a better wording. I think we should talk about the fact that someb=
-ody
-else already "add"ed this submodule in his work tree; I'm not sure talk=
-ing
-about a gitlink here would help someone new to submodules that much, as=
- this
-topic seems to be about confusing "init" and "add".)
-
->             url found in .gitmodules into .git/config. The key used i=
-n
->             .git/config is submodule.$name.url. This command does not=
- alter
->             existing information in .git/config. You can then customi=
-ze the
-> @@ -118,6 +122,10 @@
->             submodule update --init without the explicit init step if=
- you do
->             not intend to customize any submodule locations.
-> =20
-> +           (Because init only operates on existing gitlinks, it cann=
-ot
-> +           be used to create submodules, regardless of the contents =
-of
-> +           .gitmodules.  Use the add subcommand to create submodules=
-=2E)
-> +
-
-I'm not sure we need this anymore when we clarify the description above=
-=2E
-
->         update
->             Update the registered submodules, i.e. clone missing subm=
-odules and
->             checkout the commit specified in the index of the contain=
-ing
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
