@@ -1,59 +1,96 @@
-From: Norah Jones <nh.jones01@gmail.com>
-Subject: How do I modify the commit message (not the topmost one)  of a git commit?
-Date: Sat, 4 May 2013 06:31:26 +0000
-Message-ID: <abcd1234abc123ab12a0000000345000020000004001@gmail.com>
-Reply-To: Norah Jones <nh.jones01@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Pitfalls in auto-fast-forwarding heads that are not checked out?
+Date: Sat, 04 May 2013 09:34:17 +0200
+Message-ID: <5184B9F9.2010708@kdbg.org>
+References: <CACPiFCLnjCeCpt8wR71bFweFyA3rFCsnbEiR1yRD1n=X5K84Mw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 04 08:31:46 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 04 09:34:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYW0X-0006qu-TI
-	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 08:31:46 +0200
+	id 1UYWzO-0003yE-6H
+	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 09:34:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752733Ab3EDGba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 May 2013 02:31:30 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:38204 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751784Ab3EDGb3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 May 2013 02:31:29 -0400
-Received: by mail-pd0-f176.google.com with SMTP id x10so1244266pdj.35
-        for <git@vger.kernel.org>; Fri, 03 May 2013 23:31:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:to:from:reply-to:subject:message-id:x-priority
-         :x-mailer:mime-version:content-transfer-encoding:content-type;
-        bh=M/fnPJcZASl1YqtKppkNn8HW1ts6DE83FySnIa17nvU=;
-        b=PLsZq1SZIKV0gSXq0PqcHVhFVLaetfIAE+G8SdOlQrh5FHU5H6lBiPO6Bar9vfCCGC
-         djSeiNfaYEOIqB2dWZ1ZwNlTGHXdwSAYBxtgEwWPPlPXsIIzQ8zyp+PEY3EYF+S7JkrB
-         YRdX9Jd7oQzGGXEpSQSddG3CkIsHl4RBDsCHWxQNHT7G1BMYzLLuIVJ3v1CNgMxR/3FQ
-         AzDBcFS5E1O0gmvzuZJ+GErCzzDC0n/68oRjlR9VVbn4bCALPsYUJYdTEYZvfA+lJywF
-         E/AjEnXjja0W6Z1/g2buXKPpHyw0tI/LZ3lqewfNK/cImtb/o7hh8O4ZBbZjZJt2vd6W
-         VLgQ==
-X-Received: by 10.68.233.3 with SMTP id ts3mr17269010pbc.153.1367649088689;
-        Fri, 03 May 2013 23:31:28 -0700 (PDT)
-Received: from www.queryhome.com (ec2-54-245-79-134.us-west-2.compute.amazonaws.com. [54.245.79.134])
-        by mx.google.com with ESMTPSA id qi1sm15940070pac.21.2013.05.03.23.31.27
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 03 May 2013 23:31:27 -0700 (PDT)
-X-Priority: 3
-X-Mailer: CatPHPMailer 5.1 (phpmailer.sourceforge.net)
+	id S1756518Ab3EDHeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 May 2013 03:34:22 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:36716 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754065Ab3EDHeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 May 2013 03:34:22 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 855D4130047;
+	Sat,  4 May 2013 09:34:18 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id F26F519F5C6;
+	Sat,  4 May 2013 09:34:17 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <CACPiFCLnjCeCpt8wR71bFweFyA3rFCsnbEiR1yRD1n=X5K84Mw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223356>
 
-Hi, 
+Am 04.05.2013 00:46, schrieb Martin Langhoff:
+> I am building a small git wrapper around puppet, and one of the
+> actions it performs is auto-fastforwarding of branches without
+> checking them out.
+> 
+> In simplified code... we ensure that we are on a head called master,
+> and in some cases "ppg commit", will commit to master and...
+> 
+>   ## early on
+>   # sanity-check we are on master
+>   headname=$(git rev-parse --symbolic-full-name --revs-only HEAD)
+>   if [ "$headname" -ne "refs/heads/headname" ]; then
 
-I did a series of commits and now I find one of my commit (not the topmost one) has an incorrect commit message. How can I change that specific one? I believe "git commit --amend" works only for the last commit.
+You mean "refs/heads/master" and "!=" here because -ne is numeric
+comparison in a shell script.
 
+>       echo >&2 "ERROR: can only issue --immediate commit from the
+> master branch!"
+>       exit 1
+>   fi
+> 
+>   ## then
+>   git commit -bla blarg baz
+> 
+>   ## and then...
+> 
+>   # ensure we can ff
+>   head_sha1=$(git rev-parse --revs-only master)
+>   mb=$(git merge-base $production_sha1 refs/heads/master)
+>   if [[ "$mb" -ne "$production_sha1" ]]; then
 
-Thanks,
-Norah Jones
+Your approach looks OK (but note again the incorrect "-ne").
+
+Since git 1.8.0 you can express this check as
+
+    if git merge-base --is-ancestor $production_sha1 refs/heads/master
+
+>       echo >&2 "ERROR: cannot fast-forward master to production"
+
+	echo >&2 "ERROR: cannot fast-forward production to master"
+
+>       exit 1
+>   fi
+>   $GIT_EXEC_PATH/git-update-ref -m "ppg immediate commit"
+> refs/heads/production $head_sha1 $production_sha1 || exit 1
+> 
+> Are there major pitfalls in this approach?
+
+I don't think there are.
+
+> I cannot think of any, but
+> git has stayed away from updating my local tracking branches; so maybe
+> there's a reason for that...
+
+I don't understand what you are saying here. What is "that"?
+
+-- Hannes
