@@ -1,132 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Add porcelain command to revert a single staged file to its HEAD state while preserving its staged state
-Date: Sat, 04 May 2013 13:01:10 -0700
-Message-ID: <7v61yywm49.fsf@alter.siamese.dyndns.org>
-References: <CADeMBooSZA4D7YctRpRf+axjcUhkMBaJhkd89nssxZYFKph5sA@mail.gmail.com>
-	<87obcryvcw.fsf@hexa.v.cablecom.net>
-	<7va9oawmbp.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: jn/config-ignore-inaccessible (Re: What's cooking in git.git (Apr
+ 2013, #10; Mon, 29))
+Date: Sat, 4 May 2013 13:14:14 -0700
+Message-ID: <20130504201414.GA2420@elie.Belkin>
+References: <7vppxdgife.fsf@alter.siamese.dyndns.org>
+ <87y5bvyw7j.fsf@hexa.v.cablecom.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>, <git@vger.kernel.org>
-To: Dimitar Bonev <dsbonev@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 04 22:01:24 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat May 04 22:14:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYidy-00060R-3A
-	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 22:01:18 +0200
+	id 1UYiqu-00071z-4T
+	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 22:14:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754519Ab3EDUBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 May 2013 16:01:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44223 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753401Ab3EDUBN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 May 2013 16:01:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF4BD1B9C0;
-	Sat,  4 May 2013 20:01:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58QMi9JRGyZfzYXGxKWDScuzCRI=; b=V5RL6J
-	ZqBbz417cS7BxK2eH100D7vNhLE3uws6DeKGTXrLKsqbh1ytCHkJUvzrdyuTCtNX
-	oVE0RIyiJ+xKq3/L7U2eEes5SiiLix4D/NVzJhpue/75rOjuI+8h9WhhzSu6l8y1
-	x99d0/sfvjD7cRA3BOdGeJtaxLQ7Q/4WxZYAY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wF6hGBheNoc2w1JNStsxeI1t7WcTo24W
-	aSU0kATgawVr/mwMId5xfcNHXQmUvcLKDKiRRa08behnL0lSBVNBUcoGRH+2IiRa
-	KGoOhlGri45gHUGx0nswGZVFwKlYYRMBT5aKy/dcUf8UoBKI3LpIeWpUo0hQTW+z
-	6ioU+My91/A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B36C81B9BF;
-	Sat,  4 May 2013 20:01:12 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F00741B9BE;
-	Sat,  4 May 2013 20:01:11 +0000 (UTC)
-In-Reply-To: <7va9oawmbp.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sat, 04 May 2013 12:56:42 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5E7F16BE-B4F5-11E2-895F-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753131Ab3EDUOY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 May 2013 16:14:24 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:37873 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752536Ab3EDUOX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 May 2013 16:14:23 -0400
+Received: by mail-pa0-f51.google.com with SMTP id ld10so1436484pab.38
+        for <git@vger.kernel.org>; Sat, 04 May 2013 13:14:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=mmFvdavQ5OwfbSY9YBaz3CYmSGrvg8ctGiU+JbtS+Ok=;
+        b=O2rGndBjze7O1x+FnXjalIeeeFAvaUGaYq9pMDbdtBdw783uIjh8gkFszDnBIGGO7p
+         pJXltiF6JA91wRaidj7iCmXq6nF33OtKgAMm7Y8GMQ5ys3hhuri6WqHOV6Ii5fZ8lUQX
+         zkplYHI3LZpiBF9vsR6XHYA3tQc8R0bq07zArb0qNDrh2iczDQXszoEjaeGBp96DS+Lx
+         CKYzNlTPnYUNQDY+a0vKhmkf00zszyWS1yoVl4PZa8uBOTLK852AfBiBSvDmTT+VFCK5
+         tBFesi87AGmFXTOw/NLjVmUMUB8OngYZYNafhHk/q9D3wZRYa/DSoEAi6wxUGrGR3s8R
+         LfQg==
+X-Received: by 10.68.232.234 with SMTP id tr10mr19564193pbc.11.1367698463368;
+        Sat, 04 May 2013 13:14:23 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id t1sm18377192pab.12.2013.05.04.13.14.21
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 04 May 2013 13:14:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <87y5bvyw7j.fsf@hexa.v.cablecom.net>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223376>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Thomas Rast wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 
-> "I have something worth saving, better than HEAD in some way
-> (e.g. contains fixes), in my index. I want to keep it while I
-> experiment an approach that is unrelated to it, so I want a clean
-> slate in the working tree from HEAD without disturbing the index".
+>> * jn/config-ignore-inaccessible (2013-04-15) 1 commit
+>>  - config: allow inaccessible configuration under $HOME
+>>
+>>  When $HOME is misconfigured to point at an unreadable directory, we
+>>  used to complain and die. This loosens the check.
+>>
+>>  I do not think we agreed that this is a good idea, though.
 >
-> At the first glance, that looks like a reasonable thing to ask, but
-> after thinking about it a bit more, I am not sure if it really is,
-> primarily because it is unclear what you can productively do to the
-> end result next.
+> As a data point: yesterday on IRC, two users complained that they each
+> had this problem.
 >
-> Suppose you matched the working tree to HEAD while keeping a
-> valuable change in the index, and after working for a while, now
-> have finished the experiment and have something in your working
-> tree.
->
-> What is your next move?
->
-> If the end result in the working tree were "Nah, this other approach
-> does not work, trash it", you can checkout the working tree from the
-> index, so nothing is lost.
->
-> But if your result is _also_ something worth saving, what would you
-> do?  "git add" to update the index will trash the work that was in
-> the index, and that is by definition unrelated to what you worked on
-> in the working tree (you wanted to start from the version in the
-> HEAD, not from the version in the index, so the end result is likely
-> to lack the work you saved in the index).
->
-> That makes me think that "match working tree from HEAD bypassing
-> index" is not a very useful strategy, unless you are expecting a
-> failed experiment from the start.
->
-> As Thomas said, I think a more reasonable workflow would begin by
-> saving the "somewhat worth saving" state you have in your index as a
-> WIP commit, i.e.
->
-> 	git commit -m wip
->
-> When I experiment starting from a clean slate (after saving away
-> such a WIP commit), I would then do this:
->
->         git checkout HEAD^
->
-> to start at the state before the WIP commit and hack away.  As I do
-> not know how the experiment would go when I do this, I often do not
-> bother giving the experiment its own branch.
->
-> If the experiment does not seem to go in a productive direction, I
-> can simply "git reset --hard && git checkout -" to get rid of it.
->
-> On the other hand, if its direction shows promise but turns out to
-> be more involved than a quick hack, I can at that point decide to
-> give it its own branch with "git checkout -b newbranch".  Then I can
-> choose to keep working on it, or switch to other tasks after making
-> a wip commit on that new branch.
->
-> Or if the experiment results in a series of good and straightforward
-> changes that should come _before_ that original wip (which happens
-> very often), then I could do:
->
-> 	git commit ;# maybe more commits.
->       git cherry-pick @{-1} ;# the one stashed away
->       git co -B @{-1}
->
-> to update the original branch and come back to it.
+>   http://colabti.org/irclogger/irclogger_log/git?date=2013-05-03#l3022
+>   http://colabti.org/irclogger/irclogger_log/git?date=2013-05-03#l3111
 
-Also, if the alternative experiment was really to replace what you
-originally did to your index, as a natural extension to the above
-workflow, you would omit "cherry-pick" step in the above.  Your
-perfected alternative solution will become the true history of the
-original branch, discarding the tentative solution in the index.
+I think the approach taken in the patch above is a good one.  If
+/etc/gitconfig contains important configuration, it is still not
+ignored, errors other than permissions reading ~/.gitconfig are
+still fatal, and permissions errors accessing ~/.gitconfig are no
+longer fatal because they are expected as something very common
+in normal setups.
+
+I haven't been able to convince myself there is a different, better
+behavior to be found.  Special-casing inaccessible $HOME while still
+forbidding inaccessible $HOME/.config/git and $HOME/.gitconfig would
+seem strange.
+
+Hmm?
+Jonathan
