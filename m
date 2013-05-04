@@ -1,96 +1,60 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Pitfalls in auto-fast-forwarding heads that are not checked out?
-Date: Sat, 04 May 2013 09:34:17 +0200
-Message-ID: <5184B9F9.2010708@kdbg.org>
-References: <CACPiFCLnjCeCpt8wR71bFweFyA3rFCsnbEiR1yRD1n=X5K84Mw@mail.gmail.com>
+From: Dimitar Bonev <dsbonev@gmail.com>
+Subject: Add porcelain command to revert a single staged file to its HEAD
+ state while preserving its staged state
+Date: Sat, 4 May 2013 10:34:55 +0300
+Message-ID: <CADeMBooSZA4D7YctRpRf+axjcUhkMBaJhkd89nssxZYFKph5sA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 04 09:34:39 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 04 09:35:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYWzO-0003yE-6H
-	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 09:34:38 +0200
+	id 1UYWzk-0004Hl-O9
+	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 09:35:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756518Ab3EDHeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 May 2013 03:34:22 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:36716 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754065Ab3EDHeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 May 2013 03:34:22 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 855D4130047;
-	Sat,  4 May 2013 09:34:18 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id F26F519F5C6;
-	Sat,  4 May 2013 09:34:17 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <CACPiFCLnjCeCpt8wR71bFweFyA3rFCsnbEiR1yRD1n=X5K84Mw@mail.gmail.com>
+	id S1755082Ab3EDHe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 May 2013 03:34:56 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:46648 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753576Ab3EDHe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 May 2013 03:34:56 -0400
+Received: by mail-pd0-f175.google.com with SMTP id y14so1254366pdi.6
+        for <git@vger.kernel.org>; Sat, 04 May 2013 00:34:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=IzVFAl4gj/gMKpX0iLq+B0QWqPPOAGzB2H06MIbyl+A=;
+        b=F5pgKt78dvLI391snp274kEqWH67RW5xjSmRcaP3KGWJK8Tjevo7llpg9T61y7k+ft
+         lWa21DC27QvoI8PPbL0AoHt0SqzNvKcQJRAeBIh086aq0nudlxtp5Eu5ze5UhXcSlWgD
+         wTgstV0K0gaWX0ngwg+vgEYPIKxhmxyLkETjwcu7AAnNvDAD+T0/Tcqn3ncQx8qQp7Jc
+         EOj1LtSi2/1Ju/ZUVznjIVKz0DN0lYg3HxflFOLHh69B5nKbiGnz/eu94pdVQl8BpI80
+         DkqVNfp9O2bq1OyGOTMHEgyMFG2OnltR4iwG7e97x95jMjPpuUJWzvtfGecHJgb0Ip65
+         ooNA==
+X-Received: by 10.68.218.8 with SMTP id pc8mr17005580pbc.115.1367652895618;
+ Sat, 04 May 2013 00:34:55 -0700 (PDT)
+Received: by 10.70.78.37 with HTTP; Sat, 4 May 2013 00:34:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223357>
 
-Am 04.05.2013 00:46, schrieb Martin Langhoff:
-> I am building a small git wrapper around puppet, and one of the
-> actions it performs is auto-fastforwarding of branches without
-> checking them out.
-> 
-> In simplified code... we ensure that we are on a head called master,
-> and in some cases "ppg commit", will commit to master and...
-> 
->   ## early on
->   # sanity-check we are on master
->   headname=$(git rev-parse --symbolic-full-name --revs-only HEAD)
->   if [ "$headname" -ne "refs/heads/headname" ]; then
+Hi,
 
-You mean "refs/heads/master" and "!=" here because -ne is numeric
-comparison in a shell script.
+I have been looking for such a command/option and no one gave me
+sufficient answer. So this message should be considered as a feature
+request. I had a situation where I had staged a file with a problem
+solution in it, then I wanted to experiment with a different solution
+so I had to revert the file to its HEAD state and I couldn't find a
+way that preserves the staged state of that file. More discussions:
 
->       echo >&2 "ERROR: can only issue --immediate commit from the
-> master branch!"
->       exit 1
->   fi
-> 
->   ## then
->   git commit -bla blarg baz
-> 
->   ## and then...
-> 
->   # ensure we can ff
->   head_sha1=$(git rev-parse --revs-only master)
->   mb=$(git merge-base $production_sha1 refs/heads/master)
->   if [[ "$mb" -ne "$production_sha1" ]]; then
+https://groups.google.com/forum/?fromgroups=#!topic/git-users/nYiN-rE_3i0
 
-Your approach looks OK (but note again the incorrect "-ne").
+http://stackoverflow.com/questions/16335799/git-porcelain-command-to-revert-a-single-file-to-its-head-state-but-keep-its-sta
 
-Since git 1.8.0 you can express this check as
-
-    if git merge-base --is-ancestor $production_sha1 refs/heads/master
-
->       echo >&2 "ERROR: cannot fast-forward master to production"
-
-	echo >&2 "ERROR: cannot fast-forward production to master"
-
->       exit 1
->   fi
->   $GIT_EXEC_PATH/git-update-ref -m "ppg immediate commit"
-> refs/heads/production $head_sha1 $production_sha1 || exit 1
-> 
-> Are there major pitfalls in this approach?
-
-I don't think there are.
-
-> I cannot think of any, but
-> git has stayed away from updating my local tracking branches; so maybe
-> there's a reason for that...
-
-I don't understand what you are saying here. What is "that"?
-
--- Hannes
+Regards,
+Dimitar Bonev
