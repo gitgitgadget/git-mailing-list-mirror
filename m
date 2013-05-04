@@ -1,138 +1,179 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCH 0/7] Make "$remote/$branch" work with unconventional refspecs
-Date: Sun,  5 May 2013 01:55:42 +0200
-Message-ID: <1367711749-8812-1-git-send-email-johan@herland.net>
+Subject: [PATCH 2/7] t7900: Start testing usability of namespaced remote refs
+Date: Sun,  5 May 2013 01:55:44 +0200
+Message-ID: <1367711749-8812-3-git-send-email-johan@herland.net>
+References: <1367711749-8812-1-git-send-email-johan@herland.net>
 Cc: johan@herland.net, gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 05 01:56:05 2013
+X-From: git-owner@vger.kernel.org Sun May 05 01:56:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYmJ5-0005dx-RD
-	for gcvg-git-2@plane.gmane.org; Sun, 05 May 2013 01:56:00 +0200
+	id 1UYmJL-0005n7-04
+	for gcvg-git-2@plane.gmane.org; Sun, 05 May 2013 01:56:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750817Ab3EDXzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 May 2013 19:55:55 -0400
-Received: from mail-bk0-f49.google.com ([209.85.214.49]:47747 "EHLO
-	mail-bk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750705Ab3EDXzy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 May 2013 19:55:54 -0400
-Received: by mail-bk0-f49.google.com with SMTP id e19so1164307bku.36
-        for <git@vger.kernel.org>; Sat, 04 May 2013 16:55:53 -0700 (PDT)
+	id S1750998Ab3EDX4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 May 2013 19:56:00 -0400
+Received: from mail-bk0-f54.google.com ([209.85.214.54]:50274 "EHLO
+	mail-bk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750705Ab3EDXz6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 May 2013 19:55:58 -0400
+Received: by mail-bk0-f54.google.com with SMTP id y8so1149991bkt.41
+        for <git@vger.kernel.org>; Sat, 04 May 2013 16:55:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=Lr+IQTbSxW1e+cleOFBbEmqKs5zXPW+lSppwne3lwnY=;
-        b=Eza4BtJ6Prrd4Mina23y/UxFRh7I+2bFz1zu3Yf57e6bTLADc69eR/fSW9NK/CAhO5
-         UGgQkAJhRN6d/Da33/Sa+cUmVT032VA/dkZKVsO+Dyl1Bgo96kIsa0dT1dsKDlNHO+vb
-         p5PIxtKeS6oNQ3H69gMX/JBd4adsocgyxp2Lo+fVGLJWeTGlp9clxtAMF1Ln9HIMrSUP
-         5rmIgyJ/aFBhoVmYsYPyriJ/fEv9C4mzITJ9+zfFacLrXZ1js7gQ0WJ43Kd2FPqMJs2F
-         Uj7eMuuc2E8lKW/D64GuZXbfcPfNQkhF5lSPEWRIKPRT49MwvXfK6U2YLCT4DCynKrAp
-         URIg==
-X-Received: by 10.205.75.3 with SMTP id yy3mr5897896bkb.80.1367711753222;
-        Sat, 04 May 2013 16:55:53 -0700 (PDT)
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=ZKnBuF83/VB02eyX+cUSazlZyVwLifPYdlEGDOVhV5Y=;
+        b=IYH05WRKItBGyC6MzNNgUajs9zxS2EYlhYPj/BMY9WZXbFadISTQ1bOArPM1fgcH3F
+         9a+8Jq9LVJ96/4gxm/rjEuQw5hqtaz9Ze5+4+ClAgXSHXz7NEGHF/x3C2TGhXhXNkyvO
+         56inJGDf7TG9v9TQwTNvh0q4/Q1A1RcngJtxTe1v/6aEjqB9d3ehn1eUTL5J+adLqI/l
+         QAda4ehNBkorbHg+ayw+LRTvISwOpWj0zUV3P5fj6kHs+FUXpIhkf39HKWCGWFIJ5gce
+         Wize9FTAJnnVgyjgy0D3MD54KsT+rQPnKMcqrz9N1KfPIeiB3YXiXydbDauXmoG5L5/L
+         Yilw==
+X-Received: by 10.205.68.195 with SMTP id xz3mr5862564bkb.41.1367711757133;
+        Sat, 04 May 2013 16:55:57 -0700 (PDT)
 Received: from localhost.localdomain (p5DC5A30A.dip0.t-ipconnect.de. [93.197.163.10])
-        by mx.google.com with ESMTPSA id iy11sm3810775bkb.11.2013.05.04.16.55.50
+        by mx.google.com with ESMTPSA id iy11sm3810775bkb.11.2013.05.04.16.55.55
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 04 May 2013 16:55:52 -0700 (PDT)
+        Sat, 04 May 2013 16:55:56 -0700 (PDT)
 X-Mailer: git-send-email 1.8.1.3.704.g33f7d4f
+In-Reply-To: <1367711749-8812-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223383>
 
-The "$remote/$branch" syntax can be interpreted in two subtly different
-ways:
+Some users are interested in fetching remote refs into a separate namespace
+in the local repo. E.g. instead of the usual remote config:
 
- 1. A shorthand name for the remote-tracking branch corresponding to a
-    specific $branch from a specific $remote.
+  [remote "origin"]
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	url = ...
 
- 2. A refname fragment, which - when appended to "refs/remotes/" -
-    yields the remote-tracking branch corresponding to a specific
-    $branch from a specific $remote.
+they want to keep remote tags separate from local tags, and they may also
+want to fetch other ref types:
 
-For the current default/conventional refspecs, both interpretations are
-true and equally valid. However, when configuring non-default refspecs
-(such as the +refs/heads/*:refs/remotes/origin/heads/*), it becomes
-obvious that the current code follows the latter interpretation: The
-"$remote/$branch" shorthand will no longer work, and you are forced to
-use "$remote/heads/$branch" instead.
+  [remote "origin"]
+	fetch = +refs/heads/*:refs/remotes/origin/heads/*
+	fetch = +refs/tags/*:refs/remotes/origin/tags/*
+	fetch = +refs/notes/*:refs/remotes/origin/notes/*
+	fetch = +refs/replace/*:refs/remotes/origin/replace/*
+	tagopt = "--no-tags"
+	url = ...
 
-I argue that the former interpretation is what most users intuitively
-expect, and that we should work towards making Git follow the same
-interpretation:
+This configuration creates a separate namespace under refs/remotes/origin/*
+mirroring the structure of local refs (under refs/*) where all the relevant
+refs from the 'origin' remote can be found.
 
-Instead of prepending "refs/remotes/" to convert "$remote/$branch" into
-a full refname, we should find "$remote" in the repo config, and then
-map "refs/heads/$branch" through $remote's fetch refspec(s), to find
-the remote-tracking branch that properly corresponds to the specific
-$branch in the $remote repo.
+This patch introduces a test whose main purpose is to verify that git will
+work comfortably with this kind of setup. For now, we only verify that it
+is possible (though not exactly easy) to establish a clone with the above
+configuration, and that fetching into it yields the expected result.
 
-This goal is achieved by the final patch in this series, and most of
-the preceding patches serve as preliminary changes and refactoring to
-support this.
-
-Patch #1 is the exception in that it is a self-contained bugfix for a
-scanf-related problem I ran across while working on the patch series.
-
-Patches #2 and #3 introduce a new test intended to verify Git's
-usability when working with remote ref namespaces (which rely on
-setting up unconventional refspecs). For now, this test is fairly
-thin, but it should be expanded as we find more problems with these
-kinds of setups.
-
-Patches #4 and #5 are pure refactorings to reorganize the code that
-expands shorthand names to full refnames and vice versa. The idea
-is to associate the patterns that are used to expand/shorten ref
-names with the actual function that does the expansion/shortening,
-so that we can later add patterns that uses different expand/shorten
-functions.
-
-Patch #6 teaches Git to realize when - in the context of communication
-with a remote repo - it's expanding shorthand refs into either local
-refnames, or remote refnames. It is important that any expansion rules
-relying on local repo configuration are not allowed to expand shorthand
-names on behalf of the remote repo.
-
-Finally, patch #7 introduces a new rule and associated expand/shorten
-functions mapping "$remote/$branch"-type shorthand names to/from their
-remote-tracking branch counterparts, by using the configured refspecs
-as described above. This rule is obviously only applied to local refs,
-as it would be wrong for a repo to use its local config to dictate a
-ref expansion in a remote repo.
-
-The series has been build on recent 'next', and although it also
-applies cleanly to v1.8.3-rc1, it will cause a test failure in
-t7900, since it depends on the jh/checkout-auto-tracking topic, which
-is currently cooking.
-
-
-Have fun! :)
-
-...Johan
-
-
-Johan Herland (7):
-  shorten_unambiguous_ref(): Allow shortening refs/remotes/origin/HEAD to origin
-  t7900: Start testing usability of namespaced remote refs
-  t7900: Demonstrate failure to expand "$remote/$branch" according to refspecs
-  refs.c: Refactor rules for expanding shorthand names into full refnames
-  refs.c: Refactor code for shortening full refnames into shorthand names
-  refname_match(): Caller must declare if we're matching local or remote refs
-  refs.c: Add rules for resolving refs using remote refspecs
-
- cache.h                                        |   4 -
- refs.c                                         | 260 +++++++++++++++++--------
- refs.h                                         |  14 ++
- remote.c                                       |  15 +-
- t/t6300-for-each-ref.sh                        |  12 ++
- t/t7900-working-with-namespaced-remote-refs.sh | 133 +++++++++++++
- 6 files changed, 342 insertions(+), 96 deletions(-)
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+ t/t7900-working-with-namespaced-remote-refs.sh | 88 ++++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
  create mode 100755 t/t7900-working-with-namespaced-remote-refs.sh
 
+diff --git a/t/t7900-working-with-namespaced-remote-refs.sh b/t/t7900-working-with-namespaced-remote-refs.sh
+new file mode 100755
+index 0000000..af03ac9
+--- /dev/null
++++ b/t/t7900-working-with-namespaced-remote-refs.sh
+@@ -0,0 +1,88 @@
++#!/bin/sh
++
++test_description='testing end-user usability of namespaced remote refs
++
++Set up a local repo with namespaced remote refs, like this:
++
++[remote "origin"]
++	fetch = +refs/heads/*:refs/remotes/origin/heads/*
++	fetch = +refs/tags/*:refs/remotes/origin/tags/*
++	fetch = +refs/notes/*:refs/remotes/origin/notes/*
++	fetch = +refs/replace/*:refs/remotes/origin/replace/*
++	tagopt = "--no-tags"
++	url = ...
++
++Test that the usual end-user operations work as expected with this setup.
++'
++
++. ./test-lib.sh
++
++test_expect_success 'setup server repo' '
++	git init server &&
++	(
++		cd server &&
++		test_commit server_master_a &&
++		git checkout -b other &&
++		test_commit server_other_b &&
++		git checkout master &&
++		test_commit server_master_b
++	)
++'
++
++server_master_a=$(git --git-dir=server/.git rev-parse --verify server_master_a)
++server_master_b=$(git --git-dir=server/.git rev-parse --verify server_master_b)
++server_other_b=$(git --git-dir=server/.git rev-parse --verify server_other_b)
++
++cat > expect.refspecs << EOF
+++refs/heads/*:refs/remotes/origin/heads/*
+++refs/tags/*:refs/remotes/origin/tags/*
+++refs/notes/*:refs/remotes/origin/notes/*
+++refs/replace/*:refs/remotes/origin/replace/*
++EOF
++
++cat > expect.show-ref << EOF
++$server_master_b refs/heads/master
++$server_master_b refs/remotes/origin/heads/master
++$server_other_b refs/remotes/origin/heads/other
++$server_master_a refs/remotes/origin/tags/server_master_a
++$server_master_b refs/remotes/origin/tags/server_master_b
++$server_other_b refs/remotes/origin/tags/server_other_b
++EOF
++
++test_clone() {
++	( cd $1 && git config --get-all remote.origin.fetch ) > actual.refspecs &&
++	test_cmp expect.refspecs actual.refspecs &&
++	( cd $1 && git show-ref ) > actual.show-ref &&
++	test_cmp expect.show-ref actual.show-ref
++}
++
++test_expect_failure 'clone with namespaced remote refs' '
++	git clone server client \
++		--config remote.origin.fetch="+refs/heads/*:refs/remotes/origin/heads/*" \
++		--config remote.origin.fetch="+refs/tags/*:refs/remotes/origin/tags/*" \
++		--config remote.origin.fetch="+refs/notes/*:refs/remotes/origin/notes/*" \
++		--config remote.origin.fetch="+refs/replace/*:refs/remotes/origin/replace/*" \
++		--config remote.origin.tagopt "--no-tags" &&
++	test_clone client
++'
++
++# Work-around for the above failure
++test_expect_success 'work-around "clone" with namespaced remote refs' '
++	rm -rf client &&
++	git init client &&
++	(
++		cd client &&
++		git remote add origin ../server &&
++		git config --unset-all remote.origin.fetch &&
++		git config --add remote.origin.fetch "+refs/heads/*:refs/remotes/origin/heads/*" &&
++		git config --add remote.origin.fetch "+refs/tags/*:refs/remotes/origin/tags/*" &&
++		git config --add remote.origin.fetch "+refs/notes/*:refs/remotes/origin/notes/*" &&
++		git config --add remote.origin.fetch "+refs/replace/*:refs/remotes/origin/replace/*" &&
++		git config remote.origin.tagopt "--no-tags" &&
++		git fetch &&
++		git checkout master
++	) &&
++	test_clone client
++'
++
++test_done
 -- 
 1.8.1.3.704.g33f7d4f
