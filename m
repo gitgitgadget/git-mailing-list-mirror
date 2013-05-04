@@ -1,62 +1,71 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: Re: [PATCH] revision.c: Fix a sparse warning
-Date: Sat, 04 May 2013 21:13:57 +0300
-Message-ID: <51854FE5.4050907@bracey.fi>
-References: <518544A4.4080202@ramsay1.demon.co.uk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Add porcelain command to revert a single staged file to its HEAD
+ state while preserving its staged state
+Date: Sat, 4 May 2013 11:48:57 -0700
+Message-ID: <20130504184857.GC25863@elie.Belkin>
+References: <CADeMBooSZA4D7YctRpRf+axjcUhkMBaJhkd89nssxZYFKph5sA@mail.gmail.com>
+ <87obcryvcw.fsf@hexa.v.cablecom.net>
+ <CADeMBopNestsZT4maGr3+tdOBf_Q0ukUbRCbXyucOiZZeHx6nQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sat May 04 20:14:11 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+To: Dimitar Bonev <dsbonev@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 04 20:49:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYgyG-0001pd-PR
-	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 20:14:09 +0200
+	id 1UYhWA-0003Ci-VA
+	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 20:49:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758427Ab3EDSOE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 May 2013 14:14:04 -0400
-Received: from mo2.mail-out.ovh.net ([178.32.228.2]:48510 "EHLO
-	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756831Ab3EDSOD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 May 2013 14:14:03 -0400
-Received: from mail240.ha.ovh.net (b6.ovh.net [213.186.33.56])
-	by mo2.mail-out.ovh.net (Postfix) with SMTP id ACE9BDC0E55
-	for <git@vger.kernel.org>; Sat,  4 May 2013 20:14:00 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 4 May 2013 20:14:00 +0200
-Received: from 85-23-153-122.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@85.23.153.122)
-  by ns0.ovh.net with SMTP; 4 May 2013 20:13:59 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-X-Ovh-Mailout: 178.32.228.2 (mo2.mail-out.ovh.net)
-In-Reply-To: <518544A4.4080202@ramsay1.demon.co.uk>
-X-Ovh-Tracer-Id: 5757289175496757371
-X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: -100
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrieduucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-X-Spam-Check: DONE|U 0.5/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrieduucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+	id S1759854Ab3EDStE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 May 2013 14:49:04 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:62551 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759269Ab3EDStD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 May 2013 14:49:03 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rq8so1399345pbb.19
+        for <git@vger.kernel.org>; Sat, 04 May 2013 11:49:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Rt7rn7Ss0tVlCdsw+5KDxvJ4+ldI40wVYeIW1UJmygM=;
+        b=eLcn4ANMNS+cVTt868D5WyzK+wdsVMFpO8XncWpU4UNPJLmlF+sw4ad/6rPIGBm9iW
+         ZuIFarv9wqz23dSWz4TeTrZxEWwqEaayXmPEIUXqQqgaFc6zpKg9EkJjKBnMi/Are7In
+         xHRYHCPD4atIwZJW9P2Q/rcGC3VGPhtgX9JdPsyHX80sl5ElvjI6r6K6nxs5yVNdzn1M
+         t5TtB6/uNfHBJ2mDCvRbNuCacbS1QJ9OgbZE2Lf3AfZSDTDd6GxjQl4JxTnpCJOjV4TT
+         DjDU983vSx5vgKH+L+i4nok/cSnBBZ3xo+kAcgk6HovqEzsreK9Xqo6YYxmTTEOSFDMd
+         eNAg==
+X-Received: by 10.66.248.228 with SMTP id yp4mr19871207pac.158.1367693343235;
+        Sat, 04 May 2013 11:49:03 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id k2sm18178355pat.7.2013.05.04.11.49.01
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 04 May 2013 11:49:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CADeMBopNestsZT4maGr3+tdOBf_Q0ukUbRCbXyucOiZZeHx6nQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223370>
 
-On 04/05/2013 20:25, Ramsay Jones wrote:
-> Sparse issues an "'sole_interesting' not declared. Should it be static?"
-> warning. In order to suppress the warning, since this symbol does not
-> need more than file visibility, we simply add the static modifier to
-> its declaration.
->
->
-Thanks! I'll include that fix.
+Dimitar Bonev wrote:
 
-Kevin
+> @ThomasRast: 'git show HEAD:targetfile > targetfile' was proposed in
+> the both links that I provided in the email that your replied to, but
+> this introduces external dependency to the command interpreter to
+> output the file unmodified but not every interpreter does this.
+> PowerShell in particular modifies the encoding of the file
+
+That would suggest that "git show" (along with similar commands like
+"git diff") should learn an --output= option to avoid its output being
+corrupted.  It doesn't leave me very happy.
+
+Is there no way to convince PowerShell to treat the output of a
+command as binary data with no particular encoding?
