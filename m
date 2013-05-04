@@ -1,76 +1,98 @@
-From: Vikrant Varma <vikrant.varma94@gmail.com>
-Subject: [PATCH v2 2/2] merge: use help_unknown_ref
-Date: Sat,  4 May 2013 05:34:20 +0530
-Message-ID: <1367625860-20746-3-git-send-email-vikrant.varma94@gmail.com>
-References: <1367625860-20746-1-git-send-email-vikrant.varma94@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Vikrant Varma <vikrant.varma94@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 04 02:06:06 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 3/4] fast-export: don't parse all the commits
+Date: Fri, 3 May 2013 19:06:29 -0500
+Message-ID: <CAMP44s09KqFuXPf=3qG42jzChnNBoiXdStME6Ga7EzY7uwF88Q@mail.gmail.com>
+References: <1367555502-4706-1-git-send-email-felipe.contreras@gmail.com>
+	<1367555502-4706-4-git-send-email-felipe.contreras@gmail.com>
+	<7vd2t7ybin.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 04 02:06:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYPzE-0000sT-Of
-	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 02:06:01 +0200
+	id 1UYPzn-0001Pf-Mh
+	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 02:06:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762352Ab3EDAF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 May 2013 20:05:57 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:43819 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755932Ab3EDAF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 May 2013 20:05:56 -0400
-Received: by mail-pa0-f50.google.com with SMTP id fb10so1175357pad.37
-        for <git@vger.kernel.org>; Fri, 03 May 2013 17:05:56 -0700 (PDT)
+	id S1761496Ab3EDAGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 May 2013 20:06:31 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:45653 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756356Ab3EDAGb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 May 2013 20:06:31 -0400
+Received: by mail-la0-f42.google.com with SMTP id fq13so1980659lab.1
+        for <git@vger.kernel.org>; Fri, 03 May 2013 17:06:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=2F+xllLJknlYwOQCnVDea8LCwRwgpaI75cpPeCgQadQ=;
-        b=ia7X4iWPPLQ25sotfsD8pKfT82DUKxBl6otMTALW1945UF5p+3Wn2fAOqT4GaAo4pa
-         xNXix4ZjScMBk29Ywz0Pq980W1nsFotjRuMBRgsEy4xSrF/yVta/Ywqf3F7vziqzytpY
-         IeIMutBBk+urtWh7fTDioHrmouEuKUe+aGSSdbwnIEistyamp4RPa9WqZzxsdxk/6/of
-         CFwuRDt8NSSHQ37r+tdTrRGVQKOVJxDZjL9bE793zQ9NTYYjwJLlLfSUxUJeUT99H+AJ
-         MWFUdFQ5j8+4d+pURcTEwegtyW0iApr1cF+Hs2ECQaUBfmD/Orn6W5N6vtbVKnaQkV0l
-         /wNQ==
-X-Received: by 10.66.119.5 with SMTP id kq5mr16647694pab.193.1367625956072;
-        Fri, 03 May 2013 17:05:56 -0700 (PDT)
-Received: from localhost.localdomain (triband-mum-59.183.134.119.mtnl.net.in. [59.183.134.119])
-        by mx.google.com with ESMTPSA id ea15sm14689710pad.16.2013.05.03.17.05.52
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 03 May 2013 17:05:55 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1367625860-20746-1-git-send-email-vikrant.varma94@gmail.com>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=N+XlZOzDig0elCC71JNRLTKE8AKMTsZ9Uncjd2IF85s=;
+        b=uXR8BcFcKmIepxVOf45utNmMBfLdlCdPmX8fkASHcZzAZQkYguIW1Dc3phD7/0TTCe
+         Ras0ok0oDOVglri1NgQcNeIKuHQSEtOWVVXaU3Yg9SreQv1S1AS/jWJzxnUDJyuRNz9z
+         NeKZmDjYtATiJPN4eaQJxgcOq1Rkz2y0EFOoKNHZsfTShdQ2AwKhJ7OO/vroALUsen0f
+         8Ix7ZnL9GqnLPFk5bup/aCUVWUFdt2zzm/qa/kN9q5kf0uasgMRh28lgcf0VetfoRxZO
+         KT//sv97BWLri3G0iamUM2dtwWaXLOJ9Zmh/XwVfVYkB7CPSvI8c64/LrQ8IcYsJx9kB
+         xwHQ==
+X-Received: by 10.112.154.98 with SMTP id vn2mr5016689lbb.8.1367625989422;
+ Fri, 03 May 2013 17:06:29 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Fri, 3 May 2013 17:06:29 -0700 (PDT)
+In-Reply-To: <7vd2t7ybin.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223340>
 
-Use help.c:help_unknown_ref instead of die to provide a friendlier error
-message before exiting, when one of the refs specified in a merge is unknown.
+On Fri, May 3, 2013 at 4:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> We don't need the parsed objects at this point, merely the information
+>> that they have marks.
+>>
+>> Seems to be three times faster in my setup with lots of objects.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>  builtin/fast-export.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+>> index a5b8da8..3c5a701 100644
+>> --- a/builtin/fast-export.c
+>> +++ b/builtin/fast-export.c
+>> @@ -636,7 +636,7 @@ static void import_marks(char *input_file)
+>>                       /* only commits */
+>>                       continue;
+>>
+>> -             object = parse_object(sha1);
+>> +             object = lookup_unknown_object(sha1);
+>
+> This updates the parse_object() moved by the previous patch. At this
+> point in the codeflow, unlike the original, we already _know_ the
+> object must be a commit; wouldn't an equivalent of:
+>
+>         object = &(lookup_commit(sha1)->object)
+>
+> be more correct here?
 
-Signed-off-by: Vikrant Varma <vikrant.varma94@gmail.com>
----
- builtin/merge.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Maybe, if we want to run some extra code we don't care about.
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 3e2daa3..2ebe732 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1054,7 +1054,8 @@ static struct commit_list *collect_parents(struct commit *head_commit,
- 	for (i = 0; i < argc; i++) {
- 		struct commit *commit = get_merge_parent(argv[i]);
- 		if (!commit)
--			die(_("%s - not something we can merge"), argv[i]);
-+			help_unknown_ref(argv[i], "merge",
-+					 "not something we can merge");
- 		remotes = &commit_list_insert(commit, remotes)->next;
- 	}
- 	*remotes = NULL;
+The only actual difference is that object->type will be OBJ_COMMIT,
+but a) this is not going to be used anywhere, and b) we can set that
+ourselves.
+
+In fact, my original code was:
+
+	object = lookup_object(sha1);
+	if (!object)
+		object = create_object(sha1, OBJ_COMMIT, alloc_object_node());
+
+But I figured there's no need for those extra lines of code.
+
 -- 
-1.7.10.4
+Felipe Contreras
