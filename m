@@ -1,96 +1,67 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: Re: [PATCH v2 8/8] revision.c: discount UNINTERESTING parents
-Date: Sat, 04 May 2013 23:18:39 +0300
-Message-ID: <51856D1F.4030303@bracey.fi>
-References: <1367342788-7795-1-git-send-email-kevin@bracey.fi> <1367342788-7795-9-git-send-email-kevin@bracey.fi> <7vmwsfbtu7.fsf@alter.siamese.dyndns.org> <5182A7CC.4040009@bracey.fi> <7v61z11721.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Another use of "@"?
+Date: Sat, 04 May 2013 23:11:44 +0200
+Message-ID: <vpqtxmi8n73.fsf@grenoble-inp.fr>
+References: <CACsJy8AcWV8hmbhG27dw+GdnZf8NnQEctYmowqd3sSzOOHf+xg@mail.gmail.com>
+	<CALkWK0=qdGcbQDz2VomhOcy7AybXj5jkxzS53jFGyjdZ9+6juQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-2022-JP
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 04 22:44:01 2013
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 04 23:12:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYjJJ-0003fU-C6
-	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 22:44:01 +0200
+	id 1UYjkR-0007Dh-KO
+	for gcvg-git-2@plane.gmane.org; Sat, 04 May 2013 23:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756839Ab3EDUn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 May 2013 16:43:57 -0400
-Received: from 3.mo2.mail-out.ovh.net ([46.105.58.226]:46133 "EHLO
-	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754282Ab3EDUn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 May 2013 16:43:56 -0400
-X-Greylist: delayed 1514 seconds by postgrey-1.27 at vger.kernel.org; Sat, 04 May 2013 16:43:56 EDT
-Received: from mail240.ha.ovh.net (b6.ovh.net [213.186.33.56])
-	by mo2.mail-out.ovh.net (Postfix) with SMTP id 50613DC1A18
-	for <git@vger.kernel.org>; Sat,  4 May 2013 22:18:41 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 4 May 2013 22:18:41 +0200
-Received: from 85-23-153-122.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@85.23.153.122)
-  by ns0.ovh.net with SMTP; 4 May 2013 22:18:40 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-X-Ovh-Mailout: 178.32.228.2 (mo2.mail-out.ovh.net)
-In-Reply-To: <7v61z11721.fsf@alter.siamese.dyndns.org>
-X-Ovh-Tracer-Id: 7863284951213379800
-X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: -100
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrieduucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-X-Spam-Check: DONE|U 0.5/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrieduucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+	id S1757340Ab3EDVLs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 May 2013 17:11:48 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56876 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754282Ab3EDVLr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 May 2013 17:11:47 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r44LBf1S008474
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 4 May 2013 23:11:41 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UYjk8-0007Tq-Bu; Sat, 04 May 2013 23:11:44 +0200
+In-Reply-To: <CALkWK0=qdGcbQDz2VomhOcy7AybXj5jkxzS53jFGyjdZ9+6juQ@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Sat, 4 May 2013 18:14:07 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 04 May 2013 23:11:41 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r44LBf1S008474
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1368306703.01821@idGLTy9ISV6aEkP5hkzxuQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223378>
 
-On 02/05/2013 23:05, Junio C Hamano wrote:
->
->>>       ....Z...A===X---o---o---B
->>>            \\    /
->>>             W---Y
->>>
-> OK, I think I understand it, and we are in agreement.  For the
-> purpose of the above paragraph, a side branch is what is not on the
-> "--ancestry-path", so all of the below "examples" are about the
-> behaviour when --ancestry-path is used.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Ah, in fact, no. In some previous mails I was concentrating on
-ancestry-path, but those 3 examples were really of ordinary "A..B", with
-W+Y in the INTERESTING set. I think the side-branch logic remains sound
-and desirable even in the absence of --ancestry-path, so I don't think
-this is an ancestry-path change. (And from a basic naive usability point
-of view I'm much more interested in improving the more obvious modes
-than the rather more obscure --ancestry-path.)
+> On Matthieu's note, I have a comment: symbolic refs are an absolute
+> dead end.  We didn't think of it from the start, and it's too late
+> now.  Do NOT go there: from my investigation, I believe that hooking
+> up everything to the revision parser is the way forward.
 
-Ancestry path forces side branches to be ignored - it's the "simple"
-case for ignoring (and understanding) side branches. But if we let other
-modes know where the bottom is, they too can benefit from reliable side
-branch logic - we can find out if anything happened on side branches,
-but we can also ignore them completely if they turn out to be totally
-irrelevant.
+My comment was not about the solution, but about the problem (which
+seemed to have been misunderstood). The question seems to be "get the
+reference with the same names as what HEAD points to, but on remote A",
+and the "points to" part is about symbolic references.
 
-When not using ancestry-path, the side branches this patch works on are
-thosewhich go off and don't come back - they stub off at some
-UNINTERESTING commit other than the bottom(s). If no other limiting is
-set, they must have hit an ancestor of our BOTTOM commit(s);
-simplify-merges could have potentially pruned away if unlimited. And
-this patch restores that pruning ability - simplify-merges can rewrite
-them back to just 1 UNINTERESTING merge parent at the boundary (looking
-like an ancestry-path boundary), then this patch can chuck the boundary
-merge. Hey presto, irrelevant branch now invisible. And the patch also
-provides benefits to all other modes.
-
-I'll post v3 of the sequence tomorrow - it includes a new test which
-illustrates the changes - it's a 60-or-so-item test set, with about 15
-"failures" in a variety of modes that get fixed by this sequence. I
-think that should make an excellent discussion topic. We'll see whether
-folks agree with my view about what should and shouldn't be shown...
-
-Kevin
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
