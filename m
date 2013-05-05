@@ -1,7 +1,7 @@
 From: Kevin Bracey <kevin@bracey.fi>
-Subject: [PATCH v3 9/9] revision.c: discount side branches when computing TREESAME
-Date: Sun,  5 May 2013 18:32:57 +0300
-Message-ID: <1367767977-14513-10-git-send-email-kevin@bracey.fi>
+Subject: [PATCH v3 5/9] revision.c: Make --full-history consider more merges
+Date: Sun,  5 May 2013 18:32:53 +0300
+Message-ID: <1367767977-14513-6-git-send-email-kevin@bracey.fi>
 References: <1367767977-14513-1-git-send-email-kevin@bracey.fi>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
@@ -13,26 +13,26 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZ16o-00025T-T2
+	id 1UZ16p-00025T-JE
 	for gcvg-git-2@plane.gmane.org; Sun, 05 May 2013 17:44:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751984Ab3EEPoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 May 2013 11:44:09 -0400
-Received: from mo2.mail-out.ovh.net ([178.32.228.2]:50934 "EHLO
-	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751767Ab3EEPoA (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751988Ab3EEPoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 May 2013 11:44:10 -0400
+Received: from 5.mo2.mail-out.ovh.net ([87.98.181.248]:48694 "EHLO
+	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751899Ab3EEPoA (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 5 May 2013 11:44:00 -0400
 Received: from mail636.ha.ovh.net (b6.ovh.net [213.186.33.56])
-	by mo2.mail-out.ovh.net (Postfix) with SMTP id 3E1D4DC19F4
-	for <git@vger.kernel.org>; Sun,  5 May 2013 17:33:08 +0200 (CEST)
+	by mo2.mail-out.ovh.net (Postfix) with SMTP id 324D1DC18EB
+	for <git@vger.kernel.org>; Sun,  5 May 2013 17:33:06 +0200 (CEST)
 Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 5 May 2013 17:33:13 +0200
+	by b0.ovh.net with SMTP; 5 May 2013 17:33:11 +0200
 Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
-  by ns0.ovh.net with SMTP; 5 May 2013 17:33:11 +0200
+  by ns0.ovh.net with SMTP; 5 May 2013 17:33:09 +0200
 X-Ovh-Mailout: 178.32.228.2 (mo2.mail-out.ovh.net)
 X-Mailer: git-send-email 1.8.3.rc0.28.g682c2d9
 In-Reply-To: <1367767977-14513-1-git-send-email-kevin@bracey.fi>
-X-Ovh-Tracer-Id: 8914312514291732711
+X-Ovh-Tracer-Id: 8913749564338311395
 X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
 X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
 X-OVH-SPAMSTATE: OK
@@ -46,474 +46,530 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223410>
 
-Add a BOTTOM flag to commit objects, and use it to define priority for
-pruning. Priority commits are those that are !UNINTERESTING or BOTTOM,
-and this allows us to identify irrelevant side branches (UNINTERESTING
-&& !BOTTOM).
+History simplification previously always treated merges as TREESAME
+if they were TREESAME to any parent.
 
-If a merge has priority parents, and it is TREESAME to them, then do
-not let non-priority parents cause the merge to be treated as
-!TREESAME.
+While this was consistent with the default behaviour, this could be
+extremely unhelpful when searching detailed history, and could not be
+overridden. For example, if a merge had ignored a change, as if by "-s
+ours", then:
 
-When considering simplification, don't always include all merges -
-merges with exactly 1 priority parent can be simplified, if TREESAME
-according to the above rule.
+  git log -m -p --full-history -Schange file
 
-These two changes greatly increase simplification in limited revision
-lists - irrelevant merges from unlisted commits can be omitted.
+would successfully locate "change"'s addition but would not locate the
+merge that resolved against it.
+
+Futher, simplify_merges could drop the actual parent that a commit
+was TREESAME to, leaving it as a normal commit marked TREESAME that
+isn't actually TREESAME to its remaining parent.
+
+Now redefine a commit's TREESAME flag to be true only if a commit is
+TREESAME to _all_ of its parents. This doesn't affect either the default
+simplify_history behaviour (because partially TREESAME merges are turned
+into normal commits), or full-history with parent rewriting (because all
+merges are output). But it does affect other modes. The clearest
+difference is that --full-history will show more merges - sufficient to
+ensure that -m -p --full-history log searches can really explain every
+change to the file, including those changes' ultimate fate in merges.
+
+Also modify simplify_merges to recalculate TREESAME after removing
+a parent. This is achieved by storing per-parent TREESAME flags on the
+initial scan, so the combined flag can be easily recomputed.
+
+This fixes some t6111 failures, but creates a couple of new ones -
+we are now showing some merges that don't need to be shown.
 
 Signed-off-by: Kevin Bracey <kevin@bracey.fi>
 ---
- revision.c                        | 201 ++++++++++++++++++++++++++++++++------
- revision.h                        |   3 +-
- t/t6019-rev-list-ancestry-path.sh |  12 ++-
- t/t6111-rev-list-treesame.sh      |  22 ++---
- 4 files changed, 195 insertions(+), 43 deletions(-)
+ Documentation/rev-list-options.txt |   6 +-
+ revision.c                         | 241 ++++++++++++++++++++++++++++++++-----
+ revision.h                         |   1 +
+ t/t6019-rev-list-ancestry-path.sh  |   2 +-
+ t/t6111-rev-list-treesame.sh       |  20 +--
+ 5 files changed, 226 insertions(+), 44 deletions(-)
 
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 50bbff7..1dad341 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -409,10 +409,10 @@ parent lines.
+ 	the example, we get
+ +
+ -----------------------------------------------------------------------
+-	I  A  B  N  D  O
++	I  A  B  N  D  O  P
+ -----------------------------------------------------------------------
+ +
+-`P` and `M` were excluded because they are TREESAME to a parent.  `E`,
++`M` was excluded because it is TREESAME to both parents.  `E`,
+ `C` and `B` were all walked, but only `B` was !TREESAME, so the others
+ do not appear.
+ +
+@@ -440,7 +440,7 @@ themselves.  This results in
+ Compare to '\--full-history' without rewriting above.  Note that `E`
+ was pruned away because it is TREESAME, but the parent list of P was
+ rewritten to contain `E`'s parent `I`.  The same happened for `C` and
+-`N`.  Note also that `P` was included despite being TREESAME.
++`N`.
+ 
+ In addition to the above settings, you can change whether TREESAME
+ affects inclusion:
 diff --git a/revision.c b/revision.c
-index 20c7058..99a3432 100644
+index a67b615..c88ded8 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -333,6 +333,76 @@ static int everybody_uninteresting(struct commit_list *orig)
+@@ -429,10 +429,100 @@ static int rev_same_tree_as_empty(struct rev_info *revs, struct commit *commit)
+ 	return retval >= 0 && (tree_difference == REV_TREE_SAME);
  }
  
- /*
-+ * A definition of "priority" commit that we can use to simplify limited graphs
-+ * by eliminating side branches.
-+ *
-+ * A "priority" commit is one that is !UNINTERESTING (ie we are including it
-+ * in our list), or that is a specified BOTTOM commit. Then after computing
-+ * a limited list, during processing we can generally ignore boundary merges
-+ * coming from outside the graph, (ie from non-priority parents), and treat
-+ * those merges as if they were single-parent. TREESAME is defined to consider
-+ * only priority parents, if any. If we are TREESAME to our on-graph parents,
-+ * we don't care if we were !TREESAME to non-graph parents.
-+ *
-+ * Including bottom commits in "priority" ensures that a limited graph's
-+ * connection to the actual bottom commit is not viewed as an uninteresting
-+ * side branch, but treated as part of the graph. For example:
-+ *
-+ *   ....Z...A---X---o---o---B
-+ *        .     /
-+ *         W---Y
-+ *
-+ * When computing "A..B", the A-X connection is at least as important as
-+ * Y-X, despite A being flagged UNINTERESTING.
-+ *
-+ * And when computing --ancestry-path "A..B", the A-X connection is more
-+ * important than Y-X, despite both A and Y being flagged UNINTERESTING.
-+ */
-+static inline int priority_commit(struct commit *commit)
++struct treesame_state {
++	unsigned int nparents;
++	unsigned char treesame[FLEX_ARRAY];
++};
++
++static struct treesame_state *initialise_treesame(struct rev_info *revs, struct commit *commit)
 +{
-+	return (commit->object.flags & (UNINTERESTING | BOTTOM)) != UNINTERESTING;
++	unsigned n = commit_list_count(commit->parents);
++	struct treesame_state *st = xcalloc(1, sizeof(*st) + n);
++	st->nparents = n;
++	add_decoration(&revs->treesame, &commit->object, st);
++	return st;
 +}
 +
 +/*
-+ * Return a single priority commit from a parent list. If we are a TREESAME
-+ * commit, and this selects one of our parents, then we can safely simplify to
-+ * that parent.
-+ *
-+ * For 1-parent commits, or if first-parent-only, then this returns the only
-+ * parent. TREESAME will have been set purely on that parent.
-+ *
-+ * For multi-parent commits, identify a sole priority parent, if any.
-+ * If we have only one priority parent, then TREESAME will be set purely
-+ * with regard to that parent, and we can choose simplification appropriately.
-+ *
-+ * If we have more than one priority parent, or no priority parents
-+ * (and multiple non-priority ones), then we can't select a parent here and
-+ * return NULL.
++ * Must be called immediately after removing the nth_parent from a commit's
++ * parent list, if we are maintaining the per-parent treesame[] decoration.
++ * This does not recalculate the master TREESAME flag - update_treesame()
++ * should be called to update it after a sequence of treesame[] modifications
++ * that may have affected it.
 + */
-+static struct commit *priority_select_parent(struct rev_info *revs, struct commit_list *orig)
++static int compact_treesame(struct rev_info *revs, struct commit *commit, unsigned nth_parent)
 +{
-+	struct commit_list *list = orig;
-+	struct commit *priority = NULL;
++	struct treesame_state *st;
++	int old_same;
 +
-+	if (!orig)
-+		return NULL;
++	if (!commit->parents) {
++		/*
++		 * Have just removed the only parent from a non-merge.
++		 * Different handling, as we lack decoration.
++		 */
++		if (nth_parent != 0)
++			die("compact_treesame %u", nth_parent);
++		old_same = !!(commit->object.flags & TREESAME);
++		if (rev_same_tree_as_empty(revs, commit))
++			commit->object.flags |= TREESAME;
++		else
++			commit->object.flags &= ~TREESAME;
++		return old_same;
++	}
 +
-+	if (revs->first_parent_only || !orig->next)
-+		return orig->item;
++	st = lookup_decoration(&revs->treesame, &commit->object);
++	if (!st || nth_parent >= st->nparents)
++		die("compact_treesame %u", nth_parent);
 +
-+	while (list) {
-+		struct commit *commit = list->item;
-+		list = list->next;
-+		if (priority_commit(commit)) {
-+			if (priority)
-+				return NULL;
-+			priority = commit;
++	old_same = st->treesame[nth_parent];
++	memmove(st->treesame + nth_parent,
++		st->treesame + nth_parent + 1,
++		st->nparents - nth_parent - 1);
++
++	/*
++	 * If we've just become a non-merge commit, update TREESAME
++	 * immediately, and remove the no-longer-needed decoration.
++	 * If still a merge, defer update until update_treesame().
++	 */
++	if (--st->nparents == 1) {
++		if (commit->parents->next)
++			die("compact_treesame parents mismatch");
++		if (st->treesame[0] && revs->dense)
++			commit->object.flags |= TREESAME;
++		else
++			commit->object.flags &= ~TREESAME;
++		free(add_decoration(&revs->treesame, &commit->object, NULL));
++	}
++
++	return old_same;
++}
++
++static unsigned update_treesame(struct rev_info *revs, struct commit *commit)
++{
++	if (commit->parents && commit->parents->next) {
++		unsigned n;
++		struct treesame_state *st;
++
++		st = lookup_decoration(&revs->treesame, &commit->object);
++		if (!st)
++			die("update_treesame %s", sha1_to_hex(commit->object.sha1));
++		commit->object.flags |= TREESAME;
++		for (n = 0; n < st->nparents; n++) {
++			if (!st->treesame[n]) {
++				commit->object.flags &= ~TREESAME;
++				break;
++			}
 +		}
 +	}
-+	return priority;
-+}
 +
-+/*
-  * The goal is to get REV_TREE_NEW as the result only if the
-  * diff consists of all '+' (and no other changes), REV_TREE_OLD
-  * if the whole diff is removal of old data, and otherwise
-@@ -502,27 +572,52 @@ static unsigned update_treesame(struct rev_info *revs, struct commit *commit)
- 	if (commit->parents && commit->parents->next) {
- 		unsigned n;
- 		struct treesame_state *st;
-+		struct commit_list *p;
-+		unsigned priority_parents;
-+		unsigned priority_change, nonpriority_change;
- 
- 		st = lookup_decoration(&revs->treesame, &commit->object);
- 		if (!st)
- 			die("update_treesame %s", sha1_to_hex(commit->object.sha1));
--		commit->object.flags |= TREESAME;
--		for (n = 0; n < st->nparents; n++) {
--			if (!st->treesame[n]) {
--				commit->object.flags &= ~TREESAME;
--				break;
--			}
-+		priority_parents = 0;
-+		priority_change = nonpriority_change = 0;
-+		for (p = commit->parents, n = 0; p; n++, p = p->next) {
-+			if (priority_commit(p->item)) {
-+				priority_change |= !st->treesame[n];
-+				priority_parents++;
-+			} else
-+				nonpriority_change |= !st->treesame[n];
- 		}
-+		if (priority_parents ? priority_change : nonpriority_change)
-+			commit->object.flags &= ~TREESAME;
-+		else
-+			commit->object.flags |= TREESAME;
- 	}
- 
- 	return commit->object.flags & TREESAME;
- }
- 
-+static inline int limiting_can_increase_treesame(const struct rev_info *revs)
-+{
-+	/*
-+	 * TREESAME is irrelevant unless prune && dense;
-+	 * if simplify_history is set, we can't have a mixture of TREESAME and
-+	 *    !TREESAME INTERESTING parents (and we don't have treesame[]
-+	 *    decoration anyway);
-+	 * if first_parent_only is set, then the TREESAME flag is locked
-+	 *    against the first parent (and again we lack treesame[] decoration).
-+	 */
-+	return revs->prune && revs->dense &&
-+	       !revs->simplify_history &&
-+	       !revs->first_parent_only;
++	return commit->object.flags & TREESAME;
 +}
 +
  static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
  {
  	struct commit_list **pp, *parent;
- 	struct treesame_state *ts = NULL;
--	int tree_changed = 0, nth_parent;
-+	int priority_change = 0, nonpriority_change = 0;
-+	int priority_parents, nth_parent;
+-	int tree_changed = 0, tree_same = 0, nth_parent = 0;
++	struct treesame_state *ts = NULL;
++	int tree_changed = 0, nth_parent;
  
  	/*
  	 * If we don't do pruning, everything is interesting
-@@ -546,10 +641,12 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
+@@ -456,25 +546,43 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
  	if (!revs->dense && !commit->parents->next)
  		return;
  
--	for (pp = &commit->parents, nth_parent = 0;
-+	for (pp = &commit->parents, nth_parent = 0, priority_parents = 0;
- 	     (parent = *pp) != NULL;
- 	     pp = &parent->next, nth_parent++) {
+-	pp = &commit->parents;
+-	while ((parent = *pp) != NULL) {
++	for (pp = &commit->parents, nth_parent = 0;
++	     (parent = *pp) != NULL;
++	     pp = &parent->next, nth_parent++) {
  		struct commit *p = parent->item;
-+		if (priority_commit(p))
-+			priority_parents++;
  
- 		if (nth_parent == 1) {
- 			/*
-@@ -573,7 +670,7 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
- 			    !revs->simplify_history &&
- 			    !(commit->object.flags & UNINTERESTING)) {
- 				ts = initialise_treesame(revs, commit);
--				if (!tree_changed)
-+				if (!(nonpriority_change || priority_change))
- 					ts->treesame[0] = 1;
- 			}
- 		}
-@@ -583,7 +680,7 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
+-		/*
+-		 * Do not compare with later parents when we care only about
+-		 * the first parent chain, in order to avoid derailing the
+-		 * traversal to follow a side branch that brought everything
+-		 * in the path we are limited to by the pathspec.
+-		 */
+-		if (revs->first_parent_only && nth_parent++)
+-			break;
++		if (nth_parent == 1) {
++			/*
++			 * This our second loop iteration - so we now know
++			 * we're dealing with a merge.
++			 *
++			 * Do not compare with later parents when we care only about
++			 * the first parent chain, in order to avoid derailing the
++			 * traversal to follow a side branch that brought everything
++			 * in the path we are limited to by the pathspec.
++			 */
++			if (revs->first_parent_only)
++				break;
++			/*
++			 * If this will remain a potentially-simplifiable
++			 * merge, remember per-parent treesame if needed.
++			 * Initialise the array with the comparison from our
++			 * first iteration.
++			 */
++			if (revs->treesame.name &&
++			    !revs->simplify_history &&
++			    !(commit->object.flags & UNINTERESTING)) {
++				ts = initialise_treesame(revs, commit);
++				if (!tree_changed)
++					ts->treesame[0] = 1;
++			}
++		}
+ 		if (parse_commit(p) < 0)
+ 			die("cannot simplify commit %s (because of %s)",
+ 			    sha1_to_hex(commit->object.sha1),
  			    sha1_to_hex(p->object.sha1));
  		switch (rev_compare_tree(revs, p, commit)) {
  		case REV_TREE_SAME:
--			if (!revs->simplify_history || (p->object.flags & UNINTERESTING)) {
-+			if (!revs->simplify_history || !priority_commit(p)) {
+-			tree_same = 1;
+ 			if (!revs->simplify_history || (p->object.flags & UNINTERESTING)) {
  				/* Even if a merge with an uninteresting
  				 * side branch brought the entire change
- 				 * we are interested in, we do not want
-@@ -619,14 +716,27 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
- 		/* fallthrough */
+@@ -482,7 +590,8 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
+ 				 * to lose the other branches of this
+ 				 * merge, so we just keep going.
+ 				 */
+-				pp = &parent->next;
++				if (ts)
++					ts->treesame[nth_parent] = 1;
+ 				continue;
+ 			}
+ 			parent->next = NULL;
+@@ -511,12 +620,11 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
  		case REV_TREE_OLD:
  		case REV_TREE_DIFFERENT:
--			tree_changed = 1;
-+			if (priority_commit(p))
-+				priority_change = 1;
-+			else
-+				nonpriority_change = 1;
+ 			tree_changed = 1;
+-			pp = &parent->next;
  			continue;
  		}
  		die("bad tree compare for commit %s", sha1_to_hex(commit->object.sha1));
  	}
--	if (tree_changed)
--		return;
--	commit->object.flags |= TREESAME;
-+
-+	/*
-+	 * TREESAME is straightforward for single-parent commits. For merge
-+	 * commits, it is most useful to define it so that "non-priority"
-+	 * parents cannot make us !TREESAME - if we have any priority
-+	 * parents, then we only consider TREESAMEness with respect to them,
-+	 * allowing irrelevant merges from uninteresting branches to be
-+	 * simplified away. Only if we have only nonpriority parents do we
-+	 * base TREESAME on them. Note that this logic is replicated in
-+	 * update_treesame, which should be kept in sync.
-+	 */
-+	if (priority_parents ? !priority_change : !nonpriority_change)
-+		commit->object.flags |= TREESAME;
+-	if (tree_changed && !tree_same)
++	if (tree_changed)
+ 		return;
+ 	commit->object.flags |= TREESAME;
+ }
+@@ -1930,28 +2038,32 @@ static void add_child(struct rev_info *revs, struct commit *parent, struct commi
+ 	l->next = add_decoration(&revs->children, &parent->object, l);
  }
  
- static void commit_list_insert_by_date_cached(struct commit *p, struct commit_list **head,
-@@ -1002,6 +1112,18 @@ static int limit_list(struct rev_info *revs)
- 		free_commit_list(bottom);
+-static int remove_duplicate_parents(struct commit *commit)
++static int remove_duplicate_parents(struct rev_info *revs, struct commit *commit)
+ {
++	struct treesame_state *ts = lookup_decoration(&revs->treesame, &commit->object);
+ 	struct commit_list **pp, *p;
+ 	int surviving_parents;
+ 
+ 	/* Examine existing parents while marking ones we have seen... */
+ 	pp = &commit->parents;
++	surviving_parents = 0;
+ 	while ((p = *pp) != NULL) {
+ 		struct commit *parent = p->item;
+ 		if (parent->object.flags & TMP_MARK) {
+ 			*pp = p->next;
++			if (ts)
++				compact_treesame(revs, commit, surviving_parents);
+ 			continue;
+ 		}
+ 		parent->object.flags |= TMP_MARK;
++		surviving_parents++;
+ 		pp = &p->next;
  	}
- 
-+	/*
-+	 * Check if any commits have become TREESAME by some of their parents
-+	 * becoming UNINTERESTING.
-+	 */
-+	if (limiting_can_increase_treesame(revs))
-+		for (list = newlist; list; list = list->next) {
-+			struct commit *c = list->item;
-+			if (c->object.flags & (UNINTERESTING | TREESAME))
-+				continue;
-+			update_treesame(revs, c);
-+		}
-+
- 	revs->commits = newlist;
- 	return 0;
+-	/* count them while clearing the temporary mark */
+-	surviving_parents = 0;
++	/* clear the temporary mark */
+ 	for (p = commit->parents; p; p = p->next) {
+ 		p->item->object.flags &= ~TMP_MARK;
+-		surviving_parents++;
+ 	}
++	/* no update_treesame() - removing duplicates can't affect TREESAME */
+ 	return surviving_parents;
  }
-@@ -1015,6 +1137,16 @@ static void add_rev_cmdline(struct rev_info *revs,
- 	struct rev_cmdline_info *info = &revs->cmdline;
- 	int nr = info->nr;
  
+@@ -1971,6 +2083,70 @@ static struct merge_simplify_state *locate_simplify_state(struct rev_info *revs,
+ 	return st;
+ }
+ 
++static int mark_redundant_parents(struct rev_info *revs, struct commit *commit)
++{
++	struct commit_list *h = reduce_heads(commit->parents);
++	int i = 0, marked = 0;
++	struct commit_list *po, *pn;
++
++	/* Want these for sanity-checking only */
++	int orig_cnt = commit_list_count(commit->parents);
++	int cnt = commit_list_count(h);
++
 +	/*
-+	 * Total hack, but at least doing it here means we're consistent
-+	 * with collect_bottom_commits(). But if we just flagged BOTTOM
-+	 * commits before this, could we ditch this entire function?
++	 * Not ready to remove items yet, just mark them for now, based
++	 * on the output of reduce_heads(). reduce_heads outputs the reduced
++	 * set in its original order, so this isn't too hard.
 +	 */
-+	if (item->type == OBJ_COMMIT && (flags & UNINTERESTING)) {
-+		item->flags |= BOTTOM;
-+		flags |= BOTTOM;
++	po = commit->parents;
++	pn = h;
++	while (po) {
++		if (pn && po->item == pn->item) {
++			pn = pn->next;
++			i++;
++		} else {
++			po->item->object.flags |= TMP_MARK;
++			marked++;
++		}
++		po=po->next;
 +	}
 +
- 	ALLOC_GROW(info->rev, nr + 1, info->alloc);
- 	info->rev[nr].item = item;
- 	info->rev[nr].name = name;
-@@ -2233,6 +2365,7 @@ static int remove_marked_parents(struct rev_info *revs, struct commit *commit)
++	if (i != cnt || cnt+marked != orig_cnt)
++		die("mark_redundant_parents %d %d %d %d", orig_cnt, cnt, i, marked);
++
++	free_commit_list(h);
++
++	return marked;
++}
++
++static int remove_marked_parents(struct rev_info *revs, struct commit *commit)
++{
++	struct commit_list **pp, *p;
++	int nth_parent, removed = 0;
++
++	pp = &commit->parents;
++	nth_parent = 0;
++	while ((p = *pp) != NULL) {
++		struct commit *parent = p->item;
++		if (parent->object.flags & TMP_MARK) {
++			parent->object.flags &= ~TMP_MARK;
++			*pp = p->next;
++			free(p);
++			removed++;
++			compact_treesame(revs, commit, nth_parent);
++			continue;
++		}
++		pp = &p->next;
++		nth_parent++;
++	}
++
++	/* Removing parents can only increase TREESAMEness */
++	if (removed && !(commit->object.flags & TREESAME))
++		update_treesame(revs, commit);
++
++	return nth_parent;
++}
++
  static struct commit_list **simplify_one(struct rev_info *revs, struct commit *commit, struct commit_list **tail)
  {
  	struct commit_list *p;
-+	struct commit *parent;
- 	struct merge_simplify_state *st, *pst;
- 	int cnt;
+@@ -2015,7 +2191,9 @@ static struct commit_list **simplify_one(struct rev_info *revs, struct commit *c
+ 	}
  
-@@ -2321,19 +2454,20 @@ static struct commit_list **simplify_one(struct rev_info *revs, struct commit *c
+ 	/*
+-	 * Rewrite our list of parents.
++	 * Rewrite our list of parents. Note that this cannot
++	 * affect our TREESAME flags in any way - a commit is
++	 * always TREESAME to its simplification.
+ 	 */
+ 	for (p = commit->parents; p; p = p->next) {
+ 		pst = locate_simplify_state(revs, p->item);
+@@ -2027,31 +2205,30 @@ static struct commit_list **simplify_one(struct rev_info *revs, struct commit *c
+ 	if (revs->first_parent_only)
+ 		cnt = 1;
+ 	else
+-		cnt = remove_duplicate_parents(commit);
++		cnt = remove_duplicate_parents(revs, commit);
+ 
+ 	/*
+ 	 * It is possible that we are a merge and one side branch
+ 	 * does not have any commit that touches the given paths;
+-	 * in such a case, the immediate parents will be rewritten
+-	 * to different commits.
++	 * in such a case, the immediate parent from that branch
++	 * will be rewritten to be the merge base.
+ 	 *
+ 	 *      o----X		X: the commit we are looking at;
+ 	 *     /    /		o: a commit that touches the paths;
+ 	 * ---o----'
+ 	 *
+-	 * Further reduce the parents by removing redundant parents.
++	 * Detect and simplify this case.
+ 	 */
+ 	if (1 < cnt) {
+-		struct commit_list *h = reduce_heads(commit->parents);
+-		cnt = commit_list_count(h);
+-		free_commit_list(commit->parents);
+-		commit->parents = h;
++		int marked = mark_redundant_parents(revs, commit);
++		if (marked)
++			cnt = remove_marked_parents(revs, commit);
+ 	}
+ 
  	/*
  	 * A commit simplifies to itself if it is a root, if it is
  	 * UNINTERESTING, if it touches the given paths, or if it is a
--	 * merge and its parents simplify to more than one commit
-+	 * merge and its parents don't simplify to one priority commit
+-	 * merge and its parents simplifies to more than one commits
++	 * merge and its parents simplify to more than one commit
  	 * (the first two cases are already handled at the beginning of
  	 * this function).
  	 *
--	 * Otherwise, it simplifies to what its sole parent simplifies to.
-+	 * Otherwise, it simplifies to what its sole priority parent
-+	 * simplifies to.
- 	 */
- 	if (!cnt ||
- 	    (commit->object.flags & UNINTERESTING) ||
- 	    !(commit->object.flags & TREESAME) ||
--	    (1 < cnt))
-+	    (parent = priority_select_parent(revs, commit->parents)) == NULL)
- 		st->simplified = commit;
- 	else {
--		pst = locate_simplify_state(revs, commit->parents->item);
-+		pst = locate_simplify_state(revs, parent);
- 		st->simplified = pst->simplified;
- 	}
- 	return tail;
-@@ -2430,7 +2564,8 @@ int prepare_revision_walk(struct rev_info *revs)
+@@ -2159,6 +2336,10 @@ int prepare_revision_walk(struct rev_info *revs)
+ 	if (!revs->leak_pending)
  		free(list);
  
- 	/* Signal whether we need per-parent treesame decoration */
--	if (revs->simplify_merges)
-+	if (revs->simplify_merges ||
-+	    (revs->limited && limiting_can_increase_treesame(revs)))
- 		revs->treesame.name = "treesame";
- 
++	/* Signal whether we need per-parent treesame decoration */
++	if (revs->simplify_merges)
++		revs->treesame.name = "treesame";
++
  	if (revs->no_walk != REVISION_WALK_NO_WALK_UNSORTED)
-@@ -2464,15 +2599,15 @@ static enum rewrite_result rewrite_one(struct rev_info *revs, struct commit **pp
- 		if (!revs->limited)
- 			if (add_parents_to_list(revs, p, &revs->commits, &cache) < 0)
- 				return rewrite_one_error;
--		if (p->parents && p->parents->next)
--			return rewrite_one_ok;
- 		if (p->object.flags & UNINTERESTING)
- 			return rewrite_one_ok;
- 		if (!(p->object.flags & TREESAME))
- 			return rewrite_one_ok;
- 		if (!p->parents)
- 			return rewrite_one_noparents;
--		*pp = p->parents->item;
-+		if ((p = priority_select_parent(revs, p->parents)) == NULL)
-+			return rewrite_one_ok;
-+		*pp = p;
+ 		commit_list_sort_by_date(&revs->commits);
+ 	if (revs->no_walk)
+@@ -2218,7 +2399,7 @@ static int rewrite_parents(struct rev_info *revs, struct commit *commit)
+ 		}
+ 		pp = &parent->next;
  	}
+-	remove_duplicate_parents(commit);
++	remove_duplicate_parents(revs, commit);
+ 	return 0;
  }
  
-@@ -2616,10 +2751,7 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
- 	if (revs->min_age != -1 && (commit->date > revs->min_age))
- 		return commit_ignore;
- 	if (revs->min_parents || (revs->max_parents >= 0)) {
--		int n = 0;
--		struct commit_list *p;
--		for (p = commit->parents; p; p = p->next)
--			n++;
-+		int n = commit_list_count(commit->parents);
- 		if ((n < revs->min_parents) ||
- 		    ((revs->max_parents >= 0) && (n > revs->max_parents)))
- 			return commit_ignore;
-@@ -2629,12 +2761,23 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
- 	if (revs->prune && revs->dense) {
- 		/* Commit without changes? */
- 		if (commit->object.flags & TREESAME) {
-+			int n;
-+			struct commit_list *p;
- 			/* drop merges unless we want parenthood */
- 			if (!want_ancestry(revs))
- 				return commit_ignore;
--			/* non-merge - always ignore it */
--			if (!commit->parents || !commit->parents->next)
--				return commit_ignore;
-+			/*
-+			 * If we want ancestry, then need to keep any merges
-+			 * between priority commits to tie together topology.
-+			 * For consistency with TREESAME and simplification.
-+			 * use "priority" here rather than just INTERESTING,
-+			 * to treat bottom commit(s) as part of the topology.
-+			 */
-+			for (n = 0, p = commit->parents; p; p = p->next)
-+				if (priority_commit(p->item))
-+					if (++n >= 2)
-+						return commit_show;
-+			return commit_ignore;
- 		}
- 	}
- 	return commit_show;
 diff --git a/revision.h b/revision.h
-index 1abe57b..765630a 100644
+index 01bd2b7..1abe57b 100644
 --- a/revision.h
 +++ b/revision.h
-@@ -15,7 +15,8 @@
- #define ADDED		(1u<<7)	/* Parents already parsed and added? */
- #define SYMMETRIC_LEFT	(1u<<8)
- #define PATCHSAME	(1u<<9)
--#define ALL_REV_FLAGS	((1u<<10)-1)
-+#define BOTTOM		(1u<<10)
-+#define ALL_REV_FLAGS	((1u<<11)-1)
+@@ -167,6 +167,7 @@ struct rev_info {
+ 	struct reflog_walk_info *reflog_info;
+ 	struct decoration children;
+ 	struct decoration merge_simplification;
++	struct decoration treesame;
  
- #define DECORATE_SHORT_REFS	1
- #define DECORATE_FULL_REFS	2
+ 	/* notes-specific options: which refs to show */
+ 	struct display_notes_opt notes_opt;
 diff --git a/t/t6019-rev-list-ancestry-path.sh b/t/t6019-rev-list-ancestry-path.sh
-index ebe79ac..c5a412c 100755
+index 86ef908..ebe79ac 100755
 --- a/t/t6019-rev-list-ancestry-path.sh
 +++ b/t/t6019-rev-list-ancestry-path.sh
-@@ -15,7 +15,8 @@ test_description='--ancestry-path'
- #  --ancestry-path D..M -- M.t == M
- #
- #  G..M -- G.t                 == [nothing - was dropped in "-s ours" merge L]
--#  --ancestry-path G..M -- G.t == H J L
-+#  --ancestry-path G..M -- G.t == L
-+#  --ancestry-path --simplify-merges G^..M -- G.t == G L
- 
- . ./test-lib.sh
- 
-@@ -82,8 +83,15 @@ test_expect_success 'rev-list G..M -- G.t' '
+@@ -81,7 +81,7 @@ test_expect_success 'rev-list G..M -- G.t' '
+ 	test_cmp expect actual
  '
  
- test_expect_success 'rev-list --ancestry-path G..M -- G.t' '
--	for c in H J L; do echo $c; done >expect &&
-+	echo L >expect &&
+-test_expect_failure 'rev-list --ancestry-path G..M -- G.t' '
++test_expect_success 'rev-list --ancestry-path G..M -- G.t' '
+ 	for c in H J L; do echo $c; done >expect &&
  	git rev-list --ancestry-path --format=%s G..M -- G.t |
-+	sed -e "/^commit /d" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'rev-list --ancestry-path --simplify-merges G^..M -- G.t' '
-+	for c in G L; do echo $c; done >expect &&
-+	git rev-list --ancestry-path --simplify-merges --format=%s G^..M -- G.t |
  	sed -e "/^commit /d" |
- 	sort >actual &&
- 	test_cmp expect actual
 diff --git a/t/t6111-rev-list-treesame.sh b/t/t6111-rev-list-treesame.sh
-index 5cc0c34..689d357 100755
+index 602c02d..efc2442 100755
 --- a/t/t6111-rev-list-treesame.sh
 +++ b/t/t6111-rev-list-treesame.sh
-@@ -126,16 +126,16 @@ check_result 'M L G' F..M --first-parent -- file
+@@ -102,9 +102,9 @@ check_result 'M L K J I H G F E D C B A'
+ check_result 'M H L K J I G E F D C B A' --topo-order
+ check_result 'M L H B A' -- file
+ check_result 'M L H B A' --parents -- file
+-check_outcome failure 'M L J I H G F D B A' --full-history -- file # drops G
++check_result 'M L J I H G F D B A' --full-history -- file
+ check_result 'M L K J I H G F D B A' --full-history --parents -- file
+-check_outcome failure 'M H L J I G F B A' --simplify-merges -- file # drops G
++check_result 'M H L J I G F B A' --simplify-merges -- file
+ check_result 'M L K G F D B A' --first-parent
+ check_result 'M L G F B A' --first-parent -- file
+ 
+@@ -113,11 +113,11 @@ check_result 'M L K J I H G E' F..M
+ check_result 'M H L K J I G E' F..M --topo-order
+ check_result 'M L H' F..M -- file
+ check_result 'M L H' F..M --parents -- file # L+H's parents rewritten to B, so more useful than it may seem
+-check_outcome failure 'M L J I H G' F..M --full-history -- file # drops G
++check_result 'M L J I H G' F..M --full-history -- file
+ check_result 'M L K J I H G' F..M --full-history --parents -- file
+-check_outcome failure 'M H L J I G' F..M --simplify-merges -- file # drops G
++check_result 'M H L J I G' F..M --simplify-merges -- file
+ check_result 'M L K J I H G' F..M --ancestry-path
+-check_outcome failure 'M L J I H G' F..M --ancestry-path -- file # drops G
++check_result 'M L J I H G' F..M --ancestry-path -- file
+ check_result 'M L K J I H G' F..M --ancestry-path --parents -- file
+ check_result 'M H L J I G' F..M --ancestry-path --simplify-merges -- file
+ check_result 'M L K G' F..M --first-parent
+@@ -126,7 +126,7 @@ check_result 'M L G' F..M --first-parent -- file
  # Note that G is pruned when E is the bottom, even if it's the same commit list
  # If we want history since E, then we're quite happy to ignore G that took E.
  check_result 'M L K J I H G' E..M --ancestry-path
--check_outcome failure 'M L J I H' E..M --ancestry-path -- file # includes G
--check_outcome failure 'M L K J I H' E..M --ancestry-path --parents -- file
--check_outcome failure 'M H L J I' E..M --ancestry-path --simplify-merges -- file # includes G
-+check_result 'M L J I H' E..M --ancestry-path -- file
-+check_result 'M L K J I H' E..M --ancestry-path --parents -- file
-+check_result 'M H L J I' E..M --ancestry-path --simplify-merges -- file
+-check_result 'M L J I H' E..M --ancestry-path -- file
++check_outcome failure 'M L J I H' E..M --ancestry-path -- file # includes G
+ check_outcome failure 'M L K J I H' E..M --ancestry-path --parents -- file
+ check_outcome failure 'M H L J I' E..M --ancestry-path --simplify-merges -- file # includes G
  
- # Should still be able to ignore I-J branch in simple log, despite limiting
- # to G.
- check_result 'M L K J I H' G..M
- check_result 'M H L K J I' G..M --topo-order
--check_outcome failure 'M L H' G..M -- file # includes J I
--check_outcome failure 'M L H' G..M --parents -- file # includes J I
-+check_result 'M L H' G..M -- file
-+check_result 'M L H' G..M --parents -- file
- check_result 'M L J I H' G..M --full-history -- file
- check_result 'M L K J I H' G..M --full-history --parents -- file
- check_result 'M H L J I' G..M --simplify-merges -- file
-@@ -149,15 +149,15 @@ check_result 'M H L J I' G..M --ancestry-path --simplify-merges -- file
+@@ -149,13 +149,13 @@ check_result 'M H L J I' G..M --ancestry-path --simplify-merges -- file
  # But --full-history shouldn't drop D on its own - without simplification,
  # we can't decide if the merge from INTERESTING commit C was sensible.
  check_result 'F D C' B..F
--check_outcome failure 'F' B..F -- file # includes D
--check_outcome failure 'F' B..F --parents -- file # includes D
-+check_result 'F' B..F -- file
-+check_result 'F' B..F --parents -- file
- check_result 'F D' B..F --full-history -- file
+-check_result 'F' B..F -- file
++check_outcome failure 'F' B..F -- file # includes D
+ check_outcome failure 'F' B..F --parents -- file # includes D
+-check_outcome failure 'F D' B..F --full-history -- file # drops D prematurely
++check_result 'F D' B..F --full-history -- file
  check_result 'F D' B..F --full-history --parents -- file
  check_result 'F' B..F --simplify-merges -- file
  check_result 'F D' B..F --ancestry-path
--check_outcome failure 'F' B..F --ancestry-path -- file # includes D
--check_outcome failure 'F' B..F --ancestry-path --parents -- file # includes D
--check_outcome failure 'F' B..F --ancestry-path --simplify-merges -- file # includes D
-+check_result 'F' B..F --ancestry-path -- file
-+check_result 'F' B..F --ancestry-path --parents -- file
-+check_result 'F' B..F --ancestry-path --simplify-merges -- file
+-check_result 'F' B..F --ancestry-path -- file
++check_outcome failure 'F' B..F --ancestry-path -- file # includes D
+ check_outcome failure 'F' B..F --ancestry-path --parents -- file # includes D
+ check_outcome failure 'F' B..F --ancestry-path --simplify-merges -- file # includes D
  check_result 'F D' B..F --first-parent
- check_result 'F' B..F --first-parent -- file
- 
-@@ -166,7 +166,7 @@ check_result 'F' B..F --first-parent -- file
- check_result 'F D B' C..F
- check_result 'F B' C..F -- file
- check_result 'F B' C..F --parents -- file
--check_outcome failure 'F D B' C..F --full-history -- file # drops D
-+check_result 'F D B' C..F --full-history -- file
+@@ -170,7 +170,7 @@ check_outcome failure 'F D B' C..F --full-history -- file # drops D
  check_result 'F D B' C..F --full-history --parents -- file
  check_result 'F D B' C..F --simplify-merges -- file
  check_result 'F D' C..F --ancestry-path
+-check_outcome failure 'F D' C..F --ancestry-path -- file # drops D
++check_result 'F D' C..F --ancestry-path -- file
+ check_result 'F D' C..F --ancestry-path --parents -- file
+ check_result 'F D' C..F --ancestry-path --simplify-merges -- file
+ check_result 'F D B' C..F --first-parent
 -- 
 1.8.3.rc0.28.g682c2d9
