@@ -1,38 +1,37 @@
 From: Kevin Bracey <kevin@bracey.fi>
-Subject: [PATCH v3 7/9] simplify-merges: never remove all TREESAME parents
-Date: Sun,  5 May 2013 18:32:55 +0300
-Message-ID: <1367767977-14513-8-git-send-email-kevin@bracey.fi>
+Subject: [PATCH v3 6/9] t6012: update test for tweaked full-history traversal
+Date: Sun,  5 May 2013 18:32:54 +0300
+Message-ID: <1367767977-14513-7-git-send-email-kevin@bracey.fi>
 References: <1367767977-14513-1-git-send-email-kevin@bracey.fi>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Kevin Bracey <kevin@bracey.fi>
+	Linus Torvalds <torvalds@linux-foundation.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 05 17:33:23 2013
+X-From: git-owner@vger.kernel.org Sun May 05 17:33:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZ0wE-0003wh-Sj
+	id 1UZ0wF-0003wh-Hi
 	for gcvg-git-2@plane.gmane.org; Sun, 05 May 2013 17:33:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751847Ab3EEPdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 May 2013 11:33:10 -0400
-Received: from 5.mo2.mail-out.ovh.net ([87.98.181.248]:58315 "EHLO
+	id S1751858Ab3EEPdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 May 2013 11:33:11 -0400
+Received: from 5.mo2.mail-out.ovh.net ([87.98.181.248]:35464 "EHLO
 	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751821Ab3EEPdH (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751826Ab3EEPdH (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 5 May 2013 11:33:07 -0400
 Received: from mail636.ha.ovh.net (b6.ovh.net [213.186.33.56])
-	by mo2.mail-out.ovh.net (Postfix) with SMTP id 611C1DC1AA9
+	by mo2.mail-out.ovh.net (Postfix) with SMTP id 54BE6DC1A4D
 	for <git@vger.kernel.org>; Sun,  5 May 2013 17:33:06 +0200 (CEST)
 Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
 	by b0.ovh.net with SMTP; 5 May 2013 17:33:11 +0200
 Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
-  by ns0.ovh.net with SMTP; 5 May 2013 17:33:10 +0200
+  by ns0.ovh.net with SMTP; 5 May 2013 17:33:09 +0200
 X-Ovh-Mailout: 178.32.228.2 (mo2.mail-out.ovh.net)
 X-Mailer: git-send-email 1.8.3.rc0.28.g682c2d9
 In-Reply-To: <1367767977-14513-1-git-send-email-kevin@bracey.fi>
-X-Ovh-Tracer-Id: 8914031039315022053
+X-Ovh-Tracer-Id: 8914031039315022052
 X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
 X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
 X-OVH-SPAMSTATE: OK
@@ -46,138 +45,76 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223402>
 
-When simplifying an odd merge, such as one that used "-s ours", we may
-find ourselves TREESAME to apparently redundant parents. Prevent
-simplify_merges() from removing every TREESAME parent; if this would
-happen reinstate the first TREESAME parent - the one that the default
-log would have followed.
+From: Junio C Hamano <gitster@pobox.com>
 
-This avoids producing a totally disjoint history from the default log
-when the default log is a better explanation of the end result, and aids
-visualisation of odd merges.
-
-Signed-off-by: Kevin Bracey <kevin@bracey.fi>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/rev-list-options.txt |  3 +-
- revision.c                         | 69 ++++++++++++++++++++++++++++++++++++++
- t/t6111-rev-list-treesame.sh       |  2 +-
- 3 files changed, 72 insertions(+), 2 deletions(-)
+ t/t6012-rev-list-simplify.sh | 29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 1dad341..e23bdb0 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -471,7 +471,8 @@ history according to the following rules:
- +
- * Replace each parent `P` of `C'` with its simplification `P'`.  In
-   the process, drop parents that are ancestors of other parents, and
--  remove duplicates.
-+  remove duplicates, but take care to never drop all parents that
-+  we are TREESAME to.
- +
- * If after this parent rewriting, `C'` is a root or merge commit (has
-   zero or >1 parents), a boundary commit, or !TREESAME, it remains.
-diff --git a/revision.c b/revision.c
-index c88ded8..7535757 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2119,6 +2119,73 @@ static int mark_redundant_parents(struct rev_info *revs, struct commit *commit)
- 	return marked;
- }
+diff --git a/t/t6012-rev-list-simplify.sh b/t/t6012-rev-list-simplify.sh
+index dd6dc84..4e55872 100755
+--- a/t/t6012-rev-list-simplify.sh
++++ b/t/t6012-rev-list-simplify.sh
+@@ -14,21 +14,24 @@ unnote () {
  
-+/*
-+ * Awkward naming - this means one parent we are TREESAME to.
-+ * cf mark_treesame_root_parents: root parents that are TREESAME (to an
-+ * empty tree). Better name suggestions?
-+ */
-+static int leave_one_treesame_to_parent(struct rev_info *revs, struct commit *commit)
-+{
-+	struct treesame_state *ts = lookup_decoration(&revs->treesame, &commit->object);
-+	struct commit *unmarked = NULL, *marked = NULL;
-+	struct commit_list *p;
-+	unsigned n;
-+
-+	for (p = commit->parents, n = 0; p; p = p->next, n++) {
-+		if (ts->treesame[n]) {
-+			if (p->item->object.flags & TMP_MARK) {
-+				if (!marked)
-+					marked = p->item;
-+			} else {
-+				if (!unmarked) {
-+					unmarked = p->item;
-+					break;
-+				}
-+			}
-+		}
+ test_expect_success setup '
+ 	echo "Hi there" >file &&
+-	git add file &&
+-	test_tick && git commit -m "Initial file" &&
++	echo "initial" >lost &&
++	git add file lost &&
++	test_tick && git commit -m "Initial file and lost" &&
+ 	note A &&
+ 
+ 	git branch other-branch &&
+ 
+ 	echo "Hello" >file &&
+-	git add file &&
+-	test_tick && git commit -m "Modified file" &&
++	echo "second" >lost &&
++	git add file lost &&
++	test_tick && git commit -m "Modified file and lost" &&
+ 	note B &&
+ 
+ 	git checkout other-branch &&
+ 
+ 	echo "Hello" >file &&
+-	git add file &&
++	>lost &&
++	git add file lost &&
+ 	test_tick && git commit -m "Modified the file identically" &&
+ 	note C &&
+ 
+@@ -37,7 +40,9 @@ test_expect_success setup '
+ 	test_tick && git commit -m "Add another file" &&
+ 	note D &&
+ 
+-	test_tick && git merge -m "merge" master &&
++	test_tick &&
++	test_must_fail git merge -m "merge" master &&
++	>lost && git commit -a -m "merge" &&
+ 	note E &&
+ 
+ 	echo "Yet another" >elif &&
+@@ -110,4 +115,16 @@ check_result 'I B A' -- file
+ check_result 'I B A' --topo-order -- file
+ check_result 'H' --first-parent -- another-file
+ 
++check_result 'E C B A' --full-history E -- lost
++test_expect_success 'full history simplification without parent' '
++	printf "%s\n" E C B A >expect &&
++	git log --pretty="$FMT" --full-history E -- lost |
++	unnote >actual &&
++	sed -e "s/^.*	\([^ ]*\) .*/\1/" >check <actual &&
++	test_cmp expect check || {
++		cat actual
++		false
 +	}
++'
 +
-+	/*
-+	 * If we are TREESAME to a marked-for-deletion parent, but not to any
-+	 * unmarked parents, unmark the first TREESAME parent. This is the
-+	 * parent that the default simplify_history==1 scan would have followed,
-+	 * and it doesn't make sense to omit that path when asking for a
-+	 * simplified full history. Retaining it improves the chances of
-+	 * understanding odd missed merges that took an old version of a file.
-+	 *
-+	 * Example:
-+	 *
-+	 *   I---------X       A modified the file, but mainline merge X used
-+	 *    \       /        "-s ours", so took the version from I. X is
-+	 *     `--A--'         TREESAME to I and !TREESAME to A.
-+	 *
-+	 * Default log from X would produce "I". Without this check,
-+	 * --full-history --simplify-merges would produce "I-A-X", showing
-+	 * the merge commit X and that it changed A, but not making clear that
-+	 * it had just taken the I version. With this check, the topology above
-+	 * is retained.
-+	 *
-+	 * Note that it is possible that the simplification chooses a different
-+	 * TREESAME parent from the default, in which case this test doesn't
-+	 * activate, and we _do_ drop the default parent. Example:
-+	 *
-+	 *   I------X         A modified the file, but it was reverted in B,
-+	 *    \    /          meaning mainline merge X is TREESAME to both
-+	 *     A--B           parents.
-+	 *
-+	 * Default log would produce "I" by following the first parent;
-+	 * --full-history --simplify-merges will produce "I-A-B". But this is a
-+	 * reasonable result - it presents a logical full history leading from
-+	 * I to X, and X is not an important merge.
-+	 */
-+	if (!unmarked && marked) {
-+		marked->object.flags &= ~TMP_MARK;
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
- static int remove_marked_parents(struct rev_info *revs, struct commit *commit)
- {
- 	struct commit_list **pp, *p;
-@@ -2222,6 +2289,8 @@ static struct commit_list **simplify_one(struct rev_info *revs, struct commit *c
- 	if (1 < cnt) {
- 		int marked = mark_redundant_parents(revs, commit);
- 		if (marked)
-+			marked -= leave_one_treesame_to_parent(revs, commit);
-+		if (marked)
- 			cnt = remove_marked_parents(revs, commit);
- 	}
- 
-diff --git a/t/t6111-rev-list-treesame.sh b/t/t6111-rev-list-treesame.sh
-index efc2442..5cc0c34 100755
---- a/t/t6111-rev-list-treesame.sh
-+++ b/t/t6111-rev-list-treesame.sh
-@@ -104,7 +104,7 @@ check_result 'M L H B A' -- file
- check_result 'M L H B A' --parents -- file
- check_result 'M L J I H G F D B A' --full-history -- file
- check_result 'M L K J I H G F D B A' --full-history --parents -- file
--check_result 'M H L J I G F B A' --simplify-merges -- file
-+check_result 'M H L J I G F B A' --simplify-merges -- file # should check that G has parent B
- check_result 'M L K G F D B A' --first-parent
- check_result 'M L G F B A' --first-parent -- file
- 
+ test_done
 -- 
 1.8.3.rc0.28.g682c2d9
