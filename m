@@ -1,78 +1,250 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 0/3] interactive git clean
-Date: Sun, 5 May 2013 08:35:55 -0400
-Message-ID: <CAPig+cR--LQSkxc27_tMRrEnFJFApymqK9268BQA0bab38W3OQ@mail.gmail.com>
-References: <cover.1367551846.git.worldhello.net@gmail.com>
-	<CAPig+cQALgr_VXwG5jBiFVTM627se8zQz7vsmF=A9OLcp_GT9A@mail.gmail.com>
-	<CANYiYbG5q7g-Gn-EGtsgS4XYLbQJuY6Pr_6FgKknADTD5_KoTg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 05 14:36:09 2013
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: [PATCH v3 3/9] t6111: new TREESAME test set
+Date: Sun,  5 May 2013 18:32:51 +0300
+Message-ID: <1367767977-14513-4-git-send-email-kevin@bracey.fi>
+References: <1367767977-14513-1-git-send-email-kevin@bracey.fi>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Kevin Bracey <kevin@bracey.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 05 17:33:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UYyAh-0001EO-Lx
-	for gcvg-git-2@plane.gmane.org; Sun, 05 May 2013 14:36:08 +0200
+	id 1UZ0w5-0003s5-Pu
+	for gcvg-git-2@plane.gmane.org; Sun, 05 May 2013 17:33:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208Ab3EEMf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 May 2013 08:35:56 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:63735 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751142Ab3EEMfz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 May 2013 08:35:55 -0400
-Received: by mail-ie0-f173.google.com with SMTP id k5so3241713iea.18
-        for <git@vger.kernel.org>; Sun, 05 May 2013 05:35:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=3fBTTGBLrDKsQZNBrpWwUAoaraDiu8QuqnSqX+x4k00=;
-        b=RJKLfmRJlN2ZhBiq3g0fgA58NM+yNkGEJWSpfSm1ID+lCXCJbCjFbhVLHQkvT/niq6
-         4FPQdD7e3fqWq09bazcxj9ghyWMUXN1A2Jq6nevH+tnkxEWtZwWwsv/dNxU6b7Vx44WM
-         Cy3JRhswcjyaoydHd/IRrhWy1RPKNUKtBvMpU1yC9Z+SygbpTA8U4b9uANceyVW+a6ZK
-         8nZNb2sSDtRZXR/oiTM3W5JRR7/+GGhEz9c520FmL23u+fh2afcybrwJRChpjBollH1a
-         fKBVNP/v7u+MQg/YE1d10Kig150TuOUHwQHWbj0+zJEwCoERr/8vVcVIOLgkeSRtWHSY
-         HD6Q==
-X-Received: by 10.50.1.69 with SMTP id 5mr1443596igk.100.1367757355254; Sun,
- 05 May 2013 05:35:55 -0700 (PDT)
-Received: by 10.64.13.46 with HTTP; Sun, 5 May 2013 05:35:55 -0700 (PDT)
-In-Reply-To: <CANYiYbG5q7g-Gn-EGtsgS4XYLbQJuY6Pr_6FgKknADTD5_KoTg@mail.gmail.com>
-X-Google-Sender-Auth: 8jgM1V64ENmR8Cc_JzCdJKYN7kQ
+	id S1751835Ab3EEPdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 May 2013 11:33:07 -0400
+Received: from 4.mo2.mail-out.ovh.net ([87.98.172.75]:34964 "EHLO
+	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751633Ab3EEPdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 May 2013 11:33:06 -0400
+Received: from mail636.ha.ovh.net (b6.ovh.net [213.186.33.56])
+	by mo2.mail-out.ovh.net (Postfix) with SMTP id 61931DC19F4
+	for <git@vger.kernel.org>; Sun,  5 May 2013 17:33:04 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 5 May 2013 17:33:09 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 5 May 2013 17:33:07 +0200
+X-Ovh-Mailout: 178.32.228.2 (mo2.mail-out.ovh.net)
+X-Mailer: git-send-email 1.8.3.rc0.28.g682c2d9
+In-Reply-To: <1367767977-14513-1-git-send-email-kevin@bracey.fi>
+X-Ovh-Tracer-Id: 8913468089361600737
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: -100
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedriedvucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedriedvucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223400>
 
-On Fri, May 3, 2013 at 9:06 PM, Jiang Xin <worldhello.net@gmail.com> wrote:
-> 2013/5/3 Eric Sunshine <sunshine@sunshineco.com>:
->> More generally, is this sort of modal edit mode desirable and
->> convenient? Can the edit operation be combined with the top-level
->> prompt? For example:
->>
->>   % git clean -i
->>   file1 file2 file3
->>   file4 file5 file6
->>   Remove ([y]es, [n]o, [p]rompt, exclusion-list)? file[4-6]
->>   file1 file2 file3
->>   Remove ([y]es, [n]o, [p]rompt, exclusion-list)? p
->>   file1 (y/n/q/!)? y
->>   file2 (y/n/q/!)? n
->>   file3 (y/n/q/!)? y
->
-> What If there is a file named 'y', and the user want to exclude it,
-> and press 'y' as a pattern.
+Some side branching and odd merging to illustrate various flaws in
+revision list scans, particularly when limiting the list.
 
-The pattern [y] will match file named 'y'. It probably is unusual for
-files named 'y', 'n', etc. to exist in the top-level directory, but
-the gitignore patterns already provide an escape hatch for these
-unusual cases. (That is not to say that this is the perfect example or
-solution, but only that it may be worth considering such options when
-designing the user-interface for convenience.)
+Many expected failures, which will be gone by the end of the "history
+traversal refinements" series.
+
+Signed-off-by: Kevin Bracey <kevin@bracey.fi>
+---
+ t/t6111-rev-list-treesame.sh | 180 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 180 insertions(+)
+ create mode 100755 t/t6111-rev-list-treesame.sh
+
+diff --git a/t/t6111-rev-list-treesame.sh b/t/t6111-rev-list-treesame.sh
+new file mode 100755
+index 0000000..602c02d
+--- /dev/null
++++ b/t/t6111-rev-list-treesame.sh
+@@ -0,0 +1,180 @@
++#!/bin/sh
++#
++#        ,---E--.   *H----------.             * marks !TREESAME parent paths
++#       /        \ /             \*
++# *A--*B---D--*F-*G---------K-*L-*M
++#   \     /*       \       /
++#    `-C-'          `-*I-*J
++#
++# A creates "file", B and F change it.
++# Odd merge G takes the old version from B.
++# I changes it, but J reverts it.
++# H and L both change it, and M merges those changes.
++
++test_description='TREESAME and limiting'
++
++. ./test-lib.sh
++
++note () {
++	git tag "$1"
++}
++
++unnote () {
++	git name-rev --tags --stdin | sed -e "s|$_x40 (tags/\([^)]*\)) |\1 |g"
++}
++
++test_expect_success setup '
++	test_commit "Initial file" file "Hi there" A &&
++	git branch other-branch &&
++
++	test_commit "file=Hello" file "Hello" B &&
++	git branch third-branch &&
++
++	git checkout other-branch &&
++	test_commit "Added other" other "Hello" C &&
++
++	git checkout master &&
++	test_merge D other-branch &&
++
++	git checkout third-branch &&
++	test_commit "Third file" third "Nothing" E &&
++
++	git checkout master &&
++	test_commit "file=Blah" file "Blah" F &&
++
++	test_tick && git merge --no-commit third-branch &&
++	git checkout third-branch file &&
++	git commit &&
++	note G &&
++	git branch fiddler-branch &&
++
++	git checkout -b part2-branch &&
++	test_commit "file=Part 2" file "Part 2" H &&
++
++	git checkout fiddler-branch &&
++	test_commit "Bad commit" file "Silly" I &&
++
++	test_tick && git revert I && note J &&
++
++	git checkout master &&
++	test_tick && git merge --no-ff fiddler-branch &&
++	note K
++
++	test_commit "file=Part 1" file "Part 1" L &&
++
++	test_tick && test_must_fail git merge part2-branch &&
++	test_commit M file "Parts 1+2"
++'
++
++FMT='tformat:%P 	%H | %s'
++
++# could we soup this up to optionally check parents? So "(BA)C" would check
++# that C is shown and has parents B A.
++check_outcome () {
++	outcome=$1
++	shift
++	for c in $1
++	do
++		echo "$c"
++	done >expect &&
++	shift &&
++	param="$*" &&
++	test_expect_$outcome "log $param" '
++		git log --format="$FMT" $param |
++		unnote >actual &&
++		sed -e "s/^.*	\([^ ]*\) .*/\1/" >check <actual &&
++		test_cmp expect check || {
++			cat actual
++			false
++		}
++	'
++}
++
++check_result () {
++	check_outcome success "$@"
++}
++
++# Odd merge G drops a change in F. Important that G is listed in all
++# except the most basic list. Achieving this means normal merge D will also be
++# shown in normal full-history, as we can't distinguish unless we do a
++# simplification pass. After simplification, D is dropped but G remains.
++check_result 'M L K J I H G F E D C B A'
++check_result 'M H L K J I G E F D C B A' --topo-order
++check_result 'M L H B A' -- file
++check_result 'M L H B A' --parents -- file
++check_outcome failure 'M L J I H G F D B A' --full-history -- file # drops G
++check_result 'M L K J I H G F D B A' --full-history --parents -- file
++check_outcome failure 'M H L J I G F B A' --simplify-merges -- file # drops G
++check_result 'M L K G F D B A' --first-parent
++check_result 'M L G F B A' --first-parent -- file
++
++# Check that odd merge G remains shown when F is the bottom.
++check_result 'M L K J I H G E' F..M
++check_result 'M H L K J I G E' F..M --topo-order
++check_result 'M L H' F..M -- file
++check_result 'M L H' F..M --parents -- file # L+H's parents rewritten to B, so more useful than it may seem
++check_outcome failure 'M L J I H G' F..M --full-history -- file # drops G
++check_result 'M L K J I H G' F..M --full-history --parents -- file
++check_outcome failure 'M H L J I G' F..M --simplify-merges -- file # drops G
++check_result 'M L K J I H G' F..M --ancestry-path
++check_outcome failure 'M L J I H G' F..M --ancestry-path -- file # drops G
++check_result 'M L K J I H G' F..M --ancestry-path --parents -- file
++check_result 'M H L J I G' F..M --ancestry-path --simplify-merges -- file
++check_result 'M L K G' F..M --first-parent
++check_result 'M L G' F..M --first-parent -- file
++
++# Note that G is pruned when E is the bottom, even if it's the same commit list
++# If we want history since E, then we're quite happy to ignore G that took E.
++check_result 'M L K J I H G' E..M --ancestry-path
++check_result 'M L J I H' E..M --ancestry-path -- file
++check_outcome failure 'M L K J I H' E..M --ancestry-path --parents -- file
++check_outcome failure 'M H L J I' E..M --ancestry-path --simplify-merges -- file # includes G
++
++# Should still be able to ignore I-J branch in simple log, despite limiting
++# to G.
++check_result 'M L K J I H' G..M
++check_result 'M H L K J I' G..M --topo-order
++check_outcome failure 'M L H' G..M -- file # includes J I
++check_outcome failure 'M L H' G..M --parents -- file # includes J I
++check_result 'M L J I H' G..M --full-history -- file
++check_result 'M L K J I H' G..M --full-history --parents -- file
++check_result 'M H L J I' G..M --simplify-merges -- file
++check_result 'M L K J I H' G..M --ancestry-path
++check_result 'M L J I H' G..M --ancestry-path -- file
++check_result 'M L K J I H' G..M --ancestry-path --parents -- file
++check_result 'M H L J I' G..M --ancestry-path --simplify-merges -- file
++
++# B..F should be able to simplify the merge D from irrelevant side branch C.
++# Default log should also be free to follow B-D, and ignore C.
++# But --full-history shouldn't drop D on its own - without simplification,
++# we can't decide if the merge from INTERESTING commit C was sensible.
++check_result 'F D C' B..F
++check_result 'F' B..F -- file
++check_outcome failure 'F' B..F --parents -- file # includes D
++check_outcome failure 'F D' B..F --full-history -- file # drops D prematurely
++check_result 'F D' B..F --full-history --parents -- file
++check_result 'F' B..F --simplify-merges -- file
++check_result 'F D' B..F --ancestry-path
++check_result 'F' B..F --ancestry-path -- file
++check_outcome failure 'F' B..F --ancestry-path --parents -- file # includes D
++check_outcome failure 'F' B..F --ancestry-path --simplify-merges -- file # includes D
++check_result 'F D' B..F --first-parent
++check_result 'F' B..F --first-parent -- file
++
++# Any sort of full history of C..F should show D, as it's the connection to C,
++# and it differs from it.
++check_result 'F D B' C..F
++check_result 'F B' C..F -- file
++check_result 'F B' C..F --parents -- file
++check_outcome failure 'F D B' C..F --full-history -- file # drops D
++check_result 'F D B' C..F --full-history --parents -- file
++check_result 'F D B' C..F --simplify-merges -- file
++check_result 'F D' C..F --ancestry-path
++check_outcome failure 'F D' C..F --ancestry-path -- file # drops D
++check_result 'F D' C..F --ancestry-path --parents -- file
++check_result 'F D' C..F --ancestry-path --simplify-merges -- file
++check_result 'F D B' C..F --first-parent
++check_result 'F B' C..F --first-parent -- file
++
++
++test_done
+-- 
+1.8.3.rc0.28.g682c2d9
