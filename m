@@ -1,106 +1,86 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 0/3] interactive git clean
-Date: Mon, 6 May 2013 05:40:06 -0400
-Message-ID: <CAPig+cTSER2ngpGoM-3pwPO3dAnqq+9qCHdVb1YbLg9UgkPF0g@mail.gmail.com>
-References: <cover.1367551846.git.worldhello.net@gmail.com>
-	<CAPig+cQALgr_VXwG5jBiFVTM627se8zQz7vsmF=A9OLcp_GT9A@mail.gmail.com>
-	<CANYiYbG5q7g-Gn-EGtsgS4XYLbQJuY6Pr_6FgKknADTD5_KoTg@mail.gmail.com>
-	<CAPig+cR--LQSkxc27_tMRrEnFJFApymqK9268BQA0bab38W3OQ@mail.gmail.com>
-	<vpqli7s8rqp.fsf@grenoble-inp.fr>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: trouble on windows network share
+Date: Mon, 6 May 2013 11:42:17 +0200
+Message-ID: <87ip2wla12.fsf@linux-k42r.v.cablecom.net>
+References: <871B6C10EBEFE342A772D1159D1320853F63D205@umechphj.easf.csd.disa.mil>
+	<1367529968647-7584800.post@n2.nabble.com>
+	<87ppx8o1lj.fsf@linux-k42r.v.cablecom.net>
+	<8B6563E531152E4190313499F193F94214A9C966@mbx500-u1-lo-3.exch500.msoutlookonline.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon May 06 11:40:21 2013
+Content-Type: text/plain
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: David Goldfarb <deg@degel.com>
+X-From: git-owner@vger.kernel.org Mon May 06 11:42:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZHu4-0002n1-EU
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 11:40:16 +0200
+	id 1UZHw9-0004Ww-NU
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 11:42:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753248Ab3EFJkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 05:40:10 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:60041 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752700Ab3EFJkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 05:40:08 -0400
-Received: by mail-la0-f54.google.com with SMTP id fd20so3148722lab.13
-        for <git@vger.kernel.org>; Mon, 06 May 2013 02:40:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=ROG4Ixd/OMcDohvN6GWktZNKslsHhYZ69chI2UPHDvQ=;
-        b=AGpCpGmItLFpZdNn5Yl07+iU/Y8bDlm32WG7LxfkSiKndlG2t+vBtYpGRDzlzunk1R
-         xpCFA+lv+4ZXHF/qqPed62tDdVxyC2HsmDsZ91wKeJXYmt0FrAVcgm+V/9pvzZWiRdnw
-         4cAsMrPuxgm56PTB+SbtlewCNPZKcYtch8Us3SUjhMQb7yGjCjfAGATk5GJCRIxpzGFH
-         IwxOKxTwCs/6Idu8j0IyDv24agoH+1F6KU0Pbw76fsztLzUJt/moMzP7klKd93XKiV9A
-         LKZnGIx+8SYzm4GggiqFu9wmrxDEwKz/1E91grUXGVNRwaZ+epY7qtFhMb/Ifjkn9o0+
-         5AUQ==
-X-Received: by 10.112.159.1 with SMTP id wy1mr7628234lbb.80.1367833207011;
- Mon, 06 May 2013 02:40:07 -0700 (PDT)
-Received: by 10.114.182.172 with HTTP; Mon, 6 May 2013 02:40:06 -0700 (PDT)
-In-Reply-To: <vpqli7s8rqp.fsf@grenoble-inp.fr>
-X-Google-Sender-Auth: h6sJkjbaE8oa8rKbcjqIArv8pEA
+	id S1753177Ab3EFJmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 05:42:21 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:47951 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752629Ab3EFJmU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 05:42:20 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 6 May
+ 2013 11:42:17 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS12.d.ethz.ch (172.31.38.212) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Mon, 6 May 2013 11:42:17 +0200
+In-Reply-To: <8B6563E531152E4190313499F193F94214A9C966@mbx500-u1-lo-3.exch500.msoutlookonline.net>
+	(David Goldfarb's message of "Sat, 4 May 2013 23:23:21 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223432>
 
-Hi Matthieu,
+David Goldfarb <deg@degel.com> writes:
 
-On Mon, May 6, 2013 at 3:58 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+> Git works correctly under Linux (Ubuntu 12.04; git 1.7.9.5).  I've attached the strace outputs. (Note: for reasons that are probably irrelevant, I needed to run the commands sudo'd. Shout back if this is an issue).
 >
->> The pattern [y] will match file named 'y'. It probably is unusual for
->> files named 'y', 'n', etc. to exist in the top-level directory, but
->> the gitignore patterns already provide an escape hatch for these
->> unusual cases.
+> Under Windows 7, Cygwin git 1.7.9, commit fails:
+>   U:\foo>git commit -m "added foo2"
+>   error: unable to find 0b89efdeef245ed6a0a7eacc5c578629a141f856
+>   fatal: 0b89efdeef245ed6a0a7eacc5c578629a141f856 is not a valid object
 >
-> But how does the user know that?
+> For what it's worth, note that the file does exist.
+>   U:\foo>ls -l .git/objects/0b
+>   total 1024
+>   -rwxrw-r-- 1 ???????? ???????? 74 May  5 01:15 89efdeef245ed6a0a7eacc5c578629a141f856
+>
+> (I'm not sure why the permissions are trashed. Seems to be a Cygwin thing, or maybe my Cygwin config. The "??????" also  appears on local files, and I believe also with files on the old Buffalo drive, so I don't think it is relevant to the problem).  Just in case, here's the same dir, as seen from the Ubuntu VM:
+>
+>   deg@ubuntu:/mnt/users/foo$ ls -l .git/objects/0b
+>   total 64
+>   -rwxr-xr-x 0 root root 74 May  5 01:15 89efdeef245ed6a0a7eacc5c578629a141f856
+>
+> Again, note that there is some user permissions lossage here. I don't know enough about Linux mount or CIFS, and apparently did the mount in a way that everything seems to appear to be stuck owned by root. (same problem I hinted at above). Hope this is not relevant to the problem.
+>
+> Here's how the same directory looks, when I'm ssh'd into the NAS box itself:
+>
+>    CentralPark:/shares/Users/foo# ls -l .git/objects/0b
+>   total 64
+>   -rwxrw-r-- 1 deg share 74 May  5 01:15 89efdeef245ed6a0a7eacc5c578629a141f856
+>
+> In any event, the symptoms don't seem to be a permissions problem, so all this extra info is probably just a red herring, I hope.
 
-Documentation. Junio also mentioned having a '?' in each prompt
-explaining the options at that point.
+Hrm.  What about what Jeff already asked of the OP (and AFAICS never got
+a reply)?
 
-> I'd rather stay away from dwim that works in 99% of cases but do
-> something dangerous in the 1% remaining, and complex un-guessable escape
-> scheme to solve these few cases. The two stages (yes/no/edit, and then
-> escape patterns) is clear, and does not require so many additional
-> keystrokes.
+} If it's a race condition between the write and the subsequent read in
+} the same process, then it would be solved by looking at the object
+} later. Does "git cat-file -p 6838761d549cf76033d2e9faf5954e62839eb25d"
+} work, or is the object forever inaccessible?
 
-The scheme doesn't have to be unsafe. git-clean *knows* which files
-are up for deletion. If one of those filenames conflicts with one of
-the prompt options, --interactive mode can warn about the ambiguity at
-the point the user types that particular ambiguous response, and ask
-for clarification ("did you mean 'yes, delete everything' or 'exclude
-filename y'?"). You get DWIM for 99.9% of the cases, and an extra
-prompt for the other 0.1%. Nothing unsafe. Is such an implementation
-more complicated or ugly than the separate 'edit' mode? Is the user
-experience better or worse (more or less convenient)? Is it easier or
-harder to document and explain?
+In your case: git cat-file -p 0b89efdeef245ed6a0a7eacc5c578629a141f856
 
-Another observation which came to mind after my original email:
-
-Would it make sense for --interactive mode to launch an editor with
-the list of files scheduled for deletion and allow the user to remove
-lines he does not want deleted (similar to "git-rebase
---interactive"). Depending upon case, this could be more or less
-convenient than the proposed gitignore-patterned 'edit' mode. It could
-be yet another option in the yes/no/prompt/edit menu or it could be
-the default and only behavior of "git-clean --interactive" (again
-similar to "git-rebase --interactive).
-
-I'm not advocating any particular user interface. The observations and
-questions about convenience and user experience both here and in my
-original email were made with the hope of promoting discussion before
-the interface gets locked in. How clunky or fluid should it be? How
-verbose or terse?
-
--- ES
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
