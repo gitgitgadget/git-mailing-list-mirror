@@ -1,123 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Add porcelain command to revert a single staged file to its HEAD state while preserving its staged state
-Date: Mon, 06 May 2013 07:52:46 -0700
-Message-ID: <7vbo8otb29.fsf@alter.siamese.dyndns.org>
-References: <CADeMBooSZA4D7YctRpRf+axjcUhkMBaJhkd89nssxZYFKph5sA@mail.gmail.com>
-	<87obcryvcw.fsf@hexa.v.cablecom.net>
-	<7va9oawmbp.fsf@alter.siamese.dyndns.org>
-	<7v61yywm49.fsf@alter.siamese.dyndns.org>
-	<CADeMBopBvCmb4cz8p8vf-jXaOhfzP3GZKF94Efgsh-NOBs+d3Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] fast-export: improve speed by skipping blobs
+Date: Mon, 06 May 2013 08:08:45 -0700
+Message-ID: <7v7gjctabm.fsf@alter.siamese.dyndns.org>
+References: <1367793534-8401-1-git-send-email-felipe.contreras@gmail.com>
+	<1367793534-8401-3-git-send-email-felipe.contreras@gmail.com>
+	<20130506123111.GB3809@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jrnieder@gmail.com,
-	Thomas Rast <trast@inf.ethz.ch>
-To: Dimitar Bonev <dsbonev@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 06 16:52:57 2013
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 06 17:08:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZMmc-0003tP-1K
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 16:52:54 +0200
+	id 1UZN28-0002er-33
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 17:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754353Ab3EFOwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 10:52:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61796 "EHLO
+	id S1754426Ab3EFPIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 11:08:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48687 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752836Ab3EFOws (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 10:52:48 -0400
+	id S1754111Ab3EFPIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 11:08:48 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 587BA1B186;
-	Mon,  6 May 2013 14:52:48 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E95F1BCC7;
+	Mon,  6 May 2013 15:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=JPB7HDMfARtZ3PLtM7efHg3VlZY=; b=tJ4drhifDi7w3Igom19G
-	7swI+slBNir69DmPbDQhBbeepeqtIVE3oDZzMIByFan7VJhhqkszHn04+QUeeGMm
-	Xq1t9vEf87r2lAlAOVGxCFnJN6KpFp9xO60B8jqVwxDYzXpEeBDA9LMyhD1mhzg4
-	b5o+O4jydMKKrKSu52v0/u4=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eSDCAZuF6m84FYFiPxXVENNit+Y=; b=Pl5N+m
+	z6fwqPmbKHAy7zVbk+67BrKNnZUScD6iOjsItK+oYnKD2ke6rm5MVVvQp7EoaqxL
+	t0qr7xnr/3G7hN5mxU8e1yOn60K8EMzC6JQsJzuaqOcV+h90SiF9k93ZMucMm/mT
+	7FkEg6S7V2x4MIcQoDDJptuhYeucxqk7/XNTY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=BRfNRcmi7TTpQ3EQ/9mDs2NtL+Qk4+3YzITDRDd6b/YXui
-	5SXuLnWZDHjJBcXzXGawqycps/7KqJkJc+S4pRIHz1pvlbQ+LJVrU3CRqCqkruC3
-	WAX4SV49O+VPJzZZWMMxL0M5jYDNI8f3mJdwFIphJ5aW8k0JyM2VL5Xrasfgg=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B3EMhWhNAEWCbf37C652nwbjAX92mrr9
+	GuB3fUgsx/9a9TngyPtLiuZEZVylRgbdhicY5oNiW6zogU2fPaFmQl4Pk6NkPUnu
+	nZAkI6xQzfaHXNXsv4eHv8sxipThVU/O0mRHgEmntP5WYtPh84OJy8HT0Lsgh1bm
+	Sb2q4nG4JZI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FB691B185;
-	Mon,  6 May 2013 14:52:48 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84D8C1BCC6;
+	Mon,  6 May 2013 15:08:47 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A32BF1B183;
-	Mon,  6 May 2013 14:52:47 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B04A1BCC5;
+	Mon,  6 May 2013 15:08:46 +0000 (UTC)
+In-Reply-To: <20130506123111.GB3809@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 6 May 2013 08:31:11 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9DE4647C-B65C-11E2-8358-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D9B9A974-B65E-11E2-B862-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223457>
 
-Dimitar Bonev <dsbonev@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-[administrivia: please do not drop people out of Cc list]
+> On Sun, May 05, 2013 at 05:38:53PM -0500, Felipe Contreras wrote:
+>
+>> We don't care about blobs, or any object other than commits, but in
+>> order to find the type of object, we are parsing the whole thing, which
+>> is slow, specially in big repositories with lots of big files.
+>
+> I did a double-take on reading this subject line and first paragraph,
+> thinking "surely fast-export needs to actually output blobs?".
+>
+> Reading the patch, I see that this is only about not bothering to load
+> blob marks from --import-marks. It might be nice to mention that in the
+> commit message, which is otherwise quite confusing.
 
-> Actually this is not the case as I tried to explain with the 'git
-> commit' followed by 'git checkout HEAD~1 -- targetfile' followed by
-> 'git commit --amend' example. The index and the working dir states are
-> very well related.
+I had the same reaction first, but not writing the blob _objects_
+out to the output stream would not make any sense, so it was fairly
+easy to guess what the author wanted to say ;-).
 
-That invites another question: if it is very well related, why isn't
-it an option to start from the state you have in the working tree
-(i.e. doing nothing), or in the index (i.e. "git checkout
-controller")?
+> I'm also not sure why your claim "we don't care about blobs" is true,
+> because naively we would want future runs of fast-export to avoid having
+> to write out the whole blob content when mentioning the blob again.
 
-But the answer does not matter that much in the end.
+The existing documentation is fairly clear that marks for objects
+other than commits are not exported, and the import-marks codepath
+discards anything but commits, so there is no mechanism for the
+existing fast-export users to leave blob marks in the marks file for
+later runs of fast-export to take advantage of.  The second
+invocation cannot refer to such a blob in the first place.
 
-> Lets imagine that I am adding an MVC feature X - it
-> could be implemented with 3 or more files. If I stage the files and
-> came up with an idea that requires a major rewrite of one of these
-> files - lets say the controller one - then it is more convenient to
-> checkout the file's HEAD state and build on top of it - I had been
-> doing just that right before staging
+The story is different on the fast-import side, where we do say we
+dump the full table and a later run can depend on these marks.
 
-So you have satisfactory changes for view and model in the index,
-and changes to the controller that maybe is OK but you think it
-could be improved, and you want to go back to the clean slate to
-rethink the approach only for the controller part?
-
-I think the story is essentially the same.  Let's say you did
-
-    git diff HEAD controller | git apply -R
-    edit controller
-
-to get rid of the changes in the working tree, further worked on the
-controller part, and came up with a different implementation.  Then
-you would presumably do
-
-    git add controller
-
-but at that point you would lose the "maybe OK" version you had in
-the index.  What if you think the version in the working tree might
-end up being better than "maybe OK" but can still be improved
-further?  You never "git add" until the working tree version gets
-into truly a better shape?
-
-What happens fairly often is that you end up having more than _one_
-versions that are both better than the version from the HEAD but
-cannot immediately say one is clearly better than the others in all
-counts, and at some point, you would need more than one intermediate
-states (while the index can have only one), to keep these competing
-versions. The next thing you would want to do is to take a deep
-breath and pick better parts from these good versions to come up
-with the single final version. Keeping one good version in the index
-does not let you do so.
-
-> ... commits - I treat them as finished work.
-
-I think people should learn to take the biggest advantage of using a
-distributed source control system, which is that commits do not have
-to be "finished work", until you choose to declare they are done and
-push them out for others to see.
-
-Fear of commitment is a disease we do not have to suffer once we
-graduated centralized systems ;-).
+By discarding marks on blobs, we may be robbing some optimization
+possibilities, and by discarding marks on tags, we may be robbing
+some features, from users of fast-export; we might want to add an
+option "--use-object-marks={blob,commit,tag}" or something to both
+fast-export and fast-import, so that the former can optionally write
+marks for non-commits out, and the latter can omit non commit marks
+if the user do not need them. But that is a separate issue.
