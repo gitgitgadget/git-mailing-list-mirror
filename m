@@ -1,77 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/3] fast-export: improve speed by skipping blobs
-Date: Mon, 6 May 2013 08:31:11 -0400
-Message-ID: <20130506123111.GB3809@sigill.intra.peff.net>
-References: <1367793534-8401-1-git-send-email-felipe.contreras@gmail.com>
- <1367793534-8401-3-git-send-email-felipe.contreras@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 06 14:31:23 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH] t/Makefile: don't define TEST_RESULTS_DIRECTORY recursively
+Date: Mon,  6 May 2013 13:35:46 +0100
+Message-ID: <6bb37f45280373b96c2ae581db9bd87007dc0fb7.1367843730.git.john@keeping.me.uk>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 06 14:36:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZKZf-0001x1-6T
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 14:31:23 +0200
+	id 1UZKeJ-000630-9j
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 14:36:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753117Ab3EFMbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 08:31:17 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37952 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753081Ab3EFMbN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 08:31:13 -0400
-Received: (qmail 32595 invoked by uid 102); 6 May 2013 12:31:33 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 May 2013 07:31:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 May 2013 08:31:11 -0400
-Content-Disposition: inline
-In-Reply-To: <1367793534-8401-3-git-send-email-felipe.contreras@gmail.com>
+	id S1753004Ab3EFMgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 08:36:06 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:34841 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752859Ab3EFMgF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 08:36:05 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 156936065A1;
+	Mon,  6 May 2013 13:36:04 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ht9rnBukIbhO; Mon,  6 May 2013 13:36:03 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id E89AB6064E8;
+	Mon,  6 May 2013 13:36:02 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id D87D0161E2F4;
+	Mon,  6 May 2013 13:36:02 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Dnmgd5-doHyU; Mon,  6 May 2013 13:36:02 +0100 (BST)
+Received: from river.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 9F507161E52B;
+	Mon,  6 May 2013 13:35:52 +0100 (BST)
+X-Mailer: git-send-email 1.8.3.rc0.149.g98a72f2.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223446>
 
-On Sun, May 05, 2013 at 05:38:53PM -0500, Felipe Contreras wrote:
+Commit 54bb901 (t/Makefile: fix result handling with
+TEST_OUTPUT_DIRECTORY - 2013-04-26) incorrectly defined
+TEST_RESULTS_DIRECTORY relative to itself, when it should be relative to
+TEST_OUTPUT_DIRECTORY.  Fix this.
 
-> We don't care about blobs, or any object other than commits, but in
-> order to find the type of object, we are parsing the whole thing, which
-> is slow, specially in big repositories with lots of big files.
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ t/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I did a double-take on reading this subject line and first paragraph,
-thinking "surely fast-export needs to actually output blobs?".
-
-Reading the patch, I see that this is only about not bothering to load
-blob marks from --import-marks. It might be nice to mention that in the
-commit message, which is otherwise quite confusing.
-
-I'm also not sure why your claim "we don't care about blobs" is true,
-because naively we would want future runs of fast-export to avoid having
-to write out the whole blob content when mentioning the blob again. I
-think one argument could be "if we write a mark for blob X, we will also
-have written a mark for commit Y which contains it; on subsequent runs,
-we will just show the mark for Y in the first place, and not even care
-about showing X (as a part of Y) either way. We would only refer to the
-mark for X if it appears as part of a different commit, but that is a
-rare case not worth worrying about."
-
-Does that match your reasoning?
-
-> Before this, loading the objects of a fresh emacs import, with 260598
-> blobs took 14 minutes, after this patch, it takes 3 seconds.
-
-Presumably most of that speed improvement comes from not parsing the
-blob objects. I wonder if you could get similar speedups by applying the
-"do not bother parsing" rule from your patch 3. You would still incur
-some cost to create a "struct blob", but it may or may not be
-measurable.  That would mean we get the "case not worth worrying about"
-from above for free. I doubt it would make that big a difference,
-though, given the rarity of it. So I am OK with it either way.
-
--Peff
+diff --git a/t/Makefile b/t/Makefile
+index 11de5da..ebb7371 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -16,7 +16,7 @@ DEFAULT_TEST_TARGET ?= test
+ TEST_LINT ?= test-lint-duplicates test-lint-executable
+ 
+ ifdef TEST_OUTPUT_DIRECTORY
+-TEST_RESULTS_DIRECTORY = $(TEST_RESULTS_DIRECTORY)/test-results
++TEST_RESULTS_DIRECTORY = $(TEST_OUTPUT_DIRECTORY)/test-results
+ else
+ TEST_RESULTS_DIRECTORY = test-results
+ endif
+-- 
+1.8.3.rc0.149.g98a72f2.dirty
