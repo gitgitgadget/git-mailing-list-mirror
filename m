@@ -1,73 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v5 0/3] interactive git clean
-Date: Mon, 06 May 2013 09:58:06 +0200
-Message-ID: <vpqli7s8rqp.fsf@grenoble-inp.fr>
-References: <cover.1367551846.git.worldhello.net@gmail.com>
-	<CAPig+cQALgr_VXwG5jBiFVTM627se8zQz7vsmF=A9OLcp_GT9A@mail.gmail.com>
-	<CANYiYbG5q7g-Gn-EGtsgS4XYLbQJuY6Pr_6FgKknADTD5_KoTg@mail.gmail.com>
-	<CAPig+cR--LQSkxc27_tMRrEnFJFApymqK9268BQA0bab38W3OQ@mail.gmail.com>
+From: Ilya Basin <basinilya@gmail.com>
+Subject: Re[4]: [PATCH 4/5] git-svn: fix bottleneck in stash_placeholder_list()
+Date: Mon, 6 May 2013 12:14:22 +0400
+Message-ID: <916494719.20130506121422@gmail.com>
+References: <1438528085.20130501090926@gmail.com> <1409591910.20130501123153@gmail.com> <7vhaim8w48.fsf@alter.siamese.dyndns.org> <455264907.20130501235104@gmail.com> <20130501213031.GA13056@dcvr.yhbt.net> <7v1u9q5pu5.fsf@alter.siamese.dyndns.org> <20130502024926.GA12172@dcvr.yhbt.net> <12810110770.20130502213124@gmail.com> <20130502204017.GB26623@dcvr.yhbt.net> <77906182.20130503092642@gmail.com> <1379019858.20130503104248@gmail.com>
+Reply-To: Ilya Basin <basinilya@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon May 06 09:58:35 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Ray Chen <rchen@cs.umd.edu>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon May 06 10:14:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZGJe-00009x-QX
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 09:58:35 +0200
+	id 1UZGZ8-0003qO-9H
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 10:14:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753663Ab3EFH60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 03:58:26 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:42213 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753582Ab3EFH6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 03:58:25 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r467w5QN024847
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 6 May 2013 09:58:06 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UZGJC-00025M-MR; Mon, 06 May 2013 09:58:06 +0200
-In-Reply-To: <CAPig+cR--LQSkxc27_tMRrEnFJFApymqK9268BQA0bab38W3OQ@mail.gmail.com>
-	(Eric Sunshine's message of "Sun, 5 May 2013 08:35:55 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 06 May 2013 09:58:07 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r467w5QN024847
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1368431890.05552@5CDFl8uxUaVnBLT3sxzoDw
+	id S1753786Ab3EFIOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 04:14:30 -0400
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:40649 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753584Ab3EFIO3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 04:14:29 -0400
+Received: by mail-lb0-f182.google.com with SMTP id r11so3159156lbv.27
+        for <git@vger.kernel.org>; Mon, 06 May 2013 01:14:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
+         :subject:in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=m4pxF2mw80iOnmRJMDmA+gVvn4UAQGS+YmRwEV+xDTk=;
+        b=SakNS3gheWzQfazVdz4DEarmRnSKn54phyXaviXWCgNXmOmRPPoRQnrSs8yjg+wFbM
+         o1/MZ6CD03vNT5fsdwCIDfabyloRqe1c10zQjyM7RY7dL1CYg6WedoZDGFdP9r74pfaT
+         XpbkGHEwtTyqFowzDo1Eyb+uSx2EIvrNvB8JpKNpzupI7Qa6mxWUPZX95/knhN+VRMfx
+         IFwPCAx7zK6p8nd2tTQPx4RCn6V1FMXRESQ1SyAkzVZittGuFFaIp1UD4RsTlan3SC9V
+         SG+SZ7PlJgRp3+xYjl4ip+w0OA3KfueKAohHE5pA1E2/Oft/AYcGzaBmdB6MJEg5oeYG
+         kujg==
+X-Received: by 10.152.26.65 with SMTP id j1mr7225718lag.42.1367828066997;
+        Mon, 06 May 2013 01:14:26 -0700 (PDT)
+Received: from BASIN.reksoft.ru ([2a00:1120:0:1001:1842:ea3c:41c8:517a])
+        by mx.google.com with ESMTPSA id lb9sm8561154lab.9.2013.05.06.01.14.24
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 06 May 2013 01:14:25 -0700 (PDT)
+X-Mailer: Voyager (v3.99.4) Professional
+X-Priority: 3 (Normal)
+In-Reply-To: <1379019858.20130503104248@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223429>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+>>>> The last error I encountered is:
+>>>> r7009 = 39805bb078983e34f2fc8d2c8c02d695d00d11c0 (refs/remotes/DMC4_Basic)
+>>>> Too many open files: Can't open file '/home/il/builds/sicap/gitsvn/prd_dmc4.svn/db/revs/0/786': Too many open files at /.snapshots/persist/builds/git/git-git/perl/blib/lib/Git/SVN/Ra.pm line 282.
+>>>> 
+>>>> I think It's unrelated to empty dirs.
 
-> The pattern [y] will match file named 'y'. It probably is unusual for
-> files named 'y', 'n', etc. to exist in the top-level directory, but
-> the gitignore patterns already provide an escape hatch for these
-> unusual cases.
+EW>>> Can you get an lsof on the git-svn process right before this?
+IB>>     /.snapshots/persist/builds/sicap/gitsvn/aaa/.git/A4O_OTQxWc
+IB>>     /.snapshots/persist/builds/sicap/gitsvn/aaa/.git/LfpcENJduN
+IB>>     /.snapshots/persist/builds/sicap/gitsvn/aaa/.git/Dkk7pN4Mpz
+IB>>     etc.
 
-But how does the user know that?
+EW>>> What's your open files limit?
+IB>> 1024
 
-I'd rather stay away from dwim that works in 99% of cases but do
-something dangerous in the 1% remaining, and complex un-guessable escape
-scheme to solve these few cases. The two stages (yes/no/edit, and then
-escape patterns) is clear, and does not require so many additional
-keystrokes.
+IB> Why no call to close() from temp_release() in Git.pm?
+
+Found, fixed. It was related to empty dirs.
+
+
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
