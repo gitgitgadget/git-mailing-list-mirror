@@ -1,199 +1,194 @@
-From: David Goldfarb <deg@degel.com>
-Subject: RE: trouble on windows network share
-Date: Mon, 6 May 2013 10:46:41 +0000
-Message-ID: <8B6563E531152E4190313499F193F94214AAB079@mbx500-u1-lo-3.exch500.msoutlookonline.net>
-References: <871B6C10EBEFE342A772D1159D1320853F63D205@umechphj.easf.csd.disa.mil>
-	<1367529968647-7584800.post@n2.nabble.com>
-	<87ppx8o1lj.fsf@linux-k42r.v.cablecom.net>
-	<8B6563E531152E4190313499F193F94214A9C966@mbx500-u1-lo-3.exch500.msoutlookonline.net>
-	<87ip2wla12.fsf@linux-k42r.v.cablecom.net>
-	<8B6563E531152E4190313499F193F94214AAAB42@mbx500-u1-lo-3.exch500.msoutlookonline.net>
- <878v3sh14d.fsf@linux-k42r.v.cablecom.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: another packed-refs race
+Date: Mon, 06 May 2013 14:03:40 +0200
+Message-ID: <51879C1C.5000407@alum.mit.edu>
+References: <20130503083847.GA16542@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon May 06 12:46:49 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 06 14:03:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZIwS-0006g8-Rj
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 12:46:49 +0200
+	id 1UZK8z-000438-Kb
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 14:03:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753818Ab3EFKqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 06:46:45 -0400
-Received: from HUB500-LO-4.exch500.serverdata.net ([205.217.20.176]:39329 "EHLO
-	hub500-LO-4.EXCH500.SERVERDATA.NET" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753366Ab3EFKqo convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 May 2013 06:46:44 -0400
-Received: from MBX500-U1-LO-3.exch500.msoutlookonline.net ([10.32.4.55]) by
- HUB500-LO-4.exch500.msoutlookonline.net ([10.32.4.39]) with mapi id
- 14.03.0123.003; Mon, 6 May 2013 03:46:35 -0700
-Thread-Topic: trouble on windows network share
-Thread-Index: AQHOSkGhDJxfER0S7U2/adU3l4duX5j376ZggAAJdNA=
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [87.69.114.75]
+	id S1752801Ab3EFMDp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 08:03:45 -0400
+Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:64260 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752463Ab3EFMDo (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 May 2013 08:03:44 -0400
+X-AuditID: 12074412-b7f216d0000008d4-e5-51879c1f3955
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 5F.F9.02260.F1C97815; Mon,  6 May 2013 08:03:43 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r46C3f6O005190
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 6 May 2013 08:03:42 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <20130503083847.GA16542@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqCs/pz3Q4OVbRYuuK91MFvPu7mKy
+	+NHSw+zA7HHp5Xc2j2e9exg9Pm+SC2CO4rZJSiwpC85Mz9O3S+DOuLNuFnPBRsOKczNmsjYw
+	Nql3MXJySAiYSLTtmc4IYYtJXLi3nq2LkYtDSOAyo8SSja8YIZxjTBLv9s1kBaniFdCWWNyy
+	jQ3EZhFQlbj27wILiM0moCuxqKeZCcQWFQiTWLV+GTNEvaDEyZlPwGpEBGQlvh/eCLaNWcBK
+	YtWVNrCZwkBzJi6bwA5iCwHFX0w/BWRzcHAKWEvM2CgPYjILqEusnycE0Skvsf3tHOYJjAKz
+	kCyYhVA1C0nVAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Znq5mSV6qSmlmxghgSu0g3H9
+	SblDjAIcjEo8vIVP2gKFWBPLiitzDzFKcjApifIqTW8PFOJLyk+pzEgszogvKs1JLT7EKMHB
+	rCTC67MXqJw3JbGyKrUoHyYlzcGiJM77c7G6n5BAemJJanZqakFqEUxWhoNDSYL3wyygoYJF
+	qempFWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGgKI0vBsYpSIoHaC/fbKB23uKCxFygKETr
+	KUZdjpVXnrxmFGLJy89LlRLnnQWyQwCkKKM0D24FLE29YhQH+liYlxFkFA8wxcFNegW0hAlo
+	SQIf2JKSRISUVAPjnBvCn2uC/PO0/rvWf8qfFPKz5gT7gjd8Ms8S2J5/TTjzJzVlWtWdWTPr
+	OB2z7mfdMheTX8enwL0mQllIqn6DxK2C1aZ/rmltLsyQf3rvFrfWZA33vN8ickfv 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223442>
 
-Oops, I earlier missed the second half of your message, where you suggested that I patch move_temp_to_file().
-Sorry, I don't have the tool-chain or knowledge to recompile git into this win/Cygwin environment.
-
-What I can do, realistically, is:
-- Follow exact instructions.
-- (with some obvious hesitation) run executables that you send me.
-- Continue whatever tests you want with my existing git.
-
-Note, too, that:
-- This is occurring on a standard, off-the-shelf, NAS box, the Western Digital "My Book Live"
-- I would guess that the "craziness" has more to do with the box's network stack than with its FS, since it behaves fine when mounted on Linux, but not on Windows.
-
-David
-
-
-
------Original Message-----
-From: David Goldfarb 
-Sent: Monday, May 06, 2013 1:13 PM
-To: 'Thomas Rast'
-Cc: git@vger.kernel.org
-Subject: RE: trouble on windows network share
-
-Ok.  Continuing in the same shell:
-
-    U:\foo>git status
-    # On branch master
-    # Changes to be committed:
-    #   (use "git reset HEAD <file>..." to unstage)
-    #
-    #       new file:   trace1
-    #
-    # Untracked files:
-    #   (use "git add <file>..." to include in what will be committed)
-    #
-    #       trace2
-
-    U:\foo>git commit -m "test b"
-    error: Trying to write ref refs/heads/master with nonexistent object 428dafc292b8396fc7b3c7f692dc9dfe1196a40a
-    fatal: cannot update HEAD ref
-
-    U:\foo>dir /s *a40a
-     Volume in drive U is Users
-     Volume Serial Number is FC97-3DA5
-
-     Directory of U:\foo\.git\objects\42
-
-    05/06/2013  12:26 PM               152 8dafc292b8396fc7b3c7f692dc9dfe1196a40a
-                   1 File(s)            152 bytes
-
-         Total Files Listed:
-                   1 File(s)            152 bytes
-                   0 Dir(s)  1,594,477,576,192 bytes free
-
-    U:\foo>date
-    The current date is: Mon 05/06/2013
-    Enter the new date: (mm-dd-yy)
-    U:\foo>time
-    The current time is: 13:10:49.55
-    Enter the new time:
-    U:\foo>git cat-file -p 428dafc292b8396fc7b3c7f692dc9dfe1196a40a
-    tree cecae5b4c87ea21aef513fcfcd5c27fe87e0536f
-    parent f6a0de35d12a3b58f12bf1af4ff629b8b004ad82
-    author David Goldfarb <deg@degel.com> 1367834997 +0300
-    committer David Goldfarb <deg@degel.com> 1367834997 +0300
-
-    test b
-
-    U:\foo>U:\foo>
-
-
-
-David
-
------Original Message-----
-From: Thomas Rast [mailto:trast@inf.ethz.ch]
-Sent: Monday, May 06, 2013 1:08 PM
-To: David Goldfarb
-Cc: git@vger.kernel.org
-Subject: Re: trouble on windows network share
-
-David Goldfarb <deg@degel.com> writes:
-
-> Looks like it works.
+On 05/03/2013 10:38 AM, Jeff King wrote:
+> I found another race related to the packed-refs code. Consider for a
+> moment what happens when we are looking at refs and another process does
+> a simultaneous "git pack-refs --all --prune", updating packed-refs and
+> deleting the loose refs.
+> 
+> If we are resolving a single ref, then we will either find its loose
+> form or not. If we do, we're done. If not, we can fall back on what was
+> in the packed-refs file. If we read the packed-refs file at that point,
+> we're OK. If the loose ref existed before but was pruned before we could
+> read it, then we know the packed-refs file is already in place, because
+> pack-refs would not have deleted the loose ref until it had finished
+> writing the new file. But imagine that we already loaded the packed-refs
+> file into memory earlier. We may be looking at an _old_ version of it
+> that has an irrelevant sha1 from the older packed-refs file. Or it might
+> not even exist in the packed-refs file at all, and we think the ref does
+> not resolve.
 >
-> From the windows machine:
->     U:\foo>git cat-file -p 0b89efdeef245ed6a0a7eacc5c578629a141f856
->     100644 blob b02e7c87fe376a353ea4f014bdb3f5200a946b37    foo1
->     100644 blob 2cbf64f759a62392ad9dfe1fb9c2cdb175876014    foo2
->
->     U:\foo>
->
->
-> Double-checking that nothing was fixed or changed when I earlier committed the file from Linux, here's a second test:
->
->
->     U:\foo>git cat-file -p 0b89efdeef245ed6a0a7eacc5c578629a141f856
->     100644 blob b02e7c87fe376a353ea4f014bdb3f5200a946b37    foo1
->     100644 blob 2cbf64f759a62392ad9dfe1fb9c2cdb175876014    foo2
->     
->     U:\foo>git status
->     # On branch master
->     # Untracked files:
->     #   (use "git add <file>..." to include in what will be committed)
->     #
->     #       trace1
->     #       trace2
->     nothing added to commit but untracked files present (use "git add" 
-> to track)
->     
->     U:\foo>git add trace1
->     
->     U:\foo>git commit trace1 -m "testing"
+> We could fix this by making sure our packed-refs file is up to date
 
-Note that specifying 'trace1' here is redundant, since you already added it and had no other staged changes.  Perhaps you can re-run a test like this without the extra argument for comparison.  That would tell us if it matters that the write and read happen in the same process.
+s/file/cache/
 
->     error: unable to find cecae5b4c87ea21aef513fcfcd5c27fe87e0536f
->     fatal: cecae5b4c87ea21aef513fcfcd5c27fe87e0536f is not a valid 
-> object
->     
->     U:\foo>git cat-file -p cecae5b4c87ea21aef513fcfcd5c27fe87e0536f
->     100644 blob b02e7c87fe376a353ea4f014bdb3f5200a946b37    foo1
->     100644 blob 2cbf64f759a62392ad9dfe1fb9c2cdb175876014    foo2
->     100644 blob 19102815663d23f8b75a47e7a01965dcdc96468c    test.txt
->     100644 blob c9009b02950964cf1d5281125e6e2f647dd9dc16    trace1
+> before using it. E.g., resolving a ref with the following sequence:
+> 
+>   1. Look for loose ref. If found, OK.
+> 
+>   2. Compare inode/size/mtime/etc of on-disk packed-refs to their values
+>      from the last time we loaded it. If they're not the same, reload
+>      packed-refs from disk. Otherwise, continue.
+> 
+>   3. Look for ref in in-memory packed-refs.
+> 
+> Not too bad. We introduce one extra stat() for a ref that has been
+> packed, and the scheme isn't very complicated.
 
-I'm inclined to just say that your FS is crazy.
+Let me think out loud alongside your analysis...
 
-What's unsatisfactory is that we already have a bunch of crazy FS workarounds in move_temp_to_file(), which is one obvious candidate for what is going on here.  So this wouldn't be something new; just another craziness to work around.
+By this mechanism the reader can ensure that it never uses a version of
+the packed-refs file that is older than its information that the
+corresponding loose ref is absent from the filesystem.
 
-For example, you could test the theory that rename() has something to do with it by patching this into move_temp_to_file():
+This is all assuming that the filesystem accesses have a defined order;
+how is that guaranteed?  pack_refs() and commit_ref() both rely on
+commit_lock_file(), which calls
 
-diff --git i/sha1_file.c w/sha1_file.c
-index 67e815b..22af015 100644
---- i/sha1_file.c
-+++ w/sha1_file.c
-@@ -2635,6 +2635,10 @@ int move_temp_to_file(const char *tmpfile, const char *filename)
- 		/* FIXME!!! Collision check here ? */
- 	}
- 
-+	if (access(filename, R_OK) < 0)
-+		return error("access(%s, R_OK) failed immediately after rename(): %s",
-+			     filename, strerror(errno));
-+
- out:
- 	if (adjust_shared_perm(filename))
- 		return error("unable to set permission to '%s'", filename);
+    close(fd) on the lockfile
+    rename(lk->filename, result_file)
 
+prune_ref() locks the ref, verifies that its SHA-1 is unchanged, then
+calls unlink(), then rollback_lock_file().
 
---
-Thomas Rast
-trast@{inf,student}.ethz.ch
+The atomicity of rename() guarantees that a reader sees either the old
+or the new version of the file in question.  But what guarantees are
+there about accesses across two files?  Suppose we start with ref "foo"
+that exists only as a loose ref, and we have a pack-refs process doing
+
+    write packed-refs with "foo"
+    commit_lock_file() for packed-refs
+    read loose ref "foo" and verify that its SHA-1 is unchanged
+    unlink() loose ref "foo"
+
+while another process is trying to read the reference:
+
+    look for loose ref "foo"
+    read packed-refs
+
+Is there any guarantee that the second process can't see the loose ref
+"foo" as being missing but nevertheless read the old version of
+packed-refs?  I'm not strong enough on filesystem semantics to answer
+that question.
+
+> But what about enumerating refs via for_each_ref? It's possible to have
+> the same problem there, and the packed-refs file may be moved into place
+> midway through the process of enumerating the loose refs. So we may see
+> refs/heads/master, but when we get to refs/remotes/origin/master, it has
+> now been packed and pruned.
+
+Yes.
+
+> I _think_ we can get by with:
+> 
+>   1. Generate the complete sorted list of loose refs.
+> 
+>   2. Check that packed-refs is stat-clean, and reload if necessary, as
+>      above.
+> 
+>   3. Merge the sorted loose and packed lists, letting loose override
+>      packed (so even if we get repacked halfway through our loose
+>      traversal and get half of the refs there, it's OK to see duplicates
+>      in packed-refs, which we will ignore).
+> 
+> This is not very far off of what we do now. Obviously we don't do the
+> stat-clean check in step 2. But we also don't generate the complete list
+> of loose refs before hitting the packed-refs file. Instead we lazily
+> load the loose directories as needed. And of course we cache that
+> information in memory, even though it may go out of date. I think the
+> best we could do is keep a stat() for each individual directory we see,
+> and check it before using the in-memory contents. That may be a lot of
+> stats, but it's still better than actually opening each loose ref
+> separately.
+
+The loose refs cache is only used by the for_each_ref() functions, not
+for looking up individual references.  Another approach would be to
+change the top-level for_each_ref() functions to re-stat() all of the
+loose references within the namespace that interests it, *then* verify
+that the packed-ref cache is not stale, *then* start the iteration.
+Then there would be no need to re-stat() files during the iteration.
+(This would mean that we have to prohibit a second reference iteration
+from being started while one is already in progress.)
+
+Of course, clearing (part of) the loose reference cache invalidates any
+pointers that other callers might have retained to refnames in the old
+version of the cache.  I've never really investigated what callers might
+hold onto such pointers under the assumption that they will live to the
+end of the process.
+
+Given all of this trouble, there is an obvious question: why do we have
+a loose reference cache in the first place?  I think there are a few
+reasons:
+
+1. In case one git process has to iterate through the same part of the
+reference namespace more than once.  (Does this frequently happen?)
+
+2. Reading a bunch of loose references at the same time is more
+efficient than reading them one by one interleaved with other file
+reads.  (I think this is a significant win.)
+
+3. Keeping references in a cache means that their refnames have a longer
+life, which callers can take advantage of to avoid making their own
+copies.  I haven't checked which callers might make this assumption, and
+nowhere is the lifetime of such a refname documented so it is not even
+clear what callers are *allowed* to assume.  (In my changes I've tried
+to stay on the safe side by not reducing any lifetimes.)
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
