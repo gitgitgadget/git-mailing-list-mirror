@@ -1,80 +1,120 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/3] fast-export: improve speed by skipping blobs
-Date: Mon, 6 May 2013 12:20:08 -0400
-Message-ID: <20130506162008.GB7992@sigill.intra.peff.net>
-References: <1367793534-8401-1-git-send-email-felipe.contreras@gmail.com>
- <1367793534-8401-3-git-send-email-felipe.contreras@gmail.com>
- <20130506123111.GB3809@sigill.intra.peff.net>
- <7v7gjctabm.fsf@alter.siamese.dyndns.org>
+From: Trond Hasle Amundsen <t.h.amundsen@usit.uio.no>
+Subject: Re: [PATCH] contrib/hooks/post-receive-email: get description from repo.git/config
+Date: Mon, 06 May 2013 18:26:48 +0200
+Organization: Universitas Osloensis
+Message-ID: <15t38u0cbw7.fsf@tux.uio.no>
+References: <15tsj20cizd.fsf@tux.uio.no>
+	<7vtxmgruhc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 06 18:20:19 2013
+X-From: git-owner@vger.kernel.org Mon May 06 18:27:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZO9C-0004cR-4g
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 18:20:18 +0200
+	id 1UZOFe-0002an-BD
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 18:26:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754685Ab3EFQUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 12:20:12 -0400
-Received: from cloud.peff.net ([50.56.180.127]:39505 "EHLO peff.net"
+	id S1753714Ab3EFQ0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 12:26:54 -0400
+Received: from mail-out4.uio.no ([129.240.10.15]:48692 "EHLO mail-out4.uio.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754341Ab3EFQUL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 12:20:11 -0400
-Received: (qmail 13748 invoked by uid 102); 6 May 2013 16:20:31 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 May 2013 11:20:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 May 2013 12:20:08 -0400
-Content-Disposition: inline
-In-Reply-To: <7v7gjctabm.fsf@alter.siamese.dyndns.org>
+	id S1752836Ab3EFQ0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 12:26:53 -0400
+Received: from mail-mx4.uio.no ([129.240.10.45])
+	by mail-out4.uio.no with esmtp (Exim 4.80.1)
+	(envelope-from <t.h.amundsen@usit.uio.no>)
+	id 1UZOFY-0002op-NH; Mon, 06 May 2013 18:26:52 +0200
+Received: from tux.uio.no ([129.240.6.13])
+	by mail-mx4.uio.no with esmtp  (Exim 4.80)
+	(envelope-from <t.h.amundsen@usit.uio.no>)
+	id 1UZOFY-0000JR-8X; Mon, 06 May 2013 18:26:52 +0200
+Received: by tux.uio.no (Postfix, from userid 45150)
+	id D7ED38F9; Mon,  6 May 2013 18:26:48 +0200 (CEST)
+In-Reply-To: <7vtxmgruhc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 06 May 2013 08:36:15 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-UiO-Ratelimit-Test: rcpts/h 4 msgs/h 2 sum rcpts/h 6 sum msgs/h 3 total rcpts 5515 max rcpts/h 30 ratelimit 0
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.7, required=5.0, autolearn=disabled, RP_MATCHES_RCVD=-0.653,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
+X-UiO-Scanned: E8DB029F4816427DC6E1537AC3AF9F0C9CB74618
+X-UiO-SPAM-Test: remote_host: 129.240.6.13 spam_score: -56 maxlevel 80 minaction 1 bait 0 mail/h: 2 total 1450 max/h 9 blacklist 0 greylist 1 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223468>
 
-On Mon, May 06, 2013 at 08:08:45AM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > I'm also not sure why your claim "we don't care about blobs" is true,
-> > because naively we would want future runs of fast-export to avoid having
-> > to write out the whole blob content when mentioning the blob again.
-> 
-> The existing documentation is fairly clear that marks for objects
-> other than commits are not exported, and the import-marks codepath
-> discards anything but commits, so there is no mechanism for the
-> existing fast-export users to leave blob marks in the marks file for
-> later runs of fast-export to take advantage of.  The second
-> invocation cannot refer to such a blob in the first place.
+> But when you send a patch the next time around, please have the
+> above and the next three lines (i.e. "introductory text") _below_
+> the three-dash line.
 
-OK. If the argument is "we do not write them, so do not bother reading
-them back in", I think that is reasonable. It could hurt anybody trying
-to run "fast-export" against a marks file created by somebody else, but
-that is also the same case that is being helped here (since otherwise,
-we would not be seeing blob entries at all).
+Allright, noted.
 
-I do not offhand know enough about the internals of import/export-style
-remote-helpers to say whether the "hurt" case even exists, let alone how
-common it is.
+>> From 878a7af9088e2bcc3afc9b09b9023f1f188c844b Mon Sep 17 00:00:00 2001
+>> From: Trond Hasle Amundsen <t.h.amundsen@usit.uio.no>
+>> Date: Mon, 6 May 2013 15:41:25 +0200
+>> Subject: [PATCH] contrib/hooks/post-receive-email: get description from repo.git/config
+>
+> And remove these five lines above.  We will read the authorship and
+> subject from the e-mail header of your message.
 
-> By discarding marks on blobs, we may be robbing some optimization
-> possibilities, and by discarding marks on tags, we may be robbing
-> some features, from users of fast-export; we might want to add an
-> option "--use-object-marks={blob,commit,tag}" or something to both
-> fast-export and fast-import, so that the former can optionally write
-> marks for non-commits out, and the latter can omit non commit marks
-> if the user do not need them. But that is a separate issue.
+So many rules.. ;) Also noted.
 
-Yeah, that would allow the old behavior (and more) if anybody is hurt by
-this. It is nice if the order of implementation is "more features, then
-flip the default" because it provides an immediate escape hatch for
-anybody who is hurt by the change in default. But again, I do not know
-enough to say whether such hurt cases even exist.
+>> +projectdesc=$(git config gitweb.description)
+>> +if [ -f "$GIT_DIR/description" ]; then
+>> +        projectdesc=$(sed -ne '1p' "$GIT_DIR/description" 2>/dev/null)
+>> +fi
+>> +
+>>  # Check if the description is unchanged from it's default, and shorten it to
+>>  # a more manageable length if it is
+>>  if expr "$projectdesc" : "Unnamed repository.*$" >/dev/null
+>
+> If description file takes precedence, then the right order to do
+> this would be
+>
+>     projectdesc=$(sed -ne 1p "$GIT_DIR/description" 2>/dev/null)
+>     if expr "$projectdesc" : "Unnamed repository" >/dev/null
+>     then
+>             : use it as is
+>     elif projectdesc=$(git config gitweb.description)
+>     then
+>             : use it as is
+>     else
+>             projectdesc="UNNAMED PROJECT"
+>     fi
+>
+> to avoid calling "git config" when it is not even necessary.
 
--Peff
+That doesn't work, you'll always call "git config" unless the string
+matches "Unnamed repository". If you negate the expr line it still
+doesn't work. To avoid calling "git config" I'd rather suggest something
+like this:
+
+  projectdesc=$(sed -ne 1p "$GIT_DIR/description" 2>/dev/null)
+  if [ -z "$projectdesc" ]; then
+          projectdesc=$(git config gitweb.description)
+  fi
+
+And let this block remain intact:
+
+  if expr "$projectdesc" : "Unnamed repository.*$" >/dev/null
+  then
+          projectdesc="UNNAMED PROJECT"
+  fi
+
+The only change would then be the three added lines containing the if
+block that calls "git config" if the "projectdesc" variable is
+empty. The idea is just to get the description from config if the
+description file doesn't exist.
+
+Just curious.. why would we avoid calling "git config" unless necessary?
+
+Regards,
+-- 
+Trond H. Amundsen <t.h.amundsen@usit.uio.no>
+Center for Information Technology Services, University of Oslo
