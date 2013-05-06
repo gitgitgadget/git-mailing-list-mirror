@@ -1,84 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH v2 2/3] fast-export: improve speed by skipping blobs
-Date: Mon, 06 May 2013 09:32:41 -0700
-Message-ID: <7vli7srrva.fsf@alter.siamese.dyndns.org>
+Date: Mon, 6 May 2013 12:40:46 -0400
+Message-ID: <20130506164046.GA20257@sigill.intra.peff.net>
 References: <1367793534-8401-1-git-send-email-felipe.contreras@gmail.com>
-	<1367793534-8401-3-git-send-email-felipe.contreras@gmail.com>
-	<20130506123111.GB3809@sigill.intra.peff.net>
-	<7v7gjctabm.fsf@alter.siamese.dyndns.org>
-	<20130506162008.GB7992@sigill.intra.peff.net>
+ <1367793534-8401-3-git-send-email-felipe.contreras@gmail.com>
+ <20130506123111.GB3809@sigill.intra.peff.net>
+ <7v7gjctabm.fsf@alter.siamese.dyndns.org>
+ <20130506162008.GB7992@sigill.intra.peff.net>
+ <7vli7srrva.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
 	Antoine Pelisse <apelisse@gmail.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 06 18:32:49 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 06 18:41:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZOLI-000855-Sv
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 18:32:49 +0200
+	id 1UZOT7-0007aR-Kq
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 18:40:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754507Ab3EFQcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 12:32:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52769 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754006Ab3EFQco (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 12:32:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7A511CCDD;
-	Mon,  6 May 2013 16:32:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gmscv6GjClhEFMHVmmkExWsM2+s=; b=TfEib5
-	1vEaMJgL1yFtaY2VogAeXuK1RtF1MNICjoLQ51qNrnnRiiH+EailfWBwdsruENDZ
-	2hOqbVGXc8zvDCm7pCD3iaHBdcwlgmoggez/GT82/o+VvguHmmUR0gd/qTilm69f
-	KCQH/IOZ7xUfjlz9N+8eCFyVYa+FHbPnskWsA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dSkAorGcWHi0gCF/DcEQQyyRclMFdKb6
-	iA8iXgPOBbcDDT3R+zfAIh7COGYW40ijVoEeY7VkVbpqLs4Qp+bwdR5Q+7PtEz79
-	HlKPZXvFSUMmNquiqVzE0za7MG8dfWjPvhLmxp9OD6s+lLGJ+W3wTDTPu1BMSY9o
-	jp0L/cRSyws=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE74E1CCDC;
-	Mon,  6 May 2013 16:32:43 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 355C81CCD9;
-	Mon,  6 May 2013 16:32:43 +0000 (UTC)
-In-Reply-To: <20130506162008.GB7992@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 6 May 2013 12:20:08 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9384D166-B66A-11E2-A438-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754600Ab3EFQkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 12:40:49 -0400
+Received: from cloud.peff.net ([50.56.180.127]:39653 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753525Ab3EFQks (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 12:40:48 -0400
+Received: (qmail 14842 invoked by uid 102); 6 May 2013 16:41:08 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 May 2013 11:41:08 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 May 2013 12:40:46 -0400
+Content-Disposition: inline
+In-Reply-To: <7vli7srrva.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223471>
 
-Jeff King <peff@peff.net> writes:
+On Mon, May 06, 2013 at 09:32:41AM -0700, Junio C Hamano wrote:
 
-> On Mon, May 06, 2013 at 08:08:45AM -0700, Junio C Hamano wrote:
->
->> > I'm also not sure why your claim "we don't care about blobs" is true,
->> > because naively we would want future runs of fast-export to avoid having
->> > to write out the whole blob content when mentioning the blob again.
->> 
->> The existing documentation is fairly clear that marks for objects
->> other than commits are not exported, and the import-marks codepath
->> discards anything but commits, so there is no mechanism for the
->> existing fast-export users to leave blob marks in the marks file for
->> later runs of fast-export to take advantage of.  The second
->> invocation cannot refer to such a blob in the first place.
->
-> OK. If the argument is "we do not write them, so do not bother reading
-> them back in", I think that is reasonable.
+> > OK. If the argument is "we do not write them, so do not bother reading
+> > them back in", I think that is reasonable.
+> 
+> The way I read builtin/fast-export.c::import_marks() is that it is
+> more like "we do not write them, and we do not read them back in
+> either IN THE CURRENT CODE".
 
-The way I read builtin/fast-export.c::import_marks() is that it is
-more like "we do not write them, and we do not read them back in
-either IN THE CURRENT CODE".
+Ahh...I see now. It is not about skipping the blobs as a new behavior,
+but rather about skipping them _earlier_, before we have loaded the
+object contents from disk.
+
+I took the "we don't care about" as "the general use of fast-export does
+not care about", but it is "we will literally just drop them a few lines
+later".
+
+So yes, I think this is an obviously correct optimization. Thanks for
+clarifying, and sorry to be so slow.
+
+-Peff
