@@ -1,175 +1,128 @@
-From: "Arend van Spriel" <arend@broadcom.com>
-Subject: [RFC] git: make signoff header configurable
-Date: Mon, 6 May 2013 23:33:52 +0200
-Message-ID: <1367876032-6833-1-git-send-email-arend@broadcom.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 4/4] fast-import: only store commit objects
+Date: Mon, 6 May 2013 16:36:18 -0500
+Message-ID: <CAMP44s2KHH1n0vHB0Mdv-M2xV97KA9FMc6UrPyYyxD+2jsvfTA@mail.gmail.com>
+References: <1367555502-4706-1-git-send-email-felipe.contreras@gmail.com>
+	<1367555502-4706-5-git-send-email-felipe.contreras@gmail.com>
+	<87y5bw3q1s.fsf@hexa.v.cablecom.net>
+	<CAMP44s1R9hAMZ=DQoPiTVi3+40NpADjVFU7tYovZA8W-PWEhhg@mail.gmail.com>
+	<518785B3.3050606@alum.mit.edu>
+	<87ip2wflg0.fsf@linux-k42r.v.cablecom.net>
+	<518789D1.4010905@alum.mit.edu>
+	<7v38u0t9va.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1HASAuF0ECCvJr66WeqopDzLZQ12pKFsc-j5_VCDrizg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Arend van Spriel" <arend@broadcom.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 06 23:34:14 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 06 23:36:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZT2z-00056j-2w
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 23:34:13 +0200
+	id 1UZT56-0007Fm-Mq
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 23:36:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757354Ab3EFVeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 17:34:08 -0400
-Received: from mms3.broadcom.com ([216.31.210.19]:2540 "EHLO mms3.broadcom.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757107Ab3EFVeH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 17:34:07 -0400
-Received: from [10.9.208.57] by mms3.broadcom.com with ESMTP (Broadcom
- SMTP Relay (Email Firewall v6.5)); Mon, 06 May 2013 14:25:33 -0700
-X-Server-Uuid: B86B6450-0931-4310-942E-F00ED04CA7AF
-Received: from IRVEXCHSMTP2.corp.ad.broadcom.com (10.9.207.52) by
- IRVEXCHCAS08.corp.ad.broadcom.com (10.9.208.57) with Microsoft SMTP
- Server (TLS) id 14.1.438.0; Mon, 6 May 2013 14:33:57 -0700
-Received: from mail-sj1-12.sj.broadcom.com (10.10.10.20) by
- IRVEXCHSMTP2.corp.ad.broadcom.com (10.9.207.52) with Microsoft SMTP
- Server id 14.1.438.0; Mon, 6 May 2013 14:33:56 -0700
-Received: from arend-ubuntu-1 (unknown [10.177.252.129]) by
- mail-sj1-12.sj.broadcom.com (Postfix) with ESMTP id 50902207C0; Mon, 6
- May 2013 14:33:56 -0700 (PDT)
-Received: from arend by arend-ubuntu-1 with local (Exim 4.80) (
- envelope-from <arend@broadcom.com>) id 1UZT2g-0001ml-JK; Mon, 06 May
- 2013 23:33:54 +0200
-X-Mailer: git-send-email 1.7.10.4
-X-WSS-ID: 7D96C0472L812500273-01-01
+	id S1757961Ab3EFVgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 17:36:20 -0400
+Received: from mail-la0-f51.google.com ([209.85.215.51]:33991 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757883Ab3EFVgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 17:36:19 -0400
+Received: by mail-la0-f51.google.com with SMTP id ep20so3772631lab.38
+        for <git@vger.kernel.org>; Mon, 06 May 2013 14:36:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=htE7j6oEoBJlOUOxYsOG/8f6uxtYldlRixLZ+Qlvt60=;
+        b=uvNwlRjunxXZbRLaK1UH0QH8LQpApT5JnE75D9hgveJT7cF8MtK1rnGgx9MGDW+/yv
+         lwJGjbrUw7IfYiek/nQLB/AjXW1cABxOsBG4Xs1S6OQChF6mhGMDOV+pIJ7wdS/QWFT4
+         rn47tWifXyoz3NoC7w11N8gEZicjJm4PdJhkHha18Di96pEkVBktaM1HvVcPFWKsUeDN
+         4yhLv6+/b/GaHUsflMyLbG8Gxtbqm4N31R2oUvtebM25ODzq7grElj6q5JBb+ZeOsCHl
+         ZLsJPNRNo7ffwz16DbEKy3dilj57oQGwTWOoRNv3kZvxG8WpgfXixWusYDQdhBdpy/FH
+         QFaw==
+X-Received: by 10.112.146.133 with SMTP id tc5mr8676541lbb.88.1367876178364;
+ Mon, 06 May 2013 14:36:18 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Mon, 6 May 2013 14:36:18 -0700 (PDT)
+In-Reply-To: <CAMP44s1HASAuF0ECCvJr66WeqopDzLZQ12pKFsc-j5_VCDrizg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223511>
 
-When using -s for commit, revert, and format-patch (there
-may be more) command the comments message gets a generated
-and hard-coded signed-off-by message. For some projects a
-different header is used, eg. HostAP. Adding a config parameter
-named 'signoff.label'.
+On Mon, May 6, 2013 at 4:19 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Mon, May 6, 2013 at 10:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>>
+>>> Yes, it can be handy to start loading the first "blobfile" in parallel
+>>> with the later stages of the conversion, before the second "dumpfile" is
+>>> ready.  In that case the user needs to pass --export-marks to the first
+>>> fast-import process to export marks on blobs so that the marks can be
+>>> passed to the second fast-import via --import-marks.
+>>>
+>>> So the proposed change would break a documented use of cvs2git.
+>>>
+>>> Making the export of blob marks optional would of course be OK, as long
+>>> as the default is to export them.
+>>
+>> Thanks for a concise summary.  Your use case fits exactly what
+>> Felipe conjectured as the nonexistent minority.
+>
+> Not true. cvs2git does *not* rely on the blobs being stored in a marks
+> file, because cvs2git does not rely on mark files at all.
+>
+>> An option that lets the caller say "I only care about marks on these
+>> types of objects to be written to (and read from) the exported marks
+>> file" would help Felipe's use case without harming your use case,
+>> and would be a sane and safe way to go.
+>
+> His case is not harmed at all. It's only the unfortunate command that
+> is mentioned in the documentation that didn't need to be mentioned at
+> all in the first place.
+>
+> It should be the other way around, if it's only this documentation
+> that is affected, we could add a switch for that particular command,
+> and the documentation should be updated, but it's overkill to add a
+> switch for one odd command in some documentation somewhere, it would
+> be much better to update the odd command to avoid using marks at all,
+> which is what the more appropriate command does, right below in the
+> same documentation.
 
-Signed-off-by: Arend van Spriel <arend@broadcom.com>
----
-I had an itch to scratch. Like the -s command line parameter to
-get the signed-off message added, but not all projects use the
-same signature format. So let me know what you think about this
-idea. Never contributed to git before so decided to make it an
-RFC first as this solution may be a bit hack-ish.
+This would simplify the documentation, and obliterate the need to use
+mark files at all:
 
-Regards,
-Arend
----
- builtin/commit.c |    5 +++--
- config.c         |   12 ++++++++++++
- sequencer.c      |   15 +++++++++++++--
- sequencer.h      |    3 ++-
- 4 files changed, 30 insertions(+), 5 deletions(-)
+diff -ur cvs2svn-2.4.0/www/cvs2git.html cvs2svn-2.4.0-mod/www/cvs2git.html
+--- cvs2svn-2.4.0/www/cvs2git.html	2012-09-22 01:49:55.000000000 -0500
++++ cvs2svn-2.4.0-mod/www/cvs2git.html	2013-05-06 16:33:12.070189985 -0500
+@@ -355,14 +355,13 @@
+       fast-import</tt>:</p>
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index d2f30d9..6e28325 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -848,6 +848,7 @@ static int rest_is_empty(struct strbuf *sb, int start)
- {
- 	int i, eol;
- 	const char *nl;
-+	char *so_hdr = get_signoff_header();
- 
- 	/* Check if the rest is just whitespace and Signed-of-by's. */
- 	for (i = start; i < sb->len; i++) {
-@@ -857,8 +858,8 @@ static int rest_is_empty(struct strbuf *sb, int start)
- 		else
- 			eol = sb->len;
- 
--		if (strlen(sign_off_header) <= eol - i &&
--		    !prefixcmp(sb->buf + i, sign_off_header)) {
-+		if (strlen(so_hdr) <= eol - i &&
-+		    !prefixcmp(sb->buf + i, so_hdr)) {
- 			i = eol;
- 			continue;
- 		}
-diff --git a/config.c b/config.c
-index aefd80b..110fa04 100644
---- a/config.c
-+++ b/config.c
-@@ -9,6 +9,7 @@
- #include "exec_cmd.h"
- #include "strbuf.h"
- #include "quote.h"
-+#include "sequencer.h"
- 
- typedef struct config_file {
- 	struct config_file *prev;
-@@ -892,6 +893,17 @@ int git_default_config(const char *var, const char *value, void *dummy)
- 		pack_size_limit_cfg = git_config_ulong(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "signoff.label")) {
-+		const char *label;
-+
-+		if (!git_config_string(&label, var, value)) {
-+			size_t len = strlen(label) + 3;
-+			sign_off_header = xcalloc(1, len);
-+			snprintf(sign_off_header, len, "%s: ", label);
-+			free((void *)label);
-+		}
-+		return 0;
-+	}
- 	/* Add other config variables here and to Documentation/config.txt. */
- 	return 0;
- }
-diff --git a/sequencer.c b/sequencer.c
-index cf8fbeb..7e9a0dd 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -17,9 +17,20 @@
- 
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
--const char sign_off_header[] = "Signed-off-by: ";
-+static const char def_signoff_header[] = "Signed-off-by";
-+char *sign_off_header = NULL;
- static const char cherry_picked_prefix[] = "(cherry picked from commit ";
- 
-+char *get_signoff_header(void)
-+{
-+	if (!sign_off_header) {
-+		size_t len = strlen(def_signoff_header) + 3;
-+		sign_off_header = xcalloc(1, len);
-+		snprintf(sign_off_header, len, "%s: ", def_signoff_header);
-+	}
-+	return sign_off_header;
-+}
-+
- static int is_rfc2822_line(const char *buf, int len)
- {
- 	int i;
-@@ -1130,7 +1141,7 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
- 	struct strbuf sob = STRBUF_INIT;
- 	int has_footer;
- 
--	strbuf_addstr(&sob, sign_off_header);
-+	strbuf_addstr(&sob, get_signoff_header());
- 	strbuf_addstr(&sob, fmt_name(getenv("GIT_COMMITTER_NAME"),
- 				getenv("GIT_COMMITTER_EMAIL")));
- 	strbuf_addch(&sob, '\n');
-diff --git a/sequencer.h b/sequencer.h
-index 1fc22dc..5a91105 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -48,8 +48,9 @@ struct replay_opts {
- 
- int sequencer_pick_revisions(struct replay_opts *opts);
- 
--extern const char sign_off_header[];
-+extern char* sign_off_header;
- 
-+char *get_signoff_header(void);
- void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
- 
- #endif
+ <pre>
+-git fast-import --export-marks=../cvs2svn-tmp/git-marks.dat &lt;
+../cvs2svn-tmp/git-blob.dat
+-git fast-import --import-marks=../cvs2svn-tmp/git-marks.dat &lt;
+../cvs2svn-tmp/git-dump.dat
++cat ../cvs2svn-tmp/git-blob.dat ../cvs2svn-tmp/git-dump.dat | git fast-import
+ </pre>
+
+-    <p>On Linux/Unix this can be shortened to:</p>
++    <p>On Windows you should use type instead:</p>
+
+ <pre>
+-cat ../cvs2svn-tmp/git-blob.dat ../cvs2svn-tmp/git-dump.dat | git fast-import
++type ../cvs2svn-tmp/git-blob.dat ../cvs2svn-tmp/git-dump.dat | git fast-import
+ </pre>
+
+   </li>
+Only in cvs2svn-2.4.0-mod/www: .cvs2git.html.swp
+
+
 -- 
-1.7.10.4
+Felipe Contreras
