@@ -1,103 +1,96 @@
-From: Trond Hasle Amundsen <t.h.amundsen@usit.uio.no>
-Subject: Re: [PATCH] contrib/hooks/post-receive-email: get description from repo.git/config
-Date: Mon, 06 May 2013 17:22:02 +0200
-Organization: Universitas Osloensis
-Message-ID: <15tfvy0cew5.fsf@tux.uio.no>
-References: <15tsj20cizd.fsf@tux.uio.no>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: offtopic: ppg design decisions - encapsulation
+Date: Mon, 6 May 2013 11:34:28 -0400
+Message-ID: <CACPiFCL+cd1vmqj6JEj84L5rDvHGxDgo+zGw5__ard6-sumipA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 06 17:22:13 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 06 17:35:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZNEy-0006SN-9o
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 17:22:12 +0200
+	id 1UZNRJ-00026I-DR
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 17:34:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754425Ab3EFPWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 11:22:06 -0400
-Received: from mail-out4.uio.no ([129.240.10.15]:40595 "EHLO mail-out4.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753714Ab3EFPWF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 11:22:05 -0400
-Received: from mail-mx6.uio.no ([129.240.10.40])
-	by mail-out4.uio.no with esmtp (Exim 4.80.1)
-	(envelope-from <t.h.amundsen@usit.uio.no>)
-	id 1UZNEp-0007Kq-3q
-	for git@vger.kernel.org; Mon, 06 May 2013 17:22:03 +0200
-Received: from tux.uio.no ([129.240.6.13])
-	by mail-mx6.uio.no with esmtp  (Exim 4.80.1)
-	(envelope-from <t.h.amundsen@usit.uio.no>)
-	id 1UZNEo-0000rv-J5; Mon, 06 May 2013 17:22:03 +0200
-Received: by tux.uio.no (Postfix, from userid 45150)
-	id 7D470981; Mon,  6 May 2013 17:22:02 +0200 (CEST)
-In-Reply-To: <15tsj20cizd.fsf@tux.uio.no> (Trond Hasle Amundsen's message of
-	"Mon, 06 May 2013 15:53:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-UiO-Ratelimit-Test: rcpts/h 3 msgs/h 2 sum rcpts/h 5 sum msgs/h 2 total rcpts 5510 max rcpts/h 30 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-5.7, required=5.0, autolearn=disabled, RP_MATCHES_RCVD=-0.653,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: 4671F53C75B3B5D9892DEAE5A562EC20E43B7D9E
-X-UiO-SPAM-Test: remote_host: 129.240.6.13 spam_score: -56 maxlevel 80 minaction 1 bait 0 mail/h: 2 total 1447 max/h 9 blacklist 0 greylist 1 ratelimit 0
+	id S1754048Ab3EFPex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 11:34:53 -0400
+Received: from mail-qa0-f52.google.com ([209.85.216.52]:37950 "EHLO
+	mail-qa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753830Ab3EFPew (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 11:34:52 -0400
+Received: by mail-qa0-f52.google.com with SMTP id g10so1359107qah.18
+        for <git@vger.kernel.org>; Mon, 06 May 2013 08:34:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=i2QVDAKN6Alq+O9W47RZeMTSZTWZ0Vixprp0ODaS41I=;
+        b=CPuBpR1Pby2JhxXVZLww/dMn96mwYMGLwXHJuLgV5vEuYqcz85pOQT2diXZrv4q1k9
+         IzDAwpJfcSXHTJ37v8MO770g+AvHYiuu0mn6RXTUV10x5OLrqb2k8ISWDvk9xHSi7JJR
+         Nf+gHiVWi0H/rV4tY/C5h2T1SqYO2OJ9Jt6VANJ365fX5zQhkfU4MlcT7tHzP/g2WkPU
+         PgpDySsScMzIWLOcz9ZTRCN9ukpb3zkR4IJbAJx8LzBL4laVyM0HnrZpY4OaGr0urX1q
+         imbCZ+CiKEMh6sfznCWWUjOdRChDnwm6TPvS8z1tZymuoXPlW39+31bNsSHgT40Fh/mR
+         klvw==
+X-Received: by 10.224.164.205 with SMTP id f13mr24056216qay.16.1367854491845;
+ Mon, 06 May 2013 08:34:51 -0700 (PDT)
+Received: by 10.49.87.165 with HTTP; Mon, 6 May 2013 08:34:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223462>
 
-Trond Hasle Amundsen <t.h.amundsen@usit.uio.no> writes:
+[ Unashamedly offtopic... asking here because I like git design and
+coding style, and ppg is drawing plenty of inspiration from the old
+git shell scripts. Please kindly flame me privately... ]
 
-> The included patch attempts to improve post-receive-email. It's a
-> trivial change, but one that helps us Gitolite users. Comments are
-> welcome, and this is my first attempt at contributing to the Git
-> project. Please keep me on CC as I'm not on the list.
+ppg is a wrapper around git to maintain and distribute Puppet configs,
+adding a few niceties.
 
-Bah.. It seems I attached this as MIME, sorry about that. Here it is,
-properly inlined this time:
+Now, ppg will actuall manage two git repositories -- one for the
+puppet configs, the second one for ferrying back the puppet run
+results to the originating repo (were they get loaded in a puppet
+dashboard server for cute webbased reporting). The puppet config repo
+is a normally-behaved git repo. The "reports" repo is a bit of a hack
+-- never used directly by the user, it will follow a store-and-forward
+scheme, where I should trim old history or just use something other
+than git.
 
->From 878a7af9088e2bcc3afc9b09b9023f1f188c844b Mon Sep 17 00:00:00 2001
-From: Trond Hasle Amundsen <t.h.amundsen@usit.uio.no>
-Date: Mon, 6 May 2013 15:41:25 +0200
-Subject: [PATCH] contrib/hooks/post-receive-email: get description from repo.git/config
+So I see two possible repo layouts:
 
-When getting the project description, we first try gitweb.description
-entry in repo.git/config, but repo.git/description takes precedence if
-it exists. This behaviour mimics that of Gitweb, and is what we want
-when using Gitolite, which deletes repo.git/description upon repo
-creation and rather maintains a gitweb.description entry in
-repo.git/config if a description is configured.
+- "Transparent, nested"
+ .git/ # holding puppet configs, allows direct use of git commands
+ .git/reports.git # nested inside puppet configs repo
 
-Signed-off-by: Trond Hasle Amundsen <t.h.amundsen@usit.uio.no>
----
- contrib/hooks/post-receive-email |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
+- "Mediated, parallel"
+ .ppg/puppet.git # all git commands must be wrapped
+ .ppg/reports.git
 
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index 0e5b72d..6ce046a 100755
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -714,7 +714,14 @@ if [ -z "$GIT_DIR" ]; then
- 	exit 1
- fi
- 
--projectdesc=$(sed -ne '1p' "$GIT_DIR/description" 2>/dev/null)
-+# Get the repo's description. First try gitweb.description entry in
-+# repo.git/config, but repo.git/description takes precedence if it
-+# exists. This behaviour mimics that of Gitweb.
-+projectdesc=$(git config gitweb.description)
-+if [ -f "$GIT_DIR/description" ]; then
-+        projectdesc=$(sed -ne '1p' "$GIT_DIR/description" 2>/dev/null)
-+fi
-+
- # Check if the description is unchanged from it's default, and shorten it to
- # a more manageable length if it is
- if expr "$projectdesc" : "Unnamed repository.*$" >/dev/null
--- 
-1.7.1
+My laziness and laisses-faire take on things drives to to use the
+transparent&nested approach. Let the user do anything in there
+directly with git.
+
+OTOH, the mediated approach allows for more complete support,
+including sanity checks on commands that don't have hooks available. I
+already have a /usr/bin/ppg wrapper, which I could use to wrap all git
+commands, setting GIT_DIR=.ppg/puppet.git for all ops. It would force
+ops to be from the top of the tree (unless I write explicit support)
+and I would have to implement explicit. And it would break related
+tools that are not mediated via /usr/bin/git (gitk!).
+
+Written this way, it seems to be a minimal lazy approach vs DTRT.
+
+Am I missing any important aspect or option? Thoughts?
+
+cheers,
 
 
-Cheers,
--- 
-Trond H. Amundsen <t.h.amundsen@usit.uio.no>
-Center for Information Technology Services, University of Oslo
+
+m
+--
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
