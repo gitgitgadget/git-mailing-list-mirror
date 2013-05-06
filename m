@@ -1,177 +1,107 @@
-From: David Goldfarb <deg@degel.com>
-Subject: RE: trouble on windows network share
-Date: Mon, 6 May 2013 10:13:42 +0000
-Message-ID: <8B6563E531152E4190313499F193F94214AAACCF@mbx500-u1-lo-3.exch500.msoutlookonline.net>
-References: <871B6C10EBEFE342A772D1159D1320853F63D205@umechphj.easf.csd.disa.mil>
-	<1367529968647-7584800.post@n2.nabble.com>
-	<87ppx8o1lj.fsf@linux-k42r.v.cablecom.net>
-	<8B6563E531152E4190313499F193F94214A9C966@mbx500-u1-lo-3.exch500.msoutlookonline.net>
-	<87ip2wla12.fsf@linux-k42r.v.cablecom.net>
-	<8B6563E531152E4190313499F193F94214AAAB42@mbx500-u1-lo-3.exch500.msoutlookonline.net>
- <878v3sh14d.fsf@linux-k42r.v.cablecom.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 4/4] fast-import: only store commit objects
+Date: Mon, 06 May 2013 12:28:03 +0200
+Message-ID: <518785B3.3050606@alum.mit.edu>
+References: <1367555502-4706-1-git-send-email-felipe.contreras@gmail.com> <1367555502-4706-5-git-send-email-felipe.contreras@gmail.com> <87y5bw3q1s.fsf@hexa.v.cablecom.net> <CAMP44s1R9hAMZ=DQoPiTVi3+40NpADjVFU7tYovZA8W-PWEhhg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon May 06 12:13:50 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 06 12:28:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZIQX-0004Al-Ea
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 12:13:49 +0200
+	id 1UZIeb-0007kO-S7
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 12:28:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753042Ab3EFKNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 06:13:45 -0400
-Received: from HUB500-LO-5.exch500.serverdata.net ([205.217.20.175]:18452 "EHLO
-	hub500-LO-5.EXCH500.SERVERDATA.NET" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752186Ab3EFKNo convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 May 2013 06:13:44 -0400
-Received: from MBX500-U1-LO-3.exch500.msoutlookonline.net ([10.32.4.55]) by
- HUB500-LO-5.exch500.msoutlookonline.net ([10.32.4.42]) with mapi id
- 14.03.0123.003; Mon, 6 May 2013 03:13:35 -0700
-Thread-Topic: trouble on windows network share
-Thread-Index: AQHOSkGhDJxfER0S7U2/adU3l4duX5j376Zg
-In-Reply-To: <878v3sh14d.fsf@linux-k42r.v.cablecom.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [87.69.114.75]
+	id S1753945Ab3EFK2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 06:28:13 -0400
+Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:64808 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753920Ab3EFK2J (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 May 2013 06:28:09 -0400
+X-AuditID: 12074414-b7fb86d000000905-7e-518785b84e0b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id B8.76.02309.8B587815; Mon,  6 May 2013 06:28:08 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r46AS4mr001333
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 6 May 2013 06:28:05 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <CAMP44s1R9hAMZ=DQoPiTVi3+40NpADjVFU7tYovZA8W-PWEhhg@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMKsWRmVeSWpSXmKPExsUixO6iqLujtT3Q4Ox8MYtfZ3exWBx8nGfR
+	daWbyaKh9wqzRf/yLjaLu5dXsTuweeycdZfd48PHOI/br+cze1y8pOzxeZNcAGsUt01SYklZ
+	cGZ6nr5dAnfG9gX7mQve8VUcefGNqYHxL3cXIyeHhICJxPrDTUwQtpjEhXvr2boYuTiEBC4z
+	SrxuusMC4RxjkjjYcIYZpIpXQFvi/YU3jCA2i4CqxLTpK8DibAK6Eot6msEmiQqESaxavwyq
+	XlDi5MwnLCC2iIChxN72qWBDmQXOM0oc/PCEHSQhLGAvsevLdFaIbR8ZJbYeOQJUxcHBKRAo
+	MXlpBIjJLKAusX6eEEg5s4C8xPa3c5gnMArMQrJiFkLVLCRVCxiZVzHKJeaU5urmJmbmFKcm
+	6xYnJ+blpRbpWujlZpbopaaUbmKEBLrIDsYjJ+UOMQpwMCrx8BY8aQsUYk0sK67MPcQoycGk
+	JMrr1dIeKMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE12cvUDlvSmJlVWpRPkxKmoNFSZz322J1
+	PyGB9MSS1OzU1ILUIpisDAeHkgTvVJChgkWp6akVaZk5JQhpJg5OkOFcUiLFqXkpqUWJpSUZ
+	8aBIjS8GxipIigdobzNIO29xQWIuUBSi9RSjLsfKK09eMwqx5OXnpUqJ864DKRIAKcoozYNb
+	AUtrrxjFgT4W5l0PUsUDTIlwk14BLWECWpLAB7akJBEhJdXA6B39VieqRcbwi1mi3RTPK0af
+	Uv8c5fJt4pbIS12jvYivMaF0VjyXT5adXM8eTe/fQUmLDu82tu4QWediVf9gXtOr 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223438>
 
-Ok.  Continuing in the same shell:
+On 05/03/2013 08:23 PM, Felipe Contreras wrote:
+> On Fri, May 3, 2013 at 12:56 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+>> How do we know that this doesn't break any users of fast-import?  Your
+>> comment isn't very reassuring:
+>>
+>>> the vast majority of them will never be used again
+>>
+>> So what's with the minority?
+> 
+> Actually I don't think there's any minority. If the client program
+> doesn't store blobs, the blob marks are not used anyway. So there's no
+> change.
 
-    U:\foo>git status
-    # On branch master
-    # Changes to be committed:
-    #   (use "git reset HEAD <file>..." to unstage)
-    #
-    #       new file:   trace1
-    #
-    # Untracked files:
-    #   (use "git add <file>..." to include in what will be committed)
-    #
-    #       trace2
+I haven't been following this conversation in detail, but your proposed
+change sounds like something that would break cvs2git [1].  Let me
+explain what cvs2git does and why:
 
-    U:\foo>git commit -m "test b"
-    error: Trying to write ref refs/heads/master with nonexistent object 428dafc292b8396fc7b3c7f692dc9dfe1196a40a
-    fatal: cannot update HEAD ref
+CVS stores all of the revisions of a single file in a single filename,v
+file in rcsfile(5) format.  The revisions are stored as deltas ordered
+so that a single revision can be reconstructed from a single serial read
+of the file.
 
-    U:\foo>dir /s *a40a
-     Volume in drive U is Users
-     Volume Serial Number is FC97-3DA5
+cvs2git reads each of these files once, reconstructing *all* of the
+revisions for a file in a single go.  It then pours them into a
+git-fast-import stream as blobs and sets a mark on each blob.
 
-     Directory of U:\foo\.git\objects\42
+Only much later in the conversion does it have enough information to
+reconstruct tree-wide commits.  At that time it outputs git-fast-import
+data (to a second file) defining the git commits and their ancestry.
+The contents are defined by referring to the marks of blobs from the
+first git-fast-import stream file.
 
-    05/06/2013  12:26 PM               152 8dafc292b8396fc7b3c7f692dc9dfe1196a40a
-                   1 File(s)            152 bytes
+This strategy speeds up the conversion *enormously*.
 
-         Total Files Listed:
-                   1 File(s)            152 bytes
-                   0 Dir(s)  1,594,477,576,192 bytes free
+So if I understand correctly that you are proposing to stop allowing
+marks on blob objects to be set and/or referred to later, then I object
+vociferously.
 
-    U:\foo>date
-    The current date is: Mon 05/06/2013
-    Enter the new date: (mm-dd-yy)
-    U:\foo>time
-    The current time is: 13:10:49.55
-    Enter the new time:
-    U:\foo>git cat-file -p 428dafc292b8396fc7b3c7f692dc9dfe1196a40a
-    tree cecae5b4c87ea21aef513fcfcd5c27fe87e0536f
-    parent f6a0de35d12a3b58f12bf1af4ff629b8b004ad82
-    author David Goldfarb <deg@degel.com> 1367834997 +0300
-    committer David Goldfarb <deg@degel.com> 1367834997 +0300
+If I've misunderstood then I'll go back into my hole :-)
 
-    test b
+Michael
 
-    U:\foo>U:\foo>
+[1] http://cvs2svn.tigris.org/cvs2git.html
 
-
-
-David
-
------Original Message-----
-From: Thomas Rast [mailto:trast@inf.ethz.ch] 
-Sent: Monday, May 06, 2013 1:08 PM
-To: David Goldfarb
-Cc: git@vger.kernel.org
-Subject: Re: trouble on windows network share
-
-David Goldfarb <deg@degel.com> writes:
-
-> Looks like it works.
->
-> From the windows machine:
->     U:\foo>git cat-file -p 0b89efdeef245ed6a0a7eacc5c578629a141f856
->     100644 blob b02e7c87fe376a353ea4f014bdb3f5200a946b37    foo1
->     100644 blob 2cbf64f759a62392ad9dfe1fb9c2cdb175876014    foo2
->
->     U:\foo>
->
->
-> Double-checking that nothing was fixed or changed when I earlier committed the file from Linux, here's a second test:
->
->
->     U:\foo>git cat-file -p 0b89efdeef245ed6a0a7eacc5c578629a141f856
->     100644 blob b02e7c87fe376a353ea4f014bdb3f5200a946b37    foo1
->     100644 blob 2cbf64f759a62392ad9dfe1fb9c2cdb175876014    foo2
->     
->     U:\foo>git status
->     # On branch master
->     # Untracked files:
->     #   (use "git add <file>..." to include in what will be committed)
->     #
->     #       trace1
->     #       trace2
->     nothing added to commit but untracked files present (use "git add" 
-> to track)
->     
->     U:\foo>git add trace1
->     
->     U:\foo>git commit trace1 -m "testing"
-
-Note that specifying 'trace1' here is redundant, since you already added it and had no other staged changes.  Perhaps you can re-run a test like this without the extra argument for comparison.  That would tell us if it matters that the write and read happen in the same process.
-
->     error: unable to find cecae5b4c87ea21aef513fcfcd5c27fe87e0536f
->     fatal: cecae5b4c87ea21aef513fcfcd5c27fe87e0536f is not a valid 
-> object
->     
->     U:\foo>git cat-file -p cecae5b4c87ea21aef513fcfcd5c27fe87e0536f
->     100644 blob b02e7c87fe376a353ea4f014bdb3f5200a946b37    foo1
->     100644 blob 2cbf64f759a62392ad9dfe1fb9c2cdb175876014    foo2
->     100644 blob 19102815663d23f8b75a47e7a01965dcdc96468c    test.txt
->     100644 blob c9009b02950964cf1d5281125e6e2f647dd9dc16    trace1
-
-I'm inclined to just say that your FS is crazy.
-
-What's unsatisfactory is that we already have a bunch of crazy FS workarounds in move_temp_to_file(), which is one obvious candidate for what is going on here.  So this wouldn't be something new; just another craziness to work around.
-
-For example, you could test the theory that rename() has something to do with it by patching this into move_temp_to_file():
-
-diff --git i/sha1_file.c w/sha1_file.c
-index 67e815b..22af015 100644
---- i/sha1_file.c
-+++ w/sha1_file.c
-@@ -2635,6 +2635,10 @@ int move_temp_to_file(const char *tmpfile, const char *filename)
- 		/* FIXME!!! Collision check here ? */
- 	}
- 
-+	if (access(filename, R_OK) < 0)
-+		return error("access(%s, R_OK) failed immediately after rename(): %s",
-+			     filename, strerror(errno));
-+
- out:
- 	if (adjust_shared_perm(filename))
- 		return error("unable to set permission to '%s'", filename);
-
-
---
-Thomas Rast
-trast@{inf,student}.ethz.ch
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
