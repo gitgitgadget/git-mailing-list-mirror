@@ -1,82 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 10/9] revision.c: treat A...B merge bases as if manually specified
-Date: Mon, 06 May 2013 14:24:11 -0700
-Message-ID: <7vli7rpzt0.fsf@alter.siamese.dyndns.org>
-References: <1367767977-14513-1-git-send-email-kevin@bracey.fi>
-	<1367859096-25909-1-git-send-email-kevin@bracey.fi>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 2/3] fast-export: improve speed by skipping blobs
+Date: Mon, 6 May 2013 16:30:29 -0500
+Message-ID: <CAMP44s2wh71vW6GaCfyCO398BWvVbYnwSE76bO=46XVJF3jWNg@mail.gmail.com>
+References: <1367793534-8401-1-git-send-email-felipe.contreras@gmail.com>
+	<1367793534-8401-3-git-send-email-felipe.contreras@gmail.com>
+	<20130506123111.GB3809@sigill.intra.peff.net>
+	<7v7gjctabm.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2rdkND40QDQA9T7MNGoKPtnr50nV98aExUe4bCOXZGyA@mail.gmail.com>
+	<7vppx3q0z6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Kevin Bracey <kevin@bracey.fi>
-X-From: git-owner@vger.kernel.org Mon May 06 23:24:20 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 06 23:30:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZStQ-0004Ut-4C
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 23:24:20 +0200
+	id 1UZSzU-0001tq-Br
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 23:30:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758032Ab3EFVYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 17:24:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35103 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756915Ab3EFVYO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 17:24:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E684C1C90D;
-	Mon,  6 May 2013 21:24:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=irL2MYXlJxBD4Mv3x2MLJhF0f5s=; b=MclIrT
-	J4elL8652omL+DcJWtkrwbRGKXfFJH5OIkUkngSyGJGNeJN1lUK1NY4nvuOrTYI2
-	xcX0XPpe5tgLfGkRrT1fV4ChgWULRw28lOrVEYgSu8fCtDgbXaFx5shDbzW+LeJy
-	QOHCfhpvzkfc7lvYbDnsFQat2xdpcl4nzj6a0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OmCo/ZaVEvFWLnBs4eaTEzk365FWJvBK
-	FHXJzMozX1rDH14gRQ7xHSHcusDz3mfQHjKTHcwe+eCEfESTQ38YYbwUFYejQKhr
-	3/2ZAhZ4Cuyw4akM1BSzvMQA7UoaWj26lOWjHmaQ9xKlWbnY4RbhWvK82EEm9mKG
-	w2lMU+e40IQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD0751C90A;
-	Mon,  6 May 2013 21:24:13 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 56BC31C909;
-	Mon,  6 May 2013 21:24:13 +0000 (UTC)
-In-Reply-To: <1367859096-25909-1-git-send-email-kevin@bracey.fi> (Kevin
-	Bracey's message of "Mon, 6 May 2013 19:51:36 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4C742938-B693-11E2-9D25-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757228Ab3EFVab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 17:30:31 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:64747 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756830Ab3EFVaa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 17:30:30 -0400
+Received: by mail-la0-f45.google.com with SMTP id fp12so3777495lab.32
+        for <git@vger.kernel.org>; Mon, 06 May 2013 14:30:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=aTRzg2fSKA5J8KS9H2jKlLrbUUggZq6nEPBMfVKA3Z4=;
+        b=D5hShWjwKc7yfzDQm78PT0dwBc0pUljOnKJdD0WmDwwao9v7GHcJLedwwfuoew/d5u
+         yIGZCN2el7QAd9veNzoTTrQoYLypF8MHuIebHpMGWJeqyURBATa49RQ9vfReQEDU0/VZ
+         gVoy67MHueLDPKecwLMZcyKzkN83g4G4rpDpjGm1MpxjWaYeSfea8cSNHKnSb1YvO8iH
+         zx1LzryZ3otbYyvBRBK8EnSNeh4DzbN9ZeNibOxLKoJXv94SdCpcLs0YTIXEOPAsq8N8
+         E/HvFdDJCy+TiZWoYGLyc0iDVlLlb5bPgc7mv1S+w10CzigObjozYy4TFLUXWgbc6xua
+         q2VQ==
+X-Received: by 10.112.154.98 with SMTP id vn2mr8728006lbb.8.1367875829234;
+ Mon, 06 May 2013 14:30:29 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Mon, 6 May 2013 14:30:29 -0700 (PDT)
+In-Reply-To: <7vppx3q0z6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223509>
 
-Kevin Bracey <kevin@bracey.fi> writes:
+On Mon, May 6, 2013 at 3:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>>> The story is different on the fast-import side, where we do say we
+>>> dump the full table and a later run can depend on these marks.
+>>
+>> Yes, and gaining nothing but increased disk-space.
+>
+> I thought that the "gaining nothing" has already been refuted by the
+> discussion several hours ago...
+>
+> cf. http://thread.gmane.org/gmane.comp.version-control.git/223275/focus=223440
+>
+> Puzzled...
 
-> The documentation assures users that "A...B" is defined as 'r1 r2 --not
-> $(git merge-base --all r1 r2)'. This isn't in fact quite true, because
-> the calculated merge bases are not sent to add_rev_cmdline().
+What is being gained there? Nothing.
 
-We want the commands to be able to tell which ones in revs->pending
-and revs->commits were specified by the end user and how.  While I
-think it makes sense to mark these negative merge bases with "These
-came from the command line with A...B syntax", I am not sure if it
-is the best way to do so in add_pending_commit_list().
+>>> By discarding marks on blobs, we may be robbing some optimization
+>>> possibilities, and by discarding marks on tags, we may be robbing
+>>> some features, from users of fast-export; we might want to add an
+>>> option "--use-object-marks={blob,commit,tag}" or something to both
+>>> fast-export and fast-import, so that the former can optionally write
+>>> marks for non-commits out, and the latter can omit non commit marks
+>>> if the user do not need them. But that is a separate issue.
+>>
+>> How?
+>
+>  * if we teach fast-import to optionally not write marks for blobs
+>    and trees out, your remote-bzr can take advantage of it,
 
-By the way, why does this have anything to do with the history
-traversal series in the first place?
+I already said remote-bzr is irrelevant. *Everybody* benefits.
 
-When there is anythning marked UNINTERESTING on the rev->pending
-before calling prepare_revision_walk(), you have a history with some
-bottom boundaries, and when there isn't, your bottom boundaries are
-root commits.  If you want to behave differently depending on how
-the user gave us the revision range from the command line, e.g.
-acting differently between "A ^B" and "B..A", cmdline is a good
-place to learn the exact form, but at the history traversal level, I
-do not think you should even care.  Why does the code even look at
-the cmdline, and not rev->pending?
+>    Existing users like cvs2git that do not ask to skip marks for
+>    non-commits will not be hurt and keep referring to blobs an
+>    earlier run wrote out.
+
+cvs2git does *not* store marks. It doesn't get any benefit or get hurt *at all*.
+
+>  * if we teach fast-export to optionally write marks for blobs and
+>    trees out, the users of fast-export could reuse marks for blobs
+>    and trees in later runs (perhaps they can drive fast-export from
+>    the output of "git log --raw", noticing blob object names they
+>    already saw).  Existing users that do not ask for such a feature
+>    will not be hurt.
+
+There's absolutely no benefit from fast-export being able to load and
+store blobs, the only effect is that the mark files will have tons of
+entries nobody will ever use.
+
+If you want to add options for features that only hurt, go ahead, but
+the only sane default is to only store commit marks, both for
+fast-export, and fast-import. Period.
+
+Cheers.
+
+-- 
+Felipe Contreras
