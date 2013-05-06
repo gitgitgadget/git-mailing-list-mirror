@@ -1,187 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/7] shorten_unambiguous_ref(): Allow shortening refs/remotes/origin/HEAD to origin
-Date: Mon, 06 May 2013 10:52:14 -0700
-Message-ID: <7vy5bsq9m9.fsf@alter.siamese.dyndns.org>
-References: <1367711749-8812-1-git-send-email-johan@herland.net>
-	<1367711749-8812-2-git-send-email-johan@herland.net>
+From: David Foster <davidfstr@gmail.com>
+Subject: Bug: git-p4: Sometimes p4 generates Windows-style output on OS X
+Date: Mon, 06 May 2013 10:59:36 -0700
+Message-ID: <5187EF88.6040707@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon May 06 19:52:23 2013
+Content-Type: multipart/mixed;
+ boundary="------------070404000402070804080400"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 06 19:59:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZPaJ-0002tq-9D
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 19:52:23 +0200
+	id 1UZPhR-0001bb-3N
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 19:59:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754795Ab3EFRwT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 13:52:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44223 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753417Ab3EFRwS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 13:52:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 392381CB1A;
-	Mon,  6 May 2013 17:52:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QoW80pEqrEbanmFB+3E4iP63moI=; b=Bkgen8
-	d4uWCIfeE1sO3pkiOks9kQ9sj6a84dUxGhh2CNgpxx38eZj09VGbo8rdnnskNC5L
-	1muxRHD19tLEs4FTg/5J1vPfXpSJxPa7Dy2GN/GilDBdR2TORj5C7M/fGH36zBIq
-	Vu1Fv7A1CpZ95Gb25rdKaR5f06iU6ftr3FKv8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I3nPXrwjGS/dBg7j1tCcQdso/8tXIx9S
-	NXNTtpTUkgHd1j4vk6E/epJ5x//hBBkIVwH/t8hOZ4W4QijTZS/beu/g1k+M/SJ0
-	3Yfq84II2PuAbDChbe7vVhvuRoXxZrLBQlrtE0nLoqugx6Pez3MiFpaZ/VPHE8GP
-	b2Oqh21gjvQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C2741CB17;
-	Mon,  6 May 2013 17:52:17 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 64B5F1CB15;
-	Mon,  6 May 2013 17:52:16 +0000 (UTC)
-In-Reply-To: <1367711749-8812-2-git-send-email-johan@herland.net> (Johan
-	Herland's message of "Sun, 5 May 2013 01:55:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B09061DE-B675-11E2-B460-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754351Ab3EFR7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 13:59:40 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:37340 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754021Ab3EFR7k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 13:59:40 -0400
+Received: by mail-pb0-f44.google.com with SMTP id wz17so2133948pbc.3
+        for <git@vger.kernel.org>; Mon, 06 May 2013 10:59:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
+         :content-type;
+        bh=muOE4lVGz1zXV2s9I2Lh/lCPCKKSyMTgc4hS5K/+aQU=;
+        b=PXiQOXAV0K6VK55CTTgoJZxTwXd5VcO0jwqrOjxPj9oKFsLNckLFMbNrD7JqhRxWwV
+         QG7+l9sSa564jeJpQEQw+Uji5DerERbIDcaWjIEKczHFDEAh1Rie3MZTmZ6kT1gYsA3d
+         0lI6Nkl5xsx+jcn4ub9SP3rM4dkL6dQO79VQTlzoLtpmcTtK9EgwFXULI/haFRhN9VLS
+         GQtrK8g4lNu4TiQj3939Ah1268zEjVT2qGU3vfifLbyyta5Bmg7BCvqDyBbp0ZSn1SN+
+         WRV+DJvDuURS5id5PH1smQK27eQgAgMYL9QAcn2oVOdp62Zqu61Ji8C2zFw91sxcT34N
+         edZA==
+X-Received: by 10.66.9.10 with SMTP id v10mr1309681paa.171.1367863179775;
+        Mon, 06 May 2013 10:59:39 -0700 (PDT)
+Received: from Lain.local ([209.119.210.194])
+        by mx.google.com with ESMTPSA id j13sm26645549pat.17.2013.05.06.10.59.37
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 06 May 2013 10:59:38 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223480>
 
-Johan Herland <johan@herland.net> writes:
+This is a multi-part message in MIME format.
+--------------070404000402070804080400
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> ... there is AFAICS _no_ way for sscanf() - having
-> already done one or more format extractions - to indicate to its caller
-> that the input fails to match the trailing part of the format string.
+I've observed that the p4 command that git-p4 delegates to occasionally 
+outputs Windows-style line endings even on the OS X platform. When this 
+happens, git-p4 gets very confused and crashes out.
 
-Yeah, we can detect when we did not have enough, but we cannot tell
-where it stopped matching.
+I've attached a patch which seems to fix the issue in my case. Now this 
+patch is a pretty bad hack, and I don't recommend that it be accepted 
+as-is. It is just a starting point.
 
-It is interesting that this bug has stayed so long with us, which
-may indicate that nobody actually uses the feature at all.
+A real fix would determine in advance whether Perforce was going to emit 
+Windows-style output. Since I don't know the circumstances under which 
+this happens on non-Windows platforms, I can't provide a better patch. 
+Someone who has intimate knowledge of p4's operating modes would be best 
+to examine what's really going on with p4.
 
-Good eyes.
+P.S. In case it matters, I am not subscribed to this mailing list, so 
+you will need to CC me for any replies to reach me.
 
->
-> Cc: Bert Wesarg <bert.wesarg@googlemail.com>
-> Signed-off-by: Johan Herland <johan@herland.net>
-> ---
->  refs.c                  | 82 +++++++++++++++++++------------------------------
->  t/t6300-for-each-ref.sh | 12 ++++++++
->  2 files changed, 43 insertions(+), 51 deletions(-)
->
-> diff --git a/refs.c b/refs.c
-> index d17931a..7231f54 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2945,80 +2945,60 @@ struct ref *find_ref_by_name(const struct ref *list, const char *name)
->  	return NULL;
->  }
->  
-> +int shorten_ref(const char *refname, const char *pattern, char *short_name)
+---
+David Foster
+http://dafoster.net/
 
-Does this need to be an extern?
+--------------070404000402070804080400
+Content-Type: text/plain; charset=UTF-8; x-mac-type="0"; x-mac-creator="0";
+ name="0001-Compensate-for-Windows-style-output-from-the-p4-comm.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename*0="0001-Compensate-for-Windows-style-output-from-the-p4-comm.pa";
+ filename*1="tch"
 
->  {
-> +	/*
-> +	 * pattern must be of the form "[pre]%.*s[post]". Check if refname
-> +	 * starts with "[pre]" and ends with "[post]". If so, write the
-> +	 * middle part into short_name, and return the number of chars
-> +	 * written (not counting the added NUL-terminator). Otherwise,
-> +	 * if refname does not match pattern, return 0.
-> +	 */
-> +	size_t pre_len, post_start, post_len, match_len;
-> +	size_t ref_len = strlen(refname);
-> +	char *sep = strstr(pattern, "%.*s");
-> +	if (!sep || strstr(sep + 4, "%.*s"))
-> +		die("invalid pattern in ref_rev_parse_rules: %s", pattern);
-> +	pre_len = sep - pattern;
-> +	post_start = pre_len + 4;
-> +	post_len = strlen(pattern + post_start);
-> +	if (pre_len + post_len >= ref_len)
-> +		return 0; /* refname too short */
-> +	match_len = ref_len - (pre_len + post_len);
-> +	if (strncmp(refname, pattern, pre_len) ||
-> +	    strncmp(refname + ref_len - post_len, pattern + post_start, post_len))
-> +		return 0; /* refname does not match */
-> +	memcpy(short_name, refname + pre_len, match_len);
-> +	short_name[match_len] = '\0';
-> +	return match_len;
->  }
+>From aef963f0c45dea81f3e6f30d3b4185a0983ca4de Mon Sep 17 00:00:00 2001
+From: David Foster <davidfstr@gmail.com>
+Date: Mon, 6 May 2013 10:50:01 -0700
+Subject: [PATCH] Compensate for Windows-style output from the p4 command on
+ non-Windows systems.
 
-OK. Looks correct, even though I suspect some people might come up
-with a more concise way to express the above.
+---
+ git-p4.py |   18 ++++++++++++++++++
+ 1 files changed, 18 insertions(+), 0 deletions(-)
 
->  char *shorten_unambiguous_ref(const char *refname, int strict)
->  {
->  	int i;
->  	char *short_name;
->  
->  	/* skip first rule, it will always match */
-> -	for (i = nr_rules - 1; i > 0 ; --i) {
-> +	for (i = ARRAY_SIZE(ref_rev_parse_rules) - 1; i > 0 ; --i) {
->  		int j;
->  		int rules_to_fail = i;
->  		int short_name_len;
->  
-> +		if (!ref_rev_parse_rules[i] ||
+diff --git a/git-p4.py b/git-p4.py
+index 647f110..949d66d 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1454,6 +1454,24 @@ class P4Submit(Command, P4UserMap):
+             tmpFile = open(fileName, "rb")
+             message = tmpFile.read()
+             tmpFile.close()
++            
++            # HACK: If Perforce spontaneously generates Windows-style output,
++            #       compensate by assuming the entire p4 command went into
++            #       Windows mode.
++            if separatorLine not in message:
++                print "WARNING: Perforce has spontaneously decided to generate Windows-style output. Compensating."
++                
++                # Assume that Perforce is now inexplicably operating in Windows mode
++                self.isWindows = True
++                
++                # Retroactively rewrite expected output
++                submitTemplate = submitTemplate.replace("\n", "\r\n")
++                separatorLine = separatorLine.replace("\n", "\r\n")
++                newdiff = newdiff.replace("\n", "\r\n")
++                
++                if separatorLine not in message:
++                    raise ValueError('Confused. Thought Perforce went into Windows mode but apparently something else is wrong.')
++            
+             submitTemplate = message[:message.index(separatorLine)]
+             if self.isWindows:
+                 submitTemplate = submitTemplate.replace("\r\n", "\n")
+-- 
+1.7.7.5 (Apple Git-26)
 
-What is this skippage about?  Isn't it what you already compensated
-away by starting from "ARRAY_SIZE() - 1"?
 
-Ahh, no.  But wait.  Isn't there a larger issue here?
-
-> +		    !(short_name_len = shorten_ref(refname,
-> +						   ref_rev_parse_rules[i],
-> +						   short_name)))
->  			continue;
->  
-> -		short_name_len = strlen(short_name);
-> -
->  		/*
->  		 * in strict mode, all (except the matched one) rules
->  		 * must fail to resolve to a valid non-ambiguous ref
->  		 */
->  		if (strict)
-> -			rules_to_fail = nr_rules;
-> +			rules_to_fail = ARRAY_SIZE(ref_rev_parse_rules);
-
-Isn't nr_rules in the original is "ARRAY_SIZE()-1"?
-
->  
->  		/*
->  		 * check if the short name resolves to a valid ref,
-
-Could you add a test to trigger the "strict" codepath?
-
-Thanks.
-
-> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index 752f5cb..57e3109 100755
-> --- a/t/t6300-for-each-ref.sh
-> +++ b/t/t6300-for-each-ref.sh
-> @@ -466,4 +466,16 @@ test_expect_success 'Verify sort with multiple keys' '
->  		refs/tags/bogo refs/tags/master > actual &&
->  	test_cmp expected actual
->  '
-> +
-> +cat >expected <<\EOF
-> +origin
-> +origin/master
-> +EOF
-> +
-> +test_expect_success 'Check refs/remotes/origin/HEAD shortens to origin' '
-> +	git remote set-head origin master &&
-> +	git for-each-ref --format="%(refname:short)" refs/remotes >actual &&
-> +	test_cmp expected actual
-> +'
-> +
->  test_done
+--------------070404000402070804080400--
