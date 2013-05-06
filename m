@@ -1,69 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] contrib/hooks/post-receive-email: get description from repo.git/config
-Date: Mon, 06 May 2013 17:42:49 +0200
-Message-ID: <vpq1u9kunba.fsf@grenoble-inp.fr>
-References: <15tsj20cizd.fsf@tux.uio.no>
-	<7vtxmgruhc.fsf@alter.siamese.dyndns.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: offtopic: ppg design decisions - encapsulation
+Date: Mon, 6 May 2013 16:53:53 +0100
+Message-ID: <20130506155353.GF25912@serenity.lan>
+References: <CACPiFCL+cd1vmqj6JEj84L5rDvHGxDgo+zGw5__ard6-sumipA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Trond Hasle Amundsen <t.h.amundsen@usit.uio.no>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 06 17:43:19 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 06 17:54:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZNZM-00025P-R2
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 17:43:17 +0200
+	id 1UZNjp-0003q7-28
+	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 17:54:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755234Ab3EFPnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 11:43:13 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:34586 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755014Ab3EFPnM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 11:43:12 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r46FgmeI010127
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 6 May 2013 17:42:48 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UZNYw-0004xQ-AE; Mon, 06 May 2013 17:42:50 +0200
-In-Reply-To: <7vtxmgruhc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 06 May 2013 08:36:15 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 06 May 2013 17:42:48 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r46FgmeI010127
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1368459772.27527@QUWKLuqOLqlNF0TThjyswg
+	id S1754182Ab3EFPyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 11:54:00 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:52896 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755154Ab3EFPx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 11:53:59 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 3CBA2CDA5A9;
+	Mon,  6 May 2013 16:53:59 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GVgM++pGhV5W; Mon,  6 May 2013 16:53:59 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 2CAB4CDA596;
+	Mon,  6 May 2013 16:53:55 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <CACPiFCL+cd1vmqj6JEj84L5rDvHGxDgo+zGw5__ard6-sumipA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223465>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, May 06, 2013 at 11:34:28AM -0400, Martin Langhoff wrote:
+> [ Unashamedly offtopic... asking here because I like git design and
+> coding style, and ppg is drawing plenty of inspiration from the old
+> git shell scripts. Please kindly flame me privately... ]
+> 
+> ppg is a wrapper around git to maintain and distribute Puppet configs,
+> adding a few niceties.
+> 
+> Now, ppg will actuall manage two git repositories -- one for the
+> puppet configs, the second one for ferrying back the puppet run
+> results to the originating repo (were they get loaded in a puppet
+> dashboard server for cute webbased reporting). The puppet config repo
+> is a normally-behaved git repo. The "reports" repo is a bit of a hack
+> -- never used directly by the user, it will follow a store-and-forward
+> scheme, where I should trim old history or just use something other
+> than git.
 
-> Trond Hasle Amundsen <t.h.amundsen@usit.uio.no> writes:
->
->> Hello,
->>
->> The included patch attempts to improve post-receive-email. It's a
->
-> Please don't ;-)
-
-More precisely: you should have a look at git-multimail (in directory
-contrib/, in branch for now pu/, or from
-https://github.com/mhagger/git-multimail) before spending time on
-post-receive-email.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I'm not sure I fully understand what the reports are, but it sounds like
+they are closely related to original configuration commits.  If that is
+the case, have you considered using Git notes instead of a separate
+repository?
