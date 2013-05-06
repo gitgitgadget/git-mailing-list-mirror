@@ -1,128 +1,148 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 4/4] fast-import: only store commit objects
-Date: Mon, 6 May 2013 16:36:18 -0500
-Message-ID: <CAMP44s2KHH1n0vHB0Mdv-M2xV97KA9FMc6UrPyYyxD+2jsvfTA@mail.gmail.com>
-References: <1367555502-4706-1-git-send-email-felipe.contreras@gmail.com>
-	<1367555502-4706-5-git-send-email-felipe.contreras@gmail.com>
-	<87y5bw3q1s.fsf@hexa.v.cablecom.net>
-	<CAMP44s1R9hAMZ=DQoPiTVi3+40NpADjVFU7tYovZA8W-PWEhhg@mail.gmail.com>
-	<518785B3.3050606@alum.mit.edu>
-	<87ip2wflg0.fsf@linux-k42r.v.cablecom.net>
-	<518789D1.4010905@alum.mit.edu>
-	<7v38u0t9va.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1HASAuF0ECCvJr66WeqopDzLZQ12pKFsc-j5_VCDrizg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: another packed-refs race
+Date: Mon, 6 May 2013 18:18:28 -0400
+Message-ID: <20130506221828.GA19851@sigill.intra.peff.net>
+References: <20130503083847.GA16542@sigill.intra.peff.net>
+ <51879C1C.5000407@alum.mit.edu>
+ <20130506184122.GA23568@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 06 23:36:25 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 07 00:18:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZT56-0007Fm-Mq
-	for gcvg-git-2@plane.gmane.org; Mon, 06 May 2013 23:36:25 +0200
+	id 1UZTjw-0002iC-4O
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 00:18:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757961Ab3EFVgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 17:36:20 -0400
-Received: from mail-la0-f51.google.com ([209.85.215.51]:33991 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757883Ab3EFVgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 17:36:19 -0400
-Received: by mail-la0-f51.google.com with SMTP id ep20so3772631lab.38
-        for <git@vger.kernel.org>; Mon, 06 May 2013 14:36:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=htE7j6oEoBJlOUOxYsOG/8f6uxtYldlRixLZ+Qlvt60=;
-        b=uvNwlRjunxXZbRLaK1UH0QH8LQpApT5JnE75D9hgveJT7cF8MtK1rnGgx9MGDW+/yv
-         lwJGjbrUw7IfYiek/nQLB/AjXW1cABxOsBG4Xs1S6OQChF6mhGMDOV+pIJ7wdS/QWFT4
-         rn47tWifXyoz3NoC7w11N8gEZicjJm4PdJhkHha18Di96pEkVBktaM1HvVcPFWKsUeDN
-         4yhLv6+/b/GaHUsflMyLbG8Gxtbqm4N31R2oUvtebM25ODzq7grElj6q5JBb+ZeOsCHl
-         ZLsJPNRNo7ffwz16DbEKy3dilj57oQGwTWOoRNv3kZvxG8WpgfXixWusYDQdhBdpy/FH
-         QFaw==
-X-Received: by 10.112.146.133 with SMTP id tc5mr8676541lbb.88.1367876178364;
- Mon, 06 May 2013 14:36:18 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Mon, 6 May 2013 14:36:18 -0700 (PDT)
-In-Reply-To: <CAMP44s1HASAuF0ECCvJr66WeqopDzLZQ12pKFsc-j5_VCDrizg@mail.gmail.com>
+	id S1757235Ab3EFWSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 18:18:31 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41949 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756251Ab3EFWSb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 18:18:31 -0400
+Received: (qmail 1116 invoked by uid 102); 6 May 2013 22:18:51 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 May 2013 17:18:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 May 2013 18:18:28 -0400
+Content-Disposition: inline
+In-Reply-To: <20130506184122.GA23568@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223512>
 
-On Mon, May 6, 2013 at 4:19 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Mon, May 6, 2013 at 10:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->>
->>> Yes, it can be handy to start loading the first "blobfile" in parallel
->>> with the later stages of the conversion, before the second "dumpfile" is
->>> ready.  In that case the user needs to pass --export-marks to the first
->>> fast-import process to export marks on blobs so that the marks can be
->>> passed to the second fast-import via --import-marks.
->>>
->>> So the proposed change would break a documented use of cvs2git.
->>>
->>> Making the export of blob marks optional would of course be OK, as long
->>> as the default is to export them.
->>
->> Thanks for a concise summary.  Your use case fits exactly what
->> Felipe conjectured as the nonexistent minority.
->
-> Not true. cvs2git does *not* rely on the blobs being stored in a marks
-> file, because cvs2git does not rely on mark files at all.
->
->> An option that lets the caller say "I only care about marks on these
->> types of objects to be written to (and read from) the exported marks
->> file" would help Felipe's use case without harming your use case,
->> and would be a sane and safe way to go.
->
-> His case is not harmed at all. It's only the unfortunate command that
-> is mentioned in the documentation that didn't need to be mentioned at
-> all in the first place.
->
-> It should be the other way around, if it's only this documentation
-> that is affected, we could add a switch for that particular command,
-> and the documentation should be updated, but it's overkill to add a
-> switch for one odd command in some documentation somewhere, it would
-> be much better to update the odd command to avoid using marks at all,
-> which is what the more appropriate command does, right below in the
-> same documentation.
+On Mon, May 06, 2013 at 02:41:22PM -0400, Jeff King wrote:
 
-This would simplify the documentation, and obliterate the need to use
-mark files at all:
+> That is a weaker guarantee, and I think we can provide it with:
+> 
+>   1. Load all loose refs into cache for a particular enumeration.
+> 
+>   2. Make sure the packed-refs cache is up-to-date (by checking its
+>      stat() information and reloading if necessary).
+> 
+>   3. Run the usual iteration over the loose/packed ref caches.
 
-diff -ur cvs2svn-2.4.0/www/cvs2git.html cvs2svn-2.4.0-mod/www/cvs2git.html
---- cvs2svn-2.4.0/www/cvs2git.html	2012-09-22 01:49:55.000000000 -0500
-+++ cvs2svn-2.4.0-mod/www/cvs2git.html	2013-05-06 16:33:12.070189985 -0500
-@@ -355,14 +355,13 @@
-       fast-import</tt>:</p>
+This does seem to work in my experiments. With stock git, I can trigger
+the race reliably with:
 
- <pre>
--git fast-import --export-marks=../cvs2svn-tmp/git-marks.dat &lt;
-../cvs2svn-tmp/git-blob.dat
--git fast-import --import-marks=../cvs2svn-tmp/git-marks.dat &lt;
-../cvs2svn-tmp/git-dump.dat
-+cat ../cvs2svn-tmp/git-blob.dat ../cvs2svn-tmp/git-dump.dat | git fast-import
- </pre>
+  # base load, in one terminal, as before
+  git init -q repo &&
+  cd repo &&
+  git commit -q --allow-empty -m one &&
+  one=`git rev-parse HEAD` &&
+  git commit -q --allow-empty -m two &&
+  two=`git rev-parse HEAD` &&
+  sha1=$one &&
+  while true; do
+    # this re-creates the loose ref in .git/refs/heads/master
+    if test "$sha1" = "$one"; then
+      sha1=$two
+    else
+      sha1=$one
+    fi &&
+    git update-ref refs/heads/master $sha1 &&
 
--    <p>On Linux/Unix this can be shortened to:</p>
-+    <p>On Windows you should use type instead:</p>
+    # we can remove packed-refs safely, as we know that
+    # its only value is now stale. Real git would not do
+    # this, but we are simulating the case that "master"
+    # simply wasn't included in the last packed-refs file.
+    rm -f .git/packed-refs &&
 
- <pre>
--cat ../cvs2svn-tmp/git-blob.dat ../cvs2svn-tmp/git-dump.dat | git fast-import
-+type ../cvs2svn-tmp/git-blob.dat ../cvs2svn-tmp/git-dump.dat | git fast-import
- </pre>
+    # and now we repack, which will create an up-to-date
+    # packed-refs file, and then delete the loose ref
+    git pack-refs --all --prune
+  done
 
-   </li>
-Only in cvs2svn-2.4.0-mod/www: .cvs2git.html.swp
+  # in another terminal, enumerate and make sure we never miss the ref
+  cd repo &&
+  while true; do
+    refs=`git.compile for-each-ref --format='%(refname)'`
+    echo "==> $refs"
+    test -z "$refs" && break
+  done
 
+It usually takes about 30 seconds to hit a problem, though I measured
+failures at up to 90 seconds. With the patch below (on top of the one I
+posted the other day, which refreshes the packed-refs cache in
+get_packed_refs), it has been running fine for 15 minutes.
 
--- 
-Felipe Contreras
+The "noop_each_fn" is a little gross. I could also just reimplement the
+recursion from do_for_each_ref_in_dir (except we don't care about flags,
+trim, base, etc, and would just be calling get_ref_dir recursively).
+It's a slight repetition of code, but it would be less subtle than what
+I have written below (which uses a no-op callback for the side effect
+that it primes the loose ref cache). Which poison do you prefer?
+
+diff --git a/refs.c b/refs.c
+index 45a7ee6..59ae7e4 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1363,19 +1363,38 @@ static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn
+ 	for_each_rawref(warn_if_dangling_symref, &data);
+ }
+ 
++static int noop_each_fn(const char *ref, const unsigned char *sha1, int flags,
++			void *data)
++{
++	return 0;
++}
++
+ static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn fn,
+ 			   int trim, int flags, void *cb_data)
+ {
+ 	struct ref_cache *refs = get_ref_cache(submodule);
+-	struct ref_dir *packed_dir = get_packed_refs(refs);
+-	struct ref_dir *loose_dir = get_loose_refs(refs);
++	struct ref_dir *packed_dir;
++	struct ref_dir *loose_dir;
+ 	int retval = 0;
+ 
+-	if (base && *base) {
+-		packed_dir = find_containing_dir(packed_dir, base, 0);
++	/*
++	 * Prime the loose ref cache; we must make sure the packed ref cache is
++	 * uptodate after we read the loose refs in order to avoid race
++	 * conditions with a simultaneous "pack-refs --prune".
++	 */
++	loose_dir = get_loose_refs(refs);
++	if (base && *base)
+ 		loose_dir = find_containing_dir(loose_dir, base, 0);
++	if (loose_dir) {
++		sort_ref_dir(loose_dir);
++		do_for_each_ref_in_dir(loose_dir, 0, base, noop_each_fn, 0, 0,
++				       NULL);
+ 	}
+ 
++	packed_dir = get_packed_refs(refs);
++	if (base && *base)
++		packed_dir = find_containing_dir(packed_dir, base, 0);
++
+ 	if (packed_dir && loose_dir) {
+ 		sort_ref_dir(packed_dir);
+ 		sort_ref_dir(loose_dir);
