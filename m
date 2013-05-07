@@ -1,171 +1,61 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: another packed-refs race
-Date: Tue, 07 May 2013 06:32:12 +0200
-Message-ID: <518883CC.7050609@alum.mit.edu>
-References: <20130503083847.GA16542@sigill.intra.peff.net> <51879C1C.5000407@alum.mit.edu> <20130506184122.GA23568@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 4/4] fast-import: only store commit objects
+Date: Mon, 6 May 2013 23:32:29 -0500 (CDT)
+Message-ID: <alpine.DEB.1.00.1305062331190.8213@s15462909.onlinehome-server.info>
+References: <1367555502-4706-1-git-send-email-felipe.contreras@gmail.com> <1367555502-4706-5-git-send-email-felipe.contreras@gmail.com> <87y5bw3q1s.fsf@hexa.v.cablecom.net> <CAMP44s1R9hAMZ=DQoPiTVi3+40NpADjVFU7tYovZA8W-PWEhhg@mail.gmail.com>
+ <518785B3.3050606@alum.mit.edu> <87ip2wflg0.fsf@linux-k42r.v.cablecom.net> <518789D1.4010905@alum.mit.edu> <7v38u0t9va.fsf@alter.siamese.dyndns.org> <CAMP44s1HASAuF0ECCvJr66WeqopDzLZQ12pKFsc-j5_VCDrizg@mail.gmail.com> <CAMP44s2KHH1n0vHB0Mdv-M2xV97KA9FMc6UrPyYyxD+2jsvfTA@mail.gmail.com>
+ <518871A0.8030707@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 07 06:32:26 2013
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Antoine Pelisse <apelisse@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 07 06:32:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZZZh-0007S6-E8
-	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 06:32:25 +0200
+	id 1UZZZv-0007dL-4r
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 06:32:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759658Ab3EGEcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 00:32:18 -0400
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:53487 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759650Ab3EGEcQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 May 2013 00:32:16 -0400
-X-AuditID: 12074413-b7f226d000000902-95-518883cf508b
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 3C.03.02306.FC388815; Tue,  7 May 2013 00:32:15 -0400 (EDT)
-Received: from [192.168.69.140] (p57A24E33.dip0.t-ipconnect.de [87.162.78.51])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r474WCf6018036
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 7 May 2013 00:32:13 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <20130506184122.GA23568@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLKsWRmVeSWpSXmKPExsUixO6iqHu+uSPQYM5mfouuK91MFvPu7mKy
-	+NHSw+zA7HHp5Xc2j2e9exg9Pm+SC2CO4rZJSiwpC85Mz9O3S+DOeH1iE1PBbu2KjtXTmBoY
-	9yp1MXJySAiYSMx93s4CYYtJXLi3nq2LkYtDSOAyo8TSZWvYIZyzTBKnF7xhBKniFdCWOHDj
-	GROIzSKgKjF53gwwm01AV2JRTzOYLSoQJrFq/TJmiHpBiZMzn4BtEBGQlfh+eCPYHGYBK4lV
-	V9pYQWxhoDkTl02AWtbJKHFv63J2kASngLXE+bdXgIZyADWoS6yfJwTRKy+x/e0c5gmMArOQ
-	rJiFUDULSdUCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbrmermZJXqpKaWbGCHBK7yDcddJ
-	uUOMAhyMSjy8CqfaA4VYE8uKK3MPMUpyMCmJ8k5u6ggU4kvKT6nMSCzOiC8qzUktPsQowcGs
-	JMIrrQ2U401JrKxKLcqHSUlzsCiJ86otUfcTEkhPLEnNTk0tSC2CycpwcChJ8M4BGSpYlJqe
-	WpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPitT4YmCsgqR4gPZeBmnnLS5IzAWKQrSeYtTl
-	WHnlyWtGIZa8/LxUKXHeNSBFAiBFGaV5cCtgqeoVozjQx8K8W0GqeIBpDm7SK6AlTEBLEvja
-	QZaUJCKkpBoYGVqcq+cofJ6t8KTw5K9TepL8s27mGT5OWpXpZZH2/dp5ew7W10G7P149oXZx
-	44dN9fOadqYaPP/f1PKiVuqBTJ1jYfHvSYxb01QsJXaGyD47s8bk37qiz5r7lgYk 
+	id S1759667Ab3EGEcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 00:32:35 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49328 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759661Ab3EGEcd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 May 2013 00:32:33 -0400
+Received: from mailout-de.gmx.net ([10.1.76.20]) by mrigmx.server.lan
+ (mrigmx002) with ESMTP (Nemesis) id 0M5JXV-1UM3Wa0yWl-00zSva for
+ <git@vger.kernel.org>; Tue, 07 May 2013 06:32:31 +0200
+Received: (qmail invoked by alias); 07 May 2013 04:32:31 -0000
+Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
+  by mail.gmx.net (mp020) with SMTP; 07 May 2013 06:32:31 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19EMYVMiihEcVC5Ib0Ex8s24Dwbp+jNsM/FNNgWlH
+	TGitdubdo6yLwf
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <518871A0.8030707@alum.mit.edu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223540>
 
-On 05/06/2013 08:41 PM, Jeff King wrote:
-> On Mon, May 06, 2013 at 02:03:40PM +0200, Michael Haggerty wrote:
-> [...]
->> The loose refs cache is only used by the for_each_ref() functions, not
->> for looking up individual references.  Another approach would be to
->> change the top-level for_each_ref() functions to re-stat() all of the
->> loose references within the namespace that interests it, *then* verify
->> that the packed-ref cache is not stale, *then* start the iteration.
->> Then there would be no need to re-stat() files during the iteration.
->> (This would mean that we have to prohibit a second reference iteration
->> from being started while one is already in progress.)
-> 
-> Hmm. Thinking on this more, I'm not sure that we need to stat the loose
-> references at all. We do not need to care if the loose refs are up to
-> date or not. Well, we might care, but the point here is not to pretend
-> that we have an up-to-date atomic view of the loose refs; it is only to
-> make sure that the fallback-to-packed behavior does not lie to us about
-> the existence or value of a ref.
-> 
-> IOW, it is OK to come up with a value for ref X that was true at the
-> beginning of the program, even if it has been simultaneously updated.
-> Our program can operate as if it happened in the instant it started,
-> even though in real life it takes longer. But it is _not_ OK to miss the
-> existence of a ref, or to come up with a value that it did not hold at
-> some point during the program (e.g., it is not OK to return some cruft
-> we wrote into the packed-refs file when we packed it three weeks ago).
+Hi Michael,
 
-This all sounds correct to me.
+On Tue, 7 May 2013, Michael Haggerty wrote:
 
-Another potential problem caused by the non-atomicity of loose reference
-reading could be to confuse reachability tests if process 1 is reading
-loose references while process 2 is renaming a reference:
+> I knew about the "type" command but I was under the impression that it
+> is intended for text files and can corrupt binary files.  Are you sure
+> that using "type" as you suggest is binary-clean?
 
-1. Process 1 looks for refs/heads/aaaaa and finds it missing.
+"type" is not binary-clean. At least on some Windows versions, "type" also
+has a limit on file size.
 
-2. Process 2 renames zzzzz -> aaaaa
-
-3. Process 1 looks for refs/heads/zzzzz and finds it missing.
-
-Process 2 would think that any objects pointed to by aaaaa (formerly
-zzzzz) are unreachable.  This would be unfortunate if it is doing an
-upload-pack and very bad if it is doing a gc.  I wonder if this could be
-a problem in practice?  (Gee, wouldn't it be nice to keep reflogs for
-deleted refs? :-) )
-
-> That is a weaker guarantee, and I think we can provide it with:
-> 
->   1. Load all loose refs into cache for a particular enumeration.
-> 
->   2. Make sure the packed-refs cache is up-to-date (by checking its
->      stat() information and reloading if necessary).
-> 
->   3. Run the usual iteration over the loose/packed ref caches.
-
-This sounds reasonable, too, though I'll need some more time to digest
-your suggestion in detail.
-
-> [...]
->> Of course, clearing (part of) the loose reference cache invalidates any
->> pointers that other callers might have retained to refnames in the old
->> version of the cache.  I've never really investigated what callers might
->> hold onto such pointers under the assumption that they will live to the
->> end of the process.
-> 
-> My proposal above gets rid of the need to invalidate the loose refs
-> cache, so we can ignore that complexity.
-
-The same concern applies to invalidating the packed-ref cache, which you
-still want to do.
-
->> Given all of this trouble, there is an obvious question: why do we have
->> a loose reference cache in the first place?  I think there are a few
->> reasons:
->>
->> 1. In case one git process has to iterate through the same part of the
->> reference namespace more than once.  (Does this frequently happen?)
-> 
-> I'm not sure how often it happens. There are a few obvious candidates if
-> you "git grep 'for_each[a-z_]*ref'", but I'm not sure if the actual
-> performance impact is measurable (the cache should be warm after the
-> first run-through).
-> 
->> 2. Reading a bunch of loose references at the same time is more
->> efficient than reading them one by one interleaved with other file
->> reads.  (I think this is a significant win.)
-> 
-> Makes some sense, though I don't recall whether it was ever measured.
-
-I think I measured it once and found it a significant benefit, though I
-can't remember whether this was with a warm cache or only with a cold cache.
-
-In fact, I experimented with some other strategies for loose reference
-loading for performance reasons.  Currently loose references are read
-into the cache lazily, one directory at a time.  I experimented with
-changes in both directions:
-
-* Preloading the whole tree of loose references before starting an
-iteration.  As I recall, this was a performance *win*.  It was on my
-to-do list of things to pursue when I have some free time (ha, ha).  I
-mostly wanted to check first that there are not callers who abort the
-iteration soon after starting it.  For example, imagine a caller who
-tries to determine "are there any tags at all" by iterating over
-"refs/tags" with a callback that just returns 1; such a caller would
-suffer the cost of reading all of the loose references in "refs/tags".
-
-* Lazy loading loose references one reference at a time.  The ideas was
-that this would allow the reference cache to be used for
-single-reference lookups.  This change alone caused a significant
-performance loss, so it would have had to be combined with code for
-preloading directories or subtrees before a for_each_ref() iteration.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Ciao,
+Dscho
