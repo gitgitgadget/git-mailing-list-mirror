@@ -1,72 +1,50 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: What's cooking in git.git (May 2013, #02; Mon, 6)
-Date: Tue, 7 May 2013 15:32:56 -0500
-Message-ID: <CAMP44s3+6Yaau8c=RYF8B_Quvnk9X34Umyjtnne=E_MKeYEd9g@mail.gmail.com>
-References: <7vip2vmg0k.fsf@alter.siamese.dyndns.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH] deprecate core.statinfo at Git 2.0 boundary
+Date: Tue, 7 May 2013 22:29:21 +0200 (CEST)
+Message-ID: <335406152.35740504.1367958561946.JavaMail.root@dewire.com>
+References: <20130507140904.GA3282@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 07 22:33:04 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, j sixt <j.sixt@viscovery.net>,
+	Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 07 22:37:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZoZL-0007mE-E0
-	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 22:33:03 +0200
+	id 1UZodP-0003EQ-Du
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 22:37:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759294Ab3EGUc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 16:32:59 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:63075 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758153Ab3EGUc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 May 2013 16:32:58 -0400
-Received: by mail-la0-f48.google.com with SMTP id eg20so1024203lab.35
-        for <git@vger.kernel.org>; Tue, 07 May 2013 13:32:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=ZuujPbQDc0PDxqQ945KiOiUmVmMOWvCvxWh08LNZjHA=;
-        b=bpSozvaesMHiJz8OboKtpPNcaR3cNhvHr9M8a70nY4+m2L5XvKkt9vH2aUm1PpRvbs
-         LfBCzy8yNLTs31jx6af8XrXNEEUOGLsVUhwm5SYSKcpypRy2gYWOVYS72zEnODiBABzv
-         U5B08bzZtTYP/x5US6CjBA2qIGTC2W30efVd4GD/MZNIGOCNIX3c2f5amOzrNqua1GKc
-         tWLKf8kISqTO6+7VluefhbwasRGjGxb+7WJkp4jyXCJKSfFsydlsLEty0XQoNYLKYk8c
-         s83kEI7sGL6pB/yqFsvbv/dX+q2F3vZzHe3QLIY6snTSIk7D1XjZZmYVtafBGp7BWxC0
-         sx2A==
-X-Received: by 10.112.125.130 with SMTP id mq2mr1705083lbb.103.1367958777010;
- Tue, 07 May 2013 13:32:57 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Tue, 7 May 2013 13:32:56 -0700 (PDT)
-In-Reply-To: <7vip2vmg0k.fsf@alter.siamese.dyndns.org>
+	id S1759306Ab3EGUhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 16:37:11 -0400
+Received: from zimbra.dewire.com ([83.140.172.131]:38754 "EHLO
+	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757618Ab3EGUhK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 May 2013 16:37:10 -0400
+X-Greylist: delayed 462 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 May 2013 16:37:09 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.dewire.com (Postfix) with ESMTP id B2DA982B19;
+	Tue,  7 May 2013 22:29:26 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at dewire.se
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id c7POaccxPhnp; Tue,  7 May 2013 22:29:22 +0200 (CEST)
+Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
+	by zimbra.dewire.com (Postfix) with ESMTP id 0CDA182B05;
+	Tue,  7 May 2013 22:29:22 +0200 (CEST)
+In-Reply-To: <20130507140904.GA3282@sigill.intra.peff.net>
+X-Originating-IP: [78.69.107.197]
+X-Mailer: Zimbra 7.2.0_GA_2681 (ZimbraWebClient - FF3.0 (Mac)/7.2.0_GA_2681)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223600>
 
-On Tue, May 7, 2013 at 1:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+This looks ok with me, though I can manage without backward compatibility.
 
-> * fc/at-head (2013-05-02) 5 commits
->  - Add new @ shortcut for HEAD
->  - sha1_name: refactor reinterpret()
->  - sha1_name: compare variable with constant, not constant with variable
->  - sha1_name: remove unnecessary braces
->  - sha1_name: remove no-op
->
->  Instead of typing four capital letters "HEAD", you can say "@"
->  instead.
->
->  There was another series from Ram that looked mostly test updates
->  but I lost track of which one was which.  In any case, are people
->  happy with this series?
-
-This series has cleanups and features that are good as they are.
-Ramkumar said he was going to resend his cleanup series, but he
-didn't. I'll try to gather all the patches and split them into
-cleanups, and features.
-
-Cheers.
-
--- 
-Felipe Contreras
+-- robin
