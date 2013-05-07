@@ -1,122 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/7] shorten_unambiguous_ref(): Allow shortening refs/remotes/origin/HEAD to origin
-Date: Tue, 07 May 2013 14:31:28 -0700
-Message-ID: <7vy5bqiij3.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 2/7] t7900: Start testing usability of namespaced remote refs
+Date: Tue, 7 May 2013 23:52:59 +0200
+Message-ID: <CALKQrgctyZGf2z+=+qjcW-s0uyVCqw01pv6X2NG+8yyC3FoTvQ@mail.gmail.com>
 References: <1367711749-8812-1-git-send-email-johan@herland.net>
-	<1367711749-8812-2-git-send-email-johan@herland.net>
-	<7vy5bsq9m9.fsf@alter.siamese.dyndns.org>
-	<CALKQrgcoz-+5Kb-Y1Ui9LhE=+pvcRUdAS+iRWXAfsYnV6+k34w@mail.gmail.com>
+	<1367711749-8812-3-git-send-email-johan@herland.net>
+	<7va9o7pogo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue May 07 23:31:48 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 07 23:53:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZpUB-000293-Et
-	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 23:31:47 +0200
+	id 1UZpou-0004vf-KK
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 23:53:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752701Ab3EGVbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 17:31:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59713 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751981Ab3EGVbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 May 2013 17:31:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8709D1CB44;
-	Tue,  7 May 2013 21:31:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Z+EcwbBxdU3lQRl1zlEqueOmfPs=; b=HG5MDy
-	jLVJI/IljI8zu4o+eZl056ykg8DNdz7TEcpPcbCSN3wlZErV/RtiM13FuNSx3GlH
-	vEH/8n2Jnui4kaLbES/ZOg+rseS+9o4Vl4CwMA8H3+nysKulfOa26e4cExbVHnyx
-	RNhYgh7lNCRN71ho86fzrO9oOVKR3jfw8Hlxk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vo5maXtpoY8ISOA2uV+DNCkFZfNxH2hK
-	Li+2hLWFkEfC3oZ5nGK0LLtU1nrjmImO5Mm3vc48ia3jHxm5dmuD/TRPQwP5/SgL
-	YhoMtwZa/1SV//8d80HEN8xoOO3E/EkrV8Lcucmk+nnzp53FoKrn7cqc98c9ZA/g
-	g2n9zd31xNo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AFC81CB41;
-	Tue,  7 May 2013 21:31:30 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C21511CB3A;
-	Tue,  7 May 2013 21:31:29 +0000 (UTC)
-In-Reply-To: <CALKQrgcoz-+5Kb-Y1Ui9LhE=+pvcRUdAS+iRWXAfsYnV6+k34w@mail.gmail.com>
-	(Johan Herland's message of "Tue, 7 May 2013 20:49:34 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7B0113FE-B75D-11E2-BB1B-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752070Ab3EGVxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 17:53:07 -0400
+Received: from mail10.copyleft.no ([188.94.218.231]:59102 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751642Ab3EGVxG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 May 2013 17:53:06 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UZpol-0007cR-O9
+	for git@vger.kernel.org; Tue, 07 May 2013 23:53:03 +0200
+Received: from mail-ob0-f182.google.com ([209.85.214.182])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UZpol-000J85-Gy
+	for git@vger.kernel.org; Tue, 07 May 2013 23:53:03 +0200
+Received: by mail-ob0-f182.google.com with SMTP id eh20so1098479obb.13
+        for <git@vger.kernel.org>; Tue, 07 May 2013 14:53:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=uvFtR/aDHnQ55SHze9JRpjVNFyITyCBZw7g8rBOlPAw=;
+        b=VCroh8ESlpW4+4srkVltVNND/ywqfL/ugwUAwLlmArwZn/mINvgeeSe6b8fY+SZ76r
+         lywHlRSmfRwJcdVADx+oLuhdnaA4S5uAXdpC4ybnT9xRstRWVGYYb2FYwOZuFswV1SOF
+         U9Gfcxb0KpjecDSYIAD0rBzSvzDcrLQz1TUg0aE7eKG1eWK8sN1Ie3OPGGaGVb66qq1o
+         RuvtPdM63x4wG0N4DG2TbcO9q+pZk3tzlEYEU1qyuUdMkyxbqxxFI5DgHJyELo+oApoL
+         Zmyh7c7cobOwArxECTBvtMY4UJv8hWx9AzXf7mdU1JsnbGBhQucsuHBvxbTzIlT0+Mb2
+         HV9A==
+X-Received: by 10.60.42.135 with SMTP id o7mr1111989oel.97.1367963580110; Tue,
+ 07 May 2013 14:53:00 -0700 (PDT)
+Received: by 10.182.129.110 with HTTP; Tue, 7 May 2013 14:52:59 -0700 (PDT)
+In-Reply-To: <7va9o7pogo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223604>
 
-Johan Herland <johan@herland.net> writes:
-
-> On Mon, May 6, 2013 at 7:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Johan Herland <johan@herland.net> writes:
->>
->>> ... there is AFAICS _no_ way for sscanf() - having
->>> already done one or more format extractions - to indicate to its caller
->>> that the input fails to match the trailing part of the format string.
->>
->> Yeah, we can detect when we did not have enough, but we cannot tell
->> where it stopped matching.
->>
->> It is interesting that this bug has stayed so long with us, which
->> may indicate that nobody actually uses the feature at all.
+On Tue, May 7, 2013 at 3:29 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johan Herland <johan@herland.net> writes:
+>> +test_expect_success 'work-around "clone" with namespaced remote refs' '
+>> +     rm -rf client &&
+>> +     git init client &&
+>> +     (
+>> +             cd client &&
+>> +             git remote add origin ../server &&
+>> +             git config --unset-all remote.origin.fetch &&
+>> +             git config --add remote.origin.fetch "+refs/heads/*:refs/remotes/origin/heads/*" &&
 >
-> I don't know if people really care about whether
-> "refs/remotes/origin/HEAD" shortens to "origin/HEAD" or "origin". I'm
-> guessing that people _do_ depend on the reverse - having "origin"
-> expand into "refs/remotes/origin/HEAD", so we probably cannot rip out
-> the "refs/remotes/%.*s/HEAD" rule altogether...
+> If you were to do this, I think you should drop the "remote add
+> origin" step and illustrate what configuration variables should be
+> prepared (at least minimally---the final implementation of "git
+> clone --separate-remote-layout" may add some other configuration
+> variable as a hint to say "this remote is using the new layout" or
+> somesuch) in this "client" repository.
 
-Oh, no doubt about that reverse conversion.
+Sure, I can change the test into doing:
 
-The real reason nobody cared about refs/remotes/origin/HEAD is that
-nobody sane has anything but non-symbolic ref there.  Your t1514
-does this:
+	cd client &&
+	git config remote.origin.url ../server &&
+	git config --add remote.origin.fetch
+"+refs/heads/*:refs/remotes/origin/heads/*" &&
+	git config --add remote.origin.fetch
+"+refs/tags/*:refs/remotes/origin/tags/*" &&
+	git config --add remote.origin.fetch
+"+refs/notes/*:refs/remotes/origin/notes/*" &&
+	git config --add remote.origin.fetch
+"+refs/replace/*:refs/remotes/origin/replace/*" &&
+	git config remote.origin.tagopt "--no-tags" &&
+	git fetch &&
+	git checkout master
 
-	...
-	git update-ref refs/master master_d &&
-	test_commit master_e
-	git update-ref refs/remotes/origin/HEAD master_e &&
-	...
+> That would make the test more self documenting.
+>
+> I am not convinced that it is a good idea to reuse "remotes/origin"
+> hierarchy which traditionally has been branches-only like this,
+> though.  It may be better to use
+>
+>         refs/$remotes_new_layout/origin/{heads,tags,...}/*
+>
+> for a value of $remotes_new_layout that is different from "remote",
+> and teach the dwim_ref() machinery to pay attention to it, to avoid
+> confusion.  Otherwise, you wouldn't be able to tell between a topic
+> branch that works on tags named "tags/refactor" under the old layout,
+> and a tag that marks a good point in a refactoring effort "refactor"
+> under the new layout.
 
-Nowhere in the set-up sequence, you see anything that does
+I see your point, although I'm not convinced it is common among users
+to have branch names of the "tags/*" form (or tag names of the
+"heads/*" form, for that matter). I'm also not sure it's worth messing
+with the "remotes" name which has had a long time to work its way into
+our brains and into git's user interface.
 
-	git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/master
+That said, I could have a go at using "refs/peers/*" instead of
+"refs/remotes/*", and see how that works out.
 
-or any other branch we copied from the remote.
+If it sticks, how pervasive do we want this renaming to be? I guess we
+don't want to rename the "git remote" command to "git peer" just
+yet... What about the config? Do we rename "remote.origin.url" to
+"peer.origin.url" for new-style remotes? For how long do you
+anticipate having "peers" and "remotes" living side-by-side as
+concepts in git?
 
-And the shortening is done after dereferencing the synbolic ref.
-Because of this, refs/remotes/origin/HEAD usually resolves to
-origin/master, not origin.
 
- t/t1514-rev-parse-shorten-unambiguous-ref.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+...Johan
 
-diff --git a/t/t1514-rev-parse-shorten-unambiguous-ref.sh b/t/t1514-rev-parse-shorten-unambiguous-ref.sh
-index fd87ce3..556ad16 100755
---- a/t/t1514-rev-parse-shorten-unambiguous-ref.sh
-+++ b/t/t1514-rev-parse-shorten-unambiguous-ref.sh
-@@ -76,4 +76,11 @@ test_expect_success 'shortening refnames in loose mode' '
- 	test_shortname refs/tags/master loose tags/master master_c
- '
- 
-+test_expect_success 'shortening is done after dereferencing a symref' '
-+	git update-ref refs/remotes/frotz/master master_e &&
-+	git symbolic-ref refs/remotes/frotz/HEAD refs/remotes/frotz/master &&
-+	test_shortname refs/remotes/frotz/HEAD strict frotz/master master_e &&
-+	test_shortname refs/remotes/frotz/HEAD loose frotz/master master_e
-+'
-+
- test_done
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
