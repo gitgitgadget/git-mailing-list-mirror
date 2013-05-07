@@ -1,97 +1,127 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: Fwd: Uninit'ed submodules
-Date: Tue, 07 May 2013 20:01:04 +1200
-Message-ID: <5188B4C0.50206@gmail.com>
-References: <CAFOYHZCfL2uqnUkb=7kSdpudKvYrfMo9saJ8eNsj5mYDQgHVuA@mail.gmail.com> <CAFOYHZDKTYFNRHUwdas7kZKs8UbdrY=hAA0SVqbz48NjWsHKww@mail.gmail.com> <51880191.2070809@web.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: another packed-refs race
+Date: Tue, 07 May 2013 10:03:06 +0200
+Message-ID: <5188B53A.3090106@alum.mit.edu>
+References: <20130503083847.GA16542@sigill.intra.peff.net> <51879C1C.5000407@alum.mit.edu> <20130506184122.GA23568@sigill.intra.peff.net> <518883CC.7050609@alum.mit.edu> <20130507044456.GA29757@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue May 07 10:00:14 2013
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 07 10:03:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZcon-0003Vm-O3
-	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 10:00:14 +0200
+	id 1UZcro-00061I-Iu
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 10:03:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758342Ab3EGIAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 04:00:06 -0400
-Received: from mail-da0-f53.google.com ([209.85.210.53]:48804 "EHLO
-	mail-da0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754068Ab3EGIAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 May 2013 04:00:05 -0400
-Received: by mail-da0-f53.google.com with SMTP id o9so187079dan.40
-        for <git@vger.kernel.org>; Tue, 07 May 2013 01:00:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=Bo9rYue9iRVqYqB975rHydHpEKERDb0zKYUd7aVbK+c=;
-        b=Hz9ACiDJcQ6tkZ2a9pf5MfxgQWae7mVLYkInxN7Z+JedgbWX55NsHXfZt6NyLpHI1M
-         C3EGXLCvLWH+TEvlKrBZblGiQJPacYzLnbEzMxXikFLXU04I792jXCNJdf1yAbAl9QRP
-         SDZudD9DJGLOgyxeH5gPUuuyvfSlPnHL4qvVnedIsUjV79AzHx3dvlaijW2rKgCCicza
-         TgckelVkx4p3RVIlWHLjM/OkY+HdEszrE6g4IYCubRtOesb9BSUjeb8zU9Mwfuj9mLRR
-         JxByftrCX3tKGBNFh3+RKFLwXIZ9Qo66Qgi9dHesm0fjrp4XDzxBXyhIdDwGpu6Q+e9I
-         37Bw==
-X-Received: by 10.68.195.234 with SMTP id ih10mr1036282pbc.162.1367913604037;
-        Tue, 07 May 2013 01:00:04 -0700 (PDT)
-Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id fx2sm29336788pac.4.2013.05.07.01.00.01
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 07 May 2013 01:00:03 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <51880191.2070809@web.de>
+	id S1757356Ab3EGIDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 04:03:12 -0400
+Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:53122 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754068Ab3EGIDJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 May 2013 04:03:09 -0400
+X-AuditID: 1207440c-b7ff06d0000008f7-31-5188b53c710c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 55.B2.02295.C35B8815; Tue,  7 May 2013 04:03:09 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r47836Vx026158
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 7 May 2013 04:03:07 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <20130507044456.GA29757@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsUixO6iqGu7tSPQYMU+RouuK91MFvPu7mKy
+	+NHSw+zA7HHp5Xc2j2e9exg9Pm+SC2CO4rZJSiwpC85Mz9O3S+DO6Np8jrFgtVTF78sPWBoY
+	/4h0MXJySAiYSHTd3cIOYYtJXLi3nq2LkYtDSOAyo8TUp9tYIJxjTBLfNz9gBKniFdCW+Hfx
+	FBOIzSKgKnFk8W+wbjYBXYlFPc1gcVGBMIlV65cxQ9QLSpyc+YQFxBYRkJX4fngj2BxmASuJ
+	VVfaWEFsYaA5E5dNYIdYdoNRovn1caAGDg5OAWuJk83yICazgLrE+nlCEK3yEtvfzmGewCgw
+	C8mGWQhVs5BULWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qka6iXm1mil5pSuokREro8Oxi/
+	rZM5xCjAwajEw6twqj1QiDWxrLgy9xCjJAeTkijv4o0dgUJ8SfkplRmJxRnxRaU5qcWHGCU4
+	mJVEeKW1gXK8KYmVValF+TApaQ4WJXFe1SXqfkIC6YklqdmpqQWpRTBZGQ4OJQlezi1AjYJF
+	qempFWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGgOI0vBkYqSIoHaK8BSDtvcUFiLlAUovUU
+	oy7HyitPXjMKseTl56VKifNu3QxUJABSlFGaB7cClqheMYoDfSzMKwIyigeY5OAmvQJawgS0
+	JIGvHWRJSSJCSqqBMd4tTmgDf6qQxKb8ff8mGHBHSq3lOPU3QXR2cvZPXv0VRukly7Y9+n1x
+	amOSC8OSZgaTDhmHs3+VqpX1Jk/JSs2I7dNL+rKlsnZWoZe6R6+rkFZ4dc/bfKva 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223567>
 
-On 07/05/13 07:16, Jens Lehmann wrote:
-> Am 06.05.2013 02:19, schrieb Chris Packham:
->> This did get me thinking. Why does an uninitialized submodule need to
->> have an empty directory? If it didn't the maintainer in question
->> probably would have realized that he needed to run "git submodule
->> update --init" when his "cd submodule" command failed.
+On 05/07/2013 06:44 AM, Jeff King wrote:
+> On Tue, May 07, 2013 at 06:32:12AM +0200, Michael Haggerty wrote:
+> 
+>> Another potential problem caused by the non-atomicity of loose reference
+>> reading could be to confuse reachability tests if process 1 is reading
+>> loose references while process 2 is renaming a reference:
 >>
->> I'm guessing there is a good reason for the empty directory - perhaps
->> so that git can notice the fact that it exists in the worktree but is
->> out of date?  If it does need to have some presence in the worktree
->> why not as a file? That way the cd command would still fail (albeit
->> with a different error) providing the necessary indication to the
->> user. The submodule update --init could then change from file -> dir
->> when it actually gets populated.
+>> 1. Process 1 looks for refs/heads/aaaaa and finds it missing.
+>>
+>> 2. Process 2 renames zzzzz -> aaaaa
+>>
+>> 3. Process 1 looks for refs/heads/zzzzz and finds it missing.
+>>
+>> Process 2 would think that any objects pointed to by aaaaa (formerly
+>> zzzzz) are unreachable.  This would be unfortunate if it is doing an
+>> upload-pack and very bad if it is doing a gc.  I wonder if this could be
+>> a problem in practice?  (Gee, wouldn't it be nice to keep reflogs for
+>> deleted refs? :-) )
 > 
-> Hmm, to me an empty directory is the natural representation of an
-> unpopulated submodule, but I see why that made it hard for your
-> maintainer to notice the fact that the submodule was uninitialized.
-> I suspect changing an unpopulated submodule to be represented by a
-> file will surprise quite some users (some of which will probably
-> come up with perfectly valid use cases such a change will break).
+> Ugh. Yeah, that is definitely a possible race, and it could be quite
+> disastrous for prune.
 > 
-> What about the following: Today's Git completely ignores empty
-> submodule directories, but I think that when the recursive checkout
-> support is there, the "submodule.autoupdate" flag - which I believe
-> should control that behavior - could also make those empty submodule
-> directories show up in "git status" as being unpopulated (after all
-> they are configured to be updated automatically, so not having them
-> populated is something Git should show). Would something like this
-> have helped here?
-> 
-> Until then I can only propose to establish a best practice of using
-> "git clone --recurse-submodules" in these situations to avoid the
-> problem you described.
-> 
+> I am really starting to think that we need a pluggable refs
+> architecture, and that busy servers can use something like sqlite to
+> keep the ref storage. That would require bumping repositoryformatversion,
+> of course, but it would be OK for a server accessible only by git
+> protocols.
 
-Yeah I think training people to use --recurse-submodules is probably the
-best thing we can do with the current version of git on our developers
-work stations. There is a bit of an issue when we add a new submodule
-(people aren't used to using submodule update --init), but that isn't a
-frequent occurrence.
+That would be a fun project.  I like the idea of not burdening people's
+local mostly-one-user-at-a-time repositories with code that is hardened
+against server-level pounding.
 
-The recursive checkout sounds like something we'd benefit from.
+> I also wonder if we can spend extra time to get more reliable results
+> for prune, like checking refs, coming up with a prune list, and then
+> checking again. I have a feeling it's a 2-generals sort of problem where
+> we can always miss a ref that keeps bouncing around, but we could bound
+> the probability. I haven't thought that hard about it. Perhaps this will
+> give us something to talk about on Thursday. :)
+
+It's not 100% solvable without big changes; there could always be a
+malign Dijkstra running around your system, renaming references right
+before you read them.  But I guess it would be pretty safe if pack would
+keep the union of objects reachable from the references read at the
+beginning of the run and objects reachable from the references read at
+(aka near) the end of the run.
+
+>> * Preloading the whole tree of loose references before starting an
+>> iteration.  As I recall, this was a performance *win*.  It was on my
+>> to-do list of things to pursue when I have some free time (ha, ha).  I
+>> mostly wanted to check first that there are not callers who abort the
+>> iteration soon after starting it.  For example, imagine a caller who
+>> tries to determine "are there any tags at all" by iterating over
+>> "refs/tags" with a callback that just returns 1; such a caller would
+>> suffer the cost of reading all of the loose references in "refs/tags".
+> 
+> Well, you can measure my patches, because that's what they do. :) I
+> didn't really consider an early termination from the iteration.
+> Certainly something like:
+> 
+>   git for-each-ref refs/tags | head -1
+> 
+> would take longer. Though if you have that many refs that the latency is
+> a big problem, you should probably consider packing them (it can't
+> possibly bite you with a race condition, right?).
+
+No, I don't see a correctness issue.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
