@@ -1,70 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/7] shorten_unambiguous_ref(): Allow shortening refs/remotes/origin/HEAD to origin
-Date: Tue, 07 May 2013 15:06:54 -0700
-Message-ID: <7vtxmeigw1.fsf@alter.siamese.dyndns.org>
-References: <1367711749-8812-1-git-send-email-johan@herland.net>
-	<1367711749-8812-2-git-send-email-johan@herland.net>
-	<7vy5bsq9m9.fsf@alter.siamese.dyndns.org>
-	<CALKQrgcoz-+5Kb-Y1Ui9LhE=+pvcRUdAS+iRWXAfsYnV6+k34w@mail.gmail.com>
-	<7vy5bqiij3.fsf@alter.siamese.dyndns.org>
-	<CALKQrgdaXOjXFeWSpGtgqKhALqpRN0L7VEMbNf+93UJEBTD9ig@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 00/11] sha1_name: improvements
+Date: Tue, 7 May 2013 17:11:56 -0500
+Message-ID: <CAMP44s3-vVUB4VnZP4uBMLAbviV+BMTqDcbO_TxkX+5RE6cnSg@mail.gmail.com>
+References: <1367963711-8722-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed May 08 00:07:03 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 08 00:12:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZq2I-0000Dv-N5
-	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 00:07:03 +0200
+	id 1UZq79-0004db-6W
+	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 00:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559Ab3EGWG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 18:06:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48110 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750977Ab3EGWG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 May 2013 18:06:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E34081D6EC;
-	Tue,  7 May 2013 22:06:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WUmGztrXRwFVhowKiZRaHRRD74M=; b=Ir1ads
-	ZJ20MT97aahQ59OfzqhYn/6v22IcfAUu2gnhFKMzNpf288gMFFVUGf497nP0EmQh
-	ayCOUQsZDfQvHmk2tthdh9NN0gdjuq+5M62lUQYgNKhWVIvJvUq+4Bab2+UhvnyB
-	DcD9qXoJFYzBG5lH+fd5JOO1XzzIt8TdIFAgc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=epO5AkCnXWJIz2kioVzUqYpRaRotNLfz
-	77C4+6joSY/vQUfHp9cZFDfAkqJL4zZo0KSL8eO2OWa7ESmmvyTZL5t1OOMXqZRR
-	uaY4meMQULo+9A2k8roaJ422EWZjKk4cEYd+dOwhlWds5MVI/S3VUhj6Jf6zXMXR
-	Y7ovlf2siN8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D84FE1D6EB;
-	Tue,  7 May 2013 22:06:56 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D7A71D6EA;
-	Tue,  7 May 2013 22:06:56 +0000 (UTC)
-In-Reply-To: <CALKQrgdaXOjXFeWSpGtgqKhALqpRN0L7VEMbNf+93UJEBTD9ig@mail.gmail.com>
-	(Johan Herland's message of "Wed, 8 May 2013 00:03:35 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6E8CACFA-B762-11E2-86E3-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751391Ab3EGWL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 18:11:59 -0400
+Received: from mail-la0-f44.google.com ([209.85.215.44]:63047 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750796Ab3EGWL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 May 2013 18:11:58 -0400
+Received: by mail-la0-f44.google.com with SMTP id ed20so1110122lab.17
+        for <git@vger.kernel.org>; Tue, 07 May 2013 15:11:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=spTfic0ookA55bdzJ913suUb953AczEMIKkHmVQL2Ag=;
+        b=RgBZB9vt/cpApDGq0Vxa24ij5JHgNfFNX+oq0And4O6rTYo7tAra8ZEqe4GG6a2eVy
+         CenoEEWlXine2g4QheHtTB7cJiWnVtuVmc2W7ynt+SN5mQkPR1t63LzbWHtfjfg+TE6+
+         VxjFWIvRauzeHtSegOWXzTGvlfb0Aq+slVauIJdVA+Cb39D+dakEYEAtIYJL/ig/kjdV
+         BqYjYVpwAM778CZdW905KPXowHBRYT9qD6EhU1guyyixQrHWB8y0b3lJyNOHcpMcZuZX
+         cAWCKCDWEvfB71l7iJ1W7DvREaSlM/HISJaoC38UWscgjs4Jbrj8SQP0Nx6BqeyuHTK4
+         6uxQ==
+X-Received: by 10.112.166.101 with SMTP id zf5mr1818345lbb.59.1367964716931;
+ Tue, 07 May 2013 15:11:56 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Tue, 7 May 2013 15:11:56 -0700 (PDT)
+In-Reply-To: <1367963711-8722-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223622>
 
-Johan Herland <johan@herland.net> writes:
+On Tue, May 7, 2013 at 4:55 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> While trying to add support for the @ shortcut lots of cleanups arised. Here
+> they are in a single series.
+>
+> Felipe Contreras (7):
+>   tests: at-combinations: simplify setup
+>   tests: at-combinations: check ref names directly
+>   tests: at-combinations: improve nonsense()
+>   sha1_name: remove no-op
+>   sha1_name: remove unnecessary braces
+>   sha1_name: avoid Yoda conditions
+>   sha1_name: reorganize get_sha1_basic()
+>
+> Ramkumar Ramachandra (4):
+>   tests: at-combinations: increase coverage
+>   tests: at-combinations: @{N} versus HEAD@{N}
+>   sha1_name: don't waste cycles in the @-parsing loop
+>   sha1_name: check @{-N} errors sooner
 
-> ...oops, I see I forgot the trailing && on this line. Do you want a
-> resend, or fix up yourself?
+When merging this series to the @ shortcut one, there will be
+conflicts, this is how I propose fixing them:
 
-I've pushed out a heavily fixed-up version on 'pu', mostly for
-styles and some log message changes to describe "when it is not a
-symref".
+                return len; /* syntax Ok, not enough switches */
+-       if (0 < len && len == namelen)
++       if (len > 0 && len == namelen)
+                return len; /* consumed all */
+-       else if (0 < len)
+...
+++      else if (len > 0)
+ +              return reinterpret(name, namelen, len, buf);
+
+- check "@" new-two
+- check "@@{u}" upstream-two
+...
+++check "@" ref refs/heads/new-branch
+++check "@@{u}" ref refs/heads/upstream-branch
+
+If that creates some kind of problem I would rather throw away this
+series rather than the other one.
+
+Cheers.
+
+-- 
+Felipe Contreras
