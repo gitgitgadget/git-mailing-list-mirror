@@ -1,104 +1,118 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 4/4] fast-import: only store commit objects
-Date: Mon, 6 May 2013 23:49:56 -0500
-Message-ID: <CAMP44s3OZX=f8=MdXq8jr57o94ubzqf0O3EVFKn4QdTXdg+A=Q@mail.gmail.com>
-References: <1367555502-4706-1-git-send-email-felipe.contreras@gmail.com>
-	<1367555502-4706-5-git-send-email-felipe.contreras@gmail.com>
-	<87y5bw3q1s.fsf@hexa.v.cablecom.net>
-	<CAMP44s1R9hAMZ=DQoPiTVi3+40NpADjVFU7tYovZA8W-PWEhhg@mail.gmail.com>
-	<518785B3.3050606@alum.mit.edu>
-	<87ip2wflg0.fsf@linux-k42r.v.cablecom.net>
-	<518789D1.4010905@alum.mit.edu>
-	<CAMP44s1Nk7YAjNkTq=ShQbzkMasw6bpcEPTXLb8x+2q-vXLRGg@mail.gmail.com>
-	<518874A5.5050002@alum.mit.edu>
-	<alpine.DEB.1.00.1305062332470.8213@s15462909.onlinehome-server.info>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] git: make signoff header configurable
+Date: Mon, 06 May 2013 21:53:31 -0700
+Message-ID: <7vehdjo0fo.fsf@alter.siamese.dyndns.org>
+References: <1367876032-6833-1-git-send-email-arend@broadcom.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 07 06:50:03 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Arend van Spriel" <arend@broadcom.com>
+X-From: git-owner@vger.kernel.org Tue May 07 06:53:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZZqk-0004f3-DS
-	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 06:50:02 +0200
+	id 1UZZuI-0007Zq-0s
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 06:53:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758273Ab3EGEt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 00:49:58 -0400
-Received: from mail-la0-f53.google.com ([209.85.215.53]:47420 "EHLO
-	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757580Ab3EGEt5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 May 2013 00:49:57 -0400
-Received: by mail-la0-f53.google.com with SMTP id eo20so139431lab.12
-        for <git@vger.kernel.org>; Mon, 06 May 2013 21:49:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=Qq+rEwvNVbHYd3T1ZepIvbR1oYLTDieM1ao18jnHgWQ=;
-        b=qkGBBBWXNBhHNKoD4Xe50m74awGM0HEA2NuQMhE+f0cRSqBmXDXt0SLEaDa3PF+r3k
-         CaqFJbRMpj820grJa8C47WHYkNNmUsvsJre3+U8QjuPUdmxwM+H72G/Vi9kaK7r7eQa9
-         DS48rEztrL2wGFGXOU2Tfw1zQ3GnBdhlmHbbOLtZitqt7rBkxXuJdl9K6LUfXn+2cATP
-         QtgF4jpS/j7GyJ7B1deiY3WCo9EYTbvSq5DQnoMNrsqlrVHYcpSRRqjsVMBca/LaOsVn
-         /+97DvGAr1RJJmj0Ie0MgNAO/CMLU1IDtw0vsGyM+OjcmCHRafqT56eH+8QCdwLvvFk5
-         pJYw==
-X-Received: by 10.112.1.166 with SMTP id 6mr283778lbn.135.1367902196134; Mon,
- 06 May 2013 21:49:56 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Mon, 6 May 2013 21:49:56 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1305062332470.8213@s15462909.onlinehome-server.info>
+	id S1758313Ab3EGExh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 00:53:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59993 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757444Ab3EGExh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 May 2013 00:53:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 244DA16A51;
+	Tue,  7 May 2013 04:53:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=O2HKyHmSNBWcmHMJCb1jLwYkb2U=; b=qVgu3p
+	GsxEDkVoS5asvG8GToP+MfBl7f6XdtUglIsFxKgeUuIlGK9Fd9Z8shOQVWgIwhkW
+	rpQcGVOEM7XhD1k6XWTabOnka8ixAuswGspUt/q2KS1Jx24y/VKk/WUAlf6IDVln
+	pXkIdci7IKiQ/IrEZ68d5ELtGydGzeWY8/3oM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=R+G+0Ay3MtYwzmj+VFuNqfuxRhTYNzrn
+	g5ivbevSSz0TCN3yv6t2V9ulQz5KwtNT55yNaKg1JKg6gp9PjYZ/OBjPhU7vufFO
+	JcHGUJXAVZ7+Zh3SXjPaWMAGYAxq91iVKQw5skFKOl9BdOtcyQ2UvsEjSMWVVGAO
+	p4kxIgJP1Mo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16C3A16A50;
+	Tue,  7 May 2013 04:53:34 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 736A016A4E;
+	Tue,  7 May 2013 04:53:33 +0000 (UTC)
+In-Reply-To: <1367876032-6833-1-git-send-email-arend@broadcom.com> (Arend van
+	Spriel's message of "Mon, 6 May 2013 23:33:52 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 11EF916E-B6D2-11E2-A8AB-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223548>
 
-On Mon, May 6, 2013 at 11:39 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Tue, 7 May 2013, Michael Haggerty wrote:
->
->> On 05/06/2013 11:04 PM, Felipe Contreras wrote:
->> > On Mon, May 6, 2013 at 5:45 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> >> On 05/06/2013 12:32 PM, Thomas Rast wrote:
->
->> >> So the proposed change would break a documented use of cvs2git.
->> >
->> > It's documented as an alternative. How many people actually use this
->> > form over the other? Is there really any advantage? It's possibly that
->> > basically nobody is using this form, and there's no benefits.
->>
->> You conjectured earlier that nobody uses blob marks, and I provided a
->> counterexample.  Then you proposed a workaround that would require
->> changes to the cvs2git documentation, and I even explained how your
->> proposed workaround is not as flexible as the status quo.  Do you want
->> to go through the same argument with every possible user of
->> git-fast-import?
->>
->> It would be insanity to change the default behavior when a workaround on
->> the Git side (namely adding an option that tells git-fast-import *not*
->> to emit blob marks) would be quite straightforward to implement and have
->> little maintenance cost.
->
-> I really wonder how many more counterexamples are required to settle this
-> discussion.
+"Arend van Spriel" <arend@broadcom.com> writes:
 
-One. I haven't seen one use-case that *requires* blob marks, I haven't
-seen one tool that utilizes blob marks. And no, cvs2git doesn't use
-marks at all.
+> I had an itch to scratch. Like the -s command line parameter to
+> get the signed-off message added, but not all projects use the
+> same signature format. So let me know what you think about this
+> idea. Never contributed to git before so decided to make it an
+> RFC first as this solution may be a bit hack-ish.
 
-> There is no good reason to artificially limit Git's capabilities here,
-> especially when it has been demonstrated that supporting that capability
-> is not only possible, but also outright easy.
+It is customary to declare things like "char *get_signoff_header()"
+that are meant to be available pretty much everywhere in cache.h
+(look for /* Environment bits from configuration mechanism */) and
+not in an unrelated header like sequencer.h (which builtin/commit.c
+or config.c have no business including).  Also, default-config may
+be a bit too generic place to read this information; it is used by
+many read-only commands like "log", "diff", etc. that have no reason
+to know this custom trailer setting.
 
-Strawman. Nobody is arguing that there shouldn't be an option to
-enable blob exporting, the argument is that there's no point in making
-that the *default*.
+Other than these, I do not see anything glaringly "hack-ish" in the
+implementation itself.  Of course, a non-RFC patch would come with
+documentation and test script updates.
 
--- 
-Felipe Contreras
+By the way, what you are adding is a trailer, not a header, as it
+comes at the very end ;-).
+
+To projects that adopt the S-o-b convention from the kernel, the act
+of signing off has a very specific legal meaning (I know it is not
+an electronic signature, but the intention counts in court); I am
+not sure if it is even a good idea to make "-s" mean something
+different depending on the configuration in the first place, though.
+
+Wouldn't a commit template a better alternative for appending a
+random stuff in the log message, I wonder.
+
+>  builtin/commit.c |    5 +++--
+>  config.c         |   12 ++++++++++++
+>  sequencer.c      |   15 +++++++++++++--
+>  sequencer.h      |    3 ++-
+>  4 files changed, 30 insertions(+), 5 deletions(-)
+> diff --git a/sequencer.h b/sequencer.h
+> index 1fc22dc..5a91105 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -48,8 +48,9 @@ struct replay_opts {
+>  
+>  int sequencer_pick_revisions(struct replay_opts *opts);
+>  
+> -extern const char sign_off_header[];
+> +extern char* sign_off_header;
+
+The asterisk sticks to the identifier, not type, i.e.
+
+	extern char *signoff_label;
+
+But I suspect you do not need to make this extern (for the same
+reason we can keep def_signoff_header[] a static), as long as the
+public facing API "get-signoff-header" is extern.
+
+> +char *get_signoff_header(void);
+>  void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
+>  
+>  #endif
