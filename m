@@ -1,103 +1,141 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/3] fast-{import,export}: use get_sha1_hex() directly
-Date: Tue, 07 May 2013 16:19:09 -0700
-Message-ID: <7vli7qidjm.fsf@alter.siamese.dyndns.org>
-References: <1367793534-8401-1-git-send-email-felipe.contreras@gmail.com>
-	<1367793534-8401-2-git-send-email-felipe.contreras@gmail.com>
-	<7v38tyn9cq.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0AipiEVhHrDS0-dB9jCoCqHYDd_s5gcGzqyuh0A+qehg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 08 01:19:30 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] remote-bzr: fix for disappeared revisions
+Date: Tue,  7 May 2013 18:39:35 -0500
+Message-ID: <1367969975-4163-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 08 01:41:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZrAP-0004X0-MI
-	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 01:19:30 +0200
+	id 1UZrVK-0005sI-G0
+	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 01:41:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756104Ab3EGXTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 19:19:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52910 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755923Ab3EGXTN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 May 2013 19:19:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB73E1CE85;
-	Tue,  7 May 2013 23:19:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=e7iiH54DBGlaPZhTR1LUzbKoKnE=; b=uAZEvl
-	kGwdwSYH2Y4DD7WZamf/kUD4zdiccfHZBRBWqkHnZoB9cAaVbhy4Zg9JyVvkNXYE
-	oghMc/fl8tw3SVUhPYGu0d6o1pu2lty1deTZ2G1kUka/s6sfDFyW2TwuiJTrCfLI
-	ipWHmN8GvXUj06O3usmuoIm67W6MwwOP/DPHA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lxunR6rk2ZrsdqqJF5Yr74UO4O65XmoB
-	hPITytve/5Q5Z49ZFc9shtS71GRBz9zkpTT8QcDPxJgAJFMDhfZY9g7eiRk8lz48
-	K2aGXXnRsZPeneKZZGC+iAsMd8CuT6SW3JSM1GzYrSrB0HqA2MTJIcXeIRkjn5S7
-	HSVjPR/NUfM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F8891CE84;
-	Tue,  7 May 2013 23:19:11 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1F96B1CE81;
-	Tue,  7 May 2013 23:19:11 +0000 (UTC)
-In-Reply-To: <CAMP44s0AipiEVhHrDS0-dB9jCoCqHYDd_s5gcGzqyuh0A+qehg@mail.gmail.com>
-	(Felipe Contreras's message of "Tue, 7 May 2013 17:13:19 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8642ADF4-B76C-11E2-9CC5-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753715Ab3EGXlC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 19:41:02 -0400
+Received: from mail-ye0-f171.google.com ([209.85.213.171]:57037 "EHLO
+	mail-ye0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750968Ab3EGXlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 May 2013 19:41:00 -0400
+Received: by mail-ye0-f171.google.com with SMTP id l12so268757yen.30
+        for <git@vger.kernel.org>; Tue, 07 May 2013 16:41:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=59omehHWmxgY4uKhG2sL80Vhy59L3WQzE+oNSifRQBs=;
+        b=MCu+3TboDMORMvYXTPRg3PGMxyJM3WfTcvLGTUO1aVS2pec6TC/0B/viMMxCyQm5Vn
+         MpwXkdMZRfW8baSwdLJ7kg02XkyLpb0lRMPKNtvNgxADchNYtOwvsxMW52ugxAe7rMw1
+         dDEvMl3Hp30ngYmMrAAGlVU2C1I8x7a+SUf1Etvct2I9OJJg2aSqUH8joe9QRgy3AKlf
+         YEi+Juyk3fAR3ElWGqbdAu940+BquAS54Zb57sX6yF1jK9jep/AVmQEMTxDYHAp8my+3
+         gO4RMtAGWcdkhljo3+Hi52bHjvWntwcts6yGSM5igiWWR/m6EcCddjQwnu3/wfIkUcCN
+         3DeA==
+X-Received: by 10.236.77.196 with SMTP id d44mr4205203yhe.44.1367970059885;
+        Tue, 07 May 2013 16:40:59 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id a24sm21221970yho.24.2013.05.07.16.40.57
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 07 May 2013 16:40:58 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.553.gac13664
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223629>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+It's possible that the previous tip goes away, we should not assume it's
+always present. Fortunately we are only using it to calculate the
+progress to display to the user, so only that needs to be fixed.
 
-> Turns out most of the get_sha1() calls were correct; this does the trick:
->
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index 18fdfb3..d1d68e9 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -623,7 +623,7 @@ static void import_marks(char *input_file)
->
->                 mark = strtoumax(line + 1, &mark_end, 10);
->                 if (!mark || mark_end == line + 1
-> -                       || *mark_end != ' ' || get_sha1(mark_end + 1, sha1))
-> +                       || *mark_end != ' ' || get_sha1_hex(mark_end + 1, sha1))
->                         die("corrupt mark line: %s", line);
->
->                 if (last_idnum < mark)
-> diff --git a/fast-import.c b/fast-import.c
-> index 5f539d7..3f32149 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -1822,7 +1822,7 @@ static void read_marks(void)
->                 *end = 0;
->                 mark = strtoumax(line + 1, &end, 10);
->                 if (!mark || end == line + 1
-> -                       || *end != ' ' || get_sha1(end + 1, sha1))
-> +                       || *end != ' ' || get_sha1_hex(end + 1, sha1))
+Also, add a test that triggers this issue.
 
-This is where --import-marks is handled, and we should be seeing
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/remote-helpers/git-remote-bzr | 15 ++++++++++----
+ contrib/remote-helpers/test-bzr.sh    | 37 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 4 deletions(-)
 
-	:markid SHA-1
-
-one per each line (according to Documentation/git-fast-import.txt).
-So this one should be get_sha1_hex().
-
-The other one in fast-export.c would be the same.
-
-The other ones in the original patch were reading from the
-fast-import stream and shouldn't have insisted on 40-hex.
-
-Will replace the body of the change with only these two hunks and
-requeue.  Thanks.
+diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+index 0ef30f8..3e452af 100755
+--- a/contrib/remote-helpers/git-remote-bzr
++++ b/contrib/remote-helpers/git-remote-bzr
+@@ -282,9 +282,13 @@ def export_branch(repo, name):
+ 
+     branch.lock_read()
+     revs = branch.iter_merge_sorted_revisions(None, tip, 'exclude', 'forward')
+-    tip_revno = branch.revision_id_to_revno(tip)
+-    last_revno, _ = branch.last_revision_info()
+-    total = last_revno - tip_revno
++    try:
++        tip_revno = branch.revision_id_to_revno(tip)
++        last_revno, _ = branch.last_revision_info()
++        total = last_revno - tip_revno
++    except bzrlib.errors.NoSuchRevision:
++        tip_revno = 0
++        total = 0
+ 
+     for revid, _, seq, _ in revs:
+ 
+@@ -353,7 +357,10 @@ def export_branch(repo, name):
+ 
+         progress = (revno - tip_revno)
+         if (progress % 100 == 0):
+-            print "progress revision %d '%s' (%d/%d)" % (revno, name, progress, total)
++            if total:
++                print "progress revision %d '%s' (%d/%d)" % (revno, name, progress, total)
++            else:
++                print "progress revision %d '%s' (%d)" % (revno, name, progress)
+ 
+     branch.unlock()
+ 
+diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
+index cec55f1..3f417ad 100755
+--- a/contrib/remote-helpers/test-bzr.sh
++++ b/contrib/remote-helpers/test-bzr.sh
+@@ -300,4 +300,41 @@ test_expect_success 'proper bzr repo' '
+   test_cmp ../expected actual
+ '
+ 
++test_expect_success 'strip' '
++  mkdir -p tmp && cd tmp &&
++  test_when_finished "cd .. && rm -rf tmp" &&
++
++  (
++  bzr init bzrrepo &&
++  cd bzrrepo &&
++
++  echo one >> content &&
++  bzr add content &&
++  bzr commit -m one &&
++
++  echo two >> content &&
++  bzr commit -m two
++  ) &&
++
++  git clone "bzr::$PWD/bzrrepo" gitrepo &&
++
++  (
++  cd bzrrepo &&
++  bzr uncommit --force &&
++
++  echo three >> content &&
++  bzr commit -m three &&
++
++  echo four >> content &&
++  bzr commit -m four &&
++  bzr log --line | sed -e "s/^[0-9]\+: //" > ../expected
++  ) &&
++
++  (cd gitrepo &&
++  git fetch &&
++  git log --format="%an %ad %s" --date=short origin/master > ../actual) &&
++
++  test_cmp actual expected
++'
++
+ test_done
+-- 
+1.8.3.rc1.553.gac13664
