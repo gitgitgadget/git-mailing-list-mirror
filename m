@@ -1,94 +1,101 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 00/11] sha1_name: improvements
-Date: Tue, 7 May 2013 17:11:56 -0500
-Message-ID: <CAMP44s3-vVUB4VnZP4uBMLAbviV+BMTqDcbO_TxkX+5RE6cnSg@mail.gmail.com>
-References: <1367963711-8722-1-git-send-email-felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 1/3] fast-{import,export}: use get_sha1_hex() directly
+Date: Tue, 7 May 2013 17:13:19 -0500
+Message-ID: <CAMP44s0AipiEVhHrDS0-dB9jCoCqHYDd_s5gcGzqyuh0A+qehg@mail.gmail.com>
+References: <1367793534-8401-1-git-send-email-felipe.contreras@gmail.com>
+	<1367793534-8401-2-git-send-email-felipe.contreras@gmail.com>
+	<7v38tyn9cq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 08 00:12:04 2013
+Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 08 00:13:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZq79-0004db-6W
-	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 00:12:03 +0200
+	id 1UZq8U-0005yD-Jx
+	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 00:13:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751391Ab3EGWL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 18:11:59 -0400
-Received: from mail-la0-f44.google.com ([209.85.215.44]:63047 "EHLO
-	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750796Ab3EGWL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 May 2013 18:11:58 -0400
-Received: by mail-la0-f44.google.com with SMTP id ed20so1110122lab.17
-        for <git@vger.kernel.org>; Tue, 07 May 2013 15:11:57 -0700 (PDT)
+	id S1751258Ab3EGWNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 18:13:21 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:62621 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750772Ab3EGWNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 May 2013 18:13:21 -0400
+Received: by mail-lb0-f180.google.com with SMTP id v1so1276687lbd.11
+        for <git@vger.kernel.org>; Tue, 07 May 2013 15:13:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
          :subject:from:to:cc:content-type;
-        bh=spTfic0ookA55bdzJ913suUb953AczEMIKkHmVQL2Ag=;
-        b=RgBZB9vt/cpApDGq0Vxa24ij5JHgNfFNX+oq0And4O6rTYo7tAra8ZEqe4GG6a2eVy
-         CenoEEWlXine2g4QheHtTB7cJiWnVtuVmc2W7ynt+SN5mQkPR1t63LzbWHtfjfg+TE6+
-         VxjFWIvRauzeHtSegOWXzTGvlfb0Aq+slVauIJdVA+Cb39D+dakEYEAtIYJL/ig/kjdV
-         BqYjYVpwAM778CZdW905KPXowHBRYT9qD6EhU1guyyixQrHWB8y0b3lJyNOHcpMcZuZX
-         cAWCKCDWEvfB71l7iJ1W7DvREaSlM/HISJaoC38UWscgjs4Jbrj8SQP0Nx6BqeyuHTK4
-         6uxQ==
-X-Received: by 10.112.166.101 with SMTP id zf5mr1818345lbb.59.1367964716931;
- Tue, 07 May 2013 15:11:56 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Tue, 7 May 2013 15:11:56 -0700 (PDT)
-In-Reply-To: <1367963711-8722-1-git-send-email-felipe.contreras@gmail.com>
+        bh=z3Hs9hQCH764SpKXIFWskRIPa2MOrxsHFSjtOE9yh90=;
+        b=cn/I9eSRyxz6O+PqC67/Ga99ZwbWHlsTRBiRSp6aUruXdHXpjnaOZyrAQC9WsCRtoa
+         PrwdkSjp0beBrri4FyYebKJSSobkI5ceXsDk9CJfvdjx8Ya6dAs7nbv0ea99ySLyMPEE
+         N37YTw/1Ll67afUqWywIMPGpbTplP6X2tYN6P1ffjlFjDYPqGp8qLJWrZZ+9X1qWFUel
+         h7Z81Sshb99NdJ6NPdHgBrOLNiCUngpXYQ8zLjX68IQFRDXuNolujw5GXwi43K40m/7L
+         y/k+yqw0JyAnL2lZLWTSNDSFr3GrvEEqeIxO7FXtwID82FXk5MMojbS1uzMZo/IyXdpk
+         BztA==
+X-Received: by 10.152.29.165 with SMTP id l5mr1768155lah.8.1367964799817; Tue,
+ 07 May 2013 15:13:19 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Tue, 7 May 2013 15:13:19 -0700 (PDT)
+In-Reply-To: <7v38tyn9cq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223623>
 
-On Tue, May 7, 2013 at 4:55 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> While trying to add support for the @ shortcut lots of cleanups arised. Here
-> they are in a single series.
+On Tue, May 7, 2013 at 9:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> Felipe Contreras (7):
->   tests: at-combinations: simplify setup
->   tests: at-combinations: check ref names directly
->   tests: at-combinations: improve nonsense()
->   sha1_name: remove no-op
->   sha1_name: remove unnecessary braces
->   sha1_name: avoid Yoda conditions
->   sha1_name: reorganize get_sha1_basic()
+>> It's wrong to call get_sha1() if they should be SHA-1s, plus
+>> inefficient.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
 >
-> Ramkumar Ramachandra (4):
->   tests: at-combinations: increase coverage
->   tests: at-combinations: @{N} versus HEAD@{N}
->   sha1_name: don't waste cycles in the @-parsing loop
->   sha1_name: check @{-N} errors sooner
+> It appears that "they should be SHA-1s" assumption does not hold;
+> this patch breaks at least 3303, 9020, and 9300.
+>
+> Also assuming these are always 40-hex goes directly against what is
+> documented in Documentation/git-fast-import.txt (look for "Here
+> committish is any of the following").  My bad while reviewing the
+> earlier round.
+>
+> I've redone 'pu' (which was failing the test last night) after
+> dropping this and keeping only patches 2 and 3 from the series.
 
-When merging this series to the @ shortcut one, there will be
-conflicts, this is how I propose fixing them:
+Turns out most of the get_sha1() calls were correct; this does the trick:
 
-                return len; /* syntax Ok, not enough switches */
--       if (0 < len && len == namelen)
-+       if (len > 0 && len == namelen)
-                return len; /* consumed all */
--       else if (0 < len)
-...
-++      else if (len > 0)
- +              return reinterpret(name, namelen, len, buf);
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 18fdfb3..d1d68e9 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -623,7 +623,7 @@ static void import_marks(char *input_file)
 
-- check "@" new-two
-- check "@@{u}" upstream-two
-...
-++check "@" ref refs/heads/new-branch
-++check "@@{u}" ref refs/heads/upstream-branch
+                mark = strtoumax(line + 1, &mark_end, 10);
+                if (!mark || mark_end == line + 1
+-                       || *mark_end != ' ' || get_sha1(mark_end + 1, sha1))
++                       || *mark_end != ' ' || get_sha1_hex(mark_end + 1, sha1))
+                        die("corrupt mark line: %s", line);
 
-If that creates some kind of problem I would rather throw away this
-series rather than the other one.
-
-Cheers.
+                if (last_idnum < mark)
+diff --git a/fast-import.c b/fast-import.c
+index 5f539d7..3f32149 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1822,7 +1822,7 @@ static void read_marks(void)
+                *end = 0;
+                mark = strtoumax(line + 1, &end, 10);
+                if (!mark || end == line + 1
+-                       || *end != ' ' || get_sha1(end + 1, sha1))
++                       || *end != ' ' || get_sha1_hex(end + 1, sha1))
+                        die("corrupt mark line: %s", line);
+                e = find_object(sha1);
+                if (!e) {
 
 -- 
 Felipe Contreras
