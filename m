@@ -1,144 +1,248 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 4/4] fast-import: only store commit objects
-Date: Tue, 07 May 2013 04:58:45 +0200
-Message-ID: <51886DE5.7030001@alum.mit.edu>
-References: <1367555502-4706-1-git-send-email-felipe.contreras@gmail.com> <1367555502-4706-5-git-send-email-felipe.contreras@gmail.com> <87y5bw3q1s.fsf@hexa.v.cablecom.net> <CAMP44s1R9hAMZ=DQoPiTVi3+40NpADjVFU7tYovZA8W-PWEhhg@mail.gmail.com> <518785B3.3050606@alum.mit.edu> <87ip2wflg0.fsf@linux-k42r.v.cablecom.net> <518789D1.4010905@alum.mit.edu> <7v38u0t9va.fsf@alter.siamese.dyndns.org> <CAMP44s1HASAuF0ECCvJr66WeqopDzLZQ12pKFsc-j5_VCDrizg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 2/2] peel_ref: refactor for safety with simultaneous update
+Date: Mon, 6 May 2013 23:06:41 -0400
+Message-ID: <20130507030641.GB23219@sigill.intra.peff.net>
+References: <20130507025458.GA22912@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 07 04:58:58 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 07 05:06:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZY7F-0002jM-0k
-	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 04:58:57 +0200
+	id 1UZYEq-0000HR-Sn
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 05:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758990Ab3EGC6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 22:58:53 -0400
-Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:53416 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756110Ab3EGC6w (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 May 2013 22:58:52 -0400
-X-AuditID: 12074414-b7fb86d000000905-2d-51886deb560b
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id A7.05.02309.BED68815; Mon,  6 May 2013 22:58:51 -0400 (EDT)
-Received: from [192.168.69.140] (p57A24E33.dip0.t-ipconnect.de [87.162.78.51])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r472wk1f014001
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 6 May 2013 22:58:48 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <CAMP44s1HASAuF0ECCvJr66WeqopDzLZQ12pKFsc-j5_VCDrizg@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrCKsWRmVeSWpSXmKPExsUixO6iqPs6tyPQ4NgaXotfZ3exWBx8nGfR
-	daWbyaKh9wqzRf/yLjaLu5dXsTuweeycdZfd48PHOI/br+cze1y8pOzxeZNcAGsUt01SYklZ
-	cGZ6nr5dAnfGypZrTAUTFSp+TdrO2MB4W7KLkZNDQsBEYlnHM3YIW0ziwr31bF2MXBxCApcZ
-	JRof/2aEcM4ySfy+tpoJpIpXQFvi2MP7LCA2i4CqxPH3a5hBbDYBXYlFPc1gNaICYRKr1i9j
-	hqgXlDg58wlYvYiAocTe9qksIEOZBY4xSuzpvAC2WljAXmLXl+msENtOM0v0r1/LBpLgFAiU
-	mL3pA1AHB1CHusT6eUIgYWYBeYntb+cwT2AUmIVkxyyEqllIqhYwMq9ilEvMKc3VzU3MzClO
-	TdYtTk7My0st0rXQy80s0UtNKd3ECAl1kR2MR07KHWIU4GBU4uFVONUeKMSaWFZcmXuIUZKD
-	SUmUlzu9I1CILyk/pTIjsTgjvqg0J7X4EKMEB7OSCK+0NlCONyWxsiq1KB8mJc3BoiTO+22x
-	up+QQHpiSWp2ampBahFMVoaDQ0mC1zEHqFGwKDU9tSItM6cEIc3EwQkynEtKpDg1LyW1KLG0
-	JCMeFKvxxcBoBUnxAO3lAmnnLS5IzAWKQrSeYtTlWHnlyWtGIZa8/LxUKXHex9lARQIgRRml
-	eXArYIntFaM40MfCvAtBRvEAkyLcpFdAS5iAliTwtYMsKUlESEk1ME4pX3NiM9u2KosmhZAv
-	ui7n5vjLXFx/one3VLBLzfXn8/7qTVjccbG1WmqD8O1p8Ye37KhUUJjcN3HiqkVa 
+	id S1757386Ab3EGDGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 23:06:44 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43876 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756379Ab3EGDGn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 23:06:43 -0400
+Received: (qmail 15685 invoked by uid 102); 7 May 2013 03:07:04 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 May 2013 22:07:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 May 2013 23:06:41 -0400
+Content-Disposition: inline
+In-Reply-To: <20130507025458.GA22912@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223533>
 
-On 05/06/2013 11:19 PM, Felipe Contreras wrote:
-> On Mon, May 6, 2013 at 10:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->>
->>> Yes, it can be handy to start loading the first "blobfile" in parallel
->>> with the later stages of the conversion, before the second "dumpfile" is
->>> ready.  In that case the user needs to pass --export-marks to the first
->>> fast-import process to export marks on blobs so that the marks can be
->>> passed to the second fast-import via --import-marks.
->>>
->>> So the proposed change would break a documented use of cvs2git.
->>>
->>> Making the export of blob marks optional would of course be OK, as long
->>> as the default is to export them.
->>
->> Thanks for a concise summary.  Your use case fits exactly what
->> Felipe conjectured as the nonexistent minority.
-> 
-> Not true. cvs2git does *not* rely on the blobs being stored in a marks
-> file, because cvs2git does not rely on mark files at all.
-> 
->> An option that lets the caller say "I only care about marks on these
->> types of objects to be written to (and read from) the exported marks
->> file" would help Felipe's use case without harming your use case,
->> and would be a sane and safe way to go.
-> 
-> His case is not harmed at all. It's only the unfortunate command that
-> is mentioned in the documentation that didn't need to be mentioned at
-> all in the first place.
-> 
-> It should be the other way around, if it's only this documentation
-> that is affected, we could add a switch for that particular command,
-> and the documentation should be updated, but it's overkill to add a
-> switch for one odd command in some documentation somewhere, it would
-> be much better to update the odd command to avoid using marks at all,
-> which is what the more appropriate command does, right below in the
-> same documentation.
-> 
->   cat ../cvs2svn-tmp/git-blob.dat ../cvs2svn-tmp/git-dump.dat | git fast-import
-> 
-> Should the rest of the real world be punished because somebody added a
-> command in some documentation somewhere, which wasn't actually needed
-> in the first place?
+The peel_ref function lets a caller peel an object, taking
+advantage of the fact that we may have the peeled value
+cached for a packed ref.  However, this function is not
+necessarily safe in the face of simultaneous ref updates.
 
-Don't get too fixated on the documentation.  The documentation just
-gives some examples of how cvs2git can be used.
+The caller has typically already loaded the ref from disk
+(e.g., as part of a for_each_ref enumeration), and therefore
+knows what the ref's base sha1 is. But if the asked-for ref
+is not the current ref, we will load the ref from disk
+ourselves. If another process is simultaneously updating the
+ref, we may not get the same sha1 that the caller thinks is
+in the ref, and as a result may return a peeled value that
+does not match the sha1 that the caller has.
 
-The reason that cvs2git outputs two files is that the first file is
-emitted at the very beginning of the conversion and the second at the
-very end.  These conversions can take a long time (> 1 day for very big
-repos), can be interrupted and restarted between "passes", and passes
-can even be re-run with changed configurations.
+To make this safer, we can have the caller pass in its idea
+of the sha1 of the ref, and use that as the base for peeling
+(and we can also double-check that it matches the
+current_ref pointer when we use that).
 
-CVS write access has to be turned off before the start of the final
-conversion, so no VCS is possible until the conversion is over.  So
-users are very interested in keeping the downtime minimal.  The blobfile
-can also be unwieldy (its size is approximately the sum of the sizes of
-all revisions of all files in the project).  Being able to load the
-blobfile into one fast-import process and the dumpfile into a different
-process (which relies on the feature that you propose removing) opens up
-a lot of possibilities:
+This makes the function harder to call (it is not really
+"peel this ref", but "peel this object, and by the way, it
+is called by this refname"). However, none of the current
+callers care, because they always call it from a
+for_each_ref enumeration, meaning it is no extra work to
+pass in the sha1.
 
-* The first fast-import of the blobfile can be started as soon as the
-blobfile is complete and run in parallel with the rest of the conversion.
+Furthermore, that means that none of the current callers hit
+the "read_ref_full" codepath at all (so this bug is not
+currently triggerable). They either follow the current_ref
+optimization, or if the ref is not packed, they go straight
+to the deref_tag fallback.
 
-* If the blobfile needs to be transferred over the network (e.g.,
-because Git will be served from a different server than the one doing
-the conversion) the network transfer can also be done in parallel with
-the rest of the conversion.
+Let's just rip out the unused code path entirely. Not only
+is it not used now, but it would not even make sense to use:
+you would get the peeled value of the ref, but you would
+have no clue which base object led to that peel.
 
-* The blobfile could be written to a named pipe that is being read by a
-git-fast-import process, to avoid having to write the blobfile to disk
-in the first place.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+So I think peel_ref is buggy as-is (in both master and in
+mh/packed-refs-various), it's just not triggerable because of the
+dead code path. And it would get buggier again with my other patch
+series, as then get_packed_ref could actually re-read the packed-refs
+file. But I really think peel_ref is a badly designed function.
 
-* The user could run "git repack" between loading the blobfile and
-loading the dumpfile.
+You do not peel a ref; you peel an object. You might think it is
+convenient to have a function do the ref lookup and the peeling
+together, but in practice nobody wants that, because you would not know
+what you had just peeled. The real point is to hit the current_ref
+optimization. Michael's series already has factored out a peel_object
+function with the relevant bits. I think we can simply do away with
+peel_ref entirely, and move the current_ref optimization there. I think
+it should be perfectly cromulent to do:
 
-These are just the ways that cvs2git does and/or could benefit from the
-flexibility that is now in git-fast-import.  Other tools might also be
-using git-fast-import in ways that would be broken by your proposed change.
+  int peel_object(const unsigned char *base, const unsigned char *peeled)
+  {
+          if (current_ref && current_ref->flag & REF_KNOWS_PEELED &&
+              !hashcmp(base, current_ref->u.value.sha1)) {
+                  hashcpy(peeled, current_ref->u.value.peeled);
+                  return 0;
+          }
 
-Michael
+          /* peel as usual */
+  }
 
+That is, we do not need to care that it is _our_ ref that peels to that.
+We happen to have a ref whose peeled value we know, and its object
+matches the one we want to peel. Whether it is the same ref or not, the
+same object sha1 should peel to the same peeled sha1. Of course, in
+practice it will be our ref, because that is how the current callers
+work. But it is also a safe function for callers who do not know or care
+about the optimization.
+
+My original patch on "master" is below for illustration, but do not look
+too closely. I think the path I outlined above makes more sense, but I
+am not going to work on it tonight.
+
+ builtin/describe.c     |  2 +-
+ builtin/pack-objects.c |  4 ++--
+ builtin/show-ref.c     |  2 +-
+ refs.c                 | 24 ++++--------------------
+ refs.h                 |  3 ++-
+ upload-pack.c          |  2 +-
+ 6 files changed, 11 insertions(+), 26 deletions(-)
+
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 6636a68..23d7f1a 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -150,7 +150,7 @@ static int get_name(const char *path, const unsigned char *sha1, int flag, void
+ 		return 0;
+ 
+ 	/* Is it annotated? */
+-	if (!peel_ref(path, peeled)) {
++	if (!peel_ref(path, sha1, peeled)) {
+ 		is_annotated = !!hashcmp(sha1, peeled);
+ 	} else {
+ 		hashcpy(peeled, sha1);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index f069462..76352df 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -556,7 +556,7 @@ static int mark_tagged(const char *path, const unsigned char *sha1, int flag,
+ 
+ 	if (entry)
+ 		entry->tagged = 1;
+-	if (!peel_ref(path, peeled)) {
++	if (!peel_ref(path, sha1, peeled)) {
+ 		entry = locate_object_entry(peeled);
+ 		if (entry)
+ 			entry->tagged = 1;
+@@ -2032,7 +2032,7 @@ static int add_ref_tag(const char *path, const unsigned char *sha1, int flag, vo
+ 	unsigned char peeled[20];
+ 
+ 	if (!prefixcmp(path, "refs/tags/") && /* is a tag? */
+-	    !peel_ref(path, peeled)        && /* peelable? */
++	    !peel_ref(path, sha1, peeled)  && /* peelable? */
+ 	    locate_object_entry(peeled))      /* object packed? */
+ 		add_object_entry(sha1, OBJ_TAG, NULL, 0);
+ 	return 0;
+diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+index 8d9b76a..64f339d 100644
+--- a/builtin/show-ref.c
++++ b/builtin/show-ref.c
+@@ -78,7 +78,7 @@ match:
+ 	if (!deref_tags)
+ 		return 0;
+ 
+-	if (!peel_ref(refname, peeled)) {
++	if (!peel_ref(refname, sha1, peeled)) {
+ 		hex = find_unique_abbrev(peeled, abbrev);
+ 		printf("%s %s^{}\n", hex, refname);
+ 	}
+diff --git a/refs.c b/refs.c
+index 89f8141..c16bd75 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1231,38 +1231,22 @@ int peel_ref(const char *refname, unsigned char *peeled)
+ 	return filter->fn(refname, sha1, flags, filter->cb_data);
+ }
+ 
+-int peel_ref(const char *refname, unsigned char *peeled)
++int peel_ref(const char *refname, const unsigned char *base,
++	     unsigned char *peeled)
+ {
+-	int flag;
+-	unsigned char base[20];
+ 	struct object *o;
+ 
+ 	if (current_ref && (current_ref->name == refname
+-		|| !strcmp(current_ref->name, refname))) {
++		|| !strcmp(current_ref->name, refname))
++	    && !hashcmp(current_ref->u.value.sha1, base)) {
+ 		if (current_ref->flag & REF_KNOWS_PEELED) {
+ 			if (is_null_sha1(current_ref->u.value.peeled))
+ 			    return -1;
+ 			hashcpy(peeled, current_ref->u.value.peeled);
+ 			return 0;
+ 		}
+-		hashcpy(base, current_ref->u.value.sha1);
+-		goto fallback;
+-	}
+-
+-	if (read_ref_full(refname, base, 1, &flag))
+-		return -1;
+-
+-	if ((flag & REF_ISPACKED)) {
+-		struct ref_dir *dir = get_packed_refs(get_ref_cache(NULL));
+-		struct ref_entry *r = find_ref(dir, refname);
+-
+-		if (r != NULL && r->flag & REF_KNOWS_PEELED) {
+-			hashcpy(peeled, r->u.value.peeled);
+-			return 0;
+-		}
+ 	}
+ 
+-fallback:
+ 	o = lookup_unknown_object(base);
+ 	if (o->type == OBJ_NONE) {
+ 		int type = sha1_object_info(base, NULL);
+diff --git a/refs.h b/refs.h
+index 1e8b4e1..39817a4 100644
+--- a/refs.h
++++ b/refs.h
+@@ -61,7 +61,8 @@ extern int ref_exists(const char *);
+ 
+ extern int ref_exists(const char *);
+ 
+-extern int peel_ref(const char *refname, unsigned char *peeled);
++extern int peel_ref(const char *refname, const unsigned char *base,
++		    unsigned char *peeled);
+ 
+ /** Locks a "refs/" ref returning the lock on success and NULL on failure. **/
+ extern struct ref_lock *lock_ref_sha1(const char *refname, const unsigned char *old_sha1);
+diff --git a/upload-pack.c b/upload-pack.c
+index bfa6279..6acff92 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -755,7 +755,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 	else
+ 		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname_nons);
+ 	capabilities = NULL;
+-	if (!peel_ref(refname, peeled))
++	if (!peel_ref(refname, sha1, peeled))
+ 		packet_write(1, "%s %s^{}\n", sha1_to_hex(peeled), refname_nons);
+ 	return 0;
+ }
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.8.3.rc1.2.g12db477
