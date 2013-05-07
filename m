@@ -1,114 +1,93 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] gitk: add support for -G'regex' pickaxe variant
-Date: Tue, 7 May 2013 13:17:18 -0400
-Message-ID: <CACPiFCKev9uibTa8GSH94ZaH-NaVBAWVempg4xfTdFTThE85Zw@mail.gmail.com>
-References: <7vipezaaig.fsf@alter.siamese.dyndns.org> <1339698851-15428-1-git-send-email-zbyszek@in.waw.pl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Paul Mackerras <paulus@samba.org>,
-	Martin Langhoff <martin@laptop.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?ISO-8859-2?Q?Zbigniew_J=EAdrzejewski=2DSzmek?= 
-	<zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Tue May 07 19:17:47 2013
+From: worley@ariadne.com (Dale R. Worley)
+Subject: [PATCH] CodingGuidelines:  make it clear which files in
+ Documentation are the sources
+Date: Tue, 7 May 2013 13:52:58 -0400
+Message-ID: <201305071752.r47HqwxR001058@hobgoblin.ariadne.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 07 20:00:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZlWL-0001zi-Pq
-	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 19:17:46 +0200
+	id 1UZmBI-0008Lm-1N
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 20:00:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752478Ab3EGRRk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 May 2013 13:17:40 -0400
-Received: from mail-vc0-f180.google.com ([209.85.220.180]:48745 "EHLO
-	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752322Ab3EGRRk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 May 2013 13:17:40 -0400
-Received: by mail-vc0-f180.google.com with SMTP id hv10so748334vcb.25
-        for <git@vger.kernel.org>; Tue, 07 May 2013 10:17:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=xjkbQbinBJJ3/was/gOFYC/HhRTQ3ngiIAgRAkiuWaw=;
-        b=KMHh1L9BnBEaKOvS2UAQybsD+rqQuUxlTCOgjykb2vHin/LzBd0/fP1+0ccwMVlTVP
-         uk+SqtCV453bcImVoeBt3sMDsRih/Bx3ODBQGs6mPozFv33FDlUYLZSTH9MxlnrtTG8s
-         uW47grD8PlwYcWsJHEp1Ypp+C+HJNeVpszTkOHskfcXxfJ5LgqpkplIiD4wXYM7oJSHX
-         JnemP7Go+Nm2RJDNw735LCzlPOW+ysWyenN0qEn8jBdwAEIe2AFLdCwD1snADdjBnKvB
-         ULRNqeKINpZEelR1/OhIMBKlM9XzEdLsETycVj5buH3NH+YgjrQ7a/9F904gH4YHDlrY
-         xUtQ==
-X-Received: by 10.220.168.202 with SMTP id v10mr1870041vcy.71.1367947059066;
- Tue, 07 May 2013 10:17:39 -0700 (PDT)
-Received: by 10.220.248.79 with HTTP; Tue, 7 May 2013 10:17:18 -0700 (PDT)
-In-Reply-To: <1339698851-15428-1-git-send-email-zbyszek@in.waw.pl>
+	id S1757254Ab3EGR77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 13:59:59 -0400
+Received: from qmta06.westchester.pa.mail.comcast.net ([76.96.62.56]:42015
+	"EHLO qmta06.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752628Ab3EGR76 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 May 2013 13:59:58 -0400
+X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 May 2013 13:59:58 EDT
+Received: from omta01.westchester.pa.mail.comcast.net ([76.96.62.11])
+	by qmta06.westchester.pa.mail.comcast.net with comcast
+	id YztG1l0020EZKEL565sr0D; Tue, 07 May 2013 17:52:51 +0000
+Received: from hobgoblin.ariadne.com ([24.34.72.61])
+	by omta01.westchester.pa.mail.comcast.net with comcast
+	id Z5sq1l00Z1KKtkw3M5sq21; Tue, 07 May 2013 17:52:51 +0000
+Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
+	by hobgoblin.ariadne.com (8.14.5/8.14.5) with ESMTP id r47HqweX001059
+	for <git@vger.kernel.org>; Tue, 7 May 2013 13:52:59 -0400
+Received: (from worley@localhost)
+	by hobgoblin.ariadne.com (8.14.5/8.14.5/Submit) id r47HqwxR001058;
+	Tue, 7 May 2013 13:52:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1367949171;
+	bh=sljGQ1ninqYwlhYR0kwnT0yF7eyU03Pfa5i95SFLKWI=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:Subject:
+	 To;
+	b=ABIMJgIl0KsNtq9xrHaccp9KM0rjNOV+Skl1MHfpVJpngSwdnvEM6w5Tzk8vMar9G
+	 Cw2/eW052ZI/p4l6hCpWjLxDxnPPoMmd2IgKNWbgvgPhF8W1OGODN8uPpPJAmtaJy3
+	 2SEKcNmecdSxspGKyOJGv2BpmczBbCgf2iOXENLguBGaOem12FD/ob2PdoSCR+hVqJ
+	 qY7BHExIgGI7YnTD+tJOCNfYEVRooL3wX7M89lEoP40OK1viakmtTV5WS8FZHfD+Zp
+	 ECyHVlJXsUuDNBblwdl2BM6OquXjv0HO7V613w5EeFXm3/mIlWevVvsmfFupzNK5xC
+	 sXYPyUpYkILTQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223589>
 
-I just did git rebase origin/master for the umpteenth time, which
-reminded me this nice patch is still pending.
+While learning about making a documentation patch, I noticed that
+Documentation/CodingGuideles isn't as clear as it could be regarding
+how to edit the documentation.  In particular, it says "Most (if not
+all) of the documentation pages are written in AsciiDoc - and
+processed into HTML output and manpages." without really specifying
+the details for those of us who aren't familiar with AsciiDoc.  So I
+added a sentence stating explicitly which files are the sources and
+which are derived.
 
-ping?
+It's also a test for submitting a patch.
 
-
-
-m
-
-On Thu, Jun 14, 2012 at 2:34 PM, Zbigniew J=EAdrzejewski-Szmek
-<zbyszek@in.waw.pl> wrote:
-> From: Martin Langhoff <martin@laptop.org>
->
-> git log -G'regex' is a very usable alternative to the classic
-> pickaxe. Minimal patch to make it usable from gitk.
->
-> [zj: reword message]
-> Signed-off-by: Zbigniew J=EAdrzejewski-Szmek <zbyszek@in.waw.pl>
-> ---
-> Martin's off on holidays, so I'm sending v2 after rewording.
->
->  gitk-git/gitk | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 22270ce..24eaead 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -2232,7 +2232,8 @@ proc makewindow {} {
->      set gm [makedroplist .tf.lbar.gdttype gdttype \
->                 [mc "containing:"] \
->                 [mc "touching paths:"] \
-> -               [mc "adding/removing string:"]]
-> +               [mc "adding/removing string:"] \
-> +               [mc "with changes matching regex:"]]
->      trace add variable gdttype write gdttype_change
->      pack .tf.lbar.gdttype -side left -fill y
->
-> @@ -4595,6 +4596,8 @@ proc do_file_hl {serial} {
->         set gdtargs [concat -- $relative_paths]
->      } elseif {$gdttype eq [mc "adding/removing string:"]} {
->         set gdtargs [list "-S$highlight_files"]
-> +    } elseif {$gdttype eq [mc "with changes matching regex:"]} {
-> +       set gdtargs [list "-G$highlight_files"]
->      } else {
->         # must be "containing:", i.e. we're searching commit info
->         return
-> --
-> 1.7.11.rc3.129.ga90bc7a.dirty
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Dale
 
 
 
---=20
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+>From e87227498ef3d50dc20584c24c53071cce63c555 Mon Sep 17 00:00:00 2001
+From: Dale Worley <worley@ariadne.com>
+Date: Tue, 7 May 2013 13:39:46 -0400
+Subject: [PATCH] CodingGuidelines:  make it clear which files in
+ Documentation are the sources
+
+---
+ Documentation/CodingGuidelines |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 7e4d571..b8eef7c 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -238,7 +238,9 @@ For Python scripts:
+ Writing Documentation:
+ 
+  Most (if not all) of the documentation pages are written in AsciiDoc
+- and processed into HTML output and manpages.
++ and processed into HTML output and manpages.  This means that the *.txt
++ files in this directory are usually the sources from which the
++ corresponding *.html, *.1, and *.xml files are generated.
+ 
+  Every user-visible change should be reflected in the documentation.
+  The same general rule as for code applies -- imitate the existing
+-- 
+1.7.7.6
