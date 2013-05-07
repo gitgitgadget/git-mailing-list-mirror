@@ -1,103 +1,155 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/7] Make "$remote/$branch" work with unconventional refspecs
-Date: Mon, 06 May 2013 19:11:56 -0700
-Message-ID: <7vip2vo7wz.fsf@alter.siamese.dyndns.org>
-References: <1367711749-8812-1-git-send-email-johan@herland.net>
-	<7vr4hmuk20.fsf@alter.siamese.dyndns.org>
-	<CALKQrgdp9DVDBLNwCAmQHbEfZDvhdsmSW3sh1BRo1XEnyqPPaA@mail.gmail.com>
-	<7v8v3tuu6i.fsf@alter.siamese.dyndns.org>
-	<CALKQrgf6NcT2tEGMTczxR2WspOi4NjrN_kxmKN-QyE2Py3iSaQ@mail.gmail.com>
-	<7vhaigrqay.fsf@alter.siamese.dyndns.org>
-	<CALKQrgeegzzJ-2QNvdmeeugS0Aw7jrE4SM8S7zk+qPdfgRCMyg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/4] fix packed-refs races
+Date: Mon, 6 May 2013 22:36:11 -0400
+Message-ID: <20130507023610.GA22053@sigill.intra.peff.net>
+References: <20130503083847.GA16542@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue May 07 04:12:07 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 07 04:36:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZXNu-0008So-Kp
-	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 04:12:06 +0200
+	id 1UZXlL-0002Vz-Ti
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 04:36:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757764Ab3EGCMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 May 2013 22:12:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54712 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757356Ab3EGCL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 May 2013 22:11:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54100135BC;
-	Tue,  7 May 2013 02:11:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UrXYRJCO6WAFtbY0yphnjkFHr5I=; b=Z7+eB8
-	ZsUOkDJ4FlisyyYTBuhYoCIT2DgnJ6sBwxg2kyKjnywz/JlkGM6EiIIVgar0RWY1
-	Mx761AbhBxmLBUVGvKDWitfFrDTGee5hbEVyImTliI85JXDg19QZhV9acX9KsHO+
-	chK+0dCfOp3wy3kRETKCSsW26EEi03aJV2yoo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r60fpa07iRh3/nMH4JYMIouAnwCq61b8
-	FzODyNZeoQO6fCCzkaQsSDxi/tNq0JGE021Iwa346VGB0bVpRw+LY7ec+jv7bHM7
-	fsxX935T4+ex4jEO2qxb2+BNs55xdJmsJ7ulhJRR2XYnxqxr3JRbu1QpXeqqInbh
-	GIQTsWFAkZs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 457FA135BA;
-	Tue,  7 May 2013 02:11:59 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8980A135B7;
-	Tue,  7 May 2013 02:11:58 +0000 (UTC)
-In-Reply-To: <CALKQrgeegzzJ-2QNvdmeeugS0Aw7jrE4SM8S7zk+qPdfgRCMyg@mail.gmail.com>
-	(Johan Herland's message of "Tue, 7 May 2013 01:42:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7F518B70-B6BB-11E2-92FD-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S933857Ab3EGCgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 May 2013 22:36:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43623 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757421Ab3EGCgN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 May 2013 22:36:13 -0400
+Received: (qmail 14211 invoked by uid 102); 7 May 2013 02:36:33 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 May 2013 21:36:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 May 2013 22:36:11 -0400
+Content-Disposition: inline
+In-Reply-To: <20130503083847.GA16542@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223524>
 
-Johan Herland <johan@herland.net> writes:
+This fixes the races I brought up in the surrounding thread:
 
-> Ok, so whereas I consider the refspec to be "king", and that the expansion
-> from convenient shorthands to full remote-tracking refnames should be
-> derived from the chosen refspec, you would (if I understand you correctly)
-> rather have a constant (i.e. independent of remotes and refspecs) set of
-> rules for expanding shorthands to full refnames, and if the user chooses
-> refspecs that don't mesh well with those rules, then that is the user's
-> problem, and not Git's.
+  http://thread.gmane.org/gmane.comp.version-control.git/223299
 
-You need to dig your rhetoric from the other end of the tunnel.  I
-would consider the local namespace for the refs to be the "king",
-and we would design how they are resolved to be useful for user's
-local usage pattern.  How the remote refs are copied by fetch
-following refspecs is one of the many components (e.g. the dwimming
-machinery "checkout foo" uses to guess that the user may want to
-fork from and integrate later with one of the refs under refs/remotes
-is one of them and it is not "fetch") to complement the refname
-resolution rule to support the local usage of refs.
+The individual races are describe in more detail in each commit, but for
+reference, here is the complete reproduction recipe (which I posted
+already in several parts throughout the thread, but is collected here):
 
-> In light of this, I'm interested in your thoughts about the following
-> related problem that I've just started looking at:
->
-> git branch -r shows the remote-tracking branches in this repo. Currently,
-> .... Should we add a heuristic for detecting when
-> to use refs/remotes/* vs. refs/remotes/*/heads/* as a filter?
+  # base.sh
+  # run this script forever in one terminal
+  git init -q repo &&
+  cd repo &&
+  git commit -q --allow-empty -m one &&
+  one=`git rev-parse HEAD` &&
+  git commit -q --allow-empty -m two &&
+  two=`git rev-parse HEAD` &&
+  sha1=$one &&
+  while true; do
+    # this re-creates the loose ref in .git/refs/heads/master
+    if test "$sha1" = "$one"; then
+      sha1=$two
+    else
+      sha1=$one
+    fi &&
+    git update-ref refs/heads/master $sha1 &&
 
-Didn't I already said that I do not think repurposing refs/remotes/
-for these "unified" copies is the best approach?
+    # we can remove packed-refs safely, as we know that
+    # its only value is now stale. Real git would not do
+    # this, but we are simulating the case that "master"
+    # simply wasn't included in the last packed-refs file.
+    rm -f .git/packed-refs &&
 
-A change that I think is a good thing to add on top of your [45]/7
-refactoring is to allow the user to add custom expansion/contraction
-rules.  Then the user can group refs regardless of "remotes" and
-give meaningful shortening.
+    # and now we repack, which will create an up-to-date
+    # packed-refs file, and then delete the loose ref
+    git pack-refs --all --prune
+  done
 
-As I said in a very early review, viewing "fetch refspec" to be
-"king" and refspecs are the only way the user may want to group
-things locally is myopic.  The every-day usage of the local names
-ought to be the king, and everything else should serve to make it
-easier to use.
+  # lookup.sh
+  # run this script simultaneously in another terminal; when it exits,
+  # git is broken (it erroneously told us that master did not exist).
+  # It is fixed by applying up to patch 3/4 below.
+  cd repo &&
+  while true; do
+    ref=`git rev-parse --verify master`
+    echo "==> $ref"
+    test -z "$ref" && break
+  done
+
+  # enumerate.sh
+  # run this script simultaneously in another terminal (either with
+  # lookup.sh running, too, or just base.sh); when it exits, we
+  # for-each-ref has erroneously missed master. It is fixed by applying
+  # up to patch 4/4 below.
+  cd repo &&
+  while true; do
+    refs=`git.compile for-each-ref --format='%(refname)'`
+    echo "==> $refs"
+    test -z "$refs" && break
+  done
+
+I don't think is a purely hypothetical race. About once a month for the
+past six months or so, I'll run across a corrupted repository on
+github.com that is inexplicably missing a few objects near the tip of a
+ref. This last time, I happened to catch something very odd in our ref
+audit-log. The log for the repo that became corrupted showed a small
+push to the tip of "master", but the objects for that push were missing
+(the previous ref tip was fine). At almost the exact same time, our
+alternates repo was running a "fetch --prune" from the corrupted repo.
+But it didn't see the corrupted master ref; it saw that
+refs/heads/master didn't exist at all, and it deleted it.
+
+I believe that git-upload-pack hit the enumeration race above, and
+showed a ref advertisement in which refs/heads/master was missing[1],
+leading fetch to delete the ref. At the same time, a gc was running in
+the corrupted repo which hit the same issue, and ended up pruning[2] the
+newly pushed objects, which were not referenced from anywhere else.
+
+It may seem unlikely for two programs to hit the race at the same time
+(especially given the number of iterations you need to trigger the race
+with the scripts above), but I think it's exacerbated when you have a
+very large number of refs (because the loose enumeration takes much
+longer). So I think there's a good chance this was my problem. And if
+not, it is good to fix anyway. :)
+
+  [1/4]: resolve_ref: close race condition for packed refs
+  [2/4]: add a stat_validity struct
+  [3/4]: get_packed_refs: reload packed-refs file when it changes
+  [4/4]: for_each_ref: load all loose refs before packed refs
+
+-Peff
+
+[1] Usually the enumeration race would cause you to see the old value
+    from the packed-refs file, not a completely missing ref (unless the
+    ref was not packed at all previously, but that is almost certainly
+    not the case here). But it does call into resolve_ref to actually
+    read the ref, which has its own race that can cause refs to
+    "disappear" (and is fixed by patch 1).
+
+    As an aside, I think that calling resolve_ref is probably wrong. We
+    know we have a fully qualified refname, because we keep track of
+    which directory we are calling readdir() on. But if for whatever
+    reason somebody deletes it at the exact moment between when we see
+    it in readdir() and when we try to open it (not packs it, but
+    actually deletes it), then we'll see it is missing and fall back to
+    trying other ref-lookups. So in theory a race with a delete of
+    refs/heads/foo could accidentally retrieve the value for
+    refs/heads/refs/heads/foo.
+
+    It's quite unlikely, though, and I'm not too concerned about it.
+
+[2] Recently pushed objects should still be safe, even if they are
+    unreachable. However, in our case the pruning was exacerbated by a
+    gc codepath that could call "git repack -ad" (not in upstream git,
+    but we do our own custom gc due to the alternates structure of our
+    forks). I've also fixed that, as we should always be using "-A" to
+    keep recent unreachable objects.
