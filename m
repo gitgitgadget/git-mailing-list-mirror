@@ -1,103 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: another packed-refs race
-Date: Tue, 7 May 2013 00:44:56 -0400
-Message-ID: <20130507044456.GA29757@sigill.intra.peff.net>
-References: <20130503083847.GA16542@sigill.intra.peff.net>
- <51879C1C.5000407@alum.mit.edu>
- <20130506184122.GA23568@sigill.intra.peff.net>
- <518883CC.7050609@alum.mit.edu>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 4/4] fast-import: only store commit objects
+Date: Mon, 6 May 2013 23:47:37 -0500
+Message-ID: <CAMP44s3vGKv-Z6sx0sjAPH7_U1+AiJjFHjKz8ke+EUqW-u2Y=A@mail.gmail.com>
+References: <1367555502-4706-1-git-send-email-felipe.contreras@gmail.com>
+	<1367555502-4706-5-git-send-email-felipe.contreras@gmail.com>
+	<87y5bw3q1s.fsf@hexa.v.cablecom.net>
+	<CAMP44s1R9hAMZ=DQoPiTVi3+40NpADjVFU7tYovZA8W-PWEhhg@mail.gmail.com>
+	<518785B3.3050606@alum.mit.edu>
+	<87ip2wflg0.fsf@linux-k42r.v.cablecom.net>
+	<518789D1.4010905@alum.mit.edu>
+	<CAMP44s1Nk7YAjNkTq=ShQbzkMasw6bpcEPTXLb8x+2q-vXLRGg@mail.gmail.com>
+	<518874A5.5050002@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
+Content-Type: text/plain; charset=UTF-8
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 07 06:45:09 2013
+X-From: git-owner@vger.kernel.org Tue May 07 06:47:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZZm0-0000hb-7t
-	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 06:45:08 +0200
+	id 1UZZoY-0002oI-GY
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 06:47:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757587Ab3EGEpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 00:45:01 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44516 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757383Ab3EGEo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 May 2013 00:44:59 -0400
-Received: (qmail 20337 invoked by uid 102); 7 May 2013 04:45:20 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 May 2013 23:45:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 May 2013 00:44:56 -0400
-Content-Disposition: inline
-In-Reply-To: <518883CC.7050609@alum.mit.edu>
+	id S1757915Ab3EGErm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 00:47:42 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:52426 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757580Ab3EGErl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 May 2013 00:47:41 -0400
+Received: by mail-lb0-f170.google.com with SMTP id t11so278632lbd.1
+        for <git@vger.kernel.org>; Mon, 06 May 2013 21:47:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=pqB1QLHF/mlbq2wTEsyTiVjaiS0KfgwUHk8Wc4VKMcs=;
+        b=tTgvms/A9Xpe5Pen6xHvhenRL1XQqZADfBcoOmg+WaLmIiZerdY1JLUgAngw135k/P
+         iggaRzU0291b5vXyaKAJKxyJexQqi/rqA8Zi5XfDaGpvR9SB8Mez7N2HRijgs1hq7XPk
+         I8HN0R9HAfebtFuIYQaWn0DJSxaiVGAAKTEJMJRHs21C6DKx728IuDJEpDk2t0JTFZF0
+         UckNDXEwODTXdcS2NOqYUWXwD5HzS6DLFO8ri43e4qC7A3SLKBryIZiDUhy1utgOecrn
+         iw77tFW66CqVmDxCRh09tDtDtNuy/4WDdIS93NYWD8yHAqhksjHKfWZuh5vknGKD6wqY
+         zi/A==
+X-Received: by 10.152.29.165 with SMTP id l5mr175653lah.8.1367902057547; Mon,
+ 06 May 2013 21:47:37 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Mon, 6 May 2013 21:47:37 -0700 (PDT)
+In-Reply-To: <518874A5.5050002@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223545>
 
-On Tue, May 07, 2013 at 06:32:12AM +0200, Michael Haggerty wrote:
+On Mon, May 6, 2013 at 10:27 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
 
-> Another potential problem caused by the non-atomicity of loose reference
-> reading could be to confuse reachability tests if process 1 is reading
-> loose references while process 2 is renaming a reference:
-> 
-> 1. Process 1 looks for refs/heads/aaaaa and finds it missing.
-> 
-> 2. Process 2 renames zzzzz -> aaaaa
-> 
-> 3. Process 1 looks for refs/heads/zzzzz and finds it missing.
-> 
-> Process 2 would think that any objects pointed to by aaaaa (formerly
-> zzzzz) are unreachable.  This would be unfortunate if it is doing an
-> upload-pack and very bad if it is doing a gc.  I wonder if this could be
-> a problem in practice?  (Gee, wouldn't it be nice to keep reflogs for
-> deleted refs? :-) )
+> You conjectured earlier that nobody uses blob marks, and I provided a
+> counterexample.  Then you proposed a workaround that would require
+> changes to the cvs2git documentation, and I even explained how your
+> proposed workaround is not as flexible as the status quo.
 
-Ugh. Yeah, that is definitely a possible race, and it could be quite
-disastrous for prune.
+cvs2git does *not* need blob marks, it does not need marks at all.
 
-I am really starting to think that we need a pluggable refs
-architecture, and that busy servers can use something like sqlite to
-keep the ref storage. That would require bumping repositoryformatversion,
-of course, but it would be OK for a server accessible only by git
-protocols.
+The use-case that you mentioned has nothing to do with cvs2git, in
+fact. I can be described as this:
 
-I also wonder if we can spend extra time to get more reliable results
-for prune, like checking refs, coming up with a prune list, and then
-checking again. I have a feeling it's a 2-generals sort of problem where
-we can always miss a ref that keeps bouncing around, but we could bound
-the probability. I haven't thought that hard about it. Perhaps this will
-give us something to talk about on Thursday. :)
+% ./generate-blobs > blobs
+% git fast-import --export-marks=marks < blobs
+% ./generate-commits > commits
+% git fast-import --import-marks=marks < commits
 
-> > My proposal above gets rid of the need to invalidate the loose refs
-> > cache, so we can ignore that complexity.
-> 
-> The same concern applies to invalidating the packed-ref cache, which you
-> still want to do.
+In this example 'generate-commits' has no notion of marks at all, and
+'git fast-import' doesn't need marks to process both blobs and
+commits.
 
-True. In theory a call to resolve_ref can invalidate it, so any call
-from inside a for_each_ref callback would be suspect.
+> Do you want
+> to go through the same argument with every possible user of git-fast-import?
 
-> * Preloading the whole tree of loose references before starting an
-> iteration.  As I recall, this was a performance *win*.  It was on my
-> to-do list of things to pursue when I have some free time (ha, ha).  I
-> mostly wanted to check first that there are not callers who abort the
-> iteration soon after starting it.  For example, imagine a caller who
-> tries to determine "are there any tags at all" by iterating over
-> "refs/tags" with a callback that just returns 1; such a caller would
-> suffer the cost of reading all of the loose references in "refs/tags".
+I don't care about possible users, I care about *real* users.
 
-Well, you can measure my patches, because that's what they do. :) I
-didn't really consider an early termination from the iteration.
-Certainly something like:
+> It would be insanity to change the default behavior when a workaround on
+> the Git side (namely adding an option that tells git-fast-import *not*
+> to emit blob marks) would be quite straightforward to implement and have
+> little maintenance cost.
 
-  git for-each-ref refs/tags | head -1
+And nobody would benefit from that.
 
-would take longer. Though if you have that many refs that the latency is
-a big problem, you should probably consider packing them (it can't
-possibly bite you with a race condition, right?).
+>>> Making the export of blob marks optional would of course be OK, as long
+>>> as the default is to export them.
+>>
+>> Nobody benefits from leaving the default as it is.
+>
+> Sure they do.  Any tool that *knows* that it doesn't need blob marks can
+> pass the new option and benefit.  Other tools benefit from not being
+> broken by your change.
 
--Peff
+Which the *vastly* more common case? That blobs are needed, or that
+they are not?
+
+-- 
+Felipe Contreras
