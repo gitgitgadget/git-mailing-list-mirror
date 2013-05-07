@@ -1,131 +1,75 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 2/7] t7900: Start testing usability of namespaced remote refs
-Date: Tue, 7 May 2013 23:52:59 +0200
-Message-ID: <CALKQrgctyZGf2z+=+qjcW-s0uyVCqw01pv6X2NG+8yyC3FoTvQ@mail.gmail.com>
-References: <1367711749-8812-1-git-send-email-johan@herland.net>
-	<1367711749-8812-3-git-send-email-johan@herland.net>
-	<7va9o7pogo.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 07 23:53:14 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 00/11] sha1_name: improvements
+Date: Tue,  7 May 2013 16:55:00 -0500
+Message-ID: <1367963711-8722-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 07 23:56:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZpou-0004vf-KK
-	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 23:53:12 +0200
+	id 1UZpsN-00083T-Kv
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 23:56:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752070Ab3EGVxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 17:53:07 -0400
-Received: from mail10.copyleft.no ([188.94.218.231]:59102 "EHLO
-	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751642Ab3EGVxG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 May 2013 17:53:06 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UZpol-0007cR-O9
-	for git@vger.kernel.org; Tue, 07 May 2013 23:53:03 +0200
-Received: from mail-ob0-f182.google.com ([209.85.214.182])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UZpol-000J85-Gy
-	for git@vger.kernel.org; Tue, 07 May 2013 23:53:03 +0200
-Received: by mail-ob0-f182.google.com with SMTP id eh20so1098479obb.13
-        for <git@vger.kernel.org>; Tue, 07 May 2013 14:53:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=uvFtR/aDHnQ55SHze9JRpjVNFyITyCBZw7g8rBOlPAw=;
-        b=VCroh8ESlpW4+4srkVltVNND/ywqfL/ugwUAwLlmArwZn/mINvgeeSe6b8fY+SZ76r
-         lywHlRSmfRwJcdVADx+oLuhdnaA4S5uAXdpC4ybnT9xRstRWVGYYb2FYwOZuFswV1SOF
-         U9Gfcxb0KpjecDSYIAD0rBzSvzDcrLQz1TUg0aE7eKG1eWK8sN1Ie3OPGGaGVb66qq1o
-         RuvtPdM63x4wG0N4DG2TbcO9q+pZk3tzlEYEU1qyuUdMkyxbqxxFI5DgHJyELo+oApoL
-         Zmyh7c7cobOwArxECTBvtMY4UJv8hWx9AzXf7mdU1JsnbGBhQucsuHBvxbTzIlT0+Mb2
-         HV9A==
-X-Received: by 10.60.42.135 with SMTP id o7mr1111989oel.97.1367963580110; Tue,
- 07 May 2013 14:53:00 -0700 (PDT)
-Received: by 10.182.129.110 with HTTP; Tue, 7 May 2013 14:52:59 -0700 (PDT)
-In-Reply-To: <7va9o7pogo.fsf@alter.siamese.dyndns.org>
+	id S1752699Ab3EGV4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 17:56:39 -0400
+Received: from mail-ye0-f177.google.com ([209.85.213.177]:58002 "EHLO
+	mail-ye0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752466Ab3EGV4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 May 2013 17:56:37 -0400
+Received: by mail-ye0-f177.google.com with SMTP id q3so246725yen.8
+        for <git@vger.kernel.org>; Tue, 07 May 2013 14:56:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=/gkmt+TYnQuhtufMPzzs+JdKOauRNn60VCoMxoGEfU0=;
+        b=UXhw+RmYCRqhlQOHwv2zRdAKdBMP7kbEH5yv46+gx+8y/qfO4romTNjhEolfzidwVv
+         J+voX+wCM4EUn+K4nFvBpkr4Sjbf2TS0MkHvlLLjHj57MbbPgC8CYa1bCge/IROdGByb
+         LxngjZNg5dZW4l2H4/ci2/u9v0zyVnnIe0/rUgrg1QM7ysflIcVHe8zNT2lUxv/vXeK9
+         qHKeSH3UYVIW60ZQ5gd0OFmBzcwrAmZgp6RmZ27eP5OsuOsUxol3WXzugHuLUQxlbYGo
+         l61/98DXNDpr2+HOy1rqL9oPGvIQv16B6Gbeetwkbav1AufHhPP6pF48w6XC8DXqX6YC
+         WJdA==
+X-Received: by 10.236.132.196 with SMTP id o44mr3862221yhi.37.1367963796508;
+        Tue, 07 May 2013 14:56:36 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id b70sm7055499yhm.3.2013.05.07.14.56.34
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 07 May 2013 14:56:35 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc0.401.g45bba44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223605>
 
-On Tue, May 7, 2013 at 3:29 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johan Herland <johan@herland.net> writes:
->> +test_expect_success 'work-around "clone" with namespaced remote refs' '
->> +     rm -rf client &&
->> +     git init client &&
->> +     (
->> +             cd client &&
->> +             git remote add origin ../server &&
->> +             git config --unset-all remote.origin.fetch &&
->> +             git config --add remote.origin.fetch "+refs/heads/*:refs/remotes/origin/heads/*" &&
->
-> If you were to do this, I think you should drop the "remote add
-> origin" step and illustrate what configuration variables should be
-> prepared (at least minimally---the final implementation of "git
-> clone --separate-remote-layout" may add some other configuration
-> variable as a hint to say "this remote is using the new layout" or
-> somesuch) in this "client" repository.
+Hi,
 
-Sure, I can change the test into doing:
+While trying to add support for the @ shortcut lots of cleanups arised. Here
+they are in a single series.
 
-	cd client &&
-	git config remote.origin.url ../server &&
-	git config --add remote.origin.fetch
-"+refs/heads/*:refs/remotes/origin/heads/*" &&
-	git config --add remote.origin.fetch
-"+refs/tags/*:refs/remotes/origin/tags/*" &&
-	git config --add remote.origin.fetch
-"+refs/notes/*:refs/remotes/origin/notes/*" &&
-	git config --add remote.origin.fetch
-"+refs/replace/*:refs/remotes/origin/replace/*" &&
-	git config remote.origin.tagopt "--no-tags" &&
-	git fetch &&
-	git checkout master
+Felipe Contreras (7):
+  tests: at-combinations: simplify setup
+  tests: at-combinations: check ref names directly
+  tests: at-combinations: improve nonsense()
+  sha1_name: remove no-op
+  sha1_name: remove unnecessary braces
+  sha1_name: avoid Yoda conditions
+  sha1_name: reorganize get_sha1_basic()
 
-> That would make the test more self documenting.
->
-> I am not convinced that it is a good idea to reuse "remotes/origin"
-> hierarchy which traditionally has been branches-only like this,
-> though.  It may be better to use
->
->         refs/$remotes_new_layout/origin/{heads,tags,...}/*
->
-> for a value of $remotes_new_layout that is different from "remote",
-> and teach the dwim_ref() machinery to pay attention to it, to avoid
-> confusion.  Otherwise, you wouldn't be able to tell between a topic
-> branch that works on tags named "tags/refactor" under the old layout,
-> and a tag that marks a good point in a refactoring effort "refactor"
-> under the new layout.
+Ramkumar Ramachandra (4):
+  tests: at-combinations: increase coverage
+  tests: at-combinations: @{N} versus HEAD@{N}
+  sha1_name: don't waste cycles in the @-parsing loop
+  sha1_name: check @{-N} errors sooner
 
-I see your point, although I'm not convinced it is common among users
-to have branch names of the "tags/*" form (or tag names of the
-"heads/*" form, for that matter). I'm also not sure it's worth messing
-with the "remotes" name which has had a long time to work its way into
-our brains and into git's user interface.
-
-That said, I could have a go at using "refs/peers/*" instead of
-"refs/remotes/*", and see how that works out.
-
-If it sticks, how pervasive do we want this renaming to be? I guess we
-don't want to rename the "git remote" command to "git peer" just
-yet... What about the config? Do we rename "remote.origin.url" to
-"peer.origin.url" for new-style remotes? For how long do you
-anticipate having "peers" and "remotes" living side-by-side as
-concepts in git?
-
-
-...Johan
+ sha1_name.c                | 42 +++++++++++++++++++---------------
+ t/t1508-at-combinations.sh | 56 +++++++++++++++++++++++++++++++++-------------
+ 2 files changed, 64 insertions(+), 34 deletions(-)
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.8.3.rc0.401.g45bba44
