@@ -1,136 +1,93 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 10/11] sha1_name: reorganize get_sha1_basic()
-Date: Tue,  7 May 2013 16:55:10 -0500
-Message-ID: <1367963711-8722-11-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 11/11] sha1_name: check @{-N} errors sooner
+Date: Tue,  7 May 2013 16:55:11 -0500
+Message-ID: <1367963711-8722-12-git-send-email-felipe.contreras@gmail.com>
 References: <1367963711-8722-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 07 23:57:32 2013
+X-From: git-owner@vger.kernel.org Tue May 07 23:57:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZpt6-0000Gi-8z
-	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 23:57:32 +0200
+	id 1UZpt6-0000Gi-Q2
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 23:57:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753298Ab3EGV5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 17:57:17 -0400
-Received: from mail-yh0-f54.google.com ([209.85.213.54]:45145 "EHLO
-	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753150Ab3EGV5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 May 2013 17:57:12 -0400
-Received: by mail-yh0-f54.google.com with SMTP id b12so274577yha.13
-        for <git@vger.kernel.org>; Tue, 07 May 2013 14:57:12 -0700 (PDT)
+	id S1753305Ab3EGV5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 17:57:22 -0400
+Received: from mail-gg0-f178.google.com ([209.85.161.178]:37246 "EHLO
+	mail-gg0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753256Ab3EGV5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 May 2013 17:57:16 -0400
+Received: by mail-gg0-f178.google.com with SMTP id l2so247150ggn.37
+        for <git@vger.kernel.org>; Tue, 07 May 2013 14:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=HjM731rPx/MFFy2qc+6XtJqzXMyMAX3HE2E7KWUzMaE=;
-        b=gYbgBj9/WCtIjS1KnT8gdShtbiQMIipimAr4vosDPMcUQ9vus0XZemBs7XtlHF+oCJ
-         meSmPz+zCRj6gJ2eV7i7SRMrQk2/teAtGw9hl0urvAk8AfqV9x1fSlgvwA1NUrh1Lhpt
-         apAcx71UXBQhhOAIFcD1QGvfiPItDN3EZ1MrGYZarqZJx5/+a+sVBxJgi5nWlnA1/MiW
-         SCc1HJPe0iEgU4chFVLwOTh64oJhUBru44DjutKkH4e/5DfEl47cMqziYfG6szemIFkq
-         V9jp40dAFDI/ZTv1VqU9mCxBB/Vh/l4VwxrSRFMkJSCSxwBR8zijsfqYGRqm1B+deD+6
-         xB0Q==
-X-Received: by 10.236.63.201 with SMTP id a49mr3687845yhd.146.1367963831979;
-        Tue, 07 May 2013 14:57:11 -0700 (PDT)
+        bh=CoeCOjeXwTlN8sfdWFdk8vn2jYn5UmoCDav4/6/VFxc=;
+        b=XDM2xbQbIWIgl4Dzk2r4tr66J882C3jRupAzYRpurC4swfGeeCW8mFkjabBNrZeb/p
+         8MhuF+y+MEkMBJJ+eHyQbsJyZEipdAtO4w9kx69Mwni4MxvJtHCDWl1toThtffXM8OqB
+         AA12BkzdNSKm30iyHihNfa9fl5qBdwbTKf1e4WCIK453cH3ISVDoTxX4uD+EXPn0tELp
+         tETUneru+2QSIME27khxZ67ZyuTgTZjUgQ15EMm0L1KRDvwys6UUSC0PHSS/msg0LGem
+         vKYfGeJDg0Wo0Pe+RkTXVM5MVhVpWi7XHcRqibiwAwp1TTgDzC+JSQnMaqiy0WrNKpUT
+         k28Q==
+X-Received: by 10.236.119.13 with SMTP id m13mr3864767yhh.155.1367963835309;
+        Tue, 07 May 2013 14:57:15 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id i44sm58405219yhk.17.2013.05.07.14.57.10
+        by mx.google.com with ESMTPSA id i67sm58480218yhq.25.2013.05.07.14.57.13
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 07 May 2013 14:57:11 -0700 (PDT)
+        Tue, 07 May 2013 14:57:14 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc0.401.g45bba44
 In-Reply-To: <1367963711-8722-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223616>
 
-Through the years the functionality to handle @{-N} and @{u} has moved
-around the code, and as a result, code that once made sense, doesn't any
-more.
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 
-There is no need to call this function recursively with the branch of
-@{-N} substituted because dwim_{ref,log} already replaces it.
+It's trivial to check for them in the @{N} parsing loop.
 
-However, there's one corner-case where @{-N} resolves to a detached
-HEAD, in which case we wouldn't get any ref back.
-
-So we parse the nth-prior manually, and deal with it depending on
-weather it's a SHA-1, or a ref.
+[fc: style]
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- sha1_name.c | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ sha1_name.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/sha1_name.c b/sha1_name.c
-index 0acc6e0..c512c69 100644
+index c512c69..db965af 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -431,13 +431,14 @@ static inline int upstream_mark(const char *string, int len)
- }
- 
- static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags);
-+static int interpret_nth_prior_checkout(const char *name, struct strbuf *buf);
- 
- static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- {
- 	static const char *warn_msg = "refname '%.*s' is ambiguous.";
- 	char *real_ref = NULL;
- 	int refs_found = 0;
--	int at, reflog_len;
-+	int at, reflog_len, nth_prior = 0;
- 
- 	if (len == 40 && !get_sha1_hex(str, sha1))
- 		return 0;
-@@ -447,6 +448,10 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+@@ -448,7 +448,10 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
  	if (len && str[len-1] == '}') {
  		for (at = len-4; at >= 0; at--) {
  			if (str[at] == '@' && str[at+1] == '{') {
-+				if (at == 0 && str[2] == '-') {
-+					nth_prior = 1;
-+					continue;
-+				}
- 				if (!upstream_mark(str + at, len - at)) {
- 					reflog_len = (len-1) - (at+2);
- 					len = at;
-@@ -460,19 +465,22 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 	if (len && ambiguous_path(str, len))
- 		return -1;
+-				if (at == 0 && str[2] == '-') {
++				if (str[at+2] == '-') {
++					if (at != 0)
++						/* @{-N} not at start */
++						return -1;
+ 					nth_prior = 1;
+ 					continue;
+ 				}
+@@ -497,10 +500,6 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 		unsigned long co_time;
+ 		int co_tz, co_cnt;
  
--	if (!len && reflog_len) {
-+	if (nth_prior) {
- 		struct strbuf buf = STRBUF_INIT;
--		int ret;
--		/* try the @{-N} syntax for n-th checkout */
--		ret = interpret_branch_name(str, &buf);
--		if (ret > 0)
--			/* substitute this branch name and restart */
--			return get_sha1_1(buf.buf, buf.len, sha1, 0);
--		else if (ret == 0)
+-		/* a @{-N} placed anywhere except the start is an error */
+-		if (str[at+2] == '-')
 -			return -1;
-+		int detached;
-+
-+		if (interpret_nth_prior_checkout(str, &buf) > 0) {
-+			detached = (buf.len == 40 && !get_sha1_hex(buf.buf, sha1));
-+			strbuf_release(&buf);
-+			if (detached)
-+				return 0;
-+		}
-+	}
-+
-+	if (!len && reflog_len)
- 		/* allow "@{...}" to mean the current branch reflog */
- 		refs_found = dwim_ref("HEAD", 4, sha1, &real_ref);
--	} else if (reflog_len)
-+	else if (reflog_len)
- 		refs_found = dwim_log(str, len, sha1, &real_ref);
- 	else
- 		refs_found = dwim_ref(str, len, sha1, &real_ref);
+-
+ 		/* Is it asking for N-th entry, or approxidate? */
+ 		for (i = nth = 0; 0 <= nth && i < reflog_len; i++) {
+ 			char ch = str[at+2+i];
 -- 
 1.8.3.rc0.401.g45bba44
