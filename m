@@ -1,59 +1,70 @@
 From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Pitfalls in auto-fast-forwarding heads that are not checked out?
-Date: Tue, 7 May 2013 10:27:46 -0400
-Message-ID: <CACPiFCJ9Jcd8VG3aTocaJ_jkcY8=3aUJUbDMJcfRXOaW41EsmQ@mail.gmail.com>
-References: <CACPiFCLnjCeCpt8wR71bFweFyA3rFCsnbEiR1yRD1n=X5K84Mw@mail.gmail.com>
- <5184B9F9.2010708@kdbg.org> <CACPiFCK=8KFX++Bg+LhymorSMnWgrj5Js+-f=UYyZnNY=n9WiA@mail.gmail.com>
- <20130504185146.GD25863@elie.Belkin>
+Subject: Re: offtopic: ppg design decisions - encapsulation
+Date: Tue, 7 May 2013 10:32:15 -0400
+Message-ID: <CACPiFCLtYKsXQ-aoPadJxkB5phQ+j2PAfHnDTJK6B85mcfRF_g@mail.gmail.com>
+References: <CACPiFCL+cd1vmqj6JEj84L5rDvHGxDgo+zGw5__ard6-sumipA@mail.gmail.com>
+ <20130506155353.GF25912@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 07 16:28:19 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue May 07 16:32:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZisL-0001PT-Ac
-	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 16:28:17 +0200
+	id 1UZiwb-0005JX-NG
+	for gcvg-git-2@plane.gmane.org; Tue, 07 May 2013 16:32:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754054Ab3EGO2K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 10:28:10 -0400
-Received: from mail-ve0-f181.google.com ([209.85.128.181]:57438 "EHLO
-	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753738Ab3EGO2H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 May 2013 10:28:07 -0400
-Received: by mail-ve0-f181.google.com with SMTP id d10so582901vea.12
-        for <git@vger.kernel.org>; Tue, 07 May 2013 07:28:06 -0700 (PDT)
+	id S1753664Ab3EGOch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 10:32:37 -0400
+Received: from mail-vc0-f171.google.com ([209.85.220.171]:42041 "EHLO
+	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753337Ab3EGOcf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 May 2013 10:32:35 -0400
+Received: by mail-vc0-f171.google.com with SMTP id m16so549834vca.2
+        for <git@vger.kernel.org>; Tue, 07 May 2013 07:32:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=f4A0oLOldHSQCvmxkSccQYuvDp2hIjJmOCdDR1tMTrw=;
-        b=bTD5wfTMlI2144v4Z0Oiydg/BMBZULAWIYmoOA3Yo+v3SJQKUqkhWSdMy/ZEt6KwwO
-         mk/x0jfIl7F2eZDk33twQD20+udZYMSxrI/aflSlruvJZrVc3o8ldxyL4ncXS9Jtvo6q
-         CFBvF9COQT7vsO0pDZ7CzlwAg6loYnGmFDRxdofFeN4LChz7ZVtN03UBgSF6VesUj1cH
-         nk9MfEk4YS6mSNTNwLkagq9eqhgWy2GuaLYuPhUvMpmUCG4GgX2WmJbIJQXbqyQvUK/o
-         wABTW0JD8ZF3xyzqZdz6OBO2Sv7s31jU8O94Uf7GIcSnvJgGp0PafSRt/NnXtPLkqulp
-         52TA==
-X-Received: by 10.220.168.6 with SMTP id s6mr306954vcy.41.1367936886175; Tue,
- 07 May 2013 07:28:06 -0700 (PDT)
-Received: by 10.220.248.79 with HTTP; Tue, 7 May 2013 07:27:46 -0700 (PDT)
-In-Reply-To: <20130504185146.GD25863@elie.Belkin>
+        bh=7LhSKnL7gdxEA0YX1LzooHCdRq8zcdEjost/iFxzNUQ=;
+        b=QgtVtSrP7A59QwGE/1/QOYmYKi+cnP/aZ2aY4S8zf0SJITa9yBaHo8UgvvlMCj/p2J
+         b52xcYPnWl80s7yzchsABWuGe0rEP1agT1wTuBP+wUMRbvigW4w1OoYZpUHcsZ1xMEzZ
+         lSoKmV4YQJCuUCGwiUF/3xk2puz3KClGEvGuHN17Y9CQs6xVjGaE2LvuAc9ML53qBiI5
+         I9FyNsygSEHlMa7mcA3F+OsOwVKd7+IgPcWLjUwej9DeO01Q7Su+tc7jNxPA27N/rfKT
+         heGejfW5mCTP5WT1QRqu6tgd2qlFaHvsApveLnNQUAFInIor5WBc4yvTmRKRkrqSzm8d
+         +x2w==
+X-Received: by 10.220.168.202 with SMTP id v10mr1346528vcy.71.1367937155168;
+ Tue, 07 May 2013 07:32:35 -0700 (PDT)
+Received: by 10.220.248.79 with HTTP; Tue, 7 May 2013 07:32:15 -0700 (PDT)
+In-Reply-To: <20130506155353.GF25912@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223573>
 
-On Sat, May 4, 2013 at 2:51 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Another trick is to use "git push":
->         git push . $production_sha1:refs/heads/master
+On Mon, May 6, 2013 at 11:53 AM, John Keeping <john@keeping.me.uk> wrote:
+> I'm not sure I fully understand what the reports are, but it sounds like
+> they are closely related to original configuration commits.  If that is
+> the case, have you considered using Git notes instead of a separate
+> repository?
 
-Great trick -- thanks! In use in ppg now :-)
+Interesting suggestion! I read up on git-notes.
 
+Yes, reports are closely related to a commit -- it's a lot of the
+execution of puppet with that config on a client node. At the same
+time, we have one report per change deployment, per client -- with
+thousands of clients. So it will be a large dataset, and a transient
+one -- I intend to use git as a store-and-forward mechanism for the
+reports, and it is safe&sane to forget old reports.
+
+I don't see much ease-of-expiry in the notes, so I guess I would have
+to write that myself, which complicates things a bit :-)
+
+cheers,
 
 
 m
