@@ -1,137 +1,163 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 10/11] sha1_name: reorganize get_sha1_basic()
-Date: Wed, 8 May 2013 17:06:16 -0500
-Message-ID: <CAMP44s0_h0gLyknHytdTeoA3E4e4hYYUP-_PKjJE9jWbUaYuPg@mail.gmail.com>
-References: <1367963711-8722-1-git-send-email-felipe.contreras@gmail.com>
-	<1367963711-8722-11-git-send-email-felipe.contreras@gmail.com>
-	<7vbo8lfi8y.fsf@alter.siamese.dyndns.org>
-	<CAMP44s38eJP6WRQTQMDRqo-AXb7-YE1ZS-tJ7NK_QRwgHB3Obw@mail.gmail.com>
-	<7vsj1xcf81.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/2] help: add help_unknown_ref
+Date: Wed, 08 May 2013 15:49:19 -0700
+Message-ID: <7vzjw5axzk.fsf@alter.siamese.dyndns.org>
+References: <1367625860-20746-1-git-send-email-vikrant.varma94@gmail.com>
+	<1367625860-20746-2-git-send-email-vikrant.varma94@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 09 00:06:23 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Vikrant Varma <vikrant.varma94@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 09 00:49:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaCVD-000431-1r
-	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 00:06:23 +0200
+	id 1UaDB0-0008DJ-VN
+	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 00:49:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752460Ab3EHWGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 May 2013 18:06:18 -0400
-Received: from mail-la0-f53.google.com ([209.85.215.53]:44603 "EHLO
-	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751777Ab3EHWGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 May 2013 18:06:17 -0400
-Received: by mail-la0-f53.google.com with SMTP id eo20so2254028lab.12
-        for <git@vger.kernel.org>; Wed, 08 May 2013 15:06:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=AM7ZxrfdjH8q6eNX12moUR1J0uKr0LmkFC/3/X4iK2c=;
-        b=BqiiNyDoruMI9bPFdg70nRMs/Yx67cndi/YJKNIizeyeMEPpJqcwESJb+DDMM0lnzw
-         I7spIyvWnJCKo94G5d3oOD/KrgpzKIhYxF8bi+mJxRGFaVRODgvG5ESZpwwI7zvFWTRX
-         whfZ/2XkuvUfmfNoCAQH3q/7JbKMzBNE8TEqeaEEx/Ob4FFMGbeP6zfbzrVJBYbWufTJ
-         7nj7B+VB0ouvKCMjiPR4l6/SGieBvPby8VzX7xOQ6fX4btsVb8zUANlrgK+5ZJ2xdUu3
-         DVtr/2ftufNqM1hqmbjL0cVvrBS5j86gTDcqLsqc/rdO7P0u1Ts2nq57BB2BPMU3yZZe
-         XWeQ==
-X-Received: by 10.152.22.168 with SMTP id e8mr4080238laf.20.1368050776225;
- Wed, 08 May 2013 15:06:16 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Wed, 8 May 2013 15:06:16 -0700 (PDT)
-In-Reply-To: <7vsj1xcf81.fsf@alter.siamese.dyndns.org>
+	id S1755468Ab3EHWtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 May 2013 18:49:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52826 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751925Ab3EHWtW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 May 2013 18:49:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E2D01D87C;
+	Wed,  8 May 2013 22:49:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=rsORPRFFcbUoe7gKfGo50mgWAG0=; b=Azc46PddKbO2m4p+V30U
+	uvkE+XY7JezrO1bAbvjA5gpVxTBoK+p+jimdB5ND02BsFOEE+oUqFOm47g9yeh1u
+	aSXWfiZX4HH2qGCNeKSyF7XQ8IoVCCVTnn+zDNyfSa6TyNk1KEqPH2wJlKS9Vjk/
+	e5f2gfh7o5H5UzY1dUIp+B0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=Iz5m0TwZkMhgNnrbK6OfBWUwYHP7TknD9RfS36z11kDxS0
+	ufO6WOUd2EjSphQ8+app2bOc9UnUETD4QceBLbufyFRFcOZUOcwvgBlcEM4KyGmu
+	w33By2Lih93z0I2pdiFXUVyl7IJv2skTHZb1LbP2806f1H4qiXzJ283S31FEI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33D711D87B;
+	Wed,  8 May 2013 22:49:21 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 82C431D87A;
+	Wed,  8 May 2013 22:49:20 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 85651302-B831-11E2-82AC-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223691>
 
-On Wed, May 8, 2013 at 4:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Vikrant Varma <vikrant.varma94@gmail.com> writes:
+
+> When a ref is not known, currently functions call die() with an
+> error message.
+
+The first part read somewhat awkward, so I started rewriting the
+above like so:
+
+    When the user gives an unknown string to a command that expects
+    to see a ref, we could be more helpful than just saying "that's
+    not a ref" and die.
+
+which in turn made me realize that some commands may not even know
+if the user mistyped a ref.  It is not an objection to this patch
+per-se, but a useful future enhancement may be to allow the callers
+call guess_mistyped_ref() directly and let them decide what to do
+when they suspect the string they did not understand is not a
+mistyped ref but something else, i.e. not let help_unknown_ref() die
+unconditionally but allow it to return.  Then the caller can do:
+
+        commit = get_commit_from_string(argv[i]);
+        if (!commit) {
+            ... I do not understand argv[i], but ...
+            ... it may be a mistyped ref ...
+            help_unknown_ref(argv[i], "expected a revision");
+            ... it is not likely to be a typo ...
+            ... perhaps it was meant to be a filename? ...
+            if (file_exists(argv[i])) {
+                ... yes! ...
+                ... do the "file" thing instead ...
+            }
+        }
+
+> Add helper function help_unknown_ref to take care of displaying an
+> error message along with a list of suggested refs the user might
+> have meant.
+
+OK.
+
+> Example:
+> 	$ git merge foo
+> 	merge: foo - not something we can merge
+
+That leading "merge: " looks somewhat strange, especially when it
+immediately follows the command line to invoke "merge", making it
+appear to waste space by stating the obvious.
+
+Our messages are generally marked with "error:", "fatal:",
+"warning:", etc. at the beginning.
+
 >
->> On Wed, May 8, 2013 at 1:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>
->>>> Through the years the functionality to handle @{-N} and @{u} has moved
->>>> around the code, and as a result, code that once made sense, doesn't any
->>>> more.
->>>>
->>>> There is no need to call this function recursively with the branch of
->>>> @{-N} substituted because dwim_{ref,log} already replaces it.
->>>>
->>>> However, there's one corner-case where @{-N} resolves to a detached
->>>> HEAD, in which case we wouldn't get any ref back.
->>>>
->>>> So we parse the nth-prior manually, and deal with it depending on
->>>> weather it's a SHA-1, or a ref.
->>>> ...
->>>
->>> s/weather/whether/;
->>>
->>>> @@ -447,6 +448,10 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->>>>       if (len && str[len-1] == '}') {
->>>>               for (at = len-4; at >= 0; at--) {
->>>>                       if (str[at] == '@' && str[at+1] == '{') {
->>>> +                             if (at == 0 && str[2] == '-') {
->>>> +                                     nth_prior = 1;
->>>> +                                     continue;
->>>> +                             }
->>>
->>> Does this have to be inside the loop?
->>
->> Yes, the whole purpose is to avoid reflog_len to be set.
+> 	Did you mean one of these?
+> 	    origin/foo
+> 	    upstream/foo
 >
-> What I meant was the "<nothing>@{-" check, which happens only at==0.
->
->         if (!memcmp(str, "@{-", 3) && len > 3)
->                 nth_prior = 1;
->         else
->                 for (at = len - 4; at; at--) {
->                         ... look for and break at the first "@{" ...
->                 }
->
-> or something.
+> Signed-off-by: Vikrant Varma <vikrant.varma94@gmail.com>
 
-That's doable, but would screw up the next patch.
+> ...
+> +struct string_list guess_refs(const char *ref)
+> +{
+> +	struct similar_ref_cb ref_cb;
+> +	struct string_list similar_refs = STRING_LIST_INIT_NODUP;
+> +
+> +	ref_cb.base_ref = ref;
+> +	ref_cb.similar_refs = &similar_refs;
+> +	for_each_ref(append_similar_ref, &ref_cb);
+> +	return similar_refs;
+> +}
+> +
+> +void help_unknown_ref(const char *ref, const char *cmd, const char *error)
+> +{
+> +	int i;
+> +	struct string_list suggested_refs = guess_refs(ref);
+> +
+> +	fprintf_ln(stderr, _("%s: %s - %s"), cmd, ref, error);
+> +
+> +	if (suggested_refs.nr > 0) {
+> +		fprintf_ln(stderr,
+> +			   Q_("\nDid you mean this?",
+> +			      "\nDid you mean one of these?",
+> +			      suggested_refs.nr));
+> +		for (i = 0; i < suggested_refs.nr; i++)
+> +			fprintf(stderr, "\t%s\n", suggested_refs.items[i].string);
+> +	}
+> +
+> +	string_list_clear(&suggested_refs, 0);
+> +	exit(1);
+> +}
 
->>> Ahh, OK, the new code will now let dwim_ref/log to process @{-N}
->>> again (the log message hints this but it wasn't all that clear),
->>
->> I thought it was clear we would let dwim_{ref,log} do the job:
->
-> Yes, the reason I did not immediately think of that is because I
-> knew @{-N} was expensive (need to read reflog backwards) and didn't
-> think anybody would redo the code to deliberately do that twice ;-)
+Looks sensible.
 
-But that's what the commit message said.
+> diff --git a/help.h b/help.h
+> index 0ae5a12..5003423 100644
+> --- a/help.h
+> +++ b/help.h
+> @@ -27,4 +27,9 @@ extern void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes);
+>  extern int is_in_cmdlist(struct cmdnames *cmds, const char *name);
+>  extern void list_commands(unsigned int colopts, struct cmdnames *main_cmds, struct cmdnames *other_cmds);
+>  
+> +/*
+> + * This function has been called because ref is not known.
+> + * Print a list of refs that the user might have meant, and exit.
+> + */
 
->>> Also, a few points this patch highlights in the code before the
->>> change:
->>>
->>>  - If we were on a branch with 40-hex name at nth prior checkout,
->>>    would we mistake it as being detached at the commit?
->>>
->>>  - If we were on a branch 'foo' at nth prior checkout, would our
->>>    previous get_sha1_1() have made us mistake it as referring to a
->>>    tag 'foo' with the same name if it exists?
->>
->> I don't know, but I suspect there's no change after this patch.
->
-> Yes, didn't I say "the code before the change" above?
->
-> These two correctness issues look more important issues to me, with
-> or without the restructure patch (in other words, they are
-> independent).
+The wording is a bit funny; I'll amend it somehow before queuing.
 
-Right, if you are interested in correctness, you might want to try
-@{-1}{0}; it resolves to @{-1} currently, and it fails correctly with
-my patch.
-
-Cheers.
-
--- 
-Felipe Contreras
+> +extern void help_unknown_ref(const char *ref, const char *cmd, const char *error);
+>  #endif /* HELP_H */
