@@ -1,82 +1,94 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] remote-helpers: trivial cleanup
-Date: Tue,  7 May 2013 18:45:15 -0500
-Message-ID: <1367970315-5053-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 08 01:46:48 2013
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Please pull updates for Git 1.8.3 l10n round 2
+Date: Wed, 8 May 2013 08:21:19 +0800
+Message-ID: <CANYiYbFcJgiBXUSQWUtvPmGOT3qmrVeuB4xaEtYOymLOEqmYzw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>,
+	Byrial Jensen <byrial@vip.cybercity.dk>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Vincent van Ravesteijn <vfr@lyx.org>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	=?UTF-8?B?RGF2aWQgSHJiw6HEjQ==?= <david@hrbac.cz>,
+	Harring Figueiredo <harringf@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 08 02:21:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZrap-0002Vh-RL
-	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 01:46:48 +0200
+	id 1UZs8L-0006Jh-PT
+	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 02:21:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755269Ab3EGXql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 May 2013 19:46:41 -0400
-Received: from mail-yh0-f48.google.com ([209.85.213.48]:44758 "EHLO
-	mail-yh0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755229Ab3EGXqk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 May 2013 19:46:40 -0400
-Received: by mail-yh0-f48.google.com with SMTP id f35so295584yha.35
-        for <git@vger.kernel.org>; Tue, 07 May 2013 16:46:39 -0700 (PDT)
+	id S1754596Ab3EHAVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 May 2013 20:21:21 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:58141 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753286Ab3EHAVV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 May 2013 20:21:21 -0400
+Received: by mail-we0-f174.google.com with SMTP id x53so1188574wes.19
+        for <git@vger.kernel.org>; Tue, 07 May 2013 17:21:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=WTTa8t3DRxoFAiMBUX5XMlsYvZHC+rTaMpPtPezPg6g=;
-        b=m4F0Ua2n//9joZZtG3kKnfvfvla96nwLLAwMSCIYSCfT6ygy78VmPSHQpFrMIPbnSE
-         GEZJXv66IgnIIBsq+u+qzTP6a5WEtIDgufKoXwli2w3vdjWgWPu4ZNH6iG+UNX9W7Dj+
-         V0GbCGBl4qj0DzCMpJl75lckmlwO51fVom57P8VmX8DxXSKKyNWPGy9ZOellPcq7LVWD
-         aIm3M8DT4Ps++0jqS77ZqUOgbLT6GZE64cJdUOnNp5fE8BNqRMmAg6PMQa96mPQe/VUk
-         gFzDKrPJhfLx6TIA/BA7A0SLZetQZCMYoJrCvnZ0NKQxEjWdQM1CFuA1AWCJFajKdnl0
-         TJfQ==
-X-Received: by 10.236.202.143 with SMTP id d15mr4218781yho.16.1367970399928;
-        Tue, 07 May 2013 16:46:39 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id d51sm10010170yho.14.2013.05.07.16.46.38
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 07 May 2013 16:46:39 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc1.553.gac13664
+        h=mime-version:x-received:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=cyD8AxWR6GSBh56rYva1q3JtjkfjhSFQw/fBdRmqKyc=;
+        b=ULNV12JVugdB7l13VP8dO0aEGU407AJfTZrO/ktgQOSxpa/8MtUQ1YLjVrdauDthne
+         9Q4si73Rf5YTT0lsgvbrhbZSQ/GMkfGIOhVWJ/9wNyn38AKV5V2oc15uTpyCB3x5KfEr
+         wXZcnKL4JL23LnYl8kRwmUyt6uRdzj67dmTRwFMyZa8JCBLN1SQKh5LPEO4RLQntxM/v
+         xCG1M/rMTGVTg1Tb8d2DvDQZiKLNpX9Kz8bv/cSH+MzmnOR3ITFbSeq8434ejTlbjs4u
+         HGlOMdiKQnTtNbgGwWPa3P7KZZpanJc2QysAd+g7zl5KBatBCRM6opRNGZIo5c7QQIQb
+         G9vg==
+X-Received: by 10.194.59.132 with SMTP id z4mr6691528wjq.57.1367972479610;
+ Tue, 07 May 2013 17:21:19 -0700 (PDT)
+Received: by 10.194.175.72 with HTTP; Tue, 7 May 2013 17:21:19 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223632>
 
-The comment was copied from hg-fast-export, not used anymore.
+Hi Junio,
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/git-remote-bzr | 1 -
- contrib/remote-helpers/git-remote-hg  | 1 -
- 2 files changed, 2 deletions(-)
+The following changes since commit 7e6a0cc47da79dd22c0338aee8750fda92ced5d9:
 
-diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index c19ed0e..3604c7d 100755
---- a/contrib/remote-helpers/git-remote-bzr
-+++ b/contrib/remote-helpers/git-remote-bzr
-@@ -323,7 +323,6 @@ def export_branch(branch, name):
-         count += 1
-         if (count % 100 == 0):
-             print "progress revision %s (%d/%d)" % (revid, count, len(revs))
--            print "#############################################################"
- 
-     repo.unlock()
- 
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index 06920f2..96ad30d 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -453,7 +453,6 @@ def export_ref(repo, name, kind, head):
-         count += 1
-         if (count % 100 == 0):
-             print "progress revision %d '%s' (%d/%d)" % (rev, name, count, len(revs))
--            print "#############################################################"
- 
-     # make sure the ref is updated
-     print "reset %s/%s" % (prefix, ename)
--- 
-1.8.3.rc1.553.gac13664
+  git-completion.bash: add remote.pushdefault to config list
+(2013-04-29 09:57:47 -0700)
+
+are available in the git repository at:
+
+  git://github.com/git-l10n/git-po master
+
+for you to fetch changes up to 4dcdc3d8ccfb7e6ae3a2d151b5df59785548a040:
+
+  l10n: zh_CN.po: translate 44 messages (2080t0f0u) (2013-05-08 08:13:32 +0800)
+
+----------------------------------------------------------------
+Jiang Xin (3):
+      l10n: git.pot: v1.8.3 round 2 (44 new, 12 removed)
+      Merge remote-tracking branch 'vi-vnwildman/master'
+      l10n: zh_CN.po: translate 44 messages (2080t0f0u)
+
+Peter Krefting (1):
+      l10n: Update Swedish translation (2080t0f0u)
+
+Ralf Thielow (1):
+      l10n: de.po: translate 44 new messages
+
+Tran Ngoc Quan (1):
+      l10n: Update Vietnamese translation (2080t0f0u)
+
+ po/de.po    | 1328 ++++++++++++++++++++++++++++++++++-------------------------
+ po/git.pot  | 1175 +++++++++++++++++++++++++++++-----------------------
+ po/sv.po    | 1268 ++++++++++++++++++++++++++++++++------------------------
+ po/vi.po    | 1290 +++++++++++++++++++++++++++++++++------------------------
+ po/zh_CN.po | 1258 +++++++++++++++++++++++++++++++------------------------
+ 5 files changed, 3650 insertions(+), 2669 deletions(-)
+
+--
+Jiang Xin
