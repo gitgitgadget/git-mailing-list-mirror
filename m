@@ -1,117 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] CodingGuidelines:  make it clear which files in Documentation/ are the sources
-Date: Wed, 08 May 2013 13:38:43 -0700
-Message-ID: <7vy5bpdx64.fsf@alter.siamese.dyndns.org>
-References: <201305082024.r48KOH55003964@freeze.ariadne.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 10/11] sha1_name: reorganize get_sha1_basic()
+Date: Wed, 8 May 2013 15:39:25 -0500
+Message-ID: <CAMP44s38eJP6WRQTQMDRqo-AXb7-YE1ZS-tJ7NK_QRwgHB3Obw@mail.gmail.com>
+References: <1367963711-8722-1-git-send-email-felipe.contreras@gmail.com>
+	<1367963711-8722-11-git-send-email-felipe.contreras@gmail.com>
+	<7vbo8lfi8y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: worley@alum.mit.edu (Dale R. Worley)
-X-From: git-owner@vger.kernel.org Wed May 08 22:38:55 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 08 22:39:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaB8X-0001MX-2v
-	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 22:38:53 +0200
+	id 1UaB99-00022b-Hc
+	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 22:39:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756181Ab3EHUit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 May 2013 16:38:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45533 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750900Ab3EHUis (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 May 2013 16:38:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3973F1DA6A;
-	Wed,  8 May 2013 20:38:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Cd4grGDdsAajYuyVB929zLUJMZM=; b=kgq3oe
-	FlLSkvmrGsxMNwdVar8/ZR/u3VMiBn3Rz6IX1vcCLASd4hurL67xDfJxCKRz7wDM
-	dqjzSi08UnMvqiETV61N+Fxyhp0fuNsxaRpvF2mxxOhQuu22BRc3EhCe8k9GAnpE
-	uPCGiLKBIYvfru9UCbRKkYaDRaWhNThCvuuIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Kzm4cv+24VImZcjdH5dgDDLE5IMfasgW
-	CHeA8nj8ktQsbzhu5wgrRm8lqXUwt9zcxySTxQo3Q90BNFzOD9m2rQq/LYBiF4Vf
-	P+cnRyiMLDLILYaws1atNsjeTqW6MhhLDFWKBbpfLmS45a1qrhv2jUrd0A59EUa9
-	z5kb+L42/EA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FE061DA69;
-	Wed,  8 May 2013 20:38:45 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C8791DA68;
-	Wed,  8 May 2013 20:38:44 +0000 (UTC)
-In-Reply-To: <201305082024.r48KOH55003964@freeze.ariadne.com> (Dale
-	R. Worley's message of "Wed, 8 May 2013 16:24:17 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 46CC9442-B81F-11E2-B8DA-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756234Ab3EHUj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 May 2013 16:39:29 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:36231 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755781Ab3EHUj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 May 2013 16:39:27 -0400
+Received: by mail-la0-f48.google.com with SMTP id eg20so2178724lab.35
+        for <git@vger.kernel.org>; Wed, 08 May 2013 13:39:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=L5wx8CfTsm6RyHR9PXKmoY7p8fE0DEbNDW6CrDoJt4g=;
+        b=hgJb79xRfdBQlW8AQgMWjfxU8QCn3OFF0LUI8l0ImC7wqLg/eiO1JAXsj1I7vDQ7Gn
+         N1KC8cTHwl6Rfa04jfFQE8Vhb/krAmoR7SvfbaUmM7hjvEc0lWOlJSDvKD0RkRehJrQM
+         4Bzia03D5SF4ZWsGaDqsH4WFAJ8t3JaXRsFTKRvmD9GP5k8QiMGQrthewQC4Yfq3lHfU
+         vSRJjnkevMY+OQ4Yqg5qP20Mw1jvwJ8oa88pN48tPJe8hyRrYoNzt2e4jeBZxflqw55E
+         /JN2JkK6NKaIwyL7yu+3PUARGgUkHZyuE0iNGSNGweZcTlRGI/6cF6+rLngOY4g8Ap1q
+         nLCw==
+X-Received: by 10.112.125.130 with SMTP id mq2mr3953294lbb.103.1368045565772;
+ Wed, 08 May 2013 13:39:25 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Wed, 8 May 2013 13:39:25 -0700 (PDT)
+In-Reply-To: <7vbo8lfi8y.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223685>
 
-worley@alum.mit.edu (Dale R. Worley) writes:
-
-> From e87227498ef3d50dc20584c24c53071cce63c555 Mon Sep 17 00:00:00 2001
-> From: Dale Worley <worley@ariadne.com>
-> Date: Tue, 7 May 2013 13:39:46 -0400
-> Subject: [PATCH] CodingGuidelines:  make it clear which files in
->  Documentation/ are the sources
-
-These five lines are present in the output of the format-patch only
-to help you fill in the MUA's mail header (instead of typing the
-subject, you can cut and paste from here, for example); after you
-are done with the MUA headers, remove them and do not leave them in
-the body of the message.
-
+On Wed, May 8, 2013 at 1:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> Signed-off-by: Dale R. Worley <worley@ariadne.com>
-
-The title looks a bit too long.  For a small and obviously correct
-patch like this, I do not think you would need anything in the log
-message, some of what you wrote below the three-dash line may
-deserve to be said here.  Perhaps:
-
-    Subject: [PATCH] CodingGuidelines: Documentation/*.txt are the sources
-
-    People not familiar with AsciiDoc may not realize they are
-    supposed to update *.txt files and not *.html/*.1 files when
-    preparing patches to the project.
-
-But it invites a question.  Why do people patching Git not to know *.txt
-are the sources in the first place?  Generated *.html files are not
-even tracked.
-
->  Documentation/CodingGuidelines |    4 +++-
->  1 files changed, 3 insertions(+), 1 deletions(-)
+>> Through the years the functionality to handle @{-N} and @{u} has moved
+>> around the code, and as a result, code that once made sense, doesn't any
+>> more.
+>>
+>> There is no need to call this function recursively with the branch of
+>> @{-N} substituted because dwim_{ref,log} already replaces it.
+>>
+>> However, there's one corner-case where @{-N} resolves to a detached
+>> HEAD, in which case we wouldn't get any ref back.
+>>
+>> So we parse the nth-prior manually, and deal with it depending on
+>> weather it's a SHA-1, or a ref.
+>> ...
 >
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index 7e4d571..b8eef7c 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -238,7 +238,9 @@ For Python scripts:
->  Writing Documentation:
->  
->   Most (if not all) of the documentation pages are written in AsciiDoc
-> - and processed into HTML output and manpages.
-> + and processed into HTML output and manpages.  This means that the *.txt
-> + files in this directory are usually the sources from which the
-> + corresponding *.html, *.1, and *.xml files are generated.
+> s/weather/whether/;
+>
+>> @@ -447,6 +448,10 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+>>       if (len && str[len-1] == '}') {
+>>               for (at = len-4; at >= 0; at--) {
+>>                       if (str[at] == '@' && str[at+1] == '{') {
+>> +                             if (at == 0 && str[2] == '-') {
+>> +                                     nth_prior = 1;
+>> +                                     continue;
+>> +                             }
+>
+> Does this have to be inside the loop?
 
-Whenever you see somebody writing "This means that" or "In other
-words", it is a good habit to ask if the existing text can be
-improved so that it does not need such a follow-up clarification.
+Yes, the whole purpose is to avoid reflog_len to be set.
 
-    Most (if not all) of the documentation pages are written in the
-    AsciiDoc format in *.txt files (e.g. Documentation/git.txt), and
-    processed into HTML and manpages (e.g. git.html and git.1 in the
-    same directory).
+>> @@ -460,19 +465,22 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+>>       if (len && ambiguous_path(str, len))
+>>               return -1;
+>>
+>> -     if (!len && reflog_len) {
+>> +     if (nth_prior) {
+>>               struct strbuf buf = STRBUF_INIT;
+>> -             int ret;
+>> -             /* try the @{-N} syntax for n-th checkout */
+>> -             ret = interpret_branch_name(str, &buf);
+>> -             if (ret > 0)
+>> -                     /* substitute this branch name and restart */
+>> -                     return get_sha1_1(buf.buf, buf.len, sha1, 0);
+>> -             else if (ret == 0)
+>> -                     return -1;
+>> +             int detached;
+>> +
+>> +             if (interpret_nth_prior_checkout(str, &buf) > 0) {
+>> +                     detached = (buf.len == 40 && !get_sha1_hex(buf.buf, sha1));
+>> +                     strbuf_release(&buf);
+>> +                     if (detached)
+>> +                             return 0;
+>> +             }
+>> +     }
+>
+> Earlier, if @{-N} resolved to a detached head, we just fed it to
+> get_sha1_1().  If it resolved to a concrete refname, we also fed it
+> to get_sha1_1().  We ended up calling ourselves again and did the
+> right thing either way.
+>
+> The new code bypasses the recursive call when we get a detached head
+> back, because we know that calling get_sha1_1() with the 40-hex will
+> eventually take us back to this codepath, and immediately return
+> when it sees get_sha1_hex() succeeds.
+>
+> What happens when str @{-N} leaves a concrete refname in buf.buf?
+> The branch name is lost with strbuf_release(), and then where do we
+> go from here?  Continuing down from here would run dwim_ref/log on
+> str which is still @{-N}, no?
+>
+> Ahh, OK, the new code will now let dwim_ref/log to process @{-N}
+> again (the log message hints this but it wasn't all that clear),
 
->  
->   Every user-visible change should be reflected in the documentation.
->   The same general rule as for code applies -- imitate the existing
+I thought it was clear we would let dwim_{ref,log} do the job:
+
+---
+There is no need to call this function recursively with the branch of
+@{-N} substituted because dwim_{ref,log} already replaces it.
+---
+
+> That is somewhat contrived, and I am not so sure if that is a good
+> reorganization.
+
+But much less contrived than before, because the code that deals with
+@{-N} is in one place, instead of sprinkled all over as many
+corner-cases, and there's no recursion.
+
+> Also, a few points this patch highlights in the code before the
+> change:
+>
+>  - If we were on a branch with 40-hex name at nth prior checkout,
+>    would we mistake it as being detached at the commit?
+>
+>  - If we were on a branch 'foo' at nth prior checkout, would our
+>    previous get_sha1_1() have made us mistake it as referring to a
+>    tag 'foo' with the same name if it exists?
+
+I don't know, but I suspect there's no change after this patch.
+
+-- 
+Felipe Contreras
