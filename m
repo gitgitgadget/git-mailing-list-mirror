@@ -1,120 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] shallow clones over http
-Date: Wed, 08 May 2013 12:12:16 -0700
-Message-ID: <7v38txffqn.fsf@alter.siamese.dyndns.org>
-References: <20130403040352.GA8284@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 08 21:12:30 2013
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: [PATCHv2] CodingGuidelines:  make it clear which files in
+ Documentation/ are the sources
+Date: Wed, 8 May 2013 16:24:17 -0400
+Message-ID: <201305082024.r48KOH55003964@freeze.ariadne.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 08 22:24:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ua9ms-00049G-Gr
-	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 21:12:26 +0200
+	id 1UaAub-000167-Gs
+	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 22:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754360Ab3EHTMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 May 2013 15:12:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33297 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753947Ab3EHTMV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 May 2013 15:12:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD29E1C4E7;
-	Wed,  8 May 2013 19:12:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GF1m3Av3LRo8RDJvdM/Bmgp4mrU=; b=I+Zw2W
-	Dd0pnmuymgWwe2lJ6nNbOD3nSM5gu5xj4TFE4i9axvyWIHmnlYTEjDBDHnHyg+WQ
-	vL03cD4ymlDZaeI363quDHejtu2co1rMiYqw7XRvLTDgUAGiqEkLTON0RZK2EMBD
-	Be6BOfzXhnghcQZk/ENq37D81BUJAGye5uapg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AaJ3Tvc4675z1n6e1tkqmjGeghcxgg9n
-	ekGklK1ZBz44sGlEdz/TwX3b5vLmAQYO7McPsP9DGv9gtJ+6BgkFCCz8Z97Mkuum
-	6TdDWxvbGyCTZKedvdPlr1rJkwy5eht4uB/RbabPyWKtAWj+mSQ9UY2iAKJ86Pk7
-	emWvAdIig0w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A3FC81C4E6;
-	Wed,  8 May 2013 19:12:18 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E0961C4E5;
-	Wed,  8 May 2013 19:12:18 +0000 (UTC)
-In-Reply-To: <20130403040352.GA8284@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 3 Apr 2013 00:03:52 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 336E7F5C-B813-11E2-8DC0-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758107Ab3EHUYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 May 2013 16:24:22 -0400
+Received: from qmta15.westchester.pa.mail.comcast.net ([76.96.59.228]:57139
+	"EHLO qmta15.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757954Ab3EHUYT (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 May 2013 16:24:19 -0400
+Received: from omta05.westchester.pa.mail.comcast.net ([76.96.62.43])
+	by qmta15.westchester.pa.mail.comcast.net with comcast
+	id ZNcX1l0020vyq2s5FYQJBa; Wed, 08 May 2013 20:24:18 +0000
+Received: from freeze.ariadne.com ([24.34.72.61])
+	by omta05.westchester.pa.mail.comcast.net with comcast
+	id ZYQJ1l00Y1KKtkw3RYQJA2; Wed, 08 May 2013 20:24:18 +0000
+Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
+	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r48KOHos003966
+	for <git@vger.kernel.org>; Wed, 8 May 2013 16:24:17 -0400
+Received: (from worley@localhost)
+	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r48KOH55003964;
+	Wed, 8 May 2013 16:24:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1368044658;
+	bh=fTgC68wLUxfrPg4cdaIDEvbzMBXBXe+JX/pUraptOUY=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=ltrOPcl/b8OwKoI+QC13HS/wCZi+bBal1NMO+LhkFkBUVaO7xl/9DrPnKWdNMMJKU
+	 E+VyNigmQA6RjIHu0HsbrAT14q1moVX568r0nqHqsyaIpz3Ou32DRBcdNv13DvjalQ
+	 qc8sSt0Opo93f94KM+EyX9ZV0OG9CUgoHqrw/OOs+62xZlpG5TTYmURWVagyJ9fa6m
+	 HKwpwpnoJntlohYMfQTX2faAyfybV7iRY33i7mHCcDv2Y+THo+Ue3r//bttGPMqvgN
+	 PULxcy1SdLB3mQun4l3aGqWhre7/ItT8eXT+zcvahsUwYCevaIIqxDXcWeDa0c1LJ5
+	 UQ98gjEjZcm3w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223683>
 
-Jeff King <peff@peff.net> writes:
+>From e87227498ef3d50dc20584c24c53071cce63c555 Mon Sep 17 00:00:00 2001
+From: Dale Worley <worley@ariadne.com>
+Date: Tue, 7 May 2013 13:39:46 -0400
+Subject: [PATCH] CodingGuidelines:  make it clear which files in
+ Documentation/ are the sources
 
-> I'm trying to track down a protocol bug that happens with shallow clones
-> over smart-http. As far as I can tell, the bug has existed in all
-> versions.
->
-> You can reproduce it using the attached repository, which is a shallow
-> clone of https://github.com/mileszs/ack.vim.git, like:
->
->   $ tar xzf repo.tar.gz
->   $ cd repo.git
->   $ git fetch --depth=10
->   fatal: git fetch-pack: expected shallow list
->
-> In that test my fetch actually hit github.com as the upstream full repo,
-> but you can also clone it down locally and demonstrate it with purely
-> local copies of git (but it's more of a pain, because you have to set up
-> a smart http server).
->
-> The last part of the conversation looks like this:
->
->   packet:   fetch-pack< 0000
->   packet:   fetch-pack< ACK f183a345a0c10caed7684d07dabae33e007c7590 common
->   packet:   fetch-pack> have f183a345a0c10caed7684d07dabae33e007c7590
->   packet:   fetch-pack< ACK 33312d4db4e91468957b1b41dd039c5d88e85fda common
->   packet:   fetch-pack< ACK 34d0b2fbc182b31d926632d170bc07d6a6fc3f9b common
->   packet:   fetch-pack< ACK 45c802e07c60686986474b6b05b2c7048330b6b5 common
->   packet:   fetch-pack< ACK e93f693fd2a9940d6421bf9e4ddd1f535994eaa5 common
->   packet:   fetch-pack< ACK 132ee41e8e2c8c545b3aed120171e1596c9211a4 common
->   packet:   fetch-pack< ACK 973deb3145a99992638b2301cfd654721cf35d68 common
->   packet:   fetch-pack< ACK e53a88a4e72d84562493313e8911ada4def787da common
->   packet:   fetch-pack< ACK 90be0bf3eee6f7a0cb9c2377a50610f4ce738da3 common
->   packet:   fetch-pack< ACK aeab88ccf41bf216fde37983bd403d9b913391e7 common
->   packet:   fetch-pack< ACK 5f480935d3ce431c393657c3000337bcbdbd5535 common
->   packet:   fetch-pack< ACK db81e01b433501b159983ea38690aeb01eea1e6b common
->   packet:   fetch-pack< ACK 06c44b8cab93e780a29ff7f7b5b1dd41dba4b2d5 common
->   packet:   fetch-pack< ACK 65f3966becdb2d931d5afbdcc6a28008d154668a common
->   packet:   fetch-pack< ACK 10e8caef9f2ed308231ce1abc326c512e86a5d4c common
->   packet:   fetch-pack< ACK 6b55dd91f2e7fc64c23eea57e85171cb958f9cd2 common
->   packet:   fetch-pack< ACK 6b55dd91f2e7fc64c23eea57e85171cb958f9cd2 ready
->   packet:   fetch-pack< NAK
->   packet:   fetch-pack< ACK 6b55dd91f2e7fc64c23eea57e85171cb958f9cd2
->   fatal: git fetch-pack: expected shallow list
->
-> So we see that upload-pack sends a bunch of detailed ACKs, followed by a
-> NAK, and then it sends another ACK.
->
-> Fetch-pack is inside find_common, reading these acks. At the beginning
-> of each stateless-rpc response, it expects to consume any
-> shallow/unshallow lines up to a flush packet (the call to
-> consume_shallow_list). And then it reads the acks in a loop. After it
-> sees the NAK, it assumes that the server is done sending the packet, and
-> loops again, expecting another set of shallow/unshallow lines. But we
-> get the next ACK instead, and die.
->
-> So who is wrong? Is upload-pack wrong to send an ACK after the NAK?
+Signed-off-by: Dale R. Worley <worley@ariadne.com>
+---
+While learning about making a documentation patch, I noticed that
+Documentation/CodingGuideles isn't as clear as it could be regarding
+how to edit the documentation.  In particular, it says "Most (if not
+all) of the documentation pages are written in AsciiDoc - and
+processed into HTML output and manpages." without really specifying
+the details for those of us who aren't familiar with AsciiDoc.  So I
+added a sentence stating explicitly which files are the sources and
+which are derived.
 
-3e63b21aced1 (upload-pack: Implement no-done capability, 2011-03-14)
-claims that the above sequence of acks and naks is what upload-pack
-wants to show.
+It's also a test for submitting a patch.  I've read SubmittingPatches
+again, more carefully, and have corrected some problem with my
+previous message.
 
-What happens when you disable no-done extension handling on the
-server end, I wonder?
+ Documentation/CodingGuidelines |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 7e4d571..b8eef7c 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -238,7 +238,9 @@ For Python scripts:
+ Writing Documentation:
+ 
+  Most (if not all) of the documentation pages are written in AsciiDoc
+- and processed into HTML output and manpages.
++ and processed into HTML output and manpages.  This means that the *.txt
++ files in this directory are usually the sources from which the
++ corresponding *.html, *.1, and *.xml files are generated.
+ 
+  Every user-visible change should be reflected in the documentation.
+  The same general rule as for code applies -- imitate the existing
+-- 
+1.7.7.6
