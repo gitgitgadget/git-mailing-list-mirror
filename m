@@ -1,103 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/11] sha1_name: improvements
-Date: Tue, 07 May 2013 22:56:07 -0700
-Message-ID: <7v1u9igglk.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 02/11] tests: at-combinations: check ref names directly
+Date: Wed, 8 May 2013 01:03:42 -0500
+Message-ID: <CAMP44s1fjB_d9enPYdGX1Ycez2PYjG0iss9-PUsb+A+E5hMvEw@mail.gmail.com>
 References: <1367963711-8722-1-git-send-email-felipe.contreras@gmail.com>
-	<CAMP44s3-vVUB4VnZP4uBMLAbviV+BMTqDcbO_TxkX+5RE6cnSg@mail.gmail.com>
+	<1367963711-8722-3-git-send-email-felipe.contreras@gmail.com>
+	<7vfvxyggmb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 08 07:56:19 2013
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 08 08:03:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UZxMO-00021c-GS
-	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 07:56:16 +0200
+	id 1UZxTn-0008SN-Pq
+	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 08:03:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751088Ab3EHF4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 May 2013 01:56:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50445 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750834Ab3EHF4K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 May 2013 01:56:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 648A614899;
-	Wed,  8 May 2013 05:56:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=VeeasEe+xKixJJaX67toSOfCeqA=; b=Zh9Jk/4LSyeAMJfZou4M
-	ygwYRpC1YlKdcd63DisIUkQizd3ImWpmUE06cMYAnTgy7+fQVGoOmaIKlTSrxTkt
-	z/FxEMPIK2RA/XxaNBbWNVm5Kv7go4ldkCw/PkOMWX+WgUPmx7Y4EIBzOQGLQjhu
-	sDZH4TmfkGoC46dc6VgvBrQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=o/Qr3vSoymhIIVmGcTDfIN5XOOyaoHXPtkzNu/WyCNv+3d
-	1mjSfr36HtwFa/7r+kzN7THWdGReOy37xBrLJD8lmDBPofnoRKr0zyYiSTx+TF0+
-	OBvi0nWaeEAz9zf4/NhKVrdppfgd3/0pq8qVbymXbG4/nADTFkR0zuakrwizw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BD1914898;
-	Wed,  8 May 2013 05:56:10 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA48814895;
-	Wed,  8 May 2013 05:56:09 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FB3BCD98-B7A3-11E2-BAB8-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751359Ab3EHGDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 May 2013 02:03:44 -0400
+Received: from mail-la0-f41.google.com ([209.85.215.41]:63883 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750881Ab3EHGDo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 May 2013 02:03:44 -0400
+Received: by mail-la0-f41.google.com with SMTP id fn20so1391801lab.0
+        for <git@vger.kernel.org>; Tue, 07 May 2013 23:03:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=Gxf5QxEe1YMNapi1GHIVZPSx8xQWXi9jvbWjQl0Y/CM=;
+        b=PjlSR/8sBQefX6ycGeDPAOGg7pZFb2pmCklAPke3uVcPW0fzC79kVWu/vZrjoIRnS4
+         hvIDOE/DRBV7da+dBq11bz9EHk6iSeWCoYHzYCcFb93W2abE7FXBEUT9zH2TmYL0KpIe
+         nGxMS/1cVZG09THT9kvN23Fp3kGmZjnSfpjY3BKWDN2vtCtkfmbHSh8M8wro9agcqC5g
+         XJOKSofpOxAlquV3KzMOTjVRWrpmj2rEWfsi7ty/Cd1saTUVTXBZwQ6CgxtFFJ+Y3WSY
+         +5uIAYdEN2zvu3Ehmq/wxA2s4QUP+odiuBgMzOu5Ze9ecJHP815hObvnGv4ECwJjJCJp
+         cRIQ==
+X-Received: by 10.112.1.166 with SMTP id 6mr2389981lbn.135.1367993022361; Tue,
+ 07 May 2013 23:03:42 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Tue, 7 May 2013 23:03:42 -0700 (PDT)
+In-Reply-To: <7vfvxyggmb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223643>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> When merging this series to the @ shortcut one, there will be
-> conflicts, this is how I propose fixing them:
+On Wed, May 8, 2013 at 12:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
->                 return len; /* syntax Ok, not enough switches */
-> -       if (0 < len && len == namelen)
-> +       if (len > 0 && len == namelen)
->                 return len; /* consumed all */
-> -       else if (0 < len)
-> ...
-> ++      else if (len > 0)
->  +              return reinterpret(name, namelen, len, buf);
+>> Some committishes might point to the same commit, but through a
+>> different ref, that's why it's better to check directly for the ref,
+>> rather than the commit message.
+>>
+>> We can do that by calling rev-parse --symbolic-full-name, and to
+>> differentiate the old from the new behavior we add an extra argument to
+>> the check() helper.
+>>
+>> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
 >
-> - check "@" new-two
-> - check "@@{u}" upstream-two
-> ...
-> ++check "@" ref refs/heads/new-branch
-> ++check "@@{u}" ref refs/heads/upstream-branch
+> It is signed-off by Ram first but who is the author?  You, or him?
 
-The resolution for the tests wrapper that acquired an extra
-parameter matches what I did locally.  Thanks for a merge sanity
-check.
+I am, but he sent the patch first.
 
-I didn't see any conflicts on the sha1_name.c side, but I applied
-the Yoda thing slightly differently to result in a slightly more
-streamlined codeflow:
+>>  t/t1508-at-combinations.sh | 27 ++++++++++++++++-----------
+>>  1 file changed, 16 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
+>> index 46e3f16..bd2d2fe 100755
+>> --- a/t/t1508-at-combinations.sh
+>> +++ b/t/t1508-at-combinations.sh
+>> @@ -4,9 +4,14 @@ test_description='test various @{X} syntax combinations together'
+>>  . ./test-lib.sh
+>>
+>>  check() {
+>> -test_expect_${3:-success} "$1 = $2" "
+>> -     echo '$2' >expect &&
+>> -     git log -1 --format=%s '$1' >actual &&
+>> +test_expect_${4:-success} "$1 = $3" "
+>> +     if [ '$2' == 'commit' ]; then
+>> +             echo '$3' >expect &&
+>> +             git log -1 --format=%s '$1' >actual
+>> +     else
+>> +             echo '$3' >expect &&
+>> +             git rev-parse --symbolic-full-name '$1' >actual
+>> +     fi &&
+>
+> Move the echo outside of if, and match the overall style.
 
-	if (!len) {
-		return len;
-	} else if (len > 0) {
-		if (len == namelen)
-                	return len;
-		else
-			return reinterpret(...);
-	}
+Right.
 
-which I think shows the choices better.
-
-Although I haven't looked at the largest one (10/11) carefully,
-everything else looked quite straightforward and readable.
-
-I am not very happy about how $<n> parameters are quoted in t1508,
-but that suboptimal quoting were there before this series, and I'd
-consider it outside of the scope for now.
-
-Will queue.  Thanks.
+-- 
+Felipe Contreras
