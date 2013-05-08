@@ -1,144 +1,77 @@
-From: David Goldfarb <deg@degel.com>
-Subject: RE: trouble on windows network share
-Date: Wed, 8 May 2013 09:37:57 +0000
-Message-ID: <8B6563E531152E4190313499F193F94214AB8CED@mbx500-u1-lo-3.exch500.msoutlookonline.net>
-References: <871B6C10EBEFE342A772D1159D1320853F63D205@umechphj.easf.csd.disa.mil>
-	<1367529968647-7584800.post@n2.nabble.com>
-	<87ppx8o1lj.fsf@linux-k42r.v.cablecom.net>
-	<8B6563E531152E4190313499F193F94214A9C966@mbx500-u1-lo-3.exch500.msoutlookonline.net>
- <87ip2wla12.fsf@linux-k42r.v.cablecom.net>
- <871B6C10EBEFE342A772D1159D1320853F65E5B6@umechphj.easf.csd.disa.mil>
+From: Robin Messer <robin.messer@altran.com>
+Subject: Minor correction to Git book
+Date: Wed, 8 May 2013 11:24:56 +0100
+Message-ID: <71E08C07CB3C444098033ABD69925159145BB1DDE1@BATH-EXCMS.praxis.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>,
-	Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed May 08 11:38:08 2013
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 08 12:35:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ua0p5-0000lI-Ap
-	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 11:38:07 +0200
+	id 1Ua1iW-0001ee-P6
+	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 12:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752601Ab3EHJiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 May 2013 05:38:01 -0400
-Received: from hub500-lo-2.exch500.serverdata.net ([205.217.20.184]:41101 "EHLO
-	hub500-lo-2.exch500.serverdata.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751439Ab3EHJh7 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 May 2013 05:37:59 -0400
-Received: from MBX500-U1-LO-3.exch500.msoutlookonline.net ([10.32.4.55]) by
- HUB500-LO-2.exch500.msoutlookonline.net ([10.32.4.33]) with mapi id
- 14.03.0123.003; Wed, 8 May 2013 02:37:49 -0700
-Thread-Topic: trouble on windows network share
-Thread-Index: AQHOSj3+DJxfER0S7U2/adU3l4duX5j4lwwAgAJtFzA=
-In-Reply-To: <871B6C10EBEFE342A772D1159D1320853F65E5B6@umechphj.easf.csd.disa.mil>
-Accept-Language: en-US
+	id S1753771Ab3EHKfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 May 2013 06:35:19 -0400
+Received: from mail2.altran-praxis.com ([80.194.246.106]:54733 "EHLO
+	mail2.altran-praxis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753327Ab3EHKfR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 May 2013 06:35:17 -0400
+X-Greylist: delayed 611 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 May 2013 06:35:17 EDT
+X-IronPort-AV: E=Sophos;i="4.87,632,1363132800"; 
+   d="scan'208";a="61568"
+X-DISCLAIMER: Added
+Received: from unknown (HELO excas01.praxis.local) ([10.1.1.14])
+  by mail2.altran-praxis.com with ESMTP; 08 May 2013 11:25:02 +0100
+Received: from Bath-EXCMS.praxis.local
+ ([fe80:0000:0000:0000:18cc:cc9f:44.171.158.91]) by excas01.praxis.local
+ ([10.1.1.14]) with mapi; Wed, 8 May 2013 11:25:01 +0100
+Thread-Topic: Minor correction to Git book
+Thread-Index: Ac5L1kmD3gWlQ/9TTmyyNiVMggLZfg==
+Accept-Language: en-US, en-GB
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [87.69.114.75]
+x-cr-hashedpuzzle: BKiE BmCR DBMc DjDb Dw8n EhSx FC8O FQ8/ FqMd GVxE GsK9
+ HKf7 Hh6s H0A+ IEPh
+ Kxjr;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{503B7540-1B06-410B-BE17-3F9C1C6DC808};cgBvAGIAaQBuAC4AbQBlAHMAcwBlAHIAQABhAGwAdAByAGEAbgAuAGMAbwBtAA==;Wed,
+ 08 May 2013 10:24:57
+ GMT;TQBpAG4AbwByACAAYwBvAHIAcgBlAGMAdABpAG8AbgAgAHQAbwAgAEcAaQB0ACAAYgBvAG8AawA=
+x-cr-puzzleid: {503B7540-1B06-410B-BE17-3F9C1C6DC808}
+acceptlanguage: en-US, en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223652>
 
-Here's one more data point. It suggests that the problem is due to either Cygwin or possibly Git 1.7.9.
+I'm just learning Git so I don't yet know how to submit this
+as a patch, but I'm reading the Git Book to get myself started
+and I think there is a mistake on the page at:
 
+http://git-scm.com/book/en/Git-Basics-Recording-Changes-to-the-Repository
 
-My Ubuntu box is actually a VM, hosted by my windows box in VMWare Player.
+It says: "For another example, if you stage the benchmarks.rb file and
+then edit it, you can use git diff to see the changes in the file that
+are staged and the changes that are unstaged:"
 
-So, I tried using the VMWare shared folder feature, to mount the Windows U: drive (which is physically on the WD NAS box) as /mnt/hgfs/Host-U on Ubuntu.
-Then, I tried linux on the Ubuntu box, fully expecting it to fail as it trampolined through Windows connection to the NAS box).
+I believe this should say "git status" rather than "git diff".
 
-But, it worked fine.
+--
+Robin
 
-So, at this point, it became likely that the problem is tied to the different version of Git that I have on the two machines:
-- On Ubuntu, git version 1.7.10.4
-- On Windows, Cygwin's git version 1.7.9 (which appears to be the latest version for Cygwin).
+This email is confidential and intended solely for the use of the individual to whom it is addressed. If you are not the intended recipient, be advised that you have received this email in error and that any use, disclosure, copying or distribution or any action taken or omitted to be taken in reliance on it is strictly prohibited. If you have received this email in error please contact the sender. Any views or opinions presented in this email are solely those of the author and do not necessarily represent those of Altran.
 
-So, I installed Git on Windows from http://git-scm.com/download/win. Git version 1.8.1.msysgit.1
+Although this email and any attachments are believed to be free of any virus or other defect, no responsibility is accepted by Altran or any of its associated companies for any loss or damage arising in any way from the receipt or use thereof.
 
-Triumph: Git on windows works with this git but, on the same file and repo, fails with Cygwin git.
+Altran UK Ltd:
 
-So, either something relevant changed in Git 1.7.10, or (more likely) this is a Cygwin issue.
+Company Number: 3302507, registered in England and Wales
 
+Registered Address: 22 St. Lawrence Street, Bath, BA1 1AN
 
-Jason, are you also using Cygwin git?  Are you also using a WD NAS?
-
-David
-
------Original Message-----
-From: Pyeron, Jason J CTR (US) [mailto:jason.j.pyeron.ctr@mail.mil] 
-Sent: Monday, May 06, 2013 4:11 PM
-To: Thomas Rast; David Goldfarb
-Cc: git@vger.kernel.org
-Subject: RE: trouble on windows network share
-
-> -----Original Message-----
-> From: Thomas Rast
-> Sent: Monday, May 06, 2013 5:42 AM
-> 
-> David Goldfarb <deg@degel.com> writes:
-> 
-> > Git works correctly under Linux (Ubuntu 12.04; git 1.7.9.5).  I've
-> attached the strace outputs. (Note: for reasons that are probably
-> irrelevant, I needed to run the commands sudo'd. Shout back if this is
-> an issue).
-> >
-> > Under Windows 7, Cygwin git 1.7.9, commit fails:
-> >   U:\foo>git commit -m "added foo2"
-> >   error: unable to find 0b89efdeef245ed6a0a7eacc5c578629a141f856
-> >   fatal: 0b89efdeef245ed6a0a7eacc5c578629a141f856 is not a valid
-> object
-> >
-> > For what it's worth, note that the file does exist.
-> >   U:\foo>ls -l .git/objects/0b
-> >   total 1024
-> >   -rwxrw-r-- 1 ???????? ???????? 74 May  5 01:15
-> 89efdeef245ed6a0a7eacc5c578629a141f856
-> >
-> > (I'm not sure why the permissions are trashed. Seems to be a Cygwin
-> thing, or maybe my Cygwin config. The "??????" also  appears on local
-> files, and I believe also with files on the old Buffalo drive, so I
-> don't think it is relevant to the problem).  Just in case, here's the
-> same dir, as seen from the Ubuntu VM:
-> >
-> >   deg@ubuntu:/mnt/users/foo$ ls -l .git/objects/0b
-> >   total 64
-> >   -rwxr-xr-x 0 root root 74 May  5 01:15
-> 89efdeef245ed6a0a7eacc5c578629a141f856
-> >
-> > Again, note that there is some user permissions lossage here. I don't
-> know enough about Linux mount or CIFS, and apparently did the mount in
-> a way that everything seems to appear to be stuck owned by root. (same
-> problem I hinted at above). Hope this is not relevant to the problem.
-> >
-> > Here's how the same directory looks, when I'm ssh'd into the NAS box
-> itself:
-> >
-> >    CentralPark:/shares/Users/foo# ls -l .git/objects/0b
-> >   total 64
-> >   -rwxrw-r-- 1 deg share 74 May  5 01:15
-> 89efdeef245ed6a0a7eacc5c578629a141f856
-> >
-> > In any event, the symptoms don't seem to be a permissions problem, so
-> all this extra info is probably just a red herring, I hope.
-> 
-> Hrm.  What about what Jeff already asked of the OP (and AFAICS never
-> got
-> a reply)?
-
-If referring to me, then yes but it was too big for the list.
-
-> 
-> } If it's a race condition between the write and the subsequent read in
-> } the same process, then it would be solved by looking at the object
-> } later. Does "git cat-file -p
-> 6838761d549cf76033d2e9faf5954e62839eb25d"
-> } work, or is the object forever inaccessible?
-> 
-> In your case: git cat-file -p 0b89efdeef245ed6a0a7eacc5c578629a141f856
+VAT Registered in Great Britain: 682635707
