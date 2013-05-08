@@ -1,153 +1,144 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 10/11] sha1_name: reorganize get_sha1_basic()
-Date: Wed, 8 May 2013 15:39:25 -0500
-Message-ID: <CAMP44s38eJP6WRQTQMDRqo-AXb7-YE1ZS-tJ7NK_QRwgHB3Obw@mail.gmail.com>
-References: <1367963711-8722-1-git-send-email-felipe.contreras@gmail.com>
-	<1367963711-8722-11-git-send-email-felipe.contreras@gmail.com>
-	<7vbo8lfi8y.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] sha1_name.c: signal if @{-N} was a true branch nameor a detached head
+Date: Wed, 08 May 2013 14:12:29 -0700
+Message-ID: <7vk3n9dvlu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 08 22:39:32 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 08 23:12:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaB99-00022b-Hc
-	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 22:39:31 +0200
+	id 1UaBfK-0004fQ-Bg
+	for gcvg-git-2@plane.gmane.org; Wed, 08 May 2013 23:12:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756234Ab3EHUj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 May 2013 16:39:29 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:36231 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755781Ab3EHUj1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 May 2013 16:39:27 -0400
-Received: by mail-la0-f48.google.com with SMTP id eg20so2178724lab.35
-        for <git@vger.kernel.org>; Wed, 08 May 2013 13:39:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=L5wx8CfTsm6RyHR9PXKmoY7p8fE0DEbNDW6CrDoJt4g=;
-        b=hgJb79xRfdBQlW8AQgMWjfxU8QCn3OFF0LUI8l0ImC7wqLg/eiO1JAXsj1I7vDQ7Gn
-         N1KC8cTHwl6Rfa04jfFQE8Vhb/krAmoR7SvfbaUmM7hjvEc0lWOlJSDvKD0RkRehJrQM
-         4Bzia03D5SF4ZWsGaDqsH4WFAJ8t3JaXRsFTKRvmD9GP5k8QiMGQrthewQC4Yfq3lHfU
-         vSRJjnkevMY+OQ4Yqg5qP20Mw1jvwJ8oa88pN48tPJe8hyRrYoNzt2e4jeBZxflqw55E
-         /JN2JkK6NKaIwyL7yu+3PUARGgUkHZyuE0iNGSNGweZcTlRGI/6cF6+rLngOY4g8Ap1q
-         nLCw==
-X-Received: by 10.112.125.130 with SMTP id mq2mr3953294lbb.103.1368045565772;
- Wed, 08 May 2013 13:39:25 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Wed, 8 May 2013 13:39:25 -0700 (PDT)
-In-Reply-To: <7vbo8lfi8y.fsf@alter.siamese.dyndns.org>
+	id S1751491Ab3EHVMc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 May 2013 17:12:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41646 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751195Ab3EHVMc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 May 2013 17:12:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79B6B1C23E;
+	Wed,  8 May 2013 21:12:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=m
+	AO+awkhe+9u2gYBLaCKe9eDKVs=; b=iGm3lTPXJQBeYi+eSkZMo7fZxleXgTGSP
+	RINngS1oRpaeHiCpQREZEz8LGJV1tRY/wgfDkJfoLWUuH2fjJHoaywHFf1CG2+kH
+	RTG16GV/BF7gr7gdfIcJjF8+diLkeOMnlk49gj+RotZnXc2e7Je66G2PzdUz7kCe
+	iJLzpfoWCo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=XEcNqyyhbG+o/8Tvb/crXKT3jNZL8Z9M93gL1d5KEUMsJdPfbpMkM8gT
+	hccd/AbS3yRofE6pLfZHnQue4UglbfNaOLmjckdk2MPImBd8epY11XYRGbna7LwN
+	LL4nUm9qCA4euxbkHXlwAxBlh4KdXZvys5udsMLM2Du+jvyNcEg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6EF5F1C23D;
+	Wed,  8 May 2013 21:12:31 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B09431C239;
+	Wed,  8 May 2013 21:12:30 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FE7A242A-B823-11E2-B63F-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223686>
 
-On Wed, May 8, 2013 at 1:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> Through the years the functionality to handle @{-N} and @{u} has moved
->> around the code, and as a result, code that once made sense, doesn't any
->> more.
->>
->> There is no need to call this function recursively with the branch of
->> @{-N} substituted because dwim_{ref,log} already replaces it.
->>
->> However, there's one corner-case where @{-N} resolves to a detached
->> HEAD, in which case we wouldn't get any ref back.
->>
->> So we parse the nth-prior manually, and deal with it depending on
->> weather it's a SHA-1, or a ref.
->> ...
->
-> s/weather/whether/;
->
->> @@ -447,6 +448,10 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->>       if (len && str[len-1] == '}') {
->>               for (at = len-4; at >= 0; at--) {
->>                       if (str[at] == '@' && str[at+1] == '{') {
->> +                             if (at == 0 && str[2] == '-') {
->> +                                     nth_prior = 1;
->> +                                     continue;
->> +                             }
->
-> Does this have to be inside the loop?
+The original API read "checkout: moving from (.*) to ..." from the
+reflog of the HEAD, and returned the substring between "from" and
+"to", but there was no way, if the substring was a 40-hex string, to
+tell if we were on a detached HEAD at that commit object, or on a
+branch whose name happened to be the 40-hex string.
 
-Yes, the whole purpose is to avoid reflog_len to be set.
+At this point, we cannot afford to change the format recorded in the
+reflog, so introduce a heuristics to see if the 40-hex matches the
+object name of the commit we are switching out of.  This will
+unfortunately mishandle this case:
 
->> @@ -460,19 +465,22 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->>       if (len && ambiguous_path(str, len))
->>               return -1;
->>
->> -     if (!len && reflog_len) {
->> +     if (nth_prior) {
->>               struct strbuf buf = STRBUF_INIT;
->> -             int ret;
->> -             /* try the @{-N} syntax for n-th checkout */
->> -             ret = interpret_branch_name(str, &buf);
->> -             if (ret > 0)
->> -                     /* substitute this branch name and restart */
->> -                     return get_sha1_1(buf.buf, buf.len, sha1, 0);
->> -             else if (ret == 0)
->> -                     return -1;
->> +             int detached;
->> +
->> +             if (interpret_nth_prior_checkout(str, &buf) > 0) {
->> +                     detached = (buf.len == 40 && !get_sha1_hex(buf.buf, sha1));
->> +                     strbuf_release(&buf);
->> +                     if (detached)
->> +                             return 0;
->> +             }
->> +     }
->
-> Earlier, if @{-N} resolved to a detached head, we just fed it to
-> get_sha1_1().  If it resolved to a concrete refname, we also fed it
-> to get_sha1_1().  We ended up calling ourselves again and did the
-> right thing either way.
->
-> The new code bypasses the recursive call when we get a detached head
-> back, because we know that calling get_sha1_1() with the 40-hex will
-> eventually take us back to this codepath, and immediately return
-> when it sees get_sha1_hex() succeeds.
->
-> What happens when str @{-N} leaves a concrete refname in buf.buf?
-> The branch name is lost with strbuf_release(), and then where do we
-> go from here?  Continuing down from here would run dwim_ref/log on
-> str which is still @{-N}, no?
->
-> Ahh, OK, the new code will now let dwim_ref/log to process @{-N}
-> again (the log message hints this but it wasn't all that clear),
+	HEX=$(git rev-parse master)
+	git checkout -b $HEX master
+	git checkout master
 
-I thought it was clear we would let dwim_{ref,log} do the job:
+where we were indeed on a non-detached $HEX branch (i.e. HEAD was
+pointing at refs/heads/$HEX, not storing $HEX), of course, but
+otherwise should be fairly reliable.
 
----
-There is no need to call this function recursively with the branch of
-@{-N} substituted because dwim_{ref,log} already replaces it.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
-> That is somewhat contrived, and I am not so sure if that is a good
-> reorganization.
+ * This is a preparatory step for the beginning of a much larger
+   series.  Peff is Cc'ed because one of the most tricky issue
+   involves what d46a8301930a (fix parsing of @{-1}@{u} combination,
+   2010-01-28) did.
 
-But much less contrived than before, because the code that deals with
-@{-N} is in one place, instead of sprinkled all over as many
-corner-cases, and there's no recursion.
+ sha1_name.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-> Also, a few points this patch highlights in the code before the
-> change:
->
->  - If we were on a branch with 40-hex name at nth prior checkout,
->    would we mistake it as being detached at the commit?
->
->  - If we were on a branch 'foo' at nth prior checkout, would our
->    previous get_sha1_1() have made us mistake it as referring to a
->    tag 'foo' with the same name if it exists?
-
-I don't know, but I suspect there's no change after this patch.
-
+diff --git a/sha1_name.c b/sha1_name.c
+index 3820f28..1473bb6 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -862,6 +862,7 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
+ struct grab_nth_branch_switch_cbdata {
+ 	int remaining;
+ 	struct strbuf buf;
++	int detached;
+ };
+ 
+ static int grab_nth_branch_switch(unsigned char *osha1, unsigned char *nsha1,
+@@ -880,9 +881,14 @@ static int grab_nth_branch_switch(unsigned char *osha1, unsigned char *nsha1,
+ 	if (!match || !target)
+ 		return 0;
+ 	if (--(cb->remaining) == 0) {
++		unsigned char sha1[20];
++
+ 		len = target - match;
+ 		strbuf_reset(&cb->buf);
+ 		strbuf_add(&cb->buf, match, len);
++		cb->detached = (len == 40 &&
++				!get_sha1_hex(match, sha1) &&
++				!hashcmp(osha1, sha1));
+ 		return 1; /* we are done */
+ 	}
+ 	return 0;
+@@ -891,8 +897,12 @@ static int grab_nth_branch_switch(unsigned char *osha1, unsigned char *nsha1,
+ /*
+  * Parse @{-N} syntax, return the number of characters parsed
+  * if successful; otherwise signal an error with negative value.
++ * The string in buf.buf is either a branch name (needs to be
++ * prefixed with "refs/heads/" if the caller wants to make it
++ * a fully spelled refname) or 40-hex object name of the detached
++ * HEAD, and *detached is set to true for the latter.
+  */
+-static int interpret_nth_prior_checkout(const char *name, struct strbuf *buf)
++static int interpret_nth_prior_checkout(const char *name, struct strbuf *buf, int *detached)
+ {
+ 	long nth;
+ 	int retval;
+@@ -917,6 +927,8 @@ static int interpret_nth_prior_checkout(const char *name, struct strbuf *buf)
+ 	if (0 < for_each_reflog_ent_reverse("HEAD", grab_nth_branch_switch, &cb)) {
+ 		strbuf_reset(buf);
+ 		strbuf_add(buf, cb.buf.buf, cb.buf.len);
++		if (detached)
++			*detached = cb.detached;
+ 		retval = brace - name + 1;
+ 	}
+ 
+@@ -992,7 +1004,7 @@ int interpret_branch_name(const char *name, struct strbuf *buf)
+ 	char *cp;
+ 	struct branch *upstream;
+ 	int namelen = strlen(name);
+-	int len = interpret_nth_prior_checkout(name, buf);
++	int len = interpret_nth_prior_checkout(name, buf, NULL);
+ 	int tmp_len;
+ 
+ 	if (!len)
 -- 
-Felipe Contreras
+1.8.3-rc1-182-gc61d106
