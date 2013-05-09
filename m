@@ -1,80 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/3] Initialize variables with values
-Date: Thu, 9 May 2013 06:21:15 -0700
-Message-ID: <20130509132115.GA3375@elie>
-References: <518AF79A.5000408@cs-ware.de>
- <518AF843.6040501@cs-ware.de>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 3/2] t5004: resurrect original empty tar archive test
+Date: Thu, 09 May 2013 15:36:10 +0200
+Message-ID: <518BA64A.5020302@lsrfire.ath.cx>
+References: <518BA058.6050300@lsrfire.ath.cx> <518BA10B.2080003@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Sven Strickroth <sven@cs-ware.de>
-X-From: git-owner@vger.kernel.org Thu May 09 15:21:33 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	BJ Hargrave <bj@bjhargrave.com>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 09 15:36:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaQmq-0004HU-TL
-	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 15:21:33 +0200
+	id 1UaR19-0005ED-2Q
+	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 15:36:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278Ab3EINVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 May 2013 09:21:25 -0400
-Received: from mail-bk0-f51.google.com ([209.85.214.51]:45404 "EHLO
-	mail-bk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751211Ab3EINVZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 May 2013 09:21:25 -0400
-Received: by mail-bk0-f51.google.com with SMTP id ji2so1478586bkc.10
-        for <git@vger.kernel.org>; Thu, 09 May 2013 06:21:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=U5QO2AQEtI0g1W/OhzAhtQcs2FPWRv5EecaDm5ciHnY=;
-        b=Th2A+Tu2i7GQcYlpc45BeXK2GPe9juV56F3DqRzO/LuLuTfbzERzRMXqjFaTvsFwJW
-         tthDAIYyF0CGnsLlB15hI2l7ylHSt3J1Y2HpGwp5EFfCWnNFjENvaapu4Rzxcvlhshu6
-         htShNhr5eF2rzYqHhO4HbRZ5ujIe78mRLuCjAzyjpCt2VOgNIZ8bntkdkqsP9nsrxdz/
-         aXxmHJz21VNK70X7iLtDLqaaKamZUpyzO8vLdWx3tFnzGmgraWDHibWoNjxBM/4wsw1O
-         Rs3ZYZznjOiZfFZALEeqqQWc8SyS8+PNtRSnMT7tvkEKtrJggQeCwCyx7bncB1mRSXnP
-         Zeow==
-X-Received: by 10.205.24.201 with SMTP id rf9mr3111094bkb.73.1368105683713;
-        Thu, 09 May 2013 06:21:23 -0700 (PDT)
-Received: from elie ([213.221.117.228])
-        by mx.google.com with ESMTPSA id f3sm762436bkj.21.2013.05.09.06.21.21
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 09 May 2013 06:21:21 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <518AF843.6040501@cs-ware.de>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1753546Ab3EINgP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 May 2013 09:36:15 -0400
+Received: from india601.server4you.de ([85.25.151.105]:51334 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753136Ab3EINgO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 May 2013 09:36:14 -0400
+Received: from [192.168.2.105] (p4FFD9FB6.dip0.t-ipconnect.de [79.253.159.182])
+	by india601.server4you.de (Postfix) with ESMTPSA id B73D84B9;
+	Thu,  9 May 2013 15:36:12 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <518BA10B.2080003@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223732>
 
-Hi,
+Add a test to verify the emptiness of an archive by extracting its
+contents.  Don't run this test if the version of tar doesn't support
+archives containing only a comment header, though.
 
-Sven Strickroth wrote:
+The existing check 'tar archive of empty tree is empty' used to work
+like that (minus the tar capability check) but was changed to depend
+on the exact representation of empty tar files created by git archive
+instead of on the behaviour of tar in order to avoid issues with
+different tar versions.
 
-> With MSVC initializing a variable with "int a=a" causes a warning about
-> using an uninitialized value.
-[...]
-> --- a/builtin/rev-list.c
-> +++ b/builtin/rev-list.c
-> @@ -338,7 +338,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
->  		mark_edges_uninteresting(revs.commits, &revs, show_edge);
->  
->  	if (bisect_list) {
-> -		int reaches = reaches, all = all;
-> +		int reaches = 0, all = 0;
+The different approaches test different things: The existing one is
+for empty trees, for which we know the exact expected output and thus
+we can simply check it without extracting; the new one is for commits
+with empty trees, whose archives include stamps and so the more
+"natural" check by extraction is a better fit because it focuses on
+the interesting aspect, namely the absence of any archive entries.
 
-A correct way to spell this is
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+Not urgent.  By the way: A fix for the bsdtar issue worked around by
+our 24676f02 (t5004: fix issue with empty archive test and bsdtar) has
+been committed to the libarchive repo, but it's not in any released
+version, yet.
 
-		int reaches, all;
+ t/t5004-archive-corner-cases.sh   |  14 ++++++++++++++
+ t/t5004/empty-with-pax-header.tar | Bin 0 -> 10240 bytes
+ 2 files changed, 14 insertions(+)
+ create mode 100644 t/t5004/empty-with-pax-header.tar
 
-which, as a bonus, lets the compiler warn if they are used
-uninitialized.  Does that provoke warnings?
+diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
+index 8d1bbd3..f25f06b 100755
+--- a/t/t5004-archive-corner-cases.sh
++++ b/t/t5004-archive-corner-cases.sh
+@@ -27,6 +27,20 @@ check_dir() {
+ 	test_cmp expect actual
+ }
+ 
++# bsdtar/libarchive versions before 3.1.3 consider a tar file with a
++# global pax header that is not followed by a file record as corrupt.
++if "$TAR" tf "$TEST_DIRECTORY"/t5004/empty-with-pax-header.tar >/dev/null 2>&1
++then
++	test_set_prereq HEADER_ONLY_TAR_OK
++fi
++
++test_expect_success HEADER_ONLY_TAR_OK 'tar archive of commit with empty tree' '
++	git archive --format=tar HEAD >empty-with-pax-header.tar &&
++	make_dir extract &&
++	"$TAR" xf empty-with-pax-header.tar -C extract &&
++	check_dir extract
++'
++
+ test_expect_success 'tar archive of empty tree is empty' '
+ 	git archive --format=tar HEAD: >empty.tar &&
+ 	perl -e "print \"\\0\" x 10240" >10knuls.tar &&
+diff --git a/t/t5004/empty-with-pax-header.tar b/t/t5004/empty-with-pax-header.tar
+new file mode 100644
+index 0000000000000000000000000000000000000000..da9e39e6cf49841254a2d75aabb9ef575f9fd805
+GIT binary patch
+literal 10240
+zcmeIuF%H5Y6vlC8PvH>&fx_TfnwHW!v|?&aJib+jCU$V?VB-HRkMITZ-tSV~%dXFL
+z)t9GKHE9&vmz>KvC!T$-&pwAnD6NckQtDT(j47<>wjX8v<Lx?C<2=%s^R!Nvn{WAh
+zw`IBI<xiii-p4!)={y}{+a@P%2!(3ZA%xgSuTAZ&@lBAmw}p36CcpdXg%}P21Q0*~
+t0R#|0009ILKmY**5I_I{1Q0*~0R#|0009ILKmY**5I_I{1Q7TWfd`KEC+GkG
 
-Thanks,
-Jonathan
+literal 0
+HcmV?d00001
+
+-- 
+1.8.2.1
