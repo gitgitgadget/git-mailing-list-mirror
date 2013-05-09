@@ -1,126 +1,77 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 1/5] msvc: Fix compilation errors caused by poll.h emulation
-Date: Thu, 09 May 2013 21:35:28 +0100
-Message-ID: <518C0890.9050508@ramsay1.demon.co.uk>
-References: <510AB7D3.7010407@ramsay1.demon.co.uk> <518AFEFC.8010904@cs-ware.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/5] allow more sources for config values
+Date: Thu, 09 May 2013 14:00:29 -0700
+Message-ID: <7vk3n798cy.fsf@alter.siamese.dyndns.org>
+References: <20130509161636.GB3526@book-mint>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Sven Strickroth <sven@cs-ware.de>
-X-From: git-owner@vger.kernel.org Thu May 09 22:40:52 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
+	Jeff King <peff@peff.net>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu May 09 23:00:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaXdz-0007R4-9n
-	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 22:40:51 +0200
+	id 1UaXx7-000541-SC
+	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 23:00:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662Ab3EIUkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 May 2013 16:40:47 -0400
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:33999 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752412Ab3EIUkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 May 2013 16:40:46 -0400
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id B827F4005FB;
-	Thu,  9 May 2013 21:40:44 +0100 (BST)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 6DFD64005F9;
-	Thu,  9 May 2013 21:40:43 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
-	Thu,  9 May 2013 21:40:41 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <518AFEFC.8010904@cs-ware.de>
-X-MDF-HostID: 19
+	id S1752970Ab3EIVAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 May 2013 17:00:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32928 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752590Ab3EIVAc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 May 2013 17:00:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 192A71D999;
+	Thu,  9 May 2013 21:00:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DrD7jdccHZ4f/1capcq+lMYYKVs=; b=Y6M+5a
+	zZsioUXbFrMwGtU9y1KWFNz7yRmVPu8He3knETld76qOG1tmEJLFNNSFZP6xJjLr
+	VcBlP5M1EuL1ES8EhH4TaNgyTB+n1RLdj7D6ZwYZPlw7UHfXP8n5UcaXn/xPGSWZ
+	0tRQFGsI3BbQJFJWrnl7uvC6TXkWi4dMq67p4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jhipeP/JnsWGK+Mb4Ls8pOhFQ9bVc07u
+	vbXI8fcvGfEcHJjq9csxvfOVlVZ+IDto7z4mcFlUjejzfER4vkO2pXetMtrGeW7W
+	pQLeUqjmUlBOUTBsfqJYd9V7w25FprNLsEoTfWVMzFr5CaI+hZjPVmgXr8q+Eu39
+	E3ifmJkGNZA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 076761D998;
+	Thu,  9 May 2013 21:00:32 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7DA021D997;
+	Thu,  9 May 2013 21:00:31 +0000 (UTC)
+In-Reply-To: <20130509161636.GB3526@book-mint> (Heiko Voigt's message of "Thu,
+	9 May 2013 18:16:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7C354170-B8EB-11E2-A78C-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223781>
 
-Sven Strickroth wrote:
-> Am 31.01.2013 19:28 schrieb Ramsay Jones:
->> Commit 0f77dea9 ("mingw: move poll out of sys-folder", 24-10-2011), along
->> with other commits in the 'ef/mingw-upload-archive' branch (see commit
->> 7406aa20), effectively reintroduced the same problem addressed by commit
->> 56fb3ddc ("msvc: Fix compilation errors in compat/win32/sys/poll.c",
->> 04-12-2010).
->>
->> In order to fix the compilation errors, we use the same solution adopted
->> in that earlier commit. In particular, we set _WIN32_WINNT to 0x0502
->> (which would target Windows Server 2003) prior to including the winsock2.h
->> header file.
-> 
-> This change causes problems compiling with MSVC2012 for me. If I don't
-> define NO_SYS_POLL_H git-compat-util.h now tries to include <sys/poll.h>
-> which does not exist for MSVC and if I define NO_SYS_POLL_H
-> git-compat-util.h now tries to include <poll.h> which also doesn't exist
-> for MSVC.
-> 
-> Including compat/poll into the includes path causes redefinition errors.
-> 
-> How have you tested this?
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-I used the Makefile, with the Visual C++ 2008 command line compiler on
-Windows XP (SP3), to build a vanilla git on MinGW.
-Viz:
+> I fixed all the issues I know of so this should be ready for master.
 
-    ramsay (pu) ms $ git checkout master
-    Switched to branch 'master'
-    ramsay (master) ms $ git rev-parse master
-    423ecb0bb66e9d60b6667aebc2844e82205369a1
-    ramsay (master) ms $ make clean >/dev/null 2>&1
-    ramsay (master) ms $ make >ms-out1 2>&1
-    ramsay (master) ms $ grep error ms-out1
-    ramsay (master) ms $ ./git version
-    git version 1.8.3.rc1.25.g423ecb0.MSVC
-    ramsay (master) ms $
+Thanks for working on thsi, but that is 'master after 1.8.3' at this
+point in the release cycle.
 
-Also
+I am declaring patch bankruptcy and will not be picking up new
+patches that are not regression fixes meant for 1.8.3 or subsystem
+updates to my tree.  I am mildly upset that nobody (including
+myself) caught the show-stopper regression to cherry-pick, even
+though it has been on 'master' for more than 20 days.
 
-    ramsay (tmp) ms $ rm git.o
-    ramsay (tmp) ms $ make V=1 git.o
-    compat/vcbuild/scripts/clink.pl -o git.o -c    -nologo -I. -I../zlib -Icompat/vc
-    build -Icompat/vcbuild/include -DWIN32 -D_CONSOLE -DHAVE_STRING_H -D_CRT_SECURE_
-    NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE -GL -Os -MT -DNO_CURL -DNO_ST_BLOCKS_IN_
-    STRUCT_STAT -DNO_NSEC -DNO_SYMLINK_HEAD -DNO_GETTEXT -DNO_SYS_POLL_H -DNO_THREAD
-    _SAFE_PREAD -DNO_IPV6 -DNO_INET_NTOP -DNO_INET_PTON -DNO_ICONV -DNO_POSIX_GOODIE
-    S  -DUNRELIABLE_FSTAT -DSHA1_HEADER='"block-sha1/sha1.h"' -D__USE_MINGW_ACCESS -
-    DNOGDI -DHAVE_STRING_H -DHAVE_ALLOCA_H -Icompat -Icompat/regex -Icompat/win32 -D
-    STRIP_EXTENSION=\".exe\" -DNO_LIBGEN_H -DSNPRINTF_RETURNS_BOGUS -DNO_POLL -Icomp
-    at/poll -DNO_STRCASESTR -DNO_STRLCPY -DNO_STRTOUMAX -Icompat/fnmatch -DNO_FNMATC
-    H -DNO_SETENV -DNO_MKDTEMP -DNO_MKSTEMPS -DNO_UNSETENV -DUSE_WIN32_MMAP -DOBJECT
-    _CREATION_MODE=1 -DNO_PREAD -DNO_MEMMEM -DRUNTIME_PREFIX -Icompat/regex -DSHELL_
-    PATH='"/bin/sh"' -DDEFAULT_HELP_FORMAT='"html"' '-DGIT_HTML_PATH="share/doc/git-
-    doc"' '-DGIT_MAN_PATH="share/man"' '-DGIT_INFO_PATH="share/info"' git.c
-    git.c
-    git.c(204) : warning C4090: 'function' : different 'const' qualifiers
-    git.c(218) : warning C4090: 'function' : different 'const' qualifiers
-    git.c(221) : warning C4090: 'function' : different 'const' qualifiers
-    ramsay (tmp) ms $
+Please do continue discussing this and other patches on the list,
+and please do plan to re-submit after dust settles post 1.8.3
+release.
 
-Note that '-Icompat/poll' is passed on the command-line (it is split at -Icomp
-above), which comes from:
-
-    ramsay (tmp) ms $ git grep -n 'compat/poll'
-    Makefile:647:LIB_H += compat/poll/poll.h
-    Makefile:1235:  COMPAT_CFLAGS += -DNO_POLL -Icompat/poll
-    Makefile:1236:  COMPAT_OBJS += compat/poll/poll.o
-    ramsay (tmp) ms $
-
-I have a patch which allows me to generate the preprocessed output file
-and, after running it on git.c (=> git.i), I can see that msvc reads the
-compat/poll/poll.h file. (from line 128 of git-compat-util.h).
-
-Are you using a MSVC "project" file? If so, is it equivalent to the Makefile?
-Has the "#include" behaviour changed between MSVC 2008 -> MSVC 2012?
-
-ATB,
-Ramsay Jones
+Thanks.
