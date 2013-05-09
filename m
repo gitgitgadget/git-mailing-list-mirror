@@ -1,88 +1,100 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [RFC PATCH 3/3] Makefile: avoid deprecation warnings on OS X 10.8
-Date: Thu, 9 May 2013 16:21:55 -0700
-Message-ID: <CAJDDKr5=tQu-TWaBKiwUzCKF5+=P6360puEgY_o9DtsbfQz1Vw@mail.gmail.com>
-References: <1368090810-40596-1-git-send-email-davvid@gmail.com>
-	<1368090810-40596-2-git-send-email-davvid@gmail.com>
-	<1368090810-40596-3-git-send-email-davvid@gmail.com>
-	<20130509151436.GJ25912@serenity.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] fast-export: add new --refspec option
+Date: Thu, 09 May 2013 16:23:37 -0700
+Message-ID: <7v38tv7n5y.fsf@alter.siamese.dyndns.org>
+References: <1368063095-22861-1-git-send-email-felipe.contreras@gmail.com>
+	<1368063095-22861-3-git-send-email-felipe.contreras@gmail.com>
+	<7vvc6r7pii.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2yoBFZU+LzHWT30ijbQ2rknmV1ZoB9qDDYvvme2chB7g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Charles Bailey <charles@hashpling.org>,
-	"Theodore Ts'o" <tytso@mit.edu>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri May 10 01:22:02 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 10 01:23:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uaa9x-0004TH-Ok
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 01:22:02 +0200
+	id 1UaaBd-0006MC-9x
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 01:23:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752265Ab3EIXV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 May 2013 19:21:57 -0400
-Received: from mail-wg0-f53.google.com ([74.125.82.53]:63965 "EHLO
-	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751674Ab3EIXV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 May 2013 19:21:56 -0400
-Received: by mail-wg0-f53.google.com with SMTP id y10so3426155wgg.8
-        for <git@vger.kernel.org>; Thu, 09 May 2013 16:21:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=ahRzM+O4OfK7fQmpqwKZ4tYKaqB8Z0GF5UVGc6YKFyA=;
-        b=y2qzRFp6AgeE7MqQ9v/1pVeeF5/KzgEax75Yb8XesDHH4quEH+rpahp9LcgpYb881G
-         n+Edo5sXP9S/ykcGvvK+xuTR3wvIX8vS+aWTVoaBSkHpWwOVBstYQcCjVWH9xCH03lrR
-         ViBrg1knews//HsGF36E99bSXATgwvXt/IL8Tf49/wC0BGzYLnTGfqcyc4D2IiS1fhRR
-         ZZJW2t93OS6fwQMma8Q8ghXMQpWCc3zJhuXDYkuoj13ee89c5uZ0vC+DYfMCH00/xTBI
-         MfrH6/4EtV1MepU3Y9ld7i4M+uTuU3HBeqwbah7e8jt1lZU05M3RRzVpgrjJCridrNpn
-         Jfvg==
-X-Received: by 10.180.105.195 with SMTP id go3mr269361wib.2.1368141715529;
- Thu, 09 May 2013 16:21:55 -0700 (PDT)
-Received: by 10.194.240.195 with HTTP; Thu, 9 May 2013 16:21:55 -0700 (PDT)
-In-Reply-To: <20130509151436.GJ25912@serenity.lan>
+	id S1752759Ab3EIXXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 May 2013 19:23:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57129 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752279Ab3EIXXk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 May 2013 19:23:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88C391D35D;
+	Thu,  9 May 2013 23:23:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8RmKqCklhbyv0Ln+5z8a2T7QufM=; b=WI7k4e
+	QOAhCZb2yjKSCYurYwQ/hu6DSszUb4wWE4m455PDbqA+QDXLOjwznnREoqENzS65
+	v7luUTReNc4ae4aKR1tgb8yTm068LQLxu20uPpk36cYgFUpDDS9bwPrKr3gkJINT
+	LNesNuLDCJZef4NLS99V42EoPmIEfpJL8H8io=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uwYm9dG6DUX1LTdcZJ0QMdrD+s60bJG5
+	IeyQdQA6zUy86We9ZmWEkEBwn0CeRy4DR7mlGEbbgRPqzGpzJNFzrL/86jiYzPi9
+	X1RrEKdh5YLzePX6Kd/S8a9rGCOf1QceXTr55bN5cQJtwyrhu/2bH2hGLlysbsWI
+	TNAoNPy4VYo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D3961D35C;
+	Thu,  9 May 2013 23:23:39 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D17CA1D35A;
+	Thu,  9 May 2013 23:23:38 +0000 (UTC)
+In-Reply-To: <CAMP44s2yoBFZU+LzHWT30ijbQ2rknmV1ZoB9qDDYvvme2chB7g@mail.gmail.com>
+	(Felipe Contreras's message of "Thu, 9 May 2013 17:53:52 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7AAA64E8-B8FF-11E2-A376-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223803>
 
-On Thu, May 9, 2013 at 8:14 AM, John Keeping <john@keeping.me.uk> wrote:
-> On Thu, May 09, 2013 at 02:13:30AM -0700, David Aguilar wrote:
->> Mac OS X Mountain Lion prints warnings when building git:
->>
->>       warning: 'SHA1_Init' is deprecated
->>       (declared at /usr/include/openssl/sha.h:121)
->>
->> Silence the warnings by disabling OpenSSH in favor of BLK_SHA1.
->>
->> Signed-off-by: David Aguilar <davvid@gmail.com>
->> ---
->> I know I can create config.mak, but do we prefer to have the default
->> settings be warning-free?  I do not see any other platforms that tweak
->> NO_OPENSSL themselves, hence "RFC".  Is there a better way to do this?
->> Are there any Darwin/PPC users that would be harmed by this patch?
->
-> Disabling OpenSSL also has the effect of disabling SSL support in
-> git-imap-send.  Does enabling BLK_SHA1 instead also remove the warnings?
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Thanks.  Yes, setting BLK_SHA1 does eliminate the warnings.
+> Of course, but how do you implement that? That's mixing refspecs and
+> revlist arguments, which AFAIK don't mix:
 
-I'll re-roll this patch and send it independently.
-It's unrelated to the mergetool stuff so apologies for the wide
-initial Cc: list.
+Simple.  You treat everything as refspecs and form revision ranges
+out of them.  Note that that is exactly the reason why "git push"
+can take "master" as a short-hand for "master:master" [*1*].
 
-> Alternatively, it seems that the recommended update is to use Apple's
-> CommonCrypto library, as in this patch:
-> https://gist.github.com/anonymous/4466305
+> % git fast-export ^next:new-next master:new-master --not
+> refs/tags/*:refs/tags/backup/*
 
-It seems like we'd want something like this in compat-util.h or
-somewhere similar.  That'll be a bigger change so I'll try the
-BLK_SHA1 approach first since it is minimally invasive.  This would be
-nice to tackle once the dust has settled a bit.
---
-David
+I thought you stopped mentioning the bottom of the range
+(e.g. ^next) in the output from export stream at around 49266e8a11cf
+(fast-export: don't handle uninteresting refs, 2012-11-28).
+
+What does ^next:new-next (or mapping after "--not" in general) even
+mean?  They would not make sense, would they?
+
+So I would imagine you would be spelling that as:
+
+    git fast-export master:new-master --not next refs/tags/*
+
+or something, no?
+
+
+[Footnote]
+
+*1* Of course, unlike "git push", but similar to "git bundle",
+    export does not know who the "receiving side" is and what they
+    have, so in addition to the positives, you would need to tell
+    the command where the bottoms of the range you are exporting
+    are, so there needs to be some difference between the way "git
+    push" and export/bundle specify the ranges.
+
+    But that does not affect what should happen on the positive end
+    of the ranges, which both "git push" and export/bundle need to
+    specify anyway.
