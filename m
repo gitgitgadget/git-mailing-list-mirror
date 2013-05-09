@@ -1,291 +1,79 @@
-From: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
-Subject: RE: trouble on windows network share
-Date: Thu, 9 May 2013 13:52:41 +0000
-Message-ID: <871B6C10EBEFE342A772D1159D1320853F65F7E0@umechphj.easf.csd.disa.mil>
-References: <871B6C10EBEFE342A772D1159D1320853F63D205@umechphj.easf.csd.disa.mil>
-	<1367529968647-7584800.post@n2.nabble.com>
-	<87ppx8o1lj.fsf@linux-k42r.v.cablecom.net>
-	<8B6563E531152E4190313499F193F94214A9C966@mbx500-u1-lo-3.exch500.msoutlookonline.net>
- <87ip2wla12.fsf@linux-k42r.v.cablecom.net>
- <871B6C10EBEFE342A772D1159D1320853F65E5B6@umechphj.easf.csd.disa.mil>
- <8B6563E531152E4190313499F193F94214AB8CED@mbx500-u1-lo-3.exch500.msoutlookonline.net>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 3/3] Initialize variables with values
+Date: Thu, 09 May 2013 16:32:55 +0200
+Message-ID: <518BB397.901@lsrfire.ath.cx>
+References: <518AF79A.5000408@cs-ware.de> <518AF843.6040501@cs-ware.de> <20130509132115.GA3375@elie>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
-	micalg=SHA1; boundary="----=_NextPart_000_0061_01CE4C9A.F07706D0"
-Cc: David Goldfarb <deg@degel.com>, Thomas Rast <trast@inf.ethz.ch>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 09 15:53:05 2013
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sven Strickroth <sven@cs-ware.de>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 09 16:33:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaRHH-0000Bo-6R
-	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 15:52:59 +0200
+	id 1UaRu5-0006LD-Mj
+	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 16:33:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755527Ab3EINww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 May 2013 09:52:52 -0400
-Received: from edge-mech.mail.mil ([214.21.82.12]:7269 "EHLO
-	edge-mech.mail.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754882Ab3EINwu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 May 2013 09:52:50 -0400
-Received: from UMECHPIB.easf.csd.disa.mil (214.21.83.150) by
- umechpjr.easf.csd.disa.mil (214.21.82.12) with Microsoft SMTP Server (TLS) id
- 14.2.309.2; Thu, 9 May 2013 13:52:42 +0000
-Received: from UMECHPHJ.easf.csd.disa.mil ([169.254.9.27]) by
- UMECHPIB.easf.csd.disa.mil ([214.21.83.150]) with mapi id 14.03.0123.003;
- Thu, 9 May 2013 13:52:42 +0000
-Thread-Topic: trouble on windows network share
-Thread-Index: AQHOSj3+8HmkEZnOSbCnphFucszy2pj4IXCwgALphYCAAddioA==
-In-Reply-To: <8B6563E531152E4190313499F193F94214AB8CED@mbx500-u1-lo-3.exch500.msoutlookonline.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [214.21.83.188]
+	id S1754792Ab3EIOc7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 May 2013 10:32:59 -0400
+Received: from india601.server4you.de ([85.25.151.105]:51365 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752860Ab3EIOc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 May 2013 10:32:58 -0400
+Received: from [192.168.2.105] (p4FFD9FB6.dip0.t-ipconnect.de [79.253.159.182])
+	by india601.server4you.de (Postfix) with ESMTPSA id 359DE4B9;
+	Thu,  9 May 2013 16:32:57 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <20130509132115.GA3375@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223735>
 
-------=_NextPart_000_0061_01CE4C9A.F07706D0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Am 09.05.2013 15:21, schrieb Jonathan Nieder:
+> Hi,
+>
+> Sven Strickroth wrote:
+>
+>> With MSVC initializing a variable with "int a=3Da" causes a warning =
+about
+>> using an uninitialized value.
+> [...]
+>> --- a/builtin/rev-list.c
+>> +++ b/builtin/rev-list.c
+>> @@ -338,7 +338,7 @@ int cmd_rev_list(int argc, const char **argv, co=
+nst char *prefix)
+>>   		mark_edges_uninteresting(revs.commits, &revs, show_edge);
+>>
+>>   	if (bisect_list) {
+>> -		int reaches =3D reaches, all =3D all;
+>> +		int reaches =3D 0, all =3D 0;
+>
+> A correct way to spell this is
+>
+> 		int reaches, all;
+>
+> which, as a bonus, lets the compiler warn if they are used
+> uninitialized.  Does that provoke warnings?
 
-> -----Original Message-----
-> From: David Goldfarb 
-> Sent: Wednesday, May 08, 2013 5:38 AM
-> 
-> Here's one more data point. It suggests that the problem is due to
-> either Cygwin or possibly Git 1.7.9.
-> 
-> 
-> My Ubuntu box is actually a VM, hosted by my windows box in VMWare
-> Player.
-> 
-> So, I tried using the VMWare shared folder feature, to mount the
-> Windows U: drive (which is physically on the WD NAS box) as
-> /mnt/hgfs/Host-U on Ubuntu.
-> Then, I tried linux on the Ubuntu box, fully expecting it to fail as it
-> trampolined through Windows connection to the NAS box).
-> 
-> But, it worked fine.
-> 
-> So, at this point, it became likely that the problem is tied to the
-> different version of Git that I have on the two machines:
-> - On Ubuntu, git version 1.7.10.4
-> - On Windows, Cygwin's git version 1.7.9 (which appears to be the
-> latest version for Cygwin).
-> 
-> So, I installed Git on Windows from http://git-scm.com/download/win.
-> Git version 1.8.1.msysgit.1
-> 
-> Triumph: Git on windows works with this git but, on the same file and
-> repo, fails with Cygwin git.
-> 
-> So, either something relevant changed in Git 1.7.10, or (more likely)
-> this is a Cygwin issue.
+Only find_bisection() (defined in bisect.c) is used to set these=20
+variables in that block.  While it sets "all" unconditionally, it=20
+doesn't always set "reaches" -- only if it actually finds something.=20
+That's still safe because the following code path errors out early if=20
+nothing was found before it uses "reaches".
 
-Likely.
+Are there C compilers that can analyse initialization and usage of=20
+variables across compilation units like that?
 
-> 
-> 
-> Jason, are you also using Cygwin git?  Are you also using a WD NAS?
+Anyway, initializing the variables to zero makes this code consistent=20
+with the second call-site of find_bisection().  Making sure this=20
+function sets "reaches" unconditionally as well and dropping the=20
+initialization from both places may be even better.
 
-Cygwin, yes. I am going to spend some time (likely this weekend) to get the current version to compile on Cygwin.
-
-WD NAS, no. Windows Server 2008 with NTFS file system on internal raid.
-
-> 
-> David
-> 
-> -----Original Message-----
-> From: Pyeron, Jason J CTR (US) [mailto:jason.j.pyeron.ctr@mail.mil]
-> Sent: Monday, May 06, 2013 4:11 PM
-> To: Thomas Rast; David Goldfarb
-> Cc: git@vger.kernel.org
-> Subject: RE: trouble on windows network share
-> 
-> > -----Original Message-----
-> > From: Thomas Rast
-> > Sent: Monday, May 06, 2013 5:42 AM
-> >
-> > David Goldfarb <deg@degel.com> writes:
-> >
-> > > Git works correctly under Linux (Ubuntu 12.04; git 1.7.9.5).  I've
-> > attached the strace outputs. (Note: for reasons that are probably
-> > irrelevant, I needed to run the commands sudo'd. Shout back if this
-> is
-> > an issue).
-> > >
-> > > Under Windows 7, Cygwin git 1.7.9, commit fails:
-> > >   U:\foo>git commit -m "added foo2"
-> > >   error: unable to find 0b89efdeef245ed6a0a7eacc5c578629a141f856
-> > >   fatal: 0b89efdeef245ed6a0a7eacc5c578629a141f856 is not a valid
-> > object
-> > >
-> > > For what it's worth, note that the file does exist.
-> > >   U:\foo>ls -l .git/objects/0b
-> > >   total 1024
-> > >   -rwxrw-r-- 1 ???????? ???????? 74 May  5 01:15
-> > 89efdeef245ed6a0a7eacc5c578629a141f856
-> > >
-> > > (I'm not sure why the permissions are trashed. Seems to be a Cygwin
-> > thing, or maybe my Cygwin config. The "??????" also  appears on local
-> > files, and I believe also with files on the old Buffalo drive, so I
-> > don't think it is relevant to the problem).  Just in case, here's the
-> > same dir, as seen from the Ubuntu VM:
-> > >
-> > >   deg@ubuntu:/mnt/users/foo$ ls -l .git/objects/0b
-> > >   total 64
-> > >   -rwxr-xr-x 0 root root 74 May  5 01:15
-> > 89efdeef245ed6a0a7eacc5c578629a141f856
-> > >
-> > > Again, note that there is some user permissions lossage here. I
-> don't
-> > know enough about Linux mount or CIFS, and apparently did the mount
-> in
-> > a way that everything seems to appear to be stuck owned by root.
-> (same
-> > problem I hinted at above). Hope this is not relevant to the problem.
-> > >
-> > > Here's how the same directory looks, when I'm ssh'd into the NAS
-> box
-> > itself:
-> > >
-> > >    CentralPark:/shares/Users/foo# ls -l .git/objects/0b
-> > >   total 64
-> > >   -rwxrw-r-- 1 deg share 74 May  5 01:15
-> > 89efdeef245ed6a0a7eacc5c578629a141f856
-> > >
-> > > In any event, the symptoms don't seem to be a permissions problem,
-> so
-> > all this extra info is probably just a red herring, I hope.
-> >
-> > Hrm.  What about what Jeff already asked of the OP (and AFAICS never
-> > got
-> > a reply)?
-> 
-> If referring to me, then yes but it was too big for the list.
-> 
-> >
-> > } If it's a race condition between the write and the subsequent read
-> in
-> > } the same process, then it would be solved by looking at the object
-> > } later. Does "git cat-file -p
-> > 6838761d549cf76033d2e9faf5954e62839eb25d"
-> > } work, or is the object forever inaccessible?
-> >
-> > In your case: git cat-file -p
-> 0b89efdeef245ed6a0a7eacc5c578629a141f856
-> 
-
-
-------=_NextPart_000_0061_01CE4C9A.F07706D0
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-
-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
-GDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
-AOYpItQUJtGYGlJexYSDc37BYLOz0JS+/RyUVb/2hCybycB0c+/MwpnymcltyhTTdP++EPL3Lb/L
-uwaj7phQQWUB4VcstsvkyhysflI0DrGOByY+MjWvo2EKxeUIthJ5jFTBeunxUB9dgzpnMLMp2x06
-TDkhUNgYLI0Gde5jcnhorWKcdaSUBtMyaxKvBgcpvhOgwKfwJU+3/h+3V+AYEo0hahW5WlT7d2XY
-TD/1ujzAN+EGfsK+niOMKNGa18ZnONdzyb0HHYVv1ZUKmtzaOk4o8KXrCd/l2wvNR6+KzbtvlEDj
-WZxQn8kOqXECudzpaYA6iTtFBSIYBYS1EvA8wIECAwEAAaOCAhwwggIYMA4GA1UdDwEB/wQEAwIB
-hjAfBgNVHSMEGDAWgBRJdLsMXrp6/gJU73ugxpXGCYBwljAdBgNVHQ4EFgQUNWFmKAm8ViVbi8y/
-gV5hLDA50yEwEgYDVR0TAQH/BAgwBgEB/wIBADAMBgNVHSQEBTADgAEAMGYGA1UdIARfMF0wCwYJ
-YIZIAWUCAQsFMAsGCWCGSAFlAgELCTALBglghkgBZQIBCxEwCwYJYIZIAWUCAQsSMAsGCWCGSAFl
-AgELEzAMBgpghkgBZQMCAQMaMAwGCmCGSAFlAwIBAxswNwYDVR0fBDAwLjAsoCqgKIYmaHR0cDov
-L2NybC5kaXNhLm1pbC9jcmwvRE9EUk9PVENBMi5jcmwwggEBBggrBgEFBQcBAQSB9DCB8TA6Bggr
-BgEFBQcwAoYuaHR0cDovL2NybC5kaXNhLm1pbC9pc3N1ZWR0by9ET0RST09UQ0EyX0lULnA3YzAg
-BggrBgEFBQcwAYYUaHR0cDovL29jc3AuZGlzYS5taWwwgZAGCCsGAQUFBzAChoGDbGRhcDovL2Ny
-bC5nZHMuZGlzYS5taWwvY24lM2REb0QlMjBSb290JTIwQ0ElMjAyJTJjb3UlM2RQS0klMmNvdSUz
-ZERvRCUyY28lM2RVLlMuJTIwR292ZXJubWVudCUyY2MlM2RVUz9jcm9zc0NlcnRpZmljYXRlUGFp
-cjtiaW5hcnkwDQYJKoZIhvcNAQEFBQADggEBAAqIVhylVyZaYst10N2GxVLiL/O8EWQ/jC8+EfyY
-YEDygA0ogppo/uBISyfTOgp7lfYDDIEUkUI6YGziK1Mt7N8RrvVUF/AB+ZcHp5urC9usl4kJxu/5
-BzQWAKh+EVOefC+hOKKZeTk0QW59uFgwVoie5KpkRdmgRGI6t+Ux05GA8RsQsmdw1VurWbRaSBZC
-xAJM2mxoylAdMb43mcfPU8xCKVbDnRfKA+cQWvE5PBzM+xuXCibzMd/gq1wknZ7eOH0CUWdG+ZNw
-he0KVcL0wWhanwjJHXubdtxU7zmMGOUMRO73BrIf9cvmDr3Uof/U+ZEHIlJ5t8D97LL4hfRE+1wx
-ggMyMIIDLgIBATBkMF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAK
-BgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbDjAJ
-BgUrDgMCGgUAoIIBozAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0x
-MzA1MDkxMzUyMzhaMCMGCSqGSIb3DQEJBDEWBBTg8fhhHEar/Zd9LQIDtfymFhU87DBYBgkqhkiG
-9w0BCQ8xSzBJMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDAHBgUrDgMCBzANBggqhkiG9w0D
-AgIBKDAHBgUrDgMCGjAKBggqhkiG9w0CBTBzBgkrBgEEAYI3EAQxZjBkMF0xCzAJBgNVBAYTAlVT
-MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgw
-FgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbETB1BgsqhkiG9w0BCRACCzFmoGQwXTELMAkGA1UE
-BhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQ
-S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDItsRMA0GCSqGSIb3DQEBAQUABIIBALGuuci6
-hy4p1Jc3POPC8zb6y84YM86dYfN69/FV7/30fCnN39vXB803E1ObuHOPFOACMwv1gj8Gt1nepez7
-drG6n0TyeF1Wn44oP1kdanePrZyfu45yFgQfHbpQfPbXlCx2qYnt8zuJYTqq3RIklv/pAS8rWgOd
-Tex0+xjV7lYCDi4BWYfyWCUOD8ob4Vd+RNf19OoCvGPAnAarxUXxgXMmEup5tlX1hjI/sX/RWXbm
-3EhzLwQuKm30v5bwXsE+atdALLwNrtQEeWdyUb89+RHRcxR3s765f2Ihz7dhfvM7NNW/me1iDyYY
-Lsf60sPOirW9nVFd+/S9oh+Iths7/ncAAAAAAAA=
-
-------=_NextPart_000_0061_01CE4C9A.F07706D0--
+Ren=E9
