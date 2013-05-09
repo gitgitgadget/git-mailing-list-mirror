@@ -1,99 +1,145 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 3/4] {fast-export,transport-helper}: style cleanups
-Date: Thu, 9 May 2013 14:23:04 -0500
-Message-ID: <CAMP44s3XsVb6k1Oynw_y7yvV1fWaSDGquFoRNMcaN0yGD5_UNQ@mail.gmail.com>
-References: <1368062218-22440-1-git-send-email-felipe.contreras@gmail.com>
-	<1368062218-22440-4-git-send-email-felipe.contreras@gmail.com>
-	<CAEBDL5XZhEo14WKiz2m3KFRX+NsTFhmcz3adSti33RATMd897w@mail.gmail.com>
-	<CAMP44s1R4YmyCFEQVRwSH6x-nDO-1=vDcA02C7F86GJk0zkS6g@mail.gmail.com>
-	<7vbo8k9exd.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] cherry-pick: make sure all input objects are commits
+Date: Thu, 09 May 2013 12:47:33 -0700
+Message-ID: <7vy5bo7x62.fsf@alter.siamese.dyndns.org>
+References: <20130403092704.GC21520@suse.cz>
+	<7v38v1yn8o.fsf@alter.siamese.dyndns.org>
+	<20130411092638.GA12770@suse.cz>
+	<CALkWK0n6FjGbXTqiOT_O6NbB5h0DLaNWKCCTQAFSO_BL-pPdBA@mail.gmail.com>
+	<20130411110324.GD12770@suse.cz>
+	<CALkWK0kb+2KZLvRJDJb_VrNNs1k4grsfyFv0HfYv0Kr9v4sChQ@mail.gmail.com>
+	<20130411130652.GG12770@suse.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 09 21:23:14 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@suse.cz>
+X-From: git-owner@vger.kernel.org Thu May 09 21:47:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaWQr-00013Z-NL
-	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 21:23:14 +0200
+	id 1UaWoZ-0004eC-Dr
+	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 21:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752207Ab3EITXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 May 2013 15:23:07 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:65195 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751892Ab3EITXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 May 2013 15:23:06 -0400
-Received: by mail-la0-f46.google.com with SMTP id fk20so3231918lab.19
-        for <git@vger.kernel.org>; Thu, 09 May 2013 12:23:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=T5nXi7npY1ULVwZsnKG2TaPA5QnK2CLwI83I9ZAgFyk=;
-        b=lQX9+zZOXvZEDYsRHO5dlQKKW6yQMY/rzEuwKcm23UcdVyGhWGX++9oEv3zu+kp9Lt
-         NPC9Kd1EtQMSlQ6P6Gg3a4LnEgIu+XMgHGqUAiZiYzXvtdRAvx4HpUstGopoU80M/mqB
-         8zV4xdrdOi5cAUI3m1onMKXIZs8K7ZVV03kAwOf2qSsGLuv4VePESDJ+ZlqeVtlZRKIM
-         P3YqejSde1BWIhb+OrmP2FPYzZeAHEnvK0HHTDZWO2SJuuvw3paFwcEAcL0RFlweHfHY
-         MzzZ55Jfe0YMbBHo0Ve/Rzi3tePFsrHCGNHB62/yCT/qY1Cai9qAk9wllFYdJYhrZQ14
-         Fb9Q==
-X-Received: by 10.112.145.72 with SMTP id ss8mr6184623lbb.12.1368127384336;
- Thu, 09 May 2013 12:23:04 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Thu, 9 May 2013 12:23:04 -0700 (PDT)
-In-Reply-To: <7vbo8k9exd.fsf@alter.siamese.dyndns.org>
+	id S1753643Ab3EITrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 May 2013 15:47:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61859 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752452Ab3EITrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 May 2013 15:47:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E7D91D39D;
+	Thu,  9 May 2013 19:47:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0Oo7GjcRfEJoJ/51JKviywGeDLQ=; b=oc+MOH
+	fbHMrvAlcrADz9sTIjYrF1aOLmciHFkaywgM3+f5ZbT6Uv9bn+063UoFeiZlI4dg
+	gbyGhzxsi7ElBAsOlB/JyvLqYHC4hu5Y1HDIteavI8o//RSFFYNtkE2xicYjJ93e
+	VzaODBnyLX2Kxb9Tjyky4waY+2uHEyXhmIfAk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=C4APlVn+nzYxTQJoa+U97kY/u29/zsIr
+	Q5xEx1QkESsocPC1auv3X4JyMRavqrh3IePijiaw1UY/mOttvG1LIxBEN63DgoZI
+	KVrmlhEUgQjc27OmU31XZO5X9jhvCaPwnGWnFujGAdUCBLp2jmxKMt6ygCGTa1vx
+	55DVziw/aG0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1368D1D39C;
+	Thu,  9 May 2013 19:47:36 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F1431D39A;
+	Thu,  9 May 2013 19:47:35 +0000 (UTC)
+In-Reply-To: <20130411130652.GG12770@suse.cz> (Miklos Vajna's message of "Thu,
+	11 Apr 2013 15:06:52 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4BD5B0FA-B8E1-11E2-8863-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223775>
 
-On Thu, May 9, 2013 at 1:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Miklos Vajna <vmiklos@suse.cz> writes:
+
+> When a single argument was a non-commit, the error message used to be:
 >
->>>>         if (!author)
->>>> -               die ("Could not find author in commit %s",
->>>> +               die("Could not find author in commit %s",
->>>>                      sha1_to_hex(commit->object.sha1));
->>>
->>> It looks like your simple replace didn't account for calls with
->>> multiple lines.  Now the remaining lines don't line up.
->>> :-)  There's several more places like this in the patch.
->>
->> AFAIK neither the git or the Linux code-style specify how multiple
->> lines with open parenthesis should align.
+> 	fatal: BUG: expected exactly one commit from walk
 >
-> Then the usual "follow the style of surrounding code" rule would
-> apply, no?
-
-The surrounding code has all the open parentheses wrong for these
-functions, that doesn't mean the surrounding code is correct.
-
-> It is clear that the original wants to align the opening
-> dq of "Could..."  and 's' at the beginning of sha1_to_hex().
+> For multiple arguments, when none of the arguments was a commit, the error was:
 >
-> Why is it so hard for you to say "Good eyes, thanks"?
+> 	fatal: empty commit set passed
+>
+> Finally, when some of the arguments were non-commits, we ignored those
+> arguments.  Fix this bug and make sure all arguments are commits, and
+> for the first non-commit, error out with:
+>
+> 	fatal: <name>: Can't cherry-pick a <type>
+>
+> Signed-off-by: Miklos Vajna <vmiklos@suse.cz>
 
-Because I didn't miss it, it was deliberate from my side, if nobody
-can be bothered to add a rule on the coding style guidelines, why
-should I bother? As I said, this pops up from time to time in Linux
-mailing lists[1], but at the end of the day the CodingStyle doesn't
-specify what should be the way to align these, so any discussion about
-whether they are properly aligned or not is futile.
+This turns out to be an irritatingly stupid change.  While I am
+rebuilding a privately tagged tip of 'maint', I am seeing:
 
-If it was up to me, I would use the alignment that makes more sense,
-which is to align two tabs always, this way, each time somebody
-decides to change the first line, the rest of the lines don't need to
-change, which is something I see through the CodingStyle; try to avoid
-a style that would generate bigger diffs.
+	fatal: v1.8.2.3: Can't cherry-pick a tag
 
-But if I did such alignment I might create even more discussion, so I
-deliberately decided not to change the alignment at all, which still
-leaves the code in accordance with the CodingStyle.
+You would want to reject non committish, not non commit.
 
-[1] http://article.gmane.org/gmane.linux.kernel/1407801
-
--- 
-Felipe Contreras
+>  sequencer.c                         | 18 ++++++++++++++++++
+>  t/t3508-cherry-pick-many-commits.sh |  6 ++++++
+>  2 files changed, 24 insertions(+)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index baa0310..61fdb68 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1047,6 +1047,7 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+>  {
+>  	struct commit_list *todo_list = NULL;
+>  	unsigned char sha1[20];
+> +	int i;
+>  
+>  	if (opts->subcommand == REPLAY_NONE)
+>  		assert(opts->revs);
+> @@ -1067,6 +1068,23 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+>  	if (opts->subcommand == REPLAY_CONTINUE)
+>  		return sequencer_continue(opts);
+>  
+> +	for (i = 0; i < opts->revs->pending.nr; i++) {
+> +		unsigned char sha1[20];
+> +		const char *name = opts->revs->pending.objects[i].name;
+> +
+> +		/* This happens when using --stdin. */
+> +		if (!strlen(name))
+> +			continue;
+> +
+> +		if (!get_sha1(name, sha1)) {
+> +			enum object_type type = sha1_object_info(sha1, NULL);
+> +
+> +			if (type > 0 && type != OBJ_COMMIT)
+> +				die(_("%s: can't cherry-pick a %s"), name, typename(type));
+> +		} else
+> +			die(_("%s: bad revision"), name);
+> +	}
+> +
+>  	/*
+>  	 * If we were called as "git cherry-pick <commit>", just
+>  	 * cherry-pick/revert it, set CHERRY_PICK_HEAD /
+> diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
+> index 4e7136b..19c99d7 100755
+> --- a/t/t3508-cherry-pick-many-commits.sh
+> +++ b/t/t3508-cherry-pick-many-commits.sh
+> @@ -55,6 +55,12 @@ one
+>  two"
+>  '
+>  
+> +test_expect_success 'cherry-pick three one two: fails' '
+> +	git checkout -f master &&
+> +	git reset --hard first &&
+> +	test_must_fail git cherry-pick three one two:
+> +'
+> +
+>  test_expect_success 'output to keep user entertained during multi-pick' '
+>  	cat <<-\EOF >expected &&
+>  	[master OBJID] second
