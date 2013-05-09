@@ -1,74 +1,80 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] sha1_name.c: signal if @{-N} was a true branch nameor
- a detached head
-Date: Thu, 9 May 2013 14:24:42 -0400
-Message-ID: <CAPig+cS-SyANELP5N9ch2UQgsDaJmfnm0qqPBQ+71ctGDXzzYg@mail.gmail.com>
-References: <7vk3n9dvlu.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] {fast-export,transport-helper}: style cleanups
+Date: Thu, 09 May 2013 11:38:38 -0700
+Message-ID: <7vbo8k9exd.fsf@alter.siamese.dyndns.org>
+References: <1368062218-22440-1-git-send-email-felipe.contreras@gmail.com>
+	<1368062218-22440-4-git-send-email-felipe.contreras@gmail.com>
+	<CAEBDL5XZhEo14WKiz2m3KFRX+NsTFhmcz3adSti33RATMd897w@mail.gmail.com>
+	<CAMP44s1R4YmyCFEQVRwSH6x-nDO-1=vDcA02C7F86GJk0zkS6g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 09 20:24:49 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 09 20:38:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaVWK-00018U-Jq
-	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 20:24:48 +0200
+	id 1UaVjq-0000mM-5H
+	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 20:38:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752033Ab3EISYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 May 2013 14:24:46 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:55077 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751944Ab3EISYo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 May 2013 14:24:44 -0400
-Received: by mail-lb0-f174.google.com with SMTP id r10so3331580lbi.5
-        for <git@vger.kernel.org>; Thu, 09 May 2013 11:24:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=Buf8byMwfVa1imLbU6d5TJPpi0SsvPLRAuh1bnsZ5Ik=;
-        b=O0cItG1RAwZ08nSWy371/Ihj0+Bo51aaaZVxx7b24DOAdO5KBNVvGu9lzTLqxOOZoS
-         hJyDn/Qll8Jx2/UyrTdjUe7uTZk1e9GGaTX1KZadjYYVPNFOhLKSyrR03JMztocr49UW
-         4ZF1U+bPMb0GY9JGwFLkVVdXP4DDQzMFfXebo4dXTNclMnO6JXqS4DxqoNMtVSylW/Fn
-         sKRaGpAKfSlvgoWBiq1ECM9S2muqpwDEx4P8FT3jPZocWzv2guzptF5AALVyYCKICwmZ
-         2JQxVSr9KgOgjYw/PRN6uLsAqA+Hdt14CqfCmHM8wDy0l5w2Vl4+d8a46lHqo0JSGXHO
-         OxNg==
-X-Received: by 10.112.72.163 with SMTP id e3mr5956696lbv.28.1368123882310;
- Thu, 09 May 2013 11:24:42 -0700 (PDT)
-Received: by 10.114.181.3 with HTTP; Thu, 9 May 2013 11:24:42 -0700 (PDT)
-In-Reply-To: <7vk3n9dvlu.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: Eq0Yl-kEZoxxAc5Gjtrz1wq6IKY
+	id S1751540Ab3EISim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 May 2013 14:38:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33111 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751326Ab3EISil (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 May 2013 14:38:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B683F1DE62;
+	Thu,  9 May 2013 18:38:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iXKSE9pZ3dLl8kdZT2W4yYdUVmQ=; b=wlCbuz
+	SFKOongpgNrf4WoFlNaAdKSWjk3CfdLc0j4Gf0uU2EegEv02yzOqm3G348y2fYeS
+	9UUm6CyAtJANiAx/0V/0eD9uI5lbw77ChyEB4OT+TZzTf86M5XRxFYPUUUWB/pOn
+	0iaXkFHoDbW0fYQx4qeuB1HcLAyN0RETlNPLs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EvCG1twe57Hg6wlq6elMBUt2yXfKJrBe
+	fiPjQ3n0ijd+svBZQV7Cfj+5Cb4ycYT+PbxZqQC22MqbYhD9zOatxHUNmClq3Afb
+	/x05VuzZwUi0V/eJQPAjAAI2vh8RvufK/FnnEXcHfGWq+JWVhqBWr5NmDYkx3xTa
+	ddZYMFV4tfg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC1AC1DE61;
+	Thu,  9 May 2013 18:38:40 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 31A121DE5F;
+	Thu,  9 May 2013 18:38:40 +0000 (UTC)
+In-Reply-To: <CAMP44s1R4YmyCFEQVRwSH6x-nDO-1=vDcA02C7F86GJk0zkS6g@mail.gmail.com>
+	(Felipe Contreras's message of "Thu, 9 May 2013 03:50:23 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AB129556-B8D7-11E2-B5BF-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223769>
 
-On Wed, May 8, 2013 at 5:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> sha1_name.c: signal if @{-N} was a true branch nameor a detached head
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-s/nameor/name or/
+>>>         if (!author)
+>>> -               die ("Could not find author in commit %s",
+>>> +               die("Could not find author in commit %s",
+>>>                      sha1_to_hex(commit->object.sha1));
+>>
+>> It looks like your simple replace didn't account for calls with
+>> multiple lines.  Now the remaining lines don't line up.
+>> :-)  There's several more places like this in the patch.
+>
+> AFAIK neither the git or the Linux code-style specify how multiple
+> lines with open parenthesis should align.
 
-> The original API read "checkout: moving from (.*) to ..." from the
-> reflog of the HEAD, and returned the substring between "from" and
-> "to", but there was no way, if the substring was a 40-hex string, to
-> tell if we were on a detached HEAD at that commit object, or on a
-> branch whose name happened to be the 40-hex string.
->
-> At this point, we cannot afford to change the format recorded in the
-> reflog, so introduce a heuristics to see if the 40-hex matches the
-> object name of the commit we are switching out of.  This will
-> unfortunately mishandle this case:
->
->         HEX=$(git rev-parse master)
->         git checkout -b $HEX master
->         git checkout master
->
-> where we were indeed on a non-detached $HEX branch (i.e. HEAD was
-> pointing at refs/heads/$HEX, not storing $HEX), of course, but
-> otherwise should be fairly reliable.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Then the usual "follow the style of surrounding code" rule would
+apply, no?  It is clear that the original wants to align the opening
+dq of "Could..."  and 's' at the beginning of sha1_to_hex().
+
+Why is it so hard for you to say "Good eyes, thanks"?
