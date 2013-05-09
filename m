@@ -1,126 +1,80 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 2/2] t5004: avoid using tar for checking emptiness of archive
-Date: Thu, 09 May 2013 15:13:47 +0200
-Message-ID: <518BA10B.2080003@lsrfire.ath.cx>
-References: <518BA058.6050300@lsrfire.ath.cx>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] Initialize variables with values
+Date: Thu, 9 May 2013 06:21:15 -0700
+Message-ID: <20130509132115.GA3375@elie>
+References: <518AF79A.5000408@cs-ware.de>
+ <518AF843.6040501@cs-ware.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	BJ Hargrave <bj@bjhargrave.com>
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 09 15:14:01 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Sven Strickroth <sven@cs-ware.de>
+X-From: git-owner@vger.kernel.org Thu May 09 15:21:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaQfT-0003Mu-BY
-	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 15:13:55 +0200
+	id 1UaQmq-0004HU-TL
+	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 15:21:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752855Ab3EINNv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 May 2013 09:13:51 -0400
-Received: from india601.server4you.de ([85.25.151.105]:51320 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751222Ab3EINNu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 May 2013 09:13:50 -0400
-Received: from [192.168.2.105] (p4FFD9FB6.dip0.t-ipconnect.de [79.253.159.182])
-	by india601.server4you.de (Postfix) with ESMTPSA id 193574B9;
-	Thu,  9 May 2013 15:13:49 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <518BA058.6050300@lsrfire.ath.cx>
+	id S1752278Ab3EINVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 May 2013 09:21:25 -0400
+Received: from mail-bk0-f51.google.com ([209.85.214.51]:45404 "EHLO
+	mail-bk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751211Ab3EINVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 May 2013 09:21:25 -0400
+Received: by mail-bk0-f51.google.com with SMTP id ji2so1478586bkc.10
+        for <git@vger.kernel.org>; Thu, 09 May 2013 06:21:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=U5QO2AQEtI0g1W/OhzAhtQcs2FPWRv5EecaDm5ciHnY=;
+        b=Th2A+Tu2i7GQcYlpc45BeXK2GPe9juV56F3DqRzO/LuLuTfbzERzRMXqjFaTvsFwJW
+         tthDAIYyF0CGnsLlB15hI2l7ylHSt3J1Y2HpGwp5EFfCWnNFjENvaapu4Rzxcvlhshu6
+         htShNhr5eF2rzYqHhO4HbRZ5ujIe78mRLuCjAzyjpCt2VOgNIZ8bntkdkqsP9nsrxdz/
+         aXxmHJz21VNK70X7iLtDLqaaKamZUpyzO8vLdWx3tFnzGmgraWDHibWoNjxBM/4wsw1O
+         Rs3ZYZznjOiZfFZALEeqqQWc8SyS8+PNtRSnMT7tvkEKtrJggQeCwCyx7bncB1mRSXnP
+         Zeow==
+X-Received: by 10.205.24.201 with SMTP id rf9mr3111094bkb.73.1368105683713;
+        Thu, 09 May 2013 06:21:23 -0700 (PDT)
+Received: from elie ([213.221.117.228])
+        by mx.google.com with ESMTPSA id f3sm762436bkj.21.2013.05.09.06.21.21
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 09 May 2013 06:21:21 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <518AF843.6040501@cs-ware.de>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223731>
 
-Test 2 of t5004 checks if a supposedly empty tar archive really
-contains no files.  24676f02 (t5004: fix issue with empty archive test
-and bsdtar) removed our commit hash to make it work with bsdtar, but
-the test still fails on NetBSD and OpenBSD, which use their own tar
-that considers a tar file containing only NULs as broken.
+Hi,
 
-Here's what the different archivers do when asked to create a tar
-file without entries:
+Sven Strickroth wrote:
 
-	$ uname -v
-	NetBSD 6.0.1 (GENERIC)
-	$ gtar --version | head -1
-	tar (GNU tar) 1.26
-	$ bsdtar --version
-	bsdtar 2.8.4 - libarchive 2.8.4
+> With MSVC initializing a variable with "int a=a" causes a warning about
+> using an uninitialized value.
+[...]
+> --- a/builtin/rev-list.c
+> +++ b/builtin/rev-list.c
+> @@ -338,7 +338,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+>  		mark_edges_uninteresting(revs.commits, &revs, show_edge);
+>  
+>  	if (bisect_list) {
+> -		int reaches = reaches, all = all;
+> +		int reaches = 0, all = 0;
 
-	$ : >zero.tar
-	$ perl -e 'print "\0" x 10240' >tenk.tar
-	$ sha1 zero.tar tenk.tar
-	SHA1 (zero.tar) = da39a3ee5e6b4b0d3255bfef95601890afd80709
-	SHA1 (tenk.tar) = 34e163be8e43c5631d8b92e9c43ab0bf0fa62b9c
+A correct way to spell this is
 
-	$ : | tar cf - -T - | sha1
-	da39a3ee5e6b4b0d3255bfef95601890afd80709
-	$ : | gtar cf - -T - | sha1
-	34e163be8e43c5631d8b92e9c43ab0bf0fa62b9c
-	$ : | bsdtar cf - -T - | sha1
-	34e163be8e43c5631d8b92e9c43ab0bf0fa62b9c
+		int reaches, all;
 
-So NetBSD's native tar creates an empty file, while GNU tar and bsdtar
-both give us 10KB of NULs -- just like git archive with an empty tree.
-Now let's see how the archivers handle these two kinds of empty tar
-files:
-	
-	$ tar tf zero.tar; echo $?
-	tar: Unexpected EOF on archive file
-	1
-	$ gtar tf zero.tar; echo $?
-	gtar: This does not look like a tar archive
-	gtar: Exiting with failure status due to previous errors
-	2
-	$ bsdtar tf zero.tar; echo $?
-	0
+which, as a bonus, lets the compiler warn if they are used
+uninitialized.  Does that provoke warnings?
 
-	$ tar tf tenk.tar; echo $?
-	tar: Cannot identify format. Searching...
-	tar: End of archive volume 1 reached
-	tar: Sorry, unable to determine archive format.
-	$ gtar tf tenk.tar; echo $?
-	0
-	$ bsdtar tf tenk.tar; echo $?
-	0
-
-NetBSD's tar complains about both, bsdtar happily accepts any of them
-and GNU tar doesn't like zero-length archive files.  So the safest
-course of action is to stay with our block-of-NULs format which is
-compatible with GNU tar and bsdtar, as we can't make NetBSD's native
-tar happy anyway.
-
-We can simplify our test, however, by taking tar out of the picture.
-Instead of extracting the archive and checking for the non-presence of
-files, check if the file has a size of 10KB and contains only NULs.
-This makes t5004 pass on NetBSD and OpenBSD.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
-Fixes a failure of a test added after v1.8.2.
-
- t/t5004-archive-corner-cases.sh | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
-index ddf6e35..8d1bbd3 100755
---- a/t/t5004-archive-corner-cases.sh
-+++ b/t/t5004-archive-corner-cases.sh
-@@ -29,9 +29,8 @@ check_dir() {
- 
- test_expect_success 'tar archive of empty tree is empty' '
- 	git archive --format=tar HEAD: >empty.tar &&
--	make_dir extract &&
--	"$TAR" xf empty.tar -C extract &&
--	check_dir extract
-+	perl -e "print \"\\0\" x 10240" >10knuls.tar &&
-+	test_cmp 10knuls.tar empty.tar
- '
- 
- test_expect_success 'tar archive of empty tree with prefix' '
--- 
-1.8.2.1
+Thanks,
+Jonathan
