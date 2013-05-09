@@ -1,60 +1,70 @@
-From: Sven Strickroth <sven@cs-ware.de>
-Subject: Re: [PATCH 1/3] poll.h lies in the same folder, so use normal quotes
- for include
-Date: Thu, 09 May 2013 03:31:32 +0200
-Message-ID: <518AFC74.2040500@cs-ware.de>
-References: <518AF79A.5000408@cs-ware.de> <518AF7EA.6020403@cs-ware.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/3] Support for old:new remote-helper push
+Date: Wed,  8 May 2013 20:31:32 -0500
+Message-ID: <1368063095-22861-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 09 03:32:07 2013
+X-From: git-owner@vger.kernel.org Thu May 09 03:33:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaFiI-0005s3-Lu
-	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 03:32:07 +0200
+	id 1UaFjI-0006x9-Qr
+	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 03:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755969Ab3EIBbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 May 2013 21:31:45 -0400
-Received: from srv1.79p.de ([213.239.234.118]:33240 "EHLO srv1.79p.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755890Ab3EIBbe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 May 2013 21:31:34 -0400
-Received: from [192.168.0.20] (p5B03ACDA.dip0.t-ipconnect.de [91.3.172.218])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: sven@cs-ware.de)
-	by srv1.79p.de (Postfix) with ESMTPSA id EB084441600
-	for <git@vger.kernel.org>; Thu,  9 May 2013 03:31:31 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
-	s=mail2013; t=1368063092;
-	bh=eYp5d8z+eFHimWddzBdnUVpUVzi7YnHltwCLDZ4JtpA=;
-	h=Message-ID:Date:From:MIME-Version:To:Subject:References:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	b=G/fBRROe6xIUfMJCk/PZBC0N+CkMsfbJ04OWVCMcdrmBG1hh8ssEZZDRHk5+4Fizr
-	 i76bHVwKGJIQvuYF1vol5OvlIZA/uH5I2waDDUJVQnslm1rVcia16DZmXW4oKAXvJu
-	 WE3H5coxJxKC2Vw0MXXKCG8+ZtbT7MJN315y3ApU=
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <518AF7EA.6020403@cs-ware.de>
-X-Enigmail-Version: 1.5.1
+	id S1752619Ab3EIBdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 May 2013 21:33:03 -0400
+Received: from mail-oa0-f50.google.com ([209.85.219.50]:54665 "EHLO
+	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751950Ab3EIBdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 May 2013 21:33:01 -0400
+Received: by mail-oa0-f50.google.com with SMTP id l10so2834075oag.37
+        for <git@vger.kernel.org>; Wed, 08 May 2013 18:33:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=yJ7FzMum+Dc2BlswqavyHBfpSxN3nxAikABabI6HTec=;
+        b=KzZOv8KsspM1Xuvfr0u1wcjthNQ4mTVJxAIVQbN1Ks/Dll3OlslMe61XMNI4MZo1oA
+         jHKxBecl7ojBpGprSR80tjzF3X2qbi5Nw/MUf6ReRacRMIEkUj/7pxsT+LStO9Rdz2Ah
+         suZXg3Rghz8aAQqNrlnmTwo1n/iD7/PD4e7xxPKAwD7chbTDz3iEqPxXWOHBuXKibOqg
+         G+rmO2dJ24HT7HscqFoznZKCsXGXQYnO3Va1i/NJle4TA7IydxDEfvemmR/mLIvi8uc4
+         WetC77YNBbkUWd8fqSP/AWpEp66QmGkbOpr7NNSjdIWdDpLJ/ZvDAwStcsmRyBi5vses
+         OqqA==
+X-Received: by 10.182.92.133 with SMTP id cm5mr3142940obb.73.1368063180688;
+        Wed, 08 May 2013 18:33:00 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id eq4sm1153617obb.5.2013.05.08.18.32.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 08 May 2013 18:32:59 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.553.gac13664
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223706>
 
-Am 09.05.2013 03:12 schrieb Sven Strickroth:
-> Some compilers, like Visual C++ complain when <> is used instead of
-> double quotes for non system includes.
+Hi,
 
-I just noticed that this patch isn't necessary for 1.8.3 (since
-41f2999180f5a58f2a4214d896359c1587c9024f) any more. Sorry for the noise
-- I was still building against 1.8.2.2.
+In order to support pushing old:new refspecs in remote-helpers, the best way to
+do what is to add an option to fast-export to rename the refs in the stream, so
+here it is:
+
+Felipe Contreras (3):
+  fast-export: improve argument parsing
+  fast-export: add new --refspec option
+  transport-helper: add support for old:new refspec
+
+ Documentation/git-fast-export.txt |  4 ++++
+ builtin/fast-export.c             | 33 ++++++++++++++++++++++++++++++++-
+ t/t5801-remote-helpers.sh         |  2 +-
+ t/t9350-fast-export.sh            |  7 +++++++
+ transport-helper.c                | 14 ++++++++++++--
+ 5 files changed, 56 insertions(+), 4 deletions(-)
 
 -- 
-Best regards,
- Sven Strickroth
- PGP key id F5A9D4C4 @ any key-server
+1.8.3.rc1.553.gac13664
