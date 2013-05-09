@@ -1,89 +1,78 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/3] fast-export: add new --refspec option
-Date: Thu, 9 May 2013 18:32:16 -0500
-Message-ID: <CAMP44s1d_9iT7nqtu3gTy=kX-Kapnf0AUZJ-Z-MpLkBuWxBgSw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] fast-export: improve argument parsing
+Date: Thu, 9 May 2013 18:33:15 -0500
+Message-ID: <CAMP44s1GAeu5v5xqLu8BgisprmWN=C8zoFYNidoyBPXmu-cvJQ@mail.gmail.com>
 References: <1368063095-22861-1-git-send-email-felipe.contreras@gmail.com>
-	<1368063095-22861-3-git-send-email-felipe.contreras@gmail.com>
-	<7vvc6r7pii.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2yoBFZU+LzHWT30ijbQ2rknmV1ZoB9qDDYvvme2chB7g@mail.gmail.com>
-	<7v38tv7n5y.fsf@alter.siamese.dyndns.org>
+	<1368063095-22861-2-git-send-email-felipe.contreras@gmail.com>
+	<7vzjw37q7o.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2RYPENwsPAcoaKjmHxkuVA52vvRrQ_stmT_qY-Pmt6HA@mail.gmail.com>
+	<7vy5bn68eu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 10 01:32:24 2013
+X-From: git-owner@vger.kernel.org Fri May 10 01:33:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaaJz-0007Vc-4e
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 01:32:23 +0200
+	id 1UaaKv-00005e-5e
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 01:33:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754335Ab3EIXcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 May 2013 19:32:19 -0400
-Received: from mail-la0-f53.google.com ([209.85.215.53]:50642 "EHLO
-	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754301Ab3EIXcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 May 2013 19:32:18 -0400
-Received: by mail-la0-f53.google.com with SMTP id eo20so3368707lab.26
-        for <git@vger.kernel.org>; Thu, 09 May 2013 16:32:16 -0700 (PDT)
+	id S1754390Ab3EIXdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 May 2013 19:33:17 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:58984 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753016Ab3EIXdQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 May 2013 19:33:16 -0400
+Received: by mail-lb0-f172.google.com with SMTP id y6so3656599lbh.3
+        for <git@vger.kernel.org>; Thu, 09 May 2013 16:33:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
          :subject:from:to:cc:content-type;
-        bh=kXaLk/cDK+y3zIb2XLYD3mFpYfXWql7ceiAEKGl+gao=;
-        b=JUM7ceHLS5xNAH5MG2d0EAmndhIuYHfq66/ZcMsfyddd3PcCb+D0GH6/aPE58rsWnJ
-         eXyq7g8hODJccupd74AcJbiRA5hO9iUYxH5lcnGiqAcWBxKIag9s2IBAbnOtLW3yrIwS
-         lAZ8h/mxarjeK3S8ZYOggVnhjhtAOnGz6tZwovrE4OZq2ZMxmsH2v/02rEL3HD3kMUw6
-         r6N3TghmVGt1R7Cgxq1ABMlOX9rqYI1HvuRLrTJYVkpunhMAklXEjGqy3Acn0Bmh4dh6
-         hQaHFbMCF5x2nbWvkeZiK9dFFFEKEQ6qHS/WxuObatDaCiJX1dsbs9E+MUbxvgu/ZSI4
-         +VRA==
-X-Received: by 10.152.87.69 with SMTP id v5mr6512786laz.24.1368142336717; Thu,
- 09 May 2013 16:32:16 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Thu, 9 May 2013 16:32:16 -0700 (PDT)
-In-Reply-To: <7v38tv7n5y.fsf@alter.siamese.dyndns.org>
+        bh=5EBw+g9Ugcns8oMvobAq9p0V+1tdvO6VOFS6JaUBg2s=;
+        b=lcP55jDyBoKIAfZyl7Cx91hiqgWe/bWq/HWdSSeKMa1m2Npf/YJrljr4le1ESD6ckl
+         hPNZoqGGPZh8wXcbnf75FvYaUvV4aK0i5Yb3YB2lP+bjxlnHVddCSFyCSF8JZpCY+jqI
+         JHsmiQ4LWyDv2R3snJqF4QXkGPaJNDkN8QjH9mV4n6P2ziD1OFDqS/57wzWbj/S0WVTf
+         aJJj/6gjt4oaXe0LXiDjUr8Fi6eIssGJYyrb3QeSqsAlFsbGBmid8gAZzOAcNoxyr/by
+         k2s53efCISVIzjGYPn7r2caZpkk5xPxaX22Cj706b6xQWmKiW5Kzoy4NKpavn+1wuJQP
+         Pi4A==
+X-Received: by 10.112.145.72 with SMTP id ss8mr6539499lbb.12.1368142395343;
+ Thu, 09 May 2013 16:33:15 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Thu, 9 May 2013 16:33:15 -0700 (PDT)
+In-Reply-To: <7vy5bn68eu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223806>
 
-On Thu, May 9, 2013 at 6:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, May 9, 2013 at 6:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
->> Of course, but how do you implement that? That's mixing refspecs and
->> revlist arguments, which AFAIK don't mix:
+>> On Thu, May 9, 2013 at 5:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>
+>>>> We don't want to pass arguments specific to fast-export to
+>>>> setup_revisions.
+>>>
+>>> Interesting.  What bad things happen with the current order?
+>>>
+>>> Does "fast-export --export-marks=foo" causes setup_revisions() to
+>>> mistakenly eat --export-marks=foo and barf?
+>>
+>> No, apparently it skips them. But try 'git fast-export --export-marks
+>> marks HEAD'.
 >
-> Simple.  You treat everything as refspecs and form revision ranges
-> out of them.  Note that that is exactly the reason why "git push"
-> can take "master" as a short-hand for "master:master" [*1*].
+> That is the kind of thing that needs to be said, not in the
+> discussion but in the history, either in the log or in a new test,
+> or both.
 
-And how do you implement that?
-
->> % git fast-export ^next:new-next master:new-master --not
->> refs/tags/*:refs/tags/backup/*
->
-> I thought you stopped mentioning the bottom of the range
-> (e.g. ^next) in the output from export stream at around 49266e8a11cf
-> (fast-export: don't handle uninteresting refs, 2012-11-28).
-
-That doesn't prevent the rev-list parsing from working.
-
-> What does ^next:new-next (or mapping after "--not" in general) even
-> mean?  They would not make sense, would they?
-
-They don't, which is precisely my point.
-
-> So I would imagine you would be spelling that as:
->
->     git fast-export master:new-master --not next refs/tags/*
->
-> or something, no?
-
-rev-list doesn't accept 'refs/tags/*'.
+If only I had known that when I wrote the commit message.
 
 -- 
 Felipe Contreras
