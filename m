@@ -1,115 +1,82 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 3/3] transport-helper: add support for old:new refspec
-Date: Wed,  8 May 2013 20:31:35 -0500
-Message-ID: <1368063095-22861-4-git-send-email-felipe.contreras@gmail.com>
-References: <1368063095-22861-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+From: Sven Strickroth <sven@cs-ware.de>
+Subject: Re: [PATCH 1/5] msvc: Fix compilation errors caused by poll.h emulation
+Date: Thu, 09 May 2013 03:42:20 +0200
+Message-ID: <518AFEFC.8010904@cs-ware.de>
+References: <510AB7D3.7010407@ramsay1.demon.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 09 03:33:27 2013
+X-From: git-owner@vger.kernel.org Thu May 09 03:42:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaFjZ-0007D4-Ka
-	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 03:33:27 +0200
+	id 1UaFsY-00084Q-Tu
+	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 03:42:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754798Ab3EIBdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 May 2013 21:33:13 -0400
-Received: from mail-oa0-f41.google.com ([209.85.219.41]:43284 "EHLO
-	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753353Ab3EIBdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 May 2013 21:33:12 -0400
-Received: by mail-oa0-f41.google.com with SMTP id k1so2879197oag.14
-        for <git@vger.kernel.org>; Wed, 08 May 2013 18:33:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=hC3ZeubpO1rODeSEJ4MDLK0dB/RCYmVBYZeSuuLfrtA=;
-        b=y0wboCHsPjDD72h8pwMCzu5Cq960dzc78cNocWlkIIU85vs+EkhN9OIEZjCsoaoeRZ
-         bzhlRFtSRsNEAyYr/MzNdO/2o4Sdn0XCh+cjcUt2z7LGl8RcsPtd8n8eIxUHG93PgDK1
-         bLS17OhoKE5GxEUWR1ptuA2y/3Hj0GM2VYBoUvNv/PwFqt1rc+yIQv3CbRjbeqpivzqk
-         aDxzdKP3K1fFjNnE6IsG9172ON/GjVYJp3TE7GVf0xPkc+KoTw4S0mt00wJ/uNMpllcj
-         ckj2H7s6wFi3nZOPZFW//eEuHkUAbPLtPkmbXm7/2LDtuXgIZka3U0/NZe8V4LoFNpnA
-         4boA==
-X-Received: by 10.60.63.174 with SMTP id h14mr3035406oes.137.1368063191008;
-        Wed, 08 May 2013 18:33:11 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id ns4sm1172896obc.2.2013.05.08.18.33.08
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 08 May 2013 18:33:10 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc1.553.gac13664
-In-Reply-To: <1368063095-22861-1-git-send-email-felipe.contreras@gmail.com>
+	id S1755404Ab3EIBm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 May 2013 21:42:26 -0400
+Received: from srv1.79p.de ([213.239.234.118]:33306 "EHLO srv1.79p.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755164Ab3EIBm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 May 2013 21:42:26 -0400
+Received: from [192.168.0.20] (p5B03ACDA.dip0.t-ipconnect.de [91.3.172.218])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: sven@cs-ware.de)
+	by srv1.79p.de (Postfix) with ESMTPSA id 49640441047;
+	Thu,  9 May 2013 03:42:20 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
+	s=mail2013; t=1368063740;
+	bh=5a12YcphIG2LEqLMjBvnvmuz7Jd8SG7i3pKJ+EgVRnI=;
+	h=Message-ID:Date:From:MIME-Version:To:CC:Subject:References:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	b=Z2tKP+q/aSW7DKbTZsxbCIvLMG5HtjUuY30fl9MShOS0yYzgM85YpPP6SrVFoFqJh
+	 QxlRfBqasz0JdYR+z99koR9QM/Qerll3JEHAj3JhKU2ZW/eXxcle60WAEU8HBX+Jh9
+	 uFwY7V0kxOLJ4ifF9mB3kz8p8UTRMP1fnIdTtwjc=
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <510AB7D3.7010407@ramsay1.demon.co.uk>
+X-Enigmail-Version: 1.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223710>
 
-By using fast-export's new --refspec option.
+Am 31.01.2013 19:28 schrieb Ramsay Jones:
+> Commit 0f77dea9 ("mingw: move poll out of sys-folder", 24-10-2011), along
+> with other commits in the 'ef/mingw-upload-archive' branch (see commit
+> 7406aa20), effectively reintroduced the same problem addressed by commit
+> 56fb3ddc ("msvc: Fix compilation errors in compat/win32/sys/poll.c",
+> 04-12-2010).
+> 
+> In order to fix the compilation errors, we use the same solution adopted
+> in that earlier commit. In particular, we set _WIN32_WINNT to 0x0502
+> (which would target Windows Server 2003) prior to including the winsock2.h
+> header file.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- t/t5801-remote-helpers.sh |  2 +-
- transport-helper.c        | 14 ++++++++++++--
- 2 files changed, 13 insertions(+), 3 deletions(-)
+This change causes problems compiling with MSVC2012 for me. If I don't
+define NO_SYS_POLL_H git-compat-util.h now tries to include <sys/poll.h>
+which does not exist for MSVC and if I define NO_SYS_POLL_H
+git-compat-util.h now tries to include <poll.h> which also doesn't exist
+for MSVC.
 
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index dbb02e2..d15f794 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -92,7 +92,7 @@ test_expect_success 'push new branch by name' '
- 	compare_refs local HEAD server refs/heads/new-name
- '
- 
--test_expect_failure 'push new branch with old:new refspec' '
-+test_expect_success 'push new branch with old:new refspec' '
- 	(cd local &&
- 	 git push origin new-name:new-refspec
- 	) &&
-diff --git a/transport-helper.c b/transport-helper.c
-index 835815f..b1fdd39 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -787,7 +787,7 @@ static int push_refs_with_export(struct transport *transport,
- 	struct ref *ref;
- 	struct child_process *helper, exporter;
- 	struct helper_data *data = transport->data;
--	struct string_list revlist_args = STRING_LIST_INIT_NODUP;
-+	struct string_list revlist_args = STRING_LIST_INIT_DUP;
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	helper = get_helper(transport);
-@@ -814,14 +814,24 @@ static int push_refs_with_export(struct transport *transport,
- 			die("remote-helpers do not support ref deletion");
- 		}
- 
--		if (ref->peer_ref)
-+		if (ref->peer_ref) {
-+			if (strcmp(ref->name, ref->peer_ref->name)) {
-+				struct strbuf buf = STRBUF_INIT;
-+				strbuf_addf(&buf, "%s:%s", ref->peer_ref->name, ref->name);
-+				string_list_append(&revlist_args, "--refspec");
-+				string_list_append(&revlist_args, buf.buf);
-+				strbuf_release(&buf);
-+			}
- 			string_list_append(&revlist_args, ref->peer_ref->name);
-+		}
- 
- 	}
- 
- 	if (get_exporter(transport, &exporter, &revlist_args))
- 		die("Couldn't run fast-export");
- 
-+	string_list_clear(&revlist_args, 1);
-+
- 	if (finish_command(&exporter))
- 		die("Error while running fast-export");
- 	push_update_refs_status(data, remote_refs);
+Including compat/poll into the includes path causes redefinition errors.
+
+How have you tested this?
+
+I think the check in git-compat-util.h has to be extended to only
+include any poll.h if _MSC_VER is defined.
+
 -- 
-1.8.3.rc1.553.gac13664
+Best regards,
+ Sven Strickroth
+ PGP key id F5A9D4C4 @ any key-server
