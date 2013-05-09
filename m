@@ -1,82 +1,70 @@
-From: Sven Strickroth <sven@cs-ware.de>
-Subject: Re: [PATCH 1/5] msvc: Fix compilation errors caused by poll.h emulation
-Date: Thu, 09 May 2013 03:42:20 +0200
-Message-ID: <518AFEFC.8010904@cs-ware.de>
-References: <510AB7D3.7010407@ramsay1.demon.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] sha1_name.c: signal if @{-N} was a true branch
+ nameor a detached head
+Date: Thu, 9 May 2013 08:46:07 +0200
+Message-ID: <20130509064607.GA11985@sigill.intra.peff.net>
+References: <7vk3n9dvlu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 09 03:42:43 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 09 08:46:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaFsY-00084Q-Tu
-	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 03:42:43 +0200
+	id 1UaKcK-0002fS-48
+	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 08:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755404Ab3EIBm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 May 2013 21:42:26 -0400
-Received: from srv1.79p.de ([213.239.234.118]:33306 "EHLO srv1.79p.de"
+	id S1750965Ab3EIGqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 May 2013 02:46:12 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35954 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755164Ab3EIBm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 May 2013 21:42:26 -0400
-Received: from [192.168.0.20] (p5B03ACDA.dip0.t-ipconnect.de [91.3.172.218])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: sven@cs-ware.de)
-	by srv1.79p.de (Postfix) with ESMTPSA id 49640441047;
-	Thu,  9 May 2013 03:42:20 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
-	s=mail2013; t=1368063740;
-	bh=5a12YcphIG2LEqLMjBvnvmuz7Jd8SG7i3pKJ+EgVRnI=;
-	h=Message-ID:Date:From:MIME-Version:To:CC:Subject:References:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	b=Z2tKP+q/aSW7DKbTZsxbCIvLMG5HtjUuY30fl9MShOS0yYzgM85YpPP6SrVFoFqJh
-	 QxlRfBqasz0JdYR+z99koR9QM/Qerll3JEHAj3JhKU2ZW/eXxcle60WAEU8HBX+Jh9
-	 uFwY7V0kxOLJ4ifF9mB3kz8p8UTRMP1fnIdTtwjc=
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <510AB7D3.7010407@ramsay1.demon.co.uk>
-X-Enigmail-Version: 1.5.1
+	id S1750831Ab3EIGqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 May 2013 02:46:11 -0400
+Received: (qmail 3044 invoked by uid 102); 9 May 2013 06:46:33 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (213.221.117.228)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 May 2013 01:46:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 May 2013 08:46:07 +0200
+Content-Disposition: inline
+In-Reply-To: <7vk3n9dvlu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223712>
 
-Am 31.01.2013 19:28 schrieb Ramsay Jones:
-> Commit 0f77dea9 ("mingw: move poll out of sys-folder", 24-10-2011), along
-> with other commits in the 'ef/mingw-upload-archive' branch (see commit
-> 7406aa20), effectively reintroduced the same problem addressed by commit
-> 56fb3ddc ("msvc: Fix compilation errors in compat/win32/sys/poll.c",
-> 04-12-2010).
+On Wed, May 08, 2013 at 02:12:29PM -0700, Junio C Hamano wrote:
+
+> The original API read "checkout: moving from (.*) to ..." from the
+> reflog of the HEAD, and returned the substring between "from" and
+> "to", but there was no way, if the substring was a 40-hex string, to
+> tell if we were on a detached HEAD at that commit object, or on a
+> branch whose name happened to be the 40-hex string.
 > 
-> In order to fix the compilation errors, we use the same solution adopted
-> in that earlier commit. In particular, we set _WIN32_WINNT to 0x0502
-> (which would target Windows Server 2003) prior to including the winsock2.h
-> header file.
+> At this point, we cannot afford to change the format recorded in the
+> reflog, so introduce a heuristics to see if the 40-hex matches the
+> object name of the commit we are switching out of.  This will
+> unfortunately mishandle this case:
+> 
+> 	HEX=$(git rev-parse master)
+> 	git checkout -b $HEX master
+> 	git checkout master
 
-This change causes problems compiling with MSVC2012 for me. If I don't
-define NO_SYS_POLL_H git-compat-util.h now tries to include <sys/poll.h>
-which does not exist for MSVC and if I define NO_SYS_POLL_H
-git-compat-util.h now tries to include <poll.h> which also doesn't exist
-for MSVC.
+I do not think I've ever seen a 40-hex branch name in practice, but I
+would think a branch named after the commit tip would be a reasonably
+common reason to have one, and would trigger this case.
 
-Including compat/poll into the includes path causes redefinition errors.
+Since the point of marking the detached HEAD is to turn off things like
+"@{-1}@{u}", we would want to be generous and err on the side of
+assuming it is a branch if it _might_ be one. IOW, shouldn't we treat
+the above sequence as a branch, and therefore mishandle:
 
-How have you tested this?
+  git checkout $HEX^0 master
+  git checkout master
 
-I think the check in git-compat-util.h has to be extended to only
-include any poll.h if _MSC_VER is defined.
+by erroneously assuming that we moved to the branch $HEX?
 
--- 
-Best regards,
- Sven Strickroth
- PGP key id F5A9D4C4 @ any key-server
+-Peff
