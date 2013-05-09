@@ -1,82 +1,75 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: [PATCH 4/4] fast-export: trivial cleanup
-Date: Thu, 9 May 2013 05:04:55 -0400
-Message-ID: <CAEBDL5Ww6g8G-eM93ZFji3ZNEbKrpsTuibHkOk=aSnFapV0EEA@mail.gmail.com>
-References: <1368062218-22440-1-git-send-email-felipe.contreras@gmail.com>
-	<1368062218-22440-5-git-send-email-felipe.contreras@gmail.com>
-	<CAEBDL5VotNSZC_xHc3r49bBFtNwU+drWa_Pj=skC3xzk-CGpKA@mail.gmail.com>
-	<CAMP44s1DPwfiEDuUqUSBN1ShsgLDy9_2E0OD6nnwT7kJeJUCyg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 09 11:05:01 2013
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH 1/3] mergetools/kdiff3: do not use --auto when diffing
+Date: Thu,  9 May 2013 02:13:28 -0700
+Message-ID: <1368090810-40596-1-git-send-email-davvid@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>,
+	Charles Bailey <charles@hashpling.org>,
+	Theodore Ts'o <tytso@mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 09 11:13:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaMmb-0002iG-3x
-	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 11:05:01 +0200
+	id 1UaMv2-0003oY-Ln
+	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 11:13:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751841Ab3EIJE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 May 2013 05:04:57 -0400
-Received: from mail-wg0-f50.google.com ([74.125.82.50]:59383 "EHLO
-	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751305Ab3EIJE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 May 2013 05:04:56 -0400
-Received: by mail-wg0-f50.google.com with SMTP id m15so2701432wgh.17
-        for <git@vger.kernel.org>; Thu, 09 May 2013 02:04:55 -0700 (PDT)
+	id S1752748Ab3EIJNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 May 2013 05:13:39 -0400
+Received: from mail-da0-f54.google.com ([209.85.210.54]:52592 "EHLO
+	mail-da0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752598Ab3EIJNi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 May 2013 05:13:38 -0400
+Received: by mail-da0-f54.google.com with SMTP id u36so1486355dak.41
+        for <git@vger.kernel.org>; Thu, 09 May 2013 02:13:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=UW83pg8zmhX+oLhOZWeHw28sJaU7pMxhrJiEh62GRuQ=;
-        b=XOrvW8OhwIB+qb2Azd7usmNUozDoeCHj8G5vPKq1YNAnFyu2U/7k84I5jw2gq2xuGo
-         L7TU8NISvAnCAO1L3eGxmdJ2MID/JYaJIknswcJfYI3GmSvq49sQXzheaxpemcLjXZNk
-         vXZWtEbtp5eyWRu9BTJOA3YcPKif3V8FagCLpOMeqf+qYmO+KSkF32PPK8ZgEzr5wa2a
-         iLTHXWfgJMAwLMZ74m2H5o4tJFeuwRBIsQTrpRDS+JSZGEtaAXTfiydYn56MXDZzFsLy
-         4nEOpyIOczvXdgGnSL1U6cVlvYWUg4NWcP2y1usVc/0WgRUYAvahkjprU+bYo6xBMAU+
-         4eLg==
-X-Received: by 10.180.21.167 with SMTP id w7mr15930270wie.2.1368090295115;
- Thu, 09 May 2013 02:04:55 -0700 (PDT)
-Received: by 10.180.78.69 with HTTP; Thu, 9 May 2013 02:04:55 -0700 (PDT)
-In-Reply-To: <CAMP44s1DPwfiEDuUqUSBN1ShsgLDy9_2E0OD6nnwT7kJeJUCyg@mail.gmail.com>
-X-Google-Sender-Auth: kBX9wxLWo4GLBTLngveTUFyhTCo
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=gefufJrbFVTr1oQn3qxH6Y7HTlJBrZJ0/BQyL4EtUcA=;
+        b=Sb79jJ0C4MrU6Qv5CPNOF4Z1xPELtbEhh2S+KjPlvng+RnQURSjA4lqtnJVfSvWuil
+         oUde05/ZRaoIKyipqH/2G73umUXmxnJyjsBc54JjU7YxQL9vNvRWJZsUdpqSUYabILgG
+         9WT3OvN7BYMdgMd3xb7UZowhpoEHaIUeS6z6/I0LoBoqOQe01bcrOvCaHu6Ema7cRfSa
+         7c2IVkOIEQj85EURmJnpCLNiR9DKLdZSbfzpUYZYtSQtIgDKEYmhnajoz77zTQKclxHY
+         EZFssESXmQnNSWNwumTEUI9orfkzi5Yok3/Hie84NFoW6pFnXMYox5zsi5Imd38CzAYn
+         QY7g==
+X-Received: by 10.66.251.133 with SMTP id zk5mr12118715pac.26.1368090818377;
+        Thu, 09 May 2013 02:13:38 -0700 (PDT)
+Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id wi6sm2323180pbc.22.2013.05.09.02.13.36
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 09 May 2013 02:13:37 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.38.gd586103
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223720>
 
-On Thu, May 9, 2013 at 4:53 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-[snip]
->>> @@ -562,9 +561,7 @@ static void handle_tags_and_duplicates(struct string_list *extra_refs)
->>>                         break;
->>>                 case OBJ_COMMIT:
->>>                         /* create refs pointing to already seen commits */
->>> -                       commit = (struct commit *)object;
->>> -                       printf("reset %s\nfrom :%d\n\n", name,
->>> -                              get_object_mark(&commit->object));
->>> +                       printf("reset %s\nfrom :%d\n\n", name, get_object_mark(object));
->>
->> FWIW, this line is now too long (exceeds 80 columns).  Good catch on
->> the casting though.
->>
->> -John
->>
->> PS  Sorry for the duplicate Felipe... I still need to get used to
->> hitting "Reply All". :-)
->
-> The guideline is:
->
->  - We try to keep to at most 80 characters per line.
->
-> The key word being *try*.
+The `kdiff3 --auto` help message is, "No GUI if all conflicts are auto-
+solvable."  This flag was carried over from the original mergetool
+commands.  diff_cmd() is for two-way comparisons only so remove the
+superfluous flag.
 
-I saw that, but you actively joined the lines, and there was no need
-to.  It didn't even require trying to keep it within 80 columns. :-)
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+This one is not RFC; just a trivial fix.
 
--John
+ mergetools/kdiff3 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mergetools/kdiff3 b/mergetools/kdiff3
+index 28fead4..a30034f 100644
+--- a/mergetools/kdiff3
++++ b/mergetools/kdiff3
+@@ -1,5 +1,5 @@
+ diff_cmd () {
+-	"$merge_tool_path" --auto \
++	"$merge_tool_path" \
+ 		--L1 "$MERGED (A)" --L2 "$MERGED (B)" \
+ 		"$LOCAL" "$REMOTE" >/dev/null 2>&1
+ }
+-- 
+1.8.3.rc1.38.g0f1704c
