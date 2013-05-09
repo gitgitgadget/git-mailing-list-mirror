@@ -1,153 +1,192 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v8 12/12] git-clean: update document for interactive git-clean
-Date: Fri, 10 May 2013 01:14:16 +0800
-Message-ID: <29373d346dd31a2c73b582fb3291667df6105b9c.1368118918.git.worldhello.net@gmail.com>
-References: <cover.1368118918.git.worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu May 09 19:15:36 2013
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: Problems with Windows, Was: What's cooking in git.git (May 2013,
+ #01; Fri, 3)
+Date: Thu, 09 May 2013 18:18:01 +0100
+Message-ID: <518BDA49.400@ramsay1.demon.co.uk>
+References: <7vvc6zwta7.fsf@alter.siamese.dyndns.org> <51890F48.3090409@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	mlevedahl@gmail.com, Jonathan Nieder <jrnieder@gmail.com>
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu May 09 19:21:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaURD-0003Tw-Sg
-	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 19:15:28 +0200
+	id 1UaUX6-0002Ii-1e
+	for gcvg-git-2@plane.gmane.org; Thu, 09 May 2013 19:21:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752378Ab3EIRPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 May 2013 13:15:22 -0400
-Received: from mail-da0-f49.google.com ([209.85.210.49]:40179 "EHLO
-	mail-da0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751044Ab3EIRPU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 May 2013 13:15:20 -0400
-Received: by mail-da0-f49.google.com with SMTP id p5so1719540dak.36
-        for <git@vger.kernel.org>; Thu, 09 May 2013 10:15:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:in-reply-to:references;
-        bh=gMSB+KF1STDpXu6gk+LGUufNHJStfqOFC+zX1D7x1eg=;
-        b=ch2S9u2ISbT5x3DWaDKFrE84W1lzdA5aKpyGSUNpvpvfuHZg6KbYerj3MqES7GxF6j
-         YvYQMYTx4fj+Wa+guKbhpZE7NzXKn8tIz2/oHk2X78JaHSXIKHaqYFNG6mdjm8aGiGTr
-         7VQ9vQt8SgnzN9hIF8aSScRmYU3ogLmLvkAlLdzyVzN7pNUg7chnICyXt+R4CM+6oo3g
-         0o/m2YmsDxRri+ucaxC9rmygMGsQkZH/bnfaR3E1tzibvUaDGdG3NtIQmLnLxnQ7jBna
-         613N8nr8G/df3buSosh8quCTIXG33fWgh3QWM9cHQORRCYpfSlmqZ9rIDgqv5oboAdwb
-         HDDQ==
-X-Received: by 10.68.52.39 with SMTP id q7mr13579382pbo.92.1368119720462;
-        Thu, 09 May 2013 10:15:20 -0700 (PDT)
-Received: from localhost.localdomain ([114.246.128.169])
-        by mx.google.com with ESMTPSA id pa2sm4407182pac.9.2013.05.09.10.15.16
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 09 May 2013 10:15:19 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc1.341.g24a8a0f
-In-Reply-To: <cover.1368118918.git.worldhello.net@gmail.com>
-In-Reply-To: <cover.1368118918.git.worldhello.net@gmail.com>
-References: <CANYiYbEvYXiRE0OeR5vqBAaOFFpJTPBetQbawZD5EcMCj8veFw@mail.gmail.com> <cover.1368118918.git.worldhello.net@gmail.com>
+	id S1752418Ab3EIRVW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 May 2013 13:21:22 -0400
+Received: from mdfmta004.mxout.tbr.inty.net ([91.221.168.45]:36756 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751731Ab3EIRVV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 May 2013 13:21:21 -0400
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 1D2C1A0C073;
+	Thu,  9 May 2013 18:21:19 +0100 (BST)
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id C9552A0C083;
+	Thu,  9 May 2013 18:21:17 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;
+	Thu,  9 May 2013 18:21:16 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <51890F48.3090409@web.de>
+X-MDF-HostID: 9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223762>
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
----
- Documentation/git-clean.txt | 71 +++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 69 insertions(+), 2 deletions(-)
+Torsten B=F6gershausen wrote:
+> On 2013-05-04 01.14, Junio C Hamano wrote:
+>>
+>>  Cygwin portability; both were reviewed by Jonathan, and the tip one
+>>  seems to want a bit further explanation.  Needs positive report
+>>  from Cygwin 1.7 users who have been on 1.7 to make sure it does not
+>>  regress for them.
+>=20
+> I was trying to verify that cygwin 1.7 is still Ok, but got puzzled.
+>=20
+> Running the test suite under cygwin doesn't seem to work any more (?)=
+:
+>=20
+> Scenario 1:
+> The PC is running alone, and goes into the screen saver.
+> Pressing CTRL-ALT-DEL didn't get any effect.
+>=20
+> Scenario 2:
+> The PC didn't react any more, when the test suite was run in backgrou=
+nd.
+> In 3 or 4 cases the PC needed to be reboot hardly.
+>=20
+> Using the commits before and after this change makes the test suite h=
+ang=20
+> as well at some point, then it hangs somewhere at TC 3000--4000.
+>=20
+> Scenario 4:
+> The I disabled the screensaver, upgdated cygwin,
+>  and went back to an older commit:
+> The latest run from commit 52d63e70, April 28,
+> hangs in TC 5500, ok 26 clone shallow object count.
+>=20
+> I can see 2 times=20
+> git.exe pull --depth 4 ..A=20
+>=20
+> Scenario 5:
+> The run of today 1.8.3-rc1, hangs in t5510,
+> some git.exe are running fetch. (or pull)
+>=20
+>=20
+> It seems as if some process/exes are not terminated
+> in the way it should be.
+>=20
+> I will try on a different machine,
+> comments are wellcome
 
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index 186e34..4512f7 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -39,8 +39,8 @@ OPTIONS
- 
- -i::
- --interactive::
--	Show what would be done and the user must confirm before actually
--	cleaning.
-+	Show what would be done and clean files interactively. See
-+	``Interactive mode'' for details.
- 
- -n::
- --dry-run::
-@@ -69,6 +69,73 @@ OPTIONS
- 	Remove only files ignored by Git.  This may be useful to rebuild
- 	everything from scratch, but keep manually created files.
- 
-+Interactive mode
-+----------------
-+When the command enters the interactive mode, it shows the
-+files and directories to be cleaned, and goes into its
-+interactive command loop.
-+
-+The command loop shows the list of subcommands available, and
-+gives a prompt "What now> ".  In general, when the prompt ends
-+with a single '>', you can pick only one of the choices given
-+and type return, like this:
-+
-+------------
-+    *** Commands ***
-+      1: clean         2: filter by pattern     3: select by numbers
-+      4. ask each      5. toggle flags: none    6. quit
-+      7: help
-+    What now> 2
-+------------
-+
-+You also could say `c` or `clean` above as long as the choice is unique.
-+
-+The main command loop has 7 subcommands.
-+
-+clean::
-+
-+   Start cleaning files and directories, and then quit.
-+
-+filter by pattern::
-+
-+   This shows the files and directories to be deleted and issues an
-+   "Input ignore patterns>>" prompt. You can input space-seperated
-+   patterns to exclude files and directories from deletion.
-+   E.g. "*.c *.h" will excludes files end with ".c" and ".h" from
-+   deletion. When you are satisfied with the filtered result, press
-+   ENTER (empty) back to the main menu.
-+
-+select by numbers::
-+
-+   This shows the files and directories to be deleted and issues an
-+   "Select items to delete>>" prompt. When the prompt ends with double
-+   '>>' like this, you can make more than one selection, concatenated
-+   with whitespace or comma.  Also you can say ranges.  E.g. "2-5 7,9"
-+   to choose 2,3,4,5,7,9 from the list.  If the second number in a
-+   range is omitted, all remaining patches are taken.  E.g. "7-" to
-+   choose 7,8,9 from the list.  You can say '*' to choose everything.
-+   Also when you are satisfied with the filtered result, press ENTER
-+   (empty) back to the main menu.
-+
-+ask each::
-+
-+  This will start to clean, and you must confirm one by one in order
-+  to delete items. Please note that this action is not as efficient
-+  as the above two actions.
-+
-+toggle flags::
-+
-+  This lets you change the flags for git-clean, such as -x/-X/-d/-ff,
-+  and refresh the cleaning candidates list automatically.
-+
-+quit::
-+
-+  This lets you quit without do cleaning.
-+
-+help::
-+
-+  Show brief usage of interactive git-clean.
-+
- SEE ALSO
- --------
- linkgit:gitignore[5]
--- 
-1.8.3.rc1.341.g24a8a0f
+Hmm, I'm a little puzzled, but not shocked. ;-)
+
+Somebody, I forget who, had already tested Jonathan's patch
+on cygwin 1.7 successfully and my follow up patch should be
+a no-op on cygwin 1.7; so I'm puzzled! (The high risk should
+have been on cygwin 1.5).
+
+I'm not shocked because running the test-suite on cygwin has
+been a bit of a magical mystery tour for quite some time.
+
+In about 2007, I could not run the test-suite for about six
+to nine months; it would randomly wedge my laptop solid - I had
+to pull the power-cord out in order to re-boot. (I suspect that
+commit 9cb18f56fde may have cured that particular problem, but
+don't quote me on that - I didn't investigate at the time.)
+
+I have noticed that running the tests with 'prove' is more likely
+to prove successful, so my config.mak looks like:
+
+    $ cat config.mak
+    NO_SVN_TESTS=3D1
+    GIT_TEST_OPTS=3D--no-color
+    NO_GETTEXT=3D1
+    DEFAULT_TEST_TARGET=3Dprove
+    GIT_PROVE_OPTS=3D'--timer'
+    $
+
+I currently run the tests like so:
+
+    $ time $(GIT_SKIP_TESTS=3D't0061.3 t0070.3 t4130 t9010 t9300' make =
+test \
+    >test-outp13 2>&1)
+
+    real    172m25.311s
+    user    132m15.133s
+    sys     66m43.122s
+    $
+
+The t0061.3 and t0070.3 failures don't require much discussion. The t41=
+30
+failure is an intermittent "racy git" issue that has been on my TODO li=
+st
+for several years. t9300 also fails intermittently. However, t9010 fail=
+s
+every time for me, hanging the test suite (although ^C interrupts it ju=
+st
+fine).
+
+I have a "fix" for t9010 that looks like:
+
+    diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
+    index b7eed24..4d01e3b 100755
+    --- a/t/t9010-svn-fe.sh
+    +++ b/t/t9010-svn-fe.sh
+    @@ -22,10 +22,9 @@ try_dump () {
+            maybe_fail_fi=3D${3:+test_$3} &&
+   =20
+            {
+    -               $maybe_fail_svnfe test-svn-fe "$input" >stream 3<ba=
+ckflow &
+    -       } &&
+    -       $maybe_fail_fi git fast-import --cat-blob-fd=3D3 <stream 3>=
+backflow &&
+    -       wait $!
+    +               $maybe_fail_svnfe test-svn-fe "$input" 3<backflow
+    +       } |
+    +       $maybe_fail_fi git fast-import --cat-blob-fd=3D3 3>backflow
+     }
+   =20
+     properties () {
+
+but I have not tested this patch enough to be happy to submit it (I hav=
+e
+some suspicions that it would still fail intermittently, just like t930=
+0).
+
+Also, commit 7bc0911d ("test-lib: Fix say_color () not to interpret \a\=
+b\c
+in the message", 11-10-2012) caused several random test failures. (don'=
+t ask
+me why). So, before each test run, I have to apply the following:
+
+    diff --git a/t/test-lib.sh b/t/test-lib.sh
+    index f50f834..ed32b7f 100644
+    --- a/t/test-lib.sh
+    +++ b/t/test-lib.sh
+    @@ -230,7 +230,7 @@ else
+            say_color() {
+                    test -z "$1" && test -n "$quiet" && return
+                    shift
+    -               printf "%s\n" "$*"
+    +               echo -E "$*"
+            }
+     fi
+
+which effectively reverts that commit.
+
+So, as I said, a "magical mystery tour". :-D
+
+ATB,
+Ramsay Jones
