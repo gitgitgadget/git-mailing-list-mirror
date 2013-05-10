@@ -1,74 +1,72 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 4/4] t4300 (rebase): don't unnecessarily set GIT_TRACE
-Date: Fri, 10 May 2013 12:16:39 -0700
-Message-ID: <20130510191639.GB3478@elie>
-References: <1368196178-5807-1-git-send-email-artagnon@gmail.com>
- <1368196178-5807-5-git-send-email-artagnon@gmail.com>
- <7vmws2529j.fsf@alter.siamese.dyndns.org>
- <CALkWK0k_ArM9EpY0S7=mbgFpHsoauZCr9e=ESX_CEA5-vRHrHQ@mail.gmail.com>
- <7vr4he3kpz.fsf@alter.siamese.dyndns.org>
- <CALkWK0kLjf=m-_9PkXzxOpnpqfh-n004E0f7_mi-VL3SbYWFAg@mail.gmail.com>
- <7vk3n6206h.fsf@alter.siamese.dyndns.org>
- <CALkWK0kTvwxMFGUqH0wKNVpLg-qQQbN+vOcAxiEwmOeDe=87jA@mail.gmail.com>
- <20130510190705.GA3478@elie>
- <CALkWK0kZWrY5_B3mxuVV1cA-AqvkqJpjRAuSovXLi6OCA+3ybQ@mail.gmail.com>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: Git Merge 2013 Conference, Berlin
+Date: Fri, 10 May 2013 21:16:34 +0200
+Message-ID: <CAP2yMaJyH1epFXpT2JFxrbKvvnMtRT0yMf6pAGPkNnzVtN4JwA@mail.gmail.com>
+References: <CAP2yMaJyCi5tvFZ5hVpVULR=oKgfc-b0zb8baxFDhNqmu+W_Bg@mail.gmail.com>
+ <518D462D.7080901@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 10 21:16:54 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git list <git@vger.kernel.org>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 10 21:17:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UasoD-0002x4-FO
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 21:16:49 +0200
+	id 1UasoN-000372-A2
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 21:16:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753783Ab3EJTQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 15:16:45 -0400
-Received: from mail-bk0-f44.google.com ([209.85.214.44]:60243 "EHLO
-	mail-bk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753279Ab3EJTQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 15:16:44 -0400
-Received: by mail-bk0-f44.google.com with SMTP id jk13so2182295bkc.17
-        for <git@vger.kernel.org>; Fri, 10 May 2013 12:16:43 -0700 (PDT)
+	id S1753794Ab3EJTQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 15:16:55 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:44131 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753789Ab3EJTQz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 15:16:55 -0400
+Received: by mail-ie0-f175.google.com with SMTP id s9so8760417iec.34
+        for <git@vger.kernel.org>; Fri, 10 May 2013 12:16:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=M0OCMdsT8lHJjciMlO4Gd2QHc1b4r3I95wFviXFat1E=;
-        b=Xe3aR0E8J2wrSwzOkQe8Tlf4RPcV5ZmAkrfnVDcTDkM6vXtl/r6E40ATClV2z+7l04
-         +qenFADvCqqTBUpWYG5B12g/rV/YuXF9ttI4l4c7HCidqUPOcaRYF8mnLjeb7dYAQy8q
-         8fEc5YKXhClvKfy43j1h/7nq9QJ1hLYz6vc9pgd/gbHbKGeKilLKKOOgxhhuDRe5CUZV
-         ulGMpzuo4Kep23mZy7sn/80pspPH1udirUKnDObJTDso8rxtHM3G6R/ZCpqG4R+Tar90
-         n//dGmxo88lABNJL/TCWo270urszXmJ2haqcGAbBtDkJ1OZL5bekqQ/wdr9dgBiSa010
-         i/8w==
-X-Received: by 10.204.184.132 with SMTP id ck4mr4313612bkb.126.1368213403560;
-        Fri, 10 May 2013 12:16:43 -0700 (PDT)
-Received: from elie ([213.221.117.228])
-        by mx.google.com with ESMTPSA id jz9sm1045284bkb.1.2013.05.10.12.16.42
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 10 May 2013 12:16:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0kZWrY5_B3mxuVV1cA-AqvkqJpjRAuSovXLi6OCA+3ybQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=S5CpoL9DzOlpnlnhSCYCSjwVIgNkjpybG1xAapeqRLE=;
+        b=EWtIFoU6SzHRUM74AkziPk4LjIOoA9jBWNmVzhYOS4Luz3Fd1VnaoiP6PoFyjVHmC2
+         +8bm6Aq/xwRseACShf7FTLE16fwCk3ri/5pZxYRCje+gxbyICSf2kwwNwtJ+Qr2dJ3yg
+         WFFU+f4lmAnZNum/b5NdizQE+4Unx4rOQB/8FXE2jROBTMKJvk+8rEYDprtni/V2aD9/
+         3b9iKUg7AG73/zj5QrsBNNFDt27WH7+Un/55Tk8MQsb16kgK98S3zqQZxl4TDy1bq7Kr
+         QdHeZjR8fapE1g4+5Vw1Pn9sY+xI69M4o48LVr2oJ/XTGgaRfImxp+9VSuFXwFuz4JWM
+         N9hQ==
+X-Received: by 10.50.36.39 with SMTP id n7mr3035405igj.106.1368213414588; Fri,
+ 10 May 2013 12:16:54 -0700 (PDT)
+Received: by 10.231.246.71 with HTTP; Fri, 10 May 2013 12:16:34 -0700 (PDT)
+In-Reply-To: <518D462D.7080901@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223899>
 
-Ramkumar Ramachandra wrote:
+Hey,
 
->                           Can we do better by not printing the -v
-> output of the passing tests though?
+On Fri, May 10, 2013 at 9:10 PM, Sebastian Schuberth
+<sschuberth@gmail.com> wrote:
+> On 23.01.2013 20:27, Scott Chacon wrote:
+>
+>> As you may remember, we did not have a GitTogether last year.  Since I
+>> miss drinking and talking Git nerdiness with all of you, I'm going to
+>> try organizing some face time on a semi-regular basis.  I would like
+>> to try to do a small Git conference in the US and the EU each year.
+>>
+>> We're starting off in Berlin, May 9-11th.  GitHub has secured
+>> conference space at the Radisson Blu Berlin for those days.  I have a
+>
+>
+> It's a pity that you did not announce the event on the msysgit mailing list,
+> too, which is why I totally missed it until today, the event being almost
+> over. This is especially sad for me as I'm living in Berlin, so it would
+> have been easy for me to attend, and as I had offered to help you organizing
+> the event when you were still looking for a location last year.
 
-Not for my use.  The output from comprable tests before is often
-useful for comparison.  I wouldn't be against such an option for
-people who want it, though.
+I apologize, I will try to put events on that list as well in the future.
 
-Thanks,
-Jonathan
+Scott
