@@ -1,77 +1,64 @@
-From: Ruediger Meier <sweet_f_a@gmx.de>
-Subject: Re: git clone --depth and git describe
-Date: Fri, 10 May 2013 10:42:03 +0200
-Message-ID: <201305101042.04232.sweet_f_a@gmx.de>
-References: <201305100107.59115.sweet_f_a@gmx.de> <CACsJy8D=getgkDV9A57=_N+u-XPPy8Cxdx5W+QADnCiGZxFRWQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 10 10:42:17 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/4] remote-hg: trivial fixes and cleanups
+Date: Fri, 10 May 2013 05:16:59 -0500
+Message-ID: <1368181023-10402-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 10 12:18:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uaiu8-0002mv-Gy
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 10:42:17 +0200
+	id 1UakPQ-0001UR-2c
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 12:18:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752888Ab3EJImJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 04:42:09 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61213 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751640Ab3EJImH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 04:42:07 -0400
-Received: from mailout-de.gmx.net ([10.1.76.10]) by mrigmx.server.lan
- (mrigmx001) with ESMTP (Nemesis) id 0Lj83k-1TyeG31bX4-00dDMw for
- <git@vger.kernel.org>; Fri, 10 May 2013 10:42:05 +0200
-Received: (qmail invoked by alias); 10 May 2013 08:42:05 -0000
-Received: from dslb-088-073-076-227.pools.arcor-ip.net (EHLO dslb-088-073-076-227.pools.arcor-ip.net) [88.73.76.227]
-  by mail.gmx.net (mp010) with SMTP; 10 May 2013 10:42:05 +0200
-X-Authenticated: #11967524
-X-Provags-ID: V01U2FsdGVkX1/BEFA1IOrBeF/YvRph6ScGlQphFEL6rwBUr70Lpt
-	JrMVPwb/oaf7BN
-User-Agent: KMail/1.9.10
-In-Reply-To: <CACsJy8D=getgkDV9A57=_N+u-XPPy8Cxdx5W+QADnCiGZxFRWQ@mail.gmail.com>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S1751953Ab3EJKSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 06:18:34 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:45526 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750924Ab3EJKSb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 06:18:31 -0400
+Received: by mail-ob0-f180.google.com with SMTP id xk17so1812291obc.25
+        for <git@vger.kernel.org>; Fri, 10 May 2013 03:18:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=gG0qQcaThfro9Co8j8aBUpT1sVRSWnh2zb7A0L1hhqY=;
+        b=dnf58jaGeEfJlGn2ZUeF8eAi2XLUQKF5UuQa8mh/IiLyEia+KjsZWN/PmV4dKKBG2m
+         SckoVaSNF+bknJVlbypyatQsIfTryrKQk+zIknxXlsqqkInOaCE+poc2kluJ7LJL7sa8
+         lr5XjrAzdaCFZGYe3omrGNADUzXLkkEmJNoO9y+TaSN9uVJYVHw+zN8R5K6F6Z9hh/0a
+         sI7OT4osKJQFaZlrhZV+3fGb03Pw3vdyYvmy4NH3PS4qvSOtEfIx5cOFn4lMbwp47ZOE
+         y8ez4ySXeBNnf2v9rQ67/S7A8miZE2PIn6XewylTzGFaIfgBmCUqFzBq6gIMiTf8aEuv
+         22ZQ==
+X-Received: by 10.60.149.129 with SMTP id ua1mr6726612oeb.56.1368181110816;
+        Fri, 10 May 2013 03:18:30 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id h8sm2123739obk.10.2013.05.10.03.18.28
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 10 May 2013 03:18:29 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.555.gd13b5a0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223826>
 
-On Friday 10 May 2013, Duy Nguyen wrote:
-> On Fri, May 10, 2013 at 6:07 AM, Ruediger Meier <sweet_f_a@gmx.de> 
-wrote:
-> > Hi,
-> >
-> > I have a use case where I'd like to improve performance using "git
-> > clone --depth". But I also need "git describe" working on that
-> > clone.
-> >
-> > So something like
-> >  git clone --depth=describable
-> > would be nice to have.
->
-> What does --depth=describable do?
+Hi,
 
-I mean automatically getting the minimum depth which gives us the 
-history back to the last (annotated) tag. So that "git describe" and 
-possibly other project specific administrative scripts (like 
-git-version-gen or gitlog-to-changelog) would work safely on that 
-shallow clone.
+Simple no-brainers.
 
-Or maybe --depth could just generally accept a revspec as argument 
-instead of number only. This would be more useful anyway IMO. Then 
-perhaps something like "last_tag" could be a general magic revspec, 
-probably useful for many other git commands too.
+Felipe Contreras (4):
+  remote-hg: don't push fake 'master' bookmark
+  remote-hg: update bookmarks when pulling
+  remote-hg: test: be a little more quiet
+  remote-hg: fix new branch creation
 
+ contrib/remote-helpers/git-remote-hg | 7 +++++--
+ contrib/remote-helpers/test-hg.sh    | 4 ++--
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-> > Would it be possible to add such feature?
->
-
-cu,
-Rudi
+-- 
+1.8.3.rc1.555.gd13b5a0
