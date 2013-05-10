@@ -1,92 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] transport-helper: fix remote helper namespace regression
-Date: Fri, 10 May 2013 13:55:29 -0700
-Message-ID: <7vli7mzha6.fsf@alter.siamese.dyndns.org>
-References: <1368187710-4434-1-git-send-email-felipe.contreras@gmail.com>
-	<1368187710-4434-3-git-send-email-felipe.contreras@gmail.com>
-	<7vsj1uzijo.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2QHd7b2t654hnMw_xca0OJKjUjEgP2yU4PUe-w4z-zBg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 10 22:55:48 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 1/6] remote-hg: disable forced push by default
+Date: Fri, 10 May 2013 15:59:21 -0500
+Message-ID: <1368219566-1399-2-git-send-email-felipe.contreras@gmail.com>
+References: <1368219566-1399-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 10 23:01:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UauLz-0003aR-Lh
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 22:55:48 +0200
+	id 1UauR2-0000dT-TV
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 23:01:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754534Ab3EJUzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 16:55:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42471 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754247Ab3EJUzc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 16:55:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65CC51DC49;
-	Fri, 10 May 2013 20:55:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YMXoVTRKoEbUPSp1attDm6rW9po=; b=LBJ6kt
-	fO7QmomRcEoGLsK7rWrWAAtAoHpetnVWUG4eAmtfomHHEPj76RIIo5q3K/ZeD4Mk
-	SBMGAMHAaRCjieWbLWdaa1sHCJHDfoZ1F6D7K4ZV+kBTZbxtON9V7w4Sw1t/NWK9
-	z/y8pas5NF69/ktHgOxq1S6Zk+739Ecl9QVtQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u3EcVWFmeReVU1PKm0VsUwN1vRlfQwuJ
-	gPA96zVDUnsowDQJqUGQTbWxjSEyMCGEqwdyjvX/6Cxb8QCm8k7Q93X8t8p9CN8s
-	D/Mcxljba1S4XTHssHbpKryAepLVZFuS35yutfi83ebLLzas0PoihNHCV4FBVjsN
-	nwEU9uxtilc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5AB5C1DC48;
-	Fri, 10 May 2013 20:55:31 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D32D81DC47;
-	Fri, 10 May 2013 20:55:30 +0000 (UTC)
-In-Reply-To: <CAMP44s2QHd7b2t654hnMw_xca0OJKjUjEgP2yU4PUe-w4z-zBg@mail.gmail.com>
-	(Felipe Contreras's message of "Fri, 10 May 2013 15:36:16 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F36B8E66-B9B3-11E2-B592-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754722Ab3EJVA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 17:00:57 -0400
+Received: from mail-oa0-f45.google.com ([209.85.219.45]:52305 "EHLO
+	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754266Ab3EJVA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 17:00:56 -0400
+Received: by mail-oa0-f45.google.com with SMTP id j6so4465398oag.18
+        for <git@vger.kernel.org>; Fri, 10 May 2013 14:00:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=0nWaqNKY6cb9kIsj12jpbu5ZEo8rrZnwyaZ4GzfVN00=;
+        b=PZtc9YRqBkBVEm6D6NfVPMr9SY94sExeOx2xLO74WPgkpYrqmt9/hmzMuXvk+S/ui+
+         RYUnFTvlXFrRMkD0FzxHovhHAWRGnyPdEGrL6143rkYgCl8jwtWyW09KQ2eMcckPH+ow
+         NAS7oB7rTW7e/5XGEJPf+a4t8KqR3bWAJ+oV/JuWCKN6YFib4m36CUlwkNxUGNg/Kge1
+         olO7CnCTTdVaoIsQs8cIBBs3gdjNn3Jfykr1cCgs5PglrobWlG71bFL+xZSJ9w0oxgS0
+         vCeIK1q+6Ys0t9iYw6sC6ggLY1wU/rrdYyxx2TJcMDimTbhx375elG5JKuUheIL3CnoG
+         p7wQ==
+X-Received: by 10.60.155.209 with SMTP id vy17mr8184521oeb.83.1368219656113;
+        Fri, 10 May 2013 14:00:56 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id h8sm4570543obk.10.2013.05.10.14.00.54
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 10 May 2013 14:00:55 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.579.g184e698
+In-Reply-To: <1368219566-1399-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223907>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+In certain situations we might end up pushing garbage revisions (e.g. in
+a rebase), and the patches to deal with that haven't been merged yet.
 
-> On Fri, May 10, 2013 at 3:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> +test_expect_success 'push update refs failure' '
->>> +     (cd local &&
->>> +     git checkout update &&
->>> +     echo "update fail" >>file &&
->>> +     git commit -a -m "update fail" &&
->>> +     git rev-parse --verify testgit/origin/heads/update >expect &&
->>> +     GIT_REMOTE_TESTGIT_PUSH_ERROR="non-fast forward" \
->>> +     test_expect_code 1 git push origin update &&
->>
->> This is not portable
->
-> Why not? Other parts of this script run commands with environment
-> variables like this.
+So let's disable forced pushes by default.
 
-There is a difference between a proper command and a shell function
-with respect to the single-shot environment assignment.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/remote-helpers/git-remote-hg | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-	VAR=VAL command args
-
-is fine, but
-
-	VAR=VAL shell_function args
-
-is not.
-
-People often make this mistake and we had to fix it number of times
-in t/ directory.
+diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+index 96ad30d..84901e9 100755
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -908,7 +908,7 @@ def main(args):
+ 
+     hg_git_compat = False
+     track_branches = True
+-    force_push = True
++    force_push = False
+ 
+     try:
+         if get_config('remote-hg.hg-git-compat') == 'true\n':
+@@ -916,8 +916,8 @@ def main(args):
+             track_branches = False
+         if get_config('remote-hg.track-branches') == 'false\n':
+             track_branches = False
+-        if get_config('remote-hg.force-push') == 'false\n':
+-            force_push = False
++        if get_config('remote-hg.force-push') == 'true\n':
++            force_push = True
+     except subprocess.CalledProcessError:
+         pass
+ 
+-- 
+1.8.3.rc1.579.g184e698
