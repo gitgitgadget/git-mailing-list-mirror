@@ -1,105 +1,90 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [PATCH] Support running an arbitrary git action through checkout
-Date: Fri, 10 May 2013 17:06:07 +0200
-Message-ID: <2d5cfb3be9487f607051cad3d5230434660307ba.1368198269.git.trast@inf.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Steve Losh <steve@stevelosh.com>, Jeff King <peff@peff.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 10 17:06:20 2013
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv3 0/7] textconv with grep and show
+Date: Fri, 10 May 2013 17:08:18 +0200
+Message-ID: <cover.1368197380.git.git@drmicha.warpmail.net>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 10 17:09:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uaotn-0001HY-RZ
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 17:06:20 +0200
+	id 1Uaowi-0004Tg-9Y
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 17:09:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753473Ab3EJPGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 11:06:15 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:58809 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753340Ab3EJPGP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 11:06:15 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 10 May
- 2013 17:06:03 +0200
-Received: from linux-k42r.v.cablecom.net (213.221.117.227) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 10 May
- 2013 17:06:11 +0200
-X-Mailer: git-send-email 1.8.3.rc1.425.g49e5819
-X-Originating-IP: [213.221.117.227]
+	id S1753712Ab3EJPJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 11:09:16 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:60707 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753600Ab3EJPJP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 May 2013 11:09:15 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id B02AC20C0E;
+	Fri, 10 May 2013 11:09:12 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute4.internal (MEProxy); Fri, 10 May 2013 11:09:12 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=from:to:cc:subject:date:message-id; s=
+	smtpout; bh=PFlSoOMPThYnsqADs50jF1Aq9bw=; b=Zx7MEsVQOKIvcveZl3X3
+	46sIVi09VQNSVBWX6TSmzOeO5rJyLtKYY6C/xa3V8yNaGZsmdt0DLKggQPW/JL+B
+	bTBihH2mEHXUJ38kfPu2Q3uHyY13hYqz3lu9uHf6fQ6+qSguMGtA4HeAdywBKYdj
+	ANHpcDmVL0OWZy7vNVPPK/w=
+X-Sasl-enc: n7icmVj1I8YIUKno+dHW1XzCxm7LWT3l7QuHUTqOANY9 1368198551
+Received: from localhost (unknown [213.221.117.228])
+	by mail.messagingengine.com (Postfix) with ESMTPA id C0B4BC80010;
+	Fri, 10 May 2013 11:09:11 -0400 (EDT)
+X-Mailer: git-send-email 1.8.3.rc1.406.gf4dce7e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223862>
 
-[1] correctly observed that we are already wrapping three different
-operations under the git-checkout command.  To lead that design -- and
-the Koan -- to the obvious conclusion, some additional work is
-required.
+This is the "Git Merge edition" of the textconv series. Great
+conference, the series struggles to match that.
 
-With this patch, you can say
+v3 keeps all defaults as they are (no textconv for blobs by default) and
+incorporates Junio's touched_flags patch. I do not need the callback but
+left it in.
 
-  git checkout --reset foo      # reset HEAD to foo
-  git checkout --bisect start   # begin a bisection
-  git checkout --rebase master  # rebase the current branch on master
+As for beeing able to choose textconv as a default for blobs, I'm
+wondering how fine grained that needs to be: one for all, differentiate
+between "show blob" and "grep", or even driver specific
+(diff.driver.blobtextconv boolean).
 
-and so on for any git command.
+In the latter case, it's not clear to me how "--textconv" with a "false"
+config should behave.
 
-Note that this actually shadows the long form of the existing --merge
-option.  But since all reasonable Git users are extremely lazy typers,
-they will just use the short form (-m) and this change is not expected
-to cause them any problems.
+Jeff King (1):
+  grep: allow to use textconv filters
 
-[1] http://stevelosh.com/blog/2013/04/git-koans/
+Junio C Hamano (1):
+  diff_opt: track whether flags have been set explicitly
 
-Cc: Steve Losh <steve@stevelosh.com>
-Cc: Jeff King <peff@peff.net>
-Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
----
- builtin/checkout.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+Michael J Gruber (5):
+  t4030: demonstrate behavior of show with textconv
+  show: honor --textconv for blobs
+  cat-file: do not die on --textconv without textconv filters
+  t7008: demonstrate behavior of grep with textconv
+  grep: honor --textconv for the case rev:path
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f5b50e5..17419a2 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -20,6 +20,8 @@
- #include "resolve-undo.h"
- #include "submodule.h"
- #include "argv-array.h"
-+#include "help.h"
-+#include "exec_cmd.h"
- 
- static const char * const checkout_usage[] = {
- 	N_("git checkout [options] <branch>"),
-@@ -1071,6 +1073,25 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		OPT_END(),
- 	};
- 
-+	if (argc > 1 && !prefixcmp(argv[1], "--")) {
-+		const char *subcommand = argv[1] + 2;
-+		struct cmdnames main_cmds, other_cmds;
-+
-+		memset(&main_cmds, 0, sizeof(main_cmds));
-+		memset(&other_cmds, 0, sizeof(other_cmds));
-+
-+		load_command_list("git-", &main_cmds, &other_cmds);
-+
-+		if (is_in_cmdlist(&main_cmds, subcommand) ||
-+		    is_in_cmdlist(&other_cmds, subcommand)) {
-+			const char **args = xmalloc((argc) * sizeof(char*));
-+			args[0] = subcommand;
-+			memcpy(args+1, argv+2, argc*sizeof(char*));
-+			args[argc] = NULL;
-+			execv_git_cmd(args);
-+		}
-+	}
-+
- 	memset(&opts, 0, sizeof(opts));
- 	memset(&new, 0, sizeof(new));
- 	opts.overwrite_ignore = 1;
+ Documentation/git-grep.txt           |   9 +++-
+ Documentation/technical/api-diff.txt |  10 +++-
+ builtin/cat-file.c                   |  18 +++----
+ builtin/grep.c                       |  13 +++--
+ builtin/log.c                        |  26 +++++++--
+ diff.c                               |   3 ++
+ diff.h                               |   8 ++-
+ grep.c                               | 100 ++++++++++++++++++++++++++++++-----
+ grep.h                               |   1 +
+ object.c                             |  26 ++++++---
+ object.h                             |   2 +
+ t/t4030-diff-textconv.sh             |  24 +++++++++
+ t/t7008-grep-binary.sh               |  31 +++++++++++
+ t/t8007-cat-file-textconv.sh         |  20 ++-----
+ 14 files changed, 234 insertions(+), 57 deletions(-)
+
 -- 
-1.8.3.rc1.425.g49e5819
+1.8.3.rc1.406.gf4dce7e
