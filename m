@@ -1,80 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Pending changes before 1.8.3-rc2?
-Date: Fri, 10 May 2013 14:13:51 -0700
-Message-ID: <7vfvxuzgfk.fsf@alter.siamese.dyndns.org>
-References: <7vwqr6znn4.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0Y7QGrfavBsFL17LEQga3eGRyMHbNMbLZFpC4WeEZTBQ@mail.gmail.com>
+From: Filipe Cabecinhas <filcab@gmail.com>
+Subject: Re: write() _will_ fail on Mac OS X/XNU if nbytes > INT_MAX
+Date: Fri, 10 May 2013 15:24:57 -0700
+Message-ID: <CAEDE8507jPW4sKW7-xX5-+3YpFgfzkXzeskCNRrD7T6ynxgdNA@mail.gmail.com>
+References: <CAEDE852zw9EhmnVaWb_oa_BX_d_--TZoTcs1kgkMPHooM_E6Cw@mail.gmail.com>
+	<7v4nffpbct.fsf@alter.siamese.dyndns.org>
+	<CAEDE8504Pa_hRcHBLt4S9CL74noqrX3fWGCSf+x45zCr_43+5A@mail.gmail.com>
+	<7vbo8j600q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>,
-	Eric Wong <normalperson@yhbt.net>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Jiang Xin <worldhello.net@gmail.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 10 23:14:13 2013
+Content-Type: text/plain; charset=UTF-8
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 11 00:25:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uaudo-0005eJ-Mo
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 23:14:13 +0200
+	id 1Uavkb-000898-5h
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 00:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754483Ab3EJVNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 17:13:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52984 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754207Ab3EJVNy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 17:13:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB8981E22F;
-	Fri, 10 May 2013 21:13:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GA2rQ0v1WM7wNE2GgUCtulLhr74=; b=HTifSz
-	ZhpVcoKHBcjlYEdkYf/uDUP5GeAYOkm4/Kiznvbwc8El4cFOFjA+Kv8gNfLHP684
-	2CFzA7TTTwRaVte/js8vkGwpQf4HDto99S3ZWDGRca0TaVFqiurXog54WTdlge3c
-	wWAUmGq3YAd2h4Atup8NBTKcS/cIvmGR4rX9Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TIw8u9W6bjpeARAD8VT35c9GHPzmInJd
-	JeYPpfvRzwfBsw2+5KQCqNpjB7OHO8mwRB7dV9//BFnuHaDBQaxOOVqut2vVHLhV
-	5uIH7O81ILUrtQUxLUb8zGIgd/5rplm0VRymwxiWuLl6wqj/Z+RfgL9oSa/ywBgU
-	UuZUxB0205I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF02F1E22E;
-	Fri, 10 May 2013 21:13:53 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6417D1E22D;
-	Fri, 10 May 2013 21:13:53 +0000 (UTC)
-In-Reply-To: <CAMP44s0Y7QGrfavBsFL17LEQga3eGRyMHbNMbLZFpC4WeEZTBQ@mail.gmail.com>
-	(Felipe Contreras's message of "Fri, 10 May 2013 16:02:55 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8497047C-B9B6-11E2-8B06-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754124Ab3EJWZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 18:25:00 -0400
+Received: from mail-wg0-f49.google.com ([74.125.82.49]:32997 "EHLO
+	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753955Ab3EJWY7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 18:24:59 -0400
+Received: by mail-wg0-f49.google.com with SMTP id j13so4401705wgh.28
+        for <git@vger.kernel.org>; Fri, 10 May 2013 15:24:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:content-type;
+        bh=DALZfPn5UT7tEp46AIvKC4OpwcmToh6W5X7uURXEToQ=;
+        b=QWmXWbW5mZGT0cTXU5SiCJdYaobJIIcHceSOCfMJGGeMiTC556IvGOm2jFw/GpLwev
+         wfPtis2U+YKix1qcpdyMS6L0jzleKU7wPvJo+3G+Uxt6+te25j2vNuAeYasCfoypBQDk
+         trNYf1a0/SnMqy9VR00bb3oLYgegMBwoUBOPbYXhC7InWScMkMR8G5XvkAbgUveK+CVC
+         DthSdJC1kD9M6R37zOEV5SS5SzzPt8b6Ik2ldlqdRuUKMpsPNkLycG07ogdq+nmYkEAm
+         kA/0WSapOgPuVNryDghvGRf7xYPR9AEi88qMngvA5XVhWIypE9sFgNFhQ3nR4UAd2D4G
+         vq1g==
+X-Received: by 10.194.109.198 with SMTP id hu6mr27509329wjb.5.1368224697767;
+ Fri, 10 May 2013 15:24:57 -0700 (PDT)
+Received: by 10.194.38.233 with HTTP; Fri, 10 May 2013 15:24:57 -0700 (PDT)
+In-Reply-To: <7vbo8j600q.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223917>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Due to a bug in the Darwin kernel, write() calls have a maximum size of
+INT_MAX bytes.
 
-> On Fri, May 10, 2013 at 1:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> I should learn to start bugging you folks a lot earlier in the
->> release cycle (except for Jiang, as localization strings will not be
->> finalizable until very late), but anyway, we will soon be tagging
->> the hopefully final -rc for the upcoming release.  Please throw me a
->> "pull this now!" if you have stuff that needs to be in 1.8.3.
->
-> I guess this doesn't include me, but:
-> http://article.gmane.org/gmane.comp.version-control.git/223908
+This patch introduces a new compat function: clipped_write
+This function behaves the same as write() but will write, at most, INT_MAX
+characters.
+It may be necessary to include this function on Windows, too.
 
-If you mean by "this" my "To:" list, no, it did not include you, but
-that was only because I forgot to.  Sorry about that.
+Signed-off-by: Filipe Cabecinhas <filcab+git@gmail.com>
+---
+ Makefile               |  5 +++++
+ compat/clipped-write.c | 13 +++++++++++++
+ config.mak.uname       |  1 +
+ git-compat-util.h      |  5 +++++
+ 4 files changed, 24 insertions(+)
+ create mode 100644 compat/clipped-write.c
 
-remote-hg and its test in contrib/remote-helpers/ are yours, and as
-long the changes do not affect other parts of the system (judging
-from the diffstat, the 6-patch series wouldn't), I do not mind too
-much about late changes in the cycle.
+diff --git a/Makefile b/Makefile
+index 0f931a2..ccb8f3f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1466,6 +1466,11 @@ ifndef NO_MSGFMT_EXTENDED_OPTIONS
+  MSGFMT += --check --statistics
+ endif
+
++ifdef NEEDS_CLIPPED_WRITE
++ BASIC_CFLAGS += -DNEEDS_CLIPPED_WRITE
++ COMPAT_OBJS += compat/clipped-write.o
++endif
++
+ ifneq (,$(XDL_FAST_HASH))
+  BASIC_CFLAGS += -DXDL_FAST_HASH
+ endif
+diff --git a/compat/clipped-write.c b/compat/clipped-write.c
+new file mode 100644
+index 0000000..9183698
+--- /dev/null
++++ b/compat/clipped-write.c
+@@ -0,0 +1,13 @@
++#include <limits.h>
++#include <unistd.h>
++
++/*
++ * Version of write that will write at most INT_MAX bytes.
++ * Workaround a xnu bug on Mac OS X
++ */
++ssize_t clipped_write(int fildes, const void *buf, size_t nbyte)
++{
++ if (nbyte > INT_MAX)
++ nbyte = INT_MAX;
++ return write(fildes, buf, nbyte);
++}
+diff --git a/config.mak.uname b/config.mak.uname
+index d78fd3d..174703b 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -95,6 +95,7 @@ ifeq ($(uname_S),Darwin)
+  NO_MEMMEM = YesPlease
+  USE_ST_TIMESPEC = YesPlease
+  HAVE_DEV_TTY = YesPlease
++ NEEDS_CLIPPED_WRITE = YesPlease
+  COMPAT_OBJS += compat/precompose_utf8.o
+  BASIC_CFLAGS += -DPRECOMPOSE_UNICODE
+ endif
+diff --git a/git-compat-util.h b/git-compat-util.h
+index e955bb5..a96db23 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -185,6 +185,11 @@ int get_st_mode_bits(const char *path, int *mode);
+ #define probe_utf8_pathname_composition(a,b)
+ #endif
+
++#ifdef NEEDS_CLIPPED_WRITE
++ssize_t clipped_write(int fildes, const void *buf, size_t nbyte);
++#define write(x, y, z) clipped_write((x), (y), (z))
++#endif
++
+ #ifdef MKDIR_WO_TRAILING_SLASH
+ #define mkdir(a,b) compat_mkdir_wo_trailing_slash((a),(b))
+ extern int compat_mkdir_wo_trailing_slash(const char*, mode_t);
+--
+1.8.2.1.343.g13c32df
