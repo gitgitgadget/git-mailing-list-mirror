@@ -1,92 +1,63 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: git clone --depth and git describe
-Date: Fri, 10 May 2013 17:48:16 +0700
-Message-ID: <CACsJy8CsB06LTzGsEyM7FGeazq9BiYsbA4_JyiMa_SwPSMHV_Q@mail.gmail.com>
-References: <201305100107.59115.sweet_f_a@gmx.de> <CACsJy8D=getgkDV9A57=_N+u-XPPy8Cxdx5W+QADnCiGZxFRWQ@mail.gmail.com>
- <201305101042.04232.sweet_f_a@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ruediger Meier <sweet_f_a@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 10 12:48:52 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/2] transport-helper: fixes
+Date: Fri, 10 May 2013 07:08:28 -0500
+Message-ID: <1368187710-4434-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 10 14:10:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uaksd-0001W9-KZ
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 12:48:51 +0200
+	id 1Uam9C-0000av-Va
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 14:10:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751576Ab3EJKss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 06:48:48 -0400
-Received: from mail-oa0-f48.google.com ([209.85.219.48]:37405 "EHLO
-	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751141Ab3EJKsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 06:48:47 -0400
-Received: by mail-oa0-f48.google.com with SMTP id i4so4613102oah.7
-        for <git@vger.kernel.org>; Fri, 10 May 2013 03:48:46 -0700 (PDT)
+	id S1751957Ab3EJMJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 08:09:58 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:54890 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751718Ab3EJMJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 08:09:57 -0400
+Received: by mail-ob0-f172.google.com with SMTP id fb19so2906364obc.3
+        for <git@vger.kernel.org>; Fri, 10 May 2013 05:09:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=rY7R9o7m2Me/UotEttGJn9QefOqzr3lIUKLY4QoaI8E=;
-        b=zJ/Pr+7L2VzH21OM/DddlTzBNy/qvoQoNTwO+q2b9ZVC1qWLU4VxmIwbVBeZEFURp3
-         chUjlwJXZJx27TGRfeKlPVibxDVvds1o8owUkSg9Rx+MtMr4gufeRYQmGIl2GAql30DQ
-         Mfu23mAJGRFNc9ee+MvsZrp88WXz6NFdjQ/bgLn3dqO78wxgO73dfVafvOSon/anAIiP
-         ghLOXbgumYTJz4i/jHHDjmZem55FJxxeV17rZ1TUvCVakmzX2xkYglQ8cLGAq7o5EZd3
-         YTYXwpaEetN+uj5gMV8M1Mmr1+8067xKIBCtTwSRjau+32GR1L7DCmic9yr9Uhxjigy1
-         HJCQ==
-X-Received: by 10.182.224.162 with SMTP id rd2mr6549628obc.95.1368182926602;
- Fri, 10 May 2013 03:48:46 -0700 (PDT)
-Received: by 10.76.180.138 with HTTP; Fri, 10 May 2013 03:48:16 -0700 (PDT)
-In-Reply-To: <201305101042.04232.sweet_f_a@gmx.de>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=oCZXW2NegCJeS8AatOBcmqF+RrzxAN0vE6+zOdHhItQ=;
+        b=p6DVxOdZKFTiBxmya5Jy5HnkvULJm3SfY3Yy0U47tBk0I2zU2CxtX/kiJtIry18mz1
+         jiYVyiiuyuZN50R6739gek3K8odkmwk3reSIM+/0OLLL3DikBVpgp7HsBNFiimRC8Cds
+         cG+4Ttz5fUv4VqX2ncD4HkfQLVbMHUWZ/PzkexlcKya3VzgT8BpBKXhO8yKp1oeJOBRL
+         mqMYX9pD898Rm+KNiqlSmHywVd//zwy9shfNosLTI3L3WbbE9GCDLHrK/4M1SAAkoNRA
+         rfCygXPv+gUZ4Jvfizc1AvBbWPZZiV/D+5yJkhSIjlzYcRclMsF9Rw8BF5whFt7lL+LM
+         tsjw==
+X-Received: by 10.60.55.97 with SMTP id r1mr6662226oep.85.1368187797115;
+        Fri, 10 May 2013 05:09:57 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id n5sm2424413obi.8.2013.05.10.05.09.55
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 10 May 2013 05:09:56 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.579.g184e698
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223833>
 
-On Fri, May 10, 2013 at 3:42 PM, Ruediger Meier <sweet_f_a@gmx.de> wrote:
-> On Friday 10 May 2013, Duy Nguyen wrote:
->> On Fri, May 10, 2013 at 6:07 AM, Ruediger Meier <sweet_f_a@gmx.de>
-> wrote:
->> > Hi,
->> >
->> > I have a use case where I'd like to improve performance using "git
->> > clone --depth". But I also need "git describe" working on that
->> > clone.
->> >
->> > So something like
->> >  git clone --depth=describable
->> > would be nice to have.
->>
->> What does --depth=describable do?
->
-> I mean automatically getting the minimum depth which gives us the
-> history back to the last (annotated) tag. So that "git describe" and
-> possibly other project specific administrative scripts (like
-> git-version-gen or gitlog-to-changelog) would work safely on that
-> shallow clone.
+Hi,
 
-That should be possible to do. But you need to define it more clearly
-if you start working on it. If you set --depth=v1.7.0, but another
-branch in the source repo does not cross v1.7.0, what should we get?
-Full history of that branch?
+I found potentially serious issue with one of my patches to transport-helper.
 
-Just thinking out loud. We could make git-describe work with fixed
-depth (e.g. --depth=12). The server could be made to send the client
-some extended sha-1 syntax to get to related tags from the cut points,
-e.g. v1.7.0 = <cut point>~12^2~14^1~20. And git-describe could be
-modified to make use of that information when it traverses down to the
-cut point. But I'm not sure if it's worth doing.
+Felipe Contreras (2):
+  test: remote-helper: add missing and
+  transport-helper: fix remote helper namespace regression
 
-> Or maybe --depth could just generally accept a revspec as argument
-> instead of number only. This would be more useful anyway IMO. Then
-> perhaps something like "last_tag" could be a general magic revspec,
-> probably useful for many other git commands too.
+ git-remote-testgit.sh     |  7 ++++++-
+ t/t5801-remote-helpers.sh | 15 ++++++++++++++-
+ transport-helper.c        |  2 +-
+ 3 files changed, 21 insertions(+), 3 deletions(-)
 
-revspec is probably overkill. Take a look at
-shallow.c:get_shallow_commits(). "cut at the first found tag" should
-be easy to do, I think.
---
-Duy
+-- 
+1.8.3.rc1.579.g184e698
