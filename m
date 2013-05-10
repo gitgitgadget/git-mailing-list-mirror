@@ -1,92 +1,214 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] t4300 (rebase): don't unnecessarily set GIT_TRACE
-Date: Fri, 10 May 2013 07:38:00 -0700
-Message-ID: <7vmws2529j.fsf@alter.siamese.dyndns.org>
-References: <1368196178-5807-1-git-send-email-artagnon@gmail.com>
-	<1368196178-5807-5-git-send-email-artagnon@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 8/8] rebase: implement --[no-]autostash and rebase.autostash
+Date: Fri, 10 May 2013 10:41:05 -0400
+Message-ID: <CAPig+cQuWTfDqoF4G_Sk5_9VWKffpqmGC2WxXeF9DCyDxLx16A@mail.gmail.com>
+References: <1368196005-5354-1-git-send-email-artagnon@gmail.com>
+	<1368196005-5354-9-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 10 16:38:12 2013
+X-From: git-owner@vger.kernel.org Fri May 10 16:41:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UaoSZ-0004as-GO
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 16:38:11 +0200
+	id 1UaoVm-0008HG-44
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 16:41:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757064Ab3EJOiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 10:38:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35787 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757140Ab3EJOiC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 10:38:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FC8F1B4DE;
-	Fri, 10 May 2013 14:38:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iPUb7leKF0MpSc6LGYjCmJr1S/4=; b=NXWY6x
-	kkVb8COL3R2JH9IHaijBQ+TqpYNxsYg8ooJQcPEEux1+2s7lTtP/tSQn6+t3MwaX
-	7O0AIO+cqFpaaDeZdrST6oItvsv/bawsXUsg9GTSm7joZP5W+W7M4uYEBA5NUxDQ
-	0SRSTsX7B2IXSlSx2fql+xyPTlIZd02pAltmA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UcGkOB6jygsk1OriKwglyBs+ZBcgFLpi
-	CVnHJsXXMUf/qGsoo1sXpE4xIEYtVn89Kb2+Zsm70v+qUi8GjAvo7NF/z131hjgm
-	9egF4bZyLlpI0i2jBgt1iYJWnJ0xbsjogUuUVk3myZjq72XHzsnALvpcJwV5pca2
-	+MdJZ9gqBgQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36F4C1B4DD;
-	Fri, 10 May 2013 14:38:02 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8CD181B4DB;
-	Fri, 10 May 2013 14:38:01 +0000 (UTC)
-In-Reply-To: <1368196178-5807-5-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Fri, 10 May 2013 19:59:38 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 37648116-B97F-11E2-B39B-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756954Ab3EJOlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 10:41:11 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:57658 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754820Ab3EJOlI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 10:41:08 -0400
+Received: by mail-lb0-f180.google.com with SMTP id v1so4215854lbd.25
+        for <git@vger.kernel.org>; Fri, 10 May 2013 07:41:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=LbHZIZzWPJrJlKJw4FisOHvFM9HquCUudKD2bFxu6Sk=;
+        b=qmZQxRHI4Jn3SJSanbf8AsolF45WeX4F/NroWnZG0JQ9PMQG9XYNs340GORnTUre0b
+         WW0drvWra1eZ6KBZL78BqfiL1Eki5yYFGIKs++py0sBD/tObHxxdvbo2JmC4orsv8GJw
+         ZQbi/GZ14eyFpIUt680z4Oyhb1trnhEfnXbD7TiweQptp+xtkHKdytfAGpoU2zeLE+1Q
+         O+uGuEd4xlPn/Aw1x7viLD//BOeNHZWMuDP9xuZ7D39UgNxyWGChD+r4a8hq5xlXktmN
+         vTadEFt2AJ6+e562SLsx/+p5JURC972voNfOdKtqG9k5ZoaWHmSj1gAva53wOF0DEkpK
+         +9gA==
+X-Received: by 10.112.137.9 with SMTP id qe9mr7728155lbb.64.1368196865901;
+ Fri, 10 May 2013 07:41:05 -0700 (PDT)
+Received: by 10.114.181.3 with HTTP; Fri, 10 May 2013 07:41:05 -0700 (PDT)
+In-Reply-To: <1368196005-5354-9-git-send-email-artagnon@gmail.com>
+X-Google-Sender-Auth: 2OxSj9mICLywXJXNrpDS_0ST15c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223856>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Fri, May 10, 2013 at 10:26 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+> new file mode 100755
+> index 0000000..8386998
+> --- /dev/null
+> +++ b/t/t3420-rebase-autostash.sh
+> @@ -0,0 +1,148 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2013 Ramkumar Ramachandra
+> +#
+> +
+> +test_description='git rebase --autostash tests'
+> +. ./test-lib.sh
+> +
+> +test_expect_success setup '
+> +       echo hello-world >file0 &&
+> +       git add . &&
+> +       test_tick &&
+> +       git commit -m "initial commit" &&
+> +       git checkout -b feature-branch &&
+> +       echo another-hello >file1 &&
+> +       echo goodbye >file2 &&
+> +       git add . &&
+> +       test_tick &&
+> +       git commit -m "second commit" &&
+> +       echo final-goodbye >file3 &&
+> +       git add . &&
+> +       test_tick &&
+> +       git commit -m "third commit"
 
-> A couple of tests execute 'git rebase' with GIT_TRACE set to 1, but
-> this trace output is not used anywhere.
+Broken &&-chain.
 
-Isn't it shown in "t4300-*.sh -v" output to help the debugger?
+> +       git checkout -b unrelated-onto-branch master &&
+> +       echo unrelated >file4 &&
+> +       git add . &&
+> +       test_tick &&
+> +       git commit -m "unrelated commit"
 
-> relevant to what we are testing.
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  t/t3400-rebase.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-> index 0841a12..d0d9442 100755
-> --- a/t/t3400-rebase.sh
-> +++ b/t/t3400-rebase.sh
-> @@ -137,13 +137,13 @@ test_expect_success 'rebase a single mode change' '
->  	test_chmod +x A &&
->  	test_tick &&
->  	git commit -m modechange &&
-> -	GIT_TRACE=1 git rebase master
-> +	git rebase master
->  '
->  
->  test_expect_success 'rebase is not broken by diff.renames' '
->  	test_config diff.renames copies &&
->  	git checkout filemove &&
-> -	GIT_TRACE=1 git rebase force-3way
-> +	git rebase force-3way
->  '
->  
->  test_expect_success 'setup: recover' '
+Broken &&-chain.
+
+> +       git checkout -b related-onto-branch master &&
+> +       echo conflicting-change >file2 &&
+> +       git add . &&
+> +       test_tick &&
+> +       git commit -m "related commit"
+> +'
+> +
+> +testrebase() {
+> +       type=$1
+> +       dotest=$2
+> +
+> +       test_expect_success "rebase$type: dirty worktree, non-conflicting rebase" '
+> +               test_config rebase.autostash true &&
+> +               git reset --hard &&
+> +               git checkout -b rebased-feature-branch feature-branch &&
+> +               test_when_finished git branch -D rebased-feature-branch &&
+> +               echo dirty >>file3 &&
+> +               git rebase$type unrelated-onto-branch &&
+> +               grep unrelated file4 &&
+> +               grep dirty file3 &&
+> +               git checkout feature-branch
+> +       '
+> +
+> +       test_expect_success "rebase$type: dirty index, non-conflicting rebase" '
+> +               test_config rebase.autostash true &&
+> +               git reset --hard &&
+> +               git checkout -b rebased-feature-branch feature-branch &&
+> +               test_when_finished git branch -D rebased-feature-branch
+
+Broken &&-chain.
+
+> +               echo dirty >>file3 &&
+> +               git add file3 &&
+> +               git rebase$type unrelated-onto-branch &&
+> +               grep unrelated file4 &&
+> +               grep dirty file3 &&
+> +               git checkout feature-branch
+> +       '
+> +
+> +       test_expect_success "rebase$type: conflicting rebase" '
+> +               test_config rebase.autostash true &&
+> +               git reset --hard &&
+> +               git checkout -b rebased-feature-branch feature-branch &&
+> +               test_when_finished git branch -D rebased-feature-branch &&
+> +               echo dirty >>file3 &&
+> +               test_must_fail git rebase$type related-onto-branch &&
+> +               test_path_is_file $dotest/autostash &&
+> +               ! grep dirty file3 &&
+> +               rm -rf $dotest &&
+> +               git reset --hard &&
+> +               git checkout feature-branch
+> +       '
+> +
+> +       test_expect_success "rebase$type: --continue" '
+> +               test_config rebase.autostash true &&
+> +               git reset --hard &&
+> +               git checkout -b rebased-feature-branch feature-branch &&
+> +               test_when_finished git branch -D rebased-feature-branch &&
+> +               echo dirty >>file3 &&
+> +               test_must_fail git rebase$type related-onto-branch &&
+> +               test_path_is_file $dotest/autostash &&
+> +               ! grep dirty file3 &&
+> +               echo "conflicting-plus-goodbye" >file2 &&
+> +               git add file2 &&
+> +               git rebase --continue &&
+> +               test_path_is_missing $dotest/autostash &&
+> +               grep dirty file3 &&
+> +               git checkout feature-branch
+> +       '
+> +
+> +       test_expect_success "rebase$type: --skip" '
+> +               test_config rebase.autostash true &&
+> +               git reset --hard &&
+> +               git checkout -b rebased-feature-branch feature-branch &&
+> +               test_when_finished git branch -D rebased-feature-branch &&
+> +               echo dirty >>file3 &&
+> +               test_must_fail git rebase$type related-onto-branch &&
+> +               test_path_is_file $dotest/autostash &&
+> +               ! grep dirty file3 &&
+> +               git rebase --skip &&
+> +               test_path_is_missing $dotest/autostash &&
+> +               grep dirty file3 &&
+> +               git checkout feature-branch
+> +       '
+> +
+> +       test_expect_success "rebase$type: --abort" '
+> +               test_config rebase.autostash true &&
+> +               git reset --hard &&
+> +               git checkout -b rebased-feature-branch feature-branch &&
+> +               test_when_finished git branch -D rebased-feature-branch &&
+> +               echo dirty >>file3 &&
+> +               test_must_fail git rebase$type related-onto-branch &&
+> +               test_path_is_file $dotest/autostash &&
+> +               ! grep dirty file3 &&
+> +               git rebase --abort &&
+> +               test_path_is_missing $dotest/autostash &&
+> +               grep dirty file3 &&
+> +               git checkout feature-branch
+> +       '
+> +
+> +       test_expect_success "rebase$type: non-conflicting rebase, conflicting stash" '
+> +               test_config rebase.autostash true &&
+> +               git reset --hard &&
+> +               git checkout -b rebased-feature-branch feature-branch &&
+> +               test_when_finished git branch -D rebased-feature-branch &&
+> +               echo dirty >file4 &&
+> +               git add file4 &&
+> +               git rebase$type unrelated-onto-branch &&
+> +               test_path_is_missing $dotest &&
+> +               git reset --hard &&
+> +               grep unrelated file4 &&
+> +               ! grep dirty file4 &&
+> +               git checkout feature-branch &&
+> +               git stash pop &&
+> +               grep dirty file4
+> +       '
+> +}
+> +
+> +testrebase "" .git/rebase-apply
+> +testrebase " --merge" .git/rebase-merge
+> +testrebase " --interactive" .git/rebase-merge
+> +
+> +test_done
