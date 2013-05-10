@@ -1,91 +1,74 @@
-From: Tobias Preuss <tobias.preuss@googlemail.com>
-Subject: Re: [PATCH] git-gui: allow "\ No newline at end of file" for linewise staging
-Date: Fri, 10 May 2013 21:09:53 +0200
-Message-ID: <CADEaiE_ddTLO0kYL5siN4rmycibuzHA3R1dz9mKyueYd0y_atw@mail.gmail.com>
-References: <CADEaiE-J4nEwyK4WSiH=zzaH6cb85mw15O3wxrWrTXJtZfJixQ@mail.gmail.com>
- <CADEaiE8GKfSQ5u+0bb8qtBe-3OTYJThGb-UFLU_pM-T9ZqvkiA@mail.gmail.com>
- <7vzk0qw8ts.fsf@alter.siamese.dyndns.org> <87vcb6bee5.fsf@fox.patthoyts.tk> <20130509163002.GA3630@book-mint>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: Git Merge 2013 Conference, Berlin
+Date: Fri, 10 May 2013 21:10:37 +0200
+Message-ID: <518D462D.7080901@gmail.com>
+References: <CAP2yMaJyCi5tvFZ5hVpVULR=oKgfc-b0zb8baxFDhNqmu+W_Bg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Fri May 10 21:10:25 2013
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 10 21:10:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uashx-0004ix-SL
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 21:10:22 +0200
+	id 1UasiU-0005Dx-FA
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 21:10:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753444Ab3EJTKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 15:10:15 -0400
-Received: from mail-ea0-f178.google.com ([209.85.215.178]:40304 "EHLO
-	mail-ea0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753089Ab3EJTKO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 15:10:14 -0400
-Received: by mail-ea0-f178.google.com with SMTP id q15so494512ead.9
-        for <git@vger.kernel.org>; Fri, 10 May 2013 12:10:13 -0700 (PDT)
+	id S1753430Ab3EJTKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 15:10:50 -0400
+Received: from mail-ee0-f54.google.com ([74.125.83.54]:50484 "EHLO
+	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753089Ab3EJTKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 15:10:50 -0400
+Received: by mail-ee0-f54.google.com with SMTP id e50so1732882eek.41
+        for <git@vger.kernel.org>; Fri, 10 May 2013 12:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=ly+owVh5CV0HrZRYBTXmmPUxbA2NyaY5QQrydBQmHbQ=;
-        b=fyB/PUXuCsSwLIRd+jKRXl2n5YikdInhCDLa96R93yeCiUSUPPwhajQTY6f/q/Opf5
-         O8lrIRdNg1SlXJHjxvbNcDtj5UWac0upgvnllh3AiZZpNC0aGV78qWELxgLfy7fY9em6
-         jWp2W4M3+PI234VAS1p0IKj9mRv3U/OfwWPSp/8Hb1JzTopjoWQgDigEJ7b9YsHhfD+G
-         rm6FRArpjoWTvrOdZCpNN2hCLgMEcxH+AS08dLwMz1COXqG8ctWrFoc1zpgBklDCNQD5
-         OLIioROgQH396YsL68FmptgMjV9Wssp7yikVXa0aONcSvkewy0b6REz9HJvpgSAK+hA1
-         2jRQ==
-X-Received: by 10.14.100.1 with SMTP id y1mr44806678eef.9.1368213013164; Fri,
- 10 May 2013 12:10:13 -0700 (PDT)
-Received: by 10.14.117.76 with HTTP; Fri, 10 May 2013 12:09:53 -0700 (PDT)
-In-Reply-To: <20130509163002.GA3630@book-mint>
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:newsgroups
+         :to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=xQHs0mfQ+7M/FXg4HEp3qFMtvrZoXIqI/CgyCjHQD5o=;
+        b=EdXvsmgTvSYmW85YQFjnHruaKthmxw7wre+pp5F/FUrobR5I0QLibaY2f1LiuAuTTs
+         K8eVNL6S2QmH5daKW67E3lDZMUheBtrxugazEQxdPh4YyAnIKstVJkzzy6z0uI/jd47K
+         5d3cq5dCgIqpqkUN1fUSBUDGSl2UnIjQSAADSIoVqsBk3nwoh4o3jD+fXYZ+bwOf7V8I
+         ++bZwONBGJfSHfU33QYyYTd7E5JtW9MuF0huQxcQ+oR444b02DsRHiqCVhTwtm1Agp3q
+         ch7oZHuB+07jvOIMl4ic9wTy74kH9LwKyqpBlfBhSu9uuB+J5m03QfOCIRT3dNlnywfM
+         dBpw==
+X-Received: by 10.14.203.73 with SMTP id e49mr44301165eeo.20.1368213048900;
+        Fri, 10 May 2013 12:10:48 -0700 (PDT)
+Received: from [192.168.188.20] (p4FC96537.dip0.t-ipconnect.de. [79.201.101.55])
+        by mx.google.com with ESMTPSA id w52sm5270345eev.12.2013.05.10.12.10.47
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 10 May 2013 12:10:48 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <CAP2yMaJyCi5tvFZ5hVpVULR=oKgfc-b0zb8baxFDhNqmu+W_Bg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223896>
 
-I tested the patch as I am the same person that bothered about the
-behavior a while ago. Please merge.
-- Sorry for sending an HTML formatted mail before.
+On 23.01.2013 20:27, Scott Chacon wrote:
 
-On Thu, May 9, 2013 at 6:30 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> Counting of lines did not skip this line when generating the hunk
-> header.
+> As you may remember, we did not have a GitTogether last year.  Since I
+> miss drinking and talking Git nerdiness with all of you, I'm going to
+> try organizing some face time on a semi-regular basis.  I would like
+> to try to do a small Git conference in the US and the EU each year.
 >
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> ---
-> Here is an attempt at fixing the no newline issue. I would appreciate
-> another pair of eyes though.
->
->  git-gui/lib/diff.tcl | 11 +++++++++--
->  1 file changed, 9 insertions(+), 2 deletions(-)
->
-> diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-> index ec44055..30d9a79 100644
-> --- a/git-gui/lib/diff.tcl
-> +++ b/git-gui/lib/diff.tcl
-> @@ -764,8 +764,15 @@ proc apply_range_or_line {x y} {
->                                 # context line
->                                 set ln [$ui_diff get $i_l $next_l]
->                                 set patch "$patch$pre_context$ln"
-> -                               set n [expr $n+1]
-> -                               set m [expr $m+1]
-> +                               # Skip the "\ No newline at end of
-> +                               # file". Depending on the locale setting
-> +                               # we don't know what this line looks
-> +                               # like exactly. The only thing we do
-> +                               # know is that it starts with "\ "
-> +                               if {![string match {\\ *} $ln]} {
-> +                                       set n [expr $n+1]
-> +                                       set m [expr $m+1]
-> +                               }
->                                 set pre_context {}
->                         } elseif {$c1 eq $to_context} {
->                                 # turn change line into context line
-> --
-> 1.8.3.rc1.40.gba374ae
->
+> We're starting off in Berlin, May 9-11th.  GitHub has secured
+> conference space at the Radisson Blu Berlin for those days.  I have a
+
+It's a pity that you did not announce the event on the msysgit mailing 
+list, too, which is why I totally missed it until today, the event being 
+almost over. This is especially sad for me as I'm living in Berlin, so 
+it would have been easy for me to attend, and as I had offered to help 
+you organizing the event when you were still looking for a location last 
+year.
+
+-- 
+Sebastian Schuberth
