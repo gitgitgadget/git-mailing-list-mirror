@@ -1,70 +1,90 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/4] remote-hg: don't push fake 'master' bookmark
-Date: Fri, 10 May 2013 07:20:46 -0500
-Message-ID: <CAMP44s2=xj=PS8Eb7D-meAO9U1x1yTD9PShJrMXP1dHMVUYXnA@mail.gmail.com>
-References: <1368181023-10402-1-git-send-email-felipe.contreras@gmail.com>
-	<1368181023-10402-2-git-send-email-felipe.contreras@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 10 14:20:54 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2 0/8] rebase.autostash completed
+Date: Fri, 10 May 2013 19:56:37 +0530
+Message-ID: <1368196005-5354-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 10 16:25:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UamJi-0004A7-3J
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 14:20:54 +0200
+	id 1UaoG4-0006yW-L3
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 16:25:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752447Ab3EJMUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 08:20:50 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:44345 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752597Ab3EJMUt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 08:20:49 -0400
-Received: by mail-lb0-f174.google.com with SMTP id r10so4079615lbi.5
-        for <git@vger.kernel.org>; Fri, 10 May 2013 05:20:48 -0700 (PDT)
+	id S1755863Ab3EJOZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 10:25:11 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:45351 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756237Ab3EJOZK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 10:25:10 -0400
+Received: by mail-pb0-f52.google.com with SMTP id xa7so2819634pbc.11
+        for <git@vger.kernel.org>; Fri, 10 May 2013 07:25:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=UFX+AQLbfmp6TlB7/oc3Ot+pgacx+u45bDXZx/oEmNw=;
-        b=T+iWNoKzVWGjIvP//TdrsVIwWMNUjIHYVqswOBSKoBzjj9pjz9MoTnJnyNSJ/SjGbX
-         MW1D36Vq2DjwgJIh1nta29BjGOu97XSsVA3OSG7B5P284mKgVMeoTuVvcdyF3zahBEU6
-         ZrcB0dt8tOxiCYMm0w1UB+TluOq8R3IwOL6o4RJSJN8FlzyNHVT/cSxDwxRgcGxtBAOG
-         RyMiQ+Cxp90fWhpQpAvDhMPU/2fHi7hMG31HDMZNCZRIe+1+RxH4zzM4r/mJ+T6WRT3z
-         DQ3s0D8wAKHemUsq41u64BQa7CwQh0XS9b6HB/i4rBTE+rIrY4EEsltf9gHSYw+OvpZs
-         9qfg==
-X-Received: by 10.112.135.70 with SMTP id pq6mr7571003lbb.82.1368188446905;
- Fri, 10 May 2013 05:20:46 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Fri, 10 May 2013 05:20:46 -0700 (PDT)
-In-Reply-To: <1368181023-10402-2-git-send-email-felipe.contreras@gmail.com>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=nCfrr87eGzSrgBmNWlpnH1ZeUijvyp0tNJiOQM4oVi4=;
+        b=uJkLG8+fwFDN3rdZGBw41GzG1qYJyIchmOXRJ7up9nqYU95HpTVAuG+uKV0kbBKfgO
+         PTFvhgEeOkN29Sendf1IPOmhlF0ROJ+44mdog26eqFBeggjkP76arnL6XknLpOPmoXm0
+         T/ygWuMNjjLo7Lv6mBXO2NrYCfo78150Yl2KdWTNGp1dsuJJ6JahLCJY9S4ZKaCh+yLY
+         wtfOkVLdsM3sT6xpo8nsyVmbbNXU9HOQZ1QdwV1LHFIeRYKhV7mn4gkX/vI3NZ+Hp85L
+         WtERERgSuEggEPb+ayF3kuDtrbCG2hRdDEMjpXnyYRymEu94o6E0+jc04qbf9W7+Fvlz
+         4xJQ==
+X-Received: by 10.66.230.164 with SMTP id sz4mr17994040pac.124.1368195909492;
+        Fri, 10 May 2013 07:25:09 -0700 (PDT)
+Received: from luneth.maa.corp.collab.net ([182.71.239.158])
+        by mx.google.com with ESMTPSA id nt2sm2915928pbc.17.2013.05.10.07.25.06
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 10 May 2013 07:25:08 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.52.gc14258d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223839>
 
-On Fri, May 10, 2013 at 5:17 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> --- a/contrib/remote-helpers/git-remote-hg
-> +++ b/contrib/remote-helpers/git-remote-hg
-> @@ -867,7 +867,7 @@ def do_export(parser):
->
->          if bmark == 'master' and 'master' not in parser.repo._bookmarks:
->              # fake bookmark
-> -            pass
+Hi,
 
-Missed:
+The feature is finished with documentation and tests in this
+iteration.  I've written an extensive t3420 which proves that the
+feature works flawlessly.  Further, I've made every attempt to
+actually explain what I'm doing: I've taken care to inspect all the
+return values.
 
-+ print "ok %s" % ref
+Overall, I'm elated with the design and interface.  I think it is most
+intuitive, while not trading off power/ flexibility.
 
-> +            continue
->          elif bookmarks.pushbookmark(parser.repo, bmark, old, new):
->              # updated locally
->              pass
+One subtle detail that you might disagree with: I report success if
+the rebase succeeds but the stash application fails.  Are we okay with
+this?
+
+Also, does t3420 exercise all the cases sufficiently?  Have I missed
+anything?
+
+Enjoy reading and reviewing this.
+
+Ramkumar Ramachandra (8):
+  am: suppress error output from a conditional
+  rebase -i: don't error out if $state_dir already exists
+  am: tighten a conditional that checks for $dotest
+  rebase: prepare to do generic housekeeping
+  am: return control to caller, for housekeeping
+  rebase -i: return control to caller, for housekeeping
+  rebase --merge: return control to caller, for housekeeping
+  rebase: implement --[no-]autostash and rebase.autostash
+
+ Documentation/config.txt     |   8 +++
+ Documentation/git-rebase.txt |  10 +++
+ git-am.sh                    |  15 +++--
+ git-rebase--am.sh            |   8 +--
+ git-rebase--interactive.sh   |  11 ++--
+ git-rebase--merge.sh         |   5 +-
+ git-rebase.sh                |  46 +++++++++++++-
+ t/t3420-rebase-autostash.sh  | 148 +++++++++++++++++++++++++++++++++++++++++++
+ 8 files changed, 233 insertions(+), 18 deletions(-)
+ create mode 100755 t/t3420-rebase-autostash.sh
 
 -- 
-Felipe Contreras
+1.8.3.rc1.52.gc14258d
