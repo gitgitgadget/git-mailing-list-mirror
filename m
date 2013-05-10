@@ -1,68 +1,77 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Avoiding broken Gitweb links and deleted objects
-Date: Fri, 10 May 2013 14:04:58 +0700
-Message-ID: <CACsJy8CopioiTrEDfuZK=n1DfJ8_chxV9dEObqpVfHHmJvzyqQ@mail.gmail.com>
-References: <CAJELnLFrfY=-gOFEe0cJHuyT4UNjbTm8hXMxAmzmQHVbz4iEbg@mail.gmail.com>
- <518C8EAC.6000106@viscovery.net> <7vzjw349y0.fsf@alter.siamese.dyndns.org>
+From: Miklos Vajna <vmiklos@suse.cz>
+Subject: Re: [PATCH v3] cherry-pick: make sure all input objects are commits
+Date: Fri, 10 May 2013 09:07:13 +0200
+Message-ID: <20130510070712.GA24415@suse.cz>
+References: <20130403092704.GC21520@suse.cz>
+ <7v38v1yn8o.fsf@alter.siamese.dyndns.org>
+ <20130411092638.GA12770@suse.cz>
+ <CALkWK0n6FjGbXTqiOT_O6NbB5h0DLaNWKCCTQAFSO_BL-pPdBA@mail.gmail.com>
+ <20130411110324.GD12770@suse.cz>
+ <CALkWK0kb+2KZLvRJDJb_VrNNs1k4grsfyFv0HfYv0Kr9v4sChQ@mail.gmail.com>
+ <20130411130652.GG12770@suse.cz>
+ <7vy5bo7x62.fsf@alter.siamese.dyndns.org>
+ <7vsj1v99ve.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Matt McClure <matthewlmcclure@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jI8keyz6grp/JLjh"
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 10 09:05:35 2013
+X-From: git-owner@vger.kernel.org Fri May 10 09:07:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UahOY-0004TB-Uc
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 09:05:35 +0200
+	id 1UahQL-0006WU-MI
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 09:07:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751488Ab3EJHFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 03:05:30 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:36474 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750893Ab3EJHF3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 03:05:29 -0400
-Received: by mail-ob0-f179.google.com with SMTP id xn12so3869596obc.10
-        for <git@vger.kernel.org>; Fri, 10 May 2013 00:05:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=qXyjZh5GHwVygS8zHez2XPSVaO4UsFGSzwOljoW1Wu4=;
-        b=hOJX+a4RQV6/bJGZNEjhDbIXxtXIwrneBUWz0kLwnMlMr7Vdhy+KqeoRr+LwJ/dliw
-         3kO0thI5rGKmJ6/Z1uPf+KAPiRTy2zhUqIdhlbK6/i7vKdpcKl0gyaJ6uiT/vxr1uh2K
-         p0ad64OpZ+sXqvUIKwqIC5jac3sfY2BfuewgDpyudMBGXkmm5WoSw+SGnZ9mTI4vZrS8
-         p3mHtRzCPIAoPcEZBLWP11NglWVwOzML9exiMMZHpF2Jf61OUywNzY1CVGpD1BgItrNv
-         FO3Hu0tWPwZihrqttB46wA8E4BZBCLHipky9NjkgqhqXlKmmD0wV/M+4KCELt2wcdPjv
-         BIJQ==
-X-Received: by 10.60.83.103 with SMTP id p7mr6080320oey.130.1368169528666;
- Fri, 10 May 2013 00:05:28 -0700 (PDT)
-Received: by 10.76.180.138 with HTTP; Fri, 10 May 2013 00:04:58 -0700 (PDT)
-In-Reply-To: <7vzjw349y0.fsf@alter.siamese.dyndns.org>
+	id S1751680Ab3EJHHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 03:07:21 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:43155 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751551Ab3EJHHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 03:07:21 -0400
+Received: from relay2.suse.de (unknown [195.135.220.254])
+	by mx2.suse.de (Postfix) with ESMTP id CB450A398F;
+	Fri, 10 May 2013 09:07:17 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vsj1v99ve.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223821>
 
-On Fri, May 10, 2013 at 1:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> Imagine that a user runs "git rebase" on a history leading to commit
-> X to create an alternate, improved history that leads to commit Y.
-> What if we teach "git rebase" to record, perhaps by default, an
-> "ours" merge on top of Y that takes the tree state of Y but has X as
-> its second parent, and "git log" and its family to ignore such an
-> artificial "ours" merge that records a tree that is identical to one
-> of its parents, again perhaps by default?  "git log" works more or
-> less in such a way already, but we might want to teach other modes
-> like --full-history and --simplify-merges to ignore "ours" to hide
-> such an artificial merge by default, with an audit option to
-> unignore them.
 
-What about git-merge? Will it be fooled by these merges while looking
-for merge bases?
---
-Duy
+--jI8keyz6grp/JLjh
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, May 09, 2013 at 01:27:49PM -0700, Junio C Hamano <gitster@pobox.com=
+> wrote:
+> I'd apply this before -rc2.  I _think_ it is also OK to just let
+> lookup_commit_reference_gently() barf with its standard message
+>=20
+> 	error: Object %s is a %s, not a commit
+>=20
+> without an extra sha1_object_info() call in the error codepath, but
+> I did not bother, as this is meant to be an emergency fix.
+
+Yes, that makes a lot of sense. I myself never cherry-pick tags, but I
+understand that is part of some workflow.
+
+--jI8keyz6grp/JLjh
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iEYEARECAAYFAlGMnKAACgkQe81tAgORUJZ5oQCcDGit+JhrLfsqijGrgnCWH20V
+GOwAn2AxBwYuB3DPf+7lszjgAmZ56a3S
+=si3t
+-----END PGP SIGNATURE-----
+
+--jI8keyz6grp/JLjh--
