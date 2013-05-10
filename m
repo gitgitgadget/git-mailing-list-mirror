@@ -1,78 +1,58 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [RFC PATCH 2/3] mergetools/kdiff3: allow opting-out of
- auto-merges
-Date: Fri, 10 May 2013 06:41:30 +0100
-Message-ID: <20130510054130.GA29215@hashpling.org>
-References: <1368090810-40596-1-git-send-email-davvid@gmail.com>
- <1368090810-40596-2-git-send-email-davvid@gmail.com>
- <7vli7ob0c4.fsf@alter.siamese.dyndns.org>
- <20130509172334.GK25912@serenity.lan>
- <7v38tw9d7r.fsf@alter.siamese.dyndns.org>
- <CAJDDKr4S6=U1d1fWixaiAzf46KLBDNsi85fgvXy0Uu_aRJyoyw@mail.gmail.com>
-Mime-Version: 1.0
+From: Esther Hwang <ehwang827@gmail.com>
+Subject: Can't Open Git
+Date: Thu, 9 May 2013 22:49:34 -0700
+Message-ID: <B5C53ACE-2055-448A-B687-49775BBD0D14@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1283)
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>,
-	Git Mailing List <git@vger.kernel.org>,
-	Theodore Ts'o <tytso@mit.edu>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 10 07:47:54 2013
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 10 07:49:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UagBN-0003ep-Jr
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 07:47:53 +0200
+	id 1UagD8-0005eu-Sw
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 07:49:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751085Ab3EJFri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 01:47:38 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:53584 "EHLO
-	avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750893Ab3EJFrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 01:47:37 -0400
-X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 May 2013 01:47:36 EDT
-Received: from hashpling.plus.com ([212.159.69.125])
-	by avasout06 with smtp
-	id a5hW1l0072iA9hg015hXKA; Fri, 10 May 2013 06:41:32 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=YbCEuWhf c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
- a=0Bzu9jTXAAAA:8 a=zd_RDMET5nsA:10 a=43sm8_qVhh4A:10 a=mSBy96HJJ2wA:10
- a=BHUvooL90DcA:10 a=kj9zAlcOel0A:10 a=Ew9TdX-QAAAA:8 a=QYcJVrp4qakA:10
- a=YJRR7J0FMZm6UIha44AA:9 a=CjuIK1q_8ugA:10
-Received: from charles by hashpling.plus.com with local (Exim 4.72)
-	(envelope-from <charles@hashpling.org>)
-	id 1Uag5C-0007nP-LS; Fri, 10 May 2013 06:41:30 +0100
-Content-Disposition: inline
-In-Reply-To: <CAJDDKr4S6=U1d1fWixaiAzf46KLBDNsi85fgvXy0Uu_aRJyoyw@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-08-17)
+	id S1750980Ab3EJFti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 01:49:38 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:57198 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750787Ab3EJFth convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 May 2013 01:49:37 -0400
+Received: by mail-ie0-f176.google.com with SMTP id at1so7234412iec.35
+        for <git@vger.kernel.org>; Thu, 09 May 2013 22:49:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:content-type:content-transfer-encoding:subject:date
+         :message-id:to:mime-version:x-mailer;
+        bh=ezxzqU5MDdZk+jyP2k7l1lVtSiOU5Ry6/R/LDX2LVb4=;
+        b=g1Y34ppUbR8MDGBzCGAldbE97+kmqedP+1IijwihJNacn9D1BsvFvvq3wVCRTvLyLf
+         l2dC1rqxK4sbukSvu84xe6E5n2eoeyq/XYZzHV8xOqouBs0Nes5n8PeP5ppBfJ++OxCV
+         xBv5V77qUOZh2LSh+/g52zoagHNlyuj3IGaZqq/CnpdpqNPmEJx96ai0KDIUH1cnpMhX
+         mR9d9Rlx7oeJXU0gyYl5hNw0jL5cmdnSrIW68BQvRPd7cZ9GWrQhD7IH87byxQIWiUAy
+         kcX0CmnmRd8O/aVtjItLrafa9d1Jq5AgaPfxHPc3NIKEIuqz6K86m1lAie+Tn3e0ArJ2
+         ImLQ==
+X-Received: by 10.50.80.101 with SMTP id q5mr932410igx.2.1368164977454;
+        Thu, 09 May 2013 22:49:37 -0700 (PDT)
+Received: from unknown68a86d2f9a0e.att.net (172-8-151-18.lightspeed.irvnca.sbcglobal.net. [172.8.151.18])
+        by mx.google.com with ESMTPSA id kc10sm2853274igb.0.2013.05.09.22.49.35
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 09 May 2013 22:49:36 -0700 (PDT)
+X-Mailer: Apple Mail (2.1283)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223815>
 
-On Thu, May 09, 2013 at 03:17:30PM -0700, David Aguilar wrote:
-> Generally, "mergetool.<tool>.cmd" is not general enough since we've
-> always special cased the base vs. no-base code paths and we run
-> different commands depending on whether a base is available.
+Hi,
 
-Then this is a deficiency of the ".cmd" mechanism which should provide
-an "if all else fails" way to do things, even if ugly. We could simply
-add a BASELESS variable to the eval environment of the custom command.
-(Do we always create an empty file for $BASE, now?)
+I just installed the latest Git released a few days ago. I can't seem to get an application icon or find it on my Mac. I can only find the installer. Am I doing something wrong?
 
-> We could drop --auto altogether, which maybe is a better course of
-> action since it makes the behavior predictable and un-surprising, but
-> I do not know if anyone has come to rely on kdiff3's "auto-merge"
-> feature (hence the extended Cc: list).
+I'm just beginning to learn Git.
 
-I disagree, I think that a mergetool should be allowed to be as
-helpful as possible and if it can resolve the merge unaided then this
-is no bad thing. I've worked with a number of people who were very
-happy with the current kdiff3 behaviour. Nothing prevents you from
-verifying the merge and fixing it up if it wasn't done perfectly by
-the tool, although I haven't ever encountered this with git+kdiff3.
-
-Charles.
+Thanks,
+Esther
