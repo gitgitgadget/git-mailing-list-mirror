@@ -1,96 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Avoiding broken Gitweb links and deleted objects
-Date: Fri, 10 May 2013 09:22:15 -0700
-Message-ID: <7vfvxu3ivc.fsf@alter.siamese.dyndns.org>
-References: <CAJELnLFrfY=-gOFEe0cJHuyT4UNjbTm8hXMxAmzmQHVbz4iEbg@mail.gmail.com>
-	<518C8EAC.6000106@viscovery.net>
-	<7vzjw349y0.fsf@alter.siamese.dyndns.org>
-	<CACsJy8CopioiTrEDfuZK=n1DfJ8_chxV9dEObqpVfHHmJvzyqQ@mail.gmail.com>
-	<7vvc6r4855.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] Support running an arbitrary git action through checkout
+Date: Fri, 10 May 2013 22:05:48 +0530
+Message-ID: <CALkWK0kES+b3A64-nm+4aerBiEBn-cHKkHXb-Vhtp4JdMP9COQ@mail.gmail.com>
+References: <2d5cfb3be9487f607051cad3d5230434660307ba.1368198269.git.trast@inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Matt McClure <matthewlmcclure@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 10 18:22:26 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Steve Losh <steve@stevelosh.com>,
+	Jeff King <peff@peff.net>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri May 10 18:36:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uaq5O-0005su-O5
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 18:22:23 +0200
+	id 1UaqJ8-0004F3-11
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 18:36:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755856Ab3EJQWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 12:22:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43056 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755240Ab3EJQWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 12:22:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DC2A1D1BB;
-	Fri, 10 May 2013 16:22:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1yLB1FQQsL7eojrlzacuAddTic4=; b=SM24md
-	Yabqc11DJhDw8kQRJu6Ty/eHe4yiVMLWbk3tFJgKNWQdyZk2NJS4lZF7+9jYEBSy
-	LEnpKmKaZnAxYMFfjEqnWDG2oZFB2mFdDSG7HkXv422BNxmFkzh1LivUTSUMIWdw
-	uNzlluw/IkFKriITN3+cfQBrYkxBG/aFYaLBI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rmSLM9TCmLJarHnsXsAgN82Lmv5oBQqZ
-	grSkWCnepZWG7fNANw8tNMv9rU5O13QzrtFdE1zJLGIcmHZWngwvloEDxv2KvVOU
-	wCaacMn+7r6iTdhIzs8FXeN83gLmValMvPr1aTd4oP0yGypiV6TfEg3StiqqpfwJ
-	Rpa1zbIsvrY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 919631D1BA;
-	Fri, 10 May 2013 16:22:17 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 002631D1B9;
-	Fri, 10 May 2013 16:22:16 +0000 (UTC)
-In-Reply-To: <7vvc6r4855.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 10 May 2013 00:16:22 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C7EA72A0-B98D-11E2-91AB-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756029Ab3EJQga (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 12:36:30 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:53174 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754990Ab3EJQg3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 12:36:29 -0400
+Received: by mail-ie0-f182.google.com with SMTP id a14so8400755iee.13
+        for <git@vger.kernel.org>; Fri, 10 May 2013 09:36:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=FiJ2Q2Y8bMkQyvh+I4ry6rWzkremFZwJvq0s7GBs1es=;
+        b=DTTG+JRpElOl87/jWUvVwAWY7ueTI99c2Q+C/FG4FtNwl0Ge9f7Y1cM68vEW/9fjzO
+         uPUu52mX7JcKSztML8Q8tO478nNM4CQp0/Hnk6/y5iI167vqbzN1mLBprAZUksvAxwFq
+         Prmyhl1Re2lgP5WJGZHHnMvR9gU9RmfGt8xVgzztge44rGpv/2IU4t+HyEmHXmu14epf
+         kBYqKmJNN1vs2V2G9RJvDYWdz+RkRCxn9rIOgC3a4w5QJtoNewGuCDtPgIyccu2ueFyN
+         4YNqhN3JATT26LkUayfS6JLdxzuWJAZwn6V+NvoVn+jTfkcpMB0ntms9pHZ8W8siiAoL
+         MGeg==
+X-Received: by 10.42.27.146 with SMTP id j18mr7898038icc.54.1368203788692;
+ Fri, 10 May 2013 09:36:28 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Fri, 10 May 2013 09:35:48 -0700 (PDT)
+In-Reply-To: <2d5cfb3be9487f607051cad3d5230434660307ba.1368198269.git.trast@inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223878>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Thomas Rast wrote:
+> [1] correctly observed that we are already wrapping three different
+> operations under the git-checkout command.
 
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> On Fri, May 10, 2013 at 1:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Johannes Sixt <j.sixt@viscovery.net> writes:
->>> Imagine that a user runs "git rebase" on a history leading to commit
->>> X to create an alternate, improved history that leads to commit Y.
->>> What if we teach "git rebase" to record, perhaps by default, an
->>> "ours" merge on top of Y that takes the tree state of Y but has X as
->>> its second parent, and "git log" and its family to ignore such an
->>> artificial "ours" merge that records a tree that is identical to one
->>> of its parents, again perhaps by default?  "git log" works more or
->>> less in such a way already, but we might want to teach other modes
->>> like --full-history and --simplify-merges to ignore "ours" to hide
->>> such an artificial merge by default, with an audit option to
->>> unignore them.
->>
->> What about git-merge? Will it be fooled by these merges while looking
->> for merge bases?
->
-> I thought it was obvious that we should ignore the side branches
-> that were superseded this way, as by definition they did not
-> contribute to the end result at all.
->
-> But there must be something huge that I missed...
+Incorrect.  We merge_trees() and update refs.  I see no reason to
+create artificial abstractions on top of this.
 
-I think what I missed is that the same logic to ignore side branches
-whose history gets cauterised with such an "ours" merge may apply to
-an "ours" merge that people already make, but the latter may want to
-take both histories into account.
+> [...]
 
-So I guess it is not such a great idea.
+Let's not talk about how gross your implementation is.
