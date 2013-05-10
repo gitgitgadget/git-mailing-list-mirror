@@ -1,75 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] t4300 (rebase): don't unnecessarily set GIT_TRACE
-Date: Fri, 10 May 2013 08:42:16 -0700
-Message-ID: <7vr4he3kpz.fsf@alter.siamese.dyndns.org>
-References: <1368196178-5807-1-git-send-email-artagnon@gmail.com>
-	<1368196178-5807-5-git-send-email-artagnon@gmail.com>
-	<7vmws2529j.fsf@alter.siamese.dyndns.org>
-	<CALkWK0k_ArM9EpY0S7=mbgFpHsoauZCr9e=ESX_CEA5-vRHrHQ@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH v3 4/5] teach config --blob option to parse config
+ from database
+Date: Fri, 10 May 2013 17:47:35 +0200
+Message-ID: <20130510154735.GA3850@book-mint>
+References: <20130509154020.GA26423@book-mint>
+ <20130509162018.GF3526@book-mint>
+ <20130509223038.GB30774@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 10 17:42:28 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jens Lehmann <jens.lehmann@web.de>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 10 17:47:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UapSl-0005k7-00
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 17:42:27 +0200
+	id 1UapY0-00031V-Rt
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 17:47:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753801Ab3EJPmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 11:42:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47160 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753719Ab3EJPmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 11:42:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 740711D14A;
-	Fri, 10 May 2013 15:42:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AW/arSZIjHacxeMDCCTcD/JOV60=; b=pNwmGt
-	d9NL3z1mlrDS+7WnKm0ustrOb3DJXVlxNlaG02v5egwuHwsAaboc+xJSa23yUrYC
-	ERPu86SHNeDwng+O2I1kTLFFDdD0OqJFfn3DDplVGVnEBXxm6DU/U29Akh0snXpa
-	7XGKMEA+P9A+7PEonsP9NbSACrcvsotinnLRU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RDxAL6bJpEHv5a5vqBQSJhudCnryIlYp
-	XXHjtncfUanR3GIzuajGi7+86wB+oRGjDaPNuchl7JlXGPumM6OSWkm6gBqoM5ZC
-	y/1jqn/u+h4JpDjN39jsHYAiyB4Ybb/E3rqa222/VO1MiQLjTX8iUnjO2ut7oe8b
-	OIJRtSLo17s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BE5C1D149;
-	Fri, 10 May 2013 15:42:18 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E0EC31D148;
-	Fri, 10 May 2013 15:42:17 +0000 (UTC)
-In-Reply-To: <CALkWK0k_ArM9EpY0S7=mbgFpHsoauZCr9e=ESX_CEA5-vRHrHQ@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Fri, 10 May 2013 20:16:42 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 31F443B6-B988-11E2-9998-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753453Ab3EJPrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 11:47:48 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.93]:39227 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753322Ab3EJPrr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 11:47:47 -0400
+Received: from [213.221.117.228] (helo=book-mint)
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1UapXo-0003CF-AE; Fri, 10 May 2013 17:47:40 +0200
+Content-Disposition: inline
+In-Reply-To: <20130509223038.GB30774@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223875>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Fri, May 10, 2013 at 12:30:39AM +0200, Jeff King wrote:
+> On Thu, May 09, 2013 at 06:20:18PM +0200, Heiko Voigt wrote:
+> 
+> > +static int config_buf_fgetc(struct config_source *conf)
+> > +{
+> > +	if (conf->buf.pos < conf->buf.len && conf->buf.buf[conf->buf.pos])
+> > +		return conf->buf.buf[conf->buf.pos++];
+> > +
+> > +	return EOF;
+> > +}
+> 
+> It probably would not matter for config reading, but is there any reason
+> not to make your fgetc replacement 8-bit clean (i.e., to check only len,
+> and not worry about NUL characters)?
 
-> Junio C Hamano wrote:
->> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->>
->>> A couple of tests execute 'git rebase' with GIT_TRACE set to 1, but
->>> this trace output is not used anywhere.
->>
->> Isn't it shown in "t4300-*.sh -v" output to help the debugger?
->
-> Um, but why the GIT_TRACE in just these two places?  Can't I set
-> GIT_TRACE=1 when executing the shell script if I really wanted that?
+I got a NULL character here and by mistake thought that somehow the len
+would include the ending character. But that was a bug introduced by me
+when I refactored to buffer and length instead of strbuf. I missed to
+transport the len properly. So I will removed this check again.
 
-Perhaps because this is a test about "rebase" and a typical debugger
-does not want to trace other "git" things while debugging this?
+Cheers Heiko
