@@ -1,101 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/8] am: suppress error output from a conditional
-Date: Fri, 10 May 2013 07:46:26 -0700
-Message-ID: <7vhaia51vh.fsf@alter.siamese.dyndns.org>
-References: <1368196005-5354-1-git-send-email-artagnon@gmail.com>
-	<1368196005-5354-2-git-send-email-artagnon@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 4/4] t4300 (rebase): don't unnecessarily set GIT_TRACE
+Date: Fri, 10 May 2013 20:16:42 +0530
+Message-ID: <CALkWK0k_ArM9EpY0S7=mbgFpHsoauZCr9e=ESX_CEA5-vRHrHQ@mail.gmail.com>
+References: <1368196178-5807-1-git-send-email-artagnon@gmail.com>
+ <1368196178-5807-5-git-send-email-artagnon@gmail.com> <7vmws2529j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 10 16:46:44 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 10 16:47:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uaoan-0005VV-Im
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 16:46:41 +0200
+	id 1Uaobb-0006Lb-Ur
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 16:47:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754455Ab3EJOqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 10:46:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62295 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753041Ab3EJOq3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 10:46:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4BDB1B8C8;
-	Fri, 10 May 2013 14:46:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=miHCjIi6Gbsc+JGpWGSLOtJcha8=; b=dcQOB7
-	tohhXdJoC+FklgDTAyHSaNcbaofNVS/32v8QwMIfoiaAMTm8sZqYJdQBFZZZOIsn
-	GxD9zzhb3JyFbV6mpWMvMctYmo/kBEaNwlwHdzfudmYtF1iEFhpkjkCC3HtAKMRf
-	aCP8siJTSfXRqnT2/J0JLccZKeP4wM1esp0gI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ytk02lg9pqBcSnSVyyNg+h0V4Zk+aQa4
-	Ca3yQPv0y5eaK9lGT4YukSWHs5VLgp8Z9M1G0bexKGYLV/UdUKMrlh3S8UhKF+lP
-	Z8msNRypaZxXlw82mOGDVq0hiNEUze4yclPP1yo6hL1xzsexslHBEzZqLzfIoS2N
-	TrW7SaMVdUQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA0F91B8C7;
-	Fri, 10 May 2013 14:46:28 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4713B1B8C6;
-	Fri, 10 May 2013 14:46:28 +0000 (UTC)
-In-Reply-To: <1368196005-5354-2-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Fri, 10 May 2013 19:56:38 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 656B4986-B980-11E2-BB1D-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754476Ab3EJOr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 10:47:26 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:51051 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754371Ab3EJOrX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 10:47:23 -0400
+Received: by mail-ie0-f177.google.com with SMTP id 9so8182219iec.36
+        for <git@vger.kernel.org>; Fri, 10 May 2013 07:47:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=ogxD+mex6iijjAf/t4jZRJUAzIbGMxq6YwFRXRz65J8=;
+        b=l0WqyKb4LJrRikY3fXaDbfF9HpnmrnP4ntrMOInMlY8xMJ901oZP9yVsprMJlslvHy
+         0r3uodY32TfoXJPno24ZQ4K0m0pCrb7Is2HcRPL8XM/ZG11hwhWzWDAKlFxOOHLk6MNS
+         W8qclrzZLgTdFCsTlI3rJD5oyeQG5c2DmZeTeYJztyyYS1rde724Av1+3aM75EhU7RJ/
+         b2UM14mKnzn+PjmELRHaQ2T6/nYf6p0+sjyQIg3ht8b4bPPJFQNE0mcd9ea6uN/lAIFO
+         M/MRtqo5MeDPrMi2RbmbEJmNzCDE0py6RQMTeXXIXA9lon7qhogozQMcvMg9smfd5Qn2
+         +MZQ==
+X-Received: by 10.50.73.65 with SMTP id j1mr2265706igv.49.1368197242889; Fri,
+ 10 May 2013 07:47:22 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Fri, 10 May 2013 07:46:42 -0700 (PDT)
+In-Reply-To: <7vmws2529j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223858>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-
-> In preparation for a later patch that creates $dotest/autostash in
-> git-rebase.sh before anything else happens, don't assume that the
-> presence of a $dotest directory implies the existence of the $next and
-> $last files.  The check for the files is in a conditional anyway, but
-> `cat` is executed on potentially non-existent files.  Suppress this
-> error output.
+Junio C Hamano wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
 >
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  git-am.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>> A couple of tests execute 'git rebase' with GIT_TRACE set to 1, but
+>> this trace output is not used anywhere.
 >
-> diff --git a/git-am.sh b/git-am.sh
-> index c092855..88aa438 100755
-> --- a/git-am.sh
-> +++ b/git-am.sh
-> @@ -446,8 +446,8 @@ done
->  # If the dotest directory exists, but we have finished applying all the
->  # patches in them, clear it out.
->  if test -d "$dotest" &&
-> -   last=$(cat "$dotest/last") &&
-> -   next=$(cat "$dotest/next") &&
-> +   last=$(cat "$dotest/last" 2>/dev/null) &&
-> +   next=$(cat "$dotest/next" 2>/dev/null) &&
->     test $# != 0 &&
->     test "$next" -gt "$last"
->  then
+> Isn't it shown in "t4300-*.sh -v" output to help the debugger?
 
-If you are introducing "dotest exists but next/last may not be
-present" as a valid new state, it probably should check the presence
-and/or absence of them explicitly, but more importantly, it is a
-good idea to move "test $# != 0" higher. Earlier it did not matter
-because when $dotest existed, next/last were supposed to be there
-and absence of them was an error codepath. Now, missing these files
-is not an error but is a perfectly normal state, so checking what
-can be checked more cheaply makes sense as a general code hygiene.
-
-As you may already know, I am not taking a patch that is not meant
-for 'master' to fix regressions in 1.8.3 at this point in the cycle
-after -rc2; please hold onto this and other patches as they won't
-stay in my mailbox.
+Um, but why the GIT_TRACE in just these two places?  Can't I set
+GIT_TRACE=1 when executing the shell script if I really wanted that?
