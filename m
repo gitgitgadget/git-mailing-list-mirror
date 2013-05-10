@@ -1,84 +1,70 @@
-From: nemo <nemo@ikkoku.de>
-Subject: Conflict removed lines from the change set
-Date: Fri, 10 May 2013 14:10:47 +0200
-Message-ID: <1368187847.18427.8.camel@nemo>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/4] remote-hg: don't push fake 'master' bookmark
+Date: Fri, 10 May 2013 07:20:46 -0500
+Message-ID: <CAMP44s2=xj=PS8Eb7D-meAO9U1x1yTD9PShJrMXP1dHMVUYXnA@mail.gmail.com>
+References: <1368181023-10402-1-git-send-email-felipe.contreras@gmail.com>
+	<1368181023-10402-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 10 14:16:57 2013
+X-From: git-owner@vger.kernel.org Fri May 10 14:20:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UamFs-0008Eu-9q
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 14:16:56 +0200
+	id 1UamJi-0004A7-3J
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 14:20:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752750Ab3EJMQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 08:16:52 -0400
-Received: from kyoko.ikkoku.de ([5.9.116.230]:60378 "EHLO kyoko.ikkoku.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752530Ab3EJMQv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 08:16:51 -0400
-X-Greylist: delayed 344 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 May 2013 08:16:51 EDT
-Received: by kyoko.ikkoku.de (Postfix, from userid 113)
-	id 4FDA2C04E8; Fri, 10 May 2013 14:11:06 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on kyoko.ikkoku.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
-	version=3.3.2
-Received: from [192.168.1.102] (p578EB331.dip0.t-ipconnect.de [87.142.179.49])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: nemo)
-	by kyoko.ikkoku.de (Postfix) with ESMTPSA id D2C65BFA29
-	for <git@vger.kernel.org>; Fri, 10 May 2013 14:11:05 +0200 (CEST)
-X-Mailer: Evolution 3.6.4-0ubuntu1 
+	id S1752447Ab3EJMUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 08:20:50 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:44345 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752597Ab3EJMUt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 08:20:49 -0400
+Received: by mail-lb0-f174.google.com with SMTP id r10so4079615lbi.5
+        for <git@vger.kernel.org>; Fri, 10 May 2013 05:20:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=UFX+AQLbfmp6TlB7/oc3Ot+pgacx+u45bDXZx/oEmNw=;
+        b=T+iWNoKzVWGjIvP//TdrsVIwWMNUjIHYVqswOBSKoBzjj9pjz9MoTnJnyNSJ/SjGbX
+         MW1D36Vq2DjwgJIh1nta29BjGOu97XSsVA3OSG7B5P284mKgVMeoTuVvcdyF3zahBEU6
+         ZrcB0dt8tOxiCYMm0w1UB+TluOq8R3IwOL6o4RJSJN8FlzyNHVT/cSxDwxRgcGxtBAOG
+         RyMiQ+Cxp90fWhpQpAvDhMPU/2fHi7hMG31HDMZNCZRIe+1+RxH4zzM4r/mJ+T6WRT3z
+         DQ3s0D8wAKHemUsq41u64BQa7CwQh0XS9b6HB/i4rBTE+rIrY4EEsltf9gHSYw+OvpZs
+         9qfg==
+X-Received: by 10.112.135.70 with SMTP id pq6mr7571003lbb.82.1368188446905;
+ Fri, 10 May 2013 05:20:46 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Fri, 10 May 2013 05:20:46 -0700 (PDT)
+In-Reply-To: <1368181023-10402-2-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223838>
 
-It seems that on conflict git 1.8.1.2 removes lines
-below the preserved line.
+On Fri, May 10, 2013 at 5:17 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> --- a/contrib/remote-helpers/git-remote-hg
+> +++ b/contrib/remote-helpers/git-remote-hg
+> @@ -867,7 +867,7 @@ def do_export(parser):
+>
+>          if bmark == 'master' and 'master' not in parser.repo._bookmarks:
+>              # fake bookmark
+> -            pass
 
-Before merging my master branch onto my staging branch
-I have this in the soon to be conflicting file:
+Missed:
 
-  [... stuff ...]
-  lib.printMenuBottom.10.20.typolink.additionalParams =
-&print=1&no_cache=1
-  [... stuff ...]
++ print "ok %s" % ref
 
-The changes from master look like this:
+> +            continue
+>          elif bookmarks.pushbookmark(parser.repo, bmark, old, new):
+>              # updated locally
+>              pass
 
-  [... stuff ...]
-+
-+ [globalVar = GP:tx_gois24api_piModeratedShow|action|show = expose]
-+ lib.printMenuBottom.10.20.typolink.additionalParams =
-&print=1&no_cache=1&type=26
-+ [else]
-  lib.printMenuBottom.10.20.typolink.additionalParams =
-&print=1&no_cache=1
- +[global]
-  [... stuff ...]
-
-After merging and having a conflict git-diff reports this:
-
-++<<<<<<< HEAD
-++=======
-+ 
-+ [globalVar = GP:tx_gois24api_piModeratedShow|action|show = expose]
-+ lib.printMenuBottom.10.20.typolink.additionalParams =
-&print=1&no_cache=1&type=26
-+ [else]
-++>>>>>>> master
-  lib.printMenuBottom.10.20.typolink.additionalParams =
-&print=1&no_cache=1
- -[global]
- -
-
-Why is the [global] line marked for removal? I presume that this
-should not be the case.
+-- 
+Felipe Contreras
