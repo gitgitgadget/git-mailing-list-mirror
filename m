@@ -1,65 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Pending changes before 1.8.3-rc2?
-Date: Fri, 10 May 2013 11:38:07 -0700
-Message-ID: <7vwqr6znn4.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [RFC PATCH 2/3] mergetools/kdiff3: allow opting-out of auto-merges
+Date: Fri, 10 May 2013 11:40:50 -0700
+Message-ID: <CAJDDKr4RUzFXJpuFjCV00TE0ZmrzZzVC4uO=2uJVSxoY_==JcQ@mail.gmail.com>
+References: <1368090810-40596-1-git-send-email-davvid@gmail.com>
+	<1368090810-40596-2-git-send-email-davvid@gmail.com>
+	<7vli7ob0c4.fsf@alter.siamese.dyndns.org>
+	<20130509172334.GK25912@serenity.lan>
+	<7v38tw9d7r.fsf@alter.siamese.dyndns.org>
+	<CAJDDKr4S6=U1d1fWixaiAzf46KLBDNsi85fgvXy0Uu_aRJyoyw@mail.gmail.com>
+	<20130510054130.GA29215@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>,
-	Eric Wong <normalperson@yhbt.net>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 10 20:38:27 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Theodore Ts'o" <tytso@mit.edu>
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Fri May 10 20:41:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UasD2-0005jy-Ps
-	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 20:38:25 +0200
+	id 1UasFU-0008UA-DQ
+	for gcvg-git-2@plane.gmane.org; Fri, 10 May 2013 20:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753125Ab3EJSiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 May 2013 14:38:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58715 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753089Ab3EJSiJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 May 2013 14:38:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F405E1D7BB;
-	Fri, 10 May 2013 18:38:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=H
-	qsOg9BcCHI6N3ubcFFFaRot5Fk=; b=g+m9XbTQyf7boh+lGUZeENNFQjWFaKLbl
-	vZtzScYM4AQTOMPTfD5reQke/uP5gu73VzQEnJUmWmg7k0OQYdqzBKSglJtmE2jC
-	s3BwpWKiZ1BZJkXSOtKFWzlIqLqV82wzImDSDXazIA0gthQND9fiKNgmoOZrZ8bf
-	Add46uXmeE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=QHZig1rdJ3AM5gN7f15lQOFKByBkUPrJosq3GuUcizblHAlRnwOQ3own
-	krk0CELVgArYTO96tGROIeAlg398NYdH2QZjq3dCE2woJfjKGdEB2/WgX8zm3MVt
-	UPzmusTtQStyjIa549vx3RVD0yrXR9JemyJzK1FLo3QdHqdqRXI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6F491D7BA;
-	Fri, 10 May 2013 18:38:08 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 641871D7B8;
-	Fri, 10 May 2013 18:38:08 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C294EC1E-B9A0-11E2-B68F-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753186Ab3EJSkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 May 2013 14:40:52 -0400
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:42331 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753003Ab3EJSkv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 May 2013 14:40:51 -0400
+Received: by mail-wg0-f50.google.com with SMTP id m15so4256411wgh.17
+        for <git@vger.kernel.org>; Fri, 10 May 2013 11:40:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=invCuXVvgM5NEqoU3wAaSBKvrHaThdzlJf/f9pzA1Js=;
+        b=VnkaaJNk29/IdNw5E+IV+a91DtZizVaO4XJxBYrB50rG+8UsM0PhSU1TDacLZHfJNs
+         KjPhGcnu7uKjJUugqk6uItaXJzVaZfBRdfuCuGqNhwQ7RokWhAzb/zpq5x64RM9rLKLp
+         WoiIAZynCrXlNbtp/dsWT3dUOEEjYsPk5IXyaLm6tCi11Z7ms/9DqHMsbbE4GQfxhNDa
+         NpIaUI6OHa0Bx9rMg8Wy1kOCcYxXtZWq9ziu6jPUq7kwDsML+Ek+gwCcK5vtWJ1lEAeU
+         NFSvQbl48g694bya1JB/7+w5LLvVk8xqRebgUCzsopqb+4M315lXGpcB0aE186g/I6Rn
+         Z5VA==
+X-Received: by 10.180.105.195 with SMTP id go3mr5729520wib.2.1368211250704;
+ Fri, 10 May 2013 11:40:50 -0700 (PDT)
+Received: by 10.194.240.195 with HTTP; Fri, 10 May 2013 11:40:50 -0700 (PDT)
+In-Reply-To: <20130510054130.GA29215@hashpling.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223893>
 
-I should learn to start bugging you folks a lot earlier in the
-release cycle (except for Jiang, as localization strings will not be
-finalizable until very late), but anyway, we will soon be tagging
-the hopefully final -rc for the upcoming release.  Please throw me a
-"pull this now!" if you have stuff that needs to be in 1.8.3.
+On Thu, May 9, 2013 at 10:41 PM, Charles Bailey <charles@hashpling.org> wrote:
+> On Thu, May 09, 2013 at 03:17:30PM -0700, David Aguilar wrote:
+>> Generally, "mergetool.<tool>.cmd" is not general enough since we've
+>> always special cased the base vs. no-base code paths and we run
+>> different commands depending on whether a base is available.
+>
+> Then this is a deficiency of the ".cmd" mechanism which should provide
+> an "if all else fails" way to do things, even if ugly. We could simply
+> add a BASELESS variable to the eval environment of the custom command.
+> (Do we always create an empty file for $BASE, now?)
+>
+>> We could drop --auto altogether, which maybe is a better course of
+>> action since it makes the behavior predictable and un-surprising, but
+>> I do not know if anyone has come to rely on kdiff3's "auto-merge"
+>> feature (hence the extended Cc: list).
+>
+> I disagree, I think that a mergetool should be allowed to be as
+> helpful as possible and if it can resolve the merge unaided then this
+> is no bad thing. I've worked with a number of people who were very
+> happy with the current kdiff3 behaviour. Nothing prevents you from
+> verifying the merge and fixing it up if it wasn't done perfectly by
+> the tool, although I haven't ever encountered this with git+kdiff3.
 
-Thanks.
+That's the bit of info I was needing.
 
- 
+I can always tell the one person who ran into this that "that's how it
+is" and explain why it's a good thing.
+
+"one person" < "number of people" so it's an easy decision, and we
+don't need to make the tool worse to cater to someone that's new to
+git.
+
+Thanks Charles,
+--
+David
