@@ -1,89 +1,158 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] patch-ids.c: cache patch IDs in a notes tree
-Date: Sat, 11 May 2013 22:49:00 +0100
-Message-ID: <20130511214900.GF2299@serenity.lan>
-References: <9d9e56d323b40fe9ea2a6484e35f0afcd3a3a85b.1368301939.git.john@keeping.me.uk>
- <CA+55aFyn0+Q4CA6yQZipaCRB0w9cW4YpuL3XuxU2JR5QPp98XQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2] git-prompt.sh: colorize ZSH prompt
+Date: Sun, 12 May 2013 03:48:59 +0530
+Message-ID: <1368310739-24099-1-git-send-email-artagnon@gmail.com>
+References: <CAMP44s1pO+ytNWEV6ykRn671yf50+oMZQMnrcTN+s5ykPRpumg@mail.gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat May 11 23:49:16 2013
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 12 00:18:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbHfH-0006X3-IG
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 23:49:15 +0200
+	id 1UbI7n-00031d-RA
+	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 00:18:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754517Ab3EKVtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 17:49:11 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:41825 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754277Ab3EKVtK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 17:49:10 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 23FB3198003;
-	Sat, 11 May 2013 22:49:10 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2pfndDNUT+hp; Sat, 11 May 2013 22:49:09 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 7987D606577;
-	Sat, 11 May 2013 22:49:09 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 61BB1161E07A;
-	Sat, 11 May 2013 22:49:09 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qtfHPhyrTxpl; Sat, 11 May 2013 22:49:09 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 1DA73161E340;
-	Sat, 11 May 2013 22:49:02 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CA+55aFyn0+Q4CA6yQZipaCRB0w9cW4YpuL3XuxU2JR5QPp98XQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754542Ab3EKWS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 18:18:28 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:42252 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754482Ab3EKWS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 18:18:27 -0400
+Received: by mail-pd0-f176.google.com with SMTP id x10so3546038pdj.35
+        for <git@vger.kernel.org>; Sat, 11 May 2013 15:18:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=UhOCVTAcGOSCslfMDvXS3uZTBREUk8JGaIVgKP1nUjA=;
+        b=ReDRw7ROz8N+68/MDQGjtd5zREZPW7UEJ2FxfBNtH8MTjmuZmSTDZy8rha1g/GdqKc
+         FcdrIsCVukMgegAM0ERRayedu5v0Yf++5ksUefU8v55+xPViexYCEoSBqqjFuodnCwsh
+         XV4fa8ZBKeFiL4fwhThGlCQM/rj9BUp2ZF/C54tQY8KCj8cvyjglZA2hVcD45bmzFxV8
+         j4qyAux/Bdl5xjOkxT+w8YD71jeoFYT+jyn7vnsGsHpc4KbabiIT+vgnF8KWCc6Zq4/z
+         9ZpVVCoL49Ovn4waSMP/Qx9HwFNSOKqicOPLSKjMMtF2cbzysJ2bC/N+oVGqNkjWxHXM
+         lt8g==
+X-Received: by 10.68.164.98 with SMTP id yp2mr22637721pbb.214.1368310706734;
+        Sat, 11 May 2013 15:18:26 -0700 (PDT)
+Received: from localhost.localdomain ([122.174.27.160])
+        by mx.google.com with ESMTPSA id vu10sm7848476pbc.27.2013.05.11.15.18.24
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 11 May 2013 15:18:25 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.46.gfc3cab0
+In-Reply-To: <CAMP44s1pO+ytNWEV6ykRn671yf50+oMZQMnrcTN+s5ykPRpumg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224015>
 
-On Sat, May 11, 2013 at 02:10:01PM -0700, Linus Torvalds wrote:
-> On Sat, May 11, 2013 at 12:54 PM, John Keeping <john@keeping.me.uk> wrote:
-> > This adds a new configuration variable "patchid.cacheRef" which controls
-> > whether (and where) patch IDs will be cached in a notes tree.
-> 
-> Patch ID's aren't stable wrt different diff options, so I think this
-> is potentially a very bad idea.
+Add colors suitable for use in the ZSH prompt.  Having learnt that the
+ZSH equivalent of PROMPT_COMMAND is precmd (), you can now use
+GIT_PS1_SHOWCOLORHINTS with ZSH.
 
-Hmm... I hadn't realised that.  Looking a bit closer, it looks like
-init_patch_ids sets up its own diffopts so its not affected by the
-command line (except for pathspecs which would be easy to check for).
-Of course that still means it can be affected by settings in the user's
-configuration.
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ You like this more?  I don't mind going either way.
 
-It's a pity that this can't be done since it gives a significant
-performance improvement for some tasks that I perform relatively
-frequently.  Is there a reason patch IDs couldn't be generated using
-fixed diff options?  Since there's no way to control it from the command
-line it seems surprising that the results of "log --cherry" might be
-different based on what's in your config.
+ contrib/completion/git-prompt.sh | 67 ++++++++++++++++++++++++++++------------
+ 1 file changed, 47 insertions(+), 20 deletions(-)
 
-That could go either way I suppose - is it useful to be able to change
-patch IDs based on command line arguments or is it wrong that as we add
-persistent diff settings to the configuration we've been silently
-changing the behaviour of "git patch-id" and "git cherry".
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 08c9b22..26e5bc2 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -20,7 +20,8 @@
+ #        <post>, which are strings you would put in $PS1 before
+ #        and after the status string generated by the git-prompt
+ #        machinery.  e.g.
+-#           PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
++#        Bash: PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
++#        ZSH: precmd () { __git_ps1 "%n" ":%~$ " "|%s" }
+ #        will show username, at-sign, host, colon, cwd, then
+ #        various status string, followed by dollar and SP, as
+ #        your prompt.
+@@ -363,10 +364,18 @@ __git_ps1 ()
+ 		if [ $pcmode = yes ]; then
+ 			local gitstring=
+ 			if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
+-				local c_red='\e[31m'
+-				local c_green='\e[32m'
+-				local c_lblue='\e[1;34m'
+-				local c_clear='\e[0m'
++				if [[ -n ${ZSH_VERSION-} ]]; then
++					local c_red='%F{red}'
++					local c_green='%F{green}'
++					local c_lblue='%F{blue}'
++					local c_clear='%f'
++				else
++					local c_red='\e[31m'
++					local c_green='\e[32m'
++					local c_lblue='\e[1;34m'
++					local c_clear='\e[0m'
++				fi
++
+ 				local bad_color=$c_red
+ 				local ok_color=$c_green
+ 				local branch_color="$c_clear"
+@@ -379,23 +388,41 @@ __git_ps1 ()
+ 					branch_color="$bad_color"
+ 				fi
+ 
+-				# Setting gitstring directly with \[ and \] around colors
+-				# is necessary to prevent wrapping issues!
+-				gitstring="\[$branch_color\]$branchstring\[$c_clear\]"
++				if [[ -n ${ZSH_VERSION-} ]]; then
++					gitstring="$branch_color$branchstring$c_clear"
+ 
+-				if [ "$w" = "*" ]; then
+-					gitstring="$gitstring\[$bad_color\]$w"
+-				fi
+-				if [ -n "$i" ]; then
+-					gitstring="$gitstring\[$ok_color\]$i"
+-				fi
+-				if [ -n "$s" ]; then
+-					gitstring="$gitstring\[$flags_color\]$s"
+-				fi
+-				if [ -n "$u" ]; then
+-					gitstring="$gitstring\[$bad_color\]$u"
++					if [ "$w" = "*" ]; then
++						gitstring="$gitstring$bad_color$w"
++					fi
++					if [ -n "$i" ]; then
++						gitstring="$gitstring$ok_color$i"
++					fi
++					if [ -n "$s" ]; then
++						gitstring="$gitstring$flags_color$s"
++					fi
++					if [ -n "$u" ]; then
++						gitstring="$gitstring$bad_color$u"
++					fi
++					gitstring="$gitstring$c_clear$r$p"
++				else
++					# Setting gitstring directly with \[ and \] around colors
++					# is necessary to prevent wrapping issues!
++					gitstring="\[$branch_color\]$branchstring\[$c_clear\]"
++
++					if [ "$w" = "*" ]; then
++						gitstring="$gitstring\[$bad_color\]$w"
++					fi
++					if [ -n "$i" ]; then
++						gitstring="$gitstring\[$ok_color\]$i"
++					fi
++					if [ -n "$s" ]; then
++						gitstring="$gitstring\[$flags_color\]$s"
++					fi
++					if [ -n "$u" ]; then
++						gitstring="$gitstring\[$bad_color\]$u"
++					fi
++					gitstring="$gitstring\[$c_clear\]$r$p"
+ 				fi
+-				gitstring="$gitstring\[$c_clear\]$r$p"
+ 			else
+ 				gitstring="$c${b##refs/heads/}${f:+$f}$r$p"
+ 			fi
+-- 
+1.8.3.rc1.46.gfc3cab0
