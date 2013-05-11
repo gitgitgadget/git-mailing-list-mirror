@@ -1,211 +1,152 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/4] refactor "ref->merge" flag
-Date: Sat, 11 May 2013 18:15:59 +0200
-Message-ID: <20130511161558.GC3270@sigill.intra.peff.net>
+Subject: [PATCH 4/4] fetch: opportunistically update tracking refs
+Date: Sat, 11 May 2013 18:16:52 +0200
+Message-ID: <20130511161652.GD3270@sigill.intra.peff.net>
 References: <20130511161320.GA14990@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Thomas Rast <trast@student.ethz.ch>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 11 18:16:09 2013
+X-From: git-owner@vger.kernel.org Sat May 11 18:17:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbCSu-0003Fr-Io
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 18:16:09 +0200
+	id 1UbCTj-0003tL-Tk
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 18:17:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753257Ab3EKQQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 12:16:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58763 "EHLO peff.net"
+	id S1753264Ab3EKQQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 12:16:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58773 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753219Ab3EKQQC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 12:16:02 -0400
-Received: (qmail 9302 invoked by uid 102); 11 May 2013 16:16:26 -0000
+	id S1753213Ab3EKQQz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 12:16:55 -0400
+Received: (qmail 9366 invoked by uid 102); 11 May 2013 16:17:20 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (213.221.117.228)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 11 May 2013 11:16:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 11 May 2013 18:15:59 +0200
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 11 May 2013 11:17:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 11 May 2013 18:16:52 +0200
 Content-Disposition: inline
 In-Reply-To: <20130511161320.GA14990@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223980>
 
-Each "struct ref" has a boolean flag that is set by the
-fetch code to determine whether the ref should be marked as
-"not-for-merge" or not when we write it out to FETCH_HEAD.
+When we run a regular "git fetch" without arguments, we
+update the tracking refs according to the configured
+refspec. However, when we run "git fetch origin master" (or
+"git pull origin master"), we do not look at the configured
+refspecs at all, and just update FETCH_HEAD.
 
-It would be useful to turn this boolean into a tri-state,
-with the third state meaning "do not bother writing it out
-to FETCH_HEAD at all". That would let us add extra refs to
-the set of refs to be stored (e.g., to store copies of
-things we fetched) without impacting FETCH_HEAD.
+We miss an opportunity to update "refs/remotes/origin/master"
+(or whatever the user has configured). Some users find this
+confusing, because they would want to do further comparisons
+against the old state of the remote master, like:
 
-This patch turns it into an enum that covers the tri-state
-case, and hopefully makes the code more explicit and easier
-to read.
+  $ git pull origin master
+  $ git log HEAD...origin/master
+
+In the currnet code, they are comparing against whatever
+commit happened to be in origin/master from the last time
+they did a complete "git fetch".  This patch will update a
+ref from the RHS of a configured refspec whenever we happen
+to be fetching its LHS. That makes the case above work.
+
+The downside is that any users who really care about whether
+and when their tracking branches are updated may be
+surprised.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/fetch.c | 57 +++++++++++++++++++++++++++++++++++----------------------
- cache.h         | 14 +++++++++++++-
- 2 files changed, 48 insertions(+), 23 deletions(-)
+ Documentation/pull-fetch-param.txt |  2 +-
+ builtin/fetch.c                    | 16 ++++++++++++++++
+ t/t5510-fetch.sh                   |  8 ++++----
+ 3 files changed, 21 insertions(+), 5 deletions(-)
 
+diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
+index 6f5ca21..18cffc2 100644
+--- a/Documentation/pull-fetch-param.txt
++++ b/Documentation/pull-fetch-param.txt
+@@ -75,4 +75,4 @@ endif::git-pull[]
+ * A parameter <ref> without a colon merges <ref> into the current
+   branch,
+ endif::git-pull[]
+-  while not storing the branch anywhere locally.
++  and updates the remote-tracking branches (if any).
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 4b6b1df..287cf4c 100644
+index 287cf4c..e41cc0d 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -119,7 +119,7 @@ static void add_merge_config(struct ref **head,
+@@ -160,6 +160,8 @@ static struct ref *get_ref_map(struct transport *transport,
+ 	const struct ref *remote_refs = transport_get_remote_refs(transport);
  
- 		for (rm = *head; rm; rm = rm->next) {
- 			if (branch_merge_matches(branch, i, rm->name)) {
--				rm->merge = 1;
-+				rm->fetch_head_status = FETCH_HEAD_MERGE;
- 				break;
- 			}
- 		}
-@@ -140,7 +140,7 @@ static void add_merge_config(struct ref **head,
- 		refspec.src = branch->merge[i]->src;
- 		get_fetch_map(remote_refs, &refspec, tail, 1);
- 		for (rm = *old_tail; rm; rm = rm->next)
--			rm->merge = 1;
-+			rm->fetch_head_status = FETCH_HEAD_MERGE;
- 	}
- }
- 
-@@ -167,7 +167,7 @@ static struct ref *get_ref_map(struct transport *transport,
- 		}
- 		/* Merge everything on the command line, but not --tags */
- 		for (rm = ref_map; rm; rm = rm->next)
--			rm->merge = 1;
-+			rm->fetch_head_status = FETCH_HEAD_MERGE;
+ 	if (ref_count || tags == TAGS_SET) {
++		struct ref **old_tail;
++
+ 		for (i = 0; i < ref_count; i++) {
+ 			get_fetch_map(remote_refs, &refs[i], &tail, 0);
+ 			if (refs[i].dst && refs[i].dst[0])
+@@ -170,6 +172,20 @@ static struct ref *get_ref_map(struct transport *transport,
+ 			rm->fetch_head_status = FETCH_HEAD_MERGE;
  		if (tags == TAGS_SET)
  			get_fetch_map(remote_refs, tag_refspec, &tail, 0);
++
++		/*
++		 * For any refs that we happen to be fetching via command-line
++		 * arguments, take the opportunity to update their configured
++		 * counterparts. However, we do not want to mention these
++		 * entries in FETCH_HEAD at all, as they would simply be
++		 * duplicates of existing entries.
++		 */
++		old_tail = tail;
++		for (i = 0; i < transport->remote->fetch_refspec_nr; i++)
++			get_fetch_map(ref_map, &transport->remote->fetch[i],
++				      &tail, 0);
++		for (rm = *old_tail; rm; rm = rm->next)
++			rm->fetch_head_status = FETCH_HEAD_IGNORE;
  	} else {
-@@ -186,7 +186,7 @@ static struct ref *get_ref_map(struct transport *transport,
- 					*autotags = 1;
- 				if (!i && !has_merge && ref_map &&
- 				    !remote->fetch[0].pattern)
--					ref_map->merge = 1;
-+					ref_map->fetch_head_status = FETCH_HEAD_MERGE;
- 			}
- 			/*
- 			 * if the remote we're fetching from is the same
-@@ -202,7 +202,7 @@ static struct ref *get_ref_map(struct transport *transport,
- 			ref_map = get_remote_ref(remote_refs, "HEAD");
- 			if (!ref_map)
- 				die(_("Couldn't find remote ref HEAD"));
--			ref_map->merge = 1;
-+			ref_map->fetch_head_status = FETCH_HEAD_MERGE;
- 			tail = &ref_map->next;
- 		}
- 	}
-@@ -389,7 +389,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 	const char *what, *kind;
- 	struct ref *rm;
- 	char *url, *filename = dry_run ? "/dev/null" : git_path("FETCH_HEAD");
--	int want_merge;
-+	int want_status;
+ 		/* Use the defaults */
+ 		struct remote *remote = transport->remote;
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 789c228..ff43e08 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -377,7 +377,7 @@ test_expect_success 'mark initial state of origin/master' '
+ 	)
+ '
  
- 	fp = fopen(filename, "a");
- 	if (!fp)
-@@ -407,19 +407,22 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 	}
+-test_expect_success 'explicit fetch should not update tracking' '
++test_expect_success 'explicit fetch should update tracking' '
  
- 	/*
--	 * The first pass writes objects to be merged and then the
--	 * second pass writes the rest, in order to allow using
--	 * FETCH_HEAD as a refname to refer to the ref to be merged.
-+	 * We do a pass for each fetch_head_status type in their enum order, so
-+	 * merged entries are written before not-for-merge. That lets readers
-+	 * use FETCH_HEAD as a refname to refer to the ref to be merged.
- 	 */
--	for (want_merge = 1; 0 <= want_merge; want_merge--) {
-+	for (want_status = FETCH_HEAD_MERGE;
-+	     want_status <= FETCH_HEAD_IGNORE;
-+	     want_status++) {
- 		for (rm = ref_map; rm; rm = rm->next) {
- 			struct ref *ref = NULL;
-+			const char *merge_status_marker = "";
+ 	cd "$D" &&
+ 	git branch -f side &&
+@@ -387,12 +387,12 @@ test_expect_success 'explicit fetch should not update tracking' '
+ 		o=$(git rev-parse --verify refs/remotes/origin/master) &&
+ 		git fetch origin master &&
+ 		n=$(git rev-parse --verify refs/remotes/origin/master) &&
+-		test "$o" = "$n" &&
++		test "$o" != "$n" &&
+ 		test_must_fail git rev-parse --verify refs/remotes/origin/side
+ 	)
+ '
  
- 			commit = lookup_commit_reference_gently(rm->old_sha1, 1);
- 			if (!commit)
--				rm->merge = 0;
-+				rm->fetch_head_status = FETCH_HEAD_NOT_FOR_MERGE;
+-test_expect_success 'explicit pull should not update tracking' '
++test_expect_success 'explicit pull should update tracking' '
  
--			if (rm->merge != want_merge)
-+			if (rm->fetch_head_status != want_status)
- 				continue;
- 
- 			if (rm->peer_ref) {
-@@ -465,16 +468,26 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 					strbuf_addf(&note, "%s ", kind);
- 				strbuf_addf(&note, "'%s' of ", what);
- 			}
--			fprintf(fp, "%s\t%s\t%s",
--				sha1_to_hex(rm->old_sha1),
--				rm->merge ? "" : "not-for-merge",
--				note.buf);
--			for (i = 0; i < url_len; ++i)
--				if ('\n' == url[i])
--					fputs("\\n", fp);
--				else
--					fputc(url[i], fp);
--			fputc('\n', fp);
-+			switch (rm->fetch_head_status) {
-+			case FETCH_HEAD_NOT_FOR_MERGE:
-+				merge_status_marker = "not-for-merge";
-+				/* fall-through */
-+			case FETCH_HEAD_MERGE:
-+				fprintf(fp, "%s\t%s\t%s",
-+					sha1_to_hex(rm->old_sha1),
-+					merge_status_marker,
-+					note.buf);
-+				for (i = 0; i < url_len; ++i)
-+					if ('\n' == url[i])
-+						fputs("\\n", fp);
-+					else
-+						fputc(url[i], fp);
-+				fputc('\n', fp);
-+				break;
-+			default:
-+				/* do not write anything to FETCH_HEAD */
-+				break;
-+			}
- 
- 			strbuf_reset(&note);
- 			if (ref) {
-diff --git a/cache.h b/cache.h
-index 94ca1ac..9670d99 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1024,9 +1024,21 @@ struct ref {
- 	unsigned int
- 		force:1,
- 		forced_update:1,
--		merge:1,
- 		deletion:1,
- 		matched:1;
-+
-+	/*
-+	 * Order is important here, as we write to FETCH_HEAD
-+	 * in numeric order. And the default NOT_FOR_MERGE
-+	 * should be 0, so that xcalloc'd structures get it
-+	 * by default.
-+	 */
-+	enum {
-+		FETCH_HEAD_MERGE = -1,
-+		FETCH_HEAD_NOT_FOR_MERGE = 0,
-+		FETCH_HEAD_IGNORE = 1
-+	} fetch_head_status;
-+
- 	enum {
- 		REF_STATUS_NONE = 0,
- 		REF_STATUS_OK,
+ 	cd "$D" &&
+ 	git branch -f side &&
+@@ -402,7 +402,7 @@ test_expect_success 'explicit pull should not update tracking' '
+ 		o=$(git rev-parse --verify refs/remotes/origin/master) &&
+ 		git pull origin master &&
+ 		n=$(git rev-parse --verify refs/remotes/origin/master) &&
+-		test "$o" = "$n" &&
++		test "$o" != "$n" &&
+ 		test_must_fail git rev-parse --verify refs/remotes/origin/side
+ 	)
+ '
 -- 
 1.8.3.rc1.2.g12db477
