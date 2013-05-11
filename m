@@ -1,88 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] test-bzr: Do not use unportable sed "\+"
-Date: Sat, 11 May 2013 11:52:33 -0700
-Message-ID: <7vwqr5wdqm.fsf@alter.siamese.dyndns.org>
-References: <201305111525.53130.tboegi@web.de>
+Subject: Re: [ANN] git-tbdiff: topic branch diff
+Date: Sat, 11 May 2013 12:01:07 -0700
+Message-ID: <7vsj1twdcc.fsf@alter.siamese.dyndns.org>
+References: <87ip2pfs19.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: felipe.contreras@gmail.com, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat May 11 20:52:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat May 11 21:01:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbEuO-0004QW-RR
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 20:52:41 +0200
+	id 1UbF2t-0002lq-8N
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 21:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753247Ab3EKSwh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 May 2013 14:52:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65087 "EHLO
+	id S1753644Ab3EKTBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 15:01:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42166 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752976Ab3EKSwg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 May 2013 14:52:36 -0400
+	id S1753110Ab3EKTBK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 15:01:10 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A2B41E3CF;
-	Sat, 11 May 2013 18:52:35 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA8771E556;
+	Sat, 11 May 2013 19:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=aLRIHlQk49gE
-	RaQ6/bmLbLDdR74=; b=OFrVmlTZN2Zbr06yR80a0Pu1Q4dYP7/LQQM67s9F49eB
-	cBLwqp27CgSyxGkwP0g9HcetXQ8lUK9awtOY6DXFz/w2Asfn5wzGVewth5eEtIMJ
-	47gcj9uq9FPSltKBa/aQpK3nIXhMiFXc5HLwyFX9n+71rZYGQtUvIcS3I4dxtJo=
+	:content-type; s=sasl; bh=wbuEEZ+6tk6mo6ib5OGdns4zCPQ=; b=yX/sW4
+	8xwUmEk/nzrWExM6BnmdRF/2CG6tdp24IoGB+xylcLG2q8SVNTGf6yB84DnIfQbJ
+	zrBhIjAJ3Dr0lOs/Pzvc8bRqhaztHifA37Nb0XIdDRJh8itG3IBfS9O+GODGVZ4D
+	6RwxnUucKcywDAFcCEeNLtpaakSd77Xzpxjds=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=lxXnr4
-	YpUf0wDIqXcNPKNzf00THJg3Q/L91NS24XwdTVyv2rCsXpZS27U10FGzBwqWki2h
-	oqQ2JELltiAmnwIhWEd0oWpvkh1p8H+Z7UxVtWzrf22rDn/GPmpV/Rraq9vJJJnH
-	XgDvNkOcb1HwZxkSPGB4KvF2AYy70JpWE6p6o=
+	:content-type; q=dns; s=sasl; b=AfyRaoTd543+qXtu8UnOEOmq3N8Lqgdi
+	YpinmmF6u7exCQNj8lAOF/oCADbk+dYRIGRTtiEkeObPbUf4hHuXlNj3e7aIfkiX
+	ZzBnvRLUmaDXgTW2qdcwCqGMDVg/W24amHsb9s+NnTCULVO75/3FfR0cbeD0QXLB
+	TNlSpYqqxZE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7785A1E3CD;
-	Sat, 11 May 2013 18:52:35 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A094B1E555;
+	Sat, 11 May 2013 19:01:09 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D00A01E3C8;
-	Sat, 11 May 2013 18:52:34 +0000 (UTC)
-In-Reply-To: <201305111525.53130.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?=
-	message of "Sat, 11 May 2013 15:25:52 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E72A1E554;
+	Sat, 11 May 2013 19:01:08 +0000 (UTC)
+In-Reply-To: <87ip2pfs19.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
+	of "Sat, 11 May 2013 17:35:46 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F16391E6-BA6B-11E2-926C-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 23E0F630-BA6D-11E2-B9BD-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224002>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-> Using sed -e '/[0-9]\+//' to find "one ore more" digits
-> is not portable.
-> Use the Basic Regular Expression '/[0-9][0-9]*//' instead
+> In this case the matching up is trivial, but you can see that it clearly
+> shows the added Signoffs and edited parts of message and patch.
 >
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> Have fun, and let me know if it breaks!
 
-Thanks.  Is there another one in t/t5551-http-fetch.sh that checks
-the tags?
+Nice.
 
-> ---
->  contrib/remote-helpers/test-bzr.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-help=
-ers/test-bzr.sh
-> index d9c32f4..5dfa070 100755
-> --- a/contrib/remote-helpers/test-bzr.sh
-> +++ b/contrib/remote-helpers/test-bzr.sh
-> @@ -328,7 +328,7 @@ test_expect_success 'strip' '
-> =20
->    echo four >> content &&
->    bzr commit -m four &&
-> -  bzr log --line | sed -e "s/^[0-9]\+: //" > ../expected
-> +  bzr log --line | sed -e "s/^[0-9][0-9]*: //" > ../expected
->    ) &&
-> =20
->    (cd gitrepo &&
+I need to do this kind of comparison quite often, when a rerolled
+series is received.  Since there is no reason to re_base_ the series
+with with an updated one on a different fork-point, I tend to do:
+
+	$ git checkout master...tr/topic
+        $ git am -s3c ./+tr-topic-2.mbox
+	... inspect the differences between tr/topic and HEAD ...
+        $ git branch -f tr/topic
+
+where the first step finds the bottom boundary of the previous
+iteration and detaches the HEAD at the commit, the second step
+applies the rerolled series and the topic branch is updated in
+the final step.
+
+The "inspect the differences" step can be helped if I can use this
+tool to say
+
+	$ git tbdiff master..tr/topic master..HEAD
+
+It would probably be trivial to extend the command line parser to
+also accept
+
+	$ git tbdiff tr/topic...
+
+but that is an icing on the cake.
