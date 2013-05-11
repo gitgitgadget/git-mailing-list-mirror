@@ -1,55 +1,84 @@
 From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: RE:  [PATCH] test-bzr: Do not use unportable sed "\+"
-Date: Sat, 11 May 2013 22:11:25 +0200
-Message-ID: <518EA5ED.9020001@web.de>
-References: <201305111525.53130.tboegi@web.de>
+Subject: Re: [PATCH] test-bzr: Do not use unportable sed "\+"
+Date: Sat, 11 May 2013 22:35:08 +0200
+Message-ID: <518EAB7C.3010508@web.de>
+References: <201305111525.53130.tboegi@web.de> <7vwqr5wdqm.fsf@alter.siamese.dyndns.org> <7vobchwbax.fsf@alter.siamese.dyndns.org> <518EA351.8000603@web.de> <7v8v3lwa5p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: felipe.contreras@gmail.com, git@vger.kernel.org
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat May 11 22:13:10 2013
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	felipe.contreras@gmail.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 11 22:35:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbGAI-0005cB-7N
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 22:13:10 +0200
+	id 1UbGW1-00058k-VP
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 22:35:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754057Ab3EKUNF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 May 2013 16:13:05 -0400
-Received: from mout.web.de ([212.227.15.3]:65388 "EHLO mout.web.de"
+	id S1754267Ab3EKUfc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 May 2013 16:35:32 -0400
+Received: from mout.web.de ([212.227.17.12]:63964 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753879Ab3EKUNE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 16:13:04 -0400
-Received: from [192.168.209.16] ([195.67.191.23]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0LrK0u-1UP3uD48Sa-013LBb; Sat, 11 May 2013 22:13:02
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
-In-Reply-To: <201305111525.53130.tboegi@web.de>
-X-Provags-ID: V02:K0:3IKMSaq2z9TyXACJ1q1ZabTJNYP96zus0v7oGn2Yd8I
- 1l7DSrY4k6zsdV1NkEPwJCIsCnNXQX2BFdkFFtEhdHlId08Oqb
- t8YAZmdK+t5zfaPojWTTYmwngyDY1Pj8q0ySBvNs9CGRGKm+v5
- 6t7WKRmZF/x4n0IfrjQxXAS7iUU+cCx6kfAhdYCiWwP1fu+cXt
- 3vv1BLG3mmd+5dUzZ+I1A==
+	id S1754256Ab3EKUfb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 16:35:31 -0400
+Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0M7blv-1UMdm71vjL-00xN1m; Sat, 11 May 2013 22:35:16 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <7v8v3lwa5p.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:G5oL0DhwM111sE+hraNPhiwcZe8jGmOvGWULoyYgJ7r
+ vblk0Wf+JTsg8syDXuenrvwpJv4RTi3DLUGE/kbblwnIAioExQ
+ mely7CL74VdBv8sZedlnTwaosDdx/3vEyAKu6zilmCiTqRcxnT
+ P/vc55LaAMzu1H5ES+L5whhda53mvG79zsMiGMzWIIHqZFuo5R
+ 1DTffjEt9u44zTMM81QAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224010>
 
-On 05/11/2013 03:25 PM, Torsten B=C3=B6gershausen wrote:
-Sorry, I forgot to mention that there is another test case that fails
-in test-bzr.sh (Both Linux and MacOS):
+On 11.05.13 22:09, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+>> I did,
+>> the interesting thing is that the test passes with and without your =
+patch.
+>> (After enabling  GIT_TEST_LONG and GIT_TEST_HTTPD in both cases)
+>=20
+> Strange.  Do you see differences between the produced packed-refs
+> file?
 
-Cloning into 'gitrepo'...
---- ../expected 2013-05-11 20:07:17.678360248 +0000
-+++ actual      2013-05-11 20:07:21.510312073 +0000
-@@ -1,3 +1,3 @@
--origin/HEAD
-+origin
-  origin/branch
-  origin/trunk
-not ok 11 - proper bzr repo
+The original version seems to look like this:
+:1 666527db455708922859283c673094002092910b
+:2 1e2acf73c6db881cfb1d56d67662e3d9260be2cf
+[snip]
+
+The "fixed POSIX version" follows that style:
+666527db455708922859283c673094002092910b refs/tags/blablablablablablabl=
+ablablablablablablablablablablablablablablablablablablablablablablabla-=
+1
+1e2acf73c6db881cfb1d56d67662e3d9260be2cf refs/tags/blablablablablablabl=
+ablablablablablablablablablablablablablablablablablablablablablablabla-=
+2
+[snip]
+
+(Just to verify the changes:)
+diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
+index b23efbb..68965f0 100755
+--- a/t/t5551-http-fetch.sh
++++ b/t/t5551-http-fetch.sh
+@@ -210,8 +210,11 @@ test_expect_success EXPENSIVE 'create 50,000 tags =
+in the repo' '
+        # now assign tags to all the dangling commits we created above
+        tag=3D$("$PERL_PATH" -e "print \"bla\" x 30") &&
+        sed -e "s/^:\(.\+\) \(.\+\)$/\2 refs\/tags\/$tag-\1/" <marks >>=
+packed-refs
++       sed -e "s|^:\([^ ]*\) \(.*\)$|\2 refs/tags/$tag-\1|" <marks >pa=
+cked-refs.junio
++       sed -e "s/^:\(.\+\) \(.\+\)$/\2 refs\/tags\/$tag-\1/" <marks >p=
+acked-refs.orig
+        )
+ '
++       exit 0
