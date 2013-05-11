@@ -1,9 +1,8 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 3/3] cache.h: eliminate SHA-1 deprecation warnings on OS X 10.8
-Date: Sat, 11 May 2013 01:22:28 -0700
-Message-ID: <1368260548-52612-3-git-send-email-davvid@gmail.com>
+Subject: [PATCH v2 2/3] imap-send: eliminate HMAC warnings on OS X 10.8
+Date: Sat, 11 May 2013 01:22:27 -0700
+Message-ID: <1368260548-52612-2-git-send-email-davvid@gmail.com>
 References: <1368260548-52612-1-git-send-email-davvid@gmail.com>
- <1368260548-52612-2-git-send-email-davvid@gmail.com>
 Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Sat May 11 10:23:05 2013
@@ -12,113 +11,100 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ub555-0000nt-Go
+	id 1Ub555-0000nt-0j
 	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 10:23:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753902Ab3EKIW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 04:22:57 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:57613 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753832Ab3EKIWx (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753890Ab3EKIWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sat, 11 May 2013 04:22:53 -0400
-Received: by mail-pa0-f54.google.com with SMTP id kx1so3463010pab.13
-        for <git@vger.kernel.org>; Sat, 11 May 2013 01:22:53 -0700 (PDT)
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:59028 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753222Ab3EKIWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 04:22:51 -0400
+Received: by mail-pa0-f52.google.com with SMTP id bg2so3460428pad.39
+        for <git@vger.kernel.org>; Sat, 11 May 2013 01:22:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=/dvOOiNI+YDqcz8tqQGYNoPkxR5IKa883tzggpKnvm8=;
-        b=V0s1xye/RNHcZ9HvpR+3cOFlHQJ+NVIpe4pIGf+HLEhOyR8NtdjaYhBXTqy2wmb9RO
-         kwNFPUadGca2ZCTZgjXdTA2zAv1y5atcZwsprZd+pwXYJZU3SKMQfXxRZkLlBr9wtnI7
-         N4DcfpwxCtyH/7ae9/Z4i0nCpOTGX3QsxBVzKkGNcLCtQzBp/ByOJUunNwvjagz3aBx3
-         D0L+zJkoxTW8WwKH/MV2OA8V0RNbeK9UnLbdc37rzmh/gd+8RgasUa8m06TkJQobrxsO
-         b4WLm8NkFT18wYYjZUSBKRvMDGu/SZS0vRZgkWn0EXLKhiUwuoiXmrAGMT4tK8ArIZ+B
-         ICHQ==
-X-Received: by 10.68.253.230 with SMTP id ad6mr20044233pbd.182.1368260573026;
-        Sat, 11 May 2013 01:22:53 -0700 (PDT)
+        bh=LgmaVN6tJvk7FYR7imzm+r+RRVpBInGpca90mAbo+PA=;
+        b=waQddcSzW48RJSP0d9Fvb9mxdcTTDD6qGh/Do7X8U75mTsBhfIFXRb2JGnZGmzUELQ
+         zq/OGMLCY6i9sdo28gC2RPXDdZQh618r2XlBDynqaX/IGvmRlo1uWWrTwaRk00e6y+JN
+         fhxMrveufhaaGX1FhKnNUPJKL8fDNxWzBA6AeQFMNaTAiFNNK5ujZbNxvfb7L3iTO0iD
+         HpdNX2412XwZepkakUBk58pjfFWeZqhBQ/lAqKEo+0QfRsgoIEFoLSMIuFt3b7mum5+i
+         28LqyTO82g4iXJ0xmtMzHnjS9uJT0uOITkqB20qFf6VE8oJylyItgoND9KBMa964VquM
+         DrJw==
+X-Received: by 10.66.119.34 with SMTP id kr2mr21239910pab.149.1368260571127;
+        Sat, 11 May 2013 01:22:51 -0700 (PDT)
 Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id dr6sm6154774pac.11.2013.05.11.01.22.51
+        by mx.google.com with ESMTPSA id dr6sm6154774pac.11.2013.05.11.01.22.49
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 11 May 2013 01:22:52 -0700 (PDT)
+        Sat, 11 May 2013 01:22:50 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc1.47.g41936fa
-In-Reply-To: <1368260548-52612-2-git-send-email-davvid@gmail.com>
+In-Reply-To: <1368260548-52612-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223943>
 
-Mac OS X Mountain Lion prints warnings when building git:
+Mac OS X Mountain Lion warns that HMAC_Init() and friends are
+deprecated.  Use CommonCrypto's HMAC to eliminate the warnings.
 
-	warning: 'SHA1_Init' is deprecated
-	(declared at /usr/include/openssl/sha.h:121)
-
-Silence the warnings by using the Common Digest SHA-1
-functions for SHA1_Init(), SHA1_Update(), and SHA1_Final().
-
-Add a COMMON_DIGEST_SHA1 knob to the Makefile to allow
-choosing this implementation and define it by default on Darwin.
-
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
-Unchanged since last time; rebased to 3/3.
+Rebased to 2/3.
 
- Makefile | 7 +++++++
- cache.h  | 7 +++++++
- 2 files changed, 14 insertions(+)
+ Makefile    |  5 +++++
+ imap-send.c | 10 ++++++++++
+ 2 files changed, 15 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 25282b4..8b2f9cc 100644
+index f698c1a..25282b4 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1055,6 +1055,7 @@ ifeq ($(uname_S),Darwin)
+@@ -1054,6 +1054,7 @@ ifeq ($(uname_S),Darwin)
+ 			BASIC_LDFLAGS += -L/opt/local/lib
  		endif
  	endif
- 	COMMON_DIGEST_HMAC = YesPlease
-+	COMMON_DIGEST_SHA1 = YesPlease
++	COMMON_DIGEST_HMAC = YesPlease
  	NO_REGEX = YesPlease
  	PTHREAD_LIBS =
  endif
-@@ -1390,10 +1391,16 @@ ifdef PPC_SHA1
- 	LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
- 	LIB_H += ppc/sha1.h
- else
-+ifdef COMMON_DIGEST_SHA1
-+	BASIC_CFLAGS += -DCOMMON_DIGEST_FOR_SHA1=1
-+	SHA1_HEADER = <CommonCrypto/CommonDigest.h>
-+	EXTLIBS += $(LIB_4_CRYPTO)
-+else
- 	SHA1_HEADER = <openssl/sha.h>
+@@ -1393,6 +1394,10 @@ else
  	EXTLIBS += $(LIB_4_CRYPTO)
  endif
  endif
++
++ifdef COMMON_DIGEST_HMAC
++	BASIC_CFLAGS += -DCOMMON_DIGEST_FOR_HMAC=1
 +endif
- 
- ifdef COMMON_DIGEST_HMAC
- 	BASIC_CFLAGS += -DCOMMON_DIGEST_FOR_HMAC=1
-diff --git a/cache.h b/cache.h
-index 94ca1ac..e2b24c6 100644
---- a/cache.h
-+++ b/cache.h
-@@ -10,11 +10,18 @@
- 
- #include SHA1_HEADER
- #ifndef git_SHA_CTX
-+#ifdef COMMON_DIGEST_FOR_SHA1
-+#define git_SHA_CTX	CC_SHA1_CTX
-+#define git_SHA1_Init	CC_SHA1_Init
-+#define git_SHA1_Update	CC_SHA1_Update
-+#define git_SHA1_Final	CC_SHA1_Final
+ ifdef NO_PERL_MAKEMAKER
+ 	export NO_PERL_MAKEMAKER
+ endif
+diff --git a/imap-send.c b/imap-send.c
+index d9bcfb4..1b2e69c 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -29,8 +29,18 @@
+ #ifdef NO_OPENSSL
+ typedef void *SSL;
+ #else
++#ifdef COMMON_DIGEST_FOR_HMAC
++#include <CommonCrypto/CommonHMAC.h>
++#define HMAC_CTX CCHmacContext
++#define HMAC_Init(hmac, key, len, algo) CCHmacInit(hmac, algo, key, len)
++#define HMAC_Update CCHmacUpdate
++#define HMAC_Final(hmac, hash, ptr) CCHmacFinal(hmac, hash)
++#define HMAC_CTX_cleanup
++#define EVP_md5() kCCHmacAlgMD5
 +#else
- #define git_SHA_CTX	SHA_CTX
- #define git_SHA1_Init	SHA1_Init
- #define git_SHA1_Update	SHA1_Update
- #define git_SHA1_Final	SHA1_Final
- #endif
+ #include <openssl/evp.h>
+ #include <openssl/hmac.h>
 +#endif
+ #include <openssl/x509v3.h>
+ #endif
  
- #include <zlib.h>
- typedef struct git_zstream {
 -- 
 1.8.3.rc1.47.g41936fa
