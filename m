@@ -1,102 +1,118 @@
-From: Andrey Borzenkov <arvidjaar@gmail.com>
-Subject: Re: Cannot push anything via export transport helper after push
- fails.
-Date: Sat, 11 May 2013 22:48:37 +0400
-Message-ID: <20130511224837.39a1c551@opensuse.site>
-References: <20130511162936.0354e5d7@opensuse.site>
-	<CAMP44s1YhQR0o-0CLc2PG-EJTZdN4tha-4BVEUy-K_Av81D=GQ@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [RFC/PATCH 0/2] merge-base: add --merge-child option
+Date: Sat, 11 May 2013 19:48:55 +0100
+Message-ID: <20130511184855.GE2299@serenity.lan>
+References: <cover.1368274689.git.john@keeping.me.uk>
+ <7vmws1xv0b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=KOI8-R
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 11 20:48:54 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 11 20:49:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbEqj-0001Nj-6I
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 20:48:53 +0200
+	id 1UbEr3-0001g3-Mf
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 20:49:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752786Ab3EKSsl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 May 2013 14:48:41 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:58257 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752242Ab3EKSsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 14:48:40 -0400
-Received: by mail-la0-f45.google.com with SMTP id fp12so4927129lab.4
-        for <git@vger.kernel.org>; Sat, 11 May 2013 11:48:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:in-reply-to
-         :references:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=R5aQnuT5kdLyEDtGpiEJef1kJsC1RoIUjEkSX3jpggE=;
-        b=OoYFZF3w1pai7uv7z/vbhox11VbJzBZwm1AJFnFXKl62BIjJZo2zvzMdqmE/Eq1Xh3
-         4Nsin38SfRDkyrVzEBwjka6M76kBmWnhSMDE1igePBzsXkzwR7YJ9ItrSfhdwi5QZLFd
-         7Sjc89thQnw/hZpZjqwWmLD2fd+VzC8swYVN9j80zKU61b4UslKJ7b/FHG22nDMuoflA
-         3hVnlezNqQaOCCvBawXNgWPGks4rB0aJkwrOVuKjSIj4VeEvMR3IyxjVW9q+PomaBCW7
-         PLy8hrsTdvmTybJn2XBR1W7Ii0iYdpOu4RAEyoXa5TedgZhrtbSvBHEt2/zIJEsi6PL5
-         whMQ==
-X-Received: by 10.112.125.164 with SMTP id mr4mr9882800lbb.116.1368298119278;
-        Sat, 11 May 2013 11:48:39 -0700 (PDT)
-Received: from opensuse.site ([94.29.72.160])
-        by mx.google.com with ESMTPSA id c9sm2268934lba.16.2013.05.11.11.48.38
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Sat, 11 May 2013 11:48:38 -0700 (PDT)
-In-Reply-To: <CAMP44s1YhQR0o-0CLc2PG-EJTZdN4tha-4BVEUy-K_Av81D=GQ@mail.gmail.com>
-X-Mailer: Claws Mail 3.9.0 (GTK+ 2.24.14; x86_64-suse-linux-gnu)
+	id S1752933Ab3EKStJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 14:49:09 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:49660 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752242Ab3EKStI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 14:49:08 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id BEFCDCDA57C;
+	Sat, 11 May 2013 19:49:06 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0m1exV2ZPtYn; Sat, 11 May 2013 19:49:05 +0100 (BST)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 1F62ACDA59C;
+	Sat, 11 May 2013 19:48:57 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7vmws1xv0b.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224000>
 
-=F7 Sat, 11 May 2013 08:57:14 -0500
-=46elipe Contreras <felipe.contreras@gmail.com> =D0=C9=DB=C5=D4:
-
+On Sat, May 11, 2013 at 10:54:12AM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > This is helpful when examining branches with disjoint roots, for example
+> > because one is periodically merged into a subtree of the other.
 > >
-> > The problem seems to be that git fast-export updates marks
-> > unconditionally, whether export actually applied or not. So next ti=
-me
-> > it assumes everything is already exported and does nothing.
+> > With the --merge-child option, "git merge-base" will print a
+> > first-parent ancestor of the first revision given, where the commit
+> > printed is either a merge-base of the supplied revisions or a merge for
+> > which one of its parents (not the first) is a merge-base.
+> 
+> The above two doe snot connect at least to me.  The second paragraph
+> seems to describe how this mysterious mode decides its output to a
+> sufficient detail, but what the output _means_, and it is unclear
+> how it relates to gitk/git-gui style merges.
+> 
+> > For example, given the history:
 > >
-> > Is it expected behavior?
->=20
-> Indeed, this is the way it currently works, and it's not easy to fix.
-> We would need some way to make fast-export wait until we know the exi=
-t
-> status of the remote helper, and then tell it when it failed, so the
-> marks are not updated.
->=20
+> >         A---C---G
+> >              \
+> >         B-----D---F
+> >          \
+> >           E
+> >
+> > we have:
+> > ...
+> >         $ git log --left-right F...E --not $(git merge-base --merge-child F E)
+> >         < F
+> >         > E
+> >
+> > The git-log case is useful because it allows us to limit the range of
+> > commits that we are examining for patch-identical changes when using
+> > --cherry.
+> 
+> Hmph, is this reinventing ancestry-path in a different way?  At the
+> low level machinery, you are finding D to show only F and E, and
+> your goal seems to be to ignore the side ancestry A--C--G, but it is
+> not clear if you prefer "E D F"(which would be what F...E would give
+> in a history limited to ancestry-path, ignoring C) over "E F".
 
-One possibility would be to omit *export-marks and manage GIT marks in
-remote helper as well. Helper would then update synchronously both GIT
-and BZR marks if no errors were detected. Or even better, it could
-update just those commits that had been successful.
+I hadn't considered ancestry-path, but I don't think it does what I
+want.  What I want if for LEFT to be B--D--F and RIGHT to be B--E,
+ignoring A--C--G because I know that none of those are patch identical
+to anything in B--E.
 
-> However, the way remote-bzr/hg work is that the commits are still
-> there anyway. So if you merge the next time you push those commits ar=
-e
-> already converted, so it's not a problem if fast-export is not
-> exporting them again.
->=20
+So what I want is more descendant-path than ancestry path in that I
+don't want anything that isn't a descendant of the merge base of the
+supplied arguments.
 
-As I understand bzr commit ID is stable. What happens if we try to
-commit the same ID second time?
+> > For example with git-gui in git.git I know that anything
+> > before the last merge of git-gui is not interesting:
+> 
+> Can this be extended to find the second last such merge?  Or is the
+> last one always special?
 
-> So even though it's not ideal, it should work.
->=20
+In this implementation it only finds the last one because that's where
+the merge base is.
 
-I'm more concerned about transport errors. Any network glitch during
-push renders you repository unusable (at least, without much efforts).
+> Still skeptical, but I'll let people discuss it during the feature
+> freeze ;-).
 
-> The problem is when the remote-helper crashes and the marks of
-> fast-export and the remote-helper are out of sync, and then the user
-> is really screwed.
->=20
-
-This case would benefit from moving processing of GIT marks into remote
-helper as well.
+I'm not convinced this is easy to explain myself, which may make it a
+bad idea.  Perhaps a --descendant-path argument to git-log is a better
+way to help with this case.
