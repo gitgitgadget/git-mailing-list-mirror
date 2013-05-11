@@ -1,108 +1,110 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: git log --cherry with disjoint roots
-Date: Sat, 11 May 2013 11:53:21 +0100
-Message-ID: <20130511105321.GC2299@serenity.lan>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Outdated and broken online versions of user-manual.html
+Date: Sat, 11 May 2013 12:36:21 +0100
+Organization: OPDS
+Message-ID: <BE32A698F2774BD5B5235264B13A46C8@PhilipOakley>
+References: <20130510190229.GA31708@odin.tremily.us> <loom.20130511T092853-808@post.gmane.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 11 12:53:48 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	reply-type=original
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>, "Thomas Ackermann" <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Sat May 11 13:36:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ub7Qx-0006f5-Ei
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 12:53:47 +0200
+	id 1Ub864-0003F7-3O
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 13:36:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753042Ab3EKKxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 06:53:31 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:50639 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751672Ab3EKKxa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 06:53:30 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id A1BA1CDA5D2
-	for <git@vger.kernel.org>; Sat, 11 May 2013 11:53:29 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id t07SLHynzF-m for <git@vger.kernel.org>;
-	Sat, 11 May 2013 11:53:27 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id AE61DCDA5A9
-	for <git@vger.kernel.org>; Sat, 11 May 2013 11:53:26 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 93593161E340
-	for <git@vger.kernel.org>; Sat, 11 May 2013 11:53:26 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5RYfeWarvjum for <git@vger.kernel.org>;
-	Sat, 11 May 2013 11:53:24 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 6B9A2161E418
-	for <git@vger.kernel.org>; Sat, 11 May 2013 11:53:22 +0100 (BST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751376Ab3EKLgM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 May 2013 07:36:12 -0400
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:32681 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751148Ab3EKLgK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 May 2013 07:36:10 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AqsRAMYrjlFOl3rN/2dsb2JhbABagwc3gzyFP7ciAQECfRd0ghoFAQEFCAEBGQ8BBR4BARUXAgMFAgEDFQEEAgUhAgIUAQQaBgcXBgESCAIBAgMBh2kDE6tPiEIFiDCBJossgT8tGIMbMmEDjmGJcZAPgxA7
+X-IronPort-AV: E=Sophos;i="4.87,652,1363132800"; 
+   d="scan'208";a="423610289"
+Received: from host-78-151-122-205.as13285.net (HELO PhilipOakley) ([78.151.122.205])
+  by out1.ip03ir2.opaltelecom.net with SMTP; 11 May 2013 12:36:08 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223957>
 
-I use my own integration branch manager[1] to manage my WIP changes to
-various projects, including git.git and one of the features of this is a
---status option that shows whether anything that I'm tracking has been
-merged to the base branch I'm building on top of.  Since the commit IDs
-will be different after being sent to the list, this uses the --cherry
-option to git-log.
+=46rom: "Thomas Ackermann" <th.acker@arcor.de>
+Sent: Saturday, May 11, 2013 8:48 AM
+> W. Trevor King <wking <at> tremily.us> writes:
+>
+>>
+>> I'm also surprised that I couldn't find a more obvious link to the
+>> manual from git-scm.com (I ended up taking a =E2=80=9CSee Also=E2=80=
+=9D link from
+>> gittutorial(7) [3]).  I'm not sure if this is intentional or not,
+>> since git-scm.com does prominently link Pro Git, and that overlaps
+>> fairly significantly with the manual.
+>>
+>> Folks with Git installed will generally have man pages, so it's not =
+a
+>> big deal, but having current docs somewhere online to link against
+>> would be nice.  I'm also curious if I should be linking against a
+>> particular location.
+>>
+>
+> IMHO user-manual is a natural step for a Git beginner after reading=20
+> one
+> of the books like "Pro Git" and before he is ready to digest the man=20
+> pages.
+> But up to now there are several problems with user-manual besides the
+> problems described by Trevor:
+> (1) Very poor html formatting (document type "book" causes
+> ugly TOCs per section and there's a "Part I" without a "Part II")
+> (2) Partly outdated content
+> (3) Sub-optimal structuring (to-do list as part of the document,
+> glossary not at the end of the document)
+> (4) User-manual.PDF uses an independent tool chain which makes it
+> harder to do improvements for user-manual.html and also is the only
+> pdf doc we are creating. IMHO we should remove this altogether.
+> (5) Large overlapping with the tutorials. IMHO all of the
+> tutorials should be blended into user-manual
+>
+> I am currently working on (1)-(4) and then aiming for (5).
+> Comments are welcome ...
+>
+> ---
+> Thomas
 
-Today I realised that I wasn't tracking a git-gui change I sent to the
-list a couple of weeks ago [2] and so I pulled that in and added it.
-Getting the status for this is significantly slower than anything else
-because it does this:
+I too had noticed that both the User-Manual and git Everyday are not=20
+formatted in a manner that allows them to be accessed via 'git help'.
 
-    git log --cherry --oneline origin/master...git-gui-fix-subdir
+I recently added a '--guides' option to 'git help' (v1.8.2-377-g73903d0=
+)=20
+which will show the common guides but was frustrated that I couldn't=20
+include either the user-manual or everday in the list.
 
-and although there are only 5 commits in git-gui-fix-subdir not in
-master there are 31964 commits in master not in git-gui-fix-subdir and
---cherry seems to inspect all of those.  So I get:
+I'd welcome the provision of a 'man'/'html' formatted version of the tw=
+o=20
+guides. Are you expecting to make then compatible with the man format?
 
-    $ time git log --oneline --cherry master...git-gui-fix-subdir \
-        >/dev/null
-    real    0m41.378s
-    user    0m40.248s
-    sys     0m0.986s
+I would be a little cautious of your point 5 if it squoze everything=20
+into one overlong document at the expense of losing the shorter=20
+documents - one can't eat a whole melon in one bite ;-) That said there=
+=20
+is a significant opportunity for rationalisation and clarity=20
+improvement, even if it is only a proper realisation of where we=20
+deliberately duplicate information for ease of user learning.
 
-Now I know that I don't need to check anything older than commit 8ead1bf
-(Merge tag 'gitgui-0.17.0' of git://repo.or.cz/git-gui, 2012-10-17) and
-if I tell Git that it gets significantly better:
+I also liked the idea of all the documenation being collated into one=20
+Humongous pdf as a reference (there was a patch a while back - don't=20
+have a reference right now).
 
-    $ time git log --oneline --cherry master...git-gui-fix-subdir \
-        --not 8ead1bfe111085ef1ad7759e67340f074996b244 >/dev/null
-    real    0m2.163s
-    user    0m2.070s
-    sys     0m0.084s
-
-I'd like a way to automatically find the last merge that pulled in a
-subtree so that my script can construct the above command line without
-me needing to tell it the correct SHA-1 every time I have a branch that
-is affected by this.
-
-I guess this boils down to having a way to ask Git to list merges that
-have a parent in a specified range, but perhaps I'm missing an easier
-solution to this.
-
-I also wonder if it would be interesting to cache patch IDs rather than
-generating them every time...
-
-[1] http://johnkeeping.github.io/git-integration/
-[2] http://article.gmane.org/gmane.comp.version-control.git/222646
+Philip=20
