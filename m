@@ -1,77 +1,108 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [PATCH v3 5/5] do not die when error in config parsing of
- buf occurs
-Date: Sat, 11 May 2013 12:30:21 +0200
-Message-ID: <20130511103020.GA6329@book-mint>
-References: <20130509154020.GA26423@book-mint>
- <20130509162102.GG3526@book-mint>
- <20130509223936.GC30774@sigill.intra.peff.net>
- <20130511085531.GA3670@book-mint>
- <20130511095936.GB17326@sigill.intra.peff.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: git log --cherry with disjoint roots
+Date: Sat, 11 May 2013 11:53:21 +0100
+Message-ID: <20130511105321.GC2299@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 11 12:30:46 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 11 12:53:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ub74f-0007SD-6p
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 12:30:45 +0200
+	id 1Ub7Qx-0006f5-Ei
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 12:53:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752645Ab3EKKaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 06:30:30 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.31.94]:57286 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751356Ab3EKKa3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 06:30:29 -0400
-Received: from [213.221.117.228] (helo=book-mint)
-	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Ub74L-0000Tv-41; Sat, 11 May 2013 12:30:25 +0200
+	id S1753042Ab3EKKxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 06:53:31 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:50639 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751672Ab3EKKxa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 06:53:30 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id A1BA1CDA5D2
+	for <git@vger.kernel.org>; Sat, 11 May 2013 11:53:29 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id t07SLHynzF-m for <git@vger.kernel.org>;
+	Sat, 11 May 2013 11:53:27 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by jackal.aluminati.org (Postfix) with ESMTP id AE61DCDA5A9
+	for <git@vger.kernel.org>; Sat, 11 May 2013 11:53:26 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 93593161E340
+	for <git@vger.kernel.org>; Sat, 11 May 2013 11:53:26 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5RYfeWarvjum for <git@vger.kernel.org>;
+	Sat, 11 May 2013 11:53:24 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 6B9A2161E418
+	for <git@vger.kernel.org>; Sat, 11 May 2013 11:53:22 +0100 (BST)
 Content-Disposition: inline
-In-Reply-To: <20130511095936.GB17326@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223956>
 
-On Sat, May 11, 2013 at 11:59:36AM +0200, Jeff King wrote:
-> On Sat, May 11, 2013 at 10:55:31AM +0200, Heiko Voigt wrote:
-> > We where not outputting to stdout before so the test is correct there as
-> > well. I extended the test when implementing the non-dying version of
-> > git_config_with_options() so I could see the test fail. If just
-> > returning the error it would still output the values read until then. So
-> > if you think that it belongs into the initial version of this test
-> > (maybe including some comment why we need an extra parseable value) I
-> > am happy to move it there.
-> 
-> From what you wrote above, it sounds like we would expect git-config to
-> write out some.value before failing on some.error. But that isn't what
-> the test is checking, is it? It is checking that nothing is output.
-> 
-> I do not think the output matters much either way when git-config has
-> failed; if it returns a non-zero exit code, then the results of stdout
-> cannot be trusted (after all, it may have been killed by signal after it
-> had written out half of the output).
-> 
-> Still slightly puzzled...
+I use my own integration branch manager[1] to manage my WIP changes to
+various projects, including git.git and one of the features of this is a
+--status option that shows whether anything that I'm tracking has been
+merged to the base branch I'm building on top of.  Since the commit IDs
+will be different after being sent to the list, this uses the --cherry
+option to git-log.
 
-Well before my "do not die patch" there was no output to stdout since git
-already died during reading.
-Afterwards there would be output of values to stdout until the error
-occurred and then the error code would be returned. So my intend was to
-keep the output the same. Since the blob reading is new I thinks its
-fine either way. So currently I am thinking about just removing the
-whole "stop to write anything on error" part of this patch and just
-return the error. What do you think?
+Today I realised that I wasn't tracking a git-gui change I sent to the
+list a couple of weeks ago [2] and so I pulled that in and added it.
+Getting the status for this is significantly slower than anything else
+because it does this:
 
-Cheers Heiko
+    git log --cherry --oneline origin/master...git-gui-fix-subdir
+
+and although there are only 5 commits in git-gui-fix-subdir not in
+master there are 31964 commits in master not in git-gui-fix-subdir and
+--cherry seems to inspect all of those.  So I get:
+
+    $ time git log --oneline --cherry master...git-gui-fix-subdir \
+        >/dev/null
+    real    0m41.378s
+    user    0m40.248s
+    sys     0m0.986s
+
+Now I know that I don't need to check anything older than commit 8ead1bf
+(Merge tag 'gitgui-0.17.0' of git://repo.or.cz/git-gui, 2012-10-17) and
+if I tell Git that it gets significantly better:
+
+    $ time git log --oneline --cherry master...git-gui-fix-subdir \
+        --not 8ead1bfe111085ef1ad7759e67340f074996b244 >/dev/null
+    real    0m2.163s
+    user    0m2.070s
+    sys     0m0.084s
+
+I'd like a way to automatically find the last merge that pulled in a
+subtree so that my script can construct the above command line without
+me needing to tell it the correct SHA-1 every time I have a branch that
+is affected by this.
+
+I guess this boils down to having a way to ask Git to list merges that
+have a parent in a specified range, but perhaps I'm missing an easier
+solution to this.
+
+I also wonder if it would be interesting to cache patch IDs rather than
+generating them every time...
+
+[1] http://johnkeeping.github.io/git-integration/
+[2] http://article.gmane.org/gmane.comp.version-control.git/222646
