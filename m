@@ -1,73 +1,54 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] Makefile: fix default regex settings on Darwin
-Date: Fri, 10 May 2013 22:08:33 -0700
-Message-ID: <1368248913-95188-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 11 07:08:50 2013
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH] gitk: add support for -G'regex' pickaxe variant
+Date: Sat, 11 May 2013 15:56:47 +1000
+Message-ID: <20130511055647.GA3262@iris.ozlabs.ibm.com>
+References: <7vipezaaig.fsf@alter.siamese.dyndns.org>
+ <1339698851-15428-1-git-send-email-zbyszek@in.waw.pl>
+ <CACPiFCKev9uibTa8GSH94ZaH-NaVBAWVempg4xfTdFTThE85Zw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Martin Langhoff <martin@laptop.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 11 07:57:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ub237-0007au-Rv
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 07:08:50 +0200
+	id 1Ub2o3-0001XY-74
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 07:57:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511Ab3EKFIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 01:08:46 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:35401 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751247Ab3EKFIp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 01:08:45 -0400
-Received: by mail-pd0-f174.google.com with SMTP id u10so3229783pdi.19
-        for <git@vger.kernel.org>; Fri, 10 May 2013 22:08:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=A/6gYw2jMRFsNvcps4UEDicN3S+awe4UKeUm+8HIdMw=;
-        b=ap+fHYBYr4t8MfvKAvsOp4OcXnQFIQtUBWC+LV2CAQ0cMWX0F8O+Q4lVsPNOkCzj/t
-         /atfpBvoQCxFk9kh3VgaEwSLHf4qoGK0ktdv2LNfdEuRW8QaGP3m9IZDFmZiQnB5wyBE
-         XcLW1CegNz3rPnb5guFKQEaHWuZfmggPDb8PAX3VE4CvcufgnX8Q5wHwR+5ghZ3JtUSx
-         Y1hTx2E3H8ohRQGhb6NTFbMSS7F3THmvCrQMXHfA7+GRwZrnklrCZmHmn0EMmAW/OM7K
-         ROW3/DYPnChoduPShhRaXgTzBrsv1pDactEuolBSG/8H2GKTVzOXwaLq3pKke7ZbUSrS
-         YqKw==
-X-Received: by 10.68.245.6 with SMTP id xk6mr20238432pbc.41.1368248924711;
-        Fri, 10 May 2013 22:08:44 -0700 (PDT)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id vv6sm5529717pab.6.2013.05.10.22.08.43
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 10 May 2013 22:08:43 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc1.47.g6e51a5f
+	id S1752869Ab3EKF5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 01:57:00 -0400
+Received: from ozlabs.org ([203.10.76.45]:51611 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752258Ab3EKF47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 01:56:59 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 924F42C00D4; Sat, 11 May 2013 15:56:57 +1000 (EST)
+Content-Disposition: inline
+In-Reply-To: <CACPiFCKev9uibTa8GSH94ZaH-NaVBAWVempg4xfTdFTThE85Zw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223929>
 
-t0070-fundamental.sh fails on Mac OS X 10.8 by default.
-Fix it by using Git's regex library.
+On Tue, May 07, 2013 at 01:17:18PM -0400, Martin Langhoff wrote:
+> I just did git rebase origin/master for the umpteenth time, which
+> reminded me this nice patch is still pending.
+> 
+> ping?
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-"make test" fails right now; this fixes it.
-t0070-fundamental is how far it got last time.
-It's still running now.. :-)
+I thought I had replied to this patch; maybe I only thought about it.
 
- Makefile | 1 +
- 1 file changed, 1 insertion(+)
+Given that we already have a selector to choose between exact and
+regexp matching, it seems more natural to use that rather than add a
+new selector entry.  Arguably the "IgnCase" option should be disabled
+when "adding/removing string" is selected.
 
-diff --git a/Makefile b/Makefile
-index 7e12999..4a462c0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1057,6 +1057,7 @@ ifeq ($(uname_S),Darwin)
- 	COMMON_DIGEST_SHA1 = YesPlease
- 	COMMON_DIGEST_HMAC = YesPlease
- 	PTHREAD_LIBS =
-+	NO_REGEX = YesPlease
- endif
- 
- ifndef CC_LD_DYNPATH
--- 
-1.8.3.rc1.47.g6e51a5f
+Paul.
