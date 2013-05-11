@@ -1,110 +1,66 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Outdated and broken online versions of user-manual.html
-Date: Sat, 11 May 2013 12:36:21 +0100
-Organization: OPDS
-Message-ID: <BE32A698F2774BD5B5235264B13A46C8@PhilipOakley>
-References: <20130510190229.GA31708@odin.tremily.us> <loom.20130511T092853-808@post.gmane.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 4/4] t4300 (rebase): don't unnecessarily set GIT_TRACE
+Date: Sat, 11 May 2013 17:07:14 +0530
+Message-ID: <CALkWK0=rqjduiWsj2-iqCoW9tsv4G8gvpf7fCZwg5=TKuEo+bA@mail.gmail.com>
+References: <1368196178-5807-1-git-send-email-artagnon@gmail.com>
+ <1368196178-5807-5-git-send-email-artagnon@gmail.com> <7vmws2529j.fsf@alter.siamese.dyndns.org>
+ <CALkWK0k_ArM9EpY0S7=mbgFpHsoauZCr9e=ESX_CEA5-vRHrHQ@mail.gmail.com>
+ <7vr4he3kpz.fsf@alter.siamese.dyndns.org> <CALkWK0kLjf=m-_9PkXzxOpnpqfh-n004E0f7_mi-VL3SbYWFAg@mail.gmail.com>
+ <7vk3n6206h.fsf@alter.siamese.dyndns.org> <CALkWK0kTvwxMFGUqH0wKNVpLg-qQQbN+vOcAxiEwmOeDe=87jA@mail.gmail.com>
+ <20130510190705.GA3478@elie> <CALkWK0kZWrY5_B3mxuVV1cA-AqvkqJpjRAuSovXLi6OCA+3ybQ@mail.gmail.com>
+ <20130510191639.GB3478@elie> <7vk3n6zgr3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>, "Thomas Ackermann" <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Sat May 11 13:36:17 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 11 13:38:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ub864-0003F7-3O
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 13:36:16 +0200
+	id 1Ub87k-0004UD-B1
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 13:38:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751376Ab3EKLgM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 May 2013 07:36:12 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:32681 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751148Ab3EKLgK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 May 2013 07:36:10 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AqsRAMYrjlFOl3rN/2dsb2JhbABagwc3gzyFP7ciAQECfRd0ghoFAQEFCAEBGQ8BBR4BARUXAgMFAgEDFQEEAgUhAgIUAQQaBgcXBgESCAIBAgMBh2kDE6tPiEIFiDCBJossgT8tGIMbMmEDjmGJcZAPgxA7
-X-IronPort-AV: E=Sophos;i="4.87,652,1363132800"; 
-   d="scan'208";a="423610289"
-Received: from host-78-151-122-205.as13285.net (HELO PhilipOakley) ([78.151.122.205])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 11 May 2013 12:36:08 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751704Ab3EKLhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 07:37:55 -0400
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:36778 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750924Ab3EKLhz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 07:37:55 -0400
+Received: by mail-ie0-f171.google.com with SMTP id e11so9734794iej.30
+        for <git@vger.kernel.org>; Sat, 11 May 2013 04:37:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=h73b0USotR+e9s4z1gUEOcujgQbgVHJPPXkcfZpGvC4=;
+        b=OZI98SSZ8CvplyX7aLEQWK8fI5IHhKtMRTpCC7neNftyRagTzZqGEHnUM5LRcXcT5A
+         Msk/wIfVySyO4BFRcv+soJKZuOg5rJkQfQBK4HZJ8rpj0HZ5el4OrKxisAOO2kRmAiBy
+         eFvVGxBHpn48O0V8bMDLmv4TeVjv6BPPZdu2O7w3Tpeyt0UailMniBdCk1852gt0LDdM
+         /+CXP7RLHvfhnbg1kqzaNBjtW6GL2xLxm512I7uNK3zt4UWkU3gcGQBYRfNmRpKVLFn6
+         yBW4YuSNbomacRxB38ITzN1CtueUKhXRVdakHP5ttU/6yL+Ch1KbOpnt6+ETipIek8hW
+         SeXA==
+X-Received: by 10.50.66.140 with SMTP id f12mr4720932igt.63.1368272274587;
+ Sat, 11 May 2013 04:37:54 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Sat, 11 May 2013 04:37:14 -0700 (PDT)
+In-Reply-To: <7vk3n6zgr3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223958>
 
-=46rom: "Thomas Ackermann" <th.acker@arcor.de>
-Sent: Saturday, May 11, 2013 8:48 AM
-> W. Trevor King <wking <at> tremily.us> writes:
->
->>
->> I'm also surprised that I couldn't find a more obvious link to the
->> manual from git-scm.com (I ended up taking a =E2=80=9CSee Also=E2=80=
-=9D link from
->> gittutorial(7) [3]).  I'm not sure if this is intentional or not,
->> since git-scm.com does prominently link Pro Git, and that overlaps
->> fairly significantly with the manual.
->>
->> Folks with Git installed will generally have man pages, so it's not =
-a
->> big deal, but having current docs somewhere online to link against
->> would be nice.  I'm also curious if I should be linking against a
->> particular location.
->>
->
-> IMHO user-manual is a natural step for a Git beginner after reading=20
-> one
-> of the books like "Pro Git" and before he is ready to digest the man=20
-> pages.
-> But up to now there are several problems with user-manual besides the
-> problems described by Trevor:
-> (1) Very poor html formatting (document type "book" causes
-> ugly TOCs per section and there's a "Part I" without a "Part II")
-> (2) Partly outdated content
-> (3) Sub-optimal structuring (to-do list as part of the document,
-> glossary not at the end of the document)
-> (4) User-manual.PDF uses an independent tool chain which makes it
-> harder to do improvements for user-manual.html and also is the only
-> pdf doc we are creating. IMHO we should remove this altogether.
-> (5) Large overlapping with the tutorials. IMHO all of the
-> tutorials should be blended into user-manual
->
-> I am currently working on (1)-(4) and then aiming for (5).
-> Comments are welcome ...
->
-> ---
-> Thomas
+Junio C Hamano wrote:
+> But the output from passing "-v" before the test that breaks is not
+> very useful for two reasons.
 
-I too had noticed that both the User-Manual and git Everyday are not=20
-formatted in a manner that allows them to be accessed via 'git help'.
+I sometimes checkout the Good branch in a different worktree, compare
+the output/ state of the passing test with the failing one.  I've
+never really found the outputs from earlier tests enlightening.  From
+my experience, the failure is often due to an earlier test not
+imposing tighter passing conditions: but because it's shell, the
+debugging time is very small.  I always just patch-locally and run.
 
-I recently added a '--guides' option to 'git help' (v1.8.2-377-g73903d0=
-)=20
-which will show the common guides but was frustrated that I couldn't=20
-include either the user-manual or everday in the list.
-
-I'd welcome the provision of a 'man'/'html' formatted version of the tw=
-o=20
-guides. Are you expecting to make then compatible with the man format?
-
-I would be a little cautious of your point 5 if it squoze everything=20
-into one overlong document at the expense of losing the shorter=20
-documents - one can't eat a whole melon in one bite ;-) That said there=
-=20
-is a significant opportunity for rationalisation and clarity=20
-improvement, even if it is only a proper realisation of where we=20
-deliberately duplicate information for ease of user learning.
-
-I also liked the idea of all the documenation being collated into one=20
-Humongous pdf as a reference (there was a patch a while back - don't=20
-have a reference right now).
-
-Philip=20
+I'm not sure how to make the testing framework more useful.
