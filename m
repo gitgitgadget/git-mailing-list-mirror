@@ -1,110 +1,91 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 2/3] imap-send: eliminate HMAC warnings on OS X 10.8
-Date: Sat, 11 May 2013 01:22:27 -0700
-Message-ID: <1368260548-52612-2-git-send-email-davvid@gmail.com>
-References: <1368260548-52612-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 11 10:23:05 2013
+Subject: Re: [PATCH v2] cache.h: eliminate SHA-1 deprecation warnings on OS X 10.8
+Date: Sat, 11 May 2013 01:38:32 -0700
+Message-ID: <CAJDDKr7-sMrX=2Aek1LY8knM2jFPs933eLj3iZdTa68YYv-6Og@mail.gmail.com>
+References: <1368240282-89581-1-git-send-email-davvid@gmail.com>
+	<20130511062336.GD3394@elie>
+	<CAJDDKr6QkeSk32kNhU_QuvrZSGUEokcEbN7Aq3PcOhvaA_hFgg@mail.gmail.com>
+	<20130511082203.GA953@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	John Keeping <john@keeping.me.uk>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat May 11 10:38:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ub555-0000nt-0j
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 10:23:03 +0200
+	id 1Ub5KR-0002b8-If
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 10:38:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753890Ab3EKIWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 04:22:53 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:59028 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753222Ab3EKIWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 04:22:51 -0400
-Received: by mail-pa0-f52.google.com with SMTP id bg2so3460428pad.39
-        for <git@vger.kernel.org>; Sat, 11 May 2013 01:22:51 -0700 (PDT)
+	id S1753809Ab3EKIif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 04:38:35 -0400
+Received: from mail-ea0-f177.google.com ([209.85.215.177]:43150 "EHLO
+	mail-ea0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753372Ab3EKIid (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 04:38:33 -0400
+Received: by mail-ea0-f177.google.com with SMTP id o10so2567490eaj.36
+        for <git@vger.kernel.org>; Sat, 11 May 2013 01:38:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=LgmaVN6tJvk7FYR7imzm+r+RRVpBInGpca90mAbo+PA=;
-        b=waQddcSzW48RJSP0d9Fvb9mxdcTTDD6qGh/Do7X8U75mTsBhfIFXRb2JGnZGmzUELQ
-         zq/OGMLCY6i9sdo28gC2RPXDdZQh618r2XlBDynqaX/IGvmRlo1uWWrTwaRk00e6y+JN
-         fhxMrveufhaaGX1FhKnNUPJKL8fDNxWzBA6AeQFMNaTAiFNNK5ujZbNxvfb7L3iTO0iD
-         HpdNX2412XwZepkakUBk58pjfFWeZqhBQ/lAqKEo+0QfRsgoIEFoLSMIuFt3b7mum5+i
-         28LqyTO82g4iXJ0xmtMzHnjS9uJT0uOITkqB20qFf6VE8oJylyItgoND9KBMa964VquM
-         DrJw==
-X-Received: by 10.66.119.34 with SMTP id kr2mr21239910pab.149.1368260571127;
-        Sat, 11 May 2013 01:22:51 -0700 (PDT)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id dr6sm6154774pac.11.2013.05.11.01.22.49
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 11 May 2013 01:22:50 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc1.47.g41936fa
-In-Reply-To: <1368260548-52612-1-git-send-email-davvid@gmail.com>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=tIzHW6xtVTMQ+/n7hsAOdCo2hjZVqHlT4DsxPEmOrtM=;
+        b=rfDAxSUH0zVSNzzYa870WbbRd12FW1/fBXj03v6AJkWtJ9SzYMGXXvMzK7UELBJ230
+         hSB/ibjjBwqAX2un96UlbOWXd0UVWasWphbGUO5u2QMbduNWTwkzr08ejNKFtflusAoX
+         FbwxsXq0cvA6YvzAZ7jqSVYy6qifL3oubyCOfuYvkJ4f/mEROq4ITVbjmefW0AbFPK1y
+         +uOf0mN6Hfclt2uFU6G9bo49PjYBSrt9/KRfqjEhyy4sHUW91IbdhNdoppTbBJ3GcbKq
+         IwUI6NJ+odBQ9n+qmU+Z5pDf2whFagylq9vT+NOD8J55oQ7Xz4GcU0THZeowmwk7EFSu
+         3LsA==
+X-Received: by 10.15.24.72 with SMTP id i48mr30232632eeu.37.1368261512117;
+ Sat, 11 May 2013 01:38:32 -0700 (PDT)
+Received: by 10.14.32.65 with HTTP; Sat, 11 May 2013 01:38:32 -0700 (PDT)
+In-Reply-To: <20130511082203.GA953@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223944>
 
-Mac OS X Mountain Lion warns that HMAC_Init() and friends are
-deprecated.  Use CommonCrypto's HMAC to eliminate the warnings.
+On Sat, May 11, 2013 at 1:22 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, May 11, 2013 at 12:11:05AM -0700, David Aguilar wrote:
+>
+>> > Does this perform better or worse than just setting
+>> > BLK_SHA1=YesPlease?  I'd naively think it could go either way: on one
+>> > hand adding another library dependency can slow down startup, and on
+>> > the other hand the implementation may or may not be optimized better
+>> > than the generic block-sha1/ implementation.
+>>
+>> Pretty much identical.
+>>
+>> Here are the timings (I should probably read t/perf/README and get
+>> better numbers):
+>>
+>> Best of ten
+>> $ time git rev-list --all --objects >/dev/null
+>> [...]
+>
+> I'm not sure that's a great test of sha1 performance. It will hash the
+> commit and tree objects it loads during the traversal, but that time is
+> almost certainly dwarfed by zlib inflation and by lookup_object.
+>
+> Adding "--verify-objects" would sha1 the blobs, too, which might be more
+> reasonable (or running "git fsck"). Something like "git add" on a large
+> blob would also be a good test.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-Rebased to 2/3.
+Thanks.  Here are the numbers with --verify-objects:
 
- Makefile    |  5 +++++
- imap-send.c | 10 ++++++++++
- 2 files changed, 15 insertions(+)
+$ time git rev-list --all --objects --verify-objects >/dev/null
 
-diff --git a/Makefile b/Makefile
-index f698c1a..25282b4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1054,6 +1054,7 @@ ifeq ($(uname_S),Darwin)
- 			BASIC_LDFLAGS += -L/opt/local/lib
- 		endif
- 	endif
-+	COMMON_DIGEST_HMAC = YesPlease
- 	NO_REGEX = YesPlease
- 	PTHREAD_LIBS =
- endif
-@@ -1393,6 +1394,10 @@ else
- 	EXTLIBS += $(LIB_4_CRYPTO)
- endif
- endif
-+
-+ifdef COMMON_DIGEST_HMAC
-+	BASIC_CFLAGS += -DCOMMON_DIGEST_FOR_HMAC=1
-+endif
- ifdef NO_PERL_MAKEMAKER
- 	export NO_PERL_MAKEMAKER
- endif
-diff --git a/imap-send.c b/imap-send.c
-index d9bcfb4..1b2e69c 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -29,8 +29,18 @@
- #ifdef NO_OPENSSL
- typedef void *SSL;
- #else
-+#ifdef COMMON_DIGEST_FOR_HMAC
-+#include <CommonCrypto/CommonHMAC.h>
-+#define HMAC_CTX CCHmacContext
-+#define HMAC_Init(hmac, key, len, algo) CCHmacInit(hmac, algo, key, len)
-+#define HMAC_Update CCHmacUpdate
-+#define HMAC_Final(hmac, hash, ptr) CCHmacFinal(hmac, hash)
-+#define HMAC_CTX_cleanup
-+#define EVP_md5() kCCHmacAlgMD5
-+#else
- #include <openssl/evp.h>
- #include <openssl/hmac.h>
-+#endif
- #include <openssl/x509v3.h>
- #endif
- 
--- 
-1.8.3.rc1.47.g41936fa
+# CommonCrypto 32.24s user 4.65s system 99% cpu 37.098 total
+# master       33.00s user 4.68s system 99% cpu 37.852 total
+# BLK_SHA1     54.17s user 4.67s system 99% cpu 58.928 total
+
+Doing BLK_SHA1 seems like less of a good idea now, so I think my
+latest re-roll might be the way to go...
+--
+David
