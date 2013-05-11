@@ -1,61 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PULL] git-svn updates for 1.8.3-rc2
-Date: Sat, 11 May 2013 11:09:29 -0700
-Message-ID: <7vehddxuau.fsf@alter.siamese.dyndns.org>
-References: <20130510202640.GA16349@dcvr.yhbt.net>
+From: Andrey Borzenkov <arvidjaar@gmail.com>
+Subject: Re: Cannot push anything via export transport helper after push
+ fails.
+Date: Sat, 11 May 2013 22:48:37 +0400
+Message-ID: <20130511224837.39a1c551@opensuse.site>
+References: <20130511162936.0354e5d7@opensuse.site>
+	<CAMP44s1YhQR0o-0CLc2PG-EJTZdN4tha-4BVEUy-K_Av81D=GQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Paul Walmsley <pjwhams@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Michael Contreras <michael@inetric.com>,
-	Avishay Lavie <avishay.lavie@gmail.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat May 11 20:09:38 2013
+Content-Type: text/plain; charset=KOI8-R
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 11 20:48:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbEEj-0005td-8H
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 20:09:37 +0200
+	id 1UbEqj-0001Nj-6I
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 20:48:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752304Ab3EKSJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 14:09:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58710 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752083Ab3EKSJc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 14:09:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C817F1DB4F;
-	Sat, 11 May 2013 18:09:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8xnFxT+Nag4ZCnns452+IpA03g4=; b=J9ImHV
-	JSQeV3hHDH45ipAEU/EJGZrTbGe2oAGIhxey4Og19figCZOsScC77OCypxIUYkvk
-	40rcMM6EzK8YfJwYqOPaG836w+EXtmd/zOB3CJBhWDC8Ce4ufEIku+7/P1g5aZH6
-	he3qHkVJ7s/ZuezhDkhOAoiupFr1OXKqlSFOg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=j51o2tGaOoCBjE0VDdNUBBEunUG1KIpk
-	HzEL7pk4W/FbjpUfLxR4wXsgy0xmhY5dL/IVEo+hRyrNzWGlMFp1iSzR+ZHyu7dX
-	o+fVSdko6/s8njMzNTP47BbLJcjckIWa9kZKyLDlgrlQTHM/t77x+Q04MYDV96L3
-	gl7K2pwt5bQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BAB201DB4E;
-	Sat, 11 May 2013 18:09:31 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 43FFF1DB4B;
-	Sat, 11 May 2013 18:09:31 +0000 (UTC)
-In-Reply-To: <20130510202640.GA16349@dcvr.yhbt.net> (Eric Wong's message of
-	"Fri, 10 May 2013 20:26:40 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: ED75979C-BA65-11E2-9FA2-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752786Ab3EKSsl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 May 2013 14:48:41 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:58257 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752242Ab3EKSsk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 14:48:40 -0400
+Received: by mail-la0-f45.google.com with SMTP id fp12so4927129lab.4
+        for <git@vger.kernel.org>; Sat, 11 May 2013 11:48:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:in-reply-to
+         :references:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=R5aQnuT5kdLyEDtGpiEJef1kJsC1RoIUjEkSX3jpggE=;
+        b=OoYFZF3w1pai7uv7z/vbhox11VbJzBZwm1AJFnFXKl62BIjJZo2zvzMdqmE/Eq1Xh3
+         4Nsin38SfRDkyrVzEBwjka6M76kBmWnhSMDE1igePBzsXkzwR7YJ9ItrSfhdwi5QZLFd
+         7Sjc89thQnw/hZpZjqwWmLD2fd+VzC8swYVN9j80zKU61b4UslKJ7b/FHG22nDMuoflA
+         3hVnlezNqQaOCCvBawXNgWPGks4rB0aJkwrOVuKjSIj4VeEvMR3IyxjVW9q+PomaBCW7
+         PLy8hrsTdvmTybJn2XBR1W7Ii0iYdpOu4RAEyoXa5TedgZhrtbSvBHEt2/zIJEsi6PL5
+         whMQ==
+X-Received: by 10.112.125.164 with SMTP id mr4mr9882800lbb.116.1368298119278;
+        Sat, 11 May 2013 11:48:39 -0700 (PDT)
+Received: from opensuse.site ([94.29.72.160])
+        by mx.google.com with ESMTPSA id c9sm2268934lba.16.2013.05.11.11.48.38
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Sat, 11 May 2013 11:48:38 -0700 (PDT)
+In-Reply-To: <CAMP44s1YhQR0o-0CLc2PG-EJTZdN4tha-4BVEUy-K_Av81D=GQ@mail.gmail.com>
+X-Mailer: Claws Mail 3.9.0 (GTK+ 2.24.14; x86_64-suse-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223999>
 
-Thanks, pulled.
+=F7 Sat, 11 May 2013 08:57:14 -0500
+=46elipe Contreras <felipe.contreras@gmail.com> =D0=C9=DB=C5=D4:
+
+> >
+> > The problem seems to be that git fast-export updates marks
+> > unconditionally, whether export actually applied or not. So next ti=
+me
+> > it assumes everything is already exported and does nothing.
+> >
+> > Is it expected behavior?
+>=20
+> Indeed, this is the way it currently works, and it's not easy to fix.
+> We would need some way to make fast-export wait until we know the exi=
+t
+> status of the remote helper, and then tell it when it failed, so the
+> marks are not updated.
+>=20
+
+One possibility would be to omit *export-marks and manage GIT marks in
+remote helper as well. Helper would then update synchronously both GIT
+and BZR marks if no errors were detected. Or even better, it could
+update just those commits that had been successful.
+
+> However, the way remote-bzr/hg work is that the commits are still
+> there anyway. So if you merge the next time you push those commits ar=
+e
+> already converted, so it's not a problem if fast-export is not
+> exporting them again.
+>=20
+
+As I understand bzr commit ID is stable. What happens if we try to
+commit the same ID second time?
+
+> So even though it's not ideal, it should work.
+>=20
+
+I'm more concerned about transport errors. Any network glitch during
+push renders you repository unusable (at least, without much efforts).
+
+> The problem is when the remote-helper crashes and the marks of
+> fast-export and the remote-helper are out of sync, and then the user
+> is really screwed.
+>=20
+
+This case would benefit from moving processing of GIT marks into remote
+helper as well.
