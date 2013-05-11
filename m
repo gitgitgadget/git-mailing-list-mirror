@@ -1,96 +1,83 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/8] am: suppress error output from a conditional
-Date: Sun, 12 May 2013 05:08:43 +0530
-Message-ID: <CALkWK0mtJU_fWK7A2BXN3f5VRT4Qh69PE0nfQaTJ6GU1Z5=wig@mail.gmail.com>
-References: <1368196005-5354-1-git-send-email-artagnon@gmail.com>
- <1368196005-5354-2-git-send-email-artagnon@gmail.com> <7vhaia51vh.fsf@alter.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] patch-ids.c: cache patch IDs in a notes tree
+Date: Sat, 11 May 2013 18:57:02 -0500 (CDT)
+Message-ID: <alpine.DEB.1.00.1305111846160.8213@s15462909.onlinehome-server.info>
+References: <9d9e56d323b40fe9ea2a6484e35f0afcd3a3a85b.1368301939.git.john@keeping.me.uk> <CA+55aFyn0+Q4CA6yQZipaCRB0w9cW4YpuL3XuxU2JR5QPp98XQ@mail.gmail.com> <20130511214900.GF2299@serenity.lan>
+ <CA+55aFzinmXA2HtA3hmN1VVOcLPWedfqJRws0RJMEc1By1VLLg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 12 01:39:36 2013
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: John Keeping <john@keeping.me.uk>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun May 12 01:57:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbJO3-00007B-KN
-	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 01:39:35 +0200
+	id 1UbJfJ-0003US-9t
+	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 01:57:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752318Ab3EKXjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 19:39:25 -0400
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:35858 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752028Ab3EKXjY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 19:39:24 -0400
-Received: by mail-ia0-f174.google.com with SMTP id j3so4780160iae.19
-        for <git@vger.kernel.org>; Sat, 11 May 2013 16:39:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=vUNuhGqEFp/lquzw4C+g53b9zEoslzYrUrDEVyiqTsY=;
-        b=kbhij+vKW7AS0xc/fRN1U6WM+pS0lUN12KsxYNQkzqBqoKlhQFpzkh6XhAyvninSyr
-         GUyjkNAOaQ26QMYRFzkEB8pJ+WeqoAdRbn+6vFvxdNgoXPOKgJTuunGL/gM+f3jaZKlV
-         b59H4HBpj4KrBhWdXSaSsyTvQ/VZMdkT0jX22VfKjA/hOAsr9dhiBGS47wiPTVzmA75i
-         yoaXyKI5n/GEBeVjMvdf69rkXQb3T/k5m7VAgU3FniVqh9pYdVgyNynK8ge5JaybI4jH
-         94MHz0pe0DB1ZEQ2kuATk5Ksqu+4zu3qQbeSWx8xBr9AcQQhpSaslZ/cs1+lhmyvHZOT
-         86WQ==
-X-Received: by 10.42.27.146 with SMTP id j18mr10909973icc.54.1368315563958;
- Sat, 11 May 2013 16:39:23 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Sat, 11 May 2013 16:38:43 -0700 (PDT)
-In-Reply-To: <7vhaia51vh.fsf@alter.siamese.dyndns.org>
+	id S1752598Ab3EKX5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 19:57:08 -0400
+Received: from mout.gmx.net ([212.227.17.21]:54687 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752363Ab3EKX5H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 19:57:07 -0400
+Received: from mailout-de.gmx.net ([10.1.76.34]) by mrigmx.server.lan
+ (mrigmx002) with ESMTP (Nemesis) id 0MKfbV-1UZwcJ2glD-0021Ue for
+ <git@vger.kernel.org>; Sun, 12 May 2013 01:57:04 +0200
+Received: (qmail invoked by alias); 11 May 2013 23:57:04 -0000
+Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
+  by mail.gmx.net (mp034) with SMTP; 12 May 2013 01:57:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19F0epV75xFEVb6SHiSscTvqCl0OQfrUjbSwQOKmy
+	bzbmAMGWM3tSXh
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CA+55aFzinmXA2HtA3hmN1VVOcLPWedfqJRws0RJMEc1By1VLLg@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224021>
 
-Junio C Hamano wrote:
-> If you are introducing "dotest exists but next/last may not be
-> present" as a valid new state, it probably should check the presence
-> and/or absence of them explicitly,
+Hi John & Linus,
 
-Um, a test -f preceding the cat?  Why, when cat implicitly checks
-existence anyway?
+On Sat, 11 May 2013, Linus Torvalds wrote:
 
-> but more importantly, it is a
-> good idea to move "test $# != 0" higher.
+> [...] I really think caching patch ID's should be something people
+> should be aware of is fundamentally wrong, even if it might work.
 
-This?
+Given the incredible performance win, I would say it is still worth
+looking into.
 
-diff --git a/git-am.sh b/git-am.sh
-index 47c1021..1e10e31 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -446,9 +446,9 @@ done
- # If the dotest directory exists, but we have finished applying all the
- # patches in them, clear it out.
- if test -d "$dotest" &&
-+   test $# != 0 &&
-    last=$(cat "$dotest/last" 2>/dev/null) &&
-    next=$(cat "$dotest/next" 2>/dev/null) &&
--   test $# != 0 &&
-    test "$next" -gt "$last"
- then
-    rm -fr "$dotest"
+If you store also a hash of Git version and diff options (may even be the
+hash of the raw bytes of the diff options if you do not plan to share the
+ref between machines) with the patch ID, you can make it safe.
 
-> Earlier it did not matter
-> because when $dotest existed, next/last were supposed to be there
-> and absence of them was an error codepath. Now, missing these files
-> is not an error but is a perfectly normal state,
+That hash would be generated at patch_id init time and
+load_cached_patch_id() would check this hash in addition to the return
+value of get_sha1() (and ignore the note if the version/diff options
+differ).
 
-It's not a "normal state" for the purposes of git-am.sh.  There is no
-codepath in the program that depends only on $dotest, but not
-next/last.  I would frame this as: "checking for $dotest is not a
-sufficient prerequisite anymore; we have to additionally look for
-next/last".  To git-am.sh, an empty $dotest or just a
-$dotest/autostash is equivalent to no $dotest at all.
+If you are following git.git slavishly, maybe hashing just the major/minor
+Git version would be in order to avoid frequent regeneration of identical
+patch IDs.
 
-> so checking what
-> can be checked more cheaply makes sense as a general code hygiene.
+> And quite frankly, if you do rebases etc so much that you think patch
+> ID's are so important that they need to be cached, you may be doing
+> odd/wrong things.
 
-Yeah, I agree.  See "am: tighten a conditional that checks for
-$dotest", where I get away with just checking $dotest/last (and assume
-that $dotest/next is present by extension).  How do I apply your
-suggestion to this particular patch?
+AFAICT John actually gave a very valid scenario that validates his use
+case: git-gui patches are best tested in the git.git scenario but have to
+be contributed via git-gui.git. It's not John's fault that this typically
+requires a lot of rebasing between vastly divergent histories.
+
+John, do you think you can incorporate that "finger-print" of the patch ID
+generation and store it in the same note?
+
+Ciao,
+Johannes
