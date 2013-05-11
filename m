@@ -1,100 +1,84 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v2] cache.h: eliminate SHA-1 deprecation warnings on OS X 10.8
-Date: Sat, 11 May 2013 00:11:05 -0700
-Message-ID: <CAJDDKr6QkeSk32kNhU_QuvrZSGUEokcEbN7Aq3PcOhvaA_hFgg@mail.gmail.com>
-References: <1368240282-89581-1-git-send-email-davvid@gmail.com>
-	<20130511062336.GD3394@elie>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: Re: Outdated and broken online versions of user-manual.html
+Date: Sat, 11 May 2013 07:48:10 +0000 (UTC)
+Message-ID: <loom.20130511T092853-808@post.gmane.org>
+References: <20130510190229.GA31708@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	John Keeping <john@keeping.me.uk>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 11 09:11:26 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 11 09:48:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ub3xl-0004YF-J5
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 09:11:25 +0200
+	id 1Ub4Xo-0004H2-1Z
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 09:48:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752146Ab3EKHLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 03:11:09 -0400
-Received: from mail-ea0-f172.google.com ([209.85.215.172]:35687 "EHLO
-	mail-ea0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751979Ab3EKHLH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 03:11:07 -0400
-Received: by mail-ea0-f172.google.com with SMTP id r16so2678374ead.31
-        for <git@vger.kernel.org>; Sat, 11 May 2013 00:11:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=jCk+fSu2BH+Yu647/hLNnT+c7DHo5RUsjggVW5CvwC0=;
-        b=lMqUGzp2c1xhjw1lyMgvTO2qnSN3S2FeLfFQuqxe+xirNmA+TgmEJAWLSsvDeNpjRw
-         KQJQtfAS9DVH4v3b0vonOzXItONyQ/kKzI/s8kC5FW4kfYelv/1Tx658ENPVFX3zY1en
-         PYqbb5JPpwUtnNDBokpSSx5Tx8yBg/RQphi0dUzDv/R10p5wn3tY54nWge2O7wgujPpO
-         qDKs6fsU7vsdTYGbRmVVfUuBY8qTigf25E2y2LNulJed1TeLXmSqopgNqr/YZlzzMhTD
-         RMw7EKLfjvZzZwyUnB0i5FEJ4wcmqr+/RqFdYqVolBafwZhXH1alzTjBrrEbsKx45u6t
-         5zOA==
-X-Received: by 10.14.3.137 with SMTP id 9mr50816067eeh.0.1368256265483; Sat,
- 11 May 2013 00:11:05 -0700 (PDT)
-Received: by 10.14.32.65 with HTTP; Sat, 11 May 2013 00:11:05 -0700 (PDT)
-In-Reply-To: <20130511062336.GD3394@elie>
+	id S1752957Ab3EKHs2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 May 2013 03:48:28 -0400
+Received: from plane.gmane.org ([80.91.229.3]:60282 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752596Ab3EKHs1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 03:48:27 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Ub4XY-00044M-SH
+	for git@vger.kernel.org; Sat, 11 May 2013 09:48:24 +0200
+Received: from dslb-094-217-022-251.pools.arcor-ip.net ([94.217.22.251])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 11 May 2013 09:48:24 +0200
+Received: from th.acker by dslb-094-217-022-251.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 11 May 2013 09:48:24 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 94.217.22.251 (Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223938>
 
-On Fri, May 10, 2013 at 11:23 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
->
-> David Aguilar wrote:
->
->> Mac OS X Mountain Lion prints warnings when building git:
->>
->>       warning: 'SHA1_Init' is deprecated
->>       (declared at /usr/include/openssl/sha.h:121)
->>
->> Silence the warnings by using the Common Digest SHA-1
->> functions for SHA1_Init(), SHA1_Update(), and SHA1_Final().
->
-> Thanks.
->
-> Does this perform better or worse than just setting
-> BLK_SHA1=YesPlease?  I'd naively think it could go either way: on one
-> hand adding another library dependency can slow down startup, and on
-> the other hand the implementation may or may not be optimized better
-> than the generic block-sha1/ implementation.
+W. Trevor King <wking <at> tremily.us> writes:
 
-Pretty much identical.
+>=20
+> I'm also surprised that I couldn't find a more obvious link to the
+> manual from git-scm.com (I ended up taking a =E2=80=9CSee Also=E2=80=9D=
+ link from
+> gittutorial(7) [3]).  I'm not sure if this is intentional or not,
+> since git-scm.com does prominently link Pro Git, and that overlaps
+> fairly significantly with the manual.
+>=20
+> Folks with Git installed will generally have man pages, so it's not a
+> big deal, but having current docs somewhere online to link against
+> would be nice.  I'm also curious if I should be linking against a
+> particular location.
+>=20
 
-Here are the timings (I should probably read t/perf/README and get
-better numbers):
+IMHO user-manual is a natural step for a Git beginner after reading one=
+=20
+of the books like "Pro Git" and before he is ready to digest the man pa=
+ges.=20
+But up to now there are several problems with user-manual besides the
+problems described by Trevor:
+(1) Very poor html formatting (document type "book" causes
+ugly TOCs per section and there's a "Part I" without a "Part II")
+(2) Partly outdated content
+(3) Sub-optimal structuring (to-do list as part of the document,
+glossary not at the end of the document)
+(4) User-manual.PDF uses an independent tool chain which makes it
+harder to do improvements for user-manual.html and also is the only
+pdf doc we are creating. IMHO we should remove this altogether.
+(5) Large overlapping with the tutorials. IMHO all of the=20
+tutorials should be blended into user-manual
 
-Best of ten
-$ time git rev-list --all --objects >/dev/null
+I am currently working on (1)-(4) and then aiming for (5).
+Comments are welcome ...
 
-# master
-git rev-list --all --objects > /dev/null  5.16s user 0.11s system 99%
-cpu 5.277 total
-
-# BLK_SHA1
-git rev-list --all --objects > /dev/null  5.17s user 0.11s system 99%
-cpu 5.299 total
-
-# CommonDigest
-git rev-list --all --objects > /dev/null  5.18s user 0.11s system 99%
-cpu 5.301 total
-
-The library startup cost is identical to master since at the end of
-the day it's still libcrypto.
-
-FWIW the way it's done in this patch still allows defining BLK_SHA1,
-which is parity with how the Makefile behaves on Linux.
-
-Re-roll?
---
-David
+---
+Thomas
