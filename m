@@ -1,94 +1,93 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Cannot push anything via export transport helper after push fails.
-Date: Sat, 11 May 2013 08:57:14 -0500
-Message-ID: <CAMP44s1YhQR0o-0CLc2PG-EJTZdN4tha-4BVEUy-K_Av81D=GQ@mail.gmail.com>
-References: <20130511162936.0354e5d7@opensuse.site>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: Aw: Re: Outdated and broken online versions of user-manual.html
+Date: Sat, 11 May 2013 17:00:55 +0200 (CEST)
+Message-ID: <407109112.1476124.1368284455898.JavaMail.ngmail@webmail17.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Andrey Borzenkov <arvidjaar@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 11 15:57:21 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com
+To: philipoakley@iee.org, git@vger.kernel.org, th.acker@arcor.de
+X-From: git-owner@vger.kernel.org Sat May 11 17:01:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbAIb-0005cw-0V
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 15:57:21 +0200
+	id 1UbBIF-0008Ec-0r
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 17:01:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752742Ab3EKN5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 09:57:16 -0400
-Received: from mail-la0-f47.google.com ([209.85.215.47]:59688 "EHLO
-	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752711Ab3EKN5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 09:57:16 -0400
-Received: by mail-la0-f47.google.com with SMTP id fh20so4799087lab.20
-        for <git@vger.kernel.org>; Sat, 11 May 2013 06:57:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=41DNUzP4kUCzES8+rJ4JQ+TXmfdVHYgrXRGNaoH047E=;
-        b=qGNRXBB7TDoQoG3RF14ALCUosoz0DFfQAQbWuWsm+90lh8Uye0XdMtPb/jw4TOzXV6
-         m5TJSGaBPv3Z2sqXML3MIdKephKpFPUFMf9dT6iduUF1cqMguufAe78n7UdlFROWt3dx
-         AEJTawvw0jwkB3dMHgvcR6I9DYkzNRnHzGeAzedlXJRTRs66jQEqA9ax9lXmuKU4bBy3
-         p3fKzLFqemlB9QaOxnn4Ip84NC0CM8lH5EwI1EH/9LvvTEDwPlCY8MZqawVLXDSUsuMs
-         s07c2vney3DDwcTwN2Zt0oa4tLcVFe0EFvL+aguv3AOINnmKMH3QssLtGIZ+EBvAit5v
-         todQ==
-X-Received: by 10.152.116.71 with SMTP id ju7mr9728071lab.38.1368280634595;
- Sat, 11 May 2013 06:57:14 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Sat, 11 May 2013 06:57:14 -0700 (PDT)
-In-Reply-To: <20130511162936.0354e5d7@opensuse.site>
+	id S1753009Ab3EKPA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 11:00:58 -0400
+Received: from mail-in-11.arcor-online.net ([151.189.21.51]:52542 "EHLO
+	mail-in-11.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752995Ab3EKPA5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 May 2013 11:00:57 -0400
+Received: from mail-in-19-z2.arcor-online.net (mail-in-19-z2.arcor-online.net [151.189.8.36])
+	by mx.arcor.de (Postfix) with ESMTP id EBF8035A324;
+	Sat, 11 May 2013 17:00:55 +0200 (CEST)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-19-z2.arcor-online.net (Postfix) with ESMTP id E808A3F83CC;
+	Sat, 11 May 2013 17:00:55 +0200 (CEST)
+Received: from webmail17.arcor-online.net (webmail17.arcor-online.net [151.189.8.75])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id DFDE2197A97;
+	Sat, 11 May 2013 17:00:55 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-09.arcor-online.net DFDE2197A97
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1368284455; bh=la7/HBck8OAzm0Coqfge/aaSgS+1rAnAV0sRUiMPqsY=;
+	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=puajUqGFyMlmWRogQ+u5uYhmjJNs3Fu/T2qOdQF4YefchQR4f2igIgqRi3g0cESsP
+	 mSvyj2tunCS2KDvdhYRzswLCGv3+ymgqgN2LemDw6WEEOVmeUd1JeGLQE/UvItNJ66
+	 99vW137a8wrbXnNqCZb6pbE53Huo5uuPw8Q8U2pM=
+Received: from [94.217.22.251] by webmail17.arcor-online.net (151.189.8.75) with HTTP (Arcor Webmail); Sat, 11 May 2013 17:00:55 +0200 (CEST)
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 94.217.22.251
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223973>
 
-On Sat, May 11, 2013 at 7:29 AM, Andrey Borzenkov <arvidjaar@gmail.com> wrote:
-> I noticed that using git-remote-bzr, but as far as I can tell this is
-> generic for all transport helpers using fast-export.
+ 
+> > (1) Very poor html formatting (document type "book" causes
+> > ugly TOCs per section and there's a "Part I" without a "Part II")
+> > (2) Partly outdated content
+> > (3) Sub-optimal structuring (to-do list as part of the document,
+> > glossary not at the end of the document)
+> > (4) User-manual.PDF uses an independent tool chain which makes it
+> > harder to do improvements for user-manual.html and also is the only
+> > pdf doc we are creating. IMHO we should remove this altogether.
+> > (5) Large overlapping with the tutorials. IMHO all of the
+> > tutorials should be blended into user-manual
+
+> I'd welcome the provision of a 'man'/'html' formatted version of the two 
+> guides. Are you expecting to make then compatible with the man format?
 >
+This is another topic on my to-do list ...
+ 
+> I would be a little cautious of your point 5 if it squoze everything 
+> into one overlong document at the expense of losing the shorter 
+> documents - one can't eat a whole melon in one bite ;-) That said there 
+> is a significant opportunity for rationalisation and clarity 
+> improvement, even if it is only a proper realisation of where we 
+> deliberately duplicate information for ease of user learning.
+> 
+I did not have a closer look on this but just from reading the documents
+I got the impression that the tutorials are already more or less contained
+in the user-manual and by a little restructuring the melon will fall into handy pieces ;-)
+
+> I also liked the idea of all the documenation being collated into one 
+> Humongous pdf as a reference (there was a patch a while back - don't 
+> have a reference right now).
 >
->
-> What happened was "git push" failed due to merge conflict. So far so
-> good - but from now on git assumes everything is up to date.
->
-> bor@opensuse:/tmp/test/git> git push origin master
-> To bzr::bzr+ssh://bor@localhost/tmp/test/bzr
->  ! [rejected]        master -> master (non-fast-forward)
-> error: failed to push some refs to 'bzr::bzr+ssh://bor@localhost/tmp/test/bzr'
-> hint: Updates were rejected because the tip of your current branch is behind
-> hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
-> hint: before pushing again.
-> hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-> bor@opensuse:/tmp/test/git> git push origin master
-> Everything up-to-date
-> bor@opensuse:/tmp/test/git>
->
-> The problem seems to be that git fast-export updates marks
-> unconditionally, whether export actually applied or not. So next time
-> it assumes everything is already exported and does nothing.
->
-> Is it expected behavior?
+Thanks :-) My patches were rejected but (4) shows that now I know why ;-)
+Nevertheless I maintain this in https://github.com/tacker66/git.git and provide
+the documents for every major version of Git in https://github.com/tacker66/git-docpdf.git.
+(4) is also the reason why I stopped using the pdf target and instead create user-manual.pdf
+with wkhtmltopdf from user-manual.html.
+Additionally I use Amazons kindlegen to create mobi version from the html documents
+which look quite good on a Kindle.
 
-Indeed, this is the way it currently works, and it's not easy to fix.
-We would need some way to make fast-export wait until we know the exit
-status of the remote helper, and then tell it when it failed, so the
-marks are not updated.
 
-However, the way remote-bzr/hg work is that the commits are still
-there anyway. So if you merge the next time you push those commits are
-already converted, so it's not a problem if fast-export is not
-exporting them again.
-
-So even though it's not ideal, it should work.
-
-The problem is when the remote-helper crashes and the marks of
-fast-export and the remote-helper are out of sync, and then the user
-is really screwed.
-
-Cheers.
-
--- 
-Felipe Contreras
+---
+Thomas
