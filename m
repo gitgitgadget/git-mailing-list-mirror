@@ -1,152 +1,104 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/4] fetch: opportunistically update tracking refs
-Date: Sat, 11 May 2013 18:16:52 +0200
-Message-ID: <20130511161652.GD3270@sigill.intra.peff.net>
-References: <20130511161320.GA14990@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCHv2 00/10] Prepare for alternative remote-tracking branch location
+Date: Sat, 11 May 2013 18:21:10 +0200
+Message-ID: <1368289280-30337-1-git-send-email-johan@herland.net>
+Cc: johan@herland.net, gitster@pobox.com, jrnieder@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 11 18:17:00 2013
+X-From: git-owner@vger.kernel.org Sat May 11 18:21:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbCTj-0003tL-Tk
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 18:17:00 +0200
+	id 1UbCY7-0007L1-Ho
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 18:21:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753264Ab3EKQQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 12:16:56 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58773 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753213Ab3EKQQz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 12:16:55 -0400
-Received: (qmail 9366 invoked by uid 102); 11 May 2013 16:17:20 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (213.221.117.228)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 11 May 2013 11:17:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 11 May 2013 18:16:52 +0200
-Content-Disposition: inline
-In-Reply-To: <20130511161320.GA14990@sigill.intra.peff.net>
+	id S1753118Ab3EKQV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 12:21:26 -0400
+Received: from mail-wg0-f52.google.com ([74.125.82.52]:58514 "EHLO
+	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752722Ab3EKQVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 12:21:25 -0400
+Received: by mail-wg0-f52.google.com with SMTP id k13so5034418wgh.19
+        for <git@vger.kernel.org>; Sat, 11 May 2013 09:21:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=HHQH/qhuK2pStmiB7gQKmrsstfcuGyOKYhsZvPJGFJ4=;
+        b=TfsOrem6/mNwgPw7I8whvf1n5VWZ8WYW+eoHQ5T9lbvht2JNZj2GwbsTtac6VNu1+9
+         qFF3I6W+U0Fil3WyTAihVYUthi4kCanEfkF2K3+IKKVw3tr4wNE9BmvLWnUbJyz64O6H
+         Md5bRkzqwDf9NlBD3y5wH/pLcFOja6GTeIxQiduvjpRVl4nLiQZ3MmfS1iNXiXhuhju0
+         WuxepfYXlz5S+EUZDR6Vf+jez/Q9ZfkRJQNzpRBThbKlI6yWeZeDJY9W8oIFKSZzEacY
+         anWHf3VjuNJr83gW+NInbm6GFN495bTVYYkrOnQcXCJffHazdh/1b1AjJ56T1kBlCBhf
+         q9IQ==
+X-Received: by 10.180.188.141 with SMTP id ga13mr9876408wic.9.1368289284460;
+        Sat, 11 May 2013 09:21:24 -0700 (PDT)
+Received: from localhost.localdomain ([213.221.117.228])
+        by mx.google.com with ESMTPSA id er17sm4722405wic.0.2013.05.11.09.21.22
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 11 May 2013 09:21:23 -0700 (PDT)
+X-Mailer: git-send-email 1.8.1.3.704.g33f7d4f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223981>
 
-When we run a regular "git fetch" without arguments, we
-update the tracking refs according to the configured
-refspec. However, when we run "git fetch origin master" (or
-"git pull origin master"), we do not look at the configured
-refspecs at all, and just update FETCH_HEAD.
+Hi,
 
-We miss an opportunity to update "refs/remotes/origin/master"
-(or whatever the user has configured). Some users find this
-confusing, because they would want to do further comparisons
-against the old state of the remote master, like:
+Here is the second iteration of the current series for teaching git to
+work with remote ref namespaces. This iteration is pretty much a full
+rework of the first iteration, based on Junio's comments to the first
+iteration, and discussion with other Git developers at the Git Merge
+conference in Berlin, particularily Jonathan Nieder has helped to work
+out some of these issues.
 
-  $ git pull origin master
-  $ git log HEAD...origin/master
+Patches #1 - #2 are pretty much unchanged from v1, except that we now
+put the remote refs in refs/peers/* instead of /refs/remotes/*.
 
-In the currnet code, they are comparing against whatever
-commit happened to be in origin/master from the last time
-they did a complete "git fetch".  This patch will update a
-ref from the RHS of a configured refspec whenever we happen
-to be fetching its LHS. That makes the case above work.
+Patches #3 - #5 gets us to the point where "git rev-parse origin/master"
+will expand to "refs/peers/origin/heads/master", and vice versa for
+shortening
 
-The downside is that any users who really care about whether
-and when their tracking branches are updated may be
-surprised.
+Patches #6-#10 (except #7 which is a small unrelated test addition) is
+about making "git branch -a" and "git branch -r" output remote-tracking
+branches from the refs/peers/* hierarchy.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/pull-fetch-param.txt |  2 +-
- builtin/fetch.c                    | 16 ++++++++++++++++
- t/t5510-fetch.sh                   |  8 ++++----
- 3 files changed, 21 insertions(+), 5 deletions(-)
+Note that this patch series is based on top of the jh/shorten-refname
+series in 'pu'.
 
-diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
-index 6f5ca21..18cffc2 100644
---- a/Documentation/pull-fetch-param.txt
-+++ b/Documentation/pull-fetch-param.txt
-@@ -75,4 +75,4 @@ endif::git-pull[]
- * A parameter <ref> without a colon merges <ref> into the current
-   branch,
- endif::git-pull[]
--  while not storing the branch anywhere locally.
-+  and updates the remote-tracking branches (if any).
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 287cf4c..e41cc0d 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -160,6 +160,8 @@ static struct ref *get_ref_map(struct transport *transport,
- 	const struct ref *remote_refs = transport_get_remote_refs(transport);
- 
- 	if (ref_count || tags == TAGS_SET) {
-+		struct ref **old_tail;
-+
- 		for (i = 0; i < ref_count; i++) {
- 			get_fetch_map(remote_refs, &refs[i], &tail, 0);
- 			if (refs[i].dst && refs[i].dst[0])
-@@ -170,6 +172,20 @@ static struct ref *get_ref_map(struct transport *transport,
- 			rm->fetch_head_status = FETCH_HEAD_MERGE;
- 		if (tags == TAGS_SET)
- 			get_fetch_map(remote_refs, tag_refspec, &tail, 0);
-+
-+		/*
-+		 * For any refs that we happen to be fetching via command-line
-+		 * arguments, take the opportunity to update their configured
-+		 * counterparts. However, we do not want to mention these
-+		 * entries in FETCH_HEAD at all, as they would simply be
-+		 * duplicates of existing entries.
-+		 */
-+		old_tail = tail;
-+		for (i = 0; i < transport->remote->fetch_refspec_nr; i++)
-+			get_fetch_map(ref_map, &transport->remote->fetch[i],
-+				      &tail, 0);
-+		for (rm = *old_tail; rm; rm = rm->next)
-+			rm->fetch_head_status = FETCH_HEAD_IGNORE;
- 	} else {
- 		/* Use the defaults */
- 		struct remote *remote = transport->remote;
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 789c228..ff43e08 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -377,7 +377,7 @@ test_expect_success 'mark initial state of origin/master' '
- 	)
- '
- 
--test_expect_success 'explicit fetch should not update tracking' '
-+test_expect_success 'explicit fetch should update tracking' '
- 
- 	cd "$D" &&
- 	git branch -f side &&
-@@ -387,12 +387,12 @@ test_expect_success 'explicit fetch should not update tracking' '
- 		o=$(git rev-parse --verify refs/remotes/origin/master) &&
- 		git fetch origin master &&
- 		n=$(git rev-parse --verify refs/remotes/origin/master) &&
--		test "$o" = "$n" &&
-+		test "$o" != "$n" &&
- 		test_must_fail git rev-parse --verify refs/remotes/origin/side
- 	)
- '
- 
--test_expect_success 'explicit pull should not update tracking' '
-+test_expect_success 'explicit pull should update tracking' '
- 
- 	cd "$D" &&
- 	git branch -f side &&
-@@ -402,7 +402,7 @@ test_expect_success 'explicit pull should not update tracking' '
- 		o=$(git rev-parse --verify refs/remotes/origin/master) &&
- 		git pull origin master &&
- 		n=$(git rev-parse --verify refs/remotes/origin/master) &&
--		test "$o" = "$n" &&
-+		test "$o" != "$n" &&
- 		test_must_fail git rev-parse --verify refs/remotes/origin/side
- 	)
- '
+
+Have fun!
+
+...Johan
+
+
+Johan Herland (10):
+  t7900: Start testing usability of namespaced remote refs
+  t7900: Demonstrate failure to expand "$peer/$branch" according to refspecs
+  refs.c: Refactor code for mapping between shorthand names and full refnames
+  remote: Reject remote names containing '/'
+  refs.c: Add support for expanding/shortening refs in refs/peers/*
+  t7900: Test git branch -r/-a output w/remote-tracking branches in refs/peers/*
+  t3203: Add testcase for fix in 1603ade81352a526ccb206f41ff81ecbc855df2d
+  builtin/branch.c: Refactor ref_item.name and .dest into strbufs
+  builtin/branch.c: Refactor "remotes/" prepending to remote-tracking branches
+  branch: Fix display of remote branches in refs/peers/*
+
+ builtin/branch.c                               | 114 +++++------
+ builtin/remote.c                               |   4 +-
+ cache.h                                        |   4 -
+ refs.c                                         | 256 ++++++++++++++++++-------
+ refs.h                                         |   6 +
+ remote.c                                       |   6 +-
+ t/t3203-branch-output.sh                       |  15 ++
+ t/t5505-remote.sh                              |  12 ++
+ t/t7900-working-with-namespaced-remote-refs.sh | 131 +++++++++++++
+ t/t7901-multi-level-remote-name-failure.sh     |  20 ++
+ 10 files changed, 430 insertions(+), 138 deletions(-)
+ create mode 100755 t/t7900-working-with-namespaced-remote-refs.sh
+ create mode 100755 t/t7901-multi-level-remote-name-failure.sh
+
 -- 
-1.8.3.rc1.2.g12db477
+1.8.1.3.704.g33f7d4f
