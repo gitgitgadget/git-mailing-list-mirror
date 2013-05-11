@@ -1,66 +1,139 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 4/4] t4300 (rebase): don't unnecessarily set GIT_TRACE
-Date: Sat, 11 May 2013 17:07:14 +0530
-Message-ID: <CALkWK0=rqjduiWsj2-iqCoW9tsv4G8gvpf7fCZwg5=TKuEo+bA@mail.gmail.com>
-References: <1368196178-5807-1-git-send-email-artagnon@gmail.com>
- <1368196178-5807-5-git-send-email-artagnon@gmail.com> <7vmws2529j.fsf@alter.siamese.dyndns.org>
- <CALkWK0k_ArM9EpY0S7=mbgFpHsoauZCr9e=ESX_CEA5-vRHrHQ@mail.gmail.com>
- <7vr4he3kpz.fsf@alter.siamese.dyndns.org> <CALkWK0kLjf=m-_9PkXzxOpnpqfh-n004E0f7_mi-VL3SbYWFAg@mail.gmail.com>
- <7vk3n6206h.fsf@alter.siamese.dyndns.org> <CALkWK0kTvwxMFGUqH0wKNVpLg-qQQbN+vOcAxiEwmOeDe=87jA@mail.gmail.com>
- <20130510190705.GA3478@elie> <CALkWK0kZWrY5_B3mxuVV1cA-AqvkqJpjRAuSovXLi6OCA+3ybQ@mail.gmail.com>
- <20130510191639.GB3478@elie> <7vk3n6zgr3.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 11 13:38:01 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [RFC/PATCH 0/2] merge-base: add --merge-child option
+Date: Sat, 11 May 2013 13:23:42 +0100
+Message-ID: <cover.1368274689.git.john@keeping.me.uk>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 11 14:24:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ub87k-0004UD-B1
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 13:38:00 +0200
+	id 1Ub8qf-0004Th-7h
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 14:24:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751704Ab3EKLhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 07:37:55 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:36778 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750924Ab3EKLhz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 07:37:55 -0400
-Received: by mail-ie0-f171.google.com with SMTP id e11so9734794iej.30
-        for <git@vger.kernel.org>; Sat, 11 May 2013 04:37:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=h73b0USotR+e9s4z1gUEOcujgQbgVHJPPXkcfZpGvC4=;
-        b=OZI98SSZ8CvplyX7aLEQWK8fI5IHhKtMRTpCC7neNftyRagTzZqGEHnUM5LRcXcT5A
-         Msk/wIfVySyO4BFRcv+soJKZuOg5rJkQfQBK4HZJ8rpj0HZ5el4OrKxisAOO2kRmAiBy
-         eFvVGxBHpn48O0V8bMDLmv4TeVjv6BPPZdu2O7w3Tpeyt0UailMniBdCk1852gt0LDdM
-         /+CXP7RLHvfhnbg1kqzaNBjtW6GL2xLxm512I7uNK3zt4UWkU3gcGQBYRfNmRpKVLFn6
-         yBW4YuSNbomacRxB38ITzN1CtueUKhXRVdakHP5ttU/6yL+Ch1KbOpnt6+ETipIek8hW
-         SeXA==
-X-Received: by 10.50.66.140 with SMTP id f12mr4720932igt.63.1368272274587;
- Sat, 11 May 2013 04:37:54 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Sat, 11 May 2013 04:37:14 -0700 (PDT)
-In-Reply-To: <7vk3n6zgr3.fsf@alter.siamese.dyndns.org>
+	id S1751361Ab3EKMYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 08:24:07 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:51595 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751264Ab3EKMYF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 08:24:05 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 3E2F5198007;
+	Sat, 11 May 2013 13:24:04 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -10.999
+X-Spam-Level: 
+X-Spam-Status: No, score=-10.999 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NxV+QqOza1VH; Sat, 11 May 2013 13:24:03 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id 5D11B198003;
+	Sat, 11 May 2013 13:24:03 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 45B17161E410;
+	Sat, 11 May 2013 13:24:03 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id DPMLMEVj5LGf; Sat, 11 May 2013 13:24:02 +0100 (BST)
+Received: from river.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 20A68161E3B6;
+	Sat, 11 May 2013 13:23:52 +0100 (BST)
+X-Mailer: git-send-email 1.8.3.rc1.289.gcb3647f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223959>
 
-Junio C Hamano wrote:
-> But the output from passing "-v" before the test that breaks is not
-> very useful for two reasons.
+This is helpful when examining branches with disjoint roots, for example
+because one is periodically merged into a subtree of the other.
 
-I sometimes checkout the Good branch in a different worktree, compare
-the output/ state of the passing test with the failing one.  I've
-never really found the outputs from earlier tests enlightening.  From
-my experience, the failure is often due to an earlier test not
-imposing tighter passing conditions: but because it's shell, the
-debugging time is very small.  I always just patch-locally and run.
+With the --merge-child option, "git merge-base" will print a
+first-parent ancestor of the first revision given, where the commit
+printed is either a merge-base of the supplied revisions or a merge for
+which one of its parents (not the first) is a merge-base.
 
-I'm not sure how to make the testing framework more useful.
+For example, given the history:
+
+        A---C---G
+             \
+        B-----D---F
+         \
+          E
+
+we have:
+
+        $ git merge-base F E
+        B
+
+        $ git merge-base --merge-child F E
+        D
+
+	$ git merge-base F G
+	C
+
+	$ git merge-base --merge-child F G
+	C
+
+        $ git log --left-right F...E
+        < F
+        < D
+        < C
+        < A
+        > E
+
+        $ git log --left-right F...E --not $(git merge-base --merge-child F E)
+        < F
+        > E
+
+The git-log case is useful because it allows us to limit the range of
+commits that we are examining for patch-identical changes when using
+--cherry.  For example with git-gui in git.git I know that anything
+before the last merge of git-gui is not interesting:
+
+        $ time git log --cherry master...git-gui/master >/dev/null
+        real    0m32.731s
+        user    0m31.956s
+        sys     0m0.664s
+
+        $ time git log --cherry master...git-gui/master --not \
+                $(git merge-base --merge-child master git-gui/master) \
+                >/dev/null
+        real    0m2.296s
+        user    0m2.193s
+        sys     0m0.092s
+
+
+The first commit is a small prerequisite to extract a useful function
+from builtin/tag.c to commit.c.  The second is the main change (the
+commit message is identical to the text before this paragraph).
+
+I'm not convinced that '--merge-child' is the right name for this but I
+think the functionality itself is useful.
+
+John Keeping (2):
+  commit: add commit_list_contains function
+  merge-base: add --merge-child option
+
+ Documentation/git-merge-base.txt |  6 ++++
+ builtin/merge-base.c             | 61 ++++++++++++++++++++++++++++++++++++++--
+ builtin/tag.c                    | 10 +------
+ commit.c                         |  8 ++++++
+ commit.h                         |  1 +
+ t/t6010-merge-base.sh            | 25 ++++++++++++++--
+ 6 files changed, 98 insertions(+), 13 deletions(-)
+
+-- 
+1.8.3.rc1.289.gcb3647f
