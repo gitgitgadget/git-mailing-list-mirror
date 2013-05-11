@@ -1,92 +1,98 @@
 From: Jeff King <peff@peff.net>
-Subject: [RFC/PATCH 0/4] update tracking refs on explicit fetch
-Date: Sat, 11 May 2013 18:13:21 +0200
-Message-ID: <20130511161320.GA14990@sigill.intra.peff.net>
+Subject: [PATCH 1/4] t5510: start tracking-ref tests from a known state
+Date: Sat, 11 May 2013 18:14:03 +0200
+Message-ID: <20130511161400.GA3270@sigill.intra.peff.net>
+References: <20130511161320.GA14990@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Thomas Rast <trast@student.ethz.ch>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 11 18:13:39 2013
+X-From: git-owner@vger.kernel.org Sat May 11 18:14:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbCQT-0001JI-Qt
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 18:13:38 +0200
+	id 1UbCR2-0001jo-Ep
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 18:14:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752834Ab3EKQNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 12:13:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58735 "EHLO peff.net"
+	id S1752864Ab3EKQOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 12:14:08 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58743 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752672Ab3EKQNY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 12:13:24 -0400
-Received: (qmail 9062 invoked by uid 102); 11 May 2013 16:13:49 -0000
+	id S1752672Ab3EKQOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 12:14:07 -0400
+Received: (qmail 9182 invoked by uid 102); 11 May 2013 16:14:31 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (213.221.117.228)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 11 May 2013 11:13:49 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 11 May 2013 18:13:21 +0200
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 11 May 2013 11:14:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 11 May 2013 18:14:03 +0200
 Content-Disposition: inline
+In-Reply-To: <20130511161320.GA14990@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/223977>
 
-This is a cleaned-up version of the oft-discussed[1] concept that "git
-pull origin master" should update "refs/remotes/origin/master".
+We have three sequential tests for for whether tracking refs
+are updated by various fetches and pulls; the first two
+should not update the ref, and the third should. Each test
+depends on the state left by the test before.
 
-It is a little bit of a risky change, in that anybody who deeply cares
-about when their tracking ref branches are updated would be impacted.
-But I think the general consensus is that while you can come up with a
-hypothetical use case, the logic is quite tortured, and you could
-accomplish the same thing by keeping a local branch. Most people seem to
-have the mental model that remote tracking branches are basically a
-cache for what's on the remote, updated opportunistically as
-appropriate.
+This is fragile (a failing early test will confuse later
+tests), and means we cannot add more "should update" tests
+after the third one.
 
-  [1/4]: t5510: start tracking-ref tests from a known state
-  [2/4]: fetch/pull doc: untangle meaning of bare <ref>
-  [3/4]: refactor "ref->merge" flag
-  [4/4]: fetch: opportunistically update tracking refs
+Let's instead save the initial state before these tests, and
+then reset to a known state before running each test.
 
-The final patch is the moral equivalent of the patch I've posted before
-when this topic comes up (and referenced in the threads below). But that
-patch did not take care not to write duplicate (mergable!) entries into
-FETCH_HEAD, leading to great confusion from git-pull.  This series deals
-with that, and takes care to write the exact same FETCH_HEAD we would
-have written before the series.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t5510-fetch.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-However, Jonathan raised an interesting question: what is the point of
-not-for-merge entries at all? We are not going to merge them, so none of
-the pull/merge machinery cares about them. We do not consider extra
-entries in FETCH_HEAD for reachability or anything like that. Is there
-anybody who reads them?
-
-If we do not care about them, we can simplify this much further, and
-either write the duplicates as not-for-merge, or even omit not-for-merge
-entries entirely. However, it is possible that some third-party scripts
-process FETCH_HEAD, so I took the conservative route.
-
-Note that this patch is as greedy as possible[2]; whenever we see the
-LHS is fetched, we update the RHS side, even if the user did:
-
-  git fetch origin master:foobar
-
-Some of the discussions below argue that the behavior should not kick in
-for such a case. I am not sure I agree (and argue against it in those
-discussions). I think at this point that is the only potentially
-contentious item.
-
--Peff
-
-[1] Past discussions:
-
-    http://thread.gmane.org/gmane.comp.version-control.git/127163/focus=127215
-
-    http://thread.gmane.org/gmane.comp.version-control.git/192252
-
-    http://thread.gmane.org/gmane.comp.version-control.git/203357/focus=203442
-
-    http://article.gmane.org/gmane.comp.version-control.git/221234
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index d7a19a1..789c228 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -370,12 +370,20 @@ test_expect_success 'explicit fetch should not update tracking' '
+ 
+ '
+ 
++test_expect_success 'mark initial state of origin/master' '
++	(
++		cd three &&
++		git tag base-origin-master refs/remotes/origin/master
++	)
++'
++
+ test_expect_success 'explicit fetch should not update tracking' '
+ 
+ 	cd "$D" &&
+ 	git branch -f side &&
+ 	(
+ 		cd three &&
++		git update-ref refs/remotes/origin/master base-origin-master &&
+ 		o=$(git rev-parse --verify refs/remotes/origin/master) &&
+ 		git fetch origin master &&
+ 		n=$(git rev-parse --verify refs/remotes/origin/master) &&
+@@ -390,6 +398,7 @@ test_expect_success 'explicit pull should not update tracking' '
+ 	git branch -f side &&
+ 	(
+ 		cd three &&
++		git update-ref refs/remotes/origin/master base-origin-master &&
+ 		o=$(git rev-parse --verify refs/remotes/origin/master) &&
+ 		git pull origin master &&
+ 		n=$(git rev-parse --verify refs/remotes/origin/master) &&
+@@ -404,6 +413,7 @@ test_expect_success 'configured fetch updates tracking' '
+ 	git branch -f side &&
+ 	(
+ 		cd three &&
++		git update-ref refs/remotes/origin/master base-origin-master &&
+ 		o=$(git rev-parse --verify refs/remotes/origin/master) &&
+ 		git fetch origin &&
+ 		n=$(git rev-parse --verify refs/remotes/origin/master) &&
+-- 
+1.8.3.rc1.2.g12db477
