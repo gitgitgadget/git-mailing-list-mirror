@@ -1,79 +1,70 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] test-bzr: Do not use unportable sed "\+"
-Date: Sat, 11 May 2013 22:00:17 +0200
-Message-ID: <518EA351.8000603@web.de>
-References: <201305111525.53130.tboegi@web.de> <7vwqr5wdqm.fsf@alter.siamese.dyndns.org> <7vobchwbax.fsf@alter.siamese.dyndns.org>
+Date: Sat, 11 May 2013 13:09:54 -0700
+Message-ID: <7v8v3lwa5p.fsf@alter.siamese.dyndns.org>
+References: <201305111525.53130.tboegi@web.de>
+	<7vwqr5wdqm.fsf@alter.siamese.dyndns.org>
+	<7vobchwbax.fsf@alter.siamese.dyndns.org> <518EA351.8000603@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	felipe.contreras@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 11 22:00:44 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: felipe.contreras@gmail.com, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat May 11 22:10:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbFyE-0004kW-VF
-	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 22:00:43 +0200
+	id 1UbG7F-0003Hb-4t
+	for gcvg-git-2@plane.gmane.org; Sat, 11 May 2013 22:10:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753989Ab3EKUA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 16:00:28 -0400
-Received: from mout.web.de ([212.227.17.11]:59436 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753879Ab3EKUA1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 16:00:27 -0400
-Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb003) with
- ESMTPA (Nemesis) id 0Lz3CK-1UWlsJ1zX6-014cPl; Sat, 11 May 2013 22:00:19 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <7vobchwbax.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:nJjeI1Ixmr6etbTVAXA5Fl6AKWXhkIKwKnzNVr8rZTs
- 7GQqHCMFWZmPyjJWRpZcg14bkgHBSafjgitu3neAH8YO4uraH1
- 9a6jPy+l3nqOfcg/UbN+MMW4qiQ8fYL7NYk33coE2uLStb6mfZ
- pkRyOubmx/sqUmKeI6gM8uOgfkfWBZXjiOWTE0mfcsZQfU9/w0
- qWx7r+wmsvIio5zP0qqoA==
+	id S1754006Ab3EKUJ5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 May 2013 16:09:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57472 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753738Ab3EKUJ4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 May 2013 16:09:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3AB3B1D06E;
+	Sat, 11 May 2013 20:09:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=OJtPieQxqI3v
+	gVT65pSdxY1Q1mM=; b=sCoAGJuZW1EcFcZfiCSOWxSpogfraMjrcHPgeC47ZdWa
+	S7gjTaKgpBjIbqmo1PmvmUnFWYRzm0G5/DkroGN7gn3aKyTCUEuhyhNEsvtCD0cb
+	CPFURocVc7hn2Lo2OSm4kYTTliRyXuTx04MSuNr7nNByGqYKoyfUZsLddFPHnMw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OxYPnF
+	xXvJ5ctQ1ZxAhhjSekoudgp/B5rlAma2PRxnre/DlR4cTLR+QYTLthFUtm/YOh+a
+	7SpagyCmbxQpBCwEkEV7dFY1PfPXIDn13ilZdSE1LprCa24bBE2ME/9+/w2v09U6
+	1yRdQAHS46eDvTlYWOHtdhsFGn08b9C7o+zek=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2EA1A1D06C;
+	Sat, 11 May 2013 20:09:56 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BD4D51D06B;
+	Sat, 11 May 2013 20:09:55 +0000 (UTC)
+In-Reply-To: <518EA351.8000603@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Sat, 11 May 2013 22:00:17 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BF977E1A-BA76-11E2-9C24-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224008>
 
-On 11.05.13 21:45, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Thanks.  Is there another one in t/t5551-http-fetch.sh that checks
->> the tags?
-> 
-> I think your sed will see the same breakage for the one in 5551 (my
-> sed is unfortunately GNU and ".\+" does not break it).  Could you
-> test this patch with:
-> 
->      GIT_TEST_LONG=YesPlease GIT_TEST_HTTPD=YesPlease \
->      ./t5551-http-fetch.sh
-> 
-> Thanks.
-> 
->  t/t5551-http-fetch.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
-> index b23efbb..4a3184e 100755
-> --- a/t/t5551-http-fetch.sh
-> +++ b/t/t5551-http-fetch.sh
-> @@ -209,7 +209,7 @@ test_expect_success EXPENSIVE 'create 50,000 tags in the repo' '
->  
->  	# now assign tags to all the dangling commits we created above
->  	tag=$("$PERL_PATH" -e "print \"bla\" x 30") &&
-> -	sed -e "s/^:\(.\+\) \(.\+\)$/\2 refs\/tags\/$tag-\1/" <marks >>packed-refs
-> +	sed -e "s|^:\([^ ]*\) \(.*\)$|\2 refs/tags/$tag-\1|" <marks >>packed-refs
->  	)
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-I did,
-the interesting thing is that the test passes with and without your patch.
-(After enabling  GIT_TEST_LONG and GIT_TEST_HTTPD in both cases)
+> I did,
+> the interesting thing is that the test passes with and without your p=
+atch.
+> (After enabling  GIT_TEST_LONG and GIT_TEST_HTTPD in both cases)
 
-
-Side note:
-I added this line in in t/check-non-portable-shell.pl
-  /sed[^"]+"[^"]+\\([+])/ and err "sed \\$1 is not portable)";
+Strange.  Do you see differences between the produced packed-refs
+file?
