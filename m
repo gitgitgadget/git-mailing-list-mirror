@@ -1,160 +1,78 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [RFC/PATCH 0/2] merge-base: add --merge-child option
-Date: Sun, 12 May 2013 17:58:29 +0100
-Message-ID: <20130512165829.GM2299@serenity.lan>
-References: <cover.1368274689.git.john@keeping.me.uk>
- <518FB8DE.7070004@bracey.fi>
- <20130512162823.GK2299@serenity.lan>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v7 02/10] Show items of interactive git-clean in columns
+Date: Sun, 12 May 2013 19:09:39 +0200
+Message-ID: <vpqli7ki0q4.fsf@grenoble-inp.fr>
+References: <cover.1368011946.git.worldhello.net@gmail.com>
+	<ad26375dece854339d64dcb82c17f19f8edccf48.1368011946.git.worldhello.net@gmail.com>
+	<cover.1368011946.git.worldhello.net@gmail.com>
+	<6a7931a0bb14f8c71479e16175812bedb6b826cb.1368011946.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Kevin Bracey <kevin@bracey.fi>
-X-From: git-owner@vger.kernel.org Sun May 12 18:58:52 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 12 19:09:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbZbm-0005V3-Bb
-	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 18:58:50 +0200
+	id 1UbZmW-00043O-Bj
+	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 19:09:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754656Ab3ELQ6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 May 2013 12:58:46 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:36254 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754539Ab3ELQ6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 May 2013 12:58:45 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 42CE6606576;
-	Sun, 12 May 2013 17:58:45 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -11
-X-Spam-Level: 
-X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kXga7vjEyMVg; Sun, 12 May 2013 17:58:44 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 5977F60656A;
-	Sun, 12 May 2013 17:58:42 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id B4BF7161E2DC;
-	Sun, 12 May 2013 17:58:41 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rYFCMLhTl2A7; Sun, 12 May 2013 17:58:40 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id C256E161E415;
-	Sun, 12 May 2013 17:58:31 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20130512162823.GK2299@serenity.lan>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754654Ab3ELRJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 May 2013 13:09:47 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:58872 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754569Ab3ELRJr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 May 2013 13:09:47 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4CH9bU1008268
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 12 May 2013 19:09:37 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UbZmF-0007Vi-B0; Sun, 12 May 2013 19:09:39 +0200
+In-Reply-To: <6a7931a0bb14f8c71479e16175812bedb6b826cb.1368011946.git.worldhello.net@gmail.com>
+	(Jiang Xin's message of "Wed, 8 May 2013 19:38:47 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 12 May 2013 19:09:37 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r4CH9bU1008268
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1368983379.00424@PNp/My0+fZA7yuFrI8Mksw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224054>
 
-On Sun, May 12, 2013 at 05:28:24PM +0100, John Keeping wrote:
-> However, this doesn't seem to make a difference to the time taken when I
-> add in --cherry-mark (which is why I was partially correct in the
-> parallel thread - it doesn't have the effect on cherry-mark that I want
-> it to):
-> 
->     $ time git rev-list --ancestry-path --left-right --count --cherry-mark \
->             origin/master...git-gui/master 
->     2056    5       0
-> 
->     real    0m32.266s
->     user    0m31.522s
->     sys     0m0.749s
-> 
->     $ time git rev-list  --left-right --count --cherry-mark \
->             origin/master...git-gui/master
->     31959   5       0
-> 
->     real    0m32.140s
->     user    0m31.337s
->     sys     0m0.807s
-> 
-> This seems to be caused by the code in revision.c::limit_list() which
-> does the cherry detection then limits to left/right and only then
-> applies the ancestry path.  I haven't looked further than that, but is
-> there any reason not to apply the ancestry path restriction before
-> looking for patch-identical commits?
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-With the patch below, the --ancestry-path version drops to under 2
-seconds.
+> +column.clean::
+> +	Specify whether to output cleaning files in `git clean -i` in columns.
+> +	See `column.ui` for details.
+> +
 
-I'm not sure if this is a good idea though.  It helps me say "I know
-nothing that isn't on the ancestry path can be patch-identical, so don't
-bother checking if it is" but it regresses users who want the full
-cherry-pick check while only limiting the output.
 
-Perhaps we need --cherry-no-uninteresting to apply the first 3 hunks of
-the patch at runtime :-S
+> +static void pretty_print_dels()
 
--- >8 --
-diff --git a/revision.c b/revision.c
-index de3b058..d721d83 100644
---- a/revision.c
-+++ b/revision.c
-@@ -837,7 +837,7 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
- 	for (p = list; p; p = p->next) {
- 		struct commit *commit = p->item;
- 		unsigned flags = commit->object.flags;
--		if (flags & BOUNDARY)
-+		if (flags & (BOUNDARY | UNINTERESTING))
- 			;
- 		else if (flags & SYMMETRIC_LEFT)
- 			left_count++;
-@@ -858,7 +858,7 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
- 		struct commit *commit = p->item;
- 		unsigned flags = commit->object.flags;
- 
--		if (flags & BOUNDARY)
-+		if (flags & (BOUNDARY | UNINTERESTING))
- 			continue;
- 		/*
- 		 * If we have fewer left, left_first is set and we omit
-@@ -879,7 +879,7 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
- 		struct patch_id *id;
- 		unsigned flags = commit->object.flags;
- 
--		if (flags & BOUNDARY)
-+		if (flags & (BOUNDARY | UNINTERESTING))
- 			continue;
- 		/*
- 		 * If we have fewer left, left_first is set and we omit
-@@ -1103,17 +1103,18 @@ static int limit_list(struct rev_info *revs)
- 		show(revs, newlist);
- 		show_early_output = NULL;
- 	}
--	if (revs->cherry_pick || revs->cherry_mark)
--		cherry_pick_list(newlist, revs);
--
--	if (revs->left_only || revs->right_only)
--		limit_left_right(newlist, revs);
- 
- 	if (bottom) {
- 		limit_to_ancestry(bottom, newlist);
- 		free_commit_list(bottom);
- 	}
- 
-+	if (revs->cherry_pick || revs->cherry_mark)
-+		cherry_pick_list(newlist, revs);
-+
-+	if (revs->left_only || revs->right_only)
-+		limit_left_right(newlist, revs);
-+
- 	/*
- 	 * Check if any commits have become TREESAME by some of their parents
- 	 * becoming UNINTERESTING.
+Ah, OK. That's the helper function I was expecting in 01/10. The patches
+would be easier to review if the helper was introduced in 01/10 and
+then modified here to add column display, but the result is OK.
+
+> +	/*
+> +	 * always enable column display, we only consult column.*
+> +	 * about layout strategy and stuff
+> +	 */
+
+Isn't this conflicting with the documentation above?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
