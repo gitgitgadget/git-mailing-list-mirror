@@ -1,116 +1,95 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: Bug: git-p4: Sometimes p4 generates Windows-style output on OS X
-Date: Sun, 12 May 2013 08:59:39 -0400
-Message-ID: <20130512125939.GA1456@padd.com>
-References: <5187EF88.6040707@gmail.com>
+From: Jason Timrod <jtimrod@yahoo.com>
+Subject: Mapping file contents from one repository to another
+Date: Sun, 12 May 2013 08:22:00 -0700 (PDT)
+Message-ID: <1368372120.73994.YahooMailNeo@web160305.mail.bf1.yahoo.com>
+Reply-To: Jason Timrod <jtimrod@yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Foster <davidfstr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 12 14:59:58 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 12 17:27:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbVsb-0004gr-67
-	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 14:59:57 +0200
+	id 1UbYBj-0007Cn-Tl
+	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 17:27:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752622Ab3ELM7o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 May 2013 08:59:44 -0400
-Received: from honk.padd.com ([74.3.171.149]:50745 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752394Ab3ELM7n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 May 2013 08:59:43 -0400
-Received: from arf.padd.com (unknown [50.55.134.154])
-	by honk.padd.com (Postfix) with ESMTPSA id 539925B63;
-	Sun, 12 May 2013 05:59:42 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 6FAAA22A3C; Sun, 12 May 2013 08:59:39 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <5187EF88.6040707@gmail.com>
+	id S1753878Ab3ELP1r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 May 2013 11:27:47 -0400
+Received: from nm11-vm0.bullet.mail.bf1.yahoo.com ([98.139.213.136]:34057 "HELO
+	nm11-vm0.bullet.mail.bf1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753555Ab3ELP1q convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 May 2013 11:27:46 -0400
+X-Greylist: delayed 345 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 May 2013 11:27:46 EDT
+Received: from [98.139.214.32] by nm11.bullet.mail.bf1.yahoo.com with NNFMP; 12 May 2013 15:22:01 -0000
+Received: from [98.139.215.253] by tm15.bullet.mail.bf1.yahoo.com with NNFMP; 12 May 2013 15:22:01 -0000
+Received: from [127.0.0.1] by omp1066.mail.bf1.yahoo.com with NNFMP; 12 May 2013 15:22:01 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 145975.71342.bm@omp1066.mail.bf1.yahoo.com
+Received: (qmail 75550 invoked by uid 60001); 12 May 2013 15:22:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1368372120; bh=AMzgEWrc3BK5yL0CeNvMRqnT9wIMMtYwdfZSRoenimg=; h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=vOQ9AyJJ2DWTjuCG9GOMn87fnkNu4aDYTSOUbEJBwSR5JVja5yxTP3aIB0zSyOGqTsDc963pnnggc55zIHBVSpqRYyYgYtInf6GvZtLrETmmnsL5mx3CHToHztI6Ff9MRXjIyp0Ww1PfDBs87Rx8u0MSLw5xaIp+VgNv0OOdohw=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=PgyPqpB5NwfD3bF3AaH+eBXc7G0jRU/D3CJnrKf4WjxJeoVzl7iX1ExrjBi1hpdZUW55ehpmFWOEsU40nO3fxmmSLcg73iXCa+PbDPGfExlB7ygdS073aMRjVEUvQQUQMwiq62zYYTkf/SVlBcZ4MtVriZ2/NyQOpG4dzWuIrRk=;
+X-YMail-OSG: bhwhTmoVM1l53N.HM.Gk510.ppzNCBnbA7_V81DNdpTXI4n
+ lP6miQZmfb0m.ocCIzqKD5B_eSO1QchgCDC28AEB6yzldFimdeWTyt2Y4KdX
+ kt9ukjl4WShDJYe44zqcNHCLfdXwNnqPsmzbdbeFI6j97Wl.CyY9bKpk7zBh
+ qP1Af8N48Mhu1YzsiV9qTHJYvaHTJjI01qp1CSYF98GxRjHdPhYvTBlm3_CL
+ 5r15o2fptKd56BXE3NvVeiZ1nEt1t0KkzNZ46kmvFfqUyO_JFqDSzE5K0_mw
+ X_RxuKQ57b_hrziBaLJnwhB71puWEtjbUmeta31JHQSeZTlOiudHh8m5TVc4
+ GeyTsiREE60ZofJFTSH4Us4VItT9GKmISC_usdCHRfX6DjRXNbcGI1i_pY51
+ k9VOaNCes6FgmB2AUHc36Oysdu3cviKoM6onbrUhf7vcqM0po7umUmClLmn7
+ NaYaOAlPczHlOWsyEOl7QInmOgi07isyMUN7.diiqWldb1t2uLV.I4qXoWQ-
+ -
+Received: from [82.18.155.27] by web160305.mail.bf1.yahoo.com via HTTP; Sun, 12 May 2013 08:22:00 PDT
+X-Rocket-MIMEInfo: 002.001,SGkgYWxsLAoKVGhpcyBpcyBhIGNvbXBsaWNhdGVkIHF1ZXN0aW9uIHRvIHRyeSBhbmQgYXNrLCBsZXQgYWxvbmUgYW5zd2VyLCBzbyBJIGhhZCBiZXN0IGdpdmUgc29tZSBiYWNrZ3JvdW5kLgoKSSBoYXZlIHR3byByZXBvc2l0b3JpZXMgLS0tIG9uZSBvZiB0aGVtLCB3aGljaCBJJ2xsIGNhbGwgInJlcG9BIiwgaXMgdGhlIG1haW4gcmVwb3NpdG9yeSwgaXQncyB0aGUgb25lIHdoaWNoIG1vc3Qgb2YgdGhlIGNvZGUgd2UgZGV2ZWxvcCBlbmRzIHVwLiDCoFRoZSBvdGhlciByZXBvc2l0b3J5LCAicmVwb0IiIGkBMAEBAQE-
+X-Mailer: YahooMailWebService/0.8.141.536
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224047>
 
-davidfstr@gmail.com wrote on Mon, 06 May 2013 10:59 -0700:
-> I've observed that the p4 command that git-p4 delegates to
-> occasionally outputs Windows-style line endings even on the OS X
-> platform. When this happens, git-p4 gets very confused and crashes
-> out.
-> 
-> I've attached a patch which seems to fix the issue in my case. Now
-> this patch is a pretty bad hack, and I don't recommend that it be
-> accepted as-is. It is just a starting point.
-> 
-> A real fix would determine in advance whether Perforce was going to
-> emit Windows-style output. Since I don't know the circumstances
-> under which this happens on non-Windows platforms, I can't provide a
-> better patch. Someone who has intimate knowledge of p4's operating
-> modes would be best to examine what's really going on with p4.
+Hi all,
 
-You've changed the part where git-p4 reads the submit message
-back from the text editor.  There has been no interaction with p4
-yet.  The self.isWindows check after your changes is just to
-remove "\r" from newlines that many windows editors produce.
+This is a complicated question to try and ask, let alone answer, so I h=
+ad best give some background.
 
-Now could be that you're worried not about this message, but
-about failing in the later apply when it tries to put the
-"\n"-terminated patch onto a workspace full of "\r\n".  There
-was a recent thread:
+I have two repositories --- one of them, which I'll call "repoA", is th=
+e main repository, it's the one which most of the code we develop ends =
+up. =A0The other repository, "repoB" is our portable version of the cod=
+e---the one which is used to deploy on systems other than the one which=
+ repoA is deployed on. =A0As such, "repoB" often (and does) contain com=
+mits specific to repoB which will never appear in repoA, such as OS-spe=
+cific things.
 
-http://thread.gmane.org/gmane.comp.version-control.git/221664/focus=223625
+In this case, in repoA we have a man page. =A0Up until recently, this u=
+sed to be the same file in both repositories. =A0But because of the way=
+ the files in repoB are deployed, unlike in repoA this file has had its=
+ name changed from:
 
-suggesting that core.autocrlf was to blame.  Would be interesting
-if this turns out to be your problem too.  Maybe we could look
-for that and do something sensible.
+foo.1 -> foo.1.in
 
-The other thing to check is "p4 client -o" and see what LineEnd
-setting exists for the backing p4 workspace.
+Because the man page is run through some sed script to replace various =
+things which never need to happen in repoA
 
-		-- Pete
+Now, as you might guess, foo.1 in repoA doesn't change. =A0When I merge=
+ in changes from repoA to repoB, there is no way for the repositories t=
+o know that repoA:foo.1 is really repoB:foo.1.in -- which means a new f=
+ile is created every time.
 
-> From aef963f0c45dea81f3e6f30d3b4185a0983ca4de Mon Sep 17 00:00:00 2001
-> From: David Foster <davidfstr@gmail.com>
-> Date: Mon, 6 May 2013 10:50:01 -0700
-> Subject: [PATCH] Compensate for Windows-style output from the p4 command on
->  non-Windows systems.
-> 
-> ---
->  git-p4.py |   18 ++++++++++++++++++
->  1 files changed, 18 insertions(+), 0 deletions(-)
-> 
-> diff --git a/git-p4.py b/git-p4.py
-> index 647f110..949d66d 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -1454,6 +1454,24 @@ class P4Submit(Command, P4UserMap):
->              tmpFile = open(fileName, "rb")
->              message = tmpFile.read()
->              tmpFile.close()
-> +            
-> +            # HACK: If Perforce spontaneously generates Windows-style output,
-> +            #       compensate by assuming the entire p4 command went into
-> +            #       Windows mode.
-> +            if separatorLine not in message:
-> +                print "WARNING: Perforce has spontaneously decided to generate Windows-style output. Compensating."
-> +                
-> +                # Assume that Perforce is now inexplicably operating in Windows mode
-> +                self.isWindows = True
-> +                
-> +                # Retroactively rewrite expected output
-> +                submitTemplate = submitTemplate.replace("\n", "\r\n")
-> +                separatorLine = separatorLine.replace("\n", "\r\n")
-> +                newdiff = newdiff.replace("\n", "\r\n")
-> +                
-> +                if separatorLine not in message:
-> +                    raise ValueError('Confused. Thought Perforce went into Windows mode but apparently something else is wrong.')
-> +            
->              submitTemplate = message[:message.index(separatorLine)]
->              if self.isWindows:
->                  submitTemplate = submitTemplate.replace("\r\n", "\n")
-> -- 
-> 1.7.7.5 (Apple Git-26)
-> 
+I appreciate I could just rename foo.1.in back to foo.1 in repoB, but t=
+his would cause some ambiguity with users who try to run the file throu=
+gh "man", because the tradition of .in files is well-understood.
+
+So short of renaming the file in repoB back to foo.1, my question is th=
+is: =A0when merging repoA to repoB, can I somehow map the file contents=
+ from foo.1 to be foo.1.in in repoB?
+
+Kindly,
+
+Jason
