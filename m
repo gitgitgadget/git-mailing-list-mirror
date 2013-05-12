@@ -1,76 +1,70 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] cache.h: avoid deprecation warnings on OS X 10.8
-Date: Sun, 12 May 2013 13:20:30 -0400
-Message-ID: <CAPig+cRsBay2tobNEMTujMR4q7xs-Fbq_3V=WQaw40KWAXwdLg@mail.gmail.com>
-References: <1368239010-60894-1-git-send-email-davvid@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v7 00/10] interactive git clean
+Date: Sun, 12 May 2013 19:28:57 +0200
+Message-ID: <vpq8v3khzty.fsf@grenoble-inp.fr>
+References: <cover.1368011946.git.worldhello.net@gmail.com>
+	<CAPig+cR6aa+xODi=8DoiBpqQZM1eBHkGBvGzMGB2PSiT3osMEw@mail.gmail.com>
+	<7vwqr9fo9b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	John Keeping <john@keeping.me.uk>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 12 19:20:50 2013
+Content-Type: text/plain
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 12 19:29:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbZx3-0002xn-Al
-	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 19:20:49 +0200
+	id 1Uba5B-0008K3-M2
+	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 19:29:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754681Ab3ELRUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 May 2013 13:20:33 -0400
-Received: from mail-la0-f43.google.com ([209.85.215.43]:49524 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754671Ab3ELRUd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 May 2013 13:20:33 -0400
-Received: by mail-la0-f43.google.com with SMTP id ea20so5445064lab.16
-        for <git@vger.kernel.org>; Sun, 12 May 2013 10:20:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=Dm/KPUl1ghOMj/ChKsjh9kcJkcdu4G5r4p8RRT/xlVc=;
-        b=LqsWLRynI70SXp5G7Wx6U6iuqBZQ7w+qrU45906oQE2p/uXJS7ArGshgGLFHwEDHc6
-         KE2baIm/lNYw6a8dsIg1BGDCue10Xd3vKzxQCjsXZSt4L3SbrEYwo3HI++Np7+yP0J9Z
-         PedqtQ+2kYSpXvTbvP3ODoeLMncjWL7UZjqWdbcSOLakYyBiuJjWktBZk5+YT9MZhbqV
-         rxG1Fj4sWRNUDlGYFjCyFsTnvKyNcQ23qlEMn6N5Q/258/MCcIVa0jjgbnSm8Z4mSqTT
-         gW53w72sZr5dhzCZRRSoPf6ktsgdSVrNomhVFa/3V0PsfstDEb4NUaqqjPN8x2RXZmmI
-         swfw==
-X-Received: by 10.112.125.232 with SMTP id mt8mr8439648lbb.55.1368379231084;
- Sun, 12 May 2013 10:20:31 -0700 (PDT)
-Received: by 10.114.181.3 with HTTP; Sun, 12 May 2013 10:20:30 -0700 (PDT)
-In-Reply-To: <1368239010-60894-1-git-send-email-davvid@gmail.com>
-X-Google-Sender-Auth: i5xjgjt_V8L1SVuJdKfn_hILkZc
+	id S1754741Ab3ELR3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 May 2013 13:29:08 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:43688 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754568Ab3ELR3H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 May 2013 13:29:07 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4CHSu77011475
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 12 May 2013 19:28:56 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Uba4w-0007hD-8x; Sun, 12 May 2013 19:28:58 +0200
+In-Reply-To: <7vwqr9fo9b.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 08 May 2013 09:08:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 12 May 2013 19:28:56 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r4CHSu77011475
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1368984538.37116@fH5fytl5vdQ8hsyVOETqhg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224058>
 
-On Fri, May 10, 2013 at 10:23 PM, David Aguilar <davvid@gmail.com> wrote:
-> Mac OS X Mountain Lion prints warnings when building git:
->
->         warning: 'SHA1_Init' is deprecated
->         (declared at /usr/include/openssl/sha.h:121)
->
-> Silence the warnings by using the Common Digest SHA-1
-> functions for SHA1_Init(), SHA1_Update(), and SHA1_Final().
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Lion, with this patch, I see diagnostics such as:
+> Cleaning all unneeded files inside a single interactive session
+> should *never* be the goal---that will lead to an over-engineered
+> design (e.g. switching "clean -x" flags in the middle? why?).  I
+> think Jiang's latest series is already way over-engineered,
 
-    warning: implicit declaration of function 'CC_SHA1_Init'
+I didn't read the end of the series in detail, but I tend to agree with
+you. Maybe it's time to remember the YAGNI principle, and keep the
+number of options small at least for now (e.g. drop 11/12 git-clean: add
+toggle flags interactive action). When users (including us) will have
+used "git clean -i" for a while, we'll have a better idea of what is
+really needed.
 
-If I #include <CommonCrypto/CommonDigest.h>, the "implicit
-declaration" warning is resolved, but a host of other warnings about
-incompatible pointer types crop up.
-
-(This is a bare Lion installation with latest XCode and "Command Line
-Tools" package. No MacPorts, no Homebrew.)
-
-> Add a COMMON_DIGEST_SHA1 knob to the Makefile to allow
-> choosing this implementation and define it by default on Darwin.
->
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
-> This implements the suggestion from John Keeping instead
-> of blindly setting NO_OPENSSL on Darwin.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
