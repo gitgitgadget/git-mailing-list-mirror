@@ -1,83 +1,121 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] patch-ids.c: cache patch IDs in a notes tree
-Date: Sat, 11 May 2013 18:57:02 -0500 (CDT)
-Message-ID: <alpine.DEB.1.00.1305111846160.8213@s15462909.onlinehome-server.info>
-References: <9d9e56d323b40fe9ea2a6484e35f0afcd3a3a85b.1368301939.git.john@keeping.me.uk> <CA+55aFyn0+Q4CA6yQZipaCRB0w9cW4YpuL3XuxU2JR5QPp98XQ@mail.gmail.com> <20130511214900.GF2299@serenity.lan>
- <CA+55aFzinmXA2HtA3hmN1VVOcLPWedfqJRws0RJMEc1By1VLLg@mail.gmail.com>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: [PATCH] git-gui: fix file name handling with non-empty prefix
+Date: Sat, 11 May 2013 22:03:25 -0400
+Message-ID: <518EF86D.3060207@gmail.com>
+References: <264998b2b2201b7d6ab9bfa8b5518f712b3a6a08.1367069056.git.john@keeping.me.uk> <20130427141839.GF472@serenity.lan>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: John Keeping <john@keeping.me.uk>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun May 12 01:57:26 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun May 12 04:07:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbJfJ-0003US-9t
-	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 01:57:25 +0200
+	id 1UbLhW-0007Dk-4w
+	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 04:07:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752598Ab3EKX5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 May 2013 19:57:08 -0400
-Received: from mout.gmx.net ([212.227.17.21]:54687 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752363Ab3EKX5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 May 2013 19:57:07 -0400
-Received: from mailout-de.gmx.net ([10.1.76.34]) by mrigmx.server.lan
- (mrigmx002) with ESMTP (Nemesis) id 0MKfbV-1UZwcJ2glD-0021Ue for
- <git@vger.kernel.org>; Sun, 12 May 2013 01:57:04 +0200
-Received: (qmail invoked by alias); 11 May 2013 23:57:04 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp034) with SMTP; 12 May 2013 01:57:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19F0epV75xFEVb6SHiSscTvqCl0OQfrUjbSwQOKmy
-	bzbmAMGWM3tSXh
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <CA+55aFzinmXA2HtA3hmN1VVOcLPWedfqJRws0RJMEc1By1VLLg@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754008Ab3ELCHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 May 2013 22:07:34 -0400
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:39855 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752619Ab3ELCHd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 May 2013 22:07:33 -0400
+Received: by mail-pb0-f50.google.com with SMTP id um15so3603567pbc.9
+        for <git@vger.kernel.org>; Sat, 11 May 2013 19:07:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=ZrVYgPOgNd6KYhv9vlGpEoPjvPt4BUoTDorTl3bvf/Y=;
+        b=XpTjAgV0HLM8TZFpi4/LjOKgCvYHjOrP942o9s9tNcEB4N9KP9jYnaQ3k+93FbA+qf
+         h7wRX2ssLxNir+yXHdayuOcoP4/4WaZ5zQkCPQZTKulOzJeJrcsEA3Em1308lzlD/Myw
+         dIIlSE2HMIveVQHG9Rrj/mG3B01t/CBUZwLFlYuzAgpIWUO3gcHRwqEhihBhzm7kWrbI
+         ALDw7LM72jXid4K4ImaTBqfvOJILbwabM8fOVzqPfnvZWva0UZ86CGOmnMk/zxrXaeIi
+         vPAic2Z+ew2WgiL6hAfxOoj7OCJZvTO5RZqVKuga7lueHwLgJ9ZE4nq60xwT4JI1tGKf
+         R43w==
+X-Received: by 10.66.177.46 with SMTP id cn14mr24548168pac.4.1368324452685;
+        Sat, 11 May 2013 19:07:32 -0700 (PDT)
+Received: from [192.168.0.21] (S0106185933487631.vc.shawcable.net. [24.85.157.19])
+        by mx.google.com with ESMTPSA id zo4sm8357417pbc.21.2013.05.11.19.07.30
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 11 May 2013 19:07:31 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130501 Thunderbird/17.0.5
+In-Reply-To: <20130427141839.GF472@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224022>
 
-Hi John & Linus,
+Sorry for the late reply. I was able to reproduce the problem that you
+were describing a while ago. And your patch indeed fixes it. It's a much
+more elegant way of dealing with the "absolute vs relative" path problem
+that I was trying to fix.
 
-On Sat, 11 May 2013, Linus Torvalds wrote:
+Thanks!
 
-> [...] I really think caching patch ID's should be something people
-> should be aware of is fundamentally wrong, even if it might work.
+As for Pat, I'm not sure wha'ts going on with his email address. It was
+working back in October, and his username still seems to be active over
+at SourceForge... let's see if this email reaches him.
 
-Given the incredible performance win, I would say it is still worth
-looking into.
+Here's a link for his reference just in case he missed your original email:
+http://thread.gmane.org/gmane.comp.version-control.git/222646
 
-If you store also a hash of Git version and diff options (may even be the
-hash of the raw bytes of the diff options if you do not plan to share the
-ref between machines) with the patch ID, you can make it safe.
 
-That hash would be generated at patch_id init time and
-load_cached_patch_id() would check this hash in addition to the return
-value of get_sha1() (and ignore the note if the version/diff options
-differ).
-
-If you are following git.git slavishly, maybe hashing just the major/minor
-Git version would be in order to avoid frequent regeneration of identical
-patch IDs.
-
-> And quite frankly, if you do rebases etc so much that you think patch
-> ID's are so important that they need to be cached, you may be doing
-> odd/wrong things.
-
-AFAICT John actually gave a very valid scenario that validates his use
-case: git-gui patches are best tested in the git.git scenario but have to
-be contributed via git-gui.git. It's not John's fault that this typically
-requires a lot of rebasing between vastly divergent histories.
-
-John, do you think you can incorporate that "finger-print" of the patch ID
-generation and store it in the same note?
-
-Ciao,
-Johannes
+On 04/27/13 10:18, John Keeping wrote:
+> I got a bounce with "550 no such user" for Pat's email address when
+> sending this.  Does anyone have more up-to-date contact details?  Or is
+> it just SourceForge being broken?
+>
+> On Sat, Apr 27, 2013 at 02:24:16PM +0100, John Keeping wrote:
+>> Commit e3d06ca (git-gui: Detect full path when parsing arguments -
+>> 2012-10-02) fixed the handling of absolute paths passed to the browser
+>> and blame subcommands by checking whether the file exists without the
+>> prefix before prepending the prefix and checking again.  Since we have
+>> chdir'd to the top level of the working tree before doing this, this
+>> does not work if a file with the same name exists in a subdirectory and
+>> at the top level (for example Makefile in git.git's t/ directory).
+>>
+>> Instead of doing this, revert that patch and fix absolute path issue by
+>> using "file join" to prepend the prefix to the supplied path.  This will
+>> correctly handle absolute paths by skipping the prefix in that case.
+>>
+>> Signed-off-by: John Keeping <john@keeping.me.uk>
+>> ---
+>>  git-gui.sh | 14 +++-----------
+>>  1 file changed, 3 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/git-gui.sh b/git-gui.sh
+>> index e133331..a94ad7f 100755
+>> --- a/git-gui.sh
+>> +++ b/git-gui.sh
+>> @@ -3003,19 +3003,11 @@ blame {
+>>  	set jump_spec {}
+>>  	set is_path 0
+>>  	foreach a $argv {
+>> -		if {[file exists $a]} {
+>> -			if {$path ne {}} usage
+>> -			set path [normalize_relpath $a]
+>> -			break
+>> -		} elseif {[file exists $_prefix$a]} {
+>> -			if {$path ne {}} usage
+>> -			set path [normalize_relpath $_prefix$a]
+>> -			break
+>> -		}
+>> +		set p [file join $_prefix $a]
+>>  
+>> -		if {$is_path} {
+>> +		if {$is_path || [file exists $p]} {
+>>  			if {$path ne {}} usage
+>> -			set path [normalize_relpath $_prefix$a]
+>> +			set path [normalize_relpath $p]
+>>  			break
+>>  		} elseif {$a eq {--}} {
+>>  			if {$path ne {}} {
+>> -- 
+>> 1.8.3.rc0.149.g98a72f2.dirty
