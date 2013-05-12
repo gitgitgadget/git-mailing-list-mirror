@@ -1,70 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v7 00/10] interactive git clean
-Date: Sun, 12 May 2013 19:28:57 +0200
-Message-ID: <vpq8v3khzty.fsf@grenoble-inp.fr>
-References: <cover.1368011946.git.worldhello.net@gmail.com>
-	<CAPig+cR6aa+xODi=8DoiBpqQZM1eBHkGBvGzMGB2PSiT3osMEw@mail.gmail.com>
-	<7vwqr9fo9b.fsf@alter.siamese.dyndns.org>
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: Re: [RFC/PATCH 0/2] merge-base: add --merge-child option
+Date: Sun, 12 May 2013 20:29:38 +0300
+Message-ID: <518FD182.5020606@bracey.fi>
+References: <cover.1368274689.git.john@keeping.me.uk> <518FB8DE.7070004@bracey.fi> <20130512162823.GK2299@serenity.lan> <20130512165829.GM2299@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 12 19:29:14 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun May 12 19:29:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uba5B-0008K3-M2
-	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 19:29:14 +0200
+	id 1Uba5j-0000Ex-D6
+	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 19:29:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754741Ab3ELR3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 May 2013 13:29:08 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43688 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754568Ab3ELR3H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 May 2013 13:29:07 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4CHSu77011475
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 12 May 2013 19:28:56 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Uba4w-0007hD-8x; Sun, 12 May 2013 19:28:58 +0200
-In-Reply-To: <7vwqr9fo9b.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 08 May 2013 09:08:16 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 12 May 2013 19:28:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r4CHSu77011475
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1368984538.37116@fH5fytl5vdQ8hsyVOETqhg
+	id S1754785Ab3ELR3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 May 2013 13:29:43 -0400
+Received: from 6.mo1.mail-out.ovh.net ([46.105.43.205]:59638 "EHLO
+	mo1.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754754Ab3ELR3n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 May 2013 13:29:43 -0400
+Received: from mail615.ha.ovh.net (b6.ovh.net [213.186.33.56])
+	by mo1.mail-out.ovh.net (Postfix) with SMTP id 7AFADFF8A10
+	for <git@vger.kernel.org>; Sun, 12 May 2013 19:29:41 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 12 May 2013 19:30:04 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 12 May 2013 19:30:02 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+X-Ovh-Mailout: 178.32.228.1 (mo1.mail-out.ovh.net)
+In-Reply-To: <20130512165829.GM2299@serenity.lan>
+X-Ovh-Tracer-Id: 15103384301322997761
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: -100
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrjeegucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+X-Spam-Check: DONE|U 0.500015/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrjeegucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224059>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 12/05/2013 19:58, John Keeping wrote:
+>
+> With the patch below, the --ancestry-path version drops to under 2
+> seconds.
+>
+> I'm not sure if this is a good idea though.  It helps me say "I know
+> nothing that isn't on the ancestry path can be patch-identical, so don't
+> bother checking if it is" but it regresses users who want the full
+> cherry-pick check while only limiting the output.
 
-> Cleaning all unneeded files inside a single interactive session
-> should *never* be the goal---that will lead to an over-engineered
-> design (e.g. switching "clean -x" flags in the middle? why?).  I
-> think Jiang's latest series is already way over-engineered,
+Hmm. Should an excluded commit be a valid comparator? Is it 
+sensible/correct to show a left commit as "=" to a right commit that has 
+been excluded by the revision specifiers? Doesn't sound right to me.
 
-I didn't read the end of the series in detail, but I tend to agree with
-you. Maybe it's time to remember the YAGNI principle, and keep the
-number of options small at least for now (e.g. drop 11/12 git-clean: add
-toggle flags interactive action). When users (including us) will have
-used "git clean -i" for a while, we'll have a better idea of what is
-really needed.
+I'm not convinced that there's a valid use-case that you're regressing 
+here. If --ancestry-path is being misused (the user's assertion that 
+non-ancestry doesn't matter is wrong) the "error" of not noting culled 
+patch-identical commits is nothing compared to the fact we're already 
+totally omitting the non-identical ones.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Kevin
