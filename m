@@ -1,36 +1,37 @@
 From: Heiko Voigt <hvoigt@hvoigt.net>
 Subject: [PATCH] teach the user to be nice to git and let him say please
 	sometimes
-Date: Sat, 11 May 2013 22:20:16 +0200
-Message-ID: <20130511201928.GA22938@book.hvoigt.net>
+Date: Sun, 12 May 2013 09:26:18 +0200
+Message-ID: <20130512072616.GC23115@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 12 09:26:42 2013
+X-From: git-owner@vger.kernel.org Sun May 12 09:26:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbQg2-0007GR-Qu
+	id 1UbQg3-0007GR-Bw
 	for gcvg-git-2@plane.gmane.org; Sun, 12 May 2013 09:26:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751405Ab3ELH0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1751383Ab3ELH0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sun, 12 May 2013 03:26:21 -0400
-Received: from [46.115.72.172] ([46.115.72.172]:38912 "EHLO book.hvoigt.net"
+Received: from [46.115.72.172] ([46.115.72.172]:35453 "EHLO book.hvoigt.net"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751111Ab3ELH0U (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1750894Ab3ELH0U (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 12 May 2013 03:26:20 -0400
+X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 May 2013 03:26:18 EDT
 Received: by book.hvoigt.net (Postfix, from userid 501)
-	id 474ADD2B782; Sat, 11 May 2013 22:20:17 +0200 (CEST)
+	id C1F13D2B928; Sun, 12 May 2013 09:26:18 +0200 (CEST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224027>
 
 Since ages we do not care about our program enough. Lets not treat them
 as slaves anymore and say please.
@@ -41,6 +42,10 @@ Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
+
+I do not know why this very urgent patch did not make it to the
+mailinglist yesterday evening. Well here is a resend.
+
  .gitignore                       |  1 +
  Makefile                         |  1 +
  builtin.h                        |  1 +
@@ -294,5 +299,13 @@ index 1ada169..6c67cef 100644
  		exit(run_builtin(p, argc, argv));
  	}
  }
+@@ -506,7 +554,6 @@ static int run_argv(int *argcp, const char ***argv)
+ 	return done_alias;
+ }
+ 
+-
+ int main(int argc, const char **argv)
+ {
+ 	const char *cmd;
 -- 
 1.8.3.rc1.44.gb387c77
