@@ -1,61 +1,75 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/2] git-prompt.sh: strip unnecessary space in prompt string
-Date: Mon, 13 May 2013 19:51:50 +0530
-Message-ID: <CALkWK0=zqG6cyeZhK65nVQZunQinf=Ub=BPTJHx+ZWgAs2thag@mail.gmail.com>
-References: <1368289513-8700-1-git-send-email-artagnon@gmail.com>
- <1368289513-8700-2-git-send-email-artagnon@gmail.com> <7v61ynsci8.fsf@alter.siamese.dyndns.org>
- <CALkWK0m0dT-sX=nu5jaDj=y1oOSo0cRKQ=2K_S-yepnsm8ny7A@mail.gmail.com>
- <20130513091718.GA21636@goldbirke> <CALkWK0m+mG39W7RqU-9KfPWLnaey5pL+jvfdZg49ixsASE+QoQ@mail.gmail.com>
- <20130513110551.GT2331@goldbirke> <20130513111143.GU2331@goldbirke> <7vvc6noubf.fsf@alter.siamese.dyndns.org>
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: Re: [RFC/PATCH 0/2] merge-base: add --merge-child option
+Date: Mon, 13 May 2013 17:26:14 +0300
+Message-ID: <5190F806.6040207@bracey.fi>
+References: <cover.1368274689.git.john@keeping.me.uk> <518FB8DE.7070004@bracey.fi> <20130512162823.GK2299@serenity.lan> <20130512163317.GL2299@serenity.lan> <518FCDDE.9040707@bracey.fi> <7vwqr3u9c5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 13 16:22:39 2013
+X-From: git-owner@vger.kernel.org Mon May 13 16:26:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ubte9-0001Io-Vx
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 16:22:38 +0200
+	id 1Ubtht-00049B-6m
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 16:26:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751718Ab3EMOWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 10:22:33 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:56471 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751071Ab3EMOWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 10:22:32 -0400
-Received: by mail-ie0-f177.google.com with SMTP id 9so11741063iec.8
-        for <git@vger.kernel.org>; Mon, 13 May 2013 07:22:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=HbS/vDSnFvZv+ud5ENL2QfWTZG8OGJ8+mhyEpmuYNfk=;
-        b=0gawYgDScIo4QOhs+1fMp7FoLecRKkGQuCn/EXxZc1FWfe1e1AxZpOfAbRSkaBg76S
-         Iof3kBuWT9asbtf3EQBxs7Bf3sTu2lBDnIukQGAzTQkuM72DPK5Q3MNN9P3iXURli44q
-         Xv6mDpUcrmsIeysSK4Aqfmpjcgj+KpVJA7vYAzvAz8eblhwpMG38zyjcXCAw/tszWcCf
-         ab1Clv3Lp2Sf4uOiswlfTXQQFQ2iOVIu4ZIqc4i9juJU+ZVpH9oIKEYc9uWcjtfCHgcr
-         ABmKuWcIvaZ9MHr7ojNm24ZZZJwVt9zTrhqMdTv4aOdBKWv1GchiRQcMdvC+DiRpGk6+
-         PI1A==
-X-Received: by 10.50.66.197 with SMTP id h5mr9912540igt.63.1368454952095; Mon,
- 13 May 2013 07:22:32 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Mon, 13 May 2013 07:21:50 -0700 (PDT)
-In-Reply-To: <7vvc6noubf.fsf@alter.siamese.dyndns.org>
+	id S1752148Ab3EMO0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 10:26:25 -0400
+Received: from 19.mo5.mail-out.ovh.net ([46.105.35.78]:56080 "EHLO
+	mo5.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752065Ab3EMO0Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 10:26:24 -0400
+Received: from mail624.ha.ovh.net (b6.ovh.net [213.186.33.56])
+	by mo5.mail-out.ovh.net (Postfix) with SMTP id D0E92FFA9F9
+	for <git@vger.kernel.org>; Mon, 13 May 2013 16:26:20 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 13 May 2013 16:26:38 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 13 May 2013 16:26:37 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+X-Ovh-Mailout: 178.32.228.5 (mo5.mail-out.ovh.net)
+In-Reply-To: <7vwqr3u9c5.fsf@alter.siamese.dyndns.org>
+X-Ovh-Tracer-Id: 17878164622200115416
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: -100
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrjeehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrjeehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224152>
 
-Junio C Hamano wrote:
-> If you restructure the code to formulate "gitstring" to call a shell
-> function to do so, people can override it and come up with whatever
-> format they want to use, no?
+On 13/05/2013 01:22, Junio C Hamano wrote:
+> Kevin Bracey <kevin@bracey.fi> writes:
+>
+>>     git log --ancestry-path --left-right E...F --not $(git merge-base
+>> --all E F)
+>>
+>> which looks like we're having to repeat ourselves because it's not
+>> paying attention...
+> You are half wrong; "--left-right" is about "do we show the </>/=
+> marker in the output?", so it is true that it does not make sense
+> without "...", but the reverse is not true: A...B does not and
+> should not imply --left-right.
+>
+The repetition I meant is that by the definition of ancestry-path, the 
+above would seem to be equivalent to
 
-The user would essentially have to implement her own
-__git_ps1_colorize_string; a function that takes a lot of arguments
-and stitches them together with color.  Much too painful for little
-gain.
+   git log --ancestry-path --left-right E F --not $(git merge-base --all E F) $(git merge-base --all E F)
+
+Anyway, revised separated-out version of the patch follows.
+
+Kevin
