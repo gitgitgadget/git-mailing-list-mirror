@@ -1,84 +1,146 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] gitk: add support for -G'regex' pickaxe variant
-Date: Mon, 13 May 2013 12:33:20 -0700
-Message-ID: <20130513193320.GC3657@google.com>
-References: <7vipezaaig.fsf@alter.siamese.dyndns.org>
- <1339698851-15428-1-git-send-email-zbyszek@in.waw.pl>
- <CACPiFCKev9uibTa8GSH94ZaH-NaVBAWVempg4xfTdFTThE85Zw@mail.gmail.com>
- <20130511055647.GA3262@iris.ozlabs.ibm.com>
- <20130511061322.GB3394@elie>
- <20130511094119.GA6196@iris.ozlabs.ibm.com>
- <CACPiFCKkzSCaSfqExZggFHBAmcPBTYYhyauOa2h1dXiYqKZMxA@mail.gmail.com>
- <20130513185551.GB3657@google.com>
- <CAAhxitGFhVa6+8x_rgNz5dgyr6m4S11fVU2eJNnMuWimGiM8aQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Paul Mackerras <paulus@samba.org>,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Martin Langhoff <martin@laptop.org>
-X-From: git-owner@vger.kernel.org Mon May 13 21:33:31 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [RFC/PATCH] branch: show me the hot branches
+Date: Tue, 14 May 2013 01:32:45 +0530
+Message-ID: <1368475365-18680-1-git-send-email-artagnon@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 13 22:02:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbyV0-0001Uz-EJ
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 21:33:30 +0200
+	id 1Ubywp-0004gZ-Mx
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 22:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753781Ab3EMTd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 15:33:26 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:54392 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751229Ab3EMTdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 15:33:25 -0400
-Received: by mail-pa0-f52.google.com with SMTP id bg2so4860727pad.25
-        for <git@vger.kernel.org>; Mon, 13 May 2013 12:33:25 -0700 (PDT)
+	id S1755183Ab3EMUCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 16:02:11 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:48412 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755230Ab3EMUCJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 16:02:09 -0400
+Received: by mail-pa0-f53.google.com with SMTP id kq12so4874914pab.26
+        for <git@vger.kernel.org>; Mon, 13 May 2013 13:02:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=FWWKihu5GHfhF69vR6RHiQdN1XgpqE/kgLLPcnu0nko=;
-        b=YuEpwji+uzfalHJlNUzQbfyOmd21F0NmPZIom6i9sOU2b3IIDMSkQ0ytlt+xUS0KMm
-         QXUaXSmCw678bDJij2e+IpIdS8qM7Es7OjHhVapcE+bsPXJJ4Th2trY3CnjU3bGkMI3t
-         ODzSl22u06hHwugRNRBA2C71VlmKx16KyqZdO6VurQG5YAcAlV/ZQ7fDTHNzAqTVanZO
-         9yVbn/xfBIsD3L+XtjPHzuP9eT+corY/vsj02Gw23NcnGM3CBOyPk6pEf9EUSmzM5L/6
-         zGcYJXJ+G+nHF36QTWsjaS+2PSWDFDDG1C+YjKa+3G9OCXt5snyV1cKmY+7cUf0z1YCE
-         mNPA==
-X-Received: by 10.68.99.226 with SMTP id et2mr30445071pbb.91.1368473605046;
-        Mon, 13 May 2013 12:33:25 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id az5sm15094770pbc.18.2013.05.13.12.33.22
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 13 May 2013 12:33:23 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAAhxitGFhVa6+8x_rgNz5dgyr6m4S11fVU2eJNnMuWimGiM8aQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-received:from:to:subject:date:message-id:x-mailer;
+        bh=k99/JWaLERryLbE0RMYX9+v/g05zdk+CTOL8J0/c+Uk=;
+        b=P204BJ0ibrdlx/jJdR8OWpkLLIOoQPnyXqlFdODa6jSopKq8rJb7OEBmxq1ndbTtg8
+         M6x6EBArSMYPhrd913UhIQgpDyLvmwn5HDilbzhQYjK3CjJFq1GjorNW4SQNXmAB2bkW
+         Ff58AvzhC6dISXqANotJALOjsjwbQqY6QX7xyka5AyY/ogLVHu94N4JvcUIZkb40zyKf
+         oBAjVARMJ3wJoljkBckPUCOe9GOfPB1DAcZcbGFDaVUzWNg+RnI2bP5qYPI9H6/HLWdO
+         9LL21LRcNGTsLCIgbxoru9Py3Cnb0C+zYGpBV4Ef0vDQxGcAcwvLbzqw57Fm6E9JkKbA
+         EsUQ==
+X-Received: by 10.68.204.35 with SMTP id kv3mr30954827pbc.87.1368475328386;
+        Mon, 13 May 2013 13:02:08 -0700 (PDT)
+Received: from localhost.localdomain ([122.164.164.41])
+        by mx.google.com with ESMTPSA id wi6sm15150314pbc.22.2013.05.13.13.02.06
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 13 May 2013 13:02:07 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.49.g8d97506.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224198>
 
-Martin Langhoff wrote:
-> On Mon, May 13, 2013 at 2:55 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+Uses commit->date to sort displayed refs.
 
->> My experience is the opposite.  I wonder "What did the author of this
->> nonsense comment mean?" or "What is the purpose of this strange
->> condition in this if () statement?".  Then "git log -S" finds the
->> culprit
->
-> Only if that if () statement looks that way from a single commit.
-> That's my point. If the line code bit you are looking at is the result
-> of several changes, your log -S will grind a while and find you
-> nothing.
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ Just had this idea and wrote it down in five minutes.  The
+ implementation is only meant to be indicative.
 
-Well, no, it should find the final change that brought it into the
-current form.  Just like "git blame".
+ Isn't this awesome?
 
-Has it been finding zero results in some cases where the current code
-matches the pattern?  That sounds like a bug.
+ builtin/branch.c | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 0836890..8b08563 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -59,6 +59,11 @@ static enum merge_filter {
+ } merge_filter;
+ static unsigned char merge_filter_ref[20];
+ 
++static enum sort_strategy {
++	LEXICAL = 0,
++	DATE,
++} sort_strategy;
++
+ static struct string_list output = STRING_LIST_INIT_DUP;
+ static unsigned int colopts;
+ 
+@@ -406,7 +411,7 @@ static void free_ref_list(struct ref_list *ref_list)
+ 	free(ref_list->list);
+ }
+ 
+-static int ref_cmp(const void *r1, const void *r2)
++static int ref_cmp_lexical(const void *r1, const void *r2)
+ {
+ 	struct ref_item *c1 = (struct ref_item *)(r1);
+ 	struct ref_item *c2 = (struct ref_item *)(r2);
+@@ -416,6 +421,16 @@ static int ref_cmp(const void *r1, const void *r2)
+ 	return strcmp(c1->name, c2->name);
+ }
+ 
++static int ref_cmp_date(const void *r1, const void *r2)
++{
++	struct ref_item *c1 = (struct ref_item *)(r1);
++	struct ref_item *c2 = (struct ref_item *)(r2);
++
++	if (c1->kind != c2->kind)
++		return c1->kind - c2->kind;
++	return c1->commit->date < c2->commit->date;
++}
++
+ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
+ 		int show_upstream_ref)
+ {
+@@ -621,7 +636,6 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+ 
+ 	memset(&ref_list, 0, sizeof(ref_list));
+ 	ref_list.kinds = kinds;
+-	ref_list.verbose = verbose;
+ 	ref_list.abbrev = abbrev;
+ 	ref_list.with_commit = with_commit;
+ 	if (merge_filter != NO_FILTER)
+@@ -629,7 +643,14 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+ 	cb.ref_list = &ref_list;
+ 	cb.pattern = pattern;
+ 	cb.ret = 0;
++
++	if (sort_strategy == DATE && verbose < 1)
++		ref_list.verbose = 1;
++	else
++		ref_list.verbose = verbose;
+ 	for_each_rawref(append_ref, &cb);
++	ref_list.verbose = verbose;
++
+ 	if (merge_filter != NO_FILTER) {
+ 		struct commit *filter;
+ 		filter = lookup_commit_reference_gently(merge_filter_ref, 0);
+@@ -646,7 +667,10 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+ 			ref_list.maxwidth = calc_maxwidth(&ref_list);
+ 	}
+ 
+-	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
++	if (sort_strategy == DATE)
++		qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp_date);
++	else
++		qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp_lexical);
+ 
+ 	detached = (detached && (kinds & REF_LOCAL_BRANCH));
+ 	if (detached && match_patterns(pattern, "HEAD"))
+@@ -843,6 +867,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
+ 
++	sort_strategy = DATE;
++
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage_with_options(builtin_branch_usage, options);
+ 
+-- 
+1.8.3.rc1.49.g8d97506.dirty
