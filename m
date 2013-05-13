@@ -1,121 +1,76 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 3/3] prompt: colorize ZSH prompt
-Date: Mon, 13 May 2013 19:19:18 +0530
-Message-ID: <1368452958-31090-4-git-send-email-artagnon@gmail.com>
-References: <1368452958-31090-1-git-send-email-artagnon@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 13 15:48:00 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/7] rebase: implement --[no-]autostash and rebase.autostash
+Date: Mon, 13 May 2013 06:49:23 -0700
+Message-ID: <7v4ne7q9b0.fsf@alter.siamese.dyndns.org>
+References: <1368359801-28121-1-git-send-email-artagnon@gmail.com>
+	<1368359801-28121-8-git-send-email-artagnon@gmail.com>
+	<7vd2svqtqd.fsf@alter.siamese.dyndns.org>
+	<CALkWK0nP=RmJHjcFUG2u4pz1ORtPhR7bzi3VvTE=7ggnKbjaQA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 13 15:49:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ubt6a-0000G7-9X
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 15:47:56 +0200
+	id 1Ubt87-0001Y2-7q
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 15:49:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753398Ab3EMNru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 09:47:50 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:56336 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752707Ab3EMNrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 09:47:49 -0400
-Received: by mail-pb0-f41.google.com with SMTP id xb12so490694pbc.28
-        for <git@vger.kernel.org>; Mon, 13 May 2013 06:47:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=N6DGAskgH2iaxa1iUfUU6pQd9g+BK9Uc2AKM2cD4kqs=;
-        b=r5dD5UVvNolIeeNeKW+wq+uX5Iq12/pJJsNiTliIffxEUQyGHEQ//VZQbK4sOVqTTT
-         vhxa0UsnzIeBNQ+YH0vNUuRnKKhNzvWfRL2ilB5dzVbNCox/4PsylrTzaHrGDeR5tdDm
-         ohpSS2Z5U/U802tJbX0jpQ7ReqoBHZW7NNHT63cpIw/l00QDj4nNOP+tgC3SC55yBCAQ
-         21L8HY4YH22TBifbAvFB4l1w9fraYnKd8mVIeGKqw8i+qdLVTYrlqSkrqmBCUvQSVIzk
-         pv3np8oVZFnYvKGSXfuFktvjO2zrY8JWHzY/MJcaNJxeU7FvHQoOVXoBR2+rBbGmBZf+
-         t18w==
-X-Received: by 10.66.158.234 with SMTP id wx10mr29761033pab.43.1368452868671;
-        Mon, 13 May 2013 06:47:48 -0700 (PDT)
-Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPSA id sq9sm15114287pab.5.2013.05.13.06.47.46
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 13 May 2013 06:47:48 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc1.57.g4ac1522
-In-Reply-To: <1368452958-31090-1-git-send-email-artagnon@gmail.com>
+	id S1753101Ab3EMNt1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 09:49:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52746 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752064Ab3EMNt0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 09:49:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F29CC1DD3C;
+	Mon, 13 May 2013 13:49:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Q7KS2Grzt4rrPu0DxvQjVI0sZ3o=; b=CARKsA
+	LG5kGJyn2R2aIGzsK3nAMOsEp5TqK96OoL7l+dV70bB9aJKbU9dXxN4OII/3sFYb
+	naSMVwxfxUjJkWKfhz6k8pDRIknAlK4mJz/TOqsxGDuhXTCkQb00IKWYefWMBkT4
+	YL0H3tonRIknyP700ajOGYlNuIxDjMOvivu7A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nS2yqUoZu2bWVRaTTz6w8qjZiymQPB4V
+	SKbQPjFfoT9tvux58I2P7NHPILv2JcBZlVSazpvmqtw1kjLJcMmhkqqrfuhxqMAL
+	wXwyfnaaB6ly0C4zAgwXbHc6uBtya4Rn/yOjbrX7KRqcv9C9dMWNwuKUSSxtx7lF
+	u7m9NEzoh4k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8FB01DD3B;
+	Mon, 13 May 2013 13:49:25 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4F4401DD3A;
+	Mon, 13 May 2013 13:49:25 +0000 (UTC)
+In-Reply-To: <CALkWK0nP=RmJHjcFUG2u4pz1ORtPhR7bzi3VvTE=7ggnKbjaQA@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 13 May 2013 13:33:50 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EC6921EC-BBD3-11E2-8B0F-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224140>
 
-Add colors suitable for use in the ZSH prompt.  Having learnt that the
-ZSH equivalent of PROMPT_COMMAND is precmd (), you can now use
-GIT_PS1_SHOWCOLORHINTS with ZSH.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- contrib/completion/git-prompt.sh | 40 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+> Junio C Hamano wrote:
+>> Writing it like this:
+>> [...]
+>> with a blank line before the next "echo", it would be more readable.
+>
+>> This feels funny.  Why not
+>> [...]
+>> without an extra command substitution with an echo?
+>
+> I'll re-roll if there are more comments.  Otherwise, can you fix these
+> up locally?  Thanks.
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 6943f86..e2dd8a8 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -20,7 +20,8 @@
- #        <post>, which are strings you would put in $PS1 before
- #        and after the status string generated by the git-prompt
- #        machinery.  e.g.
--#           PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
-+#        Bash: PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
-+#        ZSH:  precmd () { __git_ps1 "%n" ":%~$ " "|%s" }
- #        will show username, at-sign, host, colon, cwd, then
- #        various status string, followed by dollar and SP, as
- #        your prompt.
-@@ -227,6 +228,43 @@ __git_ps1_show_upstream ()
- # places.
- __git_ps1_colorize_gitstring ()
- {
-+	if [[ -n ${ZSH_VERSION-} ]]; then
-+		local c_red='%F{red}'
-+		local c_green='%F{green}'
-+		local c_lblue='%F{blue}'
-+		local c_clear='%f'
-+		local bad_color=$c_red
-+		local ok_color=$c_green
-+		local branch_color="$c_clear"
-+		local flags_color="$c_lblue"
-+		local branchstring="$c${b##refs/heads/}"
-+
-+		if [ $detached = no ]; then
-+			branch_color="$ok_color"
-+		else
-+			branch_color="$bad_color"
-+		fi
-+
-+		gitstring="$branch_color$branchstring$c_clear"
-+
-+		if [ -n "$w$i$s$u$r$p" ]; then
-+			gitstring="$gitstring$z"
-+		fi
-+		if [ "$w" = "*" ]; then
-+			gitstring="$gitstring$bad_color$w"
-+		fi
-+		if [ -n "$i" ]; then
-+			gitstring="$gitstring$ok_color$i"
-+		fi
-+		if [ -n "$s" ]; then
-+			gitstring="$gitstring$flags_color$s"
-+		fi
-+		if [ -n "$u" ]; then
-+			gitstring="$gitstring$bad_color$u"
-+		fi
-+		gitstring="$gitstring$c_clear$r$p"
-+		return
-+	fi
- 	local c_red='\e[31m'
- 	local c_green='\e[32m'
- 	local c_lblue='\e[1;34m'
--- 
-1.8.3.rc1.57.g4ac1522
+No, thanks.  I won't be even taking the patch right now, so you have
+plenty of time ;-).
