@@ -1,105 +1,50 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: [PATCH 1/2] t6019: demonstrate --ancestry-path A...B breakage
-Date: Mon, 13 May 2013 18:00:46 +0300
-Message-ID: <1368457247-19822-2-git-send-email-kevin@bracey.fi>
-References: <5190F806.6040207@bracey.fi>
- <1368457247-19822-1-git-send-email-kevin@bracey.fi>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Kevin Bracey <kevin@bracey.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 13 17:10:31 2013
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] t5551: do not use unportable sed '\+'
+Date: Mon, 13 May 2013 17:17:44 +0200
+Message-ID: <51910418.2070904@web.de>
+References: <201305111525.53130.tboegi@web.de> <7vwqr5wdqm.fsf@alter.siamese.dyndns.org> <7vobchwbax.fsf@alter.siamese.dyndns.org> <518EA351.8000603@web.de> <7v8v3lwa5p.fsf@alter.siamese.dyndns.org> <518EAB7C.3010508@web.de> <7vsj1svqi7.fsf@alter.siamese.dyndns.org> <7vr4hbu818.fsf_-_@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 13 17:17:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbuOU-0003eg-H0
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 17:10:30 +0200
+	id 1UbuVe-0000lE-At
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 17:17:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751373Ab3EMPK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 11:10:26 -0400
-Received: from mo5.mail-out.ovh.net ([178.32.228.5]:41769 "EHLO
-	mo5.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751120Ab3EMPK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 11:10:26 -0400
-Received: from mail624.ha.ovh.net (b6.ovh.net [213.186.33.56])
-	by mo5.mail-out.ovh.net (Postfix) with SMTP id AB43FFFA986
-	for <git@vger.kernel.org>; Mon, 13 May 2013 17:01:03 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 13 May 2013 17:01:22 +0200
-Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
-  by ns0.ovh.net with SMTP; 13 May 2013 17:01:20 +0200
-X-Ovh-Mailout: 178.32.228.5 (mo5.mail-out.ovh.net)
-X-Mailer: git-send-email 1.8.3.rc0.28.g4b02ef5
-In-Reply-To: <1368457247-19822-1-git-send-email-kevin@bracey.fi>
-X-Ovh-Tracer-Id: 17732924802568415
-X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: -58
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrjeehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlgedvmd
-X-Spam-Check: DONE|U 0.500009/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -58
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrjeehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlgedvmd
+	id S1754535Ab3EMPRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 11:17:50 -0400
+Received: from mout.web.de ([212.227.15.4]:63975 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754365Ab3EMPRt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 11:17:49 -0400
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0Lz3FM-1UOyCH0ggS-014Pji; Mon, 13 May 2013 17:17:45
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <7vr4hbu818.fsf_-_@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:/dOGSHthC+CPOCUQVsSc8M8ThIhwG9hojkr47cWTiyC
+ 2/t3fHGGz3qsoOAQQYKVM8L9WAx7s5/qElni0vvqhowQBKYkkd
+ dnEcDCE9IqURRPPs1znIIsNuduS3pjcMSbrGwU4WzYyj8EeVcZ
+ AGXoaoDarKoYAdNV/2FqyiSyOkbNCpaQmPwRq5x17RS0TeGLP9
+ D3s40AMBKz31tMf/TJxkw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224170>
 
-Signed-off-by: Kevin Bracey <kevin@bracey.fi>
----
- t/t6019-rev-list-ancestry-path.sh | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
-
-diff --git a/t/t6019-rev-list-ancestry-path.sh b/t/t6019-rev-list-ancestry-path.sh
-index 39b4cb0..5287f6a 100755
---- a/t/t6019-rev-list-ancestry-path.sh
-+++ b/t/t6019-rev-list-ancestry-path.sh
-@@ -13,6 +13,9 @@ test_description='--ancestry-path'
- #
- #  D..M -- M.t                 == M
- #  --ancestry-path D..M -- M.t == M
-+#
-+#  F...I                 == F G H I
-+#  --ancestry-path F...I == F H I
- 
- . ./test-lib.sh
- 
-@@ -63,13 +66,29 @@ test_expect_success 'rev-list D..M -- M.t' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'rev-list --ancestry-patch D..M -- M.t' '
-+test_expect_success 'rev-list --ancestry-path D..M -- M.t' '
- 	echo M >expect &&
- 	git rev-list --ancestry-path --format=%s D..M -- M.t |
- 	sed -e "/^commit /d" >actual &&
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'rev-list F...I' '
-+	for c in F G H I; do echo $c; done >expect &&
-+	git rev-list --format=%s F...I |
-+	sed -e "/^commit /d" |
-+	sort >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_failure 'rev-list --ancestry-path F...I' '
-+	for c in F H I; do echo $c; done >expect &&
-+	git rev-list --ancestry-path --format=%s F...I |
-+	sed -e "/^commit /d" |
-+	sort >actual &&
-+	test_cmp expect actual
-+'
-+
- #   b---bc
- #  / \ /
- # a   X
--- 
-1.8.3.rc0.28.g4b02ef5
+On 2013-05-13 00.50, Junio C Hamano wrote:
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  t/t5551-http-fetch.sh | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+Thanks, works like a charm, tested on Mac OS.
+/torsten
