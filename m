@@ -1,100 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/7] rebase: implement --[no-]autostash and rebase.autostash
-Date: Sun, 12 May 2013 23:28:10 -0700
-Message-ID: <7vd2svqtqd.fsf@alter.siamese.dyndns.org>
-References: <1368359801-28121-1-git-send-email-artagnon@gmail.com>
-	<1368359801-28121-8-git-send-email-artagnon@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv2 03/10] refs.c: Refactor code for mapping between
+ shorthand names and full refnames
+Date: Mon, 13 May 2013 08:31:23 +0200
+Message-ID: <CALKQrgf0m8r-Ofb+Ss1OpEF67dPS73b8nB+usVxH=Y=h3441Wg@mail.gmail.com>
+References: <1368289280-30337-1-git-send-email-johan@herland.net>
+	<1368289280-30337-4-git-send-email-johan@herland.net>
+	<7vmwrzsck1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 13 08:28:21 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, jrnieder@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 13 08:31:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbmF8-00088H-9t
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 08:28:18 +0200
+	id 1UbmIH-0001iU-Vt
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 08:31:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753084Ab3EMG2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 02:28:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50229 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751013Ab3EMG2N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 02:28:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21DC71AAF2;
-	Mon, 13 May 2013 06:28:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tBekbMduo2FTey2Bu2eK/f8plac=; b=TZn+nN
-	3S9oK7FYVBnOTtxtGcJc1BA/6PWU7WrLnZc6px4lvZBAmoXnOzVNMGJVggiBx8YU
-	n1xuupSIWj47P2+fGP+ZLCF+IbZ7awTV1SeNEaVWQ1Vk2y6ArjBmb1aa/2ATge0a
-	wJWIbmlMV+9l8wPEYoPV0PqvY10mihgGm7KYQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GpoNb7ekqjPYePpADvC6KEgMGltazXNk
-	bml1/ODsIzn18MBxEdUPdNqlBlUHCYODH8XOFoDV01dkxK3Pk9MCCgxsJLjg8s4r
-	1zAMZEYosI0tuAPfpbqqDnN/0TzQgVwgRHEmI96VQqnYG2wowJDMsmha7bljDIiQ
-	SEtDNntkj1A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 160DF1AAF0;
-	Mon, 13 May 2013 06:28:12 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8BEF41AAEB;
-	Mon, 13 May 2013 06:28:11 +0000 (UTC)
-In-Reply-To: <1368359801-28121-8-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Sun, 12 May 2013 17:26:41 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 48D34842-BB96-11E2-B680-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753897Ab3EMGb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 02:31:29 -0400
+Received: from mail10.copyleft.no ([188.94.218.231]:64111 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753546Ab3EMGb3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 02:31:29 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UbmIB-0005TK-B9
+	for git@vger.kernel.org; Mon, 13 May 2013 08:31:27 +0200
+Received: from mail-oa0-f41.google.com ([209.85.219.41])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UbkFL-000EsE-KO
+	for git@vger.kernel.org; Mon, 13 May 2013 06:20:23 +0200
+Received: by mail-oa0-f41.google.com with SMTP id n9so2834691oag.0
+        for <git@vger.kernel.org>; Sun, 12 May 2013 23:31:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=mNe7Ah1IB6PrP7Iph2Hk0tWIJj3xd9AjD1DY7gvbynM=;
+        b=CLFq6blTf4+uyx3zeZWqIM1ZPnZNNn0SdbwWcS3ErX26/vxckgfs6vHRvZT4kEPx34
+         DQ6XXJoa7LulTvpy5U4HSjbbgpA7VTTkSNwVuT3EWSH674lCZcqrJLYGhTL8H1LHhXSm
+         fdRSZ8fqITaQ+7fGcbzLIQ7jj0WjG0uxNAECGdEv44hUZzVcpFjgdtojrkPPI8XrOwKU
+         Yt0whPf0wlcpcqf8Z/AGrgRsWL9Y5Hiv0HgQJsXGtJOJkrkx4t0BSmC9GN2a1icodH5h
+         SaIMZC0UGCDV9KEE5t7AuwI0t8F9KKnuWx8pBHiuzXvAyzAMB2YZiTWRRz/Hkcx4ou+Q
+         CqTg==
+X-Received: by 10.60.55.231 with SMTP id v7mr11994451oep.135.1368426683384;
+ Sun, 12 May 2013 23:31:23 -0700 (PDT)
+Received: by 10.182.113.66 with HTTP; Sun, 12 May 2013 23:31:23 -0700 (PDT)
+In-Reply-To: <7vmwrzsck1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224093>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Mon, May 13, 2013 at 6:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johan Herland <johan@herland.net> writes:
+>
+>> The refname_expand() function no longer uses mkpath()/mksnpath() to
+>> perform the pattern expansion. Instead, it uses strbuf_expand(), which
+>> removes the need for using fixed-length buffers from the code.
+>
+> It is a brilliant idea to use strbuf_expand() for this. I like it.
+>
+> I notice that you later introduce %1 (that is 'one', not 'el'), but
+> unless you are planning to introduce %2 and %3 that semantically
+> fall into a similar category as %1, I would rather see a different
+> letter used that is mnemonic to what the placeholder _means_.
+>
+> The choice of the letter is arbitrary and may not look like it
+> matters that much, because it is not exposed to the end user.  But
+> by switching from the sprintf() semantics that shows things given to
+> it in the order they were given, without knowing what they mean, and
+> introducing a strbuf_expand() machinery tailored for refnames (and
+> refnames only), the new code assigns meanings to each part of the
+> refname, and we can afford to be more descriptive.
+>
+> The choice of '%*' is justifiable, "it is the closest to the '*' we
+> traditionally used to replace only one thing", but '%1' does not
+> look the best placeholder to use, at least to me.
 
-> +finish_rebase () {
-> +	if test -f "$state_dir/autostash"
-> +	then
-> +		stash_sha1=$(cat "$state_dir/autostash")
-> +		if git stash apply $stash_sha1 2>&1 >/dev/null
-> +		then
-> +			echo "Applied autostash"
-> +		else
-> +			ref_stash=refs/stash &&
-> +			: >>"$GIT_DIR/logs/$ref_stash" &&
-> +			git update-ref -m "autostash" $ref_stash $stash_sha1 \
-> +				|| die "$(eval_gettext 'Cannot store $stash_sha1')"
+Obviously, I named it '%1' since it expands into the _first_ component
+of the (slash-separated) shorthand. There is no further parsing or
+verification that it actually corresponds to a remote (and as far as I
+currently understand, we do not want to do such verification), so I
+thought it better not to make such assumptions in the placeholder
+name. That said, I could go with '%r' for "remote", although we have
+plenty of other concepts in Git that use 'r' as the initial letter. I
+could maybe use '%remote' instead?
 
-Writing it like this:
-
-			ref_stash=refs/stash &&
-			: >>"$GIT_DIR/logs/$ref_stash" &&
-			git update-ref -m "autostash" $ref_stash $stash_sha1 ||
-			die "$(eval_gettext 'Cannot store $stash_sha1')"
-
-with a blank line before the next "echo", it would be more readable.
-
-As I said in a separate message, having a code that knows where
-"stash" is and how it is organized outside the implementation of
-"git stash" is less than ideal.  It probably makes more sense to
-let programs like this to say:
-
-			git stash store -m "autostash" $stash_sha1 || exit
+Also, about the '%*': When used alone, it means "the entire
+shorthand", but when preceded with a '%1' it subtly changes meaning
+into 'the remainder of the shorthand after extracting the first
+component'. I believe the two interpretations are compatible and
+unambiguous, but if we want to be very explicit about what's
+happening, we could use something like '%all' and '%the_rest' for the
+two cases, respectively?
 
 
-> +			echo "
-> +$(gettext 'Applying autostash resulted in conflicts.
-> +Your changes are safe in the stash.
-> +You can apply or drop it at any time.')"
+...Johan
 
-This feels funny.  Why not
-
-			gettext "$msg"
-
-without an extra command substitution with an echo?
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
