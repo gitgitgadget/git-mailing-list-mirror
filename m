@@ -1,86 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] teach the user to be nice to git and let him say please sometimes
-Date: Mon, 13 May 2013 13:47:38 -0700
-Message-ID: <7vsj1qli8l.fsf@alter.siamese.dyndns.org>
-References: <20130511201928.GA22938@book.hvoigt.net>
-	<7vobcfvqu1.fsf@alter.siamese.dyndns.org>
-	<20130513134415.GB3561@book-mint> <87ppwur4tq.fsf@hexa.v.cablecom.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] gitk: add support for -G'regex' pickaxe variant
+Date: Mon, 13 May 2013 16:54:11 -0400
+Message-ID: <CACPiFC+Ummjj4d7OiZwEW+Xm_uRNU1hre3_6UDKUBTepm7EmqA@mail.gmail.com>
+References: <7vipezaaig.fsf@alter.siamese.dyndns.org> <1339698851-15428-1-git-send-email-zbyszek@in.waw.pl>
+ <CACPiFCKev9uibTa8GSH94ZaH-NaVBAWVempg4xfTdFTThE85Zw@mail.gmail.com>
+ <20130511055647.GA3262@iris.ozlabs.ibm.com> <20130511061322.GB3394@elie>
+ <20130511094119.GA6196@iris.ozlabs.ibm.com> <CACPiFCKkzSCaSfqExZggFHBAmcPBTYYhyauOa2h1dXiYqKZMxA@mail.gmail.com>
+ <20130513185551.GB3657@google.com> <CAAhxitGFhVa6+8x_rgNz5dgyr6m4S11fVU2eJNnMuWimGiM8aQ@mail.gmail.com>
+ <20130513193320.GC3657@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon May 13 22:47:51 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Martin Langhoff <martin@laptop.org>,
+	Paul Mackerras <paulus@samba.org>,
+	=?ISO-8859-2?Q?Zbigniew_J=EAdrzejewski=2DSzmek?= 
+	<zbyszek@in.waw.pl>, Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 13 22:54:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ubzet-0003BO-FS
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 22:47:47 +0200
+	id 1Ubzlm-0007oq-Ln
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 22:54:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752732Ab3EMUrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 16:47:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39306 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752254Ab3EMUrl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 16:47:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C15F1EA71;
-	Mon, 13 May 2013 20:47:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kZHdF8W4KZLsL+CvHDZCssJrDhI=; b=IeDxf4
-	AvGK4D72Hr1u4+9x1rHV4zsnyU7sssRU9vbWeaszoy9n6cpbqbSBIqdjD5I5ijv4
-	6v8mnJSeHxjpn0IRm9fAdxL3wN7ANxHhFTmQwdV4VY5LN7r08LWfuFRBhooJed1K
-	yRK1EWYFDUxrfRoMYy/yhnZGeW5KdJRF6wLbU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qe8F+iuiGHmQ5EuflMvjjGTmNrYAQnr9
-	joF09ELjjlaOFaHoAtFF+zRUCkkHlyANuwoHAOxUjZ1QT4g21GqSoOKjouELLfnu
-	Je2C/aM9jP9KYTCMhQyVOyrtv0F0fqSuXc+PSGXJpwarb538ASrFnDhx6qjiuLye
-	U6R/WVL26DU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8331B1EA70;
-	Mon, 13 May 2013 20:47:40 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E6F4D1EA6E;
-	Mon, 13 May 2013 20:47:39 +0000 (UTC)
-In-Reply-To: <87ppwur4tq.fsf@hexa.v.cablecom.net> (Thomas Rast's message of
-	"Mon, 13 May 2013 22:40:49 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 59F87688-BC0E-11E2-9C97-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752462Ab3EMUyj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 16:54:39 -0400
+Received: from mail-qe0-f50.google.com ([209.85.128.50]:37554 "EHLO
+	mail-qe0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751648Ab3EMUyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 16:54:39 -0400
+Received: by mail-qe0-f50.google.com with SMTP id k5so3828602qej.23
+        for <git@vger.kernel.org>; Mon, 13 May 2013 13:54:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=bklGulm5f+ndrOkvr5SjmzPepipvhU3itlF+uxA02DQ=;
+        b=AjMAB093mVtFWiUQPOgUeZPmHEPXCe4ZmZZuAJN5oEZbspFzfoMnxS2CSqVeA4aeT1
+         OXGtcdrCMj/cJjw+w/0OwnYSIWj+FLcV2OmNYH2YtC0XO28vJt+goID+///uWaxgWpMG
+         nMsFCh9/17LstAywrqgNCe6v+KzyL0B0kvthihGF/NetatvJHOBVcEWn6HZrlOpcDWc6
+         9BLVzZ7Ub7zgXMkfiHsvvhiuyDuOfc7Llk1eYbGROM/NcDWOm2H1Bpvlr4vuLXNEdRl7
+         L8HqtF6/TAwKlkdHAGKKw80HNgxIGt2M+TydH8g09uGNHzSG6/IeC7AhZ7BpUoT9fxfj
+         xvbA==
+X-Received: by 10.224.188.134 with SMTP id da6mr21991865qab.69.1368478478247;
+ Mon, 13 May 2013 13:54:38 -0700 (PDT)
+Received: by 10.49.96.201 with HTTP; Mon, 13 May 2013 13:54:11 -0700 (PDT)
+In-Reply-To: <20130513193320.GC3657@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224203>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+On Mon, May 13, 2013 at 3:33 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Well, no, it should find the final change that brought it into the
+> current form.  Just like "git blame".
+>
+> Has it been finding zero results in some cases where the current code
+> matches the pattern?  That sounds like a bug.
 
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
->
->> On Sun, May 12, 2013 at 02:19:34PM -0700, Junio C Hamano wrote:
->>> Heiko Voigt <hvoigt@hvoigt.net> writes:
->>> 
->>> > Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
->>> > Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
->>> > Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
->>> > Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
->>> > Signed-off-by: Johan Herland <johan@herland.net>
->>> 
->>> So these were the ones present on the dev-day?
->>
->> No this was just a random sample of the ones sitting at the same
->> beer garden table that this feature was implemented on.
->
-> Also see
->
->   http://thomasrast.ch/pix/foss/20130509_gitmerge/DSC_7078.jpg.php
->
-> for an illustration of the history of this patch.
->
-> </plug>
+Ummm, maybe. You are right, with current git it does work as I would
+expect (usefully ;-) ).
 
-Thanks for sharing. I see some familiar faces.  Envy, envy...
+I know I struggled quite a bit with log -S not finding stuff I thought
+it should and that log -G did find, back a year ago.
+
+Damn, I don't have a precise record of what git it was on, nor a good
+repro example. Too long ago,
+
+
+
+m
+--
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
