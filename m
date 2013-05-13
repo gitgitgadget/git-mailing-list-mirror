@@ -1,104 +1,83 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v4 3/3] cache.h: eliminate SHA-1 deprecation warnings on OS X 10.8
-Date: Mon, 13 May 2013 01:23:39 -0700
-Message-ID: <1368433419-24065-2-git-send-email-davvid@gmail.com>
-References: <1368433419-24065-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 13 10:23:40 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 7/7] rebase: implement --[no-]autostash and rebase.autostash
+Date: Mon, 13 May 2013 10:24:18 +0200
+Message-ID: <vpq1u9be18t.fsf@grenoble-inp.fr>
+References: <1368359801-28121-1-git-send-email-artagnon@gmail.com>
+	<1368359801-28121-8-git-send-email-artagnon@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 13 10:24:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ubo2g-00062k-1b
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 10:23:34 +0200
+	id 1Ubo3X-0006gR-KB
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 10:24:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753630Ab3EMIXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 04:23:31 -0400
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:50330 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752742Ab3EMIXa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 04:23:30 -0400
-Received: by mail-pb0-f51.google.com with SMTP id wy7so4244444pbc.38
-        for <git@vger.kernel.org>; Mon, 13 May 2013 01:23:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=fmgH9nXz6Kr45qOA6qHpBu2ipMyVjg4i6YoBHMtPNlg=;
-        b=OWdF7TPTFnE4iehtwGfWlbdD8OwpC43K/srA/SvCUm2qQty2Bmj+8ZD1RAT4QG7/ZN
-         2vgp+dM70bgpGh1p3AJHEjU6M6Rqac+/x81e/sULwlA5V4j6bsBgyYV0Ee37qZQx4Y+n
-         CPIuNnuvfyNOfT8d+uOvTt/SHd3cTUtC8+ui6fLwS5jGkgfysWFJllon+VeeEUSHvVNC
-         7wFREOX1rXzfmonw1Cr6/Ighv+7lFlA+5ykmytGXn9HdPyfhb9x42t1OYs4SxYlaa7+m
-         LFDpbb3z7KAZ24JJWu+lYdc4kHRJ3DOPI9GGyQywMydLEqcv7lzd9oLmwW12O+SACd3a
-         ShZA==
-X-Received: by 10.67.5.8 with SMTP id ci8mr28434333pad.48.1368433409803;
-        Mon, 13 May 2013 01:23:29 -0700 (PDT)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id kv2sm13130142pbc.28.2013.05.13.01.23.27
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 13 May 2013 01:23:28 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc1.52.g872cb7b
-In-Reply-To: <1368433419-24065-1-git-send-email-davvid@gmail.com>
+	id S1752618Ab3EMIYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 04:24:23 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:34445 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752462Ab3EMIYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 04:24:23 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4D8OHBf001357
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 13 May 2013 10:24:17 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Ubo3O-000127-He; Mon, 13 May 2013 10:24:18 +0200
+In-Reply-To: <1368359801-28121-8-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Sun, 12 May 2013 17:26:41 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 13 May 2013 10:24:17 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r4D8OHBf001357
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1369038257.93166@giS4fA+Ca3NyBYmOwsm0dg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224110>
 
-Mac OS X Mountain Lion prints warnings when building git:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-	warning: 'SHA1_Init' is deprecated
-	(declared at /usr/include/openssl/sha.h:121)
+> +finish_rebase () {
+> +	if test -f "$state_dir/autostash"
+> +	then
+> +		stash_sha1=$(cat "$state_dir/autostash")
+> +		if git stash apply $stash_sha1 2>&1 >/dev/null
+> +		then
+> +			echo "Applied autostash"
 
-Silence the warnings by using the CommonCrytpo SHA-1
-functions for SHA1_Init(), SHA1_Update(), and SHA1_Final().
+Any reason why this is not using gettext and the other messages do.
 
-Add a COMMON_DIGEST_SHA1 option to the Makefile to allow
-choosing this implementation and define it by default on Darwin.
+> +		else
+> +			ref_stash=refs/stash &&
+> +			: >>"$GIT_DIR/logs/$ref_stash" &&
+> +			git update-ref -m "autostash" $ref_stash $stash_sha1 \
+> +				|| die "$(eval_gettext 'Cannot store $stash_sha1')"
+> +			echo "
+> +$(gettext 'Applying autostash resulted in conflicts.
+> +Your changes are safe in the stash.
+> +You can apply or drop it at any time.')"
 
-Define COMMON_DIGEST_FOR_OPENSSL to enable the OpenSSL
-compatibility macros in CommonDigest.h.
+Good idea to put the autostash in an actual stash. Perhaps the message
+can be made more explicit, e.g. 
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-Changes since last round:
-COMMON_DIGEST_FOR_OPENSSL is used to enable the compatibility macros.
+  You can run "git stash apply" or "git stash drop" at any time.
 
- Makefile | 6 ++++++
- 1 file changed, 6 insertions(+)
+(actually, "git stash pop" may be a better suggestion to "git stash
+apply" here).
 
-diff --git a/Makefile b/Makefile
-index a0f7afc..29c02ed 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1055,6 +1055,7 @@ ifeq ($(uname_S),Darwin)
- 		endif
- 	endif
- 	COMMON_DIGEST_HMAC = YesPlease
-+	COMMON_DIGEST_SHA1 = YesPlease
- 	NO_REGEX = YesPlease
- 	PTHREAD_LIBS =
- endif
-@@ -1390,10 +1391,15 @@ ifdef PPC_SHA1
- 	LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
- 	LIB_H += ppc/sha1.h
- else
-+ifdef COMMON_DIGEST_SHA1
-+	BASIC_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
-+	SHA1_HEADER = <CommonCrypto/CommonDigest.h>
-+else
- 	SHA1_HEADER = <openssl/sha.h>
- 	EXTLIBS += $(LIB_4_CRYPTO)
- endif
- endif
-+endif
- 
- ifdef COMMON_DIGEST_HMAC
- 	BASIC_CFLAGS += -DCOMMON_DIGEST_FOR_HMAC
 -- 
-1.8.3.rc1.52.g872cb7b
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
