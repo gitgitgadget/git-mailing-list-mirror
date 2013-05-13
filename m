@@ -1,89 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 03/10] refs.c: Refactor code for mapping between shorthand names and full refnames
-Date: Sun, 12 May 2013 23:45:04 -0700
-Message-ID: <7v8v3jqsy7.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv2 04/10] remote: Reject remote names containing '/'
+Date: Mon, 13 May 2013 08:53:10 +0200
+Message-ID: <CALKQrgcry9bwmonaeWA4M7a3k36S_Q3ZQLmv7Ui5r+tdzdMr_A@mail.gmail.com>
 References: <1368289280-30337-1-git-send-email-johan@herland.net>
-	<1368289280-30337-4-git-send-email-johan@herland.net>
-	<7vmwrzsck1.fsf@alter.siamese.dyndns.org>
-	<CALKQrgf0m8r-Ofb+Ss1OpEF67dPS73b8nB+usVxH=Y=h3441Wg@mail.gmail.com>
+	<1368289280-30337-5-git-send-email-johan@herland.net>
+	<7vtxm7scn5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org, jrnieder@gmail.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon May 13 08:45:36 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 13 08:53:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbmVr-0001ok-3s
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 08:45:35 +0200
+	id 1Ubmde-000724-Jg
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 08:53:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754006Ab3EMGpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 02:45:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48358 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753809Ab3EMGpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 02:45:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E29F61B089;
-	Mon, 13 May 2013 06:45:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TCc2tEoh1lkacsjb1C3ITYYaJWU=; b=hNRdoe
-	UPyqghz4Tix3IcJ5dd/FWhaV/jDKH+5e9T+IqgOv77M16hUOzw1XOCjSS1xFHN/3
-	9N0kHXep4a0XGT9QxujnUQyH3ItNFMjHiSln0/C/TFLh5ek16cEfExLmsS4DDtkm
-	Hscnf0UtKERbEJcPwLlH9Uu3G0RDqCHGxD24E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XMZUBk14TxrLvuuWd9NIhm26rgxrg8lu
-	yutQAIhPYVtLtoVlRjPr0s8Qlu7q5rIrP1keuIiy7+vDWkC09hw8ZoC/9Gq9xvHS
-	KOQxFnbgcNStm91Ir/OKbKuREam6UlLaIfkB0EZkI03/XFdeD6+0UdP7L/vio/oC
-	u+2AML3bkVM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D514E1B088;
-	Mon, 13 May 2013 06:45:06 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C6361B086;
-	Mon, 13 May 2013 06:45:06 +0000 (UTC)
-In-Reply-To: <CALKQrgf0m8r-Ofb+Ss1OpEF67dPS73b8nB+usVxH=Y=h3441Wg@mail.gmail.com>
-	(Johan Herland's message of "Mon, 13 May 2013 08:31:23 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A5A7FC82-BB98-11E2-B869-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753922Ab3EMGx0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 02:53:26 -0400
+Received: from mail10.copyleft.no ([188.94.218.231]:53053 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753784Ab3EMGxY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 02:53:24 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UbmdP-0005fG-7N
+	for git@vger.kernel.org; Mon, 13 May 2013 08:53:23 +0200
+Received: from mail-ob0-f178.google.com ([209.85.214.178])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UbkaT-000FWX-MQ
+	for git@vger.kernel.org; Mon, 13 May 2013 06:42:14 +0200
+Received: by mail-ob0-f178.google.com with SMTP id v19so2467149obq.37
+        for <git@vger.kernel.org>; Sun, 12 May 2013 23:53:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=+bk/DafnjlChibAAO35fa6yb0XQPp+/GrWYNlb/gz7o=;
+        b=c8n4kOtosK1qR1DjTvhZKlDRa0StrN4dlngDQy1S2DYjvvbZncXfpJ3HBip0ln7diU
+         9QbnGGiUD+UL1ucJ3cz0dE7OScAW093XW5wjQcyKrCJBHwSFBGf9gCfIpxU+AscwWN/L
+         cegSJqlYNQvqY4CRgmV4LG2h4BuTvC4zatMmiw7PFbDNIUZsVRHKYifzthi+7Ci6Y4nh
+         d99qRwodYXxbJlqm27vWA2ii/GI1jKb/ocS1f2hp/2RR8Yn/Y2BibdekY15JOorx1XrX
+         D1Kgn2tcwdjdaP21DFF8EemLjDyGcgQ+rINMA8QZXlnKvpMfdv24GT5Hq6d2gYPOn/mM
+         mK0w==
+X-Received: by 10.60.162.70 with SMTP id xy6mr2432160oeb.117.1368427990746;
+ Sun, 12 May 2013 23:53:10 -0700 (PDT)
+Received: by 10.182.113.66 with HTTP; Sun, 12 May 2013 23:53:10 -0700 (PDT)
+In-Reply-To: <7vtxm7scn5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224096>
 
-Johan Herland <johan@herland.net> writes:
+On Mon, May 13, 2013 at 6:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johan Herland <johan@herland.net> writes:
+>
+>> Although we definitely support and encourage use of multi-level branch
+>> names, we have never conciously tried to give support for multi-level
+>> remote names. Currently, they are allowed, but there is no evidence that
+>> they are commonly used.
+>>
+>> Now, they do provide a source of problems when trying to expand the
+>> "$nick/$name" shorthand notation (where $nick matches a remote name)
+>> into a full refname. Consider the shorthand "foo/bar/baz": Does this
+>> parse as $nick = foo, $name = bar/baz, or $nick = foo/bar, $name = baz?
+>>
+>> Since we need to be unambiguous about these things, we hereby declare
+>> that a remote name shall never contain a '/' character, and that the
+>> only correct way to parse "foo/bar/baz" is $nick = foo, $name = bar/baz.
+>
+> I know I am guilty of hinting to go in this direction in the earlier
+> discussion, but I have to wonder how much more refactoring is needed
+> to see if there is only one unique possibility among many.
+>
+> For a string with N slashes, you have only N possible ways to split
+> it into $nick and $name, and if you see a ref "bar/baz" copied from
+> remote "foo" but no ref "baz" copied from remote "foo/bar" (or you
+> may not even have a remote "foo/bar" in the first place), the user
+> is already very unambiguous. The declaration is merely being lazy.
+>
+> I am not saying we must implement such a back-track to disambiguate
+> the user input better.  I am wondering how much more effort on top
+> of this series is needed if we want to get there (provided that the
+> disambiguation is a good thing to do in the first place).
 
-> Obviously, I named it '%1' since it expands into the _first_ component
-> of the (slash-separated) shorthand.
+I feel the problem with multi-level remote names runs a little deeper
+than merely disambiguation when resolving remote-tracking refs: If you
+have two remotes "foo" and "foo/bar", and they have branches "bar/baz"
+and "baz", respectively, then they will (in the default current
+configuration) end up clobbering eachother due to the overlapping
+remote-tracking branch (refs/remotes/foo/bar/baz). Although the remote
+ref namespace coincidentally resolves this by mapping the two to
+"refs/peers/foo/heads/bar/baz" and "refs/peers/foo/bar/heads/baz"
+respectively, you can easily create a different (although probably
+even more unlikely) case where the remote ref namespace causes the
+same kind of overlap: One remote "foo" with branch "heads/bar", and
+another remote "foo/heads" with branch "bar" will both end up
+clobbering eachother at "refs/peers/foo/heads/heads/bar"...
 
-OK, I can buy something like
+The disambiguation can probably be resolved, although the resulting
+code will obviously be somewhat more cumbersome and ugly (and IMHO the
+current code is plenty of that already...). Combine this with the
+problems of clobbering of the same remote-tracking ref (describe
+above), and the fact that AFAIK a multi-level remote name has never
+been observed "in the wild" (none of the people I asked at the Git
+Merge conference had ever observed multi-level remote names, nor did
+they directly oppose banning them), I'm not at all sure it's worth
+bothering about this at all. Simply disallowing multi-level remote
+names seems like the simpler and naturally ambiguity-resistant
+approach.
 
-	%*
-        refs/%*
-        refs/heads/%*
-        ...
-        refs/remotes/%*/HEAD
-        refs/remotes/%1/%2
-        refs/peers/%1/heads/%2
 
-that is, for a pattern that has %*, we feed the end-user string as a
-whole, and for a pattern that has %1 thru %N, we find an appropriate
-way to chop the end-user string into N pieces (e.g. nick/name would
-be split into %1 = nick, %2 = name, while foo/bar/baz might have two
-possibilities, <%1, %2> = <foo, bar/baz> or <foo/bar, baz>).  The
-earlier ones on the above list can even be written with their %*
-substituted with %1 if we go that route.
+...Johan
 
-And that makes perfect sense, and is exactly the kind of "you plan
-to have %2 and %3 that falls into the same category as %1" I was
-asking you about in the message.
-
-So, no more objection to %1 from me, if that is the direction you
-are taking us.
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
