@@ -1,77 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5551: do not use unportable sed '\+'
-Date: Mon, 13 May 2013 09:30:32 -0700
-Message-ID: <7vtxm6n8pj.fsf@alter.siamese.dyndns.org>
-References: <201305111525.53130.tboegi@web.de>
-	<7vwqr5wdqm.fsf@alter.siamese.dyndns.org>
-	<7vobchwbax.fsf@alter.siamese.dyndns.org> <518EA351.8000603@web.de>
-	<7v8v3lwa5p.fsf@alter.siamese.dyndns.org> <518EAB7C.3010508@web.de>
-	<7vsj1svqi7.fsf@alter.siamese.dyndns.org>
-	<7vr4hbu818.fsf_-_@alter.siamese.dyndns.org> <51910418.2070904@web.de>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 4/6] stash: introduce 'git stash store'
+Date: Mon, 13 May 2013 22:45:02 +0530
+Message-ID: <CALkWK0mQhzrndaEp28nOpLs5STq136PY8hntCpX5RUZKrdJVAA@mail.gmail.com>
+References: <1368449154-21882-1-git-send-email-artagnon@gmail.com>
+ <1368449154-21882-5-git-send-email-artagnon@gmail.com> <7vbo8fosd9.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kMj6q1rppzfxGWrthub4K_+C+jnvF=K4m2Fhk0pAnt7A@mail.gmail.com> <7v61ymop61.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon May 13 18:30:49 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 13 19:15:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ubve7-0003we-Mg
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 18:30:44 +0200
+	id 1UbwLn-0003f4-PK
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 19:15:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816Ab3EMQah convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 May 2013 12:30:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34431 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751572Ab3EMQag convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 May 2013 12:30:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DD551EE9F;
-	Mon, 13 May 2013 16:30:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=MrOFumcYgY8D
-	7um/YTmg88pQfLU=; b=ikYUbGWXG4LwD30dyxTkhf4Caq9Xqnqpn2sMftOViCBI
-	pvJ/RN61JdKGCDY47UzRp1KjViBuliWZTYKKDvT9tJYqOpQbAve7Nzupr/SKRuk8
-	i98STd6hk+Z0XgWZZf1grX5olNPbmu/5zSChxJ52IpCKmof1mkKf0hJ51ukWEnk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=wNA7DV
-	A1YoVWlNJTRqR+YB48JP/slqO5ZOs9zTrpjOHMyUhzgEz8EmGIRaA9JrSFy9w7vd
-	PVqvNpZI2e4uvzZke7DXX6lGs8AANp8XOhEWrQrFTYrbwa2KT1UScSuonnUIy9aH
-	hdytd4SCA1SzfNnyn/dJedtBAfgv3btQPkyR8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 045D11EE9E;
-	Mon, 13 May 2013 16:30:35 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7E3F41EE98;
-	Mon, 13 May 2013 16:30:34 +0000 (UTC)
-In-Reply-To: <51910418.2070904@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Mon, 13 May 2013 17:17:44 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6FB2C24A-BBEA-11E2-8893-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751487Ab3EMRPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 13:15:47 -0400
+Received: from mail-ia0-f181.google.com ([209.85.210.181]:65072 "EHLO
+	mail-ia0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751006Ab3EMRPq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 13:15:46 -0400
+Received: by mail-ia0-f181.google.com with SMTP id y25so2386987iay.12
+        for <git@vger.kernel.org>; Mon, 13 May 2013 10:15:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=VYJBj+gUCR4MTTe5nhaX43A+w3LvgRbtN7VPkSQ42UA=;
+        b=VAmssI5jKPZjpHfWT4oN39AYTik7aEbHslynCyTS+q9zgNA70UgqnpJptYuxnZ35v1
+         60z8svrCHCmXVreNJ1144Rg3KcI7Io1WOuuQ3eizrVAmB4qt96lx53mNVBE8/DyNZSJH
+         FAhz58voyuswONzPr8Ouj0nj0NIn0LibOJRNoPic1BkOHwS6p47A7TEdA8gmb5G7mIdn
+         E4PzwFUsRbU7nKrXLOARwdcPNQ+vSb96rqb3yC+vcVKc+zO1bJu4zdmPWZLVU+PRK54R
+         seUtmjoMZHiXj7jVS7FjRjJNLS05t2D38zSDIUf6dbNAv91rAsiRm4Peflr5xYyicL8n
+         kE2g==
+X-Received: by 10.50.73.65 with SMTP id j1mr10887821igv.49.1368465346398; Mon,
+ 13 May 2013 10:15:46 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Mon, 13 May 2013 10:15:02 -0700 (PDT)
+In-Reply-To: <7v61ymop61.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224180>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Junio C Hamano wrote:
+>         git stash store [-m <message>] [-e <error message>] $stash_sha1
 
-> On 2013-05-13 00.50, Junio C Hamano wrote:
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  t/t5551-http-fetch.sh | 8 ++++++--
->>  1 file changed, 6 insertions(+), 2 deletions(-)
->>=20
-> Thanks, works like a charm, tested on Mac OS.
-> /torsten
+1. The message is NOT optional.  If the user says 'git stash store
+b8bb3fe9', what "default message" can we possibly put in?  There is
+absolutely no context: no branch name, nothing.  So, the best we can
+do is "generic WIP".  What is the point of putting in such a useless
+message?
 
-Thanks; I take it that you reverted the "sed fix" part and saw the
-updated "clone" check fail with the platform "sed"?
+2. We have already determined that the command is NOT for end user
+interactive use.  So, why do we need a default error message at all?
+The last statement is an update-ref, and you can infer whether it
+succeeded or failed from the exit status.
+
+3. Why are we designing a command-line interface?  git stash store
+"$stash_sha1" "$message" is sufficient for scripts, and there is
+absolutely no point in parsing '-m', '-e', or any such thing.
