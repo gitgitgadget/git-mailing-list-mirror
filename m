@@ -1,86 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] sha1_name.c: signal if @{-N} was a true branch
- nameor a detached head
-Date: Mon, 13 May 2013 14:04:58 +0200
-Message-ID: <20130513120456.GA4000@sigill.intra.peff.net>
-References: <7vk3n9dvlu.fsf@alter.siamese.dyndns.org>
- <20130509064607.GA11985@sigill.intra.peff.net>
- <7vhaicaxo7.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 13 14:05:11 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 0/6] Get stash to help rebase.autostash
+Date: Mon, 13 May 2013 18:15:48 +0530
+Message-ID: <1368449154-21882-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 13 14:44:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbrV6-0000wG-Qs
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 14:05:09 +0200
+	id 1Ubs72-0003ip-PI
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 14:44:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751770Ab3EMMFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 08:05:03 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47608 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751340Ab3EMMFC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 08:05:02 -0400
-Received: (qmail 28048 invoked by uid 102); 13 May 2013 12:05:28 -0000
-Received: from m915736d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.87.145)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 13 May 2013 07:05:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 May 2013 14:04:58 +0200
-Content-Disposition: inline
-In-Reply-To: <7vhaicaxo7.fsf@alter.siamese.dyndns.org>
+	id S1751523Ab3EMMoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 08:44:16 -0400
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:51118 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750874Ab3EMMoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 08:44:16 -0400
+Received: by mail-pb0-f50.google.com with SMTP id um15so4454292pbc.37
+        for <git@vger.kernel.org>; Mon, 13 May 2013 05:44:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=v3wTqPxQBGFWeg2+9u5PVZBGKOhhB6zeraJ/cC/s6rM=;
+        b=lOKds8aKqgVkKyViO2i8ReRLmZ0p0XPkivWaATBhk+e8aXW4+jATlLk8nsrVgCzLGe
+         Pqxys2qSWUsrR+7muSHSpwUVYBQgj0Q+b7i7ntxhZ8owKVH8TJK76NC/ZEgjYBmzqnGT
+         wYaRFO0SgF/jIbJjpLwPJUyRc3xdP/tbVKowC0Uba0r/3Zl5yVwgsrz6BiQqb3J43qHc
+         2+wuiSXoIuqpHlZZM1UabyAz4kebcTuLXM+98HBeEUKRoEMywH4BhRGtWyUqNV1/dUn5
+         PiltA6qxeqFWOMg2JNVGrJOq1Jam3PqVxW3riAyAllHzq9V9zUgccy6cvZ3IC5etS898
+         ycnw==
+X-Received: by 10.66.48.197 with SMTP id o5mr1240835pan.196.1368449055564;
+        Mon, 13 May 2013 05:44:15 -0700 (PDT)
+Received: from luneth.maa.corp.collab.net ([182.71.239.158])
+        by mx.google.com with ESMTPSA id rn7sm3050227pbc.12.2013.05.13.05.44.13
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 13 May 2013 05:44:14 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.57.g4ac1522
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224125>
 
-On Thu, May 09, 2013 at 10:08:24AM -0700, Junio C Hamano wrote:
+Hi,
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Since the point of marking the detached HEAD is to turn off things like
-> > "@{-1}@{u}", we would want to be generous and err on the side of
-> > assuming it is a branch if it _might_ be one.
-> 
-> I am not sure X and Y mesh well in your "Since X, we would want Y".
-> It seems to argue for erring on the side of detached HEAD to me.
+This topic is based on the rebase.autostash topic.  It cleans up a few
+things, introduces 'git stash store', and patches rebase to use it.
+Should be simple enough.
 
-Thinking on it more, I don't see that one is actually better than the
-other. If you claim a detached HEAD when there isn't one, the user says
-"stupid git, that was a branch, and you should tell me its upstream".
-But if you claim an undetached HEAD when there isn't one, asking for the
-upstream provides wildly inaccurate results (e.g., "git checkout
-@{-1}@{u}" taking you somewhere unexpected).
+Thanks.
 
-> Checking the "from" name $HEX against old_sha1 is a local and cheap
-> measure I added there for the first level of disambiguation.  If
-> they do not match, we _know_ we didn't come back from a detached
-> HEAD state.
-> 
-> In order to err on the "favor branch when it could have been one",
-> you could additionally look for the reflog .git/logs/refs/heads/$HEX
-> when the "from" name $HEX matches old_sha1 (which is likely to be
-> detached, but it is possible that we were on the $HEX branch when
-> its tip was at $HEX) and making sure the tip of that $HEX branch
-> once used to be at $HEX at the time recorded for @{-N} in the HEAD
-> reflog in question.
+Ramkumar Ramachandra (6):
+  Documentation/stash: correct synopsis for create
+  Documentation/stash: document short form -p in synopsis
+  stash: simplify option parser for create
+  stash: introduce 'git stash store'
+  stash: tweak error message in store_stash ()
+  rebase: use 'git stash store' to simplify logic
 
-I was thinking in terms of @{-1}@{u}, so that you could say "well, do we
-have upstream config for such a branch currently?". Because even though
-we are digging into history (and it _may_ have been a branch at the
-time, but isn't now), if we are ultimately going to ask about the
-upstream config (as it is _now_, not when the entry was made), then it
-does not matter if the branch was detached or not: we are still going to
-return failure either way.
+ Documentation/git-stash.txt | 10 ++++++++--
+ git-rebase.sh               |  6 +-----
+ git-stash.sh                | 32 +++++++++++++++++++++-----------
+ t/t3903-stash.sh            | 20 ++++++++++++++++++++
+ 4 files changed, 50 insertions(+), 18 deletions(-)
 
-But there are _other_ uses for @{-1}, and I am probably being too
-focused on this one use-case.
-
-So given all of the above, I think I am fine with the direction of the
-series.
-
--Peff
+-- 
+1.8.3.rc1.57.g4ac1522
