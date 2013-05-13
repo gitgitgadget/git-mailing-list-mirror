@@ -1,91 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] git-prompt.sh: strip unnecessary space in prompt string
-Date: Mon, 13 May 2013 06:58:28 -0700
-Message-ID: <7vvc6noubf.fsf@alter.siamese.dyndns.org>
-References: <1368289513-8700-1-git-send-email-artagnon@gmail.com>
-	<1368289513-8700-2-git-send-email-artagnon@gmail.com>
-	<7v61ynsci8.fsf@alter.siamese.dyndns.org>
-	<CALkWK0m0dT-sX=nu5jaDj=y1oOSo0cRKQ=2K_S-yepnsm8ny7A@mail.gmail.com>
-	<20130513091718.GA21636@goldbirke>
-	<CALkWK0m+mG39W7RqU-9KfPWLnaey5pL+jvfdZg49ixsASE+QoQ@mail.gmail.com>
-	<20130513110551.GT2331@goldbirke> <20130513111143.GU2331@goldbirke>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Re: [PATCH] teach the user to be nice to git and let him say
+ please sometimes
+Date: Mon, 13 May 2013 20:58:47 +0700
+Message-ID: <CACsJy8Cj1pf1YqWLq1Hbgx9cDL96Kst9JkrcwwF8ELXU5BASLg@mail.gmail.com>
+References: <20130511201928.GA22938@book.hvoigt.net> <CACsJy8A+vjtwnB0LStVS3Q9v2JaKcMDa0sATr9H==X3EhQt6Jg@mail.gmail.com>
+ <20130513133035.GA3561@book-mint>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon May 13 15:58:36 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Mon May 13 15:59:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbtGt-0000GT-ME
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 15:58:36 +0200
+	id 1UbtHf-0000se-Tc
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 15:59:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751551Ab3EMN6c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 May 2013 09:58:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61924 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750830Ab3EMN6b convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 May 2013 09:58:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB35E1C153;
-	Mon, 13 May 2013 13:58:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=oIx7MF4UZIu3
-	folKrOedvpYYyTc=; b=hYsL1sTZhHr4KnP/o6SVR3uCkbzlyCyXxkWhFAyrbfc/
-	CVJ6OkXHbGf3+ZPy7xayd1PT5L4BFhcLiZkO0TsFezhz/1bpGstgdRtWKPMce2qo
-	IoV0MzpnsvKaIHQeaOlf5WtAxLlw2U8euIFarwSSktnmqXYJQXihbEr/3wGGvyE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Bz4ErG
-	o5ymOPkNwkJ9hSBQrsuXShEL+9HFO/GkUH6bcVlSBz0MmfiFKq4hogH0RRMcVNSw
-	amI0qKIYMPDZZ+y83xUdqJ6VFo+GBNBe7LtKhPFvU+CjMZI3K/7w6YoBaztIE8lR
-	N6HXlEodIz+Y4aGbKl1qa9fyL3cIXbV5hmk0g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E5CC1C152;
-	Mon, 13 May 2013 13:58:30 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B6761C151;
-	Mon, 13 May 2013 13:58:29 +0000 (UTC)
-In-Reply-To: <20130513111143.GU2331@goldbirke> ("SZEDER =?utf-8?Q?G=C3=A1b?=
- =?utf-8?Q?or=22's?= message of
-	"Mon, 13 May 2013 13:11:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 311794DA-BBD5-11E2-9F25-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752727Ab3EMN7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 09:59:19 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:40313 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751230Ab3EMN7S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 09:59:18 -0400
+Received: by mail-ob0-f174.google.com with SMTP id un3so1529012obb.5
+        for <git@vger.kernel.org>; Mon, 13 May 2013 06:59:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=cxnI4SpxKHKpee6e3nBvHEqTObIqVMjgDRLvENy4D0U=;
+        b=A3ywLcIXq+syoNgziBBv8keKEA5EDA/bWa+mBXFYlJ2c6K97oGG3fAkJvGXGeOeoeH
+         jV4zmKhC0iHfc3BWZzMl6mL75j6KLQ2rEOHOQR+ybHmfT5AW4mChvcvAL0xMpNmIcxed
+         1dqFHVkhIhaqxuB0iSLT2iJFmL+gFvIAIruZCYIhT817VrNSbCc7xijBbcQif8m6Twpe
+         50CqKF6ZQoYJD+a3ZSWtKeaE1MdndHrOMklSajegSxCOTPQ8O2kflk7vkU2NfElfWwWG
+         cKdXNX52S5+pbBCloikG4zjx9ahFpfl/FtNbzJH4nFZ4XX2bWjGkOXxCYP7sBOJCuDte
+         cASA==
+X-Received: by 10.182.45.231 with SMTP id q7mr13217199obm.58.1368453558159;
+ Mon, 13 May 2013 06:59:18 -0700 (PDT)
+Received: by 10.76.180.138 with HTTP; Mon, 13 May 2013 06:58:47 -0700 (PDT)
+In-Reply-To: <20130513133035.GA3561@book-mint>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224145>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
-
-> On Mon, May 13, 2013 at 01:05:51PM +0200, SZEDER G=C3=A1bor wrote:
->> On Mon, May 13, 2013 at 03:43:43PM +0530, Ramkumar Ramachandra wrote=
-:
->> > If we can agree that it's just a matter of taste, we should both b=
-e
->> > able to have what we want.  Any suggestions on how to make this
->> > configurable?
->>=20
->> The same way we make other things configurable in the prompt: specif=
-y
->> the GIT_PS1_HIDESTATESEPARATOR or something similar variable to stri=
-p
->> that space from the prompt.
+On Mon, May 13, 2013 at 8:30 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+>> > +       if (impolite_counter > 10)
+>> > +               die("Error: Learn some manners, say please some time!");
+>> > +       if (polite_counter > 10)
+>> > +               die("Error: Too many please! I don't believe you.");
+>>
+>> NAK. If we truly care, we need better AI here!
 >
-> Or perhaps better yet: use a variable, e.g. GIT_PS1_STATESEPARATOR or
-> whatever, to specify what should separate the branch name from the
-> repo state, defaulting to a space to keep the current behavior.
+> I agree but this patches goal was to implement the basic politeness
+> infrastructure. We planned to add more features, like inter-repository
+> jealousy, later. For inter-repository jealousy git would complain if you
+> worked more with one repository than others you cloned and you'd for
+> example sometimes need a double please to satisfy it.
 
-Why just a single knob for that SP? =20
-
-If you restructure the code to formulate "gitstring" to call a shell
-function to do so, people can override it and come up with whatever
-format they want to use, no?
+I'm still not happy with this direction. I propose we rewrite C Git in
+Lisp first as a preparation step for git-please improvements. We could
+drop support for all platforms but Lisp Machine along the way. That
+would make all other Git implementations jealous.
+--
+Duy
