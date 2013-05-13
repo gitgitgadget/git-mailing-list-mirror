@@ -1,62 +1,62 @@
-From: Jan Engelhardt <jengelh@inai.de>
-Subject: Re: AW: English/German terminology, git.git's de.po, and pro-git
-Date: Mon, 13 May 2013 21:25:23 +0200 (CEST)
-Message-ID: <alpine.LNX.2.01.1305132119220.2288@nerf07.vanv.qr>
-References: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net> <alpine.LNX.2.01.1305131542210.30808@nerf07.vanv.qr> <001d01ce500b$c7c08b70$5741a250$@scanmyfood.de>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 4/6] stash: introduce 'git stash store'
+Date: Tue, 14 May 2013 00:55:25 +0530
+Message-ID: <CALkWK0nH598SGojvcYS0TdhA=5r9kUY6XTzOa3VWQwd85qs_Ug@mail.gmail.com>
+References: <1368449154-21882-1-git-send-email-artagnon@gmail.com>
+ <1368449154-21882-5-git-send-email-artagnon@gmail.com> <7vbo8fosd9.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kMj6q1rppzfxGWrthub4K_+C+jnvF=K4m2Fhk0pAnt7A@mail.gmail.com>
+ <7v61ymop61.fsf@alter.siamese.dyndns.org> <CALkWK0mQhzrndaEp28nOpLs5STq136PY8hntCpX5RUZKrdJVAA@mail.gmail.com>
+ <7vppwun5zk.fsf@alter.siamese.dyndns.org> <CALkWK0nmDopEVArofKt42u5JHRBXmGiHP051jhMxtaihWLu95A@mail.gmail.com>
+ <7vli7in2wq.fsf@alter.siamese.dyndns.org> <CALkWK0nygD7dpwZkXYMuXHhVZpRzb968wAYq-xZrj=y7duL1ZQ@mail.gmail.com>
+ <7v61ymn10i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: 'Thomas Rast' <trast@inf.ethz.ch>,
-	'Ralf Thielow' <ralf.thielow@gmail.com>,
-	'Christian Stimming' <stimming@tuhh.de>,
-	'Sven Fuchs' <svenfuchs@artweb-design.de>, git@vger.kernel.org,
-	=?UTF-8?Q?'Jan_Kr=C3=BCger'?= <jk@jk.gs>
-To: =?UTF-8?Q?Ralph_Hau=C3=9Fmann?= <ralph@scanmyfood.de>
-X-From: git-owner@vger.kernel.org Mon May 13 21:25:35 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 13 21:26:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbyNK-0004Ci-Jl
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 21:25:34 +0200
+	id 1UbyNw-0004gq-Kt
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 21:26:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754576Ab3EMTZ1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 May 2013 15:25:27 -0400
-Received: from ares07.inai.de ([5.9.24.206]:33197 "EHLO ares07.inai.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754573Ab3EMTZZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 15:25:25 -0400
-Received: by ares07.inai.de (Postfix, from userid 25121)
-	id E1E0B96A1582; Mon, 13 May 2013 21:25:23 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by ares07.inai.de (Postfix) with ESMTP id B503C96A10BB;
-	Mon, 13 May 2013 21:25:23 +0200 (CEST)
-In-Reply-To: <001d01ce500b$c7c08b70$5741a250$@scanmyfood.de>
-User-Agent: Alpine 2.01 (LNX 1266 2009-07-14)
+	id S1753573Ab3EMT0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 15:26:08 -0400
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:52844 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753091Ab3EMT0H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 15:26:07 -0400
+Received: by mail-ie0-f173.google.com with SMTP id k5so13251302iea.18
+        for <git@vger.kernel.org>; Mon, 13 May 2013 12:26:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=UsmVsGnQPyfCj+ZbuT1xsInsj4JvJApclBR+VUVkNz8=;
+        b=D2iFOTW9gxo+2yb70McLg3LklZKEr4UJr2F1p+FPJ4L52THf21j8HqufWJ8RYW+QQc
+         j99g0y1wgUagti38xuZhLfuEhsJ8mnyJxCVxf6MUo/8X3DvzDgcSShXTU4d7o4H0O7xt
+         jzf/67jEBHXVRxasURP48v+NGYNyIXAxETeCzKa1JvxQMnkx6vH7grBLsXBqxNBxZzFy
+         9OBgnKA8EOC0Ys49lqxJBWWjQDsL9PRYn8QMXJjaT9WZ5ZytamBz6iAuCDZJ0z4tcjNw
+         ZYAIrdUdt7jfJTHQ2u1tvQ0QCbb+mFP9gKau4OIwz18ERkDuDI4WhTu100aCCcrvkWED
+         1SSg==
+X-Received: by 10.50.147.71 with SMTP id ti7mr11287602igb.49.1368473165846;
+ Mon, 13 May 2013 12:26:05 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Mon, 13 May 2013 12:25:25 -0700 (PDT)
+In-Reply-To: <7v61ymn10i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224196>
 
+Junio C Hamano wrote:
+> The whole point of my response is that it is not a valid approach to
+> decide to add (or not to add) a reasonable enhancement mechanism
+> built in from the beginning by asking "what future enhancement do
+> you foresee today?".  It is unclear if you got that point.
 
-On Monday 2013-05-13 20:57, Ralph Hau=C3=9Fmann wrote:
->
->There is a glossary for the pro-git book (see [2]) but it is not up-to=
--date=20
->and it is also mixed. Therefor I would like to avoid using this glossa=
-ry.=20
->I like the idea of a shared wiki (git de.po and pro-git).=20
->I suggest a single page as overview and single pages for=20
->complicated terms. Maybe we can use our GitHub wiki (see also [3]).
->
->[2] https://github.com/progit/progit/blob/master/de/NOTES
->[3] https://github.com/progit-de/progit/wiki/Glossar
-
-This is how I envision a good glossary
-
-	http://inai.de/files/git-glossary.txt
-
-Maybe the "Benevolent Dictator" model might be better suited
-instead of a wiki? (Think of the edit wars.)
+Right, got it.  The fact that we weren't able to foresee the merge UI
+problem tells us that we're capable of repeating the mistake no matter
+how much we think we've thought about it.
