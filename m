@@ -1,75 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/2] git-prompt.sh: strip unnecessary space in prompt string
-Date: Mon, 13 May 2013 13:10:26 +0530
-Message-ID: <CALkWK0m0dT-sX=nu5jaDj=y1oOSo0cRKQ=2K_S-yepnsm8ny7A@mail.gmail.com>
-References: <1368289513-8700-1-git-send-email-artagnon@gmail.com>
- <1368289513-8700-2-git-send-email-artagnon@gmail.com> <7v61ynsci8.fsf@alter.siamese.dyndns.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [RFC/PATCH 0/2] merge-base: add --merge-child option
+Date: Mon, 13 May 2013 08:52:31 +0100
+Message-ID: <20130513075230.GO2299@serenity.lan>
+References: <cover.1368274689.git.john@keeping.me.uk>
+ <518FB8DE.7070004@bracey.fi>
+ <20130512162823.GK2299@serenity.lan>
+ <20130512165829.GM2299@serenity.lan>
+ <518FD182.5020606@bracey.fi>
+ <7vppwvqxow.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Kevin Bracey <kevin@bracey.fi>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 13 09:41:14 2013
+X-From: git-owner@vger.kernel.org Mon May 13 09:52:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbnNi-0002ni-AZ
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 09:41:14 +0200
+	id 1UbnYu-00028e-R5
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 09:52:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754331Ab3EMHlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 03:41:09 -0400
-Received: from mail-bk0-f41.google.com ([209.85.214.41]:65182 "EHLO
-	mail-bk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750866Ab3EMHlI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 03:41:08 -0400
-Received: by mail-bk0-f41.google.com with SMTP id jc3so2298595bkc.0
-        for <git@vger.kernel.org>; Mon, 13 May 2013 00:41:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=DZwVznE359nO2f14BClwQjwI4IOY1fIB+itUqsM7bZ8=;
-        b=FGYX5n+Hs2zNTLFKTqF5Q0i0/dzCvNB9XSPD3ntwTp8DLizOAfEitnmk4JMbvQvXxQ
-         68MtQM05zoDiAlsMk4riUvr/pL147WVM7qack+41yn1UtwMt0H2vyPklFYrEZIh7U3UJ
-         dKGK34cACp8KZZZ2c+dD9vYzPYcOkuqiOJkeAeYM6gk41lLtzDRO7f6U5rdStNPVZ1U2
-         KXJoFfjeQZBRp8Lnqu31/ofGLAphIuFuKbDlhA+L9r6VUubwWGIdHOQisB4s1lku3Efc
-         AvRPbs3JJw0owMF2ejAvj3EAFxHJ/vsfOlslyZNXSsx5qEeoiIdmGbDqvfO/gGw2JEQD
-         uwcA==
-X-Received: by 10.205.38.195 with SMTP id tj3mr5160635bkb.67.1368430867165;
- Mon, 13 May 2013 00:41:07 -0700 (PDT)
-Received: by 10.204.172.209 with HTTP; Mon, 13 May 2013 00:40:26 -0700 (PDT)
-In-Reply-To: <7v61ynsci8.fsf@alter.siamese.dyndns.org>
+	id S1753954Ab3EMHwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 03:52:44 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:40052 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753382Ab3EMHwo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 03:52:44 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 842C760657A;
+	Mon, 13 May 2013 08:52:43 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 51jV08tRMZwQ; Mon, 13 May 2013 08:52:43 +0100 (BST)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 093346064EC;
+	Mon, 13 May 2013 08:52:33 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7vppwvqxow.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224102>
 
-Junio C Hamano wrote:
-> It is like asking why typeset a space after a sentence a tad wider
-> than a space after each word:
+On Sun, May 12, 2013 at 10:02:39PM -0700, Junio C Hamano wrote:
+> Kevin Bracey <kevin@bracey.fi> writes:
+> 
+> > On 12/05/2013 19:58, John Keeping wrote:
+> >>
+> >> With the patch below, the --ancestry-path version drops to under 2
+> >> seconds.
+> >>
+> >> I'm not sure if this is a good idea though.  It helps me say "I know
+> >> nothing that isn't on the ancestry path can be patch-identical, so don't
+> >> bother checking if it is" but it regresses users who want the full
+> >> cherry-pick check while only limiting the output.
+> >
+> > Hmm. Should an excluded commit be a valid comparator? Is it
+> > sensible/correct to show a left commit as "=" to a right commit that
+> > has been excluded by the revision specifiers? Doesn't sound right to
+> > me.
+> 
+> Neither to me.
 
-Not at all.  The prompt has nothing to do with sentences.
-
-> grouping related things together, and
-> separating groups of different kind apart, to make it more readable.
-
-You could argue that the colors are not very well thought-out
-(branch-name has the same color as +), but I really don't see the
-problem otherwise.  How is this more readable:
-
-    artagnon|master *=:~/src/git$
-
-than:
-
-    artagnon|master*=:~/src/git$
-
-(where master is green, * is red, and = is white)?
-
-Looking at what we've done so far, I would argue that we're not
-thinking about the usability of the prompt enough: it currently
-screams I AM DOING REBASE-i! (and similarly for other operations in
-progress).  I intend to fix these things in future patches.
-
-Thanks.
+OK.  I'll add some tests and send a proper patch once 1.8.3 is out of
+the way.
