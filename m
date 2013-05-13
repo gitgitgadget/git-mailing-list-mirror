@@ -1,80 +1,76 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH v7 03/10] Add colors to interactive git-clean
-Date: Mon, 13 May 2013 10:47:41 +0800
-Message-ID: <CANYiYbGqZ6FiHTZgejrA3a-njffQNJyaefFmCWfycuE6PGjwbA@mail.gmail.com>
-References: <ad26375dece854339d64dcb82c17f19f8edccf48.1368011946.git.worldhello.net@gmail.com>
-	<6a7931a0bb14f8c71479e16175812bedb6b826cb.1368011946.git.worldhello.net@gmail.com>
-	<cover.1368011946.git.worldhello.net@gmail.com>
-	<d7302adabb4269dd94698090fb20c739f723f00a.1368011946.git.worldhello.net@gmail.com>
-	<vpqfvxsi0gw.fsf@grenoble-inp.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon May 13 04:47:48 2013
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [RFC 0/2] Separate stat_data from cache_entry
+Date: Mon, 13 May 2013 05:00:05 +0200
+Message-ID: <1368414007-3819-1-git-send-email-mhagger@alum.mit.edu>
+References: <5190500E.8060907@alum.mit.edu>
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 13 05:00:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ubinj-0000m6-Ti
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 04:47:48 +0200
+	id 1Ubj03-0007jj-1v
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 05:00:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753804Ab3EMCrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 May 2013 22:47:43 -0400
-Received: from mail-wg0-f53.google.com ([74.125.82.53]:56195 "EHLO
-	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753424Ab3EMCrn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 May 2013 22:47:43 -0400
-Received: by mail-wg0-f53.google.com with SMTP id y10so6036486wgg.32
-        for <git@vger.kernel.org>; Sun, 12 May 2013 19:47:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=xJU+3rXV0YIfLgOXTkoW60QX3vwbOWvWPTPt+aRjCGw=;
-        b=yqp+i+5unnmegHdZlJzaI1E1TB+2z6R7E1tIOXKLZxiM5Bv/PCL5mrFuXG6MDnFW8R
-         uJibvpknNepErxUYO5giUodvZ3MwGs+oTk4xBZlcJq2n2S8hYw90qaFyJlR8yarowrqE
-         xx3uPkGk/MJBtYunhEU5MAoBHqGm1/L7VLP7lTLwdy8XqgFLQglc8FJuL19dC6YU2sg+
-         lccwwVGA2pBjDkRZzaaqMK81wjmXpLqONgPwzcOeqzV32QfXeYQ3MMkEVu9j1M7Dh9aq
-         nYuPZ/KudVmrIuqABcBxQfEYs5aoXADFG95grU6YDh8t0dRZTjY/EJZgiPYP8RaNE5Uk
-         n7Lg==
-X-Received: by 10.194.59.132 with SMTP id z4mr36863647wjq.57.1368413261990;
- Sun, 12 May 2013 19:47:41 -0700 (PDT)
-Received: by 10.194.175.72 with HTTP; Sun, 12 May 2013 19:47:41 -0700 (PDT)
-In-Reply-To: <vpqfvxsi0gw.fsf@grenoble-inp.fr>
+	id S1752285Ab3EMDA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 May 2013 23:00:27 -0400
+Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:45469 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751672Ab3EMDAZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 May 2013 23:00:25 -0400
+X-AuditID: 1207440e-b7f2b6d00000094c-39-519057492285
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id B7.81.02380.94750915; Sun, 12 May 2013 23:00:25 -0400 (EDT)
+Received: from michael.fritz.box (p57A25404.dip0.t-ipconnect.de [87.162.84.4])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4D30EGu015002
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 12 May 2013 23:00:22 -0400
+X-Mailer: git-send-email 1.8.2.2
+In-Reply-To: <5190500E.8060907@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixO6iqOsZPiHQYMUNTouuK91MFg29V5gt
+	5t3dxWRxe8V8ZosfLT3MDqwef99/YPK49PI7m8ez3j2MHhcvKXt83iQXwBrFbZOUWFIWnJme
+	p2+XwJ3RdK6dteAZa8XDk7tZGxgPsnQxcnJICJhI7P7UzAhhi0lcuLeerYuRi0NI4DKjxMSJ
+	e1ggnHNMEh0PjrKDVLEJ6Eos6mlmArFFBGQlvh/eyAhSxCwwk1Hi+99vYEXCAmYS8/7vBiti
+	EVCV+DbpNxuIzSvgLLHu5jUgmwNonYLEs7N8IGFOAR2JCe+XgF0kJKAtcbdzAuMERt4FjAyr
+	GOUSc0pzdXMTM3OKU5N1i5MT8/JSi3SN9XIzS/RSU0o3MUKCim8HY/t6mUOMAhyMSjy8C5Qn
+	BAqxJpYVV+YeYpTkYFIS5T0fAhTiS8pPqcxILM6ILyrNSS0+xCjBwawkwrvXDSjHm5JYWZVa
+	lA+TkuZgURLnVVui7ickkJ5YkpqdmlqQWgSTleHgUJLgvRoK1ChYlJqeWpGWmVOCkGbi4AQR
+	XCAbeIA2PAQp5C0uSMwtzkyHKDrFqCglzrsYJCEAksgozYMbAIv/V4ziQP8I874AqeIBpg64
+	7ldAg5mABp/x6AcZXJKIkJJqYJTd183oceK4lMEJ1aXzFp5618Nq9H9ZheCyxNCOBL/5dWmN
+	7JYCPh+MOe+r3znq6mIl7XvA6PH6K8e9zHsbHO19p0XtU7R9eu/0Pos5rAvkWVyXWXyI4Xr9
+	wIjz98+2rV1XPT6ePX/52UGjjBdTN57/ohpx1O6oTMAGlYNPT/78P2PJG3PN0/VK 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224078>
 
-2013/5/13 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
-> Jiang Xin <worldhello.net@gmail.com> writes:
->
->>  * color.interactive.<slot>: Use customized color for interactive
->>    git-clean output (like git add --interactive). <slot> may be
->>    prompt, header, help or error.
->
-> This should go to the documentation (a short summary is welcome in the
-> commit messages in addition, but users won't read this...)
->
->> +     if (!prefixcmp(var, "color.interactive.")) {
->> +             int slot = parse_clean_color_slot(var, 18);
->
-> For readability and maintainability: please use
-> strlen("color.interactive."), not 18.
+This series is a possible replacement for Peff's
 
-Feel like conventional:
+    "[PATCH 2/4] add a stat_validity struct"
 
-    git grep -C2 prefixcmp builtin/apply.c builtin/archive.c
-builtin/branch.c builtin/checkout.c
+that doesn't misuse the cache_entry too much in the implementation of
+the new functions.  It is only interesting in the context of Peff's
+series (or something like it), or if there are other places where
+somebody wants to be able to tell whether a file has changed since
+it was last checked.
 
-But maybe 18 characters are too long. ;-)
+Michael
 
+Michael Haggerty (2):
+  Extract a struct stat_data from cache_entry
+  add a stat_validity struct
+
+ builtin/ls-files.c |  12 ++--
+ cache.h            |  60 +++++++++++++++--
+ read-cache.c       | 191 ++++++++++++++++++++++++++++++++++-------------------
+ 3 files changed, 183 insertions(+), 80 deletions(-)
 
 -- 
-Jiang Xin
-http://www.worldhello.net/
+1.8.2.2
