@@ -1,73 +1,109 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/6] Documentation/stash: document short form -p in synopsis
-Date: Mon, 13 May 2013 18:15:50 +0530
-Message-ID: <1368449154-21882-3-git-send-email-artagnon@gmail.com>
-References: <1368449154-21882-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 13 14:44:39 2013
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: English/German terminology, git.git's de.po, and pro-git
+Date: Mon, 13 May 2013 14:54:51 +0200
+Message-ID: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Jan Engelhardt <jengelh@inai.de>,
+	Jan =?utf-8?Q?K?= =?utf-8?Q?r=C3=BCger?= <jk@jk.gs>
+To: Ralf Thielow <ralf.thielow@gmail.com>,
+	Christian Stimming <stimming@tuhh.de>,
+	Sven Fuchs <svenfuchs@artweb-design.de>,
+	Ralph Haussmann <ralph@scanmyfood.de>
+X-From: git-owner@vger.kernel.org Mon May 13 14:55:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ubs7F-0003rq-6B
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 14:44:33 +0200
+	id 1UbsHg-0003Ua-6s
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 14:55:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752054Ab3EMMoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 08:44:21 -0400
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:48930 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750874Ab3EMMoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 08:44:20 -0400
-Received: by mail-pb0-f51.google.com with SMTP id wy7so4430111pbc.10
-        for <git@vger.kernel.org>; Mon, 13 May 2013 05:44:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=0v/1gBRo1lmrx5Dji5RXxZkMAuDQsjpcMrVAH3ccFYo=;
-        b=OVE6AIU/rg5bOAdCacfqgKwWkqpbWm/xeLTWDvQSVBF2iZwpKsGQX1HlMxB596DmKt
-         8+n5nyrJBo2sJRjqa8USdTgtzz+x2PAwOyWBul4xpqnr9M2WIyYKmDWRECW9MIXtNRiv
-         QbY/ebFML7I6PbFXJdKeTCCvjHN9G5+CSL6jtYp6BVa+IJQBvyjaFKhKH2DRvf/pzr05
-         zW/XL9HTFdA/BrtGXdQS03bletDX2WvhpmFqfy73g90V4dkat2sxgNiijxc6M18XQt8k
-         EljFXpISIvkcmiS/YoenfG3vKdN8FNk8HUDVUI54TGHh9eFf+nGY4d8jMLgnhX1xj8MJ
-         I+3w==
-X-Received: by 10.68.176.197 with SMTP id ck5mr28433922pbc.165.1368449059997;
-        Mon, 13 May 2013 05:44:19 -0700 (PDT)
-Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPSA id rn7sm3050227pbc.12.2013.05.13.05.44.17
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 13 May 2013 05:44:19 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc1.57.g4ac1522
-In-Reply-To: <1368449154-21882-1-git-send-email-artagnon@gmail.com>
+	id S1753136Ab3EMMy4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 08:54:56 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:23375 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751898Ab3EMMyz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 08:54:55 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 13 May
+ 2013 14:54:50 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Mon, 13 May 2013 14:54:51 +0200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224132>
 
-'git stash save' can take -p, the short form of --patch, as an
-optional.  Document this.
+Hi
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Documentation/git-stash.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I hope I got together a Cc list that pretty much represents everyone
+involved in git core and pro-git book translation into German.
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 35a0134..05e462b 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 'git stash' drop [-q|--quiet] [<stash>]
- 'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
- 'git stash' branch <branchname> [<stash>]
--'git stash' [save [--patch] [-k|--[no-]keep-index] [-q|--quiet]
-+'git stash' [save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
- 	     [-u|--include-untracked] [-a|--all] [<message>]]
- 'git stash' clear
- 'git stash' create [<message> [<include-untracked-p>]]
+As I am sure you are all aware, there are two main religions as to how
+one can translate technical material into German: leave the technical
+terms mostly in English, or translate them to an appropriate
+corresponding word.  I'll denote them G+E and Ger, respectively.  I
+would really like to avoid rehashing that entire discussion in this
+thread, if at all possible; we've flogged that horse enough.  See
+e.g. [1] for previous threads on the git list about the transation.
+
+However, an unfortunate and unsatisfactory situation has developed:
+Christian Stimming's git-gui de.po uses a Ger translation, and Ralf
+Thielow built core git's de.po on top of it, so it's also Ger.
+
+Meanwhile, and independently, Sven Fuchs and Ralph Haussmann wrote a
+translation of pro-git (which is also quite mature at this point, having
+apparently begun in 2009), and as you probably guessed by now, it's G+E.
+
+So that leaves us at a point where "the" libre Git book (and also the
+one that happens to be hosted on git-scm.com, the official site) does
+not match the terminology used by German git.
+
+Like, at all.  They're not even remotely near each other.
+
+Therefore, a total newbie would find at least one of those two totally
+useless.  I haven't done a comprehensive survey yet, but it is my
+impression that the commercial git books are also G+E, so the
+hypothetical newbie would be stuck learning the English terms in one of
+the two regardless.
+
+So where to go from this mess?
+
+Obviously -- unless the agreement is that the status quo should persist
+-- we'd first have to sort out what the preferable translation should
+be.  And I'm a bit scared of trying, except that a straw poll on IRC
+gave me some hope that a simple majority vote could help settle it.
+
+My vote is G+E.
+
+After that, we should create a unified glossary.  Even in the G+E case,
+a few terms would presumably be translated fully and some others might
+have partial translations (checkout -> auschecken?).  The current
+glossary for git's de.po is [2].  I have no idea what Sven and Ralph do.
+Perhaps a github wiki page would be fine for everyone?
+
+Finally, converting the existing translation will require some manpower.
+I'll help review things, as I have previously done for translation
+updates of core git de.po; perhaps with a few more volunteers it can be
+done pretty quickly.
+
+Thanks for your time.
+
+- Thomas
+
+
+
+[1]  http://thread.gmane.org/gmane.comp.version-control.git/58315
+     http://thread.gmane.org/gmane.comp.version-control.git/156226/focus=156373
+     http://thread.gmane.org/gmane.comp.version-control.git/196779/focus=196792
+
+[2]  https://github.com/ralfth/git-po-de/wiki/Glossary
+
 -- 
-1.8.3.rc1.57.g4ac1522
+Thomas Rast
+trast@{inf,student}.ethz.ch
