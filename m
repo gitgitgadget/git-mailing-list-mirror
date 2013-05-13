@@ -1,95 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] gitk: add support for -G'regex' pickaxe variant
-Date: Mon, 13 May 2013 11:55:51 -0700
-Message-ID: <20130513185551.GB3657@google.com>
-References: <7vipezaaig.fsf@alter.siamese.dyndns.org>
- <1339698851-15428-1-git-send-email-zbyszek@in.waw.pl>
- <CACPiFCKev9uibTa8GSH94ZaH-NaVBAWVempg4xfTdFTThE85Zw@mail.gmail.com>
- <20130511055647.GA3262@iris.ozlabs.ibm.com>
- <20130511061322.GB3394@elie>
- <20130511094119.GA6196@iris.ozlabs.ibm.com>
- <CACPiFCKkzSCaSfqExZggFHBAmcPBTYYhyauOa2h1dXiYqKZMxA@mail.gmail.com>
+From: =?utf-8?Q?Ralph_Hau=C3=9Fmann?= <ralph@scanmyfood.de>
+Subject: AW: English/German terminology, git.git's de.po, and pro-git
+Date: Mon, 13 May 2013 20:57:55 +0200
+Message-ID: <001d01ce500b$c7c08b70$5741a250$@scanmyfood.de>
+References: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net> <alpine.LNX.2.01.1305131542210.30808@nerf07.vanv.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	Martin Langhoff <martin@laptop.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 13 20:56:06 2013
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "'Ralf Thielow'" <ralf.thielow@gmail.com>,
+	"'Christian Stimming'" <stimming@tuhh.de>,
+	"'Sven Fuchs'" <svenfuchs@artweb-design.de>,
+	"'Ralph Haussmann'" <ralph@scanmyfood.de>, <git@vger.kernel.org>,
+	=?utf-8?Q?'Jan_Kr=C3=BCger'?= <jk@jk.gs>
+To: "'Jan Engelhardt'" <jengelh@inai.de>,
+	"'Thomas Rast'" <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon May 13 21:03:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ubxun-0008D8-Ix
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 20:56:05 +0200
+	id 1Uby2D-0005GL-BH
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 21:03:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753517Ab3EMSz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 14:55:58 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:61678 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754280Ab3EMSz4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 14:55:56 -0400
-Received: by mail-pb0-f49.google.com with SMTP id rp2so1953266pbb.8
-        for <git@vger.kernel.org>; Mon, 13 May 2013 11:55:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=wAquy5KhQ9RUhkrYtZ6SHDzfBIdPBwDtrSD4CUhaP3o=;
-        b=h9z6f5KZNmSG69Afmfp+2p6ZOhgYH2k2I1S2sJpOdJDUVzYWe0Bn7LpzbxR8nlDDY+
-         mPvZ3KxscqthbsUaWMjY9GTv4mJcpWWFN7DofRvhDTCVKIJyW/mguj1hIBiZm6j1onpX
-         cSaAYhMDmsS2wljHzEal0Ww5V2CQM5JLNIqEGuzmgVcPxMW1k/1CkD2I6WxuBAfg6wci
-         17cSwMpIAE1NUoVHekvrDKIEerghBKzPvUxZD2kWuKDD5tXXM0mKt3gCLLay5SVBkjy2
-         m+47K354Eh+qRDiUuZrj1qOlrs/UKJEs+8lmNhfQw1YhuhYIltWrPJWsatDdbCO32U8K
-         FZPg==
-X-Received: by 10.66.227.102 with SMTP id rz6mr7204684pac.72.1368471356111;
-        Mon, 13 May 2013 11:55:56 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id to7sm16032816pab.0.2013.05.13.11.55.54
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 13 May 2013 11:55:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CACPiFCKkzSCaSfqExZggFHBAmcPBTYYhyauOa2h1dXiYqKZMxA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752467Ab3EMTDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 15:03:39 -0400
+Received: from dd10500.kasserver.com ([85.13.133.64]:45612 "EHLO
+	dd10500.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752133Ab3EMTDi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 15:03:38 -0400
+X-Greylist: delayed 334 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 May 2013 15:03:38 EDT
+Received: from Samsung (HSI-KBW-46-223-8-190.hsi.kabel-badenwuerttemberg.de [46.223.8.190])
+	by dd10500.kasserver.com (Postfix) with ESMTPSA id 18DC12DC05B6;
+	Mon, 13 May 2013 20:58:02 +0200 (CEST)
+In-Reply-To: <alpine.LNX.2.01.1305131542210.30808@nerf07.vanv.qr>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQKRpDahy+M4aP1Sw4p1lJ3ucmyYEwEddEXql3PiEjA=
+Content-Language: de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224192>
 
-Martin Langhoff wrote:
+Hi,
 
-> And to be honest, log -G is so much more useful that I don't care a
-> s***t for log -S.
+My vote is G+E, too. 
 
-Fair enough. :)
+lb1a, Florian Breisch and I are working on the german translation of the 
+pro-git book (hosted on git-scm.com). We use the repository [1] to share 
+our work. If someone wants to help us, JOIN US!
 
-[...]
-> In other words: You find a suspicious-looking line of code and you ask
-> "how did this horrid code come to be?", and the more horrendous the
-> code is, the more likely it is to be the accretion of a several
-> commits. In that case, which to me is the common case, log -S ain't
-> your friend at all.
+The current translation of pro-git is mixed, Ger and G+E. For example, 
+the translation of "annotated tag" is "Annotated Tag", "kommentierter Tag" 
+and also "kommentierte Markierung".  I agree with the opinion of Jan 
+Engelhardt that german terms should be used if they are commonly 
+used in technical context ("tree"=> "Baum" but "tag" should be "Tag" 
+in german, too).
 
-My experience is the opposite.  I wonder "What did the author of this
-nonsense comment mean?" or "What is the purpose of this strange
-condition in this if () statement?".  Then "git log -S" finds the
-culprit without showing extraneous unrelated changes (such as
-reindenting).  It is like "git blame", but for arbitrary chunks of
-code instead of single lines.  Then, just like with "git blame", at
-times the next step is to blame the parent and repeat the process
-using the earlier form of the code in question.
+There is a glossary for the pro-git book (see [2]) but it is not up-to-date 
+and it is also mixed. Therefor I would like to avoid using this glossary. 
+I like the idea of a shared wiki (git de.po and pro-git). 
+I suggest a single page as overview and single pages for 
+complicated terms. Maybe we can use our GitHub wiki (see also [3]).
 
-It is especially handy for confusing code that spans multiple lines.
-(Unfortunately that is not as easy to try in gitk.)
+ So long
 
-As I mentioned before, log -G and log -S are fairly dissimilar
-operations.
+Ralph
 
-Thanks,
-Jonathan
+[1] https://github.com/progit-de/progit
+
+[2] https://github.com/progit/progit/blob/master/de/NOTES
+
+[3] https://github.com/progit-de/progit/wiki/Glossar
