@@ -1,83 +1,53 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: [PATCH 7/7] rebase: implement --[no-]autostash and rebase.autostash
-Date: Mon, 13 May 2013 10:24:18 +0200
-Message-ID: <vpq1u9be18t.fsf@grenoble-inp.fr>
+Date: Mon, 13 May 2013 13:57:45 +0530
+Message-ID: <CALkWK0kRW07qW_A1Rcyx7gML9ZNJ=g-hvE1O==zFpzToQtTg3g@mail.gmail.com>
 References: <1368359801-28121-1-git-send-email-artagnon@gmail.com>
-	<1368359801-28121-8-git-send-email-artagnon@gmail.com>
+ <1368359801-28121-8-git-send-email-artagnon@gmail.com> <vpq1u9be18t.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 13 10:24:28 2013
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon May 13 10:28:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ubo3X-0006gR-KB
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 10:24:27 +0200
+	id 1Ubo7T-00014k-C9
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 10:28:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752618Ab3EMIYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 04:24:23 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:34445 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752462Ab3EMIYX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 04:24:23 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4D8OHBf001357
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 13 May 2013 10:24:17 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Ubo3O-000127-He; Mon, 13 May 2013 10:24:18 +0200
-In-Reply-To: <1368359801-28121-8-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Sun, 12 May 2013 17:26:41 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 13 May 2013 10:24:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r4D8OHBf001357
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1369038257.93166@giS4fA+Ca3NyBYmOwsm0dg
+	id S1751499Ab3EMI21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 04:28:27 -0400
+Received: from mail-bk0-f54.google.com ([209.85.214.54]:45388 "EHLO
+	mail-bk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751218Ab3EMI20 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 04:28:26 -0400
+Received: by mail-bk0-f54.google.com with SMTP id it16so78525bkc.13
+        for <git@vger.kernel.org>; Mon, 13 May 2013 01:28:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=jd1zH++mI3B1KntbPmCBeG54iFuld+rCLGqm9NijZjA=;
+        b=jM4dziwMGjHl7xBQCq51dG+X/7B5Z3U1J6YI0SnhynDPGch5PBM0gxoq7yUR7PDJHe
+         jNkzQAchoheH+WqRUkhhzhUxD1B6YOmXKLMIo7K+HSGDp0jf+zLYM+daeigwR8px9fh+
+         b8etFPsO9HwbX/tXekwuGgku4/dqNI029F0kpj6LymvEJl8jX4q6JqvHuPEo5kODgl46
+         8HMcMJKpw2bSNG+x11p5Nv4o4GvJoST2nR3EcaQzEQkK7g3zHHElavHM4DYn2O+zFu2T
+         twazYQ0TwhabslvNTQiVjZ3B/CerLVLskx6/LKkmnKSan8cPu2S0aXOoZkIR0tDT1Lek
+         Yk/g==
+X-Received: by 10.205.34.132 with SMTP id ss4mr5250113bkb.125.1368433705458;
+ Mon, 13 May 2013 01:28:25 -0700 (PDT)
+Received: by 10.204.172.209 with HTTP; Mon, 13 May 2013 01:27:45 -0700 (PDT)
+In-Reply-To: <vpq1u9be18t.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224111>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Matthieu Moy wrote:
+> Any reason why this is not using gettext and the other messages do.
+>   You can run "git stash apply" or "git stash drop" at any time.
 
-> +finish_rebase () {
-> +	if test -f "$state_dir/autostash"
-> +	then
-> +		stash_sha1=$(cat "$state_dir/autostash")
-> +		if git stash apply $stash_sha1 2>&1 >/dev/null
-> +		then
-> +			echo "Applied autostash"
-
-Any reason why this is not using gettext and the other messages do.
-
-> +		else
-> +			ref_stash=refs/stash &&
-> +			: >>"$GIT_DIR/logs/$ref_stash" &&
-> +			git update-ref -m "autostash" $ref_stash $stash_sha1 \
-> +				|| die "$(eval_gettext 'Cannot store $stash_sha1')"
-> +			echo "
-> +$(gettext 'Applying autostash resulted in conflicts.
-> +Your changes are safe in the stash.
-> +You can apply or drop it at any time.')"
-
-Good idea to put the autostash in an actual stash. Perhaps the message
-can be made more explicit, e.g. 
-
-  You can run "git stash apply" or "git stash drop" at any time.
-
-(actually, "git stash pop" may be a better suggestion to "git stash
-apply" here).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Fixed.  Thanks.
