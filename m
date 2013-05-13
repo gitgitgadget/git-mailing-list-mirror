@@ -1,70 +1,66 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 0/6] remote-hg: fixes and cleanups
-Date: Mon, 13 May 2013 18:15:18 -0500
-Message-ID: <CAMP44s0ArwaQ7GmwnP8r5DyqxDShJDkSJnUYQsGSzU589o2Quw@mail.gmail.com>
-References: <1368219566-1399-1-git-send-email-felipe.contreras@gmail.com>
+Subject: Re: [PATCH v4 01/11] Add new git-related helper to contrib
+Date: Mon, 13 May 2013 18:17:09 -0500
+Message-ID: <CAMP44s2hmc5rHCC9O-6brtC0VeNgRUZsWurmrr7aSUx_Vr4Kyg@mail.gmail.com>
+References: <1366919983-27521-1-git-send-email-felipe.contreras@gmail.com>
+	<1366919983-27521-2-git-send-email-felipe.contreras@gmail.com>
+	<CAMP44s0nvWvicFAJEqe0jC+zT3ZvA=Qx3MWXK36zYb2-uYV-aA@mail.gmail.com>
+	<7vhaisvqvl.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0XnEJWjzU-g=Gq2jJQu-9MJ8S84fAd-7bdomKWEeTCtw@mail.gmail.com>
+	<CALkWK0ks0yveTus9w=4MFoCjB6ujUUax4_o48Gy_yevyT6BeyA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 14 01:15:28 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Duy Nguyen <pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 14 01:17:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uc1xm-0007o6-R2
-	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 01:15:27 +0200
+	id 1Uc1zY-00007z-Ac
+	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 01:17:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755497Ab3EMXPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 19:15:20 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:59352 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755480Ab3EMXPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 19:15:19 -0400
-Received: by mail-lb0-f178.google.com with SMTP id p10so3311336lbv.9
-        for <git@vger.kernel.org>; Mon, 13 May 2013 16:15:18 -0700 (PDT)
+	id S1755136Ab3EMXRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 19:17:12 -0400
+Received: from mail-la0-f47.google.com ([209.85.215.47]:55364 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752338Ab3EMXRL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 19:17:11 -0400
+Received: by mail-la0-f47.google.com with SMTP id fq12so1394044lab.20
+        for <git@vger.kernel.org>; Mon, 13 May 2013 16:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
          :subject:from:to:cc:content-type;
-        bh=Tnr3fOUCWgKdfn2Gu3ubuoENeT+OESmwHy/RvpAmaHU=;
-        b=BwLA2w/lY6d8/PEogY8F/gzWpf6NfRlys+bSmZ3vbjrODAJMmNbkXb2f7HJdiXzK67
-         VpQVKaUZSnYRKfRvyGt5jgrfc9k9Qe/RD3z+FvdZqFj1L2+6gcyw7QCh+HN/97Z2JfHI
-         GUk0acMff6PjETQ8bHZ1bbcaZpdZlqlE3Rgs6FlYjp5NY2aYKc3RsjwEZB/Pd3vHnXbf
-         KSZx1KEWWz13VkgQZusf+FyMESgtbSOftOeW7CfghgeAdLKy/1K9PMwZ+6eGgkmEVfRE
-         EBfBU7smAmzQQ49N5dOQiVRLJ7IfmU4SuShcYZIMu3dD9cZ4Gxyry5MWTEpi8uke2JeF
-         PjRQ==
-X-Received: by 10.112.125.130 with SMTP id mq2mr13853386lbb.103.1368486918148;
- Mon, 13 May 2013 16:15:18 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Mon, 13 May 2013 16:15:18 -0700 (PDT)
-In-Reply-To: <1368219566-1399-1-git-send-email-felipe.contreras@gmail.com>
+        bh=5huTiXiIDVoFWc8r1zXckOCae+p6NhDQ7uam2Bct3Og=;
+        b=IcMMNpe9MYzNkNbyPyBJUtxTDXexgxDNxD//gA8dN40/1DSpRbwsH08+h/hCqDFuge
+         UEWiLYZPxebTR/bBA+oU2Qvf2IRgXi3+OefWBbdlMx+cvCV1yErttl33zWFrzVFL1+Qk
+         mlFcXv/iPBfemi4IFMyYv3IpIG5XWkdD94F3Ty8RhB5R2Vz0HoUZlPG9OgC4jx+UEGr0
+         KdEBGYTOM79KXTdi5iMlVNxeMKdKz4uQ9QmTVSh6sc+ZEq3FyUaP3iPCj9MoP2bMpnWG
+         bFzxZ+97WS+bz90GqdG+bZ+DjaJ3VYQf6uvaGUJ2SghX8MPSlacuCGYwfdF3Xfzgo1eO
+         CRMw==
+X-Received: by 10.152.3.167 with SMTP id d7mr1734703lad.38.1368487029683; Mon,
+ 13 May 2013 16:17:09 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Mon, 13 May 2013 16:17:09 -0700 (PDT)
+In-Reply-To: <CALkWK0ks0yveTus9w=4MFoCjB6ujUUax4_o48Gy_yevyT6BeyA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224230>
 
-On Fri, May 10, 2013 at 3:59 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-
-> A few fixes since last series, plus a few more patches. Simple no-brainers.
+On Fri, Apr 26, 2013 at 10:01 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Felipe Contreras wrote:
+>> That's fine, I was mostly asking Ramkumar who earlier argued earlier
+>> versions of this patch were not understandable.
 >
-> Felipe Contreras (6):
->   remote-hg: disable forced push by default
->   remote-hg: don't push fake 'master' bookmark
->   remote-hg: update bookmarks when pulling
->   remote-hg: test: be a little more quiet
->   remote-hg: fix new branch creation
->   remote-hg: trivial reorganization
->
->  contrib/remote-helpers/git-remote-hg | 18 +++++++++++-------
->  contrib/remote-helpers/test-hg.sh    |  4 ++--
->  2 files changed, 13 insertions(+), 9 deletions(-)
+> Sorry, still catching up with list emails.  At a glance, part 1 looks
+> much better.  Will read through more carefully soon.
 
-I was expecting these to be merged to 'master', but since they are
-still not merged, I decided to send more cleanups.
+Gentle reminder.
 
 -- 
 Felipe Contreras
