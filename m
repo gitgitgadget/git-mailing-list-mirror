@@ -1,71 +1,80 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 0/4] Coverage support revisited
-Date: Tue, 14 May 2013 00:33:15 +0200
-Message-ID: <51916A2B.3060001@web.de>
-References: <cover.1368479988.git.trast@inf.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 4/4] t4300 (rebase): don't unnecessarily set GIT_TRACE
+Date: Mon, 13 May 2013 16:05:57 -0700
+Message-ID: <20130513230557.GJ3657@google.com>
+References: <CALkWK0k_ArM9EpY0S7=mbgFpHsoauZCr9e=ESX_CEA5-vRHrHQ@mail.gmail.com>
+ <7vr4he3kpz.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kLjf=m-_9PkXzxOpnpqfh-n004E0f7_mi-VL3SbYWFAg@mail.gmail.com>
+ <7vk3n6206h.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kTvwxMFGUqH0wKNVpLg-qQQbN+vOcAxiEwmOeDe=87jA@mail.gmail.com>
+ <20130510190705.GA3478@elie>
+ <CALkWK0kZWrY5_B3mxuVV1cA-AqvkqJpjRAuSovXLi6OCA+3ybQ@mail.gmail.com>
+ <20130510191639.GB3478@elie>
+ <7vk3n6zgr3.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=rqjduiWsj2-iqCoW9tsv4G8gvpf7fCZwg5=TKuEo+bA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue May 14 00:33:26 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 14 01:06:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uc1J7-0005wm-Ef
-	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 00:33:25 +0200
+	id 1Uc1ot-0003pg-4h
+	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 01:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755255Ab3EMWdV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 18:33:21 -0400
-Received: from mout.web.de ([212.227.15.4]:65109 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755163Ab3EMWdU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 18:33:20 -0400
-Received: from [192.168.178.41] ([91.3.169.183]) by smtp.web.de (mrweb102)
- with ESMTPA (Nemesis) id 0Lc8c5-1UCYVX1gCT-00jDQO; Tue, 14 May 2013 00:33:18
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <cover.1368479988.git.trast@inf.ethz.ch>
-X-Enigmail-Version: 1.5.1
-X-Provags-ID: V02:K0:A5BUW2nU1trDpryljUxmhz5kYphKLGhi2EYicRKG0Re
- HHAOhRy6L/gJvq2I0CdSMB+jgwy58xaC+JMBOGgO4W/szJP6OU
- xKys3GuEeSMAS5FUckNDhDUM09VPlwB5dmw+Ddr5PL+92kCsjo
- NznZEvA0P3jJtCsMFmv0zyL6VU9XYzkccIBVhhRDK8Xb82RqaB
- ldX2akN72NE6OC56Wz/2Q==
+	id S1755250Ab3EMXGK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 19:06:10 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:36616 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755136Ab3EMXGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 19:06:08 -0400
+Received: by mail-ie0-f170.google.com with SMTP id aq17so13980474iec.29
+        for <git@vger.kernel.org>; Mon, 13 May 2013 16:06:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=fJbRhbpvGqtuoCPVAir5ivgKVdd1y/SSG15waG3nleg=;
+        b=PGie5D3bWkbKu1K6m1y02aZOhaKc7u1yXlkW6ykpq1rBAOtcTF10sOqQUyHtan6Jrc
+         MXM/IErLTdq4so4NTlNhlRspZeosaCD0yScknoRWf3iI67O4OqDfP5ujYxbVPcSYyo0N
+         GckdfKecCVgFQ/ocbQ7grlJiTSfgDbjXeGHIZQC3QCB8yKuobsAv8+k3ycHnqTcv500q
+         V4amYAtqw3aXJKQpiz6BUy9QmbI9dkkH2lGmiPYR2sK94wo2Y+f9Fewwk+l51UQ2OIhj
+         e3CLHswbF7GhDHpr/bvnfJeA1sDwyc+Qvm6wPOfctx36AeaDWdZwsn+VKB90hF5gpTAr
+         pNIQ==
+X-Received: by 10.50.16.36 with SMTP id c4mr223616igd.60.1368486368401;
+        Mon, 13 May 2013 16:06:08 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id c11sm21472172igv.1.2013.05.13.16.06.06
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 13 May 2013 16:06:07 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=rqjduiWsj2-iqCoW9tsv4G8gvpf7fCZwg5=TKuEo+bA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224217>
 
-Am 13.05.2013 23:27, schrieb Thomas Rast:
-> Jens asked me at git-merge if coverage support was still available.
-> Turns out it is, but there were some weirdnesses.  So this should fix
-> them.  It is reaaaally slow as you still have to run the tests one by
-> one; despite claims in the wild that it is multiprocess- safe but
-> thread-unsafe, I am in fact observing the opposite behavior pretty
-> clearly.  (As before, it switches to sequential tests automatically,
-> so you have to edit the Makefile if you want to try with parallel
-> tests.)
+Ramkumar Ramachandra wrote:
 
-Thx! That might explain why the coverage run I tried today didn't
-work (I saw bogus test failures).
+>                                                              I've
+> never really found the outputs from earlier tests enlightening.
 
-> Below is the coverage-untested-functions output; it seems submodule.c
-> is covered, so there is nothing for Jens to do ;-)
+If the test suite would automatically use "set -x" when appropriate
+so output for each command was preceded by the command being run,
+that would presumably make the verbose output more useful.
 
-Hehe, I kinda expected that part ;-)
+If you are not in a situation where it's difficult to debug
+interactively, I doubt you'll find anything better than reproducing
+the bug by hand and exploring.  I suppose an option "Run up to this
+test, stop, and tell me the $TRASH_DIRECTORY and next test so I can
+try it manually" could be a way to simplify that workflow.
 
-> unpack-trees.c: verify_clean_submodule
-
-This is the one I was after. While discussing my recursive update
-code with Peff on Saturday we wondered if that function would ever
-be called. I'll check if the tests are missing some relevant cases,
-if that function can be removed or some refactoring is necessary.
-
-Hmm, while function coverage is already extremely useful me thinks
-lcov support would be really nice. We'd have line and branch coverage,
-which help me a lot in finding dead code and missing tests at $DAYJOB
-... will look into that when I have the recursive update ready.
+Regards,
+Jonathan
