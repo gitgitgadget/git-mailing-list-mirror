@@ -1,146 +1,184 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [RFC/PATCH] branch: show me the hot branches
-Date: Tue, 14 May 2013 01:32:45 +0530
-Message-ID: <1368475365-18680-1-git-send-email-artagnon@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 13 22:02:19 2013
+From: Tobias Schulte <tobias.schulte@gliderpilot.de>
+Subject: [PATCH] git-svn: introduce --parents parameter for commands branch and tag
+Date: Mon, 13 May 2013 22:22:29 +0200
+Message-ID: <1368476549-17886-1-git-send-email-tobias.schulte@gliderpilot.de>
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Tobias Schulte <tobias.schulte@gliderpilot.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 13 22:22:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ubywp-0004gZ-Mx
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 22:02:16 +0200
+	id 1UbzGb-0002zf-Su
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 22:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755183Ab3EMUCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 16:02:11 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:48412 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755230Ab3EMUCJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 16:02:09 -0400
-Received: by mail-pa0-f53.google.com with SMTP id kq12so4874914pab.26
-        for <git@vger.kernel.org>; Mon, 13 May 2013 13:02:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:subject:date:message-id:x-mailer;
-        bh=k99/JWaLERryLbE0RMYX9+v/g05zdk+CTOL8J0/c+Uk=;
-        b=P204BJ0ibrdlx/jJdR8OWpkLLIOoQPnyXqlFdODa6jSopKq8rJb7OEBmxq1ndbTtg8
-         M6x6EBArSMYPhrd913UhIQgpDyLvmwn5HDilbzhQYjK3CjJFq1GjorNW4SQNXmAB2bkW
-         Ff58AvzhC6dISXqANotJALOjsjwbQqY6QX7xyka5AyY/ogLVHu94N4JvcUIZkb40zyKf
-         oBAjVARMJ3wJoljkBckPUCOe9GOfPB1DAcZcbGFDaVUzWNg+RnI2bP5qYPI9H6/HLWdO
-         9LL21LRcNGTsLCIgbxoru9Py3Cnb0C+zYGpBV4Ef0vDQxGcAcwvLbzqw57Fm6E9JkKbA
-         EsUQ==
-X-Received: by 10.68.204.35 with SMTP id kv3mr30954827pbc.87.1368475328386;
-        Mon, 13 May 2013 13:02:08 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.164.41])
-        by mx.google.com with ESMTPSA id wi6sm15150314pbc.22.2013.05.13.13.02.06
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 13 May 2013 13:02:07 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc1.49.g8d97506.dirty
+	id S1755397Ab3EMUWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 16:22:37 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:57746 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755349Ab3EMUWg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 16:22:36 -0400
+Received: from tobias-desktop.localdomain (pD9FB63A9.dip0.t-ipconnect.de [217.251.99.169])
+	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
+	id 0Mf6s9-1Ur3B33ZvN-00OXjx; Mon, 13 May 2013 22:22:33 +0200
+X-Mailer: git-send-email 1.7.9.5
+X-Provags-ID: V02:K0:1MU35cjDdCNBWpCqfZcTw1pxRgy7rRJ9ibUAG1FcspP
+ qWFMBCAoG1UPX79QIc6oJjiJG9SgWkSfe/TbiZ6U4epbWylNr/
+ yRSh+tWkJqV+XkxCTnsqGuBGzlnPe03iFSkiwBM/X+wo/Mg6ff
+ EvSYzwxb/RH32WvMU4sKS4tenxR4LPuGxYETsdkiKcNNSuoAU7
+ wTpGOoUOEQItq8RTphAnJDXnwjJgeNmFFfvC1+TYeqnHa09RTu
+ gs3Q8/U5XfM7cyzZhe7OMtjnHtaLGdEPu5aVgnGKnAw9YlWmoj
+ pypwLMeS7+gPgL8X2dYUYUymM5hgD/SIR7kHu1vHNC5Gs7Dv/b
+ St5xoZtZRoDKSWY3Ygteqo/H0LqES7xrhv7YUi34LN0tlyWVcg
+ 3/o0ZFxwqx0AAHYkYl5/zO74bPiDB4a/gbb8cf2lAdFp1/lsYS
+ uZFIX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224199>
 
-Uses commit->date to sort displayed refs.
+This parameter is equivalent to the parameter --parents on svn cp commands
+and is useful for non-standard repository layouts.
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+Signed-off-by: Tobias Schulte <tobias.schulte@gliderpilot.de>
 ---
- Just had this idea and wrote it down in five minutes.  The
- implementation is only meant to be indicative.
+ Documentation/git-svn.txt                |    5 ++++
+ git-svn.perl                             |   22 +++++++++++++-
+ t/t9167-git-svn-cmd-branch-subproject.sh |   46 ++++++++++++++++++++++++++++++
+ 3 files changed, 72 insertions(+), 1 deletion(-)
+ create mode 100755 t/t9167-git-svn-cmd-branch-subproject.sh
 
- Isn't this awesome?
-
- builtin/branch.c | 32 +++++++++++++++++++++++++++++---
- 1 file changed, 29 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 0836890..8b08563 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -59,6 +59,11 @@ static enum merge_filter {
- } merge_filter;
- static unsigned char merge_filter_ref[20];
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 58b6d54..4f2141d 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -298,6 +298,11 @@ where <name> is the name of the SVN repository as specified by the -R option to
+ 	git config --get-all svn-remote.<name>.commiturl
+ +
  
-+static enum sort_strategy {
-+	LEXICAL = 0,
-+	DATE,
-+} sort_strategy;
++--parents;;
++	Create parent folders. This parameter is equivalent to the parameter 
++	--parents on svn cp commands and is useful for non-standard repository 
++	layouts.
 +
- static struct string_list output = STRING_LIST_INIT_DUP;
- static unsigned int colopts;
+ 'tag'::
+ 	Create a tag in the SVN repository. This is a shorthand for
+ 	'branch -t'.
+diff --git a/git-svn.perl b/git-svn.perl
+index ccabe06..204313d 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -113,7 +113,7 @@ my ($_stdin, $_help, $_edit,
+ 	$_template, $_shared,
+ 	$_version, $_fetch_all, $_no_rebase, $_fetch_parent,
+ 	$_before, $_after,
+-	$_merge, $_strategy, $_preserve_merges, $_dry_run, $_local,
++	$_merge, $_strategy, $_preserve_merges, $_dry_run, $_parents, $_local,
+ 	$_prefix, $_no_checkout, $_url, $_verbose,
+ 	$_commit_url, $_tag, $_merge_info, $_interactive);
  
-@@ -406,7 +411,7 @@ static void free_ref_list(struct ref_list *ref_list)
- 	free(ref_list->list);
+@@ -203,6 +203,7 @@ my %cmd = (
+ 	            { 'message|m=s' => \$_message,
+ 	              'destination|d=s' => \$_branch_dest,
+ 	              'dry-run|n' => \$_dry_run,
++	              'parents' => \$_parents,
+ 	              'tag|t' => \$_tag,
+ 	              'username=s' => \$Git::SVN::Prompt::_username,
+ 	              'commit-url=s' => \$_commit_url } ],
+@@ -211,6 +212,7 @@ my %cmd = (
+ 	         { 'message|m=s' => \$_message,
+ 	           'destination|d=s' => \$_branch_dest,
+ 	           'dry-run|n' => \$_dry_run,
++	           'parents' => \$_parents,
+ 	           'username=s' => \$Git::SVN::Prompt::_username,
+ 	           'commit-url=s' => \$_commit_url } ],
+ 	'set-tree' => [ \&cmd_set_tree,
+@@ -1172,6 +1174,10 @@ sub cmd_branch {
+ 		$ctx->ls($dst, 'HEAD', 0);
+ 	} and die "branch ${branch_name} already exists\n";
+ 
++	if ($_parents) {
++		mk_parent_dirs($ctx, $dst);
++	}
++
+ 	print "Copying ${src} at r${rev} to ${dst}...\n";
+ 	$ctx->copy($src, $rev, $dst)
+ 		unless $_dry_run;
+@@ -1179,6 +1185,20 @@ sub cmd_branch {
+ 	$gs->fetch_all;
  }
  
--static int ref_cmp(const void *r1, const void *r2)
-+static int ref_cmp_lexical(const void *r1, const void *r2)
- {
- 	struct ref_item *c1 = (struct ref_item *)(r1);
- 	struct ref_item *c2 = (struct ref_item *)(r2);
-@@ -416,6 +421,16 @@ static int ref_cmp(const void *r1, const void *r2)
- 	return strcmp(c1->name, c2->name);
- }
- 
-+static int ref_cmp_date(const void *r1, const void *r2)
-+{
-+	struct ref_item *c1 = (struct ref_item *)(r1);
-+	struct ref_item *c2 = (struct ref_item *)(r2);
++sub mk_parent_dirs {
++	my $ctx = shift;
++	my $parent = shift;
++	$parent =~ s/\/[^\/]*$//;
 +
-+	if (c1->kind != c2->kind)
-+		return c1->kind - c2->kind;
-+	return c1->commit->date < c2->commit->date;
++	if (!eval{$ctx->ls($parent, 'HEAD', 0)}) {
++		mk_parent_dirs($ctx, $parent);
++		print "Creating parent folder ${parent} ...\n";
++		$ctx->mkdir($parent)
++			unless $_dry_run;
++	}
++
 +}
 +
- static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
- 		int show_upstream_ref)
- {
-@@ -621,7 +636,6 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 
- 	memset(&ref_list, 0, sizeof(ref_list));
- 	ref_list.kinds = kinds;
--	ref_list.verbose = verbose;
- 	ref_list.abbrev = abbrev;
- 	ref_list.with_commit = with_commit;
- 	if (merge_filter != NO_FILTER)
-@@ -629,7 +643,14 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 	cb.ref_list = &ref_list;
- 	cb.pattern = pattern;
- 	cb.ret = 0;
+ sub cmd_find_rev {
+ 	my $revision_or_hash = shift or die "SVN or git revision required ",
+ 	                                    "as a command-line argument\n";
+diff --git a/t/t9167-git-svn-cmd-branch-subproject.sh b/t/t9167-git-svn-cmd-branch-subproject.sh
+new file mode 100755
+index 0000000..9cb891b
+--- /dev/null
++++ b/t/t9167-git-svn-cmd-branch-subproject.sh
+@@ -0,0 +1,46 @@
++#!/bin/sh
++#
++# Copyright (c) 2013 Tobias Schulte
++#
 +
-+	if (sort_strategy == DATE && verbose < 1)
-+		ref_list.verbose = 1;
-+	else
-+		ref_list.verbose = verbose;
- 	for_each_rawref(append_ref, &cb);
-+	ref_list.verbose = verbose;
++test_description='git svn branch for subproject clones'
++. ./lib-git-svn.sh
 +
- 	if (merge_filter != NO_FILTER) {
- 		struct commit *filter;
- 		filter = lookup_commit_reference_gently(merge_filter_ref, 0);
-@@ -646,7 +667,10 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 			ref_list.maxwidth = calc_maxwidth(&ref_list);
- 	}
- 
--	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
-+	if (sort_strategy == DATE)
-+		qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp_date);
-+	else
-+		qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp_lexical);
- 
- 	detached = (detached && (kinds & REF_LOCAL_BRANCH));
- 	if (detached && match_patterns(pattern, "HEAD"))
-@@ -843,6 +867,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_END(),
- 	};
- 
-+	sort_strategy = DATE;
++test_expect_success 'initialize svnrepo' '
++    mkdir import &&
++    (
++        (cd import &&
++        mkdir -p trunk/project branches tags &&
++        (cd trunk/project &&
++        echo foo > foo
++        ) &&
++        svn_cmd import -m "import for git-svn" . "$svnrepo" >/dev/null
++        ) &&
++        rm -rf import &&
++        svn_cmd co "$svnrepo"/trunk/project trunk/project &&
++        (cd trunk/project &&
++        echo bar >> foo &&
++        svn_cmd ci -m "updated trunk"
++        ) &&
++        rm -rf trunk
++    )
++'
 +
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage_with_options(builtin_branch_usage, options);
- 
++test_expect_success 'import into git' '
++    git svn init --trunk=trunk/project --branches=branches/*/project --tags=tags/*/project "$svnrepo" &&
++    git svn fetch &&
++    git checkout remotes/trunk
++'
++
++test_expect_success 'git svn branch tests' '
++    test_must_fail git svn branch a &&
++    git svn branch --parents a &&
++    test_must_fail git svn branch -t tag1 &&
++    git svn branch --parents -t tag1 &&
++    test_must_fail git svn branch --tag tag2 &&
++    git svn branch --parents --tag tag2 &&
++    test_must_fail git svn tag tag3 &&
++    git svn tag --parents tag3
++'
++
++test_done
 -- 
-1.8.3.rc1.49.g8d97506.dirty
+1.7.9.5
