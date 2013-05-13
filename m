@@ -1,66 +1,62 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 4/6] stash: introduce 'git stash store'
-Date: Mon, 13 May 2013 22:45:02 +0530
-Message-ID: <CALkWK0mQhzrndaEp28nOpLs5STq136PY8hntCpX5RUZKrdJVAA@mail.gmail.com>
-References: <1368449154-21882-1-git-send-email-artagnon@gmail.com>
- <1368449154-21882-5-git-send-email-artagnon@gmail.com> <7vbo8fosd9.fsf@alter.siamese.dyndns.org>
- <CALkWK0kMj6q1rppzfxGWrthub4K_+C+jnvF=K4m2Fhk0pAnt7A@mail.gmail.com> <7v61ymop61.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: English/German terminology, git.git's de.po, and pro-git
+Date: Mon, 13 May 2013 19:19:15 +0200
+Message-ID: <51912093.4030201@web.de>
+References: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net> <alpine.LNX.2.01.1305131542210.30808@nerf07.vanv.qr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 13 19:15:54 2013
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@inf.ethz.ch>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	Christian Stimming <stimming@tuhh.de>,
+	Sven Fuchs <svenfuchs@artweb-design.de>,
+	Ralph Haussmann <ralph@scanmyfood.de>, git@vger.kernel.org,
+	=?UTF-8?B?SmFuIEtyw7xnZXI=?= <jk@jk.gs>
+To: Jan Engelhardt <jengelh@inai.de>
+X-From: git-owner@vger.kernel.org Mon May 13 19:19:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UbwLn-0003f4-PK
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 19:15:52 +0200
+	id 1UbwPV-0006aI-Df
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 19:19:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751487Ab3EMRPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 13:15:47 -0400
-Received: from mail-ia0-f181.google.com ([209.85.210.181]:65072 "EHLO
-	mail-ia0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751006Ab3EMRPq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 13:15:46 -0400
-Received: by mail-ia0-f181.google.com with SMTP id y25so2386987iay.12
-        for <git@vger.kernel.org>; Mon, 13 May 2013 10:15:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=VYJBj+gUCR4MTTe5nhaX43A+w3LvgRbtN7VPkSQ42UA=;
-        b=VAmssI5jKPZjpHfWT4oN39AYTik7aEbHslynCyTS+q9zgNA70UgqnpJptYuxnZ35v1
-         60z8svrCHCmXVreNJ1144Rg3KcI7Io1WOuuQ3eizrVAmB4qt96lx53mNVBE8/DyNZSJH
-         FAhz58voyuswONzPr8Ouj0nj0NIn0LibOJRNoPic1BkOHwS6p47A7TEdA8gmb5G7mIdn
-         E4PzwFUsRbU7nKrXLOARwdcPNQ+vSb96rqb3yC+vcVKc+zO1bJu4zdmPWZLVU+PRK54R
-         seUtmjoMZHiXj7jVS7FjRjJNLS05t2D38zSDIUf6dbNAv91rAsiRm4Peflr5xYyicL8n
-         kE2g==
-X-Received: by 10.50.73.65 with SMTP id j1mr10887821igv.49.1368465346398; Mon,
- 13 May 2013 10:15:46 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Mon, 13 May 2013 10:15:02 -0700 (PDT)
-In-Reply-To: <7v61ymop61.fsf@alter.siamese.dyndns.org>
+	id S1751553Ab3EMRTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 13:19:36 -0400
+Received: from mout.web.de ([212.227.17.11]:60855 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751223Ab3EMRTg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 13:19:36 -0400
+Received: from [192.168.178.41] ([91.3.169.183]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0MNc1S-1UaJqB1oUM-007Xw1; Mon, 13 May 2013 19:19:17
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <alpine.LNX.2.01.1305131542210.30808@nerf07.vanv.qr>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:k+t4bxgvwqjPENBdsP4LN9+4P1F+qF/Rpt1jOMZsdtG
+ qVmji+s+F6J2hoYc8C+nMRJ+Z8/Yburo1VBXVDVafkUqz9/ftg
+ p36OWyVyfQnvqGcmHMR6gs/z2FNP2Zcmkgodx6R0uQHhy0vRTl
+ p50NSYQt2kXB5HUJv+kYjGLx0CE8gXf6qkuCJVMzSiGWsUULMR
+ oQi92j/UZAKSpN8zicSLw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224181>
 
-Junio C Hamano wrote:
->         git stash store [-m <message>] [-e <error message>] $stash_sha1
+Am 13.05.2013 15:57, schrieb Jan Engelhardt:
+> On Monday 2013-05-13 14:54, Thomas Rast wrote:
+>> My vote is G+E.
+> 
+> Essentially, so is mine. ...
 
-1. The message is NOT optional.  If the user says 'git stash store
-b8bb3fe9', what "default message" can we possibly put in?  There is
-absolutely no context: no branch name, nothing.  So, the best we can
-do is "generic WIP".  What is the point of putting in such a useless
-message?
+Same here. I frequently get asked to switch Git back to English when the
+"LANG=C" gets lost, because my coworkers and myself - almost all of which
+are native German speakers - are terribly confused by the current git gui
+translations.
 
-2. We have already determined that the command is NOT for end user
-interactive use.  So, why do we need a default error message at all?
-The last statement is an update-ref, and you can infer whether it
-succeeded or failed from the exit status.
-
-3. Why are we designing a command-line interface?  git stash store
-"$stash_sha1" "$message" is sufficient for scripts, and there is
-absolutely no point in parsing '-m', '-e', or any such thing.
+Having said that, no matter how this vote turns out the term "submodule"
+should be translated as "Submodul" and not "Unterprojekt". The former is
+a perfectly valid German word and I see no reason to arbitrarily use a
+different one here.
