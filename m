@@ -1,90 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5551: do not use unportable sed '\+'
-Date: Mon, 13 May 2013 11:36:33 -0700
-Message-ID: <7vhai6n2vi.fsf@alter.siamese.dyndns.org>
-References: <201305111525.53130.tboegi@web.de>
-	<7vwqr5wdqm.fsf@alter.siamese.dyndns.org>
-	<7vobchwbax.fsf@alter.siamese.dyndns.org> <518EA351.8000603@web.de>
-	<7v8v3lwa5p.fsf@alter.siamese.dyndns.org> <518EAB7C.3010508@web.de>
-	<7vsj1svqi7.fsf@alter.siamese.dyndns.org>
-	<7vr4hbu818.fsf_-_@alter.siamese.dyndns.org> <51910418.2070904@web.de>
-	<7vtxm6n8pj.fsf@alter.siamese.dyndns.org> <51912FEC.6020909@web.de>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 4/6] stash: introduce 'git stash store'
+Date: Tue, 14 May 2013 00:15:45 +0530
+Message-ID: <CALkWK0nygD7dpwZkXYMuXHhVZpRzb968wAYq-xZrj=y7duL1ZQ@mail.gmail.com>
+References: <1368449154-21882-1-git-send-email-artagnon@gmail.com>
+ <1368449154-21882-5-git-send-email-artagnon@gmail.com> <7vbo8fosd9.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kMj6q1rppzfxGWrthub4K_+C+jnvF=K4m2Fhk0pAnt7A@mail.gmail.com>
+ <7v61ymop61.fsf@alter.siamese.dyndns.org> <CALkWK0mQhzrndaEp28nOpLs5STq136PY8hntCpX5RUZKrdJVAA@mail.gmail.com>
+ <7vppwun5zk.fsf@alter.siamese.dyndns.org> <CALkWK0nmDopEVArofKt42u5JHRBXmGiHP051jhMxtaihWLu95A@mail.gmail.com>
+ <7vli7in2wq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon May 13 20:36:48 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 13 20:46:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ubxc2-0003Lp-I8
-	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 20:36:42 +0200
+	id 1UbxlW-0001ms-O0
+	for gcvg-git-2@plane.gmane.org; Mon, 13 May 2013 20:46:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753344Ab3EMSgg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 May 2013 14:36:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45224 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752467Ab3EMSgf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 May 2013 14:36:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 214FF1EA7D;
-	Mon, 13 May 2013 18:36:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=sUNS5kRjie0A
-	GXn4AwWLbEiFzyQ=; b=APIAEJGCpgcFeVcz3vLhrRGjJF+H8h9k7f23KkZdc+og
-	pYBV+6dL7qjvIGAK38cgsHEzxCzFZvM4OYoXA51W28B9GGPULF6A2Pru4NR0aDTp
-	LrkfJQpVRZlsd47xE1MLzoh+zXIQAsTcT/zVnL3tvKUHkeOhOUloo1kYWOY0HTA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gUXuXp
-	4eLsgJjzw1dbE9jrWOv8zA/wnhSmv55xtpiH+hTOTAKIAhaBg5hxq+WQXa7b06JS
-	Yqsrf8cJ6c3qiLCkOS0uMlWyqnaapCMQ45Tg824PqBMSfhRzbNx/Kut+PncynSRd
-	vxnvGnlS3faeouaq87qpYZRtfbd0FUq4bSU9g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 190031EA7C;
-	Mon, 13 May 2013 18:36:35 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 73CB51EA79;
-	Mon, 13 May 2013 18:36:34 +0000 (UTC)
-In-Reply-To: <51912FEC.6020909@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Mon, 13 May 2013 20:24:44 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 09C8C4CC-BBFC-11E2-8915-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754051Ab3EMSq0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 14:46:26 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:47374 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753994Ab3EMSqZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 14:46:25 -0400
+Received: by mail-ie0-f175.google.com with SMTP id s9so13127592iec.34
+        for <git@vger.kernel.org>; Mon, 13 May 2013 11:46:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=ZNX5GSz04FUr1KWYB0ouDoT8ggLjAC9rePDTj3SYpU0=;
+        b=A3rku4V333+qIIAVpV9m3O0/UdcZX8uPBFdfZHkRo8ZmElntkkRw55TGUcwdDRy2zu
+         XpVD8Kqtuxj8hx43S6/kW43J9Z5l0FamYYWzLwH7UziGisAr+OOJwkCk3OlQV7CHiNeJ
+         8XleacNyiJihWJiZqXXBQNHI9Knn0RGROLISE9o7aO4EDEk3Phfs7qkHXkxiIE5iFna4
+         iNFfJyXsWtgtaUONoeFQaNEpZggUsmg0Y9DGOE2OuGJX6aCupm2ELFjnAS/uNofB85OT
+         Q1gbbWAZaWqCugCf25ayMFoef/ts/f8lDmvoGFZvosl3WVw0ScLgD1D5YxQO/yAsFlj+
+         gGlQ==
+X-Received: by 10.50.33.19 with SMTP id n19mr6149920igi.44.1368470785490; Mon,
+ 13 May 2013 11:46:25 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Mon, 13 May 2013 11:45:45 -0700 (PDT)
+In-Reply-To: <7vli7in2wq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224188>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Junio C Hamano wrote:
+> That is not a valid question.
 
-> On 2013-05-13 18.30, Junio C Hamano wrote:
->> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->>=20
->>> On 2013-05-13 00.50, Junio C Hamano wrote:
->>>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->>>> ---
->>>>  t/t5551-http-fetch.sh | 8 ++++++--
->>>>  1 file changed, 6 insertions(+), 2 deletions(-)
->>>>
->>> Thanks, works like a charm, tested on Mac OS.
->>> /torsten
->>=20
->> Thanks; I take it that you reverted the "sed fix" part and saw the
->> updated "clone" check fail with the platform "sed"?
-> In my first test with the fix the test case passed.
-> Then the sed expression was only manipulated to verify that the TC fa=
-iles.
-> And now I took even the original expression and have verfied it is fa=
-iling.
->
-> The short version: Yes
+I was just asking to see if you could think of something.  I just did:
+named stashes (each one has a different ref/ reflog) for internal use.
 
-Thanks.
+Sure, we'll go with the -m -e approach.
