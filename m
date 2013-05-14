@@ -1,94 +1,86 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 25/47] remote-hg: improve progress calculation
-Date: Mon, 13 May 2013 23:36:48 -0500
-Message-ID: <1368506230-19614-26-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 28/47] remote-hg: add check_bookmark() test helper
+Date: Mon, 13 May 2013 23:36:51 -0500
+Message-ID: <1368506230-19614-29-git-send-email-felipe.contreras@gmail.com>
 References: <1368506230-19614-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 14 06:40:23 2013
+X-From: git-owner@vger.kernel.org Tue May 14 06:40:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uc72D-0004WY-V4
-	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 06:40:22 +0200
+	id 1Uc72F-0004WY-LV
+	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 06:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755708Ab3ENEkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 May 2013 00:40:04 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:34909 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755623Ab3ENEkB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 May 2013 00:40:01 -0400
-Received: by mail-ob0-f169.google.com with SMTP id vb8so100137obc.0
-        for <git@vger.kernel.org>; Mon, 13 May 2013 21:40:00 -0700 (PDT)
+	id S1755832Ab3ENEkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 May 2013 00:40:15 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:39825 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755829Ab3ENEkL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 May 2013 00:40:11 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h2so102264oag.19
+        for <git@vger.kernel.org>; Mon, 13 May 2013 21:40:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=LThvOAwUS/Z8EG/BBLwuLpAjmLX0D9VkXU3yXvdWYVc=;
-        b=wpdK6LjVaaiOohFu9WHse9JML6T3oNl+BprQ1QnrAxl53ekC1mTIJbv3zX2bKfWv0o
-         ICuadRY1kr9Ey+grLgrD6y9lrR5dXBupRbypVrcsZOT6CTSMkpoDmXfPfqElZvwH96KC
-         USxIxs7QYh6TPQ6tRHOK6k9lOX/f9SUcCDp335mmL4wAons2LnQ2wDw3phBi0X0RwPGc
-         bsiHSLsDomsLSuMvJKKqXYyVLDSvIvMpcsBlVQKFXv1V8oxszfkU0xaR4MYzO5OKWKMF
-         bsBTVJI68Yxh8aynAxrDH7o54o/mo7slHLx9vdReZ2kUC4gjgflUfXfvxiWNbLtarHM0
-         CX2w==
-X-Received: by 10.60.149.129 with SMTP id ua1mr15992505oeb.56.1368506400930;
-        Mon, 13 May 2013 21:40:00 -0700 (PDT)
+        bh=OmnCL5aT//YUJEHq/HTNsizL6+tCJkrQXHEG+ejF9F4=;
+        b=s9YMj9QwM1Is1+gd5Cqt9PJIC7mCRLCI4S9iU/kLUVI2vt1G69+Mct2V20rq17Gn7F
+         eKXA2HHYFPvKucPybpurVjMg6/MdJGtLPvkE+A1cRV3RAuPqpnw9OdO2SgNZ5tEYhqXU
+         dLcdl6yK9pPWsjsKFiXNEVIQhenMOXifz7/jaTDPVV9E33ftcAZZy7RtqbhXVC5zfoBz
+         uchyQlSDmf8F7F1dnCNMM3jYmXq+tczYfwemIH0Tkdcxo+bu7F5sLu66BSLJVwWH7t1R
+         N3Zy+D7P2ISlkty6Ac23ARBsMOTYBZLCmGR5QtsEq6mPhKFw+07FDvPaHNRgymh5oEoi
+         7olg==
+X-Received: by 10.60.55.74 with SMTP id q10mr9533193oep.80.1368506411264;
+        Mon, 13 May 2013 21:40:11 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id x10sm20486161oes.6.2013.05.13.21.39.59
+        by mx.google.com with ESMTPSA id c20sm20504278oez.4.2013.05.13.21.40.09
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 13 May 2013 21:40:00 -0700 (PDT)
+        Mon, 13 May 2013 21:40:10 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc1.579.g184e698
 In-Reply-To: <1368506230-19614-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224257>
 
-No need to manually keep track of the revision count.
+And check in a more proper way.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/git-remote-hg | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ contrib/remote-helpers/test-hg.sh | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index 49af8d5..e05106a 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -418,7 +418,7 @@ def export_ref(repo, name, kind, head):
-         tip = 0
+diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers/test-hg.sh
+index 8d1f6e0..dc71c37 100755
+--- a/contrib/remote-helpers/test-hg.sh
++++ b/contrib/remote-helpers/test-hg.sh
+@@ -26,6 +26,12 @@ check () {
+ 	test_cmp expected actual
+ }
  
-     revs = xrange(tip, head.rev() + 1)
--    count = 0
-+    total = len(revs)
++check_bookmark () {
++	echo $3 > expected &&
++	hg -R $1 log -r "bookmark('$2')" --template '{desc}\n' > actual &&
++	test_cmp expected actual
++}
++
+ setup () {
+ 	(
+ 	echo "[ui]"
+@@ -98,7 +104,7 @@ test_expect_success 'update bookmark' '
+ 	git push --quiet
+ 	) &&
  
-     for rev in revs:
+-	hg -R hgrepo bookmarks | egrep "devel[	 ]+3:"
++	check_bookmark hgrepo devel devel
+ '
  
-@@ -426,7 +426,6 @@ def export_ref(repo, name, kind, head):
-         node = c.node()
- 
-         if marks.is_marked(c.hex()):
--            count += 1
-             continue
- 
-         (manifest, user, (time, tz), files, desc, extra) = repo.changelog.read(node)
-@@ -498,9 +497,9 @@ def export_ref(repo, name, kind, head):
-             print "D %s" % (fix_file_path(f))
-         print
- 
--        count += 1
--        if (count % 100 == 0):
--            print "progress revision %d '%s' (%d/%d)" % (rev, name, count, len(revs))
-+        progress = (rev - tip)
-+        if (progress % 100 == 0):
-+            print "progress revision %d '%s' (%d/%d)" % (rev, name, progress, total)
- 
-     # make sure the ref is updated
-     print "reset %s/%s" % (prefix, ename)
+ # cleanup previous stuff
 -- 
 1.8.3.rc1.579.g184e698
