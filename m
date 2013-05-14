@@ -1,62 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Re: [PATCH v4 3/5] config: make parsing stack struct independent
- from actual data source
-Date: Tue, 14 May 2013 04:35:51 +0200
-Message-ID: <20130514023551.GB23146@sigill.intra.peff.net>
-References: <20130511131721.GA17991@book-mint>
- <20130511132013.GD17991@book-mint>
- <7vfvxrscjc.fsf@alter.siamese.dyndns.org>
- <20130513140435.GC3561@book-mint>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3 00/10] remote-hg: fixes and cleanups
+Date: Mon, 13 May 2013 22:34:18 -0500
+Message-ID: <CAMP44s134n9az4anLAnNH6DLT92kAJjW3_rYUx1hGZJ6ECWAYA@mail.gmail.com>
+References: <1368486720-2716-1-git-send-email-felipe.contreras@gmail.com>
+	<7vfvxql66j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue May 14 04:36:00 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 14 05:34:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uc55r-0004UG-9e
-	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 04:35:59 +0200
+	id 1Uc60O-0005Ry-KL
+	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 05:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755806Ab3ENCfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 May 2013 22:35:54 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53425 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755376Ab3ENCfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 May 2013 22:35:54 -0400
-Received: (qmail 6194 invoked by uid 102); 14 May 2013 02:36:20 -0000
-Received: from c-67-166-180-82.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (67.166.180.82)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 13 May 2013 21:36:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 May 2013 04:35:51 +0200
-Content-Disposition: inline
-In-Reply-To: <20130513140435.GC3561@book-mint>
+	id S1755702Ab3ENDeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 May 2013 23:34:20 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:38990 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752338Ab3ENDeU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 May 2013 23:34:20 -0400
+Received: by mail-lb0-f181.google.com with SMTP id w10so115066lbi.26
+        for <git@vger.kernel.org>; Mon, 13 May 2013 20:34:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=rGBU6H9Mn6Rk29Qz2JXs2ArMH2UfPU385fTE9WXtehY=;
+        b=hPEoZfqB0XecHVIUAKMwe6mfyzV29bQ7wMbabl1j5IHrl4zcaWMzvGoCqVQOjfgxB7
+         s1kXixgtJv5vLxGkMvHSuGf/Nhs4v3kUc+mBWleBIi9yJu+o7RRV0lUB8CuUL0iYzbG7
+         ooB4eP2StTFmVzUVZMKsCIeudELxbiBLusPsYan45MWo+B/tnC/cpeSDi6/GnEbjBMBO
+         DFBOUUt6++vC8vF52pivDZlS5fkVX8ZwXFCHkyzgK2Mxr2/Oh1XfS/a8XLgRZbqsqxup
+         SeGwwVM/wYSOP0A0miriRK33ly6d3O4hL8BwwBjKrWwp7csOlAzA4eYSfWDA9e1dzp9T
+         0Hfg==
+X-Received: by 10.112.135.70 with SMTP id pq6mr14426691lbb.82.1368502458362;
+ Mon, 13 May 2013 20:34:18 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Mon, 13 May 2013 20:34:18 -0700 (PDT)
+In-Reply-To: <7vfvxql66j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224233>
 
-On Mon, May 13, 2013 at 04:04:35PM +0200, Heiko Voigt wrote:
+On Mon, May 13, 2013 at 8:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> Since the last series is not merged to master yet, I decided to add more cleanups.
+>
+> Because nothing new will go to 'master' past -rc1 by default, unless
+> you are working on fixing or finding 1.8.3 regressions, this is a
+> good time to polish things that are meant for the next cycle.
 
-> > > -static int do_config_from(struct config_file *top, config_fn_t fn, void *data)
-> > > +static int do_config_from_source(struct config_source *top, config_fn_t fn, void *data)
-> [...]
-> I thought I recalled that Jeff asked me to change the name but I can
-> not find the email, so maybe its just my wrong memory. I am happy to
-> drop the rename here, if thats what you meant.
+I know, I've been polishing a bunch of patches for the next cycle for
+a long time.
 
-I think you are thinking of:
+> Folks interested in working remote-hg, please try it out, so that we
+> can have a polished one soon after 1.8.3 ships (I am not saying this
+> round is not polished---I haven't even looked at the patches).
+>
+> And others, please spend time on testing the 1.8.3-rc2 to make sure
+> what we are going to ship is free of embarrassing regressions.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/217018/focus=217170
+The whole purpose of this series is to avoid regressions, that's why I
+sent them for 1.8.3. I thought I made it clear[1] that we would want
+these patches in, to avoid regressions, unless it's desirable that we
+end up pushing garbage to a remote repository.
 
-where I criticize the name. But I think the comment you added makes its
-purpose much more clear, so the name is less important (and for the
-record, I think "do_config" or "config_source_parse" would be fine,
-too).
+Cheers.
 
--Peff
+[1] http://article.gmane.org/gmane.comp.version-control.git/224224
+
+-- 
+Felipe Contreras
