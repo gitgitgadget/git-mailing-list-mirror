@@ -1,66 +1,83 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH] diffcore-pickaxe doc: document -S and -G properly
-Date: Tue, 14 May 2013 17:13:08 -0400
-Message-ID: <CABURp0oJ96bYY=Wvn7ih1nPZWOea9O+tB6xTe0TViXf4rKDf2A@mail.gmail.com>
-References: <1368540759-25598-1-git-send-email-artagnon@gmail.com>
- <7vwqr1jw67.fsf@alter.siamese.dyndns.org> <CALkWK0kJ7aksRbtjOesEPvsdx6wZyxxdVHUm_F-jS+Nb3WLSxg@mail.gmail.com>
- <7v8v3hjt57.fsf@alter.siamese.dyndns.org> <CALkWK0na1pDi5DnKUcWRnt0v9iQmeaLdrs7uQMDZzCKAazaNFg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remote-bzr: update old organization
+Date: Tue, 14 May 2013 14:18:04 -0700
+Message-ID: <7v4ne5i7lf.fsf@alter.siamese.dyndns.org>
+References: <1368505227-16661-1-git-send-email-felipe.contreras@gmail.com>
+	<7v1u99lb8w.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1rZmo3cQecGmYVMZ7KSq=z3_mfVnAK+so4QL_JfEe_uw@mail.gmail.com>
+	<7v8v3hi9ix.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2B3bFWXZe0aL_GMXe_56MbhSZXf-65rT364nY3shYwUA@mail.gmail.com>
+	<CAMP44s16VD+Rm5J=TXxQB+pKhpzHqoxBXSSwDvi0CVW2u2J=5g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 14 23:13:36 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 14 23:18:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcMXO-0006FU-EL
-	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 23:13:34 +0200
+	id 1UcMbu-0000fC-4d
+	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 23:18:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758533Ab3ENVNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 May 2013 17:13:30 -0400
-Received: from mail-ve0-f171.google.com ([209.85.128.171]:40034 "EHLO
-	mail-ve0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758451Ab3ENVN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 May 2013 17:13:29 -0400
-Received: by mail-ve0-f171.google.com with SMTP id m1so1253588ves.2
-        for <git@vger.kernel.org>; Tue, 14 May 2013 14:13:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=yELpH8K6ef0bj/10z7k4in9ZGWtVW1viXyQ25H9ulrA=;
-        b=j99I0Gr5dKm2OI2D+77Z7RB3G5DG3t72LPB/KDN6ct2tGAoDWjIYZMDs0Snu8uVrlM
-         KNeVmgIG9G4UmGPzfZ4t29Ba+8sk6cYpbuHpadGN2QYFiP8TgImNGubJZ8pujoIqBRi+
-         eDZH2umL5qesvPezmZ7IfIEHbsfkFCGPADKMk+JcwxSMdaV7YJJzxwl0XTKLwtguzNwY
-         1VBKCRiJbA8LMXljHYvBGXMjnWJeueRMG87L7he32vu+rC6W1R5Y14FVAv77boyEcwjP
-         MhxOUVox3DXdSuCjqIbKbSVJJ+UdQ4Jn/4hyukn2A3utvBVC2BFoSggT+Ew//WcJUA/3
-         Nr1A==
-X-Received: by 10.220.213.131 with SMTP id gw3mr8968896vcb.27.1368566008339;
- Tue, 14 May 2013 14:13:28 -0700 (PDT)
-Received: by 10.58.135.1 with HTTP; Tue, 14 May 2013 14:13:08 -0700 (PDT)
-In-Reply-To: <CALkWK0na1pDi5DnKUcWRnt0v9iQmeaLdrs7uQMDZzCKAazaNFg@mail.gmail.com>
+	id S1758555Ab3ENVSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 May 2013 17:18:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42129 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758395Ab3ENVSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 May 2013 17:18:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB9B21F6C8;
+	Tue, 14 May 2013 21:18:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7JfLH6vc9CcOd9YJl/q0YkmU91M=; b=qLMQir
+	dbwQvyFPwPOq3vciZkcm11Ib+7qg3weWgSe6fBdsQ7s9AB5tD/6XmZXH/8qLMjtC
+	arn0i6VDix4+jwFZMu4bTBqSsLq04tnAd8Boxlu+mrOTvoIFz1jCOOqNJJce5cgJ
+	mY43X5hy4iEhpU/QqzH7VQsHUCUtrsP3g3GW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mlNga7Ep/u50wkVxWCUM0XKysboAvu5r
+	9YrZqom8ONmnNPqtc+GxgWcx26aso+nvcF6sbg2A8STCNGFdv5Uh9K596xjvAd/r
+	41Qa7sYlok6fppVaqRn2b4Tn81+5GDN2WO6nOfZm9mhxrbKxMt94NuIGQIVQGY3/
+	FI0ALN4zZmE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B29E81F6C7;
+	Tue, 14 May 2013 21:18:06 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 382B91F6C6;
+	Tue, 14 May 2013 21:18:06 +0000 (UTC)
+In-Reply-To: <CAMP44s16VD+Rm5J=TXxQB+pKhpzHqoxBXSSwDvi0CVW2u2J=5g@mail.gmail.com>
+	(Felipe Contreras's message of "Tue, 14 May 2013 15:57:09 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C4EF3EE0-BCDB-11E2-A381-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224349>
 
-On Tue, May 14, 2013 at 2:57 PM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Junio C Hamano wrote:
->> I do not use zsh but with bash+readline the old tradition lnext can
->> be used (see "stty -a" output and it typically is set to ^V), i.e.
->> \C-v followed by \C-i should give you a literal HT.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> I forgot to mention the main objective of the shared repo feature:
 >
-> Just looked it up: zsh has quoted-insert (^V) after which I can TAB.
-> Still doesn't solve my problem though: I don't type out structs; I
-> paste them the X clipboard (Emacs).  And that doesn't work either on
-> bash or zsh.
+> + first/
+> * first/second/foo
+> * first/third/foo
+> * first/fourth/foo
+> * first/fifth/foo
+> * first/sixth/foo
 >
-> What can we do to improve the interface?
+> Since in bazaar branches are repositories, we want to make it possible
+> for remote-bzr users to create a single remote per branch as easily as
+> possible (without having to duplicate huge clones).
+>
+> But as I said, without this patch, they wouldn't be able to use that
+> feature if they cloned with v1.8.2.
 
-Don't use tabs in your code?
-
-P
+So we nuke that and have them clone from scratch?  I am not saying
+that is bad.  I just want us to be honest about the implications
+when including it in the ReleaseNotes.
