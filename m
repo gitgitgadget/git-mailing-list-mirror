@@ -1,129 +1,175 @@
-From: Andreas Leha <andreas.leha@med.uni-goettingen.de>
-Subject: make git ignore the timestamp embedded in PDFs
-Date: Tue, 14 May 2013 15:17:59 +0200
-Message-ID: <87y5bhn1iw.fsf@med.uni-goettingen.de>
-Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 14 16:05:18 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] diffcore-pickaxe doc: document -S and -G properly
+Date: Tue, 14 May 2013 19:42:39 +0530
+Message-ID: <1368540759-25598-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 14 16:11:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcFqs-00046e-SS
-	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 16:05:15 +0200
+	id 1UcFwZ-00084Z-92
+	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 16:11:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757500Ab3ENOFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 May 2013 10:05:07 -0400
-Received: from plane.gmane.org ([80.91.229.3]:35160 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757490Ab3ENOFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 May 2013 10:05:06 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UcFqh-0003yh-K3
-	for git@vger.kernel.org; Tue, 14 May 2013 16:05:03 +0200
-Received: from genepi110.genepi.med.uni-goettingen.de ([134.76.140.110])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 May 2013 16:05:03 +0200
-Received: from andreas.leha by genepi110.genepi.med.uni-goettingen.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 May 2013 16:05:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: genepi110.genepi.med.uni-goettingen.de
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
-Cancel-Lock: sha1:f9KQwCGCIzG+k0+oYGT70i38wVo=
+	id S1757446Ab3ENOLB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 May 2013 10:11:01 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:47626 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754624Ab3ENOLA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 May 2013 10:11:00 -0400
+Received: by mail-pd0-f170.google.com with SMTP id 10so464914pdi.15
+        for <git@vger.kernel.org>; Tue, 14 May 2013 07:11:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=l09evsnhSwpC1GL4jzjQGk2AeDFlS3pjcQYwFtG9aW0=;
+        b=DRjlD8GDp8ku+PD7aCbK5K0KLfAuVX5mC/ReXrZCiL82L1ZMQcVQQndmhxVXwSdPXW
+         QO/IBsC6Pobu8qhiXFmC/tvFfQuQvV75SICNrpQ2aU7v/BUQJ4IpVO7RqrDrMf7Kg/4J
+         XYaUJYNr/vjBnnOtpCRXc5hCO9k0wt3IP6/EfoZ8xO7TAumFoJQxDwCU+W4olHVKVfQu
+         UllLoePeNHScz7zSSGMhybLLPniEP2hquAuDAErf/+utPZMvAoF1k9MJZS4N1xEGxW2E
+         CjhL6+qbtsEDipXYRzav45knlei4e1xKl/bVM+XXFZDodK9+l0suHDqugePjRBrzMkAG
+         Pz+g==
+X-Received: by 10.68.200.162 with SMTP id jt2mr34092299pbc.138.1368540660247;
+        Tue, 14 May 2013 07:11:00 -0700 (PDT)
+Received: from luneth.maa.corp.collab.net ([182.71.239.158])
+        by mx.google.com with ESMTPSA id gh9sm18398472pbc.37.2013.05.14.07.10.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 14 May 2013 07:10:59 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.61.g2cacfff
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224299>
 
-Hi all,
+The documentation of -S and -G is very sketchy.  Completely rewrite the
+sections in Documentation/diff-options.txt and
+Documentation/gitdiffcore.txt.
 
-how can I make git ignore the time stamp(s) in a PDF.  Two PDFs that
-differ only in these time stamps should be considered identical.
+References:
+52e9578 ([PATCH] Introducing software archaeologist's tool "pickaxe".)
+f506b8e (git log/diff: add -G<regexp> that greps in the patch text)
 
-Here is an example:
-,----
-| > pdfinfo some.pdf
-| Title:          R Graphics Output
-| Creator:        R
-| Producer:       R 2.15.1
-| CreationDate:   Thu Jan 24 13:43:31 2013 <==  these entries
-| ModDate:        Thu Jan 24 13:43:31 2013 <==  should be ignored
-| Tagged:         no
-| Pages:          1
-| Encrypted:      no
-| Page size:      504 x 504 pts
-| File size:      54138 bytes
-| Optimized:      no
-| PDF version:    1.4
-`----
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ I spent some time reading the code and history to figure out what -S
+ and -G really do.  I hope I've done justice.
 
+ Documentation/diff-options.txt | 35 +++++++++++++++++++++++++++-------
+ Documentation/gitdiffcore.txt  | 43 +++++++++++++++++++++++-------------------
+ 2 files changed, 52 insertions(+), 26 deletions(-)
 
-What I tried is a filter:
-,----[ ~/.gitconfig ]
-| [filter "pdfresetdate"]
-|         clean = pdfresetdate
-`----
-
-With this filter script:
-,----[ pdfresetdate ]
-| #!/bin/bash
-|
-| FILEASARG=true
-| if [ "$#" == 0 ]; then
-|     FILEASARG=false
-| fi
-|
-| if $FILEASARG ; then
-|     FILENAME="$1"
-| else
-|     FILENAME=`mktemp`
-|     cat /dev/stdin > "${FILENAME}"
-| fi
-|
-| TMPFILE=`mktemp`
-| TMPFILE2=`mktemp`
-|
-| ## dump the pdf metadata to a file and replace the dates
-| pdftk "$FILENAME" dump_data | sed -e '{N;s/Date\nInfoValue: D:.*/Date\nInfoValue: D:19790101072619/}' > "$TMPFILE"
-|
-| ## update the pdf metadata
-| pdftk "$FILENAME" update_info "$TMPFILE" output "$TMPFILE2"
-|
-| ## overwrite the original pdf
-| mv -f "$TMPFILE2" "$FILENAME"
-|
-| ## clean up
-| rm -f "$TMPFILE"
-| rm -f "$TMPFILE2"
-| if [ -n $FILEASARG ] ; then
-|     cat "$FILENAME"
-| fi
-`----
-
-
-This 'works' as far as the committed pdf indeed has the date reset to my
-default value.
-
-However, when I re-checkout the files, they are marked modified by git.
-
-So, my question is:  How can I make git *completely* ignore the embedded
-date in the PDF?
-
-Many thanks in advance for any help!
-
-Regards,
-Andreas
-
-
-PS:
-I had posted this question (without much success) here:
-http://stackoverflow.com/questions/16058187/make-git-ignore-the-date-in-pdf-files
-and with no answer on the git-users mailing list:
-https://groups.google.com/forum/#!topic/git-users/KqtecNa3cOc
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 104579d..765abc5 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -383,14 +383,35 @@ ifndef::git-format-patch[]
+ 	that matches other criteria, nothing is selected.
+ 
+ -S<string>::
+-	Look for differences that introduce or remove an instance of
+-	<string>. Note that this is different than the string simply
+-	appearing in diff output; see the 'pickaxe' entry in
+-	linkgit:gitdiffcore[7] for more details.
++	Look for commits where the specified string was added or
++	removed.  More precisely, find commits that change the number
++	of occurrences of the specified string.
+++
++It is often useful when you're looking for an exact string (like a
++function prototype), and want to know the history of that string since
++it first came into being.
+ 
+ -G<regex>::
+-	Look for differences whose added or removed line matches
+-	the given <regex>.
++	Grep through the patch text of commits for added/removed lines
++	that match <regex>.  `--pickaxe-regex` is implied in this
++	mode.
+++
++To illustrate the difference between `-S<regex> --pickaxe-regex` and
++`-G<regex>`, consider a commit with the following diff in the same
++file:
+++
++----
+++    return !regexec(regexp, two->ptr, 1, &regmatch, 0);
++...
++-    hit = !regexec(regexp, mf2.ptr, 1, &regmatch, 0);
++----
+++
++While `git log -G"regexec\(regexp"` will show this commit, `git log
++-S"regexec\(regexp" --pickaxe-regex` will not (because the number of
++occurrences of that string didn't change).
+++
++See the 'pickaxe' entry in linkgit:gitdiffcore[7] for more
++information.
+ 
+ --pickaxe-all::
+ 	When `-S` or `-G` finds a change, show all the changes in that
+@@ -399,7 +420,7 @@ ifndef::git-format-patch[]
+ 
+ --pickaxe-regex::
+ 	Make the <string> not a plain string but an extended POSIX
+-	regex to match.
++	regex to match.  Implied when using `-G`.
+ endif::git-format-patch[]
+ 
+ -O<orderfile>::
+diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
+index 568d757..39b9c51 100644
+--- a/Documentation/gitdiffcore.txt
++++ b/Documentation/gitdiffcore.txt
+@@ -222,25 +222,30 @@ version prefixed with '+'.
+ diffcore-pickaxe: For Detecting Addition/Deletion of Specified String
+ ---------------------------------------------------------------------
+ 
+-This transformation is used to find filepairs that represent
+-changes that touch a specified string, and is controlled by the
+--S option and the `--pickaxe-all` option to the 'git diff-*'
+-commands.
+-
+-When diffcore-pickaxe is in use, it checks if there are
+-filepairs whose "result" side and whose "origin" side have
+-different number of specified string.  Such a filepair represents
+-"the string appeared in this changeset".  It also checks for the
+-opposite case that loses the specified string.
+-
+-When `--pickaxe-all` is not in effect, diffcore-pickaxe leaves
+-only such filepairs that touch the specified string in its
+-output.  When `--pickaxe-all` is used, diffcore-pickaxe leaves all
+-filepairs intact if there is such a filepair, or makes the
+-output empty otherwise.  The latter behaviour is designed to
+-make reviewing of the changes in the context of the whole
+-changeset easier.
+-
++There are two kinds of pickaxe: the S kind (corresponding to 'git log
++-S') and the G kind (corresponding to 'git log -G').
++
++The S kind detects filepairs whose "result" side and "origin" side
++have different number of occurrences of specified string.  While
++rename detection works as usual, 'git log -S' cannot omit commits
++where a the small string being looked for is moved verbatim from one
++file to another (since the number of occurrences of that string
++changed in each of those two filepairs). The implementation
++essentially runs a count, and is significantly cheaper than the G
++kind.
++
++The G kind detects filepairs whose patch text has an added or a
++deleted line that matches the given regexp.  This means that it can
++detect in-file (or what rename-detection considers the same file)
++moves.  The implementation of 'git log -G' runs diff twice and greps,
++and this can be quite expensive.
++
++A diffcore-pickaxe option worth mentioning: `--pickaxe-all`.  When not
++in effect, diffcore-pickaxe leaves only such filepairs that touch the
++specified string in its output.  When in effect, diffcore-pickaxe
++leaves all filepairs intact if there is such a filepair, or makes the
++output empty otherwise.  The latter behavior is designed to make
++reviewing of the changes in the context of the whole changeset easier.
+ 
+ diffcore-order: For Sorting the Output Based on Filenames
+ ---------------------------------------------------------
+-- 
+1.8.3.rc1.61.g2cacfff
