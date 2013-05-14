@@ -1,84 +1,95 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] remote-bzr: update old organization
-Date: Tue, 14 May 2013 16:38:40 -0500
-Message-ID: <CAMP44s0CgYs9s1ac1EEqhP8XusScj39zY6CcQyMxSnh6i-V6SA@mail.gmail.com>
-References: <1368505227-16661-1-git-send-email-felipe.contreras@gmail.com>
-	<7v1u99lb8w.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1rZmo3cQecGmYVMZ7KSq=z3_mfVnAK+so4QL_JfEe_uw@mail.gmail.com>
-	<7v8v3hi9ix.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2B3bFWXZe0aL_GMXe_56MbhSZXf-65rT364nY3shYwUA@mail.gmail.com>
-	<CAMP44s16VD+Rm5J=TXxQB+pKhpzHqoxBXSSwDvi0CVW2u2J=5g@mail.gmail.com>
-	<7v4ne5i7lf.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 09/10] remote-hg: test: be a little more quiet
+Date: Tue, 14 May 2013 14:40:53 -0700
+Message-ID: <7vbo8dgryy.fsf@alter.siamese.dyndns.org>
+References: <1368486720-2716-1-git-send-email-felipe.contreras@gmail.com>
+	<1368486720-2716-10-git-send-email-felipe.contreras@gmail.com>
+	<51929e298955c_13a8f89e18228b@nysa.mail>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 14 23:38:47 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 14 23:41:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcMvm-0005Rg-Tc
-	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 23:38:47 +0200
+	id 1UcMxx-0006ml-9P
+	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 23:41:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758550Ab3ENVin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 May 2013 17:38:43 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:57851 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758419Ab3ENVim (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 May 2013 17:38:42 -0400
-Received: by mail-la0-f42.google.com with SMTP id er20so1077391lab.1
-        for <git@vger.kernel.org>; Tue, 14 May 2013 14:38:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=Sw87jNQqp7Ci7vVeHUc8Wma5NrOticG+qM2DECOLUdo=;
-        b=i+cfSZVKksfuFb0JsWlUzQ30ph+dDzN63oclnuXiSRoQeuvg24oWfbTqf3+zGuhiKM
-         JNMKm5mhV/B4lhWFFdNudXY5qtPu0lBNJP4B2R/mgAGkibTqJn91BwT3xz+l4yy5a2YK
-         B7ilXBW70t4+GF1JZUXy1iaqrvh0vBV8G4JgoUXvJz8yRQTmukjyXA9YjLqOH5QSyYU+
-         KdmdSJXIN0MttMT3YneaTjz7zdz6Ts3Dspmi/44q6XbSxr3ZF7e1v/nw5vvR1P2WroIw
-         W1K6i80J1MEPMF3Pa1bapNXsGFRe5TsxGZitjPD6Eeng2vCDu5G5HXH3F9iitN40QfMV
-         SjDg==
-X-Received: by 10.112.125.130 with SMTP id mq2mr16047408lbb.103.1368567520895;
- Tue, 14 May 2013 14:38:40 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Tue, 14 May 2013 14:38:40 -0700 (PDT)
-In-Reply-To: <7v4ne5i7lf.fsf@alter.siamese.dyndns.org>
+	id S1758419Ab3ENVk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 May 2013 17:40:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52762 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758539Ab3ENVk4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 May 2013 17:40:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6C361E892;
+	Tue, 14 May 2013 21:40:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wxwkWOBYykqFBLqex01d1+FjdDc=; b=EDH77m
+	Yqv1reN+dlJlS5igev4nSFRzjLLRf+Lxs5ABXKjJ4PqU6/19ihdVVZv0Gk3qeI+n
+	5xttPWZEnLVKzaYfQeffi//XCGgbOMLZFyI3eWp9uR4QM+GohAxcsMu8iAjJMSix
+	QiG6fNs6B7K+OwV0NQxvbKbakju820JutM+wE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GDsdl0MXM98vomtGjkHXesyEAqt64gFH
+	iVl6IM7PmchtylEB2Jwah/i78bRpcEZK4nnSVZYuPUc6Vh9YhufUHzE2lBR7hPZL
+	yCnUVoOaI9dvY2NmD5EVamQs2oTjzSemSrW3KQfiV73h0Rx16X9JGc+iad0OLIhc
+	c2SAMXJY1Gk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B8AC21E891;
+	Tue, 14 May 2013 21:40:55 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E6511E88D;
+	Tue, 14 May 2013 21:40:55 +0000 (UTC)
+In-Reply-To: <51929e298955c_13a8f89e18228b@nysa.mail> (Felipe Contreras's
+	message of "Tue, 14 May 2013 15:27:21 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F4EFF870-BCDE-11E2-87BE-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224351>
 
-On Tue, May 14, 2013 at 4:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> I forgot to mention the main objective of the shared repo feature:
->>
->> + first/
->> * first/second/foo
->> * first/third/foo
->> * first/fourth/foo
->> * first/fifth/foo
->> * first/sixth/foo
->>
->> Since in bazaar branches are repositories, we want to make it possible
->> for remote-bzr users to create a single remote per branch as easily as
->> possible (without having to duplicate huge clones).
->>
->> But as I said, without this patch, they wouldn't be able to use that
->> feature if they cloned with v1.8.2.
->
-> So we nuke that and have them clone from scratch?  I am not saying
-> that is bad.  I just want us to be honest about the implications
-> when including it in the ReleaseNotes.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-The user won't have to do a thing, it happens behind the curtain.
+> No-brainer; improve one test.
 
-And the clone would happen either way, with or without this patch,
-because 'hg/origin/master' doesn't exist, the only purpose 'hg/origin'
-serves is to block the new feature.
+In general, unless we are taking the output from commands to a file
+and grepping in it, we prefer not to have --quiet (unless you are
+testing the --quiet feature of the command, of course).  Running the
+tests without "-v" option will not show them and when running with
+"-v" to debug the tests, the extra output will help to figure out
+which step failed.
 
--- 
-Felipe Contreras
+> Felipe Contreras wrote:
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>  contrib/remote-helpers/test-hg.sh | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers/test-hg.sh
+>> index 8de2aa7..f8d1f9e 100755
+>> --- a/contrib/remote-helpers/test-hg.sh
+>> +++ b/contrib/remote-helpers/test-hg.sh
+>> @@ -109,10 +109,10 @@ test_expect_success 'update bookmark' '
+>>    (
+>>    git clone "hg::$PWD/hgrepo" gitrepo &&
+>>    cd gitrepo &&
+>> -  git checkout devel &&
+>> +  git checkout --quiet devel &&
+>>    echo devel > content &&
+>>    git commit -a -m devel &&
+>> -  git push
+>> +  git push --quiet
+>>    ) &&
+>>  
+>>    hg -R hgrepo bookmarks | egrep "devel[	 ]+3:"
+>> -- 
+>> 1.8.3.rc1.579.g184e698
