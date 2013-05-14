@@ -1,62 +1,129 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3] checkout: add --ignore-skip-worktree-bits in sparse
- checkout mode
-Date: Tue, 14 May 2013 17:21:42 +0700
-Message-ID: <CACsJy8CzOrnofz6eWLN61axrdTubnLfWnYxWPZSMrsBgu594_A@mail.gmail.com>
-References: <1364637753-18785-1-git-send-email-pclouds@gmail.com>
- <1365808328-4191-1-git-send-email-pclouds@gmail.com> <1368523634.10814.3.camel@vpl-thinkpad10>
+From: Andreas Leha <andreas.leha@med.uni-goettingen.de>
+Subject: make git ignore the timestamp embedded in PDFs
+Date: Tue, 14 May 2013 15:17:59 +0200
+Message-ID: <87y5bhn1iw.fsf@med.uni-goettingen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?M=C3=BCller_Kirill?= <kirill.mueller@ivt.baug.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue May 14 12:22:22 2013
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 14 16:05:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcCN8-0000po-LD
-	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 12:22:19 +0200
+	id 1UcFqs-00046e-SS
+	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 16:05:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751326Ab3ENKWO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 May 2013 06:22:14 -0400
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:35781 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751191Ab3ENKWN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 May 2013 06:22:13 -0400
-Received: by mail-ob0-f171.google.com with SMTP id ef5so347794obb.30
-        for <git@vger.kernel.org>; Tue, 14 May 2013 03:22:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=S50lZyb2DJ59y100VA/PEJmQfrLKtDNYsKbbmqHeuVE=;
-        b=Oz+CE3QhuWVExQzwqv0Z6NbxMbe8mcP/Zfn4FrOPGLYLJbVojjcBwwjwVtTwmnUiPR
-         BqjWDlhPHNewdV8+DiLBixW69J7BJI/SO5cfQzz+6JWgk/IBRd6dOb8TykfFHcUiznZa
-         NCazabg1glN/uNgeJvqBLWqDbydAuV5CcBFTdDLlpaehhvKJkWK0BgQWaxhbVaVsgDxh
-         ONENc6uGNgqatiHCI3yuP9emS6aPuBTE5l9SMLsYCiXeZxvjaRKab670FwKYH61XsQQi
-         WKAKexkrm7GZybVsckVLRXhhKQwMOiCYZzD/JmsnqQW5uQEGtVLnIMt2ED2AMTzRdv12
-         +Oeg==
-X-Received: by 10.182.49.201 with SMTP id w9mr1272934obn.38.1368526933146;
- Tue, 14 May 2013 03:22:13 -0700 (PDT)
-Received: by 10.76.180.138 with HTTP; Tue, 14 May 2013 03:21:42 -0700 (PDT)
-In-Reply-To: <1368523634.10814.3.camel@vpl-thinkpad10>
+	id S1757500Ab3ENOFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 May 2013 10:05:07 -0400
+Received: from plane.gmane.org ([80.91.229.3]:35160 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757490Ab3ENOFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 May 2013 10:05:06 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UcFqh-0003yh-K3
+	for git@vger.kernel.org; Tue, 14 May 2013 16:05:03 +0200
+Received: from genepi110.genepi.med.uni-goettingen.de ([134.76.140.110])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 14 May 2013 16:05:03 +0200
+Received: from andreas.leha by genepi110.genepi.med.uni-goettingen.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 14 May 2013 16:05:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: genepi110.genepi.med.uni-goettingen.de
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+Cancel-Lock: sha1:f9KQwCGCIzG+k0+oYGT70i38wVo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224298>
 
-On Tue, May 14, 2013 at 4:27 PM, M=C3=BCller  Kirill
-<kirill.mueller@ivt.baug.ethz.ch> wrote:
-> Thank you, this looks nice. What needs to be done that this will
-> eventually reach the git in my favorite distribution? Which version o=
-f
-> Git will this be?
+Hi all,
 
-It'll be in the upcoming 1.8.3.
---
-Duy
+how can I make git ignore the time stamp(s) in a PDF.  Two PDFs that
+differ only in these time stamps should be considered identical.
+
+Here is an example:
+,----
+| > pdfinfo some.pdf
+| Title:          R Graphics Output
+| Creator:        R
+| Producer:       R 2.15.1
+| CreationDate:   Thu Jan 24 13:43:31 2013 <==  these entries
+| ModDate:        Thu Jan 24 13:43:31 2013 <==  should be ignored
+| Tagged:         no
+| Pages:          1
+| Encrypted:      no
+| Page size:      504 x 504 pts
+| File size:      54138 bytes
+| Optimized:      no
+| PDF version:    1.4
+`----
+
+
+What I tried is a filter:
+,----[ ~/.gitconfig ]
+| [filter "pdfresetdate"]
+|         clean = pdfresetdate
+`----
+
+With this filter script:
+,----[ pdfresetdate ]
+| #!/bin/bash
+|
+| FILEASARG=true
+| if [ "$#" == 0 ]; then
+|     FILEASARG=false
+| fi
+|
+| if $FILEASARG ; then
+|     FILENAME="$1"
+| else
+|     FILENAME=`mktemp`
+|     cat /dev/stdin > "${FILENAME}"
+| fi
+|
+| TMPFILE=`mktemp`
+| TMPFILE2=`mktemp`
+|
+| ## dump the pdf metadata to a file and replace the dates
+| pdftk "$FILENAME" dump_data | sed -e '{N;s/Date\nInfoValue: D:.*/Date\nInfoValue: D:19790101072619/}' > "$TMPFILE"
+|
+| ## update the pdf metadata
+| pdftk "$FILENAME" update_info "$TMPFILE" output "$TMPFILE2"
+|
+| ## overwrite the original pdf
+| mv -f "$TMPFILE2" "$FILENAME"
+|
+| ## clean up
+| rm -f "$TMPFILE"
+| rm -f "$TMPFILE2"
+| if [ -n $FILEASARG ] ; then
+|     cat "$FILENAME"
+| fi
+`----
+
+
+This 'works' as far as the committed pdf indeed has the date reset to my
+default value.
+
+However, when I re-checkout the files, they are marked modified by git.
+
+So, my question is:  How can I make git *completely* ignore the embedded
+date in the PDF?
+
+Many thanks in advance for any help!
+
+Regards,
+Andreas
+
+
+PS:
+I had posted this question (without much success) here:
+http://stackoverflow.com/questions/16058187/make-git-ignore-the-date-in-pdf-files
+and with no answer on the git-users mailing list:
+https://groups.google.com/forum/#!topic/git-users/KqtecNa3cOc
