@@ -1,68 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] branch: show me the hot branches
-Date: Tue, 14 May 2013 16:34:03 -0700
-Message-ID: <7vip2ldtlg.fsf@alter.siamese.dyndns.org>
-References: <1368475365-18680-1-git-send-email-artagnon@gmail.com>
-	<CABURp0rVoRwWUBXP5ZdsPByd47hDj7w9y5eddNQfiDfkttAKvg@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3 08/10] remote-hg: update bookmarks when pulling
+Date: Tue, 14 May 2013 18:37:01 -0500
+Message-ID: <CAMP44s1MZPJ3ei0YmDLosqKam4De+ofefaaf6R_4PSzVBrg1Yg@mail.gmail.com>
+References: <1368486720-2716-1-git-send-email-felipe.contreras@gmail.com>
+	<1368486720-2716-9-git-send-email-felipe.contreras@gmail.com>
+	<51929dfa8122e_13a8f89e182115@nysa.mail>
+	<7vzjvxfck2.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0Wd4VEc_mwr=xguVAnXvn+YVz24u8eS4Nyy0HCjwJ+dw@mail.gmail.com>
+	<7vbo8dfbbr.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0u0WPNneM-GoiqCkWTC-CT_Xa2z3on=smRiFJdd9ffeQ@mail.gmail.com>
+	<7v38tpfa7u.fsf@alter.siamese.dyndns.org>
+	<CAMP44s32KkJY3OxifDEmqp0ZkhQiRQCVwxYvSNGgqTnwC3DLEw@mail.gmail.com>
+	<7vmwrxdtoh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 15 01:34:32 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 15 01:37:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcOjo-0004Xz-BA
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 01:34:32 +0200
+	id 1UcOmN-0005uY-IP
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 01:37:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758647Ab3ENXeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 May 2013 19:34:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53785 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758538Ab3ENXeG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 May 2013 19:34:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2B0E1F164;
-	Tue, 14 May 2013 23:34:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=a50r9uL6P+P9A0Gt9jSNwIQeu3A=; b=pbfrpd
-	9fMSDWAKhd6YJJzffuV/LNloV9bpZP0OVxvs6LJKHzrfZygiWL961RWE6zMYSgGb
-	LZQOQR+4jdPU/48uNGZz0p7ibJ6zAg6mseH/OtpmffFqhMiWHJjWD34dnUY3SndC
-	2ZR0WYlQtMOCytie2W60Ez+9AE4Ew+3v9lzAQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PcdvwyisZ9XV9K4icJ3rbO6wvPoOntrX
-	QTHmG+bZJeEJ8XMZLTKDCWbLMqJS7+Kk6xp9BZ7t/lnUvruoAPK0qeir2j845BOS
-	6bQAzdCBJCQdHy/hTvmC4r/Z5bullMkLPg9L1Zo68gtwoOLEeKIgEOfv4W4kmYoM
-	p3JZKu3dEY8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9973C1F163;
-	Tue, 14 May 2013 23:34:05 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1FFD91F161;
-	Tue, 14 May 2013 23:34:05 +0000 (UTC)
-In-Reply-To: <CABURp0rVoRwWUBXP5ZdsPByd47hDj7w9y5eddNQfiDfkttAKvg@mail.gmail.com>
-	(Phil Hord's message of "Tue, 14 May 2013 19:19:43 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C4042604-BCEE-11E2-BA05-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758538Ab3ENXhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 May 2013 19:37:05 -0400
+Received: from mail-la0-f49.google.com ([209.85.215.49]:35298 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753872Ab3ENXhE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 May 2013 19:37:04 -0400
+Received: by mail-la0-f49.google.com with SMTP id fp13so519807lab.8
+        for <git@vger.kernel.org>; Tue, 14 May 2013 16:37:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=dt+cr4gA8YQtykxnLK5foJRG5Stxe02qYuHrdkALH3o=;
+        b=Ajr1lG42zzCpFe+5i/0uzDbHqmg/UJZW2BCwv5WyqaItyWYF1J/eoXXD7hDjUH8/M+
+         94Ea6ULFpwFaLwavJScB2hqm3REAvQDUzR6wFsX+Ekdx5qAwdWWNbf3YxenIhAFq06wk
+         DxaiaDfUG5uaXPuNvlvMEIpBxU/ueUobHtTJxqNiJmLvSmPuAKq3QJQs+MSgUbaNRGdk
+         qRQRqPeW18QgSWtb8nEzVR42BEgnFrNK0IzvYdZBoPULJIZYBqufIP8X/ENRyt4qwdVG
+         xpS7cUV8IJQLp057/SoMMCjlwsptD3jjV2YvggzxzM58AQ6jfDj+mwazmebpquNnDf/I
+         alzw==
+X-Received: by 10.112.63.169 with SMTP id h9mr1620620lbs.135.1368574621945;
+ Tue, 14 May 2013 16:37:01 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Tue, 14 May 2013 16:37:01 -0700 (PDT)
+In-Reply-To: <7vmwrxdtoh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224373>
 
-Phil Hord <phil.hord@gmail.com> writes:
+On Tue, May 14, 2013 at 6:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> ... After all, this is in the contrib area,
+>> so if there's a time for a possible future maintainer of a core part
+>> of git to make mistakes, it would be now.
+>
+> That sounds reasonable.
+>
+> Incidentally, before I had to stop working in order to respond to
+> your endless arguments, I already queued the 8 patches to 'master'
+> (also remote-bzr one is in below that).
 
-> I imagine it with --date-order and whatnot.
+Cool. But FTR, the "endless arguments" come from both sides.
 
-Perhaps modeled after this one.
+> I had no time checking other topics in flight nor merging the result
+> up to 'next' and 'pu' yet, and it will take a while for the result
+> to be published, but we'll see these in 1.8.3.
 
-    git for-each-ref \
-        --format='%(refname:short) %(subject)'
-        --sort='-committerdate' refs/heads/
+Well, the priority is 1.8.3.
+
+Cheers.
+
+-- 
+Felipe Contreras
