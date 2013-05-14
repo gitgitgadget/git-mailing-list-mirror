@@ -1,108 +1,89 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] diffcore-pickaxe doc: document -S and -G properly
-Date: Wed, 15 May 2013 00:14:08 +0530
-Message-ID: <CALkWK0nR1=Pgv0AY78p7n17C-VVvbc6BfJ4y_Df1ciZoc-xR-Q@mail.gmail.com>
-References: <1368540759-25598-1-git-send-email-artagnon@gmail.com> <CABURp0r808KeSRwhgPw98vUC+JSErvSYHFyAvn-=8JhQzn8e1Q@mail.gmail.com>
+Date: Tue, 14 May 2013 11:47:16 -0700
+Message-ID: <7v8v3hjt57.fsf@alter.siamese.dyndns.org>
+References: <1368540759-25598-1-git-send-email-artagnon@gmail.com>
+	<7vwqr1jw67.fsf@alter.siamese.dyndns.org>
+	<CALkWK0kJ7aksRbtjOesEPvsdx6wZyxxdVHUm_F-jS+Nb3WLSxg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 14 20:44:58 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 14 20:47:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcKDW-0000No-74
-	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 20:44:54 +0200
+	id 1UcKFv-0002FB-O3
+	for gcvg-git-2@plane.gmane.org; Tue, 14 May 2013 20:47:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757970Ab3ENSou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 May 2013 14:44:50 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:60113 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757889Ab3ENSot (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 May 2013 14:44:49 -0400
-Received: by mail-ie0-f170.google.com with SMTP id aq17so1846003iec.1
-        for <git@vger.kernel.org>; Tue, 14 May 2013 11:44:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=6X2Glb4lvwRjwZD+9cGViwJuHiJKAcheyLA0jDd9msE=;
-        b=Umz44eG7osyjotcHjMTZf36DsKhpZ7n6lVnIrWpFc5uFVBNWK/bQ1pw9yN/MqwUOFz
-         vgMVvnYt6ufHHYQ0pwYDZ1dXDayWZF8yOiO4AvS2fjXsgonHGSJU0Np9SilARuvit6ZB
-         xBKbKTQ5WNexgRWFQB3MwL/Aj4y7uiyYD3k4OscO1s59uW4PvZHK2FIjTgUjKwQF3rPB
-         mHxQsewWIIfg4vjP9j1ZluAjR9WNilCQZj6Kv8BjyvNMlK0+F3ir5qTu8eX0p3r49uQq
-         PcbVY79SYlOJKMB++qxm0dm2rZklc3VrNt9fYWk0WeF6aX8/i/OQpqZc52xj3mLNNFU4
-         CQIQ==
-X-Received: by 10.42.27.146 with SMTP id j18mr18047962icc.54.1368557089161;
- Tue, 14 May 2013 11:44:49 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Tue, 14 May 2013 11:44:08 -0700 (PDT)
-In-Reply-To: <CABURp0r808KeSRwhgPw98vUC+JSErvSYHFyAvn-=8JhQzn8e1Q@mail.gmail.com>
+	id S1758057Ab3ENSrT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 May 2013 14:47:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49473 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757923Ab3ENSrS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 May 2013 14:47:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 625DC1ECB7;
+	Tue, 14 May 2013 18:47:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/Mz5cUTM/YnZZFe6OUYcQL7kpqU=; b=ShNlRM
+	LuiuChBVP6Aa9t279fLzVMwzXjw754IdIjm9KFmqFwc2ugQYLCy8mx4+guFG8v7n
+	lN7/1+M2lLYJ69KSJs/i5uTJcR4rvbfZEpXa1BfaCePRRozp6E5vULnnctUSYb/i
+	CUdWXaERWGX+giCRhGNnKPgacSz8S+P0lirRk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nD/OlS18+fMXRzn2tv+I2ueVUr5FjTqS
+	7LCaG3gSa7fWXslqZH1ipPgu5w0TzTJnerkg0U8ccvPvWy7PahZtfE22lVrFUN4s
+	DAQwCpnv8DZp+ek+y6eGxNkgkxJZuCytrzgq1wdMRebyVo0MjIELDboqRFSTWhwg
+	8VtqGiagsfA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57DB41ECB5;
+	Tue, 14 May 2013 18:47:18 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B6B751ECB2;
+	Tue, 14 May 2013 18:47:17 +0000 (UTC)
+In-Reply-To: <CALkWK0kJ7aksRbtjOesEPvsdx6wZyxxdVHUm_F-jS+Nb3WLSxg@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 14 May 2013 23:50:42 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B39E51F4-BCC6-11E2-A1A5-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224314>
 
-Phil Hord wrote:
-> References to git-log seem out of place to me here in git-diffcore.  I
-> know it's only an example, but it seems that Git normally describes
-> these 'reference selectors' more generically.  The generic description
-> may be more confusing to new users, but this patch is not the place to
-> consider whether it should change.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-It's not for new users at all.  The most useful application of -S and
--G is in log.  The translation from a log -G to a diffcore -G is not
-obvious at all, and warrants an explanation.
-
-Oh, and for the user.  No user is going to type out `man gitdiffcore`
-out of the blue: she's most probably led there from log, and we're
-connecting the dots for her.
-
-> While the switches are called -S and -G, I do not think it is helpful
-> to name the two pickaxe options as "the S kind" and "the G kind".
-
-How do you describe something precisely without loss of meaning?  You
-stop abstracting unnecessarily.  Read the sources: you will literally
-see DIFF_PICKAXE_KIND_G there.
-
->> +
->> +The S kind detects filepairs whose "result" side and "origin" side
->> +have different number of occurrences of specified string.  While
->> +rename detection works as usual, 'git log -S' cannot omit commits
+> Junio C Hamano wrote:
+>> Any time you say "This means that", "More precisely", etc. please
+>> check if you can rewrite it to lose everything before them (i.e. a
+>> vague sentence that needs to be clarified may not have to be there
+>> at all).
 >
-> The "cannot omit" feels like a confusing double-negative.  How about
-> "includes" instead?
-
-Intended.  Omission is expected.
-
-> Is it worth mentioning that something in the documentation is "worth
-> mentioning"?
-
-You don't have to nitpick style.  We can allow this much creative
-freedom in documentation.
-
->> +in effect, diffcore-pickaxe leaves only such filepairs that touch the
->> +specified string in its output.  When in effect, diffcore-pickaxe
->> +leaves all filepairs intact if there is such a filepair, or makes the
->> +output empty otherwise.  The latter behavior is designed to make
->> +reviewing of the changes in the context of the whole changeset easier.
+> Right.  I thought both are necessary in this case: the first sentence
+> gives easy information to a first-timer.  For someone who has played
+> with it a bit, and wants to know more: the second line.
 >
-> I find this description (from the original code, not from this commit)
-> somewhat confusing.  It is written from the implementer's POV.
+>>> ++
+>>> +It is often useful when you're looking for an exact string (like a
+>>> +function prototype), and want to know the history of that string since
+>>> +it first came into being.
+>>
+>> I think you should remind that the most useful case (and indeed the
+>> intended one) is for "an exact string" to be a multi-line "block of
+>> text".  People often get a (wrong) impression from the word "string"
+>> that it is meant to be used with a single-liner.
+>
+> Yes, I've been meaning to discuss that.  I've been having some trouble
+> with multi-line strings: zsh doesn't insert a TAB in the next line.
+> The workaround I have is to write a shell script and execute that.
+> How do you do it?
 
-I explained the entire -S and -G thing in terms of filepairs (and yes,
-that's implementation detail).  Why would I want to explain this in
-any other terms?
-
-> Does
-> this seem clearer to you?
-> [...]
-
->From diff-options.txt (the more end-user side):
-
-When -S or -G finds a change, show all the changes in that changeset,
-not just the files that contain the change in <string>.
-
-Not clear enough?
+I do not use zsh but with bash+readline the old tradition lnext can
+be used (see "stty -a" output and it typically is set to ^V), i.e.
+\C-v followed by \C-i should give you a literal HT.
