@@ -1,72 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-bzr: update old organization
-Date: Tue, 14 May 2013 15:05:39 -0700
-Message-ID: <7vvc6lfc98.fsf@alter.siamese.dyndns.org>
-References: <1368505227-16661-1-git-send-email-felipe.contreras@gmail.com>
-	<7v1u99lb8w.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1rZmo3cQecGmYVMZ7KSq=z3_mfVnAK+so4QL_JfEe_uw@mail.gmail.com>
-	<7v8v3hi9ix.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2B3bFWXZe0aL_GMXe_56MbhSZXf-65rT364nY3shYwUA@mail.gmail.com>
-	<CAMP44s16VD+Rm5J=TXxQB+pKhpzHqoxBXSSwDvi0CVW2u2J=5g@mail.gmail.com>
-	<7v4ne5i7lf.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0CgYs9s1ac1EEqhP8XusScj39zY6CcQyMxSnh6i-V6SA@mail.gmail.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Fwd: git cvsimport implications
+Date: Tue, 14 May 2013 18:09:09 -0400
+Message-ID: <CAPZPVFZLDwLNazvBh5n=Jg_=CZUNz3yTme4JW2NutPgjPzwtLg@mail.gmail.com>
+References: <CAPZPVFYFL6OS2HWbF0BKNKtNsZ6CfpWmKCypGxeTs7W8-76q8Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 15 00:05:47 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 15 00:09:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcNLu-0005WY-Lk
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 00:05:47 +0200
+	id 1UcNPH-0007W4-FI
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 00:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758605Ab3ENWFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 May 2013 18:05:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47535 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758584Ab3ENWFl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 May 2013 18:05:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 248371FB27;
-	Tue, 14 May 2013 22:05:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QfFjzrvKRdOKuyR/LV/qKSH3K1I=; b=EuLssI
-	XnW9NkLy3wVeQzo5H5zSQIHx01eszvQLyYj/oKY1+icsihTU8TLnj3p6XUxaEfOn
-	Ut5p4y+NMrISeGjE3fE2m2Kx2A34Twy9SBIYCFBVn3Ijm79/Lstt4eaO6o3Y9bC1
-	A1a82OBaTcfE7LDqdMClwDP27HoMjCUMrsMAI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GUzK7irpkgcLPQBvHzFW8n62yj6RhJbH
-	hl/0WsARAnwzQD4kZ4KEclunP5oiEBpl+eoOBBYMgXNaf6L2TNIz62s4+1LEqdIu
-	dos4Blk4wUqRqfrqbtI6fnvyzXU16KjBdCzd/I4bjdOpZr7H2+iHC2aVKgD1ZjeS
-	oWW8t2cPzmE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C8EC1FB26;
-	Tue, 14 May 2013 22:05:41 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 957C21FB23;
-	Tue, 14 May 2013 22:05:40 +0000 (UTC)
-In-Reply-To: <CAMP44s0CgYs9s1ac1EEqhP8XusScj39zY6CcQyMxSnh6i-V6SA@mail.gmail.com>
-	(Felipe Contreras's message of "Tue, 14 May 2013 16:38:40 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6A470CDC-BCE2-11E2-829C-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758645Ab3ENWJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 May 2013 18:09:10 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:40478 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758562Ab3ENWJJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 May 2013 18:09:09 -0400
+Received: by mail-ob0-f174.google.com with SMTP id un3so1215057obb.19
+        for <git@vger.kernel.org>; Tue, 14 May 2013 15:09:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:content-type;
+        bh=ITNkcvGdGex4n0vAbw4rqPIyQNoNam0d+4TZ905T3nw=;
+        b=T9/s2AaJOglfQn4etUe+dtcRBOhkBVOjcF2PHIT3LORzUgIDuxGi9qCb6MvT/d6/UG
+         vECD4MMwk1y0lI3Ozdsaga/aMuV+3uvovN2Ld1Jmj95cRibaSdEOAenFMfZwd51Y/uFQ
+         hhdyeIRaIM1T64GCi8SNCUfvwP2J+aswQcGhaEXpl0fd05aMhlF8Qi18DCS/cPjQ+eR4
+         z4+J0HcsQklVhSL9snfTVR+FRY8KF37cGMVcGiOvw/4UBHFEz6gyPcffu2NPwHFz61lY
+         lEQcLKQ0jRLzbIqF88PHAKXaJ7a7pavwMqdfOL1DXAn6qCVIdu1zzkwFVSE+YH82x3WX
+         sblw==
+X-Received: by 10.60.116.138 with SMTP id jw10mr7906847oeb.64.1368569349335;
+ Tue, 14 May 2013 15:09:09 -0700 (PDT)
+Received: by 10.76.170.161 with HTTP; Tue, 14 May 2013 15:09:09 -0700 (PDT)
+In-Reply-To: <CAPZPVFYFL6OS2HWbF0BKNKtNsZ6CfpWmKCypGxeTs7W8-76q8Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224355>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Hi,
 
-> And the clone would happen either way, with or without this patch,
-> because 'hg/origin/master' doesn't exist, the only purpose 'hg/origin'
-> serves is to block the new feature.
+We are using git cvsimport heavily but mostly the projects are not
+using branches that much. We are also migrating our repos only once,
+so there is  no commits to CVS repo and no incremental imports allowed
+after the migration. we have migrated more than a thousand projects
+already.
 
-That is the answer I was trying to extract out of you (I take the hg
-is a typo for bzr in the above, though).
+we use the simplest way (from the CVS checkout folder)
+
+$ git cvsimport -C /path/to/new/git/repo
+
+Just recently it was brought to my attention that we can have problems
+with that tool. So my question is if anybody could advise which
+scenarios are safe to use this tool for, and what is not recommended?
+
+What if there are a lot of branches in the CVS repo? Is it guaranteed
+to be broken after import?
+
+Do i understand correctly that it might put some files into a branch,
+that were not originally in this branch in CVS? In which cases it
+might happen (i'm sorry i didn't quite get the "issues" in the man
+pages for cvsimport)?
+
+Thanks,
+Eugene
