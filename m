@@ -1,100 +1,94 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] remote-bzr: update old organization
-Date: Tue, 14 May 2013 17:43:23 -0500
-Message-ID: <CAMP44s0+nFHB56tdpCCbjurKhmaNfk39UaWEQBF4V2fb-hcwOQ@mail.gmail.com>
-References: <1368505227-16661-1-git-send-email-felipe.contreras@gmail.com>
-	<7v1u99lb8w.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1rZmo3cQecGmYVMZ7KSq=z3_mfVnAK+so4QL_JfEe_uw@mail.gmail.com>
-	<7v8v3hi9ix.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2B3bFWXZe0aL_GMXe_56MbhSZXf-65rT364nY3shYwUA@mail.gmail.com>
-	<CAMP44s16VD+Rm5J=TXxQB+pKhpzHqoxBXSSwDvi0CVW2u2J=5g@mail.gmail.com>
-	<7v4ne5i7lf.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0CgYs9s1ac1EEqhP8XusScj39zY6CcQyMxSnh6i-V6SA@mail.gmail.com>
-	<7vvc6lfc98.fsf@alter.siamese.dyndns.org>
-	<7vk3n1fbus.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2L9CsLu+hr4McVzUnb7x+uipEs5nHKLg+69BicMaJjpA@mail.gmail.com>
-	<7v7gj1fayr.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 08/10] remote-hg: update bookmarks when pulling
+Date: Tue, 14 May 2013 15:49:41 -0700
+Message-ID: <7v38tpfa7u.fsf@alter.siamese.dyndns.org>
+References: <1368486720-2716-1-git-send-email-felipe.contreras@gmail.com>
+	<1368486720-2716-9-git-send-email-felipe.contreras@gmail.com>
+	<51929dfa8122e_13a8f89e182115@nysa.mail>
+	<7vzjvxfck2.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0Wd4VEc_mwr=xguVAnXvn+YVz24u8eS4Nyy0HCjwJ+dw@mail.gmail.com>
+	<7vbo8dfbbr.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0u0WPNneM-GoiqCkWTC-CT_Xa2z3on=smRiFJdd9ffeQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 15 00:43:31 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 15 00:49:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcNwP-0002H0-ED
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 00:43:29 +0200
+	id 1UcO2Y-0005lq-8V
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 00:49:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758605Ab3ENWnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 May 2013 18:43:25 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:65099 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758429Ab3ENWnY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 May 2013 18:43:24 -0400
-Received: by mail-la0-f42.google.com with SMTP id er20so1123959lab.1
-        for <git@vger.kernel.org>; Tue, 14 May 2013 15:43:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=2cXCAS0Rqw6dBf5W/f3e52Vas8MId32IoSqSwcA1TQQ=;
-        b=QY0A2amIBbss+SNpOXR8usj03sRPCWNsz77yGMAa+RaZ4BiSqomcz/0Ur/fARsjzRk
-         kLODZsodT4x/r55UD131q8mwv3PzGmBzMQQOe6qrT2KVR11CKLmB9od4+J4s3Sd1t1Tb
-         hb2ApZ5SrTf1gpggLS03wqQDnGaVCo6S4Tv75XxbCi6DzmadT7jQY5FIm2UWL4uwN1yU
-         rIe+Ce9nJ5D6mKRlHGXq9YmX7J44Y0A1GokeaeAZqrjF7t6Od6P4AxiL8wdUszrvVtJY
-         +Y1+DVebyxemFaQfc8ZelK3xbmW/Mgk0eXPD3032rA9oq1dffltkBBbOX694t0BKDjos
-         q7UA==
-X-Received: by 10.112.145.72 with SMTP id ss8mr16505678lbb.12.1368571403308;
- Tue, 14 May 2013 15:43:23 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Tue, 14 May 2013 15:43:23 -0700 (PDT)
-In-Reply-To: <7v7gj1fayr.fsf@alter.siamese.dyndns.org>
+	id S1758559Ab3ENWtp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 May 2013 18:49:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53061 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758429Ab3ENWto (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 May 2013 18:49:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C1A01F513;
+	Tue, 14 May 2013 22:49:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tWf6m5DDyxI9Q2PfwykYG38LrxU=; b=NxDAJ0
+	/T40gA7sLogxdMEqBFaqbrnwtW2dIbY7eGhb5+17uHSJv26JTddmJCqyMXgmf4+u
+	BBWZ6zjcOkZ95dveNV8hDYBYLBRW7M3/fXSZ6WHMbdQQzfYaeyIJkfrZ8xzEyqV+
+	2bdQXO8kpTReE9Z+ePA35WRE+OFX5uvvxcdl0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CdMn4AdeQnevtc1EyZWb2XhvFYm9PhDg
+	OvYziDGExIFkzcuAJeX56Lh8QsAoWx28YFwyl4E9mAs6SjoAj7Z7osmlaH7JdrQR
+	s1/n3iyqbDpRTbAUvNx+ro+Km3ZN1gSZbC/xlH44mlfJiwXwCuR4XxriCWnyvZkD
+	P7JUwUSE5qc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F16B1F512;
+	Tue, 14 May 2013 22:49:44 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF9951F511;
+	Tue, 14 May 2013 22:49:43 +0000 (UTC)
+In-Reply-To: <CAMP44s0u0WPNneM-GoiqCkWTC-CT_Xa2z3on=smRiFJdd9ffeQ@mail.gmail.com>
+	(Felipe Contreras's message of "Tue, 14 May 2013 17:39:02 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 91BB5A60-BCE8-11E2-9ACC-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224366>
 
-On Tue, May 14, 2013 at 5:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> The reason for the "only regression" period is to avoid more
+> regressions. If you show me how any of the fixes I sent in this series
+> could potentially cause a regression,
+
+I already said that "You can see these patches are so trivially
+correct" is not a valid argument. The original patches would also
+have been looked correct when they were sent to the list. Things
+take time and actual use by the users to mature.
+
+>> You cannot be both.  Which is it?
 >
->> On Tue, May 14, 2013 at 5:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Junio C Hamano <gitster@pobox.com> writes:
->>>
->>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>>
->>>>> And the clone would happen either way, with or without this patch,
->>>>> because 'hg/origin/master' doesn't exist, the only purpose 'hg/origin'
->>>>> serves is to block the new feature.
->>>>
->>>> That is the answer I was trying to extract out of you (I take the hg
->>>> is a typo for bzr in the above, though).
->>>
->>> Just to double check, I understand that the justification for
->>> removal is this:
->>>
->>>      If a clone exists with the old organization (v1.8.2) it will prevent the
->>>      new shared repository organization from working, so let's remove this
->>>     -repository, which is not used any more.
->>>     +repository. It is not used by 1.8.3, and did not host any useful
->>>     +information in the code in 1.8.2.
->>
->> That is not true. It did host useful information in 1.8.2, if we apply
->> this and the user tries to pull with remote-bzr from 1.8.2, it would
->> need to be cloned again.
->
-> So the answer to my original question:
->
->     So we nuke that and have them clone from scratch?
+> I marked the patch that fix a regression as such, I marked the patches
+> that are obvious fixes with no possibility of regressions as such, and
+> I marked the trivial cleanups with no possibility of regressions as
+> such.
 
-No, as I already explained the "cloning from scratch" is already
-happening with or without this patch.
+I think you mean 6/10 by "the patch that fix a regression", but if
+that is the case, please send only the regression fix that cleanly
+apply to the tip of 'master', without any other dependencies, with a
+proper description of what breaks and how it fixes.
 
-All this change does is remove a repository that is not used any more
-in order to allow a feature that was already introduced, and that's
-exactly what the commit message says. It doesn't cause any other
-change.
+We know you can do better than "certain" and "might".
 
--- 
-Felipe Contreras
+> In certain situations we might end up pushing garbage revisions (e.g. in
+> a rebase), and the patches to deal with that haven't been merged yet.
+> 
+> So let's disable forced pushes by default.
+
+Thanks.
