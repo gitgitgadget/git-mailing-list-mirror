@@ -1,82 +1,67 @@
-From: Luc Bourhis <luc_j_bourhis@mac.com>
-Subject: Trouble with case insensitive filesystem
-Date: Wed, 15 May 2013 10:40:48 +0200
-Message-ID: <F0A0C92F-6D85-463E-9CB5-B9060BDA196B@mac.com>
-Mime-Version: 1.0 (Apple Message framework v1283)
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: is this a bug of git-diff?
+Date: Wed, 15 May 2013 10:50:25 +0100
+Message-ID: <20130515095025.GV2299@serenity.lan>
+References: <CABwUO_X8oTzuJh8+v3Oqca2W4ht-cQRNGQ+a1DbEruq5jY+vgA@mail.gmail.com>
+ <CALWbr2z338CJgavC9sVGffHSoqr0Sb9nCsr4LKURDYpkOog2TQ@mail.gmail.com>
+ <CABwUO_Wyq34S=CwbLeAqmzaFLxORkvGEvrjUzMXjkJdE1jnbhA@mail.gmail.com>
+ <CALWbr2z2jB53=2UsEneqymU2peiL4OW9Tyace_8BN3=1gA9jNg@mail.gmail.com>
+ <vpqhai4y4b2.fsf@grenoble-inp.fr>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Luc Bourhis <luc_j_bourhis@mac.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 15 11:41:32 2013
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	eric liou <accwuya@gmail.com>, git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed May 15 11:50:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcYDD-0007zL-PW
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 11:41:32 +0200
+	id 1UcYM6-0006Kb-5d
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 11:50:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758762Ab3EOJlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 05:41:24 -0400
-Received: from nk11p04mm-asmtp001.mac.com ([17.158.236.236]:58288 "EHLO
-	nk11p04mm-asmtp001.mac.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758481Ab3EOJlW convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 05:41:22 -0400
-X-Greylist: delayed 3610 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 May 2013 05:41:22 EDT
-Received: from [192.168.1.200] ([80.11.252.214]) by nk11p04mm-asmtp001.mac.com
- (Oracle Communications Messaging Server 7u4-26.01(7.0.4.26.0) 64bit (built Jul
- 13 2012)) with ESMTPSA id <0MMU0058F042ZY70@nk11p04mm-asmtp001.mac.com> for
- git@vger.kernel.org; Wed, 15 May 2013 08:40:53 +0000 (GMT)
-X-Proofpoint-Virus-Version: vendor=fsecure
- engine=2.50.10432:5.10.8626,1.0.431,0.0.0000
- definitions=2013-05-15_01:2013-05-14,2013-05-15,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- ipscore=0 suspectscore=1 phishscore=0 bulkscore=0 adultscore=0 classifier=spam
- adjust=0 reason=mlx scancount=1 engine=6.0.2-1305010000
- definitions=main-1305150024
-X-Mailer: Apple Mail (2.1283)
+	id S932226Ab3EOJui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 05:50:38 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:44206 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758638Ab3EOJuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 05:50:37 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 8D719866004;
+	Wed, 15 May 2013 10:50:36 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id xi9AywhFgK6N; Wed, 15 May 2013 10:50:34 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 28216CDA5A8;
+	Wed, 15 May 2013 10:50:27 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <vpqhai4y4b2.fsf@grenoble-inp.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224393>
 
-Hi,
+On Wed, May 15, 2013 at 11:34:41AM +0200, Matthieu Moy wrote:
+> Antoine's answer is correct. In addition, I'd say that you may want to
+> enable color in the output to make it clearer (the @@ ... @@ part would
+> be colored, but not the function name):
+> 
+>   git config --global color.ui auto
 
-I work on a case insensitive filesystem and I have core.ignorecase set to true. 
-I have a series of troublesome commits and here is what git cat-file -p shows me:
-
-...
-100644 blob 99...	fourCircles.py
-100644 blob 97...	fourcircles.py
-...
-
-The content of those slightly differ:
-
---- a/99...
-+++ b/97...
--__version__='$Header: .../fourCircles.py, ...$'
-+__version__='$Header: .../fourcircle.py, ...$'
- 
-As you can guess this git repo started its life with CVS (it was converted with git cvsimport). 
-So I thought it was a job for git filter-branch, specifically I propose to do:
-git filter-branch --index-filter 'git rm --cached --ignore-unmatch .../fourCircles.py' <commit>
-
-However because of those two blobs, I have:
-
-~> git status
-#	modified:   .../fourCircles.py
-
-and git filter-branch therefore refuses to run. I tried to use checkout, reset, 
-even to commit that fluke of a change but whatever I do, that file is still marked 
-as modified. 
-
-I am sure I am missing a tiny detail that would get me
-out of those dire straights but it has eluded me so far.
-
-I run git 1.8.2.2 on MacOS 10.7.5 (installed with MacPorts if that matters).
-
-Best wishes,
-
-Luc J. Bourhis
+I wonder if that should be the default.  I've advised a lot of people to
+turn it on and it seems to me that a user is much more likely to go
+looking for a "turn color off" option than realise that color is an
+option at all.
