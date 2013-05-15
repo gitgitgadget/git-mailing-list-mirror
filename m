@@ -1,92 +1,126 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/2] config: refactor management of color.ui's default value
-Date: Wed, 15 May 2013 19:00:55 +0200
-Message-ID: <1368637256-22622-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpq61ykfang.fsf@grenoble-inp.fr>
-Cc: Stefano Lattarini <stefano.lattarini@gmail.com>,
-	Johan Herland <johan@herland.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed May 15 19:02:09 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Lines missing from git diff-tree -p -c output?
+Date: Wed, 15 May 2013 10:17:43 -0700
+Message-ID: <7vhai4cgco.fsf@alter.siamese.dyndns.org>
+References: <20130515143508.GO25742@login.drsnuggles.stderr.nl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthijs Kooijman <matthijs@stdin.nl>
+X-From: git-owner@vger.kernel.org Wed May 15 19:17:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ucf5c-0002mF-Eq
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 19:02:08 +0200
+	id 1UcfKq-00076c-0L
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 19:17:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932543Ab3EORB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 13:01:59 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:60670 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759570Ab3EORB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 13:01:59 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4FH19es017627
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 15 May 2013 19:01:10 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Ucf4i-0000Jj-5y; Wed, 15 May 2013 19:01:12 +0200
-Received: from moy by anie with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Ucf4i-0005ta-2h; Wed, 15 May 2013 19:01:12 +0200
-X-Mailer: git-send-email 1.8.3.rc1.315.g4602f33
-In-Reply-To: <vpq61ykfang.fsf@grenoble-inp.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 15 May 2013 19:01:10 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r4FH19es017627
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1369242071.70935@1K/MLLUC5aVSg9VvZzZCmQ
+	id S1759720Ab3EORRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 13:17:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39040 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759615Ab3EORRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 13:17:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02EB21E824;
+	Wed, 15 May 2013 17:17:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=eJ0RxPh6/tfBIua1yxMpT19X/S8=; b=szOnaiErsAMt/EabBknB
+	0A3/mlZxdhkxbiSHKbBgkFbRDXNX95qFr3C5bu9LbhrQLpngYPGi6h4NepmoBp6l
+	gC3MCXdqptVGn/RMbb+n3RrGhnDBlrAPmWtyx3MC4FHXiqNrwaRSIsJU9Zm9+E6Q
+	ABf7CTtKXoFVjNuON3ebusk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=fK0YFARaB4v9JRPnJPid6dCqUm9ExF81m7Dquk1BObbec7
+	WV9xBKSLIraQHMunZwT9rVuaduHTJMwAjUsrFHP8o5nkkkkZS4Al5T55tzF5RcR7
+	m9+z9GwXS7cWdRhjZZHfslzzuFff4wpB8+FEXPsVppQgD9zddgWjZgB2xsJ4c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE1A11E823;
+	Wed, 15 May 2013 17:17:45 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5694A1E816;
+	Wed, 15 May 2013 17:17:45 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5BD5CA0C-BD83-11E2-B081-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224426>
 
-The meaning of get_colorbool_found and get_diff_color_found is "the
-config value if found, and -1 otherwise", but get_color_ui_found had a
-slightly different meaning, as it has the value 0 (which corresponds to
-the default value from the user point of view) when color.ui is unset.
+Matthijs Kooijman <matthijs@stdin.nl> writes:
 
-Make get_color_ui_found default to -1, and make it explicit that 0 is the
-default value when nothing else is found.
+> $ git diff-tree -p -c HEAD
+> d945a51b6ca22e6e8e550c53980d026f11b05158
+> diff --combined file
+> index 3404f54,0eab113..e8c8c18
+> --- a/file
+> +++ b/file
+> @@@ -1,7 -1,5 +1,6 @@@
+>  +LEFT
+>   BASE2
+>   BASE3
+>   BASE4
+> - BASE5
+> + BASE5MODIFIED
+>   BASE6
+>
+> Here, the header claims that the first head has 7 lines, but there really are
+> only 6 (5 lines of context and one delete line). The numbers for the others
+> heads are incorrect. In the original diff, the difference was bigger
+> (first head was stated to have 28 lines, while the output was similar to
+> the above).
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-So, this is new, as suggested by Junio.
+The count and the output does look inconsistent.  The hunk header
+claims that it is showing:
 
- builtin/config.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ - range 1,7 for the first parent but it should be 1,5 (2, 3, 4, 5 and 6) 
+   to match the output.
+ - range 1,5 for the second parent (left, 2, 3, 4, 5mod, and 6 -- correct)
+ - range 1,6 for the result (left, 2, 3, 4, 5mod and 6 -- correct)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 000d27c..171bad7 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -333,6 +333,7 @@ static int get_colorbool(int print)
- {
- 	get_colorbool_found = -1;
- 	get_diff_color_found = -1;
-+	get_color_ui_found = -1;
- 	git_config_with_options(git_get_colorbool_config, NULL,
- 				given_config_file, given_config_blob,
- 				respect_includes);
-@@ -344,6 +345,10 @@ static int get_colorbool(int print)
- 			get_colorbool_found = get_color_ui_found;
- 	}
+If we resurrect the loss of "BASE1" from the output, then the
+output should have shown:
+
+  +LEFT
+ - BASE1
+   BASE2
+   BASE3
+   BASE4
+ - BASE5
+ + BASE5MODIFIED
+   BASE6
+
+which means the numbers shown for the first parent (1, 2, 3, 4, 5
+and 6) should be 1,6.
+
+> Note that to trigger this behaviour, the number of context lines between the
+> BASE1 and BASE5 must be _exactly_ 3, more or less prevents this bug from
+> occuring.
+
+I think the coalescing of two adjacent hunks into one is painting
+leading lines "interesting to show context but not worth showing
+deletion before it" incorrectly.
+
+Does this patch fix the issue?
+
+ combine-diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/combine-diff.c b/combine-diff.c
+index 77d7872..7359b84 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -533,7 +533,7 @@ static int give_context(struct sline *sline, unsigned long cnt, int num_parent)
+ 		k = find_next(sline, mark, j, cnt, 0);
+ 		j = adjust_hunk_tail(sline, all_mask, i, j);
  
-+	if (get_colorbool_found < 0)
-+		/* default value if none found in config */
-+		get_colorbool_found = 0;
-+
- 	get_colorbool_found = want_color(get_colorbool_found);
- 
- 	if (print) {
--- 
-1.8.3.rc1.315.g4602f33
+-		if (k < j + context) {
++		if (k <= j + context) {
+ 			/* k is interesting and [j,k) are not, but
+ 			 * paint them interesting because the gap is small.
+ 			 */
