@@ -1,93 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 03/10] refs.c: Refactor code for mapping between shorthand names and full refnames
-Date: Wed, 15 May 2013 08:14:08 -0700
-Message-ID: <7v38toe0n3.fsf@alter.siamese.dyndns.org>
-References: <1368289280-30337-1-git-send-email-johan@herland.net>
-	<1368289280-30337-4-git-send-email-johan@herland.net>
-	<7vmwrzsck1.fsf@alter.siamese.dyndns.org>
-	<CALKQrgf0m8r-Ofb+Ss1OpEF67dPS73b8nB+usVxH=Y=h3441Wg@mail.gmail.com>
-	<7v8v3jqsy7.fsf@alter.siamese.dyndns.org>
-	<7vwqr2liv6.fsf@alter.siamese.dyndns.org>
-	<CALKQrgcDBMPeXPzTnpGyeosipR6Ln_zLh4Q_i1A7-eFUnTnBcA@mail.gmail.com>
-	<51932F1B.9000200@alum.mit.edu>
-	<CALKQrgdsBzcdtyej=qvaL-2rr-5t_UzXdOL-ZZ3a-rGW5V_i7Q@mail.gmail.com>
-	<CALKQrgdroLDSf=Xc58NiHSf7fp8cRMbrR0mGrfKY7Rg0FpPFJg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	jrnieder@gmail.com, normalperson@yhbt.net
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed May 15 17:14:20 2013
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [RFC 0/2] refactor relative_path in path.c
+Date: Wed, 15 May 2013 23:18:37 +0800
+Message-ID: <cover.1368630636.git.worldhello.net@gmail.com>
+References: <7vvc6ldtx7.fsf@alter.siamese.dyndns.org>
+Cc: Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 15 17:19:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcdPF-0002lL-Fg
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 17:14:17 +0200
+	id 1UcdTs-0006RY-GP
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 17:19:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759165Ab3EOPON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 11:14:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55081 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758844Ab3EOPOL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 11:14:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F2551E2E9;
-	Wed, 15 May 2013 15:14:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+r3hyORiTeRFZathgOrEtLfvq+s=; b=Aps126
-	GnV8S/TFkDCOYx7IyyxgNxxIBHBfIafNx9qMzv5YtbeGsD2v/fD+7q0p5RSLggLb
-	/sxuR9zjzBUGHY8rslaGSOXZCl4tFgXHKeypi4breiReCQ6l7DnXkGls33nK7fGn
-	O6RJvykgnbDLey3/CLKX+1x7GWquX7crgETWg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KGkmV2pgJYp+8T3yiwUrAmYM95le5TkJ
-	jSUPhZuH+xy1LUJs8N86MwlxaKfozGn4l8j1cETEwRUT1RCB5Hw8hyKNNkpkial9
-	UbYYz4/oR4batZ6IKbipd81BpX12ke+GbF02YDbH0hk+RU+mbj/B+o/XsRQh6+it
-	N/Qhy6NQ3H8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64F941E2E7;
-	Wed, 15 May 2013 15:14:11 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC7FE1E2DF;
-	Wed, 15 May 2013 15:14:10 +0000 (UTC)
-In-Reply-To: <CALKQrgdroLDSf=Xc58NiHSf7fp8cRMbrR0mGrfKY7Rg0FpPFJg@mail.gmail.com>
-	(Johan Herland's message of "Wed, 15 May 2013 15:53:52 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1868E09E-BD72-11E2-AF0C-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759194Ab3EOPS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 11:18:59 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:54630 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758897Ab3EOPS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 11:18:58 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rq13so1472170pbb.19
+        for <git@vger.kernel.org>; Wed, 15 May 2013 08:18:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=HgdR2QDP06FLr1rddMrqM46sDbneAghHQiQSsPYaU7A=;
+        b=hZOyLocQ7uhxcMTlV2xTmGznKtdyAq+VR2SA03LYt10BZa6qHdpue9r6FS1ss487dY
+         TIH6u/R9kSwTg0SB6/h8NvgOKP+hLe6VOn9n31zuw+4twKmrcOp+zbHSEGfv5clNHhAF
+         0vEjr3m1fmHxOoWUfv1b06QOsTndWRVPMXNQ/W6ugfvQ1wwNzn7+bJZlurvErhp1lNAc
+         P7njWcKbU6kFk4Tqgu1KGoyA7knh5bTnM3P4R0VRPn5PHEANejtd18akfgpuUZJLnQg1
+         0Zn4vpv/whdevTgMGeZxXSaJeurvoxdKfUC6MzdSkTX+xTh3ByGXFPBHlFL16pgipmBn
+         yufQ==
+X-Received: by 10.66.149.227 with SMTP id ud3mr40486637pab.33.1368631138284;
+        Wed, 15 May 2013 08:18:58 -0700 (PDT)
+Received: from localhost.localdomain ([114.248.153.37])
+        by mx.google.com with ESMTPSA id iy2sm3161860pbb.31.2013.05.15.08.18.51
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 15 May 2013 08:18:57 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.404.ga32c147
+In-Reply-To: <7vvc6ldtx7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224414>
 
-Johan Herland <johan@herland.net> writes:
-
-> On Wed, May 15, 2013 at 9:39 AM, Johan Herland <johan@herland.net> wrote:
->> On Wed, May 15, 2013 at 8:45 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>> "refs/remotes/%1/%2" (or "refs/remotes/%1/%*") might be a nice way to
->>> imply that the rule should only be attempted if the input has at least
->>> two components, whereas something like "refs/heads/%*" would be applied
->>> even for inputs with no slashes.
->>
->> /me likes, at least for "refs/remotes/%1/%*".
+2013/5/15 Junio C Hamano <gitster@pobox.com>:
+> Jiang Xin <worldhello.net@gmail.com> writes:
 >
-> Unfortunately, using "refs/remotes/%1/%*" instead of "refs/remotes/%*"
-> breaks a number of git-svn tests which puts refs directly within
-> refs/remotes/, and then does things like "git reset --hard trunk"
-> (expecting trunk -> refs/remotes/trunk, which the refs/remotes/%1/%*
-> doesn't match).
+>> +/*
+>> + * Give path as relative to prefix.
+>> + *
+>> + * This function is a combination of path_relative (in quote.c) and
+>> + * relative_path (in path.c)
+>> + */
+>> +static const char *path_relative(const char *in, const char *prefix)
+>> +{
+>> +...
+>
+> Hmph.  Is it possible to reuse the public one (in path.c) here and
+> in quote.c, perhaps after enhancing it a bit to serve needs of the
+> callers of two existing ones and the new callers of this one?
+>
 
-Oh, I never thought refs/remotes/%1/%* was a suggestion for a
-serious "improvement", but was merely a thought experiment "if all
-the remotes were at least two level names, we could express it like
-this to stress that fact".
+These two patches enhance relative_path() in path.c, so that function
+relative_path() will return real relative path, not a path strip off
+the prefix.
 
-We already allow 'origin' to refer to refs/remotes/origin/HEAD, so
-it is clear refs/remotes/%1/%* alone will not be able to replace
-what we have; we need refs/remotes/%* and refs/remotes/%*/HEAD
-anyway.
+The 2nd patch is a bit aggressive, it refactor all related functions,
+remove unnecessary arguments: len and/or prefix_len.
+
+Please review them. They will be prerequisites for the interactive
+git-clean patch series.
+
+Jiang Xin (2):
+  path.c: refactor relative_path(), not only strip prefix
+  quote.c: remove path_relative, use relative_path instead
+
+ builtin/clean.c    | 18 +++++------
+ builtin/grep.c     |  4 +--
+ builtin/ls-files.c | 13 ++++----
+ path.c             | 94 ++++++++++++++++++++++++++++++++++++++++++------------
+ quote.c            | 71 +++--------------------------------------
+ quote.h            |  7 ++--
+ wt-status.c        | 17 +++++-----
+ 7 files changed, 107 insertions(+), 117 deletions(-)
+
+-- 
+1.8.3.rc1.404.ga32c147
