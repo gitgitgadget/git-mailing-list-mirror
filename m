@@ -1,185 +1,91 @@
-From: Tobias Schulte <tobias.schulte@gliderpilot.de>
-Subject: [PATCH v2] git-svn: introduce --parents parameter for commands branch and tag
-Date: Wed, 15 May 2013 22:14:43 +0200
-Message-ID: <1368648883-9412-1-git-send-email-tobias.schulte@gliderpilot.de>
-References: <1368476549-17886-1-git-send-email-tobias.schulte@gliderpilot.de>
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Tobias Schulte <tobias.schulte@gliderpilot.de>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [RFC] New kind of upstream branch: base branch
+Date: Wed, 15 May 2013 13:28:22 -0700 (PDT)
+Message-ID: <5193efe6.c42ab60a.0319.5f2c@mx.google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 15 22:15:05 2013
+X-From: git-owner@vger.kernel.org Wed May 15 22:28:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uci6J-0004Fq-BW
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 22:15:03 +0200
+	id 1UciJI-0006uQ-Ov
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 22:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932184Ab3EOUOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 16:14:50 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:58824 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754960Ab3EOUOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 16:14:49 -0400
-Received: from tobias-desktop.localdomain (p54A16923.dip0.t-ipconnect.de [84.161.105.35])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0LsMjU-1UVrRg0tOy-012Wb3; Wed, 15 May 2013 22:14:48 +0200
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1368476549-17886-1-git-send-email-tobias.schulte@gliderpilot.de>
-X-Provags-ID: V02:K0:7X3+Rbm527Uc3kXtt7mJZ/hQn9s2T2qjRvOBOIF5Fxv
- 3h4ugjVePqAdtzSoXm7lQrrVbe2pSEkAI6dLXVAHgw8qdomHTG
- fc+Jf7cw/+URx1EfL7RXeJ/7xPEy0j46zWQxb5nByWTfQyWfEe
- vX3y8Zj7Fz+H0IiR/RKYW3bU6/XwBjQK8L+mjBGUsXKy4W7fKi
- pcHBZwz4ecUYGH1FnqAcl2eaPxjJuCW/KzvoNDUGaGg6UXHVqR
- l59uv6y9Ajd3xeKe3lITzg1T52uLTgcwm6cgacMCOyjEoV/pCC
- H6/hl5zbnFSUraqyJSexAFDoCRAvN5yEWbIv3nv+Aq+hf9GjbK
- bw3+J5l2cfpdDiBYTGtgGHHZCqqAfezfpBmjvIGQ44TwMepuH7
- vnVeE6Qwi9kHEyndsOIp9m++v+d30BTqSbsF0vm8GxK6uhR3U8
- nmeJI
+	id S1757444Ab3EOU2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 16:28:24 -0400
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:40127 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754960Ab3EOU2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 16:28:24 -0400
+Received: by mail-ob0-f171.google.com with SMTP id ef5so2522200obb.2
+        for <git@vger.kernel.org>; Wed, 15 May 2013 13:28:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:to:subject;
+        bh=w56Ay/HIfIxTDL2/ZV/vsMRu5T8vv5QU2vRrlwY4UZs=;
+        b=P9MRiTvNVUkZ708vNyoBSCvXHM/huIL2I3D6Fr6/BMw0dJV1MfhJ4IWgTHycIv/sQz
+         /xd0YGTNUmoCEQjcf8pajxhsHnWUuSQqlqxdwn974MvZxbgET+Y6WnKApDb5WDlo1n/8
+         PsKGBSpJrCsgroH1qRDiL6SR9kPpdtqclQzPhHAoVgCqaMfUKQ6uuo+vVBcnm0HlZLSN
+         fI8eZCC8aV/cy3MusuW3PBwaf/unzlmHXTs9ZxzKlC+beU2FtHv16MF185QHBkyRK4o/
+         TOZwtURcvLXvKDy8NrUKoEmpIk7iEjb6OkZU+iTcxtOuv6GXxOsh+SOCNxadzpgH4WWf
+         zUgg==
+X-Received: by 10.182.97.40 with SMTP id dx8mr17891859obb.54.1368649703624;
+        Wed, 15 May 2013 13:28:23 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id q4sm4474209obl.1.2013.05.15.13.28.21
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 15 May 2013 13:28:22 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224448>
 
-This parameter is equivalent to the parameter --parents on svn cp commands
-and is useful for non-standard repository layouts.
+Hi,
 
-Signed-off-by: Tobias Schulte <tobias.schulte@gliderpilot.de>
----
- Documentation/git-svn.txt                |    5 ++++
- git-svn.perl                             |   19 +++++++++++-
- t/t9167-git-svn-cmd-branch-subproject.sh |   48 ++++++++++++++++++++++++++++++
- 3 files changed, 71 insertions(+), 1 deletion(-)
- create mode 100755 t/t9167-git-svn-cmd-branch-subproject.sh
+I've been using Git from the start, but only lately have I forced myself to
+configure upstream branches for all my branches, and I've found a few things
+more convenient, but others completely contrary to what I expected.
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 58b6d54..842ff83 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -298,6 +298,11 @@ where <name> is the name of the SVN repository as specified by the -R option to
- 	git config --get-all svn-remote.<name>.commiturl
- +
- 
-+--parents;;
-+	Create parent folders. This parameter is equivalent to the parameter
-+	--parents on svn cp commands and is useful for non-standard repository
-+	layouts.
-+
- 'tag'::
- 	Create a tag in the SVN repository. This is a shorthand for
- 	'branch -t'.
-diff --git a/git-svn.perl b/git-svn.perl
-index ccabe06..d070de0 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -113,7 +113,7 @@ my ($_stdin, $_help, $_edit,
- 	$_template, $_shared,
- 	$_version, $_fetch_all, $_no_rebase, $_fetch_parent,
- 	$_before, $_after,
--	$_merge, $_strategy, $_preserve_merges, $_dry_run, $_local,
-+	$_merge, $_strategy, $_preserve_merges, $_dry_run, $_parents, $_local,
- 	$_prefix, $_no_checkout, $_url, $_verbose,
- 	$_commit_url, $_tag, $_merge_info, $_interactive);
- 
-@@ -203,6 +203,7 @@ my %cmd = (
- 	            { 'message|m=s' => \$_message,
- 	              'destination|d=s' => \$_branch_dest,
- 	              'dry-run|n' => \$_dry_run,
-+	              'parents' => \$_parents,
- 	              'tag|t' => \$_tag,
- 	              'username=s' => \$Git::SVN::Prompt::_username,
- 	              'commit-url=s' => \$_commit_url } ],
-@@ -211,6 +212,7 @@ my %cmd = (
- 	         { 'message|m=s' => \$_message,
- 	           'destination|d=s' => \$_branch_dest,
- 	           'dry-run|n' => \$_dry_run,
-+	           'parents' => \$_parents,
- 	           'username=s' => \$Git::SVN::Prompt::_username,
- 	           'commit-url=s' => \$_commit_url } ],
- 	'set-tree' => [ \&cmd_set_tree,
-@@ -1172,6 +1174,10 @@ sub cmd_branch {
- 		$ctx->ls($dst, 'HEAD', 0);
- 	} and die "branch ${branch_name} already exists\n";
- 
-+	if ($_parents) {
-+		mk_parent_dirs($ctx, $dst);
-+	}
-+
- 	print "Copying ${src} at r${rev} to ${dst}...\n";
- 	$ctx->copy($src, $rev, $dst)
- 		unless $_dry_run;
-@@ -1179,6 +1185,17 @@ sub cmd_branch {
- 	$gs->fetch_all;
- }
- 
-+sub mk_parent_dirs {
-+	my ($ctx, $parent) = @_;
-+	$parent =~ s{/[^/]*$}{};
-+
-+	if (!eval{$ctx->ls($parent, 'HEAD', 0)}) {
-+		mk_parent_dirs($ctx, $parent);
-+		print "Creating parent folder ${parent} ...\n";
-+		$ctx->mkdir($parent) unless $_dry_run;
-+	}
-+}
-+
- sub cmd_find_rev {
- 	my $revision_or_hash = shift or die "SVN or git revision required ",
- 	                                    "as a command-line argument\n";
-diff --git a/t/t9167-git-svn-cmd-branch-subproject.sh b/t/t9167-git-svn-cmd-branch-subproject.sh
-new file mode 100755
-index 0000000..53def87
---- /dev/null
-+++ b/t/t9167-git-svn-cmd-branch-subproject.sh
-@@ -0,0 +1,48 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2013 Tobias Schulte
-+#
-+
-+test_description='git svn branch for subproject clones'
-+. ./lib-git-svn.sh
-+
-+test_expect_success 'initialize svnrepo' '
-+	mkdir import &&
-+	(
-+		cd import &&
-+		mkdir -p trunk/project branches tags &&
-+		(
-+			cd trunk/project &&
-+			echo foo > foo
-+		) &&
-+		svn_cmd import -m "import for git-svn" . "$svnrepo" >/dev/null
-+	) &&
-+	rm -rf import &&
-+	svn_cmd co "$svnrepo"/trunk/project trunk/project &&
-+	(
-+		cd trunk/project &&
-+		echo bar >> foo &&
-+		svn_cmd ci -m "updated trunk"
-+	) &&
-+	rm -rf trunk
-+'
-+
-+test_expect_success 'import into git' '
-+	git svn init --trunk=trunk/project --branches=branches/*/project \
-+		--tags=tags/*/project "$svnrepo" &&
-+	git svn fetch &&
-+	git checkout remotes/trunk
-+'
-+
-+test_expect_success 'git svn branch tests' '
-+	test_must_fail git svn branch a &&
-+	git svn branch --parents a &&
-+	test_must_fail git svn branch -t tag1 &&
-+	git svn branch --parents -t tag1 &&
-+	test_must_fail git svn branch --tag tag2 &&
-+	git svn branch --parents --tag tag2 &&
-+	test_must_fail git svn tag tag3 &&
-+	git svn tag --parents tag3
-+'
-+
-+test_done
+Inconvenient:
+
+Before, I used to do 'git fetch' to simply fetch from 'origin', but now, it
+depends on where 'upstream' is set to.
+
+Convinient:
+
+Now, I can just do 'git rebase --interactive' and I don't have to specify the
+starting point, which is particularily useful when there's a lot of branches
+one depending on another.
+
+I think I'm using 'upstream' for something it was not intended to, and I think
+the current 'upstream' behavior should be split into 'upstream' and 'base'.
+
+== base ==
+
+The 'base' branch will be set each time you create a branch from another;
+'git checkout -b foobar master' sets 'master' as the 'base' of 'foobar'.
+
+Then you can do 'git rebase foobar@{base}' or simply 'git rebase', and Git will
+pick the right branch to rebase unto, even if you have no 'upstream'
+configured.
+
+This way 'git fetch' will keep picking 'origin', and other commands that make
+use of 'upstrem' would be undisturbed.
+
+If both 'base' and 'upstream' are defined, I think 'git rebase' should use
+'base', but since that would break old behavior, perhaps there should be a
+configuration variable to enable a different behavior.
+
+I already started writting the patches, and although tedious, I think they
+they'll be rather straightforward, but I thought it would be best to hear some
+opinions first.
+
+What do you think?
+
+Cheers.
+
 -- 
-1.7.9.5
+Felipe Contreras
