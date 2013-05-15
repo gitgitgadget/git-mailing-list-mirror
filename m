@@ -1,116 +1,103 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: introduce --parents parameter for commands
- branch and tag
-Date: Wed, 15 May 2013 02:35:47 +0000
-Message-ID: <20130515023547.GA21987@dcvr.yhbt.net>
-References: <1368476549-17886-1-git-send-email-tobias.schulte@gliderpilot.de>
+From: sam <sdoyle_2@yahoo.com>
+Subject: Re: Segmentation fault with latest git (070c57df)
+Date: Tue, 14 May 2013 20:14:42 -0700 (PDT)
+Message-ID: <1368587682499-7585906.post@n2.nabble.com>
+References: <28799936.346521359596121253.JavaMail.weblogic@epmltmp3> <12070540.431901359961105650.JavaMail.weblogic@epml10> <7vehgw5z7n.fsf@alter.siamese.dyndns.org> <20130204083701.GA30835@sigill.intra.peff.net> <7vsj5c4exz.fsf@alter.siamese.dyndns.org> <20130204093821.GA32095@sigill.intra.peff.net> <7vboc03u3e.fsf@alter.siamese.dyndns.org> <20130204183437.GA15552@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tobias Schulte <tobias.schulte@gliderpilot.de>
-X-From: git-owner@vger.kernel.org Wed May 15 04:36:04 2013
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 15 05:14:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcRZU-00079H-17
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 04:36:04 +0200
+	id 1UcSAz-0001l7-1y
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 05:14:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754398Ab3EOCft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 May 2013 22:35:49 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:46463 "EHLO dcvr.yhbt.net"
+	id S1756422Ab3EODOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 May 2013 23:14:44 -0400
+Received: from sam.nabble.com ([216.139.236.26]:53534 "EHLO sam.nabble.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753803Ab3EOCfs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 May 2013 22:35:48 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4742F1F432;
-	Wed, 15 May 2013 02:35:47 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1368476549-17886-1-git-send-email-tobias.schulte@gliderpilot.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756371Ab3EODOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 May 2013 23:14:43 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <sdoyle_2@yahoo.com>)
+	id 1UcSAs-0004c8-HJ
+	for git@vger.kernel.org; Tue, 14 May 2013 20:14:42 -0700
+In-Reply-To: <20130204183437.GA15552@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224378>
 
-Tobias Schulte <tobias.schulte@gliderpilot.de> wrote:
-> This parameter is equivalent to the parameter --parents on svn cp commands
-> and is useful for non-standard repository layouts.
+Hi,
 
-This looks useful.  A few minor cosmetic issues.
+Has there been any further progress on this. I just encountered a SEGV with
+a git apply. This is the latest git version running on Ubuntu 13.04
 
-> +++ b/Documentation/git-svn.txt
-> @@ -298,6 +298,11 @@ where <name> is the name of the SVN repository as specified by the -R option to
->  	git config --get-all svn-remote.<name>.commiturl
->  +
->  
-> +--parents;;
-> +	Create parent folders. This parameter is equivalent to the parameter 
-> +	--parents on svn cp commands and is useful for non-standard repository 
-> +	layouts.
+cat /etc/lsb-release 
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=13.04
+DISTRIB_CODENAME=raring
+DISTRIB_DESCRIPTION="Ubuntu 13.04"
 
-Trailing whitespace.
+uname -a
+Linux sam-mac 3.8.0-20-generic #31-Ubuntu SMP Mon May 6 17:03:32 UTC 2013
+x86_64 x86_64 x86_64 GNU/Linux
 
-> +sub mk_parent_dirs {
-> +	my $ctx = shift;
-> +	my $parent = shift;
+git --version
+git version 1.8.2.2
 
-I prefer declaring multiple variables from arguments as:
 
-	my ($ctx, $parent) = @_;
+samueldoyle@sam-MacBookPro:~/Projects/VMware/perforce_repos/esx50u3ps$ sudo
+gdb /usr/bin/git core
+GNU gdb (GDB) 7.5.91.20130417-cvs-ubuntu
+Copyright (C) 2013 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later
+<http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+Reading symbols from /usr/bin/git...(no debugging symbols found)...done.
+[New LWP 28634]
 
-> +	$parent =~ s/\/[^\/]*$//;
+warning: Can't read pathname for load map: Input/output error.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
 
-You can avoid leaning toothpick syndrome (escaping '/') by specifying
-alternate delimiters:
+warning: no loadable sections found in added symbol-file system-supplied DSO
+at 0x7fff94d1a000
+Core was generated by `git apply --verbose --check --ignore-whitespace
+--directory=/home/sam/P'.
+Program terminated with signal 11, Segmentation fault.
+#0  __strlen_sse2 () at ../sysdeps/x86_64/multiarch/../strlen.S:31
+31	../sysdeps/x86_64/multiarch/../strlen.S: No such file or directory.
+(gdb) bt 10
+#0  __strlen_sse2 () at ../sysdeps/x86_64/multiarch/../strlen.S:31
+#1  0x00007f06ba7c28c6 in __GI___strdup (s=0x0) at strdup.c:41
+#2  0x00000000004f4449 in ?? ()
+#3  0x000000000040eab0 in ?? ()
+#4  0x000000000040f6f5 in ?? ()
+#5  0x0000000000405a88 in ?? ()
+#6  0x0000000000404ee2 in ?? ()
+#7  0x00007f06ba75aea5 in __libc_start_main (main=0x404e30, argc=7,
+ubp_av=0x7fff94c3bd08, init=<optimized out>, fini=<optimized out>, 
+    rtld_fini=<optimized out>, stack_end=0x7fff94c3bcf8) at libc-start.c:260
+#8  0x0000000000405329 in ?? ()
 
-	$parent =~ s{/[^/]*$}{};
 
-ref: perlop(1)
+A quick search turned up this post that appears to provide the cause:
+http://stackoverflow.com/questions/3608931/why-is-this-program-segfaulting
 
-> +	if (!eval{$ctx->ls($parent, 'HEAD', 0)}) {
-> +		mk_parent_dirs($ctx, $parent);
-> +		print "Creating parent folder ${parent} ...\n";
-> +		$ctx->mkdir($parent)
-> +			unless $_dry_run;
 
-The newline is confusing, I prefer:
 
-		$ctx->mkdir($parent) unless $_dry_run;
-
-Howeve :
-
-	if (!$_dry_run) {
-		$ctx->mkdir($parent);
-	}
-
-May be preferred, too (especially for the non-Perl-fluent)
-
-> +++ b/t/t9167-git-svn-cmd-branch-subproject.sh
-
-> +test_expect_success 'initialize svnrepo' '
-> +    mkdir import &&
-> +    (
-> +        (cd import &&
-> +        mkdir -p trunk/project branches tags &&
-> +        (cd trunk/project &&
-> +        echo foo > foo
-> +        ) &&
-
-Tabs for all indentation, and indent consistently for subshells:
-
-	mkdir import &&
-	(
-		cd import &&
-		mkdir .. &&
-		(
-			cd .. &&
-			..
-		)
-	)
-
-We use subshells + cd like this so it's easier to read/maintain.
-
-Thanks again, looking forward to applying v2.
+--
+View this message in context: http://git.661346.n2.nabble.com/Segmentation-fault-with-latest-git-070c57df-tp7576614p7585906.html
+Sent from the git mailing list archive at Nabble.com.
