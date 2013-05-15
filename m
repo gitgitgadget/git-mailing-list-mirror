@@ -1,107 +1,80 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: Re: Lines missing from git diff-tree -p -c output?
-Date: Wed, 15 May 2013 20:17:34 +0200
-Message-ID: <20130515181734.GT25742@login.drsnuggles.stderr.nl>
-References: <20130515143508.GO25742@login.drsnuggles.stderr.nl>
- <7vhai4cgco.fsf@alter.siamese.dyndns.org>
- <20130515173312.GR25742@login.drsnuggles.stderr.nl>
- <7v4ne4cexm.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] make color.ui default to 'auto'
+Date: Wed, 15 May 2013 20:21:35 +0200
+Message-ID: <vpqli7gayts.fsf@grenoble-inp.fr>
+References: <vpq61yky2zp.fsf_-_@grenoble-inp.fr>
+	<1368619757-10402-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vy5bgckr4.fsf@alter.siamese.dyndns.org>
+	<vpqhai4fbsn.fsf@grenoble-inp.fr>
+	<7v8v3gcfk1.fsf@alter.siamese.dyndns.org>
+	<vpqwqr0azz7.fsf@grenoble-inp.fr>
+	<7vppwsazg7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 15 20:17:46 2013
+X-From: git-owner@vger.kernel.org Wed May 15 20:22:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcgGl-0003dB-NW
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 20:17:44 +0200
+	id 1UcgLe-0007Yj-OC
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 20:22:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933031Ab3EOSRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 14:17:40 -0400
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:44846 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933011Ab3EOSRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 14:17:39 -0400
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1UcgGc-0006g1-Ll; Wed, 15 May 2013 20:17:35 +0200
-Received: (nullmailer pid 25666 invoked by uid 1000);
-	Wed, 15 May 2013 18:17:34 -0000
-Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v4ne4cexm.fsf@alter.siamese.dyndns.org>
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Score: -2.6 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S933038Ab3EOSWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 14:22:42 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:44305 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932945Ab3EOSWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 14:22:41 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r4FILYkV002975
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 15 May 2013 20:21:34 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UcgKW-0001zG-5j; Wed, 15 May 2013 20:21:36 +0200
+In-Reply-To: <7vppwsazg7.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 15 May 2013 11:08:08 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 15 May 2013 20:21:34 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r4FILYkV002975
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1369246894.89964@uVc2BL1E76AawPRngWDumQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224438>
 
-Hi Junio,
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Could you explain why you think it hides the real problem, and what
-> kind of future enhancement may break it?
-I think the differences is mostly in the locality of the fix. In my
-proposed patch, the no_pre_delete flag is never set on an interesting
-line because it is checked in the line before it. In your patch, it
-never happens because the control flow guarantees the "context" lines
-before each change must be uninteresting.
+> Now, realize that after switching the default, these "few people"
+> have to live with distracting (or unreadable) output.  Because these
+> people are minority, their websearch "disable colors in git" will by
+> definition have smaller number of hits than "enable colors in git"
+> the above claims people "may not discover it by themselves".
 
-The net effect is of course identical, but I'm arguing that depending on
-the control flow and some code a doze lines down is easier to break than
-depending on a previous line.
+As my message says, "disable colors in git" already gives you the
+answer, today (1st hit in Google). I'm not worried about the difficulty
+to find the information in the future.
 
-Having said that: I'm not sure if the difference is significant enough
-to convince me in either direction.
+> We should be honest and say what we are doing: "it will make things
+> easier for majority while making it less convenient for minority".
 
+I thought this was what I did, but your first complain was I was
+mentionning the majority, and you are now suggesting something about
+majority/minority, so I'm lost.
 
+In any case, feel free to change the commit message, what's really
+important is the actual change, and it does not seem controversial.
 
-However, thinking about this a bit more (and getting sidetracked on a
-completely separate issue/question), I wonder why the coalescing-hunks
-code is there in the first place? e.g., why not leave out these lines?
-
-	if (k < j + context) {
-		/* k is interesting and [j,k) are not, but
-		 * paint them interesting because the gap is small.
-		 */
-		while (j < k)
-			sline[j++].flag |= mark;
-		i = k;
-		goto again;
-	}
-
-If the "context" lines before and after each group of changes are
-painted interesting, then these lines in between will also be painted
-interesting. Of course, this could cause some lines to be painted as
-interesting twice and it needs my fix for the no_pre_delete thing, but
-it would work just as well?
-
-However, I can imagine that this code is present to prevent painting
-lines twice, which would of course be a bit of a performance loss. But
-if this really was the motivation, why is the first if not something
-like:
-
-	if (k <= j + 2 * context) {
-
-Since IIUC, the current code can still paint a few context lines twice
-when they are exacly "context" lines apart, once by the "paint before"
-and one by the "paint after" code (which is also what happens in my bug
-example, I think). The above should "fix" that as well (the first part
-of the test suite hasn't complained so far).
-
-Gr.
-
-Matthijs
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
