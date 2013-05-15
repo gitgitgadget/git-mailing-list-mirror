@@ -1,75 +1,133 @@
-From: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
-Subject: Re: English/German terminology, git.git's de.po, and pro-git
-Date: Wed, 15 May 2013 17:31:45 +0200
-Message-ID: <5193AA61.2040205@ira.uka.de>
-References: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net> <alpine.LNX.2.01.1305131542210.30808@nerf07.vanv.qr> <001d01ce500b$c7c08b70$5741a250$@scanmyfood.de> <alpine.LNX.2.01.1305132119220.2288@nerf07.vanv.qr> <CAN0XMOL3rkYDinSCN2GLaRj7dOvbF=SdMRxM4PHCZ5h7g5Nkkw@mail.gmail.com> <51936218.9020306@ira.uka.de> <519370D3.3000306@web.de> <alpine.LNX.2.01.1305151351130.20281@nerf07.vanv.qr> <51937F2D.90608@web.de> <alpine.LNX.2.01.1305151502220.15513@nerf07.vanv.qr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] make color.ui default to 'auto'
+Date: Wed, 15 May 2013 08:42:39 -0700
+Message-ID: <7vy5bgckr4.fsf@alter.siamese.dyndns.org>
+References: <vpq61yky2zp.fsf_-_@grenoble-inp.fr>
+	<1368619757-10402-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	=?UTF-8?B?UmFscGggSGF1w59tYW5u?= <ralph@scanmyfood.de>,
-	Christian Stimming <stimming@tuhh.de>,
-	Sven Fuchs <svenfuchs@artweb-design.de>,
-	git <git@vger.kernel.org>,
-	=?UTF-8?B?SmFuIEtyw7xnZXI=?= <jk@jk.gs>
-To: Jan Engelhardt <jengelh@inai.de>
-X-From: git-owner@vger.kernel.org Wed May 15 17:31:44 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed May 15 17:42:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ucdg6-0007qo-VG
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 17:31:43 +0200
+	id 1Ucdqp-000891-M6
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 17:42:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758427Ab3EOPbi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 11:31:38 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:39872 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755056Ab3EOPbh (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 May 2013 11:31:37 -0400
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1Ucdfr-0003Qn-5Q; Wed, 15 May 2013 17:31:32 +0200
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 587 
-	id 1Ucdfq-0005Og-T7; Wed, 15 May 2013 17:31:26 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <alpine.LNX.2.01.1305151502220.15513@nerf07.vanv.qr>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1368631892.640328000
+	id S1758809Ab3EOPmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 11:42:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37879 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757225Ab3EOPmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 11:42:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B89C81F960;
+	Wed, 15 May 2013 15:42:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tMLHg6jo6rn8G712N8wAqx9HMG8=; b=PHnVAr
+	YilDEOwPmXa0B0EtKu2WxCQOb/ydXoDrnGf9ySmN2qTgxG/uH0xTxAvRhdRIr/Tv
+	G4dFoRrYSMEwLL5SOz1NkLCl/LsP6z+iV0t8WGrwqD2S1IQ8wMwhThjDVb810a3Y
+	06A4qp05f0v15Qa2+Odtl9DNUFiXSeRKre99U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TCz8z6QX5JpttVwsZu9kbPLV2ycUS8b6
+	ALHD5o4kIyknzaqYG17DFenXAvbBXVChJ2+uOJcvsDSfJ/9b6iBulvPbO9fSLkyP
+	uZxEUgGZokXh5lAPqcqzuBzqyaYIJwNgVJZT6HvQoSu88aDnWMF0DXAR86ysN0Ef
+	0NzG5aKlUOY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADB411F95F;
+	Wed, 15 May 2013 15:42:41 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E0E7A1F958;
+	Wed, 15 May 2013 15:42:40 +0000 (UTC)
+In-Reply-To: <1368619757-10402-1-git-send-email-Matthieu.Moy@imag.fr>
+	(Matthieu Moy's message of "Wed, 15 May 2013 14:09:17 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 13BA286A-BD76-11E2-BCD1-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224418>
 
-Am 15.05.2013 15:14, schrieb Jan Engelhardt:
->
-> On Wednesday 2013-05-15 14:27, Jens Lehmann wrote:
->>>
->>> While it's spoken Packdatei, the way to actually write it is
->>> .pack-Datei or ".pack"-Datei.
->>
->> I actually had the '-' in there too until I tried to look up "Zip-Datei"
->> in the Duden. While I don't get the leading '.' (I cannot remember having
->> seen that anywhere, AFAIK the file extensions are always used without the
->> dot), I'm not a grammar expert and will be fine either way.
->
-> In UNIX-land, extension seemed to always include the dot.
-> In DOS-land, it's without (inherited from VMS too, perhaps?)
-> As such, either way to write it is acceptable.
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-Even in unix-land no one adds a dot because usually the extension is 
-named after the data format, only that the file extension is used as the 
-common abbreviation (at least that is my interpretation). Compare with 
-jpeg. You often write jpeg-Datei instead of jpg-Datei because the data 
-format is called jpeg.
-This is why I don't think the dot has any reason to be there. I can't 
-remember ever seeing anyone writing .jpg-Datei (or .doc-Datei, 
-.rar-Datei) except to ask what a .xyz Datei contains (i.e. when he 
-doesn't know what the data format is)
+> Many tutorials tell the users to set color.ui=auto as a very first step.
+> These tutorials would benefit from skiping this step and starting the
+> real Git manipualtions earlier. Other beginners do not know about
+> color.ui=auto, and may not discover it by themselves, hence live with
+> black&white outputs while they may have prefered colors.
+>
+> A few people (e.g. color-blind) prefer having no colors, but they can
+> easily set color.ui=never for this (and googling "disable colors in git"
+> already tells them how to do so).
+
+The above two paragraphs do not make a good justification [*1*].
+The former can just as easily websearch for "enable colours in git"
+as the latter would for "disable" in order to avoid having to live
+with distraction while they may have preferred monochrome.
+
+The train of thought that is a sufficient justification for this
+change is "Our document and third-party tutorials often start with
+setting color.ui=auto configuration." leading to "Our recommendation
+is to enable colour on terminals." which in turn leading to "Why is
+our default monochrome, against our own recommendation?".  Saying
+anything more, like who are the majority or how easily the default
+can be overridden, is unnecessary, I think [*2*].
+
+As this is purely a UI thing, and since daa0c3d97176 (color: delay
+auto-color decision until point of use, 2011-08-17), the logic to
+decide when "auto colouring" is triggered is centrary controlled
+(hence it is much less likely than before that color.ui=auto could
+misfire when it shouldn't), I agree that this does not even deserve
+a warning. You could even sell it as a pure bugfix ("we recommend
+users to use auto colouring but we did not set it up for users").
+
+> The default value is changed, and the documentation is reworded to
+> mention "color.ui=false" first, since the primary use of color.ui after
+> this change is to disable colors, not to enable it.
+
+Good.
+
+> I'm starting to wonder why we didn't do this earlier ;-).
+>
+>  Documentation/config.txt | 11 ++++++-----
+>  color.c                  |  2 +-
+>  2 files changed, 7 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 1009bfc..97550be 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -913,11 +913,12 @@ color.ui::
+>  	as `color.diff` and `color.grep` that control the use of color
+>  	per command family. Its scope will expand as more commands learn
+>  	configuration to set a default for the `--color` option.  Set it
+> +	to `false` or `never` if you prefer Git commands not to use
+> +	color unless enabled explicitly with some other configuration
+> +	or the `--color` option. Set it to `always` if you want all
+> +	output not intended for machine consumption to use color, to
+> +	`true` or `auto` (this is the default since Git 2.0) if you
+> +	want such output to use color when written to the terminal.
+
+OK, so this is planned for 2.0?
+
+
+[Footnote]
+
+*1* Unless you have some statistical fact to demonstrate that
+beginners who prefer colours are of lessor intelligence than
+those who do not, that is.
+
+*2* It unnecessarily muddies the water to bring up "which is
+majority?".  A poll might reveal more people prefer monochrome, but
+in that case, either we keep the default monochrome *and* fix the
+tutorial not to suggest auto, or we stick to the recommendation to
+use auto colouring.  In other words, I see this change as merely
+making the code in line with the spirit of the documentation.
