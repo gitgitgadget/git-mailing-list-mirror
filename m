@@ -1,69 +1,70 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [RFC/PATCH] branch: show me the hot branches
-Date: Wed, 15 May 2013 08:54:14 -0400
-Message-ID: <CABURp0oH-n59hbUzUefztf6DjJWR26Tu6zUX6VNQ292icwxh4w@mail.gmail.com>
-References: <1368475365-18680-1-git-send-email-artagnon@gmail.com>
- <CABURp0rVoRwWUBXP5ZdsPByd47hDj7w9y5eddNQfiDfkttAKvg@mail.gmail.com> <7vip2ldtlg.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] make color.ui default to 'auto'
+Date: Wed, 15 May 2013 14:59:29 +0200
+Message-ID: <CALKQrgdVf_rfsLu1NnXGk+LCTV34T-4doJ+2yyi69ZER8vTAfg@mail.gmail.com>
+References: <vpq61yky2zp.fsf_-_@grenoble-inp.fr>
+	<1368619757-10402-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 15 14:54:52 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed May 15 14:59:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcbEF-0001n7-B2
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 14:54:47 +0200
+	id 1UcbIx-0005Vt-O5
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 14:59:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932636Ab3EOMyj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 08:54:39 -0400
-Received: from mail-vb0-f48.google.com ([209.85.212.48]:38530 "EHLO
-	mail-vb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932490Ab3EOMyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 08:54:36 -0400
-Received: by mail-vb0-f48.google.com with SMTP id q16so400431vbe.35
-        for <git@vger.kernel.org>; Wed, 15 May 2013 05:54:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=t5u18ZU6neAMdFhQXmKpyVUH1v70g8/E2nKZJsgXPKU=;
-        b=igIcmgtWZXVzi8Hi5MIaHFh5eDna+iHBSV52n0ZBbIKrRtAw7xkH6OoqPgw0iGFyzP
-         H+TKIGjvr+qkQLJtwpAhLBOzYb/tfLhU1GheeQwIGCVSph1yNCVZyFoagb34ruVDf9EX
-         Sj7wBsQmb5oaFiOfuasq6kFJgDdjzyU0KBNJRya/byBR4MDnS0h2Qf1DiTd8xUG4ic9g
-         SD8k6Ju4ZVdn0xznDGurukXWvgimHVCxNzvMaXgGV57XOKdqEe//BoFkt5uXCE0qIkLx
-         BORS+mZTqYcf8kbyQSEIqeRCSQWAsNuysIHTotZ2LBNsZwHjFpfph6MYIxj5uQVQOSnm
-         jZoQ==
-X-Received: by 10.58.255.229 with SMTP id at5mr23341397ved.44.1368622475833;
- Wed, 15 May 2013 05:54:35 -0700 (PDT)
-Received: by 10.58.135.1 with HTTP; Wed, 15 May 2013 05:54:14 -0700 (PDT)
-In-Reply-To: <7vip2ldtlg.fsf@alter.siamese.dyndns.org>
+	id S932679Ab3EOM7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 08:59:35 -0400
+Received: from mail10.copyleft.no ([188.94.218.231]:56165 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932510Ab3EOM7f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 08:59:35 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UcbIr-000Cp5-Kh
+	for git@vger.kernel.org; Wed, 15 May 2013 14:59:33 +0200
+Received: from mail-ob0-f171.google.com ([209.85.214.171])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UcZ5K-000KXF-BG
+	for git@vger.kernel.org; Wed, 15 May 2013 12:37:26 +0200
+Received: by mail-ob0-f171.google.com with SMTP id ef5so1918185obb.2
+        for <git@vger.kernel.org>; Wed, 15 May 2013 05:59:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=JM+xWqCUn/MPqmRjwslHCzIjXO/9Zsy3Dmv2V6HRILc=;
+        b=DwoVeV9WkIRIMH/ej4UNAjaXlZyWf5mDaTYeKYB25lAVOC8NAE9/NNMDTxYTTd5a8Q
+         dg0J6vxE/k+CeJ8UOiifXY3GiAz37mI+auwTAotKGe7W+BvC85a3Fb2dEC3vXHLH6xT3
+         W0xMdbKAwtdJ2SysFWfmnojSsLQ7SJYkOjQq5JqucGo+9l3nxLyALVzi1KVSk6V28V+P
+         IAySvKzEWd09HYkw1merN7j3nvEXxWPr3bbsy2ucQcRASzOfHhtAQALP7qDhHVdwnuAu
+         7LaWA+cbMsT4cLDa0uVCW3Ll3tit2P8lM8pSWZO9FUsLTvQP9jttnMQcTk38p+hYX/ns
+         4BpA==
+X-Received: by 10.60.80.197 with SMTP id t5mr16390759oex.1.1368622769916; Wed,
+ 15 May 2013 05:59:29 -0700 (PDT)
+Received: by 10.182.133.66 with HTTP; Wed, 15 May 2013 05:59:29 -0700 (PDT)
+In-Reply-To: <1368619757-10402-1-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224403>
 
-On Tue, May 14, 2013 at 7:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Phil Hord <phil.hord@gmail.com> writes:
->
->> I imagine it with --date-order and whatnot.
->
-> Perhaps modeled after this one.
->
->     git for-each-ref \
->         --format='%(refname:short) %(subject)'
->         --sort='-committerdate' refs/heads/
->
+On Wed, May 15, 2013 at 2:09 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 
-Nice.  I had no idea about for-each-ref.  I knew it was out there, but
-not what it could do.  Another tool in the swiss army knife that is
-git.
+Reviewed and supported-by: Johan Herland <johan@herland.net>
 
-I think Duy was right about his patch's merits.
 
-Phil
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
