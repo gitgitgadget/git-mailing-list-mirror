@@ -1,97 +1,92 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: Re: Lines missing from git diff-tree -p -c output?
-Date: Wed, 15 May 2013 17:46:38 +0200
-Message-ID: <20130515154638.GQ25742@login.drsnuggles.stderr.nl>
-References: <20130515143508.GO25742@login.drsnuggles.stderr.nl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] make color.ui default to 'auto'
+Date: Wed, 15 May 2013 09:09:22 -0700
+Message-ID: <7vtxm4cjil.fsf@alter.siamese.dyndns.org>
+References: <CALKQrgdVf_rfsLu1NnXGk+LCTV34T-4doJ+2yyi69ZER8vTAfg@mail.gmail.com>
+	<1368624095-15738-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 15 17:46:47 2013
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed May 15 18:09:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ucdug-0002sa-HN
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 17:46:46 +0200
+	id 1UceGf-0003oD-Sl
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 18:09:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759472Ab3EOPqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 11:46:43 -0400
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:33800 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759466Ab3EOPql (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 11:46:41 -0400
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1UcduZ-00044B-2O
-	for git@vger.kernel.org; Wed, 15 May 2013 17:46:39 +0200
-Received: (nullmailer pid 15631 invoked by uid 1000);
-	Wed, 15 May 2013 15:46:39 -0000
-Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20130515143508.GO25742@login.drsnuggles.stderr.nl>
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Score: -2.6 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1758951Ab3EOQJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 12:09:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48532 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758844Ab3EOQJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 12:09:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A97FC1F1B4;
+	Wed, 15 May 2013 16:09:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cxp5TQIet/0qW79wjAJZh0P1Zcc=; b=iLD7pT
+	I/IxbMD2xC9EU3T9YnIwgA5z7Wooxt5HmM2gZejGhKEugXqBPSK+8AM+qBo7OZ7g
+	0F8ipuhLOwxgtsECop2qJRFa8zaib6whv9deaFvm9S2m96pcTH3uAvel6KH+0Oks
+	Xn3zYfD8lcD/2eo5ZXOMD+mWqHuo6DPenOOtA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qqeY8P6oAIdUbhGQTqKiYxurxbSzrkfl
+	TaI8brt6ouZwLnebe36dn8wGwkbX67Gpr9kelBCuKnOuNI63aYuK0eoYtPAS8QU2
+	1uujMCOQy+ZVPVK9pz+1XZWj2x1PxCoi+mAJuGlNEju3L8l6orG2vpP03TpxbuqE
+	jN3NgJFRvxs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A11771F1B3;
+	Wed, 15 May 2013 16:09:24 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0FF3F1F1AD;
+	Wed, 15 May 2013 16:09:23 +0000 (UTC)
+In-Reply-To: <1368624095-15738-1-git-send-email-Matthieu.Moy@imag.fr>
+	(Matthieu Moy's message of "Wed, 15 May 2013 15:21:35 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CF46E110-BD79-11E2-938E-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224420>
 
-Hi folks,
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> $ git diff-tree -p -c HEAD
-> d945a51b6ca22e6e8e550c53980d026f11b05158
-> diff --combined file
-> index 3404f54,0eab113..e8c8c18
-> --- a/file
-> +++ b/file
-> @@@ -1,7 -1,5 +1,6 @@@
->  +LEFT
->   BASE2
->   BASE3
->   BASE4
-> - BASE5
-> + BASE5MODIFIED
->   BASE6
+> diff --git a/builtin/config.c b/builtin/config.c
+> index 000d27c..ecfceca 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -316,7 +316,7 @@ static void get_color(const char *def_color)
+>  
+>  static int get_colorbool_found;
+>  static int get_diff_color_found;
+> -static int get_color_ui_found;
+> +static int get_color_ui_found = GIT_COLOR_AUTO;
 
-I found the spot in the code where this is going wrong, there is an
-incorrectly set "no_pre_delete" flag for the context lines before each
-hunk. Since a patch says more than a thousand words, here's what I think
-will fix this problem:
+It is curious to notice that we have these three and only one is
+initialized to the new default value, while the other two get -1
+at the beginning of get_colorbool().
 
-diff --git a/combine-diff.c b/combine-diff.c
-index 77d7872..d36bfcf 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -518,8 +518,11 @@ static int give_context(struct sline *sline, unsigned long cnt, int num_parent)
-                unsigned long k;
- 
-                /* Paint a few lines before the first interesting line. */
--               while (j < i)
--                       sline[j++].flag |= mark | no_pre_delete;
-+               while (j < i) {
-+                       if (!(sline[j++].flag & mark))
-+                               sline[j++].flag |= no_pre_delete;
-+                       sline[j++].flag |= mark;
-+               }
- 
-        again:
-                /* we know up to i is to be included.  where does the
+I wonder if it would be cleaner to statically initialize all three
+to -1 here, drop the assignment of -1 to two of them from the
+beginning of get_colorbool(), and then have a final fallback inside
+the want_color() call itself, i.e.
 
-I'll see if I can write up a testcase and then submit this as a proper
-patch, but I wanted to at least send this over now lest someone wastes
-time coming to the same conclusion as I did.
+	get_colorbool_found = want_color(get_colorbool_found < 0
+        				? GIT_COLOR_AUTO
+                                        : get_colorbool_found);
 
-Gr.
-
-Matthijs
+so that it is clear that -1 consistently mean "We haven't read any
+value from the configuration file for this variable", instead of
+making get_color_ui_found mean slightly different thing (the value
+read from the configuration; GIT_COLOR_AUTO means we cannot tell if
+we saw this variable or the user specified auto) from the other two
+(the value read from the configuration; -1 means we did not find
+any).
