@@ -1,118 +1,107 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: Fwd: git cvsimport implications
-Date: Wed, 15 May 2013 14:03:13 -0400
-Message-ID: <CAPZPVFZTZFQrCF3gcwcff5LFm9MHhZm-DauLvfzCYrMTw4nQfA@mail.gmail.com>
-References: <CAPZPVFYFL6OS2HWbF0BKNKtNsZ6CfpWmKCypGxeTs7W8-76q8Q@mail.gmail.com>
-	<CAPZPVFZLDwLNazvBh5n=Jg_=CZUNz3yTme4JW2NutPgjPzwtLg@mail.gmail.com>
-	<7vfvxpfbli.fsf@alter.siamese.dyndns.org>
-	<51932A1A.4050606@alum.mit.edu>
+From: Matthijs Kooijman <matthijs@stdin.nl>
+Subject: Re: Lines missing from git diff-tree -p -c output?
+Date: Wed, 15 May 2013 20:17:34 +0200
+Message-ID: <20130515181734.GT25742@login.drsnuggles.stderr.nl>
+References: <20130515143508.GO25742@login.drsnuggles.stderr.nl>
+ <7vhai4cgco.fsf@alter.siamese.dyndns.org>
+ <20130515173312.GR25742@login.drsnuggles.stderr.nl>
+ <7v4ne4cexm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed May 15 20:10:31 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 15 20:17:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ucg9m-0006Sg-KJ
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 20:10:30 +0200
+	id 1UcgGl-0003dB-NW
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 20:17:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932922Ab3EOSK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 14:10:26 -0400
-Received: from mail-ia0-f177.google.com ([209.85.210.177]:46609 "EHLO
-	mail-ia0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932566Ab3EOSK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 14:10:26 -0400
-Received: by mail-ia0-f177.google.com with SMTP id z13so2473291iaz.36
-        for <git@vger.kernel.org>; Wed, 15 May 2013 11:10:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=hVPq5IX1oiu70CLnkf64fU+LsZWnXEBh3N8OB981jng=;
-        b=EybzAgn6vTElPlyDK+jQ+ZKTHTO7u+gny5UWNlJ7CAYAjNxZjC+uC9xZfIRhBCDN74
-         JponUxXxiVfja5DxLqjoqF6b+slcyBJdk3DLl/gZY/kigKodA+G1Kwb2kl/sASHsH2yV
-         HkRhmSnYeXCzHec/9VhZN0zmEKrkwszIx8NjKe2ZefSRB+soKuQeTpWp+93UqolrFauU
-         qWEFvj6RJuVK/WXx/fSXja2kimcqKQVvYjna+zvggfcj9ILtV0pJFhPKh8qc2aVAxVHt
-         zc90UWrkevHm01e5JEvbunkTOtyk5xafONYgdMm18EneDCCqdJEuVVaqqWNHqNIv/u2W
-         svlg==
-X-Received: by 10.50.138.166 with SMTP id qr6mr6202093igb.45.1368640993939;
- Wed, 15 May 2013 11:03:13 -0700 (PDT)
-Received: by 10.42.150.130 with HTTP; Wed, 15 May 2013 11:03:13 -0700 (PDT)
-In-Reply-To: <51932A1A.4050606@alum.mit.edu>
+	id S933031Ab3EOSRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 14:17:40 -0400
+Received: from drsnuggles.stderr.nl ([94.142.244.14]:44846 "EHLO
+	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933011Ab3EOSRj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 14:17:39 -0400
+Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
+	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
+	(envelope-from <matthijs@stdin.nl>)
+	id 1UcgGc-0006g1-Ll; Wed, 15 May 2013 20:17:35 +0200
+Received: (nullmailer pid 25666 invoked by uid 1000);
+	Wed, 15 May 2013 18:17:34 -0000
+Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7v4ne4cexm.fsf@alter.siamese.dyndns.org>
+X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
+X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Spam-Score: -2.6 (--)
+X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
+	pts  rule name              description
+	---- ---------------------- -------------------------------------------
+	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224437>
 
-Hi
+Hi Junio,
 
-My primary goal was to understand better what are the real problems
-that we might have with the way we use git cvsimport, so I was not
-asking about the guarantee of the cvsimport to import things
-correctly, but if there is a guarantee the import will result in
-completely broken history. IF there is a situation when cvsimport can
-do things right and when it definitely going to fail?
+> Could you explain why you think it hides the real problem, and what
+> kind of future enhancement may break it?
+I think the differences is mostly in the locality of the fix. In my
+proposed patch, the no_pre_delete flag is never set on an interesting
+line because it is checked in the line before it. In your patch, it
+never happens because the control flow guarantees the "context" lines
+before each change must be uninteresting.
 
-Anyway, thanks a lot for the info. I do know that cvs2git is an option.
+The net effect is of course identical, but I'm arguing that depending on
+the control flow and some code a doze lines down is easier to break than
+depending on a previous line.
 
-If the cvsimport is that broken - is there any plan to fix it?
+Having said that: I'm not sure if the difference is significant enough
+to convince me in either direction.
 
-Thanks,
-Eugene
 
-On Wed, May 15, 2013 at 2:24 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 05/15/2013 12:19 AM, Junio C Hamano wrote:
->> Eugene Sajine <euguess@gmail.com> writes:
->>
->>> What if there are a lot of branches in the CVS repo? Is it guaranteed
->>> to be broken after import?
->>
->> Even though CVS repository can record branches in individual ,v
->> files, reconstructing per branch history and where the branch
->> happened in each "changeset" cannot be determined with any
->> certainty.  The best you can get is a heuristic result.
->>
->> I do not think anybody can give such a guarantee.  The best you can
->> do is to convert it and validate if the result matches what you
->> think has happened in the CVS history.
->
-> Junio, you are correct that there is no 100% reliable way of inferring
-> the changesets that were made in CVS.  CVS doesn't record which file
-> revisions were committed at the same time, unambiguous branch points,
-> etc.  The best a tool can do is use heuristics.
->
-> But it *is* possible for a conversion tool to make some more elementary
-> guarantees regarding aspects of the history that are recorded
-> unambiguously in CVS, for example:
->
-> * That if you check the tip of same branch out of CVS and out of Git,
-> you get the same contents.
->
-> * That CVS file revisions are committed to Git in the correct order
-> relative to each other; e.g., that the changes made in CVS revision
-> 1.4.2.2 in a particular file precede those made in revision 1.4.2.3 of
-> the same file.
->
-> git-cvsimport fails to ensure even this minimal level of correctness.
-> Such errors are demonstrated in its own test suite.
->
-> cvs2git, on the other hand, gets the basics 100% correct (if you find a
-> discrepancy, please file a bug!), in addition to having great heuristics
-> for inferring the details of the history.
->
-> There is no reason ever to use git-cvsimport for one-time conversions
-> from CVS to Git.  The only reason ever to use it is if you absolutely
-> require an incremental bridge between CVS and Git, and even then please
-> use it with great caution.
->
-> Michael
-> the cvs2svn/cvs2git maintainer
->
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
+
+However, thinking about this a bit more (and getting sidetracked on a
+completely separate issue/question), I wonder why the coalescing-hunks
+code is there in the first place? e.g., why not leave out these lines?
+
+	if (k < j + context) {
+		/* k is interesting and [j,k) are not, but
+		 * paint them interesting because the gap is small.
+		 */
+		while (j < k)
+			sline[j++].flag |= mark;
+		i = k;
+		goto again;
+	}
+
+If the "context" lines before and after each group of changes are
+painted interesting, then these lines in between will also be painted
+interesting. Of course, this could cause some lines to be painted as
+interesting twice and it needs my fix for the no_pre_delete thing, but
+it would work just as well?
+
+However, I can imagine that this code is present to prevent painting
+lines twice, which would of course be a bit of a performance loss. But
+if this really was the motivation, why is the first if not something
+like:
+
+	if (k <= j + 2 * context) {
+
+Since IIUC, the current code can still paint a few context lines twice
+when they are exacly "context" lines apart, once by the "paint before"
+and one by the "paint after" code (which is also what happens in my bug
+example, I think). The above should "fix" that as well (the first part
+of the test suite hasn't complained so far).
+
+Gr.
+
+Matthijs
