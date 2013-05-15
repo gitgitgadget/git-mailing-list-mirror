@@ -1,133 +1,173 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v3] make color.ui default to 'auto'
-Date: Wed, 15 May 2013 16:24:29 +0200
-Message-ID: <1368627869-16539-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <51938B90.8040004@gmail.com>
-Cc: Stefano Lattarini <stefano.lattarini@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed May 15 16:25:15 2013
+From: Matthijs Kooijman <matthijs@stdin.nl>
+Subject: Lines missing from git diff-tree -p -c output?
+Date: Wed, 15 May 2013 16:35:08 +0200
+Message-ID: <20130515143508.GO25742@login.drsnuggles.stderr.nl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 15 16:35:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uccdl-0005u2-3e
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 16:25:14 +0200
+	id 1UccnV-0005Ep-TA
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 16:35:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759089Ab3EOOZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 10:25:06 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:39207 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758970Ab3EOOZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 10:25:05 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4FEOXPe002061
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 15 May 2013 16:24:33 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Uccd8-0004tg-R2; Wed, 15 May 2013 16:24:34 +0200
-Received: from moy by anie with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Uccd8-0004JQ-N9; Wed, 15 May 2013 16:24:34 +0200
-X-Mailer: git-send-email 1.8.3.rc1.314.g2261e40.dirty
-In-Reply-To: <51938B90.8040004@gmail.com>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 15 May 2013 16:24:33 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r4FEOXPe002061
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1369232677.8418@Fio2bnC1onzX9VpZgm4U6g
+	id S1759068Ab3EOOfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 10:35:11 -0400
+Received: from drsnuggles.stderr.nl ([94.142.244.14]:34093 "EHLO
+	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758970Ab3EOOfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 10:35:10 -0400
+Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
+	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
+	(envelope-from <matthijs@stdin.nl>)
+	id 1UccnM-0007B7-F1
+	for git@vger.kernel.org; Wed, 15 May 2013 16:35:09 +0200
+Received: (nullmailer pid 27593 invoked by uid 1000);
+	Wed, 15 May 2013 14:35:08 -0000
+Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
+	git@vger.kernel.org
+Content-Disposition: inline
+X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
+X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Spam-Score: -2.6 (--)
+X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
+	pts  rule name              description
+	---- ---------------------- -------------------------------------------
+	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224410>
 
-Most users seem to like having colors enabled, and colors can help
-beginners to understand the output of some commands (e.g. notice
-immediately the boundary between commits in the output of "git log").
+Hi folks,
 
-Many tutorials tell the users to set color.ui=auto as a very first step.
-These tutorials would benefit from skipping this step and starting the
-real Git manipulations earlier. Other beginners do not know about
-color.ui=auto, and may not discover it by themselves, hence live with
-black&white outputs while they may have preferred colors.
+while trying to parse git diff-tree output, I found out that in some
+cases it appears to generate an incorrect diff (AFAICT). I orginally
+found this in a 5-way merge commit in the Linux kernel, but managed to
+reduce this to something a lot more managable (an ordinary 2-way merge
+on a 6-line file).
 
-A few people (e.g. color-blind) prefer having no colors, but they can
-easily set color.ui=never for this (and googling "disable colors in git"
-already tells them how to do so).
+To start with the wrong-ness, this is the diff generated:
 
-A transition period with Git emitting a warning when color.ui is unset
-would be possible, but the discomfort of having the warning seems
-superior to the benefit: users may be surprised by the change, but not
-harmed by it.
+$ git diff-tree -p -c HEAD
+d945a51b6ca22e6e8e550c53980d026f11b05158
+diff --combined file
+index 3404f54,0eab113..e8c8c18
+--- a/file
++++ b/file
+@@@ -1,7 -1,5 +1,6 @@@
+ +LEFT
+  BASE2
+  BASE3
+  BASE4
+- BASE5
++ BASE5MODIFIED
+  BASE6
 
-The default value is changed, and the documentation is reworded to
-mention "color.ui=false" first, since the primary use of color.ui after
-this change is to disable colors, not to enable it.
+Here, the header claims that the first head has 7 lines, but there really are
+only 6 (5 lines of context and one delete line). The numbers for the others
+heads are incorrect. In the original diff, the difference was bigger
+(first head was stated to have 28 lines, while the output was similar to
+the above).
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-v2 crossed Stefano's email with typos. v3 just fixes these typos in
-the commit message.
+To find out what's going on, we can look at the -m output, which is
+correct (or look at the original file contents at the end of this mail).
 
- Documentation/config.txt | 11 ++++++-----
- builtin/config.c         |  2 +-
- color.c                  |  2 +-
- 3 files changed, 8 insertions(+), 7 deletions(-)
+$ git diff-tree -m -p HEAD
+d945a51b6ca22e6e8e550c53980d026f11b05158
+diff --git a/file b/file
+index 3404f54..e8c8c18 100644
+--- a/file
++++ b/file
+@@ -1,7 +1,6 @@
+ LEFT
+-BASE1
+ BASE2
+ BASE3
+ BASE4
+-BASE5
++BASE5MODIFIED
+ BASE6
+d945a51b6ca22e6e8e550c53980d026f11b05158
+diff --git a/file b/file
+index 0eab113..e8c8c18 100644
+--- a/file
++++ b/file
+@@ -1,3 +1,4 @@
++LEFT
+ BASE2
+ BASE3
+ BASE4
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1009bfc..97550be 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -913,11 +913,12 @@ color.ui::
- 	as `color.diff` and `color.grep` that control the use of color
- 	per command family. Its scope will expand as more commands learn
- 	configuration to set a default for the `--color` option.  Set it
--	to `always` if you want all output not intended for machine
--	consumption to use color, to `true` or `auto` if you want such
--	output to use color when written to the terminal, or to `false` or
--	`never` if you prefer Git commands not to use color unless enabled
--	explicitly with some other configuration or the `--color` option.
-+	to `false` or `never` if you prefer Git commands not to use
-+	color unless enabled explicitly with some other configuration
-+	or the `--color` option. Set it to `always` if you want all
-+	output not intended for machine consumption to use color, to
-+	`true` or `auto` (this is the default since Git 2.0) if you
-+	want such output to use color when written to the terminal.
- 
- column.ui::
- 	Specify whether supported commands should output in columns.
-diff --git a/builtin/config.c b/builtin/config.c
-index 000d27c..ecfceca 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -316,7 +316,7 @@ static void get_color(const char *def_color)
- 
- static int get_colorbool_found;
- static int get_diff_color_found;
--static int get_color_ui_found;
-+static int get_color_ui_found = GIT_COLOR_AUTO;
- static int git_get_colorbool_config(const char *var, const char *value,
- 		void *cb)
- {
-diff --git a/color.c b/color.c
-index e8e2681..f672885 100644
---- a/color.c
-+++ b/color.c
-@@ -1,7 +1,7 @@
- #include "cache.h"
- #include "color.h"
- 
--static int git_use_color_default = 0;
-+static int git_use_color_default = GIT_COLOR_AUTO;
- int color_stdout_is_tty = -1;
- 
- /*
--- 
-1.8.3.rc1.314.g2261e40.dirty
+As you can see here, first head added "LEFT", and the second head removed
+"BASE1" and modified "BASE5". In the -c diff-tree output above, this removal of
+"BASE1" is not shown, but it is counted in the number of lines, causing this
+breakage.
+
+
+Note that to trigger this behaviour, the number of context lines between the
+BASE1 and BASE5 must be _exactly_ 3, more or less prevents this bug from
+occuring. Also, the "LEFT" line introduced does not seem to be
+essential, but there needed to be some change from both sides in order
+to generate a diff at all.
+
+I haven't looked into the code, though I might give that a go later.
+Anyone got any clue why this is happening? Is this really a bug, or am I
+misunderstanding here?
+
+To recreate the above situation, you can use the following commands:
+
+git init
+cat > file <<EOF
+BASE1
+BASE2
+BASE3
+BASE4
+BASE5
+BASE6
+EOF
+git add file
+git commit -m BASE
+git checkout -b RIGHT
+cat > file <<EOF
+BASE2
+BASE3
+BASE4
+BASE5MODIFIED
+BASE6
+EOF
+git commit -m RIGHT file
+git checkout -b LEFT master
+cat > file <<EOF
+LEFT
+BASE1
+BASE2
+BASE3
+BASE4
+BASE5
+BASE6
+EOF
+git commit -m LEFT file
+git merge RIGHT
+cat > file <<EOF
+LEFT
+BASE2
+BASE3
+BASE4
+BASE5MODIFIED
+BASE6
+EOF
+git add file
+git commit --no-edit
+git diff-tree -p -c HEAD
+
+
+Gr.
+
+Matthijs
