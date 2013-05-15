@@ -1,128 +1,77 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
+From: Jan Engelhardt <jengelh@inai.de>
 Subject: Re: English/German terminology, git.git's de.po, and pro-git
-Date: Wed, 15 May 2013 13:26:11 +0200
-Message-ID: <519370D3.3000306@web.de>
-References: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net> <alpine.LNX.2.01.1305131542210.30808@nerf07.vanv.qr> <001d01ce500b$c7c08b70$5741a250$@scanmyfood.de> <alpine.LNX.2.01.1305132119220.2288@nerf07.vanv.qr> <CAN0XMOL3rkYDinSCN2GLaRj7dOvbF=SdMRxM4PHCZ5h7g5Nkkw@mail.gmail.com> <51936218.9020306@ira.uka.de>
+Date: Wed, 15 May 2013 13:56:46 +0200 (CEST)
+Message-ID: <alpine.LNX.2.01.1305151351130.20281@nerf07.vanv.qr>
+References: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net> <alpine.LNX.2.01.1305131542210.30808@nerf07.vanv.qr> <001d01ce500b$c7c08b70$5741a250$@scanmyfood.de> <alpine.LNX.2.01.1305132119220.2288@nerf07.vanv.qr> <CAN0XMOL3rkYDinSCN2GLaRj7dOvbF=SdMRxM4PHCZ5h7g5Nkkw@mail.gmail.com>
+ <51936218.9020306@ira.uka.de> <519370D3.3000306@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ralf Thielow <ralf.thielow@gmail.com>,
-	Jan Engelhardt <jengelh@inai.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
 	Thomas Rast <trast@inf.ethz.ch>,
-	=?UTF-8?B?UmFscGggSGF1w59tYW5u?= <ralph@scanmyfood.de>,
+	=?UTF-8?Q?Ralph_Hau=C3=9Fmann?= <ralph@scanmyfood.de>,
 	Christian Stimming <stimming@tuhh.de>,
 	Sven Fuchs <svenfuchs@artweb-design.de>,
-	git <git@vger.kernel.org>,
-	=?UTF-8?B?SmFuIEtyw7xnZXI=?= <jk@jk.gs>
-To: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed May 15 13:26:30 2013
+	git <git@vger.kernel.org>, =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed May 15 13:56:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcZqo-0000Pr-0B
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 13:26:30 +0200
+	id 1UcaKE-0006WB-Cu
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 13:56:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757423Ab3EOL00 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 May 2013 07:26:26 -0400
-Received: from mout.web.de ([212.227.17.12]:49340 "EHLO mout.web.de"
+	id S1758743Ab3EOL4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 07:56:50 -0400
+Received: from ares07.inai.de ([5.9.24.206]:39032 "EHLO ares07.inai.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752853Ab3EOL0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 07:26:25 -0400
-Received: from [192.168.178.41] ([91.3.187.16]) by smtp.web.de (mrweb003) with
- ESMTPA (Nemesis) id 0Lfzwp-1U9FeB1BVL-00osEk; Wed, 15 May 2013 13:26:13 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <51936218.9020306@ira.uka.de>
-X-Enigmail-Version: 1.5.1
-X-Provags-ID: V02:K0:xsHlCJtbVMOTR7TpgG+BJYLzEG7o0fs+1JmwehDW7jr
- iGRsTAy5YsVAYLBiE/vK5ZcrAGl3kmwCNty0QaieBqAStUW2GC
- i257as8hGyYwiIZIWYycgsgCjRHRI1jj6hHv1Yp/7cGMncQZt6
- 8yJC7iFckkfsCjo+3cFBqSaxokr+lNyJwyHKRDZSxnVR2Klr/d
- KDBORqgM01lefEMQGYoFA==
+	id S1757452Ab3EOL4t (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 07:56:49 -0400
+Received: by ares07.inai.de (Postfix, from userid 25121)
+	id 3495B96A1582; Wed, 15 May 2013 13:56:46 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by ares07.inai.de (Postfix) with ESMTP id 144BF96A07E8;
+	Wed, 15 May 2013 13:56:46 +0200 (CEST)
+In-Reply-To: <519370D3.3000306@web.de>
+User-Agent: Alpine 2.01 (LNX 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224399>
 
-Am 15.05.2013 12:23, schrieb Holger Hellmuth (IKS):
-> Am 14.05.2013 19:51, schrieb Ralf Thielow:
->> - repository =3D Projektarchiv
->> - bare repository =3D blo=C3=9Fes Projektarchiv
->> + repository =3D Projektarchiv, (or just Repository?)
->> + bare repository =3D blo=C3=9Fes Projektarchiv (-||-), (reines, pur=
-es Repository)
->=20
-> I would vote for Repository or if it needs to be translated, simply A=
-rchiv. Neither Projektarchiv nor Archiv is commonly used by me but Arch=
-iv is shorter and not everything in a repository is a project.
 
-Hmm, I rather tend towards using "Repository" instead of "Archiv" too, =
-as
-"Archiv" can mean anything from a tar-file to a git repository, while w=
-e are
-talking about something very specific here (and a German might be surpr=
-ised
-what the command "git archive" is about if we use "Archiv" here ;-). So=
- if
-it has to be translated, I like "Projektarchiv" better than "Archiv" fo=
-r
-those reasons. We can also think about using "Repo" as an abbreviated f=
-orm,
-we often use that when talking about repositories in German. That would=
- be a
-new term without ambiguity and will be pronounced pretty much correctly=
- by
-all Germans too. But this remains one of the tougher questions.
+On Wednesday 2013-05-15 13:26, Jens Lehmann wrote:
+>
+>Hmm, I rather tend towards using "Repository" instead of "Archiv" too, as
+>"Archiv" can mean anything from a tar-file to a git repository
 
-And then "pack" is currently translated as "Archiv":
+It's exactly the reasoning I made in my git-glossary.txt sample
+(of which the reasoning apparently has not made it into ralfth's
+latest wiki, but that's the most essential part of a glossary IMHO).
 
-  pack(noun) =3D Archiv
+>but I believe "Packdatei" would be a much better translation (especially as
+>the translation of "pack(verb)" is "packen"). I find it natural that a file
+>with the extension ".pack" is named Packdatei
 
-but I believe "Packdatei" would be a much better translation (especiall=
-y as
-the translation of "pack(verb)" is "packen"). I find it natural that a =
-file
-with the extension ".pack" is named Packdatei, just like a file with th=
-e
-extension ".zip" is a "Zipdatei" (known by the Duden) in German. And th=
-e
-Duden already knows "Pack" as an assembly of smaller parts, so we shoul=
-d be
-safe here.
+While it's spoken Packdatei, the way to actually write it is
+.pack-Datei or ".pack"-Datei.
 
->> I'm not sure about using "Repository". I think "Projektarchiv" is
->> actually good enough.
->>
->> - committer =3D Eintragender
->> - tagger =3D Markierer
->> + committer =3D Eintragender (or Committer, Commit-Ersteller)
->> + tagger =3D Markierer (or Tagger, Tag-Ersteller)
->> ...[each usage of commit and tag]...
->=20
-> Both "commit" and "tag" are used in commands so with the exception of=
- the place where they are defined the english words should be used. I t=
-hink Commit-/Tag-Ersteller actually sounds fine and german enough so no=
- one notices there is an english word in there ;-)
+>extension ".zip" is a "Zipdatei" (known by the Duden)
 
-Yup, im my experience "committen" (to commit), "einchecken" (to check i=
-n),
-"auschecken" (to check out) und "taggen" (to tag) made it into our dail=
-y
-German language use. To avoid e.g. having past tenses look strange (lik=
-e
-"committet") the combined Form ("Commit erstellt") could solve that pro=
-blem.
+If that's how Duden specifies it, it's time to call wrong upon Duden.
+It's ZIP-Datei, of course, and follows the same origin (".zip"-Datei).
+The history of "ZIP-Datei" can be explained by way of MSDOS showing
+the filename in the DIR command without the dot - which is also
+why we do not pronounce the dot in ".zip"- or ".pack"-Datei.
 
->> + branch =3D Zweig (or Branch)
->>
->> I think "Zweig" is already fine.
->=20
-> Same reason, branch is used as a command and should not be translated=
-=2E But "Zweig" is a really natural and together with "Baum" fitting tr=
-anslation, so I'm conflicted here.
 
-Yes, Baum, Wurzel and Zweig are obviously equivalent to tree, root and =
-branch,
-so I don't care much if we translate that or not.
+>Yup, im my experience "committen" (to commit), "einchecken" (to check in),
+>"auschecken" (to check out) und "taggen" (to tag) made it into our daily
+>German language use. To avoid e.g. having past tenses look strange (like
+>"committet")
+
+Not so strange. We have other words with -tet.
+bitten -> erbittete -> habe erbittet.
