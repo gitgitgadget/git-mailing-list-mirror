@@ -1,116 +1,185 @@
 From: Tobias Schulte <tobias.schulte@gliderpilot.de>
-Subject: Re: [PATCH] git-svn: introduce --parents parameter for commands branch
- and tag
-Date: Wed, 15 May 2013 21:51:40 +0200
-Message-ID: <5193E74C.6000705@gliderpilot.de>
-References: <1368476549-17886-1-git-send-email-tobias.schulte@gliderpilot.de> <20130515023547.GA21987@dcvr.yhbt.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed May 15 21:51:51 2013
+Subject: [PATCH v2] git-svn: introduce --parents parameter for commands branch and tag
+Date: Wed, 15 May 2013 22:14:43 +0200
+Message-ID: <1368648883-9412-1-git-send-email-tobias.schulte@gliderpilot.de>
+References: <1368476549-17886-1-git-send-email-tobias.schulte@gliderpilot.de>
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Tobias Schulte <tobias.schulte@gliderpilot.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 15 22:15:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uchjq-0002Vr-Em
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 21:51:50 +0200
+	id 1Uci6J-0004Fq-BW
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 22:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757589Ab3EOTvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 15:51:46 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:51529 "EHLO
+	id S932184Ab3EOUOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 16:14:50 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:58824 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753212Ab3EOTvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 15:51:45 -0400
-Received: from [192.168.178.26] (p54A16923.dip0.t-ipconnect.de [84.161.105.35])
-	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
-	id 0Lb6lR-1UE4EW2c0X-00kOgN; Wed, 15 May 2013 21:51:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <20130515023547.GA21987@dcvr.yhbt.net>
-X-Enigmail-Version: 1.4.6
-X-Provags-ID: V02:K0:4fCVOSqGJEVQOdA5UqsA7f/lrbnvS6wu0qg+qP0/+KE
- fBVvwTWJjXaV+uAhMh/HFItzsGGi1oPLWPsQf+J6pePAjx8urP
- 6A62ifzVinwtn+ntaUCKynaajzLDf+nXk3oKQzTe/tCKGehOls
- 3nPEs8krkDIg8xbj9VXYETonSgO7MRtBCU8PzOEqMUteVHBg+U
- tP1DtCXfpjA9wmwG66PaMyNk54wPEPbpIBgLiH8KNTiElA4DRd
- vK4Qi08z9jY7j/aGRs4Ifz+guY0Po7Ws5v2GpHYz9LI8Ee1NQF
- RqOY0nPwboCSWldtgGBNj9e2/bpHdqE8Jp3JYNDHWOJ5FUlzmx
- ZDO6joGhFutLRawIJy9s=
+	with ESMTP id S1754960Ab3EOUOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 16:14:49 -0400
+Received: from tobias-desktop.localdomain (p54A16923.dip0.t-ipconnect.de [84.161.105.35])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0LsMjU-1UVrRg0tOy-012Wb3; Wed, 15 May 2013 22:14:48 +0200
+X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <1368476549-17886-1-git-send-email-tobias.schulte@gliderpilot.de>
+X-Provags-ID: V02:K0:7X3+Rbm527Uc3kXtt7mJZ/hQn9s2T2qjRvOBOIF5Fxv
+ 3h4ugjVePqAdtzSoXm7lQrrVbe2pSEkAI6dLXVAHgw8qdomHTG
+ fc+Jf7cw/+URx1EfL7RXeJ/7xPEy0j46zWQxb5nByWTfQyWfEe
+ vX3y8Zj7Fz+H0IiR/RKYW3bU6/XwBjQK8L+mjBGUsXKy4W7fKi
+ pcHBZwz4ecUYGH1FnqAcl2eaPxjJuCW/KzvoNDUGaGg6UXHVqR
+ l59uv6y9Ajd3xeKe3lITzg1T52uLTgcwm6cgacMCOyjEoV/pCC
+ H6/hl5zbnFSUraqyJSexAFDoCRAvN5yEWbIv3nv+Aq+hf9GjbK
+ bw3+J5l2cfpdDiBYTGtgGHHZCqqAfezfpBmjvIGQ44TwMepuH7
+ vnVeE6Qwi9kHEyndsOIp9m++v+d30BTqSbsF0vm8GxK6uhR3U8
+ nmeJI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224447>
 
-On 15.05.2013 04:35, Eric Wong wrote:
->> +	if (!eval{$ctx->ls($parent, 'HEAD', 0)}) {
->> +		mk_parent_dirs($ctx, $parent);
->> +		print "Creating parent folder ${parent} ...\n";
->> +		$ctx->mkdir($parent)
->> +			unless $_dry_run;
-> 
-> The newline is confusing, I prefer:
-> 
-> 		$ctx->mkdir($parent) unless $_dry_run;
+This parameter is equivalent to the parameter --parents on svn cp commands
+and is useful for non-standard repository layouts.
 
-In fact, this was a copy/paste from a few lines above
+Signed-off-by: Tobias Schulte <tobias.schulte@gliderpilot.de>
+---
+ Documentation/git-svn.txt                |    5 ++++
+ git-svn.perl                             |   19 +++++++++++-
+ t/t9167-git-svn-cmd-branch-subproject.sh |   48 ++++++++++++++++++++++++++++++
+ 3 files changed, 71 insertions(+), 1 deletion(-)
+ create mode 100755 t/t9167-git-svn-cmd-branch-subproject.sh
 
-	print "Copying ${src} at r${rev} to ${dst}...\n";
-	$ctx->copy($src, $rev, $dst)
-		unless $_dry_run;
-
-> Howeve :
-> 
-> 	if (!$_dry_run) {
-> 		$ctx->mkdir($parent);
-> 	}
-> 
-> May be preferred, too (especially for the non-Perl-fluent)
-
-I am a non-Perl-fluent, as I come from the Java world with some
-knowledge of C and C++. But to be able to create the patch I had to
-gather some Perl knowledge, and by doing this, I learned enough to
-understand, that there is more than one way, ... Especially the
-constructs if (condition) foo(); vs foo() if (condition); and the same
-for unless. And since the dry_run is the exception in this case, I think
-unless is a valid choice -- and is used often in git-svn.perl. So I will
-stick to it, but remove the newline.
-
-> 
->> +++ b/t/t9167-git-svn-cmd-branch-subproject.sh
-> 
->> +test_expect_success 'initialize svnrepo' '
->> +    mkdir import &&
->> +    (
->> +        (cd import &&
->> +        mkdir -p trunk/project branches tags &&
->> +        (cd trunk/project &&
->> +        echo foo > foo
->> +        ) &&
-> 
-> Tabs for all indentation, and indent consistently for subshells:
-> 
-> 	mkdir import &&
-> 	(
-> 		cd import &&
-> 		mkdir .. &&
-> 		(
-> 			cd .. &&
-> 			..
-> 		)
-> 	)
-> 
-> We use subshells + cd like this so it's easier to read/maintain.
-
-Again, this was a copy/paste from t9128-git-svn-cmd-branch.sh. So this
-file needs some cosmetics, too. And t9127... as well...
-
-> 
-> Thanks again, looking forward to applying v2.
-> 
-
-I will send v2 soon.
-
-Tobias
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 58b6d54..842ff83 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -298,6 +298,11 @@ where <name> is the name of the SVN repository as specified by the -R option to
+ 	git config --get-all svn-remote.<name>.commiturl
+ +
+ 
++--parents;;
++	Create parent folders. This parameter is equivalent to the parameter
++	--parents on svn cp commands and is useful for non-standard repository
++	layouts.
++
+ 'tag'::
+ 	Create a tag in the SVN repository. This is a shorthand for
+ 	'branch -t'.
+diff --git a/git-svn.perl b/git-svn.perl
+index ccabe06..d070de0 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -113,7 +113,7 @@ my ($_stdin, $_help, $_edit,
+ 	$_template, $_shared,
+ 	$_version, $_fetch_all, $_no_rebase, $_fetch_parent,
+ 	$_before, $_after,
+-	$_merge, $_strategy, $_preserve_merges, $_dry_run, $_local,
++	$_merge, $_strategy, $_preserve_merges, $_dry_run, $_parents, $_local,
+ 	$_prefix, $_no_checkout, $_url, $_verbose,
+ 	$_commit_url, $_tag, $_merge_info, $_interactive);
+ 
+@@ -203,6 +203,7 @@ my %cmd = (
+ 	            { 'message|m=s' => \$_message,
+ 	              'destination|d=s' => \$_branch_dest,
+ 	              'dry-run|n' => \$_dry_run,
++	              'parents' => \$_parents,
+ 	              'tag|t' => \$_tag,
+ 	              'username=s' => \$Git::SVN::Prompt::_username,
+ 	              'commit-url=s' => \$_commit_url } ],
+@@ -211,6 +212,7 @@ my %cmd = (
+ 	         { 'message|m=s' => \$_message,
+ 	           'destination|d=s' => \$_branch_dest,
+ 	           'dry-run|n' => \$_dry_run,
++	           'parents' => \$_parents,
+ 	           'username=s' => \$Git::SVN::Prompt::_username,
+ 	           'commit-url=s' => \$_commit_url } ],
+ 	'set-tree' => [ \&cmd_set_tree,
+@@ -1172,6 +1174,10 @@ sub cmd_branch {
+ 		$ctx->ls($dst, 'HEAD', 0);
+ 	} and die "branch ${branch_name} already exists\n";
+ 
++	if ($_parents) {
++		mk_parent_dirs($ctx, $dst);
++	}
++
+ 	print "Copying ${src} at r${rev} to ${dst}...\n";
+ 	$ctx->copy($src, $rev, $dst)
+ 		unless $_dry_run;
+@@ -1179,6 +1185,17 @@ sub cmd_branch {
+ 	$gs->fetch_all;
+ }
+ 
++sub mk_parent_dirs {
++	my ($ctx, $parent) = @_;
++	$parent =~ s{/[^/]*$}{};
++
++	if (!eval{$ctx->ls($parent, 'HEAD', 0)}) {
++		mk_parent_dirs($ctx, $parent);
++		print "Creating parent folder ${parent} ...\n";
++		$ctx->mkdir($parent) unless $_dry_run;
++	}
++}
++
+ sub cmd_find_rev {
+ 	my $revision_or_hash = shift or die "SVN or git revision required ",
+ 	                                    "as a command-line argument\n";
+diff --git a/t/t9167-git-svn-cmd-branch-subproject.sh b/t/t9167-git-svn-cmd-branch-subproject.sh
+new file mode 100755
+index 0000000..53def87
+--- /dev/null
++++ b/t/t9167-git-svn-cmd-branch-subproject.sh
+@@ -0,0 +1,48 @@
++#!/bin/sh
++#
++# Copyright (c) 2013 Tobias Schulte
++#
++
++test_description='git svn branch for subproject clones'
++. ./lib-git-svn.sh
++
++test_expect_success 'initialize svnrepo' '
++	mkdir import &&
++	(
++		cd import &&
++		mkdir -p trunk/project branches tags &&
++		(
++			cd trunk/project &&
++			echo foo > foo
++		) &&
++		svn_cmd import -m "import for git-svn" . "$svnrepo" >/dev/null
++	) &&
++	rm -rf import &&
++	svn_cmd co "$svnrepo"/trunk/project trunk/project &&
++	(
++		cd trunk/project &&
++		echo bar >> foo &&
++		svn_cmd ci -m "updated trunk"
++	) &&
++	rm -rf trunk
++'
++
++test_expect_success 'import into git' '
++	git svn init --trunk=trunk/project --branches=branches/*/project \
++		--tags=tags/*/project "$svnrepo" &&
++	git svn fetch &&
++	git checkout remotes/trunk
++'
++
++test_expect_success 'git svn branch tests' '
++	test_must_fail git svn branch a &&
++	git svn branch --parents a &&
++	test_must_fail git svn branch -t tag1 &&
++	git svn branch --parents -t tag1 &&
++	test_must_fail git svn branch --tag tag2 &&
++	git svn branch --parents --tag tag2 &&
++	test_must_fail git svn tag tag3 &&
++	git svn tag --parents tag3
++'
++
++test_done
+-- 
+1.7.9.5
