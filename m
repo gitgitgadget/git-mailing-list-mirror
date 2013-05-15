@@ -1,173 +1,95 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: Lines missing from git diff-tree -p -c output?
-Date: Wed, 15 May 2013 16:35:08 +0200
-Message-ID: <20130515143508.GO25742@login.drsnuggles.stderr.nl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9 1/9] git-clean: refactor git-clean into two phases
+Date: Wed, 15 May 2013 08:03:29 -0700
+Message-ID: <7vbo8ce14u.fsf@alter.siamese.dyndns.org>
+References: <cover.1368518327.git.worldhello.net@gmail.com>
+	<7c551bf22bc45cfcdd62d1baf6300f3f86244312.1368518327.git.worldhello.net@gmail.com>
+	<7vvc6ldtx7.fsf@alter.siamese.dyndns.org>
+	<CANYiYbF3AC=iHaOkj96yhBSj8caC2SdZDygrxV43+mzAd-wGJA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 15 16:35:19 2013
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 15 17:03:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UccnV-0005Ep-TA
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 16:35:18 +0200
+	id 1UcdF5-0002t8-Da
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 17:03:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759068Ab3EOOfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 10:35:11 -0400
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:34093 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758970Ab3EOOfK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 10:35:10 -0400
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1UccnM-0007B7-F1
-	for git@vger.kernel.org; Wed, 15 May 2013 16:35:09 +0200
-Received: (nullmailer pid 27593 invoked by uid 1000);
-	Wed, 15 May 2013 14:35:08 -0000
-Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
-	git@vger.kernel.org
-Content-Disposition: inline
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Score: -2.6 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S932854Ab3EOPDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 11:03:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46025 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932798Ab3EOPDe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 11:03:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6BD51FC17;
+	Wed, 15 May 2013 15:03:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4r8NpCbBYGM6tWXP3d1EhvV767c=; b=SeJaD9
+	3jVNy/dnbWta6zcg5DD53b3nV8F1DWbORAXAAz/EDExLUpl34qT8U3R1t7oiXQlP
+	xKSK2b15XnpTjvzmWd+9bLmnpQlIbUyhK8tRPjnJC3D+6tYv6z2URA/QLrqwq8J1
+	iawhabxHy7aILC7UMJ8gz+9iginjrpQtBa31A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B6aFWP+i/3QyXdKwdRcFvVZzSB+5eAtO
+	/PsfL0HXWJEreAqNssc7sn4dFltvI/ycnOeGOxuLcedSwFpaWcYLuH2OptyP3/Wz
+	rnSBQqjnrKhfpPFQpVdIrEIta2rWpjWCL7aTYdqyWTmLDjs1b1IRyMHhM2R42In6
+	IVci8oZXhLg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9BAB1FC16;
+	Wed, 15 May 2013 15:03:32 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D9121FC14;
+	Wed, 15 May 2013 15:03:32 +0000 (UTC)
+In-Reply-To: <CANYiYbF3AC=iHaOkj96yhBSj8caC2SdZDygrxV43+mzAd-wGJA@mail.gmail.com>
+	(Jiang Xin's message of "Wed, 15 May 2013 08:40:22 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9BBBB0C2-BD70-11E2-B908-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224411>
 
-Hi folks,
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-while trying to parse git diff-tree output, I found out that in some
-cases it appears to generate an incorrect diff (AFAICT). I orginally
-found this in a 5-way merge commit in the Linux kernel, but managed to
-reduce this to something a lot more managable (an ordinary 2-way merge
-on a 6-line file).
+> 2013/5/15 Junio C Hamano <gitster@pobox.com>:
+>>> @@ -242,11 +287,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+>>>                               continue; /* Yup, this one exists unmerged */
+>>>               }
+>>>
+>>> -             /*
+>>> -              * we might have removed this as part of earlier
+>>> -              * recursive directory removal, so lstat() here could
+>>> -              * fail with ENOENT.
+>>> -              */
+>>>               if (lstat(ent->name, &st))
+>>>                       continue;
+>>
+>> I am guessing that the reason why you removed the comment is because
+>> during this phase there is no way we "might have removed".  But if
+>> that is the case, does it still make sense to run lstat() and ignore
+>> errors from the call?
+>>
+>
+> Run lstat() here is necessary, because we need to check whether
+> ent->name points to a file or a directory. If ent points to a directory,
+> only add to del_list when user provides '-x' option to git-clean.
 
-To start with the wrong-ness, this is the diff generated:
+Sorry, but that was not the question; we can see st is used
+immediately below so somebody needs to fill it.
 
-$ git diff-tree -p -c HEAD
-d945a51b6ca22e6e8e550c53980d026f11b05158
-diff --combined file
-index 3404f54,0eab113..e8c8c18
---- a/file
-+++ b/file
-@@@ -1,7 -1,5 +1,6 @@@
- +LEFT
-  BASE2
-  BASE3
-  BASE4
-- BASE5
-+ BASE5MODIFIED
-  BASE6
-
-Here, the header claims that the first head has 7 lines, but there really are
-only 6 (5 lines of context and one delete line). The numbers for the others
-heads are incorrect. In the original diff, the difference was bigger
-(first head was stated to have 28 lines, while the output was similar to
-the above).
-
-To find out what's going on, we can look at the -m output, which is
-correct (or look at the original file contents at the end of this mail).
-
-$ git diff-tree -m -p HEAD
-d945a51b6ca22e6e8e550c53980d026f11b05158
-diff --git a/file b/file
-index 3404f54..e8c8c18 100644
---- a/file
-+++ b/file
-@@ -1,7 +1,6 @@
- LEFT
--BASE1
- BASE2
- BASE3
- BASE4
--BASE5
-+BASE5MODIFIED
- BASE6
-d945a51b6ca22e6e8e550c53980d026f11b05158
-diff --git a/file b/file
-index 0eab113..e8c8c18 100644
---- a/file
-+++ b/file
-@@ -1,3 +1,4 @@
-+LEFT
- BASE2
- BASE3
- BASE4
-
-As you can see here, first head added "LEFT", and the second head removed
-"BASE1" and modified "BASE5". In the -c diff-tree output above, this removal of
-"BASE1" is not shown, but it is counted in the number of lines, causing this
-breakage.
-
-
-Note that to trigger this behaviour, the number of context lines between the
-BASE1 and BASE5 must be _exactly_ 3, more or less prevents this bug from
-occuring. Also, the "LEFT" line introduced does not seem to be
-essential, but there needed to be some change from both sides in order
-to generate a diff at all.
-
-I haven't looked into the code, though I might give that a go later.
-Anyone got any clue why this is happening? Is this really a bug, or am I
-misunderstanding here?
-
-To recreate the above situation, you can use the following commands:
-
-git init
-cat > file <<EOF
-BASE1
-BASE2
-BASE3
-BASE4
-BASE5
-BASE6
-EOF
-git add file
-git commit -m BASE
-git checkout -b RIGHT
-cat > file <<EOF
-BASE2
-BASE3
-BASE4
-BASE5MODIFIED
-BASE6
-EOF
-git commit -m RIGHT file
-git checkout -b LEFT master
-cat > file <<EOF
-LEFT
-BASE1
-BASE2
-BASE3
-BASE4
-BASE5
-BASE6
-EOF
-git commit -m LEFT file
-git merge RIGHT
-cat > file <<EOF
-LEFT
-BASE2
-BASE3
-BASE4
-BASE5MODIFIED
-BASE6
-EOF
-git add file
-git commit --no-edit
-git diff-tree -p -c HEAD
-
-
-Gr.
-
-Matthijs
+I was pointing out that the "lstat() is expected to fail with ENOENT
+but it is not an error worth reporting" justification the original
+code had to silently ignore an error, because you no longer remove
+anything immediately in this part of the code.  Is "if () continue"
+still valid thing to do here, not "if () die()"?
