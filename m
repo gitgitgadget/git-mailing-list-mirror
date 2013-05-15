@@ -1,138 +1,57 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] make color.ui default to 'auto'
-Date: Wed, 15 May 2013 15:21:35 +0200
-Message-ID: <1368624095-15738-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <CALKQrgdVf_rfsLu1NnXGk+LCTV34T-4doJ+2yyi69ZER8vTAfg@mail.gmail.com>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Johan Herland <johan@herland.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed May 15 15:22:19 2013
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Trouble with case insensitive filesystem
+Date: Wed, 15 May 2013 15:32:01 +0200
+Message-ID: <51938E51.5060900@viscovery.net>
+References: <F0A0C92F-6D85-463E-9CB5-B9060BDA196B@mac.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Luc Bourhis <luc_j_bourhis@mac.com>
+X-From: git-owner@vger.kernel.org Wed May 15 15:32:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ucbes-0006HZ-BW
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 15:22:18 +0200
+	id 1UcboS-0005Rh-Ln
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 15:32:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932585Ab3EONWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 09:22:14 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:44615 "EHLO shiva.imag.fr"
+	id S1758973Ab3EONcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 09:32:08 -0400
+Received: from so.liwest.at ([212.33.55.13]:16737 "EHLO so.liwest.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932241Ab3EONWN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 09:22:13 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r4FDLm6K002172
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 15 May 2013 15:21:48 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1UcbeP-0003K1-Go; Wed, 15 May 2013 15:21:49 +0200
-Received: from moy by anie with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1UcbeP-00046c-DO; Wed, 15 May 2013 15:21:49 +0200
-X-Mailer: git-send-email 1.8.3.rc1.314.g2261e40.dirty
-In-Reply-To: <CALKQrgdVf_rfsLu1NnXGk+LCTV34T-4doJ+2yyi69ZER8vTAfg@mail.gmail.com>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 15 May 2013 15:21:48 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r4FDLm6K002172
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1369228911.7204@dmGPTq0FKlpBx3t7EVdWsg
+	id S1758951Ab3EONcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 09:32:07 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1UcboI-00084Q-BT; Wed, 15 May 2013 15:32:02 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1C7F21660F;
+	Wed, 15 May 2013 15:32:01 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <F0A0C92F-6D85-463E-9CB5-B9060BDA196B@mac.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224407>
 
-Most users seem to like having colors enabled, and colors can help
-beginners to understand the output of some commands (e.g. notice
-immediately the boundary between commits in the output of "git log").
+Am 5/15/2013 10:40, schrieb Luc Bourhis:
+> I work on a case insensitive filesystem and I have core.ignorecase set to true. 
+> ...
+> So I thought it was a job for git filter-branch, ...
+> 
+> However because of those two blobs, I have:
+> 
+> ~> git status
+> #	modified:   .../fourCircles.py
+> 
+> and git filter-branch therefore refuses to run.
 
-Many tutorials tell the users to set color.ui=auto as a very first step.
-These tutorials would benefit from skiping this step and starting the
-real Git manipualtions earlier. Other beginners do not know about
-color.ui=auto, and may not discover it by themselves, hence live with
-black&white outputs while they may have prefered colors.
+Make a commit that has neither file, run git filter-branch, then throw
+away the commit with git reset --hard HEAD~.
 
-A few people (e.g. color-blind) prefer having no colors, but they can
-easily set color.ui=never for this (and googling "disable colors in git"
-already tells them how to do so).
-
-A transition period with Git emitting a warning when color.ui is unset
-would be possible, but the discomfort of having the warning seems
-superior to the benefit: users may be surprised by the change, but not
-harmed by it.
-
-The default value is changed, and the documentation is reworded to
-mention "color.ui=false" first, since the primary use of color.ui after
-this change is to disable colors, not to enable it.
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-> Reviewed and supported-by: Johan Herland <johan@herland.net>
-
-Apparently not well enough ;-).
-
-In v1, "git config --get-colorbool" was not affected, hence "git add
--p" wasn't colored. v2 fixes this.
-
- Documentation/config.txt | 11 ++++++-----
- builtin/config.c         |  2 +-
- color.c                  |  2 +-
- 3 files changed, 8 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1009bfc..97550be 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -913,11 +913,12 @@ color.ui::
- 	as `color.diff` and `color.grep` that control the use of color
- 	per command family. Its scope will expand as more commands learn
- 	configuration to set a default for the `--color` option.  Set it
--	to `always` if you want all output not intended for machine
--	consumption to use color, to `true` or `auto` if you want such
--	output to use color when written to the terminal, or to `false` or
--	`never` if you prefer Git commands not to use color unless enabled
--	explicitly with some other configuration or the `--color` option.
-+	to `false` or `never` if you prefer Git commands not to use
-+	color unless enabled explicitly with some other configuration
-+	or the `--color` option. Set it to `always` if you want all
-+	output not intended for machine consumption to use color, to
-+	`true` or `auto` (this is the default since Git 2.0) if you
-+	want such output to use color when written to the terminal.
- 
- column.ui::
- 	Specify whether supported commands should output in columns.
-diff --git a/builtin/config.c b/builtin/config.c
-index 000d27c..ecfceca 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -316,7 +316,7 @@ static void get_color(const char *def_color)
- 
- static int get_colorbool_found;
- static int get_diff_color_found;
--static int get_color_ui_found;
-+static int get_color_ui_found = GIT_COLOR_AUTO;
- static int git_get_colorbool_config(const char *var, const char *value,
- 		void *cb)
- {
-diff --git a/color.c b/color.c
-index e8e2681..f672885 100644
---- a/color.c
-+++ b/color.c
-@@ -1,7 +1,7 @@
- #include "cache.h"
- #include "color.h"
- 
--static int git_use_color_default = 0;
-+static int git_use_color_default = GIT_COLOR_AUTO;
- int color_stdout_is_tty = -1;
- 
- /*
--- 
-1.8.3.rc1.314.g2261e40.dirty
+-- Hannes
