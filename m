@@ -1,119 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Philip Oakley" <philipoakley@iee.org>
 Subject: Re: [RFC] New kind of upstream branch: base branch
-Date: Wed, 15 May 2013 15:20:27 -0700
-Message-ID: <7vzjvvanro.fsf@alter.siamese.dyndns.org>
-References: <5193efe6.c42ab60a.0319.5f2c@mx.google.com>
+Date: Wed, 15 May 2013 23:22:55 +0100
+Organization: OPDS
+Message-ID: <AE3E8FA3205F42C5B11F3617987BEA05@PhilipOakley>
+References: <CAMP44s3LQ0GN4rrXdpb8Fe0iLeAEm2VjkH6BHK64pmX-xpc7+Q@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 16 00:20:37 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Felipe Contreras" <felipe.contreras@gmail.com>,
+	<git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 16 00:22:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uck3n-0000Ri-VC
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 00:20:36 +0200
+	id 1Uck64-00027b-UQ
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 00:22:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751648Ab3EOWUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 18:20:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58053 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751354Ab3EOWUb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 18:20:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0025A1FA45;
-	Wed, 15 May 2013 22:20:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kxWBnD9ODPz072RP8j3ZEw9cFY4=; b=WX19QD
-	cvCwQxs50iMVDotwzQuEp1WG9r2caktnLnIEbloVF+MGH0zwDG7lCVF45QyYB+Gr
-	mAPOliUx1Lb/UE2y/zYHPfDBKMGtsbNVt95yvZq3OpQdJAYOEhARAG7qgLXwgyNs
-	Tbo2FdFFi87iDLqtfEdHbtkHjeT51df+CH/9c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I/nFbU73li3us0XGAIeMueFtF4Wc1YTO
-	WDcRYyakzzEIQvVCt4ErN4sS7iWCLTfLKwiX1mgfbc5beXVd3OvRZkdAl253roW9
-	PhAl5UJIC7QPAAJKF+KRptPjudsBpeYoDWB9PYlz7JUTHYHmuePRp/Egifey/iQ/
-	dVmv+qqqVEc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECC001FA41;
-	Wed, 15 May 2013 22:20:29 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 504821FA32;
-	Wed, 15 May 2013 22:20:29 +0000 (UTC)
-In-Reply-To: <5193efe6.c42ab60a.0319.5f2c@mx.google.com> (Felipe Contreras's
-	message of "Wed, 15 May 2013 13:28:22 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A667F87C-BDAD-11E2-9461-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752421Ab3EOWWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 18:22:53 -0400
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:20004 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751757Ab3EOWWw (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 May 2013 18:22:52 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah0OALkJlFFOl3Xl/2dsb2JhbABbgweDc4U/t1UEAQMBfBd0ghoFAQEFCAEBGRUeAQEsAgMFAgEDFQEEAgUhAgIUAQQIEgYHFwYBEggCAQIDAYdpAxOrMohoDYhhgSaLIoFsN4J8MmEDjmeGaI1/hSODETs
+X-IronPort-AV: E=Sophos;i="4.87,679,1363132800"; 
+   d="scan'208";a="424087553"
+Received: from host-78-151-117-229.as13285.net (HELO PhilipOakley) ([78.151.117.229])
+  by out1.ip03ir2.opaltelecom.net with SMTP; 15 May 2013 23:22:50 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224451>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> The 'base' branch will be set each time you create a branch from another;
-> 'git checkout -b foobar master' sets 'master' as the 'base' of 'foobar'.
-
-"git checkout -t -b foobar mastee" would instead set 'upstream' of
-'foobar' to the branch 'master' of remote '.' (the current one).
-This 'base' is a new mechanism to explicitly say "The upstream of
-this branch lives locally" by not setting "branch.foobar.remote".
-
-> Then you can do 'git rebase foobar@{base}' or simply 'git rebase', and Git will
-> pick the right branch to rebase unto, even if you have no 'upstream'
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Sent: Wednesday, May 15, 2013 9:34 PM
+> Hi,
+>
+> I've been using Git from the start, but only lately have I forced
+> myself to configure upstream branches for all my branches, and I've
+> found a few things more convenient, but others completely contrary to
+> what I expected.
+>
+> Inconvenient:
+>
+> Before, I used to do 'git fetch' to simply fetch from 'origin', but
+> now, it depends on where 'upstream' is set to.
+>
+> Convinient:
+>
+> Now, I can just do 'git rebase --interactive' and I don't have to
+> specify the starting point, which is particularily useful when there's
+> a lot of branches one depending on another.
+>
+> I think I'm using 'upstream' for something it was not intended to, and
+> I think the current 'upstream' behavior should be split into
+> 'upstream' and 'base'.
+>
+> == base ==
+>
+> The 'base' branch will be set each time you create a branch from 
+> another;
+> 'git checkout -b foobar master' sets 'master' as the 'base' of 
+> 'foobar'.
+>
+> Then you can do 'git rebase foobar@{base}' or simply 'git rebase', and
+> Git will pick the right branch to rebase unto, even if you have no
+> 'upstream'
 > configured.
+>
+> This way 'git fetch' will keep picking 'origin', and other commands
+> that make use of 'upstream' would be undisturbed.
+>
+> If both 'base' and 'upstream' are defined, I think 'git rebase' should
+> use 'base', but since that would break old behavior, perhaps there
+> should be a configuration variable to enable a different behavior.
+>
+> I already started writting the patches, and although tedious, I think
+> they they'll be rather straightforward, but I thought it would be best
+> to hear some opinions first.
+>
+> What do you think?
+>
+> -- 
+> Felipe Contreras
+---
+Sound a reasonable idea. On some patches I was working on I had to 
+[chose to] add a tag for the base which made it easier to rebase later.
 
-Surely you can teach rebase to pay attention to 'base' and achieve
-that.  But you can already do so with upstream, so this is not an
-advertisement of a 'plus', but rather a lack of 'minus' (which is
-not a bad thing at all).
+The other point is that I had already noted that the glossary doesn't 
+include the many "base" terms in use that aren't always well understood.
 
-> This way 'git fetch' will keep picking 'origin', and other commands that make
-> use of 'upstrem' would be undisturbed.
-
-And this is the true plus, because 'git fetch' with the current
-"setting a local base using the same upstream mechanism to point at
-a branch of _this_ repository, indirectly setting the upstream
-_repository_ for this branch to the current repository" will end up
-making you fetch from yourself, which is not very interesting.
-
-So I think I understand your itch and I agree that it is a valid
-one.
-
-I however am not yet convinced if that direction is what you really
-want go in, though.  What should your 'git pull' on that branch do,
-for example?
-
-When you are on foobar and want to integrate with the branch you
-based your work on (i.e. local 'master'), you can do one of these:
-
-    $ git pull
-    $ git pull --rebase
-
-to "fetch the upstream branch and integrate with it", without having
-to even care if that upstream branch is from the remote, or happens
-to be truly local.  By making 'git fetch' to go to the remote origin
-site, what will you be merging (or rebasing on) when you do the
-above two?
-
-Incidentally, I suspect you can do exactly the same thing without
-introducing a new concept "base" and instead special casing a remote
-whose URL is "."; you essentially declare that "The upstream of this
-branch whose branch.$name.remote is set to '.' lives locally", which
-is not all that different from saying "The upstream of this branch
-whose branch.$name.base exists lives locally", which is what you
-seem to be proposing.  One of the things this alternative approach
-would "special case" such remote is probably to cause "git fetch" to
-ignore such a branch.$name.remote setting and instead go fetch from
-'origin', just like your "if there is branch.$name.base, but no
-branch.$name.remote, fetch will go to 'origin'" does.
-
-But it has exactly the same "what happens when you do 'git pull'"
-problem, so even though it is conceptually a lot simpler, it has the
-same brokenness.
+Philip Oakley 
