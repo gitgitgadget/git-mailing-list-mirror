@@ -1,67 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: is this a bug of git-diff?
-Date: Wed, 15 May 2013 11:34:41 +0200
-Message-ID: <vpqhai4y4b2.fsf@grenoble-inp.fr>
-References: <CABwUO_X8oTzuJh8+v3Oqca2W4ht-cQRNGQ+a1DbEruq5jY+vgA@mail.gmail.com>
-	<CALWbr2z338CJgavC9sVGffHSoqr0Sb9nCsr4LKURDYpkOog2TQ@mail.gmail.com>
-	<CABwUO_Wyq34S=CwbLeAqmzaFLxORkvGEvrjUzMXjkJdE1jnbhA@mail.gmail.com>
-	<CALWbr2z2jB53=2UsEneqymU2peiL4OW9Tyace_8BN3=1gA9jNg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: eric liou <accwuya@gmail.com>, git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 15 11:34:57 2013
+From: Luc Bourhis <luc_j_bourhis@mac.com>
+Subject: Trouble with case insensitive filesystem
+Date: Wed, 15 May 2013 10:40:48 +0200
+Message-ID: <F0A0C92F-6D85-463E-9CB5-B9060BDA196B@mac.com>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Luc Bourhis <luc_j_bourhis@mac.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 15 11:41:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcY6n-000349-Bu
-	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 11:34:53 +0200
+	id 1UcYDD-0007zL-PW
+	for gcvg-git-2@plane.gmane.org; Wed, 15 May 2013 11:41:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758474Ab3EOJet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 05:34:49 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:56243 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758450Ab3EOJes (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 05:34:48 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4F9Ye8a012720
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 15 May 2013 11:34:40 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UcY6b-0006AX-Gz; Wed, 15 May 2013 11:34:41 +0200
-In-Reply-To: <CALWbr2z2jB53=2UsEneqymU2peiL4OW9Tyace_8BN3=1gA9jNg@mail.gmail.com>
-	(Antoine Pelisse's message of "Wed, 15 May 2013 09:10:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 15 May 2013 11:34:41 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r4F9Ye8a012720
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1369215283.89334@j79vesfYkZL17KAWEsluVw
+	id S1758762Ab3EOJlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 05:41:24 -0400
+Received: from nk11p04mm-asmtp001.mac.com ([17.158.236.236]:58288 "EHLO
+	nk11p04mm-asmtp001.mac.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758481Ab3EOJlW convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 05:41:22 -0400
+X-Greylist: delayed 3610 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 May 2013 05:41:22 EDT
+Received: from [192.168.1.200] ([80.11.252.214]) by nk11p04mm-asmtp001.mac.com
+ (Oracle Communications Messaging Server 7u4-26.01(7.0.4.26.0) 64bit (built Jul
+ 13 2012)) with ESMTPSA id <0MMU0058F042ZY70@nk11p04mm-asmtp001.mac.com> for
+ git@vger.kernel.org; Wed, 15 May 2013 08:40:53 +0000 (GMT)
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.10.8626,1.0.431,0.0.0000
+ definitions=2013-05-15_01:2013-05-14,2013-05-15,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ ipscore=0 suspectscore=1 phishscore=0 bulkscore=0 adultscore=0 classifier=spam
+ adjust=0 reason=mlx scancount=1 engine=6.0.2-1305010000
+ definitions=main-1305150024
+X-Mailer: Apple Mail (2.1283)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224392>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+Hi,
 
-> On Wed, May 15, 2013 at 8:52 AM, eric liou <accwuya@gmail.com> wrote:
->> Thank you for the quick reply.
->> But this line is not correct: "@@ -4,5 +4,6 @@ int a = 1;"
+I work on a case insensitive filesystem and I have core.ignorecase set to true. 
+I have a series of troublesome commits and here is what git cat-file -p shows me:
 
-Antoine's answer is correct. In addition, I'd say that you may want to
-enable color in the output to make it clearer (the @@ ... @@ part would
-be colored, but not the function name):
+...
+100644 blob 99...	fourCircles.py
+100644 blob 97...	fourcircles.py
+...
 
-  git config --global color.ui auto
+The content of those slightly differ:
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--- a/99...
++++ b/97...
+-__version__='$Header: .../fourCircles.py, ...$'
++__version__='$Header: .../fourcircle.py, ...$'
+ 
+As you can guess this git repo started its life with CVS (it was converted with git cvsimport). 
+So I thought it was a job for git filter-branch, specifically I propose to do:
+git filter-branch --index-filter 'git rm --cached --ignore-unmatch .../fourCircles.py' <commit>
+
+However because of those two blobs, I have:
+
+~> git status
+#	modified:   .../fourCircles.py
+
+and git filter-branch therefore refuses to run. I tried to use checkout, reset, 
+even to commit that fluke of a change but whatever I do, that file is still marked 
+as modified. 
+
+I am sure I am missing a tiny detail that would get me
+out of those dire straights but it has eluded me so far.
+
+I run git 1.8.2.2 on MacOS 10.7.5 (installed with MacPorts if that matters).
+
+Best wishes,
+
+Luc J. Bourhis
