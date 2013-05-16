@@ -1,102 +1,82 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv2 04/10] remote: Reject remote names containing '/'
-Date: Thu, 16 May 2013 13:17:03 +0200
-Message-ID: <CALKQrgewHCrkf0kP57Mm+werT9yAWnLZP7CJn-k3g85gfPRspA@mail.gmail.com>
-References: <1368289280-30337-1-git-send-email-johan@herland.net>
-	<1368289280-30337-5-git-send-email-johan@herland.net>
-	<7vtxm7scn5.fsf@alter.siamese.dyndns.org>
-	<CALKQrgcry9bwmonaeWA4M7a3k36S_Q3ZQLmv7Ui5r+tdzdMr_A@mail.gmail.com>
-	<CALkWK0k=P265MCmvj9C7MFiF=tkhCZ__3oF8FWmWd4sNx3VcTw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH 3/3] push: add separate 'downstream' branch
+Date: Thu, 16 May 2013 17:01:50 +0530
+Message-ID: <CALkWK0nBUHHkqOQannMu5Kjs00Fro8KBbiocfsT4Uf74jO9FgA@mail.gmail.com>
+References: <1368675828-27418-1-git-send-email-felipe.contreras@gmail.com>
+ <1368675828-27418-4-git-send-email-felipe.contreras@gmail.com>
+ <CALkWK0nTS6Vh7GfnrLWAK5VeevQyGN5N7xT43c+uqBQ5oM5tww@mail.gmail.com>
+ <CAMP44s3fPsGW_9aBbcsu8cJAagz8JEWV2HM=XRH3Rw4=SXdL7Q@mail.gmail.com>
+ <CALkWK0nOywB5BtHnKZQ_+wsJNp82zk7-YJw_S15quqH+iU=jWg@mail.gmail.com>
+ <CAMP44s2vsD2uwFoL5_79m05gtqyKLN9wHX8Yrhtn0kT4LVULxQ@mail.gmail.com>
+ <CALkWK0m+_AbCd305dU5p5bxwuPPCBKJH7a3e6rHgxxnySMz0pQ@mail.gmail.com> <CAMP44s1eB+bvg7vnG5S3SBACHTrkpCqJNX-Q2tzEVdvzFWvkcA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	jrnieder@gmail.com
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 16 13:17:24 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 16 13:32:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcwBX-0007IA-A6
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 13:17:23 +0200
+	id 1UcwQF-000335-Ve
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 13:32:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753022Ab3EPLRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 07:17:12 -0400
-Received: from mail10.copyleft.no ([188.94.218.231]:53014 "EHLO
-	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752402Ab3EPLRI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 07:17:08 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UcwBG-00004O-Md
-	for git@vger.kernel.org; Thu, 16 May 2013 13:17:06 +0200
-Received: from mail-oa0-f50.google.com ([209.85.219.50])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1Uctpx-000Ptc-U0
-	for git@vger.kernel.org; Thu, 16 May 2013 10:46:58 +0200
-Received: by mail-oa0-f50.google.com with SMTP id l20so3534434oag.37
-        for <git@vger.kernel.org>; Thu, 16 May 2013 04:17:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=XggADp1GtmJlahvIdP3AdUqt3KslVRmA6AbyVRJ7vjk=;
-        b=K3/xlxszHEJ8TMVm6JqB/PtAmjzmhtvSwD5jnJEilDrxwWHOV16JNI0ijaCGDpf5Gc
-         wYbqERgmaGJmaxOBrj9D+8A0oChLXaQIrLymY0iwX9ZEy7mvyPBiHHMZPWwlLRKyqXH2
-         U7/5E1t6K05NQZUnrY1JRpYUpj7AS4RpNf7IZ0tO7RQw3gYhmCXv4PutQvBugLA0mbpL
-         rC41RDt6pi2KbSlRTDLlmW/YJMiM8p4+adbtpgdVTYaudd1GGqtHAOj7eAFopb228QSK
-         H+bRXBTbEJ471J3ewLDDNO6FI9JP1Y7HiZVM9gjsVFK/DQeYQ3nMxvked5niDZnau4M1
-         avMw==
-X-Received: by 10.60.162.70 with SMTP id xy6mr12226227oeb.117.1368703023109;
- Thu, 16 May 2013 04:17:03 -0700 (PDT)
-Received: by 10.182.133.66 with HTTP; Thu, 16 May 2013 04:17:03 -0700 (PDT)
-In-Reply-To: <CALkWK0k=P265MCmvj9C7MFiF=tkhCZ__3oF8FWmWd4sNx3VcTw@mail.gmail.com>
+	id S1752521Ab3EPLcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 07:32:32 -0400
+Received: from mail-ia0-f171.google.com ([209.85.210.171]:41883 "EHLO
+	mail-ia0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752393Ab3EPLcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 07:32:31 -0400
+Received: by mail-ia0-f171.google.com with SMTP id k10so1814136iag.16
+        for <git@vger.kernel.org>; Thu, 16 May 2013 04:32:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=pC6jX0RftIyd4qboHPEnorKD3vOcMdt+HwwIlOdWJag=;
+        b=lmCaZWXifl0laLDNYjnFAR0AM9Z9rc4tjeWh4tBcgPQYze7QOx81P5VO4ed5n/GlpI
+         EqijQRPRJykA5UMqhhr2j2g1mQdW9tFTM4NEhBlJQzCuJBO0MjwnKNYprmCf+z+AZ7j3
+         8klJS3KuytbvtRmW3Z8CsWfwP+KK8eDb0w2orLQWII9XhvSmL2X3SPh1/N92zBOHavK6
+         DrseqOpAfolNEoYEFGhaXKx5o7PRNeB4zWpYZOrUoXceQ4Z8MJi4aBFY6Zj9NnXF3upv
+         /tAxNx0lEDlCLTrRiPsK5bB9Ci4MbJYyRrSWWwWQj7VQ8vU/YtZE+96g/AiCSk90vREJ
+         mssw==
+X-Received: by 10.50.3.38 with SMTP id 6mr8950286igz.44.1368703950943; Thu, 16
+ May 2013 04:32:30 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Thu, 16 May 2013 04:31:50 -0700 (PDT)
+In-Reply-To: <CAMP44s1eB+bvg7vnG5S3SBACHTrkpCqJNX-Q2tzEVdvzFWvkcA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224555>
 
-On Thu, May 16, 2013 at 11:48 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Johan Herland wrote:
->> The disambiguation can probably be resolved, although the resulting
->> code will obviously be somewhat more cumbersome and ugly (and IMHO the
->> current code is plenty of that already...). Combine this with the
->> problems of clobbering of the same remote-tracking ref (describe
->> above), and the fact that AFAIK a multi-level remote name has never
->> been observed "in the wild" (none of the people I asked at the Git
->> Merge conference had ever observed multi-level remote names, nor did
->> they directly oppose banning them), I'm not at all sure it's worth
->> bothering about this at all. Simply disallowing multi-level remote
->> names seems like the simpler and naturally ambiguity-resistant
->> approach.
+Felipe Contreras wrote:
+> Would I be able to do:
 >
-> The problem with multi-level remote names is that we use the same
-> delimiter as in the ref namespace: '/'.  So, obviously, there's a lot
-> of room for confusion.  I wonder if we should banish multi-level
-> remotes altogether though: is it possible that they will be useful to
-> someone in the future?
+> % git branch --set-upstream-to origin/master --set-downstream-to
+> github/fc/master
+>
+> ?
+>
+> Would I see these branches when I do 'git branch -vv'?
+> Would I be able to do 'git push next@{downstream}'?
 
-Technically, the problem is that we don't use a different delimiter
-between the $remote and $ref parts. If we had used
-"multi/level/remote:nested/ref" we would have been OK (on this issue
-at least, probably not OK on other issues).
+Hm, losing this functionality in the name of generality would
+certainly be very undesirable.
 
-FWIW, I've abandoned this patch, and don't care much about multi-level
-remote names anymore. They work in current git, and they will sort-of
-work with remote ref namespaces as well, although you will have to use
-full refnames when referring to their remote-tracking refs. If
-multi-level remote names suddenly become popular, we can change the
-code to try to resolve them unambiguously.
+> That is orthogonal to 'branch.A.push' the same way 'remote.B.fetch' is
+> orthogonal to 'branch.A.merge'.
 
+Not at all (which is what I've been trying to say).
+remote.<name>.fetch is operated on by fetch, while branch.<name>.merge
+is operated on by merge; they are really orthogonal.  What happens if
+both branch.<name>.push and remote.<name>.push are set?  What will
+push do?
 
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Perhaps we should get both, and get branch.<name>.push to override
+remote.<name>.push.  The issue being @{d} will not work if
+remote.<name>.push is set.  Then again, since we're targeting Gerrit
+users here, I don't really think it's an issue: refs/for/master is not
+really a "downstream branch"; it's a pseudo-ref that Gerrit handles
+internally.
