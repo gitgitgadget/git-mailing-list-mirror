@@ -1,74 +1,83 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 8/8] remote-bzr: add fallback check for a partial clone
-Date: Thu, 16 May 2013 03:36:47 -0500
-Message-ID: <1368693407-21267-9-git-send-email-felipe.contreras@gmail.com>
-References: <1368693407-21267-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 16 10:39:13 2013
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] branch: add show-tracking option
+Date: Thu, 16 May 2013 10:40:37 +0200
+Message-ID: <51949B85.40600@drmicha.warpmail.net>
+References: <1368690532-12093-1-git-send-email-felipe.contreras@gmail.com> <5194921F.4080103@drmicha.warpmail.net> <CACsJy8CrGTa2XdfFkkKDQQjF8gM3011RiUE6roe9L7yZZq5J2g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 16 10:40:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UctiM-0000iO-Dp
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 10:39:06 +0200
+	id 1Uctjr-0001un-8I
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 10:40:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756788Ab3EPIix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 04:38:53 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:60401 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755763Ab3EPIiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 04:38:51 -0400
-Received: by mail-ob0-f173.google.com with SMTP id eh20so3148858obb.32
-        for <git@vger.kernel.org>; Thu, 16 May 2013 01:38:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=z5gqvcCkWbUdji0fqaN6i7B3QbPg+5XXAL5Xr9kp138=;
-        b=UmXfD/lNlHCD8GN+DXNG1k65Sxc0gJ5r+NkKmrOzmgNE+XAV9R7bfkBmeKmDJv3IMg
-         zAdcIMmn83O6nvoU5fnBaVMKHLl/JF/xJMHR3dWQQtHs9KPsO3ta3KBmI3OmGOkeRsqL
-         7HLebEFxDI90oQCGhHkfsg0n7ePzaZ/TL8SIXZ26WRLPn/PQdOynvBP1bKH62T549cKS
-         NUO/93fZWOE21NLHIkzTGJLB7njSiW89qKRhYi1pn3euG5296VDrv371Q0ufHqbW6Ijv
-         rP2Cdmpgs2NiA5+u+6dP2J58lDOkY+7a70wCoJJemacCbNC+bhnP+kjHJQxBKcu5wY/h
-         vt4g==
-X-Received: by 10.60.41.232 with SMTP id i8mr20876142oel.129.1368693530323;
-        Thu, 16 May 2013 01:38:50 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id c20sm7130165oez.4.2013.05.16.01.38.48
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 16 May 2013 01:38:49 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc2.542.g24820ba
-In-Reply-To: <1368693407-21267-1-git-send-email-felipe.contreras@gmail.com>
+	id S1756152Ab3EPIke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 04:40:34 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:42419 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756117Ab3EPIka (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 May 2013 04:40:30 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 2DD0920889;
+	Thu, 16 May 2013 04:40:28 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute3.internal (MEProxy); Thu, 16 May 2013 04:40:29 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=U4fIPgZdk06DDBaciVDf7v
+	3xBfY=; b=hcIEIzm7UzZmn/FPJzxO61MowGMfreo+BAKrfNW1kWbG9vCKU2buyf
+	+8wPB5jPiSZqykvQNGbSbb+5s9muyjz+xpotXH2tlwUGh4Ln5ubJ6LrxcnfKO4XO
+	FE9asamfnqj4hmzmBt2d46YDf2neYd737Torr10v6N3LhNzm9YaTI=
+X-Sasl-enc: szhbHpXRYoYpqcG52H/M/1VJNPmZaCFKFkHkWrXCMR9T 1368693628
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 39BC6C80005;
+	Thu, 16 May 2013 04:40:28 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130402 Thunderbird/17.0.5
+In-Reply-To: <CACsJy8CrGTa2XdfFkkKDQQjF8gM3011RiUE6roe9L7yZZq5J2g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224510>
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/git-remote-bzr | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Duy Nguyen venit, vidit, dixit 16.05.2013 10:23:
+> On Thu, May 16, 2013 at 3:00 PM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> I feel, though, that we're really exploding our option and config realm.
+>> For "git branch" in list mode, we are already able to stack "-v", i.e.
+>> "-v" and "-vv" do different things. How about maybe adding "-vvv" and
+>> arranging things so that the verbosity and the run time increases with
+>> the number of v's?
+>>
+>> -v list with sha1 + subject of last commit
+>> -vv add upstream branch name
+>> -vvv add ahead/behind info (the only costly mode)
+>> -vvvv same with "--cherry" (ahead/behind/same)
+>>
+>> Or maybe combine the middle two cases into "-vv", which means it would
+>> be the same as "-vv", with only "-v" changing what it does now.
+> 
+> What if I want something in -vvvv except some in -vv? I think to avoid
+> option explosion, maybe we can adopt --pretty=format:xxx from "git
+> log" and let the user decideswhat (and how) to display. "pretty" code
+> learns about alignment already, which may be useful here.
+> --
+> Duy
 
-diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index 434e613..acc0dc9 100755
---- a/contrib/remote-helpers/git-remote-bzr
-+++ b/contrib/remote-helpers/git-remote-bzr
-@@ -765,7 +765,10 @@ def do_list(parser):
-     print
- 
- def clone(path, remote_branch):
--    bdir = bzrlib.bzrdir.BzrDir.create(path)
-+    try:
-+        bdir = bzrlib.bzrdir.BzrDir.create(path)
-+    except bzrlib.errors.AlreadyControlDirError:
-+        bdir = bzrlib.bzrdir.BzrDir.open(path)
-     repo = bdir.find_repository()
-     repo.fetch(remote_branch.repository)
-     return remote_branch.sprout(bdir, repository=repo)
--- 
-1.8.3.rc2.542.g24820ba
+Sure, that is the big solution we've been talking about. Unify
+for-each-ref formats and log formats and use that. After all, "git
+branch" in list mode really is for-each-ref, and should be transparently
+so; same goes for "git tag". Think "git rev-list" and "git ref-list"!
+
+But I guess we'll be compabeaten ;)
+
+Michael
