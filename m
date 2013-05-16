@@ -1,64 +1,90 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: [PATCH] Documentation/merge-options.txt: restore `-e` option
-Date: Thu, 16 May 2013 18:26:00 -0400
-Message-ID: <1368743160-11866-1-git-send-email-rhansen@bbn.com>
-Cc: Richard Hansen <rhansen@bbn.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 17 01:12:12 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Revert "remote-hg: update bookmarks when pulling"
+Date: Thu, 16 May 2013 16:14:40 -0700
+Message-ID: <7vsj1m34bj.fsf@alter.siamese.dyndns.org>
+References: <1368708195-1044-1-git-send-email-felipe.contreras@gmail.com>
+	<7v4ne27ubp.fsf@alter.siamese.dyndns.org>
+	<7vbo8a6b9c.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3HKgWE=8SU+aBMBWzwe-fQ8Rjf0yGmGQxcdedhYCNJmQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 17 01:14:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ud7LG-00023v-UK
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 01:12:11 +0200
+	id 1Ud7Nq-00043g-4J
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 01:14:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754903Ab3EPXMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 19:12:06 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:17193 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754001Ab3EPXMF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 19:12:05 -0400
-X-Greylist: delayed 2720 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 May 2013 19:12:05 EDT
-Received: from socket.bbn.com ([192.1.120.102]:39890)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1Ud6dG-0003gA-VH; Thu, 16 May 2013 18:26:43 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id A8CCE401AB
-X-Mailer: git-send-email 1.8.2.3
+	id S1755280Ab3EPXOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 19:14:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35451 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754821Ab3EPXOm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 19:14:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 301001F9AE;
+	Thu, 16 May 2013 23:14:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wO0PSbwsWEj8jrE0Xy6UhRMKqxA=; b=f7TQQG
+	ak7NW13fdp5ivoCoTrEJ8AahmeevtFeatD2SjK2e6epWIVhsVMRbIxlj8FgZstL3
+	XcsZsrg06qTG4Pdo9FfS6nw1Hbn37bfqamovbDXaIUxpE5UoqlaxMDcb6Ol0OWPJ
+	6A0knOHml3BwxgkvcJ7c7Jklv0gokIMWs4WMA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OiQGWy+8aHvBRqWhIo2DVCAbqh1d9XWJ
+	Grx/0FvNrRjRMRItfoJz3phyYrJri1CCurA+sZHsLShQVfbfjya4wYWTZtgHpdNM
+	BpA4LntD93hTwyM61rbQuQQ7ooy/tWOr5xy2LfBeIoqh2BlkYxEZLqg9QmPZgRHX
+	uOBEKPnwikU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 235851F9AD;
+	Thu, 16 May 2013 23:14:42 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 96EFE1F9AB;
+	Thu, 16 May 2013 23:14:41 +0000 (UTC)
+In-Reply-To: <CAMP44s3HKgWE=8SU+aBMBWzwe-fQ8Rjf0yGmGQxcdedhYCNJmQ@mail.gmail.com>
+	(Felipe Contreras's message of "Thu, 16 May 2013 18:04:41 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 63561B64-BE7E-11E2-8F7A-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224631>
 
-It looks like commit f8246281af9adb0fdddbcc90d2e19cb5cd5217e5
-unintentionally removed the documentation for the `-e` option.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Signed-off-by: Richard Hansen <rhansen@bbn.com>
----
- Documentation/merge-options.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> On Thu, May 16, 2013 at 1:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>
+>>>> This reverts commit 24317ef32ac3111ed00792f9b2921dc19dd28fe2.
+>>>>
+>>>> Different versions of Mercurial have different arguments for
+>>>> bookmarks.updatefromremote(), while it should be possible to call the
+>>>> right function with the right arguments depending on the version, it's
+>>>> safer to restore the old behavior for now.
+>>>>
+>>>> Reported by Rodney Lorrimar.
+>>>>
+>>>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>>>> ---
+>>>>
+>>>> Intended for master (v1.8.3).
+>>>
+>>> Hmm, is this the one we merged yesterday?
+>>
+>> Just double-checking.
+>
+> Yes.
 
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 34a8445..f192cd2 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -8,12 +8,13 @@ failed and do not autocommit, to give the user a chance to
- inspect and further tweak the merge result before committing.
- 
- --edit::
-+-e::
- --no-edit::
- 	Invoke an editor before committing successful mechanical merge to
- 	further edit the auto-generated merge message, so that the user
- 	can explain and justify the merge. The `--no-edit` option can be
- 	used to accept the auto-generated message (this is generally
--	discouraged). The `--edit` option is still useful if you are
-+	discouraged). The `--edit` (or `-e`) option is still useful if you are
- 	giving a draft message with the `-m` option from the command line
- 	and want to edit it in the editor.
- +
--- 
-1.8.2.3
+OK.  Thanks for keeping an eye on real user reports.
+
+Please relay our thanks to Rodney as well.
