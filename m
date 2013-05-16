@@ -1,117 +1,228 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 1/4] resolve_ref: close race condition for packed refs
-Date: Thu, 16 May 2013 07:50:50 +0200
-Message-ID: <519473BA.9030106@alum.mit.edu>
-References: <20130507023610.GA22053@sigill.intra.peff.net> <20130507023802.GA22940@sigill.intra.peff.net> <51901E05.1080905@alum.mit.edu> <20130516034721.GD13296@sigill.intra.peff.net>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: English/German terminology, git.git's de.po, and pro-git
+Date: Thu, 16 May 2013 07:57:11 +0200
+Message-ID: <CAN0XMOJ7hRwTAR+i8_C2z2NmmcycLQkiya0ayfWS0vAw3-zqkg@mail.gmail.com>
+References: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net>
+	<alpine.LNX.2.01.1305131542210.30808@nerf07.vanv.qr>
+	<001d01ce500b$c7c08b70$5741a250$@scanmyfood.de>
+	<alpine.LNX.2.01.1305132119220.2288@nerf07.vanv.qr>
+	<CAN0XMOL3rkYDinSCN2GLaRj7dOvbF=SdMRxM4PHCZ5h7g5Nkkw@mail.gmail.com>
+	<51936218.9020306@ira.uka.de>
+	<519370D3.3000306@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 16 07:51:03 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>,
+	Jan Engelhardt <jengelh@inai.de>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	=?UTF-8?Q?Ralph_Hau=C3=9Fmann?= <ralph@scanmyfood.de>,
+	Christian Stimming <stimming@tuhh.de>,
+	Sven Fuchs <svenfuchs@artweb-design.de>,
+	git <git@vger.kernel.org>, =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu May 16 07:57:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ucr5i-000811-Lx
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 07:51:03 +0200
+	id 1UcrBm-00045K-Ak
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 07:57:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753724Ab3EPFu5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 01:50:57 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:56524 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752104Ab3EPFu4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 May 2013 01:50:56 -0400
-X-AuditID: 1207440c-b7ff06d0000008f7-4e-519473c09e08
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 1D.69.02295.0C374915; Thu, 16 May 2013 01:50:56 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135] (may be forged))
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4G5oqDC014546
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 16 May 2013 01:50:54 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <20130516034721.GD13296@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMKsWRmVeSWpSXmKPExsUixO6iqHugeEqgwfVJ7BZdV7qZLBp6rzBb
-	zLu7i8niR0sPswOLx6WX39k8nvXuYfS4eEnZ4/MmuQCWKG6bpMSSsuDM9Dx9uwTujN878wu2
-	ilQ8+f2ZqYHxOX8XIyeHhICJxMc1h5ghbDGJC/fWs3UxcnEICVxmlJhz/DIrSEJI4DqTxMVF
-	biA2r4C2xKO/s1i6GDk4WARUJU7vLAEJswnoSizqaWYCsUUFwiRWrV/GDFEuKHFy5hMWEFtE
-	QFbi++GNjCA2s0C6xNu2d2BxYQEvif+/ZjFB7N3BKNF06y0bSIJTwFqi98haJpBdzALqEuvn
-	CUH0yktsfzuHeQKjwCwkK2YhVM1CUrWAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6hXm5m
-	iV5qSukmRkgg8+xg/LZO5hCjAAejEg+vxfTJgUKsiWXFlbmHGCU5mJREeS8VTQkU4kvKT6nM
-	SCzOiC8qzUktPsQowcGsJMI7IxUox5uSWFmVWpQPk5LmYFES51Vdou4nJJCeWJKanZpakFoE
-	k5Xh4FCS4JUDRqyQYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPChG44uBUQqS4gHa
-	aw/SzltckJgLFIVoPcWoyzHjx+R3jEIsefl5qVLivMogRQIgRRmleXArYGnrFaM40MfCEKN4
-	gCkPbtIroCVMQEs0SyaBLClJREhJNTBmsERN3rRjtqqc/23eb8wl87+6X7CuPivg8lLRg+nt
-	9FUicxzNnx4XkH/JsjXxvJCioAhf7onqW6nZ7HO3RU+umpAXOEO0qfr8a9tvd/Jy 
+	id S1754333Ab3EPF5O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 May 2013 01:57:14 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:59735 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753561Ab3EPF5N convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 May 2013 01:57:13 -0400
+Received: by mail-wi0-f170.google.com with SMTP id hr14so6242684wib.5
+        for <git@vger.kernel.org>; Wed, 15 May 2013 22:57:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=80xouW8BFMzUqNeCj7YdHr+D7dkdA9tvcM64dqvqLiU=;
+        b=u+qTnjn43VDttnW04y+akr89k91zqMo1bQK0sIZQchB3MRFbllXumex9/z1D8PD+Zs
+         OtbzI73byxrGYvWokgdU1Yl5mksepYjGzOg/uqSvK4+E61c9rWkG5vAf00tf5RLMscvz
+         d8mRPoQ3iFYjxjWeMXfv8p3N38kxllgEUDeZoKduGwxTjQHmN6JJM6nF/TPmDQ5wk2kH
+         M/UpmrsCxftOwvpcP4L6sXdscK5ajUx2qTRgaSoquCW+cGD8EM6U+fHxZEre9eNhFKA2
+         cBT9OTbV1tFGgE0kbxxzbodMzX3bA2xYbDoUN6xcAiS6neUM2PupYCQVOF2Wnb/fO1Zu
+         iPKg==
+X-Received: by 10.180.14.129 with SMTP id p1mr21043224wic.6.1368683831868;
+ Wed, 15 May 2013 22:57:11 -0700 (PDT)
+Received: by 10.194.82.41 with HTTP; Wed, 15 May 2013 22:57:11 -0700 (PDT)
+In-Reply-To: <519370D3.3000306@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224481>
 
-On 05/16/2013 05:47 AM, Jeff King wrote:
->> I probably would have separated the rest of the patch, which is a pure
->> refactoring, from this last chunk, which is a functional change.  But
->> that's just me.
-> 
-> Yeah, I go back and forth on whether it is better to have strict
-> refactors followed by changes or not. Sometimes it is hard to understand
-> the motivation for the refactor without seeing the change, and you end
-> up explaining it twice.
+Hi,
 
-A pure refactoring doesn't need much justification.  Something like
-"extract function foo()" plus maybe "this function will soon have
-multiple callers" is IMO usually adequate, especially if the function is
-well-named and documented in the patch itself.
+I think the discussion might work better via ML than GitHub.
+This is the full glossary of git's de.po as it would look
+like with (hopefully) all the changes included that have been
+discussed here. Still without any reasoning for decisions
+(except HEAD).
 
-> My usual rule of thumb is:
-> 
->   - If you are factoring out some code, and then are going to change
->     that code, make it two separate changes. That keeps the diffs
->     readable (the first one is pure movement and you do not need to look
->     closely, and the second shows a sane diff of the change).
-> 
->   - If you are factoring out some code, and then adding more callers,
->     it's OK to do it together. The new caller provides the motivation
->     for the refactor.
-> 
-> This is the latter case. But I'm open to arguments that the rule is not
-> a good one. :)
+Thanks for reading.
 
-Yes, I see how keeping the changes together makes the justification of
-the refactoring more obvious.  On the other hand, splitting has the
-following benefits:
-
-1. Reviewers have a single thing to check in each patch: "Did he
-   transcribe the code correctly into a function and choose a good
-   API?" vs. "Does it make sense to call the function from this new
-   place?"  The threads of feedback emails about each patch are
-   similarly separated.
-
-   On the other hand, of course these two changes are not completely
-   independent, because having an idea what new callers want to do
-   with the function affects what its API should be.
-
-2. If the patch series needs to be revised, it is quite possible that
-   the revisions affect only one patch or the other.  Therefore, the
-   unaffected patch can be carried along through interactive rebases
-   etc. intact, or might serve as a building block for an alternative
-   solution.
-
-3. If there's a problem, bisect can figure out which half of the change
-   was to blame.
-
-That being said, this case is very much in the gray area where it is a
-matter of personal preference and I don't mind at all if you leave it as
-a single patch.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
++Basic repository objects:
++
++    blob           =3D Blob
++    tree           =3D Baum, Baum-Objekt (bevorzugt), "Tree"-Objekt
++    submodule      =3D Submodul
++    pack(noun)     =3D Pack-Datei
++    pack(verb)     =3D packen (ggf. Pack-Datei erstellen)
++    ancestor       =3D Vorfahre, Vorg=C3=A4nger, Vorg=C3=A4nger-Commit=
+ (bevorzugt)
++
++Content in a repository:
++
++    file(s)        =3D Datei(en)
++    tracked file   =3D beobachtete Datei
++    track file     =3D beobachte Datei
++    untracked file =3D unbeobachtete Datei
++    directory      =3D Verzeichnis
++
++Repositories / tracking concepts:
++
++    clone (verb)           =3D klonen
++    clone (noun)           =3D der Klon
++    repository             =3D Repository
++
++    bare repository        =3D blo=C3=9Fes Repository
++    working directory      =3D Arbeitsverzeichnis
++
++    remote branch          =3D externer Zweig
++    remote tracking branch =3D externer =C3=9Cbernahmezweig
++    upstream branch        =3D -||-
++    tracking branch        =3D =C3=9Cbernahmezweig
++
++    remote repository      =3D externes Repository
++    remote(noun)           =3D -||-
++    remote(adj)            =3D extern
++
++Authorship:
++
++    author    =3D Autor
++    committer =3D Commit-Ersteller
++    tagger    =3D Tag-Ersteller
++
++Commits, tags and other references:
++
++    HEAD           =3D HEAD
++ Konzept aus der Git-Welt, daher nicht zu =C3=BCbersetzen.
++    detached HEAD  =3D losgel=C3=B6ster HEAD
++
++    commit(noun)      =3D Commit
++    commit(verb)      =3D committen
++    commit the result =3D das Ergebnis committen
++    parent commit     =3D Eltern-Commit
++    child commit      =3D Kind-Commit
++    commit message    =3D Commit-Beschreibung
++
++    stash(noun)       =3D der Stash
++    stash(verb)       =3D "stashen", "stash" benutzen (bevorzugt)
++    unstash(verb)     =3D "unstashen", "zur=C3=BCckladen", "aus 'stash=
+'
+zur=C3=BCckladen" (bevorzugt)
++
++    reference      =3D Referenz
++    revision       =3D Commit
++    branch         =3D Zweig (or Branch)
++    tag(noun)      =3D Tag
++    tag(verb)      =3D taggen, Tag erstellen
++    annotated tag  =3D annotierter Tag
++    tag message    =3D Tag-Beschreibung
++
++    orphan commit    =3D
++    orphan reference =3D
++
++    boundary commit =3D Grenz-Commit
++    root commit     =3D Ursprungs-Commit, Wurzel-Commit
++
++    stage/index (noun) =3D Staging-Area, Index
++    stage/index (verb) =3D (f=C3=BCr einen | zum) Commit vormerken, zu=
+r
+Staging Area hinzuf=C3=BCgen, dem Index hinzuf=C3=BCgen
++    unstage (verb)     =3D aus Staging Area entfernen/nehmen, aus Inde=
+x
+entfernen/nehmen
++
++The DAG:
++
++    commit graph =3D Commit-Graph
++    merge =3D Merge
++
++References in relation to other references:
++
++    branches that have diverged =3D Zweige sind divergiert
++    diverging references        =3D divergierte Referenzen
++    your branch is ahead        =3D dein Zweig ist voraus
++    your branch is behind       =3D dein Zweig ist hinterher
++
++Moving data around:
++
++    fetch =3D anfordern
++    pull  =3D zusammenf=C3=BChren
++    push  =3D versenden
++
++    fast-forward     =3D vorspulen
++    non-fast-forward =3D nicht vorspulen
++
++Commands:
++
++    log                =3D Log
++    interactive commit =3D interaktiver Commit
++    cherry-pick        =3D "cherry-pick" benutzen
++    rebase(verb)       =3D "rebase" benutzen
++    rebase(noun)       =3D "rebase"
++    archive            =3D archivieren
++    revert             =3D zur=C3=BCcknehmen
++    clean(verb)        =3D
++    clean(noun)        =3D
++    merge              =3D mergen
++
++    bundle(noun)       =3D Paket
++    bundle(verb)       =3D Paket erstellen
++    unbundle(verb)     =3D Paket entpacken
++
++    bisect             =3D bin=C3=A4re Suche
++    bisecting          =3D bei einer bin=C3=A4ren Suche sein, bin=C3=A4=
+re Suche durchf=C3=BChren
++
++Diff/patch related:
++
++    diff               =3D Differenz
++    delta              =3D Differenz (or Delta)
++    patch              =3D Patch
++    apply              =3D anwenden
++    diffstat           =3D (leave it as it is)
++    hunk               =3D Bereich
++    whitespace         =3D Leerzeichen (FIXME?) (maybe "Leerraum")
++
++Still being worked out:
++
++    prune              =3D veraltete(n) Zweig(e) entfernen
++    checkout(verb)     =3D auschecken
++
++    git add      =3D hinzuf=C3=BCgen
++
++    merge conflict =3D Merge-Konflikt
++    3-way merge    =3D 3-Wege-Merge
++    paths          =3D Pfade
++
++    symbolic link =3D symbolische Verkn=C3=BCfung
++    path =3D Pfad
++    link =3D Verkn=C3=BCpfung
++
++    reflog =3D Referenzprotokoll
++    partial commit =3D teilweise committen, partiell committen
++
++    reset =3D neu setzen (maybe "umsetzen"?)
++
++    register   =3D in die Konfiguration eintragen
++    unregister =3D aus der Konfiguration austragen
+--
