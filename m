@@ -1,61 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCHv2 04/10] remote: Reject remote names containing '/'
-Date: Thu, 16 May 2013 17:44:40 +0530
-Message-ID: <CALkWK0kRzADXq8ePTkDLg76-0du7+5Uvbn7pXu3Tw0d7VLsPow@mail.gmail.com>
-References: <1368289280-30337-1-git-send-email-johan@herland.net>
- <1368289280-30337-5-git-send-email-johan@herland.net> <7vtxm7scn5.fsf@alter.siamese.dyndns.org>
- <CALKQrgcry9bwmonaeWA4M7a3k36S_Q3ZQLmv7Ui5r+tdzdMr_A@mail.gmail.com>
- <CALkWK0k=P265MCmvj9C7MFiF=tkhCZ__3oF8FWmWd4sNx3VcTw@mail.gmail.com> <CALKQrgewHCrkf0kP57Mm+werT9yAWnLZP7CJn-k3g85gfPRspA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	jrnieder@gmail.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu May 16 14:15:31 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] Revert "remote-hg: update bookmarks when pulling"
+Date: Thu, 16 May 2013 07:43:15 -0500
+Message-ID: <1368708195-1044-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 16 14:44:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ucx5i-0003ff-9i
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 14:15:26 +0200
+	id 1UcxY9-00026L-GJ
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 14:44:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753156Ab3EPMPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 08:15:22 -0400
-Received: from mail-ia0-f169.google.com ([209.85.210.169]:56353 "EHLO
-	mail-ia0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752934Ab3EPMPV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 08:15:21 -0400
-Received: by mail-ia0-f169.google.com with SMTP id k38so3501959iah.0
-        for <git@vger.kernel.org>; Thu, 16 May 2013 05:15:21 -0700 (PDT)
+	id S1753759Ab3EPMop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 08:44:45 -0400
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:45413 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753476Ab3EPMoo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 08:44:44 -0400
+Received: by mail-oa0-f53.google.com with SMTP id g12so3578033oah.40
+        for <git@vger.kernel.org>; Thu, 16 May 2013 05:44:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=Ze876mDzdqo+Nq8IG5CdAyZSWcBHCgITrvyJzJ0Lo0Q=;
-        b=0AQDiP4N0q4r+2+dWvoVy+BM5+zPiEqJ7bX1PYj7Tlyo6is+rW0WajJYVm4LJH9VhD
-         PCjZCs37w5TxBpUHldcIOfeIObR38u83FXq6/MNDRUTYK7hOnj+mgD29tQ2wSCZFqJaf
-         /C3XwUMgnd+IFkiz0m5ui08esJuSyS8Bw22mZJRDwR4L6xmemcqeA2oHbE1Onk5y56kj
-         IEVGpVQv1onHMLoZea0mX94WPYBYF+1hjniWl0KMOtuLKqg7lgYNMLtGdTG/JC+LVGUj
-         NOfryvF+mWpkvKIc2qmThMZqEWfjlmP1X5Qu+vlQ4sOWnSHO8CS2b8H6EGiBDZnNYMbj
-         NABw==
-X-Received: by 10.50.73.65 with SMTP id j1mr9136136igv.49.1368706521132; Thu,
- 16 May 2013 05:15:21 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Thu, 16 May 2013 05:14:40 -0700 (PDT)
-In-Reply-To: <CALKQrgewHCrkf0kP57Mm+werT9yAWnLZP7CJn-k3g85gfPRspA@mail.gmail.com>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=SBBsqoQj4CTVcdQwLGnZuqYELN+RaiDxlvh6uhtviNE=;
+        b=uq99qtnSBWIYMgC++21u0KDJcok6wCjh5EknFOPLTCEd6nnEqfsPelTTrS/rD4l3hf
+         tbgQEY60BVdSlxbDzmxRCEIOr7E51iBSi4wrUyF0kghDAhhOuchzfOkQzF1UeuTc75AE
+         ylsygCv9rHFbe7HHDsPGuiBACaEf93PeUkotf3aaHqh8yGC1D9rrWJYlWCJrxRPFtrfA
+         xlCoWKEiiGSQbCIlXeDYTxECg6p6nAJJGSWqnHYy/f0HTyJicExAs2oLsSCLX7yrJOJ6
+         3FzD+UoobzHpFVXsEt0HiFsKyW+TYhbqvSnm1SrEKFGLXQsfjIr89Dmm3YnEebCdiV+s
+         pTeQ==
+X-Received: by 10.182.118.226 with SMTP id kp2mr12947034obb.48.1368708284376;
+        Thu, 16 May 2013 05:44:44 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id qj8sm7756639oeb.2.2013.05.16.05.44.42
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 16 May 2013 05:44:43 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc2.542.g24820ba
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224559>
 
-Johan Herland wrote:
-> FWIW, I've abandoned this patch, and don't care much about multi-level
-> remote names anymore. They work in current git, and they will sort-of
-> work with remote ref namespaces as well, although you will have to use
-> full refnames when referring to their remote-tracking refs. If
-> multi-level remote names suddenly become popular, we can change the
-> code to try to resolve them unambiguously.
+This reverts commit 24317ef32ac3111ed00792f9b2921dc19dd28fe2.
 
-Makes sense.  We can deal with the issue if and when multi-level
-remotes become popular.
+Different versions of Mercurial have different arguments for
+bookmarks.updatefromremote(), while it should be possible to call the
+right function with the right arguments depending on the version, it's
+safer to restore the old behavior for now.
+
+Reported by Rodney Lorrimar.
+
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+
+Intended for master (v1.8.3).
+
+ contrib/remote-helpers/git-remote-hg | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+index dc276af..beb864b 100755
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -363,9 +363,6 @@ def get_repo(url, alias):
+                 die('Repository error')
+             repo.pull(peer, heads=None, force=True)
+ 
+-        rb = peer.listkeys('bookmarks')
+-        bookmarks.updatefromremote(myui, repo, rb, url)
+-
+     return repo
+ 
+ def rev_to_mark(rev):
+-- 
+1.8.3.rc2.542.g24820ba
