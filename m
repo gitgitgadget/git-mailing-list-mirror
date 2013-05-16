@@ -1,109 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v10 09/14] git-clean: use a git-add-interactive compatible UI
-Date: Thu, 16 May 2013 12:29:24 -0700
-Message-ID: <7vy5be4tbf.fsf@alter.siamese.dyndns.org>
-References: <cover.1368696028.git.worldhello.net@gmail.com>
-	<9d73d532fb2d8372b971d607b9ddaa1af2b84ffd.1368696028.git.worldhello.net@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [RFC] New kind of upstream branch: base branch
+Date: Thu, 16 May 2013 20:35:26 +0100
+Organization: OPDS
+Message-ID: <D6098E29305740EE916958521A797AB9@PhilipOakley>
+References: <CAMP44s3LQ0GN4rrXdpb8Fe0iLeAEm2VjkH6BHK64pmX-xpc7+Q@mail.gmail.com><AE3E8FA3205F42C5B11F3617987BEA05@PhilipOakley> <CAMP44s13Q6DMX+QNteqO8D-J7bDcNyp7OkRVqj6B1Qhp0OSB+Q@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 16 21:29:34 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "Felipe Contreras" <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 16 21:35:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ud3ro-0005V7-2j
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 21:29:32 +0200
+	id 1Ud3xc-0001nw-EI
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 21:35:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752839Ab3EPT32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 15:29:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51914 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751647Ab3EPT31 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 15:29:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 467F81F30A;
-	Thu, 16 May 2013 19:29:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0lwv9aAOSGKWAOq7zS3i00ZELOU=; b=luVrNd
-	CsSiivKbzE0V+spMkopnQxPhnIbAWk4KLkzgX1UotOF05bndsHah/Ek+6HJSlFAf
-	KPjIDnzFtO21lc7+efNX0FFsAKgGhfb3Q1gft4jQ3ZiH0eZ7qQr5NhFTXW54xoPb
-	VgrJ+ceKIglzUyp5tpcXOEBcQUp/xFFUJZ2JA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Kum0/VBe6JZyq2d2yOET730ad4p+uPrz
-	LkbT8V5YRQn5WwNtPgTde8xx1mNRZstGnI94vfs8nO8XYgcv9fBwb11hGyc5MxJ7
-	CkkfIiBadQy7CxE7QB2fgoPXrVoQzkgnYp7u21ZLeUy2lKaCHcarpdmbbLwBT1jF
-	hqiASgVch0E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39FDC1F309;
-	Thu, 16 May 2013 19:29:27 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7B8DC1F308;
-	Thu, 16 May 2013 19:29:26 +0000 (UTC)
-In-Reply-To: <9d73d532fb2d8372b971d607b9ddaa1af2b84ffd.1368696028.git.worldhello.net@gmail.com>
-	(Jiang Xin's message of "Thu, 16 May 2013 17:53:40 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EBB435BA-BE5E-11E2-9155-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753634Ab3EPTfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 15:35:30 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:12187 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751967Ab3EPTfY (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 May 2013 15:35:24 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AuINAFQ0lVFOl3Gk/2dsb2JhbABbgweDc4U/uEgEAQMBfBd0ghoFAQEFCAEBGRUeAQEhCwIDBQIBAxUBAgICBSECAhQBBAgSBgcXBgoJCAIBAgMBh2kDE6peiHcNiE+BJosigW1qgkkyYQOOaIZqjgOFI4MROw
+X-IronPort-AV: E=Sophos;i="4.87,686,1363132800"; 
+   d="scan'208";a="409924914"
+Received: from host-78-151-113-164.as13285.net (HELO PhilipOakley) ([78.151.113.164])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 16 May 2013 20:35:20 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224613>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Sent: Thursday, May 16, 2013 4:46 AM
+> On Wed, May 15, 2013 at 5:22 PM, Philip Oakley <philipoakley@iee.org> 
+> wrote:
+>
+>> Sound a reasonable idea. On some patches I was working on I had to 
+>> [chose
+>> to] add a tag for the base which made it easier to rebase later.
+>
+> And was the 'upstream' branch somehow not appropriate for some reason?
 
-> +static void print_highlight_menu_stuff(struct menu_stuff *stuff, int **chosen)
-> +{
-> +	struct string_list menu_list = STRING_LIST_INIT_DUP;
-> +	struct strbuf menu = STRBUF_INIT;
-> +	int i;
-> +
-> +	if (MENU_STUFF_TYPE_MENU_ITEM == stuff->type) {
-> +	...
-> +	} else if (MENU_STUFF_TYPE_STRING_LIST == stuff->type) {
-> +	...
-> +	}
+If I remember correctly, I had a short branch based on 'pu', which was 
+rewound, so I wanted to rebase that short branch onto the new 'pu'. This 
+creates a confusion between old-pu and new-pu. Having a marker for the 
+'base' at the branch point allowed an easy specification of the branch
 
-This is better to write as:
+I think I misunderstood your proposal. I thought that it would 
+effectively save a marker (e.g. the sha1) for the base point of the 
+branch, it may have been something similar to a [lightweight] tag, it 
+could have been just local or could have been transferable, I hadn't 
+thought it further.
 
-	switch (stuff->type) {
-	default:
-        	die("programming error");
-        case MENU_STUFF_TYPE_MENU_ITEM:
-        	...
-                break;
-	case MENU_STUFF_TYPE_STRING_LIST:
-        	...
-		break;
-	}
-
-Besides, there is no good reason to write an equality comparison
-between constant and variable in that order (people call it a "Yoda
-condition"); do "var == const" if you must.
-
-Also please fix this one:
-
-> +		for_each_string_list_item(item, (struct string_list *)stuff->stuff) {
-> +			if ((*chosen)[i] < 0)
-> +				(*chosen)[i] = 0;
-> +			strbuf_addf(&menu, "%s%2d: %s", (*chosen)[i] ? "*" : " ", ++i, item->string);
-
-Because the evaluation order of function arguments are not defined
-(not left to right; these are comma-expressions),
-
-	(*chosen)[i] ? "*" : " "
-
-may use the original value of "i", or value after increment the
-evaluation of
-
-	++i
-
-left in "i".
+Philip 
