@@ -1,105 +1,72 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH 3/3] push: add separate 'downstream' branch
-Date: Thu, 16 May 2013 08:32:06 -0500
-Message-ID: <CAMP44s2HPXnudioSSj0O_r2PbmbAqcyTORJNhRL_a=NWu_niBw@mail.gmail.com>
+Subject: Re: [RFC/PATCH 2/3] pull: trivial cleanups
+Date: Thu, 16 May 2013 08:36:08 -0500
+Message-ID: <CAMP44s01cySnctrLjbRO6gDkFvAeoHtcSjdp11Sa8CujAKUEwA@mail.gmail.com>
 References: <1368675828-27418-1-git-send-email-felipe.contreras@gmail.com>
-	<1368675828-27418-4-git-send-email-felipe.contreras@gmail.com>
-	<CALkWK0nTS6Vh7GfnrLWAK5VeevQyGN5N7xT43c+uqBQ5oM5tww@mail.gmail.com>
-	<CAMP44s3fPsGW_9aBbcsu8cJAagz8JEWV2HM=XRH3Rw4=SXdL7Q@mail.gmail.com>
-	<CALkWK0nOywB5BtHnKZQ_+wsJNp82zk7-YJw_S15quqH+iU=jWg@mail.gmail.com>
-	<CAMP44s2vsD2uwFoL5_79m05gtqyKLN9wHX8Yrhtn0kT4LVULxQ@mail.gmail.com>
-	<CALkWK0m+_AbCd305dU5p5bxwuPPCBKJH7a3e6rHgxxnySMz0pQ@mail.gmail.com>
-	<CAMP44s1eB+bvg7vnG5S3SBACHTrkpCqJNX-Q2tzEVdvzFWvkcA@mail.gmail.com>
-	<CALkWK0nBUHHkqOQannMu5Kjs00Fro8KBbiocfsT4Uf74jO9FgA@mail.gmail.com>
+	<1368675828-27418-3-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0=tP=v=3Q4dzPc=W0=j_7iFYdGnzkaV6U_MFSg=NCE49w@mail.gmail.com>
+	<CAMP44s0sg6zQc9=cD1X61joxSd=LK7qT1k-suej3dYDD826hgw@mail.gmail.com>
+	<CALkWK0=RF4cjQ4Lz4Qi2iac_NgLdzBRw5Q9uf8KjYJju8swWDQ@mail.gmail.com>
+	<CAMP44s1vMTfrSaU+0S8EOM5g4L0885780SvT_THBr7u==bJ06A@mail.gmail.com>
+	<CALWbr2w120xDGHXB9b2UHgz5fAqX+VaSHMsaf3dhfx_5dYbruA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 16 15:32:16 2013
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 16 15:36:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcyI1-0006oL-UA
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 15:32:14 +0200
+	id 1UcyLv-0001c9-QE
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 15:36:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753799Ab3EPNcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 09:32:10 -0400
-Received: from mail-la0-f53.google.com ([209.85.215.53]:63303 "EHLO
-	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753632Ab3EPNcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 09:32:08 -0400
-Received: by mail-la0-f53.google.com with SMTP id eo20so3025777lab.12
-        for <git@vger.kernel.org>; Thu, 16 May 2013 06:32:06 -0700 (PDT)
+	id S1753504Ab3EPNgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 09:36:12 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:52301 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753425Ab3EPNgK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 09:36:10 -0400
+Received: by mail-la0-f45.google.com with SMTP id ec20so2684808lab.4
+        for <git@vger.kernel.org>; Thu, 16 May 2013 06:36:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
          :subject:from:to:cc:content-type;
-        bh=GYUKktQj2oWbA8HMvGzHCwlgJXvU7HqtTaIhIOmZy3E=;
-        b=h3+ZdSHbo/rNwEN/PtoI9ZRogisDrlE1eSm9vG4HCadzfxnGHUPJfxN1/M6pJxJG5I
-         u+DLps7+EM6t4h53wxuc5fpRrv6MW45ioGC7OxXNoJMnFREik6pVdLPhxhFznCRdPF3j
-         jHRlBxXV8EzxhlLTL1S9OcX6AHmpbezd4WVPOQ89G3dsgLvGhb5hfBEDYE8oysoW2Yxz
-         fPIQc54L52kqlyhPyPxiK05eF3wj+2Ur847KqCIfN6u8rUrFtEYdZHn0ABiZm48ginzi
-         sRPeeWPww4n0gaFFHyHLwZJ1/+/2hqZFCo2A4Lipv/xuq+Z+Qyc+VKWRxUZhKSInRl7y
-         x7lQ==
-X-Received: by 10.152.22.168 with SMTP id e8mr20323489laf.20.1368711126086;
- Thu, 16 May 2013 06:32:06 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Thu, 16 May 2013 06:32:06 -0700 (PDT)
-In-Reply-To: <CALkWK0nBUHHkqOQannMu5Kjs00Fro8KBbiocfsT4Uf74jO9FgA@mail.gmail.com>
+        bh=wUoiUro09f59dIdpYlENpnIMc5Rcx8BhhY44hJfzah4=;
+        b=kUBwjjKDWXLfJuq9pnAOJ5/Srac9fTJlAp5IvHVjH00as1vJb1fAIYsMfHEZJNRAsg
+         7BCkYWWcQ8XPMIVCeQPOaAQFM3jD4hgRMbHvMo8On0nhLYiPme7l4w7tt2xdfRgVpWuJ
+         G/dnYmxSP6o33B+c/4w243dex7EDxJxj/m4yWInIBtiFGMlfW9d6v+g7iEymL1DVDYeB
+         GnwKAqbGUFKOQMbTiLlqg7ZASfLctTZUBJafOwKddyXDVY+wHarQ7WmGBbZxGyUsWwm5
+         fg4VeVAoBNL0XMX/zkETKh4BDlAbqpvjUxWXmhvybIMiIwR4PgOS+FiGVgreV9dgz8fS
+         kdMQ==
+X-Received: by 10.112.166.101 with SMTP id zf5mr19722482lbb.59.1368711368424;
+ Thu, 16 May 2013 06:36:08 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Thu, 16 May 2013 06:36:08 -0700 (PDT)
+In-Reply-To: <CALWbr2w120xDGHXB9b2UHgz5fAqX+VaSHMsaf3dhfx_5dYbruA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224566>
 
-On Thu, May 16, 2013 at 6:31 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Felipe Contreras wrote:
->> Would I be able to do:
+On Thu, May 16, 2013 at 6:54 AM, Antoine Pelisse <apelisse@gmail.com> wrote:
+> On Thu, May 16, 2013 at 11:36 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> Actually trying that command:
 >>
->> % git branch --set-upstream-to origin/master --set-downstream-to
->> github/fc/master
->>
->> ?
->>
->> Would I see these branches when I do 'git branch -vv'?
->> Would I be able to do 'git push next@{downstream}'?
+>> % git fetch origin 'refs/tags/*:refs/tags/*' 'refs/heads/*:refs/heads/*'
+>> fatal: Refusing to fetch into current branch
+>> refs/heads/fc/fast-export/cleanup of non-bare repository
+>> fatal: The remote end hung up unexpectedly
 >
-> Hm, losing this functionality in the name of generality would
-> certainly be very undesirable.
-
-I don't even know what that means.
-
->> That is orthogonal to 'branch.A.push' the same way 'remote.B.fetch' is
->> orthogonal to 'branch.A.merge'.
+> Can you try something like this instead ?
 >
-> Not at all (which is what I've been trying to say).
-> remote.<name>.fetch is operated on by fetch, while branch.<name>.merge
-> is operated on by merge; they are really orthogonal.  What happens if
-> both branch.<name>.push and remote.<name>.push are set?  What will
-> push do?
+>     git fetch --update-head-ok # or -u
 
-The same that 'git pull' does when both branch.<name>.merge and
-remote.<name>.fetch are set.
-
-> Perhaps we should get both, and get branch.<name>.push to override
-> remote.<name>.push.
-
-Does branch.<name>.merge overrides remote.<name>.fetch? No. They
-complement each other.
-
-> The issue being @{d} will not work if
-> remote.<name>.push is set.
-
-Of course it would work. Does @{u} stop working when remote.<name>.fetch is set?
-
-> Then again, since we're targeting Gerrit
-> users here, I don't really think it's an issue: refs/for/master is not
-> really a "downstream branch"; it's a pseudo-ref that Gerrit handles
-> internally.
-
-It is a downstream branch.
+Nice! That does the trick.
 
 -- 
 Felipe Contreras
