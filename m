@@ -1,74 +1,68 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH 2/3] pull: trivial cleanups
-Date: Thu, 16 May 2013 04:36:36 -0500
-Message-ID: <CAMP44s1vMTfrSaU+0S8EOM5g4L0885780SvT_THBr7u==bJ06A@mail.gmail.com>
-References: <1368675828-27418-1-git-send-email-felipe.contreras@gmail.com>
-	<1368675828-27418-3-git-send-email-felipe.contreras@gmail.com>
-	<CALkWK0=tP=v=3Q4dzPc=W0=j_7iFYdGnzkaV6U_MFSg=NCE49w@mail.gmail.com>
-	<CAMP44s0sg6zQc9=cD1X61joxSd=LK7qT1k-suej3dYDD826hgw@mail.gmail.com>
-	<CALkWK0=RF4cjQ4Lz4Qi2iac_NgLdzBRw5Q9uf8KjYJju8swWDQ@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCHv2 04/10] remote: Reject remote names containing '/'
+Date: Thu, 16 May 2013 15:18:37 +0530
+Message-ID: <CALkWK0k=P265MCmvj9C7MFiF=tkhCZ__3oF8FWmWd4sNx3VcTw@mail.gmail.com>
+References: <1368289280-30337-1-git-send-email-johan@herland.net>
+ <1368289280-30337-5-git-send-email-johan@herland.net> <7vtxm7scn5.fsf@alter.siamese.dyndns.org>
+ <CALKQrgcry9bwmonaeWA4M7a3k36S_Q3ZQLmv7Ui5r+tdzdMr_A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 16 11:36:45 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	jrnieder@gmail.com
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu May 16 11:49:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ucuc8-0003uS-Bt
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 11:36:44 +0200
+	id 1UcuoS-0005Un-5N
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 11:49:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751473Ab3EPJgl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 05:36:41 -0400
-Received: from mail-la0-f51.google.com ([209.85.215.51]:49708 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751308Ab3EPJgh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 05:36:37 -0400
-Received: by mail-la0-f51.google.com with SMTP id lx15so839522lab.38
-        for <git@vger.kernel.org>; Thu, 16 May 2013 02:36:36 -0700 (PDT)
+	id S1751883Ab3EPJtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 05:49:22 -0400
+Received: from mail-ia0-f177.google.com ([209.85.210.177]:62943 "EHLO
+	mail-ia0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751841Ab3EPJtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 05:49:19 -0400
+Received: by mail-ia0-f177.google.com with SMTP id z13so3308087iaz.36
+        for <git@vger.kernel.org>; Thu, 16 May 2013 02:49:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=1gdzjofq8avjems2+wMmBkMau3Wvo8gHCEZWcyJLEmA=;
-        b=IZGXU1tPKNydXYYpt2tp36ra0PaxjdVz+MfEgpzIH9vM3Xhi8Qtcgf8npxQRlxbRV7
-         17uVe1bRv1LDX6uuHBWmBaKbDFdwzok30Ysn2qzTD+yJEPA6lITnqkFvUzi8dUM0/8CM
-         YwJd/34+uNte/lr89bH54al6c8Zv54PyrmK1oPZcsg83jVoB8lU1wj/Wxmh/rGNlW6g0
-         ILnBKyIa5qVV0tQ+mRyeztBcxlJctQ+iG3SbwXB3K+WtlCI26xw2vG9caRf3Fr7e/k3L
-         fIxMiqBFElJGV28/7lkMbkVMPqPDFOy7Yr5OYk4/nJLjjDer4kyKe6XiE0moHA5rFpjs
-         lOyw==
-X-Received: by 10.112.163.71 with SMTP id yg7mr10077582lbb.8.1368696996385;
- Thu, 16 May 2013 02:36:36 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Thu, 16 May 2013 02:36:36 -0700 (PDT)
-In-Reply-To: <CALkWK0=RF4cjQ4Lz4Qi2iac_NgLdzBRw5Q9uf8KjYJju8swWDQ@mail.gmail.com>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=RAga6wAKBb+MU4X7k9fX/hg9+xGTLy7N31E4VLngrRU=;
+        b=K8izB7Cj7IgoRaXx29icebJXN+Ff6xpW2SNRx02lHq432B8eO3/C2IKnDyj50V4Cln
+         Vj1Ys5ks3aRZZUprWvy864JWBFEC4UBcBO8xovWz8MTWp3xNVEiniI8vBJGWi8tggPrF
+         Z5KEdvhy/PO12YC3FAD/4fUANg2e+fVShq/QTSofeLdq2ndR2SdfJHQ31xtwbvKFz4mI
+         2QkI2xRS94wl8b+fDPqvBGgmwRByhW96WbTPF8DDZK/RdDbfR0q9Sn9OrIPVjzRupY+E
+         ZOSiaQPf87mT397FuPomMvRgQEc6l3AgCuzHunrrx86EOcVTC0uYAdfajsmFnoX41h1C
+         KO8w==
+X-Received: by 10.50.128.44 with SMTP id nl12mr8577673igb.0.1368697759248;
+ Thu, 16 May 2013 02:49:19 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Thu, 16 May 2013 02:48:37 -0700 (PDT)
+In-Reply-To: <CALKQrgcry9bwmonaeWA4M7a3k36S_Q3ZQLmv7Ui5r+tdzdMr_A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224527>
 
-On Thu, May 16, 2013 at 4:34 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Felipe Contreras wrote:
->> But my only concern is that there's no way to
->> do something like:
->>
->> % git fetch backup 'refs/tags/*:refs/tags/*' 'refs/heads/*:refs/heads/*'
->
-> [remote "backup"]
->     fetch = refs/tags/*:refs/tags/*
->     fetch = refs/heads/*:refs/heads/*
->
-> What am I missing?
+Johan Herland wrote:
+> The disambiguation can probably be resolved, although the resulting
+> code will obviously be somewhat more cumbersome and ugly (and IMHO the
+> current code is plenty of that already...). Combine this with the
+> problems of clobbering of the same remote-tracking ref (describe
+> above), and the fact that AFAIK a multi-level remote name has never
+> been observed "in the wild" (none of the people I asked at the Git
+> Merge conference had ever observed multi-level remote names, nor did
+> they directly oppose banning them), I'm not at all sure it's worth
+> bothering about this at all. Simply disallowing multi-level remote
+> names seems like the simpler and naturally ambiguity-resistant
+> approach.
 
-Actually trying that command:
-
-% git fetch origin 'refs/tags/*:refs/tags/*' 'refs/heads/*:refs/heads/*'
-fatal: Refusing to fetch into current branch
-refs/heads/fc/fast-export/cleanup of non-bare repository
-fatal: The remote end hung up unexpectedly
-
--- 
-Felipe Contreras
+The problem with multi-level remote names is that we use the same
+delimiter as in the ref namespace: '/'.  So, obviously, there's a lot
+of room for confusion.  I wonder if we should banish multi-level
+remotes altogether though: is it possible that they will be useful to
+someone in the future?
