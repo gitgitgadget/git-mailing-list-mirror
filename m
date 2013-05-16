@@ -1,85 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v10 09/14] git-clean: use a git-add-interactive compatible UI
-Date: Thu, 16 May 2013 12:39:47 -0700
-Message-ID: <7vtxm24su4.fsf@alter.siamese.dyndns.org>
-References: <cover.1368696028.git.worldhello.net@gmail.com>
-	<9d73d532fb2d8372b971d607b9ddaa1af2b84ffd.1368696028.git.worldhello.net@gmail.com>
-	<7vy5be4tbf.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: [PATCH 0/6] --valgrind improvements
+Date: Thu, 16 May 2013 22:50:11 +0200
+Message-ID: <cover.1368736093.git.trast@inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 16 21:39:56 2013
+Content-Type: text/plain
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 16 22:50:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ud41q-0005GL-Vh
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 21:39:55 +0200
+	id 1Ud58B-0004hR-Hx
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 22:50:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752929Ab3EPTju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 15:39:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61568 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751594Ab3EPTju (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 15:39:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B7A71F96E;
-	Thu, 16 May 2013 19:39:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hLEQBR53PHYlWpcmsEJYjRSEWno=; b=Fx0ZGB
-	FktIfR3qRfYDvgkx73olX3ertnZSCOg0vfT4YR7u6fOzlMrM+3g66yj8m/QBZfvV
-	0dqt4dxwt8IuRmAf2muF2LUg2q8A1sjJKgE21ajRFPlH7eueERcSTZlgi/rj1sue
-	y5tkTnmictNwk/9/9TwwAhFJx0GpPKmmLbTrA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dGhE5ZtWU/0aNKHPgJV25oHT9PXYY3MB
-	N+LTA6jixQtstjQ5cGyBD6gCouWWRRlVgmJu6gUGNGt/2YUHWtVIUWa56GRhnwBa
-	yt1BF6jhcUxTmnlx1H9hPFj/R9w5ZBWLTuwEKjx9sazVxLphz7Kca3eyX8BWfvxi
-	aPIo+zw4Pxk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 713A31F96C;
-	Thu, 16 May 2013 19:39:49 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D66DF1F96A;
-	Thu, 16 May 2013 19:39:48 +0000 (UTC)
-In-Reply-To: <7vy5be4tbf.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 16 May 2013 12:29:24 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5EA9D6FA-BE60-11E2-B2FF-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752878Ab3EPUuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 16:50:23 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:41637 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751102Ab3EPUuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 16:50:20 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 16 May
+ 2013 22:50:15 +0200
+Received: from hexa.v.cablecom.net (46.126.8.85) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 16 May
+ 2013 22:50:17 +0200
+X-Mailer: git-send-email 1.8.3.rc2.393.g8636c0b
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224615>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Peff and me discussed improving the usability of --valgrind testing.
+In particular, two ideas that came up were options for running only a
+subset of the tests in a file under --valgrind, and for running a
+single test script under valgrind while exploiting parallelism.
 
-> Also please fix this one:
->
->> +		for_each_string_list_item(item, (struct string_list *)stuff->stuff) {
->> +			if ((*chosen)[i] < 0)
->> +				(*chosen)[i] = 0;
->> +			strbuf_addf(&menu, "%s%2d: %s", (*chosen)[i] ? "*" : " ", ++i, item->string);
->
-> Because the evaluation order of function arguments are not defined
-> (not left to right; these are comma-expressions),
+So here's a little series.  It goes like this:
 
-I cannot spell, sorry.  s/are not defined/is not defined/.  Also
-s/these are c/these are not c/;
+  test-lib: enable MALLOC_* for the actual tests
 
->
-> 	(*chosen)[i] ? "*" : " "
->
-> may use the original value of "i", or value after increment the
-> evaluation of
->
-> 	++i
->
-> left in "i".
+Fix for an unrelated bug that I came across.
+
+  test-lib: refactor $GIT_SKIP_TESTS matching
+  test-lib: verbose mode for only tests matching a pattern
+  test-lib: valgrind for only tests matching a pattern
+
+An option --valgrind-only=<patterns> that lets you run only the
+subtest matching <patterns> under valgrind.
+
+  test-lib: allow prefixing a custom string before "ok N" etc.
+  test-lib: support running tests under valgrind in parallel
+
+An option --valgrind-parallel=<n> to run <n> instances in parallel,
+each of which runs every <n>-th test under valgrind, staggered so that
+they cover everything.  It's a bit of a hack, and thus RFC, but gives
+decent results.  On my 2-core laptop I measured a just over 2x
+speedup.  On a 6-core it starts falling off because of the extra
+(non-valgrind) runs, resulting in a 4.8x speedup.
+
+One open issue with the last patch that currently eludes me: if I
+combine --valgrind-parallel with any --valgrind=*, there are lots of
+errors as (apparently) the valgrind wrapper setups race against each
+other.  However, without any --valgrind=* (thus defaulting to
+'memcheck') this doesn't happen.
+
+
+Thomas Rast (6):
+  test-lib: enable MALLOC_* for the actual tests
+  test-lib: refactor $GIT_SKIP_TESTS matching
+  test-lib: verbose mode for only tests matching a pattern
+  test-lib: valgrind for only tests matching a pattern
+  test-lib: allow prefixing a custom string before "ok N" etc.
+  test-lib: support running tests under valgrind in parallel
+
+ t/README               |  10 +++
+ t/test-lib.sh          | 175 ++++++++++++++++++++++++++++++++++++++++---------
+ t/valgrind/valgrind.sh |   3 +
+ 3 files changed, 156 insertions(+), 32 deletions(-)
+
+-- 
+1.8.3.rc2.393.g8636c0b
