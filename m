@@ -1,84 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] fetch: opportunistically update tracking refs
-Date: Wed, 15 May 2013 23:37:48 -0400
-Message-ID: <20130516033748.GC13296@sigill.intra.peff.net>
-References: <20130511161320.GA14990@sigill.intra.peff.net>
- <20130511161652.GD3270@sigill.intra.peff.net>
- <871u9cftjv.fsf@linux-k42r.v.cablecom.net>
- <87r4hcedra.fsf@linux-k42r.v.cablecom.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu May 16 05:37:56 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [RFC/PATCH 0/3] New kind of upstream branch: downstream branch
+Date: Wed, 15 May 2013 22:43:45 -0500
+Message-ID: <1368675828-27418-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 16 05:45:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ucp0t-0002hk-Bk
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 05:37:55 +0200
+	id 1Ucp8A-0007Kk-DI
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 05:45:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754093Ab3EPDhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 May 2013 23:37:51 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44820 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752766Ab3EPDhu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 May 2013 23:37:50 -0400
-Received: (qmail 20861 invoked by uid 102); 16 May 2013 03:38:19 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 May 2013 22:38:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 May 2013 23:37:48 -0400
-Content-Disposition: inline
-In-Reply-To: <87r4hcedra.fsf@linux-k42r.v.cablecom.net>
+	id S1754260Ab3EPDpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 May 2013 23:45:20 -0400
+Received: from mail-oa0-f45.google.com ([209.85.219.45]:38535 "EHLO
+	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753628Ab3EPDpS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 May 2013 23:45:18 -0400
+Received: by mail-oa0-f45.google.com with SMTP id j6so3197036oag.18
+        for <git@vger.kernel.org>; Wed, 15 May 2013 20:45:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=o1IQhEvyCRyztLOSBeGK3NY+U2gG3NMY98xuqNsnzok=;
+        b=ifmNGrJ4OqzzVOmhT+aEkkf9LOaqzDnKNoBg7ht5gVQBX58ubrmXHjAsRgfz7l2DzS
+         MG16FKUwav9uF/OuhFLCDx/DkbUkXlf5R9MSx3kClInV608DuN3mG8W5wg3lhGyedLlI
+         czP0El0M+aHdokXrH10otfJn30maRCApSHt7xdyg7d7m4XUaz97xmENe1nngOclhOziX
+         Rw9yDeBDBFa3HqXwIjRg/QMKE+CzgAR2vnYt3jbYixVf22P+8mtligTtepZGQuXbu5k5
+         XFByKFQwl8/dUevlKUA6jZxbGUTL2bvKH4P3xybNwgAbFvVe3eo5bsPFv7MnM2DPRhXL
+         dngQ==
+X-Received: by 10.182.171.8 with SMTP id aq8mr18996550obc.27.1368675917659;
+        Wed, 15 May 2013 20:45:17 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id eq4sm6249497obb.5.2013.05.15.20.45.15
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 15 May 2013 20:45:16 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc1.579.g184e698
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224471>
 
-On Sun, May 12, 2013 at 11:41:45AM +0200, Thomas Rast wrote:
+Hi,
 
-> >> We miss an opportunity to update "refs/remotes/origin/master"
-> >> (or whatever the user has configured). Some users find this
-> >> confusing, because they would want to do further comparisons
-> >> against the old state of the remote master, like:
-> >>
-> >>   $ git pull origin master
-> >>   $ git log HEAD...origin/master
-> >
-> > I agree with the patch, but I would use a different reasoning. Your
-> > example here is not even correct because the range in the second command
-> > would be empty unless the merge conflicted.
-> 
-> Meh, I just read this again and saw that you actually had *three* dots.
-> Serves me right for writing a reply on the phone.
-> 
-> So the quoted part is indeed correct.
+After thinking a bit more about, I think the current 'upstream' branch serves
+most of the purposes; actually tracks an upstream branch; makes sense to rebase
+onto that, makes sense to fetch from that remote, merge, and pull.
 
-Yes, it's correct, but it is a bit subtle. A better example would
-probably be:
+The only job it doesn't make sense to use the 'upstream' branch for is to push,
+so here's a new notion of 'downstream' branch.
 
-  $ git status
-  # On branch foo
-  # Your branch is ahead of 'origin/master' by 2 commits.
+These patches are only exploratory, 'git branch -v' doesn't show these
+branches, there's no @{downstream}, no documentation, and there isn't even a
+way to set it.
 
-  $ git pull origin master
-  [pull 10 new commits]
+If there's no downstream branch configured, nothing changes.
 
-  $ git status
-  # On branch foo
-  # Your branch is ahead of 'origin/master' by 13 commits.
+Felipe Contreras (3):
+  remote: don't override default if cur head remote is '.'
+  pull: trivial cleanups
+  push: add separate 'downstream' branch
 
-That is technically true, but only because origin/master is now out of
-date. The more interesting number is 3: the two commits we had already,
-plus the new merge commit.
+ builtin/push.c | 65 ++++++++++++++++++++++++++++++++++++----------------------
+ git-pull.sh    | 15 +++++++++-----
+ remote.c       | 10 ++++++---
+ remote.h       |  3 +++
+ 4 files changed, 61 insertions(+), 32 deletions(-)
 
-And of course there are infinite variations where you pull on one
-branch, and then switch branches to compare on another. But they all
-boil down to having an out-of-date view of origin/master that does not
-reflect the most recent pull.
-
--Peff
+-- 
+1.8.3.rc1.579.g184e698
