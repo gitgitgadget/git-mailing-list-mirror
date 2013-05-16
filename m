@@ -1,110 +1,165 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCHv2] git-submodule.txt:  Clarify 'init' and 'add' subcommands.
-Date: Thu, 16 May 2013 20:50:58 +0200
-Message-ID: <51952A92.5030009@web.de>
-References: <201305152246.r4FMkVW5005582@freeze.ariadne.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v10 04/14] Refactor write_name_quoted_relative, remove unused params
+Date: Thu, 16 May 2013 12:15:10 -0700
+Message-ID: <7v38tm68jl.fsf@alter.siamese.dyndns.org>
+References: <cover.1368696028.git.worldhello.net@gmail.com>
+	<a2794488b5ec4f221ff404b4875c7c23a54492c4.1368696028.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Dale R. Worley" <worley@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu May 16 20:51:15 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 16 21:15:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ud3Gj-0001M7-Vi
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 20:51:14 +0200
+	id 1Ud3e3-0002tW-4o
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 21:15:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751481Ab3EPSvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 14:51:10 -0400
-Received: from mout.web.de ([212.227.17.11]:54365 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750835Ab3EPSvI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 14:51:08 -0400
-Received: from [192.168.178.41] ([91.3.188.160]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0M1Wxd-1UNZmT20vB-00txUf; Thu, 16 May 2013 20:51:04
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <201305152246.r4FMkVW5005582@freeze.ariadne.com>
-X-Enigmail-Version: 1.5.1
-X-Provags-ID: V02:K0:B1e314xXhxnwKOgvf8X/0FfkyxamHBuD11wvIXb5x9U
- xDdIx+gdpL7w1oM/w672bxrbxNHhgwMoFPWe1YUqA46KHfl/qx
- lXOoVCRGuYCVn1FUMHgiXhj6BfDBOhQPpeHl1UJDZdYh0yvT7E
- oPl40TpXJWUcUnVw1BvEn7dy+LTz3OeISVz/vgKxCLAWGc2mGl
- Sw9rkFuUygpAoy8fmnZ2A==
+	id S1752519Ab3EPTPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 15:15:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48015 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751978Ab3EPTPN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 15:15:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DAF8F1FB99;
+	Thu, 16 May 2013 19:15:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PYpNBgir7Lpt7/A4OHtV7bgZ1UU=; b=J+nMCD
+	vF4qWaTXlB8mx/XlUXXpXF3ZBney55Zi+abGegZH+3IkyN1L7m+BMV/bvFWg/cMX
+	Umpob2OwR2ar4XZQWv9YRQ19fXb3nYoExMXsdGfhQMTHbdpxYyeK5bmR1s2E7vkb
+	AM4Cyu+iruOmMlNAW7hO7cb8uZGquAczA5ElY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aZeaOvgOrLR5mngTcQ9D7fxkXhNNMPVM
+	AsMacGg9el92ih3x3hGxBX9qCJdXet77T9NX8Q7nXZRBWnylipArMTe9xfBRLuIm
+	3SlXgGTPPiJWPonXQvS2WiCCnPybpjkwJsFnIsoI8CPoIu+bT4WlmhpLDTXuR0Wn
+	jb9C0F3kp5o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF02A1FB98;
+	Thu, 16 May 2013 19:15:12 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 100121FB97;
+	Thu, 16 May 2013 19:15:11 +0000 (UTC)
+In-Reply-To: <a2794488b5ec4f221ff404b4875c7c23a54492c4.1368696028.git.worldhello.net@gmail.com>
+	(Jiang Xin's message of "Thu, 16 May 2013 17:53:35 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EE6AA458-BE5C-11E2-BA01-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224611>
 
-Am 16.05.2013 00:28, schrieb Dale R. Worley:
-> Describe how 'add' sets the submodule's logical name, which is used in
-> the configuration entry names.
-> 
-> Clarify that 'init' only sets up the configuration entries for
-> submodules that have already been added elsewhere.  Describe that
-> <path> arguments limit the submodules that are configured.
-> 
-> Signed-off-by: Dale Worley <worley@ariadne.com>
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-Thanks, this patch addresses all issues raised.
+> After substitude path_relative() in quote.c with relative_path() from
+> path.c, parameters (such as len and prefix_len) are obsolte in function
 
-Acked-by: Jens Lehmann <Jens.Lehmann@web.de>
+s/obsolte/obsolete/;
 
+> write_name_quoted_relative(). Remove unused parameters from
+> write_name_quoted_relative() and related functions.
+>
+> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 > ---
-> This patch seems to have all the features that we have discussed:
-> 
-> - Describes how 'add' selects the submodule logical name, including
->   the effect of --name.  (My first patch was on a version of Git that
->   did not support --name, so I didn't know of it.)
-> 
-> - Corrects description of 'init' to clarify that its behavior is
->   driven by the gitlinks recorded in the index, rather than implying
->   it is driven by the contents of .gitmodules.
-> 
-> - Describes 'init' behavior to be driven by the index, rather than my
->   previous incorrect use of "file tree".  (Of course, gitlinks aren't
->   visible in the file tree.)
-> 
-> - Updated text for 'init' is shorter and less technical than my
->   previous patch.
-> 
-> - Since "(which were added and committed elsewhere)" is stated in the
->   first sentence, I've removed the later sentence explaining that
->   submodules must be added before they can be inited.
-> 
-> - Explains the effect of <path> arguments to 'init' subcommand.
-> 
->  Documentation/git-submodule.txt |    8 ++++++--
->  1 files changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index c99d795..83235c0 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -76,6 +76,8 @@ argument <path> is the relative location for the cloned submodule
->  to exist in the superproject. If <path> is not given, the
->  "humanish" part of the source repository is used ("repo" for
->  "/path/to/repo.git" and "foo" for "host.xz:foo/.git").
-> +The <path> is also used as the submodule's logical name in its
-> +configuration entries unless `--name` is used to specify a logical name.
->  +
->  <repository> is the URL of the new submodule's origin repository.
->  This may be either an absolute URL, or (if it begins with ./
-> @@ -123,8 +125,10 @@ linkgit:git-status[1] and linkgit:git-diff[1] will provide that information
->  too (and can also report changes to a submodule's work tree).
+>  builtin/ls-files.c | 14 ++++++++------
+>  quote.c            |  3 +--
+>  quote.h            |  3 +--
+>  3 files changed, 10 insertions(+), 10 deletions(-)
+>
+> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> index 00f07..d3b33 100644
+> --- a/builtin/ls-files.c
+> +++ b/builtin/ls-files.c
+> @@ -46,10 +46,12 @@ static const char *tag_modified = "";
+>  static const char *tag_skip_worktree = "";
+>  static const char *tag_resolve_undo = "";
 >  
->  init::
-> -	Initialize the submodules, i.e. register each submodule name
-> -	and url found in .gitmodules into .git/config.
-> +	Initialize the submodules recorded in the index (which were
-> +	added and committed elsewhere) by copying submodule
-> +	names and urls from .gitmodules to .git/config.
-> +	Optional <path> arguments limit which submodules will be initialized.
->  	It will also copy the value of `submodule.$name.update` into
->  	.git/config.
->  	The key used in .git/config is `submodule.$name.url`.
-> 
+> -static void write_name(const char* name, size_t len)
+> +static void write_name(const char* name)
+
+This is not a new problem but an asterisk sticks to the variable not
+type, i.e. "const char *name".
+
+>  {
+> -	write_name_quoted_relative(name, len, prefix, prefix_len, stdout,
+> -			line_terminator);
+> +
+> +	/* turn off prefix, if run with "--full-name" */
+> +	write_name_quoted_relative(name, prefix_len > 0 ? prefix : NULL,
+> +				   stdout, line_terminator);
+>  }
+
+Are you sure all the callers pass a NUL terminated name and want to
+show them in full (not just a prefix by passing a len that is
+shorter than the string is)?
+
+My quick scan indicates that is the case, but double checking.
+
+The same comment applies to 03/14 (I checked that all callers either
+pass strlen() of the first parameter or -1, so that patch is safe).
+
+>  static void show_dir_entry(const char *tag, struct dir_entry *ent)
+> @@ -63,7 +65,7 @@ static void show_dir_entry(const char *tag, struct dir_entry *ent)
+>  		return;
+>  
+>  	fputs(tag, stdout);
+> -	write_name(ent->name, ent->len);
+> +	write_name(ent->name);
+>  }
+>  
+>  static void show_other_files(struct dir_struct *dir)
+> @@ -163,7 +165,7 @@ static void show_ce_entry(const char *tag, struct cache_entry *ce)
+>  		       find_unique_abbrev(ce->sha1,abbrev),
+>  		       ce_stage(ce));
+>  	}
+> -	write_name(ce->name, ce_namelen(ce));
+> +	write_name(ce->name);
+>  	if (debug_mode) {
+>  		printf("  ctime: %d:%d\n", ce->ce_ctime.sec, ce->ce_ctime.nsec);
+>  		printf("  mtime: %d:%d\n", ce->ce_mtime.sec, ce->ce_mtime.nsec);
+> @@ -196,7 +198,7 @@ static void show_ru_info(void)
+>  			printf("%s%06o %s %d\t", tag_resolve_undo, ui->mode[i],
+>  			       find_unique_abbrev(ui->sha1[i], abbrev),
+>  			       i + 1);
+> -			write_name(path, len);
+> +			write_name(path);
+>  		}
+>  	}
+>  }
+> diff --git a/quote.c b/quote.c
+> index ebb8..5c880 100644
+> --- a/quote.c
+> +++ b/quote.c
+> @@ -312,8 +312,7 @@ void write_name_quotedpfx(const char *pfx, size_t pfxlen,
+>  	fputc(terminator, fp);
+>  }
+>  
+> -void write_name_quoted_relative(const char *name, size_t len,
+> -				const char *prefix, size_t prefix_len,
+> +void write_name_quoted_relative(const char *name, const char *prefix,
+>  				FILE *fp, int terminator)
+>  {
+>  	struct strbuf sb = STRBUF_INIT;
+> diff --git a/quote.h b/quote.h
+> index 5610159..ed110 100644
+> --- a/quote.h
+> +++ b/quote.h
+> @@ -60,8 +60,7 @@ extern void quote_two_c_style(struct strbuf *, const char *, const char *, int);
+>  extern void write_name_quoted(const char *name, FILE *, int terminator);
+>  extern void write_name_quotedpfx(const char *pfx, size_t pfxlen,
+>                                   const char *name, FILE *, int terminator);
+> -extern void write_name_quoted_relative(const char *name, size_t len,
+> -		const char *prefix, size_t prefix_len,
+> +extern void write_name_quoted_relative(const char *name, const char *prefix,
+>  		FILE *fp, int terminator);
+>  
+>  /* quote path as relative to the given prefix */
