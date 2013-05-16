@@ -1,86 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] {fast-export,transport-helper}: style cleanups
-Date: Thu, 16 May 2013 09:49:17 -0700
-Message-ID: <7vzjvu6faq.fsf@alter.siamese.dyndns.org>
-References: <1368062218-22440-1-git-send-email-felipe.contreras@gmail.com>
-	<1368062218-22440-4-git-send-email-felipe.contreras@gmail.com>
-	<CAEBDL5XZhEo14WKiz2m3KFRX+NsTFhmcz3adSti33RATMd897w@mail.gmail.com>
-	<7v7gj77nt9.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1HDp+ojGK0UhKHF=1iDu5_E9Z0VrK-JtMked1mtH_2gQ@mail.gmail.com>
-	<CAMP44s3J8YpULYenDoYhyRJXSXL3b8-vpMbW2c4LcjK43Xidng@mail.gmail.com>
-	<7vwqqy7v8g.fsf@alter.siamese.dyndns.org>
-	<CAMP44s17aD_ryeGWQazTcJ3nrhe6C9TLhKHhrUnys=Yj_ATa0A@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/3] fetch: add --allow-local option
+Date: Thu, 16 May 2013 11:52:53 -0500
+Message-ID: <CAMP44s0Szu8oHBKMapZ6dQ1K67MXDcACuUF-+Y-jC+EgHs2QEA@mail.gmail.com>
+References: <1368689474-28911-1-git-send-email-felipe.contreras@gmail.com>
+	<1368689474-28911-2-git-send-email-felipe.contreras@gmail.com>
+	<7v61yi9arl.fsf@alter.siamese.dyndns.org>
+	<CAMP44s14TSGtQ7kvWUgrOQvT1uKciSV5fd5pQvy1ven8Z=qVcg@mail.gmail.com>
+	<7v8v3e7udi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 16 18:49:30 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 16 18:53:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ud1Mu-0002sg-BZ
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 18:49:28 +0200
+	id 1Ud1QM-00065h-Ll
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 18:53:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751950Ab3EPQtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 12:49:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59625 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751742Ab3EPQtU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 12:49:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 09B841F5BB;
-	Thu, 16 May 2013 16:49:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9QGXOR5wV3uILlKoER9tAyKJiLY=; b=RUDjmy
-	Unwx3yrT3GxEMSUFI/0hSHi6WsPT7ft+wJH5Dsy7UcxPWo6l3c7eDcROl+v9fGsN
-	u5bzf2G9oojeP6gifNzgY54wAwUD/CAvXH+F5Agm6WM8cmyTr3J0v0sE6km2//3O
-	8aMTpPXbODqAoCbwSWX8X2/HGTbg6p6fFl0y8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xMWR9OUVwNHeDTAj3c6UuAnHYtOT9sVe
-	RYLZbZhFm6KaltN0TP4z9mIH9njh/AnWxzCUwPVhuA6CPDPpn1jSmO2qacmavMoq
-	1uQzuxES8JIGKA78ScTAQegRxOVe/eh1fd/5S88hMZMfINyukwilYDuRLDOvzGKP
-	yCrO2pQR5lI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00AFB1F5BA;
-	Thu, 16 May 2013 16:49:20 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 54DF61F5B8;
-	Thu, 16 May 2013 16:49:19 +0000 (UTC)
-In-Reply-To: <CAMP44s17aD_ryeGWQazTcJ3nrhe6C9TLhKHhrUnys=Yj_ATa0A@mail.gmail.com>
-	(Felipe Contreras's message of "Thu, 16 May 2013 11:32:47 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8D634BE2-BE48-11E2-88C2-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752323Ab3EPQw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 12:52:58 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:52473 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751033Ab3EPQw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 12:52:58 -0400
+Received: by mail-lb0-f181.google.com with SMTP id w20so2974883lbh.40
+        for <git@vger.kernel.org>; Thu, 16 May 2013 09:52:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=UfrQE4BsaCDue6phDEPnBKgjIxhfppFagjLmLMWWINs=;
+        b=JD8D/M5gg97eiGmiHSuPUCV7eKslf6bj5XQJrXcOiL5vmvNZyy5lpeZyIHa5o5Klzd
+         xkmp3F/Q7gZf+peDT9r/D0rmTMw+SCDWLUEBzECYAh+F5QvqqJy1bRla84FPfaewzIDA
+         wHv96jM9eO7umsjKBDCKmeurUsjTb7cSahF306K+p9oZnFcgIpWDQWOhbZDg2OgnHpZo
+         3BhN6BW38fzNTZALty1bOzz49Yt5mfXNUH1mhzroA0ZNNopdQNcaHYqAjo5xUN+zJ/zC
+         mP0+HRFxjW1ZQHfJDUn06wxaUH58I+R6D4KhT1a2t3dnQlFcjgJrqjfKEW0moI6t67T5
+         cAmw==
+X-Received: by 10.112.135.70 with SMTP id pq6mr20584396lbb.82.1368723174095;
+ Thu, 16 May 2013 09:52:54 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Thu, 16 May 2013 09:52:53 -0700 (PDT)
+In-Reply-To: <7v8v3e7udi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224601>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> On Thu, May 16, 2013 at 11:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> I find it extremely annoying that an obviously correct patch is not
->>> merged...
->>
->> A patch that receives "this breaks style" comments
+On Thu, May 16, 2013 at 11:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> *Invalid* "this breaks style" comments, because it doesn't break any
-> style mentioned in Documentation/CodingGuidelines.
+>> That doesn't change the fact that 'git fetch .' does not make any
+>> sense whatsoever. The user *will* get confused when (s)he does 'git
+>> fetch' and nothing happens. The problem is not solved.
+>>
+>> % git checkout -b fixes master
+>> % git fetch
+>> % git branch -u master
+>> % git fetch
+>>
+>> # scratch head
+>
+> # reads manual, perhaps?
 
-    As for more concrete guidelines, just imitate the existing code
-    (this is a good guideline, no matter which project you are
-    contributing to). It is always preferable to match the _local_
-    convention
+You expect too much from users. But...
 
-The document does not spell out all the details, but that does not
-mean you can ignore what others say and many find a sensible style
-request.
+% man git push
+/default
+
+Nothing.
+
+> Why do you declare without justification that "git fetch ." does not
+> make sense?
+
+What does 'git fetch .' do?
+
+> If you come from "git pull" is "git fetch" + "git merge",
+> and if your current branch is integrating with your local branch,
+
+How many times do I have to say that 'git pull' is not 'git fetch' +
+'git merge'?
+
+You must think everybody has 'merge.defaulttoupstream=true'.
+
+> it
+> is natural that "git fetch" that does not say where to fetch from
+> fetches from your local repository (object-transfer wise, it is a
+> no-op) and update FETCH_HEAD.  You can say "it is not necessary, as
+> we can directly go to @{u}", but that is different from "it does not
+> make any sense".
+
+It literally does not make any sense. From the point of view of the
+typical user it does nothing.
+
+> I think the real cause of the problem is that some people advocate
+> the use of "git fetch" that does not say "from where" and "get
+> what".  When the user understand what it does and what it does it
+> for, not having to type is a convenience, but as a recipe to be
+> blindly followed, it leaves the new people in the dark.
+
+That's totally irrelevant. Whether the user knows all the details or
+not doesn't matter. Typing less is good, and it's important that
+commands without arguments do something sane, and 'git fetch' doesn't.
+The user should not be forced to type the remote when it's not
+necessary, and wasting the 'git fetch' command to do absolutely
+nothing is not smart.
+
+-- 
+Felipe Contreras
