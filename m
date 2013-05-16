@@ -1,74 +1,114 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] branch: add show-tracking option
-Date: Thu, 16 May 2013 15:56:33 +0700
-Message-ID: <CACsJy8D_5YE3w4WNvCA8-fA-y5DV2WqHULqcMYqd7X_SSh_aHw@mail.gmail.com>
-References: <1368690532-12093-1-git-send-email-felipe.contreras@gmail.com>
- <5194921F.4080103@drmicha.warpmail.net> <CACsJy8CrGTa2XdfFkkKDQQjF8gM3011RiUE6roe9L7yZZq5J2g@mail.gmail.com>
- <51949B85.40600@drmicha.warpmail.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: English/German terminology, git.git's de.po, and pro-git
+Date: Thu, 16 May 2013 11:00:28 +0200
+Message-ID: <87wqqze1ub.fsf@linux-k42r.v.cablecom.net>
+References: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net>
+	<alpine.LNX.2.01.1305131542210.30808@nerf07.vanv.qr>
+	<001d01ce500b$c7c08b70$5741a250$@scanmyfood.de>
+	<alpine.LNX.2.01.1305132119220.2288@nerf07.vanv.qr>
+	<CAN0XMOL3rkYDinSCN2GLaRj7dOvbF=SdMRxM4PHCZ5h7g5Nkkw@mail.gmail.com>
+	<51936218.9020306@ira.uka.de> <519370D3.3000306@web.de>
+	<CAN0XMOJ7hRwTAR+i8_C2z2NmmcycLQkiya0ayfWS0vAw3-zqkg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu May 16 10:57:15 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	"Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>,
+	Jan Engelhardt <jengelh@inai.de>,
+	Ralph =?utf-8?Q?Hau=C3=9Fmann?= <ralph@scanmyfood.de>,
+	Christian Stimming <stimming@tuhh.de>,
+	Sven Fuchs <svenfuchs@artweb-design.de>,
+	git <git@vger.kernel.org>, Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 16 11:00:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uctzq-0006Gt-QQ
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 10:57:11 +0200
+	id 1Ucu3E-0000N6-Bv
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 11:00:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756557Ab3EPI5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 04:57:06 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:59798 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756121Ab3EPI5F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 04:57:05 -0400
-Received: by mail-ob0-f177.google.com with SMTP id wn6so2836545obc.22
-        for <git@vger.kernel.org>; Thu, 16 May 2013 01:57:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=J7HVozS74Lj1Wi66XGE1qME0ADJ8kfgr8S62In2cYuw=;
-        b=teyFDr3C/e6TSEU5ybisHnzdC9EK32WX9CTyq4hTIMAuxWRjECUyZJQ0ESZPH6bkJk
-         DhjUrQUX2NMLoKu1Z9gJMqUEvSbeZK07KbqKp0NZWV49STAi6rtZ1Ii/+cBn/HAFyTZK
-         s7cRkh4AOnu8ycUV66bp11RJ0MtefzJAKX7yhoUJiQ3qG9FRdBqCcQgdariy0k+E2WYu
-         GO1vNQXXbLZdWopeBANRfRRN9HBCrWkJUOk24E4rStUjXEnv7PpKKHyXjJfRnIpLDf5c
-         6h1tPNyxEX1+v7tqUgrxDal1/gR9Mh68fp63ojD9m7acLifPruKFIeMeQWEENaevrBxO
-         x43A==
-X-Received: by 10.182.45.231 with SMTP id q7mr19691859obm.58.1368694623735;
- Thu, 16 May 2013 01:57:03 -0700 (PDT)
-Received: by 10.76.180.138 with HTTP; Thu, 16 May 2013 01:56:33 -0700 (PDT)
-In-Reply-To: <51949B85.40600@drmicha.warpmail.net>
+	id S1755807Ab3EPJAg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 May 2013 05:00:36 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:1742 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755758Ab3EPJAe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 May 2013 05:00:34 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 16 May
+ 2013 11:00:30 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 16 May 2013 11:00:28 +0200
+In-Reply-To: <CAN0XMOJ7hRwTAR+i8_C2z2NmmcycLQkiya0ayfWS0vAw3-zqkg@mail.gmail.com>
+	(Ralf Thielow's message of "Thu, 16 May 2013 07:57:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224515>
 
-On Thu, May 16, 2013 at 3:40 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
->> What if I want something in -vvvv except some in -vv? I think to avoid
->> option explosion, maybe we can adopt --pretty=format:xxx from "git
->> log" and let the user decideswhat (and how) to display. "pretty" code
->> learns about alignment already, which may be useful here.
->> --
->> Duy
+Ralf Thielow <ralf.thielow@gmail.com> writes:
+
+> Hi,
 >
-> Sure, that is the big solution we've been talking about. Unify
-> for-each-ref formats and log formats and use that. After all, "git
-> branch" in list mode really is for-each-ref, and should be transparently
-> so; same goes for "git tag". Think "git rev-list" and "git ref-list"!
+> I think the discussion might work better via ML than GitHub.
+> This is the full glossary of git's de.po as it would look
+> like with (hopefully) all the changes included that have been
+> discussed here. Still without any reasoning for decisions
+> (except HEAD).
+[...]
+> +    remote branch          =3D externer Zweig
+> +    remote tracking branch =3D externer =C3=9Cbernahmezweig
 
-Again I forgot about for-each-ref. Sounds like sharing code between
-for-each-ref and branch is a good thing to do. Then just add more
-candy placeholders from git-log like %C(xx). Sounds like a fun topic.
+Hrm, before we (erm, you) do any extensive work on redoing the glossary=
+,
+I think we should step back and agree on a direction.
 
-> But I guess we'll be compabeaten ;)
+Remember what this thread started with:
 
-No idea what that last word means :(
---
-Duy
+} However, an unfortunate and unsatisfactory situation has developed:
+} Christian Stimming's git-gui de.po uses a Ger translation, and Ralf
+} Thielow built core git's de.po on top of it, so it's also Ger.
+}=20
+} Meanwhile, and independently, Sven Fuchs and Ralph Haussmann wrote a
+} translation of pro-git (which is also quite mature at this point, hav=
+ing
+} apparently begun in 2009), and as you probably guessed by now, it's G=
++E.
+}=20
+} So that leaves us at a point where "the" libre Git book (and also the
+} one that happens to be hosted on git-scm.com, the official site) does
+} not match the terminology used by German git.
+}=20
+} Like, at all.  They're not even remotely near each other.
+
+My thinly veiled opinion in the thread starter was that we should redo
+git's de.po from scratch using a translation similar to pro-git.
+
+I can accept that discussion takes a different turn, and thus the
+translation does something else.  But my impression in the thread so fa=
+r
+was that:
+
+* Everyone voted for G+E.
+
+* The thread went of on a tangent, bikeshedding on some Ger
+  translations.
+
+Please tell me I'm wrong...
+
+Otherwise, assuming any agreement can be reached, IMHO the first step
+must be to write/complete a glossary that matches *current usage* in
+pro-git.  We can perhaps bikeshed about some glaring issues in the
+result, but remember that -- again assuming G+E is the conclusion -- an=
+y
+such change again either means a divergence between book and git (bad!)
+or a lot of work for the book translators.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
