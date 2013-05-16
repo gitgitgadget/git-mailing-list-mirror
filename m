@@ -1,61 +1,105 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] color: set color.ui to auto by default
-Date: Thu, 16 May 2013 15:25:20 +0200
-Message-ID: <vpqfvxn12gv.fsf@grenoble-inp.fr>
-References: <1368709468-18610-1-git-send-email-artagnon@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RFC/PATCH 3/3] push: add separate 'downstream' branch
+Date: Thu, 16 May 2013 08:32:06 -0500
+Message-ID: <CAMP44s2HPXnudioSSj0O_r2PbmbAqcyTORJNhRL_a=NWu_niBw@mail.gmail.com>
+References: <1368675828-27418-1-git-send-email-felipe.contreras@gmail.com>
+	<1368675828-27418-4-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0nTS6Vh7GfnrLWAK5VeevQyGN5N7xT43c+uqBQ5oM5tww@mail.gmail.com>
+	<CAMP44s3fPsGW_9aBbcsu8cJAagz8JEWV2HM=XRH3Rw4=SXdL7Q@mail.gmail.com>
+	<CALkWK0nOywB5BtHnKZQ_+wsJNp82zk7-YJw_S15quqH+iU=jWg@mail.gmail.com>
+	<CAMP44s2vsD2uwFoL5_79m05gtqyKLN9wHX8Yrhtn0kT4LVULxQ@mail.gmail.com>
+	<CALkWK0m+_AbCd305dU5p5bxwuPPCBKJH7a3e6rHgxxnySMz0pQ@mail.gmail.com>
+	<CAMP44s1eB+bvg7vnG5S3SBACHTrkpCqJNX-Q2tzEVdvzFWvkcA@mail.gmail.com>
+	<CALkWK0nBUHHkqOQannMu5Kjs00Fro8KBbiocfsT4Uf74jO9FgA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 16 15:25:37 2013
+X-From: git-owner@vger.kernel.org Thu May 16 15:32:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UcyBd-0001Vo-4U
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 15:25:37 +0200
+	id 1UcyI1-0006oL-UA
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 15:32:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753989Ab3EPNZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 09:25:33 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:56175 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753921Ab3EPNZc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 09:25:32 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4GDPJQn009526
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 16 May 2013 15:25:19 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UcyBM-0007VE-UN; Thu, 16 May 2013 15:25:20 +0200
-In-Reply-To: <1368709468-18610-1-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Thu, 16 May 2013 18:34:28 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 16 May 2013 15:25:20 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r4GDPJQn009526
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1369315521.60341@n37s+e7pdBtEcnMglTyraA
+	id S1753799Ab3EPNcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 09:32:10 -0400
+Received: from mail-la0-f53.google.com ([209.85.215.53]:63303 "EHLO
+	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753632Ab3EPNcI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 09:32:08 -0400
+Received: by mail-la0-f53.google.com with SMTP id eo20so3025777lab.12
+        for <git@vger.kernel.org>; Thu, 16 May 2013 06:32:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=GYUKktQj2oWbA8HMvGzHCwlgJXvU7HqtTaIhIOmZy3E=;
+        b=h3+ZdSHbo/rNwEN/PtoI9ZRogisDrlE1eSm9vG4HCadzfxnGHUPJfxN1/M6pJxJG5I
+         u+DLps7+EM6t4h53wxuc5fpRrv6MW45ioGC7OxXNoJMnFREik6pVdLPhxhFznCRdPF3j
+         jHRlBxXV8EzxhlLTL1S9OcX6AHmpbezd4WVPOQ89G3dsgLvGhb5hfBEDYE8oysoW2Yxz
+         fPIQc54L52kqlyhPyPxiK05eF3wj+2Ur847KqCIfN6u8rUrFtEYdZHn0ABiZm48ginzi
+         sRPeeWPww4n0gaFFHyHLwZJ1/+/2hqZFCo2A4Lipv/xuq+Z+Qyc+VKWRxUZhKSInRl7y
+         x7lQ==
+X-Received: by 10.152.22.168 with SMTP id e8mr20323489laf.20.1368711126086;
+ Thu, 16 May 2013 06:32:06 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Thu, 16 May 2013 06:32:06 -0700 (PDT)
+In-Reply-To: <CALkWK0nBUHHkqOQannMu5Kjs00Fro8KBbiocfsT4Uf74jO9FgA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224565>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Thu, May 16, 2013 at 6:31 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Felipe Contreras wrote:
+>> Would I be able to do:
+>>
+>> % git branch --set-upstream-to origin/master --set-downstream-to
+>> github/fc/master
+>>
+>> ?
+>>
+>> Would I see these branches when I do 'git branch -vv'?
+>> Would I be able to do 'git push next@{downstream}'?
+>
+> Hm, losing this functionality in the name of generality would
+> certainly be very undesirable.
 
-> This is a good default.  Users who don't want color can look for "color"
-> in the git-config(1), and turn it off.
+I don't even know what that means.
 
-Err, you're comming a bit late ;-). See my patch, posted yesterday, for
-the same topic.
+>> That is orthogonal to 'branch.A.push' the same way 'remote.B.fetch' is
+>> orthogonal to 'branch.A.merge'.
+>
+> Not at all (which is what I've been trying to say).
+> remote.<name>.fetch is operated on by fetch, while branch.<name>.merge
+> is operated on by merge; they are really orthogonal.  What happens if
+> both branch.<name>.push and remote.<name>.push are set?  What will
+> push do?
+
+The same that 'git pull' does when both branch.<name>.merge and
+remote.<name>.fetch are set.
+
+> Perhaps we should get both, and get branch.<name>.push to override
+> remote.<name>.push.
+
+Does branch.<name>.merge overrides remote.<name>.fetch? No. They
+complement each other.
+
+> The issue being @{d} will not work if
+> remote.<name>.push is set.
+
+Of course it would work. Does @{u} stop working when remote.<name>.fetch is set?
+
+> Then again, since we're targeting Gerrit
+> users here, I don't really think it's an issue: refs/for/master is not
+> really a "downstream branch"; it's a pseudo-ref that Gerrit handles
+> internally.
+
+It is a downstream branch.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Felipe Contreras
