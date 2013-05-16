@@ -1,89 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] fetch: add --allow-local option
-Date: Thu, 16 May 2013 09:38:17 -0700
-Message-ID: <7v8v3e7udi.fsf@alter.siamese.dyndns.org>
-References: <1368689474-28911-1-git-send-email-felipe.contreras@gmail.com>
-	<1368689474-28911-2-git-send-email-felipe.contreras@gmail.com>
-	<7v61yi9arl.fsf@alter.siamese.dyndns.org>
-	<CAMP44s14TSGtQ7kvWUgrOQvT1uKciSV5fd5pQvy1ven8Z=qVcg@mail.gmail.com>
+Subject: Re: [PATCH] Revert "remote-hg: update bookmarks when pulling"
+Date: Thu, 16 May 2013 09:39:22 -0700
+Message-ID: <7v4ne27ubp.fsf@alter.siamese.dyndns.org>
+References: <1368708195-1044-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+Cc: git@vger.kernel.org
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 16 18:38:36 2013
+X-From: git-owner@vger.kernel.org Thu May 16 18:39:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ud1CN-0001C4-L1
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 18:38:35 +0200
+	id 1Ud1DF-0001yj-Ey
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 18:39:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751344Ab3EPQiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 12:38:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41313 "EHLO
+	id S1751380Ab3EPQjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 12:39:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50768 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750920Ab3EPQiU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 12:38:20 -0400
+	id S1750920Ab3EPQjZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 12:39:25 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 995301E921;
-	Thu, 16 May 2013 16:38:19 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB95C1EB01;
+	Thu, 16 May 2013 16:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6rGZcW0+gPi/jlcwHmR6D1rcUgw=; b=m3pF8P
-	Ax02X1G5TOcCQT5Moc1L16F9cwGESIXvluXPBYswhIEfHmQdEUbxkaU3PJ5GgMBH
-	sWQEckCXRf4mkDl6AdsYXNEbABoPcXyhtp9I6TqCSzmCy0ynRtSNRwzvo/ydUGmG
-	XfBd1T9GxIy9A7NOk6Ug6cUcAKcD4aKOlGjP8=
+	:content-type; s=sasl; bh=5s4FAfnoD+t2ygYsy2/Wv/Z9uno=; b=DH76wM
+	d6RvrP2FvT8Sp9BjRCMnVQAQa93YmNb4SmP1WP/qDM3R2+ZxakkbS+rQSRjFsD8o
+	1Ej6weZQXzKT3qgCgAiGVwSuqw6o9IyQtMSUA1Lcegp0wminGagMg3hDdYlaN/8K
+	1vtPfJ2J++2lmd7gTRxXFE5HlaGUoCr/TQmE0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ubmZrUN4lyCPXPB9Mx581ekdxAVvS+Jd
-	n6c/V+TzP4/GizXd5pS+UTOZR4pd16ER4BnVJ2kyMUK/XfLxJp/T/Mrx4KUMz/Xi
-	IVbMg7Gyw3DGIVHY3Lk95H9CDL9hahIj8nlGfxEhghUMBgx16foXl4384F8KZ21o
-	1T1tEy9937U=
+	:content-type; q=dns; s=sasl; b=GGI6/nq1KGAMgIaTPOUeHTKOW0RIgwHd
+	jSCcMzjBkr05kho+ckM2508e3T3G3rMhM1xPqM44tAhdzoP/9zTUGujMCnqFdyrQ
+	w15MIuEQEVS6aZr7ZGuK85NawYnX7SetDSlhQxd5tBarEmKUdB8CsZgVejdOTZI3
+	2tC9VjnoJoU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FE851E91F;
-	Thu, 16 May 2013 16:38:19 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F5E61EB00;
+	Thu, 16 May 2013 16:39:24 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E9FC21E90F;
-	Thu, 16 May 2013 16:38:18 +0000 (UTC)
-In-Reply-To: <CAMP44s14TSGtQ7kvWUgrOQvT1uKciSV5fd5pQvy1ven8Z=qVcg@mail.gmail.com>
-	(Felipe Contreras's message of "Thu, 16 May 2013 11:26:19 -0500")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 22AE61EAFE;
+	Thu, 16 May 2013 16:39:24 +0000 (UTC)
+In-Reply-To: <1368708195-1044-1-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Thu, 16 May 2013 07:43:15 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 03C3DCF4-BE47-11E2-8495-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2A9E6F7E-BE47-11E2-B7D4-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224599>
 
 Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> That doesn't change the fact that 'git fetch .' does not make any
-> sense whatsoever. The user *will* get confused when (s)he does 'git
-> fetch' and nothing happens. The problem is not solved.
+> This reverts commit 24317ef32ac3111ed00792f9b2921dc19dd28fe2.
 >
-> % git checkout -b fixes master
-> % git fetch
-> % git branch -u master
-> % git fetch
+> Different versions of Mercurial have different arguments for
+> bookmarks.updatefromremote(), while it should be possible to call the
+> right function with the right arguments depending on the version, it's
+> safer to restore the old behavior for now.
 >
-> # scratch head
+> Reported by Rodney Lorrimar.
+>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>
+> Intended for master (v1.8.3).
 
-# reads manual, perhaps?
+Hmm, is this the one we merged yesterday?
 
-Why do you declare without justification that "git fetch ." does not
-make sense?  If you come from "git pull" is "git fetch" + "git merge",
-and if your current branch is integrating with your local branch, it
-is natural that "git fetch" that does not say where to fetch from
-fetches from your local repository (object-transfer wise, it is a
-no-op) and update FETCH_HEAD.  You can say "it is not necessary, as
-we can directly go to @{u}", but that is different from "it does not
-make any sense".
-
-I think the real cause of the problem is that some people advocate
-the use of "git fetch" that does not say "from where" and "get
-what".  When the user understand what it does and what it does it
-for, not having to type is a convenience, but as a recipe to be
-blindly followed, it leaves the new people in the dark.
+>
+>  contrib/remote-helpers/git-remote-hg | 3 ---
+>  1 file changed, 3 deletions(-)
+>
+> diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+> index dc276af..beb864b 100755
+> --- a/contrib/remote-helpers/git-remote-hg
+> +++ b/contrib/remote-helpers/git-remote-hg
+> @@ -363,9 +363,6 @@ def get_repo(url, alias):
+>                  die('Repository error')
+>              repo.pull(peer, heads=None, force=True)
+>  
+> -        rb = peer.listkeys('bookmarks')
+> -        bookmarks.updatefromremote(myui, repo, rb, url)
+> -
+>      return repo
+>  
+>  def rev_to_mark(rev):
