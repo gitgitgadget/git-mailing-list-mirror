@@ -1,144 +1,103 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 4/8] remote-bzr: delay cloning/pulling
-Date: Thu, 16 May 2013 03:36:43 -0500
-Message-ID: <1368693407-21267-5-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 6/8] remote-bzr: trivial cleanups
+Date: Thu, 16 May 2013 03:36:45 -0500
+Message-ID: <1368693407-21267-7-git-send-email-felipe.contreras@gmail.com>
 References: <1368693407-21267-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 16 10:38:45 2013
+X-From: git-owner@vger.kernel.org Thu May 16 10:38:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ucthz-0000N5-7B
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 10:38:43 +0200
+	id 1UctiA-0000W1-Po
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 10:38:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755567Ab3EPIik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 04:38:40 -0400
-Received: from mail-oa0-f41.google.com ([209.85.219.41]:49819 "EHLO
-	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756783Ab3EPIii (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 04:38:38 -0400
-Received: by mail-oa0-f41.google.com with SMTP id n9so3375745oag.28
-        for <git@vger.kernel.org>; Thu, 16 May 2013 01:38:37 -0700 (PDT)
+	id S1756547Ab3EPIiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 04:38:50 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:43478 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755763Ab3EPIio (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 04:38:44 -0400
+Received: by mail-ob0-f178.google.com with SMTP id v19so3136498obq.9
+        for <git@vger.kernel.org>; Thu, 16 May 2013 01:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=u/rQf9WRQ8beTXdqW95azn0Q1o63092lsORxy3zMw/I=;
-        b=IG2x/046l3/1kn9mb0mrHDq29JxhZ6UGdE65/68RoTZpwh9RvyEosIv7syOhapPVOu
-         b9UqCacMAzEx5mTH9rBOmuIOjIIbBiK3rkw7RF/HMu61t5R3BS5wvlPAOyAYLvg82b8W
-         xGqTYubMVbk1C/6st6W3ohyIV2WcOIWlowJPWvQALeFc6KpJ/SJrAZgTeVIEw+TNHcYO
-         bbXwYq0IdqBae7qVirPzOm2h73z55VSaZvNAoLHxlhabf8FTfsFQOHPkYlhOm+BqsFxc
-         jjzky3uvbg/kprgtyyZwMH127Wtgv1AoPc/egYfJiAAyETybSiixYWYnBD0Dqf6GBbD4
-         /8SQ==
-X-Received: by 10.60.17.231 with SMTP id r7mr6139537oed.13.1368693517658;
-        Thu, 16 May 2013 01:38:37 -0700 (PDT)
+        bh=TuRKChMbxcDnlbODwzhN4LRtGS6scx7SOm6F7CeKo5I=;
+        b=y2vp1865Srfdiv1oXDz0keOtqpToiThmyPLZ7CEIQ+EA5fikMm6AzcMCGPHJ1mEDAk
+         Fz7A/Adg+Db48aVRx72L/HLsAbRcW1BZTEIgDKmykKV6OC+XUJXNiS4mQ8oMEypAjm1n
+         vFvM/kBn9qFfweSn4vCCpHxdI6Tw67Y7CiRkS0BwwcyhwAiX87iFpkAstkgz7+DCbnZY
+         RFbJrIOTASlwHOD54YOk3xuMOKlinmQBow5vvbblma9b/dHKlRqXVu/tlyt6ZkOtyciI
+         n5R+RCTb1pr8dMe04E1uBxsO4HPvFZrnBS13vz9/fFtzvOieayjgbzjoiePvY4mRfIl6
+         6HJQ==
+X-Received: by 10.182.66.81 with SMTP id d17mr19624084obt.29.1368693523980;
+        Thu, 16 May 2013 01:38:43 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id c20sm7129861oez.4.2013.05.16.01.38.35
+        by mx.google.com with ESMTPSA id c20sm7130046oez.4.2013.05.16.01.38.42
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 16 May 2013 01:38:36 -0700 (PDT)
+        Thu, 16 May 2013 01:38:43 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc2.542.g24820ba
 In-Reply-To: <1368693407-21267-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224504>
-
-Until the branch is actually going to be used.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224505>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/git-remote-bzr | 28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ contrib/remote-helpers/git-remote-bzr | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index b7656df..2ba49ff 100755
+index fdc2e69..dd3d71c 100755
 --- a/contrib/remote-helpers/git-remote-bzr
 +++ b/contrib/remote-helpers/git-remote-bzr
-@@ -277,7 +277,7 @@ def export_branch(repo, name):
-     ref = '%s/heads/%s' % (prefix, name)
-     tip = marks.get_tip(name)
+@@ -814,7 +814,7 @@ def find_branches(repo, wanted):
+         except bzrlib.errors.NotBranchError:
+             continue
+         else:
+-            yield name, branch
++            yield name, branch.base
  
--    branch = bzrlib.branch.Branch.open(branches[name])
-+    branch = get_remote_branch(name)
-     repo = branch.repository
+ def get_repo(url, alias):
+     global dirname, peer, branches
+@@ -851,12 +851,12 @@ def get_repo(url, alias):
+         # branch
  
-     branch.lock_read()
-@@ -589,7 +589,7 @@ def parse_commit(parser):
- 
-     if ref.startswith('refs/heads/'):
-         name = ref[len('refs/heads/'):]
--        branch = bzrlib.branch.Branch.open(branches[name])
-+        branch = get_remote_branch(name)
-     else:
-         die('unknown ref')
- 
-@@ -691,7 +691,7 @@ def do_export(parser):
-     for ref, revid in parsed_refs.iteritems():
-         if ref.startswith('refs/heads/'):
-             name = ref[len('refs/heads/'):]
--            branch = bzrlib.branch.Branch.open(branches[name])
-+            branch = get_remote_branch(name)
-             branch.generate_revision_history(revid, marks.get_tip(name))
- 
-             if name in peers:
-@@ -748,7 +748,7 @@ def do_list(parser):
-             master_branch = name
-         print "? refs/heads/%s" % name
- 
--    branch = bzrlib.branch.Branch.open(branches[master_branch])
-+    branch = get_remote_branch(master_branch)
-     branch.lock_read()
-     for tag, revid in branch.tags.get_tag_dict().items():
-         try:
-@@ -770,8 +770,12 @@ def clone(path, remote_branch):
-     repo.fetch(remote_branch.repository)
-     return remote_branch.sprout(bdir, repository=repo)
- 
--def get_remote_branch(remote_branch, name):
--    global dirname, peers
-+def get_remote_branch(name):
-+    global dirname, branches
-+
-+    remote_branch = bzrlib.branch.Branch.open(branches[name])
-+    if isinstance(remote_branch.user_transport, bzrlib.transport.local.LocalTransport):
-+        return remote_branch
- 
-     branch_path = os.path.join(dirname, 'clone', name)
- 
-@@ -851,13 +855,10 @@ def get_repo(url, alias):
+         name = 'master'
+-        remote_branch = origin.open_branch()
++        branch = origin.open_branch().base
  
          if not is_local:
-             peers[name] = remote_branch.base
--            branch = get_remote_branch(remote_branch, name)
--        else:
--            branch = remote_branch
+-            peers[name] = remote_branch.base
++            peers[name] = branch
  
--        branches[name] = branch.base
-+        branches[name] = remote_branch.base
+-        branches[name] = remote_branch.base
++        branches[name] = branch
  
--        return branch.repository
-+        return remote_branch.repository
+         return origin
      else:
-         # repository
+@@ -866,12 +866,12 @@ def get_repo(url, alias):
+         # stupid python
+         wanted = [e for e in wanted if e]
  
-@@ -869,11 +870,8 @@ def get_repo(url, alias):
+-        for name, remote_branch in find_branches(repo, wanted):
++        for name, branch in find_branches(repo, wanted):
  
              if not is_local:
-                 peers[name] = remote_branch.base
--                branch = get_remote_branch(remote_branch, name)
--            else:
--                branch = remote_branch
+-                peers[name] = remote_branch.base
++                peers[name] = branch
  
--            branches[name] = branch.base
-+            branches[name] = remote_branch.base
+-            branches[name] = remote_branch.base
++            branches[name] = branch
  
-         return repo
+         return origin
  
 -- 
 1.8.3.rc2.542.g24820ba
