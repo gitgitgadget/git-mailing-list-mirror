@@ -1,88 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/6] test-lib: enable MALLOC_* for the actual tests
-Date: Thu, 16 May 2013 15:43:50 -0700
-Message-ID: <7v61yi4kbd.fsf@alter.siamese.dyndns.org>
-References: <cover.1368736093.git.trast@inf.ethz.ch>
-	<043f7ee12630ae267bcde88e92a7dfacbf41e730.1368736093.git.trast@inf.ethz.ch>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [PATCH 5/6] test-lib: allow prefixing a custom string before "ok
+ N" etc.
+Date: Thu, 16 May 2013 18:53:15 -0400
+Message-ID: <CABURp0pZQFB37oBDab1h3r8w7nj6jb+HXwPrbn=9pQhfLkTMMQ@mail.gmail.com>
+References: <cover.1368736093.git.trast@inf.ethz.ch> <f440021d75345b1242e54f47697c3d2ac9593e99.1368736093.git.trast@inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri May 17 00:44:11 2013
+X-From: git-owner@vger.kernel.org Fri May 17 00:53:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ud6u9-0004ae-Di
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 00:44:09 +0200
+	id 1Ud73Q-0003jN-4k
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 00:53:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755177Ab3EPWnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 18:43:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44504 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755170Ab3EPWnx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 18:43:53 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4118C1FD34;
-	Thu, 16 May 2013 22:43:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bDPVkmor1vX39esrDj1hjZXX5r8=; b=n46Z8I
-	UyrxnlFPWjsyk33VTs5kMmG7C53se6KB7JBgV1t7M6fTd3F08kwCrBRqoJXP9WDl
-	FiGvSW9oBqOyKtuwkR7ZJ20PA1I9VVWL0417ocSbapJM2a48NKh8j7vt/YrrX+vw
-	JW2IhtwlQ7kU+9ZYEYMlX3q9WOrp1LOT+KxWA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tT/YQJHmQjk8FaDqKqK4tjQBjcNewlrL
-	6CetrC6meu9+kw1tnvet+mfvTIYU4XzbE8/rk8jz2J7SXUZWG5GrhdMc+5RzGfFC
-	q/0mMXN2YrxUtGDJhu/O1Loi30IwEnrLUHqJF0CYc6gyqL2qd3njCHbzhTEgds0j
-	ctVM3hVy77k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 357E71FD33;
-	Thu, 16 May 2013 22:43:52 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFA1D1FD32;
-	Thu, 16 May 2013 22:43:51 +0000 (UTC)
-In-Reply-To: <043f7ee12630ae267bcde88e92a7dfacbf41e730.1368736093.git.trast@inf.ethz.ch>
-	(Thomas Rast's message of "Thu, 16 May 2013 22:50:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 14B64A1E-BE7A-11E2-88EC-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754331Ab3EPWxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 18:53:37 -0400
+Received: from mail-vc0-f179.google.com ([209.85.220.179]:42416 "EHLO
+	mail-vc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751185Ab3EPWxg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 18:53:36 -0400
+Received: by mail-vc0-f179.google.com with SMTP id hz10so652777vcb.10
+        for <git@vger.kernel.org>; Thu, 16 May 2013 15:53:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=wJ7I3yymnw6vZs38QTJKZQx3VfASnDMDJ+C5+UW66zs=;
+        b=nO1aZ/CyCre4AliNWfrJmOL1YwrJBhncPs2kzMZJn/9mPGom8s2RUaU6ren1pt6hdM
+         MXI8LHulaGG5DVNxoKuTtI+RFYD7kwPx8Sh5zS9izEe34a6crlvyGI91NRlrhEnOxN4F
+         UIqQk2keLZOh1VRB8TG1jMRWvp798T4rQSx+2TTmk8AzEOi5HEQP/Tf2u/PL2zNtS2zE
+         2Fh0Y18mWuc1bz8v0YCyiQg7MnuF98vyVzntVAHkuCsulukYMdVJouxHdQChtm0rHgdA
+         EBr9vsLKd778vXqULGrkxqQpzISHr1hC8dKHfUy19N5Vxk/Bcntu2P9/tfTKi39H/mav
+         qYPg==
+X-Received: by 10.58.202.103 with SMTP id kh7mr13907562vec.19.1368744815862;
+ Thu, 16 May 2013 15:53:35 -0700 (PDT)
+Received: by 10.58.135.1 with HTTP; Thu, 16 May 2013 15:53:15 -0700 (PDT)
+In-Reply-To: <f440021d75345b1242e54f47697c3d2ac9593e99.1368736093.git.trast@inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224624>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+On Thu, May 16, 2013 at 4:50 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> This is not really meant for external use, but allows the next commit
+> to neatly distinguish between sub-tests and the main run.
 
-> 1b3185f (MALLOC_CHECK: various clean-ups, 2012-09-14) moved around the
-> MALLOC_CHECK_ and MALLOC_PERTURB_ assignments, intending to limit
-> their effect to only the test runs.  However, they were actually
-> enabled only during test cleanup.  Call setup/teardown_malloc_check
-> also around the evaluation of the actual test snippet.
+Maybe we do not care about standards for this library or for your
+use-case, but placing this prefix before the "{ok,not ok}" breaks the
+TAProtocol.
+http://podwiki.hexten.net/TAP/TAP.html?page=TAP
 
-Sorry about the breakage.
+Maybe you can put the prefix _after_ the "{ok, not ok}" and test number.
 
-> Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
-> ---
->  t/test-lib.sh | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index ca6bdef..229f5f7 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -337,8 +337,10 @@ test_eval_ () {
->  test_run_ () {
->  	test_cleanup=:
->  	expecting_failure=$2
-> +	setup_malloc_check
->  	test_eval_ "$1"
->  	eval_ret=$?
-> +	teardown_malloc_check
->  
->  	if test -z "$immediate" || test $eval_ret = 0 || test -n "$expecting_failure"
->  	then
+Phil
