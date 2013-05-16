@@ -1,61 +1,60 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: [PATCH] branch: add show-tracking option
-Date: Thu, 16 May 2013 02:51:46 -0500
-Message-ID: <CAMP44s3_3JRz0vYpm5uvnAOgt=hH=DTTiB1xn9dQiK9swaANVQ@mail.gmail.com>
+Date: Thu, 16 May 2013 14:54:46 +0700
+Message-ID: <CACsJy8BnwFXsXYXPe7driH9q9e4otMuMvr4sJdLQWxhf0owCDA@mail.gmail.com>
 References: <1368690532-12093-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 16 09:51:54 2013
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 16 09:55:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ucsyf-0005lR-5F
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 09:51:53 +0200
+	id 1Uct22-0000DH-6m
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 09:55:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755816Ab3EPHvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 03:51:48 -0400
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:49606 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755659Ab3EPHvs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 03:51:48 -0400
-Received: by mail-lb0-f176.google.com with SMTP id x10so2774724lbi.21
-        for <git@vger.kernel.org>; Thu, 16 May 2013 00:51:46 -0700 (PDT)
+	id S1756291Ab3EPHzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 03:55:18 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:57659 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754957Ab3EPHzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 03:55:17 -0400
+Received: by mail-oa0-f43.google.com with SMTP id o6so3362587oag.30
+        for <git@vger.kernel.org>; Thu, 16 May 2013 00:55:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=TyTgGfBgN80HPCACoGKOMqeV2t+rHk6M0/FzGxlvhhU=;
-        b=I9MBLvBr0hHq8xYN6F8MQtYGI+CY/K1J8syJon+RKiHwyw8VwQAMKOKpHutD5nztyz
-         Ca0SKFGeSEq42jfPHdL8XEEVDGJZzqYEZpz9MYQbCZtlNPs/0pvBEwtYAq2uBC6ndhaR
-         QQRjqUn0hbLTV0KOAiIvRIdExhsb5EdYSmXiWa2Z2UKE1s7OnCtyEH0etOR8VXkjzkWA
-         rBmZ4rHJ9PIh/FrWDxybsyuvnZAUbN82D9foDgQ0oWQOS6iGSS9KT+gMDyg4Z9hE8a3p
-         9cuQ+48ogn4Lx7DNSEJt4jRPt0OqsV7Y0LGJBQniXJVjTB4UEkF5gxIzayecFM7X5l8w
-         DFGA==
-X-Received: by 10.152.120.4 with SMTP id ky4mr19853269lab.5.1368690706866;
- Thu, 16 May 2013 00:51:46 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Thu, 16 May 2013 00:51:46 -0700 (PDT)
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=FXym/GXoGZb8xC3kt+0oXEEvuLCbOSWaJCQ1wXU6lI8=;
+        b=BOQN+NYDjHViUxMDRNyDYKGpIOQe9eYu4YJNQN6rJDVNZsX92ZDi887AXerjcomyvt
+         Qao3mSHxPrVZl2Go+Tmy/aWxhdEbn6VbO9MHQprE5SzE3xtCOgEsl6RNzqhrKPPqfhpi
+         /SnJu3IF+e7pbVkL4yMks5ThNGGJLoGRAosntAfKYy5k08ksGyrnPS1TNpIrC8Wcj1FU
+         NRUNpwPLL1X39ADS28Hv7tWYUZa3UwolVlF1snFWgtHhokzS3tuwRj4rQMgXQrPIRqZK
+         l1SmfvU8nyd0RpSKm3+D7CuDYip2ETIrLTQ+t58bI1JMBjZMbJKFavNjduOmdCIcwEuE
+         1v6g==
+X-Received: by 10.182.49.201 with SMTP id w9mr6580397obn.38.1368690916520;
+ Thu, 16 May 2013 00:55:16 -0700 (PDT)
+Received: by 10.76.180.138 with HTTP; Thu, 16 May 2013 00:54:46 -0700 (PDT)
 In-Reply-To: <1368690532-12093-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224491>
 
-On Thu, May 16, 2013 at 2:48 AM, Felipe Contreras
+On Thu, May 16, 2013 at 2:48 PM, Felipe Contreras
 <felipe.contreras@gmail.com> wrote:
 > Showing the tracking information for all the branches takes significant
 > amount of time. The user might not want that. The --no-show-tracking
 > option allows that.
 
-BTW. I ideally I would switch around so -v has upstream, and --vv has
-the tracking information. But that is changing the behavior.
-
--- 
-Felipe Contreras
+Or we could cache the information somewhere in .git. If a ref still
+points to <SHA-1> as recorded in the cache, use the cached tracking
+information, otherwise go the slow way.
+--
+Duy
