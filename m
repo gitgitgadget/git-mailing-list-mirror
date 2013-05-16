@@ -1,60 +1,76 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH 5/6] test-lib: allow prefixing a custom string before "ok
- N" etc.
-Date: Thu, 16 May 2013 18:53:15 -0400
-Message-ID: <CABURp0pZQFB37oBDab1h3r8w7nj6jb+HXwPrbn=9pQhfLkTMMQ@mail.gmail.com>
-References: <cover.1368736093.git.trast@inf.ethz.ch> <f440021d75345b1242e54f47697c3d2ac9593e99.1368736093.git.trast@inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Revert "remote-hg: update bookmarks when pulling"
+Date: Thu, 16 May 2013 15:55:04 -0700
+Message-ID: <7v1u964jsn.fsf@alter.siamese.dyndns.org>
+References: <1368708195-1044-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri May 17 00:53:48 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 17 00:55:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ud73Q-0003jN-4k
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 00:53:44 +0200
+	id 1Ud758-0005P5-2J
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 00:55:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754331Ab3EPWxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 18:53:37 -0400
-Received: from mail-vc0-f179.google.com ([209.85.220.179]:42416 "EHLO
-	mail-vc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751185Ab3EPWxg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 18:53:36 -0400
-Received: by mail-vc0-f179.google.com with SMTP id hz10so652777vcb.10
-        for <git@vger.kernel.org>; Thu, 16 May 2013 15:53:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=wJ7I3yymnw6vZs38QTJKZQx3VfASnDMDJ+C5+UW66zs=;
-        b=nO1aZ/CyCre4AliNWfrJmOL1YwrJBhncPs2kzMZJn/9mPGom8s2RUaU6ren1pt6hdM
-         MXI8LHulaGG5DVNxoKuTtI+RFYD7kwPx8Sh5zS9izEe34a6crlvyGI91NRlrhEnOxN4F
-         UIqQk2keLZOh1VRB8TG1jMRWvp798T4rQSx+2TTmk8AzEOi5HEQP/Tf2u/PL2zNtS2zE
-         2Fh0Y18mWuc1bz8v0YCyiQg7MnuF98vyVzntVAHkuCsulukYMdVJouxHdQChtm0rHgdA
-         EBr9vsLKd778vXqULGrkxqQpzISHr1hC8dKHfUy19N5Vxk/Bcntu2P9/tfTKi39H/mav
-         qYPg==
-X-Received: by 10.58.202.103 with SMTP id kh7mr13907562vec.19.1368744815862;
- Thu, 16 May 2013 15:53:35 -0700 (PDT)
-Received: by 10.58.135.1 with HTTP; Thu, 16 May 2013 15:53:15 -0700 (PDT)
-In-Reply-To: <f440021d75345b1242e54f47697c3d2ac9593e99.1368736093.git.trast@inf.ethz.ch>
+	id S1755186Ab3EPWzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 18:55:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57696 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754492Ab3EPWzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 18:55:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EBB7F1F18D;
+	Thu, 16 May 2013 22:55:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=J+RyJQaVcDnOklhBTb9Kwl6xTvM=; b=CYttRe
+	Umh5H1iqHIZKd4ofI57433EfM6XI57XwPJ24BZ7A8toLZXVLpDuG6ZiZfSd4JiGM
+	PM8WlHOe04jsWomlYJvfF7EEL9TW3kWJ31sEbBovcYagxtVYfNoP8AtURAWdIcvD
+	xpo1pDxL6+gGvN/UC8phVSuWJuMhvPzQuOVRk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fg3BBHDtVmrd1wBJjiJ1Y6OXUQyoTYA9
+	qondOjnC8JfwAeG37lL66NuUKxudmPmTd1QEVaoFldS504Ics/V0A3g0JxWNmgZy
+	0iOPrfmH4M/fHCSgjH8Hh0Jif0jiO/+w/oBdQgSHlesQjxuPth1RrBpVX9j3uT4P
+	4HAKBUyZM6k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E04741F18C;
+	Thu, 16 May 2013 22:55:06 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 670461F18A;
+	Thu, 16 May 2013 22:55:06 +0000 (UTC)
+In-Reply-To: <1368708195-1044-1-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Thu, 16 May 2013 07:43:15 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A6DD4EAA-BE7B-11E2-BFD4-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224625>
 
-On Thu, May 16, 2013 at 4:50 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> This is not really meant for external use, but allows the next commit
-> to neatly distinguish between sub-tests and the main run.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Maybe we do not care about standards for this library or for your
-use-case, but placing this prefix before the "{ok,not ok}" breaks the
-TAProtocol.
-http://podwiki.hexten.net/TAP/TAP.html?page=TAP
+> This reverts commit 24317ef32ac3111ed00792f9b2921dc19dd28fe2.
+>
+> Different versions of Mercurial have different arguments for
+> bookmarks.updatefromremote(), while it should be possible to call the
+> right function with the right arguments depending on the version, it's
+> safer to restore the old behavior for now.
+>
+> Reported by Rodney Lorrimar.
+>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>
+> Intended for master (v1.8.3).
 
-Maybe you can put the prefix _after_ the "{ok, not ok}" and test number.
+OK, will revert before I start today's final integration run.
 
-Phil
+Thanks.
