@@ -1,29 +1,29 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [RFC PATCH 6/6] test-lib: support running tests under valgrind in parallel
-Date: Thu, 16 May 2013 22:50:17 +0200
-Message-ID: <1d22b4b7885ff6b27c0837608aeaacd20e36ed94.1368736093.git.trast@inf.ethz.ch>
+Subject: [PATCH 5/6] test-lib: allow prefixing a custom string before "ok N" etc.
+Date: Thu, 16 May 2013 22:50:16 +0200
+Message-ID: <f440021d75345b1242e54f47697c3d2ac9593e99.1368736093.git.trast@inf.ethz.ch>
 References: <cover.1368736093.git.trast@inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 16 22:50:53 2013
+X-From: git-owner@vger.kernel.org Thu May 16 22:50:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ud58U-00051H-Bo
-	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 22:50:50 +0200
+	id 1Ud58U-00051H-T6
+	for gcvg-git-2@plane.gmane.org; Thu, 16 May 2013 22:50:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752323Ab3EPUud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 16:50:33 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:48887 "EHLO edge10.ethz.ch"
+	id S1753391Ab3EPUug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 16:50:36 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:41637 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753119Ab3EPUuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 16:50:23 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 16 May
- 2013 22:50:19 +0200
+	id S1753225Ab3EPUuY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 16:50:24 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 16 May
+ 2013 22:50:17 +0200
 Received: from hexa.v.cablecom.net (46.126.8.85) by CAS20.d.ethz.ch
  (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 16 May
  2013 22:50:19 +0200
@@ -34,150 +34,107 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224621>
 
-With the new --valgrind-parallel=<n> option, we support running the
-tests in a single test script under valgrind in parallel using 'n'
-processes.
-
-This really follows the dumbest approach possible, as follows:
-
-* We spawn the test script 'n' times, using a throw-away
-  TEST_OUTPUT_DIRECTORY.  Each of the instances is given options that
-  ensures that it only runs every n-th test under valgrind, but
-  together they cover the entire range.
-
-* We add up the numbers from the individual tests, and provide the
-  usual output.
-
-This is really a gross hack at this point, and should be improved.  In
-particular we should keep the actual outputs somewhere more easily
-discoverable, and summarize them to the user.
-
-Nevertheless, this is already workable and gives a speedup of more
-than 2 on a dual-core (hyperthreaded) machine, using n=4.  This is
-expected since the overhead of valgrind is so big (on the order of 20x
-under good conditions, and a large startup overhead at every git
-invocation) that redundantly running the non-valgrind tests in between
-is not that expensive.
+This is not really meant for external use, but allows the next commit
+to neatly distinguish between sub-tests and the main run.
 
 Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
 ---
- t/test-lib.sh | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 55 insertions(+), 5 deletions(-)
+ t/test-lib.sh | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 55fa749..b4e81bc 100644
+index 9ae7c7b..55fa749 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -204,6 +204,15 @@ do
- 	--valgrind-only=*)
- 		valgrind_only=$(expr "z$1" : 'z[^=]*=\(.*\)')
- 		shift ;;
-+	--valgrind-parallel=*)
-+		valgrind_parallel=$(expr "z$1" : 'z[^=]*=\(.*\)')
-+		shift ;;
-+	--valgrind-only-stride=*)
-+		valgrind_only_stride=$(expr "z$1" : 'z[^=]*=\(.*\)')
-+		shift ;;
-+	--valgrind-only-offset=*)
-+		valgrind_only_offset=$(expr "z$1" : 'z[^=]*=\(.*\)')
-+		shift ;;
- 	--tee)
- 		shift ;; # was handled already
+@@ -209,6 +209,9 @@ do
  	--root=*)
-@@ -217,7 +226,7 @@ do
+ 		root=$(expr "z$1" : 'z[^=]*=\(.*\)')
+ 		shift ;;
++	--statusprefix=*)
++		statusprefix=$(expr "z$1" : 'z[^=]*=\(.*\)')
++		shift ;;
+ 	*)
+ 		echo "error: unknown test option '$1'" >&2; exit 1 ;;
  	esac
- done
+@@ -316,12 +319,12 @@ trap 'die' EXIT
  
--if test -n "$valgrind_only"
-+if test -n "$valgrind_only" || test -n "$valgrind_only_stride"
- then
- 	test -z "$valgrind" && valgrind=memcheck
- 	test -z "$verbose" && verbose_only="$valgrind_only"
-@@ -359,8 +368,10 @@ match_pattern_list () {
+ test_ok_ () {
+ 	test_success=$(($test_success + 1))
+-	say_color "" "ok $test_count - $@"
++	say_color "" "${statusprefix}ok $test_count - $@"
  }
  
- toggle_verbose () {
--	test -z "$verbose_only" && return
--	if match_pattern_list $test_count $verbose_only
-+	test -z "$verbose_only" && test -z "$valgrind_only_stride" && return
-+	if match_pattern_list $test_count $verbose_only ||
-+		{ test -n "$valgrind_only_stride" &&
-+		expr $test_count "%" $valgrind_only_stride - $valgrind_only_offset = 0 >/dev/null; }
- 	then
- 		exec 4>&2 3>&1
- 	else
-@@ -370,7 +381,7 @@ toggle_verbose () {
+ test_failure_ () {
+ 	test_failure=$(($test_failure + 1))
+-	say_color error "not ok $test_count - $1"
++	say_color error "${statusprefix}not ok $test_count - $1"
+ 	shift
+ 	echo "$@" | sed -e 's/^/#	/'
+ 	test "$immediate" = "" || { GIT_EXIT_OK=t; exit 1; }
+@@ -329,12 +332,12 @@ test_failure_ () {
  
- toggle_valgrind () {
- 	test -z "$GIT_VALGRIND" && return
--	if test -z "$valgrind_only"
-+	if test -z "$valgrind_only" && test -z "$valgrind_only_stride"
+ test_known_broken_ok_ () {
+ 	test_fixed=$(($test_fixed+1))
+-	say_color error "ok $test_count - $@ # TODO known breakage vanished"
++	say_color error "${statusprefix}ok $test_count - $@ # TODO known breakage vanished"
+ }
+ 
+ test_known_broken_failure_ () {
+ 	test_broken=$(($test_broken+1))
+-	say_color warn "not ok $test_count - $@ # TODO known breakage"
++	say_color warn "${statusprefix}not ok $test_count - $@ # TODO known breakage"
+ }
+ 
+ test_debug () {
+@@ -435,8 +438,8 @@ test_skip () {
+ 			of_prereq=" of $test_prereq"
+ 		fi
+ 
+-		say_color skip >&3 "skipping test: $@"
+-		say_color skip "ok $test_count # skip $1 (missing $missing_prereq${of_prereq})"
++		say_color skip >&3 "${statusprefix}skipping test: $@"
++		say_color skip "${statusprefix}ok $test_count # skip $1 (missing $missing_prereq${of_prereq})"
+ 		: true
+ 		;;
+ 	*)
+@@ -472,11 +475,11 @@ test_done () {
+ 
+ 	if test "$test_fixed" != 0
  	then
- 		GIT_VALGRIND_ENABLED=t
- 		return
-@@ -379,6 +390,10 @@ toggle_valgrind () {
- 	if match_pattern_list $test_count $valgrind_only
- 	then
- 		GIT_VALGRIND_ENABLED=t
-+	elif test -n "$valgrind_only_stride" &&
-+		expr $test_count "%" $valgrind_only_stride - $valgrind_only_offset = 0 >/dev/null
-+	then
-+		GIT_VALGRIND_ENABLED=t
+-		say_color error "# $test_fixed known breakage(s) vanished; please update test(s)"
++		say_color error "${statusprefix}# $test_fixed known breakage(s) vanished; please update test(s)"
  	fi
- }
+ 	if test "$test_broken" != 0
+ 	then
+-		say_color warn "# still have $test_broken known breakage(s)"
++		say_color warn "${statusprefix}# still have $test_broken known breakage(s)"
+ 	fi
+ 	if test "$test_broken" != 0 || test "$test_fixed" != 0
+ 	then
+@@ -499,9 +502,9 @@ test_done () {
+ 		then
+ 			if test $test_remaining -gt 0
+ 			then
+-				say_color pass "# passed all $msg"
++				say_color pass "${statusprefix}# passed all $msg"
+ 			fi
+-			say "1..$test_count$skip_all"
++			say "${statusprefix}1..$test_count$skip_all"
+ 		fi
  
-@@ -600,7 +615,10 @@ then
- 	GIT_VALGRIND_MODE="$valgrind"
- 	export GIT_VALGRIND_MODE
- 	GIT_VALGRIND_ENABLED=t
--	test -n "$valgrind_only" && GIT_VALGRIND_ENABLED=
-+	if test -n "$valgrind_only" || test -n "$valgrind_only_stride"
-+	then
-+		GIT_VALGRIND_ENABLED=
-+	fi
- 	export GIT_VALGRIND_ENABLED
- elif test -n "$GIT_TEST_INSTALLED"
- then
-@@ -686,6 +704,38 @@ then
- else
- 	mkdir -p "$TRASH_DIRECTORY"
- fi
-+
-+if test -n "$valgrind_parallel"
-+then
-+	for i in $(test_seq 1 $valgrind_parallel)
-+	do
-+		root="$TRASH_DIRECTORY/vgparallel-$i"
-+		mkdir "$root"
-+		TEST_OUTPUT_DIRECTORY="$root" \
-+			${SHELL_PATH} "$0" \
-+			--root="$root" --statusprefix="[$i] " \
-+			--valgrind="$valgrind" \
-+			--valgrind-only-stride="$valgrind_parallel" \
-+			--valgrind-only-offset="$i" &
-+		pids="$pids $!"
-+	done
-+	trap "kill $pids" INT TERM HUP
-+	wait $pids
-+	trap - INT TERM HUP
-+	for i in $(test_seq 1 $valgrind_parallel)
-+	do
-+		root="$TRASH_DIRECTORY/vgparallel-$i"
-+		eval "$(cat "$root/test-results/$(basename "$0" .sh)"-*.counts |
-+			sed 's/^\([a-z][a-z]*\) \([0-9][0-9]*\)/inner_\1=\2/')"
-+		test_count=$(expr $test_count + $inner_total)
-+		test_success=$(expr $test_success + $inner_success)
-+		test_fixed=$(expr $test_fixed + $inner_fixed)
-+		test_broken=$(expr $test_broken + $inner_broken)
-+		test_failed=$(expr $test_failed + $inner_failed)
-+	done
-+	test_done
-+fi
-+
- # Use -P to resolve symlinks in our working directory so that the cwd
- # in subprocesses like git equals our $PWD (for pathname comparisons).
- cd -P "$TRASH_DIRECTORY" || exit 1
+ 		test -d "$remove_trash" &&
+@@ -515,8 +518,8 @@ test_done () {
+ 	*)
+ 		if test $test_external_has_tap -eq 0
+ 		then
+-			say_color error "# failed $test_failure among $msg"
+-			say "1..$test_count"
++			say_color error "${statusprefix}# failed $test_failure among $msg"
++			say "${statusprefix}1..$test_count"
+ 		fi
+ 
+ 		exit 1 ;;
 -- 
 1.8.3.rc2.393.g8636c0b
