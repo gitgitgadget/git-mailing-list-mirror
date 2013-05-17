@@ -1,94 +1,94 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Random thoughts on "upstream"
-Date: Fri, 17 May 2013 18:13:13 +0530
-Message-ID: <CALkWK0=rHFQ14G8baYpY7gYo+Qb+5a0qOKZGBTrp6BamKC2vRg@mail.gmail.com>
-References: <7vobca6c7r.fsf@alter.siamese.dyndns.org> <CAMP44s2t3+yBQMj9uSd_=3w0CgeJsHeAQM051j7Xt+SqVthvzQ@mail.gmail.com>
- <7vobca3465.fsf@alter.siamese.dyndns.org> <7vzjvu1jes.fsf@alter.siamese.dyndns.org>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [PATCH 5/6] test-lib: allow prefixing a custom string before "ok
+ N" etc.
+Date: Fri, 17 May 2013 09:00:13 -0400
+Message-ID: <CABURp0rjaQq28gAB_WkopE6J+3xDm9GJwZS6zNJ=ia_PFDyjmA@mail.gmail.com>
+References: <cover.1368736093.git.trast@inf.ethz.ch> <f440021d75345b1242e54f47697c3d2ac9593e99.1368736093.git.trast@inf.ethz.ch>
+ <CABURp0pZQFB37oBDab1h3r8w7nj6jb+HXwPrbn=9pQhfLkTMMQ@mail.gmail.com> <87fvxmc9y0.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 17 14:44:00 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri May 17 15:00:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdK0s-0004JD-Sj
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 14:43:59 +0200
+	id 1UdKH7-0002Vv-Fw
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 15:00:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754512Ab3EQMny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 08:43:54 -0400
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:51085 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753532Ab3EQMny (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 08:43:54 -0400
-Received: by mail-ia0-f174.google.com with SMTP id r13so2920089iar.19
-        for <git@vger.kernel.org>; Fri, 17 May 2013 05:43:53 -0700 (PDT)
+	id S1754892Ab3EQNAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 09:00:34 -0400
+Received: from mail-vb0-f50.google.com ([209.85.212.50]:41332 "EHLO
+	mail-vb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753671Ab3EQNAe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 09:00:34 -0400
+Received: by mail-vb0-f50.google.com with SMTP id w15so1089101vbb.37
+        for <git@vger.kernel.org>; Fri, 17 May 2013 06:00:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=a27VH/36m2ER6PGYMSi/tzjNW75IGMmSxq/HiUlVqdg=;
-        b=VTHnnYRCxM8pFhx93JyHjnvNCbGOJtAtvscIqcaLNQzPnuizBa43tFZxPEZ/XA5N4G
-         3xhcZDg3uYb27rEE4B4HpKH0MLr6XtBAuUsfm+u8IDlJNO+FK0fwKalmM9tOLxVHChcg
-         V5iokEM0klfEoeSYBc1urEcdGTSz6PjXeEjIGdUZ5Ttq9qfH9ibgC5aj8fVXdaCMKZnb
-         DogLNbCDNI6WlF8UGtoHH15WYybj0+94y91/vP8p51tuM2WlkGukUu3ZIrUwAECvLdCV
-         2yTcDJ9zilvKh0ndQF4apxidrAvt5gqUHua1sAYl2xxfePKCyRH5dkaNzQHUznOSXrhO
-         iROg==
-X-Received: by 10.50.147.71 with SMTP id ti7mr13000007igb.49.1368794633544;
- Fri, 17 May 2013 05:43:53 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Fri, 17 May 2013 05:43:13 -0700 (PDT)
-In-Reply-To: <7vzjvu1jes.fsf@alter.siamese.dyndns.org>
+        bh=nEPTJqm16clZy+7z7yGmljTDHqfXNjIbehumobLw36g=;
+        b=0vrYjlJbmHRmV0HHYT9zvqTYJDnuzZFYAELYB9mttxxqOaKCUu2PAqlCzQ3i9LlTZs
+         oOzMUIFS6R3nu4jzk6tEaSFTAlCSL2+NW30SH6QOLy67yBXZn2XIexVutOJWr36b2iVV
+         gAMJOVleyCL9QxQKMb1JXg1cQjXmrg7iEKYFmJcMZf9y3tgtqGMzCUUbKBDpClhg2E0o
+         tVbB8fAXbXjHBsTHiCcJSlw3Vh8xjTyj1/Tx5aqgcgpdtIIt64F+tQEgYZ/mhhEFYXOh
+         3xhW3zGKg3KJBOfsVzSH5gZivElG+FzHN1tBni8D86x93QHWTeYTnNxu0Lbo7rJ2+vmV
+         789Q==
+X-Received: by 10.58.196.129 with SMTP id im1mr29742167vec.46.1368795633400;
+ Fri, 17 May 2013 06:00:33 -0700 (PDT)
+Received: by 10.58.135.1 with HTTP; Fri, 17 May 2013 06:00:13 -0700 (PDT)
+In-Reply-To: <87fvxmc9y0.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224688>
 
-Junio C Hamano wrote:
-> Actually, I suspect that you shouldn't even need to do that
-> pros-and-cons analysis, because the 'single' thing should cover as a
-> natural extension of the existing infrastructure.  You should only
-> need to have something like this:
+On Fri, May 17, 2013 at 4:00 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> Phil Hord <phil.hord@gmail.com> writes:
+>
+>> On Thu, May 16, 2013 at 4:50 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
+>>> This is not really meant for external use, but allows the next commit
+>>> to neatly distinguish between sub-tests and the main run.
+>>
+>> Maybe we do not care about standards for this library or for your
+>> use-case, but placing this prefix before the "{ok,not ok}" breaks the
+>> TAProtocol.
+>> http://podwiki.hexten.net/TAP/TAP.html?page=TAP
+>>
+>> Maybe you can put the prefix _after_ the "{ok, not ok}" and test number.
+>
+> Actually that was half on purpose.  You will notice I did not document
+> that option, as it is intended only to be used to distinguish between
+> the parallel runs implemented in [6/6].
+>
+> Those parallel runs look something like
+>
+> [4] ok 1 - plain
+> [4] ok 2 - plain nested in bare
+> [...snip until othes catch up...]
+> [4] ok 33 - re-init to update git link
+> [4] ok 34 - re-init to move gitdir
+> [3] ok 1 - plain
+> [2] ok 1 - plain
+> [4] ok 35 - re-init to move gitdir symlink
+> [4] # still have 2 known breakage(s)
+> [4] # passed all remaining 33 test(s)
+> [4] 1..35
+> [3] ok 2 - plain nested in bare
+>
+> It's invalid TAP no matter what: there are N plans and the ok/not ok
+> lines from N runs all intermingled.  So I'd rather not even pretend that
+> it is valid in any way.
 
-Which is the exact argument I presented on the other thread.  However,
-Felipe has a point: we shouldn't cripple @{f} (I think "fork" is a
-good name for it) in the name of generality.  Think of what
-remote.<name>.push and branch.<name>.push are actually going to be
-used for:
+Yes, I guessed this might have been the goal.  Maybe you can mention
+it in the commit message.
 
-remote.<name>.push are most probably going to be used with wildcards
-(like in the Gerrit case): I don't mind if @{f} is not able to tell me
-where my branch will go (and it's probably even a pseudo-ref, in which
-case the answer is really meaningless).  The limitation doesn't affect
-remote.<name>.fetch, because @{u} only operates between remote
-branches and local branches, not at the ref-mapping level.
+I hope some future change might even unwind these back into a valid
+continuous TAP stream.  But at least for now, if someone needs such a
+stream, she can unwind it herself.
 
-branch.<name>.push cannot be used with wildcards, and @{f} is pretty
-straightforward to determine in this case.  When the information is
-easily available for end-user consumption, why would we _not_ want to
-expose it by stuffing branch.<name>.push into remote.<name>.push
-configuration?
-
-So, I think the way forward is:
-
-1. Introduce @{f[ork]} to show $(branch.<name>.pushremote or
-remote.pushdefault)/$(HEAD).  We can update 'git status' to show this
-information as well: the ahead/ behind with @{f} is no less important.
-
-2. (optional) Make remote.<name>.fetch non-mandatory.  Currently, a
-lot of git-core breaks unless this is present, and this is an annoying
-wart.
-
-3. Introduce remote.<name>.push.  Make it clear that it is intended
-for the Gerrit-user.  @{f} cannot be determined with this [*1*].
-
-4. Introduce branch.<name>.push for a branch-specific override to
-remote.<name>.push.  @{f} can be determined when this is in effect.
-
-[Footnotes]
-
-*1* Do we want to do some magic wildcard-expansion to get/set @{f}
-anyway?  In which case, branch.<name>.push is really not necessary.
-Which approach is less ugly?
+Phil
