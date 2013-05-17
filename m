@@ -1,118 +1,74 @@
-From: Mike Crowe <mac@mcrowe.com>
-Subject: [PATCH v2] describe: Add --first-parent option
-Date: Fri, 17 May 2013 21:56:18 +0100
-Message-ID: <1368824178-15596-1-git-send-email-mac@mcrowe.com>
-Cc: Mike Crowe <mac@mcrowe.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/2] remote-helpers: test fixes
+Date: Fri, 17 May 2013 16:10:06 -0500
+Message-ID: <1368825008-2815-1-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 17 22:56:36 2013
+X-From: git-owner@vger.kernel.org Fri May 17 23:11:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdRhY-0002mY-5i
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 22:56:32 +0200
+	id 1UdRwG-0000Rq-Nn
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 23:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755783Ab3EQU41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 16:56:27 -0400
-Received: from cpc6-cmbg17-2-0-cust487.5-4.cable.virginmedia.com ([86.30.57.232]:49462
-	"EHLO elite.brightsigndigital.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755361Ab3EQU41 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 May 2013 16:56:27 -0400
-Received: from lander.brightsign ([172.30.1.6])
-	by elite.brightsigndigital.co.uk with esmtp (Exim 4.72)
-	(envelope-from <mcrowe@brightsign.biz>)
-	id 1UdRhP-0001cY-Jz; Fri, 17 May 2013 21:56:23 +0100
-Received: from mac by lander.brightsign with local (Exim 4.72)
-	(envelope-from <mac@lander.brightsign>)
-	id 1UdRhP-000489-1S; Fri, 17 May 2013 21:56:23 +0100
-X-Mailer: git-send-email 1.7.10.4
+	id S1756301Ab3EQVLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 17:11:40 -0400
+Received: from mail-ye0-f182.google.com ([209.85.213.182]:47108 "EHLO
+	mail-ye0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755096Ab3EQVLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 17:11:39 -0400
+Received: by mail-ye0-f182.google.com with SMTP id h13so736961yee.13
+        for <git@vger.kernel.org>; Fri, 17 May 2013 14:11:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=nk8d7/J1+LdJ+z5/NYVDl55VsWYgP3ll9QaWuV3ZUaw=;
+        b=xzvWiEn8h45t1u/vGu8GJOjeWUsnq+uIkzuCZGfXNAZaJbGnH4x//UyWfCLKhYGZor
+         Hom2rETWid99gvobYQ1HMYfPpSwRrSIuy67IoPPcK/9VLUzQjxYujBljed4bpKX1mGxJ
+         En4LuLYSRjzbv/brhYwr7HqL9kbdXfVgH57AaZwmejtRdfz2f+wEvyNtOsIwVx2THrEI
+         pNxvk2hhFxPuPqW6UF1w7oEgrZ48sehpNyPVfH5SO5zp5W600FRbIhSWCmwBP3c1RG61
+         y6/Fq38jefI2OYvqoDi8n10c8zeD1XTWb3X2xvgXLNzaTT0OdHLOFQE2XYTlBUNfrjU3
+         S/yw==
+X-Received: by 10.236.20.102 with SMTP id o66mr27387537yho.125.1368825098689;
+        Fri, 17 May 2013 14:11:38 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id j27sm19915177yhf.18.2013.05.17.14.11.36
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 17 May 2013 14:11:37 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc2.542.g24820ba
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224738>
 
-Only consider the first parent commit when walking the commit history. This
-is useful if you only wish to match tags on your branch after a merge.
+Hi,
 
-Signed-off-by: Mike Crowe <mac@mcrowe.com>
----
- Documentation/git-describe.txt |    9 ++++++++-
- builtin/describe.c             |    5 +++++
- t/t6120-describe.sh            |    3 +++
- 3 files changed, 16 insertions(+), 1 deletion(-)
+I've setup a project in Travis CI for continuous integration with very good
+results, however, I had to apply a couple of fixes.
 
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index 28e5ec0..9439cd6 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -88,6 +88,11 @@ OPTIONS
- --always::
- 	Show uniquely abbreviated commit object as fallback.
- 
-+--first-parent::
-+	Follow only the first parent commit upon seeing a merge commit.
-+	This is useful when you wish to not match tags on branches merged
-+	in the history of the target commit.
-+
- EXAMPLES
- --------
- 
-@@ -149,7 +154,9 @@ is found, its name will be output and searching will stop.
- If an exact match was not found, 'git describe' will walk back
- through the commit history to locate an ancestor commit which
- has been tagged.  The ancestor's tag will be output along with an
--abbreviation of the input committish's SHA-1.
-+abbreviation of the input committish's SHA-1. If '--first-parent' was
-+specified then the walk will only consider the first parent of each
-+commit.
- 
- If multiple tags were found during the walk then the tag which
- has the fewest commits different from the input committish will be
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 6636a68..ad84716 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -21,6 +21,7 @@ static int debug;	/* Display lots of verbose info */
- static int all;	/* Any valid ref can be used */
- static int tags;	/* Allow lightweight tags */
- static int longformat;
-+static int first_parent;
- static int abbrev = -1; /* unspecified */
- static int max_candidates = 10;
- static struct hash_table names;
-@@ -336,6 +337,9 @@ static void describe(const char *arg, int last_one)
- 				commit_list_insert_by_date(p, &list);
- 			p->object.flags |= c->object.flags;
- 			parents = parents->next;
-+
-+			if (first_parent)
-+				break;
- 		}
- 	}
- 
-@@ -404,6 +408,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN(0, "all",        &all, N_("use any ref")),
- 		OPT_BOOLEAN(0, "tags",       &tags, N_("use any tag, even unannotated")),
- 		OPT_BOOLEAN(0, "long",       &longformat, N_("always use long format")),
-+		OPT_BOOLEAN(0, "first-parent", &first_parent, N_("only follow first parent")),
- 		OPT__ABBREV(&abbrev),
- 		OPT_SET_INT(0, "exact-match", &max_candidates,
- 			    N_("only output exact matches"), 0),
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index f67aa6f..a25729f 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -110,6 +110,9 @@ check_describe tags/e --all HEAD^^^
- check_describe B-0-* --long HEAD^^2^
- check_describe A-3-* --long HEAD^^2
- 
-+check_describe c-7-* --tags
-+check_describe e-3-* --first-parent --tags
-+
- : >err.expect
- check_describe A --all A^0
- test_expect_success 'no warning was displayed for A' '
+I'm not sure if this is v1.8.3 material, but here they are.
+
+https://travis-ci.org/felipec/git/builds/7262886
+
+Felipe Contreras (2):
+  remote-helpers: tests: use python directly
+  remote-hg: tests: fix hg merge
+
+ contrib/remote-helpers/test-bzr.sh       |  2 +-
+ contrib/remote-helpers/test-hg-bidi.sh   |  2 +-
+ contrib/remote-helpers/test-hg-hg-git.sh | 11 ++++++-----
+ contrib/remote-helpers/test-hg.sh        |  2 +-
+ 4 files changed, 9 insertions(+), 8 deletions(-)
+
 -- 
-1.7.10.4
+1.8.3.rc2.542.g24820ba
