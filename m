@@ -1,86 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 1/2] cache.h: eliminate SHA-1 deprecation warnings on Mac OS X
-Date: Fri, 17 May 2013 09:53:51 -0700
-Message-ID: <7vbo891ra8.fsf@alter.siamese.dyndns.org>
-References: <1368601868-42410-1-git-send-email-davvid@gmail.com>
-	<5193CC6B.50909@web.de>
-	<CAPig+cTHh7iEY0+rReQ2LC94CsX-_aKdMLiVnL0ZF-FtKL6DaQ@mail.gmail.com>
-	<CAJDDKr726C5BZwufz5o7JWZiP3pKce4g=AZvEbj8qzk8dOqzQA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/4] {fast-export,transport-helper}: style cleanups
+Date: Fri, 17 May 2013 18:56:05 +0200
+Message-ID: <vpqvc6hczq2.fsf@grenoble-inp.fr>
+References: <1368062218-22440-1-git-send-email-felipe.contreras@gmail.com>
+	<1368062218-22440-4-git-send-email-felipe.contreras@gmail.com>
+	<CAEBDL5XZhEo14WKiz2m3KFRX+NsTFhmcz3adSti33RATMd897w@mail.gmail.com>
+	<7v7gj77nt9.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1HDp+ojGK0UhKHF=1iDu5_E9Z0VrK-JtMked1mtH_2gQ@mail.gmail.com>
+	<CAMP44s3J8YpULYenDoYhyRJXSXL3b8-vpMbW2c4LcjK43Xidng@mail.gmail.com>
+	<7vwqqy7v8g.fsf@alter.siamese.dyndns.org>
+	<CAMP44s17aD_ryeGWQazTcJ3nrhe6C9TLhKHhrUnys=Yj_ATa0A@mail.gmail.com>
+	<7vzjvu6faq.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3c1vdCn43S=nSzfj=znZ9L_7jH9-+EOY0+SZNnSBTVbw@mail.gmail.com>
+	<7vfvxm6biv.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2QcFStPtE8cSbH7jWvUOUVRSgGNYNVoDN6exRdW6xNYA@mail.gmail.com>
+	<7vobc91squ.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0o7tgUrz4xQh3H62+=625ppAOMFskOL70Nrx-O5uwaYw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Torsten =?utf-8?Q?B=C3=B6ger?= =?utf-8?Q?shausen?= 
-	<tboegi@web.de>, Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 17 18:54:00 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 17 18:57:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdNup-0006Fw-S4
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 18:54:00 +0200
+	id 1UdNy5-0000rE-Ii
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 18:57:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755828Ab3EQQxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 12:53:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54432 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755507Ab3EQQxy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 12:53:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB20A1DECC;
-	Fri, 17 May 2013 16:53:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=B66ot2Ip6a9S1RHCVPg/rSXRoRk=; b=hIJn6a
-	ty6Fgc09xZuYpyXXUxNcYuY3G37oBj7Tgq+592hYKeqwulDEKp60WYLm8CogvcQp
-	qsz9OZVA1U6gq34X7LiqUCLYrvImFLkO1Y3lSrcKTG59WAR0ETvtDTD4R4BW5oj4
-	Ckiw5MSUMkCFALFrLFN4UDfrukZawQynm8bPI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WsNMyX/ZCC5/9AvsTXY+sTtzsmoESp56
-	Yu+TAwog04ho/zlKz2Sa1+sDBIg9par78cZ1JFg3XAURYw+EekKYdbk3S1RMg8Ik
-	wAL9thSYXOvl3GV2FcpQJAveUyyaW+F0CMBP2trtjbK/n1myJAL6EXHsOGt8C4Rp
-	QSMOhf9fjA4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFAF91DECB;
-	Fri, 17 May 2013 16:53:53 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2B5481DEC7;
-	Fri, 17 May 2013 16:53:53 +0000 (UTC)
-In-Reply-To: <CAJDDKr726C5BZwufz5o7JWZiP3pKce4g=AZvEbj8qzk8dOqzQA@mail.gmail.com>
-	(David Aguilar's message of "Fri, 17 May 2013 01:21:59 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B042B10-BF12-11E2-9B5B-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756277Ab3EQQ5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 12:57:17 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43168 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756255Ab3EQQ5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 12:57:16 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r4HGu4SU010376
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 17 May 2013 18:56:04 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UdNws-0006Oy-3L; Fri, 17 May 2013 18:56:06 +0200
+In-Reply-To: <CAMP44s0o7tgUrz4xQh3H62+=625ppAOMFskOL70Nrx-O5uwaYw@mail.gmail.com>
+	(Felipe Contreras's message of "Fri, 17 May 2013 11:35:48 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 17 May 2013 18:56:04 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r4HGu4SU010376
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1369414568.34969@LlUpSM1Wu8hcZvMn+ot9Eg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224703>
 
-David Aguilar <davvid@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> Do you have advice on how we should proceed?  :sigh: sorry for wasting
-> so much maintainer time on this series already.  If you need any
-> resends or anything please let me know.  This time I'll wait for a
-> strong opinion before firing off patches.
->
-> My opinion: yeah, v5's ([NO_]APPLE_COMMON_CRYPTO) was probably where
-> we should have stopped painting.  Hindsight is 20/20.  Luckily it
-> never left "pu".
+> THERE IS NO STYLE BREAKAGE.
 
-I could do this easily:
+Repeating something, and even making it all caps does not make it true.
 
-    $ git checkout da/darwin ;# b72ac20a6f73b
-    $ git format-patch --stdout -2 |
-      sed -e 's|COMMON_DIGEST_FOR_OPENSSL|APPLE_COMMON_CRYPTO|g' >P.mbox
-    $ git checkout HEAD^^ ;# 29de20504e
-    $ git am P.mbox
-    $ git diff da/darwin HEAD ;# sanity check
-    $ git log da/darwin.. ;# sanity check
-    $ git branch -f da/darwin
+You are wasting your time and everybody else's in this thread and many
+others. You seem to reject the very concept of code review. The Git
+community likes very much code review. I do not forsee a change in the
+taste for code review and iterations to make the code as clean as it can
+be in the Git community. And I'd hate to see it change because some
+contributors are too stubborn to send a reroll when someone else points
+out something in the patch.
 
-if you nicely ask ;-)
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
