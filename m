@@ -1,98 +1,84 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 3/4] {fast-export,transport-helper}: style cleanups
-Date: Fri, 17 May 2013 12:18:32 -0500
-Message-ID: <CAMP44s1uDEUxxJWwHi=J1Jf=CnApi99BW3ZxTPUa7T+py==gfQ@mail.gmail.com>
-References: <1368062218-22440-1-git-send-email-felipe.contreras@gmail.com>
-	<1368062218-22440-4-git-send-email-felipe.contreras@gmail.com>
-	<CAEBDL5XZhEo14WKiz2m3KFRX+NsTFhmcz3adSti33RATMd897w@mail.gmail.com>
-	<7v7gj77nt9.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1HDp+ojGK0UhKHF=1iDu5_E9Z0VrK-JtMked1mtH_2gQ@mail.gmail.com>
-	<CAMP44s3J8YpULYenDoYhyRJXSXL3b8-vpMbW2c4LcjK43Xidng@mail.gmail.com>
-	<7vwqqy7v8g.fsf@alter.siamese.dyndns.org>
-	<CAMP44s17aD_ryeGWQazTcJ3nrhe6C9TLhKHhrUnys=Yj_ATa0A@mail.gmail.com>
-	<7vzjvu6faq.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3c1vdCn43S=nSzfj=znZ9L_7jH9-+EOY0+SZNnSBTVbw@mail.gmail.com>
-	<7vfvxm6biv.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2QcFStPtE8cSbH7jWvUOUVRSgGNYNVoDN6exRdW6xNYA@mail.gmail.com>
-	<7vobc91squ.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0o7tgUrz4xQh3H62+=625ppAOMFskOL70Nrx-O5uwaYw@mail.gmail.com>
-	<vpqvc6hczq2.fsf@grenoble-inp.fr>
-	<CAMP44s2AGWk76Nwk+va-6SBZqj46AHf6d_tm-AeN8jWKR-mEvw@mail.gmail.com>
-	<vpqwqqxbka7.fsf@grenoble-inp.fr>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v5 1/2] cache.h: eliminate SHA-1 deprecation warnings on
+ Mac OS X
+Date: Fri, 17 May 2013 10:20:13 -0700
+Message-ID: <CAJDDKr6VmpF_11mmd5jJOWxHovhnUCmRG_LjN8wQemrPP9=Wdg@mail.gmail.com>
+References: <1368601868-42410-1-git-send-email-davvid@gmail.com>
+	<5193CC6B.50909@web.de>
+	<CAPig+cTHh7iEY0+rReQ2LC94CsX-_aKdMLiVnL0ZF-FtKL6DaQ@mail.gmail.com>
+	<CAJDDKr726C5BZwufz5o7JWZiP3pKce4g=AZvEbj8qzk8dOqzQA@mail.gmail.com>
+	<7vbo891ra8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri May 17 19:18:38 2013
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 17 19:20:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdOIg-0002rW-Dy
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 19:18:38 +0200
+	id 1UdOKL-0004MK-0b
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 19:20:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756287Ab3EQRSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 13:18:34 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:57281 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755922Ab3EQRSe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 13:18:34 -0400
-Received: by mail-lb0-f173.google.com with SMTP id t10so4595479lbi.4
-        for <git@vger.kernel.org>; Fri, 17 May 2013 10:18:32 -0700 (PDT)
+	id S1756362Ab3EQRUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 13:20:15 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:46561 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756336Ab3EQRUN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 13:20:13 -0400
+Received: by mail-pa0-f54.google.com with SMTP id kx1so3753383pab.41
+        for <git@vger.kernel.org>; Fri, 17 May 2013 10:20:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
          :subject:from:to:cc:content-type;
-        bh=m2aik/aTlBZmBthJfRt5pvS6XMjV4YuI9udnUF7ztKA=;
-        b=sc/rRqJwTMF/YuqSC1Oc8IrIFDAZyYxTavgj38wnRp/pggqJFFWMbpoWBIEU9t+yOR
-         G8M22MH2IMfmxhEE1HiLESh8I5MSoeHg/qw9ZmiPhO8JARqEv6qV56g0O+4kRcQKcpPa
-         wh2hrXJ6ya9+bFaRKaZMXwolKXg0sir+t/KAI3WhmV3dJul2o9JRm0Z/zpgS/rImqKDy
-         4NszILToDGeTMjiDyb0dV+m2e2DReYa03MocUYJDuAmIjl1XkWxW/ybGPXObLjL5lDYq
-         W1FtfcvVOeLujBPJfjIKH6G35JcuLK1A8p0sXUfG4R/QwIpaIMjZD9BGQZzKe9ozGN3J
-         +0Cg==
-X-Received: by 10.152.22.168 with SMTP id e8mr23203792laf.20.1368811112499;
- Fri, 17 May 2013 10:18:32 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Fri, 17 May 2013 10:18:32 -0700 (PDT)
-In-Reply-To: <vpqwqqxbka7.fsf@grenoble-inp.fr>
+        bh=dSVFLo61X1ot0sfQ8JW/DuMX9aoStxSqxHtVAMUqs8M=;
+        b=TGVQz6BfAA9mhzgFdNtK+ayS2Bue95FQm+iFejpyiXMvFgCKCMy3X41wY988el5nx8
+         pqwgyOztKy6fzgkqhAfMNT7x93VL85a0KEyPIVshpPsLXZ/0u1G0tUVf+uAAFnV4GCAV
+         K/l0foI/dSF9avMFF/Iu3WAYUTt5e18t5E0d33PeyK7ghpuc7M3s9adq+Vyg6vfpfnWb
+         g4Yv79Zoxm9PqCn08yJH7QW8Ms2NRYhwsYaswuSvm/AMPGQNhL9Y8OuuUS8C0KEAvh2+
+         pThFZGpkJ7vjAeSLOSZpOE2Qr7YcTRM4T3IokqiqLbN14Ge6rvdECbZQ3xqYLvKrgchW
+         kzMA==
+X-Received: by 10.67.5.131 with SMTP id cm3mr48917723pad.80.1368811213119;
+ Fri, 17 May 2013 10:20:13 -0700 (PDT)
+Received: by 10.70.55.106 with HTTP; Fri, 17 May 2013 10:20:13 -0700 (PDT)
+In-Reply-To: <7vbo891ra8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224713>
 
-On Fri, May 17, 2013 at 12:14 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Fri, May 17, 2013 at 9:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> David Aguilar <davvid@gmail.com> writes:
 >
->> On Fri, May 17, 2013 at 11:56 AM, Matthieu Moy
->> <Matthieu.Moy@grenoble-inp.fr> wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>
->>>> THERE IS NO STYLE BREAKAGE.
->>>
->>> Repeating something, and even making it all caps does not make it true.
+>> Do you have advice on how we should proceed?  :sigh: sorry for wasting
+>> so much maintainer time on this series already.  If you need any
+>> resends or anything please let me know.  This time I'll wait for a
+>> strong opinion before firing off patches.
 >>
->> Tell that to Junio. He is also repeating the same.
+>> My opinion: yeah, v5's ([NO_]APPLE_COMMON_CRYPTO) was probably where
+>> we should have stopped painting.  Hindsight is 20/20.  Luckily it
+>> never left "pu".
 >
-> Junio explained you carefully how the former code was purposely aligning
-> stuff and you broke it.
-
-Yeah, and it was purposely adding a space between the parenthesis,
-that doesn't mean it's the desired style.
-
-The fact that something is a certain way, or was, doesn't imply it
-*should* be that way. Explaining what the code was formerly doing is
-no argument, it's merely an observation.
-
->> I actually provided *evidence*. Did you miss it?
+> I could do this easily:
 >
-> Star-emphasis does not make things true either. Again, you're losing
-> your time, and won't lose mine any further.
+>     $ git checkout da/darwin ;# b72ac20a6f73b
+>     $ git format-patch --stdout -2 |
+>       sed -e 's|COMMON_DIGEST_FOR_OPENSSL|APPLE_COMMON_CRYPTO|g' >P.mbox
+>     $ git checkout HEAD^^ ;# 29de20504e
+>     $ git am P.mbox
+>     $ git diff da/darwin HEAD ;# sanity check
+>     $ git log da/darwin.. ;# sanity check
+>     $ git branch -f da/darwin
+>
+> if you nicely ask ;-)
 
-Of course, because you have no evidence or arguments.
+gitster please ;-)
 
--- 
-Felipe Contreras
+--
+David
