@@ -1,101 +1,123 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] difftool: fix dir-diff when file does not exist in working tree
-Date: Fri, 17 May 2013 18:29:37 +0100
-Message-ID: <de6690bea81de561747ca49893fbc77fa3eb8529.1368811736.git.john@keeping.me.uk>
-Cc: Kevin Bracey <kevin@bracey.fi>, Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 17 19:29:56 2013
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 1/2] cache.h: eliminate SHA-1 deprecation warnings on
+ Mac OS X
+Date: Fri, 17 May 2013 13:40:47 -0400
+Message-ID: <CAPig+cSY=6abuqtayCvTjrUxBfMLQiZHqLKz26XR7kGTesdYUw@mail.gmail.com>
+References: <1368601868-42410-1-git-send-email-davvid@gmail.com>
+	<5193CC6B.50909@web.de>
+	<CAPig+cTHh7iEY0+rReQ2LC94CsX-_aKdMLiVnL0ZF-FtKL6DaQ@mail.gmail.com>
+	<CAJDDKr726C5BZwufz5o7JWZiP3pKce4g=AZvEbj8qzk8dOqzQA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 17 19:40:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdOTb-0004xm-Na
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 19:29:56 +0200
+	id 1UdOeE-0007FG-MF
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 19:40:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756463Ab3EQR3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 13:29:51 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:48769 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756372Ab3EQR3v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 13:29:51 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 60A436064FA;
-	Fri, 17 May 2013 18:29:50 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZSoy9SnGawbd; Fri, 17 May 2013 18:29:49 +0100 (BST)
-Received: from river.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 1DB2F60650A;
-	Fri, 17 May 2013 18:29:42 +0100 (BST)
-X-Mailer: git-send-email 1.8.3.rc2.285.gfc18c2c
+	id S1756489Ab3EQRku convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 May 2013 13:40:50 -0400
+Received: from mail-la0-f43.google.com ([209.85.215.43]:34334 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756480Ab3EQRkt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 May 2013 13:40:49 -0400
+Received: by mail-la0-f43.google.com with SMTP id ez20so3316039lab.2
+        for <git@vger.kernel.org>; Fri, 17 May 2013 10:40:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GiSEEAngBvXZSsAC6Z/2FTxtMGE0cTzchWVqWdicUfk=;
+        b=XWMdxeNBFrr7Pkvcp8MeBHBut5ZfWqPNoBPZfha4y69ij6UNqpsr8wCRnXqF5kCODB
+         Xa0v4tnqYq30SeBy4ZLsISjiS/115VVO+QRLNJRmbq1BxRM90YpCUz7yfoLdzcH87wzy
+         tXqto/U258hDw+TYDMIFR082VV4UDKCHUjyfHNeqClzrrJ5eFeRsl5jEDIS9SWyiz+xi
+         IpidB2gFEiMohIbpjLp4l6UiKkQ1zHpf0OJIV1mhEs7Cp0vuVwO65Ji4Xka+R4H8JVyh
+         npKWE4vFfhL14ag+X44zfvpuCvXijDnXSM9r4pfMJn8hpzuMu/xa5670F0065vKcEN+L
+         Z7ng==
+X-Received: by 10.152.121.105 with SMTP id lj9mr23399563lab.6.1368812447806;
+ Fri, 17 May 2013 10:40:47 -0700 (PDT)
+Received: by 10.114.181.3 with HTTP; Fri, 17 May 2013 10:40:47 -0700 (PDT)
+In-Reply-To: <CAJDDKr726C5BZwufz5o7JWZiP3pKce4g=AZvEbj8qzk8dOqzQA@mail.gmail.com>
+X-Google-Sender-Auth: baXFEE4i4pAEoZh_QW_nMoQklnk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224720>
 
-Commit 02c5631 (difftool --dir-diff: symlink all files matching the
-working tree, 2013-03-14) does not handle the case where a file that is
-being compared does not exist in the working tree.  Fix this by checking
-for existence explicitly before running git-hash-object.
+On Fri, May 17, 2013 at 4:21 AM, David Aguilar <davvid@gmail.com> wrote=
+:
+> On Thu, May 16, 2013 at 11:18 PM, Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
+>> On Wed, May 15, 2013 at 1:56 PM, Torsten B=F6gershausen <tboegi@web.=
+de> wrote:
+>>> On 2013-05-15 09.11, David Aguilar wrote:
+>>>> +     ifndef NO_APPLE_COMMON_CRYPTO
+>>>> +             APPLE_COMMON_CRYPTO =3D YesPlease
+>>>> +     endif
+>>>>       NO_REGEX =3D YesPlease
+>>>>       PTHREAD_LIBS =3D
+>>>>  endif
+>>>> @@ -1389,10 +1396,16 @@ ifdef PPC_SHA1
+>>>>       LIB_OBJS +=3D ppc/sha1.o ppc/sha1ppc.o
+>>>>       LIB_H +=3D ppc/sha1.h
+>>>>  else
+>>>> +ifdef APPLE_COMMON_CRYPTO
+>>>> +     BASIC_CFLAGS +=3D -DCOMMON_DIGEST_FOR_OPENSSL
+>>>> +     SHA1_HEADER =3D <CommonCrypto/CommonDigest.h>
+>>>
+>>> Would it make sense to replace APPLE_COMMON_CRYPTO
+>>> with COMMON_DIGEST_FOR_OPENSSL ?
+>>>
+>>> In the spirit of other Makefile-defines becoming Compiler defines,
+>>> a random picked example:
+>>> ifdef NO_STRTOULL
+>>>         COMPAT_CFLAGS +=3D -DNO_STRTOULL
+>>> endif
+>>
+>> Not necessarily. Unlike NO_STRTOULL and cousins,
+>> COMMON_DIGEST_FOR_OPENSSL is not a Git build tweak; it is merely a
+>> (public) implementation detail of the Apple header [1] to magically
+>> associate OpenSSL digest functions with CommonCrypto counterparts.
+>> It's not the only such macro recognized by the Apple headers. For
+>> instance, COMMON_DIGEST_FOR_RFC_1321 magically associates legacy MD5
+>> digest functions with CommonCrypto counterparts.
+>>
+>> Further, as Junio noted elsewhere, David is using CommonCrypto for
+>> HMAC replacements, not just for digest replacements, so a Makefile
+>> knob with DIGEST in its name is not really appropriate. More
+>> generally, David would like to find CommonCrypto replacements for al=
+l
+>> the OpenSSL functionality, so a Makefile knob named after DIGEST is
+>> too specific.
+>>
+>> These considerations motivated the original suggestion for a single
+>> Git Makefile knob to enable/disable, as a unit, all CommonCrypto
+>> replacements. Such a knob would naturally have COMMON_CRYPTO as part
+>> of its name.
+>
+> This is a nice justification for taking v5 of this series over v6.
 
-Reported-by: Kevin Bracey <kevin@bracey.fi>
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
-This fixes a regression in 1.8.3-rc0.
+You will consider this bike-shedding (I don't), but the above also is
+good justification for revising your HMAC patch to _not_ rely on
+COMMON_DIGEST_FOR_OPENSSL, which is an implementation detail of your
+SHA patch, rather than a proper build knob.
 
- git-difftool.perl   | 9 ++++++++-
- t/t7800-difftool.sh | 7 +++++++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+Similar to NO_STRTOULL and cousins, you should have a #define (such as
+NO_APPLE_COMMON_CRYPTO or NO_COMMON_CRYPTO) which is consulted by your
+HMAC patch and any future patches you submit to map CommonCrypto
+counterparts to OpenSSL functions. The fact that you also must #define
+COMMON_DIGEST_FOR_OPENSSL for the SHA patch is just an implementation
+detail of that one patch; it is not relevant to the other patches.
 
-diff --git a/git-difftool.perl b/git-difftool.perl
-index 6780292..0a1cb0a 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -92,7 +92,14 @@ sub use_wt_file
- 		return 0;
- 	}
- 
--	my $wt_sha1 = $repo->command_oneline('hash-object', "$workdir/$file");
-+	my $wt_sha1;
-+	if (-e "$workdir/$file") {
-+		$wt_sha1 = $repo->command_oneline('hash-object', "$workdir/$file");
-+	} else {
-+		# If the file doesn't exist in the working tree, use something
-+		# that cannot match a SHA-1.
-+		$wt_sha1 = '';
-+	};
- 	my $use = ($sha1 eq $null_sha1) || ($sha1 eq $wt_sha1);
- 	return ($use, $wt_sha1);
- }
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index a6bd99e..d46f041 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -356,6 +356,13 @@ run_dir_diff_test 'difftool --dir-diff from subdirectory' '
- 	)
- '
- 
-+run_dir_diff_test 'difftool --dir-diff when worktree file is missing' '
-+	test_when_finished git reset --hard &&
-+	rm file2 &&
-+	git difftool --dir-diff $symlinks --extcmd ls branch master >output &&
-+	grep file2 output
-+'
-+
- write_script .git/CHECK_SYMLINKS <<\EOF
- for f in file file2 sub/sub
- do
--- 
-1.8.3.rc2.285.gfc18c2c
+-- ES
