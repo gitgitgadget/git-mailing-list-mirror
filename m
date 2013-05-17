@@ -1,81 +1,174 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/4] {fast-export,transport-helper}: style cleanups
-Date: Fri, 17 May 2013 18:56:05 +0200
-Message-ID: <vpqvc6hczq2.fsf@grenoble-inp.fr>
-References: <1368062218-22440-1-git-send-email-felipe.contreras@gmail.com>
-	<1368062218-22440-4-git-send-email-felipe.contreras@gmail.com>
-	<CAEBDL5XZhEo14WKiz2m3KFRX+NsTFhmcz3adSti33RATMd897w@mail.gmail.com>
-	<7v7gj77nt9.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1HDp+ojGK0UhKHF=1iDu5_E9Z0VrK-JtMked1mtH_2gQ@mail.gmail.com>
-	<CAMP44s3J8YpULYenDoYhyRJXSXL3b8-vpMbW2c4LcjK43Xidng@mail.gmail.com>
-	<7vwqqy7v8g.fsf@alter.siamese.dyndns.org>
-	<CAMP44s17aD_ryeGWQazTcJ3nrhe6C9TLhKHhrUnys=Yj_ATa0A@mail.gmail.com>
-	<7vzjvu6faq.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3c1vdCn43S=nSzfj=znZ9L_7jH9-+EOY0+SZNnSBTVbw@mail.gmail.com>
-	<7vfvxm6biv.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2QcFStPtE8cSbH7jWvUOUVRSgGNYNVoDN6exRdW6xNYA@mail.gmail.com>
-	<7vobc91squ.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0o7tgUrz4xQh3H62+=625ppAOMFskOL70Nrx-O5uwaYw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] prompt: factor out gitstring coloring logic
+Date: Fri, 17 May 2013 10:00:51 -0700
+Message-ID: <7v7gix1qyk.fsf@alter.siamese.dyndns.org>
+References: <1368780948-28917-1-git-send-email-artagnon@gmail.com>
+	<1368780948-28917-3-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 17 18:57:23 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 17 19:01:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdNy5-0000rE-Ii
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 18:57:21 +0200
+	id 1UdO1d-0004Cq-Q0
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 19:01:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756277Ab3EQQ5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 12:57:17 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:43168 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756255Ab3EQQ5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 12:57:16 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r4HGu4SU010376
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 17 May 2013 18:56:04 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UdNws-0006Oy-3L; Fri, 17 May 2013 18:56:06 +0200
-In-Reply-To: <CAMP44s0o7tgUrz4xQh3H62+=625ppAOMFskOL70Nrx-O5uwaYw@mail.gmail.com>
-	(Felipe Contreras's message of "Fri, 17 May 2013 11:35:48 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 17 May 2013 18:56:04 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r4HGu4SU010376
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1369414568.34969@LlUpSM1Wu8hcZvMn+ot9Eg
+	id S1756353Ab3EQRA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 13:00:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64900 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756292Ab3EQRAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 13:00:54 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C20B1F2CF;
+	Fri, 17 May 2013 17:00:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=694QmOnFf9rhaYNFCRoAsSh6Yz0=; b=JyxO2g
+	Xc/qSB0PWXoVfnjQXDMgf+4+gYKbfs5pdwDSUkPktlYX4x03csdNaGYhsys81FnK
+	cj2QI2DfCZeHZI7dqSJJhKL6sAz8LKzcQwD5pphy7OvJCHpBZo1vX2RjgiNZdnP2
+	rP1oWr86tdk90W7NQMVquiocW2KFgs0myY+fI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XyG2AOt+gELZ+glyHOiiucPhSqgSt+4Q
+	eeyzxWzr59emeMOvgoyep2L4neO+URcxf2C8PDhCZnlXLEcVbFdEckWawOvgkT/Q
+	//l4js782p20iyuB0g5YOIv/982sTgMLgzP3RVw+6Pepl/nAF1apVo1VAYMFDSkG
+	Q8YPWlNIJjY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22C5E1F2CE;
+	Fri, 17 May 2013 17:00:54 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 495361F2CC;
+	Fri, 17 May 2013 17:00:53 +0000 (UTC)
+In-Reply-To: <1368780948-28917-3-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Fri, 17 May 2013 14:25:47 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 556DFE14-BF13-11E2-8289-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224704>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> THERE IS NO STYLE BREAKAGE.
+> So that we can extend it with ZSH-colors in a later patch.
+>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  contrib/completion/git-prompt.sh | 79 ++++++++++++++++++++++------------------
+>  1 file changed, 43 insertions(+), 36 deletions(-)
+>
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> index fb9296b..263d2d7 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -222,6 +222,48 @@ __git_ps1_show_upstream ()
+>  
+>  }
+>  
+> +# Helper function that is meant to be called from __git_ps1.  It
+> +# builds up a gitstring injecting color codes into the appropriate
+> +# places.
+> +__git_ps1_colorize_gitstring ()
+> +{
+> +	local c_red='\e[31m'
+> +	local c_green='\e[32m'
+> +	local c_lblue='\e[1;34m'
+> +	local c_clear='\e[0m'
+> +	local bad_color=$c_red
+> +	local ok_color=$c_green
+> +	local branch_color="$c_clear"
+> +	local flags_color="$c_lblue"
+> +	local branchstring="$c${b##refs/heads/}"
+> +
+> +	if [ $detached = no ]; then
+> +		branch_color="$ok_color"
+> +	else
+> +		branch_color="$bad_color"
+> +	fi
+> +
+> +	# Setting gitstring directly with \[ and \] around colors
+> +	# is necessary to prevent wrapping issues!
+> +	gitstring="\[$branch_color\]$branchstring\[$c_clear\]"
+> +
+> +	if [ -n "$w$i$s$u$r$p" ]; then
+> +		gitstring="$gitstring$z"
+> +	fi
+> +	if [ "$w" = "*" ]; then
+> +		gitstring="$gitstring\[$bad_color\]$w"
+> +	fi
+> +	if [ -n "$i" ]; then
+> +		gitstring="$gitstring\[$ok_color\]$i"
+> +	fi
 
-Repeating something, and even making it all caps does not make it true.
+This is somewhat offtopic, but does anybody remember why $w (and
+only $w) has to be checked against '*', instead of [ -n "$w" ]?
 
-You are wasting your time and everybody else's in this thread and many
-others. You seem to reject the very concept of code review. The Git
-community likes very much code review. I do not forsee a change in the
-taste for code review and iterations to make the code as clean as it can
-be in the Git community. And I'd hate to see it change because some
-contributors are too stubborn to send a reroll when someone else points
-out something in the patch.
+The primary reason I ask is because from time to time I hear people
+who forget what these *#$% line noises mean and have been wondering
+if we can add a GIT_PS1_SHOW_STATE_MNEMONIC option that shows these
+with mnemonic letter sequences (e.g. "wsu" for dirty working tree,
+unmodified index, with stash and untracked files).
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> +	if [ -n "$s" ]; then
+> +		gitstring="$gitstring\[$flags_color\]$s"
+> +	fi
+> +	if [ -n "$u" ]; then
+> +		gitstring="$gitstring\[$bad_color\]$u"
+> +	fi
+> +	gitstring="$gitstring\[$c_clear\]$r$p"
+> +}
+>  
+>  # __git_ps1 accepts 0 or 1 arguments (i.e., format string)
+>  # when called from PS1 using command substitution
+> @@ -364,42 +406,7 @@ __git_ps1 ()
+>  		if [ $pcmode = yes ]; then
+>  			local gitstring=
+>  			if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
+> -				local c_red='\e[31m'
+> -				local c_green='\e[32m'
+> -				local c_lblue='\e[1;34m'
+> -				local c_clear='\e[0m'
+> -				local bad_color=$c_red
+> -				local ok_color=$c_green
+> -				local branch_color="$c_clear"
+> -				local flags_color="$c_lblue"
+> -				local branchstring="$c${b##refs/heads/}"
+> -
+> -				if [ $detached = no ]; then
+> -					branch_color="$ok_color"
+> -				else
+> -					branch_color="$bad_color"
+> -				fi
+> -
+> -				# Setting gitstring directly with \[ and \] around colors
+> -				# is necessary to prevent wrapping issues!
+> -				gitstring="\[$branch_color\]$branchstring\[$c_clear\]"
+> -
+> -				if [ -n "$w$i$s$u$r$p" ]; then
+> -					gitstring="$gitstring$z"
+> -				fi
+> -				if [ "$w" = "*" ]; then
+> -					gitstring="$gitstring\[$bad_color\]$w"
+> -				fi
+> -				if [ -n "$i" ]; then
+> -					gitstring="$gitstring\[$ok_color\]$i"
+> -				fi
+> -				if [ -n "$s" ]; then
+> -					gitstring="$gitstring\[$flags_color\]$s"
+> -				fi
+> -				if [ -n "$u" ]; then
+> -					gitstring="$gitstring\[$bad_color\]$u"
+> -				fi
+> -				gitstring="$gitstring\[$c_clear\]$r$p"
+> +				__git_ps1_colorize_gitstring
+>  			else
+>  				gitstring="$c${b##refs/heads/}${f:+$z$f}$r$p"
+>  			fi
