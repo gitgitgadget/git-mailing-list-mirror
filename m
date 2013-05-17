@@ -1,92 +1,94 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 3/4] {fast-export,transport-helper}: style cleanups
-Date: Fri, 17 May 2013 12:02:58 -0500
-Message-ID: <CAMP44s2AGWk76Nwk+va-6SBZqj46AHf6d_tm-AeN8jWKR-mEvw@mail.gmail.com>
-References: <1368062218-22440-1-git-send-email-felipe.contreras@gmail.com>
-	<1368062218-22440-4-git-send-email-felipe.contreras@gmail.com>
-	<CAEBDL5XZhEo14WKiz2m3KFRX+NsTFhmcz3adSti33RATMd897w@mail.gmail.com>
-	<7v7gj77nt9.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1HDp+ojGK0UhKHF=1iDu5_E9Z0VrK-JtMked1mtH_2gQ@mail.gmail.com>
-	<CAMP44s3J8YpULYenDoYhyRJXSXL3b8-vpMbW2c4LcjK43Xidng@mail.gmail.com>
-	<7vwqqy7v8g.fsf@alter.siamese.dyndns.org>
-	<CAMP44s17aD_ryeGWQazTcJ3nrhe6C9TLhKHhrUnys=Yj_ATa0A@mail.gmail.com>
-	<7vzjvu6faq.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3c1vdCn43S=nSzfj=znZ9L_7jH9-+EOY0+SZNnSBTVbw@mail.gmail.com>
-	<7vfvxm6biv.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2QcFStPtE8cSbH7jWvUOUVRSgGNYNVoDN6exRdW6xNYA@mail.gmail.com>
-	<7vobc91squ.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0o7tgUrz4xQh3H62+=625ppAOMFskOL70Nrx-O5uwaYw@mail.gmail.com>
-	<vpqvc6hczq2.fsf@grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remote-bzr: update old organization
+Date: Fri, 17 May 2013 10:09:58 -0700
+Message-ID: <7vzjvtzg61.fsf@alter.siamese.dyndns.org>
+References: <1368505227-16661-1-git-send-email-felipe.contreras@gmail.com>
+	<CABLWAfStOZvKZzsCqb+UiedA7Ra-ermyRJVAeocBE=RdXL8B2w@mail.gmail.com>
+	<CAMP44s3zXLwHu0OhLKsoerHaoBGMf66hNJ=hvOiUVAe4+=hDiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri May 17 19:03:07 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Sandor Bodo-Merle <sbodomerle@gmail.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 17 19:10:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdO3d-00067X-OC
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 19:03:06 +0200
+	id 1UdOAS-0003o6-WB
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 19:10:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756411Ab3EQRDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 13:03:00 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:32790 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756276Ab3EQRDA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 13:03:00 -0400
-Received: by mail-lb0-f171.google.com with SMTP id v20so4638811lbc.16
-        for <git@vger.kernel.org>; Fri, 17 May 2013 10:02:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=Erwkzvv23L1THGnQjYZsmRa3VO2dzdgwW7sJcRhio4E=;
-        b=M1sSpNljiI50dTCiGHKIz6jLAUpXAWR0yheTdl76HcqfjCplH10dPpJ6dTyzhsadUh
-         3E/pP4AN1pEExKAFxO2kgWT0yW/YqtYu94VEjFXsUJ2Lft1ZlHASgE0juOliidIzSPFW
-         mojj9/98cXXqXMgmbewzSeCV13fQwL52FtM+SpbKYfM3Sz/3nb3gm3Ga/Fo6D/7oUZuB
-         g2ENK0IJVoxTZ2vgy9z5n4ANi3/D/F8avpT3npLjNJgurdDfRVWvOK0GoxQ9HK6XL+5o
-         8cfiW1x6oiwLfe4XVoxp0V3ZxMdGJFrNZFdugBe2WeHVfXHpj5L5k9FXBjba64N5ZHVt
-         WF+g==
-X-Received: by 10.112.135.70 with SMTP id pq6mr22993837lbb.82.1368810178430;
- Fri, 17 May 2013 10:02:58 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Fri, 17 May 2013 10:02:58 -0700 (PDT)
-In-Reply-To: <vpqvc6hczq2.fsf@grenoble-inp.fr>
+	id S1755946Ab3EQRKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 13:10:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45224 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755588Ab3EQRKA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 13:10:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E3CC1F771;
+	Fri, 17 May 2013 17:10:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ygb8c1YUYupYmLc2xW2a9YqeNbA=; b=LoitQd
+	C94Mj4m7avJHsA9I1ndF/+nMxNtsqM+PXwQ2RCveDdzEG7tdZquHMmZ0bqxeuiyz
+	t1oHaMd36nT2nATNL/ejj49O+DAPiTXAccymVwU5qEn3Y7eKeYZRbwWziG7jms/H
+	NHaa3uMMw4Zf1DIuwgQ2b3pdd4N9MIVYLZXu8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SrqhBZD0cdzPv7pXgHX7SqgzxkeJ2z9V
+	NQlkV9aZiKFapejEQv4Z+haSNc6swqWruALx1iEEwM914QgHTeaOtC/pC1fHofdM
+	RkRAkkqPwRUGadRXeUYyJ6kchEAx9eVTt/2fU39vGZmWAG40/vhDhbNXsU77O89a
+	PkG/M6ZA+pc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EED71F76F;
+	Fri, 17 May 2013 17:10:00 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 88A271F76E;
+	Fri, 17 May 2013 17:09:59 +0000 (UTC)
+In-Reply-To: <CAMP44s3zXLwHu0OhLKsoerHaoBGMf66hNJ=hvOiUVAe4+=hDiA@mail.gmail.com>
+	(Felipe Contreras's message of "Fri, 17 May 2013 05:33:27 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9B0697D2-BF14-11E2-A3D3-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224708>
 
-On Fri, May 17, 2013 at 11:56 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> On Fri, May 17, 2013 at 5:02 AM, Sandor Bodo-Merle <sbodomerle@gmail.com> wrote:
 >
->> THERE IS NO STYLE BREAKAGE.
+>> apparently this breaks my existing clone of the bugzilla repository, where i
+>> have branches cloned with versions of remote-bzr prior 1.8.2 and after. The
+>> erro iget is:
+>>
+>> Fetching origin
+>> Traceback (most recent call last):
+>>   File "/home/bms/bin/git-remote-bzr", line 956, in <module>
+>>     sys.exit(main(sys.argv))
+>>   File "/home/bms/bin/git-remote-bzr", line 928, in main
+>>     repo = get_repo(url, alias)
+>>   File "/home/bms/bin/git-remote-bzr", line 844, in get_repo
+>>     bdir.destroy_repository()
+>>   File "/usr/lib/python2.7/dist-packages/bzrlib/bzrdir.py", line 900, in
+>> destroy_repository
+>>     raise errors.NoRepositoryPresent(self)
+>> bzrlib.errors.NoRepositoryPresent: No repository present:
+>> "file:///home/bms/workspace/bugzilla/.git/bzr/origin/clone/"
+>> error: Could not fetch origin
+>>
+>>
+>> The following small patch seems to fix my regression:
 >
-> Repeating something, and even making it all caps does not make it true.
+> The patch is fine by me, in fact, I already had that patch, but
+> somehow could not trigger the exception, so I removed it.
 
-Tell that to Junio. He is also repeating the same.
+Is it merely "fine", or needed for 1.8.3?  I am guessing it is the
+latter but making a final double-check, as I'll be stopping to pick
+up patches from the list in order to start today's integration run
+(that includes tagging 1.8.3-rc3).
 
-I actually provided *evidence*. Did you miss it?
-
-> You are wasting your time and everybody else's in this thread and many
-> others. You seem to reject the very concept of code review. The Git
-> community likes very much code review. I do not forsee a change in the
-> taste for code review and iterations to make the code as clean as it can
-> be in the Git community. And I'd hate to see it change because some
-> contributors are too stubborn to send a reroll when someone else points
-> out something in the patch.
-
-Sorry, did I miss somebody mentioning a problem in this patch? All
-I've seen is people throwing opinions, nothing related to this
-project's coding style.
-
-If you see this patch doesn't follow the project's style, please point
-where, and where it's described in Documentation/CodingStyle.
-
--- 
-Felipe Contreras
+Thanks.
