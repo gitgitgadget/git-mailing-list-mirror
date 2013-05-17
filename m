@@ -1,119 +1,83 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 3/3] prompt: colorize ZSH prompt
-Date: Fri, 17 May 2013 14:25:48 +0530
-Message-ID: <1368780948-28917-4-git-send-email-artagnon@gmail.com>
-References: <1368780948-28917-1-git-send-email-artagnon@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 17 10:54:32 2013
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Fwd: git cvsimport implications
+Date: Fri, 17 May 2013 11:10:03 +0200
+Message-ID: <5195F3EB.8000308@alum.mit.edu>
+References: <CAPZPVFYFL6OS2HWbF0BKNKtNsZ6CfpWmKCypGxeTs7W8-76q8Q@mail.gmail.com> <CAPZPVFZLDwLNazvBh5n=Jg_=CZUNz3yTme4JW2NutPgjPzwtLg@mail.gmail.com> <7vfvxpfbli.fsf@alter.siamese.dyndns.org> <51932A1A.4050606@alum.mit.edu> <CAPZPVFZTZFQrCF3gcwcff5LFm9MHhZm-DauLvfzCYrMTw4nQfA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 17 11:10:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdGQi-0000XC-SJ
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 10:54:25 +0200
+	id 1UdGg5-0005dr-NS
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 11:10:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755457Ab3EQIyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 04:54:19 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:52806 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755461Ab3EQIyR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 04:54:17 -0400
-Received: by mail-pb0-f42.google.com with SMTP id up7so3111483pbc.29
-        for <git@vger.kernel.org>; Fri, 17 May 2013 01:54:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=LBhBC7Gd3bZvRhj8ZgPYr8PLN/YF0koQexHfFwzLHbo=;
-        b=noKuMgWuDYNFvjeLVs8fUxEB7zF9acjjhpc2XmZYykQ9UNb0xp0pqMr9h3aKGBK+95
-         X3J1+lrpuUxdyhvdQPeuxRNdhveTLQ2dNPBnAJyarw4ZOdBRso51UDRu8LQnWS4DcrUI
-         G+naJws7VkpG1g1snKvtMzDi5OZ6fWqxaN/MFJ8NA24uNiHvXX8CnX3ijiLcugtB9D4P
-         mFnz8Apva0LHSqjls/0nD+5fOBNIXJ6IrF7Ud8BPjMzdeMaRQip4TfricTewq9ttLgIq
-         zPB6dHG1kIctVNSVeGFCu9arGX6X10GXR0b8nWmShCrn5jr+ruTcNPfDm0wxVJVsw5Qi
-         rWIw==
-X-Received: by 10.67.5.168 with SMTP id cn8mr48560331pad.119.1368780856484;
-        Fri, 17 May 2013 01:54:16 -0700 (PDT)
-Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPSA id do4sm10438933pbc.8.2013.05.17.01.54.14
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 17 May 2013 01:54:15 -0700 (PDT)
-X-Mailer: git-send-email 1.8.1.2.432.g070c57d
-In-Reply-To: <1368780948-28917-1-git-send-email-artagnon@gmail.com>
+	id S1754061Ab3EQJKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 05:10:10 -0400
+Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:53020 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752062Ab3EQJKG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 May 2013 05:10:06 -0400
+X-AuditID: 12074412-b7f216d0000008d4-f5-5195f3ed5c56
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id FE.AC.02260.DE3F5915; Fri, 17 May 2013 05:10:06 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135] (may be forged))
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4H9A3m0018720
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 17 May 2013 05:10:04 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <CAPZPVFZTZFQrCF3gcwcff5LFm9MHhZm-DauLvfzCYrMTw4nQfA@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqPvu89RAg50XmSw2zL3LYtF1pZvJ
+	oqH3CrMDs8fOWXfZPS5eUvb4vEkugDmK2yYpsaQsODM9T98ugTtj7f91zAVfOSq2NdxkamDs
+	Zu9i5OCQEDCRaG9j6mLkBDLFJC7cW8/WxcjFISRwmVFi5bpFLBDOdSaJb//3sYNU8QpoS7Rc
+	bGEBsVkEVCUm7j/IDGKzCehKLOppBpskKhAmsWr9MmaIekGJkzOfgNWLANUvP3oBbA6zgLXE
+	iteHmUCOEBbQkZg3MxRi1xImiXO7l4P1cgoESjQ+aWUBqWEWUJdYP08IolVeYvvbOcwTGAVm
+	IdkwC6FqFpKqBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0zfRyM0v0UlNKNzFCwlZoB+P6
+	k3KHGAU4GJV4eBV+TgkUYk0sK67MPcQoycGkJMq79+PUQCG+pPyUyozE4oz4otKc1OJDjBIc
+	zEoivMdBcrwpiZVVqUX5MClpDhYlcd6fi9X9hATSE0tSs1NTC1KLYLIyHBxKErwvPwE1Chal
+	pqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIOiNL4YGKcgKR6gvRdB2nmLCxJzgaIQracY
+	dTlm/Jj8jlGIJS8/L1VKnPc4SJEASFFGaR7cCliSesUoDvSxMO8dkCoeYIKDm/QKaAkT0BLW
+	a2BLShIRUlINjAvCefprZwiHPlWbInBlcZzPo0kpp0u95NWNFkTFn1Bbzj5ZeuHH8+FLhN6q
+	8UxLrT2Rsmje4gf5hctPzTlZ+Zm1SJM7nTn+v1rbjWnJQfFqUTa79x/9++B2r/T9 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224663>
 
-Add colors suitable for use in the ZSH prompt.  Having learnt that the
-ZSH equivalent of PROMPT_COMMAND is precmd (), you can now use
-GIT_PS1_SHOWCOLORHINTS with ZSH.
+On 05/15/2013 08:03 PM, Eugene Sajine wrote:
+> My primary goal was to understand better what are the real problems
+> that we might have with the way we use git cvsimport, so I was not
+> asking about the guarantee of the cvsimport to import things
+> correctly, but if there is a guarantee the import will result in
+> completely broken history.
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- contrib/completion/git-prompt.sh | 40 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+So what are you going to do, use cvsimport whenever you cannot *prove*
+that it is wrong?  You sure have low standards for your software.
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 263d2d7..92f2770 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -20,7 +20,8 @@
- #        <post>, which are strings you would put in $PS1 before
- #        and after the status string generated by the git-prompt
- #        machinery.  e.g.
--#           PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
-+#        Bash: PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
-+#        ZSH:  precmd () { __git_ps1 "%n" ":%~$ " "|%s" }
- #        will show username, at-sign, host, colon, cwd, then
- #        various status string, followed by dollar and SP, as
- #        your prompt.
-@@ -227,6 +228,43 @@ __git_ps1_show_upstream ()
- # places.
- __git_ps1_colorize_gitstring ()
- {
-+	if [[ -n ${ZSH_VERSION-} ]]; then
-+		local c_red='%F{red}'
-+		local c_green='%F{green}'
-+		local c_lblue='%F{blue}'
-+		local c_clear='%f'
-+		local bad_color=$c_red
-+		local ok_color=$c_green
-+		local branch_color="$c_clear"
-+		local flags_color="$c_lblue"
-+		local branchstring="$c${b##refs/heads/}"
-+
-+		if [ $detached = no ]; then
-+			branch_color="$ok_color"
-+		else
-+			branch_color="$bad_color"
-+		fi
-+
-+		gitstring="$branch_color$branchstring$c_clear"
-+
-+		if [ -n "$w$i$s$u$r$p" ]; then
-+			gitstring="$gitstring$z"
-+		fi
-+		if [ "$w" = "*" ]; then
-+			gitstring="$gitstring$bad_color$w"
-+		fi
-+		if [ -n "$i" ]; then
-+			gitstring="$gitstring$ok_color$i"
-+		fi
-+		if [ -n "$s" ]; then
-+			gitstring="$gitstring$flags_color$s"
-+		fi
-+		if [ -n "$u" ]; then
-+			gitstring="$gitstring$bad_color$u"
-+		fi
-+		gitstring="$gitstring$c_clear$r$p"
-+		return
-+	fi
- 	local c_red='\e[31m'
- 	local c_green='\e[32m'
- 	local c_lblue='\e[1;34m'
+The only *useful* guarantee is that software is *correct* under defined
+circumstances.  I don't think anybody has gone to the trouble to figure
+out when that claim can be made for cvsimport.
+
+> If the cvsimport is that broken - is there any plan to fix it?
+
+For one-time imports, the fix is to use a tool that is not broken, like
+cvs2git.
+
+Alternatively, Eric Raymond claims to have developed a new version of
+cvsps that is not quite as broken as the old version.  Presumably
+cvsimport would be not quite as broken if used with the new cvsps.
+
+Michael
+
 -- 
-1.8.1.2.432.g070c57d
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
