@@ -1,78 +1,89 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 3/4] {fast-export,transport-helper}: style cleanups
-Date: Thu, 16 May 2013 19:24:55 -0500
-Message-ID: <CAMP44s0PYreS7g8FfUW-3+9xY56-yiusKRcmUKHnZc4kDwXF-A@mail.gmail.com>
-References: <1368062218-22440-1-git-send-email-felipe.contreras@gmail.com>
-	<1368062218-22440-4-git-send-email-felipe.contreras@gmail.com>
-	<CAEBDL5XZhEo14WKiz2m3KFRX+NsTFhmcz3adSti33RATMd897w@mail.gmail.com>
-	<7v7gj77nt9.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1HDp+ojGK0UhKHF=1iDu5_E9Z0VrK-JtMked1mtH_2gQ@mail.gmail.com>
-	<CAMP44s3J8YpULYenDoYhyRJXSXL3b8-vpMbW2c4LcjK43Xidng@mail.gmail.com>
-	<7vwqqy7v8g.fsf@alter.siamese.dyndns.org>
-	<CAMP44s17aD_ryeGWQazTcJ3nrhe6C9TLhKHhrUnys=Yj_ATa0A@mail.gmail.com>
-	<7vzjvu6faq.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3c1vdCn43S=nSzfj=znZ9L_7jH9-+EOY0+SZNnSBTVbw@mail.gmail.com>
-	<7vfvxm6biv.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2QcFStPtE8cSbH7jWvUOUVRSgGNYNVoDN6exRdW6xNYA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Random thoughts on "upstream"
+Date: Thu, 16 May 2013 18:31:39 -0700
+Message-ID: <7vzjvu1jes.fsf@alter.siamese.dyndns.org>
+References: <7vobca6c7r.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2t3+yBQMj9uSd_=3w0CgeJsHeAQM051j7Xt+SqVthvzQ@mail.gmail.com>
+	<7vobca3465.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 17 02:25:03 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 17 03:32:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ud8Tm-0001Hc-AO
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 02:25:02 +0200
+	id 1Ud9Wl-0008O7-NL
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 03:32:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755246Ab3EQAY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 May 2013 20:24:58 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:35434 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755222Ab3EQAY5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 May 2013 20:24:57 -0400
-Received: by mail-la0-f46.google.com with SMTP id fk20so3647034lab.19
-        for <git@vger.kernel.org>; Thu, 16 May 2013 17:24:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=i19VzoDJSKO+J9emNSiAAGJR+W5nFxLIUu+jFep3URI=;
-        b=gj2Pck7ETJ/E9M3sa/6UpfldL8n1ul/hE4N0C7wFMF0Axud55K75HPXjQXudMiMwdb
-         hr9aQugP3qsdw2m0HieZ7qr6ir+yElZrWZOsZRdlWLhGm1fgknUWQ56zLUjciYxvdfMn
-         qaz0biovExeFwWQ7nq9c75uGeXhheB4gUHrWzaY0sE0bOLLniAaNZf68g5QjhalGbSfZ
-         1YjhUU+lpL4Eb/vdPzxo8JLynEZj/89fpvZV7tp4Bd58IR+BLUwwMZj4YgwaV7zXAoSb
-         Swg6XATxdq3xcSA1Q4UrNr45x5AEfLQldtx16N3n3JmZ0Tk4wdGt75yj86dCjkTqMFjB
-         /t9Q==
-X-Received: by 10.112.145.72 with SMTP id ss8mr21343505lbb.12.1368750295884;
- Thu, 16 May 2013 17:24:55 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Thu, 16 May 2013 17:24:55 -0700 (PDT)
-In-Reply-To: <CAMP44s2QcFStPtE8cSbH7jWvUOUVRSgGNYNVoDN6exRdW6xNYA@mail.gmail.com>
+	id S1751220Ab3EQBbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 May 2013 21:31:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50119 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750698Ab3EQBbx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 May 2013 21:31:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4008010B06;
+	Fri, 17 May 2013 01:31:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0Dzq5QdaTMm/7lUgCbzr/v4q0uE=; b=Vok60G
+	+bkekSFRMsdMNqeLnHxRaUqquhn0Sk0WswHdpA1Ku8la1horX/JZLAJXXfoK7P5P
+	eJapZRkUSNRczHKAXRghqV1kdoiau5I7LInHaSteD3bH2vvEABAJJl5+IGJLAj3u
+	6aRdYxNFjozlbQCYCP8EVLo3LrvbzNIPXQRJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EAVSpFpyhlQKxHgVSTHOze/qykzSjY+W
+	NZzdp4U+7mq5uwDav3Ow6PXJkYkk7hgsawYpf3pp257ktWxnRE05ISO9ZepQCkUD
+	m75Lmsr1ijijPzE18mzoVfm5Uk+O70kSoMF4AidCCgdidcTzhEn81jwQt11NxXsT
+	92SVM4dPzr8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3299A10B05;
+	Fri, 17 May 2013 01:31:52 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 950B910B04;
+	Fri, 17 May 2013 01:31:51 +0000 (UTC)
+In-Reply-To: <7vobca3465.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 16 May 2013 16:17:54 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8CCB911E-BE91-11E2-BFEB-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224645>
 
-On Thu, May 16, 2013 at 6:54 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> There are 535 instances where parenthesis are not aligned. Do you
-> still think aligning open parenthesis is the "style of the project"?
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> Please. You are rejecting this patch on a whim, and nothing more.
+>> What happens if I want to push to 'refs/heads/topics/frotz-for-juno'?
+>
+> You would weigh pros-and-cons of supporting such a "single branch
+> only" special case, and add a branch level override, and if the
+> benefit outweighs the cost of complexity, design and implement it.
+>
+> The push.default setting is to make sure we have a simple mechanism
+> to cover more common cases, and my suspicion is what 'current' gives
+> us is already there without the need for 'single'.
 
-And FTR. I shouldn't need to waste my time demonstrating this obvious
-fact to you, you should already know that the project doesn't follow
-this style, and if you don't know for sure, you shouldn't act as if
-you do. And even if you were correct, and this was the style of the
-project, you should not reject patches based on unstated guidelines.
+Actually, I suspect that you shouldn't even need to do that
+pros-and-cons analysis, because the 'single' thing should cover as a
+natural extension of the existing infrastructure.  You should only
+need to have something like this:
 
-Would you think it's fair for you to go to jail for breaking a "law"
-that is not written anywhere?
+	[remote "there"]
+        	url = ... were you push ...
+		push = refs/heads/frotz:refs/heads/topics/frotz-for-juno
+                push = refs/heads/*:refs/heads/topics/*
 
--- 
-Felipe Contreras
+Without the 'single', your 'frotz' will be pushed to update
+heads/topics/frotz-for-juno, not heads/topics/frotz, because the
+exact refspec match will prevent it from matched twice by the
+wildcarded one.  The imagined 'single' mode would just limit the
+push to the current branch, so it would end up pushing to the branch
+you want to update, without sending an extra copy to the same name.
