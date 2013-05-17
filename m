@@ -1,174 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] prompt: factor out gitstring coloring logic
-Date: Fri, 17 May 2013 10:00:51 -0700
-Message-ID: <7v7gix1qyk.fsf@alter.siamese.dyndns.org>
-References: <1368780948-28917-1-git-send-email-artagnon@gmail.com>
-	<1368780948-28917-3-git-send-email-artagnon@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Random thoughts on "upstream"
+Date: Fri, 17 May 2013 22:31:13 +0530
+Message-ID: <CALkWK0mLtc8dmMPOcLMez1agF1+ZMUDAUwtwmiKSxOCfyiW0Bw@mail.gmail.com>
+References: <7vobca6c7r.fsf@alter.siamese.dyndns.org> <CAMP44s2t3+yBQMj9uSd_=3w0CgeJsHeAQM051j7Xt+SqVthvzQ@mail.gmail.com>
+ <7vobca3465.fsf@alter.siamese.dyndns.org> <7vzjvu1jes.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=rHFQ14G8baYpY7gYo+Qb+5a0qOKZGBTrp6BamKC2vRg@mail.gmail.com> <7vk3mx1rox.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 17 19:01:02 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 17 19:01:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdO1d-0004Cq-Q0
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 19:01:02 +0200
+	id 1UdO2Z-00058g-0r
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 19:01:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756353Ab3EQRA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 13:00:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64900 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756292Ab3EQRAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 13:00:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C20B1F2CF;
-	Fri, 17 May 2013 17:00:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=694QmOnFf9rhaYNFCRoAsSh6Yz0=; b=JyxO2g
-	Xc/qSB0PWXoVfnjQXDMgf+4+gYKbfs5pdwDSUkPktlYX4x03csdNaGYhsys81FnK
-	cj2QI2DfCZeHZI7dqSJJhKL6sAz8LKzcQwD5pphy7OvJCHpBZo1vX2RjgiNZdnP2
-	rP1oWr86tdk90W7NQMVquiocW2KFgs0myY+fI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XyG2AOt+gELZ+glyHOiiucPhSqgSt+4Q
-	eeyzxWzr59emeMOvgoyep2L4neO+URcxf2C8PDhCZnlXLEcVbFdEckWawOvgkT/Q
-	//l4js782p20iyuB0g5YOIv/982sTgMLgzP3RVw+6Pepl/nAF1apVo1VAYMFDSkG
-	Q8YPWlNIJjY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22C5E1F2CE;
-	Fri, 17 May 2013 17:00:54 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 495361F2CC;
-	Fri, 17 May 2013 17:00:53 +0000 (UTC)
-In-Reply-To: <1368780948-28917-3-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Fri, 17 May 2013 14:25:47 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 556DFE14-BF13-11E2-8289-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756293Ab3EQRBz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 13:01:55 -0400
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:35784 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755575Ab3EQRBy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 13:01:54 -0400
+Received: by mail-ie0-f171.google.com with SMTP id e11so9849368iej.30
+        for <git@vger.kernel.org>; Fri, 17 May 2013 10:01:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=LEEVw5wo3xSpxXQ00vH2iBuGHRRu7opr19+OAn1rgXI=;
+        b=iYZI+c5/pwAfOItwHnmBpMiG6JfFyQGAl9+xelq5aMvOnYYVRj90k1ogyu9XmEOY8n
+         DoOM3eX99E3LtTXVEFqU495F84zQrG+s/GZ6kq9KeK6mm24265KY1jPrRWoG0at89zx0
+         nRxVqFBjdy+WmrwxlOmiWjYA6ZGbcqTTzOg0ftK48ADgFEaJV8pTx36N3vjczFYqwYBK
+         UFsRG+arJMvDu9TruzKnZlbkEe51ta11yvT03F5KdpNJWkwc1wUzZEL8HfADglPpw0bu
+         wWKFKLy6DIExO7PFS/0hazAwt4dpjX/5Ikbu1Il4Nv63tVW5UqEIK4UxoJ+0IZ2Snf5O
+         fDrA==
+X-Received: by 10.50.33.19 with SMTP id n19mr13595299igi.44.1368810114033;
+ Fri, 17 May 2013 10:01:54 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Fri, 17 May 2013 10:01:13 -0700 (PDT)
+In-Reply-To: <7vk3mx1rox.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224705>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Junio C Hamano wrote:
+> Please clarify the semantics of @{f}.  Does it conceptually refer to
+> where the current branch is going to be pushed to (i.e. a pair of
+> (<remote>, <ref>))?  Will we have a remote tracking branch for it
+> to record what we pushed there the last time?  I am guessing that
+> your answers to both of these questions are "Yes", and frotz@{f}
+> would resolve to refs/remotes/there/topics/frotz-for-juno in the
+> sample set-up in the message you are responding to.
 
-> So that we can extend it with ZSH-colors in a later patch.
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  contrib/completion/git-prompt.sh | 79 ++++++++++++++++++++++------------------
->  1 file changed, 43 insertions(+), 36 deletions(-)
->
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index fb9296b..263d2d7 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -222,6 +222,48 @@ __git_ps1_show_upstream ()
->  
->  }
->  
-> +# Helper function that is meant to be called from __git_ps1.  It
-> +# builds up a gitstring injecting color codes into the appropriate
-> +# places.
-> +__git_ps1_colorize_gitstring ()
-> +{
-> +	local c_red='\e[31m'
-> +	local c_green='\e[32m'
-> +	local c_lblue='\e[1;34m'
-> +	local c_clear='\e[0m'
-> +	local bad_color=$c_red
-> +	local ok_color=$c_green
-> +	local branch_color="$c_clear"
-> +	local flags_color="$c_lblue"
-> +	local branchstring="$c${b##refs/heads/}"
-> +
-> +	if [ $detached = no ]; then
-> +		branch_color="$ok_color"
-> +	else
-> +		branch_color="$bad_color"
-> +	fi
-> +
-> +	# Setting gitstring directly with \[ and \] around colors
-> +	# is necessary to prevent wrapping issues!
-> +	gitstring="\[$branch_color\]$branchstring\[$c_clear\]"
-> +
-> +	if [ -n "$w$i$s$u$r$p" ]; then
-> +		gitstring="$gitstring$z"
-> +	fi
-> +	if [ "$w" = "*" ]; then
-> +		gitstring="$gitstring\[$bad_color\]$w"
-> +	fi
-> +	if [ -n "$i" ]; then
-> +		gitstring="$gitstring\[$ok_color\]$i"
-> +	fi
+Yes.
 
-This is somewhat offtopic, but does anybody remember why $w (and
-only $w) has to be checked against '*', instead of [ -n "$w" ]?
+>         Side note: I do not think "fork" rings bell to the end
+>         users.  Who is forking from what?  I am guessing you are
+>         trying to make a short form of "the branch in my public
+>         pepository I push this branch to, and other people would
+>         consider it my fork of the upstream project", but it is hard
+>         to do the reverse, i.e. a new person who is presented a word
+>         'fork' to guess that you wanted to refer to the above by
+>         that word.
 
-The primary reason I ask is because from time to time I hear people
-who forget what these *#$% line noises mean and have been wondering
-if we can add a GIT_PS1_SHOW_STATE_MNEMONIC option that shows these
-with mnemonic letter sequences (e.g. "wsu" for dirty working tree,
-unmodified index, with stash and untracked files).
+GitHub is an overwhelmingly popular service, and many end-users are
+used to clicking on the "Fork" button on various projects to
+contribute.  Here, "fork" is short for "my fork".  Do you have a
+better name in mind?
 
-> +	if [ -n "$s" ]; then
-> +		gitstring="$gitstring\[$flags_color\]$s"
-> +	fi
-> +	if [ -n "$u" ]; then
-> +		gitstring="$gitstring\[$bad_color\]$u"
-> +	fi
-> +	gitstring="$gitstring\[$c_clear\]$r$p"
-> +}
->  
->  # __git_ps1 accepts 0 or 1 arguments (i.e., format string)
->  # when called from PS1 using command substitution
-> @@ -364,42 +406,7 @@ __git_ps1 ()
->  		if [ $pcmode = yes ]; then
->  			local gitstring=
->  			if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
-> -				local c_red='\e[31m'
-> -				local c_green='\e[32m'
-> -				local c_lblue='\e[1;34m'
-> -				local c_clear='\e[0m'
-> -				local bad_color=$c_red
-> -				local ok_color=$c_green
-> -				local branch_color="$c_clear"
-> -				local flags_color="$c_lblue"
-> -				local branchstring="$c${b##refs/heads/}"
-> -
-> -				if [ $detached = no ]; then
-> -					branch_color="$ok_color"
-> -				else
-> -					branch_color="$bad_color"
-> -				fi
-> -
-> -				# Setting gitstring directly with \[ and \] around colors
-> -				# is necessary to prevent wrapping issues!
-> -				gitstring="\[$branch_color\]$branchstring\[$c_clear\]"
-> -
-> -				if [ -n "$w$i$s$u$r$p" ]; then
-> -					gitstring="$gitstring$z"
-> -				fi
-> -				if [ "$w" = "*" ]; then
-> -					gitstring="$gitstring\[$bad_color\]$w"
-> -				fi
-> -				if [ -n "$i" ]; then
-> -					gitstring="$gitstring\[$ok_color\]$i"
-> -				fi
-> -				if [ -n "$s" ]; then
-> -					gitstring="$gitstring\[$flags_color\]$s"
-> -				fi
-> -				if [ -n "$u" ]; then
-> -					gitstring="$gitstring\[$bad_color\]$u"
-> -				fi
-> -				gitstring="$gitstring\[$c_clear\]$r$p"
-> +				__git_ps1_colorize_gitstring
->  			else
->  				gitstring="$c${b##refs/heads/}${f:+$z$f}$r$p"
->  			fi
+> But it has exactly the same issue as branch.<name>.pushremote;
+> adding it without having the single "all of my pushes go to here,
+> not to 'origin'" would have meant that for N branches you have to
+> set the same thing N times.  We fixed it with remote.pushdefault
+> before the series graduated.  If you only add branch.<name>.push,
+> then people have to configure it N times, for N branches they want
+> to push out.
+
+Oh, I'm completely against just adding branch.<name>.push as I've
+pointed out on the other thread.  Even in the part you clipped out, I
+clearly stated remote.<name>.push above a branch-specific thing in the
+priorities.
+
+> Reusing the existing push refspecs was just a suggestion to solve
+> that issue, and I am not married to that particular design.  You or
+> Felipe may be able to come up with a better alternative to achieve
+> the same goal and that is perfectly fine.  I just wanted to make
+> sure that we do not force the user to repeatedly set the same thing
+> over and over in the common case.
+
+Ofcourse.
+
+> I do not think of a reason why you cannot implement that @{f} with
+> the 'single' matching (or its better version you may come up with).
+> If "git push" can figure out where it would push to, you certainly
+> should be able to borrow that same logic to see what tracking branch
+> you are locally using to track the last push result for the current
+> branch in response to @{f} request, no?
+
+Ofcourse, I'm not saying it's not possible.
+
+1. Getting @{f} requires extra computation, and that might be ugly/
+undesirable/ surprising considering how @{u} doesn't require it.
+
+2. Setting @{f} with branch --set-fork-to won't operate on the
+branch.<name> section, and this might be surprising.
+
+3. If remote.<name>.push is only going to be used by the Gerrit
+people, @{f} is not going to work anyway.
+
+These issues aren't deal breakers, but are certainly worth mentioning.
+ Frankly, I'm not overtly fond of the branch.<name>.push idea, and am
+tilting towards this now.  What do you think?
