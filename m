@@ -1,89 +1,88 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] remote-bzr: update old organization
-Date: Fri, 17 May 2013 12:12:25 -0500
-Message-ID: <CAMP44s2DogT71+cQJK8Yu0xcAbuYB-6T3TwMKyuh12wCR+sK8g@mail.gmail.com>
-References: <1368505227-16661-1-git-send-email-felipe.contreras@gmail.com>
-	<CABLWAfStOZvKZzsCqb+UiedA7Ra-ermyRJVAeocBE=RdXL8B2w@mail.gmail.com>
-	<CAMP44s3zXLwHu0OhLKsoerHaoBGMf66hNJ=hvOiUVAe4+=hDiA@mail.gmail.com>
-	<7vzjvtzg61.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Sandor Bodo-Merle <sbodomerle@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 17 19:12:33 2013
+Subject: [PATCH] remote-bzr: fixes for older versions of bzr
+Date: Fri, 17 May 2013 12:10:19 -0500
+Message-ID: <1368810619-18419-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 17 19:12:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdOCm-00060w-BM
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 19:12:32 +0200
+	id 1UdOD8-0006K0-OL
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 19:12:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756104Ab3EQRM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 13:12:27 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:36768 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755940Ab3EQRM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 13:12:27 -0400
-Received: by mail-lb0-f175.google.com with SMTP id v10so4653937lbd.34
-        for <git@vger.kernel.org>; Fri, 17 May 2013 10:12:25 -0700 (PDT)
+	id S1756139Ab3EQRMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 13:12:51 -0400
+Received: from mail-gg0-f176.google.com ([209.85.161.176]:54593 "EHLO
+	mail-gg0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755940Ab3EQRMu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 13:12:50 -0400
+Received: by mail-gg0-f176.google.com with SMTP id b1so155183ggm.7
+        for <git@vger.kernel.org>; Fri, 17 May 2013 10:12:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=6RNvRsWylKGi2e289W3l0iQWVmMVLFg2EmuDwrhh2GE=;
-        b=gML1qBqVvorGB8FURRh8Bl8v/EcYljr/2ll+I9NHK+HAE5Ed6/jk2zS9B4BgNJVUJs
-         IvOqQyJZkBgymxgcD12BYExZ0M0rCG/6yZdtj02Vmljh6n+ix4yVE2nt8SxQwJga6b5i
-         /Mfdm1ITm24jUe2AVtF+wOWY75a6qwFhUmxSCkw4pxIujrq8xkMsjvpjlCPzzufAhW//
-         ZSiqjr8mYHF5nGOLNR+qSGKwA8KPs70VyYq1HMSrA4lJ74hJ/2tHoTrBGdKRnVC3l63C
-         JiraV+R+IaxeMpSkEP6MyzY7P00ExX2dx20FFkCj5AdLN+/RM95+HtPgyAmUZX5Az6qs
-         0plA==
-X-Received: by 10.112.172.40 with SMTP id az8mr11891895lbc.88.1368810745594;
- Fri, 17 May 2013 10:12:25 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Fri, 17 May 2013 10:12:25 -0700 (PDT)
-In-Reply-To: <7vzjvtzg61.fsf@alter.siamese.dyndns.org>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=YmDJWqfLyEbTbcUfzGbunlZjGh/zbCgHyBzRtB5ByRY=;
+        b=OChuLTmqaEHYlWXeh/WNAb3dl3Eg+wh5O+XnepE0VpzGHwD5MnED9bhN5iuDE0jIkw
+         F/bPv2zR2A4a1pMCv+tuACHQKeP8bveUzBGFAgpn/RN9Ioeeu5nWZez14YBcOBUTJT9h
+         mDGwgNjuGjI3UKNJfgTr9piuPH+3H+H7Gilpd4+psYdZhn6flYyejXEyJJXX+ZfUlD9c
+         5UWwXRXwemBXpC8HYeGmP7BWGZZQ1P/GXce50ZiLj820J+o4udSDFTKc90iVPL944sTC
+         bIBcfR5/NskrD5UxcALdlXGTGgYXaSdOjBwn9ZqRlYQfcaa6dqRH4FOErYEc31z9iqMQ
+         XAzg==
+X-Received: by 10.236.138.79 with SMTP id z55mr26411277yhi.104.1368810769744;
+        Fri, 17 May 2013 10:12:49 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id d51sm18652704yho.14.2013.05.17.10.12.24
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 17 May 2013 10:12:48 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc2.542.g24820ba
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224710>
 
-On Fri, May 17, 2013 at 12:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> On Fri, May 17, 2013 at 5:02 AM, Sandor Bodo-Merle <sbodomerle@gmail.com> wrote:
->>
->>> apparently this breaks my existing clone of the bugzilla repository, where i
->>> have branches cloned with versions of remote-bzr prior 1.8.2 and after. The
->>> erro iget is:
->>>
->>> Fetching origin
->>> Traceback (most recent call last):
->>>   File "/home/bms/bin/git-remote-bzr", line 956, in <module>
->>>     sys.exit(main(sys.argv))
->>>   File "/home/bms/bin/git-remote-bzr", line 928, in main
->>>     repo = get_repo(url, alias)
->>>   File "/home/bms/bin/git-remote-bzr", line 844, in get_repo
->>>     bdir.destroy_repository()
->>>   File "/usr/lib/python2.7/dist-packages/bzrlib/bzrdir.py", line 900, in
->>> destroy_repository
->>>     raise errors.NoRepositoryPresent(self)
->>> bzrlib.errors.NoRepositoryPresent: No repository present:
->>> "file:///home/bms/workspace/bugzilla/.git/bzr/origin/clone/"
->>> error: Could not fetch origin
->>>
->>>
->>> The following small patch seems to fix my regression:
->>
->> The patch is fine by me, in fact, I already had that patch, but
->> somehow could not trigger the exception, so I removed it.
->
-> Is it merely "fine", or needed for 1.8.3?  I am guessing it is the
-> latter but making a final double-check, as I'll be stopping to pick
-> up patches from the list in order to start today's integration run
-> (that includes tagging 1.8.3-rc3).
+Up to v2.0.
 
-Yes, for v1.8.3.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/remote-helpers/git-remote-bzr | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+index ad42317..51b4a29 100755
+--- a/contrib/remote-helpers/git-remote-bzr
++++ b/contrib/remote-helpers/git-remote-bzr
+@@ -31,6 +31,7 @@ import bzrlib.transport
+ import bzrlib.errors
+ import bzrlib.ui
+ import bzrlib.urlutils
++import bzrlib.branch
+ 
+ import sys
+ import os
+@@ -788,7 +789,7 @@ def get_remote_branch(origin, remote_branch, name):
+     return branch
+ 
+ def find_branches(repo, wanted):
+-    transport = repo.user_transport
++    transport = repo.bzrdir.root_transport
+ 
+     for fn in transport.iter_files_recursive():
+         if not fn.endswith('.bzr/branch-format'):
+@@ -922,7 +923,8 @@ def main(args):
+     if not os.path.exists(dirname):
+         os.makedirs(dirname)
+ 
+-    bzrlib.ui.ui_factory.be_quiet(True)
++    if hasattr(bzrlib.ui.ui_factory, 'be_quiet'):
++        bzrlib.ui.ui_factory.be_quiet(True)
+ 
+     repo = get_repo(url, alias)
+ 
 -- 
-Felipe Contreras
+1.8.3.rc2.542.g24820ba
