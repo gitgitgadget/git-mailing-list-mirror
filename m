@@ -1,157 +1,106 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH v2] difftool: fix dir-diff when file does not exist in
- working tree
-Date: Fri, 17 May 2013 19:26:08 +0100
-Message-ID: <20130517182608.GB27005@serenity.lan>
-References: <de6690bea81de561747ca49893fbc77fa3eb8529.1368811736.git.john@keeping.me.uk>
- <7v38tlzdcv.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] fetch: add --allow-local option
+Date: Fri, 17 May 2013 11:30:30 -0700
+Message-ID: <7vtxm1xxvd.fsf@alter.siamese.dyndns.org>
+References: <1368689474-28911-1-git-send-email-felipe.contreras@gmail.com>
+	<1368689474-28911-2-git-send-email-felipe.contreras@gmail.com>
+	<7v61yi9arl.fsf@alter.siamese.dyndns.org>
+	<CAMP44s14TSGtQ7kvWUgrOQvT1uKciSV5fd5pQvy1ven8Z=qVcg@mail.gmail.com>
+	<7v8v3e7udi.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0Szu8oHBKMapZ6dQ1K67MXDcACuUF-+Y-jC+EgHs2QEA@mail.gmail.com>
+	<7vk3my6bu1.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2W5MUneTwcSnr=Ey715paKgSL6MqXmYKdSmw4NqdL4qQ@mail.gmail.com>
+	<7vk3my33vb.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0J7vcxno=v9_ewUE6FcuRVuYQhCNVS8D+AvP6cG2XNfQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Kevin Bracey <kevin@bracey.fi>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 17 20:26:23 2013
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 17 20:30:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdPME-0000Tn-5p
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 20:26:22 +0200
+	id 1UdPQP-0004hj-3b
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 20:30:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755099Ab3EQS0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 14:26:18 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:50229 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754823Ab3EQS0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 14:26:17 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id ABBF2CDA5E7;
-	Fri, 17 May 2013 19:26:16 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lcaWElwYPzIr; Fri, 17 May 2013 19:26:16 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1756067Ab3EQSag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 14:30:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37143 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754823Ab3EQSad (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 14:30:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F00A01D19A;
+	Fri, 17 May 2013 18:30:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Jp+ZMWC9fPw8hU6/WTlF/MUjnOQ=; b=SioI5+
+	i6a8W0M28lpoKoNLOoVL3qjOAfKKU/1rQgLcXtpCIev2B/+TK4CMcUbjKhdb4sma
+	ajJyiKFYQ+t4zokHOxMI8Qg+ZTgGuOSIVUHZeb0vElul04Iecvh05/NpZHOk5Jiy
+	tNgJioyiMjhOHH0PnbEr1AT0DY5K7oeA03cZc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XDO638Ph5dBLSpyikp1/stY5ipnabIWh
+	y1FtAPmxov2RvYPgI7iQfJXkSUmL3YYF60Siwy7uX3D706pzSYysQ+fSiIxW87JD
+	TWslM9y5UuRhSG35GOVX75SRNRzlp2VIvdokwuhzNO0AslbUe/QJjiTbF7GMcmJ4
+	DDIayXd0Qjg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E282A1D198;
+	Fri, 17 May 2013 18:30:32 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id DFB83CDA60A;
-	Fri, 17 May 2013 19:26:10 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7v38tlzdcv.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F1051D197;
+	Fri, 17 May 2013 18:30:32 +0000 (UTC)
+In-Reply-To: <CAMP44s0J7vcxno=v9_ewUE6FcuRVuYQhCNVS8D+AvP6cG2XNfQ@mail.gmail.com>
+	(Felipe Contreras's message of "Thu, 16 May 2013 19:04:47 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DB89A578-BF1F-11E2-824C-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224729>
 
-Commit 02c5631 (difftool --dir-diff: symlink all files matching the
-working tree, 2013-03-14) does not handle the case where a file that is
-being compared does not exist in the working tree.  Fix this by checking
-for existence explicitly before running git-hash-object.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Reported-by: Kevin Bracey <kevin@bracey.fi>
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
-On Fri, May 17, 2013 at 11:10:40AM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > Commit 02c5631 (difftool --dir-diff: symlink all files matching the
-> > working tree, 2013-03-14) does not handle the case where a file that is
-> > being compared does not exist in the working tree.  Fix this by checking
-> > for existence explicitly before running git-hash-object.
-> >
-> > Reported-by: Kevin Bracey <kevin@bracey.fi>
-> > Signed-off-by: John Keeping <john@keeping.me.uk>
-> > ---
-> > This fixes a regression in 1.8.3-rc0.
-> >
-> >  git-difftool.perl   | 9 ++++++++-
-> >  t/t7800-difftool.sh | 7 +++++++
-> >  2 files changed, 15 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/git-difftool.perl b/git-difftool.perl
-> > index 6780292..0a1cb0a 100755
-> > --- a/git-difftool.perl
-> > +++ b/git-difftool.perl
-> > @@ -92,7 +92,14 @@ sub use_wt_file
-> >  		return 0;
-> >  	}
-> >  
-> > -	my $wt_sha1 = $repo->command_oneline('hash-object', "$workdir/$file");
-> > +	my $wt_sha1;
-> > +	if (-e "$workdir/$file") {
-> > +		$wt_sha1 = $repo->command_oneline('hash-object', "$workdir/$file");
-> > +	} else {
-> > +		# If the file doesn't exist in the working tree, use something
-> > +		# that cannot match a SHA-1.
-> > +		$wt_sha1 = '';
-> 
-> Yuck.
-> 
-> "that cannot match" might be a good justification to say "this does
-> not break the next line to set $use and forces it to false", but
-> "when we return false in $use, the value of $wt_sha1 is not used"
-> needs to be said to convince why this is a safe change.
-> 
-> But if $sha1 is $null_sha1, we do end up setting $use to true and
-> the caller would stuff the empty $wt_sha1 to form:
-> 
-> 	$wtindex .= "$rmode \$dst_path\0";
-> 
-> Is that what we want to do here, or is it a "will never happen"
-> condition?  If the latter, the reason need to be described in this
-> comment (and in the log).
+> This is irrelevant, it's an implementation detail of 'git pull'. *THE
+> USER* is not running 'git fetch .'
 
-It can't ever happen because we only call this if the mode is non-zero
-in which case the SHA-1 is only null if there are unstaged changes.
+To those who fear running "git pull", the following has worked as a
+quick way to "preview" what they would be getting.
 
-However, I think this revised version is much clearer.
+	git fetch
+        git log ..FETCH_HEAD
 
- git-difftool.perl   | 6 ++++++
- t/t7800-difftool.sh | 7 +++++++
- 2 files changed, 13 insertions(+)
+and then they can "git merge FETCH_HEAD" to conclude it, or run a
+"git pull" for real.  We teach the more explicit form to end users
+in our tutorial, but it shows the explicit form only because we want
+to illustrate what goes on. Over time we added support to "git fetch"
+(and "git pull") to make it possible for users to type less when the
+remote and branch involved are obvious, but we carefully avoided
+breaking this expectation.
 
-diff --git a/git-difftool.perl b/git-difftool.perl
-index 6780292..8a75205 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -92,6 +92,12 @@ sub use_wt_file
- 		return 0;
- 	}
- 
-+	if (! -e "$workdir/$file") {
-+		# If the file doesn't exist in the working tree, we cannot
-+		# use it.
-+		return (0, $null_sha1);
-+	}
-+
- 	my $wt_sha1 = $repo->command_oneline('hash-object', "$workdir/$file");
- 	my $use = ($sha1 eq $null_sha1) || ($sha1 eq $wt_sha1);
- 	return ($use, $wt_sha1);
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index a6bd99e..d46f041 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -356,6 +356,13 @@ run_dir_diff_test 'difftool --dir-diff from subdirectory' '
- 	)
- '
- 
-+run_dir_diff_test 'difftool --dir-diff when worktree file is missing' '
-+	test_when_finished git reset --hard &&
-+	rm file2 &&
-+	git difftool --dir-diff $symlinks --extcmd ls branch master >output &&
-+	grep file2 output
-+'
-+
- write_script .git/CHECK_SYMLINKS <<\EOF
- for f in file file2 sub/sub
- do
--- 
-1.8.3.rc2.285.gfc18c2c
+So when "the user" is running "git fetch" on "mywork" branch that
+happens to be forked from a local "master", i.e. her configuration
+is set as
+
+	[branch "mywork"]
+        	remote = .
+                merge = refs/heads/master
+
+we still need to have FETCH_HEAD updated to point at what we would
+be merging if she did a "git pull".  It may be OK to additionally
+fetch objects from 'origin' and update the remote tracking branches
+associated with 'origin', but anything from 'origin' should not
+contaminate what results in FETCH_HEAD---it should record whatever
+we record when we did fetch refs/heads/master from '.'.
+
+As I said in the very beginning, it was a mistake for me to suggest
+adding a special case behaviour for '.' remote in the first place.
+It breaks a long-standing expectation and workflow built around it.
+
+So sorry for wasting our time, and consider this as a misguided
+excursion.
