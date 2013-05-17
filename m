@@ -1,7 +1,7 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v11 12/15] git-clean: add select by numbers interactive action
-Date: Fri, 17 May 2013 17:20:16 +0800
-Message-ID: <d27b6034ca6f3277e0b003925a6b2f6351d02d9b.1368782129.git.worldhello.net@gmail.com>
+Subject: [PATCH v11 09/15] git-clean: add colors to interactive git-clean
+Date: Fri, 17 May 2013 17:20:13 +0800
+Message-ID: <fd4ad61c3bc7c1d059ed8f25ca0418cb86c437e3.1368782129.git.worldhello.net@gmail.com>
 References: <cover.1368782129.git.worldhello.net@gmail.com>
 Cc: Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
@@ -14,35 +14,35 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdGqh-0006aN-LC
-	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 11:21:16 +0200
+	id 1UdGqg-0006aN-FE
+	for gcvg-git-2@plane.gmane.org; Fri, 17 May 2013 11:21:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754599Ab3EQJVD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 05:21:03 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:47224 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754493Ab3EQJVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 05:21:00 -0400
-Received: by mail-pd0-f179.google.com with SMTP id q10so3156681pdj.10
-        for <git@vger.kernel.org>; Fri, 17 May 2013 02:21:00 -0700 (PDT)
+	id S1754383Ab3EQJU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 05:20:56 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:51244 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753156Ab3EQJUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 05:20:53 -0400
+Received: by mail-pd0-f181.google.com with SMTP id p11so3163152pdj.12
+        for <git@vger.kernel.org>; Fri, 17 May 2013 02:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:in-reply-to:references;
-        bh=SMeqRU4AmKBvwYBIzdo79cRzF/yqDvoDeRhAVJ6/Gqc=;
-        b=OuYGTWagOKsCxzb+rk9D7B++l+AkAVgSu4YNEPhdaj3zWYq3B/t6+zQRycNA6QDZ1t
-         f8MjwbwglGY7AcHXNRs7n0cuYgvsh4+wTqZ5+R39vbJP5ICgZDRnNCWJcM6ML5KSnnXo
-         0dQ798m7W8mKaXvX1GEFpJ6D+F4RhAVs/Qm84iURK8FTGNm6CdvJnTrgOdx6rRDZ4Xi3
-         Nnm5H+2nYd/cbC4QVyQlWh+/CuA6FOYuQHPceXCNWafKKbLWii1APrruuAG5PXs2ZeRH
-         In2qOr+1nxiUQ6PXyFIZ2/hrm44NaNtfa3CYoviRBowiTQte7XHizVxQTAftU9R2r8OU
-         4Asg==
-X-Received: by 10.68.189.231 with SMTP id gl7mr31390987pbc.123.1368782460420;
-        Fri, 17 May 2013 02:21:00 -0700 (PDT)
+        bh=JcYt08pxwaSbuSqKFH8wGSpbpKaTh10gOt0qgiy+NXQ=;
+        b=uJL7hxU0MdV2hMQrYEd323Tj08ClgJQXFrtuF5frdinMRFhoBwjAPIsJXnxfghnaPh
+         O47y1ynmZw5RTUR/M5WDBN6EudWjiW77cXnu25vWL5T2W/0WVpdUofLQVFG1zu3BHkfk
+         /od6p4fiTmaCPSc1/+8H76NVwZdugTpDjNW9kavIXi9AEU0wpja/7cpPHETpFQMwYVEQ
+         ZqHaGYR69F/6hpH94TlvT7TanJ2RfdGFGMKhO8ADw9DROAfSiFCQQ7RoyQVhjlTtZMk/
+         ZqPMsosxENBuvF9PFl2UhOQsLpxGyVvkxqrPp6C0O50kEy+BzZ5o8KYbKx1n7e3CXpag
+         zPmQ==
+X-Received: by 10.68.244.5 with SMTP id xc5mr47928944pbc.66.1368782453463;
+        Fri, 17 May 2013 02:20:53 -0700 (PDT)
 Received: from localhost.localdomain ([114.248.153.37])
-        by mx.google.com with ESMTPSA id 10sm10531002pbm.0.2013.05.17.02.20.58
+        by mx.google.com with ESMTPSA id 10sm10531002pbm.0.2013.05.17.02.20.51
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 17 May 2013 02:20:59 -0700 (PDT)
+        Fri, 17 May 2013 02:20:53 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc2.380.g956c2b2
 In-Reply-To: <cover.1368782129.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1368782129.git.worldhello.net@gmail.com>
@@ -51,86 +51,163 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224676>
 
-Draw a multiple choice menu using `list_and_choose` to select items
-to be deleted by numbers.
-
-User can input:
-
- *  1,5-7 : select 1,5,6,7 items to be deleted
- *  *     : select all items to be deleted
- *  -*    : unselect all, nothing will be deleted
- *        : (empty) finish selecting, and return back to main menu
+Show header, help, error messages, and prompt in colors for interactive
+git-clean. Re-use config variables, such as "color.interactive" and
+"color.interactive.<slot>" for command `git-add--interactive`.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Comments-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- builtin/clean.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ Documentation/config.txt | 17 +++++------
+ builtin/clean.c          | 73 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 81 insertions(+), 9 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e031b..83613 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -876,16 +876,17 @@ The values of these variables may be specified as in color.branch.<slot>.
+ 
+ color.interactive::
+ 	When set to `always`, always use colors for interactive prompts
+-	and displays (such as those used by "git-add --interactive").
+-	When false (or `never`), never.  When set to `true` or `auto`, use
+-	colors only when the output is to the terminal. Defaults to false.
++	and displays (such as those used by "git-add --interactive" and
++	"git-clean --interactive"). When false (or `never`), never.
++	When set to `true` or `auto`, use colors only when the output is
++	to the terminal. Defaults to false.
+ 
+ color.interactive.<slot>::
+-	Use customized color for 'git add --interactive'
+-	output. `<slot>` may be `prompt`, `header`, `help` or `error`, for
+-	four distinct types of normal output from interactive
+-	commands.  The values of these variables may be specified as
+-	in color.branch.<slot>.
++	Use customized color for 'git add --interactive' and 'git clean
++	--interactive' output. `<slot>` may be `prompt`, `header`, `help`
++	or `error`, for four distinct types of normal output from
++	interactive commands.  The values of these variables may be
++	specified as in color.branch.<slot>.
+ 
+ color.pager::
+ 	A boolean to enable/disable colored output when the pager is in
 diff --git a/builtin/clean.c b/builtin/clean.c
-index d761ae..037cc 100644
+index f25ba..0778a 100644
 --- a/builtin/clean.c
 +++ b/builtin/clean.c
-@@ -680,6 +680,43 @@ static int filter_by_patterns_cmd(void)
- 	return 0;
- }
+@@ -14,6 +14,7 @@
+ #include "string-list.h"
+ #include "quote.h"
+ #include "column.h"
++#include "color.h"
  
-+static int select_by_numbers_cmd(void)
+ static int force = -1; /* unset */
+ static int interactive;
+@@ -31,16 +32,82 @@ static const char *msg_skip_git_dir = N_("Skipping repository %s\n");
+ static const char *msg_would_skip_git_dir = N_("Would skip repository %s\n");
+ static const char *msg_warn_remove_failed = N_("failed to remove %s");
+ 
++static int clean_use_color = -1;
++static char clean_colors[][COLOR_MAXLEN] = {
++	GIT_COLOR_RESET,
++	GIT_COLOR_NORMAL,	/* PLAIN */
++	GIT_COLOR_BOLD_BLUE,	/* PROMPT */
++	GIT_COLOR_BOLD,		/* HEADER */
++	GIT_COLOR_BOLD_RED,	/* HELP */
++	GIT_COLOR_BOLD_RED,	/* ERROR */
++};
++enum color_clean {
++	CLEAN_COLOR_RESET = 0,
++	CLEAN_COLOR_PLAIN = 1,
++	CLEAN_COLOR_PROMPT = 2,
++	CLEAN_COLOR_HEADER = 3,
++	CLEAN_COLOR_HELP = 4,
++	CLEAN_COLOR_ERROR = 5,
++};
++
++static int parse_clean_color_slot(const char *var)
 +{
-+	struct menu_opts menu_opts;
-+	struct menu_stuff menu_stuff;
-+	struct string_list_item *items;
-+	int *chosen;
-+	int i, j;
-+
-+	menu_opts.header = NULL;
-+	menu_opts.prompt = N_("Select items to delete");
-+	menu_opts.flags = 0;
-+
-+	menu_stuff.type = MENU_STUFF_TYPE_STRING_LIST;
-+	menu_stuff.stuff = &del_list;
-+	menu_stuff.nr = del_list.nr;
-+
-+	chosen = list_and_choose(&menu_opts, &menu_stuff);
-+	items = del_list.items;
-+	for(i = 0, j = 0; i < del_list.nr; i++) {
-+		if (i < chosen[j]) {
-+			*(items[i].string) = '\0';
-+		} else if (i == chosen[j]) {
-+			/* delete selected item */
-+			j++;
-+			continue;
-+		} else {
-+			/* end of chosen (chosen[j] == EOF), won't delete */
-+			*(items[i].string) = '\0';
-+		}
-+	}
-+
-+	string_list_remove_empty_items(&del_list, 0);
-+
-+	free(chosen);
-+	return 0;
++	if (!strcasecmp(var, "reset"))
++		return CLEAN_COLOR_RESET;
++	if (!strcasecmp(var, "plain"))
++		return CLEAN_COLOR_PLAIN;
++	if (!strcasecmp(var, "prompt"))
++		return CLEAN_COLOR_PROMPT;
++	if (!strcasecmp(var, "header"))
++		return CLEAN_COLOR_HEADER;
++	if (!strcasecmp(var, "help"))
++		return CLEAN_COLOR_HELP;
++	if (!strcasecmp(var, "error"))
++		return CLEAN_COLOR_ERROR;
++	return -1;
 +}
 +
- static int quit_cmd(void)
+ static int git_clean_config(const char *var, const char *value, void *cb)
  {
- 	string_list_clear(&del_list, 0);
-@@ -693,6 +730,7 @@ static int help_cmd(void)
- 	printf_ln(_(
- 		    "clean               - start cleaning\n"
- 		    "filter by pattern   - exclude items from deletion\n"
-+		    "select by numbers   - select items to be deleted by numbers\n"
- 		    "quit                - stop cleaning\n"
- 		    "help                - this screen\n"
- 		    "?                   - help for prompt selection"
-@@ -709,6 +747,7 @@ static void interactive_main_loop(void)
- 		struct menu_item menus[] = {
- 			{'c', "clean",			0, clean_cmd},
- 			{'f', "filter by pattern",	0, filter_by_patterns_cmd},
-+			{'s', "select by numbers",	0, select_by_numbers_cmd},
- 			{'q', "quit",			0, quit_cmd},
- 			{'h', "help",			0, help_cmd},
- 		};
+ 	if (!prefixcmp(var, "column."))
+ 		return git_column_config(var, value, "clean", &colopts);
+ 
++	/* honors the color.interactive* config variables which also
++	   applied in git-add--interactive and git-stash */
++	if (!strcmp(var, "color.interactive")) {
++		clean_use_color = git_config_colorbool(var, value);
++		return 0;
++	}
++	if (!prefixcmp(var, "color.interactive.")) {
++		int slot = parse_clean_color_slot(var +
++						  strlen("color.interactive."));
++		if (slot < 0)
++			return 0;
++		if (!value)
++			return config_error_nonbool(var);
++		color_parse(value, var, clean_colors[slot]);
++		return 0;
++	}
++
+ 	if (!strcmp(var, "clean.requireforce")) {
+ 		force = !git_config_bool(var, value);
+ 		return 0;
+ 	}
+-	return git_default_config(var, value, cb);
++
++	/* inspect the color.ui config variable and others */
++	return git_color_default_config(var, value, cb);
++}
++
++static const char *clean_get_color(enum color_clean ix)
++{
++	if (want_color(clean_use_color))
++		return clean_colors[ix];
++	return "";
++}
++
++static void clean_print_color(enum color_clean ix)
++{
++	printf("%s", clean_get_color(ix));
+ }
+ 
+ static int exclude_cb(const struct option *opt, const char *arg, int unset)
+@@ -184,14 +251,18 @@ static void interactive_main_loop(void)
+ 
+ 	while (del_list.nr) {
+ 		putchar('\n');
++		clean_print_color(CLEAN_COLOR_HEADER);
+ 		printf_ln(Q_("Would remove the following item:",
+ 			     "Would remove the following items:",
+ 			     del_list.nr));
++		clean_print_color(CLEAN_COLOR_RESET);
+ 		putchar('\n');
+ 
+ 		pretty_print_dels();
+ 
++		clean_print_color(CLEAN_COLOR_PROMPT);
+ 		printf(_("Remove [y/n]? "));
++		clean_print_color(CLEAN_COLOR_RESET);
+ 		if (strbuf_getline(&confirm, stdin, '\n') != EOF) {
+ 			strbuf_trim(&confirm);
+ 		} else {
 -- 
 1.8.3.rc2.380.g956c2b2
