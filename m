@@ -1,7 +1,7 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v12 05/15] Refactor write_name_quoted_relative, remove unused params
-Date: Sat, 18 May 2013 11:18:57 +0800
-Message-ID: <48e2072058302b355e0ec138727d1b481ac131c4.1368846844.git.worldhello.net@gmail.com>
+Subject: [PATCH v12 06/15] git-clean: refactor git-clean into two phases
+Date: Sat, 18 May 2013 11:18:58 +0800
+Message-ID: <271643036271eeaadb6b65c223905771be4bef71.1368846844.git.worldhello.net@gmail.com>
 References: <cover.1368846844.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jiang Xin <worldhello.net@gmail.com>
@@ -12,35 +12,35 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdXgV-0004GC-0e
-	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 05:19:51 +0200
+	id 1UdXgW-0004GC-1v
+	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 05:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932492Ab3ERDTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 23:19:43 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:60131 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932387Ab3ERDTl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 23:19:41 -0400
-Received: by mail-pb0-f52.google.com with SMTP id xa7so3842488pbc.11
-        for <git@vger.kernel.org>; Fri, 17 May 2013 20:19:41 -0700 (PDT)
+	id S932518Ab3ERDTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 23:19:47 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:33828 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932387Ab3ERDTp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 23:19:45 -0400
+Received: by mail-pa0-f51.google.com with SMTP id ld10so4126426pab.10
+        for <git@vger.kernel.org>; Fri, 17 May 2013 20:19:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:in-reply-to:references;
-        bh=wut96yoxTv0fNBvwb0dbGy8FbbY4+IZttWhd960DxUk=;
-        b=zzBST+ikU0xtt3nv0cKRNwsh63DsAw2Z3mmn50v5vwygX0RtNN+Tixdq22meOj5JMk
-         cRuqA63MAhoKziNMRzHeLB6wFIXiYWoBaNzlsRQ4JXIfOX5SzsLOdN20zIQOG/405tLs
-         4voxZzI4p6w2+U/idgy/ZMJmvbeeYlxiTsyZlOuFtzMTB37dTUBAhlPiXMogdK+5Xu5z
-         CorgsM84f6Ui4hlKr9VNqX9d3IOe/UObfp4/28yWl9jvmbvpjQ8XMatxz98rwc2grg68
-         ZsGrEpcydthH5gJ69wuQVUAPItU803CHXmPcD88nFLIUQpAL/rE18yVYhLIYXB17F96s
-         KRKg==
-X-Received: by 10.66.158.101 with SMTP id wt5mr26604150pab.8.1368847181245;
-        Fri, 17 May 2013 20:19:41 -0700 (PDT)
+        bh=PNDfoLSO1e75XBPTFIVNX3HeGW21JfIkfin0gzgxylw=;
+        b=ejmCxMiEr4bDXZC6uaaWaqeJndjIHJz9MSGDtn9TQ+/VQBEf83kD643lz+mG9e2tME
+         o4iBt7cFaTwMjP0lnT9SQ0xsiyW2WmsIzQZHvNkWJpG2jYm7fVYiKyNe47Fq8LGvyFD4
+         PmKsXjaEfYQ+6HJtYa7xPD6Oi5djZitMzJ07s0HeXIxhn6MzSZNStrpyLd44YapQ+ljM
+         dLOvDNzdbxjPK8I8DJgfvLTQODmiDnJBDC9vcVfbqfazprxqmktlScYDpyjborX5tumT
+         rWq6GCjhFXPwW28CZbkEtmj3m8eMOfjy9DskEDxWUiJ8CisvsPp+vzygSSVxoZ5QSWfL
+         QgUA==
+X-Received: by 10.68.202.34 with SMTP id kf2mr50409663pbc.56.1368847184471;
+        Fri, 17 May 2013 20:19:44 -0700 (PDT)
 Received: from localhost.localdomain ([114.248.155.144])
-        by mx.google.com with ESMTPSA id fn2sm13676683pbc.15.2013.05.17.20.19.33
+        by mx.google.com with ESMTPSA id fn2sm13676683pbc.15.2013.05.17.20.19.41
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 17 May 2013 20:19:40 -0700 (PDT)
+        Fri, 17 May 2013 20:19:43 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc2.26.g7472058
 In-Reply-To: <cover.1368846844.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1368846844.git.worldhello.net@gmail.com>
@@ -49,94 +49,146 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224761>
 
-After substitute path_relative() in quote.c with relative_path() from
-path.c, parameters (such as len and prefix_len) are obsolete in function
-write_name_quoted_relative(). Remove unused parameters from
-write_name_quoted_relative() and related functions.
+Before introducing interactive git-clean, refactor git-clean operations
+into two phases:
+
+ * hold cleaning items in del_list,
+ * and remove them in a separate loop at the end.
+
+We will introduce interactive git-clean between the two phases. The
+interactive git-clean will show what would be done and must confirm
+before do real cleaning.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 ---
- builtin/ls-files.c | 14 ++++++++------
- quote.c            |  3 +--
- quote.h            |  3 +--
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ builtin/clean.c | 64 ++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 45 insertions(+), 19 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 00f07..6acff4 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -46,10 +46,12 @@ static const char *tag_modified = "";
- static const char *tag_skip_worktree = "";
- static const char *tag_resolve_undo = "";
+diff --git a/builtin/clean.c b/builtin/clean.c
+index f77f95..23e1f 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -15,6 +15,7 @@
+ #include "quote.h"
  
--static void write_name(const char* name, size_t len)
-+static void write_name(const char *name)
- {
--	write_name_quoted_relative(name, len, prefix, prefix_len, stdout,
--			line_terminator);
-+
-+	/* turn off prefix, if run with "--full-name" */
-+	write_name_quoted_relative(name, prefix_len ? prefix : NULL,
-+				   stdout, line_terminator);
- }
+ static int force = -1; /* unset */
++static struct string_list del_list = STRING_LIST_INIT_DUP;
  
- static void show_dir_entry(const char *tag, struct dir_entry *ent)
-@@ -63,7 +65,7 @@ static void show_dir_entry(const char *tag, struct dir_entry *ent)
- 		return;
+ static const char *const builtin_clean_usage[] = {
+ 	N_("git clean [-d] [-f] [-n] [-q] [-e <pattern>] [-x | -X] [--] <paths>..."),
+@@ -148,12 +149,13 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	int dry_run = 0, remove_directories = 0, quiet = 0, ignored = 0;
+ 	int ignored_only = 0, config_set = 0, errors = 0, gone = 1;
+ 	int rm_flags = REMOVE_DIR_KEEP_NESTED_GIT;
+-	struct strbuf directory = STRBUF_INIT;
++	struct strbuf abs_path = STRBUF_INIT;
+ 	struct dir_struct dir;
+ 	static const char **pathspec;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
+ 	struct exclude_list *el;
++	struct string_list_item *item;
+ 	const char *qname;
+ 	char *seen = NULL;
+ 	struct option options[] = {
+@@ -223,6 +225,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		int matches = 0;
+ 		struct cache_entry *ce;
+ 		struct stat st;
++		const char *rel;
  
- 	fputs(tag, stdout);
--	write_name(ent->name, ent->len);
-+	write_name(ent->name);
- }
- 
- static void show_other_files(struct dir_struct *dir)
-@@ -163,7 +165,7 @@ static void show_ce_entry(const char *tag, struct cache_entry *ce)
- 		       find_unique_abbrev(ce->sha1,abbrev),
- 		       ce_stage(ce));
- 	}
--	write_name(ce->name, ce_namelen(ce));
-+	write_name(ce->name);
- 	if (debug_mode) {
- 		printf("  ctime: %d:%d\n", ce->ce_ctime.sec, ce->ce_ctime.nsec);
- 		printf("  mtime: %d:%d\n", ce->ce_mtime.sec, ce->ce_mtime.nsec);
-@@ -196,7 +198,7 @@ static void show_ru_info(void)
- 			printf("%s%06o %s %d\t", tag_resolve_undo, ui->mode[i],
- 			       find_unique_abbrev(ui->sha1[i], abbrev),
- 			       i + 1);
--			write_name(path, len);
-+			write_name(path);
+ 		/*
+ 		 * Remove the '/' at the end that directory
+@@ -242,13 +245,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 				continue; /* Yup, this one exists unmerged */
  		}
+ 
+-		/*
+-		 * we might have removed this as part of earlier
+-		 * recursive directory removal, so lstat() here could
+-		 * fail with ENOENT.
+-		 */
+ 		if (lstat(ent->name, &st))
+-			continue;
++			die_errno("Cannot lstat '%s'", ent->name);
+ 
+ 		if (pathspec) {
+ 			memset(seen, 0, argc > 0 ? argc : 1);
+@@ -257,33 +255,61 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		}
+ 
+ 		if (S_ISDIR(st.st_mode)) {
+-			strbuf_addstr(&directory, ent->name);
+ 			if (remove_directories || (matches == MATCHED_EXACTLY)) {
+-				if (remove_dirs(&directory, prefix, rm_flags, dry_run, quiet, &gone))
+-					errors++;
+-				if (gone && !quiet) {
+-					qname = quote_path_relative(directory.buf, prefix, &buf);
+-					printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
+-				}
++				rel = relative_path(ent->name, prefix, &buf);
++				string_list_append(&del_list, rel);
+ 			}
+-			strbuf_reset(&directory);
+ 		} else {
+ 			if (pathspec && !matches)
+ 				continue;
+-			res = dry_run ? 0 : unlink(ent->name);
++			rel = relative_path(ent->name, prefix, &buf);
++			string_list_append(&del_list, rel);
++		}
++	}
++
++	/* TODO: do interactive git-clean here, which will modify del_list */
++
++	for_each_string_list_item(item, &del_list) {
++		struct stat st;
++
++		if (prefix) {
++			strbuf_addstr(&abs_path, prefix);
++		}
++		strbuf_addstr(&abs_path, item->string);
++
++		/*
++		 * we might have removed this as part of earlier
++		 * recursive directory removal, so lstat() here could
++		 * fail with ENOENT.
++		 */
++		if (lstat(abs_path.buf, &st))
++			continue;
++
++		if (S_ISDIR(st.st_mode)) {
++			if (remove_dirs(&abs_path, prefix, rm_flags, dry_run, quiet, &gone))
++				errors++;
++			if (gone && !quiet) {
++				qname = quote_path_relative(item->string, NULL, &buf);
++				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
++			}
++		} else {
++			res = dry_run ? 0 : unlink(abs_path.buf);
+ 			if (res) {
+-				qname = quote_path_relative(ent->name, prefix, &buf);
++				qname = quote_path_relative(item->string, NULL, &buf);
+ 				warning(_(msg_warn_remove_failed), qname);
+ 				errors++;
+ 			} else if (!quiet) {
+-				qname = quote_path_relative(ent->name, prefix, &buf);
++				qname = quote_path_relative(item->string, NULL, &buf);
+ 				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
+ 			}
+ 		}
++		strbuf_reset(&abs_path);
  	}
- }
-diff --git a/quote.c b/quote.c
-index ebb8..5c880 100644
---- a/quote.c
-+++ b/quote.c
-@@ -312,8 +312,7 @@ void write_name_quotedpfx(const char *pfx, size_t pfxlen,
- 	fputc(terminator, fp);
- }
+ 	free(seen);
  
--void write_name_quoted_relative(const char *name, size_t len,
--				const char *prefix, size_t prefix_len,
-+void write_name_quoted_relative(const char *name, const char *prefix,
- 				FILE *fp, int terminator)
- {
- 	struct strbuf sb = STRBUF_INIT;
-diff --git a/quote.h b/quote.h
-index 5610159..ed110 100644
---- a/quote.h
-+++ b/quote.h
-@@ -60,8 +60,7 @@ extern void quote_two_c_style(struct strbuf *, const char *, const char *, int);
- extern void write_name_quoted(const char *name, FILE *, int terminator);
- extern void write_name_quotedpfx(const char *pfx, size_t pfxlen,
-                                  const char *name, FILE *, int terminator);
--extern void write_name_quoted_relative(const char *name, size_t len,
--		const char *prefix, size_t prefix_len,
-+extern void write_name_quoted_relative(const char *name, const char *prefix,
- 		FILE *fp, int terminator);
- 
- /* quote path as relative to the given prefix */
+-	strbuf_release(&directory);
++	strbuf_release(&abs_path);
++	strbuf_release(&buf);
++	string_list_clear(&del_list, 0);
+ 	string_list_clear(&exclude_list, 0);
+ 	return (errors != 0);
+ }
 -- 
 1.8.3.rc2.26.g7472058
