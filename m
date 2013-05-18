@@ -1,508 +1,108 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v12 15/15] test: add t7301 for git-clean--interactive
-Date: Sat, 18 May 2013 11:19:07 +0800
-Message-ID: <99e259f34c9dba5ab8447a5b7c0992d37f01016a.1368846844.git.worldhello.net@gmail.com>
-References: <cover.1368846844.git.worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 18 05:21:16 2013
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Fwd: Fwd: git cvsimport implications
+Date: Sat, 18 May 2013 07:52:03 +0200
+Message-ID: <51971703.5070700@alum.mit.edu>
+References: <CAPZPVFYFL6OS2HWbF0BKNKtNsZ6CfpWmKCypGxeTs7W8-76q8Q@mail.gmail.com> <CAPZPVFZLDwLNazvBh5n=Jg_=CZUNz3yTme4JW2NutPgjPzwtLg@mail.gmail.com> <7vfvxpfbli.fsf@alter.siamese.dyndns.org> <51932A1A.4050606@alum.mit.edu> <CAPZPVFZTZFQrCF3gcwcff5LFm9MHhZm-DauLvfzCYrMTw4nQfA@mail.gmail.com> <5195F3EB.8000308@alum.mit.edu> <CAPZPVFZ6HjFYaPOqcrwhCCdGhYUaVEjyDeaL8dcsqy1ghcfWpg@mail.gmail.com> <CAPZPVFbkcmBH7OPeP83gPnSGodoi_9diAUk-5dtR43dCDRfkwQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 18 07:52:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdXhl-0005De-9K
-	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 05:21:09 +0200
+	id 1Uda4A-00084u-3b
+	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 07:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759366Ab3ERDUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 23:20:15 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:57477 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757482Ab3ERDUJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 23:20:09 -0400
-Received: by mail-pd0-f174.google.com with SMTP id u10so3879322pdi.33
-        for <git@vger.kernel.org>; Fri, 17 May 2013 20:20:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:in-reply-to:references;
-        bh=h5pF/3+lqxUvZEote2fdDYWNNYSjsqrvwLST3Hn7PWM=;
-        b=d6Q+LpoE8ZyooNQ/24EV/mKF98yeNgCdR8v1mDRo8xSliwrkSWVJQQR9lkFdD9uAjo
-         cMkmVGBeFuR7NvgIEqCy/tHrcj8TFzF34Wkf/BdPv2178xBF4kZwDbnFUAJkzGZr/6DG
-         bQ71RVoxyq+hgu9hjEFdayzNwNyGHGdcjVWvP1NUClPJSEcT42VAY42uluBbMi+3OOWG
-         X+veqpB/Otcz6EIb0VaDBftLniQzY47GuzrsyljFgds55xrGNxUbE5JlZm/igDl+f3Dz
-         qqMwReCwN1E0VojacO11peCEcihJbxgtcj/05em74QWsJU7lsaPR57kp9em/ifjrbXW7
-         fzTQ==
-X-Received: by 10.68.163.4 with SMTP id ye4mr1593171pbb.207.1368847209397;
-        Fri, 17 May 2013 20:20:09 -0700 (PDT)
-Received: from localhost.localdomain ([114.248.155.144])
-        by mx.google.com with ESMTPSA id fn2sm13676683pbc.15.2013.05.17.20.20.06
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 17 May 2013 20:20:08 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc2.26.g7472058
-In-Reply-To: <cover.1368846844.git.worldhello.net@gmail.com>
-In-Reply-To: <cover.1368846844.git.worldhello.net@gmail.com>
-References: <cover.1368782129.git.worldhello.net@gmail.com> <cover.1368846844.git.worldhello.net@gmail.com>
+	id S1751449Ab3ERFwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 May 2013 01:52:09 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:46393 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750752Ab3ERFwH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 May 2013 01:52:07 -0400
+X-AuditID: 1207440f-b7f0e6d000000957-66-519717077c3f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 42.E6.02391.70717915; Sat, 18 May 2013 01:52:07 -0400 (EDT)
+Received: from [192.168.69.140] (p57A24D63.dip0.t-ipconnect.de [87.162.77.99])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4I5q45U006533
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sat, 18 May 2013 01:52:06 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <CAPZPVFbkcmBH7OPeP83gPnSGodoi_9diAUk-5dtR43dCDRfkwQ@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqMsuPj3Q4OMjdosNc++yWHRd6WZy
+	YPLYOesuu8fnTXIBTFHcNkmJJWXBmel5+nYJ3BkH/p9gLdgmVDFp5VPWBsYrfF2MnBwSAiYS
+	vTvms0PYYhIX7q1n62Lk4hASuMwocerYHXYI5xyTxN3/PcxdjBwcvALaEp/aZEAaWARUJZrX
+	nWMFsdkEdCUW9TQzgdiiAmESq9YvYwaxeQUEJU7OfMICYosA1S8/eoEdZAyzgLhE/z+wsLCA
+	ocTpeTdZoFYxS7zc1w82k1MgUGJZ610WiHp1ifXzhEDCzALyEtvfzmGewCgwC8mGWQhVs5BU
+	LWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qka6KXm1mil5pSuokREqT8Oxi71sscYhTgYFTi
+	4f3gOi1QiDWxrLgy9xCjJAeTkiivPef0QCG+pPyUyozE4oz4otKc1OJDjBIczEoivM+Lgcp5
+	UxIrq1KL8mFS0hwsSuK86kvU/YQE0hNLUrNTUwtSi2CyMhwcShK8HWJAQwWLUtNTK9Iyc0oQ
+	0kwcnCDDuaREilPzUlKLEktLMuJBURpfDIxTkBQP0N56kHbe4oLEXKAoROspRl2OGT8mv2MU
+	YsnLz0uVEuftBCkSACnKKM2DWwFLSa8YxYE+FuatAaniAaYzuEmvgJYwAS1hvTYVZElJIkJK
+	qoFRauqpyt6rBl+v+gr7ljyart1hGhRw635nTOtrpbt2fp1dl+LP/PXMtlL9WHbJPFJQeluU
+	7dnaVI55M/RyLr1aH3rYIGHOx3vnO/UuNqi+c1gcL6a4MWtK0gWWlUqmnPnyf1kl 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224771>
 
-Add test cases for git-clean--interactive.
+On 05/17/2013 06:10 PM, Eugene Sajine wrote:
+> MIchael, sorry for dup - didn't press reply all for the first one.
+> 
+>>
+>> So what are you going to do, use cvsimport whenever you cannot *prove*
+>> that it is wrong?  You sure have low standards for your software.
+> 
+> 1. You are making assumptions and conclusions that have no grounds.
+> I asked for help understanding what are the problems of cvsimport.
+> Never i said i'm not willing use cvs2git. Never i said I'm happy to have
+> problems in my git repos. So, this "low standard" punch was... not necessary.
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
----
- t/t7301-clean-interactive.sh | 439 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 439 insertions(+)
- create mode 100755 t/t7301-clean-interactive.sh
+I didn't mean to be offensive.  I meant it more in the sense of "you
+deserve to expect more from your software".
 
-diff --git a/t/t7301-clean-interactive.sh b/t/t7301-clean-interactive.sh
-new file mode 100755
-index 00000..4e605
---- /dev/null
-+++ b/t/t7301-clean-interactive.sh
-@@ -0,0 +1,439 @@
-+#!/bin/sh
-+
-+test_description='git clean -i basic tests'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+
-+	mkdir -p src &&
-+	touch src/part1.c Makefile &&
-+	echo build >.gitignore &&
-+	echo \*.o >>.gitignore &&
-+	git add . &&
-+	git commit -m setup &&
-+	touch src/part2.c README &&
-+	git add .
-+
-+'
-+
-+test_expect_success 'git clean -i (clean)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	echo c | git clean -i &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test ! -f a.out &&
-+	test -f docs/manual.txt &&
-+	test ! -f src/part3.c &&
-+	test ! -f src/part3.h &&
-+	test ! -f src/part4.c &&
-+	test ! -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -i (quit)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	echo q | git clean -i &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test -f docs/manual.txt &&
-+	test -f src/part3.c &&
-+	test -f src/part3.h &&
-+	test -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -i (Ctrl+D)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	echo "\04" | git clean -i &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test -f docs/manual.txt &&
-+	test -f src/part3.c &&
-+	test -f src/part3.h &&
-+	test -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (filter all)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo f; echo "*"; echo; echo c) | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test -f docs/manual.txt &&
-+	test -f src/part3.c &&
-+	test -f src/part3.h &&
-+	test -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (filter patterns)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo f; echo "part3.* *.out"; echo; echo c) | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test ! -f docs/manual.txt &&
-+	test -f src/part3.c &&
-+	test -f src/part3.h &&
-+	test ! -f src/part4.c &&
-+	test ! -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (filter patterns 2)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo f; echo "* !*.out"; echo; echo c) | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test ! -f a.out &&
-+	test -f docs/manual.txt &&
-+	test -f src/part3.c &&
-+	test -f src/part3.h &&
-+	test -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (select - all)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo s; echo "*"; echo; echo c) | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test ! -f a.out &&
-+	test ! -f docs/manual.txt &&
-+	test ! -f src/part3.c &&
-+	test ! -f src/part3.h &&
-+	test ! -f src/part4.c &&
-+	test ! -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (select - none)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo s; echo; echo c) | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test -f docs/manual.txt &&
-+	test -f src/part3.c &&
-+	test -f src/part3.h &&
-+	test -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (select - number)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo s; echo 3; echo; echo c) | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test -f docs/manual.txt &&
-+	test ! -f src/part3.c &&
-+	test -f src/part3.h &&
-+	test -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (select - number 2)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo s; echo 2 3; echo 5; echo; echo c) | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test ! -f docs/manual.txt &&
-+	test ! -f src/part3.c &&
-+	test -f src/part3.h &&
-+	test ! -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (select - number 3)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo s; echo 3,4 5; echo; echo c) | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test -f docs/manual.txt &&
-+	test ! -f src/part3.c &&
-+	test ! -f src/part3.h &&
-+	test ! -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (select - range)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo s; echo 1,3-4; echo 2; echo; echo c) | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test ! -f a.out &&
-+	test ! -f src/part3.c &&
-+	test ! -f src/part3.h &&
-+	test -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test ! -f docs/manual.txt &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (select - range 2)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo s; echo 4- 1; echo; echo c) | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test ! -f a.out &&
-+	test -f docs/manual.txt &&
-+	test -f src/part3.c &&
-+	test ! -f src/part3.h &&
-+	test ! -f src/part4.c &&
-+	test ! -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (inverse select)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo s; echo "*"; echo -5- 1 -2; echo; echo c) | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test ! -f a.out &&
-+	test -f docs/manual.txt &&
-+	test ! -f src/part3.c &&
-+	test ! -f src/part3.h &&
-+	test -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (ask)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo a; echo Y; echo y; echo no; echo yes; echo bad; echo) | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test ! -f a.out &&
-+	test ! -f docs/manual.txt &&
-+	test -f src/part3.c &&
-+	test ! -f src/part3.h &&
-+	test -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id (ask - Ctrl+D)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(echo a; echo Y; echo no; echo yes; echo "\04") | \
-+	git clean -id &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test ! -f a.out &&
-+	test -f docs/manual.txt &&
-+	test ! -f src/part3.c &&
-+	test -f src/part3.h &&
-+	test -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id with prefix and path (filter)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(cd build/ && \
-+	 (echo f; echo "docs"; echo "*.h"; echo ; echo c) | \
-+	 git clean -id ..) &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test ! -f a.out &&
-+	test -f docs/manual.txt &&
-+	test ! -f src/part3.c &&
-+	test -f src/part3.h &&
-+	test ! -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id with prefix and path (select by name)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(cd build/ && \
-+	 (echo s; echo "../docs/"; echo "../src/part3.c"; \
-+	  echo "../src/part4.c";  echo; echo c) | \
-+	 git clean -id ..) &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test ! -f docs/manual.txt &&
-+	test ! -f src/part3.c &&
-+	test -f src/part3.h &&
-+	test ! -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git clean -id with prefix and path (ask)' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
-+	docs/manual.txt obj.o build/lib.so &&
-+	(cd build/ && \
-+	 (echo a; echo Y; echo y; echo no; echo yes; echo bad; echo) | \
-+	 git clean -id ..) &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test ! -f a.out &&
-+	test ! -f docs/manual.txt &&
-+	test -f src/part3.c &&
-+	test ! -f src/part3.h &&
-+	test -f src/part4.c &&
-+	test -f src/part4.h &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_done
+> 2. I started to use cvsimport because it was the tool *provided with
+> git* about three years ago.
+> By that time i didn't find any better and simpler tool to use and
+> those implications were uknown for me,
+> they were brought up to my attention just recently.
+> CVS is not good for branches, so most of our projects didn't have any
+> cvs branches.
+> So for majority of those it seems that the cvsimport did it's job just fine.
+> Now we are going to try to migrate some projects that are using CVS
+> branches heavily.
+> That concerns me, so i'm looking for better tool.
+
+The Git test suite (tests t/t960?-*.sh) demonstrates some of the known
+problems with cvsimport, and those failures are summarized in the
+manpage for git-cvsimport(1).  Not all of the problems are related to
+branches and tags.  There might be more problems; I simply documented a
+few that I found relatively quickly then I stopped looking.
+
+> 3. Is there a way to have the whole plumbing with the
+> blobfiles and dumpfiles and consequent git fast-import wrapped into
+> nice command like:
+> 
+> git cvsimport -C path/to/my/new/shiny/gitrepo
+> 
+> Or are there any particular reasons why end user must deal with blob
+> and dump files and do fast-import afterwards?
+
+There are benefits to the split blobfile/dumpfile approach for some
+users, so I wouldn't want to get rid of that possibility.  But there's
+no reason I wouldn't accept a patch that provides an option to convert
+as you describe.  Alternately, it would take only a few lines of script
+to automate it yourself.
+
+Michael
+
 -- 
-1.8.3.rc2.26.g7472058
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
