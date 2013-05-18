@@ -1,187 +1,118 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v5 05/15] contrib: related: add helper Person classes
-Date: Sat, 18 May 2013 06:46:45 -0500
-Message-ID: <1368877615-9563-6-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v5 06/15] contrib: related: show role count
+Date: Sat, 18 May 2013 06:46:46 -0500
+Message-ID: <1368877615-9563-7-git-send-email-felipe.contreras@gmail.com>
 References: <1368877615-9563-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Duy Nguyen <pclouds@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 18 13:48:50 2013
+X-From: git-owner@vger.kernel.org Sat May 18 13:48:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Udfd3-00070f-ME
-	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 13:48:50 +0200
+	id 1Udfd9-00075M-LE
+	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 13:48:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754513Ab3ERLsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 May 2013 07:48:45 -0400
-Received: from mail-oa0-f41.google.com ([209.85.219.41]:60291 "EHLO
-	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754374Ab3ERLsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 May 2013 07:48:43 -0400
-Received: by mail-oa0-f41.google.com with SMTP id n9so6074542oag.28
-        for <git@vger.kernel.org>; Sat, 18 May 2013 04:48:43 -0700 (PDT)
+	id S1754531Ab3ERLsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 May 2013 07:48:47 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:39373 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753336Ab3ERLsr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 May 2013 07:48:47 -0400
+Received: by mail-ob0-f172.google.com with SMTP id tb18so5627532obb.3
+        for <git@vger.kernel.org>; Sat, 18 May 2013 04:48:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=5IMvay58m2dtGRtFJxVwzYCPC7yhLeGU3z5HML6ezxQ=;
-        b=FHSvVWSzdDnB8K1er1mVSCI+XMnyu9edbUAM9wKnUCg/zOnO6NSAfQnPPU2qnMiZlk
-         rPw4KKRJmm8WghvAtotAcrll9TvyIw7TvLyOv4j9K9n2BL2+r0dsE5Gin4Zs/fHRMSyb
-         UrVs6PwGfsZSdXfwG/GYAQZTPXNElBhpdW+2P2+k5F+ChsGljoevOGNVpBEEcJeDlZyK
-         2siYHVK5JE2WempzEM4owLlgc86yAyZsY2FM8do8QB2AsSFvBEOZnBeztAkLTARBi6rF
-         FhWHX+SPUmyc5FEjsqBPY618cL4j27fLa9IKyL6MOFDzVCnQ/4GCtyZHvjke07OS/w7B
-         hG0A==
-X-Received: by 10.60.62.237 with SMTP id b13mr5029462oes.40.1368877723398;
-        Sat, 18 May 2013 04:48:43 -0700 (PDT)
+        bh=q1Js+D/ta3PgvXAZR+AIvsN6q89ttTkM93wqrbfb3e4=;
+        b=aMaLBzgTitVbmHrXQIkZJlSUEbRKo52xy/FWBECCsRdD4Uugf7e6FQJA4DniQOa/Wg
+         Ttf0cVhL0cWhWujg3yPusW+yTQowN9htq5YCqfa4YAhlJT555yS+OQ1y9qf5k3T8LP1h
+         BrKcaSor0KnFldyvG4pkJhoMAbw2/NHalQufPaPgCkKoHkAocFP5vY4LoiNa2rK1Y1Uq
+         90LzUHNAlS+bYFA7fNbqceflwcSut5zrTjZB3jnIY9KW1OtJA+EJzn8tGRxQLFAuinD6
+         RZ97caMqZgG6KGQFYNcNZ3ADiQdsTJM59QbebczBS8/a6ZDd5V3tnbexO4rnOG7sUk1j
+         dHQw==
+X-Received: by 10.60.63.174 with SMTP id h14mr24759519oes.137.1368877726630;
+        Sat, 18 May 2013 04:48:46 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id h4sm2913549oel.2.2013.05.18.04.48.41
+        by mx.google.com with ESMTPSA id ns4sm11291648obc.2.2013.05.18.04.48.44
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 18 May 2013 04:48:42 -0700 (PDT)
+        Sat, 18 May 2013 04:48:45 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc2.542.g24820ba
 In-Reply-To: <1368877615-9563-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224779>
 
-No functional changes.
+Instead of showing the total involvement, show it per role: author, or
+signer.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/related/git-related | 80 +++++++++++++++++++++++++++++++--------------
- 1 file changed, 56 insertions(+), 24 deletions(-)
+ contrib/related/git-related | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
 diff --git a/contrib/related/git-related b/contrib/related/git-related
-index 7be2829..df13148 100755
+index df13148..cd1ef59 100755
 --- a/contrib/related/git-related
 +++ b/contrib/related/git-related
-@@ -8,10 +8,6 @@ require 'optparse'
- $since = '5-years-ago'
- $min_percent = 10
+@@ -31,10 +31,12 @@ class Person
+     @name = name
+     @email = email
+     @commits = {}
++    @roles = Hash.new(0)
+   end
  
--def fmt_person(name, email)
--  name ? '%s <%s>' % [name, email] : email
--end
--
- begin
-   OptionParser.new do |opts|
-     opts.program_name = 'git related'
-@@ -27,13 +23,59 @@ begin
- rescue OptionParser::InvalidOption
- end
+-  def add_role(commit)
++  def add_role(commit, role)
+     @commits[commit] = true
++    @roles[role] += 1
+   end
  
--class Commit
-+class Person
-+
-+  attr_reader :roles
-+
-+  def initialize(name, email)
-+    @name = name
-+    @email = email
-+    @commits = {}
-+  end
-+
-+  def add_role(commit)
-+    @commits[commit] = true
-+  end
-+
-+  def <=>(b)
-+    self.size <=> b.size
-+  end
-+
-+  def size
-+    @commits.size
-+  end
-+
-+  def to_s
-+    @name ? '%s <%s>' % [@name, @email] : @email
-+  end
-+
-+end
- 
--  attr_reader :persons
-+class Persons
-+
-+  @@index = {}
-+
-+  include Enumerable
-+
-+  def each(&block)
-+    @@index.values.each(&block)
-+  end
-+
-+  def self.get(name, email)
-+    id = [name, email]
-+    person = @@index[id]
-+    if not person
-+      person = @@index[id] = Person.new(name, email)
-+    end
-+    person
-+  end
-+
-+end
-+
-+class Commit
- 
-   def initialize(id)
-     @id = id
--    @persons = []
+   def <=>(b)
+@@ -79,20 +81,20 @@ class Commit
    end
  
    def parse(data)
-@@ -42,17 +84,18 @@ class Commit
+-    msg = nil
++    msg = author = nil
+     data.each_line do |line|
        if not msg
          case line
          when /^author ([^<>]+) <(\S+)> (.+)$/
--          @persons << fmt_person($1, $2)
-+          author = Persons.get($1, $2)
-+          author.add_role(@id)
+           author = Persons.get($1, $2)
+-          author.add_role(@id)
++          author.add_role(@id, :author)
          when /^$/
            msg = true
          end
        else
          if line =~ /^(Signed-off|Reviewed|Acked)-by: ([^<>]+) <(\S+?)>$/
--          @persons << fmt_person($2, $3)
-+          person = Persons.get($2, $3)
-+          person.add_role(@id)
+           person = Persons.get($2, $3)
+-          person.add_role(@id)
++          person.add_role(@id, :signer) if person != author
          end
        end
      end
--    @persons.uniq!
-   end
- 
- end
-@@ -126,21 +169,10 @@ commits = Commits.new
- commits.from_patch(ARGV[0])
- commits.import
- 
--count_per_person = Hash.new(0)
--
--commits.each do |id, commit|
--  commit.persons.each do |person|
--    count_per_person[person] += 1
--  end
--end
--
--# sort by number of participations
--count_sort = lambda do |a, b|
--  b[1] <=> a[1]
--end
-+persons = Persons.new
- 
--count_per_person.sort(&count_sort).each do |person, count|
--  percent = count.to_f * 100 / commits.size
-+persons.sort.reverse.each do |person|
-+  percent = person.size.to_f * 100 / commits.size
+@@ -174,5 +176,11 @@ persons = Persons.new
+ persons.sort.reverse.each do |person|
+   percent = person.size.to_f * 100 / commits.size
    next if percent < $min_percent
-   puts '%s (involved: %u%%)' % [person, percent]
+-  puts '%s (involved: %u%%)' % [person, percent]
++
++  roles = person.roles.map do |role, role_count|
++    role_percent = role_count.to_f * 100 / commits.size
++    '%s: %u%%' % [role, role_percent]
++  end
++
++  puts '%s (%s)' % [person, roles.join(', ')]
  end
 -- 
 1.8.3.rc2.542.g24820ba
