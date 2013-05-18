@@ -1,63 +1,57 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5 01/15] Add new git-related helper to contrib
-Date: Sat, 18 May 2013 06:55:33 -0500
-Message-ID: <CAMP44s0QYrzVBsmba1PYMG0yo0CpvTnVm=QHfYif6iu_Zo=tNA@mail.gmail.com>
-References: <1368877615-9563-1-git-send-email-felipe.contreras@gmail.com>
-	<1368877615-9563-2-git-send-email-felipe.contreras@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: User experience: git-remote-hg
+Date: Sat, 18 May 2013 17:30:58 +0530
+Message-ID: <CALkWK0=MrUE6POyVhqw5R+mAnk6S3TT0cn5vOcJSbXbJ5zWuzw@mail.gmail.com>
+References: <CANxJqTwyYuQO8bXP=yV+-aPMMo4=KB08XfxehQZZM3nC+UkvPQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 18 13:55:54 2013
+Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
+To: Samuel Chase <samebchase@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 18 14:01:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Udfjs-0004bE-3i
-	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 13:55:52 +0200
+	id 1UdfpZ-00015x-Gq
+	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 14:01:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754644Ab3ERLzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 May 2013 07:55:38 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:38230 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753307Ab3ERLzh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 May 2013 07:55:37 -0400
-Received: by mail-la0-f42.google.com with SMTP id fg20so2867578lab.1
-        for <git@vger.kernel.org>; Sat, 18 May 2013 04:55:34 -0700 (PDT)
+	id S1754412Ab3ERMBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 May 2013 08:01:41 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:64952 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754075Ab3ERMBk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 May 2013 08:01:40 -0400
+Received: by mail-ie0-f175.google.com with SMTP id s9so10973032iec.20
+        for <git@vger.kernel.org>; Sat, 18 May 2013 05:01:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=NPdcGJGBFcGytxoLZNxqDVx0aQ60e5bjFSfEhdhJ494=;
-        b=iz76S+kTZnfvsVUkQB9vTZTz9Q1aus4CLV9YW32Z/JrekQiA12Yh9Uge0H9wG6tc/F
-         gboqcxtlMsLKzcAThJVllsOSixQNldS8dwBYTomlRRBBb5VabgnYHKk9tyE2Qz8hAIYX
-         nnf6vLcdNRfGFyhFRBwLf8oMjY76PlLp+Mc5Udx75H0DaANKXxGzvNu37gn3837WHpOh
-         OgJadpoUaiPU/OxUTM6E7oRWqVU8rCWGSI9gs1Oz0am2HARXvHWY7cTq5gS+FXofutNj
-         uduiAey0IaCN9TWqdwr8xThwPVrx+f7crjvAEmem+RR+zOkof13HYkYyYpuP7/foJZH0
-         2AYg==
-X-Received: by 10.112.163.71 with SMTP id yg7mr14730558lbb.8.1368878134218;
- Sat, 18 May 2013 04:55:34 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Sat, 18 May 2013 04:55:33 -0700 (PDT)
-In-Reply-To: <1368877615-9563-2-git-send-email-felipe.contreras@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=XswjkBlXMeLTudG9YjlYfoD8nGCDpPf7yE+aR0xHzfk=;
+        b=Hz6uXRDeaS8B93ZCouweaF9tCwMMISV3Y69y9E3jrfSxoZZylApTkYb+T9ZnkAOfSD
+         2GztaVNpxm8rnwlcTimosSip5peK95dMHXqJLemlyZwX4ki0S67LVLELXieN8il+unsc
+         FTWKhIX+Rr00JljDr3SvS72cQ/dkoqmlDoOLaPjlhPjbrtlAmhFwLXo0sO0JeYNgpoaq
+         9COY+B94vJwSjvOOG/G17Kl7K8pheqVjcxa5DVAdPU4TVbw3e9x3+5MynYPawHWjo0kt
+         E875EXwlA0DcZMuv1Je6lE76kR4+bWrpo1dxRRTmr0HZZ8/4pKxPWF/+hVdYMUwZ21GG
+         /rrA==
+X-Received: by 10.50.66.197 with SMTP id h5mr901371igt.63.1368878499819; Sat,
+ 18 May 2013 05:01:39 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Sat, 18 May 2013 05:00:58 -0700 (PDT)
+In-Reply-To: <CANxJqTwyYuQO8bXP=yV+-aPMMo4=KB08XfxehQZZM3nC+UkvPQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224790>
 
-On Sat, May 18, 2013 at 6:46 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
+[+CC: Felipe, the author and maintainer of the script]
 
->  contrib/related/git-related | 124 ++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 124 insertions(+)
->  create mode 100755 contrib/related/git-related
+Samuel Chase wrote:
+> I just used git-remote-hg to convert a small hg repository.
+>
+> It worked perfectly.
 
-I tried everything and I don't think it's physically possible to make
-this script any simpler without severely crippling it's main goal.
+We'll be happy to address any deficiencies/ warts you find in everyday usage.
 
--- 
-Felipe Contreras
+Thanks.
