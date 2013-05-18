@@ -1,46 +1,46 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v12 06/15] git-clean: refactor git-clean into two phases
-Date: Sat, 18 May 2013 11:18:58 +0800
-Message-ID: <271643036271eeaadb6b65c223905771be4bef71.1368846844.git.worldhello.net@gmail.com>
+Subject: [PATCH v12 08/15] git-clean: show items of del_list in columns
+Date: Sat, 18 May 2013 11:19:00 +0800
+Message-ID: <d93dbe148950472982968f171cc9ab228f36db46.1368846844.git.worldhello.net@gmail.com>
 References: <cover.1368846844.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 18 05:19:54 2013
+X-From: git-owner@vger.kernel.org Sat May 18 05:21:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdXgW-0004GC-1v
-	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 05:19:52 +0200
+	id 1UdXhh-0005De-8i
+	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 05:21:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932518Ab3ERDTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 23:19:47 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:33828 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932387Ab3ERDTp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 23:19:45 -0400
-Received: by mail-pa0-f51.google.com with SMTP id ld10so4126426pab.10
-        for <git@vger.kernel.org>; Fri, 17 May 2013 20:19:44 -0700 (PDT)
+	id S1758694Ab3ERDTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 23:19:53 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:57473 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757363Ab3ERDTv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 23:19:51 -0400
+Received: by mail-pb0-f49.google.com with SMTP id rp8so2580004pbb.36
+        for <git@vger.kernel.org>; Fri, 17 May 2013 20:19:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:in-reply-to:references;
-        bh=PNDfoLSO1e75XBPTFIVNX3HeGW21JfIkfin0gzgxylw=;
-        b=ejmCxMiEr4bDXZC6uaaWaqeJndjIHJz9MSGDtn9TQ+/VQBEf83kD643lz+mG9e2tME
-         o4iBt7cFaTwMjP0lnT9SQ0xsiyW2WmsIzQZHvNkWJpG2jYm7fVYiKyNe47Fq8LGvyFD4
-         PmKsXjaEfYQ+6HJtYa7xPD6Oi5djZitMzJ07s0HeXIxhn6MzSZNStrpyLd44YapQ+ljM
-         dLOvDNzdbxjPK8I8DJgfvLTQODmiDnJBDC9vcVfbqfazprxqmktlScYDpyjborX5tumT
-         rWq6GCjhFXPwW28CZbkEtmj3m8eMOfjy9DskEDxWUiJ8CisvsPp+vzygSSVxoZ5QSWfL
-         QgUA==
-X-Received: by 10.68.202.34 with SMTP id kf2mr50409663pbc.56.1368847184471;
-        Fri, 17 May 2013 20:19:44 -0700 (PDT)
+        bh=V+EO+/SunWiqnei6Q73tn7TQnDmKC+xtPcCdTRSH34c=;
+        b=ZDxEVT0wvuuF1QaHVkIhrTLsN35YszXrORX8ZnZR/Qn2JS5eiuWr75XziQ7G5bnuu+
+         6aLynnLpdf+7TW8gcKj9Cr70k7KrFavcdE/7Y8y6yTe2yJ8dxmEFOluFdIhGroD3roKl
+         mjwy4YQEMTEmTpHD9SJ0W3W2bHJWsfPm6QkFoF8yFEPy2LgWUuwqBxbsHYhzbOEVbh7K
+         MmlhlDfiu/YJGjDYLkCy8riHuHishVb8x0Izr97snYUjZgfVuCwwsa0HU3NpUFjTs70A
+         43RWIavlBWvrQMdrZLtYEapSov6F94/Vp9Lca+qmN3b8/8IrFuipYJZip79F1g9bu2tf
+         kETQ==
+X-Received: by 10.66.232.196 with SMTP id tq4mr52582012pac.167.1368847190022;
+        Fri, 17 May 2013 20:19:50 -0700 (PDT)
 Received: from localhost.localdomain ([114.248.155.144])
-        by mx.google.com with ESMTPSA id fn2sm13676683pbc.15.2013.05.17.20.19.41
+        by mx.google.com with ESMTPSA id fn2sm13676683pbc.15.2013.05.17.20.19.47
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 17 May 2013 20:19:43 -0700 (PDT)
+        Fri, 17 May 2013 20:19:49 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc2.26.g7472058
 In-Reply-To: <cover.1368846844.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1368846844.git.worldhello.net@gmail.com>
@@ -49,146 +49,126 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224762>
 
-Before introducing interactive git-clean, refactor git-clean operations
-into two phases:
-
- * hold cleaning items in del_list,
- * and remove them in a separate loop at the end.
-
-We will introduce interactive git-clean between the two phases. The
-interactive git-clean will show what would be done and must confirm
-before do real cleaning.
+When there are lots of items to be cleaned, it is hard to see them all
+in one screen. Show them in columns will solve this problem.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Comments-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- builtin/clean.c | 64 ++++++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 45 insertions(+), 19 deletions(-)
+ Documentation/config.txt |  4 ++++
+ builtin/clean.c          | 49 +++++++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 44 insertions(+), 9 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 6e53f..e031b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -955,6 +955,10 @@ column.branch::
+ 	Specify whether to output branch listing in `git branch` in columns.
+ 	See `column.ui` for details.
+ 
++column.clean::
++	Specify the layout when list items in `git clean -i`, which always
++	shows files and directories in columns. See `column.ui` for details.
++
+ column.status::
+ 	Specify whether to output untracked files in `git status` in columns.
+ 	See `column.ui` for details.
 diff --git a/builtin/clean.c b/builtin/clean.c
-index f77f95..23e1f 100644
+index f28d6..f25ba 100644
 --- a/builtin/clean.c
 +++ b/builtin/clean.c
-@@ -15,6 +15,7 @@
+@@ -13,10 +13,12 @@
+ #include "refs.h"
+ #include "string-list.h"
  #include "quote.h"
++#include "column.h"
  
  static int force = -1; /* unset */
-+static struct string_list del_list = STRING_LIST_INIT_DUP;
+ static int interactive;
+ static struct string_list del_list = STRING_LIST_INIT_DUP;
++static unsigned int colopts;
  
  static const char *const builtin_clean_usage[] = {
- 	N_("git clean [-d] [-f] [-n] [-q] [-e <pattern>] [-x | -X] [--] <paths>..."),
-@@ -148,12 +149,13 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	int dry_run = 0, remove_directories = 0, quiet = 0, ignored = 0;
- 	int ignored_only = 0, config_set = 0, errors = 0, gone = 1;
- 	int rm_flags = REMOVE_DIR_KEEP_NESTED_GIT;
--	struct strbuf directory = STRBUF_INIT;
-+	struct strbuf abs_path = STRBUF_INIT;
- 	struct dir_struct dir;
- 	static const char **pathspec;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
- 	struct exclude_list *el;
-+	struct string_list_item *item;
- 	const char *qname;
- 	char *seen = NULL;
- 	struct option options[] = {
-@@ -223,6 +225,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 		int matches = 0;
- 		struct cache_entry *ce;
- 		struct stat st;
-+		const char *rel;
+ 	N_("git clean [-d] [-f] [-i] [-n] [-q] [-e <pattern>] [-x | -X] [--] <paths>..."),
+@@ -31,8 +33,13 @@ static const char *msg_warn_remove_failed = N_("failed to remove %s");
  
- 		/*
- 		 * Remove the '/' at the end that directory
-@@ -242,13 +245,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 				continue; /* Yup, this one exists unmerged */
- 		}
- 
--		/*
--		 * we might have removed this as part of earlier
--		 * recursive directory removal, so lstat() here could
--		 * fail with ENOENT.
--		 */
- 		if (lstat(ent->name, &st))
--			continue;
-+			die_errno("Cannot lstat '%s'", ent->name);
- 
- 		if (pathspec) {
- 			memset(seen, 0, argc > 0 ? argc : 1);
-@@ -257,33 +255,61 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 		}
- 
- 		if (S_ISDIR(st.st_mode)) {
--			strbuf_addstr(&directory, ent->name);
- 			if (remove_directories || (matches == MATCHED_EXACTLY)) {
--				if (remove_dirs(&directory, prefix, rm_flags, dry_run, quiet, &gone))
--					errors++;
--				if (gone && !quiet) {
--					qname = quote_path_relative(directory.buf, prefix, &buf);
--					printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
--				}
-+				rel = relative_path(ent->name, prefix, &buf);
-+				string_list_append(&del_list, rel);
- 			}
--			strbuf_reset(&directory);
- 		} else {
- 			if (pathspec && !matches)
- 				continue;
--			res = dry_run ? 0 : unlink(ent->name);
-+			rel = relative_path(ent->name, prefix, &buf);
-+			string_list_append(&del_list, rel);
-+		}
-+	}
+ static int git_clean_config(const char *var, const char *value, void *cb)
+ {
+-	if (!strcmp(var, "clean.requireforce"))
++	if (!prefixcmp(var, "column."))
++		return git_column_config(var, value, "clean", &colopts);
 +
-+	/* TODO: do interactive git-clean here, which will modify del_list */
++	if (!strcmp(var, "clean.requireforce")) {
+ 		force = !git_config_bool(var, value);
++		return 0;
++	}
+ 	return git_default_config(var, value, cb);
+ }
+ 
+@@ -144,21 +151,46 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
+ 	return ret;
+ }
+ 
+-static void interactive_main_loop(void)
++static void pretty_print_dels(void)
+ {
+-	struct strbuf confirm = STRBUF_INIT;
+-	struct strbuf buf = STRBUF_INIT;
++	struct string_list list = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *item;
++	struct strbuf buf = STRBUF_INIT;
+ 	const char *qname;
++	struct column_options copts;
 +
 +	for_each_string_list_item(item, &del_list) {
-+		struct stat st;
++		qname = quote_path_relative(item->string, NULL, &buf);
++		string_list_append(&list, qname);
++	}
 +
-+		if (prefix) {
-+			strbuf_addstr(&abs_path, prefix);
-+		}
-+		strbuf_addstr(&abs_path, item->string);
-+
-+		/*
-+		 * we might have removed this as part of earlier
-+		 * recursive directory removal, so lstat() here could
-+		 * fail with ENOENT.
-+		 */
-+		if (lstat(abs_path.buf, &st))
-+			continue;
-+
-+		if (S_ISDIR(st.st_mode)) {
-+			if (remove_dirs(&abs_path, prefix, rm_flags, dry_run, quiet, &gone))
-+				errors++;
-+			if (gone && !quiet) {
-+				qname = quote_path_relative(item->string, NULL, &buf);
-+				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
-+			}
-+		} else {
-+			res = dry_run ? 0 : unlink(abs_path.buf);
- 			if (res) {
--				qname = quote_path_relative(ent->name, prefix, &buf);
-+				qname = quote_path_relative(item->string, NULL, &buf);
- 				warning(_(msg_warn_remove_failed), qname);
- 				errors++;
- 			} else if (!quiet) {
--				qname = quote_path_relative(ent->name, prefix, &buf);
-+				qname = quote_path_relative(item->string, NULL, &buf);
- 				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
- 			}
- 		}
-+		strbuf_reset(&abs_path);
- 	}
- 	free(seen);
- 
--	strbuf_release(&directory);
-+	strbuf_release(&abs_path);
++	/*
++	 * always enable column display, we only consult column.*
++	 * about layout strategy and stuff
++	 */
++	colopts = (colopts & ~COL_ENABLE_MASK) | COL_ENABLED;
++	memset(&copts, 0, sizeof(copts));
++	copts.indent = "  ";
++	copts.padding = 2;
++	print_columns(&list, colopts, &copts);
++	putchar('\n');
 +	strbuf_release(&buf);
-+	string_list_clear(&del_list, 0);
- 	string_list_clear(&exclude_list, 0);
- 	return (errors != 0);
++	string_list_clear(&list, 0);
++}
++
++static void interactive_main_loop(void)
++{
++	struct strbuf confirm = STRBUF_INIT;
+ 
+ 	while (del_list.nr) {
+ 		putchar('\n');
+-		for_each_string_list_item(item, &del_list) {
+-			qname = quote_path_relative(item->string, NULL, &buf);
+-			printf(_(msg_would_remove), qname);
+-		}
++		printf_ln(Q_("Would remove the following item:",
++			     "Would remove the following items:",
++			     del_list.nr));
+ 		putchar('\n');
+ 
++		pretty_print_dels();
++
+ 		printf(_("Remove [y/n]? "));
+ 		if (strbuf_getline(&confirm, stdin, '\n') != EOF) {
+ 			strbuf_trim(&confirm);
+@@ -184,7 +216,6 @@ static void interactive_main_loop(void)
+ 		}
+ 	}
+ 
+-	strbuf_release(&buf);
+ 	strbuf_release(&confirm);
  }
+ 
 -- 
 1.8.3.rc2.26.g7472058
