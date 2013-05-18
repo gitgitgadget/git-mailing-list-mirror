@@ -1,111 +1,83 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
 Subject: Re: [PATCH 1/3] fetch: add --allow-local option
-Date: Sat, 18 May 2013 07:25:37 -0500
-Message-ID: <CAMP44s3xdWzVviPvrN7D1fTG6Lwgg-dEzju--VuiwZA-8bV+MQ@mail.gmail.com>
-References: <1368689474-28911-1-git-send-email-felipe.contreras@gmail.com>
-	<1368689474-28911-2-git-send-email-felipe.contreras@gmail.com>
-	<7v61yi9arl.fsf@alter.siamese.dyndns.org>
-	<CAMP44s14TSGtQ7kvWUgrOQvT1uKciSV5fd5pQvy1ven8Z=qVcg@mail.gmail.com>
-	<7v8v3e7udi.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0Szu8oHBKMapZ6dQ1K67MXDcACuUF-+Y-jC+EgHs2QEA@mail.gmail.com>
-	<7vk3my6bu1.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2W5MUneTwcSnr=Ey715paKgSL6MqXmYKdSmw4NqdL4qQ@mail.gmail.com>
-	<7vk3my33vb.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0J7vcxno=v9_ewUE6FcuRVuYQhCNVS8D+AvP6cG2XNfQ@mail.gmail.com>
-	<7vtxm1xxvd.fsf@alter.siamese.dyndns.org>
+Date: Sat, 18 May 2013 14:12:05 +0100
+Organization: OPDS
+Message-ID: <E74470E4201142788D36127322130401@PhilipOakley>
+References: <1368689474-28911-1-git-send-email-felipe.contreras@gmail.com><1368689474-28911-2-git-send-email-felipe.contreras@gmail.com><7v61yi9arl.fsf@alter.siamese.dyndns.org><CAMP44s14TSGtQ7kvWUgrOQvT1uKciSV5fd5pQvy1ven8Z=qVcg@mail.gmail.com><7v8v3e7udi.fsf@alter.siamese.dyndns.org><CAMP44s0Szu8oHBKMapZ6dQ1K67MXDcACuUF-+Y-jC+EgHs2QEA@mail.gmail.com><7vk3my6bu1.fsf@alter.siamese.dyndns.org><CAMP44s2W5MUneTwcSnr=Ey715paKgSL6MqXmYKdSmw4NqdL4qQ@mail.gmail.com><7vk3my33vb.fsf@alter.siamese.dyndns.org><CAMP44s0J7vcxno=v9_ewUE6FcuRVuYQhCNVS8D+AvP6cG2XNfQ@mail.gmail.com> <7vtxm1xxvd.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 18 14:25:45 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, "Jens Lehmann" <Jens.Lehmann@web.de>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Felipe Contreras" <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 18 15:12:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdgCm-0004jx-Va
-	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 14:25:45 +0200
+	id 1Udgvb-0001nD-8D
+	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 15:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750987Ab3ERMZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 May 2013 08:25:40 -0400
-Received: from mail-la0-f49.google.com ([209.85.215.49]:37586 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750713Ab3ERMZj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 May 2013 08:25:39 -0400
-Received: by mail-la0-f49.google.com with SMTP id fp13so4420608lab.22
-        for <git@vger.kernel.org>; Sat, 18 May 2013 05:25:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=3EAxPHj4PtYFiJ6koIUYMpTp5tZIBuAFapagQMya+OQ=;
-        b=WzwMdxcMli2SNslCJzdGxvHMHY71fMdN+nD+yDkqXjYrSXiKz9BhTZvqC3PTlM29nq
-         pgdtPsI08g/2k70iwKDekDywklK0AaKxYAaZ3Y2JreZTbpl5nUcFFWEEx68HQQYIIupU
-         jqgVuTXk54BGE9NBkUbKpkp1ieS/1EKG38yUSTlCmCYEiZVmdYDSv5+oxMve5dAOjwDv
-         1vut21nUALjD73apMvzXOOKhAMRgxzr8QaNEZosY0ydPqGFKZKQzI4SO1ZuZ2CgWHe4f
-         MJ1u4fBfV+hmi5fIPwTrtGJHNYHhRvTNW7VxwJ8hkqZaD+blZwyrJD4BryDi7rejcjNU
-         2bnA==
-X-Received: by 10.112.172.40 with SMTP id az8mr13355797lbc.88.1368879937787;
- Sat, 18 May 2013 05:25:37 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Sat, 18 May 2013 05:25:37 -0700 (PDT)
-In-Reply-To: <7vtxm1xxvd.fsf@alter.siamese.dyndns.org>
+	id S1751257Ab3ERNLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 May 2013 09:11:47 -0400
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:40867 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751115Ab3ERNLq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 May 2013 09:11:46 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AskNALl9l1FZ8YNG/2dsb2JhbABbgwiJKrhKBAEDAYEAF3SCGgUBAQQBCAEBLh4BASEFBgIDBQIBAxEEAQEKJRQBBBoGBw8IBgESCAIBAgMBh3UKvSCOBDNqgnphA4hnhgGaEIMQOw
+X-IronPort-AV: E=Sophos;i="4.87,699,1363132800"; 
+   d="scan'208";a="428600520"
+Received: from host-89-241-131-70.as13285.net (HELO PhilipOakley) ([89.241.131.70])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 18 May 2013 14:11:44 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224792>
 
-On Fri, May 17, 2013 at 1:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> This is irrelevant, it's an implementation detail of 'git pull'. *THE
->> USER* is not running 'git fetch .'
->
-> To those who fear running "git pull", the following has worked as a
-> quick way to "preview" what they would be getting.
->
->         git fetch
->         git log ..FETCH_HEAD
->
-> and then they can "git merge FETCH_HEAD" to conclude it, or run a
-> "git pull" for real.  We teach the more explicit form to end users
-> in our tutorial,
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Friday, May 17, 2013 7:30 PM
+Subject: Re: [PATCH 1/3] fetch: add --allow-local option
 
-That "tutorial" is mostly irrelevant; it has not been properly updated
-in years, and it doesn't do it's job properly.
-
-Nowadays most people use the Pro Git book, which doesn't mention
-FETCH_HEAD even once. And why would it? It's not a useful concept for
-typical users.
+[...]
 
 > So when "the user" is running "git fetch" on "mywork" branch that
 > happens to be forked from a local "master", i.e. her configuration
 > is set as
 >
->         [branch "mywork"]
->                 remote = .
->                 merge = refs/heads/master
+> [branch "mywork"]
+>        remote = .
+>                merge = refs/heads/master
 >
+
+Was the '.' example illustrative rather than exact. I see no case of 
+using '.' in my configs. Or am I completely missing the point? (e.g. 
+that the use of '.' an example of possible future usage)?
+
+
 > we still need to have FETCH_HEAD updated to point at what we would
-> be merging if she did a "git pull".
-
-No, we don't need that. That is only needed by 'git pull', and in
-fact, it should be possible to reimplement 'git pull' so that it skips
-FETCH_HEAD when the remote is local.
-
-These are mere implementation details.
-
+> be merging if she did a "git pull".  It may be OK to additionally
+> fetch objects from 'origin' and update the remote tracking branches
+> associated with 'origin', but anything from 'origin' should not
+> contaminate what results in FETCH_HEAD---it should record whatever
+> we record when we did fetch refs/heads/master from '.'.
+>
 > As I said in the very beginning, it was a mistake for me to suggest
 > adding a special case behaviour for '.' remote in the first place.
 > It breaks a long-standing expectation and workflow built around it.
-
-The fact that it's "long-standing" doesn't mean it's sane.
-
+>
 > So sorry for wasting our time, and consider this as a misguided
 > excursion.
+> --
 
-It doesn't matter, the problem that 'git fetch' does something totally
-and completely uses is still there.
-
--- 
-Felipe Contreras
+Philip 
