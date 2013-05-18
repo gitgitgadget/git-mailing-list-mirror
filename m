@@ -1,93 +1,145 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/2] remote-helpers: tests: use python directly
-Date: Fri, 17 May 2013 22:04:49 -0500
-Message-ID: <CAMP44s1w98hDbJx10PFDnS3YeYhFAHDyw=O2LdwCendLG6DVQQ@mail.gmail.com>
-References: <1368825008-2815-1-git-send-email-felipe.contreras@gmail.com>
-	<1368825008-2815-2-git-send-email-felipe.contreras@gmail.com>
-	<7vwqqxujby.fsf@alter.siamese.dyndns.org>
-	<CAJDDKr6Qnx5ddBn=6reNOY44CxaDgD254H7M3K2mb8bbd8jpmA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 18 05:05:56 2013
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH v12 03/15] quote.c: remove path_relative, use relative_path instead
+Date: Sat, 18 May 2013 11:18:55 +0800
+Message-ID: <2833373ff27b064b34d6a2bd827ceb05df272d62.1368846844.git.worldhello.net@gmail.com>
+References: <cover.1368846844.git.worldhello.net@gmail.com>
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 18 05:19:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdXT1-00028J-Hl
-	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 05:05:55 +0200
+	id 1UdXgU-0004GC-8c
+	for gcvg-git-2@plane.gmane.org; Sat, 18 May 2013 05:19:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758892Ab3ERDEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 May 2013 23:04:52 -0400
-Received: from mail-la0-f43.google.com ([209.85.215.43]:35404 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758733Ab3ERDEv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 May 2013 23:04:51 -0400
-Received: by mail-la0-f43.google.com with SMTP id ez20so3676504lab.2
-        for <git@vger.kernel.org>; Fri, 17 May 2013 20:04:49 -0700 (PDT)
+	id S932495Ab3ERDTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 May 2013 23:19:36 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:48744 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759358Ab3ERDTb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 May 2013 23:19:31 -0400
+Received: by mail-pa0-f44.google.com with SMTP id jh10so4150609pab.3
+        for <git@vger.kernel.org>; Fri, 17 May 2013 20:19:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=mx3iTZpAHw7tRF1YkNYTfJ9zmLDGc4cWLm6WMBGW4kY=;
-        b=Ja3VxRy1jxVeawl45/2Lbdrgl+YsLNiZqhoGNrLj7UzcbcsfU0SL5GvGIuXQfTZtgE
-         IlUF4F6lh9ix9UZEwiWfhCYQL/hlKZxMNx6G7eYzhWtHUU9B6VEZvaFI06gtpY/fMpGS
-         n8ulHwKYu9BdiYtaiWnIF1cEumZgbnzZcEJGTSgRJJv4+ZGquWJytA4TVBM66BNrKjTF
-         aSR3Hl4WdnDH+Or6EEjtcldSqhz/KhY/GKcux2wvzaR9h/F+0KEhBaZExb9YAtjWKrLQ
-         FHmzfrvd2jYpSVT/wJgPusS5O3PGLRO7PJBw7vibzenqy4j2WQE//xw5PpiIQgHUvtjr
-         UEig==
-X-Received: by 10.152.120.4 with SMTP id ky4mr24233644lab.5.1368846289704;
- Fri, 17 May 2013 20:04:49 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Fri, 17 May 2013 20:04:49 -0700 (PDT)
-In-Reply-To: <CAJDDKr6Qnx5ddBn=6reNOY44CxaDgD254H7M3K2mb8bbd8jpmA@mail.gmail.com>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:in-reply-to:references;
+        bh=zXy6zoGVXWAIE0b1aMYmYkA6XtWWYHj5SR3rIi25mBQ=;
+        b=yionifa2jzLlGsr+adevUwozB8L8NfN8juiomSpa4gjNhEpjWOdYY7qpuqINcqmvOX
+         fH8VP4IfM7C5U1tr1J1TvdA9wLwq/2z6kyEwslP8A4ZLmZVkTV8BDJPt5ObaeIXs5eMv
+         kq2yRvg7/cX7cKfZq8MRV4LF6gC3TCvk0VmHqQM8Vcyko1gzQFDgYi6ruQqK1Y63HuE+
+         ETeY9saw2S0c1vHB4dgpth2J8Gp4oq2LkO7cG8ysUvPhzh/g5sZJDA3BX8ViePNYutpz
+         JG0B9V6ubbHm7Nhx3iKo9szJ69WJ7J9msMe2UwcFhxytPIvnv2waqaYHoFfllyubHINq
+         RVVg==
+X-Received: by 10.66.144.170 with SMTP id sn10mr51334702pab.42.1368847170612;
+        Fri, 17 May 2013 20:19:30 -0700 (PDT)
+Received: from localhost.localdomain ([114.248.155.144])
+        by mx.google.com with ESMTPSA id fn2sm13676683pbc.15.2013.05.17.20.19.28
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 17 May 2013 20:19:29 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc2.26.g7472058
+In-Reply-To: <cover.1368846844.git.worldhello.net@gmail.com>
+In-Reply-To: <cover.1368846844.git.worldhello.net@gmail.com>
+References: <cover.1368782129.git.worldhello.net@gmail.com> <cover.1368846844.git.worldhello.net@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224755>
 
-On Fri, May 17, 2013 at 9:51 PM, David Aguilar <davvid@gmail.com> wrote:
-> On Fri, May 17, 2013 at 7:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> These remote helpers use 'env python', not PYTHON_PATH, so that's where
->>> we should check for the extensions. Otherwise, if 'python' is not
->>> PYTHON_PATH (e.g. /usr/bin/python: Makefile's default), there will be a
->>> mismatch between the python libraries actually accessible to the remote
->>> helpers.
->>
->> What I am reading here is that what the "helper" uses and what the
->> "test" checks to see if it can use the "helper" were different; and
->> this patch fixes that misalignment by testing what the "helper"
->> actually uses.
->>
->> So it is a right thing to do in that sense.
->>
->> I however am having this nagging feeling that I may be missing
->> something subtle here.  Comments from others are very much welcome.
->
-> Yes, this is correct.  Another way to skin this cat would be to do
-> search/replace in a Makefile to burn in the PYTHON_PATH similar to how
-> we do for the .sh scripts and other .py files in the main Makefile.
-> The remote helpers are in contrib/ so they do not go through the main
-> Makefile, which is the root cause.
->
-> Longer-term, it would be good to treat these uniformly, but this is no
-> worse for now.
+Since there is an enhanced version of relative_path() in path.c,
+remove duplicate counterpart path_relative() in quote.c.
 
-Yeap, I initially thought it would be tricky to implement in the
-rather minimal Makefile, but it seems it wouldn't. Whoever, I still
-find it useful that I don't have to run 'make' to test these, and I
-think it's nice that people can download directly as the final name
-('git-remote-hg'), and don't have to rename. And since these aren't
-installed with 'make install' anyway, I don't see any big hurry.
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+ quote.c | 55 ++-----------------------------------------------------
+ 1 file changed, 2 insertions(+), 53 deletions(-)
 
-Cheers.
-
+diff --git a/quote.c b/quote.c
+index 91122..64ff3 100644
+--- a/quote.c
++++ b/quote.c
+@@ -312,75 +312,24 @@ void write_name_quotedpfx(const char *pfx, size_t pfxlen,
+ 	fputc(terminator, fp);
+ }
+ 
+-static const char *path_relative(const char *in, int len,
+-				 struct strbuf *sb, const char *prefix,
+-				 int prefix_len);
+-
+ void write_name_quoted_relative(const char *name, size_t len,
+ 				const char *prefix, size_t prefix_len,
+ 				FILE *fp, int terminator)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+-	name = path_relative(name, len, &sb, prefix, prefix_len);
++	name = relative_path(name, prefix, &sb);
+ 	write_name_quoted(name, fp, terminator);
+ 
+ 	strbuf_release(&sb);
+ }
+ 
+-/*
+- * Give path as relative to prefix.
+- *
+- * The strbuf may or may not be used, so do not assume it contains the
+- * returned path.
+- */
+-static const char *path_relative(const char *in, int len,
+-				 struct strbuf *sb, const char *prefix,
+-				 int prefix_len)
+-{
+-	int off, i;
+-
+-	if (len < 0)
+-		len = strlen(in);
+-	if (prefix_len < 0) {
+-		if (prefix)
+-			prefix_len = strlen(prefix);
+-		else
+-			prefix_len = 0;
+-	}
+-
+-	off = 0;
+-	i = 0;
+-	while (i < prefix_len && i < len && prefix[i] == in[i]) {
+-		if (prefix[i] == '/')
+-			off = i + 1;
+-		i++;
+-	}
+-	in += off;
+-	len -= off;
+-
+-	if (i >= prefix_len)
+-		return in;
+-
+-	strbuf_reset(sb);
+-	strbuf_grow(sb, len);
+-
+-	while (i < prefix_len) {
+-		if (prefix[i] == '/')
+-			strbuf_addstr(sb, "../");
+-		i++;
+-	}
+-	strbuf_add(sb, in, len);
+-
+-	return sb->buf;
+-}
+-
+ /* quote path as relative to the given prefix */
+ char *quote_path_relative(const char *in, int len,
+ 			  struct strbuf *out, const char *prefix)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+-	const char *rel = path_relative(in, len, &sb, prefix, -1);
++	const char *rel = relative_path(in, prefix, &sb);
+ 	strbuf_reset(out);
+ 	quote_c_style_counted(rel, strlen(rel), out, NULL, 0);
+ 	strbuf_release(&sb);
 -- 
-Felipe Contreras
+1.8.3.rc2.26.g7472058
