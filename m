@@ -1,75 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 01/15] Add new git-related helper to contrib
-Date: Sun, 19 May 2013 00:42:11 -0700
-Message-ID: <7vli7bza98.fsf@alter.siamese.dyndns.org>
-References: <1368877615-9563-1-git-send-email-felipe.contreras@gmail.com>
-	<1368877615-9563-2-git-send-email-felipe.contreras@gmail.com>
-	<CAMP44s0QYrzVBsmba1PYMG0yo0CpvTnVm=QHfYif6iu_Zo=tNA@mail.gmail.com>
+Subject: Re: git-diff-index man page
+Date: Sun, 19 May 2013 00:46:00 -0700
+Message-ID: <7vhahzza2v.fsf@alter.siamese.dyndns.org>
+References: <CAKEGsXQDB1=hizNqM6D=uuP6PXT4ytUiTgB5fvO-gVSsPqQkLQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 19 09:42:20 2013
+Cc: git@vger.kernel.org
+To: Albert Netymk <albertnetymk@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 19 09:46:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UdyG2-0004Wq-AN
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 09:42:18 +0200
+	id 1UdyJn-0007Ip-AK
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 09:46:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751940Ab3ESHmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 03:42:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55180 "EHLO
+	id S1752058Ab3ESHqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 03:46:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34070 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751228Ab3ESHmN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 May 2013 03:42:13 -0400
+	id S1751228Ab3ESHqE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 May 2013 03:46:04 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28E231B93C;
-	Sun, 19 May 2013 07:42:13 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BAE61BAE7;
+	Sun, 19 May 2013 07:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TvsqN6jiPG4cnFXe1d8CjCPVhas=; b=xv2AVe
-	m9zmMaJW/609e3lz3Elpe/9W4Fgb1tKYjKBEZuhJPDxsUPwFgr1Ojg+GK2yPiKsO
-	ah/YHHjr0opIX+1bVHKyv6fmX7Egf2IUc03xDZ9XEWMEds08ToufoYUu9H6+Y5tG
-	gLn0eF/E56nhU/DHIl+fQJ8wxB6znYWrKHoUE=
+	:content-type; s=sasl; bh=iWfm/ZtbKzeQv0g15YLAcxlB0NY=; b=NH5ipP
+	by7HcQTh73mAtCXSUWdUb0EP8k5EzXEAml+Osi1pD1AVXu9cVJGb7bgTtOu+6bBU
+	RYLoCi8XEZWNf5eopG6OWWClEHt9UCGMk42kwS3SvcuNwjcuOMuWLgICQ2HTzoRB
+	F6Zo0tYBI4t0KLU7uud731kXS5kdgrraUKNnQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cxex2dBcaVKmbXIgnHBLseLjzKSb3vFj
-	Iw29qJWQQ5DNe96ShLq6H+WqDZ1ZjXV5AzPjgpseufzF2135dSs9OxeH+deAXgpj
-	OldDK0KcAr7TLfMeCMvb/Y9VJRtRl0D5QpHlWI9iLSwc8pFrCSep+mfoGDQT0+3d
-	Bas3B2usgTM=
+	:content-type; q=dns; s=sasl; b=qO78/nryVrYZXIOWc1Eeb1HfgKyYWeH4
+	lu4j9hDhWA+VsVSSA39cFhXPTWGMnX0bwwcGiJ69kNX0jUpdu8tvX94rnIyzi4ap
+	xVVsJKC+143nKIqd50Xrsaw6/J4qw0W650bk0fdCLzO7dpHA3jV/PXi8rd0xSYTn
+	DRCoQ32sHIg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C9971B938;
-	Sun, 19 May 2013 07:42:13 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AC321BAE5;
+	Sun, 19 May 2013 07:46:04 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9899E1B935;
-	Sun, 19 May 2013 07:42:12 +0000 (UTC)
-In-Reply-To: <CAMP44s0QYrzVBsmba1PYMG0yo0CpvTnVm=QHfYif6iu_Zo=tNA@mail.gmail.com>
-	(Felipe Contreras's message of "Sat, 18 May 2013 06:55:33 -0500")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 890721BAE4;
+	Sun, 19 May 2013 07:46:02 +0000 (UTC)
+In-Reply-To: <CAKEGsXQDB1=hizNqM6D=uuP6PXT4ytUiTgB5fvO-gVSsPqQkLQ@mail.gmail.com>
+	(Albert Netymk's message of "Sat, 18 May 2013 18:26:11 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9E60C10C-C057-11E2-9D21-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 280687DE-C058-11E2-8945-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224825>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Albert Netymk <albertnetymk@gmail.com> writes:
 
-> On Sat, May 18, 2013 at 6:46 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
+> Hello,
 >
->>  contrib/related/git-related | 124 ++++++++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 124 insertions(+)
->>  create mode 100755 contrib/related/git-related
+> The man page of git-diff-index:
+> http://git-scm.com/docs/git-diff-index
+> states that
+> `git-diff-index - Compares content and mode of blobs between the index
+> and repository`.
 >
-> I tried everything and I don't think it's physically possible to make
-> this script any simpler without severely crippling it's main goal.
+> However, in fact this command compares between files on disk and
+> repository by default. It's explained clearly in here:
+> http://git-scm.com/docs/gitdiffcore
+>
+> Maybe the man page could be updated to reflect this in NAME section:
+> `git-diff-index - Compares content and mode of blobs between files on
+> disk and repository or between the index and repository`
 
-Hmm, I haven't read these patches yet (I just came back a few hours
-ago to a state in which I am well enough to read and write e-mails),
-but did anybody complain that it is too complex?
+Surely; we need to keep it fit on a single line, though.
+
+> In DESCRIPTION section:
+> `Compares the content and mode of the blobs found via a tree object
+> with the content of the files on disk by default, and could be
+> compared with index only using cached option. ...`
+
+Yes, mentioning both mode is a good change.  The above exact text
+may give a false impression (with that "by default") that it is
+somehow more preferrable to compare tree with working tree through
+the index, and only weirdos would use "--cached" to compare tree and
+the index, though.
+
+Patches welcome.  Thanks.
