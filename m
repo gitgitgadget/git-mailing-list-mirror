@@ -1,90 +1,104 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH/WIP 0/9] for-each-ref format improvements
-Date: Sun, 19 May 2013 17:38:06 +0530
-Message-ID: <CALkWK0kYDB+cCsD7Fsymf9ETR2Ymyaf072gCUu6Uh8yFVFJV2Q@mail.gmail.com>
-References: <1368959235-27777-1-git-send-email-pclouds@gmail.com>
- <CALkWK0=7z91A54jSzc2yZU3g50u8H_f8su1Y+i=D+KxYtqor5g@mail.gmail.com> <CACsJy8DMF3NzvMRUO56H+EwpXSjmY9qzdNdv9cGJ9XxUO=ekJA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] fetch: add new fetch.default configuration
+Date: Sun, 19 May 2013 07:15:33 -0500
+Message-ID: <CAMP44s1rV+Pe_58qZLvTDt-r7XkDAinh3npY-dr+W5vnfNk4NA@mail.gmail.com>
+References: <1368843536-19781-1-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0mGPMw8NuhJFS0gK2BVutRO=FxX1ss+1o8fnndCc13LWw@mail.gmail.com>
+	<CAMP44s3pZYw87awogjjOdFRP39Ou0=td2erhV2-aC-9_A_Z75A@mail.gmail.com>
+	<CALkWK0nQzEK6-E7aMnGg6eYZJ_=XsE6FBmRgu9_8jBGkYmJe+Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 19 14:08:55 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	=?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 19 14:15:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ue2Q0-0001HE-Bl
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 14:08:52 +0200
+	id 1Ue2Wa-00066z-8f
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 14:15:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754540Ab3ESMIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 08:08:48 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:50548 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754483Ab3ESMIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 May 2013 08:08:47 -0400
-Received: by mail-ie0-f177.google.com with SMTP id 9so11503998iec.8
-        for <git@vger.kernel.org>; Sun, 19 May 2013 05:08:47 -0700 (PDT)
+	id S1752277Ab3ESMPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 08:15:35 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:38069 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751960Ab3ESMPf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 May 2013 08:15:35 -0400
+Received: by mail-lb0-f175.google.com with SMTP id v10so5741166lbd.34
+        for <git@vger.kernel.org>; Sun, 19 May 2013 05:15:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=fNnNHq3SHFkoiQgll6yBj9hRD+sThitc6JyaD5chK0s=;
-        b=RPtIIPYV2Q2nYFdUIQirEheBWpCoyXQ8/huBamPIe4pOKKuMhNLRb2/gDE3CMWfgDk
-         65v2PC4oMNYohIPDeuz6Y9I5qxF9AhLj8ZFbIuR062tny2DQdAqf1i/yoZD5NdMSR8GT
-         k8dwYCML3W6MTZCpmhCfFsF1D9iFDcQme9+a6OGU6TK4LV2fLWaNLwm8rOhe4iZBKvJf
-         2tZxRwyvMdgtlWyRekWoLjHVMeZPsUreG6NmgXI6Fz0tcEobdZ8ppJq4i5VXwOcg0bHE
-         JBuPVX2QzUVlBt4uTcI3dsxrdeTTHCW8OfMmO4Djhvm8uT89Yym/qeQEpwQECZO+J86t
-         79Tw==
-X-Received: by 10.42.27.146 with SMTP id j18mr30207719icc.54.1368965327477;
- Sun, 19 May 2013 05:08:47 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Sun, 19 May 2013 05:08:06 -0700 (PDT)
-In-Reply-To: <CACsJy8DMF3NzvMRUO56H+EwpXSjmY9qzdNdv9cGJ9XxUO=ekJA@mail.gmail.com>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=9uWuZGMaYPsSGCF44iIycmavL/hyen5/yh6rZNib0D4=;
+        b=HEJvekW5jaK6lmo0CD/enTROwegDJ0tJZKIFd5HWOWl2v1SBsiLFJJwqmF5qf0k1Q3
+         stZvOYJrkG86BQuRfZfGDR3h29/mzPWlGPj9guZiKFq2MwnCKosnGU0eibh3PtcR0OZL
+         Qm9nsYl/52IIu0vhxnJ4IQwcZUM0Ap48sXG3fvPK+avGga0VGlKFW8RJZlc+MOJJmsiq
+         KMF+cvwDWp6U37wvbcTGUmECJ83GtLe0ARxprBpopXQs1HS4ia5vHaebkzDp0Qd/9Fzn
+         DgjREmByOaXb8CuwLPT5wxCJAV5YB999rkBlKtRHd2vkr72/5hgk46cVkAyahgNiTfjP
+         A2Tw==
+X-Received: by 10.112.163.71 with SMTP id yg7mr16313634lbb.8.1368965733219;
+ Sun, 19 May 2013 05:15:33 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Sun, 19 May 2013 05:15:33 -0700 (PDT)
+In-Reply-To: <CALkWK0nQzEK6-E7aMnGg6eYZJ_=XsE6FBmRgu9_8jBGkYmJe+Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224880>
 
-Duy Nguyen wrote:
-> Hmm.. I missed that mail (or I wouldn't have worked on this already).
-> Do you want to take over?
-
-Oh, we can collaborate on one beautiful series :)
-
-> "branch -vv" shows [upstream: ahead x, behind y]. We need a syntax to
-> cover that too.
-
-Can't we construct that using [%(upstream:short): %(upstream:diff)]?
-It's nothing fundamental.
-
-> pretty and for-each-ref format seem to be on the opposite: one is
-> terse, one verbose. Unless you are going to introduce a lot of new
-> specifiers (and in the worst case, bring all pretty specifiers over,
-> unify underlying code), I think we should stick with %(xx) convention.
-
-We can stick to using the existing %(...) atoms: there's no need to go
-as far as %an versus %aN.  The atoms cannot be consistent with
-pretty-formats anyway, because pretty-formats has completely different
-atoms.  For the _new_ stuff like color and alignment, we can be
-consistent with pretty-formats, no?
-
->> Why should we deviate from the pretty case?  What is different here?
+On Sun, May 19, 2013 at 6:51 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Felipe Contreras wrote:
+>> % git checkout fc/remote/hg-next
+>> % git rebase -i # rebase to master
+>> % git checkout fc/remote/hg-notes
+>> % git rebase -i # rebase to fc/remote/hg-next
+>> % git checkout fc/remote/hg-gitifyhg-compat
+>> % git rebase -i # rebase to fc/remote/hg-notes
 >
-> Laziness plays a big factor :) So again, you want to take over? ;)
+> So it is rebase, but rebase.defaultUpstream = origin won't suffice.
+> You want to specify a custom base.  What I don't understand is why
+> you're abusing @{u},
 
-It's just a matter of modifying the parsing/printing layer, instead of
-introducing new atoms in the current parser.  Doesn't $gmane/224692
-demonstrate that the former can, in fact, be easier?
+There's no abuse; 'upstream' is meant *exactly* for this: rebase, and pull.
 
-> it uses builtin/branch.c:branch_use_color. Eventually
-> fill_tracking_info() should be moved to for-each-ref.c and pass
-> branch_use_color in as an argument. But for now, I just leave it
-> broken.
+It's called upstream because that's where eventually all the code must
+go, so semantically it's *exactly* correct: 'origin/master' is the
+upstream of 'master' which is the upstream of 'fc/remote/hg-next',
+which is the upstream of 'fc/remote/hg-notes', and so on.
 
-Auto-color can come later: it's not that urgent.  What's more
-important is that we give users the flexibility to set their own
-colors now.
+And if I where to merge a branch from 'master', it make sense that the
+default is 'origin/master', because that's the upstream.
 
-Can you give me a pull URL to your series, so we can start
-collaborating?  Mine's at gh:artagnon/git (branch: hot-branch).
+Literally each and every way in which 'upstream' is used remains the
+same for local branches, except for 'git push'.
+
+> and crippling remote (by hard-interpreting it as
+> "origin") to achieve this.
+
+More false rhetoric; "origin" is *ALREADY* the default.
+
+Show me the output of these:
+
+%git clone --origin foobar git://git.kernel.org/pub/scm/git/git.git /tmp/git
+%cd /tmp/git
+%git fetch -v
+%git checkout --no-track -b test master
+%git fetch -v
+
+> For the record, I didn't think your
+> branch.<name>.base was a bad idea at all (re-visiting now).
+
+It makes sens for rebase, but what happens when you do 'git pull' and
+you don't have an upstream configured, only a base? Why would you want
+'git pull' to fail? In which instances would you want to have a
+'base', but not an 'upstream'?
+
+Think about it.
+
+-- 
+Felipe Contreras
