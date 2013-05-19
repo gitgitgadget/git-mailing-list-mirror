@@ -1,83 +1,73 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v5 01/15] Add new git-related helper to contrib
-Date: Sun, 19 May 2013 14:14:18 -0700
-Message-ID: <CAJDDKr7+L1Qa9419aLabvnVPFCeLh0CZR9Vdazd8uk0biZxu1g@mail.gmail.com>
-References: <1368877615-9563-1-git-send-email-felipe.contreras@gmail.com>
-	<1368877615-9563-2-git-send-email-felipe.contreras@gmail.com>
-	<CALkWK0ke-Ns0JCt6LAzWqympWZ=2x3rRHOjnzB9QN7gc2=ckgw@mail.gmail.com>
-	<CAMP44s1xguzX=iavUJxYXBEPOpGvJtJ_7FDHNCWMrF6qxOsuOQ@mail.gmail.com>
-	<CALkWK0kz-pQ9UJPXerFoui9ftNXDzD-xhpkSHY=JX3rbFXgp-g@mail.gmail.com>
-	<CAMP44s3idD9pen0PyFuHeXQ=uphA8gVfFCEYhEnDRsx-gszbAw@mail.gmail.com>
+Subject: Re: [PATCH v5 1/2] cache.h: eliminate SHA-1 deprecation warnings on
+ Mac OS X
+Date: Sun, 19 May 2013 14:51:05 -0700
+Message-ID: <CAJDDKr5Yqe8LR83MKVxgUbOY37DVT7ZF4dr3ehAj2fHPc=YO7Q@mail.gmail.com>
+References: <1368601868-42410-1-git-send-email-davvid@gmail.com>
+	<5193CC6B.50909@web.de>
+	<CAPig+cTHh7iEY0+rReQ2LC94CsX-_aKdMLiVnL0ZF-FtKL6DaQ@mail.gmail.com>
+	<CAJDDKr726C5BZwufz5o7JWZiP3pKce4g=AZvEbj8qzk8dOqzQA@mail.gmail.com>
+	<7vbo891ra8.fsf@alter.siamese.dyndns.org>
+	<CAPig+cSYKM3XUm4m=ip_=p0mQz=gz0VKx7bfS=UdUsFMECWEQw@mail.gmail.com>
+	<7vfvxlzdyu.fsf@alter.siamese.dyndns.org>
+	<CAJDDKr58oM6Dm7sb-sUu2tTt210Su_q+ixc+HA0DHbc0Kmrv9w@mail.gmail.com>
+	<7vzjvrzdr7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 19 23:14:34 2013
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 19 23:51:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeAw5-0001yv-En
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 23:14:33 +0200
+	id 1UeBVZ-0001P0-6U
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 23:51:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754554Ab3ESVOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 17:14:20 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:49651 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754486Ab3ESVOT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 May 2013 17:14:19 -0400
-Received: by mail-pa0-f47.google.com with SMTP id kl13so5036558pab.6
-        for <git@vger.kernel.org>; Sun, 19 May 2013 14:14:19 -0700 (PDT)
+	id S1752944Ab3ESVvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 17:51:08 -0400
+Received: from mail-da0-f50.google.com ([209.85.210.50]:44136 "EHLO
+	mail-da0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752721Ab3ESVvH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 May 2013 17:51:07 -0400
+Received: by mail-da0-f50.google.com with SMTP id i23so2623481dad.37
+        for <git@vger.kernel.org>; Sun, 19 May 2013 14:51:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
          :subject:from:to:cc:content-type;
-        bh=WON4OaBqHIuDhktW3t3RuLOhBtOwVtOf7CSr2Y/Pbog=;
-        b=gBfXRrGfsb+BsEwyzD65avEyWJyWYQQ3J2tODWNJhzFNcqnb/grhX6g87ZivXqLj5r
-         o9TFNUVuMInqyV7M/W+CuQKgosp87lS/1v6hy9ImoW0BCSbeE0LXFMk/VZE0aKUVAeSn
-         tK7M4TLt5oqokhuNKzsXnG0DWvLvHbJ0JjzRSBhNqg2b8jNtKcoz9QdjEGuieXEQ7TJS
-         B5Na/GCislEs368ekRgEedCyLZl2/sMS1zu+NjfAUdRl1NF/LZlmBl3Ohbe6lLQSivpV
-         5M214IsaAIu7BQlLM+1Isk0RbjqZhc0XCiAsAzOXLJ22mO83eW7Eb7k/qK83ZRtkVXOe
-         NTBA==
-X-Received: by 10.66.233.9 with SMTP id ts9mr58624475pac.15.1368998058779;
- Sun, 19 May 2013 14:14:18 -0700 (PDT)
-Received: by 10.70.55.106 with HTTP; Sun, 19 May 2013 14:14:18 -0700 (PDT)
-In-Reply-To: <CAMP44s3idD9pen0PyFuHeXQ=uphA8gVfFCEYhEnDRsx-gszbAw@mail.gmail.com>
+        bh=P+4cb3C+WxmAwdt2Lb8PZlDR93IlCKyiyNBUiz+Nla0=;
+        b=OotFeTOROzPDNeA+CO8V5HMRuUJNSPTdWxXNCwf/hD+I8v1YT/YXTejh4xc3Tots84
+         h2yKsapYpinPtHrEX148Kvze+dZOJwQGiOHIPyDLVYG45ovDjyjQJ9jxPYQYkd6r90YG
+         7xEhkuIyFF77sgqeJUK8aUlpBrebwWBCKpQ1ffPqd4de4osAcGlnDl1Bl9jysQOSxEuQ
+         RNJJCvQFeRke6UcM2c1jkCGWaFlA+wk1TUFJkURlyebJBIYspo6frJdRZF5LhCDIKW9f
+         spKtGbu7Py3woNxkODYMyRXDibgMuEl322O3vYRVxLlqudeTbTUuwfR2LRvOZupv5Xvp
+         cpiA==
+X-Received: by 10.68.58.165 with SMTP id s5mr57554514pbq.220.1369000265807;
+ Sun, 19 May 2013 14:51:05 -0700 (PDT)
+Received: by 10.70.55.106 with HTTP; Sun, 19 May 2013 14:51:05 -0700 (PDT)
+In-Reply-To: <7vzjvrzdr7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224925>
 
-On Sun, May 19, 2013 at 8:41 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Sun, May 19, 2013 at 10:13 AM, Ramkumar Ramachandra
-> <artagnon@gmail.com> wrote:
->> Felipe Contreras wrote:
->>> How exactly is it not equivalent to len = len || 1?
->>
->> Here, I dug up an article for you on the issue:
->>
->> http://www.rubyinside.com/what-rubys-double-pipe-or-equals-really-does-5488.html
->>
->> Although it's fine in this case, I wouldn't recommend using ||=
->> because of the potential confusion.
+On Sat, May 18, 2013 at 11:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> David Aguilar <davvid@gmail.com> writes:
 >
-> I don't see the confusion, 'len ||= 1' is *exactly* the same as 'len =
-> 1 if not len', which is what I expected.
+>> Thanks Eric and Junio.  I looked over the patches and they look good.
+>
+> Are you sure about that?  It seemed to me that it was breaking
+> everybody that is not on MacOS X --- did I misread the patch?
 
-I spend more time in Python, C*, and Perl then in Ruby, and I was not
-confused by this at all.
+Gah, correct.  I've now tested v8 which Eric just sent out.  It worked
+fine for me, with and without NO_APPLE_COMMON_CRYPTO.
 
-It behaves just like $foo ||= 1 does in Perl.
-
-In git.git:
-
-$ git grep '||=' | wc -l
-     121
+Thanks,
 --
 David
