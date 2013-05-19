@@ -1,219 +1,168 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v6] Add new git-related helper to contrib
-Date: Sun, 19 May 2013 10:53:43 -0500
-Message-ID: <1368978823-18247-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 19 17:55:25 2013
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: English/German terminology, git.git's de.po, and pro-git
+Date: Sun, 19 May 2013 18:06:48 +0200
+Message-ID: <CAN0XMO+TG7uXGPjqQZXX5KetQkf63gRtSdMxFK8r_40Dr4BGLQ@mail.gmail.com>
+References: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net>
+	<alpine.LNX.2.01.1305131542210.30808@nerf07.vanv.qr>
+	<001d01ce500b$c7c08b70$5741a250$@scanmyfood.de>
+	<alpine.LNX.2.01.1305132119220.2288@nerf07.vanv.qr>
+	<CAN0XMOL3rkYDinSCN2GLaRj7dOvbF=SdMRxM4PHCZ5h7g5Nkkw@mail.gmail.com>
+	<51936218.9020306@ira.uka.de>
+	<519370D3.3000306@web.de>
+	<CAN0XMOJ7hRwTAR+i8_C2z2NmmcycLQkiya0ayfWS0vAw3-zqkg@mail.gmail.com>
+	<51949D65.7050001@ira.uka.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Jan Engelhardt <jengelh@inai.de>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	=?UTF-8?Q?Ralph_Hau=C3=9Fmann?= <ralph@scanmyfood.de>,
+	Christian Stimming <stimming@tuhh.de>,
+	Sven Fuchs <svenfuchs@artweb-design.de>,
+	git <git@vger.kernel.org>, =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>
+To: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sun May 19 18:07:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ue5xE-0008QM-Ku
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 17:55:25 +0200
+	id 1Ue68S-0000V2-UZ
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 18:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751315Ab3ESPzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 11:55:17 -0400
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:45635 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751292Ab3ESPzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 May 2013 11:55:16 -0400
-Received: by mail-ob0-f171.google.com with SMTP id ef5so6277104obb.30
-        for <git@vger.kernel.org>; Sun, 19 May 2013 08:55:15 -0700 (PDT)
+	id S1750871Ab3ESQGv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 May 2013 12:06:51 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:43771 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750908Ab3ESQGt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 May 2013 12:06:49 -0400
+Received: by mail-wi0-f174.google.com with SMTP id c10so1474965wiw.1
+        for <git@vger.kernel.org>; Sun, 19 May 2013 09:06:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=rLaGFVvvfiJ4HYu96hsoMDspCAP+DGGHNm3BTEz1rxk=;
-        b=WwWH4DcjfvD1vqyCS2RCcYxO2WxPDpsNtIOK5MtuSSRAqr4LQyix48KP3N2nQIfyK4
-         kuW7BgNqgPZL85AJdLcShwaG87WeNQIQEQsCtWlk4Pt6HTt5Diw0399gm9itPKuO1WX0
-         LxxLbVizJ/Ap9vPsvsHsYAXuZXjJkEGNOWTwP47Murm/aqX3mXB+n8CCMPdLx4ymKRXK
-         OCZu46xbNhW9laaLeFX79gGlKa7+dhnZV5dLhKVrVrkCB/rE2RKMuwBcFtZp4rEWo5RU
-         vYvymaSUIEKC7NJLP0BoxAUIhvmMtKZiWwWx/3txKJZ7vmSXb2tUuKV02AzpHhBW+mjr
-         jzVw==
-X-Received: by 10.60.35.100 with SMTP id g4mr15982626oej.53.1368978915467;
-        Sun, 19 May 2013 08:55:15 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id ns4sm16297958obc.2.2013.05.19.08.55.13
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 19 May 2013 08:55:14 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc3.286.g3d43083
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=z4HMarHBv8GQCoQUswYBdyT0eDaQKPdj593ucz0HV4o=;
+        b=N5Gz3iD6EJ68My6xorw1AkvgjGHGeldB+kPsp0drA/vT3GohGDpmQuztC7x7xn7J8/
+         acGdUxmAnyGINFv+JWNOZo4wfC4Z5/oSnlHTveCUoxLNj0xbTFVeET9ge60mVIfIX44Y
+         lyfPRHT/jQQh4ApuT+T9SwUg6X3aS5GGu4YL9AuJ9KblUn+dzEeQ+4djSoqnqWEuo6ZT
+         suKUvtppsx21sYe3IrAhCalA9neF5S8qTta+jSW42kSFEduVW/fLWz/JF5BJrApkvlbl
+         cTKvR1jVF2jA03gHLsxVliI6xm5d7V5I+3p7h9TF4ck0qcsG1GJq2wX+usAyW63d4Obr
+         bk3A==
+X-Received: by 10.180.21.167 with SMTP id w7mr6504302wie.2.1368979608198; Sun,
+ 19 May 2013 09:06:48 -0700 (PDT)
+Received: by 10.194.237.5 with HTTP; Sun, 19 May 2013 09:06:48 -0700 (PDT)
+In-Reply-To: <51949D65.7050001@ira.uka.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224897>
 
-This script find people that might be interested in a patch, by going
-back through the history for each single hunk modified, and finding
-people that reviewed, acknowledge, signed, or authored the code the
-patch is modifying.
+2013/5/16 Holger Hellmuth (IKS) <hellmuth@ira.uka.de>:
+>
+>> +    bare repository        =3D blo=C3=9Fes Repository
+>
+>
+> Since "blo=C3=9Fes Rep." does not convey any sensible meaning to a ge=
+rman reader
+> (at least it doesn't to me) it might as well be "bare". Also bare is =
+used as
+> parameter to commands
+>
+>
+>> +    remote tracking branch =3D externer =C3=9Cbernahmezweig
+>
+>
+> Anyone used to the english client will switch as soon as he has to re=
+ad
+> this. No idea how to improve that though except to just use the engli=
+sh
+> terms like the pro git translation does.
+>
+>
+>> +    upstream branch        =3D -||-
+>
+>
+> Use upstream as it is used as parameter to commands
+>
+>> +    fetch =3D anfordern
+>
+> fetch =3D fetch
+>>
+>> +    pull  =3D zusammenf=C3=BChren
+>
+> pull =3D pull
+>>
+>> +    push  =3D versenden
+>
+> push =3D push
+>
+> established vocabulary used in stack programming as well as in vcs. S=
+hould
+> not be translated.
+>
 
-It does this by running 'git blame' incrementally on each hunk, and then
-parsing the commit message. After gathering all the relevant people, it
-groups them to show what exactly was their role when the participated in
-the development of the relevant commit, and on how many relevant commits
-they participated. They are only displayed if they pass a minimum
-threshold of participation.
+I think the messages would become a bit too G+E when we'd say something
+like "Das Fetchen in den Branch...", "Fetche von %s". Some for merge as
+a verb.
 
-For example:
+>> +    clean(verb)        =3D
+>
+> clean(verb) =3D s=C3=A4ubern/aufr=C3=A4umen
+>>
+>> +    clean(noun)        =3D
+>
+> clean(noun) =3D S=C3=A4uberung
+>
+> "aufr=C3=A4umen" is the better verb but there is no noun for it.
+>
+>
+>> +    whitespace         =3D Leerzeichen (FIXME?) (maybe "Leerraum")
+>
+> whitespace =3D whitespace
+>
+> There is no german word for whitespace
+>
+>
+>> +Still being worked out:
+>> +
+>> +    prune              =3D veraltete(n) Zweig(e) entfernen
+>> +    checkout(verb)     =3D auschecken
+>> +
+>> +    git add      =3D hinzuf=C3=BCgen
+>
+>
+> "mittels "git add" hinzuf=C3=BCgen" if you want to emphasize that you=
+ add
+> something with the command
+>
+>
+>> +
+>> +    merge conflict =3D Merge-Konflikt
+>> +    3-way merge    =3D 3-Wege-Merge
+>> +    paths          =3D Pfade
+>> +
+>> +    symbolic link =3D symbolische Verkn=C3=BCfung
+>> +    path =3D Pfad
+>> +    link =3D Verkn=C3=BCpfung
+>> +
+>> +    reflog =3D Referenzprotokoll
+>> +    partial commit =3D teilweise committen, partiell committen
+>
+>
+> As a noun, "Teil-Commit"
+>
+>
+>> +
+>> +    reset =3D neu setzen (maybe "umsetzen"?)
+>
+>
+> "zur=C3=BCcksetzen"
+>
+>
 
-  % git related 0001-remote-hg-trivial-cleanups.patch
-  Felipe Contreras <felipe.contreras@gmail.com>
-  Jeff King <peff@peff.net>
-  Max Horn <max@quendi.de>
-  Junio C Hamano <gitster@pobox.com>
+I'll send a new version to the list later.
 
-Thus it can be used for 'git send-email' as a cc-cmd.
-
-There might be some other related functions to this script, not just to
-be used as a cc-cmd.
-
-Comments-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
-
-Sames as v5, with a few tiny modifications. I'm tired of sending the whole
-series multiple times over the years, only to get stuck at the first patch, so
-I'll send only the first one.
-
- contrib/related/git-related | 124 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 124 insertions(+)
- create mode 100755 contrib/related/git-related
-
-diff --git a/contrib/related/git-related b/contrib/related/git-related
-new file mode 100755
-index 0000000..b96dcdd
---- /dev/null
-+++ b/contrib/related/git-related
-@@ -0,0 +1,124 @@
-+#!/usr/bin/env ruby
-+
-+# This script finds people that might be interested in a patch
-+# usage: git related <file>
-+
-+$since = '5-years-ago'
-+$min_percent = 10
-+
-+def fmt_person(name, email)
-+  '%s <%s>' % [name, email]
-+end
-+
-+class Commit
-+
-+  attr_reader :persons
-+
-+  def initialize(id)
-+    @id = id
-+    @persons = []
-+  end
-+
-+  def parse(data)
-+    msg = nil
-+    data.each_line do |line|
-+      if not msg
-+        case line
-+        when /^author ([^<>]+) <(\S+)> (.+)$/
-+          @persons << fmt_person($1, $2)
-+        when /^$/
-+          msg = true
-+        end
-+      else
-+        if line =~ /^(Signed-off|Reviewed|Acked)-by: ([^<>]+) <(\S+?)>$/
-+          @persons << fmt_person($2, $3)
-+        end
-+      end
-+    end
-+    @persons.uniq!
-+  end
-+
-+end
-+
-+class Commits
-+
-+  def initialize
-+    @items = {}
-+  end
-+
-+  def size
-+    @items.size
-+  end
-+
-+  def each(&block)
-+    @items.each(&block)
-+  end
-+
-+  def import
-+    return if @items.empty?
-+    File.popen(%w[git cat-file --batch], 'r+') do |p|
-+      p.write(@items.keys.join("\n"))
-+      p.close_write
-+      p.each do |line|
-+        if line =~ /^(\h{40}) commit (\d+)/
-+          id, len = $1, $2
-+          data = p.read($2.to_i)
-+          @items[id].parse(data)
-+        end
-+      end
-+    end
-+  end
-+
-+  def get_blame(source, start, len, from)
-+    return if len == 0
-+    len ||= 1
-+    File.popen(['git', 'blame', '--incremental', '-CCC',
-+               '-L', '%u,+%u' % [start, len],
-+               '--since', $since, from + '^',
-+               '--', source]) do |p|
-+      p.each do |line|
-+        if line =~ /^(\h{40})/
-+          id = $&
-+          @items[id] = Commit.new(id)
-+        end
-+      end
-+    end
-+  end
-+
-+  def from_patch(file)
-+    from = source = nil
-+    File.open(file) do |f|
-+      f.each do |line|
-+        case line
-+        when /^From (\h+) (.+)$/
-+          from = $1
-+        when /^---\s+(\S+)/
-+          source = $1 != '/dev/null' ? $1[2..-1] : nil
-+        when /^@@ -(\d+)(?:,(\d+))?/
-+          get_blame(source, $1, $2, from)
-+        end
-+      end
-+    end
-+  end
-+
-+end
-+
-+exit 1 if ARGV.size != 1
-+
-+commits = Commits.new
-+commits.from_patch(ARGV[0])
-+commits.import
-+
-+count_per_person = Hash.new(0)
-+
-+commits.each do |id, commit|
-+  commit.persons.each do |person|
-+    count_per_person[person] += 1
-+  end
-+end
-+
-+count_per_person.each do |person, count|
-+  percent = count.to_f * 100 / commits.size
-+  next if percent < $min_percent
-+  puts person
-+end
--- 
-1.8.3.rc3.286.g3d43083
+Thanks
