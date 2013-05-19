@@ -1,73 +1,149 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 1/2] cache.h: eliminate SHA-1 deprecation warnings on Mac OS X
-Date: Sat, 18 May 2013 23:26:36 -0700
-Message-ID: <7vzjvrzdr7.fsf@alter.siamese.dyndns.org>
-References: <1368601868-42410-1-git-send-email-davvid@gmail.com>
-	<5193CC6B.50909@web.de>
-	<CAPig+cTHh7iEY0+rReQ2LC94CsX-_aKdMLiVnL0ZF-FtKL6DaQ@mail.gmail.com>
-	<CAJDDKr726C5BZwufz5o7JWZiP3pKce4g=AZvEbj8qzk8dOqzQA@mail.gmail.com>
-	<7vbo891ra8.fsf@alter.siamese.dyndns.org>
-	<CAPig+cSYKM3XUm4m=ip_=p0mQz=gz0VKx7bfS=UdUsFMECWEQw@mail.gmail.com>
-	<7vfvxlzdyu.fsf@alter.siamese.dyndns.org>
-	<CAJDDKr58oM6Dm7sb-sUu2tTt210Su_q+ixc+HA0DHbc0Kmrv9w@mail.gmail.com>
+Subject: Re: [PATCH 2/2] diffcore-pickaxe doc: document -S and -G properly
+Date: Sun, 19 May 2013 00:33:12 -0700
+Message-ID: <7vsj1jzao7.fsf@alter.siamese.dyndns.org>
+References: <1368793403-4642-1-git-send-email-artagnon@gmail.com>
+	<1368793403-4642-3-git-send-email-artagnon@gmail.com>
+	<7vfvxlw055.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Torsten =?utf-8?Q?B=C3=B6ger?= =?utf-8?Q?shausen?= 
-	<tboegi@web.de>, Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 19 08:26:46 2013
+Cc: Git List <git@vger.kernel.org>, Phil Hord <phil.hord@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 19 09:33:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Udx4u-00028W-9m
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 08:26:44 +0200
+	id 1Udy7Y-0006f0-Bv
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 09:33:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838Ab3ESG0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 02:26:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49400 "EHLO
+	id S1753316Ab3ESHdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 03:33:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56802 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751449Ab3ESG0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 May 2013 02:26:39 -0400
+	id S1753193Ab3ESHdP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 May 2013 03:33:15 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5779A1C953;
-	Sun, 19 May 2013 06:26:39 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 623A31B5E3;
+	Sun, 19 May 2013 07:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=klmIJRknxdJFzKY5gVk+z2Plgc4=; b=E6Vggm
-	jf5+DM0xJPYaqjRpEvjnTXxvQPlCqvlzJf8Oe95MXlyx4dAaLjPP6WNFCDlMmjjl
-	/+USUP5ihBJqnQMFfS0tbnOKwEtWQc3zfT11dKhhMv9rJBQEChMX/lL+yfb4mCPO
-	8Sp8JER6Ilbd+kAgmR5nr9P+Tj4A/tFQ6ThD4=
+	:content-type; s=sasl; bh=/gQPAYYseAKc7Oxnhdl+4Ad2DBc=; b=dG/p6Y
+	F7FuFBY9Q74Hj6Wats3QaQ/54/8H41UHoaKyQfIg6oDCIaqpvh1cE0gEtpnvvy0i
+	UtWaj+ysxQ0Buyu5Y+jES8wGjgJV8hojOXahwT5n0YRM313cIjEvYHjJwcwlVEx2
+	9RhAvjmcpEG4NkBzRzSkjHtiCiVjp6sn+B2fQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jLNQ+NNI3I35osyJ2xh0wk/3HUshLzq5
-	unTS9P7fzsPs+fUavvnVubEIVyl7uc4NU3qsSk2Tq6/W/Muhoh9uqFCdl2k+kYGZ
-	U+POvHXVDsXpZXf8nGstCbTE1JI38CmVMDwRQegQCt+Y4TZAPuA5ekEoGrMnMSNn
-	n51N/cvV9AE=
+	:content-type; q=dns; s=sasl; b=lMx3y6/j4zCyWaZWr7lBfB6AsmuEt7Dg
+	lDPGHTBS+xagbTEi9JW9t3ZIu1fPfUa1Y50bnuU4C3wTIAl1jz6mAG1TdQDDdJj1
+	0RGYEFImWBlG+lQ7NdE947Vk7dhl+AvqXtfMjSk4GLBP2tMDJsny7Clbn30qdKM/
+	OcSuXlBoszo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43B891C950;
-	Sun, 19 May 2013 06:26:39 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 558D11B5E2;
+	Sun, 19 May 2013 07:33:14 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B09211C94C;
-	Sun, 19 May 2013 06:26:37 +0000 (UTC)
-In-Reply-To: <CAJDDKr58oM6Dm7sb-sUu2tTt210Su_q+ixc+HA0DHbc0Kmrv9w@mail.gmail.com>
-	(David Aguilar's message of "Fri, 17 May 2013 17:38:20 -0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95CC91B5DF;
+	Sun, 19 May 2013 07:33:13 +0000 (UTC)
+In-Reply-To: <7vfvxlw055.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 17 May 2013 18:24:22 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0FF66BF6-C04D-11E2-B094-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5D19BE34-C056-11E2-8607-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224823>
 
-David Aguilar <davvid@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Thanks Eric and Junio.  I looked over the patches and they look good.
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> ...
+>>  -G<regex>::
+>> -	Look for differences whose added or removed line matches
+>> -	the given <regex>.
+>> +	Grep through the patch text of commits for added/removed lines
+>> +	that match <regex>.  `--pickaxe-regex` is implied in this
+>> +	mode.
+>
+> The same comment on differences vs commits apply to this.
+> ...
+> it will _not_ apply to users of -G.
 
-Are you sure about that?  It seemed to me that it was breaking
-everybody that is not on MacOS X --- did I misread the patch?
+s/.$/ unless they say --pickaxe-regex./; so -G does not imply it at
+all.
+
+> "grep through", if the reader knows "grep", with "match <regex>", it
+> is crystal clear that this expects a regular expression.  And that
+> is the only thing that makes -G and --pickaxe-regex superficially
+> related.
+
+s/^The description begins with /;  Sorry, but I couldn't write
+complete sentences on a bus ;-)
+
+>> -This transformation is used to find filepairs that represent
+>> -changes that touch a specified string, and is controlled by the
+>> --S option and the `--pickaxe-all` option to the 'git diff-*'
+>> -commands.
+>> -
+>> -When diffcore-pickaxe is in use, it checks if there are
+>> -filepairs whose "result" side and whose "origin" side have
+>> -different number of specified string.  Such a filepair represents
+>> -"the string appeared in this changeset".  It also checks for the
+>> -opposite case that loses the specified string.
+>> -
+>> -When `--pickaxe-all` is not in effect, diffcore-pickaxe leaves
+>> -only such filepairs that touch the specified string in its
+>> -output.  When `--pickaxe-all` is used, diffcore-pickaxe leaves all
+>> -filepairs intact if there is such a filepair, or makes the
+>> -output empty otherwise.  The latter behaviour is designed to
+>> -make reviewing of the changes in the context of the whole
+>> -changeset easier.
+>
+> This part is impossible to review on a bus, so I won't comment in
+> this message.
+>
+> Why did you even have to touch the paragraph for --pickaxe-all?
+> That applies to both -S and -G.  I thought it would be just the
+> matter of slightly tweaking the introductory paragraph (which was
+> written back when there was only -S), keeping the second paragraph
+> for -S as-is, and insert an additional paragraph for -G before
+> --pickaxe-all.
+
+Now I see that the paragraph for --pickaxe-all needs to be touched;
+the original talks about "touch the specified string", which only
+applies to -S and needs to be adjusted.
+
+So here is my attempt of clarifying it.
+
+	This transformation is used to find filepairs that represent
+	two kinds of changes, and is controlled by the -S, -G and
+	--pickaxe-all options.
+
+	The "-S<block of text>" option tells Git to consider that a
+	filepair has differences only if the number of occurrences
+	of the specified block of text is different between its
+	preimage and its postimage, and treat other filepairs as if
+	they did not have any change.  This is meant to be used with
+	a block of text that is unique enough to occur only once (so
+	expected the number of occurences is 1 vs 0 or 0 vs 1) to
+	use with "git log" to find a commit that touched the block
+	of text the last time.  When used with the "--pickaxe-regex"
+	option, the <block of text> is used as a POSIX extended
+	regular expression to match, instead of a literal string.
+
+	The "-G<regular expression>" option tells Git to consider
+	that a filepair has differences only if a textual diff
+	between its preimage and postimage would indicate a line
+	that matches the given regular expression is changed, and
+	treat other filepairs as if they did not have any change.
+
+	When -S or -G option is used without "--pickaxe-all" option,
+	only filepairs that match their respective criterion are
+	kept in the output.  When `--pickaxe-all` is used, all
+	filepairs intact if there is such a filepair, or makes the
+	output empty otherwise.  This behaviour is designed to make
+	reviewing of the changes in the context of the whole
+	changeset easier.
