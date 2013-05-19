@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: [PATCH v5 01/15] Add new git-related helper to contrib
-Date: Sun, 19 May 2013 20:43:27 +0530
-Message-ID: <CALkWK0kz-pQ9UJPXerFoui9ftNXDzD-xhpkSHY=JX3rbFXgp-g@mail.gmail.com>
+Date: Sun, 19 May 2013 20:45:28 +0530
+Message-ID: <CALkWK0mA9zWjco1fYRu4O2QmMRJE7vd2Z3CyJj=a1VxCyymMvQ@mail.gmail.com>
 References: <1368877615-9563-1-git-send-email-felipe.contreras@gmail.com>
  <1368877615-9563-2-git-send-email-felipe.contreras@gmail.com>
  <CALkWK0ke-Ns0JCt6LAzWqympWZ=2x3rRHOjnzB9QN7gc2=ckgw@mail.gmail.com> <CAMP44s1xguzX=iavUJxYXBEPOpGvJtJ_7FDHNCWMrF6qxOsuOQ@mail.gmail.com>
@@ -10,50 +10,49 @@ Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Duy Nguyen <pclouds@gmail.com>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 19 17:14:15 2013
+X-From: git-owner@vger.kernel.org Sun May 19 17:16:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ue5JO-0003Pk-6u
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 17:14:14 +0200
+	id 1Ue5LL-0004uW-BC
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 17:16:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251Ab3ESPOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 11:14:09 -0400
-Received: from mail-ia0-f182.google.com ([209.85.210.182]:52545 "EHLO
-	mail-ia0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752549Ab3ESPOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 May 2013 11:14:08 -0400
-Received: by mail-ia0-f182.google.com with SMTP id z3so6674534iad.41
-        for <git@vger.kernel.org>; Sun, 19 May 2013 08:14:08 -0700 (PDT)
+	id S1753438Ab3ESPQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 11:16:10 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:61101 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752549Ab3ESPQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 May 2013 11:16:09 -0400
+Received: by mail-ie0-f169.google.com with SMTP id u16so12332725iet.14
+        for <git@vger.kernel.org>; Sun, 19 May 2013 08:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=/MQGSMvNqi+sbHIf8huWlk0NgPNt/fk0x6PzZ9ieIAs=;
-        b=QvckMj14xhuSjyDNuQdyPvyso+Snap44Vqk2opeBpzkDyc/zsc5RwlaCV4svvaLo9f
-         daZbjTfKL1oPpNG2aMvzYgiNIgJKq9ckB2ho8fkZMjRV1BHR77sMtX8+MwTLn+BYXC/q
-         onVueRKtCapt2HMPZrolgfU+QpMujNulZ1xXfmNukuUzHRofYKQaYQPaA0I3pEFZcO3z
-         ADXMx1zXHetJ8/0+iRiSTdsijD4m+hceHW2xrOv7/QSAf7PfH96YO9T4IZdk4Rzm0Hbh
-         xHeY+aMJY97fCrNuf1+OjrfVGQspooZZ2ladrzfWC8dSYFzwDbuGEUuRBdDkRRZh2fI/
-         w1cw==
-X-Received: by 10.50.66.140 with SMTP id f12mr3067881igt.63.1368976447872;
- Sun, 19 May 2013 08:14:07 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Sun, 19 May 2013 08:13:27 -0700 (PDT)
+        bh=VqLnkJUKsk6oZEONQrjf+7WcDzbWf4bQsmSmYEZLlgM=;
+        b=j7f1wv/l/ucaVOJmeY5m/7eGEVCYikHuVJvAP7hKUniBvrUgDbmJmjarQRKZ1/fDmj
+         4HPC1dtxXk2Kcf3tUON0lGFoVZ/JPmYQnGrnhmk7yHZWi/9bdhMk0HuChPUsle20A3ps
+         rMQmAmmK+K8xEYjwIFIVqaOy8h1ToUG1YCv3yYx9qXqBquVI1M3Td3x3g9Y6Mdf2BgFR
+         955vy+4JBe9CXhHR/BdSj0ftFkkLhTwJ8/PSe24e/Xq2iK0NCjRezJRA+YZOr27ujud4
+         mPCtK1Hic88gc3/BWXMoFKYcio6+iVr0ucC+jgw9DHsbOfTpBoFD61URQbqmKczF+fbM
+         0D+Q==
+X-Received: by 10.50.66.140 with SMTP id f12mr3071349igt.63.1368976568851;
+ Sun, 19 May 2013 08:16:08 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Sun, 19 May 2013 08:15:28 -0700 (PDT)
 In-Reply-To: <CAMP44s1xguzX=iavUJxYXBEPOpGvJtJ_7FDHNCWMrF6qxOsuOQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224891>
 
 Felipe Contreras wrote:
-> How exactly is it not equivalent to len = len || 1?
+>> Will $2 ever be nil (from fmt_person)?  ie. Why are you checking for
+>> the special case " <\S+?>$"?
+>
+> Yes, '<email>' was valid in earlier versions of git.
 
-Here, I dug up an article for you on the issue:
-
-http://www.rubyinside.com/what-rubys-double-pipe-or-equals-really-does-5488.html
-
-Although it's fine in this case, I wouldn't recommend using ||=
-because of the potential confusion.
+There's a non-optional space before the "<email>" in your regex, which
+is what I was pointing out.
