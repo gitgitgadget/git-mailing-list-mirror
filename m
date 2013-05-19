@@ -1,119 +1,267 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: About overzealous compatibility
-Date: Sun, 19 May 2013 09:27:38 -0500
-Message-ID: <CAMP44s0egmU8jd2+JS3WVcW6R+CMWxbRpSKDaJ5fs7S8Fj+v=A@mail.gmail.com>
-References: <1368689474-28911-1-git-send-email-felipe.contreras@gmail.com>
-	<1368689474-28911-2-git-send-email-felipe.contreras@gmail.com>
-	<7v61yi9arl.fsf@alter.siamese.dyndns.org>
-	<CAMP44s14TSGtQ7kvWUgrOQvT1uKciSV5fd5pQvy1ven8Z=qVcg@mail.gmail.com>
-	<7v8v3e7udi.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0Szu8oHBKMapZ6dQ1K67MXDcACuUF-+Y-jC+EgHs2QEA@mail.gmail.com>
-	<7vk3my6bu1.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2W5MUneTwcSnr=Ey715paKgSL6MqXmYKdSmw4NqdL4qQ@mail.gmail.com>
-	<7vk3my33vb.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0J7vcxno=v9_ewUE6FcuRVuYQhCNVS8D+AvP6cG2XNfQ@mail.gmail.com>
-	<7vtxm1xxvd.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3xdWzVviPvrN7D1fTG6Lwgg-dEzju--VuiwZA-8bV+MQ@mail.gmail.com>
-	<7vtxlz1pr1.fsf@alter.siamese.dyndns.org>
-	<519885a591924_7301727e144294f@nysa.mail>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v5 01/15] Add new git-related helper to contrib
+Date: Sun, 19 May 2013 20:10:08 +0530
+Message-ID: <CALkWK0ke-Ns0JCt6LAzWqympWZ=2x3rRHOjnzB9QN7gc2=ckgw@mail.gmail.com>
+References: <1368877615-9563-1-git-send-email-felipe.contreras@gmail.com> <1368877615-9563-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 19 16:27:46 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 19 16:40:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ue4aP-0003Mz-2A
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 16:27:45 +0200
+	id 1Ue4n8-0004Qe-Au
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 16:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752843Ab3ESO1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 10:27:40 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:53652 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752600Ab3ESO1j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 May 2013 10:27:39 -0400
-Received: by mail-lb0-f169.google.com with SMTP id 10so5806231lbf.0
-        for <git@vger.kernel.org>; Sun, 19 May 2013 07:27:38 -0700 (PDT)
+	id S1753708Ab3ESOku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 10:40:50 -0400
+Received: from mail-ia0-f182.google.com ([209.85.210.182]:49541 "EHLO
+	mail-ia0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752964Ab3ESOkt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 May 2013 10:40:49 -0400
+Received: by mail-ia0-f182.google.com with SMTP id z3so6748686iad.27
+        for <git@vger.kernel.org>; Sun, 19 May 2013 07:40:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=1YmuIGWaVjwDE9DxeGRDQRnbcc9YeAQznS+wOYgbkuA=;
-        b=0Sy3pKrRnql5C12FcthYoeXtDSLfJ5DpaIyOva96GU+huXCkm9vXK53qx2CVJCXd4F
-         PmGd1Kw796hofrTjtx/KDkxHmzcVmc5sNO+zfNHYVx44Dy+SMbaI/kz1lZNlXzL023Ho
-         4xzw2B2uDa12ttFNKgZC+r+6YBt9nkLolvc4VKH0YRguL1lq2KGODgLJa5WJSlloVi1g
-         GD5qevgHmy2MsISfyCWp5uYnUA/4sHH7io5Lo5utvUQ7Ae3wbxDviKRRK3F8V/kkRBJW
-         QxDoqU8dxM8uVIyOsi4mE0D/9S6atWlgYW4TSokmVL8y8tfKCMFuLmSXyVKTJNNmZDgE
-         Lz3w==
-X-Received: by 10.112.63.169 with SMTP id h9mr11198529lbs.135.1368973658198;
- Sun, 19 May 2013 07:27:38 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Sun, 19 May 2013 07:27:38 -0700 (PDT)
-In-Reply-To: <519885a591924_7301727e144294f@nysa.mail>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=HYs2rzsb1Q+U/uFKcgNirroRAUdUnTQyOkleGcjlwZQ=;
+        b=aZOQhBu/3thLHgMPZhhGqR+K3lN+DZrGt/UmGlb9LpUEcm0tE8e+Nv832dLjChyGfT
+         MWeWnX1pCtDR5G53FhVtIi3rzzRfc6J8RdrLACiUiPRT8w3Hf6NpKPXR+cI7BKNPejtR
+         3VP84Z4lAA+iWUhpriu3BasARy/Pdax2BovJzBk940YV9xckpNyte2g7LrEhjAozd3d9
+         gWArxwDcJ3X0ynW/py/Ys9VYC4OAWgtc8pHJlB0z6AFxArv9Ss+3uL7r+neFX/teCGu/
+         +muKRxYdKdJishTKMB72W2EstmSFV2YWMyKSh0YGpOdi5tcNKd9QvAV/463eqZ8RJXv9
+         tiUg==
+X-Received: by 10.50.120.68 with SMTP id la4mr2816836igb.49.1368974448957;
+ Sun, 19 May 2013 07:40:48 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Sun, 19 May 2013 07:40:08 -0700 (PDT)
+In-Reply-To: <1368877615-9563-2-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224888>
 
-On Sun, May 19, 2013 at 2:56 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Junio C Hamano wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->> > On Fri, May 17, 2013 at 1:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> >> So when "the user" is running "git fetch" on "mywork" branch that
->> >> happens to be forked from a local "master",...
->> >> we still need to have FETCH_HEAD updated to point at what we would
->> >> be merging if she did a "git pull".
->> >
->> > No, we don't need that. That is only needed by 'git pull', and in
->> > fact, it should be possible to reimplement 'git pull' so that it skips
->> > FETCH_HEAD when the remote is local.
->> >
->> > These are mere implementation details.
->>
->> You seem to be incapable to understand what backward compatibility
->> is.
->
-> Really? Do you even remember the time when you changed out of nowhere
-> all the 'git-foo' commands with 'git foo' and all hell broke loose?
->
-> I remember some lonely voice of reason shouting for clear deprecation
-> warnings:
->
-> http://article.gmane.org/gmane.comp.version-control.git/94262
+Okay, let's look at this part.
 
-After re-reading this old thread, I noticed that you didn't get a
-straight answer, nor was there a neat conclusion, and the good replies
-might have been lost in the noise. So this is what you should have
-done:
+Felipe Contreras wrote:
+> diff --git a/contrib/related/git-related b/contrib/related/git-related
+> new file mode 100755
+> index 0000000..4f31482
+> --- /dev/null
+> +++ b/contrib/related/git-related
+> @@ -0,0 +1,124 @@
+> +#!/usr/bin/env ruby
+> +
+> +# This script finds people that might be interested in a patch
+> +# usage: git related <file>
+> +
+> +$since = '5-years-ago'
+> +$min_percent = 10
+> +
+> +def fmt_person(name, email)
+> +  name ? '%s <%s>' % [name, email] : email
+> +end
+> +
+> +class Commit
+> +
+> +  attr_reader :persons
+> +
+> +  def initialize(id)
+> +    @id = id
+> +    @persons = []
+> +  end
 
-1) Fix all the tests and documentation to use the 'git foo' form, so
-everything is consistent and the proper form of the commands is
-explained.
-2) Release v1.6.0 turning on annoying deprecation warnings telling
-people to stop using 'git-foo'. This wouldn't have had the same bad
-effect that v1.6.0 had, because you added at the same time a
-configuration to turn the annoying message off, so users, and
-administrators can choose to ignore the warning, and then they
-couldn't complain when the 'git-foo' links get removed for real.
-3) To be absolutely sure that people get the message that there's a
-big change, name the release v2.0.
+Okay, although I'm wondering what id is.
 
-I think 3) would have been overkill; v1.7.0 would be OK, but 2) was
-definitely needed, and 1) would have been great.
+> +  def parse(data)
+> +    msg = nil
+> +    data.each_line do |line|
+> +      if not msg
+> +        case line
+> +        when /^author ([^<>]+) <(\S+)> (.+)$/
+> +          @persons << fmt_person($1, $2)
+> +        when /^$/
+> +          msg = true
+> +        end
 
-I think it's extremely cheap that you accuse me of not understanding
-backwards compatibility, when I did for zsh's completion[1] exactly
-what you should have done for v1.6.0: add an annoying deprecation
-warning.
+When there's a blank line, flip the switch and start looking in the
+commit message.  Why though?  You're worried that the commit message
+will contain a line matching /^author ([^<>]+) <(\S+)> (.+)$/?  If so,
+why don't you split('\n', 2), look for the author in the $1 and
+Whatevered-by in $2?
 
-Cheers.
+> +      else
+> +        if line =~ /^(Signed-off|Reviewed|Acked)-by: ([^<>]+) <(\S+?)>$/
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/210024
+elif?  Can this be more generic to include Whatevered-by?
 
--- 
-Felipe Contreras
+> +          @persons << fmt_person($2, $3)
+
+Will $2 ever be nil (from fmt_person)?  ie. Why are you checking for
+the special case " <\S+?>$"?
+
+> +        end
+> +      end
+> +    end
+> +    @persons.uniq!
+
+So you don't care if the person has appeared twice or thrice in the message.
+
+> +  end
+> +
+> +end
+> +
+> +class Commits
+> +
+> +  def initialize
+> +    @items = {}
+> +  end
+
+Okay.
+
+> +  def size
+> +    @items.size
+> +  end
+
+#size is reminiscent of Array#size and Hash#size.
+
+> +  def each(&block)
+> +    @items.each(&block)
+> +  end
+
+I can see how you iterate over commits from the code below.  However,
+using #each like this is confusing, because the reader expects #each
+to be invoked on an Enumerable.  So, I have two suggestions:
+
+1. Use block_given? to make sure that #each works even without a block
+(just like Enumerator#each).
+
+2. Mixin Enumerable by putting in an 'include Enumerable' after the
+class line.  Aside from clarity, you get stuff like #find for free.
+
+> +  def import
+
+>From reading the code below, your calling semantics are: first set
+each @items[id] to a new Commit object.  import is meant to invoke
+Commit#parse and set @persons there.  Okay.
+
+> +    return if @items.empty?
+> +    File.popen(%w[git cat-file --batch], 'r+') do |p|
+> +      p.write(@items.keys.join("\n"))
+> +      p.close_write
+
+Okay.
+
+> +      p.each do |l|
+> +        if l =~ /^(\h{40}) commit (\d+)/
+
+s/l/line/?
+
+> +          id, len = $1, $2
+> +          data = p.read($2.to_i)
+> +          @items[id].parse(data)
+> +        end
+> +      end
+> +    end
+> +  end
+> +
+> +  def get_blame(source, start, len, from)
+> +    return if len == 0
+> +    len ||= 1
+
+Please don't use ||=.  It is notorious for causing confusion in
+Ruby-land.  Hint: it's not exactly equivalent to either len = len || 1
+or len || len = 1.
+
+> +    File.popen(['git', 'blame', '--incremental', '-C',
+
+Still no -CCC?
+
+> +               '-L', '%u,+%u' % [start, len],
+> +               '--since', $since, from + '^',
+> +               '--', source]) do |p|
+> +      p.each do |line|
+> +        if line =~ /^(\h{40})/
+> +          id = $1
+
+Use $0 and remove the parens: you're matching the whole line.
+
+> +          @items[id] = Commit.new(id)
+
+Okay.
+
+> +        end
+> +      end
+> +    end
+> +  end
+> +
+> +  def from_patch(file)
+> +    from = source = nil
+> +    File.open(file) do |f|
+> +      f.each do |line|
+> +        case line
+> +        when /^From (\h+) (.+)$/
+> +          from = $1
+
+Okay.
+
+> +        when /^---\s+(\S+)/
+> +          source = $1 != '/dev/null' ? $1[2..-1] : nil
+
+Okay.
+
+> +        when /^@@ -(\d+)(?:,(\d+))?/
+> +          get_blame(source, $1, $2, from)
+
+Okay.
+
+> +        end
+> +      end
+> +    end
+> +  end
+> +
+> +end
+> +
+> +exit 1 if ARGV.size != 1
+
+Okay.
+
+> +commits = Commits.new
+> +commits.from_patch(ARGV[0])
+> +commits.import
+
+The calling semantics could be better, but it's not a big complaint.
+
+> +count_per_person = Hash.new(0)
+
+Initializing all keys to 0.  Okay.
+
+> +commits.each do |id, commit|
+
+Cute.
+
+> +  commit.persons.each do |person|
+> +    count_per_person[person] += 1
+
+Okay.
+
+> +  end
+> +end
+> +
+> +count_per_person.each do |person, count|
+> +  percent = count.to_f * 100 / commits.size
+> +  next if percent < $min_percent
+> +  puts person
+
+Not going to print percentage as well?
+
+Overall, significant improvement over v3 which used all kinds of
+unnecessarily complex data structures and convoluted logic.  Looks
+like something I'd want to use: not blindly as a cc-cmd, but just to
+get a quick idea.  I also wish for depth most times: a working
+shortlog -L --follow would be really nice.
