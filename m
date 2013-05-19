@@ -1,139 +1,170 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 05/17] cmd_diff(): use an object_array for holding trees
-Date: Sun, 19 May 2013 22:27:00 +0200
-Message-ID: <1368995232-11042-6-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 11/17] object_array: add function object_array_filter()
+Date: Sun, 19 May 2013 22:27:06 +0200
+Message-ID: <1368995232-11042-12-git-send-email-mhagger@alum.mit.edu>
 References: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johan Herland <johan@herland.net>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun May 19 22:28:20 2013
+X-From: git-owner@vger.kernel.org Sun May 19 22:28:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeADI-0004Pr-U1
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 22:28:17 +0200
+	id 1UeADY-0004ax-5H
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 22:28:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754767Ab3ESU2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 16:28:08 -0400
-Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:45968 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754714Ab3ESU2E (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 May 2013 16:28:04 -0400
-X-AuditID: 12074412-b7f216d0000008d4-e8-519935d3693c
+	id S1754805Ab3ESU2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 16:28:16 -0400
+Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:63557 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754167Ab3ESU2N (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 May 2013 16:28:13 -0400
+X-AuditID: 12074414-b7fb86d000000905-4c-519935dcb517
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 70.13.02260.3D539915; Sun, 19 May 2013 16:28:03 -0400 (EDT)
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 84.59.02309.CD539915; Sun, 19 May 2013 16:28:12 -0400 (EDT)
 Received: from michael.fritz.box (p57A25040.dip0.t-ipconnect.de [87.162.80.64])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4JKRX5O026019
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4JKRX5U026019
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 19 May 2013 16:28:02 -0400
+	Sun, 19 May 2013 16:28:11 -0400
 X-Mailer: git-send-email 1.8.2.3
 In-Reply-To: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJIsWRmVeSWpSXmKPExsUixO6iqHvZdGagwaF2aYuuK91MFg29V5gt
-	5t3dxWRxe8V8ZosfLT3MDqwef99/YPK49PI7m8ez3j2MHhcvKXt83iQXwBrFbZOUWFIWnJme
-	p2+XwJ3xfs8kloJ5EhXfGuewNDDeFOpi5OSQEDCReNHykxHCFpO4cG89WxcjF4eQwGVGiaZN
-	25ggnPNMEq1NvUwgVWwCuhKLeprBbBEBWYnvhzeCdTMLTGCUWNpfCGILC3hI/FjUxQ5iswio
-	Sjz8DLGBV8BFYv6x3SwQ2xQkLs9awwxicwq4Smxp38UKYgsB1fzrv806gZF3ASPDKka5xJzS
-	XN3cxMyc4tRk3eLkxLy81CJdM73czBK91JTSTYyQoBLawbj+pNwhRgEORiUe3oYP0wOFWBPL
-	iitzDzFKcjApifK+M5kZKMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEd48QUI43JbGyKrUoHyYl
-	zcGiJM77c7G6n5BAemJJanZqakFqEUxWhoNDSYLXHBg9QoJFqempFWmZOSUIaSYOTpDhXFIi
-	xal5KalFiaUlGfGg2IgvBkYHSIoHaK80SDtvcUFiLlAUovUUoy7H5vOT3zEKseTl56VKifNe
-	BDlcAKQoozQPbgUshbxiFAf6WJjXFmQUDzD9wE16BbSECWgJ67WpIEtKEhFSUg2MziEe5UHP
-	rJm89742kpyj5Dx71ZdbM81abXqYQq6w/N7KcXZOHOduJdOEzHu3nzNf0+H6c5+Dr/tV/7vr
-	Ckfudz++Ue194oj4qhfzdp76oFBa5Phr5q1nupd7jBm+3Z8l1WbK92OZY/tl/ilL 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsUixO6iqHvHdGagwZFrJhZdV7qZLBp6rzBb
+	zLu7i8ni9or5zBY/WnqYHVg9/r7/wORx6eV3No9nvXsYPS5eUvb4vEkugDWK2yYpsaQsODM9
+	T98ugTtj3bb5jAVTZSu+zjjE3MD4TLyLkZNDQsBEonNPHyuELSZx4d56ti5GLg4hgcuMEv++
+	LWGFcM4zSfxac5kJpIpNQFdiUU8zmC0iICvx/fBGRhCbWWACo8TS/sIuRg4OYQF3iemreUHC
+	LAKqEv939ICV8wq4SvzduJUFYpmCxOVZa5hBbE6g+Jb2XWBHCAm4SPzrv806gZF3ASPDKka5
+	xJzSXN3cxMyc4tRk3eLkxLy81CJdC73czBK91JTSTYyQkBLZwXjkpNwhRgEORiUe3oYP0wOF
+	WBPLiitzDzFKcjApifIuV50ZKMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEd48QUI43JbGyKrUo
+	HyYlzcGiJM77bbG6n5BAemJJanZqakFqEUxWhoNDSYLX3QSoUbAoNT21Ii0zpwQhzcTBCSK4
+	QDbwAG1YBFLIW1yQmFucmQ5RdIpRUUqc9yJIQgAkkVGaBzcAFv2vGMWB/hHmPQJSxQNMHHDd
+	r4AGMwENZr02FWRwSSJCSqqBcWHfcf7Jp1W7NI8t7jHd8eLf9kM+v6cVfMw72752Utqdx/oM
+	13rznWX+TY6v3v5Vf9qCjzWzDm9z9GL4+edTifTdJ7MeC9Y/KTTl3vfmS9+bE9qhAvfUjmXV
+	uLkYnnMxPvvuhW7ATVPdCQUBEV5RT5X/lMzQlDNQXnrln1q/3E+/2wd2dOxkFlRi 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224912>
 
-Change cmd_diff() to use a (struct object_array) for holding the trees
-that it accumulates, rather than rolling its own equivalent.
+Add a function that allows unwanted entries in an object_array to be
+removed.  This encapsulation is a step towards giving object_array
+ownership of its entries' name memory.
+
+Use the new function to replace revision.c:gc_boundary().
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/diff.c | 37 ++++++++++++++++++-------------------
- 1 file changed, 18 insertions(+), 19 deletions(-)
+ object.c   | 16 ++++++++++++++++
+ object.h   | 11 +++++++++++
+ revision.c | 28 ++++++++++------------------
+ 3 files changed, 37 insertions(+), 18 deletions(-)
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index ba68c6c..72d99c0 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -252,8 +252,8 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+diff --git a/object.c b/object.c
+index 20703f5..fcd4a82 100644
+--- a/object.c
++++ b/object.c
+@@ -278,6 +278,22 @@ void add_object_array_with_mode(struct object *obj, const char *name, struct obj
+ 	array->nr = ++nr;
+ }
+ 
++void object_array_filter(struct object_array *array,
++			 object_array_each_func_t want, void *cb_data)
++{
++	unsigned nr = array->nr, src, dst;
++	struct object_array_entry *objects = array->objects;
++
++	for (src = dst = 0; src < nr; src++) {
++		if (want(&objects[src], cb_data)) {
++			if (src != dst)
++				objects[dst] = objects[src];
++			dst++;
++		}
++	}
++	array->nr = dst;
++}
++
+ void object_array_remove_duplicates(struct object_array *array)
  {
- 	int i;
- 	struct rev_info rev;
--	struct object_array_entry ent[100];
--	int ents = 0, blobs = 0, paths = 0;
-+	struct object_array ent = OBJECT_ARRAY_INIT;
-+	int blobs = 0, paths = 0;
- 	const char *path = NULL;
- 	struct blobinfo blob[2];
- 	int nongit;
-@@ -350,13 +350,8 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 		if (obj->type == OBJ_COMMIT)
- 			obj = &((struct commit *)obj)->tree->object;
- 		if (obj->type == OBJ_TREE) {
--			if (ARRAY_SIZE(ent) <= ents)
--				die(_("more than %d trees given: '%s'"),
--				    (int) ARRAY_SIZE(ent), name);
- 			obj->flags |= flags;
--			ent[ents].item = obj;
--			ent[ents].name = name;
--			ents++;
-+			add_object_array(obj, name, &ent);
- 			continue;
+ 	unsigned int ref, src, dst;
+diff --git a/object.h b/object.h
+index 97d384b..0d39ff4 100644
+--- a/object.h
++++ b/object.h
+@@ -85,6 +85,17 @@ int object_list_contains(struct object_list *list, struct object *obj);
+ /* Object array handling .. */
+ void add_object_array(struct object *obj, const char *name, struct object_array *array);
+ void add_object_array_with_mode(struct object *obj, const char *name, struct object_array *array, unsigned mode);
++
++typedef int (*object_array_each_func_t)(struct object_array_entry *, void *);
++
++/*
++ * Apply want to each entry in array, retaining only the entries for
++ * which the function returns true.  Preserve the order of the entries
++ * that are retained.
++ */
++void object_array_filter(struct object_array *array,
++			 object_array_each_func_t want, void *cb_data);
++
+ void object_array_remove_duplicates(struct object_array *);
+ 
+ void clear_object_flags(unsigned flags);
+diff --git a/revision.c b/revision.c
+index 19c59f4..ddc6d7c 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2435,23 +2435,6 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 	return NULL;
+ }
+ 
+-static void gc_boundary(struct object_array *array)
+-{
+-	unsigned nr = array->nr, i, j;
+-	struct object_array_entry *objects = array->objects;
+-
+-	for (i = j = 0; i < nr; i++) {
+-		if (objects[i].item->flags & SHOWN)
+-			continue;
+-		if (i != j)
+-			objects[j] = objects[i];
+-		j++;
+-	}
+-	for (i = j; i < nr; i++)
+-		objects[i].item = NULL;
+-	array->nr = j;
+-}
+-
+ static void create_boundary_commit_list(struct rev_info *revs)
+ {
+ 	unsigned i;
+@@ -2493,6 +2476,15 @@ static void create_boundary_commit_list(struct rev_info *revs)
+ 	sort_in_topological_order(&revs->commits, revs->lifo);
+ }
+ 
++/*
++ * Return true for entries that have not yet been shown.  (This is an
++ * object_array_each_func_t.)
++ */
++static int entry_unshown(struct object_array_entry *entry, void *cb_data_unused)
++{
++	return !(entry->item->flags & SHOWN);
++}
++
+ static struct commit *get_revision_internal(struct rev_info *revs)
+ {
+ 	struct commit *c = NULL;
+@@ -2575,7 +2567,7 @@ static struct commit *get_revision_internal(struct rev_info *revs)
+ 		p->flags |= CHILD_SHOWN;
+ 		if (revs->boundary_commits.nr == revs->boundary_commits.alloc) {
+ 			/* Try to make space and thereby avoid a realloc(): */
+-			gc_boundary(&revs->boundary_commits);
++			object_array_filter(&revs->boundary_commits, entry_unshown, NULL);
  		}
- 		if (obj->type == OBJ_BLOB) {
-@@ -380,7 +375,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	/*
- 	 * Now, do the arguments look reasonable?
- 	 */
--	if (!ents) {
-+	if (!ent.nr) {
- 		switch (blobs) {
- 		case 0:
- 			result = builtin_diff_files(&rev, argc, argv);
-@@ -401,22 +396,26 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 		add_object_array(p, NULL, &revs->boundary_commits);
  	}
- 	else if (blobs)
- 		usage(builtin_diff_usage);
--	else if (ents == 1)
-+	else if (ent.nr == 1)
- 		result = builtin_diff_index(&rev, argc, argv);
--	else if (ents == 2)
--		result = builtin_diff_tree(&rev, argc, argv, &ent[0], &ent[1]);
--	else if (ent[0].item->flags & UNINTERESTING) {
-+	else if (ent.nr == 2)
-+		result = builtin_diff_tree(&rev, argc, argv,
-+					   &ent.objects[0], &ent.objects[1]);
-+	else if (ent.objects[0].item->flags & UNINTERESTING) {
- 		/*
- 		 * diff A...B where there is at least one merge base
--		 * between A and B.  We have ent[0] == merge-base,
--		 * ent[ents-2] == A, and ent[ents-1] == B.  Show diff
--		 * between the base and B.  Note that we pick one
--		 * merge base at random if there are more than one.
-+		 * between A and B.  We have ent.objects[0] ==
-+		 * merge-base, ent.objects[ents-2] == A, and
-+		 * ent.objects[ents-1] == B.  Show diff between the
-+		 * base and B.  Note that we pick one merge base at
-+		 * random if there are more than one.
- 		 */
--		result = builtin_diff_tree(&rev, argc, argv, &ent[0], &ent[ents-1]);
-+		result = builtin_diff_tree(&rev, argc, argv,
-+					   &ent.objects[0],
-+					   &ent.objects[ent.nr-1]);
- 	} else
- 		result = builtin_diff_combined(&rev, argc, argv,
--					       ent, ents);
-+					       ent.objects, ent.nr);
- 	result = diff_result_code(&rev.diffopt, result);
- 	if (1 < rev.diffopt.skip_stat_unmatch)
- 		refresh_index_quietly();
 -- 
 1.8.2.3
