@@ -1,138 +1,249 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH 1/2] Doc rebase: Describe rebase as excluding merge
- commits
-Date: Sun, 19 May 2013 11:08:04 -0700
-Message-ID: <20130519180804.GE3362@elie.Belkin>
-References: <1368964329-1600-1-git-send-email-philipoakley@iee.org>
- <1368964329-1600-2-git-send-email-philipoakley@iee.org>
+Subject: Re: [RFC/PATCH] patch-ids: check modified paths before calculating
+ diff
+Date: Sun, 19 May 2013 12:36:12 -0700
+Message-ID: <20130519193612.GH3362@elie.Belkin>
+References: <a7088a74742b71a01423f3ddc1a6c7fd89474ed8.1368969438.git.john@keeping.me.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GitList <git@vger.kernel.org>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Sun May 19 20:08:17 2013
+Cc: git@vger.kernel.org, Kevin Bracey <kevin@bracey.fi>,
+	Junio C Hamano <gitster@pobox.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun May 19 21:36:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ue81n-0007KV-Kj
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 20:08:16 +0200
+	id 1Ue9P5-0002B3-SG
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 21:36:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752700Ab3ESSIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 14:08:10 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:39479 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752337Ab3ESSIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 May 2013 14:08:09 -0400
-Received: by mail-pb0-f52.google.com with SMTP id xa7so4702867pbc.11
-        for <git@vger.kernel.org>; Sun, 19 May 2013 11:08:08 -0700 (PDT)
+	id S1754117Ab3ESTgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 15:36:18 -0400
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:60161 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754091Ab3ESTgR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 May 2013 15:36:17 -0400
+Received: by mail-pb0-f45.google.com with SMTP id mc17so1324779pbc.4
+        for <git@vger.kernel.org>; Sun, 19 May 2013 12:36:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=Cm/yQlPoy8RZf7cTqbmZsDP2QCQn212WYoK/woWu+iE=;
-        b=ejB5jnF83qMKuzP7PHJyca8PHAVeCiEXiziSwGVOmJNb9Y4hRZyPPs0NWabxmTPekc
-         BytTgJsX8sv0HBao2GPksk4Z4mpEH3LpHjolf2vzRlSduCa5K/LyNrGkv3y8txe+xE5s
-         xXDk+YU9tvVHuwkeMQbWJssUcyNO95+nwQX0gBaH99bBRX53gOUQfUOktzUdZCnLNW9K
-         Pz/GgREo8F9ITwUoUPiy2Z8zN//WCu1LNdpEx5a4MHZx2heJqU0l2tKoUbeVYYRBPTpJ
-         aLqernG60qwG9tmXiUHwYXNV75TqWDCmeWiReltQLtGlK7GZ4uwIeeuBdcY2uggoGfaj
-         cRnQ==
-X-Received: by 10.68.58.165 with SMTP id s5mr57025071pbq.220.1368986888660;
-        Sun, 19 May 2013 11:08:08 -0700 (PDT)
+        bh=sCNRV1uxnpkNC3iXlnQoqEK1iWdjmG3/MNMpnkSCJY8=;
+        b=yui4c2sW5Lx4/fChBAObZgL/egjQoAtqPSzRLoi/6NdSXYlkDzHHQULI2tNvw1tooG
+         UVqkCCBRNPmzeAr5xSBn7gWO1AZ4uHb1YxHFl6b7Ob+SQYGITpcmuzF16AvQep9SClnK
+         prPoTxYshFj8hpXQWwdPw/xCWiMw0ZmnNWPFEzgQt1PHuYS04aR/6IOjj2uQ3L2kakvv
+         z2v2Ny951Agl4GAEjs/4uLbGDeLh/uQdPvbTFIAoC4KJSGYm8/dW9d2jtiYMOwJIlU8T
+         gq0dhVPO45b0wyMx5JQNvQnEmFp1a/X2nV2YjZumfQJ5shZdEVcoupJIKN66TaEPiGZS
+         Tfrg==
+X-Received: by 10.66.251.202 with SMTP id zm10mr58178540pac.53.1368992177190;
+        Sun, 19 May 2013 12:36:17 -0700 (PDT)
 Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPSA id aj2sm20540828pbc.1.2013.05.19.11.08.06
+        by mx.google.com with ESMTPSA id wp6sm20727098pbc.29.2013.05.19.12.36.14
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 19 May 2013 11:08:07 -0700 (PDT)
+        Sun, 19 May 2013 12:36:16 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1368964329-1600-2-git-send-email-philipoakley@iee.org>
+In-Reply-To: <a7088a74742b71a01423f3ddc1a6c7fd89474ed8.1368969438.git.john@keeping.me.uk>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224904>
 
-Philip Oakley wrote:
+John Keeping wrote:
 
-> Describe rebase in the description section.
+> In this case, it is likely that only a small number of paths are touched
+> by the commits on the smaller side of the range and by storing these we
+> can ignore many commits on the other side before unpacking blobs and
+> diffing them.
 
-It already does that. :)  I think you mean "start with a summary",
-which is a valuable improvement.
+I like this idea a lot.
 
-> Include a softer paraphrased version from the crytic, well-loved,
-> but sometimes parodied, Name description, and tell users that merge
-> commits are excluded by default.
+> --- a/patch-ids.c
+> +++ b/patch-ids.c
+> @@ -1,5 +1,6 @@
+>  #include "cache.h"
+>  #include "diff.h"
+> +#include "diffcore.h"
+>  #include "commit.h"
+>  #include "sha1-lookup.h"
+>  #include "patch-ids.h"
+> @@ -16,6 +17,137 @@ static int commit_patch_id(struct commit *commit, struct diff_options *options,
+>  	return diff_flush_patch_id(options, sha1);
+>  }
+>  
+> +struct collect_paths_info {
+> +	struct string_list *paths;
+> +	int searching;
+> +};
+> +
+> +static int collect_paths_recursive(int n, struct tree_desc *t,
+> +	const char *base, struct pathspec *pathspec,
+> +	struct collect_paths_info *data);
 
-I don't really follow this paragraph.  Are you saying "The NAME line
-is cryptic, but let's copy it anyway, since it is better than nothing"?
+Can you say a little about how this function works (e.g., in a
+comment)?  What are the preconditions and postconditions?  How does
+the state evolve (e.g, when is "searching" set)?
+
+> +
+> +static int same_entry(struct name_entry *a, struct name_entry *b)
+> +{
+> +	if (!a->sha1 || !b->sha1)
+> +		return a->sha1 == b->sha1;
+> +	return	!hashcmp(a->sha1, b->sha1) &&
+> +		a->mode == b->mode;
+
+Style: unusual whitespace (the tab after "return").  I'd just do
+
+	if (!a->sha1 || ...)
+		return ...
+	return !hashcmp(a->sha1, b->sha1) && a->mode == b->mode;
+
+since it is not too long.
 
 [...]
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -16,6 +16,10 @@ SYNOPSIS
->  
->  DESCRIPTION
->  -----------
-> +'git rebase' will transfer local commits, excluding merge commits
-> +by default, to the head of the branch's upstream, or onto a new base
-> +if given.
+> +static char *traverse_path(const struct traverse_info *info,
+> +		const struct name_entry *n)
+> +{
+> +	char *path = xmalloc(traverse_path_len(info, n) + 1);
+> +	return make_traverse_path(path, info, n);
+> +}
+
+This function seems to be the same as one of the same name in
+builtin/merge-tree.c.  Should it be put somewhere more public, for
+example as part of the tree-walk API?  Who is responsible for freeing
+"path"?  Would it make sense to use a strbuf here?
+
+	strbuf_setlen(&buf, traverse_path_len(info, n));
+	make_traverse_path(&buf.buf, info, n);
+
 > +
+> +static int add_touched_path(struct collect_paths_info *info, const char *path)
+> +{
+> +	if (info->searching) {
+> +		if (!string_list_has_string(info->paths, path))
+> +			return -1;
+> +	}
+> +	string_list_insert(info->paths, path);
+> +	return 0;
+> +}
 
-Not about this patch, but some day it would be nice to standardize on
-one tense for the DESCRIPTION sections of manpages.  Some git commands
-use the imperative ("Reply local commits, excluding merge commits, on
-top of ..."), some use the present indicative ("Replays local commits,
-excluding merge commits, ..."), and some use the future ("Will replay
-local commits, excluding merge commits, ...").
+Same question about internal API: when I see
 
-The traditional tense for Unix manpages is the present indicative.
-But you are right to match the rest of the description here.
+	add_touched_path(info, path)
 
->  If <branch> is specified, 'git rebase' will perform an automatic
->  `git checkout <branch>` before doing anything else.  Otherwise
->  it remains on the current branch.
+what should I expect it to do?
 
-The description has become very long by now.  I wonder if it's
-possible to break it into chunks, like so?
+In the info->searching case, "string_list_insert(info->paths, path)"
+will always be a no-op, right?  What does it mean that this is adding
+a touched path in that case?
 
-	DESCRIPTION
-	-----------
-	<brief description of the purpose of the command, including some token
-	mention of *why* a user would want to use it (e.g., "so that the patches
-	apply cleanly to their new base").>
+[...]
+> +static int collect_touched_paths_cb(int n, unsigned long mask,
+> +		unsigned long dirmask, struct name_entry *entry,
+> +		struct traverse_info *info)
+> +{
 
-	It proceeds using the following steps:
+Same question about contracts.  Ideally a reader in a rush should be
+able to read an opening comment about what the function does and
+then return to the caller without delving into the details of how
+it does its work.
 
-	 1. If <branch> is specified, ...
-	 2. Decides which commits will need to be applied.
-	    These are plain, non-merge commits that are ancestors of HEAD but
-	    not of <upstream>.
-	 3. Checks out <upstream>.  (<Explanation that technically it
-	    detaches HEAD at this step.>)
-	 4. Reapplies the commits listed on step (2), one by one, in order.
-	    If merge failures are encountered, the program will exit and allow
-	    the user to resolve them and resume or cancel the rebase.  See
-	    the RESPONDING TO MERGE CONFLICTS section below for details.
-	 5. Once all of the commits from step (2) have been applied, updates
-	    <branch> to point to the new HEAD.
+> +	struct collect_paths_info *collect_info = info->data;
+> +	if (n == 1) {
+> +		/* We're handling a root commit - add all the paths. */
+[...]
+> +	if ((entry[0].sha1 && S_ISDIR(entry[0].mode)) ||
+> +	    (entry[1].sha1 && S_ISDIR(entry[1].mode))) {
 
-	The result is an updated <branch> that ...
+At this point I'm not sure what two trees are being traversed in
+parallel, so it's not obvious to me what the code's about.  Are
+they the "before" and "after" trees for commits being rebased?
 
-	OPTIONS
-	-------
-	...
+[...]
+> +static int collect_touched_paths(struct commit *commit, struct patch_ids *ids,
+> +		int searching)
+> +{
+> +	struct tree_desc trees[2];
+> +	struct collect_paths_info info = { &ids->touched_paths, searching };
+> +	void *commitbuf;
+> +	int result;
+> +
+> +	commitbuf = fill_tree_descriptor(trees + 1, commit->object.sha1);
+> +	if (commit->parents) {
+> +		void *parentbuf = fill_tree_descriptor(trees + 0,
+> +					commit->parents->item->object.sha1);
 
-	EXAMPLES
-	--------
-	Assume the following history exists and the current branch is "topic":
-	...
+Looks like yes.
 
-Description of specific options like "--preserve-merges" and "--onto"
-could move out of the DESCRIPTION section and to the OPTIONS section.
+What should happen for commits with more than 1 parent?  If they're
+supposed to not enter this codepath because of a previous check, a
+die("BUG: ...") could be a good way to make reading easier.
 
-What do you think?
+[...]
+> @@ -40,6 +172,7 @@ int init_patch_ids(struct patch_ids *ids)
+>  	diff_setup(&ids->diffopts);
+>  	DIFF_OPT_SET(&ids->diffopts, RECURSIVE);
+>  	diff_setup_done(&ids->diffopts);
+> +	ids->touched_paths.strdup_strings = 1;
 
-Thanks,
+Good.
+
+[...]
+> @@ -64,6 +199,13 @@ static struct patch_id *add_commit(struct commit *commit,
+>  	unsigned char sha1[20];
+>  	int pos;
+>  
+> +	if (no_add) {
+> +		if (collect_touched_paths(commit, ids, 1) < 0)
+> +			return NULL;
+
+Ah, so this is what the "searching" does.
+
+The existing "no_add" argument is very confusing (what does it mean to
+add a commit without adding?), but at least the confusion is
+self-contained in a small, simple set of functions:
+
+	static struct patch_id *add_commit(struct commit *commit,
+					   struct patch_ids *ids,
+					   int no_add)
+	{
+		...
+	}
+
+	struct patch_id *has_commit_patch_id(struct commit *commit,
+					     struct patch_ids *ids)
+	{
+		return add_commit(commit, ids, 1);
+	}
+
+	struct patch_id *add_commit_patch_id(struct commit *commit,
+					     struct patch_ids *ids)
+	{
+		return add_commit(commit, ids, 0);
+	}
+
+In fact the "no_add" makes *some* sense because add_commit() needs
+to search for a patch-id before adding it, so calling with no_add
+means to do all the work except for actually adding.
+
+This new call propagates the mysterious boolean argument beyond
+there and uses it in different ways.  Would it make sense to do
+the following?
+
+ (1) rename the "no_add" parameter to "search_instead" or something
+ (2) avoid passing on "no_add" as a boolean.  Instead, use the
+     same trick elsewhere so this can use appropriately named
+     functions like:
+
+	if (!searching)
+		collect_touched_paths(commit, ids);
+	else if (!only_touches_touched_paths(commit, ids))
+		return NULL;
+
+Hope that helps,
 Jonathan
