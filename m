@@ -1,107 +1,77 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [RFC 17/17] refs: document the lifetime of the refname passed to each_ref_fn
-Date: Sun, 19 May 2013 22:27:12 +0200
-Message-ID: <1368995232-11042-18-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 15/17] find_first_merges(): remove unnecessary code
+Date: Sun, 19 May 2013 22:27:10 +0200
+Message-ID: <1368995232-11042-16-git-send-email-mhagger@alum.mit.edu>
 References: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johan Herland <johan@herland.net>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun May 19 22:28:35 2013
+X-From: git-owner@vger.kernel.org Sun May 19 22:28:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeADa-0004ax-BU
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 22:28:34 +0200
+	id 1UeADZ-0004ax-9l
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 22:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754834Ab3ESU22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 16:28:28 -0400
-Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:52348 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754787Ab3ESU2X (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 May 2013 16:28:23 -0400
-X-AuditID: 1207440e-b7f2b6d00000094c-2f-519935e60606
+	id S1754839Ab3ESU2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 16:28:21 -0400
+Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:63560 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754787Ab3ESU2T (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 May 2013 16:28:19 -0400
+X-AuditID: 12074414-b7fb86d000000905-5d-519935e3629b
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id BE.AC.02380.6E539915; Sun, 19 May 2013 16:28:22 -0400 (EDT)
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 15.59.02309.3E539915; Sun, 19 May 2013 16:28:19 -0400 (EDT)
 Received: from michael.fritz.box (p57A25040.dip0.t-ipconnect.de [87.162.80.64])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4JKRX5a026019
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4JKRX5Y026019
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 19 May 2013 16:28:21 -0400
+	Sun, 19 May 2013 16:28:17 -0400
 X-Mailer: git-send-email 1.8.2.3
 In-Reply-To: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsUixO6iqPvMdGagwfS1QhZdV7qZLBp6rzBb
-	zLu7i8ni9or5zBY/WnqYHVg9/r7/wORx6eV3No9nvXsYPS5eUvb4vEkugDWK2yYpsaQsODM9
-	T98ugTuj51tYwUqhisUPJjA3ML7i62Lk5JAQMJH4MfMRM4QtJnHh3nq2LkYuDiGBy4wSy+73
-	s0A455kknq/8yAJSxSagK7Gop5kJxBYRkJX4fngjI4jNLDCBUWJpfyGILSwQKrFkzUqwOIuA
-	qsTetjmsIDavgKvEnxvbWCG2KUhcnrUGbDMnUHxL+y6wuJCAi8S//tusExh5FzAyrGKUS8wp
-	zdXNTczMKU5N1i1OTszLSy3SNdbLzSzRS00p3cQICSm+HYzt62UOMQpwMCrx8Gq8mx4oxJpY
-	VlyZe4hRkoNJSZT3ncnMQCG+pPyUyozE4oz4otKc1OJDjBIczEoivHuEgHK8KYmVValF+TAp
-	aQ4WJXFetSXqfkIC6YklqdmpqQWpRTBZGQ4OJQlec2DsCAkWpaanVqRl5pQgpJk4OEEEF8gG
-	HqAN0iCFvMUFibnFmekQRacYFaXEeS+CnCUAksgozYMbAIv+V4ziQP8I89qCtPMAEwdc9yug
-	wUxAg1mvTQUZXJKIkJJqYBQ43nfzwYYko/nVTR2uqXsjzvY82Vaawlu4MzmhV+DikQBJBrlU
-	keuft8je6/UMZ9COOxJ/wuJ11ccdVRuPLknYts5wJu8Gh2DOiLXTpFI7ppw+OHlKQFfFPSf5
-	e6VzL2fwLlx75Ynrtfh2AR62OW8bn3vc+c7jPM/V7NB+i5zkqfrXO08/7lNiKc5I 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixO6iqPvYdGagQftHNouuK91MFg29V5gt
+	5t3dxWRxe8V8ZosfLT3MDqwef99/YPK49PI7m8ez3j2MHhcvKXt83iQXwBrFbZOUWFIWnJme
+	p2+XwJ3xpekNe8EB1oora2ewNTDuZuli5OSQEDCROHnvICuELSZx4d56ti5GLg4hgcuMEr0f
+	djNBOOeZJC7unsAOUsUmoCuxqKeZCcQWEZCV+H54IyOIzSwwgVFiaX8hiC0s4CxxZP0WsDiL
+	gKrEi1WH2EBsXgFXiWlLNkBtU5C4PGsNM4jNCRTf0r4LLC4k4CLxr/826wRG3gWMDKsY5RJz
+	SnN1cxMzc4pTk3WLkxPz8lKLdC30cjNL9FJTSjcxQoJKZAfjkZNyhxgFOBiVeHgbPkwPFGJN
+	LCuuzD3EKMnBpCTKu1x1ZqAQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd49QkA53pTEyqrUonyY
+	lDQHi5I477fF6n5CAumJJanZqakFqUUwWRkODiUJXncToEbBotT01Iq0zJwShDQTByeI4ALZ
+	wAO0YRFIIW9xQWJucWY6RNEpRkUpcd6LIAkBkERGaR7cAFj8v2IUB/pHmPcISBUPMHXAdb8C
+	GswENJj12lSQwSWJCCmpBkbZ1BNV0uddfDek1V+O9YgRjtc/x6aSOOWrQujLe21Verxm3Hra
+	X7Y+LFwSv7Bwi1/l6hUtHk8nJyluOX4ssfbJhPvT8wv97lRk3nrY86qzMuXVxM+il+fJpuvX
+	Hti3NVppvt2KW5/cTbreHz7DkeWddNa8bn2gzKclfzNe+Jte45+QI7/ytr4SS3FG 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224915>
 
-The lifetime of the refname was never documented, but some callers
-used to assume that its lifetime was essentially permanent.  The
-commits leading up to this have disabused such callers of that notion.
-
-The new status quo is that the API explicitly does *not* guarantee
-that the refname string lives beyond a single callback invocation.
-Document that fact.
+No names are ever set for the object_array_entries in merges, so there
+is no need to pretend to copy them to the result array.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
-This patch is the ultimate goal of the series, and I include it for
-illustration, but it obviously shouldn't be committed before the
-object_array questions have been answered and the rest of the code has
-been audited more carefully.
+ submodule.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
- refs.h | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
-
-diff --git a/refs.h b/refs.h
-index a35eafc..e67fb07 100644
---- a/refs.h
-+++ b/refs.h
-@@ -15,13 +15,23 @@ struct ref_lock {
- #define REF_ISBROKEN 0x04
+diff --git a/submodule.c b/submodule.c
+index b837c04..ad476ce 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -893,8 +893,7 @@ static int find_first_merges(struct object_array *result, const char *path,
+ 		}
  
- /*
-- * Calls the specified function for each ref file until it returns
-- * nonzero, and returns the value.  Please note that it is not safe to
-- * modify references while an iteration is in progress, unless the
-- * same callback function invocation that modifies the reference also
-- * returns a nonzero value to immediately stop the iteration.
-+ * The callback functions for the for_each_*() functions below must
-+ * have this signature.  The memory pointed to by the refname argument
-+ * is only guaranteed to be valid for the duration of a single
-+ * callback invocation.
-+ */
-+typedef int each_ref_fn(const char *refname,
-+			const unsigned char *sha1, int flags, void *cb_data);
-+
-+/*
-+ * The following functions invoke the specified callback function for
-+ * each reference indicated.  If the function ever returns a nonzero
-+ * value, stop the iteration and return that value.  Please note that
-+ * it is not safe to modify references while an iteration is in
-+ * progress, unless the same callback function invocation that
-+ * modifies the reference also returns a nonzero value to immediately
-+ * stop the iteration.
-  */
--typedef int each_ref_fn(const char *refname, const unsigned char *sha1, int flags, void *cb_data);
- extern int head_ref(each_ref_fn, void *);
- extern int for_each_ref(each_ref_fn, void *);
- extern int for_each_ref_in(const char *, each_ref_fn, void *);
+ 		if (!contains_another)
+-			add_object_array(merges.objects[i].item,
+-					 merges.objects[i].name, result);
++			add_object_array(merges.objects[i].item, NULL, result);
+ 	}
+ 
+ 	free(merges.objects);
 -- 
 1.8.2.3
