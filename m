@@ -1,79 +1,64 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Random thoughts on "upstream"
-Date: Sun, 19 May 2013 07:00:12 -0500
-Message-ID: <CAMP44s3OCPZYK8Cm25hLLGVOcQ5VAZ103-apHeDf3+gR5GjOcA@mail.gmail.com>
-References: <7vobca6c7r.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2t3+yBQMj9uSd_=3w0CgeJsHeAQM051j7Xt+SqVthvzQ@mail.gmail.com>
-	<7vobca3465.fsf@alter.siamese.dyndns.org>
-	<7vzjvu1jes.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=rHFQ14G8baYpY7gYo+Qb+5a0qOKZGBTrp6BamKC2vRg@mail.gmail.com>
-	<7vk3mx1rox.fsf@alter.siamese.dyndns.org>
-	<CALkWK0mLtc8dmMPOcLMez1agF1+ZMUDAUwtwmiKSxOCfyiW0Bw@mail.gmail.com>
-	<7vk3mxze8v.fsf@alter.siamese.dyndns.org>
-	<CALkWK0kYKZGhthdrb6-7RD_c2A7E9rscAZU3=JHM-4rYre6w=Q@mail.gmail.com>
-	<7vmwrr1pem.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=6L529C452MaNGksL5KeVb+cL1SeC=FwA9veS=tNQurA@mail.gmail.com>
-	<CAMP44s3HaEc1UoULYHYnzd_B_VayfedG_Gd1gT27=SeMdp4=eg@mail.gmail.com>
-	<CALkWK0mOH8ZpmDR3HWW3j-q9fEpSawNonLDDWixD9LrPcKNnDA@mail.gmail.com>
+Subject: Re: [PATCH] remote-hg: set stdout to binary mode on win32
+Date: Sun, 19 May 2013 07:00:43 -0500
+Message-ID: <CAMP44s32tF01P5=Go+cdh8x8m9c0c5e=SR4jpx_Zi38yQrGk7w@mail.gmail.com>
+References: <1368964428-1059-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 19 14:00:24 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Amit Bakshi <ambakshi@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 19 14:00:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ue2Hm-0003Lj-Tn
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 14:00:23 +0200
+	id 1Ue2ID-0003hc-KE
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 14:00:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754490Ab3ESMAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 08:00:15 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:57667 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754191Ab3ESMAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 May 2013 08:00:14 -0400
-Received: by mail-la0-f42.google.com with SMTP id fg20so3358543lab.1
-        for <git@vger.kernel.org>; Sun, 19 May 2013 05:00:12 -0700 (PDT)
+	id S1754496Ab3ESMAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 08:00:46 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:44979 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754191Ab3ESMAp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 May 2013 08:00:45 -0400
+Received: by mail-lb0-f174.google.com with SMTP id u10so3691914lbi.33
+        for <git@vger.kernel.org>; Sun, 19 May 2013 05:00:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
          :subject:from:to:cc:content-type;
-        bh=hJSoWIZ8dC+2A7o1EnaTSZJXWHwQ+PkcTSNHgUmWJJM=;
-        b=jF9viyas5kAt/jzedxSjDdMgoEFynsRDVY3rpAWQ+ashlbLaGjgGoWNErgMoHc2C/n
-         VfogzmO7aIpJfAWDAxlE1VRcY2w+rwCeSh2jETY8if1BE/pG/QuQsugZrPJK6PKiodDp
-         6zLsC3c2yDGfXsAFlthhnw7LGdw4XsY0gTgtwcDVFRS5XiAA0O1wSncd58yccFEZnRfp
-         guW0avch0MbXb0odEtyIVUpLIUINd/ocS0Lu2KFxThj/zzIE65GHmZUZuw2E4Kx/r6zz
-         xzzzmFEy7lFfmkCjaBlXwzAz7u2s5DCr+Jy9SULFHsj4MpHHsDNeKXLwMHGggmESJP8p
-         YRXQ==
-X-Received: by 10.112.145.72 with SMTP id ss8mr26116817lbb.12.1368964812865;
- Sun, 19 May 2013 05:00:12 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Sun, 19 May 2013 05:00:12 -0700 (PDT)
-In-Reply-To: <CALkWK0mOH8ZpmDR3HWW3j-q9fEpSawNonLDDWixD9LrPcKNnDA@mail.gmail.com>
+        bh=I6p7utF0Mfwksmyv3L18fUZvDzTl3RbP5ofBd2ipngA=;
+        b=coxpK2diBVcpzKEVdCZeXMFDfWtvJ3U6NxNXyiDXr7LODL9J4Yr6mQge3EGJAHu6qc
+         WK1msZfMLJX01lcy1pIz3CekwTtWg7q0Em2atXND+LjNCDc54YHsv8lMhh8m7F3rPW/K
+         470Q0LlGyl5q1azcCREF5sdQ29J8HcN77XSBBhkS8U9jnRo4vNv0sxp7rTs0bjL/W9oi
+         2ttZWz2G2vO+SDXoUY6gpEqk1zJT3DmJkMdspLtYL9bMGI50ozY5XPBrL3FFbWYhMAZg
+         bdz7dG/1TdmejhHnaekIM39HcGwfLsGkyQvlXPv9ntZtFouL6p6VYtwbrZsAu9EGA7JO
+         onIQ==
+X-Received: by 10.152.19.39 with SMTP id b7mr5016963lae.38.1368964843717; Sun,
+ 19 May 2013 05:00:43 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Sun, 19 May 2013 05:00:43 -0700 (PDT)
+In-Reply-To: <1368964428-1059-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224876>
 
-On Sun, May 19, 2013 at 6:54 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Felipe Contreras wrote:
->> You can't represent push.default = single either.
+On Sun, May 19, 2013 at 6:53 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> From: Amit Bakshi <ambakshi@gmail.com>
 >
-> Right.  And I propose that we extend the refspec to be able to
-> represent it, instead of having "single" sticking out like a sore
-> thumb (and possibly introducing more sore thumbs like this in the
-> future).
+> git clone hangs on windows, and file.write would return errno 22 inside
+> of mercurial's windows.winstdout wrapper class. This patch sets stdout's
+> mode to binary, fixing both issues.
 
-Yeah, go ahead and have fun making refspecs Turing complete. Why?
-Because you decided to call something a "sore thumb". Calling
-something a "sore thumb" doesn't make it so.
+Forgot:
+[fc: cleaned up]
 
-We, the sane people, will people will keep using simple configuration
-options. Hopefully some day there won't be much need for many of the
-current configurations, including push.default.
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 
 -- 
 Felipe Contreras
