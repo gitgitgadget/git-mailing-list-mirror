@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 11/17] object_array: add function object_array_filter()
-Date: Sun, 19 May 2013 22:27:06 +0200
-Message-ID: <1368995232-11042-12-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 13/17] fsck: don't put a void*-shaped peg in a char*-shaped hole
+Date: Sun, 19 May 2013 22:27:08 +0200
+Message-ID: <1368995232-11042-14-git-send-email-mhagger@alum.mit.edu>
 References: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johan Herland <johan@herland.net>, git@vger.kernel.org,
@@ -13,158 +13,88 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeADY-0004ax-5H
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 22:28:32 +0200
+	id 1UeADY-0004ax-OV
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 22:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754805Ab3ESU2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 16:28:16 -0400
-Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:63557 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754167Ab3ESU2N (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 May 2013 16:28:13 -0400
-X-AuditID: 12074414-b7fb86d000000905-4c-519935dcb517
+	id S1754829Ab3ESU2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 16:28:18 -0400
+Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:57958 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754787Ab3ESU2Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 May 2013 16:28:16 -0400
+X-AuditID: 1207440c-b7ff06d0000008f7-af-519935df4c0b
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 84.59.02309.CD539915; Sun, 19 May 2013 16:28:12 -0400 (EDT)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id ED.86.02295.FD539915; Sun, 19 May 2013 16:28:15 -0400 (EDT)
 Received: from michael.fritz.box (p57A25040.dip0.t-ipconnect.de [87.162.80.64])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4JKRX5U026019
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4JKRX5W026019
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 19 May 2013 16:28:11 -0400
+	Sun, 19 May 2013 16:28:14 -0400
 X-Mailer: git-send-email 1.8.2.3
 In-Reply-To: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsUixO6iqHvHdGagwZFrJhZdV7qZLBp6rzBb
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixO6iqHvfdGagwe3tNhZdV7qZLBp6rzBb
 	zLu7i8ni9or5zBY/WnqYHVg9/r7/wORx6eV3No9nvXsYPS5eUvb4vEkugDWK2yYpsaQsODM9
-	T98ugTtj3bb5jAVTZSu+zjjE3MD4TLyLkZNDQsBEonNPHyuELSZx4d56ti5GLg4hgcuMEv++
-	LWGFcM4zSfxac5kJpIpNQFdiUU8zmC0iICvx/fBGRhCbWWACo8TS/sIuRg4OYQF3iemreUHC
-	LAKqEv939ICV8wq4SvzduJUFYpmCxOVZa5hBbE6g+Jb2XWBHCAm4SPzrv806gZF3ASPDKka5
-	xJzSXN3cxMyc4tRk3eLkxLy81CJdC73czBK91JTSTYyQkBLZwXjkpNwhRgEORiUe3oYP0wOF
-	WBPLiitzDzFKcjApifIuV50ZKMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEd48QUI43JbGyKrUo
-	HyYlzcGiJM77bbG6n5BAemJJanZqakFqEUxWhoNDSYLX3QSoUbAoNT21Ii0zpwQhzcTBCSK4
-	QDbwAG1YBFLIW1yQmFucmQ5RdIpRUUqc9yJIQgAkkVGaBzcAFv2vGMWB/hHmPQJSxQNMHHDd
-	r4AGMwENZr02FWRwSSJCSqqBcWHfcf7Jp1W7NI8t7jHd8eLf9kM+v6cVfMw72752Utqdx/oM
-	13rznWX+TY6v3v5Vf9qCjzWzDm9z9GL4+edTifTdJ7MeC9Y/KTTl3vfmS9+bE9qhAvfUjmXV
-	uLkYnnMxPvvuhW7ATVPdCQUBEV5RT5X/lMzQlDNQXnrln1q/3E+/2wd2dOxkFlRi 
+	T98ugTvj67I97AXPuCoe72pkb2A8x9HFyMkhIWAi0Xj8CiuELSZx4d56ti5GLg4hgcuMEifW
+	b2KHcM4zSWz7O4EFpIpNQFdiUU8zE4gtIiAr8f3wRkYQm1lgAqPE0v5CEFtYIEDi5M0+NhCb
+	RUBV4s+/t2A2r4CrxPxFc5ggtilIXJ61hhnE5gSKb2nfBXaFkICLxL/+26wTGHkXMDKsYpRL
+	zCnN1c1NzMwpTk3WLU5OzMtLLdI11MvNLNFLTSndxAgJKp4djN/WyRxiFOBgVOLh1Xg3PVCI
+	NbGsuDL3EKMkB5OSKO87k5mBQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR49wgB5XhTEiurUovy
+	YVLSHCxK4ryqS9T9hATSE0tSs1NTC1KLYLIyHBxKErzmwOgREixKTU+tSMvMKUFIM3Fwgggu
+	kA08QBukQQp5iwsSc4sz0yGKTjEqSonzMoMkBEASGaV5cANg8f+KURzoH2FeW5AqHmDqgOt+
+	BTSYCWgw67WpIINLEhFSUg2MEVbzDVM4eB/kXjKMuqz2oHGFalaABfPZw08lHR36z739uMZQ
+	faLZyj/SnUIutgpn9BQdxdhEtlzjymT0EzVUjM9WYut+conjcHa/5Le/J3XPuYndqDRcaL/m
+	immr6MqC5WHhxhMc7uYozn+2/++8r54b/jCo3kvizxO8JK1e6NCuvNRR1liJpTgj 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224913>
 
-Add a function that allows unwanted entries in an object_array to be
-removed.  This encapsulation is a step towards giving object_array
-ownership of its entries' name memory.
+The source of this nonsense was
 
-Use the new function to replace revision.c:gc_boundary().
+    04d3975937 fsck: reduce stack footprint
+
+, which wedged a pointer to parent into the object_array_entry's name
+field.  The parent pointer was passed to traverse_one_object(), even
+though that function *didn't use it*.
+
+The useless code has been deleted over time.  Commit
+
+    a1cdc25172 fsck: drop unused parameter from traverse_one_object()
+
+removed the parent pointer from traverse_one_object()'s
+signature. Commit
+
+    c0aa335c95 Remove unused variables
+
+removed the code that read the parent pointer back out of the name
+field.
+
+This commit takes the last step: don't write the parent pointer into
+the name field in the first place.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- object.c   | 16 ++++++++++++++++
- object.h   | 11 +++++++++++
- revision.c | 28 ++++++++++------------------
- 3 files changed, 37 insertions(+), 18 deletions(-)
+I thought that this misuse of the name field was going to be a
+showstopper for changing how the name's memory is managed, but then I
+noticed that the value stored here is never used.
 
-diff --git a/object.c b/object.c
-index 20703f5..fcd4a82 100644
---- a/object.c
-+++ b/object.c
-@@ -278,6 +278,22 @@ void add_object_array_with_mode(struct object *obj, const char *name, struct obj
- 	array->nr = ++nr;
- }
- 
-+void object_array_filter(struct object_array *array,
-+			 object_array_each_func_t want, void *cb_data)
-+{
-+	unsigned nr = array->nr, src, dst;
-+	struct object_array_entry *objects = array->objects;
-+
-+	for (src = dst = 0; src < nr; src++) {
-+		if (want(&objects[src], cb_data)) {
-+			if (src != dst)
-+				objects[dst] = objects[src];
-+			dst++;
-+		}
-+	}
-+	array->nr = dst;
-+}
-+
- void object_array_remove_duplicates(struct object_array *array)
- {
- 	unsigned int ref, src, dst;
-diff --git a/object.h b/object.h
-index 97d384b..0d39ff4 100644
---- a/object.h
-+++ b/object.h
-@@ -85,6 +85,17 @@ int object_list_contains(struct object_list *list, struct object *obj);
- /* Object array handling .. */
- void add_object_array(struct object *obj, const char *name, struct object_array *array);
- void add_object_array_with_mode(struct object *obj, const char *name, struct object_array *array, unsigned mode);
-+
-+typedef int (*object_array_each_func_t)(struct object_array_entry *, void *);
-+
-+/*
-+ * Apply want to each entry in array, retaining only the entries for
-+ * which the function returns true.  Preserve the order of the entries
-+ * that are retained.
-+ */
-+void object_array_filter(struct object_array *array,
-+			 object_array_each_func_t want, void *cb_data);
-+
- void object_array_remove_duplicates(struct object_array *);
- 
- void clear_object_flags(unsigned flags);
-diff --git a/revision.c b/revision.c
-index 19c59f4..ddc6d7c 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2435,23 +2435,6 @@ static struct commit *get_revision_1(struct rev_info *revs)
- 	return NULL;
- }
- 
--static void gc_boundary(struct object_array *array)
--{
--	unsigned nr = array->nr, i, j;
--	struct object_array_entry *objects = array->objects;
--
--	for (i = j = 0; i < nr; i++) {
--		if (objects[i].item->flags & SHOWN)
--			continue;
--		if (i != j)
--			objects[j] = objects[i];
--		j++;
--	}
--	for (i = j; i < nr; i++)
--		objects[i].item = NULL;
--	array->nr = j;
--}
--
- static void create_boundary_commit_list(struct rev_info *revs)
- {
- 	unsigned i;
-@@ -2493,6 +2476,15 @@ static void create_boundary_commit_list(struct rev_info *revs)
- 	sort_in_topological_order(&revs->commits, revs->lifo);
- }
- 
-+/*
-+ * Return true for entries that have not yet been shown.  (This is an
-+ * object_array_each_func_t.)
-+ */
-+static int entry_unshown(struct object_array_entry *entry, void *cb_data_unused)
-+{
-+	return !(entry->item->flags & SHOWN);
-+}
-+
- static struct commit *get_revision_internal(struct rev_info *revs)
- {
- 	struct commit *c = NULL;
-@@ -2575,7 +2567,7 @@ static struct commit *get_revision_internal(struct rev_info *revs)
- 		p->flags |= CHILD_SHOWN;
- 		if (revs->boundary_commits.nr == revs->boundary_commits.alloc) {
- 			/* Try to make space and thereby avoid a realloc(): */
--			gc_boundary(&revs->boundary_commits);
-+			object_array_filter(&revs->boundary_commits, entry_unshown, NULL);
- 		}
- 		add_object_array(p, NULL, &revs->boundary_commits);
+ builtin/fsck.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index bb9a2cd..9909b6d 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -112,7 +112,7 @@ static int mark_object(struct object *obj, int type, void *data)
+ 		return 1;
  	}
+ 
+-	add_object_array(obj, (void *) parent, &pending);
++	add_object_array(obj, NULL, &pending);
+ 	return 0;
+ }
+ 
 -- 
 1.8.2.3
