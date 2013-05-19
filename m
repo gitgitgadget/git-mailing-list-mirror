@@ -1,63 +1,68 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] fetch: add new fetch.default configuration
-Date: Sun, 19 May 2013 17:21:12 +0530
-Message-ID: <CALkWK0nQzEK6-E7aMnGg6eYZJ_=XsE6FBmRgu9_8jBGkYmJe+Q@mail.gmail.com>
-References: <1368843536-19781-1-git-send-email-felipe.contreras@gmail.com>
- <CALkWK0mGPMw8NuhJFS0gK2BVutRO=FxX1ss+1o8fnndCc13LWw@mail.gmail.com> <CAMP44s3pZYw87awogjjOdFRP39Ou0=td2erhV2-aC-9_A_Z75A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	=?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 19 13:51:58 2013
+From: Philip Oakley <philipoakley@iee.org>
+Subject: [RFC/PATCH 1/2] Doc rebase: Describe rebase as excluding merge commits
+Date: Sun, 19 May 2013 12:52:08 +0100
+Message-ID: <1368964329-1600-2-git-send-email-philipoakley@iee.org>
+References: <1368964329-1600-1-git-send-email-philipoakley@iee.org>
+To: GitList <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 19 13:52:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ue29d-0005VP-1E
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 13:51:57 +0200
+	id 1Ue29k-0005Zj-Vw
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 13:52:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754401Ab3ESLvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 07:51:53 -0400
-Received: from mail-ia0-f176.google.com ([209.85.210.176]:34936 "EHLO
-	mail-ia0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754386Ab3ESLvw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 May 2013 07:51:52 -0400
-Received: by mail-ia0-f176.google.com with SMTP id j3so4248712iae.35
-        for <git@vger.kernel.org>; Sun, 19 May 2013 04:51:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Z+siNgAIvWX5JS1aWrPens62hxLxshCshAy9OmxC45Y=;
-        b=x53Bbjdc6N5Xy406vDg+WWjR+sf4LF8tDxqbsqkGIzmUHFwVaSXj32i7ZGavdB//4n
-         Ue+fLKrikAPQlkQUPhVQiFxCFAJ+fgrh+OCik0dGJTiuxgZk3R8E9WahdWRSMXdnpToJ
-         YLAYYMIaj4IySeQd13TrK5hrlWRBwH45cRG3f/BLSlo+ib7fROOGVFfpIAkl0kh+YSE+
-         Mu4L1Oc6FmDkR+n3BBMvHUPOrdMxBLjP5KhI/jWWFaGANygVFOph08rHYu5xdMbXUGrl
-         GUb5T489W8PvY2buv5t06sxo4rnruyN7nRmIkP1a+37o7u44JSIVnv/Jbfx1sfMXLbsu
-         3RCQ==
-X-Received: by 10.50.33.19 with SMTP id n19mr2863346igi.44.1368964312110; Sun,
- 19 May 2013 04:51:52 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Sun, 19 May 2013 04:51:12 -0700 (PDT)
-In-Reply-To: <CAMP44s3pZYw87awogjjOdFRP39Ou0=td2erhV2-aC-9_A_Z75A@mail.gmail.com>
+	id S1754449Ab3ESLwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 07:52:00 -0400
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:30994 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754429Ab3ESLv6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 May 2013 07:51:58 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah8MAMa7mFFZ8YNG/2dsb2JhbABbgwgwglK+ZAQBfRd0giABBVYzCEk5HgYKCYgRCLtujgSBJINUA5hhkBeDEDs
+X-IronPort-AV: E=Sophos;i="4.87,703,1363132800"; 
+   d="scan'208";a="424434978"
+Received: from host-89-241-131-70.as13285.net (HELO localhost) ([89.241.131.70])
+  by out1.ip03ir2.opaltelecom.net with ESMTP; 19 May 2013 12:51:57 +0100
+X-Mailer: git-send-email 1.8.1.msysgit.1
+In-Reply-To: <1368964329-1600-1-git-send-email-philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224865>
 
-Felipe Contreras wrote:
-> % git checkout fc/remote/hg-next
-> % git rebase -i # rebase to master
-> % git checkout fc/remote/hg-notes
-> % git rebase -i # rebase to fc/remote/hg-next
-> % git checkout fc/remote/hg-gitifyhg-compat
-> % git rebase -i # rebase to fc/remote/hg-notes
+Describe rebase in the description section.
 
-So it is rebase, but rebase.defaultUpstream = origin won't suffice.
-You want to specify a custom base.  What I don't understand is why
-you're abusing @{u}, and crippling remote (by hard-interpreting it as
-"origin") to achieve this.  For the record, I didn't think your
-branch.<name>.base was a bad idea at all (re-visiting now).
+Include a softer paraphrased version from the crytic, well-loved,
+but sometimes parodied, Name description, and tell users that merge
+commits are excluded by default.
+
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+
+---
+
+http://article.gmane.org/gmane.comp.version-control.git/217410
+http://article.gmane.org/gmane.comp.version-control.git/217495
+---
+ Documentation/git-rebase.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index aca8405..87a8095 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -16,6 +16,10 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ -----------
++'git rebase' will transfer local commits, excluding merge commits
++by default, to the head of the branch's upstream, or onto a new base
++if given.
++
+ If <branch> is specified, 'git rebase' will perform an automatic
+ `git checkout <branch>` before doing anything else.  Otherwise
+ it remains on the current branch.
+-- 
+1.8.1.msysgit.1
