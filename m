@@ -1,104 +1,80 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/2] remote-helpers: tests: use python directly
-Date: Sun, 19 May 2013 03:25:02 -0500
-Message-ID: <51988c5e6cefb_76e0f31e20808a6@nysa.mail>
-References: <1368825008-2815-1-git-send-email-felipe.contreras@gmail.com>
- <1368825008-2815-2-git-send-email-felipe.contreras@gmail.com>
- <7vwqqxujby.fsf@alter.siamese.dyndns.org>
- <CAJDDKr6Qnx5ddBn=6reNOY44CxaDgD254H7M3K2mb8bbd8jpmA@mail.gmail.com>
- <7v4ndz1o8q.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v5 01/15] Add new git-related helper to contrib
+Date: Sun, 19 May 2013 03:29:32 -0500
+Message-ID: <51988d6c4eceb_76e0f31e2080975@nysa.mail>
+References: <1368877615-9563-1-git-send-email-felipe.contreras@gmail.com>
+ <1368877615-9563-2-git-send-email-felipe.contreras@gmail.com>
+ <CAMP44s0QYrzVBsmba1PYMG0yo0CpvTnVm=QHfYif6iu_Zo=tNA@mail.gmail.com>
+ <7vli7bza98.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
-	David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 19 10:30:08 2013
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 19 10:32:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Udz0K-0005sd-D2
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 10:30:08 +0200
+	id 1Udz2H-0007Oc-Ca
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 10:32:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753889Ab3ESIaC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 04:30:02 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:51047 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753808Ab3ESI37 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 May 2013 04:29:59 -0400
-Received: by mail-ob0-f176.google.com with SMTP id wp18so6076000obc.35
-        for <git@vger.kernel.org>; Sun, 19 May 2013 01:29:58 -0700 (PDT)
+	id S1753897Ab3ESIcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 04:32:04 -0400
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:45184 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753858Ab3ESIcC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 May 2013 04:32:02 -0400
+Received: by mail-oa0-f44.google.com with SMTP id n12so6712430oag.31
+        for <git@vger.kernel.org>; Sun, 19 May 2013 01:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:message-id:in-reply-to:references
          :subject:mime-version:content-type:content-transfer-encoding;
-        bh=Ky0feuEQ93b4AOKRGVMwFVzyFKB3nNsZtZ90B4mgcDc=;
-        b=bbftGKB/7ZSH3atcAn5e3qUaWhmHK2mJ/fOCagn28wZzYtgRN+eu7/liADEoftMeWY
-         BDoOEaJbAigNcVGTgVkc1bvLb5Wxjf7E7ZSfRtpiQmX6IPUsjhEg1kP0bsMcDcWZlwwm
-         dIVxkpdPSMCp7O1oLb5FobF3Vl7bDVSHEZVEedCrL636vOJZv20S1B76n1yksZ8EqGtL
-         T3GRShrN85fJPQmjc48+8Ncowlmr+Od4fyBfqgkejGfc4Djk56ZgLq78blsvANBSM3XS
-         k4ddqpJEDea6tj9bQtQOFrv9z1iiMo2H5RJzNkTfgHobjt8LUeF9U3tEUbTQilgm5Lpq
-         yoNw==
-X-Received: by 10.182.240.136 with SMTP id wa8mr25100143obc.2.1368952198261;
-        Sun, 19 May 2013 01:29:58 -0700 (PDT)
+        bh=10SlM7lGCD0eQpyBrKw2sel/vLeck17MKBWP8WPpzOg=;
+        b=qgGWmwSe0ldFPAw6QlkykSGbJYdUBXUP/GIduCurnXfzN/Bysykh/YPQGGYsM/FWCI
+         aJheVwPkuF3NSnp46Bh7x131Qhp/iLsDrLwwXjv/B7FdIcZ1B7Kqes6M8wB67qlT9tcx
+         a8vzOjAWj9TvTuWx7E/6ENeQa5MX1sB2mCaztiJDX8li8ZbMo9/1wzxt8lp7plwtUNqM
+         kMaDdrwinIEDWwXKxKAPpAYggCkx+ISziVjySkZEPdgHEXFQOHnmP7DnqAPhaRSxxwxy
+         bChrhjbOTKi1lhF4tahCOgZdu6Ts4kSwx0BqixPN8/6GXIxgMWRlRjqtcuoG8x64bD3d
+         xSHw==
+X-Received: by 10.60.84.2 with SMTP id u2mr4540869oey.24.1368952321604;
+        Sun, 19 May 2013 01:32:01 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id yx4sm15103649obb.11.2013.05.19.01.29.56
+        by mx.google.com with ESMTPSA id eq4sm15166733obb.5.2013.05.19.01.31.59
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 19 May 2013 01:29:57 -0700 (PDT)
-In-Reply-To: <7v4ndz1o8q.fsf@alter.siamese.dyndns.org>
+        Sun, 19 May 2013 01:32:00 -0700 (PDT)
+In-Reply-To: <7vli7bza98.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224832>
 
 Junio C Hamano wrote:
-> David Aguilar <davvid@gmail.com> writes:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> > On Fri, May 17, 2013 at 7:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > On Sat, May 18, 2013 at 6:46 AM, Felipe Contreras
+> > <felipe.contreras@gmail.com> wrote:
 > >
-> >> So it is a right thing to do in that sense.
-> >>
-> >> I however am having this nagging feeling that I may be missing
-> >> something subtle here.  Comments from others are very much welcome.
+> >>  contrib/related/git-related | 124 ++++++++++++++++++++++++++++++++++++++++++++
+> >>  1 file changed, 124 insertions(+)
+> >>  create mode 100755 contrib/related/git-related
 > >
-> > Yes, this is correct.  Another way to skin this cat would be to do
-> > search/replace in a Makefile to burn in the PYTHON_PATH similar to how
-> > we do for the .sh scripts and other .py files in the main Makefile.
-> > The remote helpers are in contrib/ so they do not go through the main
-> > Makefile, which is the root cause.
-> >
-> > Longer-term, it would be good to treat these uniformly, but this is no
-> > worse for now.
+> > I tried everything and I don't think it's physically possible to make
+> > this script any simpler without severely crippling it's main goal.
 > 
-> Ahh, so my "nagging feeling" was that remote-helpers could in theory
-> be updated to follow the PYTHON_PATH like the rest of the system and
-> matching these two in that direction is the better longer-term fix?
+> Hmm, I haven't read these patches yet (I just came back a few hours
+> ago to a state in which I am well enough to read and write e-mails),
+> but did anybody complain that it is too complex?
 
-Indeed, and I already have patches for that. FTR, the Makefile does loop
-through the main Makefile, which is what made implementing this so easy.
-
-> I somehow thought that there were valid reasons that we could not do
-> so for some technical reason (e.g. the instalation of python used to
-> run hg and/or bzr via these remote helpers and the installation of
-> python we use may need to be different?).  As long as the right
-> longer-term direction is not "we cannot fundamentally unify them",
-> then I am very happy.
-
-I didn't think of that, and it might actually be a problem: I don't think
-Mercurial works with python 3, and Bazaar probably never will.
-
-But I don't think the current situation of always using 'python' helps either
-way.
-
-Cheers.
+This comment was again targetted to Ramkumar, who yes, indeed he complained
+about it being too complex, at least v3.
 
 -- 
 Felipe Contreras
