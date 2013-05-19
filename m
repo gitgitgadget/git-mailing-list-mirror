@@ -1,149 +1,93 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 00/17] Remove assumptions about refname lifetimes
-Date: Sun, 19 May 2013 22:26:55 +0200
-Message-ID: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 01/17] describe: make own copy of refname
+Date: Sun, 19 May 2013 22:26:56 +0200
+Message-ID: <1368995232-11042-2-git-send-email-mhagger@alum.mit.edu>
+References: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johan Herland <johan@herland.net>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun May 19 22:27:49 2013
+X-From: git-owner@vger.kernel.org Sun May 19 22:28:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeACq-00044J-Ca
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 22:27:48 +0200
+	id 1UeAD4-0004EN-N4
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 22:28:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754469Ab3ESU1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 16:27:44 -0400
-Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:55026 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754167Ab3ESU1n (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 May 2013 16:27:43 -0400
-X-AuditID: 1207440f-b7f0e6d000000957-c7-519935be0f5f
+	id S1754647Ab3ESU16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 16:27:58 -0400
+Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:43726 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754541Ab3ESU15 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 May 2013 16:27:57 -0400
+X-AuditID: 12074411-b7f286d0000008e8-b7-519935cc1256
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id F0.6C.02391.EB539915; Sun, 19 May 2013 16:27:42 -0400 (EDT)
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id DA.D1.02280.CC539915; Sun, 19 May 2013 16:27:56 -0400 (EDT)
 Received: from michael.fritz.box (p57A25040.dip0.t-ipconnect.de [87.162.80.64])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4JKRX5J026019
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4JKRX5K026019
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 19 May 2013 16:27:40 -0400
+	Sun, 19 May 2013 16:27:55 -0400
 X-Mailer: git-send-email 1.8.2.3
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHIsWRmVeSWpSXmKPExsUixO6iqLvPdGagwbQmVYuuK91MFg29V5gt
-	5t3dxWRxe8V8ZosfLT3MDqwef99/YPK49PI7m8ez3j2MHhcvKXt83iQXwBrFbZOUWFIWnJme
-	p2+XwJ2xY1ZpwR+ViotPdjI2MJ6V7WLk5JAQMJFoabnFBGGLSVy4t56ti5GLQ0jgMqPE/TUt
-	LBDOeSaJq7v2sYJUsQnoSizqaQbrEBGQlfh+eCMjiM0sMIFRYml/IYgtLOAo0b5jKTOIzSKg
-	KrF69gWwel4BF4mvr/8wQmxTkLg8aw3zBEbuBYwMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0
-	TfRyM0v0UlNKNzFCQoR/B2PXeplDjAIcjEo8vBrvpgcKsSaWFVfmHmKU5GBSEuV9ZzIzUIgv
-	KT+lMiOxOCO+qDQntfgQowQHs5II7x4hoBxvSmJlVWpRPkxKmoNFSZxXfYm6n5BAemJJanZq
-	akFqEUxWhoNDSYLXHWSoYFFqempFWmZOCUKaiYMTRHCBbOAB2nAfpJC3uCAxtzgzHaLoFKOi
-	lDjvRZCEAEgiozQPbgAsml8xigP9I8x7BKSKB5gI4LpfAQ1mAhrMem0qyOCSRISUVAOj66yt
-	Jyaa/wqV3GgavyBeeeuMvim2dS/kDS0n+Mpl/lCK3/Yv51LJu9k1PgyHEzVWW8RJXc19IB/c
-	qS/3nb/prULL97z8CYHZVYUl/9ddqlBffemi/O2pxZt//b7z1/7XohO8M/u/hbhU8+xdpOFz
-	f0MQT8GB0O/pWdf77+c1OyU9/LXIKPiAEktxRqKhFnNRcSIAd8FIx8ECAAA=
+In-Reply-To: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixO6iqHvGdGagwYeZVhZdV7qZLBp6rzBb
+	zLu7i8ni9or5zBY/WnqYHVg9/r7/wORx6eV3No9nvXsYPS5eUvb4vEkugDWK2yYpsaQsODM9
+	T98ugTtj1rof7AV7OCrePLrE3MB4gq2LkZNDQsBEYvPyjYwQtpjEhXvrgeJcHEIClxkl9py9
+	BeWcZ5I4deE0K0gVm4CuxKKeZiYQW0RAVuL7YYhuZoEJjBJL+wtBbGEBS4nNS26xg9gsAqoS
+	Ow6sA6vnFXCR6J67jR1im4LE5VlrmEFsTgFXiS3tu8DmCwHV/Ou/zTqBkXcBI8MqRrnEnNJc
+	3dzEzJzi1GTd4uTEvLzUIl1TvdzMEr3UlNJNjJCgEtzBOOOk3CFGAQ5GJR7ehg/TA4VYE8uK
+	K3MPMUpyMCmJ8r4zmRkoxJeUn1KZkVicEV9UmpNafIhRgoNZSYR3jxBQjjclsbIqtSgfJiXN
+	waIkzsu3RN1PSCA9sSQ1OzW1ILUIJivDwaEkwesOMlSwKDU9tSItM6cEIc3EwQkiuEA28ABt
+	WARSyFtckJhbnJkOUXSKUVFKnPciSEIAJJFRmgc3ABb/rxjFgf4R5j0CUsUDTB1w3a+ABjMB
+	DWa9NhVkcEkiQkqqgdHzirdHfrhmQFOD8f5vm7yn9yekGs11mZv3YO/yu5lqQq4r1R63Rlc9
+	3XS4yOZjD78S7/q5ba/sVGramizbP61OuDBZK9g0JCSscmnPvfb6jKgFxrEPJO4flL6Yfcin
+	Tcr9o5d3s/iGN+f73i7jytN7Xb/4yomq7Ja1HhECGtrbDa7P4ZggrMRSnJFoqMVc 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224907>
 
-Prior to this patch series, the refs API said nothing about the
-lifetime of the refname parameter passed to each_ref_fn callbacks by
-the for_each_ref()-style iteration functions.  De facto, the refnames
-usually had long lives because they were pointers into the ref_cache
-data structures, and those are only invalidated under rare
-circumstances.  And some callers were assuming a long lifetime, for
-example storing references to the refname string instead of copying
-it.
+Do not retain a reference to the refname passed to the each_ref_fn
+callback get_name(), because there is no guarantee of the lifetimes of
+these names.  Instead, make a local copy when needed.
 
-But it has long been the case that ref caches could be invalidated,
-for example when a packed ref is deleted.  AFAIK there was never much
-clarity about what that might mean for callers.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ builtin/describe.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Recently a number of race conditions related to references have been
-discovered.  There is likely to be a two-pronged solution to the
-races:
-
-* For traditional, filesystem-based references, there will have to be
-  more checks that the ref caches are still up-to-date at the time of
-  their use (see, for example, [1]).  If not, the ref cache will have
-  to be invalidated and reloaded.  Assuming that the invalidation of
-  the old cache includes freeing its memory, such an invalidation will
-  cause lots of refname strings to be freed even though callers might
-  still hold references to them.
-
-* For server-class installations, filesystem-based references might
-  not be robust enough for 100% reliable operation, because the
-  reading of the complete set of references is not an atomic
-  operation.  If another reference storage mechanism is developed,
-  there is no reason to expect the refnames strings to have long
-  lifetimes.
-
-A prerequisite for either of these approaches is to harmonize what
-callers assume and what the API guarantees.
-
-The purpose of this patch series is to track down callers who assume
-that the refnames that they receive via a each_ref_fn callback have
-lifetimes beyond the duration of the callback invocation and to
-rewrite them to work without that assumption.  The final patch
-documents explicitly that callers should not retain references to the
-refnames.
-
-A word about how I audited the code:
-
-To find callers making unwarranted assumptions, I (temporarily)
-changed do_one_ref() to do a xstrdup() of the refname, pass the copy
-to the callback function, then free() the copy.  This caused
-ill-behaved callers to access freed memory, which could be detected by
-running the testsuite under valgrind.  There were indeed a number of
-such errors.  All of them are fixed by this patch series, and the test
-just described now runs without errors.
-
-I plan to do a second audit by hand to see if the test suite and/or
-valgrind missed anything.
-
-The last two patches are RFCs.  I would like some input on the second
-to last because I am not very familiar with how the object array entry
-names are used, how many might be created, etc.  The last patch is an
-illustration of how I would like to change the API docs, but it will
-only be ready when all of the code has been audited and adapted.
-Please see especially my comments on these two patches for more
-information.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/223299
-
-Michael Haggerty (17):
-  describe: make own copy of refname
-  fetch: make own copies of refnames
-  add_rev_cmdline(): make a copy of the name argument
-  builtin_diff_tree(): make it obvious that function wants two entries
-  cmd_diff(): use an object_array for holding trees
-  cmd_diff(): rename local variable "list" -> "entry"
-  cmd_diff(): make it obvious which cases are exclusive of each other
-  revision: split some overly-long lines
-  gc_boundary(): move the check "alloc <= nr" to caller
-  get_revision_internal(): make check less mysterious
-  object_array: add function object_array_filter()
-  object_array_remove_duplicates(): rewrite to reduce copying
-  fsck: don't put a void*-shaped peg in a char*-shaped hole
-  find_first_merges(): initialize merges variable using initializer
-  find_first_merges(): remove unnecessary code
-  object_array_entry: copy name before storing in name field
-  refs: document the lifetime of the refname passed to each_ref_fn
-
- builtin/describe.c |  6 +++--
- builtin/diff.c     | 68 ++++++++++++++++++++++++++----------------------------
- builtin/fetch.c    |  4 ++--
- builtin/fsck.c     |  2 +-
- object.c           | 50 +++++++++++++++++++++++++++++++--------
- object.h           | 23 ++++++++++++++++--
- refs.h             | 22 +++++++++++++-----
- revision.c         | 61 +++++++++++++++++++++++++-----------------------
- revision.h         | 32 ++++++++++++++++---------
- submodule.c        |  6 ++---
- 10 files changed, 172 insertions(+), 102 deletions(-)
-
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 6636a68..3dc09eb 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -42,7 +42,7 @@ struct commit_name {
+ 	unsigned prio:2; /* annotated tag = 2, tag = 1, head = 0 */
+ 	unsigned name_checked:1;
+ 	unsigned char sha1[20];
+-	const char *path;
++	char *path;
+ };
+ static const char *prio_names[] = {
+ 	"head", "lightweight", "annotated",
+@@ -126,12 +126,14 @@ static void add_to_known_names(const char *path,
+ 			} else {
+ 				e->next = NULL;
+ 			}
++			e->path = NULL;
+ 		}
+ 		e->tag = tag;
+ 		e->prio = prio;
+ 		e->name_checked = 0;
+ 		hashcpy(e->sha1, sha1);
+-		e->path = path;
++		free(e->path);
++		e->path = xstrdup(path);
+ 	}
+ }
+ 
 -- 
 1.8.2.3
