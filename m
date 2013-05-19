@@ -1,70 +1,89 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 5/9] for-each-ref: add %(tracking[:upstream]) for tracking info
-Date: Sun, 19 May 2013 07:03:26 -0500
-Message-ID: <CAMP44s0_o6xgkbo3rT1rXSRS6kmasiooVohZcO3W+PcspbSz0w@mail.gmail.com>
-References: <1368959235-27777-1-git-send-email-pclouds@gmail.com>
-	<1368959235-27777-6-git-send-email-pclouds@gmail.com>
-	<CALkWK0k5qM3CZoivC1GJaBfwxWwvpDVtU7mHmm3feiLKr4kxXw@mail.gmail.com>
-	<CAMP44s1a5JH1T-ckvmFomoKKhFCE61CQ79YFxi4RiQLqeqhgTw@mail.gmail.com>
-	<CACsJy8DSH2Uq9-KhLVS=6Gu5L2q_gbHtrqmaQWE4_DJ6J2zQmQ@mail.gmail.com>
-	<CALkWK0m8HbYRAJdPgN7CnX_VMTX36GG-=BcqM+NTKwxX_0xqzg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] for-each-ref: introduce color format
+Date: Sun, 19 May 2013 19:05:08 +0700
+Message-ID: <CACsJy8CthvpJh6QM+umxY_Gq7nc-rGZ+Tcp7zAkadez-g+FFjQ@mail.gmail.com>
+References: <1368802552-16024-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 19 14:03:34 2013
+X-From: git-owner@vger.kernel.org Sun May 19 14:05:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ue2Kq-0005lg-75
-	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 14:03:32 +0200
+	id 1Ue2Mx-0007O8-ST
+	for gcvg-git-2@plane.gmane.org; Sun, 19 May 2013 14:05:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754512Ab3ESMD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 May 2013 08:03:28 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:40564 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754191Ab3ESMD1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 May 2013 08:03:27 -0400
-Received: by mail-lb0-f178.google.com with SMTP id w10so4221638lbi.37
-        for <git@vger.kernel.org>; Sun, 19 May 2013 05:03:26 -0700 (PDT)
+	id S1754526Ab3ESMFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 May 2013 08:05:40 -0400
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:57441 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754191Ab3ESMFj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 May 2013 08:05:39 -0400
+Received: by mail-oa0-f44.google.com with SMTP id n12so6767091oag.3
+        for <git@vger.kernel.org>; Sun, 19 May 2013 05:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=WYdDB7F11WwaX2AxWV40hwQ7IEDTmHpB8hmoy7Gz/wA=;
-        b=gGDQfcPAmiP/DJATNbfh7SqeCUSMDND7ZqMixencO03lHIJFOJVbITGRQhXfOybYhP
-         mGcYbDpQCskNEMzxUggJKfiV5gvvceQPWL5T0Jz8cxmD3EvdgEnMvbcpulAoW/4z5e7v
-         4BhZlfO9BC5NLVPaCVnFjhkzrdXHH6g//t4u2Il/+7z2TBOjNEkerUI/bNJYIZPxLEw4
-         KTEVHIsOzWnao++MfvoMULKU1tU6jLci0CPEuB/mLb0iGVWIMNKxi1IHnCcS3x/Iw/XA
-         f4783M/qttBFr6GpeAgkaT09h38BvRsE7iILTBzntDX1BkqVVWRTPnX31+RSdamxdOP9
-         93bw==
-X-Received: by 10.112.163.71 with SMTP id yg7mr16299338lbb.8.1368965006385;
- Sun, 19 May 2013 05:03:26 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Sun, 19 May 2013 05:03:26 -0700 (PDT)
-In-Reply-To: <CALkWK0m8HbYRAJdPgN7CnX_VMTX36GG-=BcqM+NTKwxX_0xqzg@mail.gmail.com>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=6+R1vWtaytNHVMAC0M1+K4suIM0YQP1cREnJLTcPV44=;
+        b=Hu4GlN4sxRHUlZedoiQxx7YvqY7b8rPlReRo6k3vv4jp3bNptqaKwRbNA4rBerHMKa
+         dC8cIy/kY6WlR+eIEgUnUdGvvJbBaeheprrCNdvm6BLbDa5aMvshvAOXIoA755OjmfzN
+         khpH6/s7umixJ0RLdnyKBhpeMIxGulDEfIeO63XQGHyUf0tZfdY0t+MCsZg6TzPaqHl/
+         QiE+h9y0WfFPP4Kjgn9LhT5XeN19/mgBPHDyqxKGlxw2WC/EFsYGnRuQ3fiSScqZ0XqS
+         qZ4ARqXF1Ps9kRtr32Qj9OViJFfhxzZtHOCGcMPSalddY28OeRp9OHVwHmTRK1Da17U1
+         A/Sg==
+X-Received: by 10.182.80.201 with SMTP id t9mr24969876obx.52.1368965138870;
+ Sun, 19 May 2013 05:05:38 -0700 (PDT)
+Received: by 10.76.180.138 with HTTP; Sun, 19 May 2013 05:05:08 -0700 (PDT)
+In-Reply-To: <1368802552-16024-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224878>
 
-On Sun, May 19, 2013 at 6:48 AM, Ramkumar Ramachandra
+On Fri, May 17, 2013 at 9:55 PM, Ramkumar Ramachandra
 <artagnon@gmail.com> wrote:
-> Duy Nguyen wrote:
->> Exactly. I already explained why %(upstream) can't be used in 00/09.
->> "tracking" may not be perfect. Somebody might want
->> "tracking:upstream:short". It does not look quite nice.
+> You can now do something like
 >
-> Which is why I suggested keeping upstream, upstream:short, and
-> introducing upstream:diff and upstream:shortdiff (or :tracking if you
-> prefer that) in [0/9].
+> $ git for-each-ref --format='%C(red)%(refname:short)%C(reset)
+> %C(blue)%(upstream:diff)%C(reset)' --count 5 --sort='-committerdate'
+> refs/heads
+>
+> To get output that's much more customizable 'git branch' output.  Future
+> patches will attempt unify the semantics of 'git branch' and 'git
+> for-each-ref'.
+>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  So my evil plan is to keep extending this format until it's on par
+>  with pretty-formats.  Then, we can move towards unifying 'git branch'
+>  and 'git for-each-ref'.  This will involve deprecating badly
+>  thought-out options like '-v', and replacing it with the more
+>  powerful '--format'.
+>
+>  I just have one major doubt: in the above output, how do I align all
+>  the upstream branches to the same column?  How can I achieve it with
+>  pretty-formats?  Something like %*d?  But * is already taken to mean
+>  deref in for-each-ref's --format.
+>
+>  By the way, the main motivation for all this comes from the fact that
+>  git for-each-ref is very nicely written :) Look at how it breaks
+>  everything up into atoms and lazily gets the information it needs to
+>  display.
 
-Yeah, but there won't be any upstream in %(tracking). Besides, if we
-manage to get downstream, we could do %(tracking:downstream). I think
-%(tracking) and %(short:tracking) make sense.
-
--- 
-Felipe Contreras
+If you can put energy into this, I suggest you improve pretty.c a bit,
+adding new format_ref_message(), similar to format_commit_message(),
+except that it takes a ref. You can extend "struct
+format_commit_context" to contain what "struct refinfo" does. I think
+pretty.c only lacks a few specifiers that for-each-ref has. I think I
+mentioned it in my for-each-ref series already, but we need to think
+how to specify "align to the left with the best width" and how
+format_ref_message() can figure the width out. A callback function
+might do.
+--
+Duy
