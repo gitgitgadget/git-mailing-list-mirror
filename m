@@ -1,100 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 1/2] Doc rebase: Describe rebase as excluding merge commits
-Date: Mon, 20 May 2013 15:29:05 -0700
-Message-ID: <7vwqqtthe6.fsf@alter.siamese.dyndns.org>
-References: <1368964329-1600-1-git-send-email-philipoakley@iee.org>
-	<1368964329-1600-2-git-send-email-philipoakley@iee.org>
-	<20130519180804.GE3362@elie.Belkin>
-	<7v1u92xnuw.fsf@alter.siamese.dyndns.org>
-	<2F59222ECBA14673815BF42E6A7CE5A5@PhilipOakley>
+Subject: Re: [PATCH] contrib/git-subtree: Use /bin/sh interpreter instead of /bin/bash
+Date: Mon, 20 May 2013 15:36:58 -0700
+Message-ID: <7vsj1hth11.fsf@alter.siamese.dyndns.org>
+References: <20130520202434.GA3151@hades.panopticon>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Jonathan Nieder" <jrnieder@gmail.com>,
-	"GitList" <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Tue May 21 00:29:14 2013
+Cc: git@vger.kernel.org
+To: Dmitry Marakasov <amdmi3@amdmi3.ru>
+X-From: git-owner@vger.kernel.org Tue May 21 00:37:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeYZt-000329-Pn
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 00:29:14 +0200
+	id 1UeYhZ-0006MI-Vq
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 00:37:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756460Ab3ETW3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 May 2013 18:29:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56191 "EHLO
+	id S1755442Ab3ETWhD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 May 2013 18:37:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63464 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756172Ab3ETW3H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 May 2013 18:29:07 -0400
+	id S1751622Ab3ETWhB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 May 2013 18:37:01 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68CEB20616;
-	Mon, 20 May 2013 22:29:07 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3A7C20B36;
+	Mon, 20 May 2013 22:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Nyi2DAx7ut5GJOh1jA7tfU5WZcE=; b=gJkeBs
-	ncyIaFgDxlhH2x+J9vBzcqQSgpKTuh+VLPuuk9tdpjJRpgP70DbC3zOv2JZ8t+Ej
-	VG9IEOjcRGyHQtljzuf+mVQRP+1plq1SxRC/oMxGdsj74atRTb1Ul3dYVjkzJch7
-	K52OFzA9WnMlknO+YWdReWU0EZFdl64N9ZNpI=
+	:content-type; s=sasl; bh=yVsXvU2xAVIAWWaaMu6p2jIaTis=; b=YsYz+Z
+	hrj8mAhcvon7DBvzdzBmq1fOB9AuI+vponzaDDz9Fu1SPMhLs1CfMIDMI7TB+pxd
+	oLIiijDxJdB8iLqn1Npm4Vx/S1Woo9w7BbO5y1vH/r7EgVoYSMgLY3uFN9z9esFz
+	UMo/3NgSWaJ6HSnVYZBkaPNLQnsI2vuwLLzNI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qrKxCdDcCVk/F6UOPpEKK8bVOmdf7wqw
-	Xyi0fFNTlofugtWXbwo5o3MEWrsS3R2hd2HSYCXXazZ9BZRXMCWo3pGw/h9By/Ar
-	4NObioL79euQEj4VV5lwJUOuvqwExKyAt3cLqw4WhOMCE/OGF6dLoZ0+NPMpHtEE
-	C3xIXkSyPvU=
+	:content-type; q=dns; s=sasl; b=NcYEyzkeHF8e0SDvbZMFyRGli1CYVy+R
+	HU9NGgsHwQuqY/4A6cj0iOrEfhPuDlvydvd8JmyB7RrNojbCKhWOQexvxJvwwwWC
+	HVoCImAE3q0Q6uyihUo5uNaxHdq3ZdnqewJeVoQCu2+ZnBjaqwIJfTlCGs6Zw/MT
+	KMxa/GBa3H4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C5EA20615;
-	Mon, 20 May 2013 22:29:07 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A974C20B35;
+	Mon, 20 May 2013 22:37:00 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF4B420612;
-	Mon, 20 May 2013 22:29:06 +0000 (UTC)
-In-Reply-To: <2F59222ECBA14673815BF42E6A7CE5A5@PhilipOakley> (Philip Oakley's
-	message of "Mon, 20 May 2013 22:55:21 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 03F8120B33;
+	Mon, 20 May 2013 22:36:59 +0000 (UTC)
+In-Reply-To: <20130520202434.GA3151@hades.panopticon> (Dmitry Marakasov's
+	message of "Tue, 21 May 2013 00:24:34 +0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AEE65A00-C19C-11E2-8BDF-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C8F7FB3C-C19D-11E2-8519-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224989>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Dmitry Marakasov <amdmi3@amdmi3.ru> writes:
 
-> From: "Junio C Hamano" <gitster@pobox.com>
-> Sent: Monday, May 20, 2013 5:43 AM
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->>
->>> Philip Oakley wrote:
->>>
->>>> Describe rebase in the description section.
->>>
->>> It already does that. :)  I think you mean "start with a summary",
->>> which is a valuable improvement.
->>
->> It indeed is a good idea to give the "high-level introduction" at
->> the very beginning, but I do not think it should describe only one
->> of the three major modes of "git rebase" (i.e. no -m, no -i), like
->> the proposed patch text does.  We should instead say what it is used
->> for and why the user would want to use it that is common across
->> these modes at a very high level.
+> Use /bin/sh interpreter instead of /bin/bash for contrib/git-subtree:
+> it's required for systems which don't use bash by default (for example,
+> FreeBSD), while there seem to be no bashisms in the script (confirmed
+> by looking through the source and tesing subtree functionality with
+> FreeBSD's /bin/sh) to require specifically bash and not the generic
+> posix shell.
+
+Has anybody audited to make sure that the script itself is free of
+bash-isms?
+
+I somehow had an impression that in the past it was littered with
+bash-isms like function local variables and array variables and
+assumed that the #!/bin/bash was necessary.  I did a quick
+eyeballing and did not see anything glaringly bash-only, but I may
+have missed something (the coding style is so different from the
+core part of Git Porcelains and distracting for me to efficiently
+do a good job of scanning).
+
 >
-> That would repeat the NAME issue (of trying too hard to be exact &
-> precise). This introductory text is that "summary".
-
-If that is "summary", it should never talk about "skips merges",
-which only applies to the mode without -m, no?
-
-The highest level view of what the command is for (the motivation
-why the user would want to consider learning how to use the command)
-is "You have a history built on top of some commit, and you want to
-rebuild the history on top of another commit, e.g. you earlier built
-on the tip of a branch that has some other work, and you want to
-rebuild the history on top of the updated tip of that other branch".
-
-The details of how the history is "rebuilt" can differ while using
-various modes of operation.  Some may skip merges, some may try to
-preserve the topology, some may even let you insert new commits by
-letting you tell it to stop in the middle.  That is not "summary"
-but is part of mode specific description.
+> Signed-off-by: Dmitry Marakasov <amdmi3@amdmi3.ru>
+> ---
+>  contrib/subtree/git-subtree.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+> index 8a23f58..5701376 100755
+> --- a/contrib/subtree/git-subtree.sh
+> +++ b/contrib/subtree/git-subtree.sh
+> @@ -1,4 +1,4 @@
+> -#!/bin/bash
+> +#!/bin/sh
+>  #
+>  # git-subtree.sh: split/join git repositories in subdirectories of this one
+>  #
