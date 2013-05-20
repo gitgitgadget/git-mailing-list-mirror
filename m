@@ -1,260 +1,102 @@
-From: Johan Herland <johan@herland.net>
-Subject: Storing refs in the odb (was: Re: [PATCH 00/17] Remove assumptions
- about refname lifetimes)
-Date: Mon, 20 May 2013 15:48:15 +0200
-Message-ID: <CALKQrgcBkdoJdJGam=VkE=nXHQ8WB5judY3C3nNQBJCns-_f+A@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [RFC 16/17] object_array_entry: copy name before storing in name
+ field
+Date: Mon, 20 May 2013 16:42:38 +0200
+Message-ID: <519A365E.6020807@alum.mit.edu>
+References: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu> <1368995232-11042-17-git-send-email-mhagger@alum.mit.edu> <CALKQrgeZ3yOogZhumQ6sQ=7B4XoEUDxPNt6Lj7ZAs13oJTOeUA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon May 20 15:48:36 2013
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon May 20 16:42:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeQRy-0001Qw-5W
-	for gcvg-git-2@plane.gmane.org; Mon, 20 May 2013 15:48:30 +0200
+	id 1UeRIW-0004f3-0x
+	for gcvg-git-2@plane.gmane.org; Mon, 20 May 2013 16:42:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756884Ab3ETNsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 May 2013 09:48:25 -0400
-Received: from mail10.copyleft.no ([188.94.218.231]:53849 "EHLO
-	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756270Ab3ETNsY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 May 2013 09:48:24 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UeQRq-000B8Y-Ns
-	for git@vger.kernel.org; Mon, 20 May 2013 15:48:22 +0200
-Received: from mail-oa0-f42.google.com ([209.85.219.42])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UeNtn-000BKN-Uo
-	for git@vger.kernel.org; Mon, 20 May 2013 13:05:04 +0200
-Received: by mail-oa0-f42.google.com with SMTP id i10so7777101oag.29
-        for <git@vger.kernel.org>; Mon, 20 May 2013 06:48:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=H6uh0/uDJAsByToJxoLuasQoa7Zjq2JUlIRYuoTUIw4=;
-        b=DZqxSQt6E6SweL4ItDSe75zAdF2MWQMT2tDYXqoX51Th3xHWXXRG9MdiAf7W4uouie
-         ZUYVzbo/Hks75fo53bLwpI2Fc4nyrlz27m30sra0t5G76RLJn3nZSeG8pjnQ99LBDU7p
-         +5SViuoFVaEWjWkSLV2jnD9Q0JvkSfVrZHl2MyoHM4YshR3lo8/dRWRNM0/mOFGJjyxO
-         xnyubBQuUBeg0bcztxU2fr1rdz/GltVNG3l5Z3oyf3zHdhGNayo85xCjF3wlRe5jfy1c
-         DdYr7Gq1hRWQCY0Z1cAgy36yVCilXAN2Mfq+mxKUFlXIVLCGj+wTz4sxeupjOHoMu8A8
-         iXCg==
-X-Received: by 10.60.80.103 with SMTP id q7mr16166192oex.135.1369057695610;
- Mon, 20 May 2013 06:48:15 -0700 (PDT)
-Received: by 10.182.133.66 with HTTP; Mon, 20 May 2013 06:48:15 -0700 (PDT)
+	id S1756384Ab3ETOmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 May 2013 10:42:43 -0400
+Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:63969 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755226Ab3ETOmn (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 May 2013 10:42:43 -0400
+X-AuditID: 12074414-b7fb86d000000905-13-519a36622f42
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id DC.0E.02309.2663A915; Mon, 20 May 2013 10:42:42 -0400 (EDT)
+Received: from [192.168.69.140] (p57A25AF2.dip0.t-ipconnect.de [87.162.90.242])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4KEgcWc005617
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 20 May 2013 10:42:40 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <CALKQrgeZ3yOogZhumQ6sQ=7B4XoEUDxPNt6Lj7ZAs13oJTOeUA@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGKsWRmVeSWpSXmKPExsUixO6iqJtkNivQ4NgNSYuuK91MFg29V5gt
+	5t3dxWTxo6WH2YHF49LL72wez3r3MHpcvKTs8XmTXABLFLdNUmJJWXBmep6+XQJ3xrOtvawF
+	uwUrXly8zNjA+I63i5GTQ0LARKJ79y52CFtM4sK99WxdjFwcQgKXGSU+be2Fcs4zSXybvgzI
+	4eDgFdCW+HlUE6SBRUBVYuq8JhYQm01AV2JRTzMTiC0qECbxftlUVhCbV0BQ4uTMJ2A1IkD1
+	Ox7/YgOxmQXiJWY0fmAFGSksECox77AwxKrDjBLLfv4Gq+cUCJSYfPkoE0gNs4C6xPp5QhCt
+	8hLb385hnsAoMAvJhlkIVbOQVC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuhl5tZopea
+	UrqJERLKIjsYj5yUO8QowMGoxMO7Q29WoBBrYllxZe4hRkkOJiVR3hZToBBfUn5KZUZicUZ8
+	UWlOavEhRgkOZiUR3ujfMwOFeFMSK6tSi/JhUtIcLErivN8Wq/sJCaQnlqRmp6YWpBbBZDU4
+	OATWrFt9gVGKJS8/L1VJgvcUyALBotT01Iq0zJwShFImDk6QRVxSIsWpeSmpRYmlJRnxoOiN
+	LwbGL0iKB+iGZyDtvMUFiblAUYjWU4zGHJvPT37HyDHjB5AUAtskJc57FqRUAKQ0ozQPbhEs
+	ub1iFAeGgTDvU5AqHmBihJv3CmgVE9Cq7ZYg7xaXJCKkpBoYS7cId0mtXB1zYh8Tq/5uey3G
+	K9uCk/rCF06bYcnktPdWWROr2Kn0hlsB9a+SXmzXNggTZVcOUUlIyE+4cJply+b/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224958>
 
-On Mon, May 20, 2013 at 2:15 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> This is a very interesting idea.  "It's turtles all the way down."
+On 05/20/2013 12:33 PM, Johan Herland wrote:
+> On Sun, May 19, 2013 at 10:27 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> This is the culmination of the last few commits.  Since some callers
+>> want to store refnames in the name field of object_array elements, but
+>> we don't want those callers to assume that the refnames that they got
+>> from for_each_ref() have infinite lifetime, the easiest thing to do is
+>> have object_array make a copy of the names before writing them in the
+>> entries, and to free the names for entries that are no longer in use.
+>> This change fixes the problem, but has some disadvantages:
+>>
+>> * It requires extra copies to be made of strings that are already
+>>   copies, for example when the results of path_name(path, name) are
+>>   used as a name in revision.c:add_object().  This might be rare
+>>   enough that it can be ignored (though the original result of
+>>   path_name() would have to be freed, which this patch doesn't do so
+>>   there is a memory leak).
+>>
+>> * Many callers store the empty string ("") as the name; for example,
+>>   most of the entries created during a run of rev-list have "" as
+>>   their name.  This means that lots of needless copies of "" are being
+>>   made.  I think that the best solution to this problem would be to
+>>   store NULL rather than "" for such entries, but I haven't figured
+>>   out all of the places where the name is used.
+> 
+> Use strbufs?
+> 
+> No allocation (except for the strbuf object itself) is needed for
+> empty strings, and string ownership and be transferred to and from it
+> to prevent extra copies.
 
-:)
+That would cost two extra size_t per object_array_entry.  I have the
+feeling that this structure is used often enough that the extra overhead
+would be a disadvantage, but I'm not sure.
 
-> On 05/20/2013 12:28 PM, Johan Herland wrote:
->> For server-class installations we need ref storage that can be read
->> (and updated?) atomically, and the current system of loose + packed
->> files won't work since reading (and updating) more than a single file
->> is not an atomic operation. Trivially, one could resolve this by
->> dropping loose refs, and always using a single packed-refs file, but
->> that would make it prohibitively expensive to update refs (the entire
->> packed-refs file must be rewritten for every update).
->
-> Correct, or the "packed-refs" file would have to be updated in place
-> using some database-style approach for locking/transactions/whatever.
->
->> Now, observe that we don't have these race conditions in the object
->> database, because it is an add-only immutable data store.
->
-> Except for prune, of course, which can cause race conditions WRT to writers.
+The obvious alternative would be to teach users to deal with NULL and
+either add another constructor alternative that transfers string
+ownership or *always* transfer string ownership and change the callers
+to call xstrdup() if they don't already own the name string.  I think I
+will try that approach first.
 
-Yes, but that is a different race, in need of a different solution.
-E.g. that race is concerned with pruning unreachable objects that are
-about to become reachable by a concurrent operation, which is AFAICS
-independent from the ref update race that we're discussing here.
-
->> What if we stored the refs as a tree object in the object database,
->> referenced by a single (loose) ref? There would be a _single_ (albeit
->> highly contentious) file outside the object database that represent
->> the current state of the refs, but hopefully we can guarantee
->> atomicity when reading (and updating?) that one file. Transactions can
->> be done by:
->>  1. Recording the tree id holding the refs before starting manipulation.
->>  2. Creating a new tree object holding the manipulated state.
->>  3. Re-checking the tree id before replacing the loose ref. If
->> unchanged: commit, else: rollback/error out.
->
-> There are two closely related possibilities and I'm not sure which one
-> you mean:
->
-> * Effectively treat all of the refs as loose refs, but stored not in the
-> filesystem but rather in a hierarchical tree structure in the object
-> database.  E.g., all of the refs directly under "refs/heads" would be in
-> one tree object, those in refs/remotes/foo in a second, those for
-> refs/remotes/bar in another etc. and all of them linked up together in a
-> tree object representing "refs".
->
-> * Effectively treat all of the refs as packed refs, but store the single
-> "packed-refs" file as a single object in the object database.
->
-> (The first alternative sounds more practical to me.  I also guess that's
-> what you mean, since down below you say that each change would require
-> producing "a few objects".)
-
-The first alternative is what I had in mind.
-
-Initially I thought to record it as if one were to record a new tree
-using .git/refs as the root of your worktree (having exploded all
-packed-refs into loose refs). I.e. you would have "heads", "tags",
-"remotes" as subtrees of "reference tree", and then e.g. in the
-"heads" subtree, there would be an entry named "master" pointing to a
-_blob_, and the contents of that blob would be the commit id of the
-current tip of the master branch.
-
-Obviously the next optimization would be to drop the "master" -> blob
--> commit indirection, and use "master" -> commit instead, i.e. the
-"master" tree entry corresponds directly to the commit to which it
-points (symrefs would naturally be recorded as symlinks). This would
-automatically provide reachability for all refs, but as you correctly
-observe:
-
-> Of course in either case we couldn't use a tree object directly, because
-> these new "reference tree" objects would refer not only to blobs and
-> other trees but also to commits and tags.
-
-Indeed. I don't know if the best solution would be to actually _allow_
-that (which would complicate the object parsing code somewhat; a tree
-entry pointing to a commit is usually interpreted as a submodule, but
-that is not what we'd want for the ref tree, and a tree entry pointing
-at a tag has AFAIK not yet been done), or whether it means we need to
-come up with a different kind of structure.
-
-> [I know this is not what you are suggesting, but I am reminded of
-> Subversion, which stores trunk, branches, and tags in the same "tree"
-> space as the contents of the working trees.  A Subversion commit
-> references a gigantic tree encompassing all branches of development and
-> all files on all of those branches (with cheap copies to reduce the
-> redundancy):
->
->     /
->     /trunk/
->     /trunk/Makefile
->     /trunk/src/
->     /trunk/src/foo.c
->     /branches/
->     /branches/next/
->     /branches/next/Makefile
->     /branches/next/src/
->     /branches/next/src/foo.c
->     /branches/pu/
->     /branches/pu/Makefile
->     /branches/pu/src/
->     /branches/pu/src/foo.c
->     /tags/
->     /tags/v1.8.2/
->     /tags/v1.8.2/Makefile
->     /tags/v1.8.2/src/
->     /tags/v1.8.2/src/foo.c
->     etc...
->
-> A Subversion commit thus describes the state of *every* branch and tag
-> at that moment in time.  The model is conceptually very simple (in fact,
-> too simple, and I believe the Subversion developers regret not having
-> distinguished between the branch namespace and the file namespace).]
-
-True. Thanks for the added perspective. The crucial difference between
-Subversion and Git in this regard is obviously that Git puts the
-commit "between" the branch namespace and the file namespace, firmly
-separating the two. My suggestion does not change this in any way, but
-it reuses the same object model to look at the branch namespace as
-"meta-trees".
-
-> The main difficulty with this idea will be the extreme contention on
-> that "last loose reference file" pointing at the root of the reference
-> tree.  Essentially *every* change to the repository will have to create
-> a new reference tree and point this file at the new version.
-
-Yes. This is indeed the ultimate problem with this idea. But AFAICS it
-is the same ultimate problem for all filesystem-based solutions: since
-atomicity can only be guaranteed for single-file updates, any
-file-based solution _must_ have the equivalent of a single lock on all
-ref updates.
-
-Hence, if it can be demonstrated that the contention on a single
-(41-byte) file is sufficiently extreme to make it infeasible in
-practice, then we can conclude that there is _no_ filesystem-based
-solution that will solve our problem, and we _must_ go for more
-advanced database solution.
-
-> I doubt
-> that would be a problem for short-lived operations, but I fear that a
-> long-lived operation would *never* get done.  By the time it had
-> finished constructing its new reference tree, some other short-lived
-> operation will have changed it, and the long-lived process will have to
-> choose between
->
-> * Restart from the beginning.
->
-> * Die with a kind of "concurrent modification error".
->
-> * Resolve the difference between the reference tree at the start of its
-> operation and the reference tree as it exists when it is done with the
-> changes that they want to make.  In some cases this might be able to be
-> done automatically as a kind of "reference tree merge" but the logic
-> might have to vary from case to case.
-
-Alternatively, it could (when sufficiently miffed) grab a lock that
-would temporarily refuse/delay anybody else access to update refs.
-
->> PS: Keeping reflogs is just a matter of wrapping the ref tree in a
->> commit object using the previous state of the ref tree as its parent.
->
-> Yes, there are a lot of nice aspects to this idea in that it reuses
-> concepts with which we are already familiar.  For example, fetching from
-> a remote would approximately hook the remote's entire reference tree
-> into a subtree of the local "refs/remotes" reference subtree.
-
-True. Hadn't thought of that...
-
-> But with
-> things like reflogs we would have to be careful not to keep obsolete
-> objects around *forever*--there would have to be some mechanism to prune
-> the old reference history.
-
-Yes, pruning reflogs could be done by finding the oldest reflog-commit
-we want to keep, rewriting it to have zero parents with "git replace",
-and then rewriting the reflog-commit history accordingly to make the
-older reflog-commits unreachable.
-
-(But then, the "git replace" mechanism writes its own refs/replace/*
-ref, which would cause a new reflog-commit. Fortunately the replace
-ref does not make the replaced history reachable, so this should in
-fact work, albeit more than a little complicated...)
-
-...Johan
-
-
-> Altogether a very interesting idea.
->
-> Michael
->
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
-
-
+Michael
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
