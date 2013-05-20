@@ -1,101 +1,106 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH] patch-ids: check modified paths before calculating
- diff
-Date: Sun, 19 May 2013 23:36:23 -0700
-Message-ID: <20130520063623.GB2919@elie.Belkin>
-References: <a7088a74742b71a01423f3ddc1a6c7fd89474ed8.1368969438.git.john@keeping.me.uk>
- <20130519193612.GH3362@elie.Belkin>
- <20130519220206.GK27005@serenity.lan>
+Subject: Re: log --cherry and merges (was [RFC/PATCH 0/2] merge-base: add
+ --merge-child option)
+Date: Sun, 19 May 2013 23:43:43 -0700
+Message-ID: <20130520064343.GC2919@elie.Belkin>
+References: <cover.1368274689.git.john@keeping.me.uk>
+ <518FB8DE.7070004@bracey.fi>
+ <20130512162823.GK2299@serenity.lan>
+ <20130512163317.GL2299@serenity.lan>
+ <518FCDDE.9040707@bracey.fi>
+ <7vwqr3u9c5.fsf@alter.siamese.dyndns.org>
+ <5190F806.6040207@bracey.fi>
+ <5190FC97.6020800@drmicha.warpmail.net>
+ <20130519124059.GJ27005@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Kevin Bracey <kevin@bracey.fi>,
-	Junio C Hamano <gitster@pobox.com>
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Kevin Bracey <kevin@bracey.fi>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
 To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon May 20 08:36:41 2013
+X-From: git-owner@vger.kernel.org Mon May 20 08:43:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeJhx-00066m-AC
-	for gcvg-git-2@plane.gmane.org; Mon, 20 May 2013 08:36:33 +0200
+	id 1UeJp3-0003DF-J4
+	for gcvg-git-2@plane.gmane.org; Mon, 20 May 2013 08:43:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130Ab3ETGg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 May 2013 02:36:29 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:59020 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751362Ab3ETGg2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 May 2013 02:36:28 -0400
-Received: by mail-pd0-f171.google.com with SMTP id t12so3375117pdi.30
-        for <git@vger.kernel.org>; Sun, 19 May 2013 23:36:28 -0700 (PDT)
+	id S1753119Ab3ETGnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 May 2013 02:43:49 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:40583 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752515Ab3ETGns (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 May 2013 02:43:48 -0400
+Received: by mail-pd0-f179.google.com with SMTP id q11so4681pdj.38
+        for <git@vger.kernel.org>; Sun, 19 May 2013 23:43:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=L7FcOChUFP1G1N3xPifWb5PCqyCCfXFq5MpiV16QrK0=;
-        b=pKfdF2lglV0lWGws3bMDFuyZsndQeo8d3eURtAH1dqPnOEQlmRDMhtEZfxzXDo8mqp
-         gewV9I0fTS6TBjv1iKYhCxmq3gYipw9tHvL53PeGCLHUWThi+yvtoTgXr06JeVFyWY9k
-         o/L6dUlPXT11sVCq9ux0c5l2ZidaThGm0fvVh0g1JVzVtpZDZv5cixsVgb8DwZ3nM+RI
-         2eoGUESwDEz/fDvIhsIuld0PyiFwi5nBZVORxFhCRSOdhEG3aKTeu0QraQvwEb6eP92e
-         i8pe8LXt3uigCuPBBZptaguaEc3OVMP1/wq0aEMGzRSMiF6cHwL8mLZg1XaoAaH/NVDI
-         xT8w==
-X-Received: by 10.68.244.134 with SMTP id xg6mr53316895pbc.188.1369031787971;
-        Sun, 19 May 2013 23:36:27 -0700 (PDT)
+        bh=1AgUay4dyagTyMc0JQFJ4qhC1gk9lJWfD+za5EUqhjk=;
+        b=p86eg7M2hx+OZkWEOHXywPG56DacM7uX2sdklIhskH9m6emdktw7dzSpafya2cgZS2
+         8fg4IWX6VGWo0lwYUNsrlGhUcs/pxisY5UJdbfeaFVrYxNbwHe06vmUCe/qPkUfvU428
+         t3yGAVA6uRpjt/qEI6/eJYbkksv1ea+n/DstImOz/1J5Z5PzpnGDQFiGkFJaDjfjn7A1
+         NuP09Ao5b6foSo8tgTyyDE6kF8EYJPmyIRfasv8K5MgOCzW71ydYG61y/kKaGGTxWZPS
+         knjQklB+ecpEDOCOcTOTUPxnT1HtlfQywYu0RfSVKZv3xRksF2DF6n2y6Rh5ZYtbFRd9
+         pOGw==
+X-Received: by 10.66.119.103 with SMTP id kt7mr8386625pab.125.1369032227996;
+        Sun, 19 May 2013 23:43:47 -0700 (PDT)
 Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPSA id wp6sm22772219pbc.29.2013.05.19.23.36.25
+        by mx.google.com with ESMTPSA id do4sm22824824pbc.8.2013.05.19.23.43.45
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 19 May 2013 23:36:26 -0700 (PDT)
+        Sun, 19 May 2013 23:43:46 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20130519220206.GK27005@serenity.lan>
+In-Reply-To: <20130519124059.GJ27005@serenity.lan>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224941>
 
 John Keeping wrote:
-> On Sun, May 19, 2013 at 12:36:12PM -0700, Jonathan Nieder wrote:
 
->>                                        Who is responsible for freeing
->> "path"?  Would it make sense to use a strbuf here?
->>
->> 	strbuf_setlen(&buf, traverse_path_len(info, n));
->> 	make_traverse_path(&buf.buf, info, n);
+> The following patch makes the revision cherry machinery ignore merges
+> unconditionally.  With it applied, there's not noticeable difference in
+> speed between "git cherry" and "git log --cherry".
 >
-> Perhaps alloc_traverse_path?  I'm not sure the strbuf buys us much for
-> this case, since we only use the result for a few lines before freeing
-> it.
+> -- >8 --
+> diff --git a/revision.c b/revision.c
+> index a67b615..19d0683 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -640,6 +640,11 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
+>  
+>  		if (flags & BOUNDARY)
+>  			continue;
+> +
+> +		/* Patch ID is meaningless for merges. */
+> +		if (commit->parents && commit->parents->next)
+> +			continue;
+> +
 
-Good idea.  Generally strbufs are nice for this kind of thing because
-they make it easy to reuse buffers, but in this case there's no
-opportunity for that.
+I guess merges should be skipped in the left-vs-right tally earlier,
+too?
 
-[...]
-> then this is "process_changed_path".
+		if (flags & BOUNDARY)
+			;
+		else if (commit->parents && commit->parents->next)
+			;
+		else if (flags & SYMMETRIC_LEFT)
+			left_count++;
+		else
+			right_count++;
 
-Sounds good.
+With that tweak (or without it --- a sloppy count is fine), this
+patch makes sense to me.  I guess some tests would be useful to
+demonstrate that --cherry doesn't notice duplicate first-parent
+diffs in merges.
 
-[...]
->> What should happen for commits with more than 1 parent?  If they're
->> supposed to not enter this codepath because of a previous check, a
->> die("BUG: ...") could be a good way to make reading easier.
->
-> Currently the patch ID code compares the commit with its first parent,
-> so I think this should do the same.
-
-Ok.  I guess a comment nearby would help future readers avoid the same
-question.
-
-I don't know what it should mean to try to use --cherry without
---no-merges or --first-parent, so I guess this is harmless.
-
-[...]
-> Thanks for the review.
-
-No problem.  Thanks for a pleasant read.
-
-Ciao,
+Thanks,
 Jonathan
