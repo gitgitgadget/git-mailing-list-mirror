@@ -1,151 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-diff-index man page
-Date: Sun, 19 May 2013 22:01:20 -0700
-Message-ID: <7vr4h2w8gv.fsf@alter.siamese.dyndns.org>
-References: <CAKEGsXQDB1=hizNqM6D=uuP6PXT4ytUiTgB5fvO-gVSsPqQkLQ@mail.gmail.com>
-	<7vhahzza2v.fsf@alter.siamese.dyndns.org>
-	<CAKEGsXRry_=BuPRPK_syW7_W+_Bh+A1bB9U5YC02=a+Z+SHv1w@mail.gmail.com>
+From: Kirill Berezin <enelar@develop-project.ru>
+Subject: git-submodule nested subrepo bug (Segmentation fault)
+Date: Mon, 20 May 2013 09:32:21 +0400
+Message-ID: <CAAObgf9RNyVOYD00ki347KBqMWoFA3U7-YM3DnLK4yu62SozSQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Albert Netymk <albertnetymk@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 20 07:01:35 2013
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 20 07:32:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeIE0-0005fj-D6
-	for gcvg-git-2@plane.gmane.org; Mon, 20 May 2013 07:01:32 +0200
+	id 1UeIiE-00024U-VX
+	for gcvg-git-2@plane.gmane.org; Mon, 20 May 2013 07:32:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750798Ab3ETFB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 May 2013 01:01:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50837 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750949Ab3ETFBZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 May 2013 01:01:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 514A516791;
-	Mon, 20 May 2013 05:01:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4bAgfjfyYjwUoLICuxZrhHOIG0Q=; b=tl7R1p
-	Oeel5h9nin+q9QNqjtpAtmPLXdWKWIIFwwdNxL/24vzja3aU7d7fZyJln3Dk90Wh
-	wQfOmDk2qPWKzvK3UorUgqvTmBHYB7uwaCZXsymeucV+iZJJfZ15rasK3Zc7Q1JZ
-	0lHQVZaW4OTzynOIc8qCnhO9My3WsUuQAr/9c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xOOiK6XQBFahZF0XGrw3Nv90dYfYl+sl
-	dOoyce78kNd8M71zCG1RqFLxiYuAU+9YE80EbiVbWrWPmlYIOiw7uHJn8ljuzjTl
-	xk61SS2LGD2zIrcI5cqjZHzSZCWxnPjbLfb/raJkJUfC5hWf9ivaru+lo3pZcwdX
-	G3M3rHpGRQg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43A1416790;
-	Mon, 20 May 2013 05:01:24 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1591C1678B;
-	Mon, 20 May 2013 05:01:22 +0000 (UTC)
-In-Reply-To: <CAKEGsXRry_=BuPRPK_syW7_W+_Bh+A1bB9U5YC02=a+Z+SHv1w@mail.gmail.com>
-	(Albert Netymk's message of "Sun, 19 May 2013 22:23:03 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5137AD2E-C10A-11E2-A0BE-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752824Ab3ETFcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 May 2013 01:32:43 -0400
+Received: from mail-ea0-f173.google.com ([209.85.215.173]:63784 "EHLO
+	mail-ea0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751062Ab3ETFcm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 May 2013 01:32:42 -0400
+Received: by mail-ea0-f173.google.com with SMTP id n15so3793321ead.32
+        for <git@vger.kernel.org>; Sun, 19 May 2013 22:32:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:mime-version:x-originating-ip:from:date:message-id
+         :subject:to:content-type:x-gm-message-state;
+        bh=rzSG3kk5L6sS67OziGXajt0PH3BiVAYcT9qOLjrYJ1I=;
+        b=A15zOaruuIEKbgJuDrbTc3bXCXY515SQ+p3YOUniTD98kqKFCdTEhFUcIXPd4BKHTi
+         aid3o+cPmDpvBStYNfdXmCTYOLueg6RBEl8NaSgkcjMY9l+lAogzjkVMvlhMKMAUlq+O
+         yNJQ70kuqKYPVfQQZc/mPNG2yYkGnrKAsHqES7Dx13m3L3CW3bElhbZQ66Q17nx8Obd0
+         NtkSVELYSWIclxP0daYfbzx1F3hUCKo2KWGqdxd6dZsgy6y19CohfbggbbmBL2qNy6Yu
+         7f+Kpgb+BLweeL6ZcI/xsL2baWAf2PfhrgVwBImoNikjquO0w5W34yfyM96BZFuROVgb
+         YDyw==
+X-Received: by 10.14.69.138 with SMTP id n10mr162219830eed.32.1369027961313;
+ Sun, 19 May 2013 22:32:41 -0700 (PDT)
+Received: by 10.15.81.133 with HTTP; Sun, 19 May 2013 22:32:21 -0700 (PDT)
+X-Originating-IP: [213.21.7.6]
+X-Gm-Message-State: ALoCoQmAeAK4xgI5nmyQtwHUlqKpP2CKzZYgQa29RwxX8YT6go8l0O03VqnaegzsNfL5unfTjoqI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224937>
 
-Albert Netymk <albertnetymk@gmail.com> writes:
+When you trying to add submodule, that already has submodule, it craches.
+For example you could try: git clone --recursive
+http://github.com/Exsul/al_server
 
-> On Sun, May 19, 2013 at 9:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Albert Netymk <albertnetymk@gmail.com> writes:
->>
->>> Hello,
->>>
->>> The man page of git-diff-index:
->>> http://git-scm.com/docs/git-diff-index
->>> states that
->>> `git-diff-index - Compares content and mode of blobs between the index
->>> and repository`.
->>> However, in fact this command compares between files on disk and
->>> repository by default. It's explained clearly in here:
->>> http://git-scm.com/docs/gitdiffcore
->>>
->>> Maybe the man page could be updated to reflect this in NAME section:
->>> `git-diff-index - Compares content and mode of blobs between files on
->>> disk and repository or between the index and repository`
->>
->> Surely; we need to keep it fit on a single line, though.
->
-> Here's one excerpt from man page of git-diff-index: (this is how one
-> line looks like)
-> Compares the content and mode of the blobs found via a tree object
-> with the content of the current index and, optionally ignoring the
-> stat state of
-> `git-diff-index - Compares content and mode of blobs between files on
-> disk and repository or between the index and repository`
->
-> It seems that this one is not longer than one line.
+Its happens because git dont create `modules` directory.
+al_server/.git/modules
 
-I would say
 
-	git-diff-index - Compare a tree and the working tree or the index
+Workaround for it wont work to:
+git submodule update --init
+It init only first level of subrepos.
+When you do:
+cd chat
+git submodule update --init
+It crashes cause missed `modules` directory for submodule:
+al_server/.git/modules/chat/modules
 
-should be sufficiently short and much more accurate than the current
-text.
-
-> I don't know how to submit patches. Besides, the only part that is a
-> bit misleading is the "NAME" and "DESCRIPTION" section. Could someone
-> just update them?
-
-How about something like this?
-
--- >8 --
-Subject: [PATCH] Documentation/diff-index: mention two modes of operation
-
-"diff-index" can be used to compare a tree with the tracked working
-tree files (when used without the --index option), or with the index
-(when used with the --index option).
-
-The text however did not say anything about the comparision with the
-working tree at all.  Fix this.
-
-Reported-by: Albert Netymk <albertnetymk@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-diff-index.txt | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-diff-index.txt b/Documentation/git-diff-index.txt
-index c0b7c58..58308e1 100644
---- a/Documentation/git-diff-index.txt
-+++ b/Documentation/git-diff-index.txt
-@@ -3,7 +3,7 @@ git-diff-index(1)
- 
- NAME
- ----
--git-diff-index - Compares content and mode of blobs between the index and repository
-+git-diff-index - Compare a tree and the working tree or the index
- 
- 
- SYNOPSIS
-@@ -13,11 +13,12 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Compares the content and mode of the blobs found via a tree
--object with the content of the current index and, optionally
--ignoring the stat state of the file on disk.  When paths are
--specified, compares only those named paths.  Otherwise all
--entries in the index are compared.
-+
-+Compare the content and mode of the blobs found in a tree object
-+with the corresponding tracked file in the working tree, or with the
-+corresponding paths in the index.  When paths are specified,
-+compares only those named paths.  Otherwise all entries in the index
-+are compared.
- 
- OPTIONS
- -------
+Final workaround is create this directory and try last command again.
