@@ -1,93 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] contrib/git-subtree: Use /bin/sh interpreter instead of /bin/bash
-Date: Mon, 20 May 2013 15:36:58 -0700
-Message-ID: <7vsj1hth11.fsf@alter.siamese.dyndns.org>
-References: <20130520202434.GA3151@hades.panopticon>
+Subject: Re: [PATCH v2] git-svn: introduce --parents parameter for commands branch and tag
+Date: Mon, 20 May 2013 15:37:23 -0700
+Message-ID: <7vobc5th0c.fsf@alter.siamese.dyndns.org>
+References: <1368476549-17886-1-git-send-email-tobias.schulte@gliderpilot.de>
+	<1368648883-9412-1-git-send-email-tobias.schulte@gliderpilot.de>
+	<20130520221340.GA8781@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dmitry Marakasov <amdmi3@amdmi3.ru>
-X-From: git-owner@vger.kernel.org Tue May 21 00:37:10 2013
+Cc: Tobias Schulte <tobias.schulte@gliderpilot.de>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue May 21 00:37:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeYhZ-0006MI-Vq
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 00:37:10 +0200
+	id 1UeYhu-0006Wx-Kt
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 00:37:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755442Ab3ETWhD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 May 2013 18:37:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63464 "EHLO
+	id S1756172Ab3ETWh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 May 2013 18:37:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38277 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751622Ab3ETWhB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 May 2013 18:37:01 -0400
+	id S1751010Ab3ETWh0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 May 2013 18:37:26 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3A7C20B36;
-	Mon, 20 May 2013 22:37:00 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7A2820B87;
+	Mon, 20 May 2013 22:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yVsXvU2xAVIAWWaaMu6p2jIaTis=; b=YsYz+Z
-	hrj8mAhcvon7DBvzdzBmq1fOB9AuI+vponzaDDz9Fu1SPMhLs1CfMIDMI7TB+pxd
-	oLIiijDxJdB8iLqn1Npm4Vx/S1Woo9w7BbO5y1vH/r7EgVoYSMgLY3uFN9z9esFz
-	UMo/3NgSWaJ6HSnVYZBkaPNLQnsI2vuwLLzNI=
+	:content-type; s=sasl; bh=52QPU8A5OW6G6cAiwLKPYlSjGkY=; b=mzkRQq
+	6ezbS56dGs6z9UbJnAXpZMDfV8ALvL+xoHRCYBeIt81CH0v1/QmTXIuJ3s09EkFz
+	f7TMB14rV6mihhJAhIuLS8P8BP45R23iV4RPUAw2hLUkvlNOtnUv4thlChn9E0H4
+	WewL3OiV47846uqSL0QHqSESJEMFaqECpS1oU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NcYEyzkeHF8e0SDvbZMFyRGli1CYVy+R
-	HU9NGgsHwQuqY/4A6cj0iOrEfhPuDlvydvd8JmyB7RrNojbCKhWOQexvxJvwwwWC
-	HVoCImAE3q0Q6uyihUo5uNaxHdq3ZdnqewJeVoQCu2+ZnBjaqwIJfTlCGs6Zw/MT
-	KMxa/GBa3H4=
+	:content-type; q=dns; s=sasl; b=F3Jox2BFkOh3LnSPOcRNchlt9DPkNgAg
+	OEvUeySeKmg+026tJtAZZ0AfPlKpejO+Rr5vte07aBbZGLOVFyTx6mFZkg0ckhMz
+	Z/Rv3WwMJS8r2s1bABhiNP3xtE+muL7SZVXLq3EW2ySWNbzrCUwIHgs639InZeWs
+	Um6aA/+fhE8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A974C20B35;
-	Mon, 20 May 2013 22:37:00 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF8C320B86;
+	Mon, 20 May 2013 22:37:25 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 03F8120B33;
-	Mon, 20 May 2013 22:36:59 +0000 (UTC)
-In-Reply-To: <20130520202434.GA3151@hades.panopticon> (Dmitry Marakasov's
-	message of "Tue, 21 May 2013 00:24:34 +0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3FF7120B84;
+	Mon, 20 May 2013 22:37:25 +0000 (UTC)
+In-Reply-To: <20130520221340.GA8781@dcvr.yhbt.net> (Eric Wong's message of
+	"Mon, 20 May 2013 22:13:40 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C8F7FB3C-C19D-11E2-8519-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D8047790-C19D-11E2-B119-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224990>
 
-Dmitry Marakasov <amdmi3@amdmi3.ru> writes:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> Use /bin/sh interpreter instead of /bin/bash for contrib/git-subtree:
-> it's required for systems which don't use bash by default (for example,
-> FreeBSD), while there seem to be no bashisms in the script (confirmed
-> by looking through the source and tesing subtree functionality with
-> FreeBSD's /bin/sh) to require specifically bash and not the generic
-> posix shell.
-
-Has anybody audited to make sure that the script itself is free of
-bash-isms?
-
-I somehow had an impression that in the past it was littered with
-bash-isms like function local variables and array variables and
-assumed that the #!/bin/bash was necessary.  I did a quick
-eyeballing and did not see anything glaringly bash-only, but I may
-have missed something (the coding style is so different from the
-core part of Git Porcelains and distracting for me to efficiently
-do a good job of scanning).
-
+> Tobias Schulte <tobias.schulte@gliderpilot.de> wrote:
+>> This parameter is equivalent to the parameter --parents on svn cp commands
+>> and is useful for non-standard repository layouts.
+>> 
+>> Signed-off-by: Tobias Schulte <tobias.schulte@gliderpilot.de>
 >
-> Signed-off-by: Dmitry Marakasov <amdmi3@amdmi3.ru>
-> ---
->  contrib/subtree/git-subtree.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
 >
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index 8a23f58..5701376 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -1,4 +1,4 @@
-> -#!/bin/bash
-> +#!/bin/sh
->  #
->  # git-subtree.sh: split/join git repositories in subdirectories of this one
->  #
+> Applied and pushed, thanks.
+
+Thanks; is it a good time for me to pull?
