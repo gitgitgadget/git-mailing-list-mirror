@@ -1,102 +1,117 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC 16/17] object_array_entry: copy name before storing in name
- field
-Date: Mon, 20 May 2013 16:42:38 +0200
-Message-ID: <519A365E.6020807@alum.mit.edu>
-References: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu> <1368995232-11042-17-git-send-email-mhagger@alum.mit.edu> <CALKQrgeZ3yOogZhumQ6sQ=7B4XoEUDxPNt6Lj7ZAs13oJTOeUA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (May 2013, #04; Wed, 15)
+Date: Mon, 20 May 2013 09:17:34 -0700
+Message-ID: <7vk3mtwrq9.fsf@alter.siamese.dyndns.org>
+References: <7vmwrvajye.fsf@alter.siamese.dyndns.org>
+	<CACsJy8Cr7AKxo9sUjMCVQ0=O91L8CRoxD3qrvZczCrBUq4TDzA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon May 20 16:42:48 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 20 18:17:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeRIW-0004f3-0x
-	for gcvg-git-2@plane.gmane.org; Mon, 20 May 2013 16:42:48 +0200
+	id 1UeSmP-0001uS-CT
+	for gcvg-git-2@plane.gmane.org; Mon, 20 May 2013 18:17:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756384Ab3ETOmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 May 2013 10:42:43 -0400
-Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:63969 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755226Ab3ETOmn (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 May 2013 10:42:43 -0400
-X-AuditID: 12074414-b7fb86d000000905-13-519a36622f42
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id DC.0E.02309.2663A915; Mon, 20 May 2013 10:42:42 -0400 (EDT)
-Received: from [192.168.69.140] (p57A25AF2.dip0.t-ipconnect.de [87.162.90.242])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4KEgcWc005617
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 20 May 2013 10:42:40 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <CALKQrgeZ3yOogZhumQ6sQ=7B4XoEUDxPNt6Lj7ZAs13oJTOeUA@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGKsWRmVeSWpSXmKPExsUixO6iqJtkNivQ4NgNSYuuK91MFg29V5gt
-	5t3dxWTxo6WH2YHF49LL72wez3r3MHpcvKTs8XmTXABLFLdNUmJJWXBmep6+XQJ3xrOtvawF
-	uwUrXly8zNjA+I63i5GTQ0LARKJ79y52CFtM4sK99WxdjFwcQgKXGSU+be2Fcs4zSXybvgzI
-	4eDgFdCW+HlUE6SBRUBVYuq8JhYQm01AV2JRTzMTiC0qECbxftlUVhCbV0BQ4uTMJ2A1IkD1
-	Ox7/YgOxmQXiJWY0fmAFGSksECox77AwxKrDjBLLfv4Gq+cUCJSYfPkoE0gNs4C6xPp5QhCt
-	8hLb385hnsAoMAvJhlkIVbOQVC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuhl5tZopea
-	UrqJERLKIjsYj5yUO8QowMGoxMO7Q29WoBBrYllxZe4hRkkOJiVR3hZToBBfUn5KZUZicUZ8
-	UWlOavEhRgkOZiUR3ujfMwOFeFMSK6tSi/JhUtIcLErivN8Wq/sJCaQnlqRmp6YWpBbBZDU4
-	OATWrFt9gVGKJS8/L1VJgvcUyALBotT01Iq0zJwShFImDk6QRVxSIsWpeSmpRYmlJRnxoOiN
-	LwbGL0iKB+iGZyDtvMUFiblAUYjWU4zGHJvPT37HyDHjB5AUAtskJc57FqRUAKQ0ozQPbhEs
-	ub1iFAeGgTDvU5AqHmBihJv3CmgVE9Cq7ZYg7xaXJCKkpBoYS7cId0mtXB1zYh8Tq/5uey3G
-	K9uCk/rCF06bYcnktPdWWROr2Kn0hlsB9a+SXmzXNggTZVcOUUlIyE+4cJply+b/ 
+	id S1755916Ab3ETQRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 May 2013 12:17:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33145 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755872Ab3ETQRj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 May 2013 12:17:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3090E2058E;
+	Mon, 20 May 2013 16:17:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JGu0hrGK30zCj6ZXpNJXtrgKX6E=; b=NfwCJp
+	5tNG0zGyOMtywlf7mAU556h+bascp/QsPdEthBSaRTtt+NyRQSwHY0DoRGiMBapV
+	fOc2kv+F+Bp77yasF+sKoRPfne8QlFw3+LHAb+81BifnmPLJ29PWI4VXE8d4Sn9N
+	7Xv+yBSLHapZP3Tx8orSHN5Iusmu20HKGUNYE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DS+qwuUv/sOZ/3DIAgopaxflK1iJEjKy
+	vggcPXHXOVO6JFS0469r4kQVq6YRJYrVM6TtnE5bx3wefQdHtmu9ZH8e/ay5caqk
+	vbRyPfpkadydY3GmhPZvECPEQPJg0QdVJbrfaLMPsPr8ejnclpyzFTgaP7tGN3PV
+	Et4IQTTqHTs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 239CC2058D;
+	Mon, 20 May 2013 16:17:38 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2B3242058A;
+	Mon, 20 May 2013 16:17:37 +0000 (UTC)
+In-Reply-To: <CACsJy8Cr7AKxo9sUjMCVQ0=O91L8CRoxD3qrvZczCrBUq4TDzA@mail.gmail.com>
+	(Duy Nguyen's message of "Mon, 20 May 2013 17:18:31 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C942523E-C168-11E2-9F6E-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224960>
 
-On 05/20/2013 12:33 PM, Johan Herland wrote:
-> On Sun, May 19, 2013 at 10:27 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> This is the culmination of the last few commits.  Since some callers
->> want to store refnames in the name field of object_array elements, but
->> we don't want those callers to assume that the refnames that they got
->> from for_each_ref() have infinite lifetime, the easiest thing to do is
->> have object_array make a copy of the names before writing them in the
->> entries, and to free the names for entries that are no longer in use.
->> This change fixes the problem, but has some disadvantages:
+Duy Nguyen <pclouds@gmail.com> writes:
+
+> On Thu, May 16, 2013 at 6:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> * nd/warn-ambiguous-object-name (2013-05-07) 1 commit
+>>  - get_sha1: improve ambiguity warning regarding SHA-1 and ref names
 >>
->> * It requires extra copies to be made of strings that are already
->>   copies, for example when the results of path_name(path, name) are
->>   used as a name in revision.c:add_object().  This might be rare
->>   enough that it can be ignored (though the original result of
->>   path_name() would have to be freed, which this patch doesn't do so
->>   there is a memory leak).
+>>  "git cmd <name>", when <name> happens to be a 40-hex string,
+>>  directly uses the 40-hex string as an object name, even if a ref
+>>  "refs/<some hierarchy>/<name>" exists.  This disambiguation order
+>>  is unlikely to change, but we should warn about the ambiguity just
+>>  like we warn when more than one refs/ hierachies share the same
+>>  name.
 >>
->> * Many callers store the empty string ("") as the name; for example,
->>   most of the entries created during a run of rev-list have "" as
->>   their name.  This means that lots of needless copies of "" are being
->>   made.  I think that the best solution to this problem would be to
->>   store NULL rather than "" for such entries, but I haven't figured
->>   out all of the places where the name is used.
-> 
-> Use strbufs?
-> 
-> No allocation (except for the strbuf object itself) is needed for
-> empty strings, and string ownership and be transferred to and from it
-> to prevent extra copies.
+>>  The message needs to be fixed up, as this is not "refname is
+>>  ambiguous".
+>
+> hm.. how should the message be rephrased? ambiguity of 40-hex string
+> and a ref path?
 
-That would cost two extra size_t per object_array_entry.  I have the
-feeling that this structure is used often enough that the extra overhead
-would be a disadvantage, but I'm not sure.
+At that point, the user gave us a full object name and we are going
+to treat it as a full object name, no?  Wouldn't it be necessary to
+let the user know that it is different from having two ambiguous refs?
 
-The obvious alternative would be to teach users to deal with NULL and
-either add another constructor alternative that transfers string
-ownership or *always* transfer string ownership and change the callers
-to call xstrdup() if they don't already own the name string.  I think I
-will try that approach first.
+Think why the user has such a hard to type ref in the first place.
+The user may have done this previously, thinking that he is detaching
+the HEAD to fix an earlier mistake in a branch:
 
-Michael
+    $ BAD_COMMIT=$(git rev-parse nd/magic~8)
+    $ git checkout $BAD_COMMIT
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+but by mistake gave a "-b" after "checkout", i.e.
+
+    $ git checkout -b $BAD_COMMIT
+
+After this, commands that want to work on branch name would still
+work as "expected", with the expectation being the user would be
+working on the refs/heads/$BAD_COMMIT branch, e.g.
+
+    $ git checkout $BAD_COMMIT
+    $ git branch -m $BAD_COMMIT nd/magic-fix
+
+but commands that want to work on commit object name will resolve it
+to the $BAD_COMMIT object (i.e. nd/magic~8), e.g.
+
+    $ git log $BAD_COMMIT
+
+and needs disambiguation if the user wants to work on the commit at
+the tip of the branch, e.g.
+
+    $ git log heads/$BAD_COMMIT
+
+So we really do want the users to notice and take corrective action,
+and one way to attract the attention of the users is to phrase the
+message more explicitly to let them know what is going on.
+
+In addition to your topic, it may be a good idea to notice this at
+the Porcelain level (e.g. "checkout -b" and "branch", but not at the
+"update-ref" level) and warn or even die if a Porcelain tries to
+create a branch with such a name.
