@@ -1,81 +1,47 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [RFC/PATCH 1/2] Doc rebase: Describe rebase as excluding merge commits
-Date: Mon, 20 May 2013 22:55:21 +0100
-Organization: OPDS
-Message-ID: <2F59222ECBA14673815BF42E6A7CE5A5@PhilipOakley>
-References: <1368964329-1600-1-git-send-email-philipoakley@iee.org><1368964329-1600-2-git-send-email-philipoakley@iee.org><20130519180804.GE3362@elie.Belkin> <7v1u92xnuw.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH v2] git-svn: introduce --parents parameter for commands
+ branch and tag
+Date: Mon, 20 May 2013 22:13:40 +0000
+Message-ID: <20130520221340.GA8781@dcvr.yhbt.net>
+References: <1368476549-17886-1-git-send-email-tobias.schulte@gliderpilot.de>
+ <1368648883-9412-1-git-send-email-tobias.schulte@gliderpilot.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Jonathan Nieder" <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 20 23:55:28 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tobias Schulte <tobias.schulte@gliderpilot.de>
+X-From: git-owner@vger.kernel.org Tue May 21 00:13:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeY3D-0006Pp-Vw
-	for gcvg-git-2@plane.gmane.org; Mon, 20 May 2013 23:55:28 +0200
+	id 1UeYKw-0005F8-KG
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 00:13:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758249Ab3ETVzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 May 2013 17:55:20 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:8193 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757019Ab3ETVzT (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 May 2013 17:55:19 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ArkNAJWamlFOl3mN/2dsb2JhbABagwiJKrhLBAEDAYECF3SCGgUBAQQBCAEBLh4BASELAgMFAgEDFQECCSUUAQQIEgYHFwYBEggCAQIDAYdqAwkKs1cNiFmMSoFtaoJ6YQOIZ4YBhmqOA4UjgxA7
-X-IronPort-AV: E=Sophos;i="4.87,709,1363132800"; 
-   d="scan'208";a="410307068"
-Received: from host-78-151-121-141.as13285.net (HELO PhilipOakley) ([78.151.121.141])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 20 May 2013 22:55:17 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1758139Ab3ETWNm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 May 2013 18:13:42 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:46044 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757246Ab3ETWNl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 May 2013 18:13:41 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09FEA1F42C;
+	Mon, 20 May 2013 22:13:41 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1368648883-9412-1-git-send-email-tobias.schulte@gliderpilot.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224986>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Monday, May 20, 2013 5:43 AM
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->> Philip Oakley wrote:
->>
->>> Describe rebase in the description section.
->>
->> It already does that. :)  I think you mean "start with a summary",
->> which is a valuable improvement.
->
-> It indeed is a good idea to give the "high-level introduction" at
-> the very beginning, but I do not think it should describe only one
-> of the three major modes of "git rebase" (i.e. no -m, no -i), like
-> the proposed patch text does.  We should instead say what it is used
-> for and why the user would want to use it that is common across
-> these modes at a very high level.
+Tobias Schulte <tobias.schulte@gliderpilot.de> wrote:
+> This parameter is equivalent to the parameter --parents on svn cp commands
+> and is useful for non-standard repository layouts.
+> 
+> Signed-off-by: Tobias Schulte <tobias.schulte@gliderpilot.de>
 
-That would repeat the NAME issue (of trying too hard to be exact & 
-precise). This introductory text is that "summary". The patch 2/2 should 
-be the one for the extra detail of the various whys and wherefores - at 
-least that was my intent.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
->
->> DESCRIPTION
->> -----------
->> <brief description of the purpose of the command, including some 
->> token
->> mention of *why* a user would want to use it (e.g., "so that the 
->> patches
->> apply cleanly to their new base").>
->
-> Exactly.
-> --
+Applied and pushed, thanks.
