@@ -1,55 +1,57 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/6] t5000: add test for pax extended header generation
-Date: Mon, 20 May 2013 15:48:25 -0700
-Message-ID: <7vr4h1s1xi.fsf@alter.siamese.dyndns.org>
-References: <1369043909-59207-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH v12 00/15] Interactive git-clean
+Date: Mon, 20 May 2013 15:48:45 -0700
+Message-ID: <7vk3mts1wy.fsf@alter.siamese.dyndns.org>
+References: <cover.1368782129.git.worldhello.net@gmail.com>
+	<cover.1368846844.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue May 21 00:48:35 2013
+Cc: Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 21 00:48:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeYsb-0002a0-MD
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 00:48:34 +0200
+	id 1UeYsw-0002hd-3i
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 00:48:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758104Ab3ETWs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 May 2013 18:48:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51646 "EHLO
+	id S1758447Ab3ETWst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 May 2013 18:48:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62395 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756914Ab3ETWs1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 May 2013 18:48:27 -0400
+	id S1757248Ab3ETWss (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 May 2013 18:48:48 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BC5A2034D;
-	Mon, 20 May 2013 22:48:27 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D11302038D;
+	Mon, 20 May 2013 22:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=d8SN2ftBLo8S+nEqUgWPPSiFfoY=; b=CcqUimO0/h8J0iTx3QLw
-	JfTcI9617Kv+podWyn+vWIHmjix1mAkHe01phWxAlMDqtQJDcHSzs3bZa04OqG1T
-	bC1CPM2RboY3cdF6JFWCcqcNIKQxnAGVoFF9aJHZ/CCQTfFAjLZRwOEV7c8Tp+3O
-	ZmRww+Yf+XMG3Kmx32jWeAU=
+	 s=sasl; bh=FlxCgdN8+uxJE2oweO/AW8pBWmQ=; b=wNaD1SBf6YoRKwrrR++L
+	WIYIxPMbS5/640jiA/nLLPcVS5jfFG6rxLnIfeto7XH/ZxWzI3mzFr1Su6ISE3rt
+	AiDt4MnE0Kh2ofEW44u87cwxKhSlLPzpBEbLP0ev5y6luWEUoFu1nF7P3/0FNtKA
+	PmylIkT/CGwQHCxu6atl8W8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=cCGpbTQOuedGTAE7uabacQLqxL6er6ZZfQel2MiLq24TbQ
-	HQB/OHvdHsCO1ckq2hjTtBooee2X98jB3ybAQ3wrNCCKtU4FPDIERju0Xd43WRRA
-	RNqY2VoGiYt+t/r8w5naDl1KLGJ6TDC4HR17qi6S9kTfHJ+lRo/EYp2I7R3Xk=
+	 q=dns; s=sasl; b=dj+D8Nx839uS33CZgeGyxf8aVYPOMiW7VuTYOYubZc32j7
+	O0K6coTyQdJf4F2qES5rhMCskymNNG7fnZY3UuSpY5TzvdbUaHhNgV14sAr1nTi/
+	UcnWiOyoIVtSxsDNdhttqYL+oLTnt8qzELSO5II/3bzQkBsnlWdf9J5k5RwME=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EF6D2034C;
-	Mon, 20 May 2013 22:48:27 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C91742038B;
+	Mon, 20 May 2013 22:48:47 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8955320349;
-	Mon, 20 May 2013 22:48:26 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 53F6820388;
+	Mon, 20 May 2013 22:48:47 +0000 (UTC)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 622E72A8-C19F-11E2-917F-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6E91897C-C19F-11E2-9251-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/224996>
 
-Thanks, will queue.
+Will replace what has been queued on 'pu' with trivial style fixups
+(haven't had a chance to make time to read it through).  Thanks.
