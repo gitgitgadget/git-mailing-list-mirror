@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 1/3] push: factor out the detached HEAD error message
-Date: Tue, 21 May 2013 23:53:18 +0530
-Message-ID: <1369160600-22337-2-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 3/3] push: don't push the volatile HEAD with current
+Date: Tue, 21 May 2013 23:53:20 +0530
+Message-ID: <1369160600-22337-4-git-send-email-artagnon@gmail.com>
 References: <1369160600-22337-1-git-send-email-artagnon@gmail.com>
 To: Git List <git@vger.kernel.org>
 X-From: git-owner@vger.kernel.org Tue May 21 20:25:21 2013
@@ -10,90 +10,84 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UerFP-0008Qz-TI
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 20:25:20 +0200
+	id 1UerFR-0008Qz-4h
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 20:25:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755475Ab3EUSZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 May 2013 14:25:07 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:58695 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753979Ab3EUSZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 14:25:05 -0400
-Received: by mail-pd0-f179.google.com with SMTP id q11so893292pdj.10
-        for <git@vger.kernel.org>; Tue, 21 May 2013 11:25:04 -0700 (PDT)
+	id S1755538Ab3EUSZN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 May 2013 14:25:13 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:36327 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753979Ab3EUSZJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 May 2013 14:25:09 -0400
+Received: by mail-pb0-f49.google.com with SMTP id rp8so892972pbb.36
+        for <git@vger.kernel.org>; Tue, 21 May 2013 11:25:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=jKTeA68/sBftaXWn46fLGeIpPWaUjath7QdOBOjsbqU=;
-        b=y4UcgPEOP2Q3+kOCA+Pk05t0W7Wq2/MLKuQY9QZ52DugSFuQkTnTfC/9iUrWClvsGe
-         N7lh4oJuk0Fu3C1fEYUUPjnhHuERRRzwDAX97PFbE9//Ip8g+yQToPjZ3aFkvx7tSnYV
-         FPQv6hLvR5LKBWCyhi/KtdpmGOzyRsnAgiglO/jHIJaYpWmLHnmEu/AFXeEKSxlxpf9r
-         bfAvDxep3xrHJEr2Ve0zARTZpycZQAR1AwKXsNOOsn4zVPuzt8UL7J2cmdlg6UbkwGYP
-         mHDfCY/zNQBat7xvicImW8QO/N2HDXFYYJ86xh1GG7/IEoVYjWz99zTwwSNkuqOO7pu5
-         AEDg==
-X-Received: by 10.66.231.7 with SMTP id tc7mr4482918pac.143.1369160704708;
-        Tue, 21 May 2013 11:25:04 -0700 (PDT)
+        bh=29j/4M/UrZ/J+A6n+uInJs45lGQkHrWYbDthKtvoAqo=;
+        b=IsIYmeWX/WPsFmadnccOHvgSBp4AeG5b9Wx12clBSxK9ZR+I63NhEMujPr3W0ugidL
+         keiKiYkt7MFPdpiV3RsUbau8whydauwXF4ldSuGFLiPAixFxeUeiT4y/kfBjfwHzghWY
+         RRFHLZ35gewz5r7/Cwh3Ytbqgt4Kfz30LrQXpLqTzADKIpqu2SX7iTlHvCdYwOY1PCG8
+         Z0MTL5CFyjRChi3vgsgds7+A1qQ0C/JMTkEzFwke+N7pIrZ5uQs/VsAB4JbkbJ0yLZN2
+         nRj+8Zxso20hOTHRGgbn26kznd4+3guw6Qkaj7vKR5iIhkZHUJ1Y5IZdqPJdE4dO+Kr7
+         XZwA==
+X-Received: by 10.66.248.228 with SMTP id yp4mr4484912pac.158.1369160708770;
+        Tue, 21 May 2013 11:25:08 -0700 (PDT)
 Received: from localhost.localdomain ([122.164.25.100])
-        by mx.google.com with ESMTPSA id l4sm3680889pbo.6.2013.05.21.11.25.02
+        by mx.google.com with ESMTPSA id l4sm3680889pbo.6.2013.05.21.11.25.06
         for <git@vger.kernel.org>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 21 May 2013 11:25:03 -0700 (PDT)
+        Tue, 21 May 2013 11:25:07 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc3.7.gc1ff30b
 In-Reply-To: <1369160600-22337-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225063>
 
-With push.default set to upstream or simple, and a detached HEAD, git
-push prints the following error:
+Since a push does not lock the "HEAD" ref, there is no guarantee that it
+will remain the same for the entire operation of the push.  Practically,
+this means that with push.default set to current:
+
+  # on branch push-current-head
+  $ git push
+  # on another terminal
+  $ git checkout master
+  # return to the first terminal
+  # the push tried to push master!
+
+Avoid this confusion by adding the branch that HEAD resolves to as the
+refspec to push (as opposed to the literal "HEAD").  With this change,
+the output of the push changes subtly from:
 
   $ git push
-  fatal: You are not currently on a branch.
-  To push the history leading to the current (detached HEAD)
-  state now, use
+  ...
+   * [new branch]      HEAD -> push-current-head
 
-    git push ram HEAD:<name-of-remote-branch>
+to:
 
-This error is not unique to upstream or simple: current cannot push with
-a detached HEAD either.  So, factor out the error string in preparation
-for using it in current.
+  $ git push
+  ...
+   * [new branch]      push-current-head -> push-current-head
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/push.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ builtin/push.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/push.c b/builtin/push.c
-index 909c34d..ef3aa97 100644
+index a79038c..d819487 100644
 --- a/builtin/push.c
 +++ b/builtin/push.c
-@@ -113,17 +113,19 @@ static NORETURN int die_push_simple(struct branch *branch, struct remote *remote
- 	    remote->name, branch->name, advice_maybe);
- }
+@@ -198,7 +198,7 @@ static void setup_default_push_refspecs(struct remote *remote)
+ 	case PUSH_DEFAULT_CURRENT:
+ 		if (!branch)
+ 			die(_(message_detached_head_die), remote->name);
+-		add_refspec("HEAD");
++		add_refspec(branch->name);
+ 		break;
  
-+static const char message_detached_head_die[] =
-+	N_("You are not currently on a branch.\n"
-+	   "To push the history leading to the current (detached HEAD)\n"
-+	   "state now, use\n"
-+	   "\n"
-+	   "    git push %s HEAD:<name-of-remote-branch>\n");
-+
- static void setup_push_upstream(struct remote *remote, int simple)
- {
- 	struct strbuf refspec = STRBUF_INIT;
- 	struct branch *branch = branch_get(NULL);
- 	if (!branch)
--		die(_("You are not currently on a branch.\n"
--		    "To push the history leading to the current (detached HEAD)\n"
--		    "state now, use\n"
--		    "\n"
--		    "    git push %s HEAD:<name-of-remote-branch>\n"),
--		    remote->name);
-+		die(_(message_detached_head_die), remote->name);
- 	if (!branch->merge_nr || !branch->merge || !branch->remote_name)
- 		die(_("The current branch %s has no upstream branch.\n"
- 		    "To push the current branch and set the remote as upstream, use\n"
+ 	case PUSH_DEFAULT_NOTHING:
 -- 
 1.8.3.rc3.7.gc1ff30b
