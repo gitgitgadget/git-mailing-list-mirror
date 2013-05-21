@@ -1,80 +1,71 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v8 0/3] Begin replacing OpenSSL with CommonCrypto
-Date: Tue, 21 May 2013 21:19:12 +0200
-Message-ID: <519BC8B0.5050100@web.de>
-References: <1368959016-23146-1-git-send-email-sunshine@sunshineco.com> <7vfvxhs1pz.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/2] sha1_name: fix error message for @{u}
+Date: Wed, 22 May 2013 00:49:47 +0530
+Message-ID: <CALkWK0m7VBz3wDGUACJAfp33M1GYqKCeMCkQwrgA7kqRMp_rtQ@mail.gmail.com>
+References: <1369132915-25657-1-git-send-email-artagnon@gmail.com>
+ <1369132915-25657-2-git-send-email-artagnon@gmail.com> <7vtxlwp9mf.fsf@alter.siamese.dyndns.org>
+ <CALkWK0mTWtJ_U1O7ZkNU3aNFwGH456xtmDJhhmS3z1tfwFPNgA@mail.gmail.com>
+ <7vfvxgnrdo.fsf@alter.siamese.dyndns.org> <CALkWK0nEXKXxercc1mNjyK-QX0pOBeKWAxPZtSPvN_h1eniO5g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	David Aguilar <davvid@gmail.com>,
-	=?windows-1252?Q?Torsten_B=F6gershau?= =?windows-1252?Q?sen?= 
-	<tboegi@web.de>, Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 21 21:19:23 2013
+X-From: git-owner@vger.kernel.org Tue May 21 21:20:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ues5h-00018m-OP
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 21:19:22 +0200
+	id 1Ues6q-0001fV-Kk
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 21:20:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755845Ab3EUTTR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 May 2013 15:19:17 -0400
-Received: from mout.web.de ([212.227.17.11]:55936 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752068Ab3EUTTR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 15:19:17 -0400
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0LmuMO-1U035h0NDQ-00hg4U; Tue, 21 May 2013 21:19:13
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <7vfvxhs1pz.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:rBCEzQpXKdwrchPZK87MsNNsF6j9n0YLfgo7yxcM3V2
- deXXj7lSwEaxeHQw9hynY1LxcPGAfN+5k0+7525wsriz0qkuvN
- Jos+9qdku2YwswxQjFGmgb3+NzeWjltf0vT2PNUioicAV+R4bV
- bnDHKf0k7naqXKRRrl96yXI3sxRvl6E1o42CYbDrs9XaCTt5Yv
- /1CwJ8QhywmtbdPz9fMwQ==
+	id S1753213Ab3EUTU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 May 2013 15:20:28 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:61066 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752068Ab3EUTU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 May 2013 15:20:28 -0400
+Received: by mail-ie0-f176.google.com with SMTP id at1so2824579iec.35
+        for <git@vger.kernel.org>; Tue, 21 May 2013 12:20:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=yuDvRl2z48dcjYVBljB5QMuuZ6h/o9/8pRuwUpigC/I=;
+        b=RYynNs2dtOXw3ry0aHG81hB3RTkcX119owxzEkXlVmOMqNBsIdofji5HWStVCQbynE
+         0LIWlOdPiQnG7TXEuJ3NRIFEQoIJ2cK9oGIAGfQEPythRAMeG1bAKLYE8Pac0RQFIuup
+         EqFD4wBoRLIkTGCHPxWgv+M+7g+xOLAtbETcTB0m9coIlZT4euAEuSnVWfPh+21CCRRC
+         xiQob1BAg1juURgGBuooTWvBmphyHPecEUJ+E+bT83UiB1HF/3UfPiR7Q6nZ/RNgnytz
+         /MqQKPuEnj7h5LsAH42gNouQ6CUaKDLG+7rvgwDy5fuhdyu/+rBZxbeP//XzjhKJxDGy
+         yxow==
+X-Received: by 10.50.3.38 with SMTP id 6mr2310959igz.44.1369164027827; Tue, 21
+ May 2013 12:20:27 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Tue, 21 May 2013 12:19:47 -0700 (PDT)
+In-Reply-To: <CALkWK0nEXKXxercc1mNjyK-QX0pOBeKWAxPZtSPvN_h1eniO5g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225067>
 
-On 2013-05-21 00.52, Junio C Hamano wrote:
-> Thanks, will replace da/darwin with this round.
-(May be late response, not sure if this is the right email thread.
-I eventually managed to compile under 10.6, what we have on pu)
+Ramkumar Ramachandra wrote:
+> Junio C Hamano wrote:
+>> So did you or did you not audit the codepath?
+>
+> No; I was explaining why I didn't in the first place.  Going through it now.
 
-One minor nit, or 2:
-imap-send.c: In function =91cram=92:
-imap-send.c:913: warning: statement with no effect
+So, this is what I have:
 
-This fixes it:
+interpret_branch_name -> interpret_branch_name (recursion)
+                      -> get_sha1_basic -> get_sha1 [context] (end-user data)
+                      -> substitute_branch_name -> dwim (end-user data)
+		      -> strbuf_branchname (callers pass a branch name; no @{u})
+		      -> revision.c:add_pending_object [with_mode] (end-user data)
 
-diff --git a/imap-send.c b/imap-send.c
-index 8ea180f..11577c9 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -35,7 +35,7 @@ typedef void *SSL;
-#define HMAC_Init(hmac, key, len, algo) CCHmacInit(hmac, algo, key, len=
-)
-#define HMAC_Update CCHmacUpdate
-#define HMAC_Final(hmac, hash, ptr) CCHmacFinal(hmac, hash)
--#define HMAC_CTX_cleanup
-+#define HMAC_CTX_cleanup(c)
-#define EVP_md5() kCCHmacAlgMD5
-#else
-#include <openssl/evp.h>
+[die_]verify_filename -> builtin/rev-parse.c (end-user)
+		      -> builtin/reset.c (end-user)
+		      -> builtin/grep.c:cmd_grep (end-user)
+		      -> revision.c:setup_revisions (end-user data)
 
-
-(And I think there are more minor nits:
-#define HMAC_Final(hmac, hash, ptr) CCHmacFinal(hmac, hash)
-could be written as
-#define HMAC_Final(hmac, hash, ptr) CCHmacFinal((hmac), (hash))
-(Use paranthese around each parameter)
-Similar change for HMAC_Init()
-
-/Torsten
+We used to die in die_verify_filename() earlier, but we die in
+interpret_branch_name() after the patch.  Do we have to dig deeper?
