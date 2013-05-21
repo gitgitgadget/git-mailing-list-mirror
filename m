@@ -1,89 +1,100 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: What's cooking in git.git (May 2013, #05; Mon, 20)
-Date: Tue, 21 May 2013 03:16:46 +0200
-Message-ID: <CALKQrgcmmaqAt-oVtFeem_xvqsjehacVoVJ2bYOyfKWTUzV0AA@mail.gmail.com>
-References: <7v38thrxwo.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] transport-helper: barf when user tries --dry-run
+Date: Mon, 20 May 2013 20:31:49 -0500
+Message-ID: <CAMP44s0z1iuo+1gWU5dtp1vL1bneK72HrKWY91+ivavRHirgGg@mail.gmail.com>
+References: <1369098554-11591-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 21 03:17:08 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 21 03:31:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UebCO-0000nD-9x
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 03:17:08 +0200
+	id 1UebQh-0006W9-Jg
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 03:31:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757040Ab3EUBQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 May 2013 21:16:52 -0400
-Received: from mail10.copyleft.no ([188.94.218.231]:64250 "EHLO
-	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753386Ab3EUBQv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 May 2013 21:16:51 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UebC6-000LKv-DV
-	for git@vger.kernel.org; Tue, 21 May 2013 03:16:50 +0200
-Received: from mail-oa0-f48.google.com ([209.85.219.48])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UeYe6-000P6W-2f
-	for git@vger.kernel.org; Tue, 21 May 2013 00:33:34 +0200
-Received: by mail-oa0-f48.google.com with SMTP id i4so93682oah.21
-        for <git@vger.kernel.org>; Mon, 20 May 2013 18:16:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+	id S1756070Ab3EUBbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 May 2013 21:31:51 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:39136 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755853Ab3EUBbv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 May 2013 21:31:51 -0400
+Received: by mail-la0-f54.google.com with SMTP id eg20so83515lab.13
+        for <git@vger.kernel.org>; Mon, 20 May 2013 18:31:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=0HWrZvlz0WTe5Bg0cuVVSTwuP4SgYFmevESJH3ERyLc=;
-        b=DPVltkYY+Q8EXBgfW96/hUQ0G/1/ZUAIqmTEv+obxzrIL3AyZvLPZZLuFDi2OUErkW
-         5CWobxEra1U9McXwPxwdSFX0/6YPtrkWqWw2bZPyJ0jFjKdRRtN/924ElSep0bdORtHa
-         uu1gFPMyk0PbWK+dETkCVluRozJBLXsP7kxBKdHW2O2fd/uOfH3Hu+siJc8tP4hdVI7N
-         Z0UKgvEE8AODd2VX3OT3P+vvoG4KJCdmAIOQXr0jaLumT4mlmRG7x4wUuKC1PtwutOSI
-         44QdUrZ2uN5BZ1ggX/5Wdka8rspZcuXgvFXQnOrxgQAvIRX4HU7uremWMV/S3stZKO9T
-         r9dA==
-X-Received: by 10.60.132.238 with SMTP id ox14mr41292oeb.102.1369099006797;
- Mon, 20 May 2013 18:16:46 -0700 (PDT)
-Received: by 10.182.133.66 with HTTP; Mon, 20 May 2013 18:16:46 -0700 (PDT)
-In-Reply-To: <7v38thrxwo.fsf@alter.siamese.dyndns.org>
+        bh=hEmurhALZzNsNLyalroRJ6udX/sZbg8AwoHMhqt6hpg=;
+        b=kXz+0Yx0KhoBcCB7fIXt+3wVyddbVA9OgxxvxM7xwu67xYLelg9/RA1LMmQqMTflJS
+         1o7hodShp8XKFgoZQWuJ9yDSgzBOIrI9rJOvVhGwFT4OWo8dqpoKsaI0uTktVir7LXCi
+         KtrKPFQ21CI4VbSSL9fOf5rZzJK+xpezebji4SPk65tGg7CHvIuDrN97/q8VnwFpkzEW
+         ibz0peP3bp2+GnjLvFEwJZJ7xH1iJ8T4t/mona2bUIwrhRH1dIP3oS7yHw+op1kQsnDy
+         F+cxv7eO8N68dzbXrslJ1fQG143ZAVFKRS6LJofeuUwr4Vq7qZQ8VAA9wnGSw7OnI+uB
+         p6hw==
+X-Received: by 10.112.135.70 with SMTP id pq6mr311181lbb.82.1369099909695;
+ Mon, 20 May 2013 18:31:49 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Mon, 20 May 2013 18:31:49 -0700 (PDT)
+In-Reply-To: <1369098554-11591-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225011>
 
-On Tue, May 21, 2013 at 2:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> * jh/shorten-refname (2013-05-07) 4 commits
->  - t1514: refname shortening is done after dereferencing symbolic refs
->  - shorten_unambiguous_ref(): Fix shortening refs/remotes/origin/HEAD to origin
->  - t1514: Demonstrate failure to correctly shorten "refs/remotes/origin/HEAD"
->  - t1514: Add tests of shortening refnames in strict/loose mode
+On Mon, May 20, 2013 at 8:09 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Certain remote-helpers (the ones with 'export') would try to push
+> regardless.
 >
->  When remotes/origin/HEAD is not a symbolic ref, "rev-parse
->  --abbrev-ref remotes/origin/HEAD" ought to show "origin", not
->  "origin/HEAD", which is fixed with this series (if it is a symbolic
->  ref that points at remotes/origin/something, then it should show
->  "origin/something" and it already does).
+> Obviously this is not what the user wants.
 >
->  I think this is being rerolled using strbuf_expand().
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  transport-helper.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/transport-helper.c b/transport-helper.c
+> index 522d791..daebdd9 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -789,6 +789,9 @@ static int push_refs_with_export(struct transport *transport,
+>         struct string_list revlist_args = STRING_LIST_INIT_NODUP;
+>         struct strbuf buf = STRBUF_INIT;
+>
+> +       if (flags & TRANSPORT_PUSH_DRY_RUN)
+> +               die("helper %s does not support dry-run", data->name);
+> +
+>         helper = get_helper(transport);
+>
+>         write_constant(helper->in, "export\n");
+> --
 
-Actually, that was not on my TODO. Sure, my other series ([PATCHv2
-00/10] Prepare for alternative remote-tracking branch location) builds
-on top of this one, and changes a lot of the same code, but I
-considered jh/shorten-refname a good set of changes in its own right,
-and I didn't want it to be held up by the much longer (and probably
-much longer-running) series.
+Actually, looking to the future, there's nothing that prevents
+remote-helpers with 'export' to support dry-run, except this patch,
+so:
 
-The strbuf_expand refactoring is nice, but not really necessary until
-we start using multi-wildcard patterns.
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -789,6 +789,11 @@ static int push_refs_with_export(struct transport
+*transport,
+        struct string_list revlist_args = STRING_LIST_INIT_NODUP;
+        struct strbuf buf = STRBUF_INIT;
 
++       if (flags & TRANSPORT_PUSH_DRY_RUN) {
++               if (set_helper_option(transport, "dry-run", "true") != 0)
++                       die("helper %s does not support dry-run", data->name);
++       }
++
+        helper = get_helper(transport);
 
-...Johan
+        write_constant(helper->in, "export\n");
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Felipe Contreras
