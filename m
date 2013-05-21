@@ -1,150 +1,208 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 05/17] cmd_diff(): use an object_array for holding trees
-Date: Tue, 21 May 2013 10:30:50 -0700
-Message-ID: <7v4ndwp7ed.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 08/17] revision: split some overly-long lines
+Date: Tue, 21 May 2013 10:34:49 -0700
+Message-ID: <7vzjvonsna.fsf@alter.siamese.dyndns.org>
 References: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu>
-	<1368995232-11042-6-git-send-email-mhagger@alum.mit.edu>
+	<1368995232-11042-9-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
 	git@vger.kernel.org
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 21 19:31:00 2013
+X-From: git-owner@vger.kernel.org Tue May 21 19:35:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeqOo-0004XK-WD
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 19:30:59 +0200
+	id 1UeqSf-0006VI-Db
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 19:34:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755297Ab3EURay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 May 2013 13:30:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57268 "EHLO
+	id S1755270Ab3EURex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 May 2013 13:34:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58547 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753764Ab3EURax (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 13:30:53 -0400
+	id S1755201Ab3EURew (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 May 2013 13:34:52 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 506E61E3D2;
-	Tue, 21 May 2013 17:30:53 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 93D8A1E69B;
+	Tue, 21 May 2013 17:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BoSKSDNDzjFgU854RkTfbnrsE9M=; b=FI/Eh+
-	yFt14pbkkkmtwHl+8didfuPjowKqScryu0vCqJnHfCB5pKbjcODghSShkAkHTbbr
-	VflZC9fJm6mzNO9TXu8CN8TIugsjkqrCOGll8ZtcmZeeryywtyufPuigpws/gw/z
-	LPD77RkVqb0drZeDeKmPTlSbfpor8jdsKJXZI=
+	:content-type; s=sasl; bh=qEffO3UADBft4yd1E9XlmaMtc8Y=; b=UXZkO7
+	o9P4OzwyIXjMpi9A34mMkJ32Q73DBCQ3likv5yrrfgNmxeYs/8oPptMhmFu69LfB
+	phU4jlr33rhalnNHgaN1ZDZyyQSBr7xW/RgUP2urD4HMIlNpLqXhP1xnMIlxqdS3
+	4ZOShI5YGCDMqdZjZURlu/OwdP36C4Ot2TOdY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WEEIABtiZRm5Ip4ocgMoCxF25GSA+1Iw
-	w0X+8l7nA/qLaqIx7HzvmrBcug6E1YywfQHXLZc172Lo+mmxo0YLRiuFKrjZ65fe
-	nPDEifiKHNmCtkpgVU/iEci41ZNKVj3zT/f56efGyj3DUVt50DpNGSj8Hzj79TEG
-	dnqVgd7xvBY=
+	:content-type; q=dns; s=sasl; b=lr51rJANNZ8x0Lisy8XhCHEmhODt8IHb
+	oSjtA14ikTXvaDlh6xeW3sNQrPD0zLZhO5GcttBco/kVmsDHW99QOk7Ilb2JCO5n
+	r+ZkFpy4doygUtaSvwPMRDMm9IUpSmiwR9XbUpZB3r0DXiaOC1zyHCmcVH7/ELI5
+	XbcoKsk9/Ys=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 455F91E3D0;
-	Tue, 21 May 2013 17:30:53 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A8551E69A;
+	Tue, 21 May 2013 17:34:51 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8DB321E3CD;
-	Tue, 21 May 2013 17:30:52 +0000 (UTC)
-In-Reply-To: <1368995232-11042-6-git-send-email-mhagger@alum.mit.edu> (Michael
-	Haggerty's message of "Sun, 19 May 2013 22:27:00 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B95371E697;
+	Tue, 21 May 2013 17:34:50 +0000 (UTC)
+In-Reply-To: <1368995232-11042-9-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Sun, 19 May 2013 22:27:03 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2F892F08-C23C-11E2-8A4B-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: BD807244-C23C-11E2-919A-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225048>
 
 Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Change cmd_diff() to use a (struct object_array) for holding the trees
-> that it accumulates, rather than rolling its own equivalent.
->
-
-A significant detail missing here is that this lifts the hardcoded
-100 tree limit in combined diff but that does not matter in
-practice, I would suppose ;-).
-
 > Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 > ---
->  builtin/diff.c | 37 ++++++++++++++++++-------------------
->  1 file changed, 18 insertions(+), 19 deletions(-)
->
-> diff --git a/builtin/diff.c b/builtin/diff.c
-> index ba68c6c..72d99c0 100644
-> --- a/builtin/diff.c
-> +++ b/builtin/diff.c
-> @@ -252,8 +252,8 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+>  revision.c | 20 ++++++++++++++------
+>  revision.h | 32 +++++++++++++++++++++-----------
+>  2 files changed, 35 insertions(+), 17 deletions(-)
+
+Looks obviously good for *.c file, but I am on the fence for *.h
+one, as the reason we kept these long single lines in *.h files was
+to help those who want to grep in *.h files to let them view the
+full function signature.  It probably is OK to tell them to use
+"git grep -A$n" instead, though.
+
+> diff --git a/revision.c b/revision.c
+> index 25e424c..8ac88d6 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -70,7 +70,8 @@ static int show_path_truncated(FILE *out, const struct name_path *path)
+>  	return ours || emitted;
+>  }
+>  
+> -void show_object_with_name(FILE *out, struct object *obj, const struct name_path *path, const char *component)
+> +void show_object_with_name(FILE *out, struct object *obj,
+> +			   const struct name_path *path, const char *component)
 >  {
->  	int i;
->  	struct rev_info rev;
-> -	struct object_array_entry ent[100];
-> -	int ents = 0, blobs = 0, paths = 0;
-> +	struct object_array ent = OBJECT_ARRAY_INIT;
-> +	int blobs = 0, paths = 0;
->  	const char *path = NULL;
->  	struct blobinfo blob[2];
->  	int nongit;
-> @@ -350,13 +350,8 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
->  		if (obj->type == OBJ_COMMIT)
->  			obj = &((struct commit *)obj)->tree->object;
->  		if (obj->type == OBJ_TREE) {
-> -			if (ARRAY_SIZE(ent) <= ents)
-> -				die(_("more than %d trees given: '%s'"),
-> -				    (int) ARRAY_SIZE(ent), name);
->  			obj->flags |= flags;
-> -			ent[ents].item = obj;
-> -			ent[ents].name = name;
-> -			ents++;
-> +			add_object_array(obj, name, &ent);
->  			continue;
->  		}
->  		if (obj->type == OBJ_BLOB) {
-> @@ -380,7 +375,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
->  	/*
->  	 * Now, do the arguments look reasonable?
->  	 */
-> -	if (!ents) {
-> +	if (!ent.nr) {
->  		switch (blobs) {
->  		case 0:
->  			result = builtin_diff_files(&rev, argc, argv);
-> @@ -401,22 +396,26 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+>  	struct name_path leaf;
+>  	leaf.up = (struct name_path *)path;
+> @@ -186,7 +187,9 @@ void mark_parents_uninteresting(struct commit *commit)
 >  	}
->  	else if (blobs)
->  		usage(builtin_diff_usage);
-> -	else if (ents == 1)
-> +	else if (ent.nr == 1)
->  		result = builtin_diff_index(&rev, argc, argv);
-> -	else if (ents == 2)
-> -		result = builtin_diff_tree(&rev, argc, argv, &ent[0], &ent[1]);
-> -	else if (ent[0].item->flags & UNINTERESTING) {
-> +	else if (ent.nr == 2)
-> +		result = builtin_diff_tree(&rev, argc, argv,
-> +					   &ent.objects[0], &ent.objects[1]);
-> +	else if (ent.objects[0].item->flags & UNINTERESTING) {
->  		/*
->  		 * diff A...B where there is at least one merge base
-> -		 * between A and B.  We have ent[0] == merge-base,
-> -		 * ent[ents-2] == A, and ent[ents-1] == B.  Show diff
-> -		 * between the base and B.  Note that we pick one
-> -		 * merge base at random if there are more than one.
-> +		 * between A and B.  We have ent.objects[0] ==
-> +		 * merge-base, ent.objects[ents-2] == A, and
-> +		 * ent.objects[ents-1] == B.  Show diff between the
-> +		 * base and B.  Note that we pick one merge base at
-> +		 * random if there are more than one.
->  		 */
-> -		result = builtin_diff_tree(&rev, argc, argv, &ent[0], &ent[ents-1]);
-> +		result = builtin_diff_tree(&rev, argc, argv,
-> +					   &ent.objects[0],
-> +					   &ent.objects[ent.nr-1]);
->  	} else
->  		result = builtin_diff_combined(&rev, argc, argv,
-> -					       ent, ents);
-> +					       ent.objects, ent.nr);
->  	result = diff_result_code(&rev.diffopt, result);
->  	if (1 < rev.diffopt.skip_stat_unmatch)
->  		refresh_index_quietly();
+>  }
+>  
+> -static void add_pending_object_with_mode(struct rev_info *revs, struct object *obj, const char *name, unsigned mode)
+> +static void add_pending_object_with_mode(struct rev_info *revs,
+> +					 struct object *obj,
+> +					 const char *name, unsigned mode)
+>  {
+>  	if (!obj)
+>  		return;
+> @@ -209,7 +212,8 @@ static void add_pending_object_with_mode(struct rev_info *revs, struct object *o
+>  	add_object_array_with_mode(obj, name, &revs->pending, mode);
+>  }
+>  
+> -void add_pending_object(struct rev_info *revs, struct object *obj, const char *name)
+> +void add_pending_object(struct rev_info *revs,
+> +			struct object *obj, const char *name)
+>  {
+>  	add_pending_object_with_mode(revs, obj, name, S_IFINVALID);
+>  }
+> @@ -226,7 +230,9 @@ void add_head_to_pending(struct rev_info *revs)
+>  	add_pending_object(revs, obj, "HEAD");
+>  }
+>  
+> -static struct object *get_reference(struct rev_info *revs, const char *name, const unsigned char *sha1, unsigned int flags)
+> +static struct object *get_reference(struct rev_info *revs, const char *name,
+> +				    const unsigned char *sha1,
+> +				    unsigned int flags)
+>  {
+>  	struct object *object;
+>  
+> @@ -247,7 +253,8 @@ void add_pending_sha1(struct rev_info *revs, const char *name,
+>  	add_pending_object(revs, object, name);
+>  }
+>  
+> -static struct commit *handle_commit(struct rev_info *revs, struct object *object, const char *name)
+> +static struct commit *handle_commit(struct rev_info *revs,
+> +				    struct object *object, const char *name)
+>  {
+>  	unsigned long flags = object->flags;
+>  
+> @@ -368,7 +375,8 @@ static void file_change(struct diff_options *options,
+>  	DIFF_OPT_SET(options, HAS_CHANGES);
+>  }
+>  
+> -static int rev_compare_tree(struct rev_info *revs, struct commit *parent, struct commit *commit)
+> +static int rev_compare_tree(struct rev_info *revs,
+> +			    struct commit *parent, struct commit *commit)
+>  {
+>  	struct tree *t1 = parent->tree;
+>  	struct tree *t2 = commit->tree;
+> diff --git a/revision.h b/revision.h
+> index 01bd2b7..9628465 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -195,19 +195,23 @@ struct setup_revision_opt {
+>  };
+>  
+>  extern void init_revisions(struct rev_info *revs, const char *prefix);
+> -extern int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct setup_revision_opt *);
+> +extern int setup_revisions(int argc, const char **argv, struct rev_info *revs,
+> +			   struct setup_revision_opt *);
+>  extern void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+> -				 const struct option *options,
+> -				 const char * const usagestr[]);
+> +			       const struct option *options,
+> +			       const char * const usagestr[]);
+>  #define REVARG_CANNOT_BE_FILENAME 01
+>  #define REVARG_COMMITTISH 02
+> -extern int handle_revision_arg(const char *arg, struct rev_info *revs, int flags, unsigned revarg_opt);
+> +extern int handle_revision_arg(const char *arg, struct rev_info *revs,
+> +			       int flags, unsigned revarg_opt);
+>  
+>  extern void reset_revision_walk(void);
+>  extern int prepare_revision_walk(struct rev_info *revs);
+>  extern struct commit *get_revision(struct rev_info *revs);
+> -extern char *get_revision_mark(const struct rev_info *revs, const struct commit *commit);
+> -extern void put_revision_mark(const struct rev_info *revs, const struct commit *commit);
+> +extern char *get_revision_mark(const struct rev_info *revs,
+> +			       const struct commit *commit);
+> +extern void put_revision_mark(const struct rev_info *revs,
+> +			      const struct commit *commit);
+>  
+>  extern void mark_parents_uninteresting(struct commit *commit);
+>  extern void mark_tree_uninteresting(struct tree *tree);
+> @@ -220,15 +224,19 @@ struct name_path {
+>  
+>  char *path_name(const struct name_path *path, const char *name);
+>  
+> -extern void show_object_with_name(FILE *, struct object *, const struct name_path *, const char *);
+> +extern void show_object_with_name(FILE *, struct object *,
+> +				  const struct name_path *, const char *);
+>  
+>  extern void add_object(struct object *obj,
+>  		       struct object_array *p,
+>  		       struct name_path *path,
+>  		       const char *name);
+>  
+> -extern void add_pending_object(struct rev_info *revs, struct object *obj, const char *name);
+> -extern void add_pending_sha1(struct rev_info *revs, const char *name, const unsigned char *sha1, unsigned int flags);
+> +extern void add_pending_object(struct rev_info *revs,
+> +			       struct object *obj, const char *name);
+> +extern void add_pending_sha1(struct rev_info *revs,
+> +			     const char *name, const unsigned char *sha1,
+> +			     unsigned int flags);
+>  
+>  extern void add_head_to_pending(struct rev_info *);
+>  
+> @@ -238,7 +246,9 @@ enum commit_action {
+>  	commit_error
+>  };
+>  
+> -extern enum commit_action get_commit_action(struct rev_info *revs, struct commit *commit);
+> -extern enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit);
+> +extern enum commit_action get_commit_action(struct rev_info *revs,
+> +					    struct commit *commit);
+> +extern enum commit_action simplify_commit(struct rev_info *revs,
+> +					  struct commit *commit);
+>  
+>  #endif
