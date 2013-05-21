@@ -1,72 +1,73 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: What's cooking in git.git (May 2013, #05; Mon, 20)
-Date: Mon, 20 May 2013 19:22:51 -0500
-Message-ID: <CAMP44s2rk4WbiBLyW5MgXrrqVisXLmz=EF2DrUwHe6MGkYoq4A@mail.gmail.com>
-References: <7v38thrxwo.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 21 02:22:57 2013
+Subject: [PATCH] completion: trivial fix for zsh
+Date: Mon, 20 May 2013 19:33:03 -0500
+Message-ID: <1369096383-28733-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 21 02:34:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UeaLx-0006MM-Ed
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 02:22:57 +0200
+	id 1UeaXL-0002Ef-GP
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 02:34:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757235Ab3EUAWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 May 2013 20:22:53 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:42606 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751572Ab3EUAWw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 May 2013 20:22:52 -0400
-Received: by mail-lb0-f171.google.com with SMTP id v20so135925lbc.30
-        for <git@vger.kernel.org>; Mon, 20 May 2013 17:22:51 -0700 (PDT)
+	id S1757548Ab3EUAei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 May 2013 20:34:38 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:47824 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755682Ab3EUAei (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 May 2013 20:34:38 -0400
+Received: by mail-ob0-f176.google.com with SMTP id wp18so54585obc.7
+        for <git@vger.kernel.org>; Mon, 20 May 2013 17:34:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=bttG4nzabBK8TfM62shw7lvA65o0dq1q56pSLTVyrLE=;
-        b=uml4Zo2Mwzzhwn5qxlQdVujuxMrX23oyxtPnCVPji7ynApj51fsU1VwuCvf1iJaU9A
-         qf+qiE5uLE1WvJ8kcito1E3DiJFFITYDeJkqiFpHX5ybr4FIt25O2cwcrIwkPoKLdMPP
-         uaqUpWD3QG43Fgm988p0cUCGhJsbpkOHbhYi9PYamvw1jJ+BFjv9erqi9X1uXiO0njTC
-         Nq362R0Y3C5Z290zjhxQKYyObyx8VvfQrNfyB007swzOXQ7XVH8R7SMqq9XbKauWrs2U
-         j8VUkHpym1W2nigMUGu9d4ADthJx97IH6YtFDB36OGq1Vpd+/gHV9bW5xzBQXTkhPccK
-         WHow==
-X-Received: by 10.112.125.130 with SMTP id mq2mr204625lbb.103.1369095771405;
- Mon, 20 May 2013 17:22:51 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Mon, 20 May 2013 17:22:51 -0700 (PDT)
-In-Reply-To: <7v38thrxwo.fsf@alter.siamese.dyndns.org>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=wDsha4jDxOmPT/lPFEKx9sAy5SJFQUfaVaZ9pUXGpps=;
+        b=F8jMbbEPG9qpB4llD5Xa9+e/HXRRBzCmjlwZDYNJIw+8RDXyDRGGlwrqywR28XY04L
+         iE5THEu+1fHXGKArup46Jq9xdUmc5lQyzCF/YgV+DbfH+jnSPqfrl0IGAlAoUSbXHoqR
+         ++DqbxNC+ErfLXaorlK5stqS6lwM4KSGcw7ZPep+THPc/rqaqr5H5uF5O2r9+edkpWN/
+         Yz5bHYR8eKUwQ8eAnxr4ZFw0L9xJUope8ZJRhaPTxCUcqu/+11s0ImbjvPC6iuK+PwGB
+         +JqxOZXdXpzBhjMpYoCfN5FmrYTVN3ngosz91hgQQi19iIMZIglaZOR0YkRFjMh1lLTT
+         yL2Q==
+X-Received: by 10.60.178.242 with SMTP id db18mr27936493oec.74.1369096477583;
+        Mon, 20 May 2013 17:34:37 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id x5sm267753oep.1.2013.05.20.17.34.35
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 20 May 2013 17:34:36 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc3.286.g3d43083
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225005>
 
-On Mon, May 20, 2013 at 7:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+zsh completion wrapper doesn't reimplement __gitcompadd(). Although it
+should be trivial to do that, let's use __gitcomp_nl() which achieves
+exactly the same thing, specially since the suffix ($4) has to be empty.
 
-> * fc/at-head (2013-05-08) 13 commits
->  - sha1_name: compare variable with constant, not constant with variable
->  - Add new @ shortcut for HEAD
->  - sha1_name: refactor reinterpret()
->  - sha1_name: check @{-N} errors sooner
->  - sha1_name: reorganize get_sha1_basic()
->  - sha1_name: don't waste cycles in the @-parsing loop
->  - sha1_name: remove unnecessary braces
->  - sha1_name: remove no-op
->  - tests: at-combinations: @{N} versus HEAD@{N}
->  - tests: at-combinations: increase coverage
->  - tests: at-combinations: improve nonsense()
->  - tests: at-combinations: check ref names directly
->  - tests: at-combinations: simplify setup
->
->  Instead of typing four capital letters "HEAD", you can say "@"
->  instead.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This is not ready for next? Note that I specifically split the two
-commits that were needed, the rest can wait.
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index a98c2fd..1c35eef 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1831,7 +1831,7 @@ _git_config ()
+ 		local remote="${prev#remote.}"
+ 		remote="${remote%.fetch}"
+ 		if [ -z "$cur" ]; then
+-			__gitcompadd "refs/heads/" "" "" ""
++			__gitcomp_nl "refs/heads/" "" "" ""
+ 			return
+ 		fi
+ 		__gitcomp_nl "$(__git_refs_remotes "$remote")"
 -- 
-Felipe Contreras
+1.8.3.rc3.286.g3d43083
