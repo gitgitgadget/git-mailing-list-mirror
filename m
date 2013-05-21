@@ -1,90 +1,101 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH] prompt: fix show upstream with svn and zsh
-Date: Tue, 21 May 2013 22:54:27 +0200
-Message-ID: <1369169667-25166-1-git-send-email-t.gummerer@gmail.com>
-Cc: felipe.contreras@gmail.com, gitster@pobox.com, szeder@ira.uka.de,
-	t.gummerer@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 21 22:57:00 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 0/3] Fixing volatile HEAD in push.default = current
+Date: Wed, 22 May 2013 02:39:44 +0530
+Message-ID: <CALkWK0np7o0eH8ZsWQSwk1Cdwnnpj5B==gS8kAE+OkTskASOsQ@mail.gmail.com>
+References: <1369160600-22337-1-git-send-email-artagnon@gmail.com>
+ <7v38tgno2k.fsf@alter.siamese.dyndns.org> <CALkWK0m3QP_eE14y8UoJ+HeFzkKM=1nVKAnYJcTrwQMp+Atphg@mail.gmail.com>
+ <7vppwkm682.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 21 23:10:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UetcB-00060v-5W
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 22:56:59 +0200
+	id 1UetpF-0003ko-Nd
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 23:10:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755122Ab3EUU4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 May 2013 16:56:54 -0400
-Received: from mail-ee0-f43.google.com ([74.125.83.43]:35910 "EHLO
-	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753174Ab3EUUzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 16:55:04 -0400
-Received: by mail-ee0-f43.google.com with SMTP id d41so719077eek.16
-        for <git@vger.kernel.org>; Tue, 21 May 2013 13:55:03 -0700 (PDT)
+	id S1752635Ab3EUVKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 May 2013 17:10:25 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:35079 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751724Ab3EUVKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 May 2013 17:10:25 -0400
+Received: by mail-ie0-f172.google.com with SMTP id 16so3180511iea.17
+        for <git@vger.kernel.org>; Tue, 21 May 2013 14:10:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=RVg/SuC0vLsfYnYd0OHaUlbTumFzBJ2dBK804KN9A1k=;
-        b=UjqMsmuy5PUpUMOiCU3AcfphXCXca3ybAF9qDu0GPcwKsAqWgY84hPcd9X91dZU2HT
-         7tsdh1bpHCGkAhzjXPG2vttwBY/0qqqoSlZ+0Cp7GNKCFA1uDhX81r4b0/ouVcBv3sjV
-         IYQe0Cw1dY8EmoyPAC/1S19NzsJNh0DqGI+a1OpsFmiNAZu+5AOMNAhiEc3gxM3TJECV
-         K/bT/6uc/YjoM2sMTmgdASFLiuR5lTGQ8Aty1TKWiF75HGW2kZNfvmvGYOl7WlhMKwx3
-         Qrc4kK2kV2Mv9Hp3JYI816zbdqJto3v3Y1kesCGOPyl5qz3P4vdRS/Ai/cMUEYbUf+Ji
-         9v3w==
-X-Received: by 10.14.172.195 with SMTP id t43mr10761192eel.34.1369169703387;
-        Tue, 21 May 2013 13:55:03 -0700 (PDT)
-Received: from localhost (host41-110-dynamic.0-79-r.retail.telecomitalia.it. [79.0.110.41])
-        by mx.google.com with ESMTPSA id y10sm5947841eev.3.2013.05.21.13.55.00
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 21 May 2013 13:55:01 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc2.359.g2fb82f5
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=4Pef45LgEf7mdLOrgbIqRf8JWN3kbBQnRvxIhr/rWck=;
+        b=IYPtfpiUEdyA/2cWqVT0+KLzOCZa2F0hvlga6AoO8iAu7alFPhiJMdT+bfCJFWLm0O
+         Xpp8//m0fzZ1k7Ln95d5/KFWUWW26f6HxBgKnhjbdnVXymlOEP0rgcmzHH6TyNo0MKs9
+         0WE5777rdMwf2x1jSGa4TZ9AQ7DBsOvlMEfJt3X7KWVcxOkew+eVsb1IetFNI1EwT6m0
+         /UJD3VEScdyllN3wUlIZ8L27AELK33ffV0k0CndzmwJP3x4xv/EFvGRF5cDIj0b782d5
+         Lo+pif9fOjzFwOcUTYlSFqdUI+T4on1jD9p3+ShTfBBoBV7wZG84s6UsZCfdd171dxBX
+         WLwg==
+X-Received: by 10.50.3.38 with SMTP id 6mr2531845igz.44.1369170624727; Tue, 21
+ May 2013 14:10:24 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Tue, 21 May 2013 14:09:44 -0700 (PDT)
+In-Reply-To: <7vppwkm682.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225077>
 
-Currently the __git_ps1 git prompt gives the following error with a
-repository converted by git-svn, when used with zsh:
+Junio C Hamano wrote:
+> In general, when a command is working in your repository with a
+> working tree, we do not make any such promise that it keeps
+> operationg normally when you pull the rug under its feet from
+> another terminal ("git checkout maint" running at the same time "git
+> pull" would not have a chance to work correctly).  Some are safe
+> (like "git push" racing with "git checkout maint" that would not
+> have to look at what the current branch is) and some are not (like
+> "git push github" racing with "git checkout maint && git push
+> origin HEAD:preview").
 
-	   __git_ps1_show_upstream:19: bad pattern: svn_remote[
+My current set of expectations look like this:
 
-This was introduced by 6d158cba (bash completion: Support "divergence
-from upstream" messages in __git_ps1), when the script was for bash
-only.  Make it compatible with zsh.
+1. Commands that operate on a worktree (merge family) do not lock the
+worktree before operating on it.  These are fast synchronous commands
+(operating on recent hot-cached stuff), and there is no _utility_ in a
+perfectly atomic worktree operation.  Might be an interesting
+theoretical exercise to merge-trees in memory, but I have absolutely
+no interest in such a problem.
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
-Tested with bash 4.2.45 and zsh 5.0.2.
+2. Commands that operate on refs, the-index, and intermediate states
+(update-ref, update-index, rebase-state family) do so atomically using
+the lockfile API.  The atomicity is important here, because we don't
+want a higher-level command to half-fail.  And it's trivial to
+implement.
 
- contrib/completion/git-prompt.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+3. Commands that operate only on the object store are guaranteed not
+to race as the object store itself is read-only (hash-object,
+commit-tree family; gc being the exception).  This is very important
+for concurrent access in a server implementation.
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index eaf5c36..e537300 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -124,7 +124,7 @@ __git_ps1_show_upstream ()
- 			fi
- 			;;
- 		svn-remote.*.url)
--			svn_remote[ $((${#svn_remote[@]} + 1)) ]="$value"
-+			svn_remote[$((${#svn_remote[@]} + 1))]="$value"
- 			svn_url_pattern+="\\|$value"
- 			upstream=svn+git # default upstream is SVN if available, else git
- 			;;
-@@ -146,8 +146,8 @@ __git_ps1_show_upstream ()
- 	svn*)
- 		# get the upstream from the "git-svn-id: ..." in a commit message
- 		# (git-svn uses essentially the same procedure internally)
--		local svn_upstream=($(git log --first-parent -1 \
--					--grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null))
-+		set -a svn_upstream "$(git log --first-parent -1 \
-+					--grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null)"
- 		if [[ 0 -ne ${#svn_upstream[@]} ]]; then
- 			svn_upstream=${svn_upstream[ ${#svn_upstream[@]} - 2 ]}
- 			svn_upstream=${svn_upstream%@*}
--- 
-1.8.3.rc2.359.g2fb82f5
+In 3 out of the 4 push.default states, push is category (3).
+push.default = current is a special case, and should try not to break
+end-user expectation even if it involves resolving HEAD.
+
+> I view the value of this topic purely as "showing a real branch name
+> when that is what we actually pushed is a lot more preferrable than
+> showing HEAD, especially because the user may see it in the terminal
+> scrollback buffer hours after it happened".  Explaining this patch
+> as "we avoid issues from simultaneously flipping HEAD by resolving
+> early" gives a false sense of security to the reader, as "early" has
+> to happen early enough for the patch to really avoid the issue, but
+> you are not in control of when the user does that flipping in the
+> other terminal.
+
+Why should I lie in the patch?  The terminal flipping was a very big
+itch I had, and the patch fixes exactly that issue.  Showing the real
+branch name was an unintended side-effect.
+
+I just said "early" and showed a nice end-user example in which it
+works, not "theoretically impossible to race with".  Better wording
+(while not lying about the motivation behind the patch)?
