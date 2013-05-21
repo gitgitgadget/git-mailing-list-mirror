@@ -1,69 +1,85 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2] transport-helper: check if the dry-run is supported
-Date: Tue, 21 May 2013 16:14:12 -0500
-Message-ID: <CAMP44s14ZBUYhxDkSwjoi+6JPx4whfQDhiq_4QfMteALsbuQ_Q@mail.gmail.com>
-References: <1369099924-13763-1-git-send-email-felipe.contreras@gmail.com>
-	<7vli78p920.fsf@alter.siamese.dyndns.org>
+Subject: Re: [RFC/PATCH 2/2] doc: command line interface (cli) dot-repository dwimmery
+Date: Tue, 21 May 2013 16:21:53 -0500
+Message-ID: <CAMP44s3G5BPbw3MO8W3rmDabJ-ewf-C5FH8HHO_o0cPf0f55BA@mail.gmail.com>
+References: <1368964449-2724-1-git-send-email-philipoakley@iee.org>
+	<1368964449-2724-3-git-send-email-philipoakley@iee.org>
+	<20130519173924.GB3362@elie.Belkin>
+	<7v38thwn6l.fsf@alter.siamese.dyndns.org>
+	<BDA138F1A58247F4A4940B3436A94485@PhilipOakley>
+	<7v1u91uw95.fsf@alter.siamese.dyndns.org>
+	<08847FEAFB00489695F31AA651F5EA2E@PhilipOakley>
+	<7vfvxgqp3m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	GitList <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 21 23:14:31 2013
+X-From: git-owner@vger.kernel.org Tue May 21 23:22:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uett4-0005Vp-B4
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 23:14:26 +0200
+	id 1Ueu0O-0000tF-9X
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 23:22:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753478Ab3EUVOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 May 2013 17:14:17 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:55959 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752445Ab3EUVOO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 17:14:14 -0400
-Received: by mail-la0-f46.google.com with SMTP id er20so1221857lab.5
-        for <git@vger.kernel.org>; Tue, 21 May 2013 14:14:12 -0700 (PDT)
+	id S1752407Ab3EUVV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 May 2013 17:21:56 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:54803 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750732Ab3EUVVz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 May 2013 17:21:55 -0400
+Received: by mail-la0-f48.google.com with SMTP id fs12so1253110lab.35
+        for <git@vger.kernel.org>; Tue, 21 May 2013 14:21:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=/sQ2HB/n3CTzV2AbecC2r126DzjNgZP8eIyNond6Ww8=;
-        b=fW/qySp8DcXwy7h4PyiJNKjtdnOX0cvAq4yqH5gc31QXbVRIxl5ltMMy0y/LPly9Z7
-         feSuHxVlE5LSlc2/yg+DMOF//4elLH4A2tVLULflctqUmI32TeFUO8s0OpbYZLLLjMIq
-         KJsxpsWKgFDC335saiaefCq9K8XwvB3XNG+xivcC1Ky65UNZuaWm1tX1u4SJ3aTR+Hpl
-         yRSbAlmVwa9fbcNErOu2NI7XWCM5lXmaW2nQBeNP0Eb78OXtqM25tSpn/cX0Mqfs0v1e
-         XjCHCe4cf3ItWxXYVfmO0IlwaKipOl2J1T+GIt5aXxDf2dN+vR/HcQojmb0qCg+dgXqb
-         UHwQ==
-X-Received: by 10.112.190.42 with SMTP id gn10mr612503lbc.82.1369170852504;
- Tue, 21 May 2013 14:14:12 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Tue, 21 May 2013 14:14:12 -0700 (PDT)
-In-Reply-To: <7vli78p920.fsf@alter.siamese.dyndns.org>
+        bh=6O4lERU7227VbZuBIVFZIczjeiE3OFMz1lt57CYBnq4=;
+        b=thVKmNS1zXMjnuW9ldJypCTDaLmjPYlPhybXYjkAczlhVT5uKKm3iR8twyJADrqZBc
+         mkh5BJU3gJQxkF7sWhzFZG7RwndUpG+kOx8AkyOcHZJstOXd1PbTjMThV5p+UMaWPYEA
+         t8qwEWadUqqMDzomcaqe5H518y2L5Lrs7d/eho2Dc/g6fM/OPeFAjoZFwQ+OPCfq7pIp
+         gTOxrcQBWRirfn7IbBQ2b8L7ZzzCNiejZTJTkeCptaKTu/H5IVzjez5PwSluzosAEn8V
+         X+ipWU2s77LoOsH3XOjaDJR9b3DWE+3e7BKne6vQZcydHDk2Yk/9CFkDQlpka0Wx0IHe
+         12IA==
+X-Received: by 10.112.166.101 with SMTP id zf5mr2517850lbb.59.1369171313654;
+ Tue, 21 May 2013 14:21:53 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Tue, 21 May 2013 14:21:53 -0700 (PDT)
+In-Reply-To: <7vfvxgqp3m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225080>
 
-On Tue, May 21, 2013 at 11:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> Certain remote-helpers (the ones with 'export') would try to push
->> regardless.
->>
->> Obviously this is not what the user wants.
->>
->> Also, add a check for the 'dry-run' option, so remote-helpers can
->> implement it.
->
-> This sounds like a good thing to do.  Perhaps the refspec mapping
-> can be handled the same way as a backend feature so that you do not
-> have to unconditionally disable it in the other patch.
+On Tue, May 21, 2013 at 11:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Philip Oakley" <philipoakley@iee.org> writes:
 
-With my patch the remote helper doesn't need to know about the refspec
-handling at all, it just works magically.
+>> On Sat, May 4, 2013 at 2:51 PM, Jonathan Nieder <jrnieder@gmail.com>
+>> wrote:
+>>> Another trick is to use "git push":
+>>>         git push . $production_sha1:refs/heads/master
+>
+> It all falls out naturally from the "Git is distributed and no
+> repository is special" principle.  I think that word "trick" merely
+> refers to "those who do not realize that the local repository is not
+> all that special and merely is _a_ repository just like anybody
+> else's may not realize they can do this", nothing more.
+
+Nobody cares.
+
+>> Filipe gave 'git fetch .' in [PATCH 1/3] fetch: add --allow-local
+>> option, 16 May 2013
+>
+> That patch came from a mistaken suggestion from me that was
+> retracted with
+
+You say it's "mistaken", but you are not the arbiter of truth; the
+fact that you say it's so doesn't make it so. It's just rhetoric.
+
+You haven't shown that it's indeed mistaken.
 
 -- 
 Felipe Contreras
