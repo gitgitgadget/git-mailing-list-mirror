@@ -1,108 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v12 01/15] test: add test cases for relative_path
-Date: Tue, 21 May 2013 13:37:01 -0700
-Message-ID: <7vhahwm5n6.fsf@alter.siamese.dyndns.org>
-References: <cover.1368846844.git.worldhello.net@gmail.com>
-	<cover.1368782129.git.worldhello.net@gmail.com>
-	<cover.1368846844.git.worldhello.net@gmail.com>
-	<ea0e3b1148ba1614916a8b1cca8d2d046acd047c.1368846844.git.worldhello.net@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 21 22:37:13 2013
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH] prompt: fix show upstream with svn and zsh
+Date: Tue, 21 May 2013 22:54:27 +0200
+Message-ID: <1369169667-25166-1-git-send-email-t.gummerer@gmail.com>
+Cc: felipe.contreras@gmail.com, gitster@pobox.com, szeder@ira.uka.de,
+	t.gummerer@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 21 22:57:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UetJ2-0005DB-MU
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 22:37:13 +0200
+	id 1UetcB-00060v-5W
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 22:56:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752429Ab3EUUhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 May 2013 16:37:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59965 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751755Ab3EUUhE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 16:37:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9869D2185D;
-	Tue, 21 May 2013 20:37:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tAEaUYz5Dc6kMSaLeyBemVMLjjA=; b=mwmS+1
-	32mldRZ4BqSahji4EIl08FtzrlIK7ylJRF9xIJxVuWMcz2GQL61HE/GRL0u0m5Ks
-	nWFOWKyb0nKNfpWUcsEJPL02kQn6KLMXU6it868pL85FdsggkJnUoc9qkbRu5HCG
-	5SZ6FEe2sg8kyBviKXr4WAZmkEXXk9WpLSyus=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LDeEsNlTzCO2ka1HEOYjATfuyVLYwdeB
-	DwOEboO1obp1L4C002rWt2eKV2yiIfedk0p7TV9HPpELvjgmkJByGD5eWtM0WMz/
-	No1rIKSzUi/p2aWDp6z0dwNHdGESUf/4ioOT9M7Jeq7T/+kdgPcXxLuh/DvZsB3p
-	A8FfN/vt+fs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D5052185C;
-	Tue, 21 May 2013 20:37:03 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA20E2185B;
-	Tue, 21 May 2013 20:37:02 +0000 (UTC)
-In-Reply-To: <ea0e3b1148ba1614916a8b1cca8d2d046acd047c.1368846844.git.worldhello.net@gmail.com>
-	(Jiang Xin's message of "Sat, 18 May 2013 11:18:53 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 319A2CE2-C256-11E2-BA81-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755122Ab3EUU4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 May 2013 16:56:54 -0400
+Received: from mail-ee0-f43.google.com ([74.125.83.43]:35910 "EHLO
+	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753174Ab3EUUzE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 May 2013 16:55:04 -0400
+Received: by mail-ee0-f43.google.com with SMTP id d41so719077eek.16
+        for <git@vger.kernel.org>; Tue, 21 May 2013 13:55:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=RVg/SuC0vLsfYnYd0OHaUlbTumFzBJ2dBK804KN9A1k=;
+        b=UjqMsmuy5PUpUMOiCU3AcfphXCXca3ybAF9qDu0GPcwKsAqWgY84hPcd9X91dZU2HT
+         7tsdh1bpHCGkAhzjXPG2vttwBY/0qqqoSlZ+0Cp7GNKCFA1uDhX81r4b0/ouVcBv3sjV
+         IYQe0Cw1dY8EmoyPAC/1S19NzsJNh0DqGI+a1OpsFmiNAZu+5AOMNAhiEc3gxM3TJECV
+         K/bT/6uc/YjoM2sMTmgdASFLiuR5lTGQ8Aty1TKWiF75HGW2kZNfvmvGYOl7WlhMKwx3
+         Qrc4kK2kV2Mv9Hp3JYI816zbdqJto3v3Y1kesCGOPyl5qz3P4vdRS/Ai/cMUEYbUf+Ji
+         9v3w==
+X-Received: by 10.14.172.195 with SMTP id t43mr10761192eel.34.1369169703387;
+        Tue, 21 May 2013 13:55:03 -0700 (PDT)
+Received: from localhost (host41-110-dynamic.0-79-r.retail.telecomitalia.it. [79.0.110.41])
+        by mx.google.com with ESMTPSA id y10sm5947841eev.3.2013.05.21.13.55.00
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 21 May 2013 13:55:01 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc2.359.g2fb82f5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225076>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Currently the __git_ps1 git prompt gives the following error with a
+repository converted by git-svn, when used with zsh:
 
-> diff --git a/test-path-utils.c b/test-path-utils.c
-> index 0092cb..18267 100644
-> --- a/test-path-utils.c
-> +++ b/test-path-utils.c
-> @@ -1,6 +1,19 @@
->  #include "cache.h"
->  #include "string-list.h"
->  
-> +#define PARSE_ARGV_STRING(var, input) do { \
-> +	if (!strcmp(input, "<null>")) { \
-> +		var = NULL; \
-> +	} else if (!strcmp(input, "<empty>")) { \
-> +		var = ""; \
-> +	} else if (*input == '<' || *input == '(') { \
-> +		fprintf(stderr, "Bad value: %s\n", input); \
-> +		return 1; \
-> +	} else { \
-> +		var = input; \
-> +	} \
-> +} while (0)
+	   __git_ps1_show_upstream:19: bad pattern: svn_remote[
 
-Yuck. Why does it have to be a macro like this?  I do not think
-"because we may return" justifies it.
+This was introduced by 6d158cba (bash completion: Support "divergence
+from upstream" messages in __git_ps1), when the script was for bash
+only.  Make it compatible with zsh.
 
->  /*
->   * A "string_list_each_func_t" function that normalizes an entry from
->   * GIT_CEILING_DIRECTORIES.  If the path is unusable for some reason,
-> @@ -103,6 +116,18 @@ int main(int argc, char **argv)
->  		return 0;
->  	}
->  
-> +	if (argc == 4 && !strcmp(argv[1], "relative_path")) {
-> +		const char *abs, *base, *rel;
-> +		PARSE_ARGV_STRING(abs, argv[2]);
-> +		PARSE_ARGV_STRING(base, argv[3]);
-> +		rel = relative_path(abs, base);
-> +		if (!rel)
-> +			puts("(null)");
-> +		else
-> +			puts(strlen(rel) > 0 ? rel : "(empty)");
-> +		return 0;
-> +	}
-> +
->  	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
->  		argv[1] ? argv[1] : "(there was none)");
->  	return 1;
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+Tested with bash 4.2.45 and zsh 5.0.2.
+
+ contrib/completion/git-prompt.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index eaf5c36..e537300 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -124,7 +124,7 @@ __git_ps1_show_upstream ()
+ 			fi
+ 			;;
+ 		svn-remote.*.url)
+-			svn_remote[ $((${#svn_remote[@]} + 1)) ]="$value"
++			svn_remote[$((${#svn_remote[@]} + 1))]="$value"
+ 			svn_url_pattern+="\\|$value"
+ 			upstream=svn+git # default upstream is SVN if available, else git
+ 			;;
+@@ -146,8 +146,8 @@ __git_ps1_show_upstream ()
+ 	svn*)
+ 		# get the upstream from the "git-svn-id: ..." in a commit message
+ 		# (git-svn uses essentially the same procedure internally)
+-		local svn_upstream=($(git log --first-parent -1 \
+-					--grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null))
++		set -a svn_upstream "$(git log --first-parent -1 \
++					--grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null)"
+ 		if [[ 0 -ne ${#svn_upstream[@]} ]]; then
+ 			svn_upstream=${svn_upstream[ ${#svn_upstream[@]} - 2 ]}
+ 			svn_upstream=${svn_upstream%@*}
+-- 
+1.8.3.rc2.359.g2fb82f5
