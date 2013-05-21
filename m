@@ -1,84 +1,77 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/2] sha1_name: fix error message for @{<N>}, @{<date>}
-Date: Tue, 21 May 2013 16:11:55 +0530
-Message-ID: <1369132915-25657-3-git-send-email-artagnon@gmail.com>
-References: <1369132915-25657-1-git-send-email-artagnon@gmail.com>
-Cc: Git List <git@vger.kernel.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: activate color.ui by default (Re: What's cooking in git.git (May 2013, #05; Mon, 20))
+Date: Tue, 21 May 2013 13:47:43 +0200
+Message-ID: <vpqd2skzh9c.fsf@grenoble-inp.fr>
+References: <7v38thrxwo.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 21 12:40:44 2013
+X-From: git-owner@vger.kernel.org Tue May 21 13:47:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uejzj-0008DL-MM
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 12:40:40 +0200
+	id 1Uel2s-0007lT-0r
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 13:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752975Ab3EUKk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 May 2013 06:40:26 -0400
-Received: from mail-da0-f44.google.com ([209.85.210.44]:56556 "EHLO
-	mail-da0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751945Ab3EUKkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 06:40:18 -0400
-Received: by mail-da0-f44.google.com with SMTP id z8so338606daj.17
-        for <git@vger.kernel.org>; Tue, 21 May 2013 03:40:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=vjFpGPVHc95l68H4nHhNCYuIrsx+Ia6AnvjqCz/14+A=;
-        b=GDqZrZ0eW9qKUqZii3KXqeCKs1oi3mgnXq+yM1WFCXyHSrEArsPQChp03UQ9LcezXu
-         wUzNVTwPjqT6PBaLIw181/leRqP39iVhVXEjTsrGTfujZXHPbTf6RS1V9tbwdmZKl2x6
-         EcyonxZbK4Pzgy/MO+AYD53sThq8qJ8Y29urYD62U/JJvqU1dMNUMIDhVuYA5j5oL3C2
-         lxOFodtsSO4Fk7Pt1SiVwVDategiLQ3p2WRSKaCulo8Xr+imwXIfLv+Vz5RbSiekopto
-         8i4h6nTcHk4H9CtsS3A+0Df6FotUnwxFarxH0LL3g0y4y3NblY5Dk+1OM+82eSMJLjr5
-         kpwg==
-X-Received: by 10.66.246.131 with SMTP id xw3mr2485902pac.114.1369132817824;
-        Tue, 21 May 2013 03:40:17 -0700 (PDT)
-Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPSA id cp1sm2198426pbc.42.2013.05.21.03.40.15
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 21 May 2013 03:40:17 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc3.6.ga9126d5.dirty
-In-Reply-To: <1369132915-25657-1-git-send-email-artagnon@gmail.com>
+	id S1752897Ab3EULry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 May 2013 07:47:54 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45461 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752340Ab3EULrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 May 2013 07:47:53 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r4LBlgMC022038
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 21 May 2013 13:47:42 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Uel2d-0000ga-Eo; Tue, 21 May 2013 13:47:43 +0200
+In-Reply-To: <7v38thrxwo.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 20 May 2013 17:15:19 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 21 May 2013 13:47:42 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r4LBlgMC022038
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1369741665.13588@OHde36NuYXeJZ+hnJNd3JA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225028>
 
-Currently, when we try to resolve @{<N>} or @{<date>} when the reflog
-for the current branch doesn't go back far enough, we get errors like:
+Junio C Hamano <gitster@pobox.com> writes:
 
-  $ git show @{10000}
-  fatal: Log for '' only has 7 entries.
+> * mm/color-auto-default (2013-05-15) 2 commits
+>  - make color.ui default to 'auto'
+>  - config: refactor management of color.ui's default value
+>
+>  Flip the default for color.ui to 'auto', which is what many
+>  tutorials recommend new users to do.
+>
+>  I think this is ready for 'next', but we may want to audit tutorials
+>  to see if we need to adjust them if they suggest to set color.ui as
+>  the first thing to do when they meet Git.
 
-  $ git show @{10000.days.ago}
-  warning: Log for '' only goes back to Tue, 21 May 2013 14:14:45 +0530.
-  ...
+The little grepping I did in our docs didn't show much about color.ui,
+and nothing about its default value (just technical documentation, not
+beginner-oriented).
 
-The empty string '' looks ugly and inconsistent with the output of
-<branch>@{<N>}.  Replace it with the string 'current branch'.
+Other than that, the patch makes the doc say "... `auto` (this is the
+default since Git 2.0)". I'm slightly in favor of delaying the change
+until Git 2.0 and keeping it as-is, but I'm OK with letting it in the
+next minor version if other people think it should (I did not see strong
+opinion on that, but I think the general opinion from the discussion was
+it would be OK). If so, I can resend without the 2.0 mention (or Junio
+can edit it locally).
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- sha1_name.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/sha1_name.c b/sha1_name.c
-index 416a673..683b4bd 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -517,6 +517,10 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 		}
- 		if (read_ref_at(real_ref, at_time, nth, sha1, NULL,
- 				&co_time, &co_tz, &co_cnt)) {
-+			if (!len) {
-+				str = "current branch";
-+				len = strlen("current branch");
-+			}
- 			if (at_time)
- 				warning("Log for '%.*s' only goes "
- 					"back to %s.", len, str,
 -- 
-1.8.3.rc3.6.ga9126d5.dirty
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
