@@ -1,84 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Fixing volatile HEAD in push.default = current
-Date: Tue, 21 May 2013 12:13:39 -0700
-Message-ID: <7v38tgno2k.fsf@alter.siamese.dyndns.org>
-References: <1369160600-22337-1-git-send-email-artagnon@gmail.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v8 0/3] Begin replacing OpenSSL with CommonCrypto
+Date: Tue, 21 May 2013 21:19:12 +0200
+Message-ID: <519BC8B0.5050100@web.de>
+References: <1368959016-23146-1-git-send-email-sunshine@sunshineco.com> <7vfvxhs1pz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 21 21:13:53 2013
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	David Aguilar <davvid@gmail.com>,
+	=?windows-1252?Q?Torsten_B=F6gershau?= =?windows-1252?Q?sen?= 
+	<tboegi@web.de>, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 21 21:19:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ues0O-0006lR-W1
-	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 21:13:53 +0200
+	id 1Ues5h-00018m-OP
+	for gcvg-git-2@plane.gmane.org; Tue, 21 May 2013 21:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752883Ab3EUTNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 May 2013 15:13:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47186 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752299Ab3EUTNm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 15:13:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00C7D214D5;
-	Tue, 21 May 2013 19:13:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BGif+0fQ1qbLnOR4MDAeN8WWZL8=; b=toQhTe
-	+GZQpMBGX9hRHIEn+KWOAlV/x83yI1J3vuK9B1ybKGKQjMMKPhOfyR7ck/Db7kNN
-	n2mniMPFciUxOXiAQqloU51pAn+NrSeh/LcFNlPuPb13Jtrpiuu8dVswDyGuIwGm
-	gMX+0hBdcwjqpB7LIX0DMT9I0DZumd/nho+H0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dcNH5Bk+f9OYOR7I4ZnLynq7qhk7npHI
-	4Rd0mj70cjD8vC9zH3HPcVano8ETg0ThDTP3kN3dl9rlj8ZZE4+HsT51k3kOBWA5
-	CbZKzma9StwursGQlvVBY3/nMNAAp1BDc+JTXqGcnFjV4LDgDAdrInxjzGwwTYva
-	WKEBZDL9SAs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E880E214D3;
-	Tue, 21 May 2013 19:13:41 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 51F11214D0;
-	Tue, 21 May 2013 19:13:41 +0000 (UTC)
-In-Reply-To: <1369160600-22337-1-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Tue, 21 May 2013 23:53:17 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8C66AF30-C24A-11E2-AD08-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755845Ab3EUTTR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 May 2013 15:19:17 -0400
+Received: from mout.web.de ([212.227.17.11]:55936 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752068Ab3EUTTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 May 2013 15:19:17 -0400
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0LmuMO-1U035h0NDQ-00hg4U; Tue, 21 May 2013 21:19:13
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <7vfvxhs1pz.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:rBCEzQpXKdwrchPZK87MsNNsF6j9n0YLfgo7yxcM3V2
+ deXXj7lSwEaxeHQw9hynY1LxcPGAfN+5k0+7525wsriz0qkuvN
+ Jos+9qdku2YwswxQjFGmgb3+NzeWjltf0vT2PNUioicAV+R4bV
+ bnDHKf0k7naqXKRRrl96yXI3sxRvl6E1o42CYbDrs9XaCTt5Yv
+ /1CwJ8QhywmtbdPz9fMwQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225066>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On 2013-05-21 00.52, Junio C Hamano wrote:
+> Thanks, will replace da/darwin with this round.
+(May be late response, not sure if this is the right email thread.
+I eventually managed to compile under 10.6, what we have on pu)
 
-> There's still a lot to think about.
+One minor nit, or 2:
+imap-send.c: In function =91cram=92:
+imap-send.c:913: warning: statement with no effect
 
-Is there?  I do not think "volatile" is particularly a good
-description for this, but showing what is pushed as a concrete
-branch name feels like a good improvement to me, at least in
-principle.
+This fixes it:
 
-I haven't picked them up, and I won't be picking them up today, as I
-suspect this series may conflict with the pre-2.0 preparation and
-2.0 transition patches and I may end up having to fix conflicts
-unnecessarily (resolving is eventually needed before 2.0 happens,
-but resolving them, or even having to worry about the possibility
-that I may have to do so, do not have to steal time from me today).
+diff --git a/imap-send.c b/imap-send.c
+index 8ea180f..11577c9 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -35,7 +35,7 @@ typedef void *SSL;
+#define HMAC_Init(hmac, key, len, algo) CCHmacInit(hmac, algo, key, len=
+)
+#define HMAC_Update CCHmacUpdate
+#define HMAC_Final(hmac, hash, ptr) CCHmacFinal(hmac, hash)
+-#define HMAC_CTX_cleanup
++#define HMAC_CTX_cleanup(c)
+#define EVP_md5() kCCHmacAlgMD5
+#else
+#include <openssl/evp.h>
 
-Thanks.
 
-> [3/3] is the big itch: [1/2] and [2/2] are just setup patches.
->
-> Ramkumar Ramachandra (3):
->   push: factor out the detached HEAD error message
->   push: fail early with detached HEAD and current
->   push: don't push the volatile HEAD with current
->
->  builtin/push.c | 20 +++++++++++++-------
->  1 file changed, 13 insertions(+), 7 deletions(-)
+(And I think there are more minor nits:
+#define HMAC_Final(hmac, hash, ptr) CCHmacFinal(hmac, hash)
+could be written as
+#define HMAC_Final(hmac, hash, ptr) CCHmacFinal((hmac), (hash))
+(Use paranthese around each parameter)
+Similar change for HMAC_Init()
+
+/Torsten
