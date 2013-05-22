@@ -1,78 +1,49 @@
-From: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-Subject: Re: [PATCH] guilt: fix date parsing
-Date: Tue, 21 May 2013 23:39:21 -0400
-Message-ID: <20130522033921.GB101217@meili.valhalla.31bits.net>
-References: <1369192411-8842-1-git-send-email-tytso@mit.edu>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: java zlib woes (was: Reading commit objects)
+Date: Wed, 22 May 2013 06:51:31 +0200
+Message-ID: <20130522045131.GA6257@inner.h.apk.li>
+References: <CABx5MBQ57-=MPamvV-peZUdD_KDLX+5cy9vD7CL7p_Vz9BkvTg@mail.gmail.com> <CAEBDL5XwrD8ZbRRSrM1iJGtcRgziH5bFVwRHzg9=_PYzaTfgAg@mail.gmail.com> <CABx5MBSnpZTthOHECqkbpdbFfkb4e_uSo-rh4owBc8B_oSKjJQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Theodore Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Wed May 22 05:39:28 2013
+Cc: John Szakmeister <john@szakmeister.net>, git <git@vger.kernel.org>
+To: Chico Sokol <chico.sokol@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 22 06:52:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ueztg-0001vd-5Q
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 05:39:28 +0200
+	id 1Uf11t-0002Mi-I5
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 06:52:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754936Ab3EVDjY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 May 2013 23:39:24 -0400
-Received: from josefsipek.net ([64.9.206.49]:1610 "EHLO josefsipek.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754695Ab3EVDjX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 23:39:23 -0400
-Received: from meili.valhalla.31bits.net (c-68-62-19-111.hsd1.mi.comcast.net [68.62.19.111])
-	by josefsipek.net (Postfix) with ESMTPSA id 5B192185C;
-	Tue, 21 May 2013 23:39:23 -0400 (EDT)
+	id S1751287Ab3EVEv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 May 2013 00:51:57 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:37588 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002Ab3EVEv4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 May 2013 00:51:56 -0400
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id r4M4pVD07743;
+	Wed, 22 May 2013 06:51:31 +0200
 Content-Disposition: inline
-In-Reply-To: <1369192411-8842-1-git-send-email-tytso@mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CABx5MBSnpZTthOHECqkbpdbFfkb4e_uSo-rh4owBc8B_oSKjJQ@mail.gmail.com>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225128>
 
-I applied this one and the "guilt: skip empty line after..." patch.
+On Tue, 21 May 2013 19:18:35 +0000, Chico Sokol wrote:
+> Ok, we discovered that the commit object actually contains the tree
+> object's sha1, by reading its contents with python zlib library.
+> 
+> So the bug must be with our java code (we're building a java lib).
 
-Jeff.
+That's interesting. We ran in a similar problem: We had a fetch
+with jget hanging within the zlib deflater code in what looked
+like a busy loop. Unfortunately we don't yet have a publishable
+repo on which this happens.
 
-On Tue, May 21, 2013 at 11:13:31PM -0400, Theodore Ts'o wrote:
-> If the date field has a space in it, such as:
-> 
->    Date: Tue, 14 May 2013 18:37:15 +0200
-> 
-> previously guilt would go belly up:
-> 
->    + export GIT_AUTHOR_DATE=Tue, 14 May 2013 18:37:15 +0200
->    /usr/local/bin/guilt: 571: export: 14: bad variable name
-> 
-> Fix this.
-> 
-> Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
-> ---
->  guilt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/guilt b/guilt
-> index 9953bdf..6e8d542 100755
-> --- a/guilt
-> +++ b/guilt
-> @@ -568,7 +568,7 @@ commit()
->  				author_date_str=`sed -n -e '/^Date:/ { s/^Date: //; p; q; }; /^(diff |---$|--- )/ q' "$p"`
->  			fi
->  			if [ ! -z "$author_date_str" ]; then
-> -				export GIT_AUTHOR_DATE=`echo $author_date_str`
-> +				export GIT_AUTHOR_DATE="$author_date_str"
->  			fi
->  		fi
->  
-> -- 
-> 1.7.12.rc0.22.gcdd159b
-> 
-
--- 
-The obvious mathematical breakthrough would be development of an easy way to
-factor large prime numbers.
-		- Bill Gates, The Road Ahead, pg. 265
+Andreas
