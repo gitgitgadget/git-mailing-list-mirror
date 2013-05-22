@@ -1,46 +1,46 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v13 04/15] Refactor quote_path_relative, remove unused params
-Date: Wed, 22 May 2013 09:40:25 +0800
-Message-ID: <ff44eaf8c54f1a858abf68159674357faab2cf1d.1369186574.git.worldhello.net@gmail.com>
+Subject: [PATCH v13 08/15] git-clean: show items of del_list in columns
+Date: Wed, 22 May 2013 09:40:29 +0800
+Message-ID: <dec60b3fed0e01159c8f7b3b485b1e6374c61fe9.1369186574.git.worldhello.net@gmail.com>
 References: <cover.1369186574.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 22 03:41:12 2013
+X-From: git-owner@vger.kernel.org Wed May 22 03:41:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uey3D-0001QS-AZ
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 03:41:11 +0200
+	id 1Uey3P-0001VA-GA
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 03:41:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754551Ab3EVBlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 May 2013 21:41:05 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:41224 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754080Ab3EVBk6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 21:40:58 -0400
-Received: by mail-pa0-f46.google.com with SMTP id fa10so1288146pad.33
-        for <git@vger.kernel.org>; Tue, 21 May 2013 18:40:58 -0700 (PDT)
+	id S1754645Ab3EVBlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 May 2013 21:41:15 -0400
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:50292 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754606Ab3EVBlK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 May 2013 21:41:10 -0400
+Received: by mail-pb0-f50.google.com with SMTP id wy17so1178461pbc.23
+        for <git@vger.kernel.org>; Tue, 21 May 2013 18:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=GpQImHAmHMwgoZI3tYErPMNRrNCoEQIf/cd9LrJZyQg=;
-        b=nLcLBGmk9nEontnZP/fa8UICnGjm3vPvERkzHrLBl2fpeiCM0wPgnNzvyvgbeODNwX
-         m/xJyauzz6baRJatoo3Tu5c1BUUxq0IMuqPEKK7MMvGvNf75MhsOT+aAnTePPUbJOkQ3
-         8EWxFbx/v1lDanZiuCRu6yB8ie33XcJAWSasTQCHNN/Glt3aYYtv2TvGNI/1JF+Mz0W6
-         DgSMl26/tmRampfCW5YnJENNNbCxZ7kyTsZkBzcIfOzMQ6AqCB0yH+0BWXrdXTgW7q56
-         xyCc6FVJgqaV7dgtZ3hG+8wbhmmaLvclngWFv16dWk2eJD8K6OuU1Y/dKFk9vwYu2BZn
-         SeBw==
-X-Received: by 10.66.182.9 with SMTP id ea9mr5959400pac.5.1369186858143;
-        Tue, 21 May 2013 18:40:58 -0700 (PDT)
+        bh=DRZRmD1CFrDFBYjxHexYyRtTs28wMITChgeWD7i+aAU=;
+        b=F+2zO3VJEfRJwAK1xuDpyEgDmpquhTB4sVu7DBsMHtejrZxxXG+uhfWTkCkTJDHq5b
+         jfylNOg/5z4Aufka+tOmQj2GsI++sZ+mpnUNKUkn9jk3/BYM2qjXcsOdRRBE3PwotwFb
+         Mpgbua+dZQ3tCYttTXIwb2Sq1IRuSWoz0THP3+BEEchunjMRgBZ8T2qWmgQwfxPFqJZI
+         SBM298LWwIVnCqJxJyMabx74noiXuyUg5pfJFHXHTg+55KhxVPFBLETvuzLwlxcgEYtB
+         MOQoa3M90oC1PLwb+28XsMVY9ImLMoGacsEpl/N4OQZ8d9Uu68uvL0G6+s3rTZsGeSZP
+         rMxA==
+X-Received: by 10.66.157.130 with SMTP id wm2mr5851273pab.156.1369186870162;
+        Tue, 21 May 2013 18:41:10 -0700 (PDT)
 Received: from localhost.localdomain ([114.248.150.82])
-        by mx.google.com with ESMTPSA id at1sm4939345pbc.10.2013.05.21.18.40.55
+        by mx.google.com with ESMTPSA id at1sm4939345pbc.10.2013.05.21.18.41.07
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 21 May 2013 18:40:57 -0700 (PDT)
+        Tue, 21 May 2013 18:41:09 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc3.368.g7c798dd
 In-Reply-To: <cover.1369186574.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1369186574.git.worldhello.net@gmail.com>
@@ -49,245 +49,127 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225107>
 
-After substitute path_relative() in quote.c with relative_path() from
-path.c, parameters (such as len and prefix_len) are obsolete in function
-quote_path_relative(). Remove unused parameters and change the order of
-parameters for quote_path_relative() function.
+When there are lots of items to be cleaned, it is hard to see them all
+in one screen. Show them in columns will solve this problem.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Comments-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/clean.c    | 18 +++++++++---------
- builtin/grep.c     |  5 ++---
- builtin/ls-files.c |  2 +-
- quote.c            |  7 ++-----
- quote.h            |  4 ++--
- wt-status.c        | 17 ++++++++---------
- 6 files changed, 24 insertions(+), 29 deletions(-)
+ Documentation/config.txt |  4 ++++
+ builtin/clean.c          | 49 +++++++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 44 insertions(+), 9 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 6e53f..e031b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -955,6 +955,10 @@ column.branch::
+ 	Specify whether to output branch listing in `git branch` in columns.
+ 	See `column.ui` for details.
+ 
++column.clean::
++	Specify the layout when list items in `git clean -i`, which always
++	shows files and directories in columns. See `column.ui` for details.
++
+ column.status::
+ 	Specify whether to output untracked files in `git status` in columns.
+ 	See `column.ui` for details.
 diff --git a/builtin/clean.c b/builtin/clean.c
-index 04e39..f77f95 100644
+index 698fb..75cc6 100644
 --- a/builtin/clean.c
 +++ b/builtin/clean.c
-@@ -56,7 +56,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 	if ((force_flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
- 			!resolve_gitlink_ref(path->buf, "HEAD", submodule_head)) {
- 		if (!quiet) {
--			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-+			quote_path_relative(path->buf, prefix, &quoted);
- 			printf(dry_run ?  _(msg_would_skip_git_dir) : _(msg_skip_git_dir),
- 					quoted.buf);
- 		}
-@@ -70,7 +70,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 		/* an empty dir could be removed even if it is unreadble */
- 		res = dry_run ? 0 : rmdir(path->buf);
- 		if (res) {
--			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-+			quote_path_relative(path->buf, prefix, &quoted);
- 			warning(_(msg_warn_remove_failed), quoted.buf);
- 			*dir_gone = 0;
- 		}
-@@ -94,7 +94,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 			if (remove_dirs(path, prefix, force_flag, dry_run, quiet, &gone))
- 				ret = 1;
- 			if (gone) {
--				quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-+				quote_path_relative(path->buf, prefix, &quoted);
- 				string_list_append(&dels, quoted.buf);
- 			} else
- 				*dir_gone = 0;
-@@ -102,10 +102,10 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 		} else {
- 			res = dry_run ? 0 : unlink(path->buf);
- 			if (!res) {
--				quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-+				quote_path_relative(path->buf, prefix, &quoted);
- 				string_list_append(&dels, quoted.buf);
- 			} else {
--				quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-+				quote_path_relative(path->buf, prefix, &quoted);
- 				warning(_(msg_warn_remove_failed), quoted.buf);
- 				*dir_gone = 0;
- 				ret = 1;
-@@ -127,7 +127,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 		if (!res)
- 			*dir_gone = 1;
- 		else {
--			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-+			quote_path_relative(path->buf, prefix, &quoted);
- 			warning(_(msg_warn_remove_failed), quoted.buf);
- 			*dir_gone = 0;
- 			ret = 1;
-@@ -262,7 +262,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 				if (remove_dirs(&directory, prefix, rm_flags, dry_run, quiet, &gone))
- 					errors++;
- 				if (gone && !quiet) {
--					qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
-+					qname = quote_path_relative(directory.buf, prefix, &buf);
- 					printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
- 				}
- 			}
-@@ -272,11 +272,11 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 				continue;
- 			res = dry_run ? 0 : unlink(ent->name);
- 			if (res) {
--				qname = quote_path_relative(ent->name, -1, &buf, prefix);
-+				qname = quote_path_relative(ent->name, prefix, &buf);
- 				warning(_(msg_warn_remove_failed), qname);
- 				errors++;
- 			} else if (!quiet) {
--				qname = quote_path_relative(ent->name, -1, &buf, prefix);
-+				qname = quote_path_relative(ent->name, prefix, &buf);
- 				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
- 			}
- 		}
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 159e65..a419c 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -286,8 +286,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
- 	struct strbuf pathbuf = STRBUF_INIT;
+@@ -13,10 +13,12 @@
+ #include "refs.h"
+ #include "string-list.h"
+ #include "quote.h"
++#include "column.h"
  
- 	if (opt->relative && opt->prefix_length) {
--		quote_path_relative(filename + tree_name_len, -1, &pathbuf,
--				    opt->prefix);
-+		quote_path_relative(filename + tree_name_len, opt->prefix, &pathbuf);
- 		strbuf_insert(&pathbuf, 0, filename, tree_name_len);
- 	} else {
- 		strbuf_addstr(&pathbuf, filename);
-@@ -318,7 +317,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 	struct strbuf buf = STRBUF_INIT;
+ static int force = -1; /* unset */
+ static int interactive;
+ static struct string_list del_list = STRING_LIST_INIT_DUP;
++static unsigned int colopts;
  
- 	if (opt->relative && opt->prefix_length)
--		quote_path_relative(filename, -1, &buf, opt->prefix);
-+		quote_path_relative(filename, opt->prefix, &buf);
- 	else
- 		strbuf_addstr(&buf, filename);
+ static const char *const builtin_clean_usage[] = {
+ 	N_("git clean [-d] [-f] [-i] [-n] [-q] [-e <pattern>] [-x | -X] [--] <paths>..."),
+@@ -31,8 +33,13 @@ static const char *msg_warn_remove_failed = N_("failed to remove %s");
  
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 220207..00f07 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -389,7 +389,7 @@ int report_path_error(const char *ps_matched, const char **pathspec, const char
- 		if (found_dup)
- 			continue;
- 
--		name = quote_path_relative(pathspec[num], -1, &sb, prefix);
-+		name = quote_path_relative(pathspec[num], prefix, &sb);
- 		error("pathspec '%s' did not match any file(s) known to git.",
- 		      name);
- 		errors++;
-diff --git a/quote.c b/quote.c
-index 64ff3..ebb8 100644
---- a/quote.c
-+++ b/quote.c
-@@ -325,8 +325,8 @@ void write_name_quoted_relative(const char *name, size_t len,
- }
- 
- /* quote path as relative to the given prefix */
--char *quote_path_relative(const char *in, int len,
--			  struct strbuf *out, const char *prefix)
-+char *quote_path_relative(const char *in, const char *prefix,
-+			  struct strbuf *out)
+ static int git_clean_config(const char *var, const char *value, void *cb)
  {
- 	struct strbuf sb = STRBUF_INIT;
- 	const char *rel = relative_path(in, prefix, &sb);
-@@ -334,9 +334,6 @@ char *quote_path_relative(const char *in, int len,
- 	quote_c_style_counted(rel, strlen(rel), out, NULL, 0);
- 	strbuf_release(&sb);
- 
--	if (!out->len)
--		strbuf_addstr(out, "./");
--
- 	return out->buf;
+-	if (!strcmp(var, "clean.requireforce"))
++	if (!prefixcmp(var, "column."))
++		return git_column_config(var, value, "clean", &colopts);
++
++	if (!strcmp(var, "clean.requireforce")) {
+ 		force = !git_config_bool(var, value);
++		return 0;
++	}
+ 	return git_default_config(var, value, cb);
  }
  
-diff --git a/quote.h b/quote.h
-index 13315..5610159 100644
---- a/quote.h
-+++ b/quote.h
-@@ -65,8 +65,8 @@ extern void write_name_quoted_relative(const char *name, size_t len,
- 		FILE *fp, int terminator);
+@@ -144,21 +151,46 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
+ 	return ret;
+ }
  
- /* quote path as relative to the given prefix */
--extern char *quote_path_relative(const char *in, int len,
--			  struct strbuf *out, const char *prefix);
-+extern char *quote_path_relative(const char *in, const char *prefix,
-+			  struct strbuf *out);
+-static void interactive_main_loop(void)
++static void pretty_print_dels(void)
+ {
+-	struct strbuf confirm = STRBUF_INIT;
+-	struct strbuf buf = STRBUF_INIT;
++	struct string_list list = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *item;
++	struct strbuf buf = STRBUF_INIT;
+ 	const char *qname;
++	struct column_options copts;
++
++	for_each_string_list_item(item, &del_list) {
++		qname = quote_path_relative(item->string, NULL, &buf);
++		string_list_append(&list, qname);
++	}
++
++	/*
++	 * always enable column display, we only consult column.*
++	 * about layout strategy and stuff
++	 */
++	colopts = (colopts & ~COL_ENABLE_MASK) | COL_ENABLED;
++	memset(&copts, 0, sizeof(copts));
++	copts.indent = "  ";
++	copts.padding = 2;
++	print_columns(&list, colopts, &copts);
++	putchar('\n');
++	strbuf_release(&buf);
++	string_list_clear(&list, 0);
++}
++
++static void interactive_main_loop(void)
++{
++	struct strbuf confirm = STRBUF_INIT;
  
- /* quoting as a string literal for other languages */
- extern void perl_quote_print(FILE *stream, const char *src);
-diff --git a/wt-status.c b/wt-status.c
-index bf84a..ef0fc 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -243,7 +243,7 @@ static void wt_status_print_unmerged_data(struct wt_status *s,
- 	struct strbuf onebuf = STRBUF_INIT;
- 	const char *one, *how = _("bug");
+ 	while (del_list.nr) {
+ 		putchar('\n');
+-		for_each_string_list_item(item, &del_list) {
+-			qname = quote_path_relative(item->string, NULL, &buf);
+-			printf(_(msg_would_remove), qname);
+-		}
++		printf_ln(Q_("Would remove the following item:",
++			     "Would remove the following items:",
++			     del_list.nr));
+ 		putchar('\n');
  
--	one = quote_path(it->string, -1, &onebuf, s->prefix);
-+	one = quote_path(it->string, s->prefix, &onebuf);
- 	status_printf(s, color(WT_STATUS_HEADER, s), "\t");
- 	switch (d->stagemask) {
- 	case 1: how = _("both deleted:"); break;
-@@ -297,8 +297,8 @@ static void wt_status_print_change_data(struct wt_status *s,
- 		    change_type);
- 	}
- 
--	one = quote_path(one_name, -1, &onebuf, s->prefix);
--	two = quote_path(two_name, -1, &twobuf, s->prefix);
-+	one = quote_path(one_name, s->prefix, &onebuf);
-+	two = quote_path(two_name, s->prefix, &twobuf);
- 
- 	status_printf(s, color(WT_STATUS_HEADER, s), "\t");
- 	switch (status) {
-@@ -706,8 +706,7 @@ static void wt_status_print_other(struct wt_status *s,
- 		struct string_list_item *it;
- 		const char *path;
- 		it = &(l->items[i]);
--		path = quote_path(it->string, strlen(it->string),
--				  &buf, s->prefix);
-+		path = quote_path(it->string, s->prefix, &buf);
- 		if (column_active(s->colopts)) {
- 			string_list_append(&output, path);
- 			continue;
-@@ -1289,7 +1288,7 @@ static void wt_shortstatus_unmerged(struct string_list_item *it,
- 	} else {
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
--		one = quote_path(it->string, -1, &onebuf, s->prefix);
-+		one = quote_path(it->string, s->prefix, &onebuf);
- 		printf(" %s\n", one);
- 		strbuf_release(&onebuf);
- 	}
-@@ -1317,7 +1316,7 @@ static void wt_shortstatus_status(struct string_list_item *it,
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
- 		if (d->head_path) {
--			one = quote_path(d->head_path, -1, &onebuf, s->prefix);
-+			one = quote_path(d->head_path, s->prefix, &onebuf);
- 			if (*one != '"' && strchr(one, ' ') != NULL) {
- 				putchar('"');
- 				strbuf_addch(&onebuf, '"');
-@@ -1326,7 +1325,7 @@ static void wt_shortstatus_status(struct string_list_item *it,
- 			printf("%s -> ", one);
- 			strbuf_release(&onebuf);
++		pretty_print_dels();
++
+ 		printf(_("Remove [y/n]? "));
+ 		if (strbuf_getline(&confirm, stdin, '\n') != EOF) {
+ 			strbuf_trim(&confirm);
+@@ -184,7 +216,6 @@ static void interactive_main_loop(void)
  		}
--		one = quote_path(it->string, -1, &onebuf, s->prefix);
-+		one = quote_path(it->string, s->prefix, &onebuf);
- 		if (*one != '"' && strchr(one, ' ') != NULL) {
- 			putchar('"');
- 			strbuf_addch(&onebuf, '"');
-@@ -1345,7 +1344,7 @@ static void wt_shortstatus_other(struct string_list_item *it,
- 	} else {
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
--		one = quote_path(it->string, -1, &onebuf, s->prefix);
-+		one = quote_path(it->string, s->prefix, &onebuf);
- 		color_fprintf(s->fp, color(WT_STATUS_UNTRACKED, s), "%s", sign);
- 		printf(" %s\n", one);
- 		strbuf_release(&onebuf);
+ 	}
+ 
+-	strbuf_release(&buf);
+ 	strbuf_release(&confirm);
+ }
+ 
 -- 
 1.8.3.rc3.368.g7c798dd
