@@ -1,46 +1,46 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v13 14/15] git-clean: add documentation for interactive git-clean
-Date: Wed, 22 May 2013 09:40:35 +0800
-Message-ID: <933513155a6f8bc3a383691280da673ca7cedc24.1369186574.git.worldhello.net@gmail.com>
+Subject: [PATCH v13 05/15] Refactor write_name_quoted_relative, remove unused params
+Date: Wed, 22 May 2013 09:40:26 +0800
+Message-ID: <aa9edf610ab88f692e1a15c6d0129dbc73039973.1369186574.git.worldhello.net@gmail.com>
 References: <cover.1369186574.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 22 03:41:53 2013
+X-From: git-owner@vger.kernel.org Wed May 22 03:41:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uey3n-0001jn-VF
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 03:41:48 +0200
+	id 1Uey3p-0001jn-Oz
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 03:41:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754716Ab3EVBlb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 May 2013 21:41:31 -0400
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:52327 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754695Ab3EVBl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 21:41:28 -0400
-Received: by mail-pb0-f54.google.com with SMTP id ro12so1183241pbb.41
-        for <git@vger.kernel.org>; Tue, 21 May 2013 18:41:28 -0700 (PDT)
+	id S1754732Ab3EVBlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 May 2013 21:41:47 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:55169 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754093Ab3EVBlB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 May 2013 21:41:01 -0400
+Received: by mail-pa0-f48.google.com with SMTP id kp6so1286775pab.21
+        for <git@vger.kernel.org>; Tue, 21 May 2013 18:41:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=IC5vMm+s/lfueZZH14nvD3rCahPzAdbLNREeu3IYpbU=;
-        b=gRVGHJqE/2O9CRnERD3hX04YXucw8/WfSzkF+ljWWc0gCzeMpYC8NWvpyFJ/bwMZuK
-         1Ewr31cz1CNkNufDJSfShmK8PdJ1KXU3DXq1uXBTSks5nNqH/ePN79yVNyCUlBJrsAol
-         3JPFDKYzth0CTZ1lCbis7ZUBcUqBcA0NggbQWhNxTl3koKZ91jHnYD0IxuFIxZluMX3q
-         tc4qqvjbbI4sRvVwMXjwm/1l8VjEKvjAtoF7xHdsBVcIq5GaZv+YGWcgijnGFHvyxdF9
-         HWCKtPkBhCOcId5dYt0MgIGDs/taDd5Wm539sHkX2ljY2OpCUAavYARkHJNDXKtnepsb
-         q9Nw==
-X-Received: by 10.68.239.228 with SMTP id vv4mr5435508pbc.5.1369186888345;
-        Tue, 21 May 2013 18:41:28 -0700 (PDT)
+        bh=vBa81XflmdBRbHx7MuA8sMiVVzm8tyzDfkb6XNPasSc=;
+        b=u1OqzYq5pVH4IyRM+RU0B0PPrk3TisBhbvH/TcQghZToK20L19Fw3S1SNmTDBFzH8F
+         DK6OW0dyRuVPzwus+DgFGiCblOPtXCEuvg4rIYDewBa2pRs2z2TnGBehd/itdg35m9nq
+         Hlj7ireN7EvB9ak22VfMWH9di4t4y4oKyd1tDnSr8ASnf+JmKUSvOnbceLZtR+JB8b8q
+         QqL+pYX/e22DarM1Ii2r+xXNqaID7v4ZEBfl3Pz/4tzyvcnIiN2/q8MMDR47NgifaKMd
+         QEFiemqSK1xI0A+MyUjUe6pLfCn7m5SIZ4G9MjVnKBS/G6T2f+sh6J0FjixmbPuahkyG
+         F9CA==
+X-Received: by 10.66.121.108 with SMTP id lj12mr6023924pab.51.1369186861125;
+        Tue, 21 May 2013 18:41:01 -0700 (PDT)
 Received: from localhost.localdomain ([114.248.150.82])
-        by mx.google.com with ESMTPSA id at1sm4939345pbc.10.2013.05.21.18.41.25
+        by mx.google.com with ESMTPSA id at1sm4939345pbc.10.2013.05.21.18.40.58
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 21 May 2013 18:41:27 -0700 (PDT)
+        Tue, 21 May 2013 18:41:00 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc3.368.g7c798dd
 In-Reply-To: <cover.1369186574.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1369186574.git.worldhello.net@gmail.com>
@@ -49,100 +49,95 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225119>
 
-Add new section "Interactive mode" for documentation of interactive
-git-clean.
+After substitute path_relative() in quote.c with relative_path() from
+path.c, parameters (such as len and prefix_len) are obsolete in function
+write_name_quoted_relative(). Remove unused parameters from
+write_name_quoted_relative() and related functions.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-clean.txt | 65 +++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 63 insertions(+), 2 deletions(-)
+ builtin/ls-files.c | 14 ++++++++------
+ quote.c            |  3 +--
+ quote.h            |  3 +--
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index 186e34..5bf76 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -39,8 +39,8 @@ OPTIONS
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 00f07..6acff4 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -46,10 +46,12 @@ static const char *tag_modified = "";
+ static const char *tag_skip_worktree = "";
+ static const char *tag_resolve_undo = "";
  
- -i::
- --interactive::
--	Show what would be done and the user must confirm before actually
--	cleaning.
-+	Show what would be done and clean files interactively. See
-+	``Interactive mode'' for details.
+-static void write_name(const char* name, size_t len)
++static void write_name(const char *name)
+ {
+-	write_name_quoted_relative(name, len, prefix, prefix_len, stdout,
+-			line_terminator);
++
++	/* turn off prefix, if run with "--full-name" */
++	write_name_quoted_relative(name, prefix_len ? prefix : NULL,
++				   stdout, line_terminator);
+ }
  
- -n::
- --dry-run::
-@@ -69,6 +69,67 @@ OPTIONS
- 	Remove only files ignored by Git.  This may be useful to rebuild
- 	everything from scratch, but keep manually created files.
+ static void show_dir_entry(const char *tag, struct dir_entry *ent)
+@@ -63,7 +65,7 @@ static void show_dir_entry(const char *tag, struct dir_entry *ent)
+ 		return;
  
-+Interactive mode
-+----------------
-+When the command enters the interactive mode, it shows the
-+files and directories to be cleaned, and goes into its
-+interactive command loop.
-+
-+The command loop shows the list of subcommands available, and
-+gives a prompt "What now> ".  In general, when the prompt ends
-+with a single '>', you can pick only one of the choices given
-+and type return, like this:
-+
-+------------
-+    *** Commands ***
-+        1: clean                2: filter by pattern    3: select by numbers
-+        4: ask each             5: quit                 6: help
-+    What now> 1
-+------------
-+
-+You also could say `c` or `clean` above as long as the choice is unique.
-+
-+The main command loop has 6 subcommands.
-+
-+clean::
-+
-+   Start cleaning files and directories, and then quit.
-+
-+filter by pattern::
-+
-+   This shows the files and directories to be deleted and issues an
-+   "Input ignore patterns>>" prompt. You can input space-seperated
-+   patterns to exclude files and directories from deletion.
-+   E.g. "*.c *.h" will excludes files end with ".c" and ".h" from
-+   deletion. When you are satisfied with the filtered result, press
-+   ENTER (empty) back to the main menu.
-+
-+select by numbers::
-+
-+   This shows the files and directories to be deleted and issues an
-+   "Select items to delete>>" prompt. When the prompt ends with double
-+   '>>' like this, you can make more than one selection, concatenated
-+   with whitespace or comma.  Also you can say ranges.  E.g. "2-5 7,9"
-+   to choose 2,3,4,5,7,9 from the list.  If the second number in a
-+   range is omitted, all remaining patches are taken.  E.g. "7-" to
-+   choose 7,8,9 from the list.  You can say '*' to choose everything.
-+   Also when you are satisfied with the filtered result, press ENTER
-+   (empty) back to the main menu.
-+
-+ask each::
-+
-+  This will start to clean, and you must confirm one by one in order
-+  to delete items. Please note that this action is not as efficient
-+  as the above two actions.
-+
-+quit::
-+
-+  This lets you quit without do cleaning.
-+
-+help::
-+
-+  Show brief usage of interactive git-clean.
-+
- SEE ALSO
- --------
- linkgit:gitignore[5]
+ 	fputs(tag, stdout);
+-	write_name(ent->name, ent->len);
++	write_name(ent->name);
+ }
+ 
+ static void show_other_files(struct dir_struct *dir)
+@@ -163,7 +165,7 @@ static void show_ce_entry(const char *tag, struct cache_entry *ce)
+ 		       find_unique_abbrev(ce->sha1,abbrev),
+ 		       ce_stage(ce));
+ 	}
+-	write_name(ce->name, ce_namelen(ce));
++	write_name(ce->name);
+ 	if (debug_mode) {
+ 		printf("  ctime: %d:%d\n", ce->ce_ctime.sec, ce->ce_ctime.nsec);
+ 		printf("  mtime: %d:%d\n", ce->ce_mtime.sec, ce->ce_mtime.nsec);
+@@ -196,7 +198,7 @@ static void show_ru_info(void)
+ 			printf("%s%06o %s %d\t", tag_resolve_undo, ui->mode[i],
+ 			       find_unique_abbrev(ui->sha1[i], abbrev),
+ 			       i + 1);
+-			write_name(path, len);
++			write_name(path);
+ 		}
+ 	}
+ }
+diff --git a/quote.c b/quote.c
+index ebb8..5c880 100644
+--- a/quote.c
++++ b/quote.c
+@@ -312,8 +312,7 @@ void write_name_quotedpfx(const char *pfx, size_t pfxlen,
+ 	fputc(terminator, fp);
+ }
+ 
+-void write_name_quoted_relative(const char *name, size_t len,
+-				const char *prefix, size_t prefix_len,
++void write_name_quoted_relative(const char *name, const char *prefix,
+ 				FILE *fp, int terminator)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+diff --git a/quote.h b/quote.h
+index 5610159..ed110 100644
+--- a/quote.h
++++ b/quote.h
+@@ -60,8 +60,7 @@ extern void quote_two_c_style(struct strbuf *, const char *, const char *, int);
+ extern void write_name_quoted(const char *name, FILE *, int terminator);
+ extern void write_name_quotedpfx(const char *pfx, size_t pfxlen,
+                                  const char *name, FILE *, int terminator);
+-extern void write_name_quoted_relative(const char *name, size_t len,
+-		const char *prefix, size_t prefix_len,
++extern void write_name_quoted_relative(const char *name, const char *prefix,
+ 		FILE *fp, int terminator);
+ 
+ /* quote path as relative to the given prefix */
 -- 
 1.8.3.rc3.368.g7c798dd
