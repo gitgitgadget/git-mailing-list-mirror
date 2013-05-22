@@ -1,62 +1,57 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 0/3] Fixing volatile HEAD in push.default = current
-Date: Wed, 22 May 2013 20:13:37 +0530
-Message-ID: <CALkWK0kXonM+J92KHs+dW31A_kZ8h9jNqwYn8AqT_V+GJhe_vg@mail.gmail.com>
-References: <1369160600-22337-1-git-send-email-artagnon@gmail.com>
- <7v38tgno2k.fsf@alter.siamese.dyndns.org> <CALkWK0m3QP_eE14y8UoJ+HeFzkKM=1nVKAnYJcTrwQMp+Atphg@mail.gmail.com>
- <7vppwkm682.fsf@alter.siamese.dyndns.org> <CALkWK0np7o0eH8ZsWQSwk1Cdwnnpj5B==gS8kAE+OkTskASOsQ@mail.gmail.com>
- <7v7girks4s.fsf@alter.siamese.dyndns.org>
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: Re: [PATCH] Added guilt.reusebranch configuration option.
+Date: Wed, 22 May 2013 10:45:31 -0400
+Message-ID: <20130522144531.GB2777@thunk.org>
+References: <1369224677-16404-1-git-send-email-tytso@mit.edu>
+ <x2ip2b6udr.fsf@bacon.lysator.liu.se>
+ <20130522134212.GB13731@poseidon.cudanet.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 22 16:44:49 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Per Cederqvist <ceder@lysator.liu.se>, git@vger.kernel.org
+To: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
+X-From: git-owner@vger.kernel.org Wed May 22 16:46:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfAH9-00013G-B8
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 16:44:23 +0200
+	id 1UfAIT-0002P5-Qn
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 16:45:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754106Ab3EVOoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 May 2013 10:44:19 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:39223 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753937Ab3EVOoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 May 2013 10:44:18 -0400
-Received: by mail-ie0-f179.google.com with SMTP id c13so5306315ieb.38
-        for <git@vger.kernel.org>; Wed, 22 May 2013 07:44:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=tM6n/J3ot9tAXeue1KOuQjns6EQCqj4nxQzZ9Re6gQI=;
-        b=iVZaTVjlckS2PrcT7Lxr8vmg4WWqau8rZZLNc591Fi7foQENBRrOednYoFKbUrU2R1
-         K/fWnuBFA0oINdhxO4FLdqL02QajI1yYQW+L3pbLc1hRIL4PTjuVfkZpCC2t/ydlgYHQ
-         4Ja7yy+vJm+J6MPXCmA9h962kRSQzpYTKDjIMOYN92DYSFmlWJTumxBc6py5LbxNZnFL
-         tC1/nJBYehSLWUR/xP8T8Eoqhj87KpPR93aPwEP20LdZu8YldOddQRcInwpDoFaCik8U
-         1CmkC8HON+ZI6OuwUrKlpiIfBB+amv9hWAbUJT7qlc95Sbwp4iqEYuI7T68C3ADGWMO4
-         o8Xw==
-X-Received: by 10.43.169.202 with SMTP id nn10mr6169373icc.4.1369233858143;
- Wed, 22 May 2013 07:44:18 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Wed, 22 May 2013 07:43:37 -0700 (PDT)
-In-Reply-To: <7v7girks4s.fsf@alter.siamese.dyndns.org>
+	id S1756266Ab3EVOpk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 May 2013 10:45:40 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:50757 "EHLO
+	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756257Ab3EVOpj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 May 2013 10:45:39 -0400
+Received: from root (helo=closure.thunk.org)
+	by imap.thunk.org with local-esmtp (Exim 4.80)
+	(envelope-from <tytso@thunk.org>)
+	id 1UfAKv-0005DV-Pv; Wed, 22 May 2013 14:48:17 +0000
+Received: by closure.thunk.org (Postfix, from userid 15806)
+	id C1BB25814B7; Wed, 22 May 2013 10:45:31 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20130522134212.GB13731@poseidon.cudanet.local>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225165>
 
-Junio C Hamano wrote:
-> The patch may have been done by a wrong motivation, in that it does
-> not fundamentally "fix" the itch.  The particular "itch" is not
-> something we are going to promise to the end users, ever, anyway.
+I just had another idea (although I haven't had a chance to code up
+anything yet).  Perhaps instead of, or in addition to, a global
+setting (i.e., guilt.reusebranch), perhaps we should have a per-branch
+setting, such as branch.<branch>.guiltReuseBranch?
 
-Just out of curiosity, is it possible to write a correct fix at all?
-Even if the first statement in do_push() locks the HEAD ref, it's not
-enough: the program may be wading around in git.c/setup.c when I
-switch terminals and change HEAD, right?
+I was actually thinking that it might be interesting to have a
+branch.<branch>.rewindable, which would change the guilt defaults, and
+could also key changes in key git behavior which makes it less likely
+that a user shoots him or herself in the foot --- i.e., give warnings
+if he or she has modified the branch in such a way that
+remotes.origin.<branch> is no longer contained within the branch head.
 
-So, our position on the matter is: no git command makes any guarantees
-with respect to races, correct?
+			      	     	       	      	  - Ted
