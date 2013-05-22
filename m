@@ -1,75 +1,63 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: first parent, commit graph layout, and pull merge direction
-Date: Wed, 22 May 2013 13:50:42 +0200
-Message-ID: <20130522115042.GA20649@inner.h.apk.li>
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: Re: [PATCH] guilt: fix date parsing
+Date: Wed, 22 May 2013 08:10:10 -0400
+Message-ID: <20130522121010.GA2777@thunk.org>
+References: <1369192411-8842-1-git-send-email-tytso@mit.edu>
+ <20130522033921.GB101217@meili.valhalla.31bits.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 22 13:50:54 2013
+Cc: git@vger.kernel.org
+To: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
+X-From: git-owner@vger.kernel.org Wed May 22 14:10:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uf7ZD-0004d4-5U
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 13:50:51 +0200
+	id 1Uf7s8-0006OT-Tv
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 14:10:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755643Ab3EVLur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 May 2013 07:50:47 -0400
-Received: from continuum.iocl.org ([217.140.74.2]:37882 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753055Ab3EVLuq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 May 2013 07:50:46 -0400
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id r4MBogt21166;
-	Wed, 22 May 2013 13:50:42 +0200
+	id S1756139Ab3EVMKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 May 2013 08:10:16 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:50696 "EHLO
+	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755748Ab3EVMKN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 May 2013 08:10:13 -0400
+Received: from root (helo=closure.thunk.org)
+	by imap.thunk.org with local-esmtp (Exim 4.80)
+	(envelope-from <tytso@thunk.org>)
+	id 1Uf7uY-0004xq-Qo; Wed, 22 May 2013 12:12:54 +0000
+Received: by closure.thunk.org (Postfix, from userid 15806)
+	id 2738C5814B7; Wed, 22 May 2013 08:10:10 -0400 (EDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+In-Reply-To: <20130522033921.GB101217@meili.valhalla.31bits.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225147>
 
-Hi everyone,
+On Tue, May 21, 2013 at 11:39:21PM -0400, Josef 'Jeff' Sipek wrote:
+> I applied this one and the "guilt: skip empty line after..." patch.
 
-I'm just looking into better displays of the commit graph (as
-displayed with gitk, smartgit, fisheye) - they tend to quickly
-dissolve into a heap of spaghetti.
+Thanks!  BTW, it looks like you are not using "git am -s" to apply
+these patches?  The reason why I ask is that whatever you're using
+isn't removing the [XXX] subject prefix (e.g., [PATCH] or [PATCH -v2]
+which is useful for mailing lists, but less useful in the git commit
+descriptions.
 
-We had the idea that treating the first parent specially would
-have some advantage here - including graphically indicating which
-one of the parents of a commit is the first parent. (For instance,
-by letting that line leave the commit node at the top/bottom,
-and the other(s) to the side.)
+If you're using guilt, do you have some script that preformats a Unix
+mbox into guilt-friendly files?  If so, maybe it would be good to
+modify it to strip out the [PATCH] annotations.  If not, let me know,
+since I've been thinking about writing a script to take a Unix mbox,
+and bursts it into a separate patch-per-file with a series file
+suitable for use by guilt, removing mail headers and doing other
+appropriate pre-parsing --- basically, a "guilt am" which works much
+like "git am".  But if someone else has done this already, no point
+duplicating effort.  :-)
 
-A short trial showed that representing first parent chains as
-straight lines in the graph does actually improve understandability,
-as feature branches clearly stand out as separate lines even when
-they no longer carry a branch name.
-
-Does any GUI already do that (treat first parent specially),
-or does anybody think of doing such? I don't quite dare to
-jump into the gitk code yet.
-
-Also, there is an implication with 'git pull': You'd expect the
-master branch to be a first parent line, but when I do a small
-thing directly on master and need to pull before pushing back,
-then origin/master is merged into my branch, and thus my side
-branch becomes the first parent line.
-
-So, feature discussion request: Invert the parent ordering
-when doing git pull from upstream? Configurably so?
-
-We actually thought about putting a restriction into our blessed
-repo that it not only restricts to fast-forward pushed, but further
-to only allow pushing new things that have the old branch head in
-the first parent chain.
-
-What do you think?
-
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+						- Ted
