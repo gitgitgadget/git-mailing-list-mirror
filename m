@@ -1,97 +1,108 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH] prompt: fix show upstream with svn and zsh
-Date: Wed, 22 May 2013 09:36:18 +0200
-Message-ID: <877gir31ql.fsf@gmail.com>
-References: <1369169667-25166-1-git-send-email-t.gummerer@gmail.com> <CAMP44s3uEaG3Y+cVoKhCA-f+hi1VZcCpXO5bYCQLvANDdvYwRA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com, szeder@ira.uka.de
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 22 09:36:29 2013
+Subject: [PATCH v2] prompt: fix show upstream with svn and zsh
+Date: Wed, 22 May 2013 09:40:39 +0200
+Message-ID: <1369208439-20061-1-git-send-email-t.gummerer@gmail.com>
+References: <1369169667-25166-1-git-send-email-t.gummerer@gmail.com>
+Cc: felipe.contreras@gmail.com, szeder@ira.uka.de,
+	t.gummerer@gmail.com, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 22 09:41:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uf3b2-00026a-Ey
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 09:36:28 +0200
+	id 1Uf3gE-0004Pt-72
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 09:41:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753375Ab3EVHgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 May 2013 03:36:23 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:60939 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752445Ab3EVHgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 May 2013 03:36:22 -0400
-Received: by mail-ee0-f46.google.com with SMTP id e49so947444eek.33
-        for <git@vger.kernel.org>; Wed, 22 May 2013 00:36:20 -0700 (PDT)
+	id S1753234Ab3EVHln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 May 2013 03:41:43 -0400
+Received: from mail-ee0-f53.google.com ([74.125.83.53]:39687 "EHLO
+	mail-ee0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752445Ab3EVHln (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 May 2013 03:41:43 -0400
+Received: by mail-ee0-f53.google.com with SMTP id c1so897624eek.26
+        for <git@vger.kernel.org>; Wed, 22 May 2013 00:41:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type;
-        bh=BkhRh3ddu2DnRNkIgkoPVh6wjUxqgoWW3Vwt0fm5rJo=;
-        b=Q4o3zvCHEIZPPhtCRB/LH4UdWLun2K59txiLIJkkvCmaeTHK81GKCalRkS+TeF17W7
-         oJClGsbgVIoxAZ4OILh4XtJFNiJvOxuhl4pVlYdnngKuOkYAqtpGf9JkHz7sSiJyLxxZ
-         DrWc63BjzZvdVcfK4/PI8BR4rNvwTlfe21Z9cckDuXK7Rv9P3Nvrp0O3FXloZ0kEDlG4
-         Cm37YSpxOxDcNwunZ6SoYnf2jr+qOhxQIMDt4jpxKLZ2Nn3+upzQJXfM60V/TQ6rrTMq
-         wOCaHveUmUSrAdy5iIDQOM2i3lqaBrm86djolxFHWnS1h5Oo2QHTtdImSuzSoTefVOZI
-         jZJA==
-X-Received: by 10.14.98.71 with SMTP id u47mr16342769eef.12.1369208180869;
-        Wed, 22 May 2013 00:36:20 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=HwS/j+sDTdpNNkgI60m5cUeUFni5R3Mk4MVFhkM+9Uw=;
+        b=obD9fUjsWxr2qDjcOiM2RadHqvuyIxHQgCP/NabGhD4Wd+U35645dagjnU3lMm8HZo
+         laKMoc0mEPKDwrerPDw9xCBtFVAACGscAaQf5x344xsnunvNL5qZjF+LdFeWkyQMG5r6
+         h0uWfhOiYGeHn6EqocPeTRcm5V+cYxYJw1hzkmHcbWArKdMNA73vhW6+wUQWDCAIvNsK
+         KJh8ckOypkOHMprAQ9/x7OYkbvqhnm2j0eLczND+R7+zEZu0me32J9TI2MtC+erGO1x4
+         A3ET63YP5+IDk7qpWypsXtFeAxBWzVollpORcbcIcRkH4dxPzTlWgWXEXZjK9TkbRaBg
+         YhJA==
+X-Received: by 10.14.246.137 with SMTP id q9mr15952192eer.39.1369208501744;
+        Wed, 22 May 2013 00:41:41 -0700 (PDT)
 Received: from localhost (nat5.unibz.it. [46.18.27.5])
-        by mx.google.com with ESMTPSA id c42sm8242356eeb.10.2013.05.22.00.36.19
+        by mx.google.com with ESMTPSA id bn53sm8284838eeb.7.2013.05.22.00.41.39
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 22 May 2013 00:36:19 -0700 (PDT)
-In-Reply-To: <CAMP44s3uEaG3Y+cVoKhCA-f+hi1VZcCpXO5bYCQLvANDdvYwRA@mail.gmail.com>
-User-Agent: Notmuch/0.15.2+87~gc75dff3 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+        Wed, 22 May 2013 00:41:40 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc2.359.g2fb82f5
+In-Reply-To: <1369169667-25166-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225136>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Currently the __git_ps1 git prompt gives the following error with a
+repository converted by git-svn, when used with zsh:
 
-> On Tue, May 21, 2013 at 3:54 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
->> Currently the __git_ps1 git prompt gives the following error with a
->> repository converted by git-svn, when used with zsh:
->>
->>            __git_ps1_show_upstream:19: bad pattern: svn_remote[
->>
->> This was introduced by 6d158cba (bash completion: Support "divergence
->> from upstream" messages in __git_ps1), when the script was for bash
->> only.  Make it compatible with zsh.
->>
->> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
->
-> This patch is fine by me. I would like to see an example of how to
-> trigger the issue with a standalone command in the commit message, but
-> it's not necessary. It would also make sense to address the comment
-> from Szeder that does raise questions about other places in the code
-> where 'array[ $foo ]' is used, maybe there's a caveat we are not
-> considering, or maybe your use-case did not execute that code.
+   __git_ps1_show_upstream:19: bad pattern: svn_remote[
+   __git_ps1_show_upstream:45: bad substitution
 
-Yes, the code was not executed, it will be fixed in the re-roll.
+To reproduce the problem, the __git_ps1_show_upstream function can be
+executed in a repository converted with git-svn.  Both those errors are
+triggered by spaces after the '['.
 
-> And finally, I don't recall seen 'set -a' used elsewhere in the code.
-> If memory serves well, we have replaced 'local -a foo=value' with
-> 'local -a foo\nfoo=value' before to fix zsh issues, I think that would
-> be safer.
+Zsh also doesn't support initializing an array with `local var=(...)`.
+This triggers the following error:
 
-Yes, thanks for the suggestion, that works.
+   __git_ps1_show_upstream:41: bad pattern: svn_upstream=(commit
 
-> But this patch is needed regardless, that, or the patch that broke
-> things should be reverted for v1.8.3.
+Use
+   local -a
+   var=(...)
+instead to make is compatible.
 
-I don't think anything should or can be reverted, as this code was
-introduced in 2010, but nobody triggered it until now.
+This was introduced by 6d158cba (bash completion: Support "divergence
+from upstream" messages in __git_ps1), when the script was for bash
+only.
 
-> Thomas, if you don't have time, let me know and I can take a look.
->
-> Cheers.
->
-> --
-> Felipe Contreras
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ contrib/completion/git-prompt.sh | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Thanks,
-Thomas
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index eaf5c36..b6b1534 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -124,7 +124,7 @@ __git_ps1_show_upstream ()
+ 			fi
+ 			;;
+ 		svn-remote.*.url)
+-			svn_remote[ $((${#svn_remote[@]} + 1)) ]="$value"
++			svn_remote[$((${#svn_remote[@]} + 1))]="$value"
+ 			svn_url_pattern+="\\|$value"
+ 			upstream=svn+git # default upstream is SVN if available, else git
+ 			;;
+@@ -146,10 +146,11 @@ __git_ps1_show_upstream ()
+ 	svn*)
+ 		# get the upstream from the "git-svn-id: ..." in a commit message
+ 		# (git-svn uses essentially the same procedure internally)
+-		local svn_upstream=($(git log --first-parent -1 \
++		local -a svn_upstream
++		svn_upstream=($(git log --first-parent -1 \
+ 					--grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null))
+ 		if [[ 0 -ne ${#svn_upstream[@]} ]]; then
+-			svn_upstream=${svn_upstream[ ${#svn_upstream[@]} - 2 ]}
++			svn_upstream=${svn_upstream[${#svn_upstream[@]} - 2]}
+ 			svn_upstream=${svn_upstream%@*}
+ 			local n_stop="${#svn_remote[@]}"
+ 			for ((n=1; n <= n_stop; n++)); do
+-- 
+1.8.3.rc2.359.g2fb82f5
