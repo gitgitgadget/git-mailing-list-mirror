@@ -1,158 +1,100 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v6] Add new git-related helper to contrib
-Date: Wed, 22 May 2013 17:23:28 -0500
-Message-ID: <CAMP44s0pXLmjVUwsVWiN2G5QReh80spXjvy_6GuUGRz1RmUbLQ@mail.gmail.com>
-References: <1368978823-18247-1-git-send-email-felipe.contreras@gmail.com>
-	<7vr4gyizti.fsf@alter.siamese.dyndns.org>
+From: Torstein Hegge <hegge@resisty.net>
+Subject: [PATCH] bisect: Fix log output for multi-parent skip ranges
+Date: Thu, 23 May 2013 00:27:53 +0200
+Message-ID: <20130522222753.GD5357@pvv.ntnu.no>
+References: <20130413152257.GB16040@pvv.ntnu.no>
+ <20130415.063809.1055555229072260139.chriscool@tuxfamily.org>
+ <20130415095339.GA28480@pvv.ntnu.no>
+ <20130422210229.GE5650@pvv.ntnu.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 23 00:23:36 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 23 00:28:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfHRY-0008PE-A8
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 00:23:36 +0200
+	id 1UfHVy-0001z6-6H
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 00:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757312Ab3EVWXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 May 2013 18:23:32 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:36140 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756616Ab3EVWXb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 May 2013 18:23:31 -0400
-Received: by mail-lb0-f174.google.com with SMTP id u10so2632296lbi.5
-        for <git@vger.kernel.org>; Wed, 22 May 2013 15:23:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1H4Q8l1aPu/R3yPRqV75pqwHljwZA3tL1NTFkPKiBr0=;
-        b=USXY0G3J0g7Pmgk1KyMUASMymsilFRjmSZFRsUA7zilM623XpTJSIbnyUPRNw9jy7S
-         HTPdO0Wwj3dygLyGydwzGTljKq3rg8LZnxAuPHzQCmscZrLyE+N037b9lvJsTXedgT5p
-         Gw1pxE8HVY7kFDSRHaortZchwB9kcv1BelkRvXl+bUEehksTTL/5PDTKvtCObFn4FeyP
-         hq0/0vIREjVSY40wD+bUvM+Vp7Ob9TXbxJDT1NlJzhO62HzJwAwP9pliEEpSKdi1hnHK
-         akDvMyu0OxZ6wrB/PsEQnbonY+caMXoFvoNrHuVWaLqWN+sG7h5Wn0NZmRBrsnv1Cntd
-         Z8OQ==
-X-Received: by 10.112.218.102 with SMTP id pf6mr5025088lbc.77.1369261408535;
- Wed, 22 May 2013 15:23:28 -0700 (PDT)
-Received: by 10.114.174.170 with HTTP; Wed, 22 May 2013 15:23:28 -0700 (PDT)
-In-Reply-To: <7vr4gyizti.fsf@alter.siamese.dyndns.org>
+	id S1757667Ab3EVW2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 May 2013 18:28:05 -0400
+Received: from microbel.pvv.ntnu.no ([129.241.210.179]:35329 "EHLO
+	microbel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757564Ab3EVW2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 May 2013 18:28:04 -0400
+Received: from torstehe by microbel.pvv.ntnu.no with local (Exim 4.72)
+	(envelope-from <torstehe@pvv.ntnu.no>)
+	id 1UfHVh-0005s4-Ih; Thu, 23 May 2013 00:27:53 +0200
+Content-Disposition: inline
+In-Reply-To: <20130422210229.GE5650@pvv.ntnu.no>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225199>
 
-On Wed, May 22, 2013 at 2:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> diff --git a/contrib/related/git-related b/contrib/related/git-related
->> new file mode 100755
->> index 0000000..b96dcdd
->> --- /dev/null
->> +++ b/contrib/related/git-related
->> @@ -0,0 +1,124 @@
->> +#!/usr/bin/env ruby
->> +
->> +# This script finds people that might be interested in a patch
->> +# usage: git related <file>
->> +
->> +$since = '5-years-ago'
->> +$min_percent = 10
->> +
->> +def fmt_person(name, email)
->> +  '%s <%s>' % [name, email]
->> +end
->
-> Micronit.  I suspect you do not need this helper, unless later
-> patches start using it.
+On Mon, Apr 22, 2013 at 23:02:29 +0200, Torstein Hegge wrote:
+> There has to be a better way to get the range of possible first bad
+> commits, similar to the output of 'git log --bisect --format="%H"'.
 
-It's not *needed*, but it makes if fulfills the role of a function: to
-avoid typing that code in multiple places.
+I just realized that this felt clunky because I didn't understand what
+'--not' does in git rev-list.
 
->> +  def import
->> +    return if @items.empty?
->> +    File.popen(%w[git cat-file --batch], 'r+') do |p|
->> +      p.write(@items.keys.join("\n"))
->> +      p.close_write
->> +      p.each do |line|
->> +        if line =~ /^(\h{40}) commit (\d+)/
->> +          id, len = $1, $2
->> +          data = p.read($2.to_i)
->> +          @items[id].parse(data)
->> +        end
->> +      end
->> +    end
->> +  end
->> +
->> +  def get_blame(source, start, len, from)
->> +    return if len == 0
->> +    len ||= 1
->> +    File.popen(['git', 'blame', '--incremental', '-CCC',
->
-> I am torn on the hardcoded use of "-CCC" here.
->
-> Depending on the nature of the change in question, it may match well
-> or worse to what you are trying to find out.  When you are trying to
-> say "What were you smoking when you implemented this broken logic?",
-> using -C may be good, but when your question is "Even though all the
-> callers of this function live in that other file, somebody moved
-> this function that used to be file static in that file to here and
-> made it public. Why?", you do not want to use -C.
->
-> I am reasonably sure that in the finished code later in the series
-> it will become configurable, but a fallback default is better to be
-> not so expensive one.
+In the case where the range of skipped commits include a merge and
+points in each parent marked good, I want
 
-The script's purpose is to find related commits, -CCC does that, does it not?
+    git rev-list bad --not good-1 good-2
 
->> +               '-L', '%u,+%u' % [start, len],
->> +               '--since', $since, from + '^',
->
-> Is "from" unconditionally set?
->
-> Perhaps that nil + '^' magically disappear and this code is relying
-> on that, but it smells like a too much magic to me.
+or 
 
-I personally don't care. You decide what's the behavior when no 'From
-' line is available in the patch. I don't see the point in worrying
-about non-git patches.
+    git rev-list bad ^good-1 ^good-2
 
->> +               '--', source]) do |p|
->> +      p.each do |line|
->> +        if line =~ /^(\h{40})/
->> +          id = $&
->> +          @items[id] = Commit.new(id)
->> +        end
->> +      end
->> +    end
->> +  end
->> +
->> +  def from_patch(file)
->> +    from = source = nil
->> +    File.open(file) do |f|
->> +      f.each do |line|
->> +        case line
->> +        when /^From (\h+) (.+)$/
->> +          from = $1
->> +        when /^---\s+(\S+)/
->> +          source = $1 != '/dev/null' ? $1[2..-1] : nil
->> +        when /^@@ -(\d+)(?:,(\d+))?/
->> +          get_blame(source, $1, $2, from)
->> +        end
->
-> Makes sense to start from the preimage so that you can find out who
-> wrote the original block of lines your patch is removing.
->
-> But then if source is /dev/null, wouldn't you be able to stop
-> without running blame at all?  You know the patch is creating a new
-> file at that point and there is nobody to point a finger at.
+but instead I did
 
-A patch can touch multiple files.
+    git rev-list bad --not good-1 --not good-2
 
+which will include commits outside the range of skipped commits. Sorry
+about that :/
+
+--- >8 ---
+Subject: [PATCH] bisect: Fix log output for multi-parent skip ranges
+
+The bisect log output of skipped commits introduced in f989cac "bisect:
+Log possibly bad, skipped commits at bisection end" should obtain the range of
+skipped commits from
+
+    git rev-list bad --not good-1 good-2
+
+not
+
+    git rev-list bad --not good-1 --not good-2
+
+when the skipped range contains a merge with good points in each parent.
+
+Signed-off-by: Torstein Hegge <hegge@resisty.net>
+---
+ git-bisect.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index d7518e9..9f064b6 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -320,8 +320,8 @@ bisect_next() {
+ 	elif test $res -eq 2
+ 	then
+ 		echo "# only skipped commits left to test" >>"$GIT_DIR/BISECT_LOG"
+-		good_revs=$(git for-each-ref --format="--not %(objectname)" "refs/bisect/good-*")
+-		for skipped in $(git rev-list refs/bisect/bad $good_revs)
++		good_revs=$(git for-each-ref --format="%(objectname)" "refs/bisect/good-*")
++		for skipped in $(git rev-list refs/bisect/bad --not $good_revs)
+ 		do
+ 			skipped_commit=$(git show-branch $skipped)
+ 			echo "# possible first bad commit: $skipped_commit" >>"$GIT_DIR/BISECT_LOG"
 -- 
-Felipe Contreras
+1.8.3.rc1.377.g7010c6b
