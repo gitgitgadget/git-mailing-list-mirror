@@ -1,109 +1,122 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: English/German terminology, git.git's de.po, and pro-git
-Date: Wed, 22 May 2013 16:09:31 +0200
-Message-ID: <CAN0XMOJuWTZLOYHafjZTBkazV2diuT_ZfD551kMZz-XQUBg66g@mail.gmail.com>
-References: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net>
-	<alpine.LNX.2.01.1305131542210.30808@nerf07.vanv.qr>
-	<001d01ce500b$c7c08b70$5741a250$@scanmyfood.de>
-	<alpine.LNX.2.01.1305132119220.2288@nerf07.vanv.qr>
-	<CAN0XMOL3rkYDinSCN2GLaRj7dOvbF=SdMRxM4PHCZ5h7g5Nkkw@mail.gmail.com>
-	<51936218.9020306@ira.uka.de>
-	<519370D3.3000306@web.de>
-	<CAN0XMOJ7hRwTAR+i8_C2z2NmmcycLQkiya0ayfWS0vAw3-zqkg@mail.gmail.com>
-	<51949D65.7050001@ira.uka.de>
-	<CAN0XMOJutVZ9ZX-0a=T38AnzH9SQN=X_pu-6+tTRifbL-zQigg@mail.gmail.com>
-	<51999FFF.8090004@gspranz.de>
+From: Chico Sokol <chico.sokol@gmail.com>
+Subject: Re: Reading commit objects
+Date: Wed, 22 May 2013 11:20:44 -0300
+Message-ID: <CABx5MBS9YgNmZD_tumMJ-MJVjHbRFCKbCjs9AZ347-OCwqO7qQ@mail.gmail.com>
+References: <CABx5MBQ57-=MPamvV-peZUdD_KDLX+5cy9vD7CL7p_Vz9BkvTg@mail.gmail.com>
+ <CAEBDL5XwrD8ZbRRSrM1iJGtcRgziH5bFVwRHzg9=_PYzaTfgAg@mail.gmail.com>
+ <CABx5MBSnpZTthOHECqkbpdbFfkb4e_uSo-rh4owBc8B_oSKjJQ@mail.gmail.com> <CAJo=hJtqACW+CR5FkmDfwyK1Wg3Kcppy6DbW7P=On_qJyvsYvQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Jan Engelhardt <jengelh@inai.de>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	=?UTF-8?Q?Ralph_Hau=C3=9Fmann?= <ralph@scanmyfood.de>,
-	Christian Stimming <stimming@tuhh.de>,
-	Sven Fuchs <svenfuchs@artweb-design.de>,
-	git <git@vger.kernel.org>, =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>
-To: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed May 22 16:09:45 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: John Szakmeister <john@szakmeister.net>, git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed May 22 16:21:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uf9ja-0002Fd-D4
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 16:09:42 +0200
+	id 1Uf9uh-0000WD-Iu
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 16:21:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754920Ab3EVOJi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 May 2013 10:09:38 -0400
-Received: from mail-wg0-f41.google.com ([74.125.82.41]:38180 "EHLO
-	mail-wg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752633Ab3EVOJh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 May 2013 10:09:37 -0400
-Received: by mail-wg0-f41.google.com with SMTP id c11so2618395wgh.2
-        for <git@vger.kernel.org>; Wed, 22 May 2013 07:09:36 -0700 (PDT)
+	id S1756151Ab3EVOVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 May 2013 10:21:06 -0400
+Received: from mail-ve0-f180.google.com ([209.85.128.180]:59663 "EHLO
+	mail-ve0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755235Ab3EVOVF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 May 2013 10:21:05 -0400
+Received: by mail-ve0-f180.google.com with SMTP id c13so1437999vea.25
+        for <git@vger.kernel.org>; Wed, 22 May 2013 07:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=5LB5RDBMP+JIQG7S0WougiMtaAowN9wQFmeyFBdYpOk=;
-        b=PNH9peAL0JOU9Xc7LiFBlevhKneUH4owOjyrYRF5HGcO/YcefrKYzM6cZrTQQHhktt
-         DvH3R7Eugl/lIxmfOuLTRMGJ8NMYrcQZ5jj8wdRaZzJlqE5wY6A4aDeTT1/Z0WoAmNAe
-         34hXLlJMmJyxS+2it1zduq6TaWDJxjxq0eBMalJseaj80nGiO9acYTQM/A4bRzLtqcEJ
-         cIT+GrYJV3VfXfzN8iCLu53SVPwWlwOWIoQ6HeQXnG3WKP9Ln8mX4moakIVXf2OUcQCJ
-         y0nqAeyKMWlU3lfC3IpmmG0E+oeLZkg1fAMNNJTugZTGRzgg6r1jkrgIohfpZd+cdJPu
-         aNXA==
-X-Received: by 10.180.14.199 with SMTP id r7mr15283849wic.6.1369231772094;
- Wed, 22 May 2013 07:09:32 -0700 (PDT)
-Received: by 10.194.71.44 with HTTP; Wed, 22 May 2013 07:09:31 -0700 (PDT)
-In-Reply-To: <51999FFF.8090004@gspranz.de>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=HxrQ7Qrsh4I8I8gMMI5uxOTE/OdOhe2GAlNpqzBJ6CE=;
+        b=Ao+2+3Bj534d9zxO3Ab82kK5UJIZ/M+dO4Q8zS9o3I0yxDBDQxGuPFAKUXC5ylqHjY
+         +82QpJif3B1ivCv7hLOmKso7Msyud0N6NVASHc7SZfNA48HqJpHiZlYtCUY35r94CSV1
+         U5qwmtWZmrw6cuj68jhpK3VLw/ejnBybhFVVdCM9k0LhJ6MnJLVUxcsw9qtmGkwT1rMd
+         U5lA2RcThw4JIoH8km6sMNLd9u1ZwdDHohTGqf5ICNHN6NKTED4lZ6wmuAxtXUnIHGlE
+         fV0H1Qa12swzR2FTx70uxfmKsD5z4TtXWlkqlPKi6xuVamoz04TakLoZiR4Z+hyAc2Fe
+         mtVg==
+X-Received: by 10.52.36.115 with SMTP id p19mr2443027vdj.8.1369232464273; Wed,
+ 22 May 2013 07:21:04 -0700 (PDT)
+Received: by 10.220.80.10 with HTTP; Wed, 22 May 2013 07:20:44 -0700 (PDT)
+In-Reply-To: <CAJo=hJtqACW+CR5FkmDfwyK1Wg3Kcppy6DbW7P=On_qJyvsYvQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225161>
 
-2013/5/20 Holger Hellmuth <holger@gspranz.de>:
-> Am 19.05.2013 18:56, schrieb Ralf Thielow:
->
->> 2013/5/16 Holger Hellmuth (IKS) <hellmuth@ira.uka.de>:
->>>
->>>
->> [...]
->>>>
->>>> +    reset =3D neu setzen (maybe "umsetzen"?)
->>>
->>>
->>>
->>> "zur=C3=BCcksetzen"
->>>
+I'm not criticizing JGit, guys. It simply doesn't fit into our needs.
+We're not interested in mapping git commands in java and don't have
+the same RAM limitations.
+
+I know JGit team is doing a great job and we do not intend to build a
+library with such completeness.
+
+Are you guys contributors of JGit? Can you guys point me out to the
+code that unpacks git objects? The closest I could get was that class:
+https://github.com/eclipse/jgit/blob/master/org.eclipse.jgit/src/org/eclipse/jgit/internal/storage/file/UnpackedObject.java
+
+It seems to be a standard and a non standard format of the packed
+object, as I read the comments of this method:
+https://github.com/eclipse/jgit/blob/master/org.eclipse.jgit/src/org/eclipse/jgit/internal/storage/file/UnpackedObject.java#L272
+
+I suspect that the default inflater class of java api expect the
+object to be in the standard format.
+
+What the following comment mean? What's the "Experimental pack-based"
+format? Is there any docs on the specs of that?
+
+We must determine if the buffer contains the standard
+zlib-deflated stream or the experimental format based
+on the in-pack object format. Compare the header byte
+for each format:
+RFC1950 zlib w/ deflate : 0www1000 : 0 <= www <= 7
+Experimental pack-based : Stttssss : ttt = 1,2,3,4
+
+
+--
+Chico Sokol
+
+
+On Wed, May 22, 2013 at 2:59 AM, Shawn Pearce <spearce@spearce.org> wrote:
+> On Tue, May 21, 2013 at 3:18 PM, Chico Sokol <chico.sokol@gmail.com> wrote:
+>> Ok, we discovered that the commit object actually contains the tree
+>> object's sha1, by reading its contents with python zlib library.
 >>
->> "reset" can be used with every existing commit. "zur=C3=BCcksetzen"
->> would imply that it have to be a recent commit, no?
+>> So the bug must be with our java code (we're building a java lib).
+>>
+>> Is there any non-standard issue in git's zlib compression? We're
+>> decompressing its contents with java default zlib api, so it should
+>> work normally, here's our code, that's printing that wrong output:
+>>
+>> import java.io.File;
+>> import java.io.FileInputStream;
+>> import java.util.zip.InflaterInputStream;
+>> import org.apache.commons.io.IOUtils;
+>> ...
+>> File obj = new File(".git/objects/25/0f67ef017fcb97b5371a302526872cfcadad21");
+>> InflaterInputStream inflaterInputStream = new InflaterInputStream(new
+>> FileInputStream(obj));
+>> System.out.println(IOUtils.readLines(inflaterInputStream));
+> ...
+>>>> Currently, we're trying to parse commit objects. After decompressing
+>>>> the contents of a commit object file we got the following output:
+>>>>
+>>>> commit 191
+>>>> author Francisco Sokol <chico.sokol@gmail.com> 1369140112 -0300
+>>>> committer Francisco Sokol <chico.sokol@gmail.com> 1369140112 -0300
+>>>>
+>>>> first commit
 >
+> Your code is broken. IOUtils is probably corrupting what you get back.
+> After inflating the stream you should see the object type ("commit"),
+> space, its length in bytes as a base 10 string, and then a NUL ('\0').
+> Following that is the tree line, and parent(s) if any. I wonder if
+> IOUtils discarded the remainder of the line after the NUL and did not
+> consider the tree line.
 >
-> It implies that it sets to something that already existed or came bef=
-ore.
-> So it even fits in a case where you reset to an older commit and rese=
-t back
-> to HEAD because the HEAD commit existed already.
->
-> If you still don't like it, I would prefer "umsetzen" to "neu setzen"=
-=2E
->
-
-I'd still understand "zur=C3=BCcksetzen" as "set something *back* to" b=
-ut this
-"back" can also be something that was made after HEAD perhaps on
-another branch and HEAD (or the current ref) was never at this point be=
-fore,
-so "zur=C3=BCcksetzen" is not true in this case.
-
-I prefer "umsetzen" to "neu setzen", too. I'll change the glossary to t=
-his.
-
-Thanks
-
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> And you wonder why JGit code is confusing. We can't rely on "standard
+> Java APIs" to do the right thing, because commonly used libraries have
+> made assumptions that disagree with the way Git works.
