@@ -1,168 +1,178 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Added guilt.reusebranch configuration option.
-Date: Wed, 22 May 2013 11:55:00 -0700
-Message-ID: <7vvc6aj14r.fsf@alter.siamese.dyndns.org>
-References: <1369224677-16404-1-git-send-email-tytso@mit.edu>
-	<x2ip2b6udr.fsf@bacon.lysator.liu.se>
-	<20130522134212.GB13731@poseidon.cudanet.local>
-	<20130522144531.GB2777@thunk.org>
-	<7v8v36kiau.fsf@alter.siamese.dyndns.org>
-	<20130522180403.GB20848@thunk.org>
+Subject: Re: [PATCH v6] Add new git-related helper to contrib
+Date: Wed, 22 May 2013 12:23:21 -0700
+Message-ID: <7vr4gyizti.fsf@alter.siamese.dyndns.org>
+References: <1368978823-18247-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>,
-	Per Cederqvist <ceder@lysator.liu.se>, git@vger.kernel.org
-To: Theodore Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Wed May 22 20:55:13 2013
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 22 21:23:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfEBt-0006Xv-3J
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 20:55:13 +0200
+	id 1UfEdG-0006yA-CH
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 21:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756801Ab3EVSzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 May 2013 14:55:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53205 "EHLO
+	id S1756613Ab3EVTXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 May 2013 15:23:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33186 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754652Ab3EVSzD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 May 2013 14:55:03 -0400
+	id S1756224Ab3EVTXY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 May 2013 15:23:24 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5568121B10;
-	Wed, 22 May 2013 18:55:02 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C7F420904;
+	Wed, 22 May 2013 19:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Bh1CaM/xjeXqLwi7BIu1/p0SQj0=; b=YDbXOq
-	CjZMe+gNUVDnjIvuwYKNSdchi5UiuubN2l69cviB3X6aeJlgRoCPR5kFzEbCePuf
-	bZ3CTSkl51WSgGg9s9NIygaY0Du/S1nv4xU7ZFfp7PfWWekGhDH/jdpkvNCFdHhs
-	Y1wl0cRMryWrpdBIpYxJLBAd+zAXDSD8GVOl4=
+	:content-type; s=sasl; bh=FFFKJWQH004fxNNn4K1ZjDp/J6w=; b=NcTCQo
+	XEXP01KZ7b2rKcvr4iZONmdj7YiJJgIFSozaR0GKzU7wRd8QPHWkMeRjcJorvKc/
+	x0xXU7MOpPZVoSejNzUTOy5P6facJ3wCfthRZEiLAY8826nq0wyKJJ7nduG3+6ZN
+	KpeMiOo+/wkn4B0xKWIffhEOpNt6Gh5CfwPqk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KG2+Z/JsFOTUAcOn5pFRJ5llnkee1a3T
-	7lbtlC3K7HCeop2p5J8dp4WLoU2kCHO3wx/ujAydi1Y/Gj7rdMNKMtgzk+g37GDA
-	lFaIVZtPiV9doxv0B2Ysz8RsPp37aQciS4KXY/PRO/UMElo9w0BK/T99YediOPk+
-	soFgWcRCdBM=
+	:content-type; q=dns; s=sasl; b=pj9j6D+CWFDIoIoYMTokZlPKP98n6L4h
+	hyOpXclyNUwcCSUKFHWbJJ9tod02EMa//fpwHTproVRSbrT1LavSriT5p9xdaPuW
+	VZntTvsa1I58IJ2gmUrTh5NDNc0dpTX0730SYhITZ7rDiqx0kVoavNPcaB05QxA9
+	D08TpTnW8Fw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4952121B0F;
-	Wed, 22 May 2013 18:55:02 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F4AB20903;
+	Wed, 22 May 2013 19:23:24 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7BA3921B0E;
-	Wed, 22 May 2013 18:55:01 +0000 (UTC)
-In-Reply-To: <20130522180403.GB20848@thunk.org> (Theodore Ts'o's message of
-	"Wed, 22 May 2013 14:04:03 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6BA2C20901;
+	Wed, 22 May 2013 19:23:23 +0000 (UTC)
+In-Reply-To: <1368978823-18247-1-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Sun, 19 May 2013 10:53:43 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1B57EAA8-C311-11E2-AC20-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 11C6F796-C315-11E2-878E-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225185>
 
-Theodore Ts'o <tytso@mit.edu> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> On Wed, May 22, 2013 at 10:58:49AM -0700, Junio C Hamano wrote:
->> Theodore Ts'o <tytso@mit.edu> writes:
->> 
->> > I was actually thinking that it might be interesting to have a
->> > branch.<branch>.rewindable, which would change the guilt defaults, and
->> > could also key changes in key git behavior which makes it less likely
->> > that a user shoots him or herself in the foot --- i.e., give warnings
->> > if he or she has modified the branch in such a way that
->> > remotes.origin.<branch> is no longer contained within the branch head.
->> 
->> At least "rebase" can pay attention to it and might make the world a
->> better place.
->
-> Yeah, rebase was the primary command I was thinking about.  The other
-> one would be "git commit --amend" after the branch had been pushed
-> out.
+> diff --git a/contrib/related/git-related b/contrib/related/git-related
+> new file mode 100755
+> index 0000000..b96dcdd
+> --- /dev/null
+> +++ b/contrib/related/git-related
+> @@ -0,0 +1,124 @@
+> +#!/usr/bin/env ruby
+> +
+> +# This script finds people that might be interested in a patch
+> +# usage: git related <file>
+> +
+> +$since = '5-years-ago'
+> +$min_percent = 10
+> +
+> +def fmt_person(name, email)
+> +  '%s <%s>' % [name, email]
+> +end
 
-It may or may not matter for the kernel folks, but let me pick your
-brain while we are on this subject.
+Micronit.  I suspect you do not need this helper, unless later
+patches start using it.
 
-The "upstream" (your remotes.origin.<branch>) is that on top of
-which you build your work.  You clone from there to bootstrap
-yourself, you add your work (which may include integrating the work
-of your contributors, if you are a mid-tier maintainer/integrator
-aka a lieutenant) on top of it, and arrange the result to reach the
-"upstream" in some way.
+> +  def import
+> +    return if @items.empty?
+> +    File.popen(%w[git cat-file --batch], 'r+') do |p|
+> +      p.write(@items.keys.join("\n"))
+> +      p.close_write
+> +      p.each do |line|
+> +        if line =~ /^(\h{40}) commit (\d+)/
+> +          id, len = $1, $2
+> +          data = p.read($2.to_i)
+> +          @items[id].parse(data)
+> +        end
+> +      end
+> +    end
+> +  end
+> +
+> +  def get_blame(source, start, len, from)
+> +    return if len == 0
+> +    len ||= 1
+> +    File.popen(['git', 'blame', '--incremental', '-CCC',
 
-For the simplest (and still widely used) workflow that employs a
-central shared repository, the way to make the result to reach the
-"upstream" is by directly pushing into it yourself.  In that sense,
-the word "upstream" and the traditional behaviour of "git push" that
-pushes back to the 'origin' (or branch.<branch>.remote) to update
-your "upstream" (or branch.<branch>.merge at 'origin') both make
-perfect sense.
+I am torn on the hardcoded use of "-CCC" here.
 
-Also, if you are rebasing, @{u} refers to that place you integrate
-with, i.e. your "upstream", in the central shared repository
-workflow.
+Depending on the nature of the change in question, it may match well
+or worse to what you are trying to find out.  When you are trying to
+say "What were you smoking when you implemented this broken logic?",
+using -C may be good, but when your question is "Even though all the
+callers of this function live in that other file, somebody moved
+this function that used to be file static in that file to here and
+made it public. Why?", you do not want to use -C.
 
-But in a triangular workflow, the way to make the result reach the
-"upstream" is *not* by pushing there yourself.  For developers at
-the leaf level, it is to push to their own repository (often on
-GitHub), which is different from where they (initially) clone from
-in order to bootstrap themselves, and (subsequently) pull from in
-order to keep them up-to-date.  And then they request the published
-work to be pulled by the "upstream".
+I am reasonably sure that in the finished code later in the series
+it will become configurable, but a fallback default is better to be
+not so expensive one.
 
-Even in a triangular workflow, @{u} should still refer to the place
-you integrate with, i.e. your "upstream", not to the place you push
-to publish the result of your work.
+> +               '-L', '%u,+%u' % [start, len],
+> +               '--since', $since, from + '^',
 
-This branch.<branch>.rewindable safety however cannot be tied to
-@{u}.  The bottom boundary you want to be warned when you cross is
-the change you pushed out to your publishing repository, and it may
-not have reached remotes.origin.<branch> yet.
+Is "from" unconditionally set?
 
-We will be introducing remote.pushdefault configuration in the
-upcoming 1.8.3 release, so that you can say:
+Perhaps that nil + '^' magically disappear and this code is relying
+on that, but it smells like a too much magic to me.
 
-	[remote "origin"]
-        	url = git://g.k.o/pub/scm/linux/kernel/git/torvalds/linux.git/
-		fetch = +refs/heads/*:refs/remotes/origin/*
+> +               '--', source]) do |p|
+> +      p.each do |line|
+> +        if line =~ /^(\h{40})/
+> +          id = $&
+> +          @items[id] = Commit.new(id)
+> +        end
+> +      end
+> +    end
+> +  end
+> +
+> +  def from_patch(file)
+> +    from = source = nil
+> +    File.open(file) do |f|
+> +      f.each do |line|
+> +        case line
+> +        when /^From (\h+) (.+)$/
+> +          from = $1
+> +        when /^---\s+(\S+)/
+> +          source = $1 != '/dev/null' ? $1[2..-1] : nil
+> +        when /^@@ -(\d+)(?:,(\d+))?/
+> +          get_blame(source, $1, $2, from)
+> +        end
 
-	[remote "ext4"]
-        	url = g.k.o:/pub/scm/linux/kernel/git/tytso/ext4.git/
-		fetch = +refs/heads/*:refs/remotes/ext4/*
+Makes sense to start from the preimage so that you can find out who
+wrote the original block of lines your patch is removing.
 
-	[remote]
-        	pushdefault = ext4
+But then if source is /dev/null, wouldn't you be able to stop
+without running blame at all?  You know the patch is creating a new
+file at that point and there is nobody to point a finger at.
 
-and hopefully it would let you do this:
-
-	git checkout master
-        ... after working on it ...
-        git push
-
-As remote.pushdefault is set to ext4, without any extra arguments,
-the result will pushed to the "ext4" remote.  If you are using the
-traditional push.default=matching, it may also try to push out dev,
-dev-next and other branches you may have in your local repository
-and at k.org; if you are using push.default=simple or other "single
-branch" modes like "current", "upstream", etc, it will only push out
-your current branch (i.e. "master") to "ext4" remote.
-
-You may however be using your local "master" branch for your
-development, and pushing the result out to "dev".  With only the
-remote.pushdefault setting to push to ext4 (instead of origin), you
-still would have to say
-
-	git push ext4 master:dev
-
-There is another change discussed on the list recently to also let
-you configure your local "master" branch to update "dev" in your
-publishing repository.  It may go like this:
-
-	[branch "master"]
-        	push = refs/heads/dev
-
-In any case, refs/remotes/ext4/dev would be the remote tracking
-branch (not refs/remotes/origin/anything) that keeps track of what
-you pushed out there the last time.  And that would be what your new
-safety based on "branch.master.rewindable = no" needs to check
-against, not "refs/remotes/origin/master" which is your master@{u}.
+> +      end
+> +    end
+> +  end
+> +
+> +end
+> +
+> +exit 1 if ARGV.size != 1
+> +
+> +commits = Commits.new
+> +commits.from_patch(ARGV[0])
+> +commits.import
+> +
+> +count_per_person = Hash.new(0)
+> +
+> +commits.each do |id, commit|
+> +  commit.persons.each do |person|
+> +    count_per_person[person] += 1
+> +  end
+> +end
+> +
+> +count_per_person.each do |person, count|
+> +  percent = count.to_f * 100 / commits.size
+> +  next if percent < $min_percent
+> +  puts person
+> +end
