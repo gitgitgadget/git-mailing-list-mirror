@@ -1,69 +1,88 @@
-From: Chico Sokol <chico.sokol@gmail.com>
-Subject: Re: Reading commit objects
-Date: Wed, 22 May 2013 11:25:31 -0300
-Message-ID: <CABx5MBSmCN=avRDCJ+RU8FoRDaGG=6uRfTdVR9m3A=SqpuKAjQ@mail.gmail.com>
-References: <CABx5MBQ57-=MPamvV-peZUdD_KDLX+5cy9vD7CL7p_Vz9BkvTg@mail.gmail.com>
- <CAEBDL5XwrD8ZbRRSrM1iJGtcRgziH5bFVwRHzg9=_PYzaTfgAg@mail.gmail.com>
- <CABx5MBSnpZTthOHECqkbpdbFfkb4e_uSo-rh4owBc8B_oSKjJQ@mail.gmail.com> <CAJo=hJtqACW+CR5FkmDfwyK1Wg3Kcppy6DbW7P=On_qJyvsYvQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] Fixing volatile HEAD in push.default = current
+Date: Wed, 22 May 2013 07:26:27 -0700
+Message-ID: <7v7girks4s.fsf@alter.siamese.dyndns.org>
+References: <1369160600-22337-1-git-send-email-artagnon@gmail.com>
+	<7v38tgno2k.fsf@alter.siamese.dyndns.org>
+	<CALkWK0m3QP_eE14y8UoJ+HeFzkKM=1nVKAnYJcTrwQMp+Atphg@mail.gmail.com>
+	<7vppwkm682.fsf@alter.siamese.dyndns.org>
+	<CALkWK0np7o0eH8ZsWQSwk1Cdwnnpj5B==gS8kAE+OkTskASOsQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: John Szakmeister <john@szakmeister.net>, git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed May 22 16:26:05 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 22 16:26:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uf9zM-0004Ap-PO
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 16:26:01 +0200
+	id 1Uf9zv-0004dr-LP
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 16:26:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756142Ab3EVOZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 May 2013 10:25:54 -0400
-Received: from mail-ve0-f170.google.com ([209.85.128.170]:57314 "EHLO
-	mail-ve0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756126Ab3EVOZw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 May 2013 10:25:52 -0400
-Received: by mail-ve0-f170.google.com with SMTP id 15so1476697vea.15
-        for <git@vger.kernel.org>; Wed, 22 May 2013 07:25:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=tWBSohfI+I+qwWbW5cadFYKOS4iKB7qSXAIoq1KVzm4=;
-        b=TbSmHPGMdR55GwShWjsExgaLzJs26Z/d3SjXgY3f6r+qFojT2apgN76mtH/H5WTOnY
-         9a1GnjJa/oR47blwDnf/nQQ98oC3ipi1cWB8n3hT1EdzykNnP3ZIa6RqUtggw2crNvW4
-         LB18Vpmj7eD9ePjQikvRw2SMF7qzpqxqX1afa6leSSsPHdXGb0W6Ss4aRYMD+qWccsma
-         96SH04QP/B9Noe9XRlgWwxyB910e68qe8RAcUFZWPJuTITvEVxAhQVD4RARYOMt6uCrc
-         iI/g5alB67tFtx7gbMUlPoc9yG/3nYpt9MDOFBczxMAxUenqNg9GqxBg8Gej2TdYUSfW
-         7V/A==
-X-Received: by 10.220.192.3 with SMTP id do3mr2885485vcb.16.1369232751596;
- Wed, 22 May 2013 07:25:51 -0700 (PDT)
-Received: by 10.220.80.10 with HTTP; Wed, 22 May 2013 07:25:31 -0700 (PDT)
-In-Reply-To: <CAJo=hJtqACW+CR5FkmDfwyK1Wg3Kcppy6DbW7P=On_qJyvsYvQ@mail.gmail.com>
+	id S1755348Ab3EVO0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 May 2013 10:26:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58906 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753397Ab3EVO0a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 May 2013 10:26:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19BC520C2B;
+	Wed, 22 May 2013 14:26:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=UPEyj9mgx3JeyCymWKoFxsJeO3c=; b=pFEexwMonHOE+Khm1i4+
+	iZ1t+VoRcoAszHeyTtMqhhug3YEsbJ+R8ZS4J5vVl7xIEfUH0DijnLJFMbTCauzE
+	gbW9h/DidPyjAt3zhthPHVe77tEKqdNJivoI2F6jsZZ8S7cHYpwSsnlsf/9u6KnO
+	T+7pxJLA6Clo1psvBtPYQIA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=Np5/KWIqzJde1gHvwm1aGXob3j+rSgN7ykqpeNesYxEpdM
+	nQOG6EBw7jeoYhg5QlaoPBkAZ74jWtfoz8EAoiYNc1GGYFO/4+1/EPxcC47/8XwF
+	NODPVV/k/YBOBJYJEzONBvYVfYFlrlO+DOuBk/nXlQ9sDGJeAlFriajXfAdFI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C6F920C29;
+	Wed, 22 May 2013 14:26:30 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6C87420C27;
+	Wed, 22 May 2013 14:26:29 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 97CEDB30-C2EB-11E2-90BC-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225163>
 
-> Your code is broken. IOUtils is probably corrupting what you get back.
-> After inflating the stream you should see the object type ("commit"),
-> space, its length in bytes as a base 10 string, and then a NUL ('\0').
-> Following that is the tree line, and parent(s) if any. I wonder if
-> IOUtils discarded the remainder of the line after the NUL and did not
-> consider the tree line.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
+> Why should I lie in the patch?  The terminal flipping was a very big
+> itch I had, and the patch fixes exactly that issue.  Showing the real
+> branch name was an unintended side-effect.
+>
+> I just said "early" and showed a nice end-user example in which it
+> works, not "theoretically impossible to race with".  Better wording
+> (while not lying about the motivation behind the patch)?
 
-Maybe you're right, Shawn. I've also tried the following code:
+The patch may have been done by a wrong motivation, in that it does
+not fundamentally "fix" the itch.  The particular "itch" is not
+something we are going to promise to the end users, ever, anyway.
 
-File dotGit = new File("objects/25/0f67ef017fcb97b5371a302526872cfcadad21");
-InflaterInputStream inflaterInputStream = new InflaterInputStream(new
-FileInputStream(dotGit));
-ByteArrayOutputStream os = new ByteArrayOutputStream();
-IOUtils.copyLarge(inflaterInputStream, os);
-System.out.println(new String(os.toByteArray()));
+The only remaining justification for the change is, even though the
+user cannot _safely_ flip the branches with this patch, it improves
+the output.
 
-But we got the same result, I'll try to read the bytes by myself
-(without apache IOUtils). Is the contents of a unpacked object utf-8
-encoded?
+That does not make the patch wrong, but the original motivation is
+an irrelevant, lost cause.  "Even though this started to address an
+itch, the patch does not fundamentally fix that itch at all." may be
+a honest statement to make, but that alone is not a justification to
+have this change.
+
+The "side effect" is the only improvement this patch gives us, and
+that happens to be a good enough justification.  At that point, is
+the original itch the patch does not correctly address even worth
+mentioning?  I answered "no" to that question.
+
+So I do not think you are lying anything.
