@@ -1,72 +1,97 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: What's cooking in git.git (May 2013, #05; Mon, 20)
-Date: Wed, 22 May 2013 09:36:25 +0200
-Message-ID: <519C7579.4080109@drmicha.warpmail.net>
-References: <7v38thrxwo.fsf@alter.siamese.dyndns.org> <519C7431.8050208@drmicha.warpmail.net>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH] prompt: fix show upstream with svn and zsh
+Date: Wed, 22 May 2013 09:36:18 +0200
+Message-ID: <877gir31ql.fsf@gmail.com>
+References: <1369169667-25166-1-git-send-email-t.gummerer@gmail.com> <CAMP44s3uEaG3Y+cVoKhCA-f+hi1VZcCpXO5bYCQLvANDdvYwRA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Wed May 22 09:36:23 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com, szeder@ira.uka.de
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 22 09:36:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uf3ax-00024y-G0
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 09:36:23 +0200
+	id 1Uf3b2-00026a-Ey
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 09:36:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753226Ab3EVHgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 May 2013 03:36:19 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:42847 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752445Ab3EVHgS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 May 2013 03:36:18 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 163FA20C0E;
-	Wed, 22 May 2013 03:36:16 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute4.internal (MEProxy); Wed, 22 May 2013 03:36:16 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=+fLIXFRd3Cp26PKwxhqec9
-	W0vos=; b=f13ZcZKYUZdHVaZe6M2XFfR1Lbl2bROYSIOAy66wHK3LkVApskl4x2
-	ubeIh1DGEj57EpacvoA6FoqNzoSoecpOgOH7g3/LoPo/b62fAAbQeZ0iUudF34/R
-	j/d/xrfQBm7y4ky3XZSevxUK4A1B5I8iPUuRLUvdGUqPtRSQkl8hk=
-X-Sasl-enc: 2ikt2YNmyPLJiTohEMY3fEld5nTyvKJ2gDeo5rcKKpuu 1369208175
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 7AC9BC8000A;
-	Wed, 22 May 2013 03:36:15 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130514 Thunderbird/17.0.6
-In-Reply-To: <519C7431.8050208@drmicha.warpmail.net>
+	id S1753375Ab3EVHgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 May 2013 03:36:23 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:60939 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752445Ab3EVHgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 May 2013 03:36:22 -0400
+Received: by mail-ee0-f46.google.com with SMTP id e49so947444eek.33
+        for <git@vger.kernel.org>; Wed, 22 May 2013 00:36:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type;
+        bh=BkhRh3ddu2DnRNkIgkoPVh6wjUxqgoWW3Vwt0fm5rJo=;
+        b=Q4o3zvCHEIZPPhtCRB/LH4UdWLun2K59txiLIJkkvCmaeTHK81GKCalRkS+TeF17W7
+         oJClGsbgVIoxAZ4OILh4XtJFNiJvOxuhl4pVlYdnngKuOkYAqtpGf9JkHz7sSiJyLxxZ
+         DrWc63BjzZvdVcfK4/PI8BR4rNvwTlfe21Z9cckDuXK7Rv9P3Nvrp0O3FXloZ0kEDlG4
+         Cm37YSpxOxDcNwunZ6SoYnf2jr+qOhxQIMDt4jpxKLZ2Nn3+upzQJXfM60V/TQ6rrTMq
+         wOCaHveUmUSrAdy5iIDQOM2i3lqaBrm86djolxFHWnS1h5Oo2QHTtdImSuzSoTefVOZI
+         jZJA==
+X-Received: by 10.14.98.71 with SMTP id u47mr16342769eef.12.1369208180869;
+        Wed, 22 May 2013 00:36:20 -0700 (PDT)
+Received: from localhost (nat5.unibz.it. [46.18.27.5])
+        by mx.google.com with ESMTPSA id c42sm8242356eeb.10.2013.05.22.00.36.19
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 22 May 2013 00:36:19 -0700 (PDT)
+In-Reply-To: <CAMP44s3uEaG3Y+cVoKhCA-f+hi1VZcCpXO5bYCQLvANDdvYwRA@mail.gmail.com>
+User-Agent: Notmuch/0.15.2+87~gc75dff3 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225135>
 
-BTW, I love our rev-list machinery:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-log --graph --abbrev-commit --pretty=oneline --decorate --cherry-mark
---left-right mjg/grep-textconv...origin/next
+> On Tue, May 21, 2013 at 3:54 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>> Currently the __git_ps1 git prompt gives the following error with a
+>> repository converted by git-svn, when used with zsh:
+>>
+>>            __git_ps1_show_upstream:19: bad pattern: svn_remote[
+>>
+>> This was introduced by 6d158cba (bash completion: Support "divergence
+>> from upstream" messages in __git_ps1), when the script was for bash
+>> only.  Make it compatible with zsh.
+>>
+>> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+>
+> This patch is fine by me. I would like to see an example of how to
+> trigger the issue with a standalone command in the commit message, but
+> it's not necessary. It would also make sense to address the comment
+> from Szeder that does raise questions about other places in the code
+> where 'array[ $foo ]' is used, maybe there's a caveat we are not
+> considering, or maybe your use-case did not execute that code.
 
->   701cdb7 Merge branch 'mg/more-textconv' into next
-|\
-| = afa15f3 (gitster/mg/more-textconv) grep: honor --textconv for the
-case rev:path
-| = 335ec3b grep: allow to use textconv filters
-| = 97f6a9c t7008: demonstrate behavior of grep with textconv
-| = 3ac2161 cat-file: do not die on --textconv without textconv filters
-| = 083b993 show: honor --textconv for blobs
-| = 6c37400 diff_opt: track whether flags have been set explicitly
-| = 4bd52d0 t4030: demonstrate behavior of show with textconv
+Yes, the code was not executed, it will be fixed in the re-roll.
 
-:)
+> And finally, I don't recall seen 'set -a' used elsewhere in the code.
+> If memory serves well, we have replaced 'local -a foo=value' with
+> 'local -a foo\nfoo=value' before to fix zsh issues, I think that would
+> be safer.
 
-So, at least there were no bits missing that I would have missed to send
-out. I'll recheck the pertaining thread.
+Yes, thanks for the suggestion, that works.
 
-Michael
+> But this patch is needed regardless, that, or the patch that broke
+> things should be reverted for v1.8.3.
+
+I don't think anything should or can be reverted, as this code was
+introduced in 2010, but nobody triggered it until now.
+
+> Thomas, if you don't have time, let me know and I can take a look.
+>
+> Cheers.
+>
+> --
+> Felipe Contreras
+
+Thanks,
+Thomas
