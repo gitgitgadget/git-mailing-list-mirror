@@ -1,58 +1,160 @@
-From: Geoff Thorpe <qc.libre@gmail.com>
-Subject: Re: is it just me, or does --all ignore --no-tags?
-Date: Wed, 22 May 2013 17:41:34 -0400
-Message-ID: <CAKSmPgbHMg5Z_o3RHbvwgizH2v9Ein13hjaMvw0gCjgq3ikHpg@mail.gmail.com>
-References: <CAKSmPgYFLZ59uAek8=GMXZE2tgGMo40s=y8X87m2GJbPVJo9WQ@mail.gmail.com>
-	<CAPc5daU_q8ScUXr=C_SPy4mSJBjY8Ue9GKbcW02=os5Yk6i0QQ@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [RFC/PATCH 2/2] doc: command line interface (cli) dot-repository dwimmery
+Date: Wed, 22 May 2013 23:09:00 +0100
+Organization: OPDS
+Message-ID: <6B51848E2F9A40078A2E42CE4BB499DA@PhilipOakley>
+References: <1368964449-2724-1-git-send-email-philipoakley@iee.org><1368964449-2724-3-git-send-email-philipoakley@iee.org><20130519173924.GB3362@elie.Belkin><7v38thwn6l.fsf@alter.siamese.dyndns.org><BDA138F1A58247F4A4940B3436A94485@PhilipOakley><7v1u91uw95.fsf@alter.siamese.dyndns.org><08847FEAFB00489695F31AA651F5EA2E@PhilipOakley><7vfvxgqp3m.fsf@alter.siamese.dyndns.org><CAMP44s3G5BPbw3MO8W3rmDabJ-ewf-C5FH8HHO_o0cPf0f55BA@mail.gmail.com><7C4B7B2B8AD949F0833D1919EEACD224@PhilipOakley> <CAMP44s3rpS==ANz_OEVyVeUWXFNBu7RZaxJ5k-b7N5k9WFFhVw@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster-vger@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 22 23:41:41 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="utf-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Jonathan Nieder" <jrnieder@gmail.com>,
+	"GitList" <git@vger.kernel.org>
+To: "Felipe Contreras" <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 23 00:09:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfGmx-00066y-Hs
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 23:41:39 +0200
+	id 1UfHDR-0002NA-25
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 00:09:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757132Ab3EVVlf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 May 2013 17:41:35 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:42211 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756209Ab3EVVle (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 May 2013 17:41:34 -0400
-Received: by mail-ie0-f181.google.com with SMTP id x12so6395798ief.40
-        for <git@vger.kernel.org>; Wed, 22 May 2013 14:41:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ToFuga63gHgZq6FQh8dXDONt/IFDv/Qa9wTOYtaMENw=;
-        b=hfxdK/a5c3q/nj4FzWiJZAY7C3J8TLPf2P++3eT++o3OMuxP25VoJlqLhUYvozR2Nk
-         iKsKNp+3fixRe16Wq0ri047zhuQGoK+wnpH42iM6HpxrkeqkKHLwIfXnT31qATmbYw29
-         6cnntYN5bmggvDHzWgFsiqxRjtq4cdaTkbUAFarBj9ndImA2/hHdYdFuYVx6kSY1RqyC
-         kjy3Z0stNtnFY88WMPsf2U8hoO0La1IdQ96+6GfGs2AnTcRE6fqoru0VamZTg2MZHsuJ
-         XOxae+wTc2YY5r0vMkKlTr6XjgYhonJaTzWfXafmwair3EYOYgQ6i1guTgm7RY7oqtux
-         dTRQ==
-X-Received: by 10.50.110.106 with SMTP id hz10mr3631126igb.24.1369258894283;
- Wed, 22 May 2013 14:41:34 -0700 (PDT)
-Received: by 10.64.57.115 with HTTP; Wed, 22 May 2013 14:41:34 -0700 (PDT)
-In-Reply-To: <CAPc5daU_q8ScUXr=C_SPy4mSJBjY8Ue9GKbcW02=os5Yk6i0QQ@mail.gmail.com>
+	id S1757319Ab3EVWI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 May 2013 18:08:57 -0400
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:47403 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756513Ab3EVWI4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 May 2013 18:08:56 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AicPAPxAnVFOl3dE/2dsb2JhbABagwgwgzuFP7h1BAEDAYEGF3SCHgUBAQQBCAEBGQQREQUIAQEWCwsCAwUCAQMUAQECAgIFIQICFAEECBACBgcXBggLCAIBAgMBDASHWgMJCgipNohkDYh0gSaLIIFtaoJIMmEDjmiGaoMPinSFI4MQOw
+X-IronPort-AV: E=Sophos;i="4.87,724,1363132800"; 
+   d="scan'208";a="576200640"
+Received: from host-78-151-119-68.as13285.net (HELO PhilipOakley) ([78.151.119.68])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 22 May 2013 23:08:54 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225195>
 
-On 22 May 2013 17:31, Junio C Hamano <gitster-vger@pobox.com> wrote:
->> So instead of doing;
->>     git fetch --all --no-tags
->> I'm now doing this to avoid the problem;
->>     git remote | xargs -n 1 git fetch --no-tags
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Sent: Wednesday, May 22, 2013 12:03 AM
+> On Tue, May 21, 2013 at 5:33 PM, Philip Oakley <philipoakley@iee.org> 
+> wrote:
+>> From: "Felipe Contreras" <felipe.contreras@gmail.com>
+>> Sent: Tuesday, May 21, 2013 10:21 PM
+>>
+>>> On Tue, May 21, 2013 at 11:23 AM, Junio C Hamano <gitster@pobox.com>
+>>> wrote:
+>>>>
+>>>> "Philip Oakley" <philipoakley@iee.org> writes:
+>>>
+>>>
+>>>>> On Sat, May 4, 2013 at 2:51 PM, Jonathan Nieder 
+>>>>> <jrnieder@gmail.com>
+>>>>> wrote:
+>>>>>>
+>>>>>> Another trick is to use "git push":
+>>>>>>         git push . $production_sha1:refs/heads/master
+>>>>
+>>>>
+>>>> It all falls out naturally from the "Git is distributed and no
+>>>> repository is special" principle.  I think that word "trick" merely
+>>>> refers to "those who do not realize that the local repository is 
+>>>> not
+>>>> all that special and merely is _a_ repository just like anybody
+>>>> else's may not realize they can do this", nothing more.
+>>>
+>>> Nobody cares.
+>>
+>> The value of the trick was acknowledged as now being in use
+>> http://article.gmane.org/gmane.comp.version-control.git/223572
 >
-> I suspect that this is 8556646 (fetch --all: pass --tags/--no-tags through to
-> each remote, 2012-09-05) which is in 1.7.12.2 and upwards.
+> How is that more useful than 'git branch -f master $sha1'?
 
-Awesome, that sounds like the exact problem. Much appreciated.
+The 'trick' checks for a fast forward, while the branch update is 
+forced. It depends on what checks are desired.
+
+My original patch was to simply document Git's dot repository capability 
+that does not appear to be that well known. Let's not keep it as an 
+Easter Egg.
+
+>
+>> Not sure if that was the caring you were commenting on.
+>
+> My point is that nobody uses '.' as a remote. Yes, you can find the
+> occasional esoteric person in the Git mailing list that might find
+> some weird command useful, but that's the fringe user-base.
+>
+>>> You say it's "mistaken", but you are not the arbiter of truth; the
+>>> fact that you say it's so doesn't make it so. It's just rhetoric.
+>>>
+>>> You haven't shown that it's indeed mistaken.
+>>
+>>
+>> An aside: in some domains (e.g. Human Error taxonomy) a 'mistake' is 
+>> a
+>> planned action which later turns out to not be the action that would 
+>> now
+>> have, in retrospect, been chosen. The intent was good, but is later 
+>> classed
+>> (within the taxonomy) as a 'mistake'. (It is not related to 'blame').
+>
+> Yeah, that's what a mistake is, in my mind.
+>
+>> If I understand the extended thread correctly, the approach moved on 
+>> and
+>> alternatives were found, so in that sense the intent was good.
+>
+> No, the approach didn't move on, there are no better alternatives, the
+> "intent" is irrelevant, the approach is good, there is no mistake.
+>
+> Junio simply ignored the fact that he was proven wrong.
+>
+> I still haven't received a response: which makes more sense?
+>
+> a)
+>
+> % git checkout svn-ext
+> % git fetch
+> From .
+> * branch            master     -> FETCH_HEAD
+> # oops
+> % git fetch git-svn
+> % git log ..FETCH_HEAD
+> % git merge FETCH_HEAD
+>
+> b)
+>
+> % git checkout svn-ext
+> % git fetch
+> From git://git.kernel.org/pub/scm/git/git
+>    680ed3e..de3a5c6  master     -> origin/master
+> # oops
+> % git fetch svn-ext
+> % git log ..FETCH_HEAD
+> % git merge FETCH_HEAD
+>
+> -- 
+> Felipe Contreras
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
+> -----
+> No virus found in this message.
+> Checked by AVG - www.avg.com
+> Version: 2013.0.3343 / Virus Database: 3162/6344 - Release Date: 
+> 05/21/13
+> 
