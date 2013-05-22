@@ -1,82 +1,775 @@
-From: Matt McClure <matthewlmcclure@gmail.com>
-Subject: Re: Avoiding broken Gitweb links and deleted objects
-Date: Wed, 22 May 2013 09:32:12 -0400
-Message-ID: <CAJELnLEGr7eG9W2WvcVjWi7rT6EUhBDVdtfx6Xjp15duB0E9kw@mail.gmail.com>
-References: <CAJELnLFrfY=-gOFEe0cJHuyT4UNjbTm8hXMxAmzmQHVbz4iEbg@mail.gmail.com>
-	<518C8EAC.6000106@viscovery.net>
-	<7vzjw349y0.fsf@alter.siamese.dyndns.org>
-	<CABjHNoT+Kvm5j4W+c2KOd+0mdu8tPCFDcEAWjxp0OcUXf1t4Lg@mail.gmail.com>
+From: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
+Subject: Re: [PATCH] Added guilt.reusebranch configuration option.
+Date: Wed, 22 May 2013 09:42:12 -0400
+Message-ID: <20130522134212.GB13731@poseidon.cudanet.local>
+References: <1369224677-16404-1-git-send-email-tytso@mit.edu>
+ <x2ip2b6udr.fsf@bacon.lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: William Swanson <swansontec@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 22 15:32:19 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Theodore Ts'o <tytso@mit.edu>, git@vger.kernel.org
+To: Per Cederqvist <ceder@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Wed May 22 15:42:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uf99N-0002NC-Qx
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 15:32:18 +0200
+	id 1Uf9J7-0002rd-Cl
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 15:42:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753984Ab3EVNcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 May 2013 09:32:14 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:38160 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753042Ab3EVNcN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 May 2013 09:32:13 -0400
-Received: by mail-pd0-f181.google.com with SMTP id p11so1697750pdj.12
-        for <git@vger.kernel.org>; Wed, 22 May 2013 06:32:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=mbTPLvyv+CItZyesoK4d8doSBsTzNtsLvxX2fzkfoDU=;
-        b=kuTV29uwR7e/8ZBU5OjkAoXvvpDmS5mMSE2y7s1Rze310WD0ra9iRHF7Bxs9ZxvOTv
-         3ZT9I5OIWJ0rXa3z0XzhqDGYFc/IeI+4saz40nyJUcnjjtMwqhu0kvyYDC0c4ge68VqH
-         c/xQ+ggGBkuZlKjU/wIqFj+7bzmJwE0Y96xbrmo6j/sHRCmnmvXz2/2sd20CexM184rl
-         jPbWo/rmxZq/oIMxE0RMUX0L/gIlSzclnH9D0YcWBv7LDXj0yjOhe6OM1E6Z6Hlj/vjB
-         JQKCMw/TdMxW2GCpUNhyuYzKaHbecyy3HLLZyzhLuKtgMGzL71Rhg09aGRJfyQXHPwHr
-         xTwg==
-X-Received: by 10.68.56.231 with SMTP id d7mr7793373pbq.49.1369229532806; Wed,
- 22 May 2013 06:32:12 -0700 (PDT)
-Received: by 10.68.15.98 with HTTP; Wed, 22 May 2013 06:32:12 -0700 (PDT)
-In-Reply-To: <CABjHNoT+Kvm5j4W+c2KOd+0mdu8tPCFDcEAWjxp0OcUXf1t4Lg@mail.gmail.com>
+	id S1754554Ab3EVNmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 May 2013 09:42:16 -0400
+Received: from josefsipek.net ([64.9.206.49]:1668 "EHLO josefsipek.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753809Ab3EVNmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 May 2013 09:42:15 -0400
+Received: from poseidon.cudanet.local (unknown [64.235.151.250])
+	by josefsipek.net (Postfix) with ESMTPSA id CD637173B;
+	Wed, 22 May 2013 09:42:13 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <x2ip2b6udr.fsf@bacon.lysator.liu.se>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225158>
 
-On Fri, May 10, 2013 at 3:34 AM, William Swanson <swansontec@gmail.com> wrote:
-> I started working on something like this a few weeks ago, but
-> eventually came to the conclusion that this information does not
-> belong in the commit graph itself.
->
-> A better approach, I think, would be to enhance the reflogs to the
-> point where they can provide this information in a reliable manner.
+On Wed, May 22, 2013 at 03:01:36PM +0200, Per Cederqvist wrote:
+> When the option is true (the default), Guilt does not create a new Git
+> branch when patches are applied.  This way, you can switch between
+> Guilt 0.35 and the current version of Guilt with no issues.
+> 
+> At a future time, maybe a year after Guilt with guilt.reusebranch
+> support is released, the default should be changed to "false" to take
+> advantage of the ability to use a separate Git branch when patches are
+> applied.
 
-Is there a way to push/pull reflogs among different repositories?
+So, I've been using the always-on prefix code and I do like it.  It makes me
+reasonably happy that other people that work on the same repo won't screw it
+up.  So, with that said, I'm tempted to actually make the default the
+new-style prefix.  If someone (there's at least Ted) wants the old behavior,
+they'll have the config.
 
-In my original scenario:
+IOW, I'm tempted to apply this patch with a minor tweak: change the default
+to new-style.
 
-1. the commits are created on a developer machine
-2. pushed to a central origin repository running Gitweb
-3. the branch is rebased on the developer machine
-4. the branch is push --force'd to the origin
+> Signed-off-by: Per Cederqvist <cederp@opera.com>
+> ---
+> 
+> This is an alternative solution to the same problem.  I've been running
+> with this code for a while.  I don't remember if I sent it to the list
+> before, but if I did it was apparently lost.  Sorry if I never sent it.
 
-Later, git push tells me:
+For all I know, I just dropped this patch on the floor by accident :/
 
-    warning: There are too many unreachable loose objects; run 'git
-prune' to remove them.
+Jeff.
 
-or I want to delete old topic branch HEADs to improve performance.
-
-But I never want to let Git delete the underlying commit objects since
-there could be Gitweb links pointing at them.
+> This version includes some regression tests.
+> 
+> (I'm having mail problems. Apologies if you receive this patch twice.)
+> 
+>     /ceder
+> 
+>  guilt                |  29 +++-
+>  regression/scaffold  |   1 +
+>  regression/t-062.out | 457 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  regression/t-062.sh  | 150 +++++++++++++++++
+>  4 files changed, 632 insertions(+), 5 deletions(-)
+>  create mode 100644 regression/t-062.out
+>  create mode 100755 regression/t-062.sh
+> 
+> diff --git a/guilt b/guilt
+> index 66a671a..108d4e7 100755
+> --- a/guilt
+> +++ b/guilt
+> @@ -836,6 +836,9 @@ guilt_push_diff_context=1
+>  # default diffstat value: true or false
+>  DIFFSTAT_DEFAULT="false"
+>  
+> +# default old_style_prefix value: true or false
+> +REUSE_BRANCH_DEFAULT="true"
+> +
+>  # Prefix for guilt branches.
+>  GUILT_PREFIX=guilt/
+>  
+> @@ -847,6 +850,10 @@ GUILT_PREFIX=guilt/
+>  diffstat=`git config --bool guilt.diffstat`
+>  [ -z "$diffstat" ] && diffstat=$DIFFSTAT_DEFAULT
+>  
+> +# reuse Git branch?
+> +reuse_branch=`git config --bool guilt.reusebranch`
+> +[ -z "$reuse_branch" ] && reuse_branch=$REUSE_BRANCH_DEFAULT
+> +
+>  #
+>  # The following gets run every time this file is source'd
+>  #
+> @@ -911,13 +918,25 @@ else
+>  	die "Unsupported operating system: $UNAME_S"
+>  fi
+>  
+> -if [ "$branch" = "$raw_git_branch" ] && [ -n "`get_top 2>/dev/null`" ]
+> +if [ -n "`get_top 2>/dev/null`" ]
+>  then
+> -    # This is for compat with old repositories that still have a
+> -    # pushed patch without the new-style branch prefix.
+> -    old_style_prefix=true
+> +	# If there is at least one pushed patch, we set
+> +	# old_style_prefix according to how it was pushed.  It is only
+> +	# possible to change the prefix style while no patches are
+> +	# applied.
+> +	if [ "$branch" = "$raw_git_branch" ]
+> +	then
+> +		old_style_prefix=true
+> +	else
+> +		old_style_prefix=false
+> +	fi
+>  else
+> -    old_style_prefix=false
+> +	if $reuse_branch
+> +	then
+> +		old_style_prefix=true
+> +	else
+> +		old_style_prefix=false
+> +	fi
+>  fi
+>  
+>  _main "$@"
+> diff --git a/regression/scaffold b/regression/scaffold
+> index 5c8b73e..acddb07 100644
+> --- a/regression/scaffold
+> +++ b/regression/scaffold
+> @@ -88,6 +88,7 @@ function setup_git_repo
+>  	git config log.date default
+>  	git config log.decorate no
+>  	git config guilt.diffstat false
+> +	git config guilt.reusebranch false
+>  }
+>  
+>  function setup_guilt_repo
+> diff --git a/regression/t-062.out b/regression/t-062.out
+> new file mode 100644
+> index 0000000..d00b3f6
+> --- /dev/null
+> +++ b/regression/t-062.out
+> @@ -0,0 +1,457 @@
+> +% setup_repo
+> +% git config guilt.reusebranch true
+> +% guilt push -a
+> +Applying patch..modify
+> +Patch applied.
+> +Applying patch..add
+> +Patch applied.
+> +Applying patch..remove
+> +Patch applied.
+> +Applying patch..mode
+> +Patch applied.
+> +% list_files
+> +d .git/patches
+> +d .git/patches/master
+> +d .git/refs/patches
+> +d .git/refs/patches/master
+> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
+> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
+> +f 71596bf71b72c2717e1aee378aabefbfa19ab7c8  .git/patches/master/status
+> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
+> +f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+> +r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/modify
+> +r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/add
+> +r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/mode
+> +r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/remove
+> +% git for-each-ref
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
+> +% git update-ref refs/heads/master refs/heads/guilt/master
+> +fatal: refs/heads/guilt/master: not a valid SHA1
+> +% git symbolic-ref HEAD refs/heads/master
+> +% git update-ref -d refs/heads/guilt/master
+> +% git for-each-ref
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
+> +% list_files
+> +d .git/patches
+> +d .git/patches/master
+> +d .git/refs/patches
+> +d .git/refs/patches/master
+> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
+> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
+> +f 71596bf71b72c2717e1aee378aabefbfa19ab7c8  .git/patches/master/status
+> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
+> +f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+> +r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/modify
+> +r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/add
+> +r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/mode
+> +r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/remove
+> +% guilt pop
+> +Now at remove.
+> +% git for-each-ref
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/heads/master
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
+> +% guilt push
+> +Applying patch..mode
+> +Patch applied.
+> +% git for-each-ref
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
+> +% guilt pop
+> +Now at remove.
+> +% git for-each-ref
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/heads/master
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
+> +% guilt pop
+> +Now at add.
+> +% git for-each-ref
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/master
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +% guilt push
+> +Applying patch..remove
+> +Patch applied.
+> +% git for-each-ref
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/heads/master
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
+> +% guilt pop
+> +Now at add.
+> +% git for-each-ref
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/master
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +% guilt pop
+> +Now at modify.
+> +% git for-each-ref
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/heads/master
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +% guilt push
+> +Applying patch..add
+> +Patch applied.
+> +% git for-each-ref
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/master
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +% guilt pop
+> +Now at modify.
+> +% git for-each-ref
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/heads/master
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +% guilt pop
+> +All patches popped.
+> +% git for-each-ref
+> +d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
+> +% guilt push
+> +Applying patch..modify
+> +Patch applied.
+> +% git for-each-ref
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/heads/master
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +% guilt pop
+> +All patches popped.
+> +% git for-each-ref
+> +d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
+> +% guilt pop
+> +No patches applied.
+> +% git for-each-ref
+> +d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
+> +% guilt push
+> +Applying patch..modify
+> +Patch applied.
+> +% git for-each-ref
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/heads/master
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +% guilt pop
+> +All patches popped.
+> +% git for-each-ref
+> +d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
+> +% guilt push -a
+> +Applying patch..modify
+> +Patch applied.
+> +Applying patch..add
+> +Patch applied.
+> +Applying patch..remove
+> +Patch applied.
+> +Applying patch..mode
+> +Patch applied.
+> +% git update-ref refs/heads/master refs/heads/guilt/master
+> +fatal: refs/heads/guilt/master: not a valid SHA1
+> +% git symbolic-ref HEAD refs/heads/master
+> +% git update-ref -d refs/heads/guilt/master
+> +% git for-each-ref
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
+> +% guilt pop -a
+> +All patches popped.
+> +% git for-each-ref
+> +d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
+> +% guilt push add
+> +Applying patch..modify
+> +Patch applied.
+> +Applying patch..add
+> +Patch applied.
+> +% git for-each-ref
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/master
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +% git update-ref refs/heads/master refs/heads/guilt/master
+> +fatal: refs/heads/guilt/master: not a valid SHA1
+> +% git symbolic-ref HEAD refs/heads/master
+> +% git update-ref -d refs/heads/guilt/master
+> +% guilt branch topic
+> +Switched to branch "topic"
+> +% git for-each-ref
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/master
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/topic
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/topic/add
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/topic/modify
+> +% guilt pop -a
+> +All patches popped.
+> +% guilt push
+> +Applying patch..modify
+> +Patch applied.
+> +% git for-each-ref
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/master
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/heads/topic
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/topic/modify
+> +% guilt pop -a
+> +All patches popped.
+> +% git checkout master
+> +Switched to branch "master"
+> +% guilt pop -a
+> +All patches popped.
+> +% git branch -d topic
+> +Deleted branch topic (was d485041).
+> +% rm -r .git/patches/topic
+> +% git for-each-ref
+> +d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
+> +% list_files
+> +d .git/patches
+> +d .git/patches/master
+> +d .git/refs/patches
+> +d .git/refs/patches/master
+> +d .git/refs/patches/topic
+> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
+> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
+> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
+> +f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+> +% guilt push -a
+> +Applying patch..modify
+> +Patch applied.
+> +Applying patch..add
+> +Patch applied.
+> +Applying patch..remove
+> +Patch applied.
+> +Applying patch..mode
+> +Patch applied.
+> +% git update-ref refs/heads/master refs/heads/guilt/master
+> +fatal: refs/heads/guilt/master: not a valid SHA1
+> +% git symbolic-ref HEAD refs/heads/master
+> +% git update-ref -d refs/heads/guilt/master
+> +% guilt branch topic
+> +Switched to branch "topic"
+> +% git for-each-ref
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/topic
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/topic/add
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/topic/mode
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/topic/modify
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/topic/remove
+> +% guilt pop -a
+> +All patches popped.
+> +% git checkout master
+> +Switched to branch "master"
+> +% guilt pop -a
+> +All patches popped.
+> +% git branch -d topic
+> +Deleted branch topic (was d485041).
+> +% rm -r .git/patches/topic
+> +% git for-each-ref
+> +d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
+> +% list_files
+> +d .git/patches
+> +d .git/patches/master
+> +d .git/refs/patches
+> +d .git/refs/patches/master
+> +d .git/refs/patches/topic
+> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
+> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
+> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
+> +f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+> +% guilt branch topic
+> +Switched to branch "topic"
+> +% git for-each-ref
+> +d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
+> +d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/topic
+> +% list_files
+> +d .git/patches
+> +d .git/patches/master
+> +d .git/patches/topic
+> +d .git/refs/patches
+> +d .git/refs/patches/master
+> +d .git/refs/patches/topic
+> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
+> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/topic/mode
+> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
+> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/topic/remove
+> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
+> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/topic/add
+> +f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+> +f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/topic/series
+> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/topic/modify
+> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/topic/status
+> +% guilt pop -a
+> +No patches applied.
+> +% git checkout master
+> +Switched to branch "master"
+> +% guilt pop -a
+> +No patches applied.
+> +% git branch -d topic
+> +Deleted branch topic (was d485041).
+> +% rm -r .git/patches/topic
+> +% git for-each-ref
+> +d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
+> +% list_files
+> +d .git/patches
+> +d .git/patches/master
+> +d .git/refs/patches
+> +d .git/refs/patches/master
+> +d .git/refs/patches/topic
+> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
+> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
+> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
+> +f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+> +% guilt push -a
+> +Applying patch..modify
+> +Patch applied.
+> +Applying patch..add
+> +Patch applied.
+> +Applying patch..remove
+> +Patch applied.
+> +Applying patch..mode
+> +Patch applied.
+> +% guilt branch topic
+> +Switched to branch "topic"
+> +% git for-each-ref
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/topic
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/topic/add
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/topic/mode
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/topic/modify
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/topic/remove
+> +% list_files
+> +d .git/patches
+> +d .git/patches/master
+> +d .git/patches/topic
+> +d .git/refs/patches
+> +d .git/refs/patches/master
+> +d .git/refs/patches/topic
+> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
+> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/topic/mode
+> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
+> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/topic/remove
+> +f 71596bf71b72c2717e1aee378aabefbfa19ab7c8  .git/patches/master/status
+> +f 71596bf71b72c2717e1aee378aabefbfa19ab7c8  .git/patches/topic/status
+> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
+> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/topic/add
+> +f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+> +f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/topic/series
+> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/topic/modify
+> +r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/modify
+> +r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/topic/modify
+> +r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/add
+> +r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/topic/add
+> +r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/mode
+> +r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/topic/mode
+> +r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/remove
+> +r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/topic/remove
+> +% guilt pop -a
+> +All patches popped.
+> +% git for-each-ref
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
+> +d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/topic
+> +37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
+> +ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
+> +33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
+> +ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
+> +% guilt pop -a
+> +No patches applied.
+> +% git checkout master
+> +Switched to branch "master"
+> +% guilt pop -a
+> +All patches popped.
+> +% git branch -d topic
+> +Deleted branch topic (was d485041).
+> +% rm -r .git/patches/topic
+> +% git for-each-ref
+> +d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
+> +% list_files
+> +d .git/patches
+> +d .git/patches/master
+> +d .git/refs/patches
+> +d .git/refs/patches/master
+> +d .git/refs/patches/topic
+> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
+> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
+> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
+> +f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+> +% guilt new newpatch
+> +% git for-each-ref --format=%(refname)
+> +refs/heads/master
+> +refs/patches/master/newpatch
+> +% guilt pop
+> +All patches popped.
+> +% guilt push
+> +Applying patch..newpatch
+> +Patch applied.
+> +% git for-each-ref
+> +25465dc1687f3833ecbd4e8bca437e522d7026db commit	refs/heads/master
+> +25465dc1687f3833ecbd4e8bca437e522d7026db commit	refs/patches/master/newpatch
+> +% git branch
+> +* master
+> +% guilt applied
+> +newpatch
+> +% guilt commit -a
+> +% git for-each-ref
+> +25465dc1687f3833ecbd4e8bca437e522d7026db commit	refs/heads/master
+> +% git branch
+> +* master
+> +% guilt push -a
+> +Applying patch..modify
+> +Patch applied.
+> +Applying patch..add
+> +Patch applied.
+> +Applying patch..remove
+> +Patch applied.
+> +Applying patch..mode
+> +Patch applied.
+> +% guilt applied
+> +modify
+> +add
+> +remove
+> +mode
+> +% git branch
+> +* master
+> +% git for-each-ref
+> +fefbdcef61022d473838926619f31e030dd04fdc commit	refs/heads/master
+> +5effcbeb303e8433935151d8c69f3bf63db1e8ef commit	refs/patches/master/add
+> +fefbdcef61022d473838926619f31e030dd04fdc commit	refs/patches/master/mode
+> +9509f22e2e627756d87b42432931c45955b74234 commit	refs/patches/master/modify
+> +9cbe2fc643b1a9e2179a8738f80424a1c2aa202d commit	refs/patches/master/remove
+> +% guilt commit -n 2
+> +% git for-each-ref
+> +fefbdcef61022d473838926619f31e030dd04fdc commit	refs/heads/master
+> +fefbdcef61022d473838926619f31e030dd04fdc commit	refs/patches/master/mode
+> +9cbe2fc643b1a9e2179a8738f80424a1c2aa202d commit	refs/patches/master/remove
+> +% git branch
+> +* master
+> +% guilt commit -n 2
+> +% git for-each-ref
+> +fefbdcef61022d473838926619f31e030dd04fdc commit	refs/heads/master
+> +% git branch
+> +* master
+> +% guilt series
+> diff --git a/regression/t-062.sh b/regression/t-062.sh
+> new file mode 100755
+> index 0000000..ffefb9c
+> --- /dev/null
+> +++ b/regression/t-062.sh
+> @@ -0,0 +1,150 @@
+> +#!/bin/bash
+> +#
+> +# Test the branch-switching upgrade code
+> +#
+> +
+> +source $REG_DIR/scaffold
+> +
+> +old_style_branch() {
+> +	# Modify the refs so that it looks as if the patch series was applied
+> +	# by an old version of guilt.
+> +	cmd git update-ref refs/heads/$1 refs/heads/guilt/$1
+> +	cmd git symbolic-ref HEAD refs/heads/$1
+> +	cmd git update-ref -d refs/heads/guilt/$1
+> +}
+> +
+> +remove_topic() {
+> +	cmd guilt pop -a
+> +	if git rev-parse --verify --quiet guilt/master >/dev/null
+> +	then
+> +		cmd git checkout guilt/master
+> +	else
+> +		cmd git checkout master
+> +	fi
+> +	cmd guilt pop -a
+> +	cmd git branch -d $1
+> +	cmd rm -r .git/patches/$1
+> +	cmd git for-each-ref
+> +	cmd list_files
+> +}
+> +
+> +function fixup_time_info
+> +{
+> +	touch -a -m -t "$TOUCH_DATE" ".git/patches/master/$1"
+> +}
+> +
+> +cmd setup_repo
+> +
+> +cmd git config guilt.reusebranch true
+> +
+> +cmd guilt push -a
+> +cmd list_files
+> +cmd git for-each-ref
+> +
+> +# Pop and push patches.  Check that the repo is converted to new-style
+> +# refs when no patches are applied and a patch is pushed.
+> +old_style_branch master
+> +cmd git for-each-ref
+> +
+> +cmd list_files
+> +
+> +for i in `seq 5`
+> +do
+> +	cmd guilt pop
+> +	cmd git for-each-ref
+> +	cmd guilt push
+> +	cmd git for-each-ref
+> +	cmd guilt pop
+> +	cmd git for-each-ref
+> +done
+> +
+> +# Check that "pop -a" does the right thing.
+> +cmd guilt push -a
+> +
+> +old_style_branch master
+> +
+> +cmd git for-each-ref
+> +
+> +cmd guilt pop -a
+> +
+> +cmd git for-each-ref
+> +
+> +# Check that pushing two patches converts the repo to now-style (since
+> +# it currently has no patches applied).
+> +cmd guilt push add
+> +cmd git for-each-ref
+> +
+> +# Check guilt branch with a few patches applied.
+> +old_style_branch master
+> +cmd guilt branch topic
+> +cmd git for-each-ref
+> +
+> +# Check that the topic branch is converted to new-style.
+> +cmd guilt pop -a
+> +cmd guilt push
+> +cmd git for-each-ref
+> +
+> +remove_topic topic
+> +
+> +# Check guilt branch with the full patch series applied.
+> +cmd guilt push -a
+> +old_style_branch master
+> +cmd guilt branch topic
+> +cmd git for-each-ref
+> +
+> +remove_topic topic
+> +
+> +# Check guilt branch with no patches applied.
+> +# This gives us a new-style checkout.
+> +cmd guilt branch topic
+> +cmd git for-each-ref
+> +cmd list_files
+> +
+> +remove_topic topic
+> +
+> +# Check guilt branch in a new-style directory with all patches
+> +# applied.  (Strictly speaking, this test should probably move to a
+> +# file devoted to testing "guilt branch".)
+> +cmd guilt push -a
+> +cmd guilt branch topic
+> +cmd git for-each-ref
+> +cmd list_files
+> +cmd guilt pop -a
+> +cmd git for-each-ref
+> +
+> +remove_topic topic
+> +
+> +# Check that "guilt new" does the right thing when no patches are
+> +# applied.  (Strictly speaking, this test should maybe move to
+> +# t-025.sh).
+> +
+> +cmd guilt new newpatch
+> +cmd git for-each-ref '--format=%(refname)'
+> +cmd guilt pop
+> +fixup_time_info newpatch
+> +cmd guilt push
+> +cmd git for-each-ref
+> +
+> +# Check that "guilt commit" does the right thing when committing all
+> +# applied patches.  (Strictly speaking, this test should maybe move to
+> +# t-030.sh).
+> +cmd git branch
+> +cmd guilt applied
+> +cmd guilt commit -a
+> +cmd git for-each-ref
+> +cmd git branch
+> +
+> +# Check that "guilt commit" does the right thing when committing only
+> +# a few of the applied patches.  (Strictly speaking, this test should
+> +# maybe move to t-030.sh).
+> +cmd guilt push -a
+> +cmd guilt applied
+> +cmd git branch
+> +cmd git for-each-ref
+> +cmd guilt commit -n 2
+> +cmd git for-each-ref
+> +cmd git branch
+> +cmd guilt commit -n 2
+> +cmd git for-each-ref
+> +cmd git branch
+> +cmd guilt series
+> -- 
+> 1.8.2
+> 
 
 -- 
-Matt McClure
-http://matthewlmcclure.com
-http://www.mapmyfitness.com/profile/matthewlmcclure
+Once you have their hardware. Never give it back.
+(The First Rule of Hardware Acquisition)
