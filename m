@@ -1,117 +1,80 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2] transport-helper: check if the dry-run is supported
-Date: Tue, 21 May 2013 22:07:06 -0500
-Message-ID: <CAMP44s1Ne-+RZ5r-vNnvs+LhqL+QeMbfq9=Nmffkd9=A6RpNTw@mail.gmail.com>
-References: <1369099924-13763-1-git-send-email-felipe.contreras@gmail.com>
-	<7vli78p920.fsf@alter.siamese.dyndns.org>
-	<CAMP44s14ZBUYhxDkSwjoi+6JPx4whfQDhiq_4QfMteALsbuQ_Q@mail.gmail.com>
-	<7vip2blu1k.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] prompt: fix show upstream with svn and zsh
+Date: Tue, 21 May 2013 22:13:22 -0500
+Message-ID: <CAMP44s3uEaG3Y+cVoKhCA-f+hi1VZcCpXO5bYCQLvANDdvYwRA@mail.gmail.com>
+References: <1369169667-25166-1-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 22 05:07:36 2013
+Cc: git@vger.kernel.org, gitster@pobox.com, szeder@ira.uka.de
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 22 05:13:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UezOn-0007rf-Oe
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 05:07:34 +0200
+	id 1UezUh-0001UF-BK
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 05:13:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754753Ab3EVDHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 May 2013 23:07:09 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:60875 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754001Ab3EVDHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 23:07:08 -0400
-Received: by mail-la0-f42.google.com with SMTP id fg20so1459550lab.1
-        for <git@vger.kernel.org>; Tue, 21 May 2013 20:07:06 -0700 (PDT)
+	id S1754773Ab3EVDNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 May 2013 23:13:25 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:54512 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754529Ab3EVDNY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 May 2013 23:13:24 -0400
+Received: by mail-la0-f50.google.com with SMTP id ed20so1462656lab.9
+        for <git@vger.kernel.org>; Tue, 21 May 2013 20:13:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=qrq5iK95J7rWf7M3K0HTXj3stLVgzq4bVfEP8R4P/3U=;
-        b=R1gugSa/fbykU9/QFRieegY3zLRlYcBqWLi6VIDqKZ1+rp5lv4x9N575lmjxI1DswD
-         NVPO2rKl16EHMY3Xxy9GOat991j2dFcwexnxth8c+fZaY1zenzAbonMtM69qUVqkJVEY
-         0EnAT/FwHmlpr4RYATW2uxyBJT0fU3tynnWHUE/wuQcNobdkAX3aIwevk5UsBEti+3C7
-         mKPFt9neSrE5HFmfS61rvKZov+N9P0IriK33qfzdJO0aFtpPRjZ0uvJz1CLksFcdlbJ6
-         z1CWffP1F+KTIJFQwkDWsvv7UbivjdjCFIFFfoaJked31gKTyymvwoYNIqTXYH6G1J3v
-         FVlg==
-X-Received: by 10.112.145.72 with SMTP id ss8mr3091974lbb.12.1369192026702;
- Tue, 21 May 2013 20:07:06 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Tue, 21 May 2013 20:07:06 -0700 (PDT)
-In-Reply-To: <7vip2blu1k.fsf@alter.siamese.dyndns.org>
+        bh=eCD8mhbfz43/Dp+mmGLkkM8aRRIH2bKjMMYYfBa+kTw=;
+        b=Os/VlUfShXL37UoNqT6hZG8AE+3lKg/Pkr1Mk4iKaYQ+tP7rI1f8mCgcj4xmgnoRMy
+         j4JDTr/2xJt/z1Q4etq3rE2RmRdYvJ5+Sf/v2o6RmtAgqH2/k5aVcRjJPilD6ExjsU4K
+         B7Z0JffONiD5j6uvWENmNYSi4OCNWq6rpRPjxNQogBQmVMs5S9Y/QZNFwj2ibNWAFpjP
+         saIjIzZxwLxxd/2VUuba65+XEF/7tMsftUAdpkj49oWfjkZUy3gbZlG1LXpasgCTKGfh
+         bFg/Rkvt8tyCJ/gXYGhh7g8w1Ueoy5SQCMazX4eMcdwusCZIPvjTkVnR/th8K8g9Esi8
+         0Bow==
+X-Received: by 10.112.63.169 with SMTP id h9mr2971287lbs.135.1369192402858;
+ Tue, 21 May 2013 20:13:22 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Tue, 21 May 2013 20:13:22 -0700 (PDT)
+In-Reply-To: <1369169667-25166-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225124>
 
-On Tue, May 21, 2013 at 7:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Tue, May 21, 2013 at 3:54 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> Currently the __git_ps1 git prompt gives the following error with a
+> repository converted by git-svn, when used with zsh:
 >
->> On Tue, May 21, 2013 at 11:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->>> This sounds like a good thing to do.  Perhaps the refspec mapping
->>> can be handled the same way as a backend feature so that you do not
->>> have to unconditionally disable it in the other patch.
->>
->> With my patch the remote helper doesn't need to know about the refspec
->> handling at all, it just works magically.
+>            __git_ps1_show_upstream:19: bad pattern: svn_remote[
 >
-> The consumers of "git fast-export" do not need to know how to flip
-> refspecs when consuming output from "git fast-export", because you
-> taught "git fast-export" to do the mapping.
+> This was introduced by 6d158cba (bash completion: Support "divergence
+> from upstream" messages in __git_ps1), when the script was for bash
+> only.  Make it compatible with zsh.
 >
-> But doesn't that coin have a flip side?  When somebody else (not
-> git) generates a fast-import stream, because these consumers are not
-> prepared to flip refspecs, they cannot rename while importing.  All
-> the producers have to be taught to do the ref mapping.
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 
-Not true. There can be an intermediary in between.
+This patch is fine by me. I would like to see an example of how to
+trigger the issue with a standalone command in the commit message, but
+it's not necessary. It would also make sense to address the comment
+from Szeder that does raise questions about other places in the code
+where 'array[ $foo ]' is used, maybe there's a caveat we are not
+considering, or maybe your use-case did not execute that code.
 
-> I do not know if this matters in real life, and even if it did, in
-> the eventual ideal world, both importers and exporters would learn
-> to do so.
+And finally, I don't recall seen 'set -a' used elsewhere in the code.
+If memory serves well, we have replaced 'local -a foo=value' with
+'local -a foo\nfoo=value' before to fix zsh issues, I think that would
+be safer.
 
-No. Only one side *needs* to learn that.
+But this patch is needed regardless, that, or the patch that broke
+things should be reverted for v1.8.3.
 
-> So I do not think what you did in your patch is a bad
-> design in that sense.  It is a half step in the right direction.
+Thomas, if you don't have time, let me know and I can take a look.
 
-What is the other step, and how would that benefit anyone?
-
-> I however found it somewhat ugly that the interface to specify set
-> of refs to traverse history to find the set of objects to export
-> stays the same as before, and the ref-mapping arguments are bolted
-> on to the machinery, without having any relationship between them.
-> The user is free to tell it to export only 'next', while telling it
-> to map 'master' to 'trunk', for example.
->
-> This is an external interface that is exposed to any users of "git
-> fast-export", so if we go that route, we would have to keep that
-> interface working forever, even when later somebody else wants to
-> add an interface that only requires ref-mapping arguments (and infer
-> what is exported from the left hand side of the refspecs).
-
-Not true. We don't *have* to keep anything forever, we are free to
-decide anything we want, and live with the consequences.
-
-If a better approach is found, we can remove this interface in v2.0,
-or v3.0, or even v10.0.
-
-Why are we shooting ourselves in the foot in the meantime? We already
-have something that works perfectly fine.
-
-Now, I specifically asked if such an interface would make sense,
-because there are too many warts, and I did not receive a satisfactory
-answer in my opinion. I will explore this interface once more, but I
-never received any positive feedback from yours that we indeed want to
-teach 'fast-export' to parse refspecs, it's just that the interface to
-do so was not ideal; you explicitly said you thought it made more
-sense on the other side; the receiver.
+Cheers.
 
 -- 
 Felipe Contreras
