@@ -1,84 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: first parent, commit graph layout, and pull merge direction
-Date: Wed, 22 May 2013 11:07:07 -0700
-Message-ID: <7v4ndukhx0.fsf@alter.siamese.dyndns.org>
-References: <20130522115042.GA20649@inner.h.apk.li>
+Subject: Re: override merge.ff = false using --ff-only
+Date: Wed, 22 May 2013 11:12:01 -0700
+Message-ID: <7vzjvmj34e.fsf@alter.siamese.dyndns.org>
+References: <CAJELnLEGCshD9z9get62+T6Z83OdPJ+A5BNSzsHA1_OC1Q00Hw@mail.gmail.com>
+	<CAJELnLFqzVBd57vudsCFrTNMVxETO75GT5T5NO0sDMtgHZJU6g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 22 20:07:19 2013
+To: Matt McClure <matthewlmcclure@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 22 20:12:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfDRV-00022L-Qj
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 20:07:18 +0200
+	id 1UfDWN-0004bY-K2
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 20:12:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753345Ab3EVSHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 May 2013 14:07:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43469 "EHLO
+	id S1756773Ab3EVSMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 May 2013 14:12:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58708 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753310Ab3EVSHK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 May 2013 14:07:10 -0400
+	id S1755970Ab3EVSME (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 May 2013 14:12:04 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C43502046E;
-	Wed, 22 May 2013 18:07:09 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1DD55206B7;
+	Wed, 22 May 2013 18:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Db67j2vs+Mgwx7oLvCQ6fW7KzNI=; b=YgUJVA
-	lnoAFpMAPXQjL4hQYGYvRJHd4rAPEvc1CjDC+M2j8jKbnFfeDA7SYM0/XTyMHpXe
-	tCksKrLvym+FP9UDOAVr7G+mYPuSSyAlV5LaYOjO0FBdGSz0Ys9BQYdmDEhrTy/u
-	YP6brhgZSXiAR8JxbcEuekEa0m7PlWm2imwlc=
+	:content-type; s=sasl; bh=9/xq8NsLIHuymChwkEx94qwd2g4=; b=Smp0Cy
+	7JktEhEzMz5DSnIMi6bV40uSPV0ocg2aMe0yOz1Y+EXJtEcOgykiUMEZDLgL3yoc
+	oMm31nSZdAlP7OF7etaeEJhlwyl3//4lPVEscUGyym35/G+iWuVPqQX4zb/S4rjk
+	2fObSOeDP4sepmIA6EQe+bsvjM0cFe/fGnPkc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MoKB4jqLBwOYleTimBD1+bPZwK2RrZj2
-	Tvv7myqLhnGBpyQCX9rOTcMt6vPKwLfMcLpwuDl3pN2325E/TXP1VnIGo4fChA3R
-	2NgLyRnWx8XHoTWDDmHMCrXz4bNDl8jXJN83oICdqjymb2wwvQ45l+tTO8HKyy+p
-	g5eNIPdgM7E=
+	:content-type; q=dns; s=sasl; b=cx/huxkurgsOodUl8LBaFhLC+ddPBIXB
+	yzu/9+J7/LSjOjFVZ8MNIed/2d05k6nT1O5SajDc1oSPmP1xGeoW96J2FzC02Mcb
+	LlhIE00A2UvgCHQqC42gyItIqTzq8wQlbNtYirELFgfdAokWcsofzalcJwM2mLx9
+	jWlUf8A56yM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7FAA2046D;
-	Wed, 22 May 2013 18:07:09 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12717206B5;
+	Wed, 22 May 2013 18:12:04 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2FA982046C;
-	Wed, 22 May 2013 18:07:09 +0000 (UTC)
-In-Reply-To: <20130522115042.GA20649@inner.h.apk.li> (Andreas Krey's message
-	of "Wed, 22 May 2013 13:50:42 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CC63206B4;
+	Wed, 22 May 2013 18:12:03 +0000 (UTC)
+In-Reply-To: <CAJELnLFqzVBd57vudsCFrTNMVxETO75GT5T5NO0sDMtgHZJU6g@mail.gmail.com>
+	(Matt McClure's message of "Wed, 22 May 2013 09:21:23 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B503378-C30A-11E2-93AB-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1AA94A1C-C30B-11E2-BFB4-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225183>
 
-Andreas Krey <a.krey@gmx.de> writes:
+Matt McClure <matthewlmcclure@gmail.com> writes:
 
-> A short trial showed that representing first parent chains as
-> straight lines in the graph does actually improve understandability,
-> as feature branches clearly stand out as separate lines even when
-> they no longer carry a branch name.
+> I naively tried to override merge.ff = false using --ff-only on the
+> command line. I expected that it would override the configured default
+> and perform a fast-forward merge. Instead, it said:
+>
+>     $ git config -l | grep -F 'merge.ff'
+>     merge.ff=false
+>
+>     $ git merge --ff-only foo
+>     fatal: You cannot combine --no-ff with --ff-only.
+>
+> On the other hand, I see that --ff works just fine in the same initial state.
+>
+>     $ git merge --ff foo
+>     Updating b869407..17b5495
+>     Fast-forward
+>     ...
+>      4 files changed, 2 insertions(+), 5 deletions(-)
+>
+> Would it be better if --ff-only refused to merge only if the commits
+> themselves prevented fast-forwarding?
 
-If you have a four-commit segment in your commit ancestry graph
-(time flows from left to right; turn your head 90-degrees to the
-right if you want a gitk representation):
+In general it would be better if any --ff related command line
+options made us ignore the configured default like merge.ff the user
+may have in the repository, not just --ff-only vs merge.ff
+combination, and your "On the other hand" demonstrates that it is
+the case for --ff from the command line.
 
-    ---A--X
-        \/
-        /\
-    ---B--Y
-
-where X and Y are both merges between A and B, having A as their
-first parent, how would you express such a graph with first-parent
-chain going a straight line?
-
-> Also, there is an implication with 'git pull': You'd expect the
-> master branch to be a first parent line, but when I do a small
-> thing directly on master and need to pull before pushing back,
-> then origin/master is merged into my branch, and thus my side
-> branch becomes the first parent line.
-
-Don't do that, then.
+I do not offhand see why --ff-only should behave differently from
+that expectation.
