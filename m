@@ -1,126 +1,117 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH 2/2] doc: command line interface (cli) dot-repository dwimmery
-Date: Tue, 21 May 2013 21:57:18 -0500
-Message-ID: <CAMP44s3cvCuOJfm4HhqOiwm=63wGiTMx7LO8Y5F+SAu=E0tN9Q@mail.gmail.com>
-References: <1368964449-2724-1-git-send-email-philipoakley@iee.org>
-	<1368964449-2724-3-git-send-email-philipoakley@iee.org>
-	<20130519173924.GB3362@elie.Belkin>
-	<7v38thwn6l.fsf@alter.siamese.dyndns.org>
-	<BDA138F1A58247F4A4940B3436A94485@PhilipOakley>
-	<7v1u91uw95.fsf@alter.siamese.dyndns.org>
-	<08847FEAFB00489695F31AA651F5EA2E@PhilipOakley>
-	<7vfvxgqp3m.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3G5BPbw3MO8W3rmDabJ-ewf-C5FH8HHO_o0cPf0f55BA@mail.gmail.com>
-	<7C4B7B2B8AD949F0833D1919EEACD224@PhilipOakley>
-	<CAMP44s3rpS==ANz_OEVyVeUWXFNBu7RZaxJ5k-b7N5k9WFFhVw@mail.gmail.com>
-	<7vr4gzlxvx.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2hH63rM++bG-aGeEyaL3tvF8yZYmcO7K1J66KVxyOutQ@mail.gmail.com>
-	<7vehczltwu.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v2] transport-helper: check if the dry-run is supported
+Date: Tue, 21 May 2013 22:07:06 -0500
+Message-ID: <CAMP44s1Ne-+RZ5r-vNnvs+LhqL+QeMbfq9=Nmffkd9=A6RpNTw@mail.gmail.com>
+References: <1369099924-13763-1-git-send-email-felipe.contreras@gmail.com>
+	<7vli78p920.fsf@alter.siamese.dyndns.org>
+	<CAMP44s14ZBUYhxDkSwjoi+6JPx4whfQDhiq_4QfMteALsbuQ_Q@mail.gmail.com>
+	<7vip2blu1k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	GitList <git@vger.kernel.org>
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 22 04:57:28 2013
+X-From: git-owner@vger.kernel.org Wed May 22 05:07:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UezF1-0004M3-V5
-	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 04:57:28 +0200
+	id 1UezOn-0007rf-Oe
+	for gcvg-git-2@plane.gmane.org; Wed, 22 May 2013 05:07:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755268Ab3EVC5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 May 2013 22:57:22 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:39457 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755181Ab3EVC5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 May 2013 22:57:20 -0400
-Received: by mail-lb0-f182.google.com with SMTP id z5so1514564lbh.41
-        for <git@vger.kernel.org>; Tue, 21 May 2013 19:57:19 -0700 (PDT)
+	id S1754753Ab3EVDHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 May 2013 23:07:09 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:60875 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754001Ab3EVDHI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 May 2013 23:07:08 -0400
+Received: by mail-la0-f42.google.com with SMTP id fg20so1459550lab.1
+        for <git@vger.kernel.org>; Tue, 21 May 2013 20:07:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=3Chvbd/Pkb+Xtiq+BGUuXY9ywddAEHQ3B88ZzHTruHM=;
-        b=LQ419P7HpDoKwo6c0NcscOtqWjl40l/eFNL5yKLTOaV08ht+nCZbiAG96uAhMmhQJc
-         B2Nqrj02dPPqSOnRRY8VRqQnQX+mYEiDQxOGFs4lxGeLkWLMFI83lwFtwBvi8t8Txxhc
-         kVzMbDkEuOk2Qyz1zfqaCT7hdAXtHXtRz9yJJjWJIoa0MUdH8ssLD5OI1NOvlhe2MDO3
-         MLFmFwS4oUMsgsg3vR0SEQTR47P33b0vhbRzLWM5XCvJA2B4c1926zc3ZH7Km9y55ZFS
-         Sug8QQk69gXux9vYCBg4UGJdklfCYr1Kmd3Swoo2jY3YyGFQmrt5NmgC+cJ/8dpgVftO
-         yMLg==
-X-Received: by 10.112.164.105 with SMTP id yp9mr384718lbb.103.1369191438842;
- Tue, 21 May 2013 19:57:18 -0700 (PDT)
-Received: by 10.114.184.3 with HTTP; Tue, 21 May 2013 19:57:18 -0700 (PDT)
-In-Reply-To: <7vehczltwu.fsf@alter.siamese.dyndns.org>
+        bh=qrq5iK95J7rWf7M3K0HTXj3stLVgzq4bVfEP8R4P/3U=;
+        b=R1gugSa/fbykU9/QFRieegY3zLRlYcBqWLi6VIDqKZ1+rp5lv4x9N575lmjxI1DswD
+         NVPO2rKl16EHMY3Xxy9GOat991j2dFcwexnxth8c+fZaY1zenzAbonMtM69qUVqkJVEY
+         0EnAT/FwHmlpr4RYATW2uxyBJT0fU3tynnWHUE/wuQcNobdkAX3aIwevk5UsBEti+3C7
+         mKPFt9neSrE5HFmfS61rvKZov+N9P0IriK33qfzdJO0aFtpPRjZ0uvJz1CLksFcdlbJ6
+         z1CWffP1F+KTIJFQwkDWsvv7UbivjdjCFIFFfoaJked31gKTyymvwoYNIqTXYH6G1J3v
+         FVlg==
+X-Received: by 10.112.145.72 with SMTP id ss8mr3091974lbb.12.1369192026702;
+ Tue, 21 May 2013 20:07:06 -0700 (PDT)
+Received: by 10.114.184.3 with HTTP; Tue, 21 May 2013 20:07:06 -0700 (PDT)
+In-Reply-To: <7vip2blu1k.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225123>
 
-On Tue, May 21, 2013 at 7:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, May 21, 2013 at 7:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
->> On Tue, May 21, 2013 at 6:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>
->>>> I still haven't received a response: which makes more sense?
->>>>
->>>> a)
->>>>
->>>>       % git checkout svn-ext
->>>>       % git fetch
->>>>       From .
->>>>        * branch            master     -> FETCH_HEAD
->>>>       # oops
->>>>       % git fetch git-svn
->>>>       % git log ..FETCH_HEAD
->>>>       % git merge FETCH_HEAD
->>>>
->>>> b)
->>>>
->>>>       % git checkout svn-ext
->>>>       % git fetch
->>>>       From git://git.kernel.org/pub/scm/git/git
->>>>          680ed3e..de3a5c6  master     -> origin/master
->>>>       # oops
->>>>       % git fetch svn-ext
->>>>       % git log ..FETCH_HEAD
->>>>       % git merge FETCH_HEAD
->>>
->>> I think with the scenario you are following, a) would prepare the
->>> FETCH_HEAD with her local git-svn branch which is her svn-ext topic
->>> is based on, but you illustrated it to fetch 'master', which I think
->>> is a minor typo.
->>>
->>> Modulo that typo, the step before the #oops makes perfect sense.  It
->>> fetched where she told Git her work on svn-ext is based on.
->>>
->>> But the step after that does not make much sense in that flow.
+>> On Tue, May 21, 2013 at 11:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >>
->> You don't get to decide what Sally (I'm naming her) does, all you get
->> to decide is what Git does.
+>>> This sounds like a good thing to do.  Perhaps the refspec mapping
+>>> can be handled the same way as a backend feature so that you do not
+>>> have to unconditionally disable it in the other patch.
 >>
->> Sally wants to fetch from the true upstream: svn-ext, but in the
->> process does by mistake a 'git fetch' *without arguments* (WHICH IS
->> WHAT THIS WHOLE DISCUSSION IS ABOUT). So now is the time you answer:
->> a) or b).
+>> With my patch the remote helper doesn't need to know about the refspec
+>> handling at all, it just works magically.
 >
-> Heh, that was my example.
+> The consumers of "git fast-export" do not need to know how to flip
+> refspecs when consuming output from "git fast-export", because you
+> taught "git fast-export" to do the mapping.
 >
-> In any case, my pick is still a).  She *TOLD* Git that her local
-> git-svn branch is what forms the base of her local svn-ext work.
+> But doesn't that coin have a flip side?  When somebody else (not
+> git) generates a fast-import stream, because these consumers are not
+> prepared to flip refspecs, they cannot rename while importing.  All
+> the producers have to be taught to do the ref mapping.
 
-She told Git that her local svn-branch was the basis for svn-next. She
-DIT NOT TELL Git to fetch from there. She told Git to fetch from any
-location Git thought best to fetch from, either a) or b) would fetch
-from the wrong location, but a) would be wronger, you just don't want
-to admit it.
+Not true. There can be an intermediary in between.
 
-You are, once again, *assuming* that if a user sets up an upstream, he
-wants to fetch from there. All you answers are based on assumptions.
+> I do not know if this matters in real life, and even if it did, in
+> the eventual ideal world, both importers and exporters would learn
+> to do so.
+
+No. Only one side *needs* to learn that.
+
+> So I do not think what you did in your patch is a bad
+> design in that sense.  It is a half step in the right direction.
+
+What is the other step, and how would that benefit anyone?
+
+> I however found it somewhat ugly that the interface to specify set
+> of refs to traverse history to find the set of objects to export
+> stays the same as before, and the ref-mapping arguments are bolted
+> on to the machinery, without having any relationship between them.
+> The user is free to tell it to export only 'next', while telling it
+> to map 'master' to 'trunk', for example.
+>
+> This is an external interface that is exposed to any users of "git
+> fast-export", so if we go that route, we would have to keep that
+> interface working forever, even when later somebody else wants to
+> add an interface that only requires ref-mapping arguments (and infer
+> what is exported from the left hand side of the refspecs).
+
+Not true. We don't *have* to keep anything forever, we are free to
+decide anything we want, and live with the consequences.
+
+If a better approach is found, we can remove this interface in v2.0,
+or v3.0, or even v10.0.
+
+Why are we shooting ourselves in the foot in the meantime? We already
+have something that works perfectly fine.
+
+Now, I specifically asked if such an interface would make sense,
+because there are too many warts, and I did not receive a satisfactory
+answer in my opinion. I will explore this interface once more, but I
+never received any positive feedback from yours that we indeed want to
+teach 'fast-export' to parse refspecs, it's just that the interface to
+do so was not ideal; you explicitly said you thought it made more
+sense on the other side; the receiver.
 
 -- 
 Felipe Contreras
