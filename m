@@ -1,66 +1,113 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: first parent, commit graph layout, and pull merge direction
-Date: Thu, 23 May 2013 16:59:34 -0500
-Message-ID: <CAMP44s3hyekQBxV13=+4qcJEMZe4TY6ZoMMDLN8yKFJJ=t_7rA@mail.gmail.com>
-References: <20130522115042.GA20649@inner.h.apk.li>
-	<7v4ndukhx0.fsf@alter.siamese.dyndns.org>
-	<20130523090657.GB23933@inner.h.apk.li>
-	<CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
-	<20130523102959.GP9448@inner.h.apk.li>
-	<20130523110839.GT27005@serenity.lan>
-	<7vd2shheic.fsf@alter.siamese.dyndns.org>
-	<20130523164114.GV27005@serenity.lan>
-	<7vbo81e7gs.fsf@alter.siamese.dyndns.org>
-	<20130523215557.GX27005@serenity.lan>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: git stash deletes/drops changes of
+Date: Fri, 24 May 2013 00:10:51 +0200
+Message-ID: <87sj1d5ous.fsf@linux-k42r.v.cablecom.net>
+References: <AANLkTin-BIxgQE5CO2cLhCYJAGHFxiXPquyozKc308DS@mail.gmail.com>
+	<loom.20130523T185301-635@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Andreas Krey <a.krey@gmx.de>,
-	John Szakmeister <john@szakmeister.net>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu May 23 23:59:44 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jim Greenleaf <james.a.greenleaf@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 24 00:11:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfdXw-0004PK-9z
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 23:59:40 +0200
+	id 1Ufdj7-0001Vz-V3
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 00:11:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759690Ab3EWV7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 17:59:36 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:48285 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759313Ab3EWV7g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 17:59:36 -0400
-Received: by mail-lb0-f182.google.com with SMTP id z5so3910814lbh.41
-        for <git@vger.kernel.org>; Thu, 23 May 2013 14:59:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=oIKyhxU6/kg1i+jCm2EFYGewnm4cyaTS9d/WI6SALBg=;
-        b=HlrG4sJ0GbH53ANLm3QvjXfQNr14qF69jlLQACRPOWe4d0/M3tyPoQym1Ge9MHyXbq
-         COiZBpSADFF4ycqkRorEXEo5i/hF/eguhrwIIy9YIQvF+nzYRx24hwkxGKHLksSfVkqg
-         Bek14Na/WnYPevTYZgbTMIKRTgyFNXALnqY/3qDVagHOheDazGKj/IM3nHF4HlgK9y5+
-         j0KaOoLUXBKHbYrmvbQw6FqNIWikCkJSRZK5EqyhSi9XenvlRhNmBgFhsRK+B87/O8gh
-         w7zeqENTba46rRLoLGBYWkZbcgb7022aM5ha3lHBvrPI1RiBdoB2WxwlHYUal54vUtm7
-         ki1A==
-X-Received: by 10.112.218.102 with SMTP id pf6mr7441670lbc.77.1369346374615;
- Thu, 23 May 2013 14:59:34 -0700 (PDT)
-Received: by 10.114.174.170 with HTTP; Thu, 23 May 2013 14:59:34 -0700 (PDT)
-In-Reply-To: <20130523215557.GX27005@serenity.lan>
+	id S1759713Ab3EWWKz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 May 2013 18:10:55 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:22062 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759689Ab3EWWKy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 May 2013 18:10:54 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 24 May
+ 2013 00:10:43 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.208.253) by
+ cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Fri, 24 May 2013 00:10:52 +0200
+In-Reply-To: <loom.20130523T185301-635@post.gmane.org> (Jim Greenleaf's
+	message of "Thu, 23 May 2013 16:57:23 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.208.253]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225308>
 
-On Thu, May 23, 2013 at 4:55 PM, John Keeping <john@keeping.me.uk> wrote:
+Jim Greenleaf <james.a.greenleaf@gmail.com> writes:
 
-> So I was asking if it would be sensible (possibly in Git 2.0) to make
-> git-pull pass --ff-only to git-merge by default.
+> Adeodato Sim=C3=B3 <dato <at> net.com.org.es> writes:
+>
+>> I was unpleasantly surprised to discover yesterday that doing `git
+>> stash` on a repository where I had previously run `git update-index
+>> --assume-unchanged FOO` completely lost all changes I had in file FO=
+O.
+>
+> I just ran into this today.
+>
+> Was a decision about this behavior reached in the intervening time?
 
-Definitely yes.
+When you mark a file assume-unchanged, git internally sets a flag that
+this file should not be considered when doing cache refreshes -- the
+file is always assumed to be up-to-date.
 
--- 
-Felipe Contreras
+So while I haven't actually looked into all of the code, I imagine it
+goes something like this:
+
+* git-stash uses git update-index --all on all modified files.  But it
+  doesn't show up as modified, because you promised it isn't.
+
+* Later it calls git reset --hard, which blows away the existing state.
+  This would seem to ignore the assume-unchanged flag in this case, as
+  otherwise it wouldn't overwrite it.
+
+Whether the last behavior is a bug is in the eye of the beholder.  In
+your case you apparently lost work.  However, 'git reset --hard' in
+itself should discard all uncommitted work without asking any further
+questions (because it's --hard).  So the bug is then in the sequence
+
+  ask about uncommitted work
+  save it elsewhere
+  git reset --hard
+
+assuming that this actually makes sure nothing gets lost.  But the only
+thing that was lost was *files that you promised would not be changed*.
+
+
+What's really unfortunate is that we caused this in the first place by
+Pasky's 6259ac6 (Documentation: How to ignore local changes in tracked
+files, 2008-07-18).  It recommends exactly the --assume-unchanged
+strategy to ignore changes to tracked files.
+
+And it's hard to disagree with its commit message:
+
+    This is currently probably one of the top FAQs at #git and the
+    --assume-unchanged switch is not widely known
+
+Except that now the corresponding FAQ is that we have to actively
+dissuade people from using --assume-unchanged precisely because it keep=
+s
+biting people.
+
+So maybe it would be time to first make up our minds as to what
+--assume-unchanged should actually mean:
+
+* Ignore changes to a tracked file, but treat them as valuable.  In
+  this case we'd have to make sure that failures like git-stash's are
+  handled properly.
+
+* Ignore changes to a tracked file, as in "who cares if it was changed"=
+=2E
+
+* A very specific optimization for users who know what they are doing.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
