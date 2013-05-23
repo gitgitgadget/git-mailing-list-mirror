@@ -1,141 +1,99 @@
-From: "Bernhard R. Link" <brl+git@mail.brlink.eu>
-Subject: Re: English/German terminology, git.git's de.po, and pro-git
-Date: Thu, 23 May 2013 20:16:16 +0200
-Message-ID: <20130523181615.GB3270@client.brlink.eu>
-References: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net>
- <CAN0XMOJ7hRwTAR+i8_C2z2NmmcycLQkiya0ayfWS0vAw3-zqkg@mail.gmail.com>
- <CAN0XMOKCppZVwwvowzrSDuAKRo-DMeD7GpryjA2deE5mYuSb4Q@mail.gmail.com>
- <7402110.vsgz8zEiin@cs-pc>
- <CAN0XMOK4oniunZz5KpC1x=JrY4yH4HnecxMSCyPF+kEyYRRjTw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6] Add new git-related helper to contrib
+Date: Thu, 23 May 2013 11:34:26 -0700
+Message-ID: <7vzjvleea5.fsf@alter.siamese.dyndns.org>
+References: <1368978823-18247-1-git-send-email-felipe.contreras@gmail.com>
+	<7vr4gyizti.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0pXLmjVUwsVWiN2G5QReh80spXjvy_6GuUGRz1RmUbLQ@mail.gmail.com>
+	<7vd2siiqsr.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2ETSxebGxXJV_BYEqTC5gJMVdQLbnTUomrie2rHhdmDg@mail.gmail.com>
+	<7v8v36iq3e.fsf@alter.siamese.dyndns.org>
+	<7v4nduipvb.fsf@alter.siamese.dyndns.org>
+	<7vzjvmh98r.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1_=HSgZA=abHJ3sgDbUyfkF78qO+sR1+Aact3o7bAgLA@mail.gmail.com>
+	<7vvc6ah81g.fsf@alter.siamese.dyndns.org>
+	<CAMP44s37a0_wVVef+QVnLNvc8Uos_XpCZAtpX0RmQyMcuJHUHw@mail.gmail.com>
+	<CAMP44s18ps9JtY7+mvXVbuZu3cm7bHnK1vCzMWqBdvawLr+zzA@mail.gmail.com>
+	<7v8v35hc11.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Stimming <stimming@tuhh.de>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	"Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>,
-	Jan Engelhardt <jengelh@inai.de>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Ralph =?iso-8859-1?Q?Hau=DFmann?= <ralph@scanmyfood.de>,
-	Sven Fuchs <svenfuchs@artweb-design.de>,
-	git <git@vger.kernel.org>,
-	Jan =?iso-8859-1?Q?Kr=FCger?= <jk@jk.gs>
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 23 20:29:11 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 23 20:34:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfaGC-0002mk-Cr
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 20:29:08 +0200
+	id 1UfaLS-00062R-O9
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 20:34:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758198Ab3EWS3D convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 May 2013 14:29:03 -0400
-Received: from server.brlink.eu ([78.46.187.186]:57638 "EHLO server.brlink.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758147Ab3EWS3C (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 14:29:02 -0400
-X-Greylist: delayed 756 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 May 2013 14:29:02 EDT
-Received: from client.brlink.eu 
-	by server.brlink.eu with esmtpsa (tls-peer-hash KfHJgA)
-	id 1Ufa3l-0000yl-4j; Thu, 23 May 2013 20:16:17 +0200
-Received: with local; Thu, 23 May 2013 20:16:16 +0200
-Content-Disposition: inline
-In-Reply-To: <CAN0XMOK4oniunZz5KpC1x=JrY4yH4HnecxMSCyPF+kEyYRRjTw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758580Ab3EWSea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 14:34:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52015 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758180Ab3EWSe3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 14:34:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A18C421D7E;
+	Thu, 23 May 2013 18:34:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=i/Ae2JBPPk9dSOcHSm95wbymedU=; b=kQKNSA
+	VLWE+WPELHgQhIYMmY7bIjyaZT0BLKCPgjSCj/CB2KFcauC8aX7tF3dn+VALExs1
+	3QQRToMe73k4yg/ncM3uLHpfpqnXIzMz9FiKrDhl040d1bm+Zk2a5OdhOebMgb/b
+	P+fWxZLoVnoPkFS1/KifyUjTytf+7npkw+3o4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BiGGFMhi/7Gw7ynYgiSQDcZhuIDcuo9h
+	JTble0jS4/sMPEtrX/59XSLjgM8dpyUZUkSBst1vS5dQP0uj6C6raZKJ+/Q8SWL4
+	I652YPD9YjV23vyiPVAZdiMJoOA54Zzyp4QRCpDo1AmfBYL1VMDYvU8yG8PIu2/W
+	zQDmzNJiNUE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 980BA21D7D;
+	Thu, 23 May 2013 18:34:28 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C58F321D7B;
+	Thu, 23 May 2013 18:34:27 +0000 (UTC)
+In-Reply-To: <7v8v35hc11.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 23 May 2013 09:54:50 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 666B041E-C3D7-11E2-A52A-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225280>
 
-* Ralf Thielow <ralf.thielow@gmail.com> [130522 17:17]:
-> >>     remote branch          =3D Remote-Branch
-> >>     remote-tracking branch =3D Remote-Tracking-Branch
-> >>     upstream branch        =3D Upstream-Branch
-> >
-> > Yes. What's the main reason for using "Branch" in the German text? =
-Consistency
-> > with the commands, or assumed familiarity of the term within the ta=
-rget
-> > audience? "Zweig" is available.
-> >
->=20
-> I think it's at the same level as "Commit" and a well known SCM-term.=
- Users
-> (even beginners) who know "Commit" and "Tag" do also know "Branch". A=
-nd
-> I think it sounds better in combination with "Remote-", "Remote-Track=
-ing-" and
-> "Upstream-" which are english words.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Additionally "Zweig" might be a bit misleading. A branch is not part of
-the "tree"s. It is called branch because in other VCSes the commits
-build a tree and a any commit outside of the main branch of that tree i=
-s
-part of exactly one different branch (so the head of that branch and th=
-e
-branch are synonymns). With git the commits are no longer a tree, so a
-git-branch is no branch and does not describe the whole branch of the
-tree of commits but is just a names pointer into the graph of commits.
-As it lost all meanings of the original word "branch", translating it
-with a translation of the original English word might more confusion
-than helping anyone.
+> Users of full-output may want to be able to see the same thing.
 
-> (same for push). In other messages, the translation is in the same me=
-ssage
-> as the command itself. I think it's OK when we just use "fetch" and "=
-push"
-> when the command is meant (as it's done for "pull", e.g. in error mes=
-sages),
-> and the translation when the messages tell what the command is doing =
-(e.g. help
-> messages). So it would depends on the message whether we translate th=
-e word
-> or not. This would apply to other terms that are commands, too, like
-> "clean" or "revert".
+... but I agree we may be able to cheat if we only want to support
+interactive, and we do want to find a way to cheat when we are
+running interactive without having to store much more information in
+each blame_entry.
 
-I'd not call it "OK". It's the only sane possibility. If you speak
-about the magic keyword you have to give the command line, you won't
-translate it, of course[1]. (The obvious interesting case is where the
-English text plays with the command name having a meaning as word
-itself. Here the translation will have to diverge to differentiate
-between both (or sacrifice one of them, where it is not important)).
+> Imagine that your scoreboard originally has three blocks of text
+> ...
+> in that situation?
 
-[1] Unlike you want to introduce a translated command line interface,
-like "Depp anfordere Herkunft Original" instead of "git fetch origin ma=
-ster"
+(I snipped everything I said in the previous reply only for
+brevity but they are still relevant).
 
-> >>     diff               =3D Differenz
-> >>     delta              =3D Differenz (or Delta)
-> >>     patch              =3D Patch
-> >>     apply              =3D anwenden
-> >>     diffstat           =3D (leave it as it is)
-> >>     hunk               =3D Bereich
-> >
-> > IMHO "Kontext" is better if you use a German word. Technically the =
-context is
-> > something else, but in a German text IMHO it fits nicer when explai=
-ning to the
-> > user where he/she can select the n-th hunk.
-> >
->
-> Not sure if German users would know what "hunk" means, in case we
-> leave it untranslated. And I'm not sure if I would understand "Kontex=
-t".
-> I tend to leave it untranslated.
+I _think_ one way to "cheat" without storing too much information in
+each blame_entry is to first make a copy of all the original blame
+entries that share the "suspect", see if any line in the line range
+represented by each of the blame entries ended up being blamed to an
+origin with a path different from that of the "suspect".  And print
+those original blame entries that fits the criterion as additional
+"these are not the final blame as you are digging with the option to
+detect copy across files, but at this commit this line appeared anew
+as far as the origin->path is concerned" output.
 
-Anyone found a German translation of the Patch manpage? Translating the
-English word-play here, I'd suggest "Block" or "Patch-Block".
-
-> >>     paths          =3D Pfade
-> >>
-> >>     symbolic link =3D symbolische Verkn=FCfung
-> >>     path =3D Pfad
-> >>     link =3D Verkn=FCpfung
-
-In the filesystem a "Link" is a "Verweis" in Unix, not a "Verkn=FCpfung=
-"
-(that are usually the pseudo-links Windows supports).
-
-        Bernhard R. Link
+So I think you were going in the right direction (in other words,
+the patch inserted new code to the right places), even though you
+may have got the details in what the new code should do wrong.
