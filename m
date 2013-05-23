@@ -1,112 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: What's cooking in git.git (May 2013, #05; Mon, 20)
-Date: Thu, 23 May 2013 17:31:54 +0200
-Message-ID: <519E366A.5040504@drmicha.warpmail.net>
-References: <7v38thrxwo.fsf@alter.siamese.dyndns.org> <519C7431.8050208@drmicha.warpmail.net> <7vy5b7j7kc.fsf@alter.siamese.dyndns.org> <519DEA50.4030407@drmicha.warpmail.net> <7vr4gxhi8y.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Bug report: git grep seems to use the wrong .gitattributes when
+ invoked in a subdirectory
+Date: Thu, 23 May 2013 17:49:35 +0200
+Message-ID: <519E3A8F.9070600@lsrfire.ath.cx>
+References: <CAK=EYX51G57borL_Hy2XzqJVML4wmAgOCBPwFLa+miDDY30O7Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 23 17:32:00 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Joel Kaasinen <joel.kaasinen@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 23 17:49:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfXUj-0007Py-CZ
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 17:31:57 +0200
+	id 1UfXly-0001NL-O2
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 17:49:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759514Ab3EWPbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 11:31:53 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:38485 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754876Ab3EWPbw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 May 2013 11:31:52 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 2E44020F2A;
-	Thu, 23 May 2013 11:31:45 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 23 May 2013 11:31:47 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=mr7Cm7We4X9JwKWp878snr
-	piEUY=; b=XWSfInZs+Aq2I17fBzc0FZ0U1Ty9EkfkRlgwBu346yZXo01hqNrFzy
-	Fz5/Ioc4Iklqh0XXgF4IN9v5AqWP0Jd4X+R4etAESyrGCHsF/5CFWx0U+HSvG023
-	EOSvnk+rmIY3gF96M+TjlrxQFMxX1ann8HJPGTbfSBCtMEgveQqKw=
-X-Sasl-enc: G+eGKN8AyC2fU8i2S2tQ0VmYE/zRFTPzGy6aewcdOYkL 1369323104
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 74F882001B7;
-	Thu, 23 May 2013 11:31:44 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130514 Thunderbird/17.0.6
-In-Reply-To: <7vr4gxhi8y.fsf@alter.siamese.dyndns.org>
+	id S1758416Ab3EWPtm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 May 2013 11:49:42 -0400
+Received: from india601.server4you.de ([85.25.151.105]:56763 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754876Ab3EWPtm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 11:49:42 -0400
+Received: from [192.168.2.105] (p4FFDBDD0.dip0.t-ipconnect.de [79.253.189.208])
+	by india601.server4you.de (Postfix) with ESMTPSA id 13700FD;
+	Thu, 23 May 2013 17:49:40 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <CAK=EYX51G57borL_Hy2XzqJVML4wmAgOCBPwFLa+miDDY30O7Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225263>
 
-Junio C Hamano venit, vidit, dixit 23.05.2013 16:40:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> Didn't you have concerns about storing the context in the object struct?
->> I can't quite judge how much of an issue this can be for fsck and such.
->> I don't want to increase the memory footprint unnecessarily, of course.
-> 
-> Yes. I thought I had a weather-balloon patch to fsck to use its own
-> so that we have something to fall back on if it turns out to be a
-> problem (and also so that anybody can see how big the difference is),
-> but I highly suspect that any user of object-array other than what
-> you are changing in the series wants to use the slim variant, which
-> suggests that the information does not belong there.
-> 
->> Other than that, the mechanism was still up for discussion (separate
->> "show" attribute or a config) given that the default behavior for
->> showing blobs is not to change.
-> 
-> My understanding was that the series as-is (not the implementation
-> but the external interface) makes us honor what the user tells us
-> better, without changing the behaviour for people who don't instruct
-> us to do anything differently, so I thought it was a good place to
-> stop at.
-> 
-> The 'show attribute or config' discussion would/should involve the
-> possibility of flipping the default, no?  After all, I was getting
-> the impression, especially from the "config", that this was "If we
-> had known better when we introduced textconv, we would have defined
-> it to apply in any situation where you would want a textual form of
-> a blob, not limited to diff" kind of thing.
-> 
-> That is a much longer term thing and my impression was that it can
-> built later on top of the series (once its implementation settles).
-> 
-> So, yes, thanks for pointing out these two points. The bloat in the
-> object array element I do care today, the feature and the interface
-> I do not think we have to worry about them today to hold the series
-> back.
+Am 23.05.2013 14:44, schrieb Joel Kaasinen:
+> [pseudo:~/tmp]% git --version
+> git version 1.7.10.4
+> [pseudo:~/tmp]% git init git-test
+> Initialized empty Git repository in/home/opqdonut/tmp/git-test/.git/
+> [pseudo:~/tmp]% cd git-test
+> [pseudo:~/tmp/git-test:master()]% mkdir -p a/data
+> [pseudo:~/tmp/git-test:master()]% mkdir data
+> [pseudo:~/tmp/git-test:master()]% echo '* binary' > data/.gitattribut=
+es
+> [pseudo:~/tmp/git-test:master()]% echo foo > a/data/foo
+> [pseudo:~/tmp/git-test:master()]% git add -A
+> [pseudo:~/tmp/git-test:master()]% git commit -m "foo"
+> [master (root-commit) 20fafbb] foo
+>   2 files changed, 1 insertion(+)
+>   create mode 100644 a/data/foo
+>   create mode 100644 data/.gitattributes
+> [pseudo:~/tmp/git-test:master()]% git grep foo
+> a/data/foo:foo
+> [pseudo:~/tmp/git-test:master()]% cd a
+> [pseudo:~/tmp/git-test/a:master()]% git grep foo
+> Binary file data/foo matches
 
-Well, if we decide "showing blobs with textconv is fundamentally
-different from showing diffs with textconv" then "--textconv" should not
-apply any textconv filters on blobs unless the user has specified them
-using a separate attribute (different from "diff").
+Just checked, with git 1.8.2.3 the last command shows a matching line.
 
-Therefore, I hesitate introducing the behavior of the current series.
-For me, it would introduce something of a "mixed beast".
+The issue has probably been fixed by 55c6168 (grep: stop looking at=20
+random places for .gitattributes).  The lowest release with that patch=20
+is git 1.8.0.1.
 
-I wouldn't hesitate introducing "textconv on by default for blobs the
-same as for diffs", but that would change existing behavior and the
-opposition is strong, for a good reason :)
-
-So, since that one isn't possible, I'm leaning towards the other
-extreme: treat the blob and diff case completely separately in the sense
-that different attributes are used. Then, even with "--textconv" there
-wouldn't be any blob filtering (show/grep) unless the user specified so
-using an attribute different from "diff".
-
-I'd rather try out the latter before having the "mixed beast" trickle
-down too much, even both its change in behavior and the one from the
-attribute version do not show up in daily use until you specify
-"--textconv" explicitly.
-
-Michael
+Ren=C3=A9
