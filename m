@@ -1,111 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: first parent, commit graph layout, and pull merge direction
-Date: Thu, 23 May 2013 14:01:39 -0700
-Message-ID: <7vbo81e7gs.fsf@alter.siamese.dyndns.org>
-References: <20130522115042.GA20649@inner.h.apk.li>
-	<7v4ndukhx0.fsf@alter.siamese.dyndns.org>
-	<20130523090657.GB23933@inner.h.apk.li>
-	<CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
-	<20130523102959.GP9448@inner.h.apk.li>
-	<20130523110839.GT27005@serenity.lan>
-	<7vd2shheic.fsf@alter.siamese.dyndns.org>
-	<20130523164114.GV27005@serenity.lan>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: push not resolving commit-ish?
+Date: Fri, 24 May 2013 00:05:50 +0300
+Message-ID: <20130523210550.GA31421@redhat.com>
+References: <20130523105310.GA17361@redhat.com>
+ <CAMP44s18KCYEZaMTn_S2znocyr-WDCT5ciuzLoYaSHPQFc4XCw@mail.gmail.com>
+ <7v4ndtftyf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Krey <a.krey@gmx.de>,
-	John Szakmeister <john@szakmeister.net>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu May 23 23:01:49 2013
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 23 23:05:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ufcdw-0001PY-TN
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 23:01:49 +0200
+	id 1Ufchc-0003QZ-8t
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 23:05:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759109Ab3EWVBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 17:01:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35892 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759072Ab3EWVBm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 17:01:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34B9622A79;
-	Thu, 23 May 2013 21:01:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=glsvHBoFpDdwF68a+sNcvE0t1bA=; b=bTygrG
-	VNu8S0WwKaINEuskPPof96qnXSmmQO4ZXKPaAvOk3SzjxMJDJq/nZhcQgb0RNlqq
-	E3o6LZ5gf/iODhUzzL08/9v+r8mQp3tPD/dI1cgzuvSxVnHtOgS2fBzNPXOLtPag
-	cClBhYsErzIwqrkmOssIiZhayFXTmrTOjvHXo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pbu9n9YvtAYs37pjdbxb9aIvjHbDfYkC
-	o1cIIjJJJgMBXWC4trlxdz/aX5ilOvDQdirTOeAf3Hqs7eX0rTq0jy+q80dTIJ7r
-	J5azRENE3qAxWdD5VEqOUAzIJje1WrSTUFsLuHhUNBki/eSmRhkkWD/ckgL/sSP+
-	ok0a99jjz18=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 270EA22A78;
-	Thu, 23 May 2013 21:01:41 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 79E0322A75;
-	Thu, 23 May 2013 21:01:40 +0000 (UTC)
-In-Reply-To: <20130523164114.GV27005@serenity.lan> (John Keeping's message of
-	"Thu, 23 May 2013 17:41:14 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F71CE05E-C3EB-11E2-9996-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758844Ab3EWVFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 17:05:32 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:40040 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758494Ab3EWVFb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 17:05:31 -0400
+Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r4NL5SoG027451
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Thu, 23 May 2013 17:05:28 -0400
+Received: from redhat.com (vpn-202-161.tlv.redhat.com [10.35.202.161])
+	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id r4NL5Q8i007501;
+	Thu, 23 May 2013 17:05:27 -0400
+Content-Disposition: inline
+In-Reply-To: <7v4ndtftyf.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225293>
 
-John Keeping <john@keeping.me.uk> writes:
+On Thu, May 23, 2013 at 11:10:32AM -0700, Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > On Thu, May 23, 2013 at 5:53 AM, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >> Looks like push can't resolve tags to commits.
+> >> Why is that?
+> >>
+> >> linux$ git push -f $PWD v3.10-rc2:refs/heads/vhost-next
+> >
+> > Perhaps v3.10-rc2^{}. Yeah, totally and completely not-user-friendly,
+> 
+> More commonly "v3.10-rc2^0:vhost-next", if you are truly pushing it
+> out to a remote repository, but then it invites a puzzlement "What
+> do you plan to do next after pushing?  The only reason v3.10-rc2 is
+> used is because there is not yet a local branch that will host the
+> vhost-next changes that is built on top of that tag (otherwise you
+> would be pushing that branch to vhost-next)".
+> 
+> But in this particular case, you are force-pushing into the current
+> repository, and it is spelled much more commonly
+> 
+>     git branch -f vhost-next v3.10-rc2
+> 
+> I would think.
 
-> I have to wonder how often "git pull" with no arguments actually does
-> what users really want (even if they don't know it!) when it doesn't
-> result in a fast-forward (and pull.rebase isn't configured).
-
-If you are in a totally centralized shared repository mindset
-without using topic branch workflow, --first-parent would not help
-you.  In your history the second parent is more likely to be the
-mainline.
-
-So for them "git pull" that either fast-forward when it can, or
-makes a merge that records the then-current state of the central
-shared repository, is perfectly sensible.  They will view gitk and
-see all the changes, "git shortlog" and "git log --no-merges" will
-give them what they expect.
-
-> Hence my suggestion to error when "git pull" doesn't result in a
-> fast-forward and no branch name is specified.  We could give some advice
-> like:
->
->     Your local changes are not included in the local branch and you
->     haven't told Git how to preserve them.
->
->     If you want to rebase your changes onto the modified upstream
->     branch, run:
->
->         git pull --rebase
-
-I can parse the first paragraph above, but cannot make much sense
-out of it.  Unless you are talking about local changes that are not
-committed yet, that is.  But in that case I fail to see what it has
-to do with the current discussion, or suggestion to use rebase.
-
->> But people need to realize that it is not solving the other half, a
->> more fundamental problem some people have in their workflow.
->
-> Yes, but some users don't realise that their workflow is broken, and
-> perhaps we can nudge them in the right direction.
-
-I actually avoided mentioning that deliberately, because I think the
-"flip the head when merging" encourages people to (1) work directly
-on 'master' and (2) pull too often when they shouldn't.
-
-That is detrimental if your goal is to nudge them in the right
-direction.
+That was just a bad example though, I really use it for
+push to remove.
