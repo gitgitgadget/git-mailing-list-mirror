@@ -1,94 +1,97 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v2] Document push --no-verify
-Date: Thu, 23 May 2013 17:37:11 +0300
-Message-ID: <20130523143711.GA24037@redhat.com>
-References: <87vc6arcf4.fsf@linux-k42r.v.cablecom.net>
- <ba24ea6f9fedc05690ee93a805d4f468650a942c.1369315855.git.trast@inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (May 2013, #05; Mon, 20)
+Date: Thu, 23 May 2013 07:40:29 -0700
+Message-ID: <7vr4gxhi8y.fsf@alter.siamese.dyndns.org>
+References: <7v38thrxwo.fsf@alter.siamese.dyndns.org>
+	<519C7431.8050208@drmicha.warpmail.net>
+	<7vy5b7j7kc.fsf@alter.siamese.dyndns.org>
+	<519DEA50.4030407@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Aaron Schrab <aaron@schrab.com>, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu May 23 16:38:13 2013
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu May 23 16:40:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfWei-0000cZ-RQ
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 16:38:13 +0200
+	id 1UfWh2-0001uA-QK
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 16:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759228Ab3EWOiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 10:38:08 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:11158 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758967Ab3EWOiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 10:38:07 -0400
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r4NEaotM023467
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Thu, 23 May 2013 10:36:50 -0400
-Received: from redhat.com (vpn-202-161.tlv.redhat.com [10.35.202.161])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id r4NEakuj019467;
-	Thu, 23 May 2013 10:36:48 -0400
-Content-Disposition: inline
-In-Reply-To: <ba24ea6f9fedc05690ee93a805d4f468650a942c.1369315855.git.trast@inf.ethz.ch>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+	id S1759281Ab3EWOkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 10:40:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38665 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758967Ab3EWOkc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 10:40:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4981920B97;
+	Thu, 23 May 2013 14:40:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nCPPu90zXh18yWKw20ThuGAE04A=; b=gEw44u
+	bfYjfx8RsyuSewKD9+yPUbsGA6t2eN3vERmneebeEo0kPq+NOVfXAEdQPsJIVMWv
+	ZTmpCgoGDtz7TZteb+ac/Oya4XHV7alqbnXIssBDbMczsr4/x2JUu/7BUy8qGFE2
+	NF+gAGOpA//dwlvolFlEkeq0fSLQXurvc6LVI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iJTaIhwJheUMbtwlWFN0RnKwcMKeccrq
+	V7BukQtfFqnSQz9MiWgYl0+2WqEjSLyjmYc66gTFD/bN+fTYJRjnrwGqOJ3z45in
+	AMh5XOu3jJ0ze1PzVlVoYq4OX1LXsyC6J/MzM4Wx0DlEdkoTWVrMXhVkakKHqc8N
+	c9iSFkVx+7w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40D4120B96;
+	Thu, 23 May 2013 14:40:31 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A58BD20B94;
+	Thu, 23 May 2013 14:40:30 +0000 (UTC)
+In-Reply-To: <519DEA50.4030407@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Thu, 23 May 2013 12:07:12 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B7A2ABDC-C3B6-11E2-A4B0-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225251>
 
-On Thu, May 23, 2013 at 03:34:11PM +0200, Thomas Rast wrote:
-> ec55559 (push: Add support for pre-push hooks, 2013-01-13) forgot to
-> add a note to git-push(1) about the new --no-verify option.
-> 
-> Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
+> Didn't you have concerns about storing the context in the object struct?
+> I can't quite judge how much of an issue this can be for fsck and such.
+> I don't want to increase the memory footprint unnecessarily, of course.
 
-Thanks. FWIW
+Yes. I thought I had a weather-balloon patch to fsck to use its own
+so that we have something to fall back on if it turns out to be a
+problem (and also so that anybody can see how big the difference is),
+but I highly suspect that any user of object-array other than what
+you are changing in the series wants to use the slim variant, which
+suggests that the information does not belong there.
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Other than that, the mechanism was still up for discussion (separate
+> "show" attribute or a config) given that the default behavior for
+> showing blobs is not to change.
 
-> ---
-> 
-> Junio replied privately that it should also mention the --verify
-> possibility.
-> 
-> So why not.  But this needs to be fixed across the board eventually;
-> 0f1930c (parse-options: allow positivation of options starting, with
-> no-, 2012-02-25) did not update any docs, so none of the other --no-
-> options mention their positive forms.
-> 
-> 
->  Documentation/git-push.txt | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index d514813..df5be26 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -11,7 +11,7 @@ SYNOPSIS
->  [verse]
->  'git push' [--all | --mirror | --tags] [--follow-tags] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
->  	   [--repo=<repository>] [-f | --force] [--prune] [-v | --verbose] [-u | --set-upstream]
-> -	   [<repository> [<refspec>...]]
-> +	   [--no-verify] [<repository> [<refspec>...]]
->  
->  DESCRIPTION
->  -----------
-> @@ -195,6 +195,11 @@ useful if you write an alias or script around 'git push'.
->  	be pushed. If on-demand was not able to push all necessary
->  	revisions it will also be aborted and exit with non-zero status.
->  
-> +--[no-]verify::
-> +	Toggle the pre-push hook (see linkgit:githooks[5]).  The
-> +	default is \--verify, giving the hook a chance to prevent the
-> +	push.  With \--no-verify, the hook is bypassed completely.
-> +
->  
->  include::urls-remotes.txt[]
->  
-> -- 
-> 1.8.3.rc3.486.gfe16094
+My understanding was that the series as-is (not the implementation
+but the external interface) makes us honor what the user tells us
+better, without changing the behaviour for people who don't instruct
+us to do anything differently, so I thought it was a good place to
+stop at.
+
+The 'show attribute or config' discussion would/should involve the
+possibility of flipping the default, no?  After all, I was getting
+the impression, especially from the "config", that this was "If we
+had known better when we introduced textconv, we would have defined
+it to apply in any situation where you would want a textual form of
+a blob, not limited to diff" kind of thing.
+
+That is a much longer term thing and my impression was that it can
+built later on top of the series (once its implementation settles).
+
+So, yes, thanks for pointing out these two points. The bloat in the
+object array element I do care today, the feature and the interface
+I do not think we have to worry about them today to hold the series
+back.
