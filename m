@@ -1,90 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (May 2013, #05; Mon, 20)
-Date: Thu, 23 May 2013 10:37:43 -0700
-Message-ID: <7vli75fvh4.fsf@alter.siamese.dyndns.org>
-References: <7v38thrxwo.fsf@alter.siamese.dyndns.org>
-	<519C7431.8050208@drmicha.warpmail.net>
-	<7vy5b7j7kc.fsf@alter.siamese.dyndns.org>
-	<519DEA50.4030407@drmicha.warpmail.net>
-	<7vr4gxhi8y.fsf@alter.siamese.dyndns.org>
-	<519E366A.5040504@drmicha.warpmail.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Random thoughts on "upstream"
+Date: Thu, 23 May 2013 23:11:21 +0530
+Message-ID: <CALkWK0n+_QqavstRCt8zM5ahmu9jnKB4M4XwdtqB4qSsJgq=hQ@mail.gmail.com>
+References: <7vobca6c7r.fsf@alter.siamese.dyndns.org> <CAMP44s2t3+yBQMj9uSd_=3w0CgeJsHeAQM051j7Xt+SqVthvzQ@mail.gmail.com>
+ <7vobca3465.fsf@alter.siamese.dyndns.org> <7vzjvu1jes.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=rHFQ14G8baYpY7gYo+Qb+5a0qOKZGBTrp6BamKC2vRg@mail.gmail.com>
+ <7vk3mx1rox.fsf@alter.siamese.dyndns.org> <CALkWK0mLtc8dmMPOcLMez1agF1+ZMUDAUwtwmiKSxOCfyiW0Bw@mail.gmail.com>
+ <7vk3mxze8v.fsf@alter.siamese.dyndns.org> <CALkWK0kYKZGhthdrb6-7RD_c2A7E9rscAZU3=JHM-4rYre6w=Q@mail.gmail.com>
+ <7vmwrr1pem.fsf@alter.siamese.dyndns.org> <CALkWK0=6L529C452MaNGksL5KeVb+cL1SeC=FwA9veS=tNQurA@mail.gmail.com>
+ <7vfvxixoks.fsf@alter.siamese.dyndns.org> <CALkWK0m1x_qrJfQ2Xw3w_kVuM-JHERFukbfxHyR08ODvxysKzw@mail.gmail.com>
+ <7vppwhfw20.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu May 23 19:37:56 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 23 19:42:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfZSa-0005Ap-Ew
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 19:37:52 +0200
+	id 1UfZWj-0007od-Lz
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 19:42:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758340Ab3EWRhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 13:37:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48341 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757992Ab3EWRhr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 13:37:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39F0D208BC;
-	Thu, 23 May 2013 17:37:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=auoV2FEq+WNEAp3DHvd30VPfO2k=; b=kItZuv
-	HmKBWjbmXb14nHNv5/g7bhc+8wcSzSSCUShCMQwXmMwrIPNl9SS3zyc/w5HeHiLw
-	T5u4XeJmPkhy73uEO5JmEjEWOOwUOfvtOmA8nymID/x9toO3O64s1PSC8x0F1uW7
-	oDEu1GD5kOKnD3PC5Cc80raLVWB2FYCbKEsdc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=D/oLBYrU8+qWYJzeV8hFTKHgZ6IQtEEm
-	JAqUi5LMUo6C6eH77T215DQplnm+rHiEhobHDPqPtDis/HjxKncYyEJ3k46EPdaX
-	81zX9PR7bZRmBWbDw1KfCsF/64ZTFrmTb4+aoHM92p+QMsSJ7HdhrCHhPLDXeo3E
-	FkFK371c1A0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31304208BB;
-	Thu, 23 May 2013 17:37:47 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6FAB208BA;
-	Thu, 23 May 2013 17:37:46 +0000 (UTC)
-In-Reply-To: <519E366A.5040504@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Thu, 23 May 2013 17:31:54 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7B30710C-C3CF-11E2-99E7-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758299Ab3EWRmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 13:42:05 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:58517 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757992Ab3EWRmD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 13:42:03 -0400
+Received: by mail-ie0-f172.google.com with SMTP id 16so9513742iea.17
+        for <git@vger.kernel.org>; Thu, 23 May 2013 10:42:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=iVVtrxUr8Kt20dP4hsRkFbOkRS5F+zephLyqbY1fcG0=;
+        b=RAtLUhVDHIJtUKIvKGw7GYKrPKH0B1cPJ5HJPTCD4qwuzx2LyW0112uaKR1SG9Ioh9
+         UwbF2mEq1D4ueYJI9TArwCX/5UkjMlYYK14HMULSVGbAm1VjbF+NSvH/Zwa2hIAp2JAc
+         WmVWnaqhzBVWZxEM2UJ4mgmXkkaFuW0O55pbEyW08bi5oyDp7bbNpL2kowIqtmY6J7O7
+         IM2kiJOp3Nt+ppGrRNIrQcVnsZtK6xvQA2Tot3MlZ566veiXQXq8RJvZmKVtLOVA7nEk
+         SX4MU5IEdRkLRlXMAFBDajy2fGV2NBGXreCoZ5F3gq5QnC0drLfuXQwguaXMYA+jwd+h
+         A03g==
+X-Received: by 10.42.47.77 with SMTP id n13mr10089165icf.12.1369330922018;
+ Thu, 23 May 2013 10:42:02 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Thu, 23 May 2013 10:41:21 -0700 (PDT)
+In-Reply-To: <7vppwhfw20.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225274>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Junio C Hamano wrote:
+> I am not saying default=single would be _the_ single right way to
+> solve it, but "when you have default=single, remote.$name.push is
+> used only to describe the mapping, not forcing you to push
+> everything out at once" is one possible solution to that.
 
-> Well, if we decide "showing blobs with textconv is fundamentally
-> different from showing diffs with textconv" then "--textconv" should not
-> apply any textconv filters on blobs unless the user has specified them
-> using a separate attribute (different from "diff").
+The big advantage it has, in my opinion, is ease of implementation:
+you'd essentially have to grab the remote.<name>.push refspec, rewrite
+it to replace refs/heads/*: with $HEAD: and feed that refspec to the
+transport layer.  Compare that to inventing a new refspec syntax,
+which is a mammoth task.  We can always extend the refspec later, if
+we want that.  I wonder if it makes sense to bake the functionality
+into current though: will we be breaking anything?
 
-I had an impression that the ship has already sailed wrt to "diff"
-being pretty much interchangeable as "text" (or "non binary") in the
-attribute system long time ago.
-
-> Therefore, I hesitate introducing the behavior of the current series.
-> For me, it would introduce something of a "mixed beast".
->
-> I wouldn't hesitate introducing "textconv on by default for blobs the
-> same as for diffs",
-
-I would.  But I wouldn't for "the user asks for --textconv, the user
-expects the blob shown with mangling", which sounds like a good
-thing to do.
-
-And there is anything wrong to refine later where exactly that
-textconv filter is defined.  At this moment, "diff.textconv" is the
-only place the user could even contemplate setting one, and there is
-no risk for confusion.  "blob.textconv" can be introduced much later
-when some users actually want to have a pair of different filters,
-at that point "diff.textconv" will become a backward compatiblity
-fallback for that filter.
+(My opinion has changed after wrestling with the horrible transport layer)
