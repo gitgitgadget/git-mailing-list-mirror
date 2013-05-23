@@ -1,133 +1,217 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: first parent, commit graph layout, and pull merge direction
-Date: Thu, 23 May 2013 17:41:14 +0100
-Message-ID: <20130523164114.GV27005@serenity.lan>
-References: <20130522115042.GA20649@inner.h.apk.li>
- <7v4ndukhx0.fsf@alter.siamese.dyndns.org>
- <20130523090657.GB23933@inner.h.apk.li>
- <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
- <20130523102959.GP9448@inner.h.apk.li>
- <20130523110839.GT27005@serenity.lan>
- <7vd2shheic.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6] Add new git-related helper to contrib
+Date: Thu, 23 May 2013 09:54:50 -0700
+Message-ID: <7v8v35hc11.fsf@alter.siamese.dyndns.org>
+References: <1368978823-18247-1-git-send-email-felipe.contreras@gmail.com>
+	<7vr4gyizti.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0pXLmjVUwsVWiN2G5QReh80spXjvy_6GuUGRz1RmUbLQ@mail.gmail.com>
+	<7vd2siiqsr.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2ETSxebGxXJV_BYEqTC5gJMVdQLbnTUomrie2rHhdmDg@mail.gmail.com>
+	<7v8v36iq3e.fsf@alter.siamese.dyndns.org>
+	<7v4nduipvb.fsf@alter.siamese.dyndns.org>
+	<7vzjvmh98r.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1_=HSgZA=abHJ3sgDbUyfkF78qO+sR1+Aact3o7bAgLA@mail.gmail.com>
+	<7vvc6ah81g.fsf@alter.siamese.dyndns.org>
+	<CAMP44s37a0_wVVef+QVnLNvc8Uos_XpCZAtpX0RmQyMcuJHUHw@mail.gmail.com>
+	<CAMP44s18ps9JtY7+mvXVbuZu3cm7bHnK1vCzMWqBdvawLr+zzA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Krey <a.krey@gmx.de>,
-	John Szakmeister <john@szakmeister.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 23 18:41:31 2013
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 23 18:55:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfYa0-0006CK-Pq
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 18:41:29 +0200
+	id 1UfYnA-0005hT-Lu
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 18:55:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759210Ab3EWQlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 12:41:24 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:54515 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752403Ab3EWQlY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 12:41:24 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 5B0B01980E8;
-	Thu, 23 May 2013 17:41:23 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -10.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-10.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yYFsicKOwFOS; Thu, 23 May 2013 17:41:22 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S932076Ab3EWQyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 12:54:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54437 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759949Ab3EWQyx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 12:54:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C3390215BB;
+	Thu, 23 May 2013 16:54:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dsZTV6Ze8BGrwe9XC6m6U+fkMzk=; b=lnfSnT
+	tM2AhueM00ji+Cd00tK7v63OYcdPleqaGm/rmdKDedaaBTpkdUXs7Seg31tV48RU
+	lOS9CJH1atb9/zHh+UsqyYT5STlbAnbyZ2ntPLNdK0HgvArjXhFtQeiLxVEbHx93
+	ISpByjYEUIDQD5RcHVOyg/5YNq+sv2tqMi/40=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lvg38U81s+nAp5nG2Lgz3a5FeGm2w+6s
+	70IY1fuENcgNQYQcqCq62OGK4uTGEL62gP7759UrZeT+vjmSudfjhfcBAPDrFcJU
+	VzXaGwLYeyEEftxTguUUIqUQLBBARa8tt77YgUB3wkx3jcntk5KtYLH+PAW2y7ZY
+	Jy8N1C3uq2Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B875A215BA;
+	Thu, 23 May 2013 16:54:52 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 14213198102;
-	Thu, 23 May 2013 17:41:16 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7vd2shheic.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E2974215B8;
+	Thu, 23 May 2013 16:54:51 +0000 (UTC)
+In-Reply-To: <CAMP44s18ps9JtY7+mvXVbuZu3cm7bHnK1vCzMWqBdvawLr+zzA@mail.gmail.com>
+	(Felipe Contreras's message of "Thu, 23 May 2013 00:22:07 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7C835598-C3C9-11E2-82A5-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225266>
 
-On Thu, May 23, 2013 at 09:01:15AM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > I've been annoyed by this at $DAYJOB recently.  A lot of people seem to
-> > blindly "git pull" without much thought about how the history is ending
-> > up and what they actually want to do.
-> 
-> I think these two are essentially the same thing, and having an
-> option to flip the heads of a merge only solves a half of the
-> problem.
-> 
-> A merge that shows everybody else's work merged into your history
-> means you are the integrator, the keeper of the main history.  And
-> the first-parent view of the history is useful only when the keeper
-> of the main history takes good care of the main history.
-> 
-> When you are using a "central shared repository" workflow, if you
-> had and used an option to flip the heads of a merge to record what
-> you have done so far as a side branch of what everybody else did to
-> do the merge, or if you rebased your work on top of what everybody
-> else did, the first-parent view would make a bit more sense than
-> what you currently get.  At least, everybody else's work will not
-> appear as a side branch that does 47 unrelated things, and your work
-> will appear as a side branch.  That is a big plus.
-> 
-> But the other half of the problem still remains, i.e. "what they
-> actually want to do".  People tend to do too many "pull" when their
-> work is not ready, only to "catch up", and that is the real problem.
-...
-> One obvious way to solve it is to use a topic branch workflow (the
-> first picture above; 'x's are built not on local 'master'), and you
-> do a "git pull" from the shared repository while you are on your
-> 'master', which is free of your 'x's until that 6-commit series is
-> complete and ready.  Then you locally merge that topic branch and
-> push it back for everybody to see, which will give you the first
-> picture in this message.  Incidentally, this does not need the "flip
-> the heads" option.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Yes, I don't think this is as much of a problem when using a topic
-branch workflow, because it's clear what the history should look like
-and users are expected to get it right.
+> On Wed, May 22, 2013 at 11:07 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> On Wed, May 22, 2013 at 7:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>
+>>>>> IIRC, git-gui runs two blames, one without any -C and one with (I do
+>>>>> not offhand recall how many -C it uses) to show both.
+>>>>
+>>>> 'git blame' is a very expensive operation, perhaps we should add
+>>>> another option so users don't need to run two blames to find this.
+>>>
+>>> Yes, you could add a "struct origin *suspect_in_the_same_file" next
+>>> to the current "struct origin *suspect" to the blame_entry in order
+>>> to represent the origin you would get if you were to stop at a "move
+>>> across files" event, and keep digging, when you are operating under
+>>> "-C -C" or higher mode.
+>>
+>> No, this is what I meant:
+>
+> But that would not print the right line numbers, so perhaps:
 
-Where I see this is when people are aiming for a linear history but
-don't get that because with "git pull" to catch up they end up with
-these backwards merges.  In these cases, I think what users really want
-is "git pull --rebase".
+Users of full-output may want to be able to see the same thing.
 
-I have to wonder how often "git pull" with no arguments actually does
-what users really want (even if they don't know it!) when it doesn't
-result in a fast-forward (and pull.rebase isn't configured).
+I have a suspicion that you misread what assign_blame() does.  The
+first inner loop to find one "suspect" is really what it says.  It
+loops over blame entries in the scoreboard but it is not about
+finding one "entry", but is to find one "suspect".  The "ent" found
+in the loop that you store in tmp_ent is no more special than any
+other "ent" that shares the same "suspect" as its origin.
 
-Hence my suggestion to error when "git pull" doesn't result in a
-fast-forward and no branch name is specified.  We could give some advice
-like:
+Imagine that your scoreboard originally has three blocks of text
+(i.e. blame_entry) A, B, and C, and the current suspect for A and C
+are the same, while we already know what the final guilty party for
+B is (which may be some descendant of the "suspect").
 
-    Your local changes are not included in the local branch and you
-    haven't told Git how to preserve them.
+Once we find one "suspect" in the first inner loop, the call to
+pass_blame() does everything it can do to exonerate that "suspect".
 
-    If you want to rebase your changes onto the modified upstream
-    branch, run:
+It runs a single diff between the suspect and each of its parents to
+find lines in both A and C that can be blamed to one of these
+parents, and blame entries A and C are split into pieces, some of
+which still have the same suspect as their origin, which are where
+their lines originate from, while others are attributable to these
+parents or their ancestors.
 
-        git pull --rebase
+If you keep the original entry for A to do something special, like
+printing what the original range of A was before it was split by
+pass_blame(), wouldn't you need to do the same for C?  We will not
+be visiting C later in the outer while(1) loop, as a single call to
+pass_blame() for "suspect" we did when we found it in A has already
+taken care of it.
 
-> Solving half a problem is better than solving no problem, and
-> especially because not all changes need to be multi-commit series
-> but can be done directly, perfectly and fully on the local 'master'
-> (i.e. 2+3+1=6 split would not happen for such changes).  For these
-> reasons, I personally am not strongly opposed to a "flip the heads"
-> option, if implemented cleanly.
-> 
-> But people need to realize that it is not solving the other half, a
-> more fundamental problem some people have in their workflow.
+I am not sure what you are trying to achieve with that found-guilty
+logic, even if the "save away in tmp_ent" logic is changed to keep
+all the blame entries that have "suspect" we are looking at as their
+origin.  When the current suspect is found to have passed all lines
+intact from its parents, we will see found-guilty left to be false.
 
-Yes, but some users don't realise that their workflow is broken, and
-perhaps we can nudge them in the right direction.
+How would it make the original blame_entry (perhaps halfway) guilty
+in that situation?
+
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -1500,25 +1500,16 @@ static int emit_one_suspect_detail(struct
+> origin *suspect, int repeat)
+>  	return 1;
+>  }
+>
+> -/*
+> - * The blame_entry is found to be guilty for the range.  Mark it
+> - * as such, and show it in incremental output.
+> - */
+> -static void found_guilty_entry(struct blame_entry *ent)
+> +static void print_guilty_entry(struct blame_entry *ent)
+>  {
+> -	if (ent->guilty)
+> -		return;
+> -	ent->guilty = 1;
+> -	if (incremental) {
+> -		struct origin *suspect = ent->suspect;
+> -
+> -		printf("%s %d %d %d\n",
+> -		       sha1_to_hex(suspect->commit->object.sha1),
+> -		       ent->s_lno + 1, ent->lno + 1, ent->num_lines);
+> -		emit_one_suspect_detail(suspect, 0);
+> -		write_filename_info(suspect->path);
+> -		maybe_flush_or_die(stdout, "stdout");
+> -	}
+> +	struct origin *suspect = ent->suspect;
+> +
+> +	printf("%s %d %d %d\n",
+> +			sha1_to_hex(suspect->commit->object.sha1),
+> +			ent->s_lno + 1, ent->lno + 1, ent->num_lines);
+> +	emit_one_suspect_detail(suspect, 0);
+> +	write_filename_info(suspect->path);
+> +	maybe_flush_or_die(stdout, "stdout");
+>  }
+>
+>  /*
+> @@ -1531,14 +1522,19 @@ static void assign_blame(struct scoreboard *sb, int opt)
+>  	struct rev_info *revs = sb->revs;
+>
+>  	while (1) {
+> -		struct blame_entry *ent;
+> +		struct blame_entry *ent, tmp_ent;
+>  		struct commit *commit;
+>  		struct origin *suspect = NULL;
+> +		int found_guilty = 0;
+>
+>  		/* find one suspect to break down */
+> -		for (ent = sb->ent; !suspect && ent; ent = ent->next)
+> -			if (!ent->guilty)
+> +		for (ent = sb->ent; ent; ent = ent->next)
+> +			if (!ent->guilty) {
+> +				tmp_ent = *ent;
+>  				suspect = ent->suspect;
+> +				break;
+> +			}
+> +
+>  		if (!suspect)
+>  			return; /* all done */
+>
+> @@ -1564,9 +1560,20 @@ static void assign_blame(struct scoreboard *sb, int opt)
+>  			commit->object.flags |= UNINTERESTING;
+>
+>  		/* Take responsibility for the remaining entries */
+> -		for (ent = sb->ent; ent; ent = ent->next)
+> -			if (same_suspect(ent->suspect, suspect))
+> -				found_guilty_entry(ent);
+> +		for (ent = sb->ent; ent; ent = ent->next) {
+> +			if (same_suspect(ent->suspect, suspect)) {
+> +				if (ent->guilty)
+> +					continue;
+> +				found_guilty = ent->guilty = 1;
+> +				if (incremental)
+> +					print_guilty_entry(ent);
+> +			}
+> +		}
+> +
+> +		if (incremental && !found_guilty &&
+> +				!is_null_sha1(suspect->commit->object.sha1))
+> +			print_guilty_entry(&tmp_ent);
+> +
+>  		origin_decref(suspect);
+>
+>  		if (DEBUG) /* sanity */
