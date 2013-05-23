@@ -1,77 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Fixing volatile HEAD in push.default = current
-Date: Thu, 23 May 2013 07:49:08 -0700
-Message-ID: <7vip29hhuj.fsf@alter.siamese.dyndns.org>
-References: <1369160600-22337-1-git-send-email-artagnon@gmail.com>
-	<7v38tgno2k.fsf@alter.siamese.dyndns.org>
-	<CALkWK0m3QP_eE14y8UoJ+HeFzkKM=1nVKAnYJcTrwQMp+Atphg@mail.gmail.com>
-	<7vppwkm682.fsf@alter.siamese.dyndns.org>
-	<CALkWK0np7o0eH8ZsWQSwk1Cdwnnpj5B==gS8kAE+OkTskASOsQ@mail.gmail.com>
-	<7v7girks4s.fsf@alter.siamese.dyndns.org>
-	<CALkWK0kXonM+J92KHs+dW31A_kZ8h9jNqwYn8AqT_V+GJhe_vg@mail.gmail.com>
-	<7vppwjj5ws.fsf@alter.siamese.dyndns.org>
-	<CALkWK0mfGWA3aBntQQU5fkCJDPx+MUOScvMRJjS+JzjNucFzPw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 23 16:49:17 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 0/7] Let's get that @{push}!
+Date: Thu, 23 May 2013 20:42:43 +0530
+Message-ID: <1369321970-7759-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 23 17:11:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfWpQ-0007DV-7r
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 16:49:16 +0200
+	id 1UfXAh-0003VZ-62
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 17:11:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758267Ab3EWOtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 10:49:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55241 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757920Ab3EWOtL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 10:49:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFDF320E8E;
-	Thu, 23 May 2013 14:49:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PXUuYZU52F4UJu4ZZlUXKr3K5Iw=; b=rjOHhr
-	qqipeYqSMorg+yM53FWzj2GTL73bMdyE/T2McBSbBi1Ed1Q00ARMrHtHp85ZIIaX
-	SszXQ9KVr7hZyFrkLsa0g3TnO997Pv80AuKE3MZ8plkhRZUXMq1R2coqJB5G0d+w
-	wrPH+45q1o85MzR1eKAhz0TmIRYXXUM+EtxTI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iSKgTunhliNX0n/p6n1cFejl3TjsGxCf
-	1cLRGWxc6wiVdEGtAFaRWewHqxbIglqCwh1fls3V5liR8JvsLUUF3LXaFtBbbEMK
-	XxavNbho/8s0qqWEbFr7PKSAHmsOHxb6aMXCuz6E9+dWye8XEGjfQt2R5AMxw3kr
-	tuPc13AFll0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5BBD20E8D;
-	Thu, 23 May 2013 14:49:10 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5839A20E8C;
-	Thu, 23 May 2013 14:49:10 +0000 (UTC)
-In-Reply-To: <CALkWK0mfGWA3aBntQQU5fkCJDPx+MUOScvMRJjS+JzjNucFzPw@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Thu, 23 May 2013 13:25:55 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: ED638E8E-C3B7-11E2-AAF8-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759162Ab3EWPLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 11:11:11 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:60125 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759063Ab3EWPLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 11:11:07 -0400
+Received: by mail-pa0-f50.google.com with SMTP id fb11so1699070pad.23
+        for <git@vger.kernel.org>; Thu, 23 May 2013 08:11:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=y9wwqyDg9+n4C12XrBEHmAtPGyklpNMRe2ndvGhLZN8=;
+        b=VxZI4RFZx11ucWI7iryH4hiYyModEpnJ8B16VE2wIgUPyt89QvQFzdspnBAm73iq/W
+         kess82DrVgVfprITZMONs+KSU731NaP5u5iN1q5OXLWOMu0IxGj4TbsIbSgN+HOAy7DQ
+         NtH0sp5psR/uZRw1P/A4bJSLukyBNYWdBz275uHZfHpJbglrQajQ2yI5F13dOh+WhXNB
+         PgXxEfZ+vZR3QL8Kft+Relm75V1VohqToU06JTWRyGooOsK1wx1vCU46kCZhRCRJc9Bu
+         eYF996AZlGYqwn86vy5PmKaXoNrRcJbCn0Jzehx4UEBRuREmzYbGNySqcFc3Cd2+oXp9
+         2kKw==
+X-Received: by 10.66.159.6 with SMTP id wy6mr13741147pab.206.1369321867255;
+        Thu, 23 May 2013 08:11:07 -0700 (PDT)
+Received: from luneth.maa.corp.collab.net ([182.71.239.158])
+        by mx.google.com with ESMTPSA id vb8sm12099173pbc.11.2013.05.23.08.11.05
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 23 May 2013 08:11:06 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc3.17.gd95ec6c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225254>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+[7/7] is the meat.  Sorry it's in such a messy state: I was having a
+field day tracing what push is actually doing.  Anyway, I wanted to
+send out the series now to get early feedback.
 
-> I would argue that there is something to "fix", but that fix involves
-> making the cp a purely atomic operation which is super-complicated,
-> and totally not worth it.  Would you _not_ like the above example to
-> work?
+In other news: why on earth is push doing _so_ much processing before
+pushing?  Is it written very badly, or am I missing something?
 
-No.  I do not think I like the above example to "work", at all.
+Thanks.
 
-I know we live in the real world, and I do not want to see such
-serializing implementations of cp or rm that try to "fix", as it
-will interfere my everyday use where such a race does not matter.
+(based on rr/die-on-missing-upstream)
+
+Ramkumar Ramachandra (7):
+  sha1_name: abstract upstream_mark() logic
+  sha1_name: factor out die_no_upstream()
+  sha1_name: remove upstream_mark()
+  remote: expose parse_push_refspec()
+  remote: expose get_ref_match()
+  sha1_name: prepare to introduce AT_KIND_PUSH
+  sha1_name: implement finding @{push}
+
+ remote.c    |   4 +--
+ remote.h    |   4 +++
+ sha1_name.c | 111 ++++++++++++++++++++++++++++++++++++++++++++----------------
+ 3 files changed, 88 insertions(+), 31 deletions(-)
+
+-- 
+1.8.3.rc3.17.gd95ec6c.dirty
