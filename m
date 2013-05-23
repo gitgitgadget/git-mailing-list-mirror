@@ -1,85 +1,63 @@
-From: Andreas Krey <a.krey@gmx.de>
+From: John Szakmeister <john@szakmeister.net>
 Subject: Re: first parent, commit graph layout, and pull merge direction
-Date: Thu, 23 May 2013 11:06:57 +0200
-Message-ID: <20130523090657.GB23933@inner.h.apk.li>
-References: <20130522115042.GA20649@inner.h.apk.li> <7v4ndukhx0.fsf@alter.siamese.dyndns.org>
+Date: Thu, 23 May 2013 05:48:38 -0400
+Message-ID: <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
+References: <20130522115042.GA20649@inner.h.apk.li>
+	<7v4ndukhx0.fsf@alter.siamese.dyndns.org>
+	<20130523090657.GB23933@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 23 11:07:12 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 23 11:48:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfRUN-0001SM-QL
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 11:07:12 +0200
+	id 1UfS8a-0004wV-CH
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 11:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757592Ab3EWJHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 05:07:05 -0400
-Received: from continuum.iocl.org ([217.140.74.2]:38715 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757415Ab3EWJHD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 05:07:03 -0400
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id r4N96vS30796;
-	Thu, 23 May 2013 11:06:57 +0200
-Content-Disposition: inline
-In-Reply-To: <7v4ndukhx0.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+	id S1757890Ab3EWJsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 05:48:40 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:44185 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757494Ab3EWJsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 05:48:39 -0400
+Received: by mail-wi0-f177.google.com with SMTP id hr14so1941425wib.4
+        for <git@vger.kernel.org>; Thu, 23 May 2013 02:48:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=ooeLQJv/NIP5z/BCu2tgkAR2r/+he66KAgWhmudwC3Y=;
+        b=ksMDAbV0n3C9DCBygLVyIMnudghGW7Frm/k01OnhBPjHmrsRwxYKpLwYt4BsJ1dQ9y
+         bF4biF+pBGpYViwXX1X8Aguh3cvFiMHgL/FGgExZlci+/GPiKjj3U3FOcctXsllebgS+
+         AS6ZrdAherdP9CAoSvu97hWeRDFJ26p8jlBDU56lwOlILJS+XmSl5JBwfgyLhg21Ifx4
+         +KYo21d+faW1GYHALGrR1ZvQn6krMUS/IQ4ZvcVV+c9HYaF6pO7CpYCuFmQT5QtdFV0H
+         xsrZ+SyEuH1oG59GZINL59SJDauPgUAhJigTWwbSzulPeEpQ/xm9EUeKTkh8wENZbz7+
+         hdzg==
+X-Received: by 10.180.37.229 with SMTP id b5mr42082019wik.29.1369302518239;
+ Thu, 23 May 2013 02:48:38 -0700 (PDT)
+Received: by 10.180.5.33 with HTTP; Thu, 23 May 2013 02:48:38 -0700 (PDT)
+In-Reply-To: <20130523090657.GB23933@inner.h.apk.li>
+X-Google-Sender-Auth: nMnuzGSjiAM0WWEnHM-7ES3_yxA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225227>
 
-On Wed, 22 May 2013 11:07:07 +0000, Junio C Hamano wrote:
-...
-> If you have a four-commit segment in your commit ancestry graph
+On Thu, May 23, 2013 at 5:06 AM, Andreas Krey <a.krey@gmx.de> wrote:
+[snip]
+> ...
+>> Don't do that, then.
+>
+> :-) Problem is, in this case 'I' expands to about
+>     1<<7 people I need to educate on this.
 
-I never had yet. :-(
+This is a feature of `git pull` that I really despise.  I really wish
+`git pull` treated the remote as the first parent in its merge
+operation.
 
-> (time flows from left to right; turn your head 90-degrees to the
-> right if you want a gitk representation):
-> 
->     ---A--X
->         \/
->         /\
->     ---B--Y
-> 
-> where X and Y are both merges between A and B, having A as their
-> first parent, how would you express such a graph with first-parent
-> chain going a straight line?
-
-Of course there are multiple possible straight lines and how it looks
-depends on the order I use the existing heads to fish them out. (That
-is, when the straight lines join, I need to bend one of them.) Assuming
-I take the one where X is on, I expect a look like
-
------A-------X-----
-      \      |
-       +- Y--------
-          |  |
------B----+--+
-
-Branch heads that are reachable from other head are picked after those
-that aren't reachable.
-
-The point is to get the feature branches being displayed on separate
-lanes (and thus visibly sticking out) and not being intermingled with
-the longer-living branches.
-
-...
-> Don't do that, then.
-
-:-) Problem is, in this case 'I' expands to about
-    1<<7 people I need to educate on this.
-
-Andreas
-
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+-John
