@@ -1,115 +1,110 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: first parent, commit graph layout, and pull merge direction
-Date: Thu, 23 May 2013 22:55:57 +0100
-Message-ID: <20130523215557.GX27005@serenity.lan>
-References: <20130522115042.GA20649@inner.h.apk.li>
- <7v4ndukhx0.fsf@alter.siamese.dyndns.org>
- <20130523090657.GB23933@inner.h.apk.li>
- <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
- <20130523102959.GP9448@inner.h.apk.li>
- <20130523110839.GT27005@serenity.lan>
- <7vd2shheic.fsf@alter.siamese.dyndns.org>
- <20130523164114.GV27005@serenity.lan>
- <7vbo81e7gs.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v6] Add new git-related helper to contrib
+Date: Thu, 23 May 2013 16:58:12 -0500
+Message-ID: <CAMP44s3LcEkTghg-cBRux7sA54L-U93w5Znqa1jz2MnUWj8Rhw@mail.gmail.com>
+References: <1368978823-18247-1-git-send-email-felipe.contreras@gmail.com>
+	<7vr4gyizti.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0pXLmjVUwsVWiN2G5QReh80spXjvy_6GuUGRz1RmUbLQ@mail.gmail.com>
+	<7vd2siiqsr.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2ETSxebGxXJV_BYEqTC5gJMVdQLbnTUomrie2rHhdmDg@mail.gmail.com>
+	<7v8v36iq3e.fsf@alter.siamese.dyndns.org>
+	<7v4nduipvb.fsf@alter.siamese.dyndns.org>
+	<7vzjvmh98r.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1_=HSgZA=abHJ3sgDbUyfkF78qO+sR1+Aact3o7bAgLA@mail.gmail.com>
+	<7vvc6ah81g.fsf@alter.siamese.dyndns.org>
+	<CAMP44s37a0_wVVef+QVnLNvc8Uos_XpCZAtpX0RmQyMcuJHUHw@mail.gmail.com>
+	<CAMP44s18ps9JtY7+mvXVbuZu3cm7bHnK1vCzMWqBdvawLr+zzA@mail.gmail.com>
+	<7v8v35hc11.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0X-79Pn4gq_rqBbti-xUobyYDc8Gy-3-g=sq8siZqq8g@mail.gmail.com>
+	<7vppwhcqjq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Krey <a.krey@gmx.de>,
-	John Szakmeister <john@szakmeister.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 23 23:56:12 2013
+X-From: git-owner@vger.kernel.org Thu May 23 23:58:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfdUa-0002w4-GF
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 23:56:12 +0200
+	id 1UfdWc-0003lt-Sp
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 23:58:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759697Ab3EWV4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 17:56:08 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:39118 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759689Ab3EWV4H (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 17:56:07 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 1705BCDA61F;
-	Thu, 23 May 2013 22:56:06 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eM40kDJuKyhY; Thu, 23 May 2013 22:56:05 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id E1214CDA5BE;
-	Thu, 23 May 2013 22:55:59 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7vbo81e7gs.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759694Ab3EWV6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 17:58:15 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:45745 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759653Ab3EWV6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 17:58:14 -0400
+Received: by mail-la0-f52.google.com with SMTP id fo13so3729299lab.25
+        for <git@vger.kernel.org>; Thu, 23 May 2013 14:58:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=PNdN1ICGNhoeGlz/U35mG/T+VnSdck1DG7kMwdS0VvQ=;
+        b=nPyfktYd5VzljH31PGLX75PQfstPHw3j6lq293wyDzjDGqcobYU7OmbLYIyI89zFkv
+         LXTcf9GsP81gjkymDwTkirrXV5iczxWQkEUIfnEXujXZ7GA+yTIVKqwKMBiW/Mg1e0Cx
+         zaVdJlIhfBGVGZAXOf0jWl3sZ2Pyw0n5+AvLNdAYvALg+HLtbIb7IcHQHaZw+5ZUXIYE
+         YP7uIM6esD9QNPCFy+SmZhfTo2aX2LNxQnfbGl7j78j+sxDseedtb0/QoWj0zRQGo+pP
+         VL1Hb4fbzjx8EPtM/Z3SqJAJ5pB1is0ItslOHNVYqUCqRxIxhhTC8mo2hXW16vbUJt5W
+         fpDw==
+X-Received: by 10.112.218.102 with SMTP id pf6mr7439917lbc.77.1369346292558;
+ Thu, 23 May 2013 14:58:12 -0700 (PDT)
+Received: by 10.114.174.170 with HTTP; Thu, 23 May 2013 14:58:12 -0700 (PDT)
+In-Reply-To: <7vppwhcqjq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225306>
 
-On Thu, May 23, 2013 at 02:01:39PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > I have to wonder how often "git pull" with no arguments actually does
-> > what users really want (even if they don't know it!) when it doesn't
-> > result in a fast-forward (and pull.rebase isn't configured).
-> 
-> If you are in a totally centralized shared repository mindset
-> without using topic branch workflow, --first-parent would not help
-> you.  In your history the second parent is more likely to be the
-> mainline.
-> 
-> So for them "git pull" that either fast-forward when it can, or
-> makes a merge that records the then-current state of the central
-> shared repository, is perfectly sensible.  They will view gitk and
-> see all the changes, "git shortlog" and "git log --no-merges" will
-> give them what they expect.
+On Thu, May 23, 2013 at 4:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>>> Imagine that your scoreboard originally has three blocks of text
+>>> (i.e. blame_entry) A, B, and C, and the current suspect for A and C
+>>> are the same, while we already know what the final guilty party for
+>>> B is (which may be some descendant of the "suspect").
+>>
+>> I don't see how that's possible, but whatever.
+>
+> The tree in your latest commit HEAD has a file with block of text A
+> followed by block of text B followed by block of text C.  The latest
+> commit was the one that added B (perhaps new lines were inserted, or
+> perhaps existing contiguous block of text was replaced, there is no
+> difference between these two cases).  You start digging the history
+> of this file from HEAD.
+>
+> Your scoreboard begins with a single blame-entry that covers all
+> three segments, with its suspect set to HEAD.  Then pass_blame()
+> discovers that top and bottom segments are older than this latest
+> commit, and splits the originally-one blame entry into three blame
+> entries.  The first and the third blame entries cover the block A
+> and the block C respectively, and their suspect fields are both set
+> to HEAD^.  The second blame entry covers the block B and its suspect
+> does not change (it still is HEAD).  Then it returns to the caller.
+>
+> The caller of pass_blame() looks at the scoreboard and finds these
+> three blame entries.  The second one's supect is still the original
+> suspect the caller asked pass_blame() to exonerate blames for, and
+> the suspect failed to do so for block B.  The final blame for the
+> middle block is now known to be HEAD.
+>
+> After all of the above, the next iteration of while(1) loop begins.
+> That is how you arrive to the "whatever" situation.  You have three
+> blame entries, A, B and C, and suspect of A and C are the same,
+> while B has a different suspect.
+>
+> Then in that "next iteration", we pick blame entry for A and decide
+> to see if HEAD^, which is the suspect for A, can be exonerated of
+> blames for _any_ (not just A) blame entry it currently is suspected
+> for.  We call pass_blame() and it will find and process both A and
+> C with a single "git diff-tree", attempting to pass blame to HEAD^^
+> and its ancestors.
 
-Yes, but for people used to a cleaner history it's confusing to see the
-mainline branch and one small change the wrong way round.  When I see
-people doing this, it's normally something like:
+All right, my code still works in that situation.
 
-    ... do some work for several hours...
-    git commit -a
-    git push
-    # fails because it's not a fast forward
-    git pull
-    git push
-
-In this scenario, just adding --rebase to "git pull" actually results in
-a much more sensible history.
-
-> > Hence my suggestion to error when "git pull" doesn't result in a
-> > fast-forward and no branch name is specified.  We could give some advice
-> > like:
-> >
-> >     Your local changes are not included in the local branch and you
-> >     haven't told Git how to preserve them.
-> >
-> >     If you want to rebase your changes onto the modified upstream
-> >     branch, run:
-> >
-> >         git pull --rebase
-> 
-> I can parse the first paragraph above, but cannot make much sense
-> out of it.  Unless you are talking about local changes that are not
-> committed yet, that is.  But in that case I fail to see what it has
-> to do with the current discussion, or suggestion to use rebase.
-
-This isn't about "swap parents", it's about helping people realise that
-just "git pull" isn't necessarily the best thing for them to do, and
-that they may want --rebase.
-
-So I was asking if it would be sensible (possibly in Git 2.0) to make
-git-pull pass --ff-only to git-merge by default.
+-- 
+Felipe Contreras
