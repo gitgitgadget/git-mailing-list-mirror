@@ -1,77 +1,102 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 05/17] cmd_diff(): use an object_array for holding trees
-Date: Thu, 23 May 2013 09:21:21 +0200
-Message-ID: <519DC371.7090109@alum.mit.edu>
-References: <1368995232-11042-1-git-send-email-mhagger@alum.mit.edu> <1368995232-11042-6-git-send-email-mhagger@alum.mit.edu> <7v4ndwp7ed.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 0/3] Fixing volatile HEAD in push.default = current
+Date: Thu, 23 May 2013 13:25:55 +0530
+Message-ID: <CALkWK0mfGWA3aBntQQU5fkCJDPx+MUOScvMRJjS+JzjNucFzPw@mail.gmail.com>
+References: <1369160600-22337-1-git-send-email-artagnon@gmail.com>
+ <7v38tgno2k.fsf@alter.siamese.dyndns.org> <CALkWK0m3QP_eE14y8UoJ+HeFzkKM=1nVKAnYJcTrwQMp+Atphg@mail.gmail.com>
+ <7vppwkm682.fsf@alter.siamese.dyndns.org> <CALkWK0np7o0eH8ZsWQSwk1Cdwnnpj5B==gS8kAE+OkTskASOsQ@mail.gmail.com>
+ <7v7girks4s.fsf@alter.siamese.dyndns.org> <CALkWK0kXonM+J92KHs+dW31A_kZ8h9jNqwYn8AqT_V+GJhe_vg@mail.gmail.com>
+ <7vppwjj5ws.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 23 09:21:31 2013
+X-From: git-owner@vger.kernel.org Thu May 23 09:56:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfPq5-000673-65
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 09:21:29 +0200
+	id 1UfQO9-0005MB-E8
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 09:56:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751910Ab3EWHVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 03:21:25 -0400
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:44808 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751865Ab3EWHVY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 May 2013 03:21:24 -0400
-X-AuditID: 12074413-b7f226d000000902-80-519dc374d6d9
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id F1.BB.02306.473CD915; Thu, 23 May 2013 03:21:24 -0400 (EDT)
-Received: from [192.168.101.152] (mx.berlin.jpk.com [212.222.128.135] (may be forged))
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4N7LMsS007495
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 23 May 2013 03:21:23 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <7v4ndwp7ed.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrLKsWRmVeSWpSXmKPExsUixO6iqFtyeG6gwbaDLBZdV7qZLBp6rzBb
-	zLu7i8niR0sPswOLx6WX39k8nvXuYfS4eEnZ4/MmuQCWKG6bpMSSsuDM9Dx9uwTujG0Xt7EX
-	rGKtWPX4JmMD4wKWLkZODgkBE4lJ049C2WISF+6tZ+ti5OIQErjMKDH172JmkISQwDUmiftT
-	C0FsXgFtieNvTrGB2CwCqhIbD1xkB7HZBHQlFvU0M4HYogJhEu+XTWWFqBeUODnzCdgCEQE1
-	iYlth8BsZoE4iZ2dq8DqhQV8JH5daGWCWLycUeJg50awxZwCZhJ9l+8yQjToSLzre8AMYctL
-	bH87h3kCo8AsJDtmISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdc73czBK91JTS
-	TYyQgBbewbjrpNwhRgEORiUe3gM35gQKsSaWFVfmHmKU5GBSEuV1OTg3UIgvKT+lMiOxOCO+
-	qDQntfgQowQHs5II7+YeoBxvSmJlVWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoND
-	SYK35RBQo2BRanpqRVpmTglCmomDE2Q4l5RIcWpeSmpRYmlJRjwoVuOLgdEKkuIB2tsD0s5b
-	XJCYCxSFaD3FaMyx+fzkd4wcM34ASSGWvPy8VClx3hqQUgGQ0ozSPLhFsFT2ilEc6G9h3i6Q
-	Kh5gGoSb9wpoFRPQqqWn5oCsKklESEk1MDowXD99+F5ceP2Da/zK3RrXt2Yv/fVln4hqVEWU
-	5IrdDscONDx89HSe4a+NqgwpO/5kHea7vGvyY6VX4vMVKljTnFe0d9YutTvMpHZ4 
+	id S1756485Ab3EWH4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 03:56:38 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:64259 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753664Ab3EWH4g (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 03:56:36 -0400
+Received: by mail-ie0-f179.google.com with SMTP id c13so7736445ieb.38
+        for <git@vger.kernel.org>; Thu, 23 May 2013 00:56:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=l0J7cCiFe6rwK5K9IHZxlb4XbzSrvf9tMgGSe1D6HBo=;
+        b=mVpD/8+1RSQ8mSroSdYj8JT6iFP/2AAWxzGoX9B/pL1bVC/9h3rse0p+q4ZYGDNnGL
+         LRK0Y8q7qCWcrndFQmMAROGAHjGgMj+BBlEheNxLaOQ2x2N7E/bnr45DK6LJ7QqvqFRR
+         NLryGm2JMm9UU3kFTIKdvjnESqPf5QQaUfnoxiY4mAFkY5ZCp4AlhaMX8kDBN3S0YHGr
+         Qi6XjYrutN9YP/Tey3nxQql2oOIvczROjklfFuNbiJI7kVSWzcDCZNthGKCKjOXff1Da
+         EV7fHLc6sFsn3EOKruNWUegS8ZD6UV7a5m8Hqzfok/gfAykdrljrH312gLhHu1+nyxx9
+         QMzw==
+X-Received: by 10.43.68.134 with SMTP id xy6mr8854304icb.48.1369295796154;
+ Thu, 23 May 2013 00:56:36 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Thu, 23 May 2013 00:55:55 -0700 (PDT)
+In-Reply-To: <7vppwjj5ws.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225222>
 
-On 05/21/2013 07:30 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> Change cmd_diff() to use a (struct object_array) for holding the trees
->> that it accumulates, rather than rolling its own equivalent.
->>
-> 
-> A significant detail missing here is that this lifts the hardcoded
-> 100 tree limit in combined diff but that does not matter in
-> practice, I would suppose ;-).
+Junio C Hamano wrote:
+>     I have "largedir" I want to get rid of, but there is a directory
+>     I want to save, "largedir/precious", in it, so I do
+>
+>         cp -R largedir/precious precious
+>
+>     and then run 'rm -rf largedir' in another terminal in parallel.
 
-I'll note it anyway in v2 of the patch series.
+I would argue that there is something to "fix", but that fix involves
+making the cp a purely atomic operation which is super-complicated,
+and totally not worth it.  Would you _not_ like the above example to
+work?  Then how can you say that there's nothing to be fixed?
 
-Thanks for all of your comments.  I will send a re-roll after I hear
-back from you regarding patches 08, 09, and 10.
+Consider a slightly different example: I rename a file while having an
+active file handle open in a process that's reading the file.  Will
+the rename fail or will the fread() in the process fail?  Nope, both
+work fine.  Replace "rename" with "remove", and we still have the same
+answer.  Ofcourse there are no guarantees: I can start up another
+process to overwrite the sectors corresponding to that file's data
+with zeros; unless the complete file is there in the kernel buffer, a
+read() will eventually end up slurping in the zeros (or fail?), right?
+ It's just that it works in practice.
 
-Michael
+Yet another example: I have a terminal pointing to a directory, and I
+remove that directory in another terminal.  When I switch back to the
+original terminal, I can't cd .., because getcwd() fails.  This has
+annoyed me endlessly in practice, and I would really like to fix this
+if I can.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Don't accept the way things are, and assume that there's nothing to be
+"fixed".  In my opinion, if something about a piece of software annoys
+you, there is always something to fix.  It just depends on what _can_
+be fixed in a reasonable amount of time with a good engineering
+solution.  There's no need to go to the other extreme: I'm not
+interested in rewriting the whole operating system in Haskell and
+providing theoretical guarantees for everything.
+
+Coming back to our push example, I don't see why you think HEAD is
+special: I could even say git push master and expect it to race with
+an update-ref.  But nobody is complaining about that: if someone does
+complain, I would seriously consider copying master to PUSH_HEAD early
+(and push that).  With HEAD, however, someone is complaining (namely,
+me): pushing usually means that I've finished working on that branch,
+and want to switch to another branch and continue working.  Why should
+I have to wait for the push to complete?  I've hit this bug several
+times (from terminal as well as Magit), and this patch fixes the
+problem for me in practice.
+
+That said, I agree that my patch does not guarantee anything (and I
+will modify my commit message to clarify this).  I'm just expressing
+my opinion on the issue of "fixing problems".
