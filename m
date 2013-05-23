@@ -1,102 +1,106 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 0/3] Fixing volatile HEAD in push.default = current
-Date: Thu, 23 May 2013 13:25:55 +0530
-Message-ID: <CALkWK0mfGWA3aBntQQU5fkCJDPx+MUOScvMRJjS+JzjNucFzPw@mail.gmail.com>
-References: <1369160600-22337-1-git-send-email-artagnon@gmail.com>
- <7v38tgno2k.fsf@alter.siamese.dyndns.org> <CALkWK0m3QP_eE14y8UoJ+HeFzkKM=1nVKAnYJcTrwQMp+Atphg@mail.gmail.com>
- <7vppwkm682.fsf@alter.siamese.dyndns.org> <CALkWK0np7o0eH8ZsWQSwk1Cdwnnpj5B==gS8kAE+OkTskASOsQ@mail.gmail.com>
- <7v7girks4s.fsf@alter.siamese.dyndns.org> <CALkWK0kXonM+J92KHs+dW31A_kZ8h9jNqwYn8AqT_V+GJhe_vg@mail.gmail.com>
- <7vppwjj5ws.fsf@alter.siamese.dyndns.org>
+From: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
+Subject: Re: Remote branch can not be resolved as commit?
+Date: Thu, 23 May 2013 10:45:44 +0200
+Message-ID: <519DD738.4050807@ira.uka.de>
+References: <519CD63A.20802@kendallshaw.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 23 09:56:44 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Kendall Shaw <kshaw@kendallshaw.com>
+X-From: git-owner@vger.kernel.org Thu May 23 10:45:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfQO9-0005MB-E8
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 09:56:41 +0200
+	id 1UfR8r-0006NN-Lp
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 10:44:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756485Ab3EWH4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 03:56:38 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:64259 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753664Ab3EWH4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 03:56:36 -0400
-Received: by mail-ie0-f179.google.com with SMTP id c13so7736445ieb.38
-        for <git@vger.kernel.org>; Thu, 23 May 2013 00:56:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=l0J7cCiFe6rwK5K9IHZxlb4XbzSrvf9tMgGSe1D6HBo=;
-        b=mVpD/8+1RSQ8mSroSdYj8JT6iFP/2AAWxzGoX9B/pL1bVC/9h3rse0p+q4ZYGDNnGL
-         LRK0Y8q7qCWcrndFQmMAROGAHjGgMj+BBlEheNxLaOQ2x2N7E/bnr45DK6LJ7QqvqFRR
-         NLryGm2JMm9UU3kFTIKdvjnESqPf5QQaUfnoxiY4mAFkY5ZCp4AlhaMX8kDBN3S0YHGr
-         Qi6XjYrutN9YP/Tey3nxQql2oOIvczROjklfFuNbiJI7kVSWzcDCZNthGKCKjOXff1Da
-         EV7fHLc6sFsn3EOKruNWUegS8ZD6UV7a5m8Hqzfok/gfAykdrljrH312gLhHu1+nyxx9
-         QMzw==
-X-Received: by 10.43.68.134 with SMTP id xy6mr8854304icb.48.1369295796154;
- Thu, 23 May 2013 00:56:36 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Thu, 23 May 2013 00:55:55 -0700 (PDT)
-In-Reply-To: <7vppwjj5ws.fsf@alter.siamese.dyndns.org>
+	id S1757734Ab3EWIoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 04:44:54 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:58676 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757694Ab3EWIou (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 May 2013 04:44:50 -0400
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1UfR8d-0000oD-OE; Thu, 23 May 2013 10:44:49 +0200
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 587 
+	id 1UfR8d-00086L-GF; Thu, 23 May 2013 10:44:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <519CD63A.20802@kendallshaw.com>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1369298689.247041000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225223>
 
-Junio C Hamano wrote:
->     I have "largedir" I want to get rid of, but there is a directory
->     I want to save, "largedir/precious", in it, so I do
+Am 22.05.2013 16:29, schrieb Kendall Shaw:
+> I am trying to setup a repository for use inside the LAN, but I have
+> been unable to checkout any branch so far. I am very new to git.
 >
->         cp -R largedir/precious precious
+> The repository is being served from gitblit over https. I have
+> GIT_SSL_NO_VERIFY=true. The repository was created from git svn.
+
+(Never heard of gitblit. Consider my post as first level support ;-)
+
+Remember that git is a distributed CVS, unlike svn. We are talking about 
+two repositories, the local one you executed the commands from and the 
+one on the server.
+
+> git ls-remote
 >
->     and then run 'rm -rf largedir' in another terminal in parallel.
+> shows the remote branches, e.g.:
+>
+> ... refs/remotes/2.0.3
+> ... refs/remotes/trunk
 
-I would argue that there is something to "fix", but that fix involves
-making the cp a purely atomic operation which is super-complicated,
-and totally not worth it.  Would you _not_ like the above example to
-work?  Then how can you say that there's nothing to be fixed?
+I would have expected a listing of
+... refs/heads/2.0.3
+... refs/heads/trunk
 
-Consider a slightly different example: I rename a file while having an
-active file handle open in a process that's reading the file.  Will
-the rename fail or will the fread() in the process fail?  Nope, both
-work fine.  Replace "rename" with "remove", and we still have the same
-answer.  Ofcourse there are no guarantees: I can start up another
-process to overwrite the sectors corresponding to that file's data
-with zeros; unless the complete file is there in the kernel buffer, a
-read() will eventually end up slurping in the zeros (or fail?), right?
- It's just that it works in practice.
+and also a mention of the remote repository (did you remove that before 
+posting?).
 
-Yet another example: I have a terminal pointing to a directory, and I
-remove that directory in another terminal.  When I switch back to the
-original terminal, I can't cd .., because getcwd() fails.  This has
-annoyed me endlessly in practice, and I would really like to fix this
-if I can.
+In refs/remotes you usually find references/pointers to remote branches 
+whereas local branches are in refs/heads. So this looks like an empty 
+repository that was created and configured with a remote repository.
 
-Don't accept the way things are, and assume that there's nothing to be
-"fixed".  In my opinion, if something about a piece of software annoys
-you, there is always something to fix.  It just depends on what _can_
-be fixed in a reasonable amount of time with a good engineering
-solution.  There's no need to go to the other extreme: I'm not
-interested in rewriting the whole operating system in Haskell and
-providing theoretical guarantees for everything.
+Either your remote repository failed to get any contents or "git 
+ls-remote" lists your local (empty) repository, which is possible if you 
+somehow managed to configure your local repository as remote of itself.
 
-Coming back to our push example, I don't see why you think HEAD is
-special: I could even say git push master and expect it to race with
-an update-ref.  But nobody is complaining about that: if someone does
-complain, I would seriously consider copying master to PUSH_HEAD early
-(and push that).  With HEAD, however, someone is complaining (namely,
-me): pushing usually means that I've finished working on that branch,
-and want to switch to another branch and continue working.  Why should
-I have to wait for the push to complete?  I've hit this bug several
-times (from terminal as well as Magit), and this patch fixes the
-problem for me in practice.
+I would suggest the following:
 
-That said, I agree that my patch does not guarantee anything (and I
-will modify my commit message to clarify this).  I'm just expressing
-my opinion on the issue of "fixing problems".
+1) "git ls-remote .". If it shows the same listing as git "ls-remote", 
+you probably have configured your local repository as your remote
+
+2) "git config --list". Is "remote.origin.url" a link to the repository 
+on the server or is it "."?
+
+3) Can you log into the server? If yes, change to the repository there 
+and try "git log" (are there any commits listed at all?), "git branch -a 
+-v". If no commits and no local branches, blame git svn.
+
+> git branch -r
+>
+> shows none of the remote branches.
+>
+> git checkout -b new-2.0.3 origin/2.0.3
+>
+> produces:
+>
+> fatal: git checkout: updating paths is incompatible with switching
+> branches.
+> Did you intend to checkout 'origin/2.0.3' which can not be resolved as
+> commit?
+>
+> What does that mean?
+
+http://stackoverflow.com/questions/945654/git-checkout-on-a-remote-branch-does-not-work
