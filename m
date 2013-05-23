@@ -1,106 +1,79 @@
-From: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
-Subject: Re: Remote branch can not be resolved as commit?
-Date: Thu, 23 May 2013 10:45:44 +0200
-Message-ID: <519DD738.4050807@ira.uka.de>
-References: <519CD63A.20802@kendallshaw.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] Geolocation support
+Date: Thu, 23 May 2013 14:15:26 +0530
+Message-ID: <CALkWK0kHEDn4Wt3Y+XUE59_9ZDf504yopMp9QtBUk49Sd+EXbg@mail.gmail.com>
+References: <87mwrncfkh.fsf@ethzero.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Kendall Shaw <kshaw@kendallshaw.com>
-X-From: git-owner@vger.kernel.org Thu May 23 10:45:00 2013
+To: Alessandro Di Marco <dmr@ethzero.com>
+X-From: git-owner@vger.kernel.org Thu May 23 10:46:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfR8r-0006NN-Lp
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 10:44:58 +0200
+	id 1UfRA6-00075z-U0
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 10:46:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757734Ab3EWIoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 04:44:54 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:58676 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757694Ab3EWIou (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 May 2013 04:44:50 -0400
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1UfR8d-0000oD-OE; Thu, 23 May 2013 10:44:49 +0200
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 587 
-	id 1UfR8d-00086L-GF; Thu, 23 May 2013 10:44:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <519CD63A.20802@kendallshaw.com>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1369298689.247041000
+	id S1757155Ab3EWIqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 04:46:09 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:55845 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477Ab3EWIqH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 04:46:07 -0400
+Received: by mail-ie0-f169.google.com with SMTP id u16so8068469iet.0
+        for <git@vger.kernel.org>; Thu, 23 May 2013 01:46:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=laWLc9JWxJs+2esP2u5FJRhP9Y6fA74CJr7E/NGHbts=;
+        b=x0LBzLro9mFNELeRwXIEzS9G9LdcqyIUPqyp0c+7QjfFxHGihGiKquwccYHeaBMo+P
+         S8HM/2ejG6427wSb1KRRwijcrQ+YQ+MqZe+bpfzD4ILt1jMD7Xyq4fRwnR3uDtrMwxA5
+         YcoTxtu/IWpxCQDq19QqX1Twp4XS/E+geGbxJxhHIJtn2vIpMvxbZjWki6neak2NbuXz
+         f6UppXxKV4MKGeYufzDQQdgmLEQRLZp2gbgj1CTwbdCP5RDZMywswExZa5ngsiqbgW3D
+         Bt6sOQ6/ynz+3hMYA3m32BDqqhkGXU2F5PHzu1PIN2tUjN0MhRobKlYkIoe50GUWMj9A
+         ym8g==
+X-Received: by 10.50.3.38 with SMTP id 6mr4451232igz.44.1369298767096; Thu, 23
+ May 2013 01:46:07 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Thu, 23 May 2013 01:45:26 -0700 (PDT)
+In-Reply-To: <87mwrncfkh.fsf@ethzero.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225224>
 
-Am 22.05.2013 16:29, schrieb Kendall Shaw:
-> I am trying to setup a repository for use inside the LAN, but I have
-> been unable to checkout any branch so far. I am very new to git.
->
-> The repository is being served from gitblit over https. I have
-> GIT_SSL_NO_VERIFY=true. The repository was created from git svn.
+Alessandro Di Marco wrote:
+> this is a hack I made a couple of years ago in order to store my current
+> location in git commits (I travel a lot and being able to associate a
+> place with the commit date helps me to quickly recover what were doing
+> at that time). Long story short, the screeenshot at
+> http://tinypic.com/r/wars40/5 shows the new gitk interface once this
+> patch has been integrated. Geolocation is controlled by two envvars
+> GIT_AUTHOR_PLACE and COMMITTER_PLACE, respectively. You can set them via
+> something like this:
 
-(Never heard of gitblit. Consider my post as first level support ;-)
+Obviously very interesting.  Now, how do we mainline (parts of) this
+feature?  I'll raise some questions here:
 
-Remember that git is a distributed CVS, unlike svn. We are talking about 
-two repositories, the local one you executed the commands from and the 
-one on the server.
+0. We already have timezone information, but this is obviously
+insufficient for any sensible geolocation data.
 
-> git ls-remote
->
-> shows the remote branches, e.g.:
->
-> ... refs/remotes/2.0.3
-> ... refs/remotes/trunk
+1. Does it make sense to make it an optional field in the commit
+object?  I can see how generic optional fields in the commit object
+can be useful: a lot of code-review systems put the code-review ID in
+the commit message, and I can see how an optional field would benefit
+them.  Will it break existing parsers (shouldn't they ignore unknown
+fields)?
 
-I would have expected a listing of
-... refs/heads/2.0.3
-... refs/heads/trunk
+2. How accurate should this geolocation information for it to be
+invariant enough?  If we blindly store what a GPS gives us, the
+centering error is obviously a problem.  What should be the resolution
+of the lat/long that we store?
 
-and also a mention of the remote repository (did you remove that before 
-posting?).
-
-In refs/remotes you usually find references/pointers to remote branches 
-whereas local branches are in refs/heads. So this looks like an empty 
-repository that was created and configured with a remote repository.
-
-Either your remote repository failed to get any contents or "git 
-ls-remote" lists your local (empty) repository, which is possible if you 
-somehow managed to configure your local repository as remote of itself.
-
-I would suggest the following:
-
-1) "git ls-remote .". If it shows the same listing as git "ls-remote", 
-you probably have configured your local repository as your remote
-
-2) "git config --list". Is "remote.origin.url" a link to the repository 
-on the server or is it "."?
-
-3) Can you log into the server? If yes, change to the repository there 
-and try "git log" (are there any commits listed at all?), "git branch -a 
--v". If no commits and no local branches, blame git svn.
-
-> git branch -r
->
-> shows none of the remote branches.
->
-> git checkout -b new-2.0.3 origin/2.0.3
->
-> produces:
->
-> fatal: git checkout: updating paths is incompatible with switching
-> branches.
-> Did you intend to checkout 'origin/2.0.3' which can not be resolved as
-> commit?
->
-> What does that mean?
-
-http://stackoverflow.com/questions/945654/git-checkout-on-a-remote-branch-does-not-work
+3. Failing (2), can we put the geolocation data in the commit message,
+and proceed?  If so, does it need to be part of git-core, or should an
+external client (gitk, or other clients) write/ parse the geolocation
+information?
