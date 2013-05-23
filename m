@@ -1,99 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6] Add new git-related helper to contrib
-Date: Thu, 23 May 2013 11:34:26 -0700
-Message-ID: <7vzjvleea5.fsf@alter.siamese.dyndns.org>
-References: <1368978823-18247-1-git-send-email-felipe.contreras@gmail.com>
-	<7vr4gyizti.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0pXLmjVUwsVWiN2G5QReh80spXjvy_6GuUGRz1RmUbLQ@mail.gmail.com>
-	<7vd2siiqsr.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2ETSxebGxXJV_BYEqTC5gJMVdQLbnTUomrie2rHhdmDg@mail.gmail.com>
-	<7v8v36iq3e.fsf@alter.siamese.dyndns.org>
-	<7v4nduipvb.fsf@alter.siamese.dyndns.org>
-	<7vzjvmh98r.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1_=HSgZA=abHJ3sgDbUyfkF78qO+sR1+Aact3o7bAgLA@mail.gmail.com>
-	<7vvc6ah81g.fsf@alter.siamese.dyndns.org>
-	<CAMP44s37a0_wVVef+QVnLNvc8Uos_XpCZAtpX0RmQyMcuJHUHw@mail.gmail.com>
-	<CAMP44s18ps9JtY7+mvXVbuZu3cm7bHnK1vCzMWqBdvawLr+zzA@mail.gmail.com>
-	<7v8v35hc11.fsf@alter.siamese.dyndns.org>
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: Re: [PATCH] Added guilt.reusebranch configuration option.
+Date: Thu, 23 May 2013 14:37:59 -0400
+Message-ID: <20130523183759.GB1275@thunk.org>
+References: <1369224677-16404-1-git-send-email-tytso@mit.edu>
+ <x2ip2b6udr.fsf@bacon.lysator.liu.se>
+ <20130522134212.GB13731@poseidon.cudanet.local>
+ <20130522144531.GB2777@thunk.org>
+ <7v8v36kiau.fsf@alter.siamese.dyndns.org>
+ <20130522180403.GB20848@thunk.org>
+ <7vvc6aj14r.fsf@alter.siamese.dyndns.org>
+ <20130523021123.GA23155@thunk.org>
+ <CALkWK0kyRno4eMYHXC3RkJFCVZ6DJWgFX=pR+WCu8=Gaf9q=Mw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 23 20:34:36 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Josef 'Jeff' Sipek <jeffpc@josefsipek.net>,
+	Per Cederqvist <ceder@lysator.liu.se>, git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 23 20:38:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfaLS-00062R-O9
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 20:34:35 +0200
+	id 1UfaP7-00087b-EU
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 20:38:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758580Ab3EWSea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 14:34:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52015 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758180Ab3EWSe3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 14:34:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A18C421D7E;
-	Thu, 23 May 2013 18:34:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=i/Ae2JBPPk9dSOcHSm95wbymedU=; b=kQKNSA
-	VLWE+WPELHgQhIYMmY7bIjyaZT0BLKCPgjSCj/CB2KFcauC8aX7tF3dn+VALExs1
-	3QQRToMe73k4yg/ncM3uLHpfpqnXIzMz9FiKrDhl040d1bm+Zk2a5OdhOebMgb/b
-	P+fWxZLoVnoPkFS1/KifyUjTytf+7npkw+3o4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BiGGFMhi/7Gw7ynYgiSQDcZhuIDcuo9h
-	JTble0jS4/sMPEtrX/59XSLjgM8dpyUZUkSBst1vS5dQP0uj6C6raZKJ+/Q8SWL4
-	I652YPD9YjV23vyiPVAZdiMJoOA54Zzyp4QRCpDo1AmfBYL1VMDYvU8yG8PIu2/W
-	zQDmzNJiNUE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 980BA21D7D;
-	Thu, 23 May 2013 18:34:28 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C58F321D7B;
-	Thu, 23 May 2013 18:34:27 +0000 (UTC)
-In-Reply-To: <7v8v35hc11.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 23 May 2013 09:54:50 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 666B041E-C3D7-11E2-A52A-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758142Ab3EWSiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 14:38:16 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:51267 "EHLO
+	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758028Ab3EWSiP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 14:38:15 -0400
+Received: from root (helo=closure.thunk.org)
+	by imap.thunk.org with local-esmtp (Exim 4.80)
+	(envelope-from <tytso@thunk.org>)
+	id 1UfaRW-0007c2-30; Thu, 23 May 2013 18:40:50 +0000
+Received: by closure.thunk.org (Postfix, from userid 15806)
+	id 031CF5814B2; Thu, 23 May 2013 14:37:59 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0kyRno4eMYHXC3RkJFCVZ6DJWgFX=pR+WCu8=Gaf9q=Mw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225281>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, May 23, 2013 at 03:22:50PM +0530, Ramkumar Ramachandra wrote:
+> Theodore Ts'o wrote:
+> > Right now I do this just by being careful, but if there was an
+> > automatic safety mechanism, it would save me a bit of work, since
+> > otherwise I might not catch my mistake until I do the "git push
+> > publish", at which point I curse and then start consulting the reflog
+> > to back the state of my tree out, and then reapplying the work I had
+> > to the right tree.
+> 
+> My scenario is a bit different, and I think this safety feature is
+> highly overrated.  It's not that "I'll never rewind some branches, but
+> rewind other branches", but rather "I might rewind anything at any
+> time, but I want immediate information so I can quickly inspect @{1}
+> to see if that was undesirable".
 
-> Users of full-output may want to be able to see the same thing.
+Spekaing of which, what I'd really appreciate is timestamps associated
+with the reflog.  That's because the most common time when I've
+screwed something up is after doing a "git rebase -i" and so the
+reflog has a *huge* number of entries on it, and figuring out which
+entry in the reflog is the right one is painful.  If could tell at a
+glance when each entry of the reflog was created, it would make it a
+lot easier to untangle a tree mangled by git rebase -i.
 
-... but I agree we may be able to cheat if we only want to support
-interactive, and we do want to find a way to cheat when we are
-running interactive without having to store much more information in
-each blame_entry.
+In practice, it means I waste five minutes carefully inspecting a few
+dozen entries on the reflog, so it's not a disaster, although I'm
+generally cursing the whole time while I'm trying to untangle the
+whole mess.
 
-> Imagine that your scoreboard originally has three blocks of text
-> ...
-> in that situation?
+This issue with reflogs not having timestamps isn't primarily about
+rewind safety, BTW; it's just one of the things which make consulting
+the reflog painful --- and it's much more likely happens after I screw
+up a git rebase -i, generally because of what happens when there's a
+merge conflict and then I accidentally fold two commits together
+unintentionally.  The times when I've screwed up a non-rewinding
+branch and then needed to recover after discovering the problem when I
+try to publish said branch are admittedly rare; maybe once or twice
+times in the past twelve months.
 
-(I snipped everything I said in the previous reply only for
-brevity but they are still relevant).
+> So, do you still need this rewinding safety thing?
 
-I _think_ one way to "cheat" without storing too much information in
-each blame_entry is to first make a copy of all the original blame
-entries that share the "suspect", see if any line in the line range
-represented by each of the blame entries ended up being blamed to an
-origin with a path different from that of the "suspect".  And print
-those original blame entries that fits the criterion as additional
-"these are not the final blame as you are digging with the option to
-detect copy across files, but at this commit this line appeared anew
-as far as the origin->path is concerned" output.
+Meh; I don't *need* it.  But then again, I'm an fairly experienced git
+user.  The fact that I use guilt without the "guilt/master" safety
+feature and have never gotten bitten by it --- in fact I deliberately
+publish rewindable branches with a guilt patch series applies speaks
+to the fact that I'm pretty experienced at rewindable heads.
 
-So I think you were going in the right direction (in other words,
-the patch inserted new code to the right places), even though you
-may have got the details in what the new code should do wrong.
+The only reason why I suggested it is because I believe it would be
+useful for people with less experience, and perhaps it would help make
+rewindable branches less scary, and less subject to a lot of the
+fearmongering that you see on the blogosphere.
+
+> 
+> > So what I do is something like this:
+> >
+> > git push publish ; git push repo ; git push code
+> 
+> While we can definitely make the UI better for this (maybe push
+> --multiple?), there is no fundamental change: we have to re-initialize
+> all the refspecs, connect to the remote via the transport layer and
+> prepare a packfile to send.  In other words, it's impossible to make
+> it any faster than what you get with the above.
+
+Sure, and if I cared I'd make a git alias to automate this, instead of
+depending on finger macros.
+
+> So you're a batched-push person.  And the above makes it clear that
+> you don't want to explicitly differentiate between a push and push -f
+> (the +pu thing).  And this assumes that you never create any new
+> branches (I branch out all the time), otherwise you'd have rules for
+> refs/heads/*.
+
+I create new branches all the time.  But they are for my own personal
+testing purposes.  So it's fairer to say that I rarely *publish* new
+branches; I generally stick to the standard set of next, master,
+maint, and pu.  And part of that is that even publishing this number
+of branches is enough to sometimes confuse the e2fsprogs developers
+who are pulling from my tree.
+
+So what I've done in the past is to create a whole bunch of feature
+branches, and then merge them into the pu branch, and then only
+publish the pu branch.  And I try to get the feature branches cleaned
+up as quickly as I have time, so they can appear on the maint or
+master/next branches sooner rather than later.
+
+> Just out of curiosity, do you ever have ref-renaming
+> requirements (like push = refs/heads/*:refs/heads/tt/*)?  We were
+> discussing that on another thread, but I haven't found an
+> implementation I'm happy with yet.
+
+In general, no, I don't do that, for the reasons stated above --- even
+publishing four branches gets to be confusing enough for people who
+are looking at my tree.
+
+I'm sure other people and other communities use git differently, so
+please insert the standard disclaimer that there's more than one way
+to skin a cat.
+
+Regards,
+
+						- Ted
