@@ -1,158 +1,133 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v6] Add new git-related helper to contrib
-Date: Thu, 23 May 2013 17:59:37 -0500
-Message-ID: <CAMP44s14Gdadmgy2zi6dRnKLYdZ=HO85OiPSVxGZ8Hquv_58=g@mail.gmail.com>
-References: <1368978823-18247-1-git-send-email-felipe.contreras@gmail.com>
-	<7vr4gyizti.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0pXLmjVUwsVWiN2G5QReh80spXjvy_6GuUGRz1RmUbLQ@mail.gmail.com>
-	<7vd2siiqsr.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2ETSxebGxXJV_BYEqTC5gJMVdQLbnTUomrie2rHhdmDg@mail.gmail.com>
-	<7v8v36iq3e.fsf@alter.siamese.dyndns.org>
-	<7v4nduipvb.fsf@alter.siamese.dyndns.org>
-	<7vzjvmh98r.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1_=HSgZA=abHJ3sgDbUyfkF78qO+sR1+Aact3o7bAgLA@mail.gmail.com>
-	<7vvc6ah81g.fsf@alter.siamese.dyndns.org>
-	<CAMP44s37a0_wVVef+QVnLNvc8Uos_XpCZAtpX0RmQyMcuJHUHw@mail.gmail.com>
-	<CAMP44s18ps9JtY7+mvXVbuZu3cm7bHnK1vCzMWqBdvawLr+zzA@mail.gmail.com>
-	<7v8v35hc11.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0X-79Pn4gq_rqBbti-xUobyYDc8Gy-3-g=sq8siZqq8g@mail.gmail.com>
-	<7vppwhcqjq.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3LcEkTghg-cBRux7sA54L-U93w5Znqa1jz2MnUWj8Rhw@mail.gmail.com>
-	<7vhahtco5b.fsf@alter.siamese.dyndns.org>
+Subject: Re: first parent, commit graph layout, and pull merge direction
+Date: Thu, 23 May 2013 18:09:30 -0500
+Message-ID: <CAMP44s1N=xy2B-YkCLC67pX_EVqAziGWyN1qkrs0Sq=o2jL6Sw@mail.gmail.com>
+References: <20130522115042.GA20649@inner.h.apk.li>
+	<7v4ndukhx0.fsf@alter.siamese.dyndns.org>
+	<20130523090657.GB23933@inner.h.apk.li>
+	<CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
+	<20130523102959.GP9448@inner.h.apk.li>
+	<20130523110839.GT27005@serenity.lan>
+	<7vd2shheic.fsf@alter.siamese.dyndns.org>
+	<20130523164114.GV27005@serenity.lan>
+	<7vbo81e7gs.fsf@alter.siamese.dyndns.org>
+	<20130523215557.GX27005@serenity.lan>
+	<7vli75cpom.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3-3gpAAyp-WfDjHxJiotO68GUbb5tHw9Qo35yCTGFNqA@mail.gmail.com>
+	<7v8v35cnp0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
+Cc: John Keeping <john@keeping.me.uk>, Andreas Krey <a.krey@gmx.de>,
+	John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 24 00:59:44 2013
+X-From: git-owner@vger.kernel.org Fri May 24 01:09:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfeU3-0004jF-UA
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 00:59:44 +0200
+	id 1Ufedj-0008N5-3B
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 01:09:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759894Ab3EWW7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 18:59:40 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:53443 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759759Ab3EWW7j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 18:59:39 -0400
-Received: by mail-la0-f54.google.com with SMTP id eg20so3851228lab.27
-        for <git@vger.kernel.org>; Thu, 23 May 2013 15:59:37 -0700 (PDT)
+	id S1759824Ab3EWXJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 19:09:33 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:61930 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759757Ab3EWXJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 19:09:32 -0400
+Received: by mail-la0-f46.google.com with SMTP id er20so3847397lab.19
+        for <git@vger.kernel.org>; Thu, 23 May 2013 16:09:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=HxZvcmhIdbsqPx3gd37OFIVXYei7j6x6pZnuJgeIF5w=;
-        b=d7ejV0wptWNaRaf/OoJzhuD8JDQGfHzLq0eVf2xl1bw7qXZ8GCACBY1PmV+IGfbphq
-         1BCVlX9ULQ/9zHhjdnbM+ptLi5zdC35oaPk4UlKmbBmRm8O4zzfaHdfiJRrzVWLW3pLX
-         vgUORjjnIldIBbT4vqcif/py6rXD64fWAKK6uaU4n7ncvX1TCwfUkZo6oHGpRMMrnJDf
-         TLp34RKFnnJelKKnEyIWcLF/nWwEBTkZ3bc+EHS0xVtW/EMu/d5/K73xfAtUJYWKXZwA
-         UBrIVvkGrxGO3QFHT5tXqAJx990SvC9Kc9u91mSxEItJyuaeBx+6ezLs0XntDr/9qmwP
-         ZtkA==
-X-Received: by 10.112.142.196 with SMTP id ry4mr7606302lbb.93.1369349977119;
- Thu, 23 May 2013 15:59:37 -0700 (PDT)
-Received: by 10.114.174.170 with HTTP; Thu, 23 May 2013 15:59:37 -0700 (PDT)
-In-Reply-To: <7vhahtco5b.fsf@alter.siamese.dyndns.org>
+        bh=Ktaok8zEYowPFlJxLEk9SiPRdX7j6AYzTl/M0Cf4Zx8=;
+        b=cKCULHW1Jyc5h5lPyke+mx+CtvGA+tEnZHc1BttYDPanqvLPypo/Iu+s/KOnBs/xm7
+         wsA4mKFK742Rb2WjOPw2glyeYddEp6Xo/kEXynVljh3tYgf7iz5rVnv0ZuR1qHxeYnh6
+         c0fe5cJNv1PWQjSVqaFpFuEqsTSBKlQ7voYg0G/66mNPW9rHNlcAaGE/H8jeF2+43AcE
+         oN1akUZyxNVZ8GldppGM05k9J7Z+IGdp4/IByJ46Ztj6GA/8ZnbUL7rSvFCij/vX1ytO
+         7dGL5rxDJzLtn1LbUYZ9UMBThWy9zK7mJfoRHmzHk4QHTM7ek10pDTqo8iP8ascvDtMw
+         Bexg==
+X-Received: by 10.112.167.229 with SMTP id zr5mr7548520lbb.7.1369350570968;
+ Thu, 23 May 2013 16:09:30 -0700 (PDT)
+Received: by 10.114.174.170 with HTTP; Thu, 23 May 2013 16:09:30 -0700 (PDT)
+In-Reply-To: <7v8v35cnp0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225316>
 
-On Thu, May 23, 2013 at 5:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, May 23, 2013 at 5:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
->>> Then in that "next iteration", we pick blame entry for A and decide
->>> to see if HEAD^, which is the suspect for A, can be exonerated of
->>> blames for _any_ (not just A) blame entry it currently is suspected
->>> for.  We call pass_blame() and it will find and process both A and
->>> C with a single "git diff-tree", attempting to pass blame to HEAD^^
->>> and its ancestors.
+>> On Thu, May 23, 2013 at 5:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> John Keeping <john@keeping.me.uk> writes:
+>>>
+>>>> This isn't about "swap parents", it's about helping people realise that
+>>>> just "git pull" isn't necessarily the best thing for them to do, and
+>>>> that they may want --rebase.
+>>>>
+>>>> So I was asking if it would be sensible (possibly in Git 2.0) to make
+>>>> git-pull pass --ff-only to git-merge by default.
+>>>
+>>> Unless your primary user base is those who use Git as a deployment
+>>> tool to always follow along the tip of some external repository
+>>> without doing anything on your own on the branch you run your "git
+>>> pull" on, defaulting it to --ff-only does not make much sense to me.
 >>
->> All right, my code still works in that situation.
+>> A lot of people do stuff, but the rebase it.
 >
-> When HEAD^ was processed, pass_blame() finds that the first line in
-> A is attributable to HEAD^ (our current suspect) while the rest were
-> copied from a different file in HEAD^^ .  All lines in C are found
-> to be copy from a different file in HEAD^^.
->
-> Then your scoreboard would have:
->
->   1. a blame entry that failed to pass blame to parents of HEAD^ (the
->      first line in A), which still has suspect == HEAD^
->
->   2. a blame entry that covers the remainder of A, blaming HEAD^^.
->
->   3. a blame entry that covers all of B, whose final guilty party is
->      known already.
->
->   4. a blame entry that covers all of C, blaming a different file in
->      HEAD^^.
->
-> Your "Take responsibility" loop goes over these blame entries, sets
-> found_guilty to true because of the first blame entry (the first
-> line of A), and calls print_guilty_entry() for blame entry 1,
-> showing that HEAD^ is guilty for the first line of A.
->
-> After the loop, your "if we did not find anybody guilty" logic does
-> not kick in, and the original line range for block A you saved in
-> tmp_ent is not used.
->
-> You lost the fact that the second and remainder of A were in this
-> file at the commit HEAD^ but not in HEAD^^ (i.e. these lines were
-> moved by HEAD^ from elsewhere).
+> If I am parsing the above properly, I think that is only saying that
+> "pull --rebase" makes sense for people who do real work, which I am
+> not disagreeing.
 
-> The fact that HEAD^ touched _something_ is not lost, so if _all_ you
-> care about is "list all the commits, but I do not care about what
-> line range was modified how", you can claim it "working",
+You claimed that 'git pull' (--ff-only) only makes sense if the
+primary user-base doesn't do any work on it, but that's not true; they
+can do a 'git rebase' after such pull (or a merge).
 
-The line range printed is correct.
+We don't have to assume our primary user-base wants to do full fledged
+merges, in fact, such assumption would be wrong.
 
-> but that
-> is a very limited definition of "working" and is not very reusable
-> or extensible in order to help those like gitk that currently have
-> to run two separate blames.  They need an output that lets them tell
-> between
+>>> If the proposal were to make pull.rebase the default at a major
+>>> version bump and force all integrators and other people who are
+>>> happy with how "pull = fetch + merge" (not "fetch + rebase") works
+>>> to say "pull.rebase = false" in their configuration, I think I can
+>>> see why some people may think it makes sense, though.
+>>
+>> That makes perfect sense, because the people that are not familiar
+>> with Git more often than not end up making merges by mistake, and the
+>> ones that are familiar with it can easily configure it to do what they
+>> want
 >
->  - this is the earliest we saw these lines in the path (it may have
->    been copied from another path, but this entry in the incremental
->    output stream is not about that final blame); and
+> Yes, in theory.  The transition needs a major version bump, but it
+> is doable (with unknown level of resistance).
+
+Isn't that what wer are discussing here?
+
+>>> But neither is an easy sell, I would imagine.  It is not about
+>>> passing me, but about not hurting users like kernel folks we
+>>> accumulated over 7-8 years.
+>>
+>> I've worked in the Linux kernel, and in my experience the vast vast
+>> majority of kernel developers don't do merges; they send patches. It's
+>> only the lieutenants that might do that, and although there are a lot,
+>> they don't surpass the 200, and they most definitely know how to
+>> configure Git to do what they need. And even then, most of them don't
+>> do merges, but create a linear history for Linus to merge.
+>>
+>> So the only one who does really rely on merges is Linus, I think he
+>> would have no problems configuring Git.
 >
->  - this is the final blame where these lines came from, possibly
->    from different path"
->
-> and coalesce both kind of origin..
+> That is not something I can agree or disagree without looping
+> somebody whose judgement I can trust from the kernel circle ;-).
 
-They can already do that by looking at the lines; if they get replaced
-by another entry; they are not guilty.
-
-Or we can add a 'guilty' line to the incremental output, that's trivial.
-
-> Also the fact that the entire C was copied from elsewhere by HEAD^
-> is lost but that is the same issue.  The next round will not find
-> any blame entry that is !ent->guity because the call to pass_blame()
-> for HEAD^ already handled the final blame not just for blame entries
-> 1 and 2, but also for 4 during this round.
-
-No, that's not true. If it's a different file the blame entry is not
-found guilty.
-
-> If the change in HEAD^ in the above example were to copy the whole A
-> and C from a different file, then your !found_guilty logic would
-> kick in and say all lines of A where copied from elsewhere in HEAD^,
-> but again we would not learn the same information for C.
-
-We would, when it's the turn for C, which is not guilty at this point.
-
-> I do not think "I care only about a single bit per commit, i.e. if
-> the commit touched the path; screw everybody else who wants to
-> actually know where each line came from" can be called "working".
-
-They can know where each line came from; the lines of each entry are
-printed properly; that's the whole point of 'tmp_ent'.
+See section 16) in Documentation/SubmittingPatches, notice how the
+whole section is written with Linus in mind. Some maintainers do have
+sub-maintainers that send pull requests to them, not Linus, but they
+are the minority. But most definitely pull requests are not for the
+general population (except in a few very rare exceptions maybe).
 
 -- 
 Felipe Contreras
