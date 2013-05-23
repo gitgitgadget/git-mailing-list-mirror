@@ -1,81 +1,85 @@
-From: Joel Kaasinen <joel.kaasinen@gmail.com>
-Subject: Bug report: git grep seems to use the wrong .gitattributes when
- invoked in a subdirectory
-Date: Thu, 23 May 2013 15:44:09 +0300
-Message-ID: <CAK=EYX51G57borL_Hy2XzqJVML4wmAgOCBPwFLa+miDDY30O7Q@mail.gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: [PATCH v2] Document push --no-verify
+Date: Thu, 23 May 2013 15:34:11 +0200
+Message-ID: <ba24ea6f9fedc05690ee93a805d4f468650a942c.1369315855.git.trast@inf.ethz.ch>
+References: <87vc6arcf4.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 23 14:44:19 2013
+Content-Type: text/plain
+Cc: Aaron Schrab <aaron@schrab.com>, <git@vger.kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 23 15:34:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfUsU-00083k-PJ
-	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 14:44:19 +0200
+	id 1UfVex-0004sy-LS
+	for gcvg-git-2@plane.gmane.org; Thu, 23 May 2013 15:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758513Ab3EWMoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 08:44:11 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:34547 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756862Ab3EWMoK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 08:44:10 -0400
-Received: by mail-ie0-f181.google.com with SMTP id x12so8352080ief.40
-        for <git@vger.kernel.org>; Thu, 23 May 2013 05:44:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=ExOk168Lom8kAnLG6RLPYuCU8OP9QeAnoaLkrEmYnvU=;
-        b=VRxGqoZ6gSJ51uHMUv0khfSsA0Als256hqNB0J5w3cygbwvQoRTmHOjPjYoB6TeOYb
-         sxYj1p5iVupIqYLCfQMEtr6bgYPbDwzygOESpsG+kR7ymVa8Kxre9ctVUPv6gW8jE9sC
-         asMmxo8eleriBmYAZRqjQhFKuk1vYym871WpdBIGvzbMZiDEQoV3tsDT9nAKU2w1dh4/
-         +gR4jzMsaoKsIFfQ/Q3cTqXXEoSVqwl2uQzYsYruVWKk31877bhkYQLCAnmi/Z4IBdtZ
-         3JhyIwsM3far31LlsoM+w2HzIqgZrAqwpOwtTK++H4G1r3nd0A/rEnYotYIBskKHzgOu
-         uphw==
-X-Received: by 10.50.32.33 with SMTP id f1mr344761igi.39.1369313049740; Thu,
- 23 May 2013 05:44:09 -0700 (PDT)
-Received: by 10.64.148.80 with HTTP; Thu, 23 May 2013 05:44:09 -0700 (PDT)
+	id S1759084Ab3EWNeR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 09:34:17 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:36904 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759076Ab3EWNeO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 09:34:14 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 23 May
+ 2013 15:34:09 +0200
+Received: from linux-k42r.v.cablecom.net (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 23 May
+ 2013 15:34:12 +0200
+X-Mailer: git-send-email 1.8.3.rc3.486.gfe16094
+In-Reply-To: <87vc6arcf4.fsf@linux-k42r.v.cablecom.net>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225245>
 
-Greetings,
+ec55559 (push: Add support for pre-push hooks, 2013-01-13) forgot to
+add a note to git-push(1) about the new --no-verify option.
 
-I bumped into a problem where git grep thinks files in repo/a/data are
-binary files when it is invoked from repo/a and
-repo/data/.gitattributes contains "* binary".
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+---
 
-I can reproduce this on 1.7.9.5 and 1.7.10.4. Unfortunately I don't
-have a newer version at hand.
+Junio replied privately that it should also mention the --verify
+possibility.
 
-How to reproduce:
+So why not.  But this needs to be fixed across the board eventually;
+0f1930c (parse-options: allow positivation of options starting, with
+no-, 2012-02-25) did not update any docs, so none of the other --no-
+options mention their positive forms.
 
-[pseudo:~/tmp]% git --version
-git version 1.7.10.4
-[pseudo:~/tmp]% git init git-test
-Initialized empty Git repository in /home/opqdonut/tmp/git-test/.git/
-[pseudo:~/tmp]% cd git-test
-[pseudo:~/tmp/git-test:master()]% mkdir -p a/data
-[pseudo:~/tmp/git-test:master()]% mkdir data
-[pseudo:~/tmp/git-test:master()]% echo '* binary' > data/.gitattributes
-[pseudo:~/tmp/git-test:master()]% echo foo > a/data/foo
-[pseudo:~/tmp/git-test:master()]% git add -A
-[pseudo:~/tmp/git-test:master()]% git commit -m "foo"
-[master (root-commit) 20fafbb] foo
- 2 files changed, 1 insertion(+)
- create mode 100644 a/data/foo
- create mode 100644 data/.gitattributes
-[pseudo:~/tmp/git-test:master()]% git grep foo
-a/data/foo:foo
-[pseudo:~/tmp/git-test:master()]% cd a
-[pseudo:~/tmp/git-test/a:master()]% git grep foo
-Binary file data/foo matches
 
-(Please CC me on replies, I'm not subscribed to the list.)
+ Documentation/git-push.txt | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---
-Joel Kaasinen
-joel.kaasinen@gmail.com
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index d514813..df5be26 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git push' [--all | --mirror | --tags] [--follow-tags] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
+ 	   [--repo=<repository>] [-f | --force] [--prune] [-v | --verbose] [-u | --set-upstream]
+-	   [<repository> [<refspec>...]]
++	   [--no-verify] [<repository> [<refspec>...]]
+ 
+ DESCRIPTION
+ -----------
+@@ -195,6 +195,11 @@ useful if you write an alias or script around 'git push'.
+ 	be pushed. If on-demand was not able to push all necessary
+ 	revisions it will also be aborted and exit with non-zero status.
+ 
++--[no-]verify::
++	Toggle the pre-push hook (see linkgit:githooks[5]).  The
++	default is \--verify, giving the hook a chance to prevent the
++	push.  With \--no-verify, the hook is bypassed completely.
++
+ 
+ include::urls-remotes.txt[]
+ 
+-- 
+1.8.3.rc3.486.gfe16094
