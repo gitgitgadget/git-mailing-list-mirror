@@ -1,83 +1,60 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 7/7] sha1_name: implement finding @{push}
-Date: Fri, 24 May 2013 23:21:34 +0700
-Message-ID: <CACsJy8AHX0181uON5Aa7oJzX8j3qAA26Ymh5G3YEGidD4O5zvA@mail.gmail.com>
-References: <1369321970-7759-1-git-send-email-artagnon@gmail.com>
- <1369321970-7759-8-git-send-email-artagnon@gmail.com> <CACsJy8CV192WVW8u6YRnbf6Ue6tFbzyiCARwicwzapSZucaaMw@mail.gmail.com>
- <CALkWK0=XufbcwObBq7_MWX3jL63Nv3YeSvTUpOfXD+XoKkvMag@mail.gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [QUERY] How do you sort completions?
+Date: Fri, 24 May 2013 18:22:02 +0200
+Message-ID: <CALWbr2xxND4xz49jmwXUTTr1f=Z3nmHCTQd+bBcK_Etv5oB0Fg@mail.gmail.com>
+References: <CALkWK0k=nVHOBe5SgRH9xQK1+yAYBzbNMqsWxhYPo0MTZPp63g@mail.gmail.com>
+	<20130524161243.GB2104@goldbirke>
+	<CALkWK0n8iuwNHfxV4AHUV+721pqLUOPhM6h+e0_opmkVuOV_4A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Git List <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 24 18:22:11 2013
+X-From: git-owner@vger.kernel.org Fri May 24 18:22:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ufuks-00083s-L2
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 18:22:10 +0200
+	id 1Ufukz-00088E-Of
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 18:22:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755703Ab3EXQWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 12:22:06 -0400
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:60944 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755017Ab3EXQWF (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755626Ab3EXQWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Fri, 24 May 2013 12:22:05 -0400
-Received: by mail-oa0-f53.google.com with SMTP id g12so6439984oah.12
-        for <git@vger.kernel.org>; Fri, 24 May 2013 09:22:04 -0700 (PDT)
+Received: from mail-qe0-f54.google.com ([209.85.128.54]:49564 "EHLO
+	mail-qe0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754732Ab3EXQWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 12:22:04 -0400
+Received: by mail-qe0-f54.google.com with SMTP id i11so2710974qej.13
+        for <git@vger.kernel.org>; Fri, 24 May 2013 09:22:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=nQY+/pFfvY1HtD9Gh5pDcGSOcko2OI2Pq8uSUEY0wcw=;
-        b=p7b9kqT64gG7iTYD+tvk1teS0CW2UY3lBBrzrp1EHdnoBZ1jj/poQhBjg8v7vfpyFp
-         ziyF1W7D5UljTB6OjM6ye7mslwgy4GH3dPXHRNRCM8NyMHuuXXSISpoGgWBBtt3BCKcq
-         f4bxS6lqsjC/TnviupbHqxRJanO3UjOuBBoThNELUuYE0UMaq6HO+V0dN92uisN8dq+s
-         /dR7F+9wqOm6wffo/f74o/W/vfJuqvR/naSyOb2PR4zk2WNwFMnllW0S7GsnblPLAwBh
-         kVHjti8Q6pIYXRSBsc9RxzXjqzyOpjvjh7e5igihQ5/Rj73WxXMjiP5EogZp/BBHzTU2
-         MklA==
-X-Received: by 10.60.62.162 with SMTP id z2mr12225239oer.140.1369412524587;
- Fri, 24 May 2013 09:22:04 -0700 (PDT)
-Received: by 10.76.141.232 with HTTP; Fri, 24 May 2013 09:21:34 -0700 (PDT)
-In-Reply-To: <CALkWK0=XufbcwObBq7_MWX3jL63Nv3YeSvTUpOfXD+XoKkvMag@mail.gmail.com>
+        bh=JrKujrDcBPTjefn2Fmu2KT50GZ0Fl91rX6N7d9fWKsU=;
+        b=YgqFSpouMoVdxCWJcXiwhzwrnrnFpGHJLGYTOofZPTkmlpEbvUEPuFrrF4ukFJLv2J
+         cIlzrPfm5tWiAJLTP7aphuNaXKYJ3wTjFODOMGlEbuXLav1iZAezfMJBQAJAF+BXwaRB
+         4oN9wlTEghEhZs70jCI1qYFwFXNKThWL5Od7K8M2K7UwZzet0E/Wvlv262laYIvTa7zv
+         qAU0jCNb5PgB07nhv2q0E3MJngxnJQ6eBmETCS3J2MFCDl6Djl1Im8JkjBvqx6RekA/u
+         RPicc11cd3aLMNHNhrRX+6i+HpViIDAUVUXPaiFxYWW+IhXRG0QTEomsF8Z6TEpxDLZH
+         3Ahw==
+X-Received: by 10.49.96.104 with SMTP id dr8mr12174459qeb.43.1369412522807;
+ Fri, 24 May 2013 09:22:02 -0700 (PDT)
+Received: by 10.49.81.99 with HTTP; Fri, 24 May 2013 09:22:02 -0700 (PDT)
+In-Reply-To: <CALkWK0n8iuwNHfxV4AHUV+721pqLUOPhM6h+e0_opmkVuOV_4A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225375>
 
-On Fri, May 24, 2013 at 11:15 PM, Ramkumar Ramachandra
+On Fri, May 24, 2013 at 6:18 PM, Ramkumar Ramachandra
 <artagnon@gmail.com> wrote:
-> Duy Nguyen wrote:
->> On Thu, May 23, 2013 at 10:12 PM, Ramkumar Ramachandra
->> <artagnon@gmail.com> wrote:
->>> Try this now: configure your current branch's pushremote to push to
->>> "refs/heads/*:refs/heads/rr/*".  Now, type 'git show @{p}'.  Voila!
->>
->> Voila what? Why not avoid guessing game and describe what the patch is for?
->
-> If you're on branch master, it'll output refs/heads/rr/master.  The
-> topic is about having a @{push} corresponding to @{upstream}
+> Damn; so it's impossible to have a custom-sorted completion list in
+> bash.  Any idea about zsh?  I know that there are completion groups,
+> but I'd really like custom sorting.
 
-Then "show @{p}" should show the tip commit of rr/master, not the ref
-name. rev-parse (with an option, maybe) may be a better place for
-this.
-
->>> +       dst_name = get_ref_match(remote->push, remote->push_refspec_nr,
->>> +                               this_ref, MATCH_REFS_ALL, 0, &pat);
->>> +       printf("dst_name = %s\n", dst_name);
->>> +}
->>> +
->>
->> Isn't this an abuse of extended sha-1 syntax? How can I combine this
->> with other @{}, ^, ~...?
->
-> I'm unsure what you mean.  How can I be on branch master^1?  Did you
-> read the cover-letter?
-
-I did not expect @{p} to printf(). If it's part of get_sha1(), how can
-it return an sha-1? And the cover letter said "7/7 is the meat". Not
-very informative.
---
-Duy
+I think sorting is required for faster look-up, most likely with
+dichotomic search. Otherwise it would have to search the whole list
+each time.
