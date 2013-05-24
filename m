@@ -1,135 +1,88 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/2] diffcore-pickaxe doc: document -S and -G properly
-Date: Fri, 24 May 2013 15:07:20 +0530
-Message-ID: <CALkWK0n+NTnO0_4jNuR3Z5qmA_=-Dux+gq8kNzAT4YLC12Z8uQ@mail.gmail.com>
-References: <1368793403-4642-1-git-send-email-artagnon@gmail.com>
- <1368793403-4642-3-git-send-email-artagnon@gmail.com> <7vfvxlw055.fsf@alter.siamese.dyndns.org>
- <7vsj1jzao7.fsf@alter.siamese.dyndns.org>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: first parent, commit graph layout, and pull merge direction
+Date: Fri, 24 May 2013 05:38:08 -0400
+Message-ID: <CAEBDL5VWuvuJCptY=J5ZyjpLkkP-+V+xY+Eugtkb7M0NL=Px4A@mail.gmail.com>
+References: <7vd2shheic.fsf@alter.siamese.dyndns.org>
+	<20130523164114.GV27005@serenity.lan>
+	<7vbo81e7gs.fsf@alter.siamese.dyndns.org>
+	<20130523215557.GX27005@serenity.lan>
+	<7vli75cpom.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3-3gpAAyp-WfDjHxJiotO68GUbb5tHw9Qo35yCTGFNqA@mail.gmail.com>
+	<7v8v35cnp0.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1N=xy2B-YkCLC67pX_EVqAziGWyN1qkrs0Sq=o2jL6Sw@mail.gmail.com>
+	<7vzjvlb7mu.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1D06ggmTjXBEL0puFLqYDShhy6HV0S+oj0AwDGz-sUqA@mail.gmail.com>
+	<20130524082900.GZ27005@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Phil Hord <phil.hord@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 24 11:38:12 2013
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Andreas Krey <a.krey@gmx.de>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Fri May 24 11:38:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfoRw-0002tI-1a
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 11:38:12 +0200
+	id 1UfoS2-0002wc-O9
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 11:38:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760096Ab3EXJiE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 05:38:04 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:55286 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760000Ab3EXJiB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 05:38:01 -0400
-Received: by mail-ie0-f170.google.com with SMTP id aq17so11726524iec.1
-        for <git@vger.kernel.org>; Fri, 24 May 2013 02:38:00 -0700 (PDT)
+	id S1760201Ab3EXJiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 05:38:13 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:37763 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760000Ab3EXJiJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 05:38:09 -0400
+Received: by mail-wi0-f175.google.com with SMTP id hn14so5075984wib.8
+        for <git@vger.kernel.org>; Fri, 24 May 2013 02:38:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Z/92jl67t4qTBq1W7Ei6YEJXKF3OOZOD9I7zbhXnIg4=;
-        b=Y34dP0Cidqt/kpIhLcULgjdUBmdbJY1nWtTk8KGv2hOGQTWGJ5YzhkJUMLCx76OUvx
-         1nqEk4A8u4D1tFIcDxpo8uK2wbWxwTxeBL63QUx9vMJerqtbbxj7gdD+KG1CyGwETNb0
-         BjcH908Pj9/rQFnHtAq2F0acJLT85nXvdH5peSvdvhGX7EhNuk9NVojr0a+qp10PYffS
-         VJqC1UBJg8/MARlXnn6S7zncTyQ/Ku2XqiSsSD8+TE3GIaSdGgN72DzM2eHdZtwvcCsR
-         yRHOMRRoUwFWB2eCCyA5w/T5uZxjbYv1zkp/Fk5hfLeX4K6DC1lKVpYqPzln1ECiHHuY
-         uFdA==
-X-Received: by 10.50.66.197 with SMTP id h5mr13008398igt.63.1369388280832;
- Fri, 24 May 2013 02:38:00 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Fri, 24 May 2013 02:37:20 -0700 (PDT)
-In-Reply-To: <7vsj1jzao7.fsf@alter.siamese.dyndns.org>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=S9jo74iR2LzY62yy2+RaKwZta/FJXkH8VxmiyZbtIfc=;
+        b=gZTd6xDi9w5A8JJn7+xyuQG+Ejt9P3nMZYcQFDruVLggprcb7x0wAQVU56TxKvtBrl
+         k+tzoIhr55T1h6ZEQw2EeQn5g8c0Yp5RPFJPnbOMh3DGk4i9Rrmlr+jcHYg16zQQ9FMD
+         9iniJD3hjrr0HFgsE1o3K9ozi3fMDMBbeixr5oNZyYIgKYNmrLwXuTc4+R4+sJDmybg8
+         kgkXIcYTT8Kc7xgnnfEu6YzPFDfqRj9ifMP9OwLb/YEq2fL5+HQMCzwYFGCYPxOZ+JIt
+         UHjibJ5auMHuwe4aI5V4ztGEjVRrW2GQf5q0Eid4GXsVKCchaFDhXnwH3nkLFhQrxWlv
+         fQOg==
+X-Received: by 10.181.13.42 with SMTP id ev10mr50404909wid.1.1369388288547;
+ Fri, 24 May 2013 02:38:08 -0700 (PDT)
+Received: by 10.180.5.33 with HTTP; Fri, 24 May 2013 02:38:08 -0700 (PDT)
+In-Reply-To: <20130524082900.GZ27005@serenity.lan>
+X-Google-Sender-Auth: hHS_4WEV-TEYwI9Sq4EH_d7jSR4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225337>
 
-Junio C Hamano wrote:
-> [...]
+On Fri, May 24, 2013 at 4:29 AM, John Keeping <john@keeping.me.uk> wrote:
+[snip]
+> Note that in my email that started this, I tried to be clear that I was
+> talking about "git pull" *without a branch name*.  If this user
+> explicitly says "git pull remote branch" then I consider that a clear
+> indication that they really do mean to perform a merge; I would not
+> recommend changing the current behaviour in that case.
+>
+> If the user just says "git pull" then it is more likely that they are
+> just trying to synchronise with the upstream branch, in which case they
+> probably don't actually want a merge.
 
-I agree with the other comments, and have made suitable changes.
-Let's review your block now.
+This makes a lot of sense to me.  I was going to write earlier that I
+almost wish there was a separate command for getting your local branch
+"in sync" with the remote one.
 
->         This transformation is used to find filepairs that represent
->         two kinds of changes, and is controlled by the -S, -G and
->         --pickaxe-all options.
+BTW, it also doesn't help that `git pull` is suggested as the answer
+anytime a push cannot succeed.  I've warned my users about using `git
+pull`, and--unfortunately--they sometimes forget because the advice is
+right there in front of them.
 
-Why do you call this a "transformation"?  Is git log --author="foo" a
-transformation on the git-log output?  Then how is git log -Sfoo a
-transformation?
+I agree with John here: it's a bare `git pull` that is often the
+culprit.  Of course, the asymmetry between `git pull` and `git pull
+remote branch` is a little bothersome too, but the team does that
+*far* less often.
 
-Two kinds of changes controlled by three different options?  Isn't the
-original much clearer?
-
-The title says diffcore-pickaxe, and the first paragraph says:
-
-There are two kinds of pickaxe: the S kind (corresponding to 'git log
--S') and the G kind (mnemonic: grep; corresponding to 'git log -G').
-
->         The "-S<block of text>" option tells Git to consider that a
->         filepair has differences only if the number of occurrences
->         of the specified block of text is different between its
->         preimage and its postimage, and treat other filepairs as if
->         they did not have any change.
-
-I'll rewrite this without the trailing "and treat other filepairs as
-if they did not have any change" (which I'm not fond of).
-
->         This is meant to be used with
->         a block of text that is unique enough to occur only once (so
->         expected the number of occurences is 1 vs 0 or 0 vs 1) to
->         use with "git log" to find a commit that touched the block
->         of text the last time.
-
-You're saying how you think it's "meant" to be used, but in doing so
-you've failed to describe its operation faithfully.  I've already
-described how it's meant to be used in diff-options (digging a block
-of text iteratively) and this is the place to explain what it is doing
-faithfully.  Hence my previous writeup on changes in number of
-occurrences and rename detection: I _had_ to read the code to
-understand it properly, and your writeup is not helping by telling me
-about idiomatic usage.
-
-Also, you've dropped computational expense which was there in the original.
-
->         When used with the "--pickaxe-regex"
->         option, the <block of text> is used as a POSIX extended
->         regular expression to match, instead of a literal string.
-
-Better.
-
->         The "-G<regular expression>" option tells Git to consider
->         that a filepair has differences only if a textual diff
->         between its preimage and postimage would indicate a line
->         that matches the given regular expression is changed, and
->         treat other filepairs as if they did not have any change.
-
-"would indicate"?  Really?  I'll rewrite this without the trailing
-"and treat other filepairs ..".
-
-You've once again dropped what it means in the context of in-file
-moves (rename detection), and computational expense from the original.
-
->         When -S or -G option is used without "--pickaxe-all" option,
->         only filepairs that match their respective criterion are
->         kept in the output.
-
-Much better.
-
->         When `--pickaxe-all` is used, all
->         filepairs intact if there is such a filepair, or makes the
->         output empty otherwise.
-
--ENOPARSE.  I didn't particularly like the original, and this isn't
-better.  I'll rewrite it.
-
->         This behaviour is designed to make
->         reviewing of the changes in the context of the whole
->         changeset easier.
-
-Same as original.  Okay.
-
-Thanks.
+-John
