@@ -1,94 +1,80 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: git stash deletes/drops changes of
-Date: Fri, 24 May 2013 17:01:43 +0100
-Message-ID: <20130524160143.GF27005@serenity.lan>
-References: <AANLkTin-BIxgQE5CO2cLhCYJAGHFxiXPquyozKc308DS@mail.gmail.com>
- <loom.20130523T185301-635@post.gmane.org>
- <87sj1d5ous.fsf@linux-k42r.v.cablecom.net>
- <7vd2shcnx7.fsf@alter.siamese.dyndns.org>
- <87obc15mq5.fsf@linux-k42r.v.cablecom.net>
- <7v4ndtcmh0.fsf@alter.siamese.dyndns.org>
- <CABURp0rBzH9=VdW0Y4Bv1tfbSzZ3dwismwgZ7zCwrXC6nDRSJQ@mail.gmail.com>
- <loom.20130524T173321-264@post.gmane.org>
- <20130524153853.GE27005@serenity.lan>
- <loom.20130524T174015-773@post.gmane.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 7/7] sha1_name: implement finding @{push}
+Date: Fri, 24 May 2013 23:09:49 +0700
+Message-ID: <CACsJy8CV192WVW8u6YRnbf6Ue6tFbzyiCARwicwzapSZucaaMw@mail.gmail.com>
+References: <1369321970-7759-1-git-send-email-artagnon@gmail.com> <1369321970-7759-8-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jim Greenleaf <james.a.greenleaf@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 24 18:02:09 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 24 18:10:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfuRT-0003hO-UK
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 18:02:08 +0200
+	id 1UfuZV-0000jd-18
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 18:10:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755830Ab3EXQCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 12:02:03 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:51054 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755097Ab3EXQCB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 12:02:01 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 3412ECDA636;
-	Fri, 24 May 2013 17:01:59 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZYbuF6AspZ0G; Fri, 24 May 2013 17:01:49 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 64166CDA63E;
-	Fri, 24 May 2013 17:01:44 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <loom.20130524T174015-773@post.gmane.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755187Ab3EXQKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 12:10:20 -0400
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:55645 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754721Ab3EXQKT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 12:10:19 -0400
+Received: by mail-oa0-f52.google.com with SMTP id h1so6251716oag.39
+        for <git@vger.kernel.org>; Fri, 24 May 2013 09:10:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=isjf0djqKLoXfshcJ+kg9SMUR3BjRH/2Sw0C0gPdS5w=;
+        b=iE8d4GgbPB3vZkttlMg7gIfCu5kjQiW4u5LH7B1xD1nI9icY/yqc0L1PQIFweFqUdy
+         6fj3jvOZkzvZAa+PgaBHcBS0SH4iHoBqetD8P0fHHOYTAMHyOSw0eTmFvzXU63jPznL3
+         iw76gNhJEuAQDi8bh+CI57Vs6X75cSkERfIpXDcAF/KDST4UfoOJ1v9ghnYfnpYKJZXo
+         84R1sWS4PSAzOSl62PU256nrxaTEHqtG7nHR3KRzwDW78h+x4QKzxgqlE2SJDM8gkefx
+         ObhyMIEa7nuomyH4R+Z4XJZvupaQvAN0mMvCs3xwYR7zc1llNFiuNvk7z0fjnYa9B7Ic
+         CfOQ==
+X-Received: by 10.182.134.231 with SMTP id pn7mr12066101obb.11.1369411819485;
+ Fri, 24 May 2013 09:10:19 -0700 (PDT)
+Received: by 10.76.141.232 with HTTP; Fri, 24 May 2013 09:09:49 -0700 (PDT)
+In-Reply-To: <1369321970-7759-8-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225370>
 
-On Fri, May 24, 2013 at 03:42:37PM +0000, Jim Greenleaf wrote:
-> John Keeping <john <at> keeping.me.uk> writes:
-> 
-> > I wonder if this would be better as a file rather than another option to
-> > git-update-index.  We already have .git/info/exclude so we could add
-> > .git/info/freeze or .git/info/local with the same syntax as the normal
-> > .gitignore file.
-> 
-> .git/info/freeze would be a good solution.
-> It would avoid the need to add a new class of files for git-status,
-> while keeping a simple, familiar record of all frozen files in a single location.
+(I haven't caught up with git mails lately, but the @{special}
+refactoring caught my eyes..)
 
-Now I've thought about it a bit more, I'm not sure this does work.
+On Thu, May 23, 2013 at 10:12 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Try this now: configure your current branch's pushremote to push to
+> "refs/heads/*:refs/heads/rr/*".  Now, type 'git show @{p}'.  Voila!
 
-If an entry in the freeze list means "ignore local changes in this
-file", we really want to be talking about local changes relative to some
-base.  Otherwise, what happens if the upstream file is radically
-altered?  A user probably doesn't want to keep their file unchanged when
-this happens.
+Voila what? Why not avoid guessing game and describe what the patch is for?
 
-So we don't just want to store the filename, we want to store the
-version of the file that the user chose to ignore.  One way to do this
-might be to mark the file as a conflict whenever a change to it comes in
-and ignore the freeze file when there is a conflict in the index.  But
-then we either need to introduce a new command to manage this state or
-some way for the user to perform Git operations ignoring the freeze
-file, otherwise how can the user pull down updates?
+> +static void find_push_ref(struct branch *branch) {
+> +       struct remote *remote = pushremote_get(NULL);
+> +       const struct refspec *pat = NULL;
+> +       char raw_ref[PATH_MAX];
+> +       struct ref *this_ref;
+> +       char *dst_name;
+> +       int len;
+> +
+> +       sprintf(raw_ref, "refs/heads/%s", branch->name);
+> +       len = strlen(raw_ref) + 1;
+> +       this_ref = xcalloc(1, sizeof(*this_ref) + len);
+> +       memcpy(this_ref->name, raw_ref, len);
+> +
+> +       dst_name = get_ref_match(remote->push, remote->push_refspec_nr,
+> +                               this_ref, MATCH_REFS_ALL, 0, &pat);
+> +       printf("dst_name = %s\n", dst_name);
+> +}
+> +
 
-Perhaps a more user-friendly way to handle this would be to introduce
-auto-stash around any operation that will modify a frozen file.  So we
-stash the user's (frozen) changes and then apply them after changing the
-file.  If there are conflicts then these are marked in the index and
-must be resolved, then the unstaged changes in the file are ignored
-again.
+Isn't this an abuse of extended sha-1 syntax? How can I combine this
+with other @{}, ^, ~...?
+--
+Duy
