@@ -1,74 +1,83 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [QUERY] How do you sort completions?
-Date: Fri, 24 May 2013 18:12:43 +0200
-Message-ID: <20130524161243.GB2104@goldbirke>
-References: <CALkWK0k=nVHOBe5SgRH9xQK1+yAYBzbNMqsWxhYPo0MTZPp63g@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 7/7] sha1_name: implement finding @{push}
+Date: Fri, 24 May 2013 21:45:52 +0530
+Message-ID: <CALkWK0=XufbcwObBq7_MWX3jL63Nv3YeSvTUpOfXD+XoKkvMag@mail.gmail.com>
+References: <1369321970-7759-1-git-send-email-artagnon@gmail.com>
+ <1369321970-7759-8-git-send-email-artagnon@gmail.com> <CACsJy8CV192WVW8u6YRnbf6Ue6tFbzyiCARwicwzapSZucaaMw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 24 18:12:56 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 24 18:16:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ufubv-0002Gi-DV
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 18:12:55 +0200
+	id 1UfufW-0004jK-BY
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 18:16:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756686Ab3EXQMr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 May 2013 12:12:47 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:54983 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756663Ab3EXQMp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 12:12:45 -0400
-Received: from localhost6.localdomain6 (goldbirke.fzi.de [141.21.50.31])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0MGmMn-1Uk3KM2em1-00E7xS; Fri, 24 May 2013 18:12:43 +0200
-Content-Disposition: inline
-In-Reply-To: <CALkWK0k=nVHOBe5SgRH9xQK1+yAYBzbNMqsWxhYPo0MTZPp63g@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:FI8RPybiNbuqYU/0rihBrAmFgH4RwvBeVtu2tqSubXL
- P5icgEnOQE0g6Jk5arvKkmkQMQ/xxNXF+DLgB6qquaKyLQ8dkO
- 44GUQ6oxkvjmcU0AQbH+5xGVBJN0RYAWiF44U8qaSf02atmvqh
- m2P4PFNDiKSmLu9McSakFDndfqkbZnaVeoZhSa8GU54k96fhXB
- S59m+B7qBlxunnb0cT+YpLn+nXN78GYXLC85yqezELaoGSJUHf
- ASC12jjpat6CBFXEsM5XU96+na9YacpdvWX23x62IptWRMuuN7
- 7L443I5j5TvJ7fyagLjG89dmB6iqauhRL8/3N4xd4KqzyqqCwX
- X/DpdiIURdkQgj6UUjQs=
+	id S1755322Ab3EXQQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 12:16:34 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:60860 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754721Ab3EXQQd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 12:16:33 -0400
+Received: by mail-ie0-f169.google.com with SMTP id u16so13033405iet.28
+        for <git@vger.kernel.org>; Fri, 24 May 2013 09:16:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=iGrmN7WKhecTSW5wtKAQluwgK9ruzj+46IRLVS4WHCY=;
+        b=qxKoJdDhhfVciIeQNcb9KNA/hYvpPKxXzmZjk+KzfoUVgppCxtPjkHHKlH91RijMor
+         l9SULBlNd847YwkTyl+uB1xoWZYKBmzYudOv8IE/fZZH8+/FuCTyQ8NPOBCBB9QEYeBu
+         8AvhPJzq5R50D+99tEhhl/bgu+3qMsX4sOR9bim4LCuwdlsJPO9BGI3m4Gx45WvrSGla
+         Lv2IYTsATIYZxpKP8bn9jdqD02r9wpoqXgfyZmDqDU79THj4z7Li8WpLfMS3uuCt2ART
+         AKUsSOkHFZGuafwM5RdoyrikaU1uCNauktOUkE/vhVTd6VFqWFSqV9nDFfpZAnT5ahn2
+         2ilA==
+X-Received: by 10.50.11.72 with SMTP id o8mr2773192igb.44.1369412193460; Fri,
+ 24 May 2013 09:16:33 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Fri, 24 May 2013 09:15:52 -0700 (PDT)
+In-Reply-To: <CACsJy8CV192WVW8u6YRnbf6Ue6tFbzyiCARwicwzapSZucaaMw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225372>
 
-Hi,
+Duy Nguyen wrote:
+> On Thu, May 23, 2013 at 10:12 PM, Ramkumar Ramachandra
+> <artagnon@gmail.com> wrote:
+>> Try this now: configure your current branch's pushremote to push to
+>> "refs/heads/*:refs/heads/rr/*".  Now, type 'git show @{p}'.  Voila!
+>
+> Voila what? Why not avoid guessing game and describe what the patch is for?
 
+If you're on branch master, it'll output refs/heads/rr/master.  The
+topic is about having a @{push} corresponding to @{upstream}
 
-On Fri, May 24, 2013 at 05:03:27PM +0530, Ramkumar Ramachandra wrote:
-> I'm not able to sort completions for some weird reason.  No matter
-> what I order I insert stuff into COMPREPLY, bash seems to auto-sort
-> them lexically.  I tried to pass --sort=3D'-committerdate' to git
-> for-each-ref so I can get a sensible 'git checkout <TAB>' reply, and
-> I'm very annoyed that it doesn't work.
->=20
-> I thought it was bash's complete builtin doing the implicit sorting,
-> so I read the manual with no success.  Is readline doing it?  If so,
-> why am I not getting the ordering even in zsh (which doesn't use
-> readline)?
+>> +static void find_push_ref(struct branch *branch) {
+>> +       struct remote *remote = pushremote_get(NULL);
+>> +       const struct refspec *pat = NULL;
+>> +       char raw_ref[PATH_MAX];
+>> +       struct ref *this_ref;
+>> +       char *dst_name;
+>> +       int len;
+>> +
+>> +       sprintf(raw_ref, "refs/heads/%s", branch->name);
+>> +       len = strlen(raw_ref) + 1;
+>> +       this_ref = xcalloc(1, sizeof(*this_ref) + len);
+>> +       memcpy(this_ref->name, raw_ref, len);
+>> +
+>> +       dst_name = get_ref_match(remote->push, remote->push_refspec_nr,
+>> +                               this_ref, MATCH_REFS_ALL, 0, &pat);
+>> +       printf("dst_name = %s\n", dst_name);
+>> +}
+>> +
+>
+> Isn't this an abuse of extended sha-1 syntax? How can I combine this
+> with other @{}, ^, ~...?
 
-The order of elements in COMPREPLY doesn't matter, it will be sorted
-anyway:
-
-$ _foo () { COMPREPLY=3D("foo" "bar" "baz") ; }
-$ complete -F _foo foo
-$ foo <TAB>
-bar  baz  foo
-
-I don't know who does the sorting (Bash or readline), and I don't know
-any way to disable it.
-
-
-G=E1bor
+I'm unsure what you mean.  How can I be on branch master^1?  Did you
+read the cover-letter?
