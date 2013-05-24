@@ -1,65 +1,83 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: restoring all branches from a bundle
-Date: Fri, 24 May 2013 18:42:37 +0700
-Message-ID: <CACsJy8C6C1GpTts+n+5Bs=aFbAgRCaQ5K8c+kr1ux0tjUbbgeQ@mail.gmail.com>
-References: <519F4684.7010905@intland.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: git stash deletes/drops changes of
+Date: Fri, 24 May 2013 13:42:42 +0100
+Message-ID: <20130524124242.GD27005@serenity.lan>
+References: <87sj1d5ous.fsf@linux-k42r.v.cablecom.net>
+ <7vd2shcnx7.fsf@alter.siamese.dyndns.org>
+ <87obc15mq5.fsf@linux-k42r.v.cablecom.net>
+ <20130523235711.GJ12252@machine.or.cz>
+ <20130524082253.GY27005@serenity.lan>
+ <20130524094006.GM12252@machine.or.cz>
+ <20130524100612.GA27005@serenity.lan>
+ <20130524101416.GO12252@machine.or.cz>
+ <20130524104018.GB27005@serenity.lan>
+ <20130524110322.GP12252@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?B?w4Frb3MsIFRhanRp?= <akos.tajti@intland.com>
-X-From: git-owner@vger.kernel.org Fri May 24 13:43:15 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@inf.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jim Greenleaf <james.a.greenleaf@gmail.com>,
+	git@vger.kernel.org
+To: Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Fri May 24 14:43:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfqOv-0004bF-Pt
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 13:43:14 +0200
+	id 1UfrKl-0007F0-Ey
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 14:42:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751946Ab3EXLnJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 May 2013 07:43:09 -0400
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:36004 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751529Ab3EXLnI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 May 2013 07:43:08 -0400
-Received: by mail-oa0-f45.google.com with SMTP id j6so5888966oag.4
-        for <git@vger.kernel.org>; Fri, 24 May 2013 04:43:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=wNdbczbmQ8nFMfHKOAAFQttUIgayObq+HoZp0jj1GJo=;
-        b=Ho+ySZl4jFNOXGtHhmgUWf5jG9yijkTSU5CUoXSMhJIg53Xnn37Le+aoCivdEMpNEQ
-         I06yeBiBoFVL8A1+OugDStqnvl1LD2ZjiphqIk8IncRF3mBcF6RsHsD/pJKQUZbpOOea
-         WepuUI1PUoYrtrRK88madY5fzKSPFKHjOPyPWPVXNEF+yOvELov6EGyTnYYEpEAptC0R
-         hzOnLShNdQoEHLgMeuPxwIJkhybUu4ExTZn3frtNTSGn+dA6fkd9K3/tDVn9TP9Nnm9P
-         VPTnYxdzdlXInK6kr19c9qSIhHW9qnL6jHKkn84+GOchG2f0R6AedgV5+3uf72qEiPr3
-         zbow==
-X-Received: by 10.60.150.146 with SMTP id ui18mr11309616oeb.101.1369395787180;
- Fri, 24 May 2013 04:43:07 -0700 (PDT)
-Received: by 10.76.141.232 with HTTP; Fri, 24 May 2013 04:42:37 -0700 (PDT)
-In-Reply-To: <519F4684.7010905@intland.com>
+	id S1754130Ab3EXMmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 08:42:55 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:34504 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753341Ab3EXMmy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 08:42:54 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 46468198036;
+	Fri, 24 May 2013 13:42:54 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -11
+X-Spam-Level: 
+X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3hbGMBCt6qVG; Fri, 24 May 2013 13:42:52 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 1B46019803E;
+	Fri, 24 May 2013 13:42:44 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <20130524110322.GP12252@machine.or.cz>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225349>
 
-On Fri, May 24, 2013 at 5:52 PM, "=C3=81kos, Tajti" <akos.tajti@intland=
-=2Ecom> wrote:
-> Dear List,
->
-> I created a dump from a repository. git bundle list-heads prints all =
-the
-> refs I meant to add. The problem is that after exracting the dump wit=
-h git
-> bundle unbundle the target repository doesn't contain any branches (g=
-it
-> branch -a prints nothing). How can we exract a dump so that the branc=
-hes are
-> also restored?
+On Fri, May 24, 2013 at 01:03:22PM +0200, Petr Baudis wrote:
+> On Fri, May 24, 2013 at 11:40:18AM +0100, John Keeping wrote:
+> > So that it continues to Just Work for people using buildroot but you can
+> > create Makefile.config to override those defaults.
+> 
+>   Indeed, that doesn't cover some corner cases of (c), but that's not a
+> big deal in practice I guess.
+> 
+>   My point still stands - this is extra hassle, done just for the sake
+> of the tool; I think the tool should not get in the way. Moreover, it's
+> not the default solution for your typical original author and therefore
+> you will still often find yourself in a situation where you have to deal
+> with a setup that's broken already.
 
-I think "git fetch /path/to/the/bundle <refspec>" does that.
---
-Duy
+I think we're in violent agreement here.
+
+I can see that there are cases where an --ignore-changes option that
+behaves like --assume-unchanged but without ever overwriting the local
+file is a useful feature.  I was simply trying to point at what I
+consider best practices for makefiles, which was relevant for the
+example you gave.  Sorry if that was unclear.
