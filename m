@@ -1,87 +1,83 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: git stash deletes/drops changes of
-Date: Fri, 24 May 2013 10:26:02 -0400 (EDT)
-Message-ID: <360187633.973068.1369405562399.JavaMail.root@genarts.com>
-References: <87obc15mq5.fsf@linux-k42r.v.cablecom.net>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [PATCH 2/2] diffcore-pickaxe doc: document -S and -G properly
+Date: Fri, 24 May 2013 10:58:29 -0400
+Message-ID: <CABURp0qCOMJnQ=+p81eXLtj6+zujO=MsYODx8zR_cXjVXwV=HA@mail.gmail.com>
+References: <1368793403-4642-1-git-send-email-artagnon@gmail.com>
+ <1368793403-4642-3-git-send-email-artagnon@gmail.com> <7vfvxlw055.fsf@alter.siamese.dyndns.org>
+ <7vsj1jzao7.fsf@alter.siamese.dyndns.org> <CALkWK0n+NTnO0_4jNuR3Z5qmA_=-Dux+gq8kNzAT4YLC12Z8uQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Jim Greenleaf <james.a.greenleaf@gmail.com>, git@vger.kernel.org,
-	Petr Baudis <pasky@ucw.cz>, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri May 24 16:33:55 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 24 16:59:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uft46-0007OH-2U
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 16:33:54 +0200
+	id 1UftSV-0006H8-OU
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 16:59:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753856Ab3EXOdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 10:33:50 -0400
-Received: from hq.genarts.com ([173.9.65.1]:59531 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752105Ab3EXOdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 10:33:49 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id C45A5BE4032;
-	Fri, 24 May 2013 10:26:08 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eZMfO5vnI2iv; Fri, 24 May 2013 10:26:02 -0400 (EDT)
-Received: from mail.hq.genarts.com (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 83292BE3D93;
-	Fri, 24 May 2013 10:26:02 -0400 (EDT)
-In-Reply-To: <87obc15mq5.fsf@linux-k42r.v.cablecom.net>
-X-Mailer: Zimbra 7.2.0_GA_2669 (ZimbraWebClient - GC27 (Mac)/7.2.0_GA_2669)
+	id S1756500Ab3EXO6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 10:58:51 -0400
+Received: from mail-vb0-f42.google.com ([209.85.212.42]:38002 "EHLO
+	mail-vb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753882Ab3EXO6u (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 10:58:50 -0400
+Received: by mail-vb0-f42.google.com with SMTP id w15so2784770vbf.1
+        for <git@vger.kernel.org>; Fri, 24 May 2013 07:58:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=aZzoduo2ZaNXRbUjrcCSn2zj8HhVbM6U0VJWJe+atts=;
+        b=z1aNozcXqTvdBHF+tiy4Twec/VLJ3d4jQtgGRlGyiOcFNZItH9oA74fdVpL/WOBdeK
+         aTa2cbK8sSNWawS9rUJbPrkYjnHY23W6OW0hA+2pY2ruW7RDCx9H0oTB9j5HwzOgM1t5
+         QrgXyabbNZ9TgKrrQHtwbBH50NysGQ8HwGjLvdpOmNeoevwZEBdMZqloHFbhaPTpbFo/
+         pr9SCk523Ufjiy3f9VOT39aTx3a3kxuDGwLSPEK/iRijylgo7hfkdcs14TWFmHZima5t
+         U0ny7+qNe526c03vVqCL9DThrMWsqvI7CUEH8caA0/MQoCqMWTYh4ZY0dQ6NTgvJacbT
+         czqA==
+X-Received: by 10.52.90.202 with SMTP id by10mr7621980vdb.26.1369407529755;
+ Fri, 24 May 2013 07:58:49 -0700 (PDT)
+Received: by 10.58.135.1 with HTTP; Fri, 24 May 2013 07:58:29 -0700 (PDT)
+In-Reply-To: <CALkWK0n+NTnO0_4jNuR3Z5qmA_=-Dux+gq8kNzAT4YLC12Z8uQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225359>
 
------ Original Message -----
-> From: "Thomas Rast" <trast@inf.ethz.ch>
-> Sent: Thursday, May 23, 2013 6:56:50 PM
-> Subject: Re: git stash deletes/drops changes of
-> 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Thomas Rast <trast@inf.ethz.ch> writes:
-> >
-> > > So maybe it would be time to first make up our minds as to what
-> > > --assume-unchanged should actually mean:
-> > >
-> > > * Ignore changes to a tracked file, but treat them as valuable.
-> > >   In this case we'd have to make sure that failures like
-> > >   git-stash's are handled properly.
-> > >
-> > > * Ignore changes to a tracked file, as in "who cares if it was
-> > >   changed".
-> > >
-> > > * A very specific optimization for users who know what they are
-> > >   doing.
-> >
-> > It has always been a promise the user makes to Git that the working
-> > tree files that are marked as such will be kept identical to what is
-> > in the index (hence there is no need for Git to check if they were
-> > modified). And by extension, Git is now free to choose reading from
-> > the working tree file when asked to read from blob object recorded
-> > in the index for that path, or vice versa, because of that promise.
-> >
-> > It is not --ignore-changes bit, and has never been.  What are the
-> > workflows that are helped if we had such a bit?  If we need to
-> > support them, I think you need a real --ignore-changes bit, not
-> > an abuse of --assume-unchanged.
-> 
-> I gather -- from #git -- that it's mostly used for config files, which
-> have an annoying habit of being different from the repository.
+On Fri, May 24, 2013 at 5:37 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Junio C Hamano wrote:
+>> [...]
+>
+> I agree with the other comments, and have made suitable changes.
+> Let's review your block now.
+>
+>>         This transformation is used to find filepairs that represent
+>>         two kinds of changes, and is controlled by the -S, -G and
+>>         --pickaxe-all options.
+>
+> Why do you call this a "transformation"?  Is git log --author="foo" a
+> transformation on the git-log output?  Then how is git log -Sfoo a
+> transformation?
+>
+> Two kinds of changes controlled by three different options?  Isn't the
+> original much clearer?
 
-The web team at my $dayjob has the same problem, and I believe they are also using --assume-unchanged.
+They are all three filters.  They transform the output by limiting it
+to commits which meet specific conditions.  Transformation is used in
+the network-graphs sense of the word.  It fits the beginning of the
+document where it says this:
 
-This may be slightly too tangential, but a different workflow we experimented with is marking the config file(s) merge=ours in gitattributes on each branch.  Ideally then devs can check in their local settings on their local branches.  Unfortunately, as is probably well known here, the merge attribute is only checked by the low level merge algorithm, so too often settings got bashed incorrectly (only one merge parent changed the file).  Perhaps there are some options in that direction?
+  The diffcore mechanism is fed a list of such comparison results
+  (each of which is called "filepair", although at this point each
+  of them talks about a single file), and transforms such a list
+  into another list.  There are currently 5 such transformations:
 
-Thanks,
-Stephen
+  - diffcore-break
+  - diffcore-rename
+  - diffcore-merge-broken
+  - diffcore-pickaxe
+  - diffcore-order
