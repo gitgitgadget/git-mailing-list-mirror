@@ -1,110 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: first parent, commit graph layout, and pull merge direction
-Date: Thu, 23 May 2013 17:21:44 -0700
-Message-ID: <7vppwhb52f.fsf@alter.siamese.dyndns.org>
-References: <20130522115042.GA20649@inner.h.apk.li>
-	<7v4ndukhx0.fsf@alter.siamese.dyndns.org>
-	<20130523090657.GB23933@inner.h.apk.li>
-	<CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
-	<20130523102959.GP9448@inner.h.apk.li>
-	<20130523110839.GT27005@serenity.lan>
-	<7vd2shheic.fsf@alter.siamese.dyndns.org>
-	<20130523164114.GV27005@serenity.lan>
-	<7vbo81e7gs.fsf@alter.siamese.dyndns.org>
-	<20130523215557.GX27005@serenity.lan>
-	<7vli75cpom.fsf@alter.siamese.dyndns.org>
-	<CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v6] Add new git-related helper to contrib
+Date: Thu, 23 May 2013 19:22:53 -0500
+Message-ID: <CAMP44s1GrtCFBdCRVDAAG+J24uDFiBc+mQ-jOesLdwVp-Qg_Dg@mail.gmail.com>
+References: <1368978823-18247-1-git-send-email-felipe.contreras@gmail.com>
+	<7vr4gyizti.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0pXLmjVUwsVWiN2G5QReh80spXjvy_6GuUGRz1RmUbLQ@mail.gmail.com>
+	<7vd2siiqsr.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2ETSxebGxXJV_BYEqTC5gJMVdQLbnTUomrie2rHhdmDg@mail.gmail.com>
+	<7v8v36iq3e.fsf@alter.siamese.dyndns.org>
+	<7v4nduipvb.fsf@alter.siamese.dyndns.org>
+	<7vzjvmh98r.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1_=HSgZA=abHJ3sgDbUyfkF78qO+sR1+Aact3o7bAgLA@mail.gmail.com>
+	<7vvc6ah81g.fsf@alter.siamese.dyndns.org>
+	<CAMP44s37a0_wVVef+QVnLNvc8Uos_XpCZAtpX0RmQyMcuJHUHw@mail.gmail.com>
+	<CAMP44s18ps9JtY7+mvXVbuZu3cm7bHnK1vCzMWqBdvawLr+zzA@mail.gmail.com>
+	<7v8v35hc11.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0X-79Pn4gq_rqBbti-xUobyYDc8Gy-3-g=sq8siZqq8g@mail.gmail.com>
+	<7vppwhcqjq.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3LcEkTghg-cBRux7sA54L-U93w5Znqa1jz2MnUWj8Rhw@mail.gmail.com>
+	<7vhahtco5b.fsf@alter.siamese.dyndns.org>
+	<CAMP44s14Gdadmgy2zi6dRnKLYdZ=HO85OiPSVxGZ8Hquv_58=g@mail.gmail.com>
+	<7vvc69b6nl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>, Andreas Krey <a.krey@gmx.de>,
-	John Szakmeister <john@szakmeister.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 24 02:21:58 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 24 02:23:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uffld-0006pQ-RN
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 02:21:58 +0200
+	id 1Uffmd-0007Ci-Qr
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 02:23:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757981Ab3EXAVs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 20:21:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42595 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757810Ab3EXAVr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 20:21:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A09C226DB;
-	Fri, 24 May 2013 00:21:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=86S/OoSWgRcuJAIb2bfDppgRa88=; b=eG1jxz
-	jvUQufq0DFh0l/KcNHxgR6zZzWP3objGtbceniBIRWrMoaqx9jcSc6yrh2uQPq3Z
-	oqZiYPzeigRbYUXx8yLldL+Fup4epHDFgUq85+e6ZBpRDCx8zXv8QqvKdnLwoMha
-	GlYXu9g+ykqbcoB4Ze/3uDrdZXv4RzuV8r63M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZCUJiawnWw6taKrOlGvhnEk/Zua+GeRK
-	19ZWzq5Y3uIZHBMyEBbWoSYFzSO6cBueWHme6soz9t9EX3yM3/Bpm3dxtj/9Zkgi
-	S9AaqVwb3IMceDEbcQvoZubduulMyNW0EvtnUAaCSQEfYM7M+CDf1Drq6UEeMh0g
-	/ZAqIuE6dkc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35E66226DA;
-	Fri, 24 May 2013 00:21:46 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A34BB226D7;
-	Fri, 24 May 2013 00:21:45 +0000 (UTC)
-In-Reply-To: <CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
-	(Linus Torvalds's message of "Thu, 23 May 2013 17:03:38 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EABFE60A-C407-11E2-8F15-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757982Ab3EXAW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 20:22:56 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:53091 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757915Ab3EXAWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 20:22:55 -0400
+Received: by mail-lb0-f172.google.com with SMTP id p10so4096890lbi.17
+        for <git@vger.kernel.org>; Thu, 23 May 2013 17:22:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=soqufcFAkPKw0Zzz6mmOJNYAmyxl+lqdP0iVm6Phz9M=;
+        b=hQE4nd0A0uooG92D9KGEyymXxgnFiaPWb3tbIG89T6+ksIsU1MAt8gpz2hnVxPWPdg
+         qX96g/mvDddy0KWqytmsDHieoY1Qc+Xp5hETmaSlzLMf+CBlCIzirrrZIduEnV8DNgro
+         BnYXixQ4Yk6ZM8xOyGw0hDiwJViv59aZncJpPkRcb1AUMNcIto8vWqA7PyYzTTs0MWHF
+         ty+T3y2TK5+VE2zuJM81D8LmuN8MtA4gUzxutPFVvKg4ap9HHs+55W6n2Y8WbeAixhQB
+         g06o1hGaOwnZHk2Z/+11fnsx3lXn4op7FChp4J/0qhi2ictQA0yZ/q0GPeH0f5OeozBA
+         SXUA==
+X-Received: by 10.112.63.169 with SMTP id h9mr7610459lbs.135.1369354973935;
+ Thu, 23 May 2013 17:22:53 -0700 (PDT)
+Received: by 10.114.174.170 with HTTP; Thu, 23 May 2013 17:22:53 -0700 (PDT)
+In-Reply-To: <7vvc69b6nl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225325>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Thu, May 23, 2013 at 6:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>>> If the change in HEAD^ in the above example were to copy the whole A
+>>> and C from a different file, then your !found_guilty logic would
+>>> kick in and say all lines of A where copied from elsewhere in HEAD^,
+>>> but again we would not learn the same information for C.
+>>
+>> We would, when it's the turn for C, which is not guilty at this point.
+>
+> In _this_ round of the while(1) loop, pass_blame_to_parent() gets
+> the scoreboard and two origins (HEAD^ that we are looking at and
+> HEAD^^ that is its parent); it does not even know what blame entry
+> this request came from.
+>
+> It runs a single diff using diff_hunks(), and asks blame_chunk() to
+> split all the blame entries in the scoreboard that suspect it is
+> looking at may be guilty for.  Blame entry for A and C are both
+> processed exactly the same way when HEAD^ is given to pass_blame()
+> for the first time, which is when assign_blame() decided to call it
+> with HEAD^ because it happened to have seen A before seeing C.  At
+> that point, both A and C are processed, and the post-processing loop
+> "Take responsibility for the remaining" will clean up remnants from
+> both A and C.  After this round ends, the suspect for A and C are
+> both set to HEAD^^.
+>
+> In the next round of the while(1) loop, C already forgot that its
+> line movement happened in HEAD^.  Its suspect is now HEAD^^.  When
+> "it's the turn for C" [*1*], you can say "These lines originate in
+> that different path in HEAD^^", but it is too late to say "But the
+> first time they appeared in the original file was HEAD^" (which is
+> when they were moved from the different path in HEAD^^), isn't it?
 
-> It would be a *horrible* mistake to make "rebase" the default, because
-> it's so much easier to screw things up that way.
->
-> That said, making "no-ff" the default, and then if that fails, saying
->
->    The pull was not a fast-forward pull, please say if you want to
-> merge or rebase.
->    Use either
->
->         git pull --rebase
->         git pull --merge
->
->    You can also use "git config pull.merge true" or "git config
-> pull.rebase true"
->    to set this once for this project and forget about it.
->
-> That way, people who want the existing behavior could just do that
->
->     git config pull.merge true
->
-> once, and they'd not even notice.
->
-> Hmm? Better yet, make it per-branch.
+If that's the case then we'll need another list of blame entries where
+each discarded blame entry goes. Given the luck of my previous obvious
+patches, I'm not interested in implementing this non-obvious one in
+the least.
 
-I would assume that "no-ff" above was meant to be "--ff-only" from
-the first part of the message.
+The point is 'git related' should do -C -C -C, if 'git blame' doesn't
+throw the right output, that's a bug in 'git blame' not 'git related.
 
-I also would assume that I can rephrase that setting pull.merge
-(which does not exist) as setting pull.rebase explicitly to false
-instead (i.e. missing pull.rebase and pull.rebase that is explicitly
-set to false would mean two different things).
-
-I have to think about this a bit to convince myself that the message
-is clear enough and useful for those this updated behaviour is
-trying to help.  After reading the above message three times, I
-still cannot shake the impression that we are just covering our
-backside to be able to say "we told you already and you chose
-poorly", in case things go wrong for them later.
+-- 
+Felipe Contreras
