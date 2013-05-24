@@ -1,81 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/7] sha1_name: implement finding @{push}
-Date: Fri, 24 May 2013 11:01:15 -0700
-Message-ID: <7vehcw9s0k.fsf@alter.siamese.dyndns.org>
-References: <1369321970-7759-1-git-send-email-artagnon@gmail.com>
-	<1369321970-7759-8-git-send-email-artagnon@gmail.com>
-	<CACsJy8CV192WVW8u6YRnbf6Ue6tFbzyiCARwicwzapSZucaaMw@mail.gmail.com>
-	<CALkWK0=XufbcwObBq7_MWX3jL63Nv3YeSvTUpOfXD+XoKkvMag@mail.gmail.com>
-	<CACsJy8AHX0181uON5Aa7oJzX8j3qAA26Ymh5G3YEGidD4O5zvA@mail.gmail.com>
-	<CALkWK0=LXNRaWz0vN_FwmJKbXT+W11mHABqzSJnbm_izQ0Ttrw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v2 0/3] Towards a useable git-branch
+Date: Fri, 24 May 2013 23:31:08 +0530
+Message-ID: <CALkWK0kut8xVx1Q8dFrrjCSufJtJc=tvLKStf0tiWHzpfksG1g@mail.gmail.com>
+References: <1369405177-7855-1-git-send-email-artagnon@gmail.com>
+ <CACsJy8CaCv4eO2YH_bUKKKZWTxSu9zd3qaDQ5kdZQaKg64ggyQ@mail.gmail.com> <7vobc09sf6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 24 20:01:26 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 24 20:01:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfwIt-0007Vl-Ax
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 20:01:23 +0200
+	id 1UfwJN-0007pB-38
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 20:01:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756348Ab3EXSBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 14:01:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55124 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754040Ab3EXSBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 14:01:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1037620F6A;
-	Fri, 24 May 2013 18:01:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2FTUGXM2JKUX2qnzFsFIJpvqBP0=; b=k7TUzM
-	EgTLyr4Rn3NGvBwdpGp/ifS0yV8VGonPsL/mClUI+JGYTKRGSqiBVcLbMlmVXD9d
-	VQ2ikq9ek94vha/RKkyRN8/3y+dr3yJJ4rL+pbi5dPeD/PySU/m9ZwRaRdH92PmM
-	/Z2zAOe66VcNz9Nu3y99nR9JqW4DO9O/2fwHU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SPEUExOUTPno3fu7rEY+CsrQ3ZtM1EdS
-	1kvm7gQz2eHXF/EUUo4JAKS8E8lamszE1j1W+hsSLjm2NI9rX8+p5s/gDTVle+1W
-	Kny/ujZa1qftxq1Y2LvWzgV0GTDZ1maDPPqBGFUIM5p5NnxB43i0VwuOrjOVO+Va
-	3RnVVlcpsLg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0665720F69;
-	Fri, 24 May 2013 18:01:18 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63BF120F66;
-	Fri, 24 May 2013 18:01:17 +0000 (UTC)
-In-Reply-To: <CALkWK0=LXNRaWz0vN_FwmJKbXT+W11mHABqzSJnbm_izQ0Ttrw@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Fri, 24 May 2013 21:59:11 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EE754346-C49B-11E2-8651-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756374Ab3EXSBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 14:01:49 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:37642 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753642Ab3EXSBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 14:01:48 -0400
+Received: by mail-ie0-f170.google.com with SMTP id aq17so13284303iec.1
+        for <git@vger.kernel.org>; Fri, 24 May 2013 11:01:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=rQkX3dClE2bd3be5VrZ8d8dwulJFCSxeoLVf46k1M4s=;
+        b=xc9FwHwj81HhkAzCnIooLIYEqrYVhtcwY6Bl2froO3nFTAUGrahxJCoMN1Drw6Vubw
+         PSZGPOtTyO8WCv9Xnvr9W1HEILZVfPJDYTye2rR8NYWTWkbJXIqI1GeatFYg4qmdyn+M
+         a4Nz1eRBlhRwWFfYJOSBYHnZ9rC0cCmtQbIyJ4BN2rofKNl2W4iOWRq6HH6PZvmWAiqY
+         Mt8vNz8mknZT7BdudkrTPMfwH+WwZGArE/Tr/fvIynFp8RXPiSNy7T+ILK4f1NCOSUxU
+         KTrpPyYBUbRAVNKCa6LBhI0Dt5jD8pfIUMl8Dn2rRjmLgdCp4Rou7p19/ODbBpvs/YMy
+         osEg==
+X-Received: by 10.50.66.140 with SMTP id f12mr154328igt.63.1369418508501; Fri,
+ 24 May 2013 11:01:48 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Fri, 24 May 2013 11:01:08 -0700 (PDT)
+In-Reply-To: <7vobc09sf6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225391>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Junio C Hamano wrote:
+> I am having this feeling that we see more and more of this line of
+> bad behaviours from some on the list recently to call something that
+> is working in which they find itch using unnecessarily derogatory
+> terms, and it makes people simply avoid any discussion that starts
+> with such an attitude.
+>
+> Unnecessary negativity is not productive and it has to stop.
 
-> Duy Nguyen wrote:
->> Then "show @{p}" should show the tip commit of rr/master, not the ref
->> name.
->
-> Yes, that is correct.
->
->> rev-parse (with an option, maybe) may be a better place for
->> this.
->
-> Er, no.  I actually want things like diff @{p}..HEAD.  I want it to be
-> a first-class revision, just like @{u}.
+My apologies.  After all, we have all been using 'git branch' for so
+many years without complaining.  I only noticed the itch recently:
+it's a burning itch that I want it to be fixed very badly (hence the
+series).  If anything I intended to convey the importance of the patch
+to me personally, not about some "general truth" on the broken-ness of
+git-branch.
 
-I think Duy's suggestion makes perfect sense; rev-parse already has
-a mechanism to expand @{u} to the full name, so if you are hooking
-into the same codepath as @{u} to implement the "I publish there"
-information, which I think you should, you already should have it
-for free.
+Ofcourse I will take your suggestion and tone down, because I don't
+want the git community to feel bad about the software they're
+developing.
