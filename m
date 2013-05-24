@@ -1,83 +1,76 @@
-From: John Keeping <john@keeping.me.uk>
+From: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
 Subject: Re: first parent, commit graph layout, and pull merge direction
-Date: Fri, 24 May 2013 09:29:01 +0100
-Message-ID: <20130524082900.GZ27005@serenity.lan>
-References: <7vd2shheic.fsf@alter.siamese.dyndns.org>
- <20130523164114.GV27005@serenity.lan>
- <7vbo81e7gs.fsf@alter.siamese.dyndns.org>
- <20130523215557.GX27005@serenity.lan>
- <7vli75cpom.fsf@alter.siamese.dyndns.org>
- <CAMP44s3-3gpAAyp-WfDjHxJiotO68GUbb5tHw9Qo35yCTGFNqA@mail.gmail.com>
- <7v8v35cnp0.fsf@alter.siamese.dyndns.org>
- <CAMP44s1N=xy2B-YkCLC67pX_EVqAziGWyN1qkrs0Sq=o2jL6Sw@mail.gmail.com>
- <7vzjvlb7mu.fsf@alter.siamese.dyndns.org>
- <CAMP44s1D06ggmTjXBEL0puFLqYDShhy6HV0S+oj0AwDGz-sUqA@mail.gmail.com>
+Date: Fri, 24 May 2013 11:29:00 +0200
+Message-ID: <519F32DC.0@ira.uka.de>
+References: <20130522115042.GA20649@inner.h.apk.li> <7v4ndukhx0.fsf@alter.siamese.dyndns.org> <20130523090657.GB23933@inner.h.apk.li> <20130523192512.GR9448@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Andreas Krey <a.krey@gmx.de>,
-	John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 24 10:29:24 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 24 11:28:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfnNL-00070M-JE
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 10:29:23 +0200
+	id 1UfoIE-0005kT-35
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 11:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760063Ab3EXI3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 04:29:17 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:49182 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759437Ab3EXI3O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 04:29:14 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 1D8E7230D6;
-	Fri, 24 May 2013 09:29:14 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id m1uARUzd-uUF; Fri, 24 May 2013 09:29:11 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 47AD523096;
-	Fri, 24 May 2013 09:29:02 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CAMP44s1D06ggmTjXBEL0puFLqYDShhy6HV0S+oj0AwDGz-sUqA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758284Ab3EXJ2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 05:28:05 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:45596 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752842Ab3EXJ2E (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 May 2013 05:28:04 -0400
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1UfoHy-0001RO-4R; Fri, 24 May 2013 11:27:59 +0200
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 587 
+	id 1UfoHx-0003NY-TN; Fri, 24 May 2013 11:27:53 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <20130523192512.GR9448@inner.h.apk.li>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1369387679.366676000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225335>
 
-On Thu, May 23, 2013 at 06:53:36PM -0500, Felipe Contreras wrote:
-> The alternatives are these:
-> 
-> a) you annoy the vast majority of the user-base by making 'git pull' a
-> dangerous operation that should be avoided, and replaced with 'git
-> fetch'+'git rebase'.
-> 
-> b) you annoy a minority of the user-base by making 'git pull' not do
-> the merge the expected, so they have to do +'git merge' (which is
-> already less of a change than a)), or configure the default (which
-> they most likely are able to do, if they did intent to do a merge).
+Am 23.05.2013 21:25, schrieb Andreas Krey:
+> On Thu, 23 May 2013 11:06:57 +0000, Andreas Krey wrote:
+> ...
+>> ...
+>>> Don't do that, then.
+>
+> Ouch, you're right. The problem is not actually in the
+> pull; only the *last* pull into a feature branch that
+> then get pushed back ff to master needs to be reversed.
+>
+> And at that time you don't know it's the last one
+> -> swap parents before the push if necessary.
 
-Note that in my email that started this, I tried to be clear that I was
-talking about "git pull" *without a branch name*.  If this user
-explicitly says "git pull remote branch" then I consider that a clear
-indication that they really do mean to perform a merge; I would not
-recommend changing the current behaviour in that case.
+if you have to be so careful to ensure the correct ordering of parents 
+it almost defeats the initial objective to make commit graphs in gitk 
+look nice without re-educating/restricting other users. A solution that 
+works for everyone should work without users having to think about it.
 
-If the user just says "git pull" then it is more likely that they are
-just trying to synchronise with the upstream branch, in which case they
-probably don't actually want a merge.
+Here is an idea (probably already discussed in the long history of git):
+1) the branch name is recorded in a commit (for merges the branch that 
+is updated)
+2) unique identifier of repository is recorded in commit (optional)
+3) simple configurable ordering and/or coloring scheme in gitk based on 
+committer,branch name and repo (with wildcards).
+
+With this users could pull and push as often as they like, the main 
+branches would always be ordered and straight lines. If instead you 
+already do the work to keep your history clean you could just use the 
+coloring scheme and see committers color coded in gitk. Further benefit: 
+the history of really old commits could be more easily remembered if you 
+knew in what branch they originated
+
+Is this a bad idea or just no one did it yet?
