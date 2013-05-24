@@ -1,83 +1,100 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH 2/2] diffcore-pickaxe doc: document -S and -G properly
-Date: Fri, 24 May 2013 10:58:29 -0400
-Message-ID: <CABURp0qCOMJnQ=+p81eXLtj6+zujO=MsYODx8zR_cXjVXwV=HA@mail.gmail.com>
-References: <1368793403-4642-1-git-send-email-artagnon@gmail.com>
- <1368793403-4642-3-git-send-email-artagnon@gmail.com> <7vfvxlw055.fsf@alter.siamese.dyndns.org>
- <7vsj1jzao7.fsf@alter.siamese.dyndns.org> <CALkWK0n+NTnO0_4jNuR3Z5qmA_=-Dux+gq8kNzAT4YLC12Z8uQ@mail.gmail.com>
+From: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
+Subject: Re: first parent, commit graph layout, and pull merge direction
+Date: Fri, 24 May 2013 17:05:26 +0200
+Message-ID: <519F81B6.4010807@ira.uka.de>
+References: <20130522115042.GA20649@inner.h.apk.li> <7v4ndukhx0.fsf@alter.siamese.dyndns.org> <20130523090657.GB23933@inner.h.apk.li> <20130523192512.GR9448@inner.h.apk.li> <519F32DC.0@ira.uka.de> <20130524134214.GA26617@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 24 16:59:08 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 24 17:04:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UftSV-0006H8-OU
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 16:59:08 +0200
+	id 1UftXr-0001Id-Pv
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 17:04:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756500Ab3EXO6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 10:58:51 -0400
-Received: from mail-vb0-f42.google.com ([209.85.212.42]:38002 "EHLO
-	mail-vb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753882Ab3EXO6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 10:58:50 -0400
-Received: by mail-vb0-f42.google.com with SMTP id w15so2784770vbf.1
-        for <git@vger.kernel.org>; Fri, 24 May 2013 07:58:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=aZzoduo2ZaNXRbUjrcCSn2zj8HhVbM6U0VJWJe+atts=;
-        b=z1aNozcXqTvdBHF+tiy4Twec/VLJ3d4jQtgGRlGyiOcFNZItH9oA74fdVpL/WOBdeK
-         aTa2cbK8sSNWawS9rUJbPrkYjnHY23W6OW0hA+2pY2ruW7RDCx9H0oTB9j5HwzOgM1t5
-         QrgXyabbNZ9TgKrrQHtwbBH50NysGQ8HwGjLvdpOmNeoevwZEBdMZqloHFbhaPTpbFo/
-         pr9SCk523Ufjiy3f9VOT39aTx3a3kxuDGwLSPEK/iRijylgo7hfkdcs14TWFmHZima5t
-         U0ny7+qNe526c03vVqCL9DThrMWsqvI7CUEH8caA0/MQoCqMWTYh4ZY0dQ6NTgvJacbT
-         czqA==
-X-Received: by 10.52.90.202 with SMTP id by10mr7621980vdb.26.1369407529755;
- Fri, 24 May 2013 07:58:49 -0700 (PDT)
-Received: by 10.58.135.1 with HTTP; Fri, 24 May 2013 07:58:29 -0700 (PDT)
-In-Reply-To: <CALkWK0n+NTnO0_4jNuR3Z5qmA_=-Dux+gq8kNzAT4YLC12Z8uQ@mail.gmail.com>
+	id S1756427Ab3EXPEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 11:04:33 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:56834 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755266Ab3EXPEc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 May 2013 11:04:32 -0400
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1UftXX-0006hY-CM; Fri, 24 May 2013 17:04:25 +0200
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 587 
+	id 1UftXX-00059m-5V; Fri, 24 May 2013 17:04:19 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <20130524134214.GA26617@inner.h.apk.li>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1369407865.636284000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225360>
 
-On Fri, May 24, 2013 at 5:37 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Junio C Hamano wrote:
->> [...]
+Am 24.05.2013 15:42, schrieb Andreas Krey:
+> On Fri, 24 May 2013 11:29:00 +0000, Holger Hellmuth (IKS) wrote:
+> ...
+>> Here is an idea (probably already discussed in the long history of git):
+>> 1) the branch name is recorded in a commit (for merges the branch that
+>> is updated)
 >
-> I agree with the other comments, and have made suitable changes.
-> Let's review your block now.
->
->>         This transformation is used to find filepairs that represent
->>         two kinds of changes, and is controlled by the -S, -G and
->>         --pickaxe-all options.
->
-> Why do you call this a "transformation"?  Is git log --author="foo" a
-> transformation on the git-log output?  Then how is git log -Sfoo a
-> transformation?
->
-> Two kinds of changes controlled by three different options?  Isn't the
-> original much clearer?
+> The branch name is almost completely meaningless. I could just
+> do my feature in my local master and never have a different name.
 
-They are all three filters.  They transform the output by limiting it
-to commits which meet specific conditions.  Transformation is used in
-the network-graphs sense of the word.  It fits the beginning of the
-document where it says this:
+In which case parent switching in the commit wouldn't help you either.
 
-  The diffcore mechanism is fed a list of such comparison results
-  (each of which is called "filepair", although at this point each
-  of them talks about a single file), and transforms such a list
-  into another list.  There are currently 5 such transformations:
+But even you could keep your master always on the left side of gitk if 
+you deem it special. And you could keep longer running cooperative 
+branches (the main develop and the release branch of your project for 
+example) in a seperate lane.
 
-  - diffcore-break
-  - diffcore-rename
-  - diffcore-merge-broken
-  - diffcore-pickaxe
-  - diffcore-order
+Depending on your use of branches many branches won't get any ordering, 
+but at a minimum important branches can easily be "highlighted".
+
+> Or commit something onto tmp that I then fast-forward into my
+> (properly named) feature branch.
+
+Yes, but then you would see a feature branch in its expected column in 
+gitk and you would also see (even years later) that it didn't start as a 
+feature but later was made into one. Cues like this help to remember 
+what happened even if you forgot to mention them in the commit message
+
+>> 2) unique identifier of repository is recorded in commit (optional)
+>
+> That is pure noise (in my workflow).
+
+It is important to differentiate between branches of the same name in 
+different repositories. For example if your project has a central 
+repository with master getting all the release stuff you want to sort 
+that master differently than your own master.
+
+The unique identifier might be just a random number or string created at 
+init time of the repo.
+
+>> 3) simple configurable ordering and/or coloring scheme in gitk based on
+>> committer,branch name and repo (with wildcards).
+>
+> Ok, gitk could use some features. :-)
+
+Without additional information about the commit history gitk can do 
+exactly what it does now.
+
+> ...
+>> Is this a bad idea or just no one did it yet?
+>
+> Possibly not bad (hg does parts of it), but un-git-ish?
+
+Don't know. No CVS does branches as good as git. But then it drops that 
+information which depending on development style could be useful or not.
+Not that useful for people who keep their history clean, a lot for 
+people who don't.
