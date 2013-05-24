@@ -1,76 +1,71 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Re: first parent, commit graph layout, and pull merge direction
-Date: Fri, 24 May 2013 19:11:10 +0200
-Message-ID: <20130524171110.GB9448@inner.h.apk.li>
-References: <20130522115042.GA20649@inner.h.apk.li> <7v4ndukhx0.fsf@alter.siamese.dyndns.org> <20130523090657.GB23933@inner.h.apk.li> <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com> <20130523102959.GP9448@inner.h.apk.li> <20130523110839.GT27005@serenity.lan> <7vd2shheic.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/2] sha1_name: fix error message for @{<N>}, @{<date>}
+Date: Fri, 24 May 2013 22:54:35 +0530
+Message-ID: <CALkWK0moMOBUZqqSe521qfa7q8xe0Z5sN10ZRQpPaTu8EuxuDw@mail.gmail.com>
+References: <1369381324-10206-1-git-send-email-artagnon@gmail.com>
+ <1369381324-10206-3-git-send-email-artagnon@gmail.com> <7vd2sgb9r8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>,
-	John Szakmeister <john@szakmeister.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 24 19:11:57 2013
+X-From: git-owner@vger.kernel.org Fri May 24 19:25:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfvX1-0003mP-9C
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 19:11:55 +0200
+	id 1Ufvk5-0003fv-Az
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 19:25:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757000Ab3EXRLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 13:11:47 -0400
-Received: from continuum.iocl.org ([217.140.74.2]:41309 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753341Ab3EXRLq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 13:11:46 -0400
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id r4OHBAE02083;
-	Fri, 24 May 2013 19:11:10 +0200
-Content-Disposition: inline
-In-Reply-To: <7vd2shheic.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+	id S1757214Ab3EXRZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 13:25:18 -0400
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:64869 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753118Ab3EXRZP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 13:25:15 -0400
+Received: by mail-ie0-f171.google.com with SMTP id e10so195102iej.30
+        for <git@vger.kernel.org>; Fri, 24 May 2013 10:25:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=grIHPJHc/amOyghhFixba63n+cg6NSIPCgex3fkuFWo=;
+        b=a9CO68ujNfa4PF48WIeghcuvEjmag1g0oZZkzTOPjhReWWdbGYvj1p9PwfWEeyFdHG
+         iJmGvz73uH85AH7wRx6KWnZxwl42wRUOjGBxgZzrnYUwf7cAQ1oZl6KYxM9oAe7gY4IB
+         3d7EELBqq/dsT2OrYnekbmyrNTynRj2eBJKKtDLm/xyXFNfGUIikhnxagNLwhZUiXWxK
+         NY4t76XTk7wgcEuepWYIaQ6R+2+LtNNUszPb3BVWno1kwEzLE+HKT9InC1b7ez+l8m82
+         TY8OHWJ7tLrEuLrZJXR0izfushztqQhE4tr4FbSUsRd+ZAU4fm19m4ORfINVLQhUZ4Q3
+         sVRA==
+X-Received: by 10.50.66.197 with SMTP id h5mr83561igt.63.1369416315509; Fri,
+ 24 May 2013 10:25:15 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Fri, 24 May 2013 10:24:35 -0700 (PDT)
+In-Reply-To: <7vd2sgb9r8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225383>
 
-On Thu, 23 May 2013 09:01:15 +0000, Junio C Hamano wrote:
-...
-> Instead of having a nice "these six commits marked as 'x' were done
-> on a branch forked some time ago, to address only this one issue and
-> to address it fully" history that explains how these commits were
-> related and these commits are the full solution to a single issue:
-> 
->       x---x---x---x---x---x
->      /                     \
->  ---o---o---o---o---o---o---M---o---o---...
-> 
-> they end up with something like this, even with the "flip the heads
-> of a merge" option, by pulling too often:
-> 
->       x---x   x---x---x   x
->      /     \ /         \ / \
->  ---o---o---M---o---o---M---M---o---o---...
+Junio C Hamano wrote:
+> What is this meant to update?  I recall rewriting this part on
+> purpose.
 
-Wouldn't that be (you don't want to put your work back into master before
-it's done) the following?
+I was being verbose to show that I handle the detached HEAD case too,
+which I missed last time.
 
-       x---x---M---x---x---M--x
-      /       /           /    \
-  ---o---o---M---o---o---M--o---M---o---o---...
+> Even though it appears unusual and invites confusion, it is very
+> consistent to say '' when the user asks for @... as we say 'master'
+> when the user asks for master@...; "inconsistent" is a very bad
+> label for it.
 
-With a bit of luck the first-parent strands will also run like this.
+The inconsistency refers to these two:
 
-I know that rebasing topic branches is better than updating, but my
-monetary upstream is busy letting go a clearcase-minted mindset.
-Teaching them rebasing will take a while, and as long as tthat we
-will have the picture above.
+>>   # on branch master
+>>   $ git show @{10000}
+>>   fatal: Log for '' only has 7 entries.
 
-Andreas
+>>   # detached HEAD case
+>>   $ git show @{10000}
+>>   fatal: Log for '' only has 2005 entries.
 
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+Is the commit message unclear?
