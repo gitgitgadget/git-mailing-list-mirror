@@ -1,71 +1,74 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/2] sha1_name: fix error message for @{<N>}, @{<date>}
-Date: Fri, 24 May 2013 22:54:35 +0530
-Message-ID: <CALkWK0moMOBUZqqSe521qfa7q8xe0Z5sN10ZRQpPaTu8EuxuDw@mail.gmail.com>
-References: <1369381324-10206-1-git-send-email-artagnon@gmail.com>
- <1369381324-10206-3-git-send-email-artagnon@gmail.com> <7vd2sgb9r8.fsf@alter.siamese.dyndns.org>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: first parent, commit graph layout, and pull merge direction
+Date: Fri, 24 May 2013 19:24:40 +0200
+Message-ID: <20130524172440.GC9448@inner.h.apk.li>
+References: <20130522115042.GA20649@inner.h.apk.li> <7v4ndukhx0.fsf@alter.siamese.dyndns.org> <20130523090657.GB23933@inner.h.apk.li> <20130523192512.GR9448@inner.h.apk.li> <519F32DC.0@ira.uka.de> <20130524134214.GA26617@inner.h.apk.li> <519F81B6.4010807@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 24 19:25:25 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri May 24 19:25:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ufvk5-0003fv-Az
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 19:25:25 +0200
+	id 1UfvkR-0003wb-Pp
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 19:25:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757214Ab3EXRZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 13:25:18 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:64869 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753118Ab3EXRZP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 13:25:15 -0400
-Received: by mail-ie0-f171.google.com with SMTP id e10so195102iej.30
-        for <git@vger.kernel.org>; Fri, 24 May 2013 10:25:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=grIHPJHc/amOyghhFixba63n+cg6NSIPCgex3fkuFWo=;
-        b=a9CO68ujNfa4PF48WIeghcuvEjmag1g0oZZkzTOPjhReWWdbGYvj1p9PwfWEeyFdHG
-         iJmGvz73uH85AH7wRx6KWnZxwl42wRUOjGBxgZzrnYUwf7cAQ1oZl6KYxM9oAe7gY4IB
-         3d7EELBqq/dsT2OrYnekbmyrNTynRj2eBJKKtDLm/xyXFNfGUIikhnxagNLwhZUiXWxK
-         NY4t76XTk7wgcEuepWYIaQ6R+2+LtNNUszPb3BVWno1kwEzLE+HKT9InC1b7ez+l8m82
-         TY8OHWJ7tLrEuLrZJXR0izfushztqQhE4tr4FbSUsRd+ZAU4fm19m4ORfINVLQhUZ4Q3
-         sVRA==
-X-Received: by 10.50.66.197 with SMTP id h5mr83561igt.63.1369416315509; Fri,
- 24 May 2013 10:25:15 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Fri, 24 May 2013 10:24:35 -0700 (PDT)
-In-Reply-To: <7vd2sgb9r8.fsf@alter.siamese.dyndns.org>
+	id S1757211Ab3EXRZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 13:25:40 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:41320 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757210Ab3EXRZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 13:25:36 -0400
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id r4OHOeV02589;
+	Fri, 24 May 2013 19:24:40 +0200
+Content-Disposition: inline
+In-Reply-To: <519F81B6.4010807@ira.uka.de>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225384>
 
-Junio C Hamano wrote:
-> What is this meant to update?  I recall rewriting this part on
-> purpose.
+On Fri, 24 May 2013 17:05:26 +0000, Holger Hellmuth (IKS) wrote:
+> Am 24.05.2013 15:42, schrieb Andreas Krey:
+...
+> >The branch name is almost completely meaningless. I could just
+> >do my feature in my local master and never have a different name.
+> 
+> In which case parent switching in the commit wouldn't help you either.
 
-I was being verbose to show that I handle the detached HEAD case too,
-which I missed last time.
+Oh, it does; I tried. Names are meaningless, the parent ordering
+isn't. ( [And at least, it's already in there.]
 
-> Even though it appears unusual and invites confusion, it is very
-> consistent to say '' when the user asks for @... as we say 'master'
-> when the user asks for master@...; "inconsistent" is a very bad
-> label for it.
+> But even you could keep your master always on the left side of gitk if 
+> you deem it special. And you could keep longer running cooperative 
+> branches (the main develop and the release branch of your project for 
+> example) in a seperate lane.
 
-The inconsistency refers to these two:
+I need gitk (or similar) to do it. Will take some time to understand
+the code (and triggers the 'I can write it (the interesting part) faster
+than I can grok gitk').
 
->>   # on branch master
->>   $ git show @{10000}
->>   fatal: Log for '' only has 7 entries.
+...
+> Without additional information about the commit history gitk can do 
+> exactly what it does now.
 
->>   # detached HEAD case
->>   $ git show @{10000}
->>   fatal: Log for '' only has 2005 entries.
+Most definitely not. There are quite some situations where the graph
+deteriorates pretty heavily, even when not expecting it to pay attention
+to first parent. When you have two branches, of which one regularly
+gets merge into the other, it sometimes manages to display first the
+one, then the other branch, with a log of merge edges going upwards
+in parallel, for example.
 
-Is the commit message unclear?
+Andreas
+
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
