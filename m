@@ -1,98 +1,79 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: first parent, commit graph layout, and pull merge direction
-Date: Fri, 24 May 2013 21:47:19 +0100
-Organization: OPDS
-Message-ID: <9C8FD0BE27314D72A629025EFFF58848@PhilipOakley>
-References: <20130522115042.GA20649@inner.h.apk.li><7v4ndukhx0.fsf@alter.siamese.dyndns.org><20130523090657.GB23933@inner.h.apk.li><CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com><20130523102959.GP9448@inner.h.apk.li><20130523110839.GT27005@serenity.lan><7vd2shheic.fsf@alter.siamese.dyndns.org><20130523164114.GV27005@serenity.lan><7vbo81e7gs.fsf@alter.siamese.dyndns.org><20130523215557.GX27005@serenity.lan><7vli75cpom.fsf@alter.siamese.dyndns.org><CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com><7vppwhb52f.fsf@alter.siamese.dyndns.org><CAMP44s0NmKO7qkxVDMqR7Lxutm19MdOQ+6u5_3MY6f18C_V3PA@mail.gmail.com><CAMP44s3Ba7L5fvEQPo0VADzNn9pJeyr2=f+OyW+_V5kkuKqEEw@mail.gmail.com> <7vli74baym.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH 1/3] for-each-ref: introduce %C(...) for color
+Date: Fri, 24 May 2013 22:56:57 +0200
+Message-ID: <CALWbr2yuEczF-G7uJ0r-teUJrZowrY8mYm+xwJmv4+CT6NgDPA@mail.gmail.com>
+References: <1369405177-7855-1-git-send-email-artagnon@gmail.com>
+	<1369405177-7855-2-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"John Keeping" <john@keeping.me.uk>,
-	"Andreas Krey" <a.krey@gmx.de>,
-	"John Szakmeister" <john@szakmeister.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Felipe Contreras" <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 24 22:47:16 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 24 22:57:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfytP-00068Z-UY
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 22:47:16 +0200
+	id 1Ufz2u-00049T-DW
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 22:57:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754754Ab3EXUrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 16:47:09 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:25522 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753787Ab3EXUrI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 May 2013 16:47:08 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ArYNAHPRn1FZ8Ylm/2dsb2JhbABagwiJKrkrBAEDAYEGF3SCHgUBAQUIAQEuHgEBIQsCAwUCAQMVAQslFAEECBIGBxcGARIIAgECAwEKh2ADE7EUDYhmjEaBbWqCemEDiGeGBIZqjgOFI4MQOw
-X-IronPort-AV: E=Sophos;i="4.87,737,1363132800"; 
-   d="scan'208";a="425014425"
-Received: from host-89-241-137-102.as13285.net (HELO PhilipOakley) ([89.241.137.102])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 24 May 2013 21:47:00 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1755359Ab3EXU47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 16:56:59 -0400
+Received: from mail-qe0-f51.google.com ([209.85.128.51]:61290 "EHLO
+	mail-qe0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754970Ab3EXU46 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 16:56:58 -0400
+Received: by mail-qe0-f51.google.com with SMTP id nd7so2851904qeb.38
+        for <git@vger.kernel.org>; Fri, 24 May 2013 13:56:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5Bq7kIr8x/MOZMMTBLwRAsiDQFheOyP+WAjjW6iq8w4=;
+        b=WsPEIFAW9pU5t8NbyAyNIugVDLscZAKtomnHcErnlCGjguvcYVGZw0VzkhuaXk+fot
+         2CxoHX7YqQpYXcQYasUoghsaJInHfywdMzrrRv3V31y700Y5nu1TDucCJqwEZjm2LVAn
+         C1M31UDakvk2jFXlWVH3+gwKWFl5rCFzheWNAtuJC6BoMtPX83Oww81RcsuUpnBw0pLG
+         uHjfl0recQYmZ9/VAsoMkJrjh96nHoGf82hiKkRhwVlUQphmJmSL4xc5hs+FgPbo5i2J
+         LIn0fUBVHf6kaegMZR9yKcapnbRAaTmCDRKQ7oyz41d1x7dwNMTx/FRpMW/xpUv4U/14
+         E36Q==
+X-Received: by 10.229.167.131 with SMTP id q3mr3869331qcy.133.1369429017750;
+ Fri, 24 May 2013 13:56:57 -0700 (PDT)
+Received: by 10.49.81.99 with HTTP; Fri, 24 May 2013 13:56:57 -0700 (PDT)
+In-Reply-To: <1369405177-7855-2-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225400>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Friday, May 24, 2013 5:26 PM
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Fri, May 24, 2013 at 4:19 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> @@ -928,12 +936,22 @@ static void emit(const char *cp, const char *ep)
+>  static void show_ref(struct refinfo *info, const char *format, int quote_style)
+>  {
+>         const char *cp, *sp, *ep;
+> +       char color[COLOR_MAXLEN];
 >
->> ... but I don't see why something small like that
->> wouldn't make sense:
->>
->> The pull was not fast-forward, please either merge or rebase.
->
-> OK, I think I got what John was getting at and this single liner
-> message is a good summary of it.
->
-> Instead of telling them "you cannot push this thing without losing
-> history from the location you are pushing to; you need to become up
-> to date with respect to them before pushing" upon seeing a non ff
-> push failure, we can tell them "you cannot update your history to
-> what the place you get new changes from has without losing your
-> history; you need to integrate the two".
->
-> Initially I said limiting "git pull" to "--ff-only" by default did
-> not make sense, but when we view it that way, I now see how such a
-> default makes sense.
->
-> In another subthread, John Szakmeister mentioned that the "please
-> 'git pull' first" message that a "push" gives when it stops due to
-> non-ff nudges the users in a wrong direction, because they often
-> take that 'git pull' too literally (e.g. 'pull --rebase' may be
-> necessary in their project, not 'git pull<ENTER>').
->
-> The original message deliberately avoided mentioning 'git pull' for
-> that exact reason, but in mid 2010 we made it worse.  The log of
-> that change says that it attempted to
->
->    ... remains fuzzy to include "git pull", "git pull --rebase" and
->    others, but directs the user to the simplest solution in the
->    vast majority of cases.
->
-> but this thread shows that it did not work; the simplest solution
-> was a wrong one.  The message also may need to be rethought to
-> complement this direction being proposed for "pull".
-> --
+>         for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
+>                 ep = strchr(sp, ')');
+>                 if (cp < sp)
+>                         emit(cp, sp);
+> -               print_value(info, parse_atom(sp + 2, ep), quote_style);
+> +
+> +               /* Do we have a color specification? */
+> +               if (!prefixcmp(sp, "%C("))
+> +                       color_parse_mem(sp + 3,
+> +                                       ep - sp - 3,
+> +                                       "--format ", color);
+> +               else {
+> +                       printf("%s", color);
 
-Perhaps offer "git pull ....", which suggests that the user should 
-consider what pull parameters to provide and if taken literally should 
-barf with the four dots.
+Is it not possible for "color" to be used uninitialized here ?
 
-Philip
+> +                       print_value(info, parse_atom(sp + 2, ep), quote_style);
+> +               }
+>         }
+>         if (*cp) {
+>                 sp = cp + strlen(cp);
