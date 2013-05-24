@@ -1,59 +1,54 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 0/3] Towards a useable git-branch
-Date: Fri, 24 May 2013 22:27:19 +0700
-Message-ID: <CACsJy8CaCv4eO2YH_bUKKKZWTxSu9zd3qaDQ5kdZQaKg64ggyQ@mail.gmail.com>
-References: <1369405177-7855-1-git-send-email-artagnon@gmail.com>
+From: Jim Greenleaf <james.a.greenleaf@gmail.com>
+Subject: Re: git stash deletes/drops changes of
+Date: Fri, 24 May 2013 15:34:26 +0000 (UTC)
+Message-ID: <loom.20130524T173321-264@post.gmane.org>
+References: <AANLkTin-BIxgQE5CO2cLhCYJAGHFxiXPquyozKc308DS@mail.gmail.com> <loom.20130523T185301-635@post.gmane.org> <87sj1d5ous.fsf@linux-k42r.v.cablecom.net> <7vd2shcnx7.fsf@alter.siamese.dyndns.org> <87obc15mq5.fsf@linux-k42r.v.cablecom.net> <7v4ndtcmh0.fsf@alter.siamese.dyndns.org> <CABURp0rBzH9=VdW0Y4Bv1tfbSzZ3dwismwgZ7zCwrXC6nDRSJQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 24 17:27:55 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 24 17:34:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UftuM-0007eR-SY
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 17:27:55 +0200
+	id 1Ufu13-0003UU-6C
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 17:34:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752426Ab3EXP1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 11:27:50 -0400
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:62992 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751529Ab3EXP1u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 11:27:50 -0400
-Received: by mail-oa0-f53.google.com with SMTP id g12so6351178oah.12
-        for <git@vger.kernel.org>; Fri, 24 May 2013 08:27:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=tO9I5nSR7a3jG0vdJSpGswIU7DP/1vAI5wvHCiSVgz4=;
-        b=GeP9awtMUktcud5fvV8Sk64aZw7lsw4a3TcpfdVezEKMc47Fy91MGyHg2DbNXFRBrD
-         VS8D/utfYvEcVitE1jHnGV3u0CTPqPREa+6gjLOMGeNIsEXuDnOaZMLhQmgwhRw7d39/
-         35KgCH1o2x4OksCn7vwDrRicwc7t1OiNOaX0V/x9oOy4CHiLNW3gh/H6lqn3LDeqiEde
-         hr9rZTcURqFOaIZ+v8SCP2GTHzFBHRLf5TjYxjobgYRQY2OqCq0UttRk0CJKB0nQqPkl
-         QA2pMEodhoXD4VavwJqK8EA+GTcQW3SRVRuzhXvQdy+M493AYte7b8DyhPls50qPrIl7
-         emAw==
-X-Received: by 10.60.62.162 with SMTP id z2mr12067986oer.140.1369409269851;
- Fri, 24 May 2013 08:27:49 -0700 (PDT)
-Received: by 10.76.141.232 with HTTP; Fri, 24 May 2013 08:27:19 -0700 (PDT)
-In-Reply-To: <1369405177-7855-1-git-send-email-artagnon@gmail.com>
+	id S1755907Ab3EXPep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 11:34:45 -0400
+Received: from plane.gmane.org ([80.91.229.3]:59807 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755830Ab3EXPeo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 11:34:44 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Ufu0v-0003PO-LE
+	for git@vger.kernel.org; Fri, 24 May 2013 17:34:41 +0200
+Received: from 112.205.196.58.pldt.net ([112.205.196.58.pldt.net])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 24 May 2013 17:34:41 +0200
+Received: from james.a.greenleaf by 112.205.196.58.pldt.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 24 May 2013 17:34:41 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 112.205.196.58 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225363>
 
-On Fri, May 24, 2013 at 9:19 PM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> There is no need to use a hammer and coerce everything into an atom,
-> or throw everything out the window and start from scratch to conform
-> to pretty-formats perfectly.  Let's extend the existing format to be
-> _useful_ sensibly.
+Phil Hord <phil.hord <at> gmail.com> writes:
 
-Usefulness is one thing. Another is maintenance and in that regard I
-still think we should be able to remove -v and -vv code (not the
-functionality) with this topic.
---
-Duy
+> The wording of --ignore-changes suffers the same lack of clarity that
+> --assume-unchanged does.
+> What's better?  --sequester is probably too obscure.  Maybe --hold.
+> Or --silence.  Or --shut-up.
+
+How about --freeze?
