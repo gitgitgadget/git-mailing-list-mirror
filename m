@@ -1,66 +1,90 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2 0/3] Towards a useable git-branch
-Date: Fri, 24 May 2013 23:38:27 +0530
-Message-ID: <CALkWK0=QbDAmbRm+01FWc3Okhcgg8RdoRjwfkjrsZ8n=Zm007g@mail.gmail.com>
-References: <1369405177-7855-1-git-send-email-artagnon@gmail.com>
- <CACsJy8CaCv4eO2YH_bUKKKZWTxSu9zd3qaDQ5kdZQaKg64ggyQ@mail.gmail.com> <7vobc09sf6.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 7/7] sha1_name: implement finding @{push}
+Date: Fri, 24 May 2013 23:51:32 +0530
+Message-ID: <CALkWK0mmJE3Q2WU3pmhWdcrxv=jFXb8oVhPCRW+Zc6yLdDmfUg@mail.gmail.com>
+References: <1369321970-7759-1-git-send-email-artagnon@gmail.com>
+ <1369321970-7759-8-git-send-email-artagnon@gmail.com> <CACsJy8CV192WVW8u6YRnbf6Ue6tFbzyiCARwicwzapSZucaaMw@mail.gmail.com>
+ <CALkWK0=XufbcwObBq7_MWX3jL63Nv3YeSvTUpOfXD+XoKkvMag@mail.gmail.com>
+ <CACsJy8AHX0181uON5Aa7oJzX8j3qAA26Ymh5G3YEGidD4O5zvA@mail.gmail.com>
+ <CALkWK0=LXNRaWz0vN_FwmJKbXT+W11mHABqzSJnbm_izQ0Ttrw@mail.gmail.com> <7vehcw9s0k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 24 20:09:17 2013
+X-From: git-owner@vger.kernel.org Fri May 24 20:22:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UfwQV-0003Wr-AL
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 20:09:15 +0200
+	id 1Ufwd8-0002OO-D6
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 20:22:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753956Ab3EXSJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 14:09:09 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:46153 "EHLO
+	id S1756458Ab3EXSWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 14:22:14 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:46630 "EHLO
 	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751633Ab3EXSJI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 14:09:08 -0400
-Received: by mail-ie0-f181.google.com with SMTP id x12so13233232ief.12
-        for <git@vger.kernel.org>; Fri, 24 May 2013 11:09:08 -0700 (PDT)
+	with ESMTP id S1752686Ab3EXSWN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 14:22:13 -0400
+Received: by mail-ie0-f181.google.com with SMTP id x12so12964724ief.40
+        for <git@vger.kernel.org>; Fri, 24 May 2013 11:22:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=BgtPqF6hvtq7xtHjYBLorvxXR0qGuYFm5e85KF4roAo=;
-        b=rU9paHCEd+LgLnJGKaD3ITntRsLehrlA24/KsY7mxTrVIbc+V5KIPBVjrlOy+o1z7a
-         IaUESsiEgLUMDO5a24icibSAuVO1cFhJT1LeZ7dwQKqe3gy4JPKVt5xTlokI95SBRaIh
-         vmysscB9z+ctdH/qa40lnHUy1vkLSL1Lw4F6Ywh/qBr4+LGCL5+1ST8+rxtBNo2VClTL
-         6regIp1Z9NgNQg/dxrDqNks+drH65koVutmQEXnO+yqrYAEJxY2uVsFsgeH5Tb5VlQq9
-         OsbCHgJH6wtRsrEDF0Il/mcKcnK52q0EhrbunEYp96hkutvA0KqvCUMi3w+FCttUBWz3
-         q7Yw==
-X-Received: by 10.50.11.72 with SMTP id o8mr194875igb.44.1369418948155; Fri,
- 24 May 2013 11:09:08 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Fri, 24 May 2013 11:08:27 -0700 (PDT)
-In-Reply-To: <7vobc09sf6.fsf@alter.siamese.dyndns.org>
+        bh=eBOg587XNM+tm15vwLzMkdik641N1niIpQBdSFlKFi4=;
+        b=hHhEeliXfn/gyNjadRA1y4SGVEYYLcruPkw032i+hzHBHseS4ROOQRjYCxKiwyG824
+         e9XoohiczIiKycUMdobe1LmYq/nZzjiiMzSFGFHRrSvTRrLHxEF7ltZcCfNmZkK1q+hB
+         +9Ap/wi9hUvBXUupIRO0STiU065aGTKQIX7d1CxHBABMaHPPzyCI9YeMfdXbOko7UGop
+         ws1zGyrCQ95XWuhBfpIsW+rerVuF+uACQtKwEUvtSbqz6fXurSY4GreIEKT1Z/u59FrF
+         BvXEjybsSgk144vHWk1x2Is1i4LhsWToJtX15PTkgopDF1b/0HrbNo+QMizyDEQT2xQD
+         FPHA==
+X-Received: by 10.43.68.134 with SMTP id xy6mr13215770icb.48.1369419733169;
+ Fri, 24 May 2013 11:22:13 -0700 (PDT)
+Received: by 10.64.46.1 with HTTP; Fri, 24 May 2013 11:21:32 -0700 (PDT)
+In-Reply-To: <7vehcw9s0k.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225393>
 
 Junio C Hamano wrote:
-> Yes, the aim of the topic should be to make the machinery flexible
-> enough so that we can lose -v/-vv implementation and replace them
-> with calls to the new machinery with canned set of output format
-> templates.
+>>> rev-parse (with an option, maybe) may be a better place for
+>>> this.
+>>
+>> Er, no.  I actually want things like diff @{p}..HEAD.  I want it to be
+>> a first-class revision, just like @{u}.
+>
+> I think Duy's suggestion makes perfect sense; rev-parse already has
+> a mechanism to expand @{u} to the full name, so if you are hooking
+> into the same codepath as @{u} to implement the "I publish there"
+> information, which I think you should, you already should have it
+> for free.
 
-Definitely.  I don't want to keep my ugly alias around forever, and I
-certainly want more users to have easy access to this (configurable
-git-branch output formats).  However, the series is not the
-theoretical exercise of prettifying the code underlying -v and -vv.
-Supporting -v and -vv is something we _have_ to do to preserve
-backward compatibility, and I would consider it a side-effect of the
-series rather than the "aim of the topic".  The aim of the topic is to
-get more useful output from git-branch.
+*scratches head*
 
-As long as the topic doesn't paint us into a corner after which it
-will be impossible to implement -v and -vv on top of the format, I
-think we're good.
+Okay, I'm not understanding this.  I've implemented @{push} as a
+revision, so all callers who know how to get_sha1_basic() will be able
+to resolve this (including rev-parse).  Are you talking about
+--symbolic-full-name?  That just calls dwim_ref(), which calls
+interpret_branch_name() anyway: except you get a symbolic name instead
+of the sha1.  Why do I have to think about rev-parse specifically in
+this patch series?  rev-parse has no special logic for @{u} either.
+
+The codepath that resolves @{u} is in interpret_branch_name(): it's
+just a matter of reading branch->merge[0]->dst; it's trivial to
+determine because read_config() just reads the configuration file and
+fills in these values when you get_branch().  How do I get "I publish
+there" information for free?  Where is it contained?  In fact, it's so
+complicated to get that information that I had to break my head to
+even get this far (after mucking around in the transport layer);
+that's what I'm trying to show in this series.  Unless I'm very badly
+mistaken, it's _impossible_ for any codepath in git to determine where
+a push will go, except the one activated by invoking the builtin push.
+
+The long-term impact of this series is not just @{push}, but that
+anyone else in git will be able to determine where a push is supposed
+to go.  Ultimately, it can lead to very heavy optimizations of the
+transport_push() codepath (which is currently super-convoluted unless
+I'm missing something).
