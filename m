@@ -1,109 +1,86 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v6] Add new git-related helper to contrib
-Date: Thu, 23 May 2013 19:22:53 -0500
-Message-ID: <CAMP44s1GrtCFBdCRVDAAG+J24uDFiBc+mQ-jOesLdwVp-Qg_Dg@mail.gmail.com>
-References: <1368978823-18247-1-git-send-email-felipe.contreras@gmail.com>
-	<7vr4gyizti.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0pXLmjVUwsVWiN2G5QReh80spXjvy_6GuUGRz1RmUbLQ@mail.gmail.com>
-	<7vd2siiqsr.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2ETSxebGxXJV_BYEqTC5gJMVdQLbnTUomrie2rHhdmDg@mail.gmail.com>
-	<7v8v36iq3e.fsf@alter.siamese.dyndns.org>
-	<7v4nduipvb.fsf@alter.siamese.dyndns.org>
-	<7vzjvmh98r.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1_=HSgZA=abHJ3sgDbUyfkF78qO+sR1+Aact3o7bAgLA@mail.gmail.com>
-	<7vvc6ah81g.fsf@alter.siamese.dyndns.org>
-	<CAMP44s37a0_wVVef+QVnLNvc8Uos_XpCZAtpX0RmQyMcuJHUHw@mail.gmail.com>
-	<CAMP44s18ps9JtY7+mvXVbuZu3cm7bHnK1vCzMWqBdvawLr+zzA@mail.gmail.com>
-	<7v8v35hc11.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0X-79Pn4gq_rqBbti-xUobyYDc8Gy-3-g=sq8siZqq8g@mail.gmail.com>
-	<7vppwhcqjq.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3LcEkTghg-cBRux7sA54L-U93w5Znqa1jz2MnUWj8Rhw@mail.gmail.com>
-	<7vhahtco5b.fsf@alter.siamese.dyndns.org>
-	<CAMP44s14Gdadmgy2zi6dRnKLYdZ=HO85OiPSVxGZ8Hquv_58=g@mail.gmail.com>
-	<7vvc69b6nl.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: first parent, commit graph layout, and pull merge direction
+Date: Thu, 23 May 2013 17:24:04 -0700
+Message-ID: <CA+55aFzpT8b1E9PxJmCmfEg3k7yMX7iRcQQebV_6ZmwCwgqb9w@mail.gmail.com>
+References: <20130522115042.GA20649@inner.h.apk.li>
+	<7v4ndukhx0.fsf@alter.siamese.dyndns.org>
+	<20130523090657.GB23933@inner.h.apk.li>
+	<CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
+	<20130523102959.GP9448@inner.h.apk.li>
+	<20130523110839.GT27005@serenity.lan>
+	<7vd2shheic.fsf@alter.siamese.dyndns.org>
+	<20130523164114.GV27005@serenity.lan>
+	<7vbo81e7gs.fsf@alter.siamese.dyndns.org>
+	<20130523215557.GX27005@serenity.lan>
+	<7vli75cpom.fsf@alter.siamese.dyndns.org>
+	<CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
+	<7vppwhb52f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
+Cc: John Keeping <john@keeping.me.uk>, Andreas Krey <a.krey@gmx.de>,
+	John Szakmeister <john@szakmeister.net>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 24 02:23:02 2013
+X-From: git-owner@vger.kernel.org Fri May 24 02:24:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uffmd-0007Ci-Qr
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 02:23:00 +0200
+	id 1Uffnm-0007ny-4i
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 02:24:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757982Ab3EXAW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 May 2013 20:22:56 -0400
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:53091 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757915Ab3EXAWz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 May 2013 20:22:55 -0400
-Received: by mail-lb0-f172.google.com with SMTP id p10so4096890lbi.17
-        for <git@vger.kernel.org>; Thu, 23 May 2013 17:22:54 -0700 (PDT)
+	id S1758075Ab3EXAYG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 May 2013 20:24:06 -0400
+Received: from mail-ve0-f171.google.com ([209.85.128.171]:53253 "EHLO
+	mail-ve0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757915Ab3EXAYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 May 2013 20:24:04 -0400
+Received: by mail-ve0-f171.google.com with SMTP id m1so2999199ves.30
+        for <git@vger.kernel.org>; Thu, 23 May 2013 17:24:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=soqufcFAkPKw0Zzz6mmOJNYAmyxl+lqdP0iVm6Phz9M=;
-        b=hQE4nd0A0uooG92D9KGEyymXxgnFiaPWb3tbIG89T6+ksIsU1MAt8gpz2hnVxPWPdg
-         qX96g/mvDddy0KWqytmsDHieoY1Qc+Xp5hETmaSlzLMf+CBlCIzirrrZIduEnV8DNgro
-         BnYXixQ4Yk6ZM8xOyGw0hDiwJViv59aZncJpPkRcb1AUMNcIto8vWqA7PyYzTTs0MWHF
-         ty+T3y2TK5+VE2zuJM81D8LmuN8MtA4gUzxutPFVvKg4ap9HHs+55W6n2Y8WbeAixhQB
-         g06o1hGaOwnZHk2Z/+11fnsx3lXn4op7FChp4J/0qhi2ictQA0yZ/q0GPeH0f5OeozBA
-         SXUA==
-X-Received: by 10.112.63.169 with SMTP id h9mr7610459lbs.135.1369354973935;
- Thu, 23 May 2013 17:22:53 -0700 (PDT)
-Received: by 10.114.174.170 with HTTP; Thu, 23 May 2013 17:22:53 -0700 (PDT)
-In-Reply-To: <7vvc69b6nl.fsf@alter.siamese.dyndns.org>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=2G+JFX5gpDCVOraT4JUy7A6+CHOJZNM/2cPiphZtQ6U=;
+        b=KXVYXNmEBPn6WUHKm6hQsg4KUu/93A8dJiuF2Mdg3Uz7mUdozmtxi+VAedD+cLmntd
+         ILCB7pIfyy2xvTJlYJC8WUTDkxgL2r+ftAYgzdMKjXhhv/dcdlsFz9mvZjvKr+JUjAwY
+         fAbEnZKQGqxkm94ZBbCQvBmITWnarSBpzSYmgM3DUJhIHQWfVZ8GFlR7BOtZJlxD3DxJ
+         bS/mnv/8sU0DrxvzVZhjpT2cD38cnsqA5Wy7Eup0xyOOxfVzlxx73QvuiiphhvvVq3+B
+         TWrIAEnK5k9SIwsHP1z+rnVyVnvHWhgMWEAsSDL8WKegqvX8fSk+cNpByznvo9qHwMTT
+         eLqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=2G+JFX5gpDCVOraT4JUy7A6+CHOJZNM/2cPiphZtQ6U=;
+        b=Hlj1RURrAAvSXVhoQbf4r/0HKKLt69YdQ4kG52II8sPC/f9v08r0J5wu8jKluCX5OP
+         cVnfR+xDWoo9BjSOlKdCDEbbUy6kFXsInXvFXQk+S3sEhf9QtNek0ycx/L+koJbQjtNe
+         emqDT6OcIrImS95ZvvtsmT/5fxoPft1fykLIk=
+X-Received: by 10.220.104.135 with SMTP id p7mr6991548vco.10.1369355044080;
+ Thu, 23 May 2013 17:24:04 -0700 (PDT)
+Received: by 10.220.125.7 with HTTP; Thu, 23 May 2013 17:24:03 -0700 (PDT)
+In-Reply-To: <7vppwhb52f.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 7RGKq_tlcrMsz6Zvuu4kfNUmsaQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225326>
 
-On Thu, May 23, 2013 at 6:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Thu, May 23, 2013 at 5:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
->>> If the change in HEAD^ in the above example were to copy the whole A
->>> and C from a different file, then your !found_guilty logic would
->>> kick in and say all lines of A where copied from elsewhere in HEAD^,
->>> but again we would not learn the same information for C.
->>
->> We would, when it's the turn for C, which is not guilty at this point.
->
-> In _this_ round of the while(1) loop, pass_blame_to_parent() gets
-> the scoreboard and two origins (HEAD^ that we are looking at and
-> HEAD^^ that is its parent); it does not even know what blame entry
-> this request came from.
->
-> It runs a single diff using diff_hunks(), and asks blame_chunk() to
-> split all the blame entries in the scoreboard that suspect it is
-> looking at may be guilty for.  Blame entry for A and C are both
-> processed exactly the same way when HEAD^ is given to pass_blame()
-> for the first time, which is when assign_blame() decided to call it
-> with HEAD^ because it happened to have seen A before seeing C.  At
-> that point, both A and C are processed, and the post-processing loop
-> "Take responsibility for the remaining" will clean up remnants from
-> both A and C.  After this round ends, the suspect for A and C are
-> both set to HEAD^^.
->
-> In the next round of the while(1) loop, C already forgot that its
-> line movement happened in HEAD^.  Its suspect is now HEAD^^.  When
-> "it's the turn for C" [*1*], you can say "These lines originate in
-> that different path in HEAD^^", but it is too late to say "But the
-> first time they appeared in the original file was HEAD^" (which is
-> when they were moved from the different path in HEAD^^), isn't it?
+> I would assume that "no-ff" above was meant to be "--ff-only" from
+> the first part of the message.
 
-If that's the case then we'll need another list of blame entries where
-each discarded blame entry goes. Given the luck of my previous obvious
-patches, I'm not interested in implementing this non-obvious one in
-the least.
+Yeah, I may need more coffee..
 
-The point is 'git related' should do -C -C -C, if 'git blame' doesn't
-throw the right output, that's a bug in 'git blame' not 'git related.
+> I also would assume that I can rephrase that setting pull.merge
+> (which does not exist) as setting pull.rebase explicitly to false
+> instead (i.e. missing pull.rebase and pull.rebase that is explicitly
+> set to false would mean two different things).
 
--- 
-Felipe Contreras
+Yeah, sounds good to me, and doesn't really sound like it would
+confuse/annoy anybody as long as it was clearly documented.
+
+              Linus
