@@ -1,55 +1,73 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 6/7] sha1_name: prepare to introduce AT_KIND_PUSH
-Date: Fri, 24 May 2013 18:57:05 +0530
-Message-ID: <CALkWK0m+PAeE1nk4a7PjXU2tymCQVXzGL1CFOgyd5AqJuVZ9Og@mail.gmail.com>
-References: <1369321970-7759-1-git-send-email-artagnon@gmail.com>
- <1369321970-7759-7-git-send-email-artagnon@gmail.com> <CAMP44s2AxHkx54HzCCK5nUsexAhWy4J_oqg4wNu0=FzvEYtXAg@mail.gmail.com>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: first parent, commit graph layout, and pull merge direction
+Date: Fri, 24 May 2013 15:42:14 +0200
+Message-ID: <20130524134214.GA26617@inner.h.apk.li>
+References: <20130522115042.GA20649@inner.h.apk.li> <7v4ndukhx0.fsf@alter.siamese.dyndns.org> <20130523090657.GB23933@inner.h.apk.li> <20130523192512.GR9448@inner.h.apk.li> <519F32DC.0@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 24 15:27:51 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri May 24 15:42:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ufs2A-0000DH-RO
-	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 15:27:51 +0200
+	id 1UfsGW-0000xa-Rc
+	for gcvg-git-2@plane.gmane.org; Fri, 24 May 2013 15:42:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751698Ab3EXN1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 09:27:47 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:64427 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751114Ab3EXN1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 09:27:46 -0400
-Received: by mail-ie0-f180.google.com with SMTP id ar20so12323487iec.11
-        for <git@vger.kernel.org>; Fri, 24 May 2013 06:27:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=WeG+GFD9R9KM1YwbOkWgwpf2C4h+I9kocwrILp2br0k=;
-        b=pZAqr+ss6+2Gb86YzR3sLeMb90ZY3weWc1dvGbxPRamuMKiDrMUwB7LKi7OWCemPT4
-         qnvJBpEgTKIc03TnJFzzi7kya91yejpiQO9tBLppysyV20IL0VSb7Rvs8ZRr1WqxQX4/
-         adkGrT0rbfLvzbeRpL/M/uRakUR3GzFptH/HF8wRafozwkZ/qHws7pj7EL45ZvXtIwgd
-         Tb65eUGbBOT6QgXLTrU5fwPhkDp0Qu4paBu02SwwjFjPP+k1m3ucIpEsIPqJSWNe4PTk
-         vn0t+b7jpOlGsTOG7G5HOPjBPNJMVHfsyQsAraxXdajNXD1TWhLCZOp3N9aNSDmzofMm
-         lpmQ==
-X-Received: by 10.42.47.77 with SMTP id n13mr12639761icf.12.1369402065995;
- Fri, 24 May 2013 06:27:45 -0700 (PDT)
-Received: by 10.64.46.1 with HTTP; Fri, 24 May 2013 06:27:05 -0700 (PDT)
-In-Reply-To: <CAMP44s2AxHkx54HzCCK5nUsexAhWy4J_oqg4wNu0=FzvEYtXAg@mail.gmail.com>
+	id S1751755Ab3EXNmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 09:42:23 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:41097 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751285Ab3EXNmW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 09:42:22 -0400
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id r4ODgEW27124;
+	Fri, 24 May 2013 15:42:14 +0200
+Content-Disposition: inline
+In-Reply-To: <519F32DC.0@ira.uka.de>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225353>
 
-Felipe Contreras wrote:
->   git push branch@{push}
->
-> Is not clear at all: push push of branch?
+On Fri, 24 May 2013 11:29:00 +0000, Holger Hellmuth (IKS) wrote:
+...
+> Here is an idea (probably already discussed in the long history of git):
+> 1) the branch name is recorded in a commit (for merges the branch that 
+> is updated)
 
-We can pick the name later.  I had to pick a name to write code, and
-that happens to be @{push}.
+The branch name is almost completely meaningless. I could just
+do my feature in my local master and never have a different name.
+
+Or commit something onto tmp that I then fast-forward into my
+(properly named) feature branch.
+
+> 2) unique identifier of repository is recorded in commit (optional)
+
+That is pure noise (in my workflow).
+
+> 3) simple configurable ordering and/or coloring scheme in gitk based on 
+> committer,branch name and repo (with wildcards).
+
+Ok, gitk could use some features. :-)
+
+...
+> Is this a bad idea or just no one did it yet?
+
+Possibly not bad (hg does parts of it), but un-git-ish?
+
+(I'm not sure that it was *intended* that the parents
+of a merge commit have an order, except that they need
+to for deterministic hashes.)
+
+Andreas
+
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
