@@ -1,137 +1,94 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 11/25] object_array_remove_duplicates(): rewrite to reduce copying
-Date: Sat, 25 May 2013 11:08:10 +0200
-Message-ID: <1369472904-12875-12-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 18/25] add_existing(): do not retain a reference to sha1
+Date: Sat, 25 May 2013 11:08:17 +0200
+Message-ID: <1369472904-12875-19-git-send-email-mhagger@alum.mit.edu>
 References: <1369472904-12875-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Johan Herland <johan@herland.net>, Thomas Rast <trast@inf.ethz.ch>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 25 11:09:28 2013
+X-From: git-owner@vger.kernel.org Sat May 25 11:09:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UgATe-0005B0-SR
-	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 11:09:27 +0200
+	id 1UgATn-0005GF-5x
+	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 11:09:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754327Ab3EYJJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 May 2013 05:09:18 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:64453 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752762Ab3EYJJL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 May 2013 05:09:11 -0400
-X-AuditID: 1207440c-b7ff06d0000008f7-1d-51a07fb6f452
+	id S1755016Ab3EYJJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 May 2013 05:09:31 -0400
+Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:52896 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754611Ab3EYJJY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 May 2013 05:09:24 -0400
+X-AuditID: 1207440d-b7fd06d000000905-a8-51a07fc3ad08
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 27.4F.02295.6BF70A15; Sat, 25 May 2013 05:09:11 -0400 (EDT)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id F0.22.02309.3CF70A15; Sat, 25 May 2013 05:09:23 -0400 (EDT)
 Received: from michael.fritz.box (p4FDD49F3.dip0.t-ipconnect.de [79.221.73.243])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4P98gul000489
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4P98gus000489
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 25 May 2013 05:09:09 -0400
+	Sat, 25 May 2013 05:09:21 -0400
 X-Mailer: git-send-email 1.8.2.3
 In-Reply-To: <1369472904-12875-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqLu9fkGgwaEXjBZdV7qZLBp6rzBb
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsUixO6iqHu4fkGgwYkFHBZdV7qZLBp6rzBb
 	zLu7i8ni9or5zBY/WnqYLe5eXsXuwObx9/0HJo9LL7+zedx+PZ/Z41nvHkaPi5eUPT5vkgtg
-	i+K2SUosKQvOTM/Tt0vgzji84AtTwTuRiju7/7E3MB4X6GLk5JAQMJFYcP8+M4QtJnHh3nq2
-	LkYuDiGBy4wS7VN+skI4F5gkNl++yQ5SxSagK7Gop5kJxBYRcJQ48eA6WBGzQC+jxMNH38ES
-	wgKhEpdXtzOC2CwCqhL/nnwCa+YVcJVY2LKCCWKdgsTlWWuAVnNwcALF357gBAkLCbhIPP90
-	jnUCI+8CRoZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbqGermZJXqpKaWbGCGBxrOD8ds6mUOM
-	AhyMSjy8guXzA4VYE8uKK3MPMUpyMCmJ8vLXLggU4kvKT6nMSCzOiC8qzUktPsQowcGsJMLL
-	kAKU401JrKxKLcqHSUlzsCiJ86ouUfcTEkhPLEnNTk0tSC2CycpwcChJ8DIBI0pIsCg1PbUi
-	LTOnBCHNxMEJIrhANvAAbeACKeQtLkjMLc5Mhyg6xagoJc57sw4oIQCSyCjNgxsASwmvGMWB
-	/hHmvQtSxQNMJ3Ddr4AGMwENvpk7H2RwSSJCSqqBMa58uf28WxbPHsT0x85IXRZlaaqRdPpC
-	mpJUdK5s5h2Gaf/v6R19M7Vf88r0CLbnZn58/opFCx0W+TQwbc78/7/BwiI9duKtFLcP/FxS
-	xdm7k/VsEjc0vO55bP64tODJtD7m0Plrzt50zzpw067nVoNBXMZ9tfzbUi2fs3L/ 
+	i+K2SUosKQvOTM/Tt0vgztj76StTwVPOik2XrrA1MP5j72Lk5JAQMJE4dWsxC4QtJnHh3nq2
+	LkYuDiGBy4wS33ffZYZwLjBJbFz8jRGkik1AV2JRTzMTiC0i4Chx4sF1VpAiZoFeRomHj76D
+	JYQFvCVObLgOZrMIqErMO3AQqJmDg1fAVWJyByvENgWJy7PWMIOEOYHCb09wgoSFBFwknn86
+	xzqBkXcBI8MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0jvdzMEr3UlNJNjJAw493B+H+dzCFG
+	AQ5GJR7eHSXzA4VYE8uKK3MPMUpyMCmJ8vLXLggU4kvKT6nMSCzOiC8qzUktPsQowcGsJMLL
+	kAKU401JrKxKLcqHSUlzsCiJ86otUfcTEkhPLEnNTk0tSC2CycpwcChJ8HrUATUKFqWmp1ak
+	ZeaUIKSZODhBBBfIBh6gDYEghbzFBYm5xZnpEEWnGBWlxHkngiQEQBIZpXlwA2AJ4RWjONA/
+	wrwpIFU8wGQC1/0KaDAT0OCbufNBBpckIqSkGhirtaao6Dwx7rm05Utk3PoPdeKH7leJKmY9
+	sJCZczJRWY39Z+JHT49f9e/vLYgKuxqnL79G6mX154/iz/pNk6++ORH3OWwrt/KR+R857uv2
+	xa9qqbkizSQ2e+X/iZxpk08I66+ysRFIN7iz21pYq8wvKUjnzN/Tt6d/WLJMy0Xu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225501>
 
-The old version copied one entry to its destination position, then
-deleted any matching entries from the tail of the array.  This
-required the tail of the array to be copied multiple times.  It didn't
-affect the complexity of the algorithm because the whole tail has to
-be searched through anyway.  But all the copying was unnecessary.
-
-Instead, check for the existence of an entry with the same name in the
-*head* of the list before copying an entry to its final position.
-This way each entry has to be copied at most one time.
-
-Extract a helper function contains_name() to do a bit of the work.
+Its lifetime is not guaranteed, so make a copy.  Free the memory when
+the string_list is cleared.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- object.c | 32 +++++++++++++++++++++-----------
- object.h |  6 +++++-
- 2 files changed, 26 insertions(+), 12 deletions(-)
+ builtin/fetch.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/object.c b/object.c
-index fcd4a82..10b5349 100644
---- a/object.c
-+++ b/object.c
-@@ -294,22 +294,32 @@ void object_array_filter(struct object_array *array,
- 	array->nr = dst;
- }
- 
-+/*
-+ * Return true iff array already contains an entry with name.
-+ */
-+static int contains_name(struct object_array *array, const char *name)
-+{
-+	unsigned nr = array->nr, i;
-+	struct object_array_entry *object = array->objects;
-+
-+	for (i = 0; i < nr; i++, object++)
-+		if (!strcmp(object->name, name))
-+			return 1;
-+	return 0;
-+}
-+
- void object_array_remove_duplicates(struct object_array *array)
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 48df5fa..fa6fe44 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -571,7 +571,8 @@ static int add_existing(const char *refname, const unsigned char *sha1,
  {
--	unsigned int ref, src, dst;
-+	unsigned nr = array->nr, src;
- 	struct object_array_entry *objects = array->objects;
- 
--	for (ref = 0; ref + 1 < array->nr; ref++) {
--		for (src = ref + 1, dst = src;
--		     src < array->nr;
--		     src++) {
--			if (!strcmp(objects[ref].name, objects[src].name))
--				continue;
--			if (src != dst)
--				objects[dst] = objects[src];
--			dst++;
-+	array->nr = 0;
-+	for (src = 0; src < nr; src++) {
-+		if (!contains_name(array, objects[src].name)) {
-+			if (src != array->nr)
-+				objects[array->nr] = objects[src];
-+			array->nr++;
- 		}
--		array->nr = dst;
- 	}
+ 	struct string_list *list = (struct string_list *)cbdata;
+ 	struct string_list_item *item = string_list_insert(list, refname);
+-	item->util = (void *)sha1;
++	item->util = xmalloc(20);
++	hashcpy(item->util, sha1);
+ 	return 0;
  }
  
-diff --git a/object.h b/object.h
-index 0d39ff4..6c1c27f 100644
---- a/object.h
-+++ b/object.h
-@@ -96,7 +96,11 @@ typedef int (*object_array_each_func_t)(struct object_array_entry *, void *);
- void object_array_filter(struct object_array *array,
- 			 object_array_each_func_t want, void *cb_data);
+@@ -636,7 +637,7 @@ static void find_non_local_tags(struct transport *transport,
+ 		item = string_list_insert(&remote_refs, ref->name);
+ 		item->util = (void *)ref->old_sha1;
+ 	}
+-	string_list_clear(&existing_refs, 0);
++	string_list_clear(&existing_refs, 1);
  
--void object_array_remove_duplicates(struct object_array *);
-+/*
-+ * Remove from array all but the first entry with a given name.
-+ * Warning: this function uses an O(N^2) algorithm.
-+ */
-+void object_array_remove_duplicates(struct object_array *array);
+ 	/*
+ 	 * We may have a final lightweight tag that needs to be
+@@ -782,7 +783,7 @@ static int do_fetch(struct transport *transport,
+ 	}
  
- void clear_object_flags(unsigned flags);
+  cleanup:
+-	string_list_clear(&existing_refs, 0);
++	string_list_clear(&existing_refs, 1);
+ 	return retcode;
+ }
  
 -- 
 1.8.2.3
