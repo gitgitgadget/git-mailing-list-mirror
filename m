@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 03/25] add_rev_cmdline(): make a copy of the name argument
-Date: Sat, 25 May 2013 11:08:02 +0200
-Message-ID: <1369472904-12875-4-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 13/25] find_first_merges(): initialize merges variable using initializer
+Date: Sat, 25 May 2013 11:08:12 +0200
+Message-ID: <1369472904-12875-14-git-send-email-mhagger@alum.mit.edu>
 References: <1369472904-12875-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Johan Herland <johan@herland.net>, Thomas Rast <trast@inf.ethz.ch>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
@@ -12,76 +12,70 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UgAV5-00066M-RE
+	id 1UgAV6-00066M-B6
 	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 11:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154Ab3EYJJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 May 2013 05:09:06 -0400
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:59664 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752512Ab3EYJI5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 May 2013 05:08:57 -0400
-X-AuditID: 12074413-b7f226d000000902-7f-51a07fa8da02
+	id S1754205Ab3EYJJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 May 2013 05:09:16 -0400
+Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:64453 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754094Ab3EYJJO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 May 2013 05:09:14 -0400
+X-AuditID: 1207440c-b7ff06d0000008f7-28-51a07fba5ab9
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 84.35.02306.8AF70A15; Sat, 25 May 2013 05:08:56 -0400 (EDT)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 68.4F.02295.ABF70A15; Sat, 25 May 2013 05:09:14 -0400 (EDT)
 Received: from michael.fritz.box (p4FDD49F3.dip0.t-ipconnect.de [79.221.73.243])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4P98gud000489
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4P98gun000489
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 25 May 2013 05:08:55 -0400
+	Sat, 25 May 2013 05:09:13 -0400
 X-Mailer: git-send-email 1.8.2.3
 In-Reply-To: <1369472904-12875-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrPIsWRmVeSWpSXmKPExsUixO6iqLuifkGgQfcEa4uuK91MFg29V5gt
-	5t3dxWRxe8V8ZosfLT3MFncvr2J3YPP4+/4Dk8ell9/ZPG6/ns/s8ax3D6PHxUvKHp83yQWw
-	RXHbJCWWlAVnpufp2yVwZzyaaVnwnb3i1Zbz7A2MK9m6GDk5JARMJH5evMMKYYtJXLi3HijO
-	xSEkcJlRovvWF0YI5wKTxOYry5hBqtgEdCUW9TQzgdgiAo4SJx5cZwUpYhboZZR4+Og7WEJY
-	wFei49JRoFEcHCwCqhInN9iAhHkFXCQW/D7CCLFNQeLyrDXMICWcAq4Sb09wgoSFgEqefzrH
-	OoGRdwEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXXO93MwSvdSU0k2MkCAT3sG466TcIUYB
-	DkYlHl6B8vmBQqyJZcWVuYcYJTmYlER5+WsXBArxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4WVI
-	AcrxpiRWVqUW5cOkpDlYlMR51Zao+wkJpCeWpGanphakFsFkZTg4lCR4PeqAGgWLUtNTK9Iy
-	c0oQ0kwcnCCCC2QDD9CGQJBC3uKCxNzizHSIolOMilLivBNBEgIgiYzSPLgBsHTwilEc6B9h
-	3gUgVTzAVALX/QpoMBPQ4Ju580EGlyQipKQaGPPcUifHcG9K+ejy72DuSVeD6dt0ZzJ41vBG
-	1nbpXqnsfGfzbZ3n/0XKHxbwmEs1flnn/Hde59bEM81aZ68trPUp5977LSz24aHbhSF3m1Vn
-	PX2uljfpCeO5uOPcO488l7/SpRv0omx9pug3jzLpjV4a8WpCNauVuydkTPEpMTaK 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqLurfkGgwcf/0hZdV7qZLBp6rzBb
+	zLu7i8ni9or5zBY/WnqYLe5eXsXuwObx9/0HJo9LL7+zedx+PZ/Z41nvHkaPi5eUPT5vkgtg
+	i+K2SUosKQvOTM/Tt0vgztg6fTNjwUW2incT/jM1MO5g7WLk5JAQMJH4vK2XCcIWk7hwbz1b
+	FyMXh5DAZUaJpdfus0M4F5gkth6ewwZSxSagK7GopxmsQ0TAUeLEg+usIEXMAr2MEg8ffQdL
+	CAtES2xaeg7MZhFQlXj9/ic7iM0r4Cqx4tZFqNUKEpdnrWHuYuTg4ASKvz3BCRIWEnCReP7p
+	HOsERt4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3QN9XIzS/RSU0o3MUICjWcH47d1MocY
+	BTgYlXh4BcvnBwqxJpYVV+YeYpTkYFIS5eWvXRAoxJeUn1KZkVicEV9UmpNafIhRgoNZSYSX
+	IQUox5uSWFmVWpQPk5LmYFES51Vdou4nJJCeWJKanZpakFoEk5Xh4FCS4GUCRpSQYFFqempF
+	WmZOCUKaiYMTRHCBbOAB2sAFUshbXJCYW5yZDlF0ilFRSpz3Zh1QQgAkkVGaBzcAlhJeMYoD
+	/SPMexekigeYTuC6XwENZgIafDN3PsjgkkSElFQDY1mhv9p6/hXxCkm7JJmW7HjLPE103coG
+	36DzYYEtL/Z7192vuuJ7dqfCg7Od71hWc3Vrvrgl+LvnvVXIE52MFO23N69UnH8t17ng9G/+
+	C1uLVxRqOAT2Gnp4hOytNKj/NF0i7AijrIVDwKPts5acMc/NCv2R7m71e9esay++ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225512>
 
-Instead of assuming that the memory pointed to by the name argument
-will live forever, make a local copy of it before storing it in the
-ref_cmdline_info.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- revision.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ submodule.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index a67b615..25e424c 100644
---- a/revision.c
-+++ b/revision.c
-@@ -898,6 +898,10 @@ static int limit_list(struct rev_info *revs)
- 	return 0;
- }
+diff --git a/submodule.c b/submodule.c
+index e728025..b837c04 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -846,7 +846,7 @@ static int find_first_merges(struct object_array *result, const char *path,
+ 		struct commit *a, struct commit *b)
+ {
+ 	int i, j;
+-	struct object_array merges;
++	struct object_array merges = OBJECT_ARRAY_INIT;
+ 	struct commit *commit;
+ 	int contains_another;
  
-+/*
-+ * Add an entry to refs->cmdline with the specified information.
-+ * *name is copied.
-+ */
- static void add_rev_cmdline(struct rev_info *revs,
- 			    struct object *item,
- 			    const char *name,
-@@ -909,7 +913,7 @@ static void add_rev_cmdline(struct rev_info *revs,
+@@ -856,7 +856,6 @@ static int find_first_merges(struct object_array *result, const char *path,
+ 	struct rev_info revs;
+ 	struct setup_revision_opt rev_opts;
  
- 	ALLOC_GROW(info->rev, nr + 1, info->alloc);
- 	info->rev[nr].item = item;
--	info->rev[nr].name = name;
-+	info->rev[nr].name = xstrdup(name);
- 	info->rev[nr].whence = whence;
- 	info->rev[nr].flags = flags;
- 	info->nr++;
+-	memset(&merges, 0, sizeof(merges));
+ 	memset(result, 0, sizeof(struct object_array));
+ 	memset(&rev_opts, 0, sizeof(rev_opts));
+ 
 -- 
 1.8.2.3
