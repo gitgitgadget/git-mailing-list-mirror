@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 48/48] remote-hg: add support for --force
-Date: Fri, 24 May 2013 21:30:04 -0500
-Message-ID: <1369449004-17981-49-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 47/48] remote-hg: add support for --dry-run
+Date: Fri, 24 May 2013 21:30:03 -0500
+Message-ID: <1369449004-17981-48-git-send-email-felipe.contreras@gmail.com>
 References: <1369449004-17981-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
@@ -12,156 +12,155 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ug4JG-0003AF-F2
+	id 1Ug4JF-0003AF-N3
 	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 04:34:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755939Ab3EYCeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 22:34:14 -0400
-Received: from mail-oa0-f52.google.com ([209.85.219.52]:46936 "EHLO
-	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755882Ab3EYCeK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 22:34:10 -0400
-Received: by mail-oa0-f52.google.com with SMTP id h1so6845514oag.39
-        for <git@vger.kernel.org>; Fri, 24 May 2013 19:34:10 -0700 (PDT)
+	id S1755912Ab3EYCeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 22:34:09 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:46752 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755882Ab3EYCeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 22:34:07 -0400
+Received: by mail-oa0-f41.google.com with SMTP id n9so7067010oag.14
+        for <git@vger.kernel.org>; Fri, 24 May 2013 19:34:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=BTrxiEgEC+skCoqPS/kWwQ6yphPSQstrCLu7aUj9d90=;
-        b=hSdT+HiSBTRixxax7cYwLgqBU0saUNZEZpglDZr4se5JzU078x4z6uN5aMgX9AzenG
-         vcyidSjOLnIB4ClqXVAYYL4QyZ/tdzZ7+jR1mvmXHoJgMLMdR5q6xr/WWLuzEZCbux73
-         h73gYnxxaMZxLBAydcHxi8SgTqdjDv4ROUDgBUBKWaB9c7pWBNNZFuWcp8S3zZF7MYzr
-         r2mB64gKjyuwsy/FRfqvnFn1Iy2+oON1QPo6rv2IvAjPYz4LswhTy+Uy795V75h3B5wB
-         mGKyKOlYxn7w6YZA+Y35ctZrSF7JmDk9j4rlGEc08enN5odVmg8SC+IOtwqKSI9IT4Y2
-         A4uw==
-X-Received: by 10.182.112.133 with SMTP id iq5mr13378852obb.75.1369449250361;
-        Fri, 24 May 2013 19:34:10 -0700 (PDT)
+        bh=0rO1fhctU8ncSg3tTYxb8KMeA7MBYJaDGji6v+4dHi4=;
+        b=FPLqpcU9xP+ugJ3VTInEiaFHhjx0BEmM/IpayILm/hJTWNgwxDsT/F/YHz0QmDPfjs
+         fIKx1a6AvFCLB/GBJpajjA2DxnUtuKZ27gxaR6rbRp7B38JFWqn134ze28bS9oxQfjE3
+         TMeio5bUk5gfgAP9E1XHFhlyL/Eo0ziPf58wbj0u3sfIFAwvtKvl92zg+uXk104qcZtQ
+         vuDwtQS+udNWlzBcsjwUsdxCztmttYDQ5Hd81z4mIzoKPqS+OyId3ZoneAe7AIziAPbm
+         tOtGG3v6KPD7bPJQXC0+p3VXxpPTC22Ynst4pj4wQbHOqFfSx+8/v21thiWN2p10AKXu
+         vJgw==
+X-Received: by 10.182.128.106 with SMTP id nn10mr13769647obb.72.1369449247197;
+        Fri, 24 May 2013 19:34:07 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id x10sm20560492oes.6.2013.05.24.19.34.08
+        by mx.google.com with ESMTPSA id b1sm9146320oeo.8.2013.05.24.19.34.05
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 24 May 2013 19:34:09 -0700 (PDT)
+        Fri, 24 May 2013 19:34:06 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc3.312.g47657de
 In-Reply-To: <1369449004-17981-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225462>
 
-And get rid of the remote-hg.force-push option hack.
+This needs a specific patch from Git not applied yet.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/git-remote-hg | 30 +++++++++++++++++-------------
- contrib/remote-helpers/test-hg.sh    | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 50 insertions(+), 13 deletions(-)
+ contrib/remote-helpers/git-remote-hg | 29 +++++++++++++++++++++++++--
+ contrib/remote-helpers/test-hg.sh    | 38 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 65 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index 20abb34..0194c67 100755
+index b983627..20abb34 100755
 --- a/contrib/remote-helpers/git-remote-hg
 +++ b/contrib/remote-helpers/git-remote-hg
-@@ -29,9 +29,6 @@ import urlparse, hashlib
- # named branches:
- # git config --global remote-hg.track-branches false
- #
--# If you don't want to force pushes (and thus risk creating new remote heads):
--# git config --global remote-hg.force-push false
--#
- # If you want the equivalent of hg's clone/pull--insecure option:
- # git config --global remote-hg.insecure true
- #
-@@ -877,9 +874,6 @@ def write_tag(repo, tag, node, msg, author):
-     return (tagnode, branch)
+@@ -557,6 +557,7 @@ def do_capabilities(parser):
+     if os.path.exists(path):
+         print "*import-marks %s" % path
+     print "*export-marks %s" % path
++    print "option"
  
- def checkheads_bmark(repo, ref, ctx):
--    if force_push:
--        return True
--
-     bmark = ref[len('refs/heads/'):]
-     if not bmark in bmarks:
-         # new bmark
-@@ -888,8 +882,11 @@ def checkheads_bmark(repo, ref, ctx):
-     ctx_old = bmarks[bmark]
-     ctx_new = ctx
-     if not repo.changelog.descendant(ctx_old.rev(), ctx_new.rev()):
--        print "error %s non-fast forward" % ref
--        return False
-+        if force_push:
-+            print "ok %s forced update" % ref
-+        else:
-+            print "error %s non-fast forward" % ref
-+            return False
- 
-     return True
- 
-@@ -936,8 +933,12 @@ def checkheads(repo, remote, p_revs):
-                 continue
- 
-             node = repo.changelog.node(rev)
--            print "error %s non-fast forward" % p_revs[node]
--            ret = False
-+            ref = p_revs[node]
-+            if force_push:
-+                print "ok %s forced update" % ref
-+            else:
-+                print "error %s non-fast forward" % ref
-+                ret = False
- 
-     return ret
- 
-@@ -949,7 +950,7 @@ def push_unsafe(repo, remote, parsed_refs, p_revs):
-     commoninc = fci(repo, remote, force=force)
-     common, _, remoteheads = commoninc
- 
--    if not force and not checkheads(repo, remote, p_revs):
-+    if not checkheads(repo, remote, p_revs):
-         return None
- 
-     cg = repo.getbundle('push', heads=list(p_revs), common=common)
-@@ -1110,11 +1111,14 @@ def do_export(parser):
      print
  
- def do_option(parser):
--    global dry_run
-+    global dry_run, force_push
-     _, key, value = parser.line.split(' ')
-     if key == 'dry-run':
-         dry_run = (value == 'true')
-         print 'ok'
-+    elif key == 'force':
-+        force_push = (value == 'true')
+@@ -724,6 +725,11 @@ def parse_commit(parser):
+             die('Unknown file command: %s' % line)
+         files[path] = f
+ 
++    # only export the commits if we are on an internal proxy repo
++    if dry_run and not peer:
++        parsed_refs[ref] = None
++        return
++
+     def getfilectx(repo, memctx, f):
+         of = files[f]
+         if 'deleted' in of:
+@@ -809,7 +815,10 @@ def parse_reset(parser):
+     from_mark = parser.get_mark()
+     parser.next()
+ 
+-    rev = mark_to_rev(from_mark)
++    try:
++        rev = mark_to_rev(from_mark)
++    except KeyError:
++        rev = None
+     parsed_refs[ref] = rev
+ 
+ def parse_tag(parser):
+@@ -1007,7 +1016,7 @@ def do_export(parser):
+     need_fetch = False
+ 
+     for ref, node in parsed_refs.iteritems():
+-        bnode = hgbin(node)
++        bnode = hgbin(node) if node else None
+         if ref.startswith('refs/heads/branches'):
+             branch = ref[len('refs/heads/branches/'):]
+             if branch in branches and bnode in branches[branch]:
+@@ -1048,6 +1057,9 @@ def do_export(parser):
+ 
+             p_revs[bnode] = ref
+         elif ref.startswith('refs/tags/'):
++            if dry_run:
++                print "ok %s" % ref
++                continue
+             tag = ref[len('refs/tags/'):]
+             tag = hgref(tag)
+             author, msg = parsed_tags.get(tag, (None, None))
+@@ -1097,6 +1109,15 @@ def do_export(parser):
+ 
+     print
+ 
++def do_option(parser):
++    global dry_run
++    _, key, value = parser.line.split(' ')
++    if key == 'dry-run':
++        dry_run = (value == 'true')
 +        print 'ok'
-     else:
-         print 'unsupported'
++    else:
++        print 'unsupported'
++
+ def fix_path(alias, repo, orig_url):
+     url = urlparse.urlparse(orig_url, 'file')
+     if url.scheme != 'file' or os.path.isabs(url.path):
+@@ -1113,6 +1134,7 @@ def main(args):
+     global parsed_tags
+     global filenodes
+     global fake_bmark, hg_version
++    global dry_run
  
-@@ -1142,7 +1146,7 @@ def main(args):
+     alias = args[1]
+     url = args[2]
+@@ -1151,6 +1173,7 @@ def main(args):
+         hg_version = tuple(int(e) for e in util.version().split('.'))
+     except:
+         hg_version = None
++    dry_run = False
  
-     hg_git_compat = get_config_bool('remote-hg.hg-git-compat')
-     track_branches = get_config_bool('remote-hg.track-branches', True)
--    force_push = get_config_bool('remote-hg.force-push')
-+    force_push = False
- 
-     if hg_git_compat:
-         mode = 'hg'
+     repo = get_repo(url, alias)
+     prefix = 'refs/hg/%s' % alias
+@@ -1175,6 +1198,8 @@ def main(args):
+             do_import(parser)
+         elif parser.check('export'):
+             do_export(parser)
++        elif parser.check('option'):
++            do_option(parser)
+         else:
+             die('unhandled command: %s' % line)
+         sys.stdout.flush()
 diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers/test-hg.sh
-index bf3635e..30f4ff6 100755
+index 91ddac7..bf3635e 100755
 --- a/contrib/remote-helpers/test-hg.sh
 +++ b/contrib/remote-helpers/test-hg.sh
-@@ -68,6 +68,9 @@ check_push () {
- 		'fetch-first')
- 			grep "^ ! \[rejected\] *${branch} -> ${branch} (fetch first)$" error || ref_ret=1
- 			;;
-+		'forced-update')
-+			grep "^ + [a-f0-9]*\.\.\.[a-f0-9]* *${branch} -> ${branch} (forced update)$" error || ref_ret=1
-+			;;
- 		'')
- 			grep "^   [a-f0-9]*\.\.[a-f0-9]* *${branch} -> ${branch}$" error || ref_ret=1
- 			;;
-@@ -594,6 +597,36 @@ test_expect_success 'remote big push fetch first' '
+@@ -594,6 +594,44 @@ test_expect_success 'remote big push fetch first' '
  	)
  '
  
-+test_expect_failure 'remote big push force' '
++test_expect_failure 'remote big push dry-run' '
 +	test_when_finished "rm -rf hgrepo gitrepo*" &&
 +
 +	setup_big_push
@@ -169,29 +168,37 @@ index bf3635e..30f4ff6 100755
 +	(
 +	cd gitrepo &&
 +
-+	check_push 0 --force --all <<-EOF
++	check_push 0 --dry-run --all <<-EOF
 +	master
 +	good_bmark
 +	branches/good_branch
 +	new_bmark:new
 +	branches/new_branch:new
-+	bad_bmark1:forced-update
-+	bad_bmark2:forced-update
-+	branches/bad_branch:forced-update
++	bad_bmark1:non-fast-forward
++	bad_bmark2:non-fast-forward
++	branches/bad_branch:non-fast-forward
++	EOF
++
++	check_push 0 --dry-run master good_bmark new_bmark branches/good_branch branches/new_branch <<-EOF
++	master
++	good_bmark
++	branches/good_branch
++	new_bmark:new
++	branches/new_branch:new
 +	EOF
 +	) &&
 +
-+	check_branch hgrepo default six &&
-+	check_branch hgrepo good_branch eight &&
-+	check_branch hgrepo bad_branch nine &&
-+	check_branch hgrepo new_branch ten &&
-+	check_bookmark hgrepo good_bmark three &&
-+	check_bookmark hgrepo bad_bmark1 four &&
-+	check_bookmark hgrepo bad_bmark2 five &&
-+	check_bookmark hgrepo new_bmark six
++	check_branch hgrepo default one &&
++	check_branch hgrepo good_branch "good branch" &&
++	check_branch hgrepo bad_branch "bad branch" &&
++	check_branch hgrepo new_branch '' &&
++	check_bookmark hgrepo good_bmark one &&
++	check_bookmark hgrepo bad_bmark1 one &&
++	check_bookmark hgrepo bad_bmark2 one &&
++	check_bookmark hgrepo new_bmark ''
 +'
 +
- test_expect_failure 'remote big push dry-run' '
+ test_expect_success 'remote double failed push' '
  	test_when_finished "rm -rf hgrepo gitrepo*" &&
  
 -- 
