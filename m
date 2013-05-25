@@ -1,113 +1,76 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 09/25] object_array: add function object_array_filter()
-Date: Sat, 25 May 2013 11:08:08 +0200
-Message-ID: <1369472904-12875-10-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 14/25] find_first_merges(): remove unnecessary code
+Date: Sat, 25 May 2013 11:08:13 +0200
+Message-ID: <1369472904-12875-15-git-send-email-mhagger@alum.mit.edu>
 References: <1369472904-12875-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Johan Herland <johan@herland.net>, Thomas Rast <trast@inf.ethz.ch>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 25 11:10:59 2013
+X-From: git-owner@vger.kernel.org Sat May 25 11:11:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UgAV7-00066M-EP
+	id 1UgAV6-00066M-Sx
 	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 11:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755545Ab3EYJKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 May 2013 05:10:53 -0400
-Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:50785 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753306Ab3EYJJI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 May 2013 05:09:08 -0400
-X-AuditID: 12074414-b7fb86d000000905-bc-51a07fb3ad82
+	id S1755520Ab3EYJKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 May 2013 05:10:46 -0400
+Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:58130 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754094Ab3EYJJQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 May 2013 05:09:16 -0400
+X-AuditID: 12074411-b7f286d0000008e8-12-51a07fbc595a
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 3A.D4.02309.3BF70A15; Sat, 25 May 2013 05:09:07 -0400 (EDT)
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id C1.22.02280.CBF70A15; Sat, 25 May 2013 05:09:16 -0400 (EDT)
 Received: from michael.fritz.box (p4FDD49F3.dip0.t-ipconnect.de [79.221.73.243])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4P98guj000489
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4P98guo000489
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 25 May 2013 05:09:06 -0400
+	Sat, 25 May 2013 05:09:14 -0400
 X-Mailer: git-send-email 1.8.2.3
 In-Reply-To: <1369472904-12875-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsUixO6iqLu5fkGgQdtuGYuuK91MFg29V5gt
-	5t3dxWRxe8V8ZosfLT3MFncvr2J3YPP4+/4Dk8ell9/ZPG6/ns/s8ax3D6PHxUvKHp83yQWw
-	RXHbJCWWlAVnpufp2yVwZyw5sIS14BR/xbSfl9kbGB/xdDFyckgImEg82zWHCcIWk7hwbz1b
-	FyMXh5DAZUaJFY+uMoMkhAQuMElc2uAIYrMJ6Eos6mkGaxARcJQ48eA6K0gDs0Avo8TDR9/B
-	EsICXhLvF3eygNgsAqoSM86tZASxeQVcJeZ+7mGE2KYgcXnWGqAFHBycQPG3JzghdrlIPP90
-	jnUCI+8CRoZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRboWermZJXqpKaWbGCFhJrKD8chJuUOM
-	AhyMSjy8AuXzA4VYE8uKK3MPMUpyMCmJ8vLXLggU4kvKT6nMSCzOiC8qzUktPsQowcGsJMLL
-	kAKU401JrKxKLcqHSUlzsCiJ835brO4nJJCeWJKanZpakFoEk5Xh4FCS4N1bB9QoWJSanlqR
-	lplTgpBm4uAEEVwgG3iANpwFKeQtLkjMLc5Mhyg6xagoJc57EyQhAJLIKM2DGwBLCK8YxYH+
-	Eea9C1LFA0wmcN2vgAYzAQ2+mTsfZHBJIkJKqoExgO01j5rZuV7FR1+SZod6TuBKOaUgnzF9
-	2ZzgRQWqW7Uqf/3S+3f83Mmtm3muyjxvne2cFBfp0F2lJ3Njg1xDVefEvLA7DU5iyVfvLKiz
-	tczYHM48n/3ErJQUj3WFK/NSn52pYgv2fO4+wz5KIleY58qRyu9P9xTtsLGb/89K 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqLunfkGgwdTDPBZdV7qZLBp6rzBb
+	zLu7i8ni9or5zBY/WnqYLe5eXsXuwObx9/0HJo9LL7+zedx+PZ/Z41nvHkaPi5eUPT5vkgtg
+	i+K2SUosKQvOTM/Tt0vgzvjS9Ia94ABrxZW1M9gaGHezdDFyckgImEjM/L+GDcIWk7hwbz2Q
+	zcUhJHCZUeLxvz5WCOcCk8TbvtfsIFVsAroSi3qamUBsEQFHiRMProMVMQv0Mko8fPQdLCEs
+	4Cbx5uszsLEsAqoSe99cArN5BVwljq6axwqxTkHi8qw1zF2MHBycQPG3JzhBwkICLhLPP51j
+	ncDIu4CRYRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrqlebmaJXmpK6SZGSKAJ7mCccVLuEKMA
+	B6MSD69A+fxAIdbEsuLK3EOMkhxMSqK8/LULAoX4kvJTKjMSizPii0pzUosPMUpwMCuJ8DKk
+	AOV4UxIrq1KL8mFS0hwsSuK8fEvU/YQE0hNLUrNTUwtSi2CyMhwcShK8e+uAGgWLUtNTK9Iy
+	c0oQ0kwcnCCCC2QDD9CGsyCFvMUFibnFmekQRacYFaXEeW+CJARAEhmleXADYCnhFaM40D/C
+	vAtAqniA6QSu+xXQYCagwTdz54MMLklESEk1MKbUPknabK2RpXK3uNdDyerezl+hx7a8/+00
+	x8KeWdf3tMGdnL7Pxq0ynxk2Xaphe/RQoaORy0P+2QFfvpbM9pQVAVmF01nEnr00vxIyQc4+
+	fXZt661NtSz+rTz8TEzuy8Simnyz4v7sd7d6G3TvnpdMjXlPw+xmx5U8fbnPt0ol 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225514>
 
-Add a function that allows unwanted entries in an object_array to be
-removed.  This encapsulation is a step towards giving object_array
-ownership of its entries' name memory.
+No names are ever set for the object_array_entries in merges, so there
+is no need to pretend to copy them to the result array.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- object.c | 16 ++++++++++++++++
- object.h | 11 +++++++++++
- 2 files changed, 27 insertions(+)
+ submodule.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/object.c b/object.c
-index 20703f5..fcd4a82 100644
---- a/object.c
-+++ b/object.c
-@@ -278,6 +278,22 @@ void add_object_array_with_mode(struct object *obj, const char *name, struct obj
- 	array->nr = ++nr;
- }
+diff --git a/submodule.c b/submodule.c
+index b837c04..ad476ce 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -893,8 +893,7 @@ static int find_first_merges(struct object_array *result, const char *path,
+ 		}
  
-+void object_array_filter(struct object_array *array,
-+			 object_array_each_func_t want, void *cb_data)
-+{
-+	unsigned nr = array->nr, src, dst;
-+	struct object_array_entry *objects = array->objects;
-+
-+	for (src = dst = 0; src < nr; src++) {
-+		if (want(&objects[src], cb_data)) {
-+			if (src != dst)
-+				objects[dst] = objects[src];
-+			dst++;
-+		}
-+	}
-+	array->nr = dst;
-+}
-+
- void object_array_remove_duplicates(struct object_array *array)
- {
- 	unsigned int ref, src, dst;
-diff --git a/object.h b/object.h
-index 97d384b..0d39ff4 100644
---- a/object.h
-+++ b/object.h
-@@ -85,6 +85,17 @@ int object_list_contains(struct object_list *list, struct object *obj);
- /* Object array handling .. */
- void add_object_array(struct object *obj, const char *name, struct object_array *array);
- void add_object_array_with_mode(struct object *obj, const char *name, struct object_array *array, unsigned mode);
-+
-+typedef int (*object_array_each_func_t)(struct object_array_entry *, void *);
-+
-+/*
-+ * Apply want to each entry in array, retaining only the entries for
-+ * which the function returns true.  Preserve the order of the entries
-+ * that are retained.
-+ */
-+void object_array_filter(struct object_array *array,
-+			 object_array_each_func_t want, void *cb_data);
-+
- void object_array_remove_duplicates(struct object_array *);
+ 		if (!contains_another)
+-			add_object_array(merges.objects[i].item,
+-					 merges.objects[i].name, result);
++			add_object_array(merges.objects[i].item, NULL, result);
+ 	}
  
- void clear_object_flags(unsigned flags);
+ 	free(merges.objects);
 -- 
 1.8.2.3
