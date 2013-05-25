@@ -1,104 +1,90 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 5/6] build: add NO_INSTALL variable
-Date: Fri, 24 May 2013 21:41:05 -0500
-Message-ID: <1369449666-18879-6-git-send-email-felipe.contreras@gmail.com>
-References: <1369449666-18879-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+Subject: [PATCH 0/9] transport-helper: a bunch of improvements
+Date: Fri, 24 May 2013 21:47:31 -0500
+Message-ID: <1369450060-19011-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 25 04:43:11 2013
+X-From: git-owner@vger.kernel.org Sat May 25 04:49:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ug4Rq-0000Of-Hg
-	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 04:43:10 +0200
+	id 1Ug4Xq-0004d1-OW
+	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 04:49:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755485Ab3EYCnB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 22:43:01 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:37625 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755204Ab3EYCm7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 22:42:59 -0400
-Received: by mail-oa0-f50.google.com with SMTP id l20so6969890oag.37
-        for <git@vger.kernel.org>; Fri, 24 May 2013 19:42:59 -0700 (PDT)
+	id S1755596Ab3EYCtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 22:49:18 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:46243 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755520Ab3EYCtS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 22:49:18 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h2so6953480oag.5
+        for <git@vger.kernel.org>; Fri, 24 May 2013 19:49:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=M1vFKw7z93u/9zHrPLvjUntzCPHYsA5OFdmD9v/Y830=;
-        b=Nj0FeF3abXpPJSn7tKLUbfLPlk2U1rRUlTRbgcQdKmAvyOW55uQXZ/Liy01DEb5Emv
-         8FlxIJvAJSSwec6S4KidPJlR8xw/Np2Imsn8R+fJe1I92ebPakY/NgE1ja/cyFG9HOTs
-         uktkJDF2vPqUPn2VX6BZWDEI2fMZ/QoyC1LcIXHE5F7S+wttZEzUKeXafHY6dIlO+/JH
-         ulwHDIydM7iqE0uhJd2p3Dwex8+xUpN2lWiYbV6DIgevvQYZlL4hHKIlTClglCXd2gj0
-         i+ZoqkII6pa3yMqMWk1Cg/WmX+thjhhctwr+QbWsD0IuEb91PpzhPBh+Jo249zONOTz7
-         jJpQ==
-X-Received: by 10.60.17.231 with SMTP id r7mr13745770oed.13.1369449779601;
-        Fri, 24 May 2013 19:42:59 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=7zNEzHYkHUiHFb0Nr15AabSa8eakOPSHc39vyN9Cc4A=;
+        b=UfrvouSprJejwFpsAnOGs87EJMNfZleC538js4BeEGSM1csTJtwXFj7ybMnKaq9IUA
+         uhV5yrNQZTiATPbFWJ/ERQgdP1ve8IL3oDYqVAtpZ6Q75VsO53vjLWKRbSnNUg/KpWYS
+         RXvfKOrf8+cFu33blLI8PmQbcFV69AdBM7Od5U2XXdybYQBbJ2IQXNtgzssrmRnmrx9U
+         NCCGg07AF5YbAKK2m9wlDU/8ASPIjrCzixLcEwCom6Z0OnPhwfA5PeWQmuRD1ZtOCP8V
+         N/vWOXOnmSYkJpYCNg9xS5c6U8us+HjnuwzWjKRUafKfQs8sZ5SfPwEZRdg+fJfTflKJ
+         X7PQ==
+X-Received: by 10.60.56.107 with SMTP id z11mr13203064oep.99.1369450157850;
+        Fri, 24 May 2013 19:49:17 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id c20sm20606240oez.4.2013.05.24.19.42.57
+        by mx.google.com with ESMTPSA id hv3sm20127489obb.7.2013.05.24.19.49.16
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 24 May 2013 19:42:58 -0700 (PDT)
+        Fri, 24 May 2013 19:49:16 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc3.312.g47657de
-In-Reply-To: <1369449666-18879-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225475>
 
-So that we can specify which scripts we do not want to install (they are
-for testing).
+Hi,
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Makefile | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+After these remote helpers that use 'export' are able to do everything:
 
-diff --git a/Makefile b/Makefile
-index 97ff848..333b5d3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -500,6 +500,10 @@ SCRIPT_SH_GEN = $(patsubst %.sh,%,$(SCRIPT_SH))
- SCRIPT_PERL_GEN = $(patsubst %.perl,%,$(SCRIPT_PERL))
- SCRIPT_PYTHON_GEN = $(patsubst %.py,%,$(SCRIPT_PYTHON))
- 
-+SCRIPT_SH_INS = $(filter-out $(NO_INSTALL),$(SCRIPT_SH_GEN))
-+SCRIPT_PERL_INS = $(filter-out $(NO_INSTALL),$(SCRIPT_PERL_GEN))
-+SCRIPT_PYTHON_INS = $(filter-out $(NO_INSTALL),$(SCRIPT_PYTHON_GEN))
-+
- # Individual rules to allow e.g.
- # "make -C ../.. SCRIPT_PERL=contrib/foo/bar.perl build-perl-script"
- # from subdirectories like contrib/*/
-@@ -509,11 +513,11 @@ build-sh-script: $(SCRIPT_SH_GEN)
- build-python-script: $(SCRIPT_PYTHON_GEN)
- 
- .PHONY: install-perl-script install-sh-script install-python-script
--install-sh-script: $(SCRIPT_SH_GEN)
-+install-sh-script: $(SCRIPT_SH_INS)
- 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
--install-perl-script: $(SCRIPT_PERL_GEN)
-+install-perl-script: $(SCRIPT_PERL_INS)
- 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
--install-python-script: $(SCRIPT_PYTHON_GEN)
-+install-python-script: $(SCRIPT_PYTHON_INS)
- 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
- 
- .PHONY: clean-perl-script clean-sh-script clean-python-script
-@@ -524,9 +528,9 @@ clean-perl-script:
- clean-python-script:
- 	$(RM) $(SCRIPT_PYTHON_GEN)
- 
--SCRIPTS = $(SCRIPT_SH_GEN) \
--	  $(SCRIPT_PERL_GEN) \
--	  $(SCRIPT_PYTHON_GEN) \
-+SCRIPTS = $(SCRIPT_SH_INS) \
-+	  $(SCRIPT_PERL_INS) \
-+	  $(SCRIPT_PYTHON_INS) \
- 	  git-instaweb
- 
- ETAGS_TARGET = TAGS
+ 1) push --dry-run
+ 2) push --force
+ 2.1) report which branches were forced
+ 3) push old:new
+ 4) push :to-delete
+
+I know these won't be applied, which is too bad for the users, which could
+enjoy these features, which are implemented properly, with documentation,
+tests, and everything.
+
+Sorry users, I don't have Jedi powers to convince Git developers of what's
+actually good.
+
+Felipe Contreras (9):
+  transport-helper: check if the dry-run is supported
+  transport-helper: add 'force' to 'export' helpers
+  transport-helper: check for 'forced update' message
+  fast-export: improve argument parsing
+  fast-export: add new --refspec option
+  transport-helper: add support for old:new refspec
+  fast-import: add support to delete refs
+  fast-export: add support to delete refs
+  transport-helper: add support to delete branches
+
+ Documentation/git-fast-export.txt |  4 ++++
+ Documentation/git-fast-import.txt |  3 +++
+ builtin/fast-export.c             | 47 ++++++++++++++++++++++++++++++++++++++-
+ fast-import.c                     | 13 ++++++++---
+ t/t5801-remote-helpers.sh         | 10 ++++++++-
+ t/t9300-fast-import.sh            | 18 +++++++++++++++
+ t/t9350-fast-export.sh            | 18 +++++++++++++++
+ transport-helper.c                | 39 ++++++++++++++++++++++++++------
+ 8 files changed, 140 insertions(+), 12 deletions(-)
+
 -- 
 1.8.3.rc3.312.g47657de
