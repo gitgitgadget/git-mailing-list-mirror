@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 7/8] remote-bzr: reorganize the way 'wanted' works
-Date: Fri, 24 May 2013 21:24:25 -0500
-Message-ID: <1369448666-17515-8-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 5/8] remote-bzr: change global repo
+Date: Fri, 24 May 2013 21:24:23 -0500
+Message-ID: <1369448666-17515-6-git-send-email-felipe.contreras@gmail.com>
 References: <1369448666-17515-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
@@ -12,137 +12,68 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ug4Bk-0006XS-Uc
-	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 04:26:33 +0200
+	id 1Ug4Bj-0006XS-SE
+	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 04:26:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754229Ab3EYC01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 22:26:27 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:34812 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752438Ab3EYC00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 22:26:26 -0400
-Received: by mail-oa0-f50.google.com with SMTP id l20so6961467oag.37
-        for <git@vger.kernel.org>; Fri, 24 May 2013 19:26:25 -0700 (PDT)
+	id S1753878Ab3EYC0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 22:26:21 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:40621 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752324Ab3EYC0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 22:26:19 -0400
+Received: by mail-ob0-f179.google.com with SMTP id wo10so2796644obc.38
+        for <git@vger.kernel.org>; Fri, 24 May 2013 19:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=mRMTH1ghW6D7WA/HstIL2R/lMzLqOSq0VAnlxAMvuLI=;
-        b=Em+yyUedMMoQzvBLuuTCVmUyKbaSPOIBcmBm5n2DKfzy2CMjRQ0wRZAxXqyGlaNvrE
-         4Xxe4ueMqybQn/xhvt+dItj1/0eQQCLDvgjt9pj3NL7xIEaOFaPDXuqbIsBNxhYPFHuh
-         qaQ65tgVj8Pp4Gv9bZZfu/tlX+0eOIfLzyRVxSylLQDjvQk0Totp/poBFXZjKXyzKU30
-         DfNrpUANfAkGPGRL4jqkmjyvkPNUnUCW3MA4wxv/qh+bOchbq3zBGtmZhfBKE7/jl+Et
-         R1rE7j1O8b0qS+mh8asStBSi0qgdkhw9AMP3lghG9jyap9UH1Xahsv2Zrg39UcjB5Zj0
-         7plg==
-X-Received: by 10.60.46.70 with SMTP id t6mr13661219oem.121.1369448785508;
-        Fri, 24 May 2013 19:26:25 -0700 (PDT)
+        bh=kArYKa6KDJghJVxbbc7j1fu0BCT/jPEY8cWMYvE1JqY=;
+        b=qfcQ0hSRhR/Nv23ckJbpThBm5yKeZaaW9PUc8lLbToMbt5j55YbVN7LylQTKTbO3Vh
+         vSEU0mqQ/hH5R3XGu49mCmpoWmOj6PYQ84DXqtlO/zbWVuhPLUi9RuUrfKxF45HEluRQ
+         T/P6pDPrQd4nBYtBf2AmMMaAKt34a4sSbrS4xx3NWIJCNMvpV6IUSsrnVb0eK0DtaoXZ
+         UZrQgHPkQ+GnlRd3L1G77XjZWLRNuH27kf5EoPoCedqAhUiE2JjeUvUYkl+86QkySVeJ
+         oZnvu8qLJVi+J20PqBnzj5RVZRKzuPPWUVODmYtbHzls9q1+GPEoQNTsnDfKjg2JYP3p
+         k59A==
+X-Received: by 10.60.35.201 with SMTP id k9mr5356106oej.102.1369448779028;
+        Fri, 24 May 2013 19:26:19 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id yx4sm20011523obb.11.2013.05.24.19.26.23
+        by mx.google.com with ESMTPSA id ku7sm20055443obc.6.2013.05.24.19.26.17
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 24 May 2013 19:26:24 -0700 (PDT)
+        Fri, 24 May 2013 19:26:18 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc3.312.g47657de
 In-Reply-To: <1369448666-17515-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225412>
 
-If the user specified a list of branches, we ignore what the remote
-repository lists, and simply use the branches directly. Since some
-remotes don't report the branches correctly, this is useful.
-
-Otherwise either fetch the repo, or the branch.
+It's not used anyway.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/git-remote-bzr | 58 ++++++++++++++++-------------------
- 1 file changed, 26 insertions(+), 32 deletions(-)
+ contrib/remote-helpers/git-remote-bzr | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index 34025c3..3248586 100755
+index 202a4f7..80ed59f 100755
 --- a/contrib/remote-helpers/git-remote-bzr
 +++ b/contrib/remote-helpers/git-remote-bzr
-@@ -795,7 +795,7 @@ def get_remote_branch(name):
+@@ -864,7 +864,7 @@ def get_repo(url, alias):
  
-     return branch
+         branches[name] = remote_branch.base
  
--def find_branches(repo, wanted):
-+def find_branches(repo):
-     transport = repo.bzrdir.root_transport
- 
-     for fn in transport.iter_files_recursive():
-@@ -806,9 +806,6 @@ def find_branches(repo, wanted):
-         name = name if name != '' else 'master'
-         name = name.replace('/', '+')
- 
--        if wanted and not name in wanted:
--            continue
--
-         try:
-             cur = transport.clone(subdir)
-             branch = bzrlib.branch.Branch.open_from_transport(cur)
-@@ -848,38 +845,35 @@ def get_repo(url, alias):
-             except bzrlib.errors.NoRepositoryPresent:
-                 pass
- 
--    try:
--        repo = origin.open_repository()
--        if not repo.user_transport.listable():
--            # this repository is not usable for us
--            raise bzrlib.errors.NoRepositoryPresent(repo.bzrdir)
--    except bzrlib.errors.NoRepositoryPresent:
--        # branch
--
--        name = 'master'
--        branch = origin.open_branch().base
--
--        if not is_local:
--            peers[name] = branch
-+    wanted = get_config('remote-bzr.branches').rstrip().split(', ')
-+    # stupid python
-+    wanted = [e for e in wanted if e]
- 
--        branches[name] = branch
--
--        return origin
-+    if not wanted:
-+        try:
-+            repo = origin.open_repository()
-+            if not repo.user_transport.listable():
-+                # this repository is not usable for us
-+                raise bzrlib.errors.NoRepositoryPresent(repo.bzrdir)
-+        except bzrlib.errors.NoRepositoryPresent:
-+            wanted = ['master']
-+
-+    if wanted:
-+        def list_wanted(url, wanted):
-+            for name in wanted:
-+                subdir = name if name != 'master' else ''
-+                yield name, bzrlib.urlutils.join(url, subdir)
-+
-+        branch_list = list_wanted(url, wanted)
+-        return remote_branch.repository
++        return origin
      else:
--        # repository
--
--        wanted = get_config('remote-bzr.branches').rstrip().split(', ')
--        # stupid python
--        wanted = [e for e in wanted if e]
-+        branch_list = find_branches(repo)
+         # repository
  
--        for name, branch in find_branches(repo, wanted):
--
--            if not is_local:
--                peers[name] = branch
--
--            branches[name] = branch
-+    for name, url in branch_list:
-+        if not is_local:
-+            peers[name] = url
-+        branches[name] = url
+@@ -879,7 +879,7 @@ def get_repo(url, alias):
  
--        return origin
-+    return origin
+             branches[name] = remote_branch.base
+ 
+-        return repo
++        return origin
  
  def fix_path(alias, orig_url):
      url = urlparse.urlparse(orig_url, 'file')
