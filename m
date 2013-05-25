@@ -1,327 +1,264 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 05/48] remote-helpers: tests: general improvements
-Date: Fri, 24 May 2013 21:29:21 -0500
-Message-ID: <1369449004-17981-6-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 06/48] remote-helpers: test: simplify remote URLs
+Date: Fri, 24 May 2013 21:29:22 -0500
+Message-ID: <1369449004-17981-7-git-send-email-felipe.contreras@gmail.com>
 References: <1369449004-17981-1-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 25 04:32:06 2013
+X-From: git-owner@vger.kernel.org Sat May 25 04:32:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ug4H7-0001Sh-W7
-	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 04:32:06 +0200
+	id 1Ug4HC-0001Wx-Pm
+	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 04:32:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754450Ab3EYCb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 22:31:59 -0400
-Received: from mail-oa0-f48.google.com ([209.85.219.48]:52316 "EHLO
-	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754347Ab3EYCb6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 22:31:58 -0400
-Received: by mail-oa0-f48.google.com with SMTP id i4so6964849oah.21
-        for <git@vger.kernel.org>; Fri, 24 May 2013 19:31:57 -0700 (PDT)
+	id S1754549Ab3EYCcD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 May 2013 22:32:03 -0400
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:54003 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754347Ab3EYCcB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 22:32:01 -0400
+Received: by mail-oa0-f47.google.com with SMTP id m1so6898280oag.20
+        for <git@vger.kernel.org>; Fri, 24 May 2013 19:32:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Ywi9RDmx73ogr8gfDh38iHlZfBSvbfBcy0AUjRXc9PE=;
-        b=RGgS65oqbKbF+JdokvtMyb5U+eE6nm4eWZmsVzcXVH3jfoa+vdqO/e7dwwpiIKIZ9t
-         xqBNZWYRoU60QiG/7EfxEYlOPrHcbdW3wWWxxbnWgt1yCI2YeXGtboQzEI4R09anLYQr
-         R8fgy4IpZa8YfjdryFMEA7PF7TxGc9dgfhf6TDyt/xiQ6sHN6RZLUAHF8EVLbq/VOCdT
-         Ar+uPy1ST2Wb9DXaOy8ixc0lCUG3HGSZoU0gxjAIaeHRS63EuqxuJnfqx9zEqOsgfgZE
-         3dNto1AtooKXMOAv4G3H06wLO6ao06FnGDatj0s6stqaKmfGqfwG9J7rRgEcEkgZOEBS
-         izTQ==
-X-Received: by 10.60.47.1 with SMTP id z1mr13747451oem.134.1369449117741;
-        Fri, 24 May 2013 19:31:57 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=1UAK3NWt0RAKtW0iUvmnj5Lh1lu3CElxd4gR2u/LjAE=;
+        b=adtu7JI06AZZ2AveAqjWVLoaARgnePROHZVmusHDTPxFVLIbKImRERUZ0rr11hfxNP
+         X67jclbJ3asr1f2gybXmaObUZSbhaTxbtwqEwA0J/jPYzGpEgAnsKM4eWkvnU5+nEOtm
+         ym6eae4cl+zmKkMHPSdEA5R4XE0BrU5cMvFTmyK5hegZqEnlmIJTeLAuBnS4HrWTjaZp
+         RMEikfZC4F0IzRxvOaN91WbGxkA+XCDjI6vv4sGInKkWBcXbfv0L2T+LHMxT0MoSJh3e
+         iXgP9R4O4nvAfjBgIuiZTI5182s58D0id+OFdW5dBYiV4zRRADTKVcPBsN6hB9pU0CI4
+         kkNw==
+X-Received: by 10.182.45.197 with SMTP id p5mr13125571obm.92.1369449120745;
+        Fri, 24 May 2013 19:32:00 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id x5sm20591997oep.1.2013.05.24.19.31.55
+        by mx.google.com with ESMTPSA id ku7sm20075609obc.6.2013.05.24.19.31.59
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 24 May 2013 19:31:56 -0700 (PDT)
+        Fri, 24 May 2013 19:31:59 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc3.312.g47657de
 In-Reply-To: <1369449004-17981-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225420>
 
-So that we don't need a temporary directory.
+No need to specify $PWD any more.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/test-bzr.sh       | 21 ++++++++++----------
- contrib/remote-helpers/test-hg-bidi.sh   | 15 +++++----------
- contrib/remote-helpers/test-hg-hg-git.sh | 33 +++++++++++---------------------
- contrib/remote-helpers/test-hg.sh        |  7 +++++--
- 4 files changed, 31 insertions(+), 45 deletions(-)
+ contrib/remote-helpers/test-bzr.sh       | 12 ++++++------
+ contrib/remote-helpers/test-hg-bidi.sh   |  6 +++---
+ contrib/remote-helpers/test-hg-hg-git.sh |  6 +++---
+ contrib/remote-helpers/test-hg.sh        | 14 +++++++-------
+ 4 files changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
-index f760110..1ae7376 100755
+diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helper=
+s/test-bzr.sh
+index 1ae7376..0276db0 100755
 --- a/contrib/remote-helpers/test-bzr.sh
 +++ b/contrib/remote-helpers/test-bzr.sh
-@@ -190,9 +190,11 @@ test_expect_success 'different authors' '
- 	test_cmp expected actual
- '
- 
-+# cleanup previous stuff
-+rm -rf bzrrepo gitrepo
-+
- test_expect_success 'fetch utf-8 filenames' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp && LC_ALL=C" &&
-+	test_when_finished "rm -rf bzrrepo gitrepo && LC_ALL=C" &&
- 
- 	LC_ALL=en_US.UTF-8
- 	export LC_ALL
-@@ -223,8 +225,9 @@ test_expect_success 'fetch utf-8 filenames' '
- '
- 
- test_expect_success 'push utf-8 filenames' '
-+	test_when_finished "rm -rf bzrrepo gitrepo && LC_ALL=C" &&
-+
- 	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp && LC_ALL=C" &&
- 
- 	LC_ALL=en_US.UTF-8
- 	export LC_ALL
-@@ -255,8 +258,7 @@ test_expect_success 'push utf-8 filenames' '
- '
- 
- test_expect_success 'pushing a merge' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf bzrrepo gitrepo" &&
- 
- 	(
- 	bzr init bzrrepo &&
-@@ -297,8 +299,7 @@ origin/trunk
- EOF
- 
- test_expect_success 'proper bzr repo' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf bzrrepo gitrepo" &&
- 
- 	bzr init-repo bzrrepo &&
- 
-@@ -323,13 +324,11 @@ test_expect_success 'proper bzr repo' '
- 	git for-each-ref --format "%(refname:short)" refs/remotes/origin > ../actual
+@@ -41,7 +41,7 @@ test_expect_success 'cloning' '
+ 	bzr commit -m one
  	) &&
- 
--	test_cmp ../expected actual
-+	test_cmp expected actual
+=20
+-	git clone "bzr::$PWD/bzrrepo" gitrepo &&
++	git clone "bzr::bzrrepo" gitrepo &&
+ 	check gitrepo one master
  '
- 
- test_expect_success 'strip' '
--	# Do not imitate this style; always chdir inside a subshell instead
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf bzrrepo gitrepo" &&
- 
+=20
+@@ -216,7 +216,7 @@ test_expect_success 'fetch utf-8 filenames' '
+ 	) &&
+=20
  	(
- 	bzr init bzrrepo &&
-diff --git a/contrib/remote-helpers/test-hg-bidi.sh b/contrib/remote-helpers/test-hg-bidi.sh
-index f569697..490a395 100755
+-	git clone "bzr::$PWD/bzrrepo" gitrepo &&
++	git clone "bzr::bzrrepo" gitrepo &&
+ 	cd gitrepo &&
+ 	git -c core.quotepath=3Dfalse ls-files > ../actual
+ 	) &&
+@@ -242,7 +242,7 @@ test_expect_success 'push utf-8 filenames' '
+ 	) &&
+=20
+ 	(
+-	git clone "bzr::$PWD/bzrrepo" gitrepo &&
++	git clone "bzr::bzrrepo" gitrepo &&
+ 	cd gitrepo &&
+=20
+ 	echo test >> "=C3=A6r=C3=B8" &&
+@@ -268,7 +268,7 @@ test_expect_success 'pushing a merge' '
+ 	bzr commit -m one
+ 	) &&
+=20
+-	git clone "bzr::$PWD/bzrrepo" gitrepo &&
++	git clone "bzr::bzrrepo" gitrepo &&
+=20
+ 	(
+ 	cd bzrrepo &&
+@@ -319,7 +319,7 @@ test_expect_success 'proper bzr repo' '
+ 	) &&
+=20
+ 	(
+-	git clone "bzr::$PWD/bzrrepo" gitrepo &&
++	git clone "bzr::bzrrepo" gitrepo &&
+ 	cd gitrepo &&
+ 	git for-each-ref --format "%(refname:short)" refs/remotes/origin > ..=
+/actual
+ 	) &&
+@@ -342,7 +342,7 @@ test_expect_success 'strip' '
+ 	bzr commit -m two
+ 	) &&
+=20
+-	git clone "bzr::$PWD/bzrrepo" gitrepo &&
++	git clone "bzr::bzrrepo" gitrepo &&
+=20
+ 	(
+ 	cd bzrrepo &&
+diff --git a/contrib/remote-helpers/test-hg-bidi.sh b/contrib/remote-he=
+lpers/test-hg-bidi.sh
+index 490a395..4bfbda2 100755
 --- a/contrib/remote-helpers/test-hg-bidi.sh
 +++ b/contrib/remote-helpers/test-hg-bidi.sh
-@@ -77,8 +77,7 @@ setup () {
- setup
- 
- test_expect_success 'encoding' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	git init -q gitrepo &&
-@@ -115,8 +114,7 @@ test_expect_success 'encoding' '
- '
- 
- test_expect_success 'file removal' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	git init -q gitrepo &&
-@@ -148,8 +146,7 @@ test_expect_success 'file removal' '
- '
- 
- test_expect_success 'git tags' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	git init -q gitrepo &&
-@@ -177,8 +174,7 @@ test_expect_success 'git tags' '
- '
- 
- test_expect_success 'hg branch' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	git init -q gitrepo &&
-@@ -214,8 +210,7 @@ test_expect_success 'hg branch' '
- '
- 
- test_expect_success 'hg tags' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	git init -q gitrepo &&
-diff --git a/contrib/remote-helpers/test-hg-hg-git.sh b/contrib/remote-helpers/test-hg-hg-git.sh
-index 7f579c8..6f0819c 100755
+@@ -22,7 +22,7 @@ fi
+=20
+ # clone to a git repo
+ git_clone () {
+-	git clone -q "hg::$PWD/$1" $2
++	git clone -q "hg::$1" $2
+ }
+=20
+ # clone to an hg repo
+@@ -31,7 +31,7 @@ hg_clone () {
+ 	hg init $2 &&
+ 	hg -R $2 bookmark -i master &&
+ 	cd $1 &&
+-	git push -q "hg::$PWD/../$2" 'refs/tags/*:refs/tags/*' 'refs/heads/*:=
+refs/heads/*'
++	git push -q "hg::../$2" 'refs/tags/*:refs/tags/*' 'refs/heads/*:refs/=
+heads/*'
+ 	) &&
+=20
+ 	(cd $2 && hg -q update)
+@@ -43,7 +43,7 @@ hg_push () {
+ 	cd $2
+ 	old=3D$(git symbolic-ref --short HEAD)
+ 	git checkout -q -b tmp &&
+-	git fetch -q "hg::$PWD/../$1" 'refs/tags/*:refs/tags/*' 'refs/heads/*=
+:refs/heads/*' &&
++	git fetch -q "hg::../$1" 'refs/tags/*:refs/tags/*' 'refs/heads/*:refs=
+/heads/*' &&
+ 	git checkout -q $old &&
+ 	git branch -q -D tmp 2> /dev/null || true
+ 	)
+diff --git a/contrib/remote-helpers/test-hg-hg-git.sh b/contrib/remote-=
+helpers/test-hg-hg-git.sh
+index 6f0819c..274a8d5 100755
 --- a/contrib/remote-helpers/test-hg-hg-git.sh
 +++ b/contrib/remote-helpers/test-hg-hg-git.sh
-@@ -114,8 +114,7 @@ setup () {
- setup
- 
- test_expect_success 'executable bit' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	git init -q gitrepo &&
-@@ -150,8 +149,7 @@ test_expect_success 'executable bit' '
- '
- 
- test_expect_success 'symlink' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	git init -q gitrepo &&
-@@ -181,8 +179,7 @@ test_expect_success 'symlink' '
- '
- 
- test_expect_success 'merge conflict 1' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	hg init hgrepo1 &&
-@@ -216,8 +213,7 @@ test_expect_success 'merge conflict 1' '
- '
- 
- test_expect_success 'merge conflict 2' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	hg init hgrepo1 &&
-@@ -251,8 +247,7 @@ test_expect_success 'merge conflict 2' '
- '
- 
- test_expect_success 'converged merge' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	hg init hgrepo1 &&
-@@ -287,8 +282,7 @@ test_expect_success 'converged merge' '
- '
- 
- test_expect_success 'encoding' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	git init -q gitrepo &&
-@@ -327,8 +321,7 @@ test_expect_success 'encoding' '
- '
- 
- test_expect_success 'file removal' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	git init -q gitrepo &&
-@@ -367,8 +360,7 @@ test_expect_success 'file removal' '
- '
- 
- test_expect_success 'git tags' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	(
- 	git init -q gitrepo &&
-@@ -394,8 +386,7 @@ test_expect_success 'git tags' '
- '
- 
- test_expect_success 'hg author' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	for x in hg git; do
- 		(
-@@ -461,8 +452,7 @@ test_expect_success 'hg author' '
- '
- 
- test_expect_success 'hg branch' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	for x in hg git; do
- 		(
-@@ -498,8 +488,7 @@ test_expect_success 'hg branch' '
- '
- 
- test_expect_success 'hg tags' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf gitrepo* hgrepo*" &&
- 
- 	for x in hg git; do
- 		(
-diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers/test-hg.sh
-index 8d1154b..043f6c6 100755
+@@ -27,7 +27,7 @@ fi
+=20
+ # clone to a git repo with git
+ git_clone_git () {
+-	git clone -q "hg::$PWD/$1" $2
++	git clone -q "hg::$1" $2
+ }
+=20
+ # clone to an hg repo with git
+@@ -36,7 +36,7 @@ hg_clone_git () {
+ 	hg init $2 &&
+ 	hg -R $2 bookmark -i master &&
+ 	cd $1 &&
+-	git push -q "hg::$PWD/../$2" 'refs/tags/*:refs/tags/*' 'refs/heads/*:=
+refs/heads/*'
++	git push -q "hg::../$2" 'refs/tags/*:refs/tags/*' 'refs/heads/*:refs/=
+heads/*'
+ 	) &&
+=20
+ 	(cd $2 && hg -q update)
+@@ -63,7 +63,7 @@ hg_push_git () {
+ 	cd $2
+ 	old=3D$(git symbolic-ref --short HEAD)
+ 	git checkout -q -b tmp &&
+-	git fetch -q "hg::$PWD/../$1" 'refs/tags/*:refs/tags/*' 'refs/heads/*=
+:refs/heads/*' &&
++	git fetch -q "hg::../$1" 'refs/tags/*:refs/tags/*' 'refs/heads/*:refs=
+/heads/*' &&
+ 	git checkout -q $old &&
+ 	git branch -q -D tmp 2> /dev/null || true
+ 	)
+diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers=
+/test-hg.sh
+index 043f6c6..4bd7584 100755
 --- a/contrib/remote-helpers/test-hg.sh
 +++ b/contrib/remote-helpers/test-hg.sh
-@@ -122,6 +122,9 @@ test_expect_success 'update bookmark' '
- 	hg -R hgrepo bookmarks | egrep "devel[	 ]+3:"
+@@ -53,7 +53,7 @@ test_expect_success 'cloning' '
+ 	hg commit -m zero
+ 	) &&
+=20
+-	git clone "hg::$PWD/hgrepo" gitrepo &&
++	git clone "hg::hgrepo" gitrepo &&
+ 	check gitrepo zero master
  '
- 
-+# cleanup previous stuff
-+rm -rf hgrepo
-+
- author_test () {
- 	echo $1 >> content &&
- 	hg commit -u "$2" -m "add $1" &&
-@@ -129,8 +132,7 @@ author_test () {
- }
- 
- test_expect_success 'authors' '
--	mkdir -p tmp && cd tmp &&
--	test_when_finished "cd .. && rm -rf tmp" &&
-+	test_when_finished "rm -rf hgrepo gitrepo" &&
- 
+=20
+@@ -67,12 +67,12 @@ test_expect_success 'cloning with branches' '
+ 	hg commit -m next
+ 	) &&
+=20
+-	git clone "hg::$PWD/hgrepo" gitrepo &&
++	git clone "hg::hgrepo" gitrepo &&
+ 	check gitrepo next next &&
+=20
+ 	(cd hgrepo && hg checkout default) &&
+=20
+-	git clone "hg::$PWD/hgrepo" gitrepo2 &&
++	git clone "hg::hgrepo" gitrepo2 &&
+ 	check gitrepo2 zero master
+ '
+=20
+@@ -86,7 +86,7 @@ test_expect_success 'cloning with bookmarks' '
+ 	hg commit -m feature-a
+ 	) &&
+=20
+-	git clone "hg::$PWD/hgrepo" gitrepo &&
++	git clone "hg::hgrepo" gitrepo &&
+ 	check gitrepo feature-a feature-a
+ '
+=20
+@@ -98,7 +98,7 @@ test_expect_success 'cloning with detached head' '
+ 	hg update -r 0
+ 	) &&
+=20
+-	git clone "hg::$PWD/hgrepo" gitrepo &&
++	git clone "hg::hgrepo" gitrepo &&
+ 	check gitrepo zero master
+ '
+=20
+@@ -111,7 +111,7 @@ test_expect_success 'update bookmark' '
+ 	) &&
+=20
  	(
- 	hg init hgrepo &&
-@@ -139,6 +141,7 @@ test_expect_success 'authors' '
- 	touch content &&
- 	hg add content &&
- 
-+	> ../expected &&
- 	author_test alpha "" "H G Wells <wells@example.com>" &&
- 	author_test beta "test" "test <unknown>" &&
- 	author_test beta "test <test@example.com> (comment)" "test <test@example.com>" &&
--- 
+-	git clone "hg::$PWD/hgrepo" gitrepo &&
++	git clone "hg::hgrepo" gitrepo &&
+ 	cd gitrepo &&
+ 	git checkout --quiet devel &&
+ 	echo devel > content &&
+@@ -155,7 +155,7 @@ test_expect_success 'authors' '
+ 	author_test kappa "test@example.com" "Unknown <test@example.com>"
+ 	) &&
+=20
+-	git clone "hg::$PWD/hgrepo" gitrepo &&
++	git clone "hg::hgrepo" gitrepo &&
+ 	git --git-dir=3Dgitrepo/.git log --reverse --format=3D"%an <%ae>" > a=
+ctual &&
+=20
+ 	test_cmp expected actual
+--=20
 1.8.3.rc3.312.g47657de
