@@ -1,114 +1,108 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 9/9] transport-helper: add support to delete branches
-Date: Fri, 24 May 2013 21:47:40 -0500
-Message-ID: <1369450060-19011-10-git-send-email-felipe.contreras@gmail.com>
-References: <1369450060-19011-1-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH] completion: zsh: improve bash script loading
+Date: Fri, 24 May 2013 22:31:44 -0500
+Message-ID: <1369452704-5974-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 25 04:50:44 2013
+X-From: git-owner@vger.kernel.org Sat May 25 05:33:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ug4Z9-0005Xs-Ly
-	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 04:50:44 +0200
+	id 1Ug5EV-0008FX-35
+	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 05:33:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756010Ab3EYCuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 22:50:37 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:53318 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752309Ab3EYCue (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 22:50:34 -0400
-Received: by mail-oa0-f54.google.com with SMTP id o17so7031972oag.13
-        for <git@vger.kernel.org>; Fri, 24 May 2013 19:50:34 -0700 (PDT)
+	id S1755748Ab3EYDdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 23:33:23 -0400
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:43391 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755409Ab3EYDdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 23:33:22 -0400
+Received: by mail-oa0-f52.google.com with SMTP id h1so6842919oag.25
+        for <git@vger.kernel.org>; Fri, 24 May 2013 20:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=UQ1VoU8/DaNc45rMfeGg1M9dM19hsOin4HN4uqtBa+I=;
-        b=pZRwjdodGH1cVoswQaa1XcCtrtbjF4omp+HxB/6S4jlUQ5/74m3l8Cmx7eCSJmQkv4
-         RKZple3TOboACb/zAC8UxNCuH5/XSgC/6UFlf0bUcyp/GTX5x+REhrKh0Nu4DaDp4gup
-         KP8pUsDqP+vwZCYv8tET/n590oSTINlmfAZW2v/NpqZWvKAbw5PUyIy4krw/zSuqwn7M
-         suVWK67bXwtN0cZlcqDmXzxLTw3q8RRfzW95JucVx/9vhrVbgUExlYsbYM5ZHQ4vr7WI
-         Ib0VUI44UZvzei/GffnjL+jv2dI598+pFB3Ov8fA9VdLVTc9/0vT2cb00kJI5Xl8WYLv
-         hkog==
-X-Received: by 10.182.137.196 with SMTP id qk4mr13532938obb.53.1369450234523;
-        Fri, 24 May 2013 19:50:34 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=jtu8tks08CbHYL+Dx6MIm8pwAvzOfT5GbdULIKv5JiU=;
+        b=QtoxLmmNOsrXtSeJa47DlLO1esgnzdX2bPQkze15Y8KERdtgYWuhuTyBTGcFAzUjur
+         k6MfMrIZq3Hs0uJDEAru5z4wk7ypqxs1tBmVe0QAAtOFEQnxF1DI0KT7MxgOJfV5frRt
+         Ns094Lze1R8MWFY/a25Pb2DgsGKIcKnJpPRKLjhtEurIL1CgFpj1IAvHkNEXc1/GZQid
+         JjSuEtQNagBuZZufEk9y3EjN2OGpvvf2aNiPn9cLPR85t98vtGMyl/yBp/K1Spb9EHge
+         lFInAxTwTkj3a1Z0fgeTATL83RCiXrQVHZoaIOk+arUNCjhuzMcKJC4pDE7QNKPvlU3L
+         CKFA==
+X-Received: by 10.60.125.101 with SMTP id mp5mr6621453oeb.18.1369452801805;
+        Fri, 24 May 2013 20:33:21 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id x5sm20657630oep.1.2013.05.24.19.50.32
+        by mx.google.com with ESMTPSA id x10sm20768124oes.6.2013.05.24.20.33.19
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 24 May 2013 19:50:33 -0700 (PDT)
+        Fri, 24 May 2013 20:33:20 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc3.312.g47657de
-In-Reply-To: <1369450060-19011-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225485>
 
-For remote-helpers that use 'export' to push.
+It's better to check in multiple locations, so the user doesn't have to.
+
+And update the documentation.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t5801-remote-helpers.sh |  8 ++++++++
- transport-helper.c        | 11 ++++++-----
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ contrib/completion/git-completion.zsh | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index 6a7db8b..a4643ce 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -94,6 +94,14 @@ test_expect_success 'push new branch with old:new refspec' '
- 	compare_refs local HEAD server refs/heads/new-refspec
- '
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index 2565d2e..9555cf8 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -4,18 +4,17 @@
+ #
+ # Copyright (c) 2012-2013 Felipe Contreras <felipe.contreras@gmail.com>
+ #
+-# You need git's bash completion script installed somewhere, by default on the
+-# same directory as this script.
++# You need git's bash completion script installed somewhere, by default it
++# would be the location bash-completion uses.
+ #
+-# If your script is on ~/.git-completion.sh instead, you can configure it on
+-# your ~/.zshrc:
++# If your script is somewhere else, you can configure it on your ~/.zshrc:
+ #
+ #  zstyle ':completion:*:*:git:*' script ~/.git-completion.sh
+ #
+-# The recommended way to install this script is to copy to
+-# '~/.zsh/completion/_git', and then add the following to your ~/.zshrc file:
++# The recommended way to install this script is to copy to '~/.zsh/_git', and
++# then add the following to your ~/.zshrc file:
+ #
+-#  fpath=(~/.zsh/completion $fpath)
++#  fpath=(~/.zsh $fpath)
  
-+test_expect_success 'push delete branch' '
-+	(cd local &&
-+	 git push origin :new-name
-+	) &&
-+	test_must_fail git --git-dir="server/.git" \
-+	 rev-parse --verify refs/heads/new-name
-+'
-+
- test_expect_success 'cloning without refspec' '
- 	GIT_REMOTE_TESTGIT_REFSPEC="" \
- 	git clone "testgit::${PWD}/server" local2 2>error &&
-diff --git a/transport-helper.c b/transport-helper.c
-index cc2150f..3ac4ced 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -833,9 +833,6 @@ static int push_refs_with_export(struct transport *transport,
- 		char *private;
- 		unsigned char sha1[20];
+ complete ()
+ {
+@@ -27,7 +26,18 @@ zstyle -T ':completion:*:*:git:*' tag-order && \
+ 	zstyle ':completion:*:*:git:*' tag-order 'common-commands'
  
--		if (ref->deletion)
--			die("remote-helpers do not support ref deletion");
--
- 		private = apply_refspecs(data->refspecs, data->refspec_nr, ref->name);
- 		if (private && !get_sha1(private, sha1)) {
- 			strbuf_addf(&buf, "^%s", private);
-@@ -847,12 +844,16 @@ static int push_refs_with_export(struct transport *transport,
- 		if (ref->peer_ref) {
- 			if (strcmp(ref->name, ref->peer_ref->name)) {
- 				struct strbuf buf = STRBUF_INIT;
--				strbuf_addf(&buf, "%s:%s", ref->peer_ref->name, ref->name);
-+				if (!ref->deletion)
-+					strbuf_addf(&buf, "%s:%s", ref->peer_ref->name, ref->name);
-+				else
-+					strbuf_addf(&buf, ":%s", ref->name);
- 				string_list_append(&revlist_args, "--refspec");
- 				string_list_append(&revlist_args, buf.buf);
- 				strbuf_release(&buf);
- 			}
--			string_list_append(&revlist_args, ref->peer_ref->name);
-+			if (!ref->deletion)
-+				string_list_append(&revlist_args, ref->peer_ref->name);
- 		}
- 	}
+ zstyle -s ":completion:*:*:git:*" script script
+-test -z "$script" && script="$(dirname ${funcsourcetrace[1]%:*})"/git-completion.bash
++if [ -z "$script" ]; then
++	local -a locations
++	locations=(
++		'/etc/bash_completion.d/git' # fedora, old debian
++		'/usr/share/bash-completion/completions/git' # arch, ubuntu, new debian
++		'/usr/share/bash-completion/git' # gentoo
++		$(dirname ${funcsourcetrace[1]%:*})/git-completion.bash
++		)
++	for e in $locations; do
++		test -f $e && script="$e" && break
++	done
++fi
+ ZSH_VERSION='' . "$script"
  
+ __gitcomp ()
 -- 
 1.8.3.rc3.312.g47657de
