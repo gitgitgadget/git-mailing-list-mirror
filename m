@@ -1,111 +1,84 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 10/25] revision: use object_array_filter() in implementation of gc_boundary()
-Date: Sat, 25 May 2013 11:08:09 +0200
-Message-ID: <1369472904-12875-11-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 16/25] do_fetch(): reduce scope of peer_item
+Date: Sat, 25 May 2013 11:08:15 +0200
+Message-ID: <1369472904-12875-17-git-send-email-mhagger@alum.mit.edu>
 References: <1369472904-12875-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Johan Herland <johan@herland.net>, Thomas Rast <trast@inf.ethz.ch>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 25 11:09:17 2013
+X-From: git-owner@vger.kernel.org Sat May 25 11:09:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UgATU-00052T-DE
-	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 11:09:16 +0200
+	id 1UgATf-0005B0-CD
+	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 11:09:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753764Ab3EYJJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 May 2013 05:09:12 -0400
-Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:50785 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752678Ab3EYJJJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 May 2013 05:09:09 -0400
-X-AuditID: 12074414-b7fb86d000000905-c0-51a07fb595ea
+	id S1754552Ab3EYJJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 May 2013 05:09:22 -0400
+Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:58130 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754352Ab3EYJJU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 May 2013 05:09:20 -0400
+X-AuditID: 12074411-b7f286d0000008e8-1a-51a07fbf5d55
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id AA.D4.02309.5BF70A15; Sat, 25 May 2013 05:09:09 -0400 (EDT)
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 62.22.02280.FBF70A15; Sat, 25 May 2013 05:09:19 -0400 (EDT)
 Received: from michael.fritz.box (p4FDD49F3.dip0.t-ipconnect.de [79.221.73.243])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4P98guk000489
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4P98guq000489
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 25 May 2013 05:09:07 -0400
+	Sat, 25 May 2013 05:09:18 -0400
 X-Mailer: git-send-email 1.8.2.3
 In-Reply-To: <1369472904-12875-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsUixO6iqLu1fkGgweGdfBZdV7qZLBp6rzBb
-	zLu7i8ni9or5zBY/WnqYLe5eXsXuwObx9/0HJo9LL7+zedx+PZ/Z41nvHkaPi5eUPT5vkgtg
-	i+K2SUosKQvOTM/Tt0vgzvh4sYex4ARvRd+smgbGR1xdjJwcEgImEjverGCBsMUkLtxbz9bF
-	yMUhJHCZUWLrtCuMEM4FJolfi5+wgVSxCehKLOppZgKxRQQcJU48uM4KUsQs0Mso8fDRd7CE
-	sECCxLmOXrCxLAKqEpM6T4E18wq4Sly4fZMRYp2CxOVZa5i7GDk4OIHib09wgoSFBFwknn86
-	xzqBkXcBI8MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0LvdzMEr3UlNJNjJAwE9nBeOSk3CFG
-	AQ5GJR5egfL5gUKsiWXFlbmHGCU5mJREeflrFwQK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuFl
-	SAHK8aYkVlalFuXDpKQ5WJTEeb8tVvcTEkhPLEnNTk0tSC2CycpwcChJ8O6tA2oULEpNT61I
-	y8wpQUgzcXCCCC6QDTxAG86CFPIWFyTmFmemQxSdYlSUEue9CZIQAElklObBDYAlhFeM4kD/
-	CPPeBaniASYTuO5XQIOZgAbfzJ0PMrgkESEl1cDoJex2LZcjavMuJtnuO/tunfq9TftnIf/s
-	6u8cVZMTtOuiXzwyud1sundLLZNrHfPRDcKJDKslvZM0LrO6pFzh3b3H1nvbq7c+q7dVm+z2
-	ebrE6f3KCZ+v9T0xOt9WM8m/Kv/SMqcsry+Jfe9O10ty7v7YJPPwDcsz8WNbOIMX 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqLu/fkGgQeclDYuuK91MFg29V5gt
+	5t3dxWRxe8V8ZosfLT3MFncvr2J3YPP4+/4Dk8ell9/ZPG6/ns/s8ax3D6PHxUvKHp83yQWw
+	RXHbJCWWlAVnpufp2yVwZ0yfMp+1oJOj4vmqZcwNjDvYuhg5OSQETCS+zz3ABGGLSVy4tx4o
+	zsUhJHCZUWLK9J9QzgUmiYWHH4J1sAnoSizqaQbrEBFwlDjx4DorSBGzQC+jxMNH38ESwgL2
+	EtdbfrOD2CwCqhLLF21nBbF5BVwlTq96ALVaQeLyrDXMXYwcHJxA8bcnOEHCQgIuEs8/nWOd
+	wMi7gJFhFaNcYk5prm5uYmZOcWqybnFyYl5eapGuqV5uZoleakrpJkZIoAnuYJxxUu4QowAH
+	oxIPr0D5/EAh1sSy4srcQ4ySHExKorz8tQsChfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwMqQA
+	5XhTEiurUovyYVLSHCxK4rx8S9T9hATSE0tSs1NTC1KLYLIyHBxKErx764AaBYtS01Mr0jJz
+	ShDSTBycIIILZAMP0IazIIW8xQWJucWZ6RBFpxgVpcR5b4IkBEASGaV5cANgKeEVozjQP8K8
+	C0CqeIDpBK77FdBgJqDBN3PngwwuSURISTUwKu94eOebFduOe/vsd316qvls4RSZSrlDZ6Pn
+	pS18bMErc4/TXU7rVmum3yetpSGeeuyx8zI/dzs0LFvQezn2+aVTtg9+OSe/PmBwuGLxhl6/
+	1c/tTNZNPXV+TkA/v3FNtcF1mz3V54rEZqWGf2z9yfji4u7qYm/PKY2py2ROGT0q 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225498>
 
-Use object_array_filter(), which will soon be made smarter about
-cleaning up discarded entries properly.  Also add a function comment.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
+ builtin/fetch.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-This version changes the test to "nr == alloc" for clarity, but
-doesn't move the test to the caller as did v1 of the patch series.
-
- revision.c | 32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 8ac88d6..be73cb4 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2435,25 +2435,23 @@ static struct commit *get_revision_1(struct rev_info *revs)
- 	return NULL;
- }
- 
--static void gc_boundary(struct object_array *array)
-+/*
-+ * Return true for entries that have not yet been shown.  (This is an
-+ * object_array_each_func_t.)
-+ */
-+static int entry_unshown(struct object_array_entry *entry, void *cb_data_unused)
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f949115..80c6e37 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -694,7 +694,6 @@ static int do_fetch(struct transport *transport,
+ 		    struct refspec *refs, int ref_count)
  {
--	unsigned nr = array->nr;
--	unsigned alloc = array->alloc;
--	struct object_array_entry *objects = array->objects;
-+	return !(entry->item->flags & SHOWN);
-+}
+ 	struct string_list existing_refs = STRING_LIST_INIT_DUP;
+-	struct string_list_item *peer_item = NULL;
+ 	struct ref *ref_map;
+ 	struct ref *rm;
+ 	int autotags = (transport->remote->fetch_tags == 1);
+@@ -724,8 +723,9 @@ static int do_fetch(struct transport *transport,
  
--	if (alloc <= nr) {
--		unsigned i, j;
--		for (i = j = 0; i < nr; i++) {
--			if (objects[i].item->flags & SHOWN)
--				continue;
--			if (i != j)
--				objects[j] = objects[i];
--			j++;
--		}
--		for (i = j; i < nr; i++)
--			objects[i].item = NULL;
--		array->nr = j;
--	}
-+/*
-+ * If array is on the verge of a realloc, garbage-collect any entries
-+ * that have already been shown to try to free up some space.
-+ */
-+static void gc_boundary(struct object_array *array)
-+{
-+	if (array->nr == array->alloc)
-+		object_array_filter(array, entry_unshown, NULL);
- }
- 
- static void create_boundary_commit_list(struct rev_info *revs)
+ 	for (rm = ref_map; rm; rm = rm->next) {
+ 		if (rm->peer_ref) {
+-			peer_item = string_list_lookup(&existing_refs,
+-						       rm->peer_ref->name);
++			struct string_list_item *peer_item =
++				string_list_lookup(&existing_refs,
++						   rm->peer_ref->name);
+ 			if (peer_item)
+ 				hashcpy(rm->peer_ref->old_sha1,
+ 					peer_item->util);
 -- 
 1.8.2.3
