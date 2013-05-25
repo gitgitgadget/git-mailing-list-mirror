@@ -1,205 +1,80 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 47/48] remote-hg: add support for --dry-run
-Date: Fri, 24 May 2013 21:30:03 -0500
-Message-ID: <1369449004-17981-48-git-send-email-felipe.contreras@gmail.com>
-References: <1369449004-17981-1-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 0/4] remote-helpers: test reorganization
+Date: Fri, 24 May 2013 21:38:23 -0500
+Message-ID: <1369449507-18269-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	David Aguilar <davvid@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 25 04:34:19 2013
+X-From: git-owner@vger.kernel.org Sat May 25 04:40:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ug4JF-0003AF-N3
-	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 04:34:18 +0200
+	id 1Ug4P5-00075g-A9
+	for gcvg-git-2@plane.gmane.org; Sat, 25 May 2013 04:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755912Ab3EYCeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 May 2013 22:34:09 -0400
-Received: from mail-oa0-f41.google.com ([209.85.219.41]:46752 "EHLO
+	id S1754551Ab3EYCkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 May 2013 22:40:08 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:40317 "EHLO
 	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755882Ab3EYCeH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 May 2013 22:34:07 -0400
-Received: by mail-oa0-f41.google.com with SMTP id n9so7067010oag.14
-        for <git@vger.kernel.org>; Fri, 24 May 2013 19:34:07 -0700 (PDT)
+	with ESMTP id S1752280Ab3EYCkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 May 2013 22:40:06 -0400
+Received: by mail-oa0-f41.google.com with SMTP id n9so6946691oag.28
+        for <git@vger.kernel.org>; Fri, 24 May 2013 19:40:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=0rO1fhctU8ncSg3tTYxb8KMeA7MBYJaDGji6v+4dHi4=;
-        b=FPLqpcU9xP+ugJ3VTInEiaFHhjx0BEmM/IpayILm/hJTWNgwxDsT/F/YHz0QmDPfjs
-         fIKx1a6AvFCLB/GBJpajjA2DxnUtuKZ27gxaR6rbRp7B38JFWqn134ze28bS9oxQfjE3
-         TMeio5bUk5gfgAP9E1XHFhlyL/Eo0ziPf58wbj0u3sfIFAwvtKvl92zg+uXk104qcZtQ
-         vuDwtQS+udNWlzBcsjwUsdxCztmttYDQ5Hd81z4mIzoKPqS+OyId3ZoneAe7AIziAPbm
-         tOtGG3v6KPD7bPJQXC0+p3VXxpPTC22Ynst4pj4wQbHOqFfSx+8/v21thiWN2p10AKXu
-         vJgw==
-X-Received: by 10.182.128.106 with SMTP id nn10mr13769647obb.72.1369449247197;
-        Fri, 24 May 2013 19:34:07 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=LKJKgQMu/jV/jsdwC+N7lfzxPncUGJP1D3/HtuQhnnY=;
+        b=F+CTuH1L82rKi2vgka1Bz2nCcfOSN//+8c9ou+VKzTNOMz114KuSxtbYcR5WXI46IV
+         ampIRR0fVKpQz7O47hSktpiu3brRrS9ZBYCCYHOKBf4rY/giONY01KPw/xR9xLIVisZj
+         o9KlcJE50ce6VUgAnruprVKl4HPhJfXm90pYfH+EKy9JRHLCsMoNDFosF6+ebZ3iNqsM
+         xQEkln5whyS62BHxTjmsxfPFnCi51ZUxKGKUqNnrYm9B3HTKK6xRdWmGTaDRgt1pf2hs
+         qbPZeic1SS4AtkXOS8I0lKBqwgvZyy3Kxv3o4m7P34b8jWzX9WxXKL8X4bCviQTMD6yM
+         o5Jw==
+X-Received: by 10.182.209.71 with SMTP id mk7mr13507217obc.83.1369449606051;
+        Fri, 24 May 2013 19:40:06 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id b1sm9146320oeo.8.2013.05.24.19.34.05
+        by mx.google.com with ESMTPSA id h4sm20612533oel.2.2013.05.24.19.40.03
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 24 May 2013 19:34:06 -0700 (PDT)
+        Fri, 24 May 2013 19:40:04 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc3.312.g47657de
-In-Reply-To: <1369449004-17981-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225463>
 
-This needs a specific patch from Git not applied yet.
+Now we use PYTHON_PATH properly, and also we are able to do:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/git-remote-hg | 29 +++++++++++++++++++++++++--
- contrib/remote-helpers/test-hg.sh    | 38 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 65 insertions(+), 2 deletions(-)
+  make -C contrib/remote-helpers install
 
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index b983627..20abb34 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -557,6 +557,7 @@ def do_capabilities(parser):
-     if os.path.exists(path):
-         print "*import-marks %s" % path
-     print "*export-marks %s" % path
-+    print "option"
- 
-     print
- 
-@@ -724,6 +725,11 @@ def parse_commit(parser):
-             die('Unknown file command: %s' % line)
-         files[path] = f
- 
-+    # only export the commits if we are on an internal proxy repo
-+    if dry_run and not peer:
-+        parsed_refs[ref] = None
-+        return
-+
-     def getfilectx(repo, memctx, f):
-         of = files[f]
-         if 'deleted' in of:
-@@ -809,7 +815,10 @@ def parse_reset(parser):
-     from_mark = parser.get_mark()
-     parser.next()
- 
--    rev = mark_to_rev(from_mark)
-+    try:
-+        rev = mark_to_rev(from_mark)
-+    except KeyError:
-+        rev = None
-     parsed_refs[ref] = rev
- 
- def parse_tag(parser):
-@@ -1007,7 +1016,7 @@ def do_export(parser):
-     need_fetch = False
- 
-     for ref, node in parsed_refs.iteritems():
--        bnode = hgbin(node)
-+        bnode = hgbin(node) if node else None
-         if ref.startswith('refs/heads/branches'):
-             branch = ref[len('refs/heads/branches/'):]
-             if branch in branches and bnode in branches[branch]:
-@@ -1048,6 +1057,9 @@ def do_export(parser):
- 
-             p_revs[bnode] = ref
-         elif ref.startswith('refs/tags/'):
-+            if dry_run:
-+                print "ok %s" % ref
-+                continue
-             tag = ref[len('refs/tags/'):]
-             tag = hgref(tag)
-             author, msg = parsed_tags.get(tag, (None, None))
-@@ -1097,6 +1109,15 @@ def do_export(parser):
- 
-     print
- 
-+def do_option(parser):
-+    global dry_run
-+    _, key, value = parser.line.split(' ')
-+    if key == 'dry-run':
-+        dry_run = (value == 'true')
-+        print 'ok'
-+    else:
-+        print 'unsupported'
-+
- def fix_path(alias, repo, orig_url):
-     url = urlparse.urlparse(orig_url, 'file')
-     if url.scheme != 'file' or os.path.isabs(url.path):
-@@ -1113,6 +1134,7 @@ def main(args):
-     global parsed_tags
-     global filenodes
-     global fake_bmark, hg_version
-+    global dry_run
- 
-     alias = args[1]
-     url = args[2]
-@@ -1151,6 +1173,7 @@ def main(args):
-         hg_version = tuple(int(e) for e in util.version().split('.'))
-     except:
-         hg_version = None
-+    dry_run = False
- 
-     repo = get_repo(url, alias)
-     prefix = 'refs/hg/%s' % alias
-@@ -1175,6 +1198,8 @@ def main(args):
-             do_import(parser)
-         elif parser.check('export'):
-             do_export(parser)
-+        elif parser.check('option'):
-+            do_option(parser)
-         else:
-             die('unhandled command: %s' % line)
-         sys.stdout.flush()
-diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers/test-hg.sh
-index 91ddac7..bf3635e 100755
---- a/contrib/remote-helpers/test-hg.sh
-+++ b/contrib/remote-helpers/test-hg.sh
-@@ -594,6 +594,44 @@ test_expect_success 'remote big push fetch first' '
- 	)
- '
- 
-+test_expect_failure 'remote big push dry-run' '
-+	test_when_finished "rm -rf hgrepo gitrepo*" &&
-+
-+	setup_big_push
-+
-+	(
-+	cd gitrepo &&
-+
-+	check_push 0 --dry-run --all <<-EOF
-+	master
-+	good_bmark
-+	branches/good_branch
-+	new_bmark:new
-+	branches/new_branch:new
-+	bad_bmark1:non-fast-forward
-+	bad_bmark2:non-fast-forward
-+	branches/bad_branch:non-fast-forward
-+	EOF
-+
-+	check_push 0 --dry-run master good_bmark new_bmark branches/good_branch branches/new_branch <<-EOF
-+	master
-+	good_bmark
-+	branches/good_branch
-+	new_bmark:new
-+	branches/new_branch:new
-+	EOF
-+	) &&
-+
-+	check_branch hgrepo default one &&
-+	check_branch hgrepo good_branch "good branch" &&
-+	check_branch hgrepo bad_branch "bad branch" &&
-+	check_branch hgrepo new_branch '' &&
-+	check_bookmark hgrepo good_bmark one &&
-+	check_bookmark hgrepo bad_bmark1 one &&
-+	check_bookmark hgrepo bad_bmark2 one &&
-+	check_bookmark hgrepo new_bmark ''
-+'
-+
- test_expect_success 'remote double failed push' '
- 	test_when_finished "rm -rf hgrepo gitrepo*" &&
- 
+Felipe Contreras (4):
+  remote-helpers: generate scripts
+  remote-helpers: rename tests
+  remote-helpers: allow direct test execution
+  remote-helpers: add exec-path links
+
+ .gitignore                                         |  2 ++
+ contrib/remote-helpers/.gitignore                  |  2 ++
+ contrib/remote-helpers/Makefile                    | 25 +++++++++++++++++-----
+ .../{git-remote-bzr => git-remote-bzr.py}          |  0
+ .../{git-remote-hg => git-remote-hg.py}            |  0
+ contrib/remote-helpers/{test-bzr.sh => test-bzr.t} |  3 ++-
+ .../{test-hg-bidi.sh => test-hg-bidi.t}            |  3 ++-
+ .../{test-hg-hg-git.sh => test-hg-hg-git.t}        |  3 ++-
+ contrib/remote-helpers/{test-hg.sh => test-hg.t}   |  3 ++-
+ 9 files changed, 32 insertions(+), 9 deletions(-)
+ create mode 100644 contrib/remote-helpers/.gitignore
+ rename contrib/remote-helpers/{git-remote-bzr => git-remote-bzr.py} (100%)
+ rename contrib/remote-helpers/{git-remote-hg => git-remote-hg.py} (100%)
+ rename contrib/remote-helpers/{test-bzr.sh => test-bzr.t} (98%)
+ rename contrib/remote-helpers/{test-hg-bidi.sh => test-hg-bidi.t} (98%)
+ rename contrib/remote-helpers/{test-hg-hg-git.sh => test-hg-hg-git.t} (99%)
+ rename contrib/remote-helpers/{test-hg.sh => test-hg.t} (97%)
+
 -- 
 1.8.3.rc3.312.g47657de
