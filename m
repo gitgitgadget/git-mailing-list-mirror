@@ -1,58 +1,58 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: fix french translation
-Date: Sun, 26 May 2013 19:43:25 +0200
-Message-ID: <CALWbr2w+ooM04nc79XKyVy48c_eH1AES5XgVDwwk+tFpmitLTw@mail.gmail.com>
-References: <CAHtLG6ToiRT-EQMFhrR976=gat+8p0GFFyz+9qpqaq36=gVyGQ@mail.gmail.com>
+From: Gioele Barabucci <gioele@svario.it>
+Subject: Re: git clone does not understand insteadOf URLs
+Date: Sun, 26 May 2013 19:55:01 +0200
+Message-ID: <51A24C75.3090100@svario.it>
+References: <51A11DD0.4040802@svario.it> <CA+EOSB=ow9Vc2J8qb3GAp4xj2GgY8qes=5Q-k-rH6VsVLjzCsg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: =?UTF-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 26 19:43:53 2013
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 26 19:55:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ugeyp-00053L-5v
-	for gcvg-git-2@plane.gmane.org; Sun, 26 May 2013 19:43:39 +0200
+	id 1UgfAE-00069e-Tb
+	for gcvg-git-2@plane.gmane.org; Sun, 26 May 2013 19:55:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754632Ab3EZRn1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 May 2013 13:43:27 -0400
-Received: from mail-qa0-f51.google.com ([209.85.216.51]:45659 "EHLO
-	mail-qa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754207Ab3EZRn0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 May 2013 13:43:26 -0400
-Received: by mail-qa0-f51.google.com with SMTP id ii15so663572qab.17
-        for <git@vger.kernel.org>; Sun, 26 May 2013 10:43:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=09usiKiNqJohji4ejuFGXSQkEf2UMZg9aQ3DauSDVXA=;
-        b=B8it4i+pg8ml1tHK6c6EYAmJtFi3omkvBDLwB6I9Q4hQ0R9FOZcgSBLqeiY7H1UKv3
-         csR6pZ5MeveqWMqwn1/5qz4Ehqwajn0+VBHMsQjRIBk2vJ0a6Je9AS3bFB3tEPSOTKgT
-         mMRxOfw03nK1rg5KjZo0Bvg8vEaiMbB/BuFD1+3ow1BmWmuryvrS6W3CMJQXxpzv+NRN
-         0qpeM5qS0pGeutQN8/HGVdcIAXEpfZ3SN2dx/nVs77shZQ6GJMMScjM/6OD5gJfO1vBa
-         AQ3VJzkrNlyB8g1mOpylEHJiCMTRKwEH+vqr6tmRANybh/xv0k/UdyRkVkJFYJv1PJWX
-         xMlA==
-X-Received: by 10.224.68.10 with SMTP id t10mr15092706qai.24.1369590206055;
- Sun, 26 May 2013 10:43:26 -0700 (PDT)
-Received: by 10.49.81.99 with HTTP; Sun, 26 May 2013 10:43:25 -0700 (PDT)
-In-Reply-To: <CAHtLG6ToiRT-EQMFhrR976=gat+8p0GFFyz+9qpqaq36=gVyGQ@mail.gmail.com>
+	id S1754675Ab3EZRzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 May 2013 13:55:07 -0400
+Received: from camelia.svario.it ([164.138.26.129]:56339 "EHLO mail.svario.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754633Ab3EZRzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 May 2013 13:55:06 -0400
+Received: from [192.168.2.4] (dynamic-adsl-84-223-204-159.clienti.tiscali.it [84.223.204.159])
+	by mail.svario.it (Postfix) with ESMTPSA id 56957214D6;
+	Sun, 26 May 2013 17:55:03 +0000 (UTC)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <CA+EOSB=ow9Vc2J8qb3GAp4xj2GgY8qes=5Q-k-rH6VsVLjzCsg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225556>
 
-Hi,
-Patch should be inlined, please have a look at
-`Documentation/SubmittingPatches`.
+Il 26/05/2013 17:13, Elia Pinto ha scritto:
+ >>       $ git clone remote-repo/ProjectA.git
+ >>       fatal repository 'remote-repo/ProjectA.git' does not exist
+ >
+> Why someone should be do something like this ? What is the use case ?
 
-Also, how is "copy" (an english word) better than "copie" (the literal
-french translation) ?
+Simple, I keep all my projects on the same server, so I would like to 
+refer to that server + path using 'remote-repo'.
 
-On Sun, May 26, 2013 at 5:27 PM, =E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cooli@=
-gmail.com> wrote:
-> see patch
+"git+ssh://git.example.org//users/gioele/projects" insteadOf "remote-repo"
+
+I also helps me when I move all the projects from one path to another in 
+the remote server: I only need to change the path once in `~/.gitconfig`.
+
+Please note that `git remote add` correctly understands 
+'remote-repo/ProjectA.git'. I was expecting that `clone` and `remote` 
+both used the same code to parse paths.
+
+Regards,
+
+-- 
+Gioele Barabucci <gioele@svario.it>
