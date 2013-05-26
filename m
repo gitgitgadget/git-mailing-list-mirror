@@ -1,89 +1,73 @@
-From: John Keeping <john@keeping.me.uk>
+From: Gioele Barabucci <gioele@svario.it>
 Subject: Re: git clone does not understand insteadOf URLs
-Date: Sun, 26 May 2013 19:14:31 +0100
-Message-ID: <20130526181430.GL27005@serenity.lan>
-References: <51A11DD0.4040802@svario.it>
- <CA+EOSB=ow9Vc2J8qb3GAp4xj2GgY8qes=5Q-k-rH6VsVLjzCsg@mail.gmail.com>
- <51A24C75.3090100@svario.it>
- <87a9nhhb9c.fsf@hase.home>
- <51A24FF4.4010102@svario.it>
+Date: Sun, 26 May 2013 20:21:45 +0200
+Message-ID: <51A252B9.7040008@svario.it>
+References: <51A11DD0.4040802@svario.it> <CA+EOSB=ow9Vc2J8qb3GAp4xj2GgY8qes=5Q-k-rH6VsVLjzCsg@mail.gmail.com> <51A24C75.3090100@svario.it> <87a9nhhb9c.fsf@hase.home> <51A24FF4.4010102@svario.it> <20130526181430.GL27005@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-To: Gioele Barabucci <gioele@svario.it>
-X-From: git-owner@vger.kernel.org Sun May 26 20:14:50 2013
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun May 26 20:21:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UgfSy-0004Va-Gr
-	for gcvg-git-2@plane.gmane.org; Sun, 26 May 2013 20:14:48 +0200
+	id 1UgfZp-0001d7-4U
+	for gcvg-git-2@plane.gmane.org; Sun, 26 May 2013 20:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754774Ab3EZSOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 May 2013 14:14:44 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:43615 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754737Ab3EZSOo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 May 2013 14:14:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 5D936606502;
-	Sun, 26 May 2013 19:14:43 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hdHaAWj+Hizu; Sun, 26 May 2013 19:14:43 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 822596064EF;
-	Sun, 26 May 2013 19:14:40 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 754AD161E26E;
-	Sun, 26 May 2013 19:14:40 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Yl2S6WORAJj0; Sun, 26 May 2013 19:14:39 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 3986D161E3D4;
-	Sun, 26 May 2013 19:14:32 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <51A24FF4.4010102@svario.it>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754725Ab3EZSVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 May 2013 14:21:49 -0400
+Received: from camelia.svario.it ([164.138.26.129]:56369 "EHLO mail.svario.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754621Ab3EZSVs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 May 2013 14:21:48 -0400
+Received: from [192.168.2.4] (dynamic-adsl-84-223-204-159.clienti.tiscali.it [84.223.204.159])
+	by mail.svario.it (Postfix) with ESMTPSA id 5DE24214D6;
+	Sun, 26 May 2013 18:21:46 +0000 (UTC)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <20130526181430.GL27005@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225561>
 
-On Sun, May 26, 2013 at 08:09:56PM +0200, Gioele Barabucci wrote:
-> Il 26/05/2013 20:00, Andreas Schwab ha scritto:
-> >> Simple, I keep all my projects on the same server, so I would like to
-> >> refer to that server + path using 'remote-repo'.
-> >>
-> >> "git+ssh://git.example.org//users/gioele/projects" insteadOf "remote-repo"
-> >
-> > You can use "remote-repo:" instead.
-> 
-> Do you mean I could use 
-> "git+ssh://git.example.org//users/gioele/projects" insteadOf 
-> "remote-repo:"? Yes, but now I have dozens of repositories already set 
-> up in various workstations and I do not want to go and change all of them.
-> 
-> What really bugs me is the fact that `git clone` and `git remote add` 
-> parse the same path in different ways. Git already has many 
-> inconsistencies. This one can be easily ironed out.
+Il 26/05/2013 20:14, John Keeping ha scritto:
+> On Sun, May 26, 2013 at 08:09:56PM +0200, Gioele Barabucci wrote:
+>> Il 26/05/2013 20:00, Andreas Schwab ha scritto:
+>>>> Simple, I keep all my projects on the same server, so I would like to
+>>>> refer to that server + path using 'remote-repo'.
+>>>>
+>>>> "git+ssh://git.example.org//users/gioele/projects" insteadOf "remote-repo"
+>
+> In what way do you think that `git remote add` handles the path?
+>
+> All `git remote add` does is add a new "remote.<name>.url" entry to the
+> configuration file with the value as given on the command line.  The
+> insteadOf mapping will only be applied when you try to fetch from/push
+> to the remote.
 
-In what way do you think that `git remote add` handles the path?
+Regardless of the implementation of the commands, if I do
 
-All `git remote add` does is add a new "remote.<name>.url" entry to the
-configuration file with the value as given on the command line.  The
-insteadOf mapping will only be applied when you try to fetch from/push
-to the remote.
+     mkdir projectA
+     cd projectA
+     git init .
+     git remote add origin remote-repo/projectA.git
+     git pull origin master
+
+I get a working repository. If I do
+
+     git clone remote-repo/projectA.git
+
+all I will get is an error.
+
+I do not see any reason (UX-wise) why the two sequences of commands 
+shouldn't work the same when used on the same URL.
+
+Regards,
+
+-- 
+Gioele Barabucci <gioele@svario.it>
