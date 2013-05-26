@@ -1,64 +1,84 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 2/4] fetch-pack: prepare updated shallow file before
- fetching the pack
-Date: Sun, 26 May 2013 08:01:33 +0700
-Message-ID: <CACsJy8BFbDA1MitnktL6tNy59sWMw4vnsZ0wN6UfDfY_oAKh+w@mail.gmail.com>
-References: <1367405974-22190-1-git-send-email-pclouds@gmail.com>
- <1367584514-19806-1-git-send-email-pclouds@gmail.com> <1367584514-19806-3-git-send-email-pclouds@gmail.com>
- <7va9o6lr0h.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v4 0/4] nd/clone-connectivity-shortcut updates
+Date: Sun, 26 May 2013 08:16:13 +0700
+Message-ID: <1369530977-12746-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 26 03:02:13 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 26 03:15:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UgPLg-0003gx-CJ
-	for gcvg-git-2@plane.gmane.org; Sun, 26 May 2013 03:02:12 +0200
+	id 1UgPYE-0007pk-NS
+	for gcvg-git-2@plane.gmane.org; Sun, 26 May 2013 03:15:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758556Ab3EZBCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 May 2013 21:02:08 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:52443 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758476Ab3EZBCG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 May 2013 21:02:06 -0400
-Received: by mail-ob0-f169.google.com with SMTP id up14so352409obb.28
-        for <git@vger.kernel.org>; Sat, 25 May 2013 18:02:05 -0700 (PDT)
+	id S1758737Ab3EZBPG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 May 2013 21:15:06 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:40716 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758476Ab3EZBPF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 May 2013 21:15:05 -0400
+Received: by mail-pa0-f48.google.com with SMTP id kp6so5598253pab.21
+        for <git@vger.kernel.org>; Sat, 25 May 2013 18:15:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=fOEe9M6JNJ1BC4Ap5GPxP9oq3Ky/TX5z0HogIq/lAz8=;
-        b=PScmYWPOeRNc/nILnYarNYYdU9J9geOr5JukH0HprZ6pXs9llSPzez2HaKYyJzpYJ6
-         TjfJOBxrbOD3jEp94g6ryGXlo03r3vq08EY1INWgyMqNdRD7OnaseD/qpSJJeTtuxl93
-         t3QNRrbHI9V9CxpIyjgbxxJTuQxFTS11sChcrHpxiDKt1r3HpSzrFkl9aMA2LimYh0UX
-         4pWyPwkjXrC2ubOA/90b6JhTNZmkCpfNbzDjlI0pemLxdqxjjXkeJSFe72QSOuHh/DwN
-         gpBQaDvGFv7klTg0gnxazMCxG98Nn2JEG6Gz/vzqgCm2x6Wn5hgbr421plvO6cOB+L36
-         QLcA==
-X-Received: by 10.60.134.147 with SMTP id pk19mr15821184oeb.4.1369530124939;
- Sat, 25 May 2013 18:02:04 -0700 (PDT)
-Received: by 10.76.141.232 with HTTP; Sat, 25 May 2013 18:01:33 -0700 (PDT)
-In-Reply-To: <7va9o6lr0h.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=0bFN3hZP0s2CrqKiy2CKYX077VjRWwDS7MoZojpOd6I=;
+        b=KKD7HnJHFoCO4zrlxHWq58FBEl1I2GeGNB2uQhzh+ecGfiwJgUrAsB28T6zHdC6ZCv
+         1VOXS0iiL15NHUuiU2SzOGo/yYaAPadqiesTJCqGFW3HBbttpNtQHM7a85pT/EcgYm0O
+         AN2mA0biLD3cVyRSLPwytjQwl5zshPfRJHKsW7iBeXHKqEnhuayev5Ijm0Na0qvBvJaW
+         TCx2zeWbDE1QpAl5S8q1rGK3MZ5UioOccji0EXi9r/MRHs/Z3ceFJBrOZH7Fpcg3UglZ
+         td2G3eE0NrC/r+7uO70pFiFTc3qv34kK7sNLPxVm52pjCbFun9mmO3UI/7GWqwoeoBEV
+         V+Aw==
+X-Received: by 10.66.193.72 with SMTP id hm8mr24419568pac.23.1369530905074;
+        Sat, 25 May 2013 18:15:05 -0700 (PDT)
+Received: from lanh ([115.73.211.70])
+        by mx.google.com with ESMTPSA id tb7sm22368590pbc.14.2013.05.25.18.15.01
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 25 May 2013 18:15:04 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 26 May 2013 08:16:22 +0700
+X-Mailer: git-send-email 1.8.2.83.gc99314b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225537>
 
-On Tue, May 7, 2013 at 10:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>       if (args->depth > 0) {
->> +             struct stat st;
->> +             if (!fstat(shallow_lock.fd, &st) &&
->> +                 st.st_size == 0) {
->> +                     unlink_or_warn(git_path("shallow"));
->
-> Are we unlinking the right file here?
+This addresses the comments from Junio and Eric in v3 [1].
 
-Yes we are. when st.st_size is 0, the new shallow file is empty (i.e.
---unshallow), so we want to remove the old file. I should check
-"!*alternate_shallow_file" here instead of based on st.st_size.
---
-Duy
+[1] http://thread.gmane.org/gmane.comp.version-control.git/219611/focus=
+=3D223584
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (4):
+  clone: let the user know when check_everything_connected is run
+  fetch-pack: prepare updated shallow file before fetching the pack
+  index-pack: remove dead code (it should never happen)
+  clone: open a shortcut for connectivity check
+
+ Documentation/git-index-pack.txt |  3 ++
+ builtin/clone.c                  | 15 +++++--
+ builtin/index-pack.c             | 38 ++++++++++++------
+ commit.h                         |  2 +
+ connected.c                      | 34 +++++++++++++++-
+ connected.h                      |  5 +++
+ fetch-pack.c                     | 84 ++++++++++++++++++++++----------=
+--------
+ fetch-pack.h                     |  4 +-
+ git.c                            |  7 ++++
+ shallow.c                        | 42 +++++++++++++++++++-
+ t/t5500-fetch-pack.sh            |  7 ++++
+ transport.c                      |  4 ++
+ transport.h                      |  2 +
+ 13 files changed, 192 insertions(+), 55 deletions(-)
+
+--=20
+1.8.2.83.gc99314b
