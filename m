@@ -1,121 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] build: be clearer about order-only prerequisites
-Date: Sun, 26 May 2013 14:50:39 -0700
-Message-ID: <7v1u8t76mo.fsf@alter.siamese.dyndns.org>
-References: <1369449666-18879-1-git-send-email-felipe.contreras@gmail.com>
-	<1369449666-18879-5-git-send-email-felipe.contreras@gmail.com>
+From: Zenaan Harkness <zen@freedbms.net>
+Subject: contrib/git-normal-to-bare.sh
+Date: Mon, 27 May 2013 14:00:46 +1000
+Message-ID: <CAOsGNSSFx7VEOmz4qTt9nz=SXzQCZH7PdZ+gnYVqLhmRmRcT-A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 26 23:51:03 2013
+Content-Type: multipart/mixed; boundary=047d7bd6b0f6842fcc04ddab319c
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 27 06:01:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UgiqA-0004NK-5s
-	for gcvg-git-2@plane.gmane.org; Sun, 26 May 2013 23:50:58 +0200
+	id 1UgocJ-0007VT-Kj
+	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 06:01:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755323Ab3EZVuo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 May 2013 17:50:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57342 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755161Ab3EZVun (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 May 2013 17:50:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89B9422556;
-	Sun, 26 May 2013 21:50:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=Ris1HXbpp2F1u8a1hyQhJjUNtC4=; b=RUhCAN8KA8ZZdFMU+mUt
-	YMCJHYetTQ0AuR7D/usg9uGE9cUhhYlyUQ5ic6UxwKLMYT5Mlv7Ysyu36Z7K4mVC
-	sbuaaGMbyk15BrMSOvIG0XzmS9dpiLF0ItdsEXYzSzvJrDeG5gIwcCcdBl9Hhn4/
-	37Qab+BU9lF/5EtxisB84F4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=FkOJjpxnFlKu/ZgqvqNdWpSCEavoMTcGKNN2bb2Rplc1no
-	eEN0xHPtV4j+75jNcd1gBtj4EX0iCVPKzYtHrBsGY9c1fUrfVBQtvkio35qS48m8
-	da9FigOOrduM1xdKvKNZtCfL8Cak6TgHpTmvR0ykiqPWl6meePlYaOvTbw7Yo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EC0D22555;
-	Sun, 26 May 2013 21:50:42 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C884E22554;
-	Sun, 26 May 2013 21:50:41 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4F842158-C64E-11E2-ACC5-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750821Ab3E0EAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 May 2013 00:00:48 -0400
+Received: from mail-qe0-f42.google.com ([209.85.128.42]:60421 "EHLO
+	mail-qe0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750745Ab3E0EAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 May 2013 00:00:47 -0400
+Received: by mail-qe0-f42.google.com with SMTP id cz11so3561815qeb.15
+        for <git@vger.kernel.org>; Sun, 26 May 2013 21:00:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=xAx0wwBv0BGmLOcpNi+KIqUwpnn37R7CVRku+lObWrw=;
+        b=BNdPJ04c+qS36pYX8Nd6WmmjYsUsMV+oR3V3ocPto/TOA5x1jSc2y/q47CwyFGTcwi
+         CyT+CzttQn8ULmMDWbLKUU2wbx//MjOpfeUWXKm4Ss1SInmI/2sBF2Ri/oVNSFkghlAK
+         s1ILXWQNHU5cZUsvdcfI7Dea309pQyrYHQglQ1butlLBtYnyFZ60pawfJgNKonBSPJxS
+         YSUdKqzBGbTWYMCVb1UZqzE14qJ9RGZ84BUSxo0dBT4zDFNOM+6AHlm4qkIcPleOABGV
+         o+4HfFhuG3fhZxXTpZWQR1VrNnvwK2i+FHS8geTZJN/ySotbjdoml7zOEpADpGuKy67y
+         OgDA==
+X-Received: by 10.49.51.166 with SMTP id l6mr30377068qeo.4.1369627246725; Sun,
+ 26 May 2013 21:00:46 -0700 (PDT)
+Received: by 10.49.103.201 with HTTP; Sun, 26 May 2013 21:00:46 -0700 (PDT)
+X-Google-Sender-Auth: lOm3nsylXV6S-5Be0kllO-liKT4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225574>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+--047d7bd6b0f6842fcc04ddab319c
+Content-Type: text/plain; charset=ISO-8859-1
 
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
+This question comes up every now and then - how to convert from normal
+to bare, or vice versa.
 
-This patch is wrong, I think.
+This is just a start to a basic script to go one way. Needs more tests
+etc, but it's enough to get newbies (like me) off to a reasonable
+start.
 
-The canonical example of order-only is something like
+PLEASE CC me, as I am not subscribed.
 
-  http://www.kolpackov.net/pipermail/notes/2004-January/000001.html
+Thanks,
+Zenaan
 
-where you want to make sure an output directory already exists, but
-you do not want to list that as prerequiste _input_ to produce
-output from the source.  G-V-F has real information that is used to
-affect the output, which is quite a different animal.
+--047d7bd6b0f6842fcc04ddab319c
+Content-Type: application/x-sh; name="git-normal-to-bare.sh"
+Content-Disposition: attachment; filename="git-normal-to-bare.sh"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: file0
 
-Try applying this 6-patch series, "make clean; make git.spec", and
-then "git checkout HEAD~2" to come back to the commit for this
-patch.  And then try running "make git.spec".  I think Version line
-will not change and still claim you are building a version with the
-6-patch series fully applied.
-
-After a quick scan of the other 5 patches in the series, they looked
-all sensible, and I do not think any of them depends on the change
-in this patch, so I think we can safely drop this one.
-
-Administrivia: as I said in the whats cooking message, I'll be
-taking things slow til the beginning of next month, so if your (not
-limited to Felipe) messages are not answered by me, it merely means
-they were not yet read by me (as opposed to dismissed as not worth
-reading without responding).
-
->  Makefile | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 28b6117..97ff848 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1787,7 +1787,7 @@ perl/PM.stamp: FORCE
->  perl/perl.mak: GIT-CFLAGS GIT-PREFIX perl/Makefile perl/Makefile.PL
->  	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' $(@F)
->  
-> -$(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl GIT-VERSION-FILE
-> +$(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl | GIT-VERSION-FILE
->  	$(QUIET_GEN)$(RM) $@ $@+ && \
->  	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir` && \
->  	sed -e '1{' \
-> @@ -1850,7 +1850,7 @@ CONFIGURE_RECIPE = $(RM) configure configure.ac+ && \
->  		   autoconf -o configure configure.ac+ && \
->  		   $(RM) configure.ac+
->  
-> -configure: configure.ac GIT-VERSION-FILE
-> +configure: configure.ac | GIT-VERSION-FILE
->  	$(QUIET_GEN)$(CONFIGURE_RECIPE)
->  
->  ifdef AUTOCONFIGURED
-> @@ -2415,7 +2415,7 @@ quick-install-html:
->  
->  ### Maintainer's dist rules
->  
-> -git.spec: git.spec.in GIT-VERSION-FILE
-> +git.spec: git.spec.in | GIT-VERSION-FILE
->  	sed -e 's/@@VERSION@@/$(GIT_VERSION)/g' < $< > $@+
->  	mv $@+ $@
+IyEvYmluL2Jhc2gKCiMgQ2hhbmdlIG9uZSBvciBtb3JlIG5vcm1hbCByZXBvcyB0byBiYXJlIHJl
+cG9zOgojIGh0dHBzOi8vZ2l0Lndpa2kua2VybmVsLm9yZy9pbmRleC5waHAvR2l0RmFxI0hvd19k
+b19JX21ha2VfZXhpc3Rpbmdfbm9uLWJhcmVfcmVwb3NpdG9yeV9iYXJlLjNGCgpmb3IgaSBpbiAi
+JEAiOyBkbwogICBlY2hvOyBlY2hvICItLS0tLS0tLS0tLS0tLS0tLS0tLS0tIgogICBlY2hvIFBy
+b2Nlc3NpbmcgJGkKCiAgIHJlcG89IiRpIgogICByZXBvPSJgYmFzZW5hbWUgJGlgIgogICB0bXBf
+cmVwbz0iJHtyZXBvfS5naXQiCgogICAjIEluc2VydCBoZXJlOiBtYXkgYmUgZXhpdCBpZiBhbnkg
+c3BhY2VzIGluIHJlcG8gZnFuCiAgICMgSW5zZXJ0IGhlcmU6IGNoZWNrIGZvciBub24tZXhpc3Rl
+bnQgcmVwby8uZ2l0IGRpcgogICAjIEluc2VydCBoZXJlOiBjaGVjayB0aGF0IHdlIGFyZSBub3Qg
+aW5zaWRlIHRoZSByZXBvCiAgICMgSW5zZXJ0IGhlcmU6IGFkZCBleGl0L2RvLW5vdGhpbmcgaWYg
+ZmFpbCB0byBtdiBkaXJzIGV0YwoKICAgbXYgJHJlcG8vLmdpdCAkdG1wX3JlcG8KICAgZ2l0IC0t
+Z2l0LWRpcj0kdG1wX3JlcG8gY29uZmlnIGNvcmUuYmFyZSB0cnVlCiAgIHJtIC1yZiAkcmVwbwog
+ICBtdiAkdG1wX3JlcG8gJHJlcG8KZG9uZQoK
+--047d7bd6b0f6842fcc04ddab319c--
