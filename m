@@ -1,79 +1,55 @@
-From: Zenaan Harkness <zen@freedbms.net>
-Subject: contrib/git-normal-to-bare.sh
-Date: Mon, 27 May 2013 14:00:46 +1000
-Message-ID: <CAOsGNSSFx7VEOmz4qTt9nz=SXzQCZH7PdZ+gnYVqLhmRmRcT-A@mail.gmail.com>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: java zlib woes (was: Reading commit objects)
+Date: Mon, 27 May 2013 06:11:46 +0200
+Message-ID: <20130527041146.GJ9448@inner.h.apk.li>
+References: <CABx5MBQ57-=MPamvV-peZUdD_KDLX+5cy9vD7CL7p_Vz9BkvTg@mail.gmail.com> <CAEBDL5XwrD8ZbRRSrM1iJGtcRgziH5bFVwRHzg9=_PYzaTfgAg@mail.gmail.com> <CABx5MBSnpZTthOHECqkbpdbFfkb4e_uSo-rh4owBc8B_oSKjJQ@mail.gmail.com> <20130522045131.GA6257@inner.h.apk.li> <CAJo=hJtkbCeJA4ao2CkPODrNX_QaKDo4uBS4qvBVTRQ=x-Os3A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=047d7bd6b0f6842fcc04ddab319c
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 27 06:01:04 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Chico Sokol <chico.sokol@gmail.com>,
+	John Szakmeister <john@szakmeister.net>,
+	git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon May 27 06:12:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UgocJ-0007VT-Kj
-	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 06:01:03 +0200
+	id 1UgonP-0007m1-S7
+	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 06:12:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750821Ab3E0EAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 May 2013 00:00:48 -0400
-Received: from mail-qe0-f42.google.com ([209.85.128.42]:60421 "EHLO
-	mail-qe0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750745Ab3E0EAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 May 2013 00:00:47 -0400
-Received: by mail-qe0-f42.google.com with SMTP id cz11so3561815qeb.15
-        for <git@vger.kernel.org>; Sun, 26 May 2013 21:00:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        bh=xAx0wwBv0BGmLOcpNi+KIqUwpnn37R7CVRku+lObWrw=;
-        b=BNdPJ04c+qS36pYX8Nd6WmmjYsUsMV+oR3V3ocPto/TOA5x1jSc2y/q47CwyFGTcwi
-         CyT+CzttQn8ULmMDWbLKUU2wbx//MjOpfeUWXKm4Ss1SInmI/2sBF2Ri/oVNSFkghlAK
-         s1ILXWQNHU5cZUsvdcfI7Dea309pQyrYHQglQ1butlLBtYnyFZ60pawfJgNKonBSPJxS
-         YSUdKqzBGbTWYMCVb1UZqzE14qJ9RGZ84BUSxo0dBT4zDFNOM+6AHlm4qkIcPleOABGV
-         o+4HfFhuG3fhZxXTpZWQR1VrNnvwK2i+FHS8geTZJN/ySotbjdoml7zOEpADpGuKy67y
-         OgDA==
-X-Received: by 10.49.51.166 with SMTP id l6mr30377068qeo.4.1369627246725; Sun,
- 26 May 2013 21:00:46 -0700 (PDT)
-Received: by 10.49.103.201 with HTTP; Sun, 26 May 2013 21:00:46 -0700 (PDT)
-X-Google-Sender-Auth: lOm3nsylXV6S-5Be0kllO-liKT4
+	id S1750860Ab3E0EMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 May 2013 00:12:20 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:43312 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750748Ab3E0EMT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 May 2013 00:12:19 -0400
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id r4R4Bko17889;
+	Mon, 27 May 2013 06:11:46 +0200
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJtkbCeJA4ao2CkPODrNX_QaKDo4uBS4qvBVTRQ=x-Os3A@mail.gmail.com>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225575>
 
---047d7bd6b0f6842fcc04ddab319c
-Content-Type: text/plain; charset=ISO-8859-1
+On Tue, 21 May 2013 22:56:21 +0000, Shawn Pearce wrote:
+...
+> This was with JGit?  A stack trace and JGit version (so we can
+> correlate line numbers) would be a much more useful bug report than
+> nothing at all.
 
-This question comes up every now and then - how to convert from normal
-to bare, or vice versa.
+I now have a full test case (involving a generated repo just shy of 1GB)
+that will reproduce that hang. Will look up the existing jgit bug to
+report there.
 
-This is just a start to a basic script to go one way. Needs more tests
-etc, but it's enough to get newbies (like me) off to a reasonable
-start.
+Andreas
 
-PLEASE CC me, as I am not subscribed.
-
-Thanks,
-Zenaan
-
---047d7bd6b0f6842fcc04ddab319c
-Content-Type: application/x-sh; name="git-normal-to-bare.sh"
-Content-Disposition: attachment; filename="git-normal-to-bare.sh"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: file0
-
-IyEvYmluL2Jhc2gKCiMgQ2hhbmdlIG9uZSBvciBtb3JlIG5vcm1hbCByZXBvcyB0byBiYXJlIHJl
-cG9zOgojIGh0dHBzOi8vZ2l0Lndpa2kua2VybmVsLm9yZy9pbmRleC5waHAvR2l0RmFxI0hvd19k
-b19JX21ha2VfZXhpc3Rpbmdfbm9uLWJhcmVfcmVwb3NpdG9yeV9iYXJlLjNGCgpmb3IgaSBpbiAi
-JEAiOyBkbwogICBlY2hvOyBlY2hvICItLS0tLS0tLS0tLS0tLS0tLS0tLS0tIgogICBlY2hvIFBy
-b2Nlc3NpbmcgJGkKCiAgIHJlcG89IiRpIgogICByZXBvPSJgYmFzZW5hbWUgJGlgIgogICB0bXBf
-cmVwbz0iJHtyZXBvfS5naXQiCgogICAjIEluc2VydCBoZXJlOiBtYXkgYmUgZXhpdCBpZiBhbnkg
-c3BhY2VzIGluIHJlcG8gZnFuCiAgICMgSW5zZXJ0IGhlcmU6IGNoZWNrIGZvciBub24tZXhpc3Rl
-bnQgcmVwby8uZ2l0IGRpcgogICAjIEluc2VydCBoZXJlOiBjaGVjayB0aGF0IHdlIGFyZSBub3Qg
-aW5zaWRlIHRoZSByZXBvCiAgICMgSW5zZXJ0IGhlcmU6IGFkZCBleGl0L2RvLW5vdGhpbmcgaWYg
-ZmFpbCB0byBtdiBkaXJzIGV0YwoKICAgbXYgJHJlcG8vLmdpdCAkdG1wX3JlcG8KICAgZ2l0IC0t
-Z2l0LWRpcj0kdG1wX3JlcG8gY29uZmlnIGNvcmUuYmFyZSB0cnVlCiAgIHJtIC1yZiAkcmVwbwog
-ICBtdiAkdG1wX3JlcG8gJHJlcG8KZG9uZQoK
---047d7bd6b0f6842fcc04ddab319c--
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
