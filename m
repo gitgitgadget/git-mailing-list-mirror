@@ -1,74 +1,98 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] fetch: don't try to update unfetched tracking refs
-Date: Mon, 27 May 2013 12:40:25 +0100
-Message-ID: <9c6fd36368cd6b0fba4855be4d31106781c02f58.1369654825.git.john@keeping.me.uk>
-Cc: Jeff King <peff@peff.net>, John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 27 13:40:42 2013
+From: Xidorn Quan <quanxunzhen@gmail.com>
+Subject: Re: [PATCH] credential-osxkeychain: support more protocols
+Date: Mon, 27 May 2013 21:57:01 +0800
+Message-ID: <CAMdq69_=21de4FvGkp0bFtZjNOttkwXOxjvhM0yZi5gyj0-V9g@mail.gmail.com>
+References: <1369641431-44504-1-git-send-email-quanxunzhen@gmail.com> <CAEBDL5W4sLB0R1ZOspb-yQzmyTCE7Y1HeC2KZ69F8R28fJY7_A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Mon May 27 15:57:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ugvn7-0008Br-AU
-	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 13:40:41 +0200
+	id 1Ugxvn-0004fr-10
+	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 15:57:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757948Ab3E0Lki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 May 2013 07:40:38 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:47908 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757704Ab3E0Lkh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 May 2013 07:40:37 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id CD664198007;
-	Mon, 27 May 2013 12:40:36 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7+qIBbtYE29H; Mon, 27 May 2013 12:40:36 +0100 (BST)
-Received: from river.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id C9BF2198005;
-	Mon, 27 May 2013 12:40:31 +0100 (BST)
-X-Mailer: git-send-email 1.8.3.rc3.438.gb3e4ae3
+	id S932627Ab3E0N5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 May 2013 09:57:42 -0400
+Received: from mail-vc0-f171.google.com ([209.85.220.171]:62996 "EHLO
+	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932366Ab3E0N5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 May 2013 09:57:42 -0400
+Received: by mail-vc0-f171.google.com with SMTP id m17so4693388vca.16
+        for <git@vger.kernel.org>; Mon, 27 May 2013 06:57:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Nv8vSaS47slm96CtlGkpq2eBGTMudWjEdg+Wyi05q8Y=;
+        b=oJTajtAWkJ5A1vHqZ3n8U6i7wCyQMcSbI51Nmf/ZVl/jd163sAs1OMrnY2kxMPWnLB
+         /B2NciCxj0XmudMopXd4IUg/hq75B+7bBkCUADo0e9MTGIfJ4DAAnQAR7jr4jaZlR9XU
+         RLJjoovnJdZZuksJvQoGRMBbTSqM4PxH45WR/l55nlRhMYzp2Xl5bPe2zhk1WKBj6rmJ
+         70wRvTimhH5O6SUz+rD4Qddls8HNGeXYXRlW8ZgD9Qer3KLDm64f8Z2AvfS82CkkkVww
+         KnHA3GbP9odQUnF3G81vewUMK6amKS+5VATqdVXHgsfxpmDNwVv6oleiYBlZpf7ckPku
+         Xysw==
+X-Received: by 10.52.228.129 with SMTP id si1mr12970265vdc.79.1369663061440;
+ Mon, 27 May 2013 06:57:41 -0700 (PDT)
+Received: by 10.52.34.230 with HTTP; Mon, 27 May 2013 06:57:01 -0700 (PDT)
+In-Reply-To: <CAEBDL5W4sLB0R1ZOspb-yQzmyTCE7Y1HeC2KZ69F8R28fJY7_A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225588>
 
-Since commit f269048 (fetch: opportunistically update tracking refs,
-2013-05-11) we update tracking refs opportunistically when fetching
-remote branches.  However, if a refspec is given on the command line
-that does not include a configured (non-pattern) refspec a fatal error
-occurs.
+On Mon, May 27, 2013 at 6:27 PM, John Szakmeister <john@szakmeister.net> wrote:
+>
+> On Mon, May 27, 2013 at 3:57 AM, Xidorn Quan <quanxunzhen@gmail.com> wrote:
+> > Add protocol ftp, smtp, and ssh for credential-osxkeychain.
+> > ---
+> >  contrib/credential/osxkeychain/git-credential-osxkeychain.c | 8 +++++++-
+> >  1 file changed, 7 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+> > index 3940202..4ddcfb3 100644
+> > --- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+> > +++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+> > @@ -127,10 +127,16 @@ static void read_credential(void)
+> >                 *v++ = '\0';
+> >
+> >                 if (!strcmp(buf, "protocol")) {
+> > -                       if (!strcmp(v, "https"))
+> > +                       if (!strcmp(v, "ftp"))
+> > +                               protocol = kSecProtocolTypeFTP;
+> > +                       else if (!strcmp(v, "https"))
+> >                                 protocol = kSecProtocolTypeHTTPS;
+> >                         else if (!strcmp(v, "http"))
+> >                                 protocol = kSecProtocolTypeHTTP;
+> > +                       else if (!strcmp(v, "smtp"))
+> > +                               protocol = kSecProtocolTypeSMTP;
+> > +                       else if (!strcmp(v, "ssh"))
+> > +                               protocol = kSecProtocolTypeSSH;
+> >                         else /* we don't yet handle other protocols */
+> >                                 exit(0);
+>
+> This looks pretty good, except the last one raises a question.  I'm
+> using Mac OS X, and ssh already interacts with keychain to get my SSH
+> key password.  Is this mainly for password logins via SSH?  Assuming
+> that's the case:
+>
+> Signed-off-by: John Szakmeister <john@szakmeister.net>
+>
+> -John
 
-Fix this by setting the "missing_ok" flag when calling get_fetch_map.
+I thought that SSH password logins can benefit from it, but I just
+found that it is wrong because it seems that SSH client is responsible
+for authenticating. Consequently, supporting SSH here is useless.
+I will remove that lines and send this patch again.
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- builtin/fetch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Since it is the first time I submit a patch to git, I am not very
+familiar with the convention here. Should I send the modified patch
+to the maintainer directly? And what information should I append to
+my patch before it can get merged?
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e41cc0d..d15a734 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -183,7 +183,7 @@ static struct ref *get_ref_map(struct transport *transport,
- 		old_tail = tail;
- 		for (i = 0; i < transport->remote->fetch_refspec_nr; i++)
- 			get_fetch_map(ref_map, &transport->remote->fetch[i],
--				      &tail, 0);
-+				      &tail, 1);
- 		for (rm = *old_tail; rm; rm = rm->next)
- 			rm->fetch_head_status = FETCH_HEAD_IGNORE;
- 	} else {
--- 
-1.8.3.rc3.438.gb3e4ae3
+--
+Xidorn Quan
