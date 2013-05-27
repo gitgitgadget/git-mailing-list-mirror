@@ -1,84 +1,88 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: [PATCH] credential-osxkeychain: support more protocols
-Date: Mon, 27 May 2013 06:27:47 -0400
-Message-ID: <CAEBDL5W4sLB0R1ZOspb-yQzmyTCE7Y1HeC2KZ69F8R28fJY7_A@mail.gmail.com>
-References: <1369641431-44504-1-git-send-email-quanxunzhen@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: What's cooking in git.git (May 2013, #04; Wed, 15)
+Date: Mon, 27 May 2013 17:36:46 +0700
+Message-ID: <CACsJy8Ct-ei7qbAW4qviQ6=q93ygxDcxRs9F3iHHV4-4Qz6qUA@mail.gmail.com>
+References: <7vmwrvajye.fsf@alter.siamese.dyndns.org> <CACsJy8Cr7AKxo9sUjMCVQ0=O91L8CRoxD3qrvZczCrBUq4TDzA@mail.gmail.com>
+ <7vk3mtwrq9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Xidorn Quan <quanxunzhen@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 27 12:27:54 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 27 12:37:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uguef-00049V-0J
-	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 12:27:53 +0200
+	id 1Uguns-0003iy-CI
+	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 12:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757412Ab3E0K1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 May 2013 06:27:49 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:46160 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756121Ab3E0K1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 May 2013 06:27:48 -0400
-Received: by mail-wi0-f170.google.com with SMTP id hr14so2116139wib.5
-        for <git@vger.kernel.org>; Mon, 27 May 2013 03:27:47 -0700 (PDT)
+	id S1757439Ab3E0KhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 May 2013 06:37:18 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:47102 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757425Ab3E0KhR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 May 2013 06:37:17 -0400
+Received: by mail-ob0-f177.google.com with SMTP id ta17so780359obb.22
+        for <git@vger.kernel.org>; Mon, 27 May 2013 03:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=v5zDsPHXl9NqU/ZIwp09EPOBi3SOM0DwncJ5AadxcAA=;
-        b=MkpBZx6Y1c1phg5sYahK/LGfOVDuNWUJ/EsQRuqOZ6rqcEPnzH8tAPK1LqRiJ4lFjh
-         v9pYItJn4ZJSHUf81aFoOqFOwqwng7NQ1Yr0DqyOuWUSEKNgjQrXBJZCmNkzO/jUIXci
-         3kT9SsCqgx9V5sK+3ajEoWyDEsyQcntoAEt6npCwEdld7Qm06SlfH3RrsdWldc8j6Zm6
-         SJ9Dvy3JDAOnFbYdGouebwYwLgQ7b4XzIaOxl9NtNpV8tedr174xbK3hA3pe8lEqkoiI
-         2mYQNqYJCHA1k1eBqoLZwTeTGfXkWHaKBPeATH0heHaUaGtQFTrvWRdumvhDKrov20WT
-         mvfw==
-X-Received: by 10.180.76.194 with SMTP id m2mr7947751wiw.4.1369650467141; Mon,
- 27 May 2013 03:27:47 -0700 (PDT)
-Received: by 10.180.5.33 with HTTP; Mon, 27 May 2013 03:27:47 -0700 (PDT)
-In-Reply-To: <1369641431-44504-1-git-send-email-quanxunzhen@gmail.com>
-X-Google-Sender-Auth: sQMloz-vDsVsQE6GHsSAVBTQ3SY
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=N8wzOWYxlqziteS7aUzXV8zMv5luFCo/2Fd04y2Ucjw=;
+        b=BXKm1A6NOQV7o4YhjLy0+2yPH5L+PiBkaS8tcPY44RuVHLNULKbn0Sn51PvIWGeb7H
+         66hdtFNgtt9slxF1/iD8MEuW/b1Ts08FBRZ6qzT3ftj2Hxon/FU2ImB7OOhv0Zt3BAsQ
+         O117K9e6UBbQ9yRKkCKQZw++u1ZovHQXEUFf+OG0btCW42UT3hb8EsqFXE2HcX8m2+F7
+         rr4ljbExQor2ZwuJWprDPMNm35RU5XWY1CsZZ+ByTY+/1DaO2tlxQ3ZGshakt2bxaCxG
+         8sNcazc9uJMIKEU2YH4auMHZ9WPgKAJHlGMT40nYrCQQS22AhuXLm7pv6of/qrwcZvGv
+         grxQ==
+X-Received: by 10.182.118.226 with SMTP id kp2mr17582301obb.48.1369651037019;
+ Mon, 27 May 2013 03:37:17 -0700 (PDT)
+Received: by 10.76.171.199 with HTTP; Mon, 27 May 2013 03:36:46 -0700 (PDT)
+In-Reply-To: <7vk3mtwrq9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225585>
 
-On Mon, May 27, 2013 at 3:57 AM, Xidorn Quan <quanxunzhen@gmail.com> wrote:
-> Add protocol ftp, smtp, and ssh for credential-osxkeychain.
-> ---
->  contrib/credential/osxkeychain/git-credential-osxkeychain.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
+On Mon, May 20, 2013 at 11:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Think why the user has such a hard to type ref in the first place.
+> The user may have done this previously, thinking that he is detaching
+> the HEAD to fix an earlier mistake in a branch:
 >
-> diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> index 3940202..4ddcfb3 100644
-> --- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> +++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> @@ -127,10 +127,16 @@ static void read_credential(void)
->                 *v++ = '\0';
+>     $ BAD_COMMIT=$(git rev-parse nd/magic~8)
+>     $ git checkout $BAD_COMMIT
 >
->                 if (!strcmp(buf, "protocol")) {
-> -                       if (!strcmp(v, "https"))
-> +                       if (!strcmp(v, "ftp"))
-> +                               protocol = kSecProtocolTypeFTP;
-> +                       else if (!strcmp(v, "https"))
->                                 protocol = kSecProtocolTypeHTTPS;
->                         else if (!strcmp(v, "http"))
->                                 protocol = kSecProtocolTypeHTTP;
-> +                       else if (!strcmp(v, "smtp"))
-> +                               protocol = kSecProtocolTypeSMTP;
-> +                       else if (!strcmp(v, "ssh"))
-> +                               protocol = kSecProtocolTypeSSH;
->                         else /* we don't yet handle other protocols */
->                                 exit(0);
+> but by mistake gave a "-b" after "checkout", i.e.
+>
+>     $ git checkout -b $BAD_COMMIT
+>
+> After this, commands that want to work on branch name would still
+> work as "expected", with the expectation being the user would be
+> working on the refs/heads/$BAD_COMMIT branch, e.g.
+>
+>     $ git checkout $BAD_COMMIT
+>     $ git branch -m $BAD_COMMIT nd/magic-fix
+>
+> but commands that want to work on commit object name will resolve it
+> to the $BAD_COMMIT object (i.e. nd/magic~8), e.g.
+>
+>     $ git log $BAD_COMMIT
+>
+> and needs disambiguation if the user wants to work on the commit at
+> the tip of the branch, e.g.
+>
+>     $ git log heads/$BAD_COMMIT
+>
+> So we really do want the users to notice and take corrective action,
+> and one way to attract the attention of the users is to phrase the
+> message more explicitly to let them know what is going on.
 
-This looks pretty good, except the last one raises a question.  I'm
-using Mac OS X, and ssh already interacts with keychain to get my SSH
-key password.  Is this mainly for password logins via SSH?  Assuming
-that's the case:
+Point taken. I guess the message would be something like this?
 
-Signed-off-by: John Szakmeister <john@szakmeister.net>
+Refname '%.*s' is ignored. It may be created by mistake.
 
--John
+Or should we be more elaborate?
+--
+Duy
