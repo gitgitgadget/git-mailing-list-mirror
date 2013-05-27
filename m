@@ -1,82 +1,82 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: [PATCH] credential-osxkeychain: support more protocols
-Date: Mon, 27 May 2013 10:28:40 -0400
-Message-ID: <CAEBDL5XMamYoZFgFWeRr3KTZWZATKp=prFus_44UEMV8LEEtzw@mail.gmail.com>
+From: Xidorn Quan <quanxunzhen@gmail.com>
+Subject: [PATCH v2] credential-osxkeychain: support more protocols
+Date: Mon, 27 May 2013 22:35:59 +0800
+Message-ID: <1369665359-48242-1-git-send-email-quanxunzhen@gmail.com>
 References: <1369641431-44504-1-git-send-email-quanxunzhen@gmail.com>
-	<CAEBDL5W4sLB0R1ZOspb-yQzmyTCE7Y1HeC2KZ69F8R28fJY7_A@mail.gmail.com>
-	<CAMdq6987TAj7f03mABkqu9v4wicarrZLYQypNUiOrP0fsLc4mQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Xidorn Quan <quanxunzhen@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 27 16:28:47 2013
+Cc: Xidorn Quan <quanxunzhen@gmail.com>,
+	John Szakmeister <john@szakmeister.net>,
+	Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 27 16:37:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UgyPl-0008Da-Vl
-	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 16:28:46 +0200
+	id 1UgyXq-0007nD-6F
+	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 16:37:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758117Ab3E0O2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 May 2013 10:28:41 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:51163 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758054Ab3E0O2l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 May 2013 10:28:41 -0400
-Received: by mail-wi0-f178.google.com with SMTP id hj6so1630792wib.11
-        for <git@vger.kernel.org>; Mon, 27 May 2013 07:28:40 -0700 (PDT)
+	id S932826Ab3E0Og6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 May 2013 10:36:58 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:55529 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932587Ab3E0Og4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 May 2013 10:36:56 -0400
+Received: by mail-pa0-f49.google.com with SMTP id bi5so6949105pad.36
+        for <git@vger.kernel.org>; Mon, 27 May 2013 07:36:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=t3+KXYv8OYf50ywy56OtLQZCuz1hkYLsrIjiZ91EQDQ=;
-        b=g+7EA+RJ2IE+jSEmAjKX/4+buJglUixLW/8iwm9qJfNZsTrf8RQthDYSL79lcJC/pn
-         Zgfm7RBQlI1NcxGLvMwi4j5vH9WgM5K0Ccgk6TTAk4+mX1QHpydaHrmuLaYoLu+tGpyt
-         PRYEAaeZgUt4428zdHeHx3gcMJCmzlt8g5TWZ9LHc7Fh8whZh4TGKVCGT8qY+/0hp5Yt
-         +zLrxv59m/kDuAyfV+mfQTRFjUO5HrurbF6hqTk4G9lVHd5QEU7K0As5MtaqNZpgO0nL
-         lZ54o2cDdON3fRdMa2rLt6CqSPPT4ZurguRzjdM6R428E745U5sg5fAew6fGT5WfWwfE
-         8Rhg==
-X-Received: by 10.194.158.102 with SMTP id wt6mr9097977wjb.5.1369664920063;
- Mon, 27 May 2013 07:28:40 -0700 (PDT)
-Received: by 10.180.5.33 with HTTP; Mon, 27 May 2013 07:28:40 -0700 (PDT)
-In-Reply-To: <CAMdq6987TAj7f03mABkqu9v4wicarrZLYQypNUiOrP0fsLc4mQ@mail.gmail.com>
-X-Google-Sender-Auth: ruWi3vcY_6QwGL9A9scG--1ecUk
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=yDxtLCTTYWHBfVP48w5kDbQodSe0DF2+3EwoAlbU/1M=;
+        b=yTs3DQNm0srBVjZocntmN6D7Ckv7UhMY9ATdeE+53k0B/jY6nbHvwQeZxXc7O/XWnm
+         vBJkn33nJwOWsfoY+2IaJ8+U2QlKzDIey2z1nd7rShJz+LLayPlgs2/WmZBXGwWJIbk6
+         JImLuaVOC1polcTzN+ryNIrF8Syhfxr7X3Kx8K1pQYb0Oc7J0hbJDoP5tTBOw+RjTXXv
+         +hQpHnNQ0dWY0tb/AR4mQGpzazMgd5J4W/cuM3Pkq3bsNHyRCdHoT0vH99SRU7zDlrMQ
+         tk0PojJTC3i6rpgHaHPSlv4hbkPA4Q2V+R5vyayJ8PFG8OKtcAOagK+CnR5ctLRYm0HR
+         vC4Q==
+X-Received: by 10.68.178.66 with SMTP id cw2mr22006550pbc.47.1369665415515;
+        Mon, 27 May 2013 07:36:55 -0700 (PDT)
+Received: from localhost.localdomain ([221.239.196.216])
+        by mx.google.com with ESMTPSA id ri8sm28851810pbc.3.2013.05.27.07.36.43
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 27 May 2013 07:36:54 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3
+In-Reply-To: <1369641431-44504-1-git-send-email-quanxunzhen@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225594>
 
-On Mon, May 27, 2013 at 9:55 AM, Xidorn Quan <quanxunzhen@gmail.com> wrote:
-[snip]
-> I thought that SSH password logins can benefit from it, but I just
-> found that it is wrong because it seems that SSH client is responsible
-> for authenticating. Consequently, supporting SSH here is useless.
-> I will remove that lines and send this patch again.
->
-> Since it is the first time I submit a patch to git, I am not very
-> familiar with the convention here. Should I send the modified patch
-> to the maintainer directly? And what information should I append to
-> my patch before it can get merged?
+Add protocol ftp and smtp for credential-osxkeychain.
 
-You'll need to read Documentation/SubmittingPatches (here's a link to
-a version online:
-https://github.com/git/git/blob/master/Documentation/SubmittingPatches).
+Acked-by: John Szakmeister <john@szakmeister.net>
 
-You should resend this patch with the fix and change "[PATCH]" to
-"[PATCH v2]", so the folks involved know that this is the second
-iteration.  You also need to include a "Signed-off-by" line in your
-patch, which means you agree to the agreement set forth in the
-"Developer's Certificate of Origin" (which is in the SubmittingPatches
-documentation).  You can easily include this line when you make the
-commit by using the `-s` option on `git commit`.
+Signed-off-by: Xidorn Quan <quanxunzhen@gmail.com>
+---
+ contrib/credential/osxkeychain/git-credential-osxkeychain.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-You can also add an "Acked-by" line for me (since I reviewed and
-approve of the change):
-
-    Acked-by: John Szakmeister <john@szakmeister.net>
-
-HTH!
-
--John
+diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+index 3940202..648fadd 100644
+--- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
++++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+@@ -127,10 +127,14 @@ static void read_credential(void)
+ 		*v++ = '\0';
+ 
+ 		if (!strcmp(buf, "protocol")) {
+-			if (!strcmp(v, "https"))
++			if (!strcmp(v, "ftp"))
++				protocol = kSecProtocolTypeFTP;
++			else if (!strcmp(v, "https"))
+ 				protocol = kSecProtocolTypeHTTPS;
+ 			else if (!strcmp(v, "http"))
+ 				protocol = kSecProtocolTypeHTTP;
++			else if (!strcmp(v, "smtp"))
++				protocol = kSecProtocolTypeSMTP;
+ 			else /* we don't yet handle other protocols */
+ 				exit(0);
+ 		}
+-- 
+1.8.3
