@@ -1,117 +1,74 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] fix segfault with git log -c --follow
-Date: Tue, 28 May 2013 00:49:57 +0200
-Message-ID: <20130527224957.GA7492@ecki>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: git-send-email doesn't deal with quoted names
+Date: Tue, 28 May 2013 01:40:20 +0200
+Message-ID: <CAHmME9p19eysjEVk+6FmAb2FQb7dq_e3k_KLQLRZqhx2Bs6O3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 28 01:22:06 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 28 01:40:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uh6ju-0001OO-H2
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 01:22:06 +0200
+	id 1Uh71k-0007fz-RI
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 01:40:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758115Ab3E0XWB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 May 2013 19:22:01 -0400
-Received: from bsmtp5.bon.at ([195.3.86.187]:64305 "EHLO lbmfmo03.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756209Ab3E0XWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 May 2013 19:22:00 -0400
-X-Greylist: delayed 1853 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 May 2013 19:22:00 EDT
-Received: from bsmtp.bon.at (unknown [192.168.181.108])
-	by lbmfmo03.bon.at (Postfix) with ESMTP id C34E2CDFF6
-	for <git@vger.kernel.org>; Tue, 28 May 2013 00:51:05 +0200 (CEST)
-Received: from [127.0.0.1] (p5B22D37E.dip0.t-ipconnect.de [91.34.211.126])
-	by bsmtp.bon.at (Postfix) with ESMTP id ED0A913004A;
-	Tue, 28 May 2013 00:50:46 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758063Ab3E0XkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 May 2013 19:40:23 -0400
+Received: from frisell.zx2c4.com ([192.95.5.64]:56341 "EHLO frisell.zx2c4.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756209Ab3E0XkW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 May 2013 19:40:22 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:date:message-id:subject:from:to:content-type; s=mail; bh=UquBt+
+	yf470rNDlfnuoVcWKDnbc=; b=V81qRfIIN+awuvDtS/zxiLnk7bXG532xfQn3UW
+	DnXe0LtPcSdw6Z3j+lqvPt8dqJNYUX1go4ib4qX4jfGFfl6K9PpdrquhbXmjx6fV
+	zFdrdl+HKCnUusyifiRfG2LD/jmUFGiQid+lQzWCFa4rnZYetKsPo6+LSxt+FN1H
+	51UJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=zx2c4.com; h=mime-version
+	:date:message-id:subject:from:to:content-type; q=dns; s=mail; b=
+	LCymWvs28HPZKZWVcEkupwrMyAqZwZkrv8Eqi50EKS5Jq/W/U3xKFydyq8YQxjTp
+	8TksZmCKf4daZdP2y08bgmrJJhqAJ73Ief8mKRZ2tevSX9yNWnJGzAAyugEFdwib
+	rDjn7TPEl9rHdWjcP70daD2xhp6ARLJITd17MnQAyko=
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ea1d710f;
+	TLS version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO;
+	for <git@vger.kernel.org>;
+	Mon, 27 May 2013 23:40:20 +0000 (UTC)
+Received: by mail-vc0-f175.google.com with SMTP id hv10so5060924vcb.34
+        for <git@vger.kernel.org>; Mon, 27 May 2013 16:40:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=kavD5bAfhbpiYU/5+qhzWr5naTxbj0qIA7HCchK0nHw=;
+        b=Ytv8EHZbZwAoQkuPxINaIHJOyIVTWmiR92bKjhe1USA7gFwlMfMDdhiTFJjN5ZBeUy
+         KvA81CVpsw/XTh3vWOgX/hHpGzkhHQIDvqauDzkt9loeNOSLAgedbE0t703NNNfwDfVi
+         SS/hzUgE5Ir2aKbqYR92idfbwTI9i5cu1pWIQmzCRaeop1he2FcGHG4hzHsFPBBYqzef
+         OPtmF7vSVzBp85BM0aVfqk4iuokfGZiZhWQcMZE2wsBIaheCQsW83s80zgmlQIZ6wp62
+         GvJTOeTIBeQBm7NqILPKhp/ojCOVNCS0q1kUsPpXddfRwkO5SEH6ERedXapFxambyYxF
+         /Qtg==
+X-Received: by 10.220.76.137 with SMTP id c9mr562616vck.48.1369698020190; Mon,
+ 27 May 2013 16:40:20 -0700 (PDT)
+Received: by 10.52.232.4 with HTTP; Mon, 27 May 2013 16:40:20 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225616>
 
-In diff_tree_combined we make a copy of diffopts. In
-try_to_follow_renames, called via diff_tree_sha1, we free and
-re-initialize diffopts->pathspec->items. Since we did not make a deep
-copy of diffopts in diff_tree_combined, the original diffopts does not
-get the update. By the time we return from diff_tree_combined,
-rev->diffopt->pathspec->items points to an invalid memory address. We
-get a segfault next time we try to access that pathspec.
+Hi,
 
-Instead, along with the copy of diffopts, make a copy pathspec->items as
-well.
+My commit author name is "Jason A. Donenfeld". Because this has a dot,
+SMTP handling likes to put it in quotes.
 
-We would also have to make a copy of pathspec->raw to keep it consistent
-with pathspec->items, but nobody seems to rely on that.
+git-send-email has this line:
+            if (defined $author and $author ne $sender) {
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
+With my name, this always winds up false, because it's comparing
+'"Jason A. Donenfeld" <Jason@zx2c4.com>' with 'Jason A. Donenfeld
+<Jason@zx2c4.com>'.
 
-I wonder why I get a segfault from this so reliably, since it's not
-actually a null-pointer dereference. Maybe this is gcc 4.8 doing
-something different from previous versions?
+So, the logic needs to be fixed somehow.
 
-Also, I have absolutely no confidence in my understanding of this code.
-This is the first solution that came to mind, and could be totally
-wrong. I just figured a patch is better than no patch.
-
-Clemens
-
- combine-diff.c |  3 +++
- t/t4202-log.sh | 14 ++++++++++++++
- 2 files changed, 17 insertions(+)
-
-diff --git a/combine-diff.c b/combine-diff.c
-index 77d7872..8825604 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1302,6 +1302,7 @@ void diff_tree_combined(const unsigned char *sha1,
- 	int i, num_paths, needsep, show_log_first, num_parent = parents->nr;
- 
- 	diffopts = *opt;
-+	diff_tree_setup_paths(diffopts.pathspec.raw, &diffopts);
- 	diffopts.output_format = DIFF_FORMAT_NO_OUTPUT;
- 	DIFF_OPT_SET(&diffopts, RECURSIVE);
- 	DIFF_OPT_CLR(&diffopts, ALLOW_EXTERNAL);
-@@ -1372,6 +1373,8 @@ void diff_tree_combined(const unsigned char *sha1,
- 		paths = paths->next;
- 		free(tmp);
- 	}
-+
-+	diff_tree_release_paths(&diffopts);
- }
- 
- void diff_tree_combined_merge(const struct commit *commit, int dense,
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 9243a97..cb03d28 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -530,6 +530,20 @@ test_expect_success 'show added path under "--follow -M"' '
- 	)
- '
- 
-+test_expect_success 'git log -c --follow' '
-+	test_create_repo follow-c &&
-+	(
-+		cd follow-c &&
-+		test_commit initial file original &&
-+		git rm file &&
-+		test_commit rename file2 original &&
-+		git reset --hard initial &&
-+		test_commit modify file foo &&
-+		git merge -m merge rename &&
-+		git log -c --follow file2
-+	)
-+'
-+
- cat >expect <<\EOF
- *   commit COMMIT_OBJECT_NAME
- |\  Merge: MERGE_PARENTS
--- 
-1.8.2.3
+Thanks,
+Jason
