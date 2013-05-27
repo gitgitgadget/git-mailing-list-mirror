@@ -1,70 +1,101 @@
 From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: fix french translation
-Date: Mon, 27 May 2013 08:32:40 +0200
-Message-ID: <CALWbr2xU58Ymq3xzAdomi_ND==ByHFfCNuZvEPDcsEcozRgoTg@mail.gmail.com>
-References: <CAHtLG6ToiRT-EQMFhrR976=gat+8p0GFFyz+9qpqaq36=gVyGQ@mail.gmail.com>
-	<CALWbr2w+ooM04nc79XKyVy48c_eH1AES5XgVDwwk+tFpmitLTw@mail.gmail.com>
-	<CAHtLG6SfTi9XiqGDFhjR0DzLwSK0qVm0GL9-7boHEo=d2uCmvA@mail.gmail.com>
+Subject: Re: [PATCH] diff: add --ignore-blank-lines option
+Date: Mon, 27 May 2013 09:14:15 +0200
+Message-ID: <CALWbr2xzSC8ZGggCUYbS7ZWEOHnZnxFJWOfHCOBkVZFQS9KcEw@mail.gmail.com>
+References: <1369591098-11267-1-git-send-email-apelisse@gmail.com>
+	<51A2722A.8040200@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git <git@vger.kernel.org>
-To: =?UTF-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 27 08:32:51 2013
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon May 27 09:14:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UgqzC-0007N6-RA
-	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 08:32:51 +0200
+	id 1UgrdM-0007FV-6P
+	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 09:14:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754848Ab3E0Gcm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 May 2013 02:32:42 -0400
-Received: from mail-qc0-f179.google.com ([209.85.216.179]:48483 "EHLO
-	mail-qc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753616Ab3E0Gcl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 May 2013 02:32:41 -0400
-Received: by mail-qc0-f179.google.com with SMTP id e1so3338831qcx.38
-        for <git@vger.kernel.org>; Sun, 26 May 2013 23:32:40 -0700 (PDT)
+	id S1756652Ab3E0HOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 May 2013 03:14:16 -0400
+Received: from mail-qa0-f42.google.com ([209.85.216.42]:49147 "EHLO
+	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753852Ab3E0HOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 May 2013 03:14:15 -0400
+Received: by mail-qa0-f42.google.com with SMTP id bs12so836208qab.8
+        for <git@vger.kernel.org>; Mon, 27 May 2013 00:14:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=13DHkFkSItsxDuh7pHasQCF96WY2+ZHQfosktXc6Wuw=;
-        b=WDcmP3gNj7tY9dmRPc5Rz/slyuwKferp4b4lm761OzAYPr7UtXNtQmQ4rA8YgvMaST
-         btKlLaaMnBmjUaFLXbFSDTvuzkjYSyOk5AqxIAaYdecmKL9Wa/8qnz9vRMOxvu0S8BY4
-         9fmugf+cqi/dOSVenzP8zpLQzAKyZoeuzsIbY2O+LHvOWTCtnEYEZrFeziZyL/bYzF7V
-         VR1aqyK8OUjJkrNyEj47sOp/MNKdBPjt2uzBEpSCAeaTaO/X3bvIECs9cp4A4ckqF5Nl
-         3yJ//G3XjjtD5iy2CydkfT1vWgoweJvJ7m9VDil78Sf9FTWD8u/bbbOyUhRsAfpLmaO5
-         XxsQ==
-X-Received: by 10.49.34.130 with SMTP id z2mr7167820qei.25.1369636360786; Sun,
- 26 May 2013 23:32:40 -0700 (PDT)
-Received: by 10.49.81.99 with HTTP; Sun, 26 May 2013 23:32:40 -0700 (PDT)
-In-Reply-To: <CAHtLG6SfTi9XiqGDFhjR0DzLwSK0qVm0GL9-7boHEo=d2uCmvA@mail.gmail.com>
+         :cc:content-type;
+        bh=cYVF0fAJgZO1FVbLxHY5H/VBZ6jF1Wy5nDsOmrjWnB4=;
+        b=cbisbFFBNICMeYLkPYVNYaIGS0GHVAOnTVpLyTTgPv+4v1axJgYPzTnpCuktgIRGtn
+         y/RHotDwuK0dMNXJv0uZ2JdZ84UQGjIReDK5sJ3r08w2x6dcI556Z2u/TYGsma9Xo/8y
+         FoAp5VWHC6Jw0AGdnWb0jkH7yS50r9plbdEVGjfM9RGgjYFmjZ+YTC82is3Oo3mQEleo
+         myDu4YNvXka4dIbY62OPgLLwAhfmx4pJ1ZLNtx7CjDpudFGIrvZhztXDWf2rqhEK2tdv
+         dNbS2mnMtMulzHCCZdSICcqnBpR9n0hQNQ6JV695C5ol/Ck6bbdnACQGOhOMwhMPHQzz
+         4mCQ==
+X-Received: by 10.49.96.104 with SMTP id dr8mr23178218qeb.43.1369638855213;
+ Mon, 27 May 2013 00:14:15 -0700 (PDT)
+Received: by 10.49.81.99 with HTTP; Mon, 27 May 2013 00:14:15 -0700 (PDT)
+In-Reply-To: <51A2722A.8040200@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225578>
 
-Please do not forget to "reply to all".
-
-On Mon, May 27, 2013 at 1:34 AM, =E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cooli@=
-gmail.com> wrote:
->  git-gui/po/fr.po | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On Sun, May 26, 2013 at 10:35 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 26.05.2013 19:58, schrieb Antoine Pelisse:
+>> The goal of the patch is to introduce the GNU diff
+>> -B/--ignore-blank-lines as closely as possible. The short option is not
+>> available because it's already used for "break-rewrites".
+>>
+>> When this option is used, git-diff will not create hunks that simply
+>> adds or removes empty lines, but will still show empty lines
+>> addition/suppression if they are close enough to "valuable" changes.
 >
-> diff --git b/git-gui/po/fr.po a/git-gui/po/fr.po
-> index 0aff186..40441db 100644
-> --- b/git-gui/po/fr.po
-> +++ a/git-gui/po/fr.po
-> @@ -1139,7 +1139,7 @@ msgstr "Standard (rapide, semi-redondant, liens=
- durs)"
->
->  #: lib/choose_repository.tcl:514
->  msgid "Full Copy (Slower, Redundant Backup)"
-> -msgstr "Copie compl=C3=A8te (plus lent, sauvegarde redondante)"
-> +msgstr "Copy compl=C3=A8te (plus lent, sauvegarde redondante)"
+> So when an addition or removal of a blank line appears in a hunk that
+> also has non-blank-line changes, the addition or removal is not treated
+> specially?
 
-I still don't get why "Copie" is replaced by "Copy" ?
+Exactly.
+
+> How is a blank line defined? What happens if a line that has only
+> whitespace is added or removed?
+
+xdl_blankline() is the best description of what I considered a blank line.
+If no --ignore-space-* option is given, it's a line that starts and
+ends with '\n'.
+If any --ignore-space-* option is given, it's a line that has any
+number of isspace(3)-defined characters, followed by '\n'.
+
+> I'm thinking of diffs of files with CRLF
+
+Good you did, because I didn't ;-)
+
+> line breaks, where the CR would count as whitespace in the line, I think.
+
+With the current implementation, an empty line with CRLF will not show
+as a blank line if no space option is given. As CR is a space
+according to isspace(3), the line will be removed with any space
+option.
+
+>> +--ignore-blank-lines::
+>> +     Ignore changes whose lines are all blank.
+>
+> I think this is too terse and does not convey what the option really does.
+
+That's the description from GNU diff man page. But indeed it could be
+more precise.
+
+>> +test_expect_success 'ignore-blank-lines: only new lines' '
+>> +     seq 5 >x &&
+>
+> Please use test_seq instead of seq in all new tests.
+
+Will fix.
+
+> -- Hannes
+>
