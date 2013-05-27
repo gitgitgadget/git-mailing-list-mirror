@@ -1,88 +1,157 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (May 2013, #04; Wed, 15)
-Date: Mon, 27 May 2013 17:36:46 +0700
-Message-ID: <CACsJy8Ct-ei7qbAW4qviQ6=q93ygxDcxRs9F3iHHV4-4Qz6qUA@mail.gmail.com>
-References: <7vmwrvajye.fsf@alter.siamese.dyndns.org> <CACsJy8Cr7AKxo9sUjMCVQ0=O91L8CRoxD3qrvZczCrBUq4TDzA@mail.gmail.com>
- <7vk3mtwrq9.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] prune-packed: avoid implying "1" is DRY_RUN in prune_packed_objects()
+Date: Mon, 27 May 2013 18:18:47 +0700
+Message-ID: <1369653527-2233-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 27 12:37:27 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 27 13:17:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uguns-0003iy-CI
-	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 12:37:24 +0200
+	id 1UgvQl-0004f6-5E
+	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 13:17:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757439Ab3E0KhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 May 2013 06:37:18 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:47102 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757425Ab3E0KhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 May 2013 06:37:17 -0400
-Received: by mail-ob0-f177.google.com with SMTP id ta17so780359obb.22
-        for <git@vger.kernel.org>; Mon, 27 May 2013 03:37:17 -0700 (PDT)
+	id S1757731Ab3E0LRb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 May 2013 07:17:31 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:33774 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757669Ab3E0LRa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 May 2013 07:17:30 -0400
+Received: by mail-pd0-f181.google.com with SMTP id bv13so4620539pdb.40
+        for <git@vger.kernel.org>; Mon, 27 May 2013 04:17:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=N8wzOWYxlqziteS7aUzXV8zMv5luFCo/2Fd04y2Ucjw=;
-        b=BXKm1A6NOQV7o4YhjLy0+2yPH5L+PiBkaS8tcPY44RuVHLNULKbn0Sn51PvIWGeb7H
-         66hdtFNgtt9slxF1/iD8MEuW/b1Ts08FBRZ6qzT3ftj2Hxon/FU2ImB7OOhv0Zt3BAsQ
-         O117K9e6UBbQ9yRKkCKQZw++u1ZovHQXEUFf+OG0btCW42UT3hb8EsqFXE2HcX8m2+F7
-         rr4ljbExQor2ZwuJWprDPMNm35RU5XWY1CsZZ+ByTY+/1DaO2tlxQ3ZGshakt2bxaCxG
-         8sNcazc9uJMIKEU2YH4auMHZ9WPgKAJHlGMT40nYrCQQS22AhuXLm7pv6of/qrwcZvGv
-         grxQ==
-X-Received: by 10.182.118.226 with SMTP id kp2mr17582301obb.48.1369651037019;
- Mon, 27 May 2013 03:37:17 -0700 (PDT)
-Received: by 10.76.171.199 with HTTP; Mon, 27 May 2013 03:36:46 -0700 (PDT)
-In-Reply-To: <7vk3mtwrq9.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=KWIc0XCWNVQgiQS2Tpu6cyFDTLDpSTB1A46NteGr57c=;
+        b=LPxULFuRnvuVfLVJVTxDBtbqEDzj0lRo+DqTHOoS9UZnbZV23PQOgqMU3VHiKfjJZN
+         IoiJGFOjT+gW37CH+sYCqo68PvfMvIg3jUl07uqFm7mvqGOKjyIi7/NbyaBc9aSpUSl3
+         SEWgSaDcQsjeoWPqAL2VuQoBGUK+HX4J7r9BfJV7v+bJlzC9ji5OujIdmWci1PWPwCIy
+         aSjbtyc3CuBnF625NYuiQQVHKDaJE0VT+WsRbhgvE32jE4urkC/d4r2+WLjKm+7ZV8qH
+         XsbSi3DsGHNOHgm2x7z8Xr4z85v7m+Vvt3oncB5X17K2Qn+CmkzRdm83MyWMRcviYmTV
+         sUZA==
+X-Received: by 10.66.122.39 with SMTP id lp7mr28900728pab.208.1369653450116;
+        Mon, 27 May 2013 04:17:30 -0700 (PDT)
+Received: from lanh ([115.73.210.112])
+        by mx.google.com with ESMTPSA id xl10sm30246033pac.15.2013.05.27.04.17.27
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 27 May 2013 04:17:29 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 27 May 2013 18:18:48 +0700
+X-Mailer: git-send-email 1.8.2.83.gc99314b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225586>
 
-On Mon, May 20, 2013 at 11:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Think why the user has such a hard to type ref in the first place.
-> The user may have done this previously, thinking that he is detaching
-> the HEAD to fix an earlier mistake in a branch:
->
->     $ BAD_COMMIT=$(git rev-parse nd/magic~8)
->     $ git checkout $BAD_COMMIT
->
-> but by mistake gave a "-b" after "checkout", i.e.
->
->     $ git checkout -b $BAD_COMMIT
->
-> After this, commands that want to work on branch name would still
-> work as "expected", with the expectation being the user would be
-> working on the refs/heads/$BAD_COMMIT branch, e.g.
->
->     $ git checkout $BAD_COMMIT
->     $ git branch -m $BAD_COMMIT nd/magic-fix
->
-> but commands that want to work on commit object name will resolve it
-> to the $BAD_COMMIT object (i.e. nd/magic~8), e.g.
->
->     $ git log $BAD_COMMIT
->
-> and needs disambiguation if the user wants to work on the commit at
-> the tip of the branch, e.g.
->
->     $ git log heads/$BAD_COMMIT
->
-> So we really do want the users to notice and take corrective action,
-> and one way to attract the attention of the users is to phrase the
-> message more explicitly to let them know what is going on.
+Commit b60daf0 (Make git-prune-packed a bit more chatty. - 2007-01-12)
+changes the meaning of prune_packed_objects()'s argument, from "dry
+run or not dry run" to a bitmap.
 
-Point taken. I guess the message would be something like this?
+It however forgot to update prune_packed_objects() caller in
+builtin/prune.c to use new DRY_RUN macro. It's fine (for a long time!)
+but there is a risk that someday someone may change the value of
+DRY_RUN to something else and builtin/prune.c suddenly breaks. Avoid
+that possibility.
 
-Refname '%.*s' is ignored. It may be created by mistake.
+While at there, change "opts =3D=3D VERBOSE" to "opts & VERBOSE" as the=
+re
+is no obvious reason why we only be chatty when DRY_RUN is not set.
 
-Or should we be more elaborate?
---
-Duy
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin.h              |  3 +++
+ builtin/prune-packed.c | 15 +++++++--------
+ builtin/prune.c        |  2 +-
+ 3 files changed, 11 insertions(+), 9 deletions(-)
+
+diff --git a/builtin.h b/builtin.h
+index faef559..64bab6b 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -12,6 +12,9 @@
+ extern const char git_usage_string[];
+ extern const char git_more_info_string[];
+=20
++#define PRUNE_PACKED_DRY_RUN 01
++#define PRUNE_PACKED_VERBOSE 02
++
+ extern void prune_packed_objects(int);
+=20
+ struct fmt_merge_msg_opts {
+diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+index 83382c1..fa6ce42 100644
+--- a/builtin/prune-packed.c
++++ b/builtin/prune-packed.c
+@@ -8,9 +8,6 @@ static const char * const prune_packed_usage[] =3D {
+ 	NULL
+ };
+=20
+-#define DRY_RUN 01
+-#define VERBOSE 02
+-
+ static struct progress *progress;
+=20
+ static void prune_dir(int i, DIR *dir, char *pathname, int len, int op=
+ts)
+@@ -29,7 +26,7 @@ static void prune_dir(int i, DIR *dir, char *pathname=
+, int len, int opts)
+ 		if (!has_sha1_pack(sha1))
+ 			continue;
+ 		memcpy(pathname + len, de->d_name, 38);
+-		if (opts & DRY_RUN)
++		if (opts & PRUNE_PACKED_DRY_RUN)
+ 			printf("rm -f %s\n", pathname);
+ 		else
+ 			unlink_or_warn(pathname);
+@@ -44,7 +41,7 @@ void prune_packed_objects(int opts)
+ 	const char *dir =3D get_object_directory();
+ 	int len =3D strlen(dir);
+=20
+-	if (opts =3D=3D VERBOSE)
++	if (opts & PRUNE_PACKED_VERBOSE)
+ 		progress =3D start_progress_delay("Removing duplicate objects",
+ 			256, 95, 2);
+=20
+@@ -71,10 +68,12 @@ void prune_packed_objects(int opts)
+=20
+ int cmd_prune_packed(int argc, const char **argv, const char *prefix)
+ {
+-	int opts =3D isatty(2) ? VERBOSE : 0;
++	int opts =3D isatty(2) ? PRUNE_PACKED_VERBOSE : 0;
+ 	const struct option prune_packed_options[] =3D {
+-		OPT_BIT('n', "dry-run", &opts, N_("dry run"), DRY_RUN),
+-		OPT_NEGBIT('q', "quiet", &opts, N_("be quiet"), VERBOSE),
++		OPT_BIT('n', "dry-run", &opts, N_("dry run"),
++			PRUNE_PACKED_DRY_RUN),
++		OPT_NEGBIT('q', "quiet", &opts, N_("be quiet"),
++			   PRUNE_PACKED_VERBOSE),
+ 		OPT_END()
+ 	};
+=20
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 85843d4..59d1fdc 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -165,7 +165,7 @@ int cmd_prune(int argc, const char **argv, const ch=
+ar *prefix)
+ 	stop_progress(&progress);
+ 	prune_object_dir(get_object_directory());
+=20
+-	prune_packed_objects(show_only);
++	prune_packed_objects(show_only ? PRUNE_PACKED_DRY_RUN : 0);
+ 	remove_temporary_files(get_object_directory());
+ 	s =3D mkpathdup("%s/pack", get_object_directory());
+ 	remove_temporary_files(s);
+--=20
+1.8.2.83.gc99314b
