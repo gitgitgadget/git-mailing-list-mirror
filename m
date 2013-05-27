@@ -1,66 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: fix french translation
-Date: Mon, 27 May 2013 11:02:54 +0200
-Message-ID: <vpqmwrg23sx.fsf@anie.imag.fr>
-References: <CAHtLG6ToiRT-EQMFhrR976=gat+8p0GFFyz+9qpqaq36=gVyGQ@mail.gmail.com>
-	<CALWbr2w+ooM04nc79XKyVy48c_eH1AES5XgVDwwk+tFpmitLTw@mail.gmail.com>
-	<CAHtLG6SfTi9XiqGDFhjR0DzLwSK0qVm0GL9-7boHEo=d2uCmvA@mail.gmail.com>
-	<CALWbr2xU58Ymq3xzAdomi_ND==ByHFfCNuZvEPDcsEcozRgoTg@mail.gmail.com>
+From: Zenaan Harkness <zen@freedbms.net>
+Subject: Re: contrib/git-normal-to-bare.sh
+Date: Mon, 27 May 2013 19:43:13 +1000
+Message-ID: <CAOsGNSRm8QChOupsY_Z++qDOMh4hXq-9A_Z2X6uY5o-tFMNj0A@mail.gmail.com>
+References: <CAOsGNSSFx7VEOmz4qTt9nz=SXzQCZH7PdZ+gnYVqLhmRmRcT-A@mail.gmail.com>
+	<vpqr4gs23u6.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>,
-	git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 27 11:03:05 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 27 11:43:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UgtKa-0006oc-NO
-	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 11:03:05 +0200
+	id 1UgtxW-0008LQ-T1
+	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 11:43:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751946Ab3E0JC7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 May 2013 05:02:59 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:59576 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751245Ab3E0JC7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 May 2013 05:02:59 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4R92r4F000989
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 27 May 2013 11:02:53 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UgtKQ-00021D-KN; Mon, 27 May 2013 11:02:54 +0200
-In-Reply-To: <CALWbr2xU58Ymq3xzAdomi_ND==ByHFfCNuZvEPDcsEcozRgoTg@mail.gmail.com>
-	(Antoine Pelisse's message of "Mon, 27 May 2013 08:32:40 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 27 May 2013 11:02:53 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r4R92r4F000989
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1370250174.82974@atuDbmlbH9uXW+gkC8AaOA
+	id S1755406Ab3E0JnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 May 2013 05:43:14 -0400
+Received: from mail-qe0-f50.google.com ([209.85.128.50]:34064 "EHLO
+	mail-qe0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755520Ab3E0JnO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 May 2013 05:43:14 -0400
+Received: by mail-qe0-f50.google.com with SMTP id x7so3669360qeu.9
+        for <git@vger.kernel.org>; Mon, 27 May 2013 02:43:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=vg7IY+7hS4g4zRD00XaH9wSi0yE5HLncLFb0lQ0hayY=;
+        b=hgHXE41NEW0g1VqRIPxw3zAMGhVoBDkNIIYPeCc68JUeSKBK3ND5K71nJjaKBy1L1q
+         I9QbQoTHZnY21T7N3fPZEb7cDKb4eZNgFOLYwTLVGLGuxEtj9BSkOjLkP3IGXzcZP2ng
+         90rctZA2lfjOmDEMrTFkFMohaQE6rFxVcghnMx/Ejte8n5q8pDZkuH3xylnZp1mfEysv
+         hgq8X4CbYEgKo70udGZgH2KGK5YpIEpRWdUqPt/3jlhvMtwnLquIOKmlXKCSjGurcFUZ
+         QJiXsfIewXwXk2f8x54NQUuAFqpxc4pzRm2t2utFqbXJYVu6+Xi0t6TiamMqM2E2krz6
+         guTw==
+X-Received: by 10.49.97.163 with SMTP id eb3mr31425256qeb.31.1369647793417;
+ Mon, 27 May 2013 02:43:13 -0700 (PDT)
+Received: by 10.49.103.201 with HTTP; Mon, 27 May 2013 02:43:13 -0700 (PDT)
+In-Reply-To: <vpqr4gs23u6.fsf@anie.imag.fr>
+X-Google-Sender-Auth: thG7H4htu4Top8QPmOm_JazJZgo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225582>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
-
->> -msgstr "Copie compl=E8te (plus lent, sauvegarde redondante)"
->> +msgstr "Copy compl=E8te (plus lent, sauvegarde redondante)"
+On 5/27/13, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+> Zenaan Harkness <zen@freedbms.net> writes:
 >
-> I still don't get why "Copie" is replaced by "Copy" ?
+>>    rm -rf $repo
+>
+> The user would appreciate if you check that there are no uncommited
+> changes and no untracked files (at least no untracked and not ignored
+> files) before running this.
+>
+> Also, it's "$repo", not just $repo, or you'll get surprising behavior if
+> $repo contain spaces.
+>
+> The safe way would actually be stg like:
+>
+>   rm -fr -- "$repo"
 
-Yes, this is clearly wrong. Copie is french, Copy is not.
+Thanks.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+In my later email, I changed it to mv - should have highlighted there
+was a change. I got bitten, on a small repo thankfully, where a perms
+or ownership problem caused the whole repo to disappear. So mv it is
+:)
+
+BTW, I've subscribed for a little while now...
+
+Thanks again
+Zenaan
