@@ -1,56 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] fetch: don't try to update unfetched tracking refs
-Date: Mon, 27 May 2013 12:35:00 -0400
-Message-ID: <20130527163500.GA18405@sigill.intra.peff.net>
-References: <9c6fd36368cd6b0fba4855be4d31106781c02f58.1369654825.git.john@keeping.me.uk>
- <20130527154252.GB8250@sigill.intra.peff.net>
- <20130527160129.GN27005@serenity.lan>
- <20130527161934.GB9235@sigill.intra.peff.net>
- <20130527163308.GO27005@serenity.lan>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v4 14/21] remote-hg: show more proper errors
+Date: Mon, 27 May 2013 11:49:08 -0500
+Message-ID: <CAMP44s0Ue5MZvRL=rbN-Ng16aPMhJxZpGgV2b=Moe8o=XgnuqA@mail.gmail.com>
+References: <1365682997-11329-1-git-send-email-felipe.contreras@gmail.com>
+	<1365682997-11329-15-git-send-email-felipe.contreras@gmail.com>
+	<CALWbr2wATbq8o4kcdyAq1zt_+fbvyxUQov04xHDTXuoKYecAQw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon May 27 18:35:13 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 27 18:49:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uh0O7-0005H3-6d
-	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 18:35:11 +0200
+	id 1Uh0bj-0000xf-K7
+	for gcvg-git-2@plane.gmane.org; Mon, 27 May 2013 18:49:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193Ab3E0QfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 May 2013 12:35:05 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45041 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752566Ab3E0QfE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 May 2013 12:35:04 -0400
-Received: (qmail 1053 invoked by uid 102); 27 May 2013 16:35:41 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 27 May 2013 11:35:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 May 2013 12:35:00 -0400
-Content-Disposition: inline
-In-Reply-To: <20130527163308.GO27005@serenity.lan>
+	id S1755375Ab3E0QtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 May 2013 12:49:11 -0400
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:46233 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755091Ab3E0QtK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 May 2013 12:49:10 -0400
+Received: by mail-lb0-f176.google.com with SMTP id x10so6944332lbi.35
+        for <git@vger.kernel.org>; Mon, 27 May 2013 09:49:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=dhRpF8SRZM+qnKRQgPy3uJrg6ZBmYbl6yw3gPgGXG9E=;
+        b=PR0q9bp0FnLTJ48lSlHaaryeeBwp1ofTkSNt7gD0ZOpNBSqK3mwFoy+4T7uSILgiP3
+         B9/GHWWhAZtqrQkEQ70zcOpiO1Sza3HyzBen/rn9NsyKlTbw/tLV7npEkREsGRJfUVKH
+         PMDeTxycg2HkyMRNtjvdLc3qB4+FSyPzopecn1FtAgwVUfTRMTTo4YHvoLN6yp3pLJap
+         nJQapgGs6RpN1shoOqqJVM+V4amAgTbGK8BWJBKb+s5C8ODyursJnYcntEz/gzTTymiJ
+         WMaAirCW65u43I0mP9lh9azkHSX1fNM+UYl7OTz9dhQK3EnBXCa7wHfrKpj/Bv2HuwsY
+         tqdQ==
+X-Received: by 10.112.156.164 with SMTP id wf4mr14269115lbb.76.1369673348692;
+ Mon, 27 May 2013 09:49:08 -0700 (PDT)
+Received: by 10.114.177.164 with HTTP; Mon, 27 May 2013 09:49:08 -0700 (PDT)
+In-Reply-To: <CALWbr2wATbq8o4kcdyAq1zt_+fbvyxUQov04xHDTXuoKYecAQw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225608>
 
-On Mon, May 27, 2013 at 05:33:09PM +0100, John Keeping wrote:
+On Mon, May 27, 2013 at 11:30 AM, Antoine Pelisse <apelisse@gmail.com> wrote:
+> Hey Felipe,
+> I know that has been integrated a while ago.
+>
+> On Thu, Apr 11, 2013 at 2:23 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> When cloning or pushing fails, we don't want to show a stack-trace.
+>>
+>> diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+>> index ff89725..3ae3598 100755
+>> --- a/contrib/remote-helpers/git-remote-hg
+>> +++ b/contrib/remote-helpers/git-remote-hg
+>> @@ -284,11 +284,17 @@ def get_repo(url, alias):
+>>      else:
+>>          local_path = os.path.join(dirname, 'clone')
+>>          if not os.path.exists(local_path):
+>> -            peer, dstpeer = hg.clone(myui, {}, url, local_path, update=False, pull=True)
+>> +            try:
+>> +                peer, dstpeer = hg.clone(myui, {}, url, local_path, update=True, pull=True)
+>> +            except:
+>> +                die('Repository error')
+>>              repo = dstpeer.local()
+>
+> Can you explain why "update" went from False to True ? That can be a
+> problem if the repository is BIG (two working directories instead of
+> one can raise space issues).
+>
+> The commit message is not so helpful here ;)
 
-> > Ah, I see. It is not "the refspec on the command-line does not match a
-> > configured refspec", but rather "there exists a configured non-pattern
-> > refspec that does not match what was on the command-line (even if what
-> > was on the command-line did match another refspec)".
-> 
-> Exactly.  I've changed the commit message to (hopefully) make this
-> clearer.
+Good catch. It was probably a mistake. However, I already sent a patch
+that overrides this so update=False again.
 
-It does. To me, anyway. :)
-
-Thanks again.
-
--Peff
+-- 
+Felipe Contreras
