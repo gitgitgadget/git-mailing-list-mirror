@@ -1,74 +1,85 @@
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: git-send-email doesn't deal with quoted names
-Date: Tue, 28 May 2013 01:40:20 +0200
-Message-ID: <CAHmME9p19eysjEVk+6FmAb2FQb7dq_e3k_KLQLRZqhx2Bs6O3w@mail.gmail.com>
+From: =?Big5?B?pEG7xL5Z?= <ch3cooli@gmail.com>
+Subject: Re: fix french translation
+Date: Tue, 28 May 2013 07:57:48 +0800
+Message-ID: <CAHtLG6Q-OWKJZVcFateFjgJ4TfovEWrfph9dyuiGi+ophBVh0Q@mail.gmail.com>
+References: <CAHtLG6ToiRT-EQMFhrR976=gat+8p0GFFyz+9qpqaq36=gVyGQ@mail.gmail.com>
+	<CALWbr2w+ooM04nc79XKyVy48c_eH1AES5XgVDwwk+tFpmitLTw@mail.gmail.com>
+	<CAHtLG6SfTi9XiqGDFhjR0DzLwSK0qVm0GL9-7boHEo=d2uCmvA@mail.gmail.com>
+	<CALWbr2xU58Ymq3xzAdomi_ND==ByHFfCNuZvEPDcsEcozRgoTg@mail.gmail.com>
+	<vpqmwrg23sx.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 28 01:40:33 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Antoine Pelisse <apelisse@gmail.com>, git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue May 28 01:58:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uh71k-0007fz-RI
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 01:40:33 +0200
+	id 1Uh7Ik-0004fB-E9
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 01:58:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758063Ab3E0XkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 May 2013 19:40:23 -0400
-Received: from frisell.zx2c4.com ([192.95.5.64]:56341 "EHLO frisell.zx2c4.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756209Ab3E0XkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 May 2013 19:40:22 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
-	:date:message-id:subject:from:to:content-type; s=mail; bh=UquBt+
-	yf470rNDlfnuoVcWKDnbc=; b=V81qRfIIN+awuvDtS/zxiLnk7bXG532xfQn3UW
-	DnXe0LtPcSdw6Z3j+lqvPt8dqJNYUX1go4ib4qX4jfGFfl6K9PpdrquhbXmjx6fV
-	zFdrdl+HKCnUusyifiRfG2LD/jmUFGiQid+lQzWCFa4rnZYetKsPo6+LSxt+FN1H
-	51UJ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=zx2c4.com; h=mime-version
-	:date:message-id:subject:from:to:content-type; q=dns; s=mail; b=
-	LCymWvs28HPZKZWVcEkupwrMyAqZwZkrv8Eqi50EKS5Jq/W/U3xKFydyq8YQxjTp
-	8TksZmCKf4daZdP2y08bgmrJJhqAJ73Ief8mKRZ2tevSX9yNWnJGzAAyugEFdwib
-	rDjn7TPEl9rHdWjcP70daD2xhp6ARLJITd17MnQAyko=
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ea1d710f;
-	TLS version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO;
-	for <git@vger.kernel.org>;
-	Mon, 27 May 2013 23:40:20 +0000 (UTC)
-Received: by mail-vc0-f175.google.com with SMTP id hv10so5060924vcb.34
-        for <git@vger.kernel.org>; Mon, 27 May 2013 16:40:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=kavD5bAfhbpiYU/5+qhzWr5naTxbj0qIA7HCchK0nHw=;
-        b=Ytv8EHZbZwAoQkuPxINaIHJOyIVTWmiR92bKjhe1USA7gFwlMfMDdhiTFJjN5ZBeUy
-         KvA81CVpsw/XTh3vWOgX/hHpGzkhHQIDvqauDzkt9loeNOSLAgedbE0t703NNNfwDfVi
-         SS/hzUgE5Ir2aKbqYR92idfbwTI9i5cu1pWIQmzCRaeop1he2FcGHG4hzHsFPBBYqzef
-         OPtmF7vSVzBp85BM0aVfqk4iuokfGZiZhWQcMZE2wsBIaheCQsW83s80zgmlQIZ6wp62
-         GvJTOeTIBeQBm7NqILPKhp/ojCOVNCS0q1kUsPpXddfRwkO5SEH6ERedXapFxambyYxF
-         /Qtg==
-X-Received: by 10.220.76.137 with SMTP id c9mr562616vck.48.1369698020190; Mon,
- 27 May 2013 16:40:20 -0700 (PDT)
-Received: by 10.52.232.4 with HTTP; Mon, 27 May 2013 16:40:20 -0700 (PDT)
+	id S1758260Ab3E0X5u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 May 2013 19:57:50 -0400
+Received: from mail-vb0-f41.google.com ([209.85.212.41]:35711 "EHLO
+	mail-vb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758249Ab3E0X5t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 May 2013 19:57:49 -0400
+Received: by mail-vb0-f41.google.com with SMTP id p14so5068652vbm.0
+        for <git@vger.kernel.org>; Mon, 27 May 2013 16:57:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=HTKX7GWjacFMaw4PBlKm8JTwsdQuwSxHhfkmDBiEshw=;
+        b=xzsK6jdq/QD+NA/Dqnsx5fSM2m0XypHGZbDFXGhbNYityYK9VC0dKY133tED4IvpeN
+         g7RaHxFMFE/KYIm+c8J4N/J8FO1ZQ02ku+nNwlxgwZrDRFeN84k3zlA7zq+woHV47YfC
+         7kUs2BfkaRD9LSeHAcS2Gt9wrN3qb7wD99fzmqyzlbVKzT1aMwGoVkqJTz79smR6wjgy
+         hjSl2SCliJ7syhCPVl4qtfZWgdPMqsEemgnEoYTPQT3IAqGUkV4u0thwfSTImCUXBK7o
+         7WmpI5DpL3D6ODGAxVNa31qQ/0OOc+kSwwUJj7JJGCQQ7qmapdmDx+o8SkWaxWlUufN4
+         TQzw==
+X-Received: by 10.220.68.13 with SMTP id t13mr16417294vci.24.1369699068761;
+ Mon, 27 May 2013 16:57:48 -0700 (PDT)
+Received: by 10.220.177.7 with HTTP; Mon, 27 May 2013 16:57:48 -0700 (PDT)
+In-Reply-To: <vpqmwrg23sx.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225617>
 
-Hi,
+Sorry, I reversed the revisions. This one should be correct.
 
-My commit author name is "Jason A. Donenfeld". Because this has a dot,
-SMTP handling likes to put it in quotes.
+ git-gui/po/fr.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-git-send-email has this line:
-            if (defined $author and $author ne $sender) {
+diff --git a/git-gui/po/fr.po b/git-gui/po/fr.po
+index 40441db..0aff186 100644
+--- a/git-gui/po/fr.po
++++ b/git-gui/po/fr.po
+@@ -1139,7 +1139,7 @@ msgstr "Standard (rapide, semi-redondant, liens d=
+urs)"
 
-With my name, this always winds up false, because it's comparing
-'"Jason A. Donenfeld" <Jason@zx2c4.com>' with 'Jason A. Donenfeld
-<Jason@zx2c4.com>'.
+ #: lib/choose_repository.tcl:514
+ msgid "Full Copy (Slower, Redundant Backup)"
+-msgstr "Copy compl=C3=A8te (plus lent, sauvegarde redondante)"
++msgstr "Copie compl=C3=A8te (plus lent, sauvegarde redondante)"
 
-So, the logic needs to be fixed somehow.
+ #: lib/choose_repository.tcl:520
+ msgid "Shared (Fastest, Not Recommended, No Backup)"
 
-Thanks,
-Jason
+2013/5/27 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
+> Antoine Pelisse <apelisse@gmail.com> writes:
+>
+>>> -msgstr "Copie compl=C4=8Dte (plus lent, sauvegarde redondante)"
+>>> +msgstr "Copy compl=C4=8Dte (plus lent, sauvegarde redondante)"
+>>
+>> I still don't get why "Copie" is replaced by "Copy" ?
+>
+> Yes, this is clearly wrong. Copie is french, Copy is not.
+>
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
