@@ -1,75 +1,67 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 4/5] test: improve rebase -q test
-Date: Tue, 28 May 2013 07:54:30 -0500
-Message-ID: <1369745671-22418-5-git-send-email-felipe.contreras@gmail.com>
-References: <1369745671-22418-1-git-send-email-felipe.contreras@gmail.com>
+From: Ilya Basin <basinilya@gmail.com>
+Subject: Re[4]: [PATCH 4/5] git-svn: fix bottleneck in stash_placeholder_list()
+Date: Tue, 28 May 2013 16:57:34 +0400
+Message-ID: <1421181699.20130528165734@gmail.com>
+References: <1438528085.20130501090926@gmail.com> <1409591910.20130501123153@gmail.com> <7vhaim8w48.fsf@alter.siamese.dyndns.org> <455264907.20130501235104@gmail.com> <20130501213031.GA13056@dcvr.yhbt.net> <7v1u9q5pu5.fsf@alter.siamese.dyndns.org> <20130502024926.GA12172@dcvr.yhbt.net> <12810110770.20130502213124@gmail.com> <366899002.20130506125846@gmail.com>
+Reply-To: Ilya Basin <basinilya@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Neil Horman <nhorman@tuxdriver.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 28 14:56:56 2013
+	Git mailing list <git@vger.kernel.org>,
+	Ray Chen <rchen@cs.umd.edu>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue May 28 14:58:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhJSJ-0001ST-QF
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 14:56:48 +0200
+	id 1UhJTi-0002qP-FV
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 14:58:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933939Ab3E1M4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 May 2013 08:56:38 -0400
-Received: from mail-oa0-f42.google.com ([209.85.219.42]:57685 "EHLO
-	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933913Ab3E1M4h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 May 2013 08:56:37 -0400
-Received: by mail-oa0-f42.google.com with SMTP id i10so9955627oag.1
-        for <git@vger.kernel.org>; Tue, 28 May 2013 05:56:37 -0700 (PDT)
+	id S933947Ab3E1M6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 May 2013 08:58:07 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:44769 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933954Ab3E1M6A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 May 2013 08:58:00 -0400
+Received: by mail-lb0-f180.google.com with SMTP id r10so7659159lbi.39
+        for <git@vger.kernel.org>; Tue, 28 May 2013 05:57:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=gQahvx3zlILjibyMKLGp8HE8KCeHA8Z1Iano44Qmibs=;
-        b=oIGttGVqspmjd9uY9JwGERtKgvEUoAjiP/DkOUFPKy5axMrd/aMDBLIHTjL0mkRtgJ
-         j+YuTVa5lu/5HI+sNbUQB4SbR5cm7KjFqoymMAf/oshIFpW1nQxRZSNXGusxrhIXZSFf
-         y3YCxmG1X4Y7/W4bMe4m1lplNjny5JzzgmQPUiQYlD5Lcdy7lhbAGH1dzBAa1eBrdjlz
-         NL54d3gM9H326AYwlHrnwD7sawGVPEieyOGTMZPqfHSO/d2DGU6Jd2omamYnCSb2zEUE
-         grCsizhx27s/feGGGqGB6YjOlWmkP1GAK53ffb+C3P7gJIFh9jv5ZBV5HXhXtemmFqNk
-         bfFA==
-X-Received: by 10.60.145.166 with SMTP id sv6mr20466341oeb.86.1369745797327;
-        Tue, 28 May 2013 05:56:37 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id p3sm26902176oel.0.2013.05.28.05.56.35
+        h=date:from:x-mailer:reply-to:x-priority:message-id:to:cc:subject
+         :in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=8ooUumFXpPntV/no3SZkBwFgy3/hE1fNMIuTvhNlWbQ=;
+        b=vwrgv9D5R82vj8LDxZJ6OO4LSjKojLE3jkDa2T8+F/gBc2QHCGYvg0r/9ykbq0e/bi
+         H5DxcZxha4c3y3psXchdus8L7502MUh1XxG2sqIarulWZId+MmCt8beKaiv2vy6NqNh9
+         g/778d1aRg7Ylft8vTF4W+kkJTL/wLkoxPoFzUjBvP2bI3omodHUhdclEiOA8FDWamxa
+         ihoj6kzLMRUCU4R3a6GLxtNbBvhN1Ak8jr/2/15r/8LXl0YYlUdIUc4T2ht1T0fq3vsq
+         1weoum/Npm4N0RrUG13ESx4sRRhc6LMXAplP3nax9N7M6KuZWAYoMQjnx8IeHayBjEE4
+         PaGg==
+X-Received: by 10.112.63.169 with SMTP id h9mr16326237lbs.135.1369745878587;
+        Tue, 28 May 2013 05:57:58 -0700 (PDT)
+Received: from BASIN.reksoft.ru (gate.reksoft.ru. [188.64.144.36])
+        by mx.google.com with ESMTPSA id a3sm7243909lbg.2.2013.05.28.05.57.56
         for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 28 May 2013 05:56:36 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc3.312.g47657de
-In-Reply-To: <1369745671-22418-1-git-send-email-felipe.contreras@gmail.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 28 May 2013 05:57:57 -0700 (PDT)
+X-Mailer: Voyager (v3.99.4) Professional
+X-Priority: 3 (Normal)
+In-Reply-To: <366899002.20130506125846@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225639>
 
-Let's show the output so it's clear why it failed.
+IB> * I think git-svn doesn't handle the case, when a tag is deleted.
+IB>   I expected it to rename the ref from "tags/tagname" to
+IB>   "tags/tagname@rev", but that doesn't happen.
+IB>   If a tag is replaced, there's no way to tell what was the previous
+IB>   state of that tag: git-svn just rewrites the ref.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- t/t3400-rebase.sh | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index b58fa1a..fb39531 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -185,6 +185,7 @@ test_expect_success 'default to @{upstream} when upstream arg is missing' '
- test_expect_success 'rebase -q is quiet' '
- 	git checkout -b quiet topic &&
- 	git rebase -q master >output.out 2>&1 &&
-+	cat output.out &&
- 	test ! -s output.out
- '
- 
--- 
-1.8.3.rc3.312.g47657de
+OK, I figured out that git-svn creates a merge commit having one of
+its parents the previous state of the tag and another parent the state
+of the new copy src folder.
