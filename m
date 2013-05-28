@@ -1,98 +1,56 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: Re: [PATCH 2/2] cherry-pick: add --skip-commits option
-Date: Tue, 28 May 2013 07:06:26 -0400
-Message-ID: <20130528110626.GB1264@hmsreliant.think-freely.org>
-References: <1369673539-28692-1-git-send-email-felipe.contreras@gmail.com>
- <1369673539-28692-3-git-send-email-felipe.contreras@gmail.com>
+From: Konstantin Khomoutov <kostix+git@007spb.ru>
+Subject: Re: git-svn too slow, contacts upstream svn repo
+Date: Tue, 28 May 2013 15:54:11 +0400
+Message-ID: <20130528155411.beed9d3450d5a9d135cd93e6@domain007.com>
+References: <1369668359.69324.YahooMailNeo@web190701.mail.sg3.yahoo.com>
+	<1369726977.1915.YahooMailNeo@web190701.mail.sg3.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 28 13:06:47 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Quark <unixuser2000-fbsd@yahoo.com>
+X-From: git-owner@vger.kernel.org Tue May 28 13:54:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhHjm-0003SC-SI
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 13:06:43 +0200
+	id 1UhITt-0007D6-Gh
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 13:54:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758351Ab3E1LGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 May 2013 07:06:37 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:47613 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751193Ab3E1LGg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 May 2013 07:06:36 -0400
-Received: from 99-127-245-201.lightspeed.rlghnc.sbcglobal.net ([99.127.245.201] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1UhHjY-0004wX-N4; Tue, 28 May 2013 07:06:35 -0400
-Content-Disposition: inline
-In-Reply-To: <1369673539-28692-3-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+	id S933528Ab3E1LyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 May 2013 07:54:16 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:32995 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933225Ab3E1LyP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 May 2013 07:54:15 -0400
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r4SBsB4p005889;
+	Tue, 28 May 2013 15:54:12 +0400
+In-Reply-To: <1369726977.1915.YahooMailNeo@web190701.mail.sg3.yahoo.com>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225630>
 
-On Mon, May 27, 2013 at 11:52:19AM -0500, Felipe Contreras wrote:
-> Pretty much what it says on the tin.
-> 
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  Documentation/git-cherry-pick.txt   |  3 +++
->  builtin/revert.c                    |  2 ++
->  sequencer.c                         |  5 ++++-
->  sequencer.h                         |  1 +
->  t/t3508-cherry-pick-many-commits.sh | 13 +++++++++++++
->  5 files changed, 23 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-> index c205d23..fccd936 100644
-> --- a/Documentation/git-cherry-pick.txt
-> +++ b/Documentation/git-cherry-pick.txt
-> @@ -129,6 +129,9 @@ effect to your index in a row.
->  	redundant commits are ignored.  This option overrides that behavior and
->  	creates an empty commit object.  Implies `--allow-empty`.
->  
-> +--skip-empty::
-> +	Instead of failing, skip commits that are or become empty.
-> +
->  --strategy=<strategy>::
->  	Use the given merge strategy.  Should only be used once.
->  	See the MERGE STRATEGIES section in linkgit:git-merge[1]
-> diff --git a/builtin/revert.c b/builtin/revert.c
-> index 0401fdb..0e5ce71 100644
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -118,6 +118,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
->  		OPT_END(),
->  		OPT_END(),
->  		OPT_END(),
-> +		OPT_END(),
->  	};
->  
->  	if (opts->action == REPLAY_PICK) {
-> @@ -127,6 +128,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
->  			OPT_BOOLEAN(0, "allow-empty", &opts->allow_empty, N_("preserve initially empty commits")),
->  			OPT_BOOLEAN(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
->  			OPT_BOOLEAN(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
-> +			OPT_BOOLEAN(0, "skip-empty", &opts->skip_empty, N_("skip empty commits")),
->  			OPT_END(),
->  		};
-I like the idea, but this option seems a bit awkward to me.  At the very least
-here, don't you now need to check for conflicts if --keep-redundant-commits and
-skip-empty are both specified (as iirc git doens't see the difference between
-empty commits and commits made empty by prior commits in the current history).
-what if we merged the two options to an OPT_STRING, something like
---empty-commits=[keep|skip|ask].  The default currently is an impiled, since the
-sequencer stops on an empty commit.
+On Tue, 28 May 2013 15:42:57 +0800 (SGT)
+Quark <unixuser2000-fbsd@yahoo.com> wrote:
 
-Neil
+> > I have been using git-svn in an corporate environment where svn
+> > repo has lot of branches, (lot means > 100). To avoid cloning all
+> > branches my config looks as below
+[...]
+> is this not right forum?
+
+As a matter of fact, this mailing list is the only correct place to ask
+questions like yours.  But this is free software after all -- people
+who could answer your question may be busy/absent at the moment or even
+not involved in the project anymore (in the worst case).  So be
+prepared to wait some time.  Also be prepared for your particular
+trouble not being solved.
+
+In the meantime, I think Thomas provided you with valuable suggestions
+in reply to your mirror post on git-users, so you could possibly
+explore them.
