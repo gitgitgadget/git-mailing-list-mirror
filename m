@@ -1,66 +1,73 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] wildmatch: properly fold case everywhere
-Date: Tue, 28 May 2013 19:53:47 +0700
-Message-ID: <CACsJy8Bu2XvapGHjcKZJuATqB90MXSCoNHkke9CBeiwSvzpH8A@mail.gmail.com>
-References: <1369744361-44918-1-git-send-email-n.oxyde@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Anthony Ramine <n.oxyde@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 28 14:54:24 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/5] Trivial patches
+Date: Tue, 28 May 2013 07:54:26 -0500
+Message-ID: <1369745671-22418-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Neil Horman <nhorman@tuxdriver.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 28 14:56:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhJPz-0007YF-EY
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 14:54:23 +0200
+	id 1UhJRr-0000xH-7p
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 14:56:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933912Ab3E1MyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 May 2013 08:54:19 -0400
-Received: from mail-oa0-f51.google.com ([209.85.219.51]:48442 "EHLO
-	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933886Ab3E1MyS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 May 2013 08:54:18 -0400
-Received: by mail-oa0-f51.google.com with SMTP id f4so9871532oah.38
-        for <git@vger.kernel.org>; Tue, 28 May 2013 05:54:18 -0700 (PDT)
+	id S933927Ab3E1M4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 May 2013 08:56:15 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:54104 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933904Ab3E1M4O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 May 2013 08:56:14 -0400
+Received: by mail-oa0-f43.google.com with SMTP id o6so9872126oag.2
+        for <git@vger.kernel.org>; Tue, 28 May 2013 05:56:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=tUMy80mWXZ7NfkPoG0/A6Ic2Dmb+51WsT4noDnE72mk=;
-        b=YBpFBlFjTqUYGtJNNFwWzZjyqvVG/0MiUug6CV631pwjySHS0bDtnklh5AROfXQSkS
-         Qysh358Iu+4bVBgFHZhO314y70iE4pYywvpWl2/Zdp8nFJ+X6wEk53Ns3m6zBN+BDXsi
-         HbmrOI+Jf9UGj13eGCnKZ382gvRCmRBODGd4sZ0PK4Z37lt+2/9fblv4adbZ9I4GN4RJ
-         eDDn7MwqFaYvn23GRM5OQhrCUqXnqXgZ+dvrgf5lIaIqUsA96JlX9NuM/1i6VBMhwnYz
-         qAjyskUCxLSlKud1ngOcmq1hcjtNLXgbT5wlKHpJ5p9Y8NECJ+ry7uVjGaO4bu7gmiTl
-         mBkQ==
-X-Received: by 10.60.59.37 with SMTP id w5mr3055858oeq.7.1369745658250; Tue,
- 28 May 2013 05:54:18 -0700 (PDT)
-Received: by 10.76.171.199 with HTTP; Tue, 28 May 2013 05:53:47 -0700 (PDT)
-In-Reply-To: <1369744361-44918-1-git-send-email-n.oxyde@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=JVv4JthxZQZBOZWlmBUIT9RzDax3RrOsm3wf58MaXoY=;
+        b=uZGWuPhcRfze7vS9noaL3VnCNIorIjioZL8Wg7EuJrJATJ9R5th2UcGbSMuvDor71A
+         GkJA7YjqNm4bw+aHlQeIxUHcmsbsJBOQMQtgTBUJybooaCT1NuzROq/jeZ+Udj7OwXK6
+         n+vHLYbXU6WY3FAY2J+1owXToKlbrAv9sIMgyGnETQ8iDvjYpW+bAFHerCDe2TOREdHK
+         Y4AVCWyrAnlcpyZ8P2aVV5paj9l3vUsYaRN0L6BZbpMQUA4D9lOwf7Sjkim962wbszwR
+         uPspSggRIZAFYSHxjXuhaJeH2mGsVP1qonyUCbwBiYIoNZaaHx5lFPyyv9OQMKJZy2u2
+         pKdA==
+X-Received: by 10.60.115.103 with SMTP id jn7mr20216616oeb.136.1369745773819;
+        Tue, 28 May 2013 05:56:13 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id wz1sm21040531obc.3.2013.05.28.05.56.11
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 28 May 2013 05:56:12 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc3.312.g47657de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225633>
 
-On Tue, May 28, 2013 at 7:32 PM, Anthony Ramine <n.oxyde@gmail.com> wrote:
-> @@ -196,6 +196,11 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
->                                         }
->                                         if (t_ch <= p_ch && t_ch >= prev_ch)
->                                                 matched = 1;
-> +                                       else if ((flags & WM_CASEFOLD) && ISLOWER(t_ch)) {
-> +                                               t_ch = toupper(t_ch);
+Hi,
 
-This happens in a while loop where t_ch may be used again. Should we
-make a local copy of toupper(t_ch) and leave t_ch untouched?
+Here's a bunch of trivial patches.
 
-> +                                               if (t_ch <= p_ch && t_ch >= prev_ch)
-> +                                                       matched = 1;
-> +                                       }
->                                         p_ch = 0; /* This makes "prev_ch" get set to 0. */
->                                 } else if (p_ch == '[' && p[1] == ':') {
->                                         const uchar *s;
---
-Duy
+Felipe Contreras (5):
+  remote: trivial style cleanup
+  sequencer: trivial fix
+  test: trivial cleanups
+  test: improve rebase -q test
+  test: rebase: fix --interactive test
+
+ remote.c                      |  3 +--
+ sequencer.c                   |  7 +++++--
+ t/t3400-rebase.sh             |  1 +
+ t/t3403-rebase-skip.sh        |  7 ++++---
+ t/t3404-rebase-interactive.sh |  2 +-
+ t/t3505-cherry-pick-empty.sh  | 18 +++++-------------
+ 6 files changed, 17 insertions(+), 21 deletions(-)
+
+-- 
+1.8.3.rc3.312.g47657de
