@@ -1,85 +1,68 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: Re: [PATCH] fast-import: Remove redundant assignment of 'oe' to itself.
-Date: Tue, 28 May 2013 10:22:05 +0200
-Message-ID: <ko1pfi$7f6$1@ger.gmane.org>
-References: <1369598719-10798-1-git-send-email-stefanbeller@googlemail.com> <51A26BB7.3060702@gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: git-send-email doesn't deal with quoted names
+Date: Tue, 28 May 2013 09:25:17 +0100
+Message-ID: <20130528082517.GP27005@serenity.lan>
+References: <CAHmME9p19eysjEVk+6FmAb2FQb7dq_e3k_KLQLRZqhx2Bs6O3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 28 10:22:39 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+X-From: git-owner@vger.kernel.org Tue May 28 10:25:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhFAx-0000wf-Pl
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 10:22:36 +0200
+	id 1UhFDq-0003T0-Rt
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 10:25:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933432Ab3E1IWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 May 2013 04:22:30 -0400
-Received: from plane.gmane.org ([80.91.229.3]:50359 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933383Ab3E1IW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 May 2013 04:22:29 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UhFAo-0000kk-GL
-	for git@vger.kernel.org; Tue, 28 May 2013 10:22:26 +0200
-Received: from dsdf-4db53f95.pool.mediaways.net ([77.181.63.149])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 28 May 2013 10:22:26 +0200
-Received: from jojo by dsdf-4db53f95.pool.mediaways.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 28 May 2013 10:22:26 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dsdf-4db53f95.pool.mediaways.net
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S933505Ab3E1IZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 May 2013 04:25:29 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:60011 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933390Ab3E1IZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 May 2013 04:25:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 2AE11CDA595;
+	Tue, 28 May 2013 09:25:24 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id T+Upcz2llcVA; Tue, 28 May 2013 09:25:22 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id A2BBCCDA5DD;
+	Tue, 28 May 2013 09:25:19 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <CAHmME9p19eysjEVk+6FmAb2FQb7dq_e3k_KLQLRZqhx2Bs6O3w@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225622>
 
-Stefano Lattarini wrote:
-> On 05/26/2013 10:05 PM, Stefan Beller wrote:
->> Reported by cppcheck.
->>
->> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
->> ---
->>  fast-import.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/fast-import.c b/fast-import.c
->> index 5f539d7..0142e3a 100644
->> --- a/fast-import.c
->> +++ b/fast-import.c
->> @@ -2914,7 +2914,7 @@ static void cat_blob(struct object_entry *oe,
->>  unsigned char sha1[20]) static void parse_cat_blob(void)
->>  {
->>  const char *p;
->> - struct object_entry *oe = oe;
->>
-> This was done on purpose, to avoid spurious warnings with (at least)
-> some versions of GCC.
->
->> + struct object_entry *oe;
->>  unsigned char sha1[20];
->>
->>  /* cat-blob SP <object> LF */
->
+On Tue, May 28, 2013 at 01:40:20AM +0200, Jason A. Donenfeld wrote:
+> My commit author name is "Jason A. Donenfeld". Because this has a dot,
+> SMTP handling likes to put it in quotes.
+> 
+> git-send-email has this line:
+>             if (defined $author and $author ne $sender) {
+> 
+> With my name, this always winds up false, because it's comparing
+> '"Jason A. Donenfeld" <Jason@zx2c4.com>' with 'Jason A. Donenfeld
+> <Jason@zx2c4.com>'.
+> 
+> So, the logic needs to be fixed somehow.
 
-This strange construct has been removed in other places meanwhile. It is 
-violating C-standards (C89, C99) and as such causes warnings with other 
-compilers, so this is fighting fire with fire. As it is a pointer it may be 
-more sensible to initialize with NULL, should appease all compilers and 
-still be correct.
+There was a patch for this recently, although it appears to be still
+under discussion:
 
-Bye, Jojo 
+    http://article.gmane.org/gmane.comp.version-control.git/225247
