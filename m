@@ -1,119 +1,70 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: contrib/git-normal-to-bare.sh
-Date: Tue, 28 May 2013 13:07:44 -0700
-Message-ID: <7v1u8qzx4f.fsf@alter.siamese.dyndns.org>
-References: <CAOsGNST8X+crMQz1ynJQxctCMUnBw3T3K5HiMH8B_GFP63yX1w@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2013, #04; Wed, 15)
+Date: Tue, 28 May 2013 14:25:45 -0700
+Message-ID: <7vppwayexy.fsf@alter.siamese.dyndns.org>
+References: <7vmwrvajye.fsf@alter.siamese.dyndns.org>
+	<CACsJy8Cr7AKxo9sUjMCVQ0=O91L8CRoxD3qrvZczCrBUq4TDzA@mail.gmail.com>
+	<7vk3mtwrq9.fsf@alter.siamese.dyndns.org>
+	<CACsJy8Ct-ei7qbAW4qviQ6=q93ygxDcxRs9F3iHHV4-4Qz6qUA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Zenaan Harkness <zen@freedbms.net>
-X-From: git-owner@vger.kernel.org Tue May 28 22:07:53 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 28 23:29:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhQBU-0000Zz-Da
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 22:07:52 +0200
+	id 1UhRSm-0008NF-DG
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 23:29:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755431Ab3E1UHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 May 2013 16:07:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40211 "EHLO
+	id S933596Ab3E1VZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 May 2013 17:25:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60044 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755033Ab3E1UHr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 May 2013 16:07:47 -0400
+	id S933523Ab3E1VZs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 May 2013 17:25:48 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67E0A226DF;
-	Tue, 28 May 2013 20:07:47 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AAAA323CE8;
+	Tue, 28 May 2013 21:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=MxHC2jcX/jU76bj7SvJysTaNRPc=; b=xYH07FWVkLicnKPgDfiE
-	E1yQFQqvAFr/sHPuPWoGSof0gYVti+jG9fbZu6iGYc7o/6ZKQUvducx0TT1aMbaM
-	SiV2lCEmiNUq5w4i2X0QHb+2e8x3IPPJuLrm6a1ZrHMlYbGM5RUk14PuwaFJqz6T
-	waNbqs50FLdA5uJ8m6dwrGU=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kTpY5FxKCE7ajsPpqMuJMh4KF2U=; b=OFBtyz
+	kr3YbzzNuZguZSL/lb0R/loBEfRlVFdeZ8hOdsrlRKAZl5mdP6QTYwlj6ptvAbFr
+	RZgnw8IdA+xs/Vzn2a0Dcpb8tkuBViZZj0ouxVQlPiBvJQ769c28YDnbtYPMCgQk
+	vV62TkOPK0+s8T2baFrP1RSphEreSDdd5E0Dg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=SojP0q4i4lIt15ctFaMLAOH+1PiRKAFkOuzE7WJn2ZQmNW
-	JacNp+0SNArw4SR1Pxtr6kJva7McCDnWTBYK7cWnx65TZ6tCeFg1jTHOOy7SuAcG
-	rtmr+Ny7ULmjuzXLIoiGvNFaKdCjw1Z+1ka5WA+dPg0VTcQKItKHOwxHQLGlI=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=N9MFNkjt4OPTZKpbRtI726SX/9J1R+op
+	R+vJL9Apcp7zWpbz5X7tJt4vmhOSCM6zHXq4FnJvq9I1RHMVPOJSTBvCDuiSKiuB
+	JGjIXpBTmwoLmb2bmhyPsX+WUgi/Qi7CXWuBo9dIB6h2CRWVUQ731Kdp6/BVlk3z
+	rPhJjl8ykdY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E1D1226DE;
-	Tue, 28 May 2013 20:07:47 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A1FFF23CE7;
+	Tue, 28 May 2013 21:25:47 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 57D0B226DB;
-	Tue, 28 May 2013 20:07:46 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 210D023CE3;
+	Tue, 28 May 2013 21:25:47 +0000 (UTC)
+In-Reply-To: <CACsJy8Ct-ei7qbAW4qviQ6=q93ygxDcxRs9F3iHHV4-4Qz6qUA@mail.gmail.com>
+	(Duy Nguyen's message of "Mon, 27 May 2013 17:36:46 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 437A6C66-C7D2-11E2-A2B3-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 29702E22-C7DD-11E2-839E-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225687>
 
-Zenaan Harkness <zen@freedbms.net> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> I needed this quite a bit in the last few days, basic script but
-> serves my need. I think it would be useful for other beginners if in
-> $git/contrib/ source dir.
+> Point taken. I guess the message would be something like this?
 >
-> Just a start to a basic script. Needs more tests etc, but it's enough
-> to get newbies (like me) off to a reasonable start. Handles multiple
-> input dirs.
+> Refname '%.*s' is ignored. It may be created by mistake.
 >
-> PLEASE CC me, as I am not subscribed.
->
-> (some SMTP server rejected attachment, so pasting below instead)
->
-> Thanks,
-> Zenaan
->
->
-> #!/bin/bash
+> Or should we be more elaborate?
 
-I do not think you need (nor used) any bash-ism in this script.
-Saying "#!/bin/sh" here is cleaner.
-
->
-> # Change one or more normal repos into bare repos:
-> # See also https://git.wiki.kernel.org/index.php/GitFaq#How_do_I_make_existing_non-bare_repository_bare.3F
->
-> for i in "$@"; do
-
-	for i
-        do
-
-You do not have to say 'in "$@"'; it is implied.
-
->    echo; echo "----------------------"
->    echo Processing $i
-
-Forgot to dq?
-
->
->    repo="$i"
->    repo="`basename $i`"
->    tmp_repo="${repo}.git"
->    # Insert here: may be exit if any spaces in repo fqn
->    # Insert here: check for non-existent repo/.git dir
->    # Insert here: check that we are not inside the repo
->    # Insert here: add exit/do-nothing if fail to mv dirs etc
->
->    mv $repo/.git $tmp_repo
-
-Forgot to dq?  i.e.
-
-	mv "$repo/.git" "$tmp_repo"
-
-The same for all the variable references in the remainder of the
-script.
-
-More importantly, "mv" would fail if $repo is given as a full
-pathname elsewhere in the filesystem that is different from your
-current directory where you create $tmp_repo.
-
->    git --git-dir=$tmp_repo config core.bare true
->    mv $repo ${repo}.bak
->    mv $tmp_repo $repo
-> done
+I dunno; with s/may be/may have been/, I think it is better than
+"refname is ambiguous".
