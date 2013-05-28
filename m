@@ -1,113 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] rebase: fix cherry-pick invocations
-Date: Tue, 28 May 2013 15:51:41 -0700
-Message-ID: <7vvc62wwea.fsf@alter.siamese.dyndns.org>
-References: <1369747757-10192-1-git-send-email-felipe.contreras@gmail.com>
-	<1369747757-10192-6-git-send-email-felipe.contreras@gmail.com>
-	<7vzjvewwne.fsf@alter.siamese.dyndns.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] fix segfault with git log -c --follow
+Date: Wed, 29 May 2013 00:54:54 +0200
+Message-ID: <20130528225453.GA9820@ecki>
+References: <20130527224957.GA7492@ecki>
+ <7vk3mj10l2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 00:51:49 2013
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 29 00:55:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhSk9-0003VA-2j
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 00:51:49 +0200
+	id 1UhSo2-0006lx-VD
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 00:55:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757861Ab3E1Wvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 May 2013 18:51:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63307 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757092Ab3E1Wvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 May 2013 18:51:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05FA7238A9;
-	Tue, 28 May 2013 22:51:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5F7ZJo4tSbKp/orJWdz+hDFVn14=; b=c+qKdi
-	9y9xe4c5aBFdFvT/chN3EsHixQXYyJ0YOHwfjWYt9zuR35quBOStUVkRDRf2xIzm
-	bk+DwICuJTkbB9Hg66ui1gNEU65F+ZA/laIxcD3kA/n3VV3cl51giP86uepIsWBB
-	3AWq24yCXK3ZjvbCPap1t1EvelltPPo/opt5c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gR+DuYCcur722SECbZ+WA1AHecJxNgm8
-	z+v0w+46HsHJvrTyqWDLYfwnJAtkNLgW9BTlgRMjnVDvKckhc3hXgEZGhC68VbBK
-	cuiSdguRTIKjyxSDFtkDVPp2OvNzPqCh36ksE7fVlpoguGiIkLG8IyT+BRlYdeH6
-	4FPE2FWu160=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F1112238A8;
-	Tue, 28 May 2013 22:51:43 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CE85238A7;
-	Tue, 28 May 2013 22:51:43 +0000 (UTC)
-In-Reply-To: <7vzjvewwne.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 28 May 2013 15:46:13 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2ACD0892-C7E9-11E2-8CEF-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758133Ab3E1Wzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 May 2013 18:55:47 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:60756 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757097Ab3E1Wzq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 May 2013 18:55:46 -0400
+X-Greylist: delayed 86696 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 May 2013 18:55:46 EDT
+Received: from [127.0.0.1] (p5B22CF5E.dip0.t-ipconnect.de [91.34.207.94])
+	by bsmtp.bon.at (Postfix) with ESMTP id 7C79310019;
+	Wed, 29 May 2013 00:55:42 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vk3mj10l2.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225696>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, May 28, 2013 at 10:22:17AM -0700, Junio C Hamano wrote:
+> Clemens Buchacher <drizzd@aon.at> writes:
+> 
+> > In diff_tree_combined we make a copy of diffopts. In
+> > try_to_follow_renames, called via diff_tree_sha1, we free and
+> > re-initialize diffopts->pathspec->items. Since we did not make a deep
+> > copy of diffopts in diff_tree_combined, the original diffopts does not
+> > get the update. By the time we return from diff_tree_combined,
+> > rev->diffopt->pathspec->items points to an invalid memory address. We
+> > get a segfault next time we try to access that pathspec.
+> 
+> I am not quite sure if I follow.  Do you mean
+> 
+> 	diff_tree_combined()
+>         - makes a shallow copy of rev->diffopt
+>         - calls diff_tree_sha1()
+>           diff_tree_sha1()
+>           - tries to follow rename and clobbers diffopt
 
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> So that all the tests pass.
->>
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> ---
->>  git-rebase--cherry.sh | 17 ++++++++++++++++-
->>  1 file changed, 16 insertions(+), 1 deletion(-)
->>
->> diff --git a/git-rebase--cherry.sh b/git-rebase--cherry.sh
->> index ca78b1b..c3a2ac9 100644
->> --- a/git-rebase--cherry.sh
->> +++ b/git-rebase--cherry.sh
->> @@ -23,11 +23,26 @@ test -n "$rebase_root" && root_flag=--root
->>  mkdir "$state_dir" || die "Could not create temporary $state_dir"
->>  : > "$state_dir"/cherry || die "Could not mark as cherry"
->>  
->> +if test -n "$rebase_root"
->> +then
->> +	revisions="$onto...$orig_head"
->> +else
->> +	revisions="$upstream...$orig_head"
->> +fi
->
-> "So that all the tests pass" needs a bit more explanation to say for
-> cherry-pick codepath why and how two-dot range fails and why and how
-> three-dot variant with --right-only fixes it.  What are the problematic
-> cases?
+Right.
 
-Yikes, sorry, this was me being slow.  Walking A...B range with
-right-only and --cherry applied will filter the duplicates, which is
-wat you want, I think, and walking A..B range will not do the
-filtering for you.
+>         - tries to use the shallow copy of original rev->diffopt
+>           that no longer is valid, which is a problem
 
+diff_tree_combined does not try to use it right away. It does return,
+but rev->diffopt is now invalid and the next time we do any kind of diff
+with it, we have a problem.
 
->>  # we have to do this the hard way.  git format-patch completely squashes
->>  # empty commits and even if it didn't the format doesn't really lend
->>  # itself well to recording empty patches.  fortunately, cherry-pick
->>  # makes this easy
->> -git cherry-pick --allow-empty "$revisions"
->> +if test -n "$keep_empty"
->> +then
->> +	extra="--allow-empty"
->> +else
->> +	extra="--skip-empty --cherry-pick"
->> +fi
->> +test -n "$GIT_QUIET" && extra="$extra -q"
->> +test -z "$force_rebase" && extra="$extra --ff"
->> +git cherry-pick --no-merges --right-only --topo-order --do-walk --copy-notes $extra "$revisions"
->>  ret=$?
->>  
->>  if test 0 != $ret
+> I wonder, just like we force recursive and disable external on the
+> copy before we use it to call diff_tree_sha1(), if we should disable
+> follow-renames on it.  "--follow" is an option that is given to the
+> history traversal part and it should not play any role in getting the
+> pairwise diff with all parents diff_tree_combined() does.
+
+Can't parse that last sentence.
+
+In any case, I don't think disabling diff_tree_sha1 is a solution. The
+bug is in diff_tree_sha1 and its subfunctions, because they manipulate a
+data structures such that it becomes corrupt. And they do so in an
+obfuscated and clearly unintentional manner. So we should not blame the
+user for calling diff_tree_sha1 in such a way that it causes corruption.
+
+> Besides,
+> 
+>  - "--follow" hack lets us keep track of only one path; and
+
+Ok. Good to know it is considered a hack. The code is quite strange
+indeed.
+
+>  - "-c" and "--cc" make sense only when dealing with a merge commit
+>    and the path in the child may have come from different path in
+>    parents,
+
+Sorry, I don't get it.
+
+> so I am not sure if allowing combination of "--follow -c/--cc" makes
+> much sense in the first place.
+
+My use-case is came up with this history:
+
+1. Code gets added to file A.
+2. File A gets renamed to B in a different branch.
+3. The branches get merged, and code from (1) is removed in the merge.
+
+Later I wonder why code from (1) is gone from B even though I felt
+certain it had been added before. I also remember that B was renamed at
+some point. So I do git log -p --follow B, and it nicely shows that diff
+where the code was added, but no diff where the code is removed.
+
+The reason is of course, that the code was removed in the merge and that
+diff is not shown. And -c is usually what I do to enable showing diffs
+in merge commits.
+
+And if the pairwise diff can also deal with file renames, I think it
+absolutely does make sense to show also a three-way diff.
+
+I can't tell far away the code is from supporting anything like that.
+
+Cheers,
+Clemens
