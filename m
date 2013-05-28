@@ -1,85 +1,87 @@
-From: =?Big5?B?pEG7xL5Z?= <ch3cooli@gmail.com>
-Subject: Re: fix french translation
-Date: Tue, 28 May 2013 07:57:48 +0800
-Message-ID: <CAHtLG6Q-OWKJZVcFateFjgJ4TfovEWrfph9dyuiGi+ophBVh0Q@mail.gmail.com>
-References: <CAHtLG6ToiRT-EQMFhrR976=gat+8p0GFFyz+9qpqaq36=gVyGQ@mail.gmail.com>
-	<CALWbr2w+ooM04nc79XKyVy48c_eH1AES5XgVDwwk+tFpmitLTw@mail.gmail.com>
-	<CAHtLG6SfTi9XiqGDFhjR0DzLwSK0qVm0GL9-7boHEo=d2uCmvA@mail.gmail.com>
-	<CALWbr2xU58Ymq3xzAdomi_ND==ByHFfCNuZvEPDcsEcozRgoTg@mail.gmail.com>
-	<vpqmwrg23sx.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Antoine Pelisse <apelisse@gmail.com>, git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue May 28 01:58:06 2013
+From: Xidorn Quan <quanxunzhen@gmail.com>
+Subject: [PATCH v3] credential-osxkeychain: support more protocols
+Date: Tue, 28 May 2013 10:36:21 +0800
+Message-ID: <1369708581-4104-1-git-send-email-quanxunzhen@gmail.com>
+References: <1369665359-48242-1-git-send-email-quanxunzhen@gmail.com>
+Cc: Xidorn Quan <quanxunzhen@gmail.com>, Jeff King <peff@peff.net>,
+	John Szakmeister <john@szakmeister.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 28 04:36:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uh7Ik-0004fB-E9
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 01:58:06 +0200
+	id 1Uh9mP-00027v-4g
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 04:36:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758260Ab3E0X5u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 May 2013 19:57:50 -0400
-Received: from mail-vb0-f41.google.com ([209.85.212.41]:35711 "EHLO
-	mail-vb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758249Ab3E0X5t convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 May 2013 19:57:49 -0400
-Received: by mail-vb0-f41.google.com with SMTP id p14so5068652vbm.0
-        for <git@vger.kernel.org>; Mon, 27 May 2013 16:57:48 -0700 (PDT)
+	id S1758634Ab3E1Cgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 May 2013 22:36:48 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:41023 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758627Ab3E1Cgs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 May 2013 22:36:48 -0400
+Received: by mail-pd0-f180.google.com with SMTP id 14so4653827pdc.25
+        for <git@vger.kernel.org>; Mon, 27 May 2013 19:36:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=HTKX7GWjacFMaw4PBlKm8JTwsdQuwSxHhfkmDBiEshw=;
-        b=xzsK6jdq/QD+NA/Dqnsx5fSM2m0XypHGZbDFXGhbNYityYK9VC0dKY133tED4IvpeN
-         g7RaHxFMFE/KYIm+c8J4N/J8FO1ZQ02ku+nNwlxgwZrDRFeN84k3zlA7zq+woHV47YfC
-         7kUs2BfkaRD9LSeHAcS2Gt9wrN3qb7wD99fzmqyzlbVKzT1aMwGoVkqJTz79smR6wjgy
-         hjSl2SCliJ7syhCPVl4qtfZWgdPMqsEemgnEoYTPQT3IAqGUkV4u0thwfSTImCUXBK7o
-         7WmpI5DpL3D6ODGAxVNa31qQ/0OOc+kSwwUJj7JJGCQQ7qmapdmDx+o8SkWaxWlUufN4
-         TQzw==
-X-Received: by 10.220.68.13 with SMTP id t13mr16417294vci.24.1369699068761;
- Mon, 27 May 2013 16:57:48 -0700 (PDT)
-Received: by 10.220.177.7 with HTTP; Mon, 27 May 2013 16:57:48 -0700 (PDT)
-In-Reply-To: <vpqmwrg23sx.fsf@anie.imag.fr>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=GzGvx6Z1l1ndU+f/c79O87SqoHCVB5TlVRoJeT9LCcw=;
+        b=JXX8Zkj1AGtN4W0YHfVN/SIG77m0gHAf8PXQSdVKP+A/o5TYx5O9BDCwGfsIr4C+4I
+         Nd0IPghp+Totuz1VCCN6quFUGvCdTi+pg7oV53m97WO07NUDs0h04FkfKzuKnLuL1ySy
+         Bh/4/74KkTZjCOkVgeHQthOPy4TLZU2FASn7PiYKDu3oFRZhtm4RkCnpZVXI3e2Y7iq9
+         QY1B2//zdZHZYAOlRFOjFjl3SUZQCE0iKu+kR+a1DwNvc87G1KJOOu1LnIZ+FMJkibMj
+         lpn+am9Qe0YQk+MFXCvlJEN8WvDvFMXLD0GWxnFkVdf5LkftlKyZFjnXXjLoM9wEsBhT
+         CWBw==
+X-Received: by 10.66.246.131 with SMTP id xw3mr31747088pac.114.1369708607618;
+        Mon, 27 May 2013 19:36:47 -0700 (PDT)
+Received: from localhost.localdomain ([221.239.198.136])
+        by mx.google.com with ESMTPSA id bs2sm32955470pad.17.2013.05.27.19.36.44
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 27 May 2013 19:36:46 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3
+In-Reply-To: <1369665359-48242-1-git-send-email-quanxunzhen@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225618>
 
-Sorry, I reversed the revisions. This one should be correct.
+Add protocol imap, imaps, ftp and smtp for credential-osxkeychain.
 
- git-gui/po/fr.po | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Signed-off-by: Xidorn Quan <quanxunzhen@gmail.com>
+Acked-by: John Szakmeister <john@szakmeister.net>
+Acked-by: Jeff King <peff@peff.net>
+---
+ contrib/credential/osxkeychain/git-credential-osxkeychain.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/git-gui/po/fr.po b/git-gui/po/fr.po
-index 40441db..0aff186 100644
---- a/git-gui/po/fr.po
-+++ b/git-gui/po/fr.po
-@@ -1139,7 +1139,7 @@ msgstr "Standard (rapide, semi-redondant, liens d=
-urs)"
-
- #: lib/choose_repository.tcl:514
- msgid "Full Copy (Slower, Redundant Backup)"
--msgstr "Copy compl=C3=A8te (plus lent, sauvegarde redondante)"
-+msgstr "Copie compl=C3=A8te (plus lent, sauvegarde redondante)"
-
- #: lib/choose_repository.tcl:520
- msgid "Shared (Fastest, Not Recommended, No Backup)"
-
-2013/5/27 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
-> Antoine Pelisse <apelisse@gmail.com> writes:
->
->>> -msgstr "Copie compl=C4=8Dte (plus lent, sauvegarde redondante)"
->>> +msgstr "Copy compl=C4=8Dte (plus lent, sauvegarde redondante)"
->>
->> I still don't get why "Copie" is replaced by "Copy" ?
->
-> Yes, this is clearly wrong. Copie is french, Copy is not.
->
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+index 3940202..bcd3f57 100644
+--- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
++++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+@@ -127,10 +127,20 @@ static void read_credential(void)
+ 		*v++ = '\0';
+ 
+ 		if (!strcmp(buf, "protocol")) {
+-			if (!strcmp(v, "https"))
++			if (!strcmp(v, "imap"))
++				protocol = kSecProtocolTypeIMAP;
++			else if (!strcmp(v, "imaps"))
++				protocol = kSecProtocolTypeIMAPS;
++			else if (!strcmp(v, "ftp"))
++				protocol = kSecProtocolTypeFTP;
++			else if (!strcmp(v, "ftps"))
++				protocol = kSecProtocolTypeFTPS;
++			else if (!strcmp(v, "https"))
+ 				protocol = kSecProtocolTypeHTTPS;
+ 			else if (!strcmp(v, "http"))
+ 				protocol = kSecProtocolTypeHTTP;
++			else if (!strcmp(v, "smtp"))
++				protocol = kSecProtocolTypeSMTP;
+ 			else /* we don't yet handle other protocols */
+ 				exit(0);
+ 		}
+-- 
+1.8.3
