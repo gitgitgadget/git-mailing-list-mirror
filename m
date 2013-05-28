@@ -1,70 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (May 2013, #04; Wed, 15)
-Date: Tue, 28 May 2013 14:25:45 -0700
-Message-ID: <7vppwayexy.fsf@alter.siamese.dyndns.org>
-References: <7vmwrvajye.fsf@alter.siamese.dyndns.org>
-	<CACsJy8Cr7AKxo9sUjMCVQ0=O91L8CRoxD3qrvZczCrBUq4TDzA@mail.gmail.com>
-	<7vk3mtwrq9.fsf@alter.siamese.dyndns.org>
-	<CACsJy8Ct-ei7qbAW4qviQ6=q93ygxDcxRs9F3iHHV4-4Qz6qUA@mail.gmail.com>
+From: =?utf-8?b?w5h5c3RlaW4=?= Walle <oystwa@gmail.com>
+Subject: Re: 1.8.3 - gitignore not being parsed correctly on OS X; regex support is broken?
+Date: Tue, 28 May 2013 21:35:01 +0000 (UTC)
+Message-ID: <loom.20130528T232459-307@post.gmane.org>
+References: <CAGLuM14_MQffwQWrB2YCQXzhkGaxdaYBuY74y7=pfb-hB6LskA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 28 23:29:50 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 28 23:40:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhRSm-0008NF-DG
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 23:29:48 +0200
+	id 1UhRct-0001Ur-Rb
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 23:40:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933596Ab3E1VZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 May 2013 17:25:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60044 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933523Ab3E1VZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 May 2013 17:25:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AAAA323CE8;
-	Tue, 28 May 2013 21:25:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kTpY5FxKCE7ajsPpqMuJMh4KF2U=; b=OFBtyz
-	kr3YbzzNuZguZSL/lb0R/loBEfRlVFdeZ8hOdsrlRKAZl5mdP6QTYwlj6ptvAbFr
-	RZgnw8IdA+xs/Vzn2a0Dcpb8tkuBViZZj0ouxVQlPiBvJQ769c28YDnbtYPMCgQk
-	vV62TkOPK0+s8T2baFrP1RSphEreSDdd5E0Dg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N9MFNkjt4OPTZKpbRtI726SX/9J1R+op
-	R+vJL9Apcp7zWpbz5X7tJt4vmhOSCM6zHXq4FnJvq9I1RHMVPOJSTBvCDuiSKiuB
-	JGjIXpBTmwoLmb2bmhyPsX+WUgi/Qi7CXWuBo9dIB6h2CRWVUQ731Kdp6/BVlk3z
-	rPhJjl8ykdY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A1FFF23CE7;
-	Tue, 28 May 2013 21:25:47 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 210D023CE3;
-	Tue, 28 May 2013 21:25:47 +0000 (UTC)
-In-Reply-To: <CACsJy8Ct-ei7qbAW4qviQ6=q93ygxDcxRs9F3iHHV4-4Qz6qUA@mail.gmail.com>
-	(Duy Nguyen's message of "Mon, 27 May 2013 17:36:46 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 29702E22-C7DD-11E2-839E-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S932747Ab3E1VkJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 May 2013 17:40:09 -0400
+Received: from plane.gmane.org ([80.91.229.3]:58301 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757698Ab3E1VkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 May 2013 17:40:06 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UhRci-0001Jy-2k
+	for git@vger.kernel.org; Tue, 28 May 2013 23:40:04 +0200
+Received: from 233.5.200.37.customer.cdi.no ([37.200.5.233])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 28 May 2013 23:40:04 +0200
+Received: from oystwa by 233.5.200.37.customer.cdi.no with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 28 May 2013 23:40:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 37.200.5.233 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Ubuntu Chromium/25.0.1364.160 Chrome/25.0.1364.160 Safari/537.22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225688>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Misty De Meo <misty <at> brew.sh> writes:
 
-> Point taken. I guess the message would be something like this?
->
-> Refname '%.*s' is ignored. It may be created by mistake.
->
-> Or should we be more elaborate?
+>=20
+> Hi,
+>=20
+> Gitignore parsing no longer seems to work properly in git 1.8.3.
+>=20
+> One of my repositories has the following gitignore:
+>=20
+> /*
+> !/.gitignore
+> !/Library/
+> !/CONTRIBUTING.md
+> !/README.md
+> !/SUPPORTERS.md
+> !/bin
+> /bin/*
+> !/bin/brew
+> !/share/man/man1/brew.1
+> .DS_Store
+> /Library/LinkedKegs
+> /Library/PinnedKegs
+> /Library/Taps
+> /Library/Formula/.gitignore
+>=20
+> In 1.8.2.3 and earlier, this works as expected. However, in 1.8.3 I'm
+> seeing every file in /bin/ being marked as an untracked file.
+>=20
+> I asked about this in #git, and was told that the culprit was the
+> regex support; apparently recompiling without regex support fixes the
+> specific gitignore issue. However, this doesn't seem to have been
+> reported anywhere on the mailing list that I can see. I was also told
+> that the issue is OS X-specific, and doesn't happen on other
+> platforms.
+>=20
+> Thanks,
+> Misty De Meo
+>=20
 
-I dunno; with s/may be/may have been/, I think it is better than
-"refname is ambiguous".
+I see a similar problem using e.g. the following .gitignore to exclude
+everything except C source files and header files:
+
+    *
+    !*/
+    !*.c
+    !*.h
+
+In Git 1.8.3 'git status' will show other files as untracked while in
+Git 1.8.2.3 I don't have that problem. I bisected to find that the
+offending commit is v1.8.2.1-402-g95c6f27.=20
+
+I am not on OSX, however, but on Linux (Ubuntu 12.04 and RHEL 5.8) so
+this may be a separate issue. I've also gotten the impression that this
+is intentional. In any case I cannot create a .gitignore that achieves
+the same for both older and newer versions of Git.
+
+Best regards,
+=C3=98ystein Walle
