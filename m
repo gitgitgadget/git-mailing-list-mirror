@@ -1,80 +1,103 @@
-From: Misty De Meo <misty@brew.sh>
-Subject: 1.8.3 - gitignore not being parsed correctly on OS X; regex support
- is broken?
-Date: Tue, 28 May 2013 12:54:15 -0500
-Message-ID: <CAGLuM14_MQffwQWrB2YCQXzhkGaxdaYBuY74y7=pfb-hB6LskA@mail.gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 1/3] cherry-pick: add support to copy notes
+Date: Tue, 28 May 2013 20:01:11 +0200
+Message-ID: <87mwrfx9ug.fsf@linux-k42r.v.cablecom.net>
+References: <1369745947-19416-1-git-send-email-felipe.contreras@gmail.com>
+	<1369745947-19416-2-git-send-email-felipe.contreras@gmail.com>
+	<7vobbv119k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 28 19:54:22 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	"Christian Couder" <chriscool@tuxfamily.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 28 20:01:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhO6H-0003nj-KM
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 19:54:21 +0200
+	id 1UhOD1-0001wS-KP
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 20:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964916Ab3E1RyR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 May 2013 13:54:17 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:44687 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964881Ab3E1RyQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 May 2013 13:54:16 -0400
-Received: by mail-wi0-f179.google.com with SMTP id hq7so2748254wib.0
-        for <git@vger.kernel.org>; Tue, 28 May 2013 10:54:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        bh=dHhuaRg4Zk6R43GWDQqTDx8BMHUJ2S2IWdBTRXcFeVU=;
-        b=Ro5SGcINiE8qVf1c9vGF85AdQHzIdcLMvCeRD2Qvtrx2NGAdS3B3z0dHeIV6SQ7fgP
-         KEcUsvQkMuFC3ecHocLE+0KpFCK9lO0n3sjSWRlacdjuZuaqo9XZOSBs0iRDEqNvPlSM
-         m2WXccYQVMSswOSmHPso57tqj8Kk9RK/jPdZao3UuJIiDWehvaHwyl9zuvQUzHbGCORC
-         J2IC/DPEwde5BTGFnbK/7tEop6EW/eCPCJbtUBI2ACN53y5jGRPiwLAaH73P2/bTHxvc
-         pdeNhevdN72r+KnGGyD0bw9UnaALWZQv00Q0Tw9S95/3Bz284VopWNJcqd/RlgZaqf7V
-         F5xQ==
-X-Received: by 10.180.9.80 with SMTP id x16mr12864914wia.63.1369763655443;
- Tue, 28 May 2013 10:54:15 -0700 (PDT)
-Received: by 10.180.163.140 with HTTP; Tue, 28 May 2013 10:54:15 -0700 (PDT)
-X-Google-Sender-Auth: Ckge5GKCTol-3wWmFCeohGrdaB4
+	id S1759214Ab3E1SBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 May 2013 14:01:15 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:23234 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759193Ab3E1SBO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 May 2013 14:01:14 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 28 May
+ 2013 20:01:08 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Tue, 28 May 2013 20:01:11 +0200
+In-Reply-To: <7vobbv119k.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 28 May 2013 10:07:35 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225676>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Gitignore parsing no longer seems to work properly in git 1.8.3.
+> Thomas Rast Cc'ed as he has been the primary force behind this line
+> of "notes" usability.
 
-One of my repositories has the following gitignore:
+Thanks for pointing this out to me.
 
-/*
-!/.gitignore
-!/Library/
-!/CONTRIBUTING.md
-!/README.md
-!/SUPPORTERS.md
-!/bin
-/bin/*
-!/bin/brew
-!/share/man/man1/brew.1
-.DS_Store
-/Library/LinkedKegs
-/Library/PinnedKegs
-/Library/Taps
-/Library/Formula/.gitignore
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>  builtin/revert.c  |   2 +
+>>  sequencer.c       | 136 ++++++++++++++++++++++++++++++++++++++++++++++++++++--
+>>  sequencer.h       |   2 +
+>>  t/t3500-cherry.sh |  32 +++++++++++++
+>>  4 files changed, 169 insertions(+), 3 deletions(-)
+>
+> "git cherry-pick" should help maintaining notes just like amend and
+> rebase, but how should this interact with notes.rewrite.<command>,
+> where the command is capable of doing this without an explicit
+> option once you tell which notes need to be maintained?
 
-In 1.8.2.3 and earlier, this works as expected. However, in 1.8.3 I'm
-seeing every file in /bin/ being marked as an untracked file.
+Since we already have the notes.rewrite.<command> convention, it would
+seem the obvious choice to line it up with the others.  The main
+bikeshedding opportunity is whether this should be an exception and
+default to false (all other commands default it to true).
 
-I asked about this in #git, and was told that the culprit was the
-regex support; apparently recompiling without regex support fixes the
-specific gitignore issue. However, this doesn't seem to have been
-reported anywhere on the mailing list that I can see. I was also told
-that the issue is OS X-specific, and doesn't happen on other
-platforms.
+Also: how does this interact with notes.rewriteRef and the corresponding
+env vars?  Why?
 
-Thanks,
-Misty De Meo
+How does it interact with 'cherry-pick -n' if this is done in sequence,
+effectively squashing several commits (this use-case is actually
+suggested by the manpage), if multiple source commits had notes?  Should
+it respect notes.rewriteMode (and by default concatenate)?  (I don't
+know if the sequencer state is expressive enough already to carry this
+in a meaningful way across cherry-pick commands.)
+
+A commit message and some docs would be a nice idea, too.
+
+> diff --git a/t/t3500-cherry.sh b/t/t3500-cherry.sh
+> index f038f34..79c1219 100755
+> --- a/t/t3500-cherry.sh
+> +++ b/t/t3500-cherry.sh
+
+This file starts out with
+
+  test_description='git cherry should detect patches integrated upstream
+
+  This test cherry-picks one local change of two into master branch, and
+  checks that git cherry only returns the second patch in the local branch
+  '
+
+So either your tests should go to a different file or the description
+becomes stale and needs to be updated.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
