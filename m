@@ -1,109 +1,120 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] sequencer: trivial fix
-Date: Tue, 28 May 2013 10:04:21 -0700
-Message-ID: <7vobbv2fze.fsf@alter.siamese.dyndns.org>
-References: <1369673539-28692-1-git-send-email-felipe.contreras@gmail.com>
-	<1369673539-28692-2-git-send-email-felipe.contreras@gmail.com>
-	<20130528110014.GA1264@hmsreliant.think-freely.org>
+Subject: Re: [PATCH RESEND v2] path: Fix a sparse warning
+Date: Tue, 28 May 2013 10:04:33 -0700
+Message-ID: <7vhahn2fz2.fsf@alter.siamese.dyndns.org>
+References: <51A3B308.6000201@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Neil Horman <nhorman@tuxdriver.com>
-X-From: git-owner@vger.kernel.org Tue May 28 19:04:33 2013
+Cc: GIT Mailing-list <git@vger.kernel.org>, tboegi@web.de
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue May 28 19:04:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhNK2-0006cb-0K
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 19:04:30 +0200
+	id 1UhNKD-0006lk-9w
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 19:04:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934866Ab3E1REZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 May 2013 13:04:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55357 "EHLO
+	id S934869Ab3E1REh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 May 2013 13:04:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64884 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934848Ab3E1REY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 May 2013 13:04:24 -0400
+	id S934848Ab3E1REg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 May 2013 13:04:36 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E15923D3F;
-	Tue, 28 May 2013 17:04:24 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F37A023D57;
+	Tue, 28 May 2013 17:04:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=Uri7PcGVcnQoLEw1u9WFY55sCBA=; b=heMCMFR+EWJ2uSSWQbo8
-	pWOOYQsld1ymwfVM1+sttxoxeGxuKsWoi0hdoaHa6F73b+z/yKP+QwHH4VmrHBju
-	NlATDSp38lilGShojB2YuHcGutF2743LJGNWwgGNTrsnlNj5vSt2E23wjLGhOR5y
-	lZiLBhgMb431hYl9ddChm28=
+	 s=sasl; bh=fGYiBlZqUMUifaOBMlZhwN29OGI=; b=Ajyr8KB83wxB7D9Y3tHR
+	QuJe7rWFg1zrZIDXvNgY9jtiplIYlORh86AUspcdfJCwIurRngq9029kksO0esXw
+	xVQApVPK31ad2aElagDyYl37scStcuwFAzOIhMZQaNzejdmfEPBEScTO4E7KVvRr
+	qtVTXH+QoVZz5r3bGDLBRzw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=GENdu7j4bnVSdG38S6tH1BNxGISiONdxytSXm1E/z3XTX5
-	5+wIcqGauc+Ce5gvkeas9gSzvawwGWQHb/nASxD+xtNS+Z9vwoPbX1YgG57R0QdL
-	CTnyBR1+R288DERyhK1+nF0c+YJnycZI2rloqVL/TCCNhHX5f6rXts7GSPoxs=
+	 q=dns; s=sasl; b=WjoghBs2hbFBvdML825EW+ZCEmsa4G7k+4WqsHEyVWFm20
+	77zp/cxgNv2aUCYFDmnb5AVo2kyAFf+lmUPLI7Saz5vyK4NarOQvcXclvvo6gM7w
+	ieco2V0MSrEp4hTErkt5pzAixKGHbWJ1/6YnrkCC6d4DMidM/g12jVtAZE9D8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 205CA23D3E;
-	Tue, 28 May 2013 17:04:24 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA10623D55;
+	Tue, 28 May 2013 17:04:35 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 36B6E23D3C;
-	Tue, 28 May 2013 17:04:23 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D23DC23D51;
+	Tue, 28 May 2013 17:04:34 +0000 (UTC)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A524F5CC-C7B8-11E2-92EA-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: AC08CBF2-C7B8-11E2-AA62-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225664>
 
-Neil Horman <nhorman@tuxdriver.com> writes:
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-> On Mon, May 27, 2013 at 11:52:18AM -0500, Felipe Contreras wrote:
->> We should free objects before leaving.
->> 
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> ---
->>  sequencer.c | 7 +++++--
->>  1 file changed, 5 insertions(+), 2 deletions(-)
->> 
->> diff --git a/sequencer.c b/sequencer.c
->> index ab6f8a7..7eeae2f 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -626,12 +626,15 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
->>  		rerere(opts->allow_rerere_auto);
->>  	} else {
->>  		int allow = allow_empty(opts, commit);
->> -		if (allow < 0)
->> -			return allow;
->> +		if (allow < 0) {
->> +			res = allow;
->> +			goto leave;
->> +		}
->>  		if (!opts->no_commit)
->>  			res = run_git_commit(defmsg, opts, allow);
->>  	}
->>  
->> +leave:
->>  	free_message(&msg);
->>  	free(defmsg);
->>  
->> -- 
->> 1.8.3.rc3.312.g47657de
->> 
->> 
-> Acked-by: Neil Horman <nhorman@tuxdriver.com>
+> On MinGW, sparse issues an "'get_st_mode_bits' not declared. Should
+> it be static?" warning. The MinGW and MSVC builds do not see the
+> declaration of this function, within git-compat-util.h, due to its
+> placement within an preprocessor conditional.
+>
+> In order to suppress the warning, we simply move the declaration to
+> the top level of the header.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> ---
+>
+> Hi Junio,
+>
+> Now that v1.8.3 is out, I note that this patch seems to have been
+> dropped (or did I miss something?).
+>
+> This used to be
+>
+>     [PATCH 2/6] path: Make the 'get_st_mode_bits' symbol a file static
+>
+> but the change in implementation required a change in title.
+> This version simply moves the declaration so that the MinGW and
+> MSVC builds can see it.
 
-This is better done without "goto" in general.
+Will queue.
 
-The other patch 2/2/ adds one more "we need to exit from the middle
-of the flow" and makes it look handier to add an exit label here,
-but it would be even better to express the logic of that patch as a
-normal cascade of if/else if/..., which is small enough and we do
-not need the "leave:" label.
+Can you tell me what the conclusion on the discussion on your two
+other patches on 'pu'?
 
-It probably is better to fold this patch into the other one when it
-is rerolled to correct the option name gotcha "on the tin".
+* rj/mingw-cygwin (2013-05-08) 2 commits
+ - cygwin: Remove the CYGWIN_V15_WIN32API build variable
+ - mingw: rename WIN32 cpp macro to GIT_WINDOWS_NATIVE
 
-Thanks.
+I stopped keeping track of the discussion and my vague recollection
+was that it is OK for 1.5 but not verified on 1.7 or something?
+
+>
+> ATB,
+> Ramsay Jones
+>
+>  git-compat-util.h | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index e955bb5..0e5e4f8 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -163,7 +163,6 @@
+>  typedef long intptr_t;
+>  typedef unsigned long uintptr_t;
+>  #endif
+> -int get_st_mode_bits(const char *path, int *mode);
+>  #if defined(__CYGWIN__)
+>  #undef _XOPEN_SOURCE
+>  #include <grp.h>
+> @@ -176,6 +175,8 @@ int get_st_mode_bits(const char *path, int *mode);
+>  #endif
+>  #endif
+>  
+> +extern int get_st_mode_bits(const char *path, int *mode);
+> +
+>  /* used on Mac OS X */
+>  #ifdef PRECOMPOSE_UNICODE
+>  #include "compat/precompose_utf8.h"
