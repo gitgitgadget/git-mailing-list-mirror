@@ -1,135 +1,111 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2] difftool --dir-diff: always use identical working
- tree file
-Date: Tue, 28 May 2013 20:08:29 +0100
-Message-ID: <20130528190829.GB17475@serenity.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] difftool --dir-diff: always use identical working tree file
+Date: Tue, 28 May 2013 12:31:14 -0700
+Message-ID: <7vtxlmzyt9.fsf@alter.siamese.dyndns.org>
 References: <20130526154429.GK27005@serenity.lan>
- <1369668697-1016-1-git-send-email-nitoyon@gmail.com>
- <7vbo7v0yju.fsf@alter.siamese.dyndns.org>
- <20130528181525.GA17475@serenity.lan>
- <7v7gij0w6z.fsf@alter.siamese.dyndns.org>
+	<1369668697-1016-1-git-send-email-nitoyon@gmail.com>
+	<7vbo7v0yju.fsf@alter.siamese.dyndns.org>
+	<20130528181525.GA17475@serenity.lan>
+	<7v7gij0w6z.fsf@alter.siamese.dyndns.org>
+	<20130528190829.GB17475@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Kenichi Saita <nitoyon@gmail.com>, git@vger.kernel.org,
 	David Aguilar <davvid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 28 21:08:48 2013
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue May 28 21:31:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhPGF-00060E-Oq
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 21:08:44 +0200
+	id 1UhPcA-00015G-CP
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 21:31:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753929Ab3E1TIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 May 2013 15:08:39 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:52638 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753495Ab3E1TIj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 May 2013 15:08:39 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 85237CDA5E5;
-	Tue, 28 May 2013 20:08:38 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rbYfRW97hiaB; Tue, 28 May 2013 20:08:37 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1753098Ab3E1TbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 May 2013 15:31:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46590 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752468Ab3E1TbR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 May 2013 15:31:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 769ED2353C;
+	Tue, 28 May 2013 19:31:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mQx78+AgyeHYU9nK8RHXkbACMvk=; b=Yhw5iq
+	BjEVtSfUgIS8yjlkuOC9pCVXDpuiAFIODhcdsdKyhUWT35gpWDrsHlhiYy9gZ3sZ
+	ezRqw5NYgJjDIfcj0pGyMkeVQJjCzJqpUgKGpeTY8HOblzAD1eybv6zLDMWSbGH9
+	GwW0ReDVFBWforVpxdpE6o1gJTRYyHMElKtCQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mA+Ww4s45PmE8PZWD1g4y9qrZtLJjIea
+	QeMKFWD4sQ7nioYHO4RT+yv+1s3yTGoJMve3ut8HaEfr+YBxir5QYMkJx4mIfMC8
+	k0+JuxoHJgdIAbCwVDM5E4jDw8+v4IfUj5OK6zR96hGgplNyr4Xt+BXtyL+K5YuO
+	wXS3Blnw9Dk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 699742353B;
+	Tue, 28 May 2013 19:31:16 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 1B12ACDA5AF;
-	Tue, 28 May 2013 20:08:31 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7v7gij0w6z.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E03F52353A;
+	Tue, 28 May 2013 19:31:15 +0000 (UTC)
+In-Reply-To: <20130528190829.GB17475@serenity.lan> (John Keeping's message of
+	"Tue, 28 May 2013 20:08:29 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 29DFF744-C7CD-11E2-87F9-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225682>
 
-On Tue, May 28, 2013 at 11:57:08AM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > Yeah, the commit message is still quite focused on the end effect of
-> > copying files back.  But that's not what's being changed here.
-> >
-> > In my suggested commit message I tried to make it clear that we're
-> > changing when we decide to copy a file across to the temporary tree.
-> > This has the beneficial (side-)effect of changing the set of files we
-> > consider for copying back into the working tree after the diff tool has
-> > been run.
-> 
-> I actually think the effect of copying files back _is_ the primary
-> motivation of this change, and stressing that end effect is a much
-> better description.  After all, if the working tree files do not
-> have any difference from the RHS of the comparison, copying from the
-> working tree and stuffing the $rsha1 to the RHS temporary index and
-> running "checkout -f" should produce identical temporary directory
-> for the user to start viewing.
-> 
-> The _only_ difference in behaviour before and after this patch that
-> matters to the end user is if that path is in @working_tree, which
-> is returned to @worktree of dir_diff sub to be later copied back,
-> no?  I would view this change as a mere means, an implementation
-> detail, to achieve that end of stuffing more paths in the @worktree
-> array.
+John Keeping <john@keeping.me.uk> writes:
 
-I agree with this, but like you I found it confusing that the patch
-touched code seemingly unrelated to copying files back.  I went toward
-describing the patch more literally and giving the motivation in the
-final paragraph.  Your message below is better, but I think it needs to
-say that the set of files considered for copying back is the set that is
-copied across to begin with.
+>>  - When comparing two revisions, e.g. "--dir-diff HEAD^^ HEAD^",
+>>    that checks out (via $rsha1 to "checkout -f" codepath) a blob
+>>    that does not match what is in the working tree of HEAD to the
+>>    temporary directory, we still allow modifications to the copy in
+>>    the temporary directory, but what can the user do with these
+>>    changes that are _not_ based on HEAD, short of checking out HEAD^
+>>    and apply the difference first?
+>> 
+>> I still cannot shake this nagging feeling that giving a writable
+>> temporary directory might have been a mistake in the first place.
+>> Perhaps it may be a better design to make the ones that the user
+>> shouldn't touch (or will lead to the above confusion) read-only,
+>> while the ones that match the working tree read-write?
+>
+> My ideal scenario would be that we only allow users to edit files when
+> they are comparing against the working tree, but that would require
+> git-difftool to fully understand all git-diff options since it just
+> passes through any it doesn't recognise.  I don't think there's an easy
+> way to do that, which leaves us with this confusing situation.
 
-> Perhaps
-> 
-> 	difftool --dir-diff: allow changing any clean working tree file
-> 
-> 	The temporary directory prepared by "difftool --dir-diff" to
-> 	show the result of a change can be modified by the user via
-> 	the tree diff program, and we try hard not to lose changes
-> 	to them after tree diff program returns to us.
-> 
->         However, the set of files to be copied back is computed
-> 	differently between --symlinks and --no-symlinks modes.  The
-> 	former checks all paths that start out as identical to the
-> 	working tree file, while the latter checks paths that
-> 	already had a local modification in the working tree,
-> 	allowing changes made in the tree diff program to paths that
-> 	did not have any local change to be lost.
-> 
-> or something.  This invites a few questions, though.
-> 
->  - By allowing these files in the temporary directory to be
->    modified, aren't we making the user's life harder by forcing them
->    to handle "working tree file was already modified, made different
->    changes in the temporary directory, now these changes need to be
->    consolidated" case?
-> 
->  - When comparing two revisions, e.g. "--dir-diff HEAD^^ HEAD^",
->    that checks out (via $rsha1 to "checkout -f" codepath) a blob
->    that does not match what is in the working tree of HEAD to the
->    temporary directory, we still allow modifications to the copy in
->    the temporary directory, but what can the user do with these
->    changes that are _not_ based on HEAD, short of checking out HEAD^
->    and apply the difference first?
-> 
-> I still cannot shake this nagging feeling that giving a writable
-> temporary directory might have been a mistake in the first place.
-> Perhaps it may be a better design to make the ones that the user
-> shouldn't touch (or will lead to the above confusion) read-only,
-> while the ones that match the working tree read-write?
+Not necessarily.
 
-My ideal scenario would be that we only allow users to edit files when
-they are comparing against the working tree, but that would require
-git-difftool to fully understand all git-diff options since it just
-passes through any it doesn't recognise.  I don't think there's an easy
-way to do that, which leaves us with this confusing situation.
+Let's assume that changing files in "diff" tool is a sensible thing
+to do, as long as we make sure such a change is not lost (which I
+may not 100% agree with, but let's put it aside for now).
+
+When you are viewing a file F in "--dir-diff HEAD^^ HEAD^", if there
+is no change for F in between HEAD^ and HEAD and you notice a typo
+that may or may not be related to the differences between HEAD^^ and
+HEAD^, it would be tempting to fix that right there.  And as long as
+F in the working tree matches that of HEAD^ and the modification you
+make in the temporary directory gets copied back to the working tree,
+your typofix will end up to be in the working tree.
+
+Which I _think_ is what people, who want to change files in "diff"
+tool, want to do.
+
+Of course, your working tree may have been in the middle of doing
+something entirely different and you may have to "add [-p]" to
+separate such a typofix with other changes you were working on, but
+that is a separate issue.
+
+And for that to work, the only think you need is "does the blob we
+show on the RHS temporary tree match what is in the working tree?"
+check.  You do not need to know or care if you are comparing two old
+revisions, etc.
