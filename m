@@ -1,93 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fix segfault with git log -c --follow
-Date: Tue, 28 May 2013 10:22:17 -0700
-Message-ID: <7vk3mj10l2.fsf@alter.siamese.dyndns.org>
-References: <20130527224957.GA7492@ecki>
+Subject: Re: [PATCH 4/5] test: improve rebase -q test
+Date: Tue, 28 May 2013 10:28:46 -0700
+Message-ID: <7vfvx710a9.fsf@alter.siamese.dyndns.org>
+References: <1369745671-22418-1-git-send-email-felipe.contreras@gmail.com>
+	<1369745671-22418-5-git-send-email-felipe.contreras@gmail.com>
+	<7vvc6311dr.fsf@alter.siamese.dyndns.org>
+	<20130528171907.GA28153@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue May 28 19:22:26 2013
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Neil Horman <nhorman@tuxdriver.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 28 19:28:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhNbM-0006VY-RO
-	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 19:22:25 +0200
+	id 1UhNhe-0004R1-1Y
+	for gcvg-git-2@plane.gmane.org; Tue, 28 May 2013 19:28:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964781Ab3E1RWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 May 2013 13:22:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39738 "EHLO
+	id S964785Ab3E1R2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 May 2013 13:28:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59599 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934735Ab3E1RWU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 May 2013 13:22:20 -0400
+	id S934735Ab3E1R2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 May 2013 13:28:49 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D07C923432;
-	Tue, 28 May 2013 17:22:19 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1222723658;
+	Tue, 28 May 2013 17:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0PMnGCpx29UsW3Z0IaugkqHOhvo=; b=jeSXOG
-	xVIqhrhEbVcC6MpPdQLdx53OVLiK4gp+Rers4xm4x97CX2JubHE8o0u6CGeR5SN/
-	opWo/1x1jQzzgMTnnioUsEnYQfYwJ26pzPivoonp5lx4RcR6+4s8qmcWJDJVgAw+
-	RUKIfrFujyNC/rhOh5txI9vvC8PJYnCUcFOzQ=
+	:content-type; s=sasl; bh=aiUX6JsHF83rhQr5nz60r4dObq4=; b=UAvCLP
+	Be9CfuJ6SBkJa6a1ywJfuAHMkRCKdA5InyC7z6Soh4eDHjiVhNlBMDsh3aJdxe9i
+	y7j6wa+fOpOhkxJphxY1HJjKdhS9pWqSjqw5JIfa0ehTL0c5NtPvezv6zdOB0mVI
+	GLKrbCQgRnHjoxcB8YqRx1IyfnB0NzPeCHhjo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xCCMIWMRuECi8r9eti+gkjTLVFHOcCjV
-	YO9djkWVZx/lJMsxxaq8V05C7YvuEfAeefw+Xf4YlxJnJGjLlRZedzaqVMJRnbO0
-	QCzCNKmwJFABosLyhJgXRPLMP8BK1BjV+vr8vw+mvUdjgIODLpBM1+mcaqw9X8Pk
-	WJpeYq0rJg8=
+	:content-type; q=dns; s=sasl; b=Elam1b2vE1vhvipdk2HWP4RwYqaX1wNZ
+	8/7nmLvDipVHkQ0jD+zM5S26X1PVxznCMjluDqFMbzm8q/kMaPZXyvRcVkEcS9Jz
+	qjsav+MjUacBJFQ8etwL0Igm4rCPvcPrD88MxARfjpfPLMQqhTuOgWqscbRocDOX
+	pf+YdwcWN6c=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C579C23431;
-	Tue, 28 May 2013 17:22:19 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07DC623657;
+	Tue, 28 May 2013 17:28:49 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 23D6F23430;
-	Tue, 28 May 2013 17:22:19 +0000 (UTC)
-In-Reply-To: <20130527224957.GA7492@ecki> (Clemens Buchacher's message of
-	"Tue, 28 May 2013 00:49:57 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 67A2F23655;
+	Tue, 28 May 2013 17:28:48 +0000 (UTC)
+In-Reply-To: <20130528171907.GA28153@google.com> (Jonathan Nieder's message of
+	"Tue, 28 May 2013 10:19:07 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2665C222-C7BB-11E2-8B04-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0E6D045E-C7BC-11E2-AFBB-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225673>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> In diff_tree_combined we make a copy of diffopts. In
-> try_to_follow_renames, called via diff_tree_sha1, we free and
-> re-initialize diffopts->pathspec->items. Since we did not make a deep
-> copy of diffopts in diff_tree_combined, the original diffopts does not
-> get the update. By the time we return from diff_tree_combined,
-> rev->diffopt->pathspec->items points to an invalid memory address. We
-> get a segfault next time we try to access that pathspec.
+> Junio C Hamano wrote:
+>
+>> A more preferrable alternative may be adding something like this to
+>> test-lib.sh and call it from here and elsewhere (there are about 50
+>> places that do "test ! -s <filename>"), perhaps?
+>>
+>>         test_must_be_an_empty_file () {
+>>                 if test -s "$1"
+>>                 then
+>>                         cat "$1"
+>>                         false
+>>                 fi
+>>         }
+>
+> I generally just use the two-liner
+>
+> 	>empty &&
+> 	test_cmp empty output
+>
+> directly in cases like this.
 
-I am not quite sure if I follow.  Do you mean
-
-	diff_tree_combined()
-        - makes a shallow copy of rev->diffopt
-        - calls diff_tree_sha1()
-          diff_tree_sha1()
-          - tries to follow rename and clobbers diffopt
-        - tries to use the shallow copy of original rev->diffopt
-          that no longer is valid, which is a problem
-
-I wonder, just like we force recursive and disable external on the
-copy before we use it to call diff_tree_sha1(), if we should disable
-follow-renames on it.  "--follow" is an option that is given to the
-history traversal part and it should not play any role in getting
-the pairwise diff with all parents diff_tree_combined() does.
-
-Besides,
-
- - "--follow" hack lets us keep track of only one path; and
-
- - "-c" and "--cc" make sense only when dealing with a merge commit
-   and the path in the child may have come from different path in
-   parents,
-
-so I am not sure if allowing combination of "--follow -c/--cc" makes
-much sense in the first place.
+That would work, too.
