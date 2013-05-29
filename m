@@ -1,161 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/6] t/send-email.sh: add test for suppress self
-Date: Wed, 29 May 2013 13:28:52 -0700
-Message-ID: <7vy5axr0mz.fsf@alter.siamese.dyndns.org>
-References: <1369579187-27573-1-git-send-email-mst@redhat.com>
-	<1369579187-27573-2-git-send-email-mst@redhat.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: [PATCH] dir.c: fix ignore processing within not-ignored directories
+Date: Wed, 29 May 2013 22:32:36 +0200
+Message-ID: <51A665E4.9080307@gmail.com>
+References: <CAGLuM14_MQffwQWrB2YCQXzhkGaxdaYBuY74y7=pfb-hB6LskA@mail.gmail.com> <CACsJy8BqCUKhc8vhjhNz0OedBngk7zcSOk70ekRm3EiruHfNxA@mail.gmail.com> <CACsJy8DD=LxAKh_fUELJ5Mj0xS_gZE88N_rJFkKGer=YAOqsMg@mail.gmail.com> <51A62A96.6040009@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Wed May 29 22:29:04 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Misty De Meo <misty@brew.sh>,
+	=?UTF-8?B?w5h5c3RlaW4gV2FsbGU=?= <oystwa@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 29 22:32:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhmzU-0005PT-Ah
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 22:29:00 +0200
+	id 1Uhn35-0008C6-6T
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 22:32:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966790Ab3E2U25 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 16:28:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57972 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965827Ab3E2U2z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 16:28:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06123225D1;
-	Wed, 29 May 2013 20:28:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dJX/PBZtGSfuw0tCtn6Pi5LORaU=; b=oiDNsd
-	WWOSJ+f5xCe0iNi++IQ263JVLpuTnYgg2TFAM4V0mgjKOcREGrV5FrEHO0dd+ZNH
-	y1ZLPee5ASjm+mlTrt9Nqq6I87pFUkjB3A0hVvOWdolAcqIEgohj58J6noPCGYXe
-	TrQm0rWN72iK47Ejcjmve/5K5i073GkjWGc24=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v2niL2356N2b7KIXl8ziedfZGwpzk0QX
-	mn7idFhvFDWLeOFEwlYlufxNpjnuIvGcGGeUFla9QeSB+5aFd/YpZo4tqAP+D93k
-	hvF7miJtlZ/q0sga6j69c5Ji2bXpC96wMBveBJvEkrLFpRVQuZr5WLn8laKR7U/I
-	L5CWz87nMLQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED1F1225D0;
-	Wed, 29 May 2013 20:28:54 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 35ECD225CA;
-	Wed, 29 May 2013 20:28:54 +0000 (UTC)
-In-Reply-To: <1369579187-27573-2-git-send-email-mst@redhat.com> (Michael
-	S. Tsirkin's message of "Sun, 26 May 2013 17:40:56 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 61982536-C89E-11E2-B4C4-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S966793Ab3E2Uck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 16:32:40 -0400
+Received: from mail-ea0-f181.google.com ([209.85.215.181]:43162 "EHLO
+	mail-ea0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966083Ab3E2Uci (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 16:32:38 -0400
+Received: by mail-ea0-f181.google.com with SMTP id a11so5551951eae.26
+        for <git@vger.kernel.org>; Wed, 29 May 2013 13:32:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=TixsqtxC6jcjfZlKjeYHf+kuNqoVikU7mB24C1h24vM=;
+        b=OuIsCebXb8c8GEXA05js6NIzojSHYxLHavcX67qPVOnhMo7TtLyvNz6Y4oSTxQulmM
+         fav1MDeUjAhUxbvgc43PIwomNCfsZGB+rtHyRKf63ZczBSE9vqTUC4I9edYMGV/EXiHf
+         ilHixQ3beo0VUOXXQZwW2b3xIADX2juF1VdupYTZ+UeusMwOwKUJo2lW92hWfdOazGqB
+         WkTi7q9R5Tt/rQxOURGAeOhI7Yu+wrGB1KLS3+e0OigWeGJ5hfPRnLLa5l1CnkDbzOPa
+         NpXJV4wSJfV6erHp7zLapiP+tGQCBIHMwBAz5y8g3VQ2B14zqtinyx31VqTFRNvnWfb2
+         nZvQ==
+X-Received: by 10.15.91.66 with SMTP id r42mr6284805eez.48.1369859557516;
+        Wed, 29 May 2013 13:32:37 -0700 (PDT)
+Received: from [10.1.100.50] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id e1sm21816065eem.10.2013.05.29.13.32.35
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 29 May 2013 13:32:36 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <51A62A96.6040009@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225888>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+As of 95c6f271 "dir.c: unify is_excluded and is_path_excluded APIs", the
+is_excluded API no longer recurses into directories that match an ignore
+pattern, and returns the directory's ignored state for all contained paths.
 
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> ---
+This is OK for normal ignore patterns, i.e. ignoring a directory affects
+the entire contents recursively.
 
-Thanks.
+Unfortunately, this also "works" for negated ignore patterns ('!dir'), i.e.
+the entire contents is "not-ignored" recursively, regardless of ignore
+patterns that match the contents directly.
 
->  t/t9001-send-email.sh | 41 +++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 41 insertions(+)
->
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index ebd5c5d..36ecf73 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -171,6 +171,47 @@ Result: OK
->  EOF
->  "
->  
-> +test_suppress_self () {
-> +		test_commit $3 &&
-> +		test_when_finished "git reset --hard HEAD^" &&
-> +		{
-> +			echo "#!$SHELL_PATH"
-> +			echo sed -n -e s/^cccmd--//p \"\$1\"
-> +		} > cccmd-sed &&
-> +		chmod +x cccmd-sed &&
+In prep_exclude, skip recursing into a directory only if it is really
+ignored (i.e. the ignore pattern is not negated).
 
-We can use write_script for this kind of thing, I think.
+Signed-off-by: Karsten Blees <blees@dcon.de>
+---
 
-> +		git commit --amend --author="$1 <$2>" -F - << EOF && \
+Also available here:
+https://github.com/kblees/git/tree/kb/ignore-within-not-ignored-dir
+git pull git://github.com/kblees/git.git kb/ignore-within-not-ignored-dir
 
-Hmm,...  everything below this function is fed as the standard input
-to "git commit" as its updated log message (i.e. "--amend -F -")?
+ dir.c                              |  3 +++
+ t/t3001-ls-files-others-exclude.sh | 18 ++++++++++++++++++
+ 2 files changed, 21 insertions(+)
 
-Puzzled...
-
-The EOF I can find is at the very bottom of this function, so there
-is no "next command" that && at the end of the above line is
-cascading the control to.
-
-Doubly puzzled...
-
-In any case, please do not add " \" at the end of line when the line
-ends one command and "&&" at the end of line clearly tells the shell
-that you haven't stopped talking yet.
-
-> +		clean_fake_sendmail && \
-> +		echo suppress-self-$3.patch > /dev/tty && \
-
-Do we always have /dev/tty?  If this is a leftover debugging, please
-remove it.  If redirecting it to >&2 does not upset what the test
-does, that is good, too (you can run the test with -v option to view
-the output).
-
-> +		git format-patch --stdout -1 >suppress-self-$3.patch && \
-> +		git send-email --from="$1 <$2>" \
-> +		--to=nobody@example.com \
-> +		--cc-cmd=./cccmd-sed \
-> +		--suppress-cc=self \
-> +		--smtp-server="$(pwd)/fake.sendmail" \
-> +		suppress-self-$3.patch && \
-> +		mv msgtxt1 msgtxt1-$3 && \
-> +		sed -e '/^$/q' msgtxt1-$3 > msghdr1-$3 && \
-
-Style.  No SP between redirection operator and redirection target,
-e.g. >$filename, <$filename, etc.  Some in this patch is done
-correctly (e.g. format-patch above), some others are not.
-
-> +		rm -f expected-no-cc-$3 && \
-> +		touch expected-no-cc-$3 && \
-
-Please reserve "touch" for "make sure it has recent timestamp", not
-for "make sure it exists and is empty".  The above two should be
-more like:
-
-		>"expected-no-cc-$3" &&
-
-Also, even though it is not required by POSIX, please dquote the
-redirection target filename if you have variable expansion.  Some
-versions of bash (incorrectly) give warning if you don't.
-
-> +		grep '^Cc:' msghdr1-$3 > actual-no-cc-$3 && \
-> +		test_cmp expected-no-cc-$3 actual-no-cc-$3
-> +test suppress-cc.self $3 with name $1 email $2
-> +
-> +$3
-> +
-> +cccmd--"$1" <$2>
-> +
-> +Cc: "$1" <$2>
-> +Cc: $1 <$2>
-> +Signed-off-by: "$1" <$2>
-> +Signed-off-by: $1 <$2>
-> +EOF
-> +}
-> +
-> +test_expect_success $PREREQ 'self name is suppressed' "
-> +	test_suppress_self 'A U Thor' 'author@redhat.com' 'self_name_suppressed'
-> +"
-> +
->  test_expect_success $PREREQ 'Show all headers' '
->  	git send-email \
->  		--dry-run \
+diff --git a/dir.c b/dir.c
+index a5926fb..13858fe 100644
+--- a/dir.c
++++ b/dir.c
+@@ -821,6 +821,9 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+ 				dir->basebuf, stk->baselen - 1,
+ 				dir->basebuf + current, &dt);
+ 			dir->basebuf[stk->baselen - 1] = '/';
++			if (dir->exclude &&
++			    dir->exclude->flags & EXC_FLAG_NEGATIVE)
++				dir->exclude = NULL;
+ 			if (dir->exclude) {
+ 				dir->basebuf[stk->baselen] = 0;
+ 				dir->exclude_stack = stk;
+diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
+index 4e3735f..f0421c0 100755
+--- a/t/t3001-ls-files-others-exclude.sh
++++ b/t/t3001-ls-files-others-exclude.sh
+@@ -175,6 +175,24 @@ test_expect_success 'negated exclude matches can override previous ones' '
+ 	grep "^a.1" output
+ '
+ 
++test_expect_success 'excluded directory overrides content patterns' '
++
++	git ls-files --others --exclude="one" --exclude="!one/a.1" >output &&
++	if grep "^one/a.1" output
++	then
++		false
++	fi
++'
++
++test_expect_success 'negated directory doesn'\''t affect content patterns' '
++
++	git ls-files --others --exclude="!one" --exclude="one/a.1" >output &&
++	if grep "^one/a.1" output
++	then
++		false
++	fi
++'
++
+ test_expect_success 'subdirectory ignore (setup)' '
+ 	mkdir -p top/l1/l2 &&
+ 	(
+-- 
+1.8.3.8097.gdc25f02.dirty
