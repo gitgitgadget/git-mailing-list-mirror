@@ -1,131 +1,167 @@
-From: Kenichi Saita <nitoyon@gmail.com>
-Subject: [PATCH v3] difftool --dir-diff: allow changing any clean working tree file
-Date: Thu, 30 May 2013 01:01:23 +0900
-Message-ID: <1369843283-2328-1-git-send-email-nitoyon@gmail.com>
-References: <7v7gij0w6z.fsf@alter.siamese.dyndns.org>
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	David Aguilar <davvid@gmail.com>,
-	Kenichi Saita <nitoyon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 29 18:02:24 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 11/25] object_array_remove_duplicates(): rewrite to reduce copying
+Date: Wed, 29 May 2013 09:18:05 -0700
+Message-ID: <7vk3mhwyiq.fsf@alter.siamese.dyndns.org>
+References: <1369472904-12875-1-git-send-email-mhagger@alum.mit.edu>
+	<1369472904-12875-12-git-send-email-mhagger@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed May 29 18:18:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhipT-0005P3-S7
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 18:02:24 +0200
+	id 1Uhj4r-0001gR-JE
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 18:18:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751506Ab3E2QCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 12:02:20 -0400
-Received: from mail-pb0-f50.google.com ([209.85.160.50]:48080 "EHLO
-	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750856Ab3E2QCT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 12:02:19 -0400
-Received: by mail-pb0-f50.google.com with SMTP id wy17so9393752pbc.37
-        for <git@vger.kernel.org>; Wed, 29 May 2013 09:02:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=yxA+UpMYuhb1xadBqpbzoTTwB8S72HsVfZygahkgEY8=;
-        b=QFb3iVOO8TUjPumX6aU3/igP3ynuGupjNA7NtF64HlAf/ZKOYhjRhsMFHamBKVgQ3P
-         RoexNvS/mvOiknvSs4kKBheHhu+q39ArIA42vRAvqGftkkokjD3vlZvC7aTMqmRrlyyZ
-         42xNmFpTUkcQP6wTmbyKmKLcZcXo2pK/vxqOxgzWZdteNjQt780BxLeUQJ2qJ5HxmtwK
-         6vXjc9B12fBiSO2FLMj+neB1J0DFNPTR3pEXoWhpM8SjRYaJuXl6rkZHXTGeXBEqLMEP
-         yQy/7dMKf0xeqiyQOg3e6hYoKxA64HDJhIC9SoedF0GYEK8TMtcr4syJWUSzhGeVIuxj
-         mD2Q==
-X-Received: by 10.66.158.101 with SMTP id wt5mr4088791pab.8.1369843338599;
-        Wed, 29 May 2013 09:02:18 -0700 (PDT)
-Received: from localhost.localdomain (144.72.102.121.dy.bbexcite.jp. [121.102.72.144])
-        by mx.google.com with ESMTPSA id q18sm40447316pao.4.2013.05.29.09.02.14
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 29 May 2013 09:02:16 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
-In-Reply-To: <7v7gij0w6z.fsf@alter.siamese.dyndns.org>
+	id S964782Ab3E2QSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 12:18:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46708 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932898Ab3E2QSK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 12:18:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DA9823CF4;
+	Wed, 29 May 2013 16:18:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PBcQGAGOxHGwyjFS7U7p1e//oEM=; b=hsnjpN
+	bJXfVdDWkO3cPJ18Asi2PxI2d2soRtwWWXBbmYHSuRT7EP499ll/UolREHq3tmLa
+	+iR7ZeKU/DXjhjAC/wKQ3Nk6FQ6jiACuOYAa9EEiDJTDriBoqenSCkYhiNzKS8hT
+	xGU45G2N/rsSyg5VVLtgpHg02ApAbVSxSCjNc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IIX+X5Mfejz5GRq4LwECstJvoaBWrHXq
+	nM542hvWGXynhCLliZRpRVfN0//RaOJtuV9hZxulO+sjtBtNxCmSU7JCpsu6M7AO
+	H20ynaZnBqxKGAuqN8Ab42FdWXq84h4/qTy0s1YM7/+mR0Tt5enLjfUB+WX7e9qH
+	5lcuvEbAb4g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8137823CF2;
+	Wed, 29 May 2013 16:18:07 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B01FA23CF0;
+	Wed, 29 May 2013 16:18:06 +0000 (UTC)
+In-Reply-To: <1369472904-12875-12-git-send-email-mhagger@alum.mit.edu>
+	(Michael Haggerty's message of "Sat, 25 May 2013 11:08:10 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 58A25E60-C87B-11E2-8F49-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225837>
 
-The temporary directory prepared by "difftool --dir-diff" to
-show the result of a change can be modified by the user via
-the tree diff program, and we try hard not to lose changes
-to them after tree diff program returns to us.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-However, the set of files to be copied back is computed
-differently between --symlinks and --no-symlinks modes.  The
-former checks all paths that start out as identical to the
-working tree file, while the latter checks paths that
-already had a local modification in the working tree,
-allowing changes made in the tree diff program to paths that
-did not have any local change to be lost.
+> The old version copied one entry to its destination position, then
+> deleted any matching entries from the tail of the array.  This
+> required the tail of the array to be copied multiple times.  It didn't
+> affect the complexity of the algorithm because the whole tail has to
+> be searched through anyway.  But all the copying was unnecessary.
+>
+> Instead, check for the existence of an entry with the same name in the
+> *head* of the list before copying an entry to its final position.
+> This way each entry has to be copied at most one time.
+>
+> Extract a helper function contains_name() to do a bit of the work.
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  object.c | 32 +++++++++++++++++++++-----------
+>  object.h |  6 +++++-
+>  2 files changed, 26 insertions(+), 12 deletions(-)
+>
+> diff --git a/object.c b/object.c
+> index fcd4a82..10b5349 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -294,22 +294,32 @@ void object_array_filter(struct object_array *array,
+>  	array->nr = dst;
+>  }
+>  
+> +/*
+> + * Return true iff array already contains an entry with name.
+> + */
+> +static int contains_name(struct object_array *array, const char *name)
+> +{
+> +	unsigned nr = array->nr, i;
+> +	struct object_array_entry *object = array->objects;
+> +
+> +	for (i = 0; i < nr; i++, object++)
+> +		if (!strcmp(object->name, name))
+> +			return 1;
+> +	return 0;
+> +}
 
-Signed-off-by: Kenichi Saita <nitoyon@gmail.com>
----
- git-difftool.perl   |    9 ++-------
- t/t7800-difftool.sh |   19 +++++++++++++++++++
- 2 files changed, 21 insertions(+), 7 deletions(-)
+Because some codepaths (e.g. patch 14/25) stuff NULL in the name
+field, we may want to be more careful with this.
 
-diff --git a/git-difftool.perl b/git-difftool.perl
-index 8a75205..e57d3d1 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -85,13 +85,9 @@ sub exit_cleanup
- 
- sub use_wt_file
- {
--	my ($repo, $workdir, $file, $sha1, $symlinks) = @_;
-+	my ($repo, $workdir, $file, $sha1) = @_;
- 	my $null_sha1 = '0' x 40;
- 
--	if ($sha1 ne $null_sha1 and not $symlinks) {
--		return 0;
--	}
--
- 	if (! -e "$workdir/$file") {
- 		# If the file doesn't exist in the working tree, we cannot
- 		# use it.
-@@ -213,8 +209,7 @@ EOF
- 
- 		if ($rmode ne $null_mode) {
- 			my ($use, $wt_sha1) = use_wt_file($repo, $workdir,
--							  $dst_path, $rsha1,
--							  $symlinks);
-+							  $dst_path, $rsha1);
- 			if ($use) {
- 				push @working_tree, $dst_path;
- 				$wtindex .= "$rmode $wt_sha1\t$dst_path\0";
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index d46f041..2418528 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -385,6 +385,25 @@ test_expect_success PERL,SYMLINKS 'difftool --dir-diff --symlink without unstage
- 	test_cmp actual expect
- '
- 
-+write_script modify-right-file <<\EOF
-+echo "new content" >"$2/file"
-+EOF
-+
-+run_dir_diff_test 'difftool --dir-diff syncs worktree with unstaged change' '
-+	test_when_finished git reset --hard &&
-+	echo "orig content" >file &&
-+	git difftool -d $symlinks --extcmd "$(pwd)/modify-right-file" branch &&
-+	echo "new content" >expect &&
-+	test_cmp expect file
-+'
-+
-+run_dir_diff_test 'difftool --dir-diff syncs worktree without unstaged change' '
-+	test_when_finished git reset --hard &&
-+	git difftool -d $symlinks --extcmd "$(pwd)/modify-right-file" branch &&
-+	echo "new content" >expect &&
-+	test_cmp expect file
-+'
-+
- write_script modify-file <<\EOF
- echo "new content" >file
- EOF
--- 
-1.7.1
+This is not a new problem, and I think the longer term solution is
+to get rid of object_array_remove_duplicates(), so it is perfectly
+fine to leave this function broken with respect to NULL input as-is.
+
+The only caller of remove-duplicates is bundle.c, which gets many
+starting points and end points from the command line and tries to be
+nice by removing obvious duplicates, e.g.
+
+	git bundle create t.bundle master master
+
+but I think its logic of deduping is wrong.  It runs dwim_ref() on
+the incoming refs after the remove-duplicates call, so
+
+	git bundle create t.bundle master heads/mater
+
+will end up with two copies of refs/heads/master.  To fix it, the
+code must dedup the result of running dwim_ref(), and at that point,
+there is no reason to call object_array_remove_duplicates().
+
+> +
+>  void object_array_remove_duplicates(struct object_array *array)
+>  {
+> -	unsigned int ref, src, dst;
+> +	unsigned nr = array->nr, src;
+>  	struct object_array_entry *objects = array->objects;
+>  
+> -	for (ref = 0; ref + 1 < array->nr; ref++) {
+> -		for (src = ref + 1, dst = src;
+> -		     src < array->nr;
+> -		     src++) {
+> -			if (!strcmp(objects[ref].name, objects[src].name))
+> -				continue;
+> -			if (src != dst)
+> -				objects[dst] = objects[src];
+> -			dst++;
+> +	array->nr = 0;
+> +	for (src = 0; src < nr; src++) {
+> +		if (!contains_name(array, objects[src].name)) {
+> +			if (src != array->nr)
+> +				objects[array->nr] = objects[src];
+> +			array->nr++;
+>  		}
+> -		array->nr = dst;
+>  	}
+>  }
+
+>  
+> diff --git a/object.h b/object.h
+> index 0d39ff4..6c1c27f 100644
+> --- a/object.h
+> +++ b/object.h
+> @@ -96,7 +96,11 @@ typedef int (*object_array_each_func_t)(struct object_array_entry *, void *);
+>  void object_array_filter(struct object_array *array,
+>  			 object_array_each_func_t want, void *cb_data);
+>  
+> -void object_array_remove_duplicates(struct object_array *);
+> +/*
+> + * Remove from array all but the first entry with a given name.
+> + * Warning: this function uses an O(N^2) algorithm.
+> + */
+> +void object_array_remove_duplicates(struct object_array *array);
+>  
+>  void clear_object_flags(unsigned flags);
