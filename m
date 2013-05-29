@@ -1,99 +1,115 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2 5/7] add tests for rebasing merged history
-Date: Wed, 29 May 2013 12:33:45 +0200
-Message-ID: <51A5D989.90009@viscovery.net>
-References: <1347949878-12578-1-git-send-email-martinvonz@gmail.com> <1369809572-24431-1-git-send-email-martinvonz@gmail.com> <1369809572-24431-6-git-send-email-martinvonz@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/2] sequencer: trivial fix
+Date: Wed, 29 May 2013 05:51:53 -0500
+Message-ID: <CAMP44s0vARKGsn2noBEAxSVHD1bkU9pR7nPCvFJwp5epwidkQw@mail.gmail.com>
+References: <1369673539-28692-1-git-send-email-felipe.contreras@gmail.com>
+	<1369673539-28692-2-git-send-email-felipe.contreras@gmail.com>
+	<20130528110014.GA1264@hmsreliant.think-freely.org>
+	<7vobbv2fze.fsf@alter.siamese.dyndns.org>
+	<51a568db9c9b8_807b33e18996fa@nysa.mail>
+	<ko4jf7$e4d$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Chris Webb <chris@arachsys.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 12:33:56 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Joachim Schmitz <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Wed May 29 12:52:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uhdha-0002xl-Jz
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 12:33:54 +0200
+	id 1Uhdz6-0000Q2-81
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 12:52:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965577Ab3E2Kdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 06:33:50 -0400
-Received: from so.liwest.at ([212.33.55.13]:54538 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965542Ab3E2Kdu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 06:33:50 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UhdhR-0005Ha-3g; Wed, 29 May 2013 12:33:45 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id CB6121660F;
-	Wed, 29 May 2013 12:33:44 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <1369809572-24431-6-git-send-email-martinvonz@gmail.com>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S965581Ab3E2Kv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 06:51:56 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:33304 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965388Ab3E2Kvz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 06:51:55 -0400
+Received: by mail-la0-f42.google.com with SMTP id fg20so8523582lab.1
+        for <git@vger.kernel.org>; Wed, 29 May 2013 03:51:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=zwH+8bTkp6X35sDrO6BruA2xvwGB3o4RxqG7XbtJWVU=;
+        b=l9yMayxWtSB+kidCnuSIuBHiCKB58mLA3TS281LbiQIHawsS0Jic5m0uJ/Zp1nl04i
+         6BtjCUhMzWDGiXwxLVle4SdmEKWKOl6Fud448M1cqmPT1cfMWSpoVlkvaJu1v4xwQSWg
+         loEcZrKwwwO0QLfZsOunp5laFcDQiIJeqUsqVFqG07nS9SN1uLWroeZY1IKBYxC8CDkY
+         68sxRQNSEC7FgdH3mzW83GG5sUtTDyJ2UGL1rEL9vb62Hh51zyiBD3Iufe0iGjenl8bg
+         OPp8nOHUmrdHsneHDb7veUUQ5a7604tNjwIArsM4ueEhyxcF9h4iFrFGLFFcshUycRCp
+         0V1g==
+X-Received: by 10.112.167.72 with SMTP id zm8mr1353659lbb.11.1369824714112;
+ Wed, 29 May 2013 03:51:54 -0700 (PDT)
+Received: by 10.114.177.164 with HTTP; Wed, 29 May 2013 03:51:53 -0700 (PDT)
+In-Reply-To: <ko4jf7$e4d$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225784>
 
-Am 5/29/2013 8:39, schrieb Martin von Zweigbergk:
-> +#       f
-> +#      /
-> +# a---b---c---g---h
-> +#      \
-> +#       d---G---i
-> +#        \       \
-> +#         e-------u
-> +#
-> +# uppercase = cherry-picked
-> +# h = reverted g
+On Wed, May 29, 2013 at 4:58 AM, Joachim Schmitz
+<jojo@schmitz-digital.de> wrote:
+> Felipe Contreras wrote:
+>>
+>> Junio C Hamano wrote:
 
-> +test_expect_failure "rebase -p --onto in merged history does not lose patches in upstream" "
-> +	reset_rebase &&
-> +	git rebase -p --onto f h u &&
-> +	test_cmp_rev f HEAD~3 &&
-> +	test_revision_subjects 'd G i e u' HEAD~2 HEAD^2^ HEAD^2 HEAD^ HEAD
-> +"
+>>> It probably is better to fold this patch into the other one when it
+>>> is rerolled to correct the option name gotcha "on the tin".
+>>
+>>
+>> Why? This patch is standalone and fixes an issue that is independent
+>> of the other patch. Why squash two patches that do *two* different
+>> things?
+>>
+>> Anyway, I'll happily drop this patch if you want this memory leak to
+>> remain. But then I'll do the same in the other patch.
+>>
+>> This mantra of avodiing 'goto' is not helping anybody.
+>
+>
+> adding 5 letters (to change the next "if" into an "else if") versus your
+> addition of several lines and some 15 additional letters (ignoring the
+> whitsspace)  is IMHO enough to see what is better?
 
-My expectations are different: When a patch is in upstream, then it is not
-to be rebased, even --onto somewhere else than upstream.
+This has nothing to do with what Junio said. Junio said it is better
+to squash the two changes into one, which is not clearly better.
 
-But take this with a grain of salt, as I never encounter(ed) this use-case
-in practice.
+As for your suggestion, what happens the next time somebody needs to
+add something else to this chunk of code? Another if, and then
+another, and soon enough you end up with five levels of indentation,
+and in some of those patches you have to change the indentation of
+existing code.
 
-> +test_expect_success "rebase -p --onto in merged history drops patches in onto" "
-> +	reset_rebase &&
-> +	git rebase -p --onto h f u &&
-> +	test_cmp_rev h HEAD~3 &&
-> +	test_revision_subjects 'd i e u' HEAD~2 HEAD^2 HEAD^ HEAD
-> +"
+If only there was much bigger and successful software project that had
+hashed all these questions and came up with a code-style to last the
+ages. Oh, but there is, it's called Linux, and the answer is to use
+goto's.
 
-And this is just the opposite case, where I think the patch should be kept.
+If the code used a goto in the first place.. BAM:
 
-> +# a---b---c
-> +#      \
-> +#       d---e
-> +#        \   \
-> +#         n---r
-> +#          \
-> +#           o
-> +#
-> +# r = tree-same with n
-> +# uppercace = cherry-picked
+--- a/sequencer.c
++++ b/sequencer.c
+ <at>  <at>  -628,8 +628,10  <at>  <at>  static int
+do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 	}
 
-I do not see any upper-cased letters in this graph. ;)
+ 	allow = allow_empty(opts, commit);
+-	if (allow < 0)
+-		return allow;
++	if (allow < 0) {
++		res = allow;
++		goto leave;
++	}
+ 	if (!opts->no_commit)
+ 		res = run_git_commit(defmsg, opts, allow);
 
-> +test_expect_success "rebase -p re-creates empty internal merge commit" "
-> +	reset_rebase &&
-> +	git rebase -p c r &&
-> +	test_revision_subjects 'c d e n r' HEAD~3 HEAD~2 HEAD^2 HEAD^ HEAD
+And every time you need to add more code you just do it, and stop
+worrying about increasing indentation, or re-indenting.
 
-Again, check c with test_cmp_rev.
+Problem solved.
 
--- Hannes
+-- 
+Felipe Contreras
