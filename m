@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: [PATCH v2 7/7] tests: move test for rebase messages from t3400 to t3406
-Date: Tue, 28 May 2013 23:39:32 -0700
-Message-ID: <1369809572-24431-8-git-send-email-martinvonz@gmail.com>
+Subject: [PATCH v2 5/7] add tests for rebasing merged history
+Date: Tue, 28 May 2013 23:39:30 -0700
+Message-ID: <1369809572-24431-6-git-send-email-martinvonz@gmail.com>
 References: <1347949878-12578-1-git-send-email-martinvonz@gmail.com>
  <1369809572-24431-1-git-send-email-martinvonz@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -10,129 +10,537 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
 	Martin von Zweigbergk <martinvonz@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 29 08:41:08 2013
+X-From: git-owner@vger.kernel.org Wed May 29 08:41:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uha4G-0003Df-IU
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 08:41:04 +0200
+	id 1Uha4X-0003RI-Fq
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 08:41:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964870Ab3E2Gk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 02:40:57 -0400
-Received: from mail-qa0-f74.google.com ([209.85.216.74]:34442 "EHLO
-	mail-qa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935043Ab3E2GkK (ORCPT <rfc822;git@vger.kernel.org>);
+	id S964835Ab3E2Gk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 02:40:56 -0400
+Received: from mail-qa0-f73.google.com ([209.85.216.73]:41018 "EHLO
+	mail-qa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935044Ab3E2GkK (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 29 May 2013 02:40:10 -0400
-Received: by mail-qa0-f74.google.com with SMTP id bs12so391281qab.3
+Received: by mail-qa0-f73.google.com with SMTP id n20so19401qaj.0
         for <git@vger.kernel.org>; Tue, 28 May 2013 23:40:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :x-gm-message-state;
-        bh=vLH1RPYb6Yd8oVkcGRXtwcmtotrDUk5j/Fhllasat4A=;
-        b=Zo6zzPGFF6uTe9WJkE5yB7Evg/o7fqC7ZCv3mlZSq71vIS6tMFQ6t/JCfCVMU4/s9J
-         l0A9+cSocCB7vH/9rJYIIZ09qh20RuZ6NukNEox/mFU20JzFr9AF2h6nFYJDklYKRFl5
-         Fzmi3oPO2+K+fQGG22XnaXCH+LL8TbV3beq7vOeF0zWq0WAttfGbdpq7LmM0PbDTnJIa
-         DyEWk4CkBaGZ9ob63wj5YSLh5umt9ngz6I8T52NXddcHhV7LvaI6fz2tXtoD9kECSeU6
-         bMdDrxxPa9yFE5DAYaQ1wZz4cPi1gfXkqeB6zyjp+wF8474IOGsnrfNZFYK9oJztFJ/R
-         xcDw==
-X-Received: by 10.236.138.20 with SMTP id z20mr697673yhi.31.1369809608879;
+        bh=ODdBL7YKugTczsNtEuctsucYYd5/2dKdB2ofEFlJyJM=;
+        b=Z7xa/JJGC7nPbFJizPY0JsxRWpIFJCu0siKOlC/mOb+niKOtOtqjA3OwVckzx4nmVN
+         hXjPG5PRt2zTUXWN7eUdvmKrn68Og0FXaCu4cPawaeiqYTcYlwCqjDQVA9x6iMvEMAlh
+         NBSQHcoiXCggLfhPlVXI1QhJoaquHv5uUfmnYRlhi/LtdE4LuvEoLiGtzYaVOAFlV+EN
+         WPbhUZtfGgrg534leRGRzx0dAnw6aLTL+PskD7N+c8V9gapvV97Xn1bpSMKLfyZn2IoA
+         iTq9dyMFJcP3s16rahTTvUzGhxMvpHCkwiiTcXblG+jEHMmo1i4whghvWwNqErwh03En
+         /ShA==
+X-Received: by 10.236.142.11 with SMTP id h11mr630661yhj.55.1369809608878;
         Tue, 28 May 2013 23:40:08 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id b23si2629880yhj.4.2013.05.28.23.40.08
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id o42si2628945yhe.5.2013.05.28.23.40.08
         for <multiple recipients>
         (version=TLSv1.1 cipher=AES128-SHA bits=128/128);
         Tue, 28 May 2013 23:40:08 -0700 (PDT)
 Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id AFF7431C121;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 8FB6F5A405D;
 	Tue, 28 May 2013 23:40:08 -0700 (PDT)
 Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id 5F9CD100D56; Tue, 28 May 2013 23:40:08 -0700 (PDT)
+	id 4684C100D10; Tue, 28 May 2013 23:40:08 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.674.gd17d3d2
 In-Reply-To: <1369809572-24431-1-git-send-email-martinvonz@gmail.com>
-X-Gm-Message-State: ALoCoQnqrSfwPJbVNsS4ZdUsyGgHHLeckfboWFxWok5cweo3BnWu+a80SpBA/z/fWOsRyEMCFM1BGC+MClJOxGmHQpqtZs6MmlMGbRhn15+fqka3ybf5hURGDhgyBY9RnPm2ofPXA3UuLxxtaKqJE9QtdQEQXOu2hIzALktSpFdYLGmRLdigR+0bplH9Mk49uOhw0NsNn7s9
+X-Gm-Message-State: ALoCoQmOht/3qHErt8VaJu7jQ346IRrbi455tZkfpZe8d25xCzAYhOj8Qafex6bzfk0LHsZAr2cn1e8hoqcQrS4VUyZAFlWOzAMvuN6sjPCKrtRlQ4dkbuQoIgSpMwOjhvX6+G72ZE3bHYhpM8wC35nWwtKY9kFclQ3Wl8bP+T+BzoZ8QJQEBNToDCSgzhx3bVRN0vHSRyuT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225760>
 
-t3406 is supposed to test "messages from rebase operation", so let's
-move tests in t3400 that fit that description into 3406. Most of the
-functionality they tested, except for the messages, has now been
-subsumed by t3420.
 ---
- t/t3400-rebase.sh         | 22 ----------------------
- t/t3406-rebase-message.sh | 22 ++++++++++++++++++++++
- 2 files changed, 22 insertions(+), 22 deletions(-)
+ t/t3400-rebase.sh                 |  31 +----
+ t/t3401-rebase-partial.sh         |  45 -------
+ t/t3404-rebase-interactive.sh     |  10 +-
+ t/t3409-rebase-preserve-merges.sh |  53 --------
+ t/t3425-rebase-topology-merges.sh | 250 ++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 252 insertions(+), 137 deletions(-)
+ delete mode 100755 t/t3401-rebase-partial.sh
+ create mode 100755 t/t3425-rebase-topology-merges.sh
 
 diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index b436ef4..45a55e9 100755
+index b58fa1a..b436ef4 100755
 --- a/t/t3400-rebase.sh
 +++ b/t/t3400-rebase.sh
-@@ -59,28 +59,6 @@ test_expect_success 'rebase against master' '
+@@ -40,13 +40,6 @@ test_expect_success 'prepare repository with topic branches' '
+ 	echo Side >>C &&
+ 	git add C &&
+ 	git commit -m "Add C" &&
+-	git checkout -b nonlinear my-topic-branch &&
+-	echo Edit >>B &&
+-	git add B &&
+-	git commit -m "Modify B" &&
+-	git merge side &&
+-	git checkout -b upstream-merged-nonlinear &&
+-	git merge master &&
+ 	git checkout -f my-topic-branch &&
+ 	git tag topic
+ '
+@@ -106,31 +99,9 @@ test_expect_success 'rebase from ambiguous branch name' '
  	git rebase master
  '
  
--test_expect_success 'rebase against master twice' '
--	git rebase master >out &&
--	test_i18ngrep "Current branch my-topic-branch is up to date" out
+-test_expect_success 'rebase after merge master' '
+-	git checkout --detach refs/tags/topic &&
+-	git branch -D topic &&
+-	git reset --hard topic &&
+-	git merge master &&
+-	git rebase master &&
+-	! (git show | grep "^Merge:")
 -'
 -
--test_expect_success 'rebase against master twice with --force' '
--	git rebase --force-rebase master >out &&
--	test_i18ngrep "Current branch my-topic-branch is up to date, rebase forced" out
+-test_expect_success 'rebase of history with merges is linearized' '
+-	git checkout nonlinear &&
+-	test 4 = $(git rev-list master.. | wc -l) &&
+-	git rebase master &&
+-	test 3 = $(git rev-list master.. | wc -l)
 -'
 -
--test_expect_success 'rebase against master twice from another branch' '
--	git checkout my-topic-branch^ &&
--	git rebase master my-topic-branch >out &&
--	test_i18ngrep "Current branch my-topic-branch is up to date" out
+-test_expect_success 'rebase of history with merges after upstream merge is linearized' '
+-	git checkout upstream-merged-nonlinear &&
+-	test 5 = $(git rev-list master.. | wc -l) &&
+-	git rebase master &&
+-	test 3 = $(git rev-list master.. | wc -l)
 -'
 -
--test_expect_success 'rebase fast-forward to master' '
--	git checkout my-topic-branch^ &&
--	git rebase my-topic-branch >out &&
--	test_i18ngrep "Fast-forwarded HEAD to my-topic-branch" out
+ test_expect_success 'rebase a single mode change' '
+ 	git checkout master &&
++	git branch -D topic &&
+ 	echo 1 >X &&
+ 	git add X &&
+ 	test_tick &&
+diff --git a/t/t3401-rebase-partial.sh b/t/t3401-rebase-partial.sh
+deleted file mode 100755
+index 7ba1797..0000000
+--- a/t/t3401-rebase-partial.sh
++++ /dev/null
+@@ -1,45 +0,0 @@
+-#!/bin/sh
+-#
+-# Copyright (c) 2006 Yann Dirson, based on t3400 by Amos Waterland
+-#
+-
+-test_description='git rebase should detect patches integrated upstream
+-
+-This test cherry-picks one local change of two into master branch, and
+-checks that git rebase succeeds with only the second patch in the
+-local branch.
+-'
+-. ./test-lib.sh
+-
+-test_expect_success 'prepare repository with topic branch' '
+-	test_commit A &&
+-	git checkout -b my-topic-branch &&
+-	test_commit B &&
+-	test_commit C &&
+-	git checkout -f master &&
+-	test_commit A2 A.t
 -'
 -
- test_expect_success 'the rebase operation should not have destroyed author information' '
- 	! (git log | grep "Author:" | grep "<>")
- '
-diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
-index fe8c27f..0392e36 100755
---- a/t/t3406-rebase-message.sh
-+++ b/t/t3406-rebase-message.sh
-@@ -30,6 +30,28 @@ test_expect_success 'rebase -m' '
- 	test_cmp expect actual
+-test_expect_success 'pick top patch from topic branch into master' '
+-	git cherry-pick C &&
+-	git checkout -f my-topic-branch
+-'
+-
+-test_debug '
+-	git cherry master &&
+-	git format-patch -k --stdout --full-index master >/dev/null &&
+-	gitk --all & sleep 1
+-'
+-
+-test_expect_success 'rebase topic branch against new master and check git am did not get halted' '
+-	git rebase master &&
+-	test_path_is_missing .git/rebase-apply
+-'
+-
+-test_expect_success 'rebase --merge topic branch that was partially merged upstream' '
+-	git reset --hard C &&
+-	git rebase --merge master &&
+-	test_path_is_missing .git/rebase-merge
+-'
+-
+-test_done
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index a58406d..ffcaf02 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -477,19 +477,11 @@ test_expect_success 'interrupted squash works as expected (case 2)' '
+ 	test $one = $(git rev-parse HEAD~2)
  '
  
-+test_expect_success 'rebase against master twice' '
-+	git rebase master >out &&
-+	test_i18ngrep "Current branch topic is up to date" out
+-test_expect_success 'ignore patch if in upstream' '
+-	HEAD=$(git rev-parse HEAD) &&
+-	git checkout -b has-cherry-picked HEAD^ &&
++test_expect_success '--continue tries to commit, even for "edit"' '
+ 	echo unrelated > file7 &&
+ 	git add file7 &&
+ 	test_tick &&
+ 	git commit -m "unrelated change" &&
+-	git cherry-pick $HEAD &&
+-	EXPECT_COUNT=1 git rebase -i $HEAD &&
+-	test $HEAD = $(git rev-parse HEAD^)
+-'
+-
+-test_expect_success '--continue tries to commit, even for "edit"' '
+ 	parent=$(git rev-parse HEAD^) &&
+ 	test_tick &&
+ 	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
+diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
+index 6de4e22..2e0c364 100755
+--- a/t/t3409-rebase-preserve-merges.sh
++++ b/t/t3409-rebase-preserve-merges.sh
+@@ -11,14 +11,6 @@ Run "git rebase -p" and check that merges are properly carried along
+ GIT_AUTHOR_EMAIL=bogus_email_address
+ export GIT_AUTHOR_EMAIL
+ 
+-# Clone 1 (trivial merge):
+-#
+-# A1--A2  <-- origin/master
+-#  \   \
+-#   B1--M  <-- topic
+-#    \
+-#     B2  <-- origin/topic
+-#
+ # Clone 2 (conflicting merge):
+ #
+ # A1--A2--B3   <-- origin/master
+@@ -36,16 +28,6 @@ export GIT_AUTHOR_EMAIL
+ #     \--A3    <-- topic2
+ #      \
+ #       B2     <-- origin/topic
+-#
+-# Clone 4 (merge using second parent as base):
+-#
+-# A1--A2--B3   <-- origin/master
+-#  \
+-#   B1--A3--M  <-- topic
+-#    \     /
+-#     \--A4    <-- topic2
+-#      \
+-#       B2     <-- origin/topic
+ 
+ test_expect_success 'setup for merge-preserving rebase' \
+ 	'echo First > A &&
+@@ -58,20 +40,6 @@ test_expect_success 'setup for merge-preserving rebase' \
+ 	git checkout -f master &&
+ 	echo Third >> A &&
+ 	git commit -a -m "Modify A2" &&
+-
+-	git clone ./. clone1 &&
+-	(cd clone1 &&
+-	git checkout -b topic origin/topic &&
+-	git merge origin/master
+-	) &&
+-
+-	git clone ./. clone4 &&
+-	(
+-		cd clone4 &&
+-		git checkout -b topic origin/topic &&
+-		git merge origin/master
+-	) &&
+-
+ 	echo Fifth > B &&
+ 	git add B &&
+ 	git commit -m "Add different B" &&
+@@ -101,16 +69,6 @@ test_expect_success 'setup for merge-preserving rebase' \
+ 	git commit -a -m "Modify B2"
+ '
+ 
+-test_expect_success 'rebase -p fakes interactive rebase' '
+-	(
+-	cd clone1 &&
+-	git fetch &&
+-	git rebase -p origin/topic &&
+-	test 1 = $(git rev-list --all --pretty=oneline | grep "Modify A" | wc -l) &&
+-	test 1 = $(git rev-list --all --pretty=oneline | grep "Merge remote-tracking branch " | wc -l)
+-	)
+-'
+-
+ test_expect_success '--continue works after a conflict' '
+ 	(
+ 	cd clone2 &&
+@@ -138,15 +96,4 @@ test_expect_success 'rebase -p preserves no-ff merges' '
+ 	)
+ '
+ 
+-test_expect_success 'rebase -p works when base inside second parent' '
+-	(
+-	cd clone4 &&
+-	git fetch &&
+-	git rebase -p HEAD^2 &&
+-	test 1 = $(git rev-list --all --pretty=oneline | grep "Modify A" | wc -l) &&
+-	test 1 = $(git rev-list --all --pretty=oneline | grep "Modify B" | wc -l) &&
+-	test 1 = $(git rev-list --all --pretty=oneline | grep "Merge remote-tracking branch " | wc -l)
+-	)
+-'
+-
+ test_done
+diff --git a/t/t3425-rebase-topology-merges.sh b/t/t3425-rebase-topology-merges.sh
+new file mode 100755
+index 0000000..0f56407
+--- /dev/null
++++ b/t/t3425-rebase-topology-merges.sh
+@@ -0,0 +1,250 @@
++#!/bin/sh
++
++test_description='rebase topology tests with merges'
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-rebase.sh
++
++test_revision_subjects () {
++	expected="$1"
++	shift
++	set -- $(git log --format=%s --no-walk=unsorted "$@")
++	test "$expected" = "$*"
++}
++
++# a---b-----------c
++#      \           \
++#       d-------e   \
++#        \       \   \
++#         n---o---w---v
++#              \
++#               z
++#
++# uppercase = cherry-picked
++test_expect_success 'setup of non-linear-history' '
++	test_commit a &&
++	test_commit b &&
++	test_commit c &&
++	git checkout b &&
++	test_commit d &&
++	test_commit e
++
++	git checkout c &&
++	test_commit g &&
++	revert h g &&
++	git checkout d &&
++	cherry_pick G g &&
++	test_commit i &&
++	git checkout b &&
++	test_commit f
++
++	git checkout d &&
++	test_commit n &&
++	test_commit o &&
++	test_merge w e &&
++	test_merge v c &&
++	git checkout o &&
++	test_commit z
 +'
 +
-+test_expect_success 'rebase against master twice with --force' '
-+	git rebase --force-rebase master >out &&
-+	test_i18ngrep "Current branch topic is up to date, rebase forced" out
++test_run_rebase () {
++	result=$1
++	shift
++	test_expect_$result "rebase $* after merge from upstream" "
++		reset_rebase &&
++		git rebase $* e w &&
++		test_cmp_rev e HEAD~2 &&
++		test_linear_range 'n o' e..
++	"
++}
++test_run_rebase success ''
++test_run_rebase success -m
++test_run_rebase success -i
++
++test_run_rebase () {
++	result=$1
++	shift
++	expected=$1
++	shift
++	test_expect_$result "rebase $* of non-linear history is linearized in place" "
++		reset_rebase &&
++		git rebase $* d w &&
++		test_cmp_rev d HEAD~3 &&
++		test_linear_range "\'"$expected"\'" d..
++	"
++}
++#TODO: make all flavors of rebase use --topo-order
++test_run_rebase success 'e n o' ''
++test_run_rebase success 'e n o' -m
++test_run_rebase success 'n o e' -i
++
++test_run_rebase () {
++	result=$1
++	shift
++	expected=$1
++	shift
++	test_expect_$result "rebase $* of non-linear history is linearized upstream" "
++		reset_rebase &&
++		git rebase $* c w &&
++		test_cmp_rev c HEAD~4 &&
++		test_linear_range "\'"$expected"\'" c..
++	"
++}
++#TODO: make all flavors of rebase use --topo-order
++test_run_rebase success 'd e n o' ''
++test_run_rebase success 'd e n o' -m
++test_run_rebase success 'd n o e' -i
++
++test_run_rebase () {
++	result=$1
++	shift
++	expected=$1
++	shift
++	test_expect_$result "rebase $* of non-linear history with merges after upstream merge is linearized" "
++		reset_rebase &&
++		git rebase $* c v &&
++		test_cmp_rev c HEAD~4 &&
++		test_linear_range "\'"$expected"\'" c..
++	"
++}
++#TODO: make all flavors of rebase use --topo-order
++test_run_rebase success 'd e n o' ''
++test_run_rebase success 'd e n o' -m
++test_run_rebase success 'd n o e' -i
++
++test_expect_success "rebase -p is no-op in non-linear history" "
++	reset_rebase &&
++	git rebase -p d w &&
++	test_cmp_rev w HEAD
++"
++
++test_expect_success "rebase -p is no-op when base inside second parent" "
++	reset_rebase &&
++	git rebase -p e w &&
++	test_cmp_rev w HEAD
++"
++
++test_expect_failure "rebase -p --root on non-linear history is a no-op" "
++	reset_rebase &&
++	git rebase -p --root w &&
++	test_cmp_rev w HEAD
++"
++
++test_expect_success "rebase -p re-creates merge from side branch" "
++	reset_rebase &&
++	git rebase -p z w &&
++	test_cmp_rev z HEAD^ &&
++	test_cmp_rev w^2 HEAD^2
++"
++
++test_expect_success "rebase -p re-creates internal merge" "
++	reset_rebase &&
++	git rebase -p c w &&
++	test_revision_subjects 'c d n e o w' HEAD~4 HEAD~3 HEAD~2 HEAD^2 HEAD^ HEAD
++"
++
++test_expect_success "rebase -p can re-create two branches on onto" "
++	reset_rebase &&
++	git rebase -p --onto c d w &&
++	test_revision_subjects 'c n e o w' HEAD~3 HEAD~2 HEAD^2 HEAD^ HEAD
++"
++
++#       f
++#      /
++# a---b---c---g---h
++#      \
++#       d---G---i
++#        \       \
++#         e-------u
++#
++# uppercase = cherry-picked
++# h = reverted g
++test_expect_success 'setup of non-linear-history for patch-equivalence tests' '
++	git checkout e &&
++	test_merge u i
 +'
 +
-+test_expect_success 'rebase against master twice from another branch' '
-+	git checkout topic^ &&
-+	git rebase master topic >out &&
-+	test_i18ngrep "Current branch topic is up to date" out
++test_expect_success "rebase -p re-creates history around dropped commit matching upstream" "
++	reset_rebase &&
++	git rebase -p h u &&
++	test_cmp_rev h HEAD~3 &&
++	test_revision_subjects 'd i e u' HEAD~2 HEAD^2 HEAD^ HEAD
++"
++
++test_expect_failure "rebase -p --onto in merged history does not lose patches in upstream" "
++	reset_rebase &&
++	git rebase -p --onto f h u &&
++	test_cmp_rev f HEAD~3 &&
++	test_revision_subjects 'd G i e u' HEAD~2 HEAD^2^ HEAD^2 HEAD^ HEAD
++"
++
++test_expect_success "rebase -p --onto in merged history drops patches in onto" "
++	reset_rebase &&
++	git rebase -p --onto h f u &&
++	test_cmp_rev h HEAD~3 &&
++	test_revision_subjects 'd i e u' HEAD~2 HEAD^2 HEAD^ HEAD
++"
++
++# a---b---c---g---h
++#      \
++#       d---G---s
++#        \   \ /
++#         \   X
++#          \ / \
++#           e---t
++#
++# uppercase = cherry-picked
++# h = reverted g
++test_expect_success 'setup of non-linear-history for dropping whole side' '
++	git checkout G &&
++	test_merge s e &&
++	git checkout e &&
++	test_merge t G
 +'
 +
-+test_expect_success 'rebase fast-forward to master' '
-+	git checkout topic^ &&
-+	git rebase topic >out &&
-+	test_i18ngrep "Fast-forwarded HEAD to topic" out
++test_expect_failure "rebase -p drops merge commit when entire first-parent side is dropped" "
++	reset_rebase &&
++	git rebase -p h s &&
++	test_cmp_rev h HEAD~2 &&
++	test_linear_range 'd e' h..
++"
++
++test_expect_success "rebase -p drops merge commit when entire second-parent side is dropped" "
++	reset_rebase &&
++	git rebase -p h t &&
++	test_cmp_rev h HEAD~2 &&
++	test_linear_range 'd e' h..
++"
++
++# a---b---c
++#      \
++#       d---e
++#        \   \
++#         n---r
++#          \
++#           o
++#
++# r = tree-same with n
++# uppercace = cherry-picked
++test_expect_success 'setup of non-linear-history for empty commits' '
++	git checkout n &&
++	git merge --no-commit e &&
++	git reset n . &&
++	git commit -m r &&
++	git reset --hard &&
++	git clean -f &&
++	git tag r
 +'
 +
- test_expect_success 'rebase --stat' '
- 	git reset --hard start &&
-         git rebase --stat master >diffstat.txt &&
++test_expect_success "rebase -p re-creates empty internal merge commit" "
++	reset_rebase &&
++	git rebase -p c r &&
++	test_revision_subjects 'c d e n r' HEAD~3 HEAD~2 HEAD^2 HEAD^ HEAD
++"
++
++test_expect_success "rebase -p re-creates empty merge commit" "
++	reset_rebase &&
++	git rebase -p o r &&
++	test_revision_subjects 'e o r' HEAD^2 HEAD^ HEAD
++"
++
++test_done
 -- 
 1.8.2.674.gd17d3d2
