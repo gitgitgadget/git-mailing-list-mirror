@@ -1,79 +1,85 @@
-From: =?utf-8?b?w5h5c3RlaW4=?= Walle <oystwa@gmail.com>
-Subject: Re: 1.8.3 - gitignore not being parsed correctly on OS X; regex support is broken?
-Date: Wed, 29 May 2013 18:49:58 +0000 (UTC)
-Message-ID: <loom.20130529T204310-306@post.gmane.org>
-References: <CAGLuM14_MQffwQWrB2YCQXzhkGaxdaYBuY74y7=pfb-hB6LskA@mail.gmail.com> <CACsJy8BqCUKhc8vhjhNz0OedBngk7zcSOk70ekRm3EiruHfNxA@mail.gmail.com> <CACsJy8DD=LxAKh_fUELJ5Mj0xS_gZE88N_rJFkKGer=YAOqsMg@mail.gmail.com> <51A62A96.6040009@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Fwd: [git-users] Highlevel (but simple to implement) commands provided by default for git
+Date: Wed, 29 May 2013 11:58:14 -0700
+Message-ID: <7vtxllsjeh.fsf@alter.siamese.dyndns.org>
+References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
+	<CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 29 20:50:44 2013
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Br=C3=A1ulio?= Bhavamitra <brauliobo@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 29 20:58:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhlSN-0008Vn-7G
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:50:43 +0200
+	id 1UhlZl-0006D4-VE
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:58:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965898Ab3E2Sub convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 14:50:31 -0400
-Received: from plane.gmane.org ([80.91.229.3]:47829 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965807Ab3E2SuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 14:50:19 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UhlRw-00088r-55
-	for git@vger.kernel.org; Wed, 29 May 2013 20:50:16 +0200
-Received: from 233.5.200.37.customer.cdi.no ([37.200.5.233])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 29 May 2013 20:50:16 +0200
-Received: from oystwa by 233.5.200.37.customer.cdi.no with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 29 May 2013 20:50:16 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 37.200.5.233 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Ubuntu Chromium/25.0.1364.160 Chrome/25.0.1364.160 Safari/537.22)
+	id S965797Ab3E2S6S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 14:58:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61740 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759396Ab3E2S6R convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 14:58:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FDCA23392;
+	Wed, 29 May 2013 18:58:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=9wgDqxlH/zH5
+	IVfBL0qYJSwgeTQ=; b=L9fWCBM12OJW+dQR6O0twfUPKFEhxNEkW3YY8qPBSvvK
+	gljK8r28Hb169wevreBZnHINaRskXtxayNzTyCW2Vxx04SFopsh7kjb1myTM57vh
+	CFPuvw+ZJrsjDXhwWQEw+f0nEi+quu5aQAVgPXZSl5WTfu0zDXb1eSXou7MLvgE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Wza78e
+	9fcK8D4+bjIKHJU/DIAV2UwHBZUkg9JV0q88tNAzwn/gJZvzpPtvp+0rGmgdDAtd
+	HfrbICfHKfFEOsq6mXeQO1Psqpm0PvTveAKcqqxVavnxNa6RROhA+OlvMWdSL7Dh
+	m4j7uodAJCgSp3M69aFnzkEnlSrrgp72udxNs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8747F23391;
+	Wed, 29 May 2013 18:58:16 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0CB5A2338F;
+	Wed, 29 May 2013 18:58:15 +0000 (UTC)
+In-Reply-To: <CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
+	(=?utf-8?Q?=22Br=C3=A1ulio?= Bhavamitra"'s message of "Wed, 29 May 2013
+ 15:11:25 -0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B8318F48-C891-11E2-9545-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225867>
 
-Karsten Blees <karsten.blees <at> gmail.com> writes:
+Br=C3=A1ulio Bhavamitra <brauliobo@gmail.com> writes:
 
->  <at> =C3=98ystein: in the meantime, could you check if this fixes th=
-e problem=20
-for you?
->=20
-> --- 8< ---
-> diff --git a/dir.c b/dir.c
-> index a5926fb..13858fe 100644
-> --- a/dir.c
-> +++ b/dir.c
->  <at>  <at>  -821,6 +821,9  <at>  <at>  static void prep_exclude(stru=
-ct=20
-dir_struct *dir, const char *base, int baselen)
->  				dir->basebuf, stk->baselen - 1,
->  				dir->basebuf + current, &dt);
->  			dir->basebuf[stk->baselen - 1] =3D '/';
-> +			if (dir->exclude &&
-> +			    dir->exclude->flags & EXC_FLAG_NEGATIVE)
-> +				dir->exclude =3D NULL;
->  			if (dir->exclude) {
->  				dir->basebuf[stk->baselen] =3D 0;
->  				dir->exclude_stack =3D stk;
+>   root =3D rev-parse --show-toplevel
 
-Hi, Karsten
+Hmm, part of my "cdup" shell function looks something like
 
-I applied your fix on v1.8.3 on both systems I mentioned earlier and
-from my tests the issue I reported is fixed.
+     cdup () {
+	... error detection etc...
+	d=3D$(git rev-parse --show-toplevel)
+        cd "$d"
+    }
 
-Thank you very much! :)
+so I can quickly go up to the top-level.  With "root", I could
+replace that rev-parse call with "git root", but I'd keep typing
 
-Regards
-=C3=98sse
+	$ cdup
+
+after doing so anyway.  I am not sure how much value it adds.
+
+You would need to handle error cases like "you are not in a working
+tree", you cannot expect to be able to say
+
+	$ cd "$(git root)"
+
+anyway.
