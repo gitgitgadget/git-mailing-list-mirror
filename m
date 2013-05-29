@@ -1,64 +1,55 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2 7/8] revert/cherry-pick: add --quiet option
-Date: Wed, 29 May 2013 18:03:25 +0530
-Message-ID: <CALkWK0=QyznWZt4sJCok9OZxjrdjtMTtpStA8LHdCCbn0Oi6TA@mail.gmail.com>
-References: <1369799788-24803-1-git-send-email-felipe.contreras@gmail.com> <1369799788-24803-8-git-send-email-felipe.contreras@gmail.com>
+From: =?ISO-8859-2?Q?=22=C1kos=2C_Tajti=22?= <akos.tajti@intland.com>
+Subject: git init doesn't create master branch
+Date: Wed, 29 May 2013 14:47:28 +0200
+Message-ID: <51A5F8E0.8060906@intland.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@inf.ethz.ch>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 14:34:17 2013
+Content-Type: text/plain; charset=ISO-8859-2;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 29 14:47:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uhfa1-0000gJ-Vq
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 14:34:14 +0200
+	id 1Uhfmy-0004ED-HG
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 14:47:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966016Ab3E2MeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 08:34:07 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:61900 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965855Ab3E2MeG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 08:34:06 -0400
-Received: by mail-ie0-f178.google.com with SMTP id f4so8561741iea.37
-        for <git@vger.kernel.org>; Wed, 29 May 2013 05:34:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=vlh2wEOqd8ePg7V1jkD2u5VcXhrFv8rmopRK3HDgL08=;
-        b=LzE3X1nfSenBn8XDC/7QzQu0+a9OGx267A26zJVHBElgXeILV6r4gnsTDj/fG188Bx
-         nDuoBz84ZmbVBwtv9y8gK1HwmWEOMDr7TdUXDkpMAnex03yiFY65JM/C3WReGOGA32wu
-         ZLvtyAN+CCdKmPpC/U1cFIJMrgdkL4wg5JRCALX2UbiJt7//3fLC2RTTT85ve7bGzanp
-         cpDh1KJXv3ulZEpivn3EVNjrU7gOUvtaesoqBZSe51Q8PuKOEvPQA1mU2vEgrx29L/VF
-         PwITl5QUgHb8DWOkVohvosAqRIzmAPcLKFU1YB6RQGqehAqGYtqNPGakqpiAveRgC5iQ
-         UK2Q==
-X-Received: by 10.50.141.230 with SMTP id rr6mr9205832igb.89.1369830845203;
- Wed, 29 May 2013 05:34:05 -0700 (PDT)
-Received: by 10.64.226.135 with HTTP; Wed, 29 May 2013 05:33:25 -0700 (PDT)
-In-Reply-To: <1369799788-24803-8-git-send-email-felipe.contreras@gmail.com>
+	id S1759559Ab3E2Mrb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 08:47:31 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:52934 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759549Ab3E2Mrb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 08:47:31 -0400
+Received: from [127.0.0.1] (188-143-39-115.pool.digikabel.hu [188.143.39.115])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0MbLRw-1Uy6i52x9w-00J469; Wed, 29 May 2013 14:47:29 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+X-Antivirus: avast! (VPS 130529-0, 2013.05.29), Outbound message
+X-Antivirus-Status: Clean
+X-Provags-ID: V02:K0:PtSmQ//UANsmfN0cFrx8DGXrAOdG2P80WEa33M4sKd6
+ qzEyAxhJ2EhiPLSkqcRt9kIq4bweBdDpTqHoiEZhaRO3vOIjyj
+ BKgOyeHs8zFAvM2vXGxmzlqprLyRTZ/JYV90psBYfatPMt+TBd
+ Ah75hgW2kmewm1A7R+YmrBwJuqx3g0r+F3wUnfxGvBtJsvxFIe
+ y9WEKUsOaWq+9YlfxMYKRg854oUlCUdvSsvmn8JqzI4whY6vm5
+ h4c+m2SAGO4we0ms4XKyyPnebiBVcVlIEgOXkWvoJgQPPzlLL0
+ Xlt4Nb7gBlBW98Jg5odFTkUu00SakMxDVtq9Ksvq6nLWR5OY85
+ G1299Z2GFAgZdDuBJ4mI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225803>
 
-Felipe Contreras wrote:
->         if (opts->skip_empty && is_index_unchanged() == 1) {
-> -               warning(_("skipping %s... %s"),
-> -                       find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV),
-> -                       msg.subject);
-> +               if (!opts->quiet)
-> +                       warning(_("skipping %s... %s"),
-> +                               find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV),
-> +                               msg.subject);
->                 goto leave;
->         }
+Dear List,
 
-All this trouble just to suppress the "skipping ..." message.  Do you
-see anything else --quiet can be used to suppress?
+the manual of git init says: "An initial HEAD file that references the=20
+HEAD of the master branch is also created."
+
+However, after creating the repository using git init there's no master=
+=20
+branch. How can make sure that master is created?
+
+Thanks in advance,
+=C1kos Tajti
