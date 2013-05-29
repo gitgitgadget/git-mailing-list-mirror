@@ -1,60 +1,72 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH v2 4/8] rebase: cherry-pick: fix abort of cherry mode
-Date: Wed, 29 May 2013 00:47:36 -0500
-Message-ID: <CAMP44s1RWNVLWGFAR=MCdYF-uz4XS6-op9pY8Dc-DWXXva-17w@mail.gmail.com>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: [RFC/PATCH v2 3/8] rebase: cherry-pick: fix sequence continuation
+Date: Tue, 28 May 2013 22:51:14 -0700
+Message-ID: <CANiSa6h7fY=GNM0VvFXvE-LD=nVWbEBGqWbaheZ6gr518_aPNA@mail.gmail.com>
 References: <1369801000-3705-1-git-send-email-felipe.contreras@gmail.com>
-	<1369801000-3705-5-git-send-email-felipe.contreras@gmail.com>
-	<CANiSa6g10XQJMCrvu1U-YG8OpZXOLA1A_fTYoPh=RHoBkHu2Mw@mail.gmail.com>
+	<1369801000-3705-4-git-send-email-felipe.contreras@gmail.com>
+	<CANiSa6ivOnRfOVMTsgDygi=2dvxmMOqqWdqs7CBYohThOVzt7Q@mail.gmail.com>
+	<CAMP44s0Zy4KpPN1n6HOVXWyCuevenbSFnH589YngMB9NVWcamQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 07:47:42 2013
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 29 07:51:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhZEc-0001Jt-Al
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 07:47:42 +0200
+	id 1UhZI8-0004Iv-NV
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 07:51:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754419Ab3E2Fri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 01:47:38 -0400
-Received: from mail-we0-f173.google.com ([74.125.82.173]:34618 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753077Ab3E2Frh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 01:47:37 -0400
-Received: by mail-we0-f173.google.com with SMTP id p57so6025171wes.32
-        for <git@vger.kernel.org>; Tue, 28 May 2013 22:47:36 -0700 (PDT)
+	id S1754257Ab3E2FvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 01:51:16 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:57312 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752117Ab3E2FvP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 01:51:15 -0400
+Received: by mail-wi0-f181.google.com with SMTP id hi5so3164216wib.8
+        for <git@vger.kernel.org>; Tue, 28 May 2013 22:51:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=6S5bRTZXEDbvDiPZ7HAJHAiTHSxOKQR7JIiDlMIGzwY=;
-        b=DgGb3LP8HSrWZm09QmmKcCHXKeo7MJgv9tl6ueuxUzmEasXOXZp/ACKFmbA1+OozGN
-         3qOe4oAplZSSajPURF22ARqA9egxjiY0QFRlhsgOun3vPnTFos95Li7hrRS5yCLlwTXv
-         hKYjqIz6TngSrmsRWhiM91ryJgSX750+2RD0XzbvSmhem+3gL0B7UpEbDrC3ZZubfAnW
-         8x+vvlQA8j8SDZLI+bgp4ApIFN4VjNM/DWaPqv8mWUJ6RZy2Hi4JvlAvgkxMLFLob0sh
-         A2qGSFv3hcw4S2CSFqKaWbUnNDY/Q6QIwLH9HKDrVzSx1qY9rZ1jQTuDL86n9/xqmIrw
-         gPfg==
-X-Received: by 10.194.216.136 with SMTP id oq8mr905001wjc.8.1369806456635;
- Tue, 28 May 2013 22:47:36 -0700 (PDT)
-Received: by 10.194.47.4 with HTTP; Tue, 28 May 2013 22:47:36 -0700 (PDT)
-In-Reply-To: <CANiSa6g10XQJMCrvu1U-YG8OpZXOLA1A_fTYoPh=RHoBkHu2Mw@mail.gmail.com>
+        bh=HBSc9wlp07mSfCwPh5D4Wk6YIedxHThY6C8mZLgoZhE=;
+        b=mTO2Mgxybn/zqvPaGAn7hmmrcFw0KF6s5wPOXc3MMI3+1VgBvZk341smPUMO4VO0Hx
+         DEfmidKLQrFeoIOw0zMJI0GBm2DajWdBXPCYzmGR14t8/BOq9E7gn5Q6ag1igZ4f/EA2
+         Tek7faM6VYVwEvKQXtfQ8zZXJ+PoI+ulytwcsZMKcjRaOKsBrjE/Gkb1tWcNFOxfwIFO
+         aQ2oG2jdUJ7vyp0VKLHLKs9/PuNe97UBXGPtkIHp5XT5+2t++x/m92g/zoPXQT75woeH
+         LRsFrepva7V4l8p3Gr5ocSkOalUwFeX7OJcnr7jPjGHt3Z24wsgSIAU3NGPQUYlDcfCY
+         BtIg==
+X-Received: by 10.180.206.77 with SMTP id lm13mr858363wic.18.1369806674450;
+ Tue, 28 May 2013 22:51:14 -0700 (PDT)
+Received: by 10.180.7.99 with HTTP; Tue, 28 May 2013 22:51:14 -0700 (PDT)
+In-Reply-To: <CAMP44s0Zy4KpPN1n6HOVXWyCuevenbSFnH589YngMB9NVWcamQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225745>
 
-On Wed, May 29, 2013 at 12:35 AM, Martin von Zweigbergk
-<martinvonz@gmail.com> wrote:
-> Same here: should this have been in the first patch? If not, do you
-> know for how long it has been broken (since which commit)?
+On Tue, May 28, 2013 at 10:41 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Wed, May 29, 2013 at 12:33 AM, Martin von Zweigbergk
+> <martinvonz@gmail.com> wrote:
+>>  As Junio asked in the previous iteration, shouldn't this have been in
+>> the first patch?
+>
+> No, the first patch is splitting the code without introducing any
+> functional changes.
+>
+> This is fixing a bug that already exists, we could fix it before the
+> split, or after, but mixing the split and the fix at the same time is
+> a no-no.
 
-Since day 1 of --keep-empty:
+Oh, now I remember. I ran into that bug once.
 
-90e1818 git-rebase: add keep_empty flag
+> One change splits, the other change fixes, what's wrong with that?
 
--- 
-Felipe Contreras
+I didn't say there was anything wrong. I was asking if the bug was
+there before (and I didn't see an answer when Junio asked).
+
+Thanks
