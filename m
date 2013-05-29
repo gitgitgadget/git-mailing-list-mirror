@@ -1,64 +1,65 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: git ignore regression in 1.8.3
-Date: Wed, 29 May 2013 20:31:04 +0700
-Message-ID: <CACsJy8BT_3aUAO+eMT6F3SWwLOWeFwJ2rxxru-+NtBRD3RTSFw@mail.gmail.com>
-References: <CAPqtr1KjmqRZZuVwput6=rKJrivb7siYePqT5QEOLJApg+phEg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v2 7/8] revert/cherry-pick: add --quiet option
+Date: Wed, 29 May 2013 19:02:47 +0530
+Message-ID: <CALkWK0=VieCwZS4ua-eyg3t-cqC2Y+ifa-G7gwJ=Mxt0cfoD1g@mail.gmail.com>
+References: <1369799788-24803-1-git-send-email-felipe.contreras@gmail.com>
+ <1369799788-24803-8-git-send-email-felipe.contreras@gmail.com>
+ <CALkWK0=QyznWZt4sJCok9OZxjrdjtMTtpStA8LHdCCbn0Oi6TA@mail.gmail.com> <CAMP44s0M8dg_8ke3p1wJtnPrjdtH0L-D3ZgnPPCSKH0Mx0Z=GA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: =?UTF-8?Q?Nicolas_Despr=C3=A8s?= <nicolas.despres@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 15:31:41 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 29 15:33:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhgTc-0007g6-60
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 15:31:40 +0200
+	id 1UhgVW-0000wJ-S6
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 15:33:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935121Ab3E2Nbf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 09:31:35 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:53990 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754087Ab3E2Nbf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 09:31:35 -0400
-Received: by mail-ob0-f176.google.com with SMTP id v19so3039044obq.7
-        for <git@vger.kernel.org>; Wed, 29 May 2013 06:31:34 -0700 (PDT)
+	id S966020Ab3E2Nda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 09:33:30 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:47498 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935145Ab3E2Nd2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 09:33:28 -0400
+Received: by mail-ie0-f177.google.com with SMTP id 9so23474027iec.8
+        for <git@vger.kernel.org>; Wed, 29 May 2013 06:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=hH3+J9kjQmqz3MCKMq3WEfff6PzurT41aK9HoAGXgg4=;
-        b=dKLT0TqqGk6AK9DQ1hqQwM/RcMDawnTpPnpEjL+HYmnFf5GsAn3Zk8+67nE77aMH1I
-         brDUltmDwOC6ImJviEQl3C0FP9WgICLs0HqOY2I6xYtOhQTeTIMgXPjKUU5O+fR+jp1v
-         WyPCHD7M34V2p1zuQga5u9+xY9You4A2AoAoRf5u8YCIpVYjNkLfYTw+jSF5rk9IVCSr
-         Jm0h7+v3kjEXGrR978fotnFfHTS4RJpE6k6DMvQ9oj4RZUTcc0ccoCt1ep+R8/4rsZcU
-         mlp//fJg31DWqTF6SPmpFo78gaxtNHaBoyLWJr2N66yMv5yXaQJbU0Dar5f0u3E8/jUq
-         9BmQ==
-X-Received: by 10.182.106.130 with SMTP id gu2mr1647990obb.0.1369834294388;
- Wed, 29 May 2013 06:31:34 -0700 (PDT)
-Received: by 10.76.171.199 with HTTP; Wed, 29 May 2013 06:31:04 -0700 (PDT)
-In-Reply-To: <CAPqtr1KjmqRZZuVwput6=rKJrivb7siYePqT5QEOLJApg+phEg@mail.gmail.com>
+         :cc:content-type;
+        bh=kxSj9+/9vN2uLUxnvx/SEZVBdWeIwiQJzJ6v1piLQ08=;
+        b=mfsYqm/QrYF59SU4G5/9K9ad4DwNTfbkq7HnGGag3uie8SP5GOMmIsV7aRX96LDUTU
+         DeY5Jq7nOb7iQzFNp1WR7bvnaGSglOsq59kZ/4kW/1PymBlkQuqT/NV+dmICApbcqpGS
+         0b170Cv2owUwCFZBPW6IAYnX/TBfNGoOunUUgHBhRy4B6ov6PmY22CKRF1Oskf13/LLV
+         Y5POmrAP92k+JFNQgPomDaqR8Cify1V8Fc0vf4Na1DG05S1n/5th+e3MiurJ1PNUqwrV
+         uEe9YOvisEmZ5CUmgQDjkjbV8sFMTvYJROplr8lHTtex61rIPUvBYh5hJUY/qMHtyLHN
+         lwTg==
+X-Received: by 10.50.141.230 with SMTP id rr6mr9330933igb.89.1369834408413;
+ Wed, 29 May 2013 06:33:28 -0700 (PDT)
+Received: by 10.64.226.135 with HTTP; Wed, 29 May 2013 06:32:47 -0700 (PDT)
+In-Reply-To: <CAMP44s0M8dg_8ke3p1wJtnPrjdtH0L-D3ZgnPPCSKH0Mx0Z=GA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225818>
 
-On Wed, May 29, 2013 at 7:31 PM, Nicolas Despr=C3=A8s
-<nicolas.despres@gmail.com> wrote:
-> I have noticed a regression in the behavior of ignore rules in 1.8.3.
+Felipe Contreras wrote:
+> Did you miss the -q option passed to 'git commit'?
 
-Yeah, it looks like everybody suddenly realizes this regression soon
-after the release, not before :( This has been reported three times so
-far. You may want to check the discussion (and hopefully progress
-soon) in this thread:
+Ah, yes.
 
-http://thread.gmane.org/gmane.comp.version-control.git/225675/focus=3D2=
-25713
+It would help if you mentioned:
 
-We really need to add some real world use cases of gitignore in the tes=
-t suite.
---
-Duy
+    Introduce --quiet to suppress warning about skipped commits (when
+using --skip-empty) and output from 'git commit'.
+
+in the commit message.
+
+Thanks.
