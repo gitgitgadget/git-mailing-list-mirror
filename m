@@ -1,170 +1,286 @@
-From: Anthony Ramine <n.oxyde@gmail.com>
-Subject: Re: [PATCH v3] wildmatch: properly fold case everywhere
-Date: Wed, 29 May 2013 19:57:44 +0200
-Message-ID: <BAB62C57-FE7D-476A-ACA7-5831BAF3E558@gmail.com>
-References: <1369744361-44918-1-git-send-email-n.oxyde@gmail.com> <1369749497-55610-1-git-send-email-n.oxyde@gmail.com> <CACsJy8CY_T44ymUnLWv4FpF3zpL3WKSysJ1wBhfxGHNPJ6kSmg@mail.gmail.com> <4E816EBA-A22D-4507-BED0-0DE55D2E619C@gmail.com> <CACsJy8A61nYu9a-BhUiBhBEv-e6_CtYyZE3sG9iCiau+3EKVdw@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 19:57:55 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: =?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: Highlevel (but simple to implement) commands provided
+ by default for git
+Date: Wed, 29 May 2013 15:05:52 -0300
+Message-ID: <CAJri6_vdN6-z0xvS2PrrdcesStqRKt7ve4dp8S2np3v=_S_ifg@mail.gmail.com>
+References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Mime-Version: 1.0
+Content-Type: multipart/alternative; boundary=001a11c36924df693504dddf3d71
+To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+X-From: git-users+bncBDUJVQ6N5UERBKEHTGGQKGQE5L5XULI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Wed May 29 20:06:35 2013
+Return-path: <git-users+bncBDUJVQ6N5UERBKEHTGGQKGQE5L5XULI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-fa0-f61.google.com ([209.85.161.61])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhkdF-0006Jx-IP
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 19:57:54 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964876Ab3E2R5u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 13:57:50 -0400
-Received: from mail-we0-f177.google.com ([74.125.82.177]:63256 "EHLO
-	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934981Ab3E2R5s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 13:57:48 -0400
-Received: by mail-we0-f177.google.com with SMTP id n57so6589884wev.22
-        for <git@vger.kernel.org>; Wed, 29 May 2013 10:57:47 -0700 (PDT)
+	(envelope-from <git-users+bncBDUJVQ6N5UERBKEHTGGQKGQE5L5XULI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1Uhkle-0005CR-LU
+	for gcggu-git-users@m.gmane.org; Wed, 29 May 2013 20:06:34 +0200
+Received: by mail-fa0-f61.google.com with SMTP id w1sf1639766faw.6
+        for <gcggu-git-users@m.gmane.org>; Wed, 29 May 2013 11:06:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:x-original-sender
+         :x-original-authentication-results:reply-to:precedence:mailing-list
+         :list-id:x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=SIdg9PLVBVv42rRkRlgXATnRuzdJwkf4OcEg6JVKfpE=;
+        b=eWfcejojG4WO+YUs0iVuvhH0U1T1Zh+3K5zstvVxUHZ8lorIGJQ/BiIBkkSnkCzhnQ
+         UefFuLhW3oDNu2F4QF5YHagLm44n77v1ivXC64JHYQHXbCUcudPfGc4c/nj7leUd2GML
+         Xxcj0YTm2vjtcIJPeUhWTxsCWuO2g6fuw3/4khKxSsT61Cj5QzcRiYZZ90rXaM1QRhyg
+         LB1lDDLNLJhGzSipPvMoKAtra7uWwgacimbghkQ6GtZZrjDUjRSYIGok2IAkHihExtG8
+         O3hAqTNZ7pS+vMf/yc8jEsFHSbcRMfH0tjzxQec5VdA2CQF68L1zctAU8JfDuwmYSsq0
+         v0BQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=djq1Vk19N/ZisKUa4JbM9eWqJN9RX1XrdzF2jpSXAuE=;
-        b=AIAM8rgEoFlvK/hYCuwBO9/o1j1fpOWEsdH+ZocOdnfYvOW9FLMnfdN7AMDmKcBEDI
-         SFK67Z46fi/HM0TlVCHvdFm2XOxYTvsFjvO+zRJH3C1/niUu/qKArmgzUdEP9UwiLGkd
-         rt6QFMpFeVxh1ZahHpofuiBGlMsriIS36dfDPCSdV4CIYULmeFdx+C9AcaGU/KEotCF/
-         YVbFtUPx0wmezUw0tE9W/IF4xxxFXqyZG1Jsj5dxAaWaEvDs2y+O2fVVDMJi7wlnmQE2
-         6m47+gKGMwYejQDVyUWHSNkOgom0Rp6lDIC/kqXS7UnGQNTjrjF8ah+nXh04FeyItJFl
-         NbYA==
-X-Received: by 10.180.90.43 with SMTP id bt11mr2025467wib.30.1369850267437;
-        Wed, 29 May 2013 10:57:47 -0700 (PDT)
-Received: from [192.168.1.44] (vol75-16-88-182-187-128.fbx.proxad.net. [88.182.187.128])
-        by mx.google.com with ESMTPSA id en3sm32830520wid.1.2013.05.29.10.57.45
-        for <multiple recipients>
+        h=x-beenthere:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:x-original-sender
+         :x-original-authentication-results:reply-to:precedence:mailing-list
+         :list-id:x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=SIdg9PLVBVv42rRkRlgXATnRuzdJwkf4OcEg6JVKfpE=;
+        b=biejzM6otHsqz7J09Aac/B4mS0BRbh/heXgrovGYbwgxMkrHxXs14vgSY/G0Ghvsvt
+         DRExQZoafh/BX3unIGX7/sM647x9vCuTthi17dWJmTDkP/lpGmXlRiRzXryH7Jl/RO3R
+         Ih5+61ulI/1er1/N7eCqxRnXFEcXFdPpdcXyG+2QJ1hpYq3dOixvTJ1twUeshpUAU+zr
+         4KGEHvuJkAFTqIKpcZwfmNmsIllH3AYEKITqDLMd8GvnAB1EzpstlD8KRWRzmddKBtyp
+         kWXIemzLNoJlGkZWU8iA213M4TrHn6vYGJvrMzd8uTcQpOdzh8Nyegd+IZNb+ST0m//Y
+         ULYA==
+X-Received: by 10.180.9.66 with SMTP id x2mr1655584wia.4.1369850794190;
+        Wed, 29 May 2013 11:06:34 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.180.211.169 with SMTP id nd9ls1611337wic.1.canary; Wed, 29 May
+ 2013 11:06:32 -0700 (PDT)
+X-Received: by 10.204.70.76 with SMTP id c12mr476679bkj.5.1369850792603;
+        Wed, 29 May 2013 11:06:32 -0700 (PDT)
+Received: from mail-lb0-f171.google.com (mail-lb0-f171.google.com [209.85.217.171])
+        by gmr-mx.google.com with ESMTPS id cm16si3171778bkb.0.2013.05.29.11.06.32
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 29 May 2013 10:57:46 -0700 (PDT)
-In-Reply-To: <CACsJy8A61nYu9a-BhUiBhBEv-e6_CtYyZE3sG9iCiau+3EKVdw@mail.gmail.com>
-X-Mailer: Apple Mail (2.1283)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225855>
+        Wed, 29 May 2013 11:06:32 -0700 (PDT)
+Received-SPF: pass (google.com: domain of brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.217.171 as permitted sender) client-ip=209.85.217.171;
+Received: by mail-lb0-f171.google.com with SMTP id v20so9393399lbc.30
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 29 May 2013 11:06:32 -0700 (PDT)
+X-Received: by 10.112.89.168 with SMTP id bp8mr2149418lbb.50.1369850792337;
+ Wed, 29 May 2013 11:06:32 -0700 (PDT)
+Received: by 10.114.39.104 with HTTP; Wed, 29 May 2013 11:05:52 -0700 (PDT)
+In-Reply-To: <f611150e-a12a-47f6-97f0-8aaff3045338-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+X-Original-Sender: brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.217.171 as
+ permitted sender) smtp.mail=brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org;       dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post?hl=en-US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/?hl=en-US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users?hl=en-US>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en-US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en-US>,
+ <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225856>
 
-Replied inline.
+--001a11c36924df693504dddf3d71
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, May 29, 2013 at 8:23 AM, Br=E1ulio Bhavamitra <brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>=
+wrote:
+
+> Hello all,
+>
+> One of the things I note about git is that is provides mostly low-level
+> and strictly necessary commands.
+> Many highlevel commands are then implemented as alias by users, after a
+> deep search on the internet.
+>
+> Adding highlevel commands, even though it could be implemented by a simpl=
+e
+> alias, would put git in another level
+> of user experience and create a new standard for newbie users.
+> What git developers think about this?
+>
+> I have, as many other users, an enormous .gitconfig. I paste here some
+> highlevel commands of it, according to my judgement.
+> Mercurial provides many of these highlevel commands.
+>
+>   root =3D rev-parse --show-toplevel
+>
+>  upstream =3D !git for-each-ref --format=3D'%(upstream:short)' $(git symb=
+olic-ref -q HEAD)
+>  upstream-remote =3D !git upstream | sed -e 's/\\/.*$//g'
+>
+>  out =3D !git fetch `git upstream-remote` && git l `git upstream`..HEAD
+>  in =3D pull --dry-run
+>
+>
+>  unmerged =3D !git ls-files --unmerged | cut -f2 | uniq
+>  untracked =3D ls-files --other --exclude-standard
+>  staged =3D ls-files --staged
+>  modified =3D ls-files --modified
+>  deleted =3D ls-files --deleted
+>
+>
+>   head =3D !git l -1
+>   current =3D rev-parse --abbrev-ref HEAD
+>
+> Source:
+> https://github.com/brauliobo/gitconfig/blob/master/configs/.gitconfig
+>
+> regards,
+> br=E1ulio
+>
+> --
+> You received this message because you are subscribed to the Google Groups
+> "Git for human beings" group.
+> To unsubscribe from this group and stop receiving emails from it, send an
+> email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+> For more options, visit https://groups.google.com/groups/opt_out.
+>
+>
+>
 
 --=20
-Anthony Ramine
+You received this message because you are subscribed to the Google Groups "=
+Git for human beings" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+For more options, visit https://groups.google.com/groups/opt_out.
 
-Le 29 mai 2013 =E0 15:52, Duy Nguyen a =E9crit :
 
-> On Wed, May 29, 2013 at 8:37 PM, Anthony Ramine <n.oxyde@gmail.com> w=
-rote:
->> Le 29 mai 2013 =E0 15:22, Duy Nguyen a =E9crit :
->>=20
->>> On Tue, May 28, 2013 at 8:58 PM, Anthony Ramine <n.oxyde@gmail.com>=
- wrote:
->>>> Case folding is not done correctly when matching against the [:upp=
-er:]
->>>> character class and uppercased character ranges (e.g. A-Z).
->>>> Specifically, an uppercase letter fails to match against any of th=
-em
->>>> when case folding is requested because plain characters in the pat=
-tern
->>>> and the whole string and preemptively lowercased to handle the bas=
-e case
->>>> fast.
->>>=20
->>> I did a little test with glibc fnmatch and also checked the source
->>> code. I don't think 'a' matches [:upper:]. So I'm not sure if that'=
-s a
->>> correct behavior or a bug in glibc. The spec is not clear (I think)=
- on
->>> this. I guess we should just assume that 'a' should match '[:upper:=
-]'?
->>=20
->> I don't know, in my opinion if case folding is enabled we should say=
- [:upper:], [:lower:] and [:alpha:] are equivalent.
->>=20
->> This opinion is shared by GNU Flex [1]:
->>=20
->>>      =95 If your scanner is case-insensitive (the =91-i=92 flag), t=
-hen =91[:upper:]=92 and =91[:lower:]=92 are equivalent to =91[:alpha:]=92=
-=2E
->>=20
->> [1] http://flex.sourceforge.net/manual/Patterns.html
->=20
-> Then we should do it too because of this precedent, I think.
->=20
->>>> @@ -196,6 +196,11 @@ static int dowild(const uchar *p, const uchar=
- *text, unsigned int flags)
->>>>                                       }
->>>>                                       if (t_ch <=3D p_ch && t_ch >=
-=3D prev_ch)
->>>>                                               matched =3D 1;
->>>> +                                       else if ((flags & WM_CASEF=
-OLD) && ISLOWER(t_ch)) {
->>>> +                                               uchar t_ch_upper =3D=
- toupper(t_ch);
->>>> +                                               if (t_ch_upper <=3D=
- p_ch && t_ch_upper >=3D prev_ch)
->>>> +                                                       matched =3D=
- 1;
->>>> +                                       }
->>>=20
->>> Or we could stick with to tolower. Something like this
->>>=20
->>> if ((t_ch <=3D p_ch && t_ch >=3D prev_ch) ||
->>>  ((flags & WM_CASEFOLD) &&
->>>     t_ch <=3D tolower(p_ch) && t_ch >=3D tolower(prev_ch)))
->>>  match =3D 1;
->>>=20
->>> I think it's easier to read if we either downcase all, or upcase al=
-l, not both.
->>=20
->> If the range to match against is [A-_], it will become [a-_] which i=
-s an empty range, ord('a') > ord('_'). I think it is simpler to reuse t=
-oupper() after the fact as I did.
->>=20
->> Anyway maybe I should add a test for that corner case?
->=20
-> Yeah I was thinking about such a case, but I saw glibc do it... I
-> guess we just found another bug, at least in compat/fnmatch.c. Yes a
-> test for it would be great, in case I change my mind 2 years from now
-> and decide to turn it the other way ;)
 
-Should I patch compat/fnmatch.c too? That would make it different from =
-the glibc's one.
+--001a11c36924df693504dddf3d71
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
->>=20
->>>>                                       p_ch =3D 0; /* This makes "p=
-rev_ch" get set to 0. */
->>>>                               } else if (p_ch =3D=3D '[' && p[1] =3D=
-=3D ':') {
->>>>                                       const uchar *s;
->>>> @@ -245,6 +250,8 @@ static int dowild(const uchar *p, const uchar =
-*text, unsigned int flags)
->>>>                                       } else if (CC_EQ(s,i, "upper=
-")) {
->>>>                                               if (ISUPPER(t_ch))
->>>>                                                       matched =3D =
-1;
->>>> +                                               else if ((flags & =
-WM_CASEFOLD) && ISLOWER(t_ch))
->>>> +                                                       matched =3D=
- 1;
->>>>                                       } else if (CC_EQ(s,i, "xdigi=
-t")) {
->>>>                                               if (ISXDIGIT(t_ch))
->>>>                                                       matched =3D =
-1;
->>>=20
->>> If WM_CASEFOLD is set, maybe isalpha(t_ch) is enough then?
->>=20
->> Yes isalpha() is enought but I wanted to keep the two cases separate=
-d, I can amend that if you want.
->=20
-> Either way is fine. I don't think this code is performance critical. =
-Your call.
-> --
-> Duy
+<div dir=3D"ltr"><br></div><div class=3D"gmail_extra"><br><br><div class=3D=
+"gmail_quote">On Wed, May 29, 2013 at 8:23 AM, Br=E1ulio Bhavamitra <span d=
+ir=3D"ltr">&lt;<a href=3D"mailto:brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org" target=3D"_blank">bra=
+uliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org</a>&gt;</span> wrote:<br>
+
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Hello all,<div><br></div><div>One of the thi=
+ngs I note about git is that is provides mostly low-level and strictly nece=
+ssary commands.</div>
+
+<div>Many highlevel commands are then implemented as alias by users, after =
+a deep search on the internet.</div><div><br></div><div>Adding highlevel co=
+mmands, even though it could be implemented by a simple alias, would put gi=
+t in another level</div>
+
+<div>of user experience and create a new standard for newbie users.</div><d=
+iv>What git developers think about this?</div><div><br></div><div>I have, a=
+s many other users, an enormous .gitconfig. I paste here some highlevel com=
+mands of it, according to my judgement.</div>
+
+<div>Mercurial provides many of these highlevel commands.<br></div><div><br=
+></div><div><span style=3D"color:rgb(51,51,51);font-family:Consolas,&#39;Li=
+beration Mono&#39;,Courier,monospace;font-size:12px;line-height:18px;white-=
+space:pre-wrap">=A0=A0</span><span style=3D"color:rgb(0,128,128);font-famil=
+y:Consolas,&#39;Liberation Mono&#39;,Courier,monospace;font-size:12px;line-=
+height:18px;white-space:pre-wrap">root</span><span style=3D"color:rgb(51,51=
+,51);font-family:Consolas,&#39;Liberation Mono&#39;,Courier,monospace;font-=
+size:12px;line-height:18px;white-space:pre-wrap"> </span><span style=3D"fon=
+t-weight:bold;color:rgb(51,51,51);font-family:Consolas,&#39;Liberation Mono=
+&#39;,Courier,monospace;font-size:12px;line-height:18px;white-space:pre-wra=
+p">=3D</span><span style=3D"color:rgb(51,51,51);font-family:Consolas,&#39;L=
+iberation Mono&#39;,Courier,monospace;font-size:12px;line-height:18px;white=
+-space:pre-wrap"> </span><span style=3D"color:rgb(221,17,68);font-family:Co=
+nsolas,&#39;Liberation Mono&#39;,Courier,monospace;font-size:12px;line-heig=
+ht:18px;white-space:pre-wrap">rev-parse --show-toplevel</span><br>
+
+</div><div><span style=3D"color:rgb(221,17,68);font-family:Consolas,&#39;Li=
+beration Mono&#39;,Courier,monospace;font-size:12px;line-height:18px;white-=
+space:pre-wrap"><pre style=3D"font-family:Consolas,&#39;Liberation Mono&#39=
+;,Courier,monospace;color:rgb(51,51,51)">
+
+<div style=3D"padding-left:10px">=A0<span style=3D"color:rgb(0,128,128)">up=
+stream</span> <span style=3D"font-weight:bold">=3D</span> <span style=3D"co=
+lor:rgb(221,17,68)">!git for-each-ref --format=3D&#39;%(upstream:short)&#39=
+; $(git symbolic-ref -q HEAD)</span></div>
+
+<div style=3D"padding-left:10px"><span style=3D"color:rgb(221,17,68)"> upst=
+ream-remote =3D !git upstream | sed -e &#39;s/\\/.*$//g&#39;</span></div><d=
+iv style=3D"padding-left:10px"><br></div><div style=3D"padding-left:10px">=
+=A0<span style=3D"color:rgb(0,128,128)">out</span> <span style=3D"font-weig=
+ht:bold">=3D</span> <span style=3D"color:rgb(221,17,68)">!git fetch `git up=
+stream-remote` &amp;&amp; git l `git upstream`..HEAD</span></div>
+
+<div style=3D"padding-left:10px"><span style=3D"color:rgb(221,17,68)"> in =
+=3D pull --dry-run</span></div></pre></span></div><div><br></div><div><pre =
+style=3D"font-size:12px;font-family:Consolas,&#39;Liberation Mono&#39;,Cour=
+ier,monospace;color:rgb(51,51,51);line-height:18px">
+
+<div style=3D"padding-left:10px">=A0<span style=3D"color:rgb(0,128,128)">un=
+merged</span> <span style=3D"font-weight:bold">=3D</span> <span style=3D"co=
+lor:rgb(221,17,68)">!git ls-files --unmerged | cut -f2 | uniq</span></div><=
+div style=3D"padding-left:10px">
+
+<span style=3D"color:rgb(221,17,68)"> untracked =3D ls-files --other --excl=
+ude-standard</span></div><div style=3D"padding-left:10px"><span style=3D"co=
+lor:rgb(221,17,68)"> staged =3D ls-files --staged</span></div><div style=3D=
+"padding-left:10px">
+
+<span style=3D"color:rgb(221,17,68)"> modified =3D ls-files --modified</spa=
+n></div><div style=3D"padding-left:10px"><span style=3D"color:rgb(221,17,68=
+)"> deleted =3D ls-files --deleted</span></div></pre></div><div><br></div><=
+div><span style=3D"color:rgb(51,51,51);font-family:Consolas,&#39;Liberation=
+ Mono&#39;,Courier,monospace;font-size:12px;line-height:18px;white-space:pr=
+e-wrap">=A0=A0</span><span style=3D"color:rgb(0,128,128);font-family:Consol=
+as,&#39;Liberation Mono&#39;,Courier,monospace;font-size:12px;line-height:1=
+8px;white-space:pre-wrap">head</span><span style=3D"color:rgb(51,51,51);fon=
+t-family:Consolas,&#39;Liberation Mono&#39;,Courier,monospace;font-size:12p=
+x;line-height:18px;white-space:pre-wrap"> </span><span style=3D"font-weight=
+:bold;color:rgb(51,51,51);font-family:Consolas,&#39;Liberation Mono&#39;,Co=
+urier,monospace;font-size:12px;line-height:18px;white-space:pre-wrap">=3D</=
+span><span style=3D"color:rgb(51,51,51);font-family:Consolas,&#39;Liberatio=
+n Mono&#39;,Courier,monospace;font-size:12px;line-height:18px;white-space:p=
+re-wrap"> </span><span style=3D"color:rgb(221,17,68);font-family:Consolas,&=
+#39;Liberation Mono&#39;,Courier,monospace;font-size:12px;line-height:18px;=
+white-space:pre-wrap">!git l -1</span><br>
+
+</div><div><span style=3D"color:rgb(221,17,68);font-family:Consolas,&#39;Li=
+beration Mono&#39;,Courier,monospace;font-size:12px;line-height:18px;white-=
+space:pre-wrap"><span style=3D"color:rgb(51,51,51)"> =A0</span><span style=
+=3D"color:rgb(0,128,128)">current</span><span style=3D"color:rgb(51,51,51)"=
+> </span><span style=3D"font-weight:bold;color:rgb(51,51,51)">=3D</span><sp=
+an style=3D"color:rgb(51,51,51)"> </span><span>rev-parse --abbrev-ref HEAD<=
+/span><br>
+
+</span></div><div><br></div><div>Source:=A0<a href=3D"https://github.com/br=
+auliobo/gitconfig/blob/master/configs/.gitconfig" target=3D"_blank">https:/=
+/github.com/brauliobo/gitconfig/blob/master/configs/.gitconfig</a></div><di=
+v>
+
+<br></div><div>regards,</div><div>br=E1ulio</div><span class=3D"HOEnZb"><fo=
+nt color=3D"#888888">
+
+<p></p>
+
+-- <br>
+You received this message because you are subscribed to the Google Groups &=
+quot;Git for human beings&quot; group.<br>
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:git-users%2Bunsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org" target=
+=3D"_blank">git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org</a>.<br>
+For more options, visit <a href=3D"https://groups.google.com/groups/opt_out=
+" target=3D"_blank">https://groups.google.com/groups/opt_out</a>.<br>
+=A0<br>
+=A0<br>
+</font></span></blockquote></div><br></div>
+
+<p></p>
+
+-- <br />
+You received this message because you are subscribed to the Google Groups &=
+quot;Git for human beings&quot; group.<br />
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org<br />
+For more options, visit <a href=3D"https://groups.google.com/groups/opt_out=
+">https://groups.google.com/groups/opt_out</a>.<br />
+&nbsp;<br />
+&nbsp;<br />
+
+--001a11c36924df693504dddf3d71--
