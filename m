@@ -1,110 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH v2 0/8] rebase: new cherry-pick mode
-Date: Wed, 29 May 2013 16:23:23 -0700
-Message-ID: <7vehcpqsk4.fsf@alter.siamese.dyndns.org>
-References: <1369801000-3705-1-git-send-email-felipe.contreras@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [git-users] Highlevel (but simple to implement) commands
+ provided by default for git
+Date: Wed, 29 May 2013 16:43:35 -0700
+Message-ID: <20130529234335.GE28153@google.com>
+References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
+ <CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
+ <CAMP44s0Cx-FCZLOFZxcpC86sY+H03HKBi0nKFMgit=B5XCy71g@mail.gmail.com>
+ <CALkWK0mBOB1RM+MXH+Nvos29M5vqc2yAtC__zPyowf7imfnz9Q@mail.gmail.com>
+ <CAJri6_uScqjovt5eK9f9+Z4ehtsdYQNuiEX1MERiDBEJWueAXg@mail.gmail.com>
+ <CALkWK0=5BwterP7ATM1GgFvLUs391w_MW4YrwbnvsbM6Q4_Opg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 30 01:23:37 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-1?Q?Br=E1ulio?= Bhavamitra <brauliobo@gmail.com>,
+	git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 30 01:43:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhpiR-0007a2-WC
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 01:23:36 +0200
+	id 1Uhq1y-0005Vc-2D
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 01:43:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967205Ab3E2XXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 19:23:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61072 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S967179Ab3E2XX0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 19:23:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DAA9723756;
-	Wed, 29 May 2013 23:23:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IyVYc1f2u8POPrX48PpdrNtPfOI=; b=HprZAk
-	mszl6zWOYZHOX0CABg9RGYyaB82ntXAlYWyB0Fim3gfxl/rMuS2rzge5TEWztAzZ
-	74h7PhKDs8HyZrmu/baiu7treGG6pJ+Pp/HIe+eoUUfYntk4LxZXXEvq1DaT6rJS
-	UtQXs02D23wK3BEcBDrf/Zh7E7IKx00wEFnx0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sijBCDrDoh11lukO1oJFSs41kGwPrSNz
-	OWjLps4o8PpJ6+TRDmAYKZ+JGEn9PFVC//gT9c27r399WfUuIf3Set4pOM1aclfJ
-	b909gA+qOKlloPArJx9QO8B7boXbE4u4QnfVrqcYjgYw+xsP5GhCyLNHT/qia27z
-	Jhxo2aSv82g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD00C23755;
-	Wed, 29 May 2013 23:23:25 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2054B23754;
-	Wed, 29 May 2013 23:23:25 +0000 (UTC)
-In-Reply-To: <1369801000-3705-1-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Tue, 28 May 2013 23:16:32 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C2BEEF12-C8B6-11E2-AFC6-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S967108Ab3E2Xnm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 19:43:42 -0400
+Received: from mail-pb0-f54.google.com ([209.85.160.54]:37699 "EHLO
+	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935040Ab3E2Xnk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 19:43:40 -0400
+Received: by mail-pb0-f54.google.com with SMTP id ro12so9928428pbb.41
+        for <git@vger.kernel.org>; Wed, 29 May 2013 16:43:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=lI7LLM5N7reDj9bPYvZxBK0ubKYg2dxcsUUiaWzwO+g=;
+        b=L0D+5pQhM06FVI9fac9IKb6D5AOgwcBGMEfZsU2U9SB92oD0aga8ILAJViuWCo8Y6o
+         XvKHqxyNdW80/ztjNMJN7N8edCi7QxZrg2UjxUaj2UPOgztqJAkdQt1WgBzJYT1+8bVT
+         Zlu2Iu6FmfrXcqAzPlZmSjbjjzcR3/QDHfSjSOwrWobBLA8m8rj6VWPVMc2PbGADf7kl
+         7YnjgxyWU2aYceeC4csAeTbEStfuVG72f4ZaL20TQl3oL1nTJ2Vs8cmNiEa1GwEh6NQy
+         5fWpEAR+5c3cg1NLvSN+hY5TaJWHfKGiF4eN5Y/xO/7NIhccBHttv5JTZ5pZkDXeHDo3
+         Ot/A==
+X-Received: by 10.66.255.41 with SMTP id an9mr5708731pad.44.1369871020155;
+        Wed, 29 May 2013 16:43:40 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id ri8sm39135594pbc.3.2013.05.29.16.43.37
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 29 May 2013 16:43:38 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=5BwterP7ATM1GgFvLUs391w_MW4YrwbnvsbM6Q4_Opg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225898>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Ramkumar Ramachandra wrote:
+> Br=E1ulio Bhavamitra wrote:
 
-> We already rely on cherry-pick for the 'am' mode, but only when using the
-> --keep-empty option, and when in such mode the behavior of 'git rebase' changes
-> completely; more specifically; it's completely broken. Manually enabling
-> --keep-empty to be the default and running the test-suite shows a huge lot of
-> failures.
+>> Agree, these aliased should work as a fallback or as an automatic sh=
+ort
+>> version
 >
-> After fixing the --keep-empty option by creating a new cherry-pick mode, this
-> patch series uses this new mode instead of the 'am' mode, and everything works.
-
-This may be a stupid question, but does --keep-empty only fail with
-the "am" mode?
-
-More specifically, how well does "rebase -i --keep-empty" work?
-
-If the answer is "very well", then it might make sense not to
-introduce yet another cherry-pick mode, but do exactly the same
-thing as what -p mode does, namely, to internally delegate the
-processing to "rebase -i" codepath.  After all, multi-pick mode of
-cherry-pick uses the same sequencer machinery as rebase -i uses,
-so if we are already producing a correct "rebase todo" sequencer
-insn list for "rebase -i" anyway, it should be the matter of not
-launching the editor to edit the initial insn sheet to make it
-non-interactive, isn't it?
-
+> Making builtins override'able is also a terrible idea.  It opens door=
+s
+> to potential bugs we don't want to deal with.  Simple example:
 >
-> There's only two tests that fail, one because the output of the shell prompt
-> changes a bit, and the other I have not yet investigated.
->
-> This brings us one step closer to replace scripts with C code.
->
-> Felipe Contreras (8):
->   rebase: split the cherry-pick stuff
->   rebase: cherry-pick: fix mode storage
->   rebase: cherry-pick: fix sequence continuation
->   rebase: cherry-pick: fix abort of cherry mode
->   rebase: cherry-pick: fix command invocations
->   rebase: cherry-pick: fix status messages
->   rebase: cherry-pick: automatically commit stage
->   rebase: use 'cherrypick' mode instead of 'am'
->
->  .gitignore                             |  1 +
->  Makefile                               |  1 +
->  contrib/completion/git-prompt.sh       |  2 ++
->  git-rebase--am.sh                      | 12 ++-----
->  git-rebase--cherrypick.sh              | 64 ++++++++++++++++++++++++++++++++++
->  git-rebase.sh                          | 11 ++++--
->  t/t3407-rebase-abort.sh                |  2 +-
->  t/t5520-pull.sh                        |  2 +-
->  t/t9106-git-svn-commit-diff-clobber.sh |  2 +-
->  9 files changed, 82 insertions(+), 15 deletions(-)
->  create mode 100644 git-rebase--cherrypick.sh
+>    am =3D log -1
+>    log =3D am -3
+
+That's detectable and could be made to error out, so it's not too bad.
+
+A bigger problem (in my opinion) with allowing arbitrary changes to
+the meaning of existing commands is that scripts, whether placed in
+=2Esh files or given as commands to run over IRC, stop working
+altogether.  It's nice to have commands like "git log" and "git am"
+mean the same thing no matter what machine I am on.
+
+Hope that helps,
+Jonathan
