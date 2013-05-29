@@ -1,56 +1,75 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH] fixup! rebase: implement --[no-]autostash and rebase.autostash
-Date: Wed, 29 May 2013 23:08:06 +0530
-Message-ID: <CALkWK0ndproca_tbs3yg5X2Zw+opDPPRXsd520v6TPVcU4iSfg@mail.gmail.com>
-References: <7vli6yydmv.fsf@alter.siamese.dyndns.org> <1369825880-8608-1-git-send-email-artagnon@gmail.com>
- <7vzjvdu1y5.fsf@alter.siamese.dyndns.org>
+Date: Wed, 29 May 2013 19:38:59 +0200
+Message-ID: <vpq4ndlbs98.fsf@anie.imag.fr>
+References: <7vli6yydmv.fsf@alter.siamese.dyndns.org>
+	<1369825880-8608-1-git-send-email-artagnon@gmail.com>
+	<7vzjvdu1y5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 29 19:38:52 2013
+X-From: git-owner@vger.kernel.org Wed May 29 19:39:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhkKp-00072L-D7
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 19:38:51 +0200
+	id 1UhkLB-0007L1-M6
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 19:39:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933479Ab3E2Ris (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 13:38:48 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:38021 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932730Ab3E2Riq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 13:38:46 -0400
-Received: by mail-ie0-f169.google.com with SMTP id u16so25605131iet.14
-        for <git@vger.kernel.org>; Wed, 29 May 2013 10:38:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=VWDMNQpEqf7cU7dZY8SYQfVZICQYGf9H3h5zORllkkQ=;
-        b=uSr/XP8234xpQU4Nir8lFH4qjhbcj9T0C5B2I1k2AYxIgXDZKZXL51Fs+ByZelcoFw
-         HXPm7I6WKohtDW9g1PJHMeBGqRPjhkTzYU2DKoiTg65qJSY+py+X1y6/k+RVymvvtOyx
-         tYQLlSIdfSF7o8sVSDiLXxA6Bd5StYe8FFnc6VNCnvAg5EAQWNYIKMRQxUORF+/iYV88
-         oONeZh/H6ZiL0QQI0gfyRzhIJYVjLKO3BGT7q8YNkw97N0iR3MKDZWLta00BHcLrBqaI
-         i6M58tjc4Mz6bNX0b+zhdq6aLNRHXt6lvxW67qx8/3fEVdiFiX3wCGp+SXUuKpK3BWWy
-         fLqg==
-X-Received: by 10.50.32.8 with SMTP id e8mr1848379igi.89.1369849126178; Wed,
- 29 May 2013 10:38:46 -0700 (PDT)
-Received: by 10.64.226.135 with HTTP; Wed, 29 May 2013 10:38:06 -0700 (PDT)
-In-Reply-To: <7vzjvdu1y5.fsf@alter.siamese.dyndns.org>
+	id S934114Ab3E2RjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 13:39:10 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:48475 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932730Ab3E2RjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 13:39:08 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4THcvbD017834
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 29 May 2013 19:38:57 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UhkKx-0004zf-SZ; Wed, 29 May 2013 19:38:59 +0200
+In-Reply-To: <7vzjvdu1y5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 29 May 2013 10:32:18 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 29 May 2013 19:38:58 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r4THcvbD017834
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1370453938.40043@Six/Z+KiDlmYo7K4r8dhlQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225850>
 
-Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>
+>> For rr/rebase-autostash, which is stalled in pu.  See $gmane/225689.
+>>
+>> This is a super-minor fix anyway: if you disagree with something, change
+>> it; there's no need to ask me.
+>
 > As I wasn't the one who were disagreeing, that would not work
 > well.
+>
+> Was there anybody "disagreeing" in the first place?
 
-I meant in the tiny details like echo + gettext versus gettext.
+I was the one suggesting the change, but I do not disagree with
+anything ;-). The fixup is right.
 
->From the review of v3, nobody had any disagreements; just minor
-suggestions: that's what this patch is about anyway.
+I think Ramkumar was just saying "feel free to edit while applying", not
+that there was any disagreement actually.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
