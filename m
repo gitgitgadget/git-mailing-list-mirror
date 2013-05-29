@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 3/8] cherry-pick: add --skip-empty option
-Date: Tue, 28 May 2013 22:56:23 -0500
-Message-ID: <1369799788-24803-4-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 2/8] sequencer: trivial fix
+Date: Tue, 28 May 2013 22:56:22 -0500
+Message-ID: <1369799788-24803-3-git-send-email-felipe.contreras@gmail.com>
 References: <1369799788-24803-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -16,137 +16,65 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhXWt-0002wT-1v
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 05:58:27 +0200
+	id 1UhXWs-0002wT-GU
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 05:58:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934782Ab3E2D6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 May 2013 23:58:19 -0400
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:47507 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933578Ab3E2D6R (ORCPT <rfc822;git@vger.kernel.org>);
+	id S934339Ab3E2D6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 28 May 2013 23:58:17 -0400
-Received: by mail-oa0-f47.google.com with SMTP id m1so10884460oag.20
-        for <git@vger.kernel.org>; Tue, 28 May 2013 20:58:17 -0700 (PDT)
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:45441 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933578Ab3E2D6P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 May 2013 23:58:15 -0400
+Received: by mail-ob0-f175.google.com with SMTP id xn12so6822842obc.34
+        for <git@vger.kernel.org>; Tue, 28 May 2013 20:58:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=0+6DGlXzMBQ07WLZxZvvmdcqZ/6kasLQ/91bobwxiGE=;
-        b=Qy/m3YRyMUaCF4eY7P8YGKQ099Cl1nHVrUqLHyCwrkUwncQ935xB434Ct2wZTqENQA
-         6w/oCfxKMCPY6/5ozZT04v0UMRf5IosK+3UdJugxtcRCUl5HQJCJ5/MVpS5/TFHffk12
-         +Vnng9b6KQvANHYsXz9FycW1BpTP7jv58baIkTwJViD6rsfSC4t/WAokmo14J/C83os4
-         99xony0sa1Pc3b8za9Gdm6L9GdygkpmDgNcNTWzUNMLvIaNrAr1UXgaxPGlk7K/MXZTQ
-         RmPSn5WYsD2OCZVy5AlpjiSm3YgdPHVkpoR/fJFFM4KObaMmSems3fA6+587HpPKsDKw
-         bu/A==
-X-Received: by 10.182.236.104 with SMTP id ut8mr467524obc.75.1369799897394;
-        Tue, 28 May 2013 20:58:17 -0700 (PDT)
+        bh=ECYD1JyYIafXsFIJuw6rZ0FW65s0/Qhx6hrLPdNItrQ=;
+        b=at0Xh6/fo9aD16huF4GQiyHqi4YqNoIwBO7moUetD8STN2IpABROtGgYWkJyyHQjye
+         3s6/20QjQucgKphRfw6wAlgnCXLw6uaK3h2uujDOnOG9iZ6W2UwE73be9p0+yfeyyhGE
+         /00sw1IqsTZWKmhgKq6A3Xz4CHAFyPEi0rWx3A6qkreP2XwIeCytg61DN/c5tztp3p67
+         cbzoe/lrG6sZEcyniLYYrdC4rM4MqKh5RtCImETApZUbpRHFCZ2cuABmRTEczlwooltK
+         2MWmojYthVKnPcVS8cSWdxyj5ukR+0NJB6E9z7IbdhgPc/pXrCS3uruAzDobj/7AeZAH
+         NzIg==
+X-Received: by 10.182.129.101 with SMTP id nv5mr481985obb.56.1369799894797;
+        Tue, 28 May 2013 20:58:14 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id b5sm38257858oby.12.2013.05.28.20.58.15
+        by mx.google.com with ESMTPSA id pm16sm39264896oeb.3.2013.05.28.20.58.12
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 28 May 2013 20:58:16 -0700 (PDT)
+        Tue, 28 May 2013 20:58:14 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.rc3.312.g47657de
 In-Reply-To: <1369799788-24803-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225717>
 
-Pretty much what it says on the tin.
+We should free objects before leaving.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-cherry-pick.txt   |  3 +++
- builtin/revert.c                    |  2 ++
- sequencer.c                         |  6 ++++++
- sequencer.h                         |  1 +
- t/t3508-cherry-pick-many-commits.sh | 13 +++++++++++++
- 5 files changed, 25 insertions(+)
+ sequencer.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index c205d23..fccd936 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -129,6 +129,9 @@ effect to your index in a row.
- 	redundant commits are ignored.  This option overrides that behavior and
- 	creates an empty commit object.  Implies `--allow-empty`.
- 
-+--skip-empty::
-+	Instead of failing, skip commits that are or become empty.
-+
- --strategy=<strategy>::
- 	Use the given merge strategy.  Should only be used once.
- 	See the MERGE STRATEGIES section in linkgit:git-merge[1]
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 0401fdb..0e5ce71 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -118,6 +118,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 		OPT_END(),
- 		OPT_END(),
- 		OPT_END(),
-+		OPT_END(),
- 	};
- 
- 	if (opts->action == REPLAY_PICK) {
-@@ -127,6 +128,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 			OPT_BOOLEAN(0, "allow-empty", &opts->allow_empty, N_("preserve initially empty commits")),
- 			OPT_BOOLEAN(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
- 			OPT_BOOLEAN(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
-+			OPT_BOOLEAN(0, "skip-empty", &opts->skip_empty, N_("skip empty commits")),
- 			OPT_END(),
- 		};
- 		if (parse_options_concat(options, ARRAY_SIZE(options), cp_extra))
 diff --git a/sequencer.c b/sequencer.c
-index f7be7d8..d3c7d72 100644
+index b4989ba..f7be7d8 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -627,6 +627,12 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 		goto leave;
+@@ -628,8 +628,10 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
  	}
  
-+	if (opts->skip_empty && is_index_unchanged() == 1) {
-+		warning(_("skipping %s... %s"),
-+			find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV),
-+			msg.subject);
+ 	allow = allow_empty(opts, commit);
+-	if (allow < 0)
+-		return allow;
++	if (allow < 0) {
++		res = allow;
 +		goto leave;
 +	}
- 	allow = allow_empty(opts, commit);
- 	if (allow < 0) {
- 		res = allow;
-diff --git a/sequencer.h b/sequencer.h
-index 1fc22dc..3b04844 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -34,6 +34,7 @@ struct replay_opts {
- 	int allow_empty;
- 	int allow_empty_message;
- 	int keep_redundant_commits;
-+	int skip_empty;
+ 	if (!opts->no_commit)
+ 		res = run_git_commit(defmsg, opts, allow);
  
- 	int mainline;
- 
-diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
-index 19c99d7..3dc19c6 100755
---- a/t/t3508-cherry-pick-many-commits.sh
-+++ b/t/t3508-cherry-pick-many-commits.sh
-@@ -187,4 +187,17 @@ test_expect_success 'cherry-pick --stdin works' '
- 	check_head_differs_from fourth
- '
- 
-+test_expect_success 'cherry-pick skip empty' '
-+	git clean -fxd &&
-+	git checkout -b empty fourth &&
-+	git commit --allow-empty -m empty &&
-+	test_commit ontop &&
-+	git checkout -f master &&
-+	git reset --hard fourth &&
-+	git cherry-pick --skip-empty fourth..empty &&
-+	echo ontop > expected &&
-+	git log --format=%s fourth..HEAD > actual
-+	test_cmp expected actual
-+'
-+
- test_done
 -- 
 1.8.3.rc3.312.g47657de
