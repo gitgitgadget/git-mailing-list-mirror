@@ -1,108 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] patch-ids: check modified paths before calculating diff
-Date: Wed, 29 May 2013 11:08:46 -0700
-Message-ID: <7vip21u09d.fsf@alter.siamese.dyndns.org>
-References: <a7088a74742b71a01423f3ddc1a6c7fd89474ed8.1368969438.git.john@keeping.me.uk>
-	<20130529062007.GA11955@sigill.intra.peff.net>
+From: =?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo@gmail.com>
+Subject: Fwd: [git-users] Highlevel (but simple to implement) commands
+ provided by default for git
+Date: Wed, 29 May 2013 15:11:25 -0300
+Message-ID: <CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
+References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Kevin Bracey <kevin@bracey.fi>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 29 20:09:03 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 29 20:12:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uhko1-0007FR-Qk
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:09:02 +0200
+	id 1Uhkr7-0001RY-AA
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:12:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965198Ab3E2SI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 14:08:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44302 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964986Ab3E2SI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 14:08:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4240523643;
-	Wed, 29 May 2013 18:08:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=o86DIxxtp3iSwd279M4Cz9Y2iy0=; b=fhRz2N
-	IPUwjtrNE4k8PFThEedIdo2BAiSu+uoASdFjBDGsYsaM/VDUqlbskDbfg2YW1u+J
-	4UqpxVWJeURa5lhztPPltCbbbrvNAEEadSnVf5oBXvnziONY+8ntBjVytTUW+HcH
-	m6O9SC38roS0/JqL6XQzqvlCd5UOhXwvveoi0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=D7R8BmMYT+odQ9QD+iC7NmJX8C0IgP88
-	hx1NjrxR6PXHgvU5Q6jIMWGMHoZ3nVTU+tgo1/N5zdhJdTTQgChiePb80qGfI5g2
-	ZvLI90XKcduPOc7+B1BKMKOTI55D8NS13SMINWGUO2/rpd2I+4vUjQM1/C0uCsGp
-	zkeM0aJD0JU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A51423640;
-	Wed, 29 May 2013 18:08:56 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95FC92363B;
-	Wed, 29 May 2013 18:08:55 +0000 (UTC)
-In-Reply-To: <20130529062007.GA11955@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 29 May 2013 02:20:07 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D3A2B812-C88A-11E2-9C72-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S965184Ab3E2SMK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 14:12:10 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:34984 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964985Ab3E2SMH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 14:12:07 -0400
+Received: by mail-la0-f48.google.com with SMTP id fs12so8904982lab.21
+        for <git@vger.kernel.org>; Wed, 29 May 2013 11:12:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=NaVFhbMViw4edElVdEQinSTnx/YP5Mor/Mc9BvSoLJw=;
+        b=qyyR3G/RqgAwf18UEbgg7TGou70BUmi8jBXFWrzCAmrNJpKVdCJgVyv6P0cXuBZpVr
+         v7VehUJ5JgK3endD6eIEYDHYJmG3zkn+5Qe5mMurfIJXfEZVCL/BdnY18zwwvhQ0F6QP
+         fJbS531hkXRIKiIlcNwRFCsve7wFVVofgA4q1X6PrDKYpO82xTKFIdVk/eG3uz7HftiK
+         Z2neCLMiBw1POiZtlLDHqC9eZ7VXX7OEVxvIruYwRTBSO+oWw8RbAvmd+QnKj2uk1mER
+         cEfMBYGAPxnIuomb/0lyZiylpxNYLrxgBU4qQUfqpwqUbO2kR5gvz4eBUsytSvOZhQMj
+         D5fA==
+X-Received: by 10.152.9.104 with SMTP id y8mr1963957laa.1.1369851125274; Wed,
+ 29 May 2013 11:12:05 -0700 (PDT)
+Received: by 10.114.39.104 with HTTP; Wed, 29 May 2013 11:11:25 -0700 (PDT)
+In-Reply-To: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225858>
 
-Jeff King <peff@peff.net> writes:
+---------- Forwarded message ----------
+=46rom: Br=C3=A1ulio Bhavamitra <brauliobo@gmail.com>
+Date: Wed, May 29, 2013 at 8:23 AM
+Subject: [git-users] Highlevel (but simple to implement) commands
+provided by default for git
+To: git-users@googlegroups.com
 
-> I think such a loose patch-id could just be a hash of the filenames that
-> were changed by the patch (e.g., the first 32-bits of the sha1 of the
-> concatenated filenames). Computing that should be about as expensive as
-> a tree-diff. Per observation 2 above, if two commits do not have the
-> same loose id, we know that they cannot possibly have the same strict
-> id.
 
-Because the "strict" one already hashes the filenames, if files that
-are touched by a patch is different from that of another patch, we
-judge them being different.
+Hello all,
 
-> Then we can forget about the smaller-side and bigger-side entirely, and
-> just do something like:
->
->   1. Make a sorted list (or hash table) of loose ids for one side.
->
->   2. For each commit on the other side, calculate its loose id and look
->      that up in the sorted list. If no hits, we know that there is no
->      match. For any hits, lazily calculate (and cache) the strict patch
->      id for both sides and compare as usual.
->
-> In the best case, we compute no patch-ids at all. And even for the
-> average case, I'd expect our lazy calculation to only have to compute a
-> handful of ids.
+One of the things I note about git is that is provides mostly
+low-level and strictly necessary commands.
+Many highlevel commands are then implemented as alias by users, after
+a deep search on the internet.
 
-Correct.
+Adding highlevel commands, even though it could be implemented by a
+simple alias, would put git in another level
+of user experience and create a new standard for newbie users.
+What git developers think about this?
 
-This has rather interesting ramifications on cherry-pick and rebase,
-though.  Both command can handle changes that come from an old tree
-before some paths were renamed, but strict patch-id would not spot
-equivalent changes we already have in our history if our change
-happened after a rename, i.e.
+I have, as many other users, an enormous .gitconfig. I paste here some
+highlevel commands of it, according to my judgement.
+Mercurial provides many of these highlevel commands.
 
-   Z
-  /
- O---R---X---Y
+  root =3D rev-parse --show-toplevel
 
-where Z updates path F, R moves F to G and X changes G the same way
-as Z changes F, and we are trying to cherry-pick Z on top of Y.  The
-cherry-pick filter will see different patch-id for Z and X.
+ upstream =3D !git for-each-ref --format=3D'%(upstream:short)' $(git
+symbolic-ref -q HEAD)
+ upstream-remote =3D !git upstream | sed -e 's/\\/.*$//g'
 
-We will likely to notice that "patch already applied" (if using am-3
-machinery) or "already up-to-date" (if using merge machinery) even
-when we missed this equivalency and drop the duplicate from the
-result, so it is not a big loss, but we might want to consider
-removing the filename from patch-id computation, at least for the
-ones we internally use and discard for revs->cherry_pick filtering.
+ out =3D !git fetch `git upstream-remote` && git l `git upstream`..HEAD
+ in =3D pull --dry-run
+
+
+ unmerged =3D !git ls-files --unmerged | cut -f2 | uniq
+ untracked =3D ls-files --other --exclude-standard
+ staged =3D ls-files --staged
+ modified =3D ls-files --modified
+ deleted =3D ls-files --deleted
+
+
+  head =3D !git l -1
+ current =3D rev-parse --abbrev-ref HEAD
+
+Source: https://github.com/brauliobo/gitconfig/blob/master/configs/.git=
+config
+
+regards,
+br=C3=A1ulio
+
+--
+You received this message because you are subscribed to the Google
+Groups "Git for human beings" group.
+To unsubscribe from this group and stop receiving emails from it, send
+an email to git-users+unsubscribe@googlegroups.com.
+=46or more options, visit https://groups.google.com/groups/opt_out.
