@@ -1,66 +1,76 @@
-From: =?ISO-8859-1?Q?=22=C1kos=2C_Tajti=22?= <akos.tajti@intland.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: git init doesn't create master branch
-Date: Wed, 29 May 2013 15:20:30 +0200
-Message-ID: <51A6009E.8020503@intland.com>
-References: <51A5F8E0.8060906@intland.com> <vpqk3migdb1.fsf@anie.imag.fr> <CALkWK0m=m89QcnMNg9gEVeb7ZHSRd7ZMcL+y8gYuzn8YCTsSYw@mail.gmail.com> <51A5FC17.8000608@intland.com> <vpqbo7udjcy.fsf@anie.imag.fr>
+Date: Wed, 29 May 2013 18:50:39 +0530
+Message-ID: <CALkWK0nLJn2EDy9KO+Qp3sHhxgyKQag-575srq5ztuu5LgsmyA@mail.gmail.com>
+References: <51A5F8E0.8060906@intland.com> <vpqk3migdb1.fsf@anie.imag.fr>
+ <CALkWK0m=m89QcnMNg9gEVeb7ZHSRd7ZMcL+y8gYuzn8YCTsSYw@mail.gmail.com> <51A5FC17.8000608@intland.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed May 29 15:20:41 2013
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: =?UTF-8?B?w4Frb3MsIFRhanRp?= <akos.tajti@intland.com>
+X-From: git-owner@vger.kernel.org Wed May 29 15:21:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhgIw-0006a7-Ea
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 15:20:38 +0200
+	id 1UhgJh-0007DR-0E
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 15:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965982Ab3E2NUd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 09:20:33 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:51003 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965875Ab3E2NUd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 09:20:33 -0400
-Received: from [127.0.0.1] (188-143-39-115.pool.digikabel.hu [188.143.39.115])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0MYpHi-1UuSAH37QY-00VSwd; Wed, 29 May 2013 15:20:31 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <vpqbo7udjcy.fsf@anie.imag.fr>
-X-Antivirus: avast! (VPS 130529-0, 2013.05.29), Outbound message
-X-Antivirus-Status: Clean
-X-Provags-ID: V02:K0:Shrg8gRQFYxR/QavCPFxaZd9gZUaHWSNqMJt3+memFa
- KVVzyEH1Das9GSHwZaV9iZO74ixrDIiNOao9cNZCgeLKkL/heU
- 7A6RRuHK6RZlrVprn3hBdvot4SdJQg8+AarlUKVmgjTYA8L3uo
- hozLaHWqSCy8zdumnaV/8xgNszskhzoDdwZGOlSzRpa1G7fvWX
- aWBKJzT8SjL0ph+zNWxFp2X+8myy/vkhj37a2cN2ImWcZt/nnS
- +QnEupB9yZ+Udkt4L1zAv9nIVCA1G0sEUaBgmzYvrQAOlD/7ii
- 2x/EoicbiSgGjjrIeHYBOKq5PRK+Q9zKF6lc5lDQsRJR5YNsNK
- v7lwMepecQuT0n76pkoI=
+	id S966069Ab3E2NVU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 09:21:20 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:36493 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965613Ab3E2NVU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 09:21:20 -0400
+Received: by mail-ie0-f169.google.com with SMTP id u16so24720964iet.14
+        for <git@vger.kernel.org>; Wed, 29 May 2013 06:21:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=z9OkHp07nBUZYUibqT0UoJKLXcS70Kbwh8RCsMwjHcg=;
+        b=Z2dw2IY2sm53Y1SQT2wKw3dEDjTNqDAsfP7fYotD8rYzOwdkePby1ZR1y5Iyujv+2U
+         kQiufD0T/sAm5+XwKpFcXaWlr9a/9MiT8IP22AgAc93vqgOXjCmB2weXZX8QBSf5lsXz
+         OE+fHqnHKog8Nuk6ZK0aPJi1Wnuo6aHlXUmz68etcqaQ9pSnC/kudUVlIM4XQOesYQMH
+         mkU8P/2oWSLesj2sHWdyPY6kexhG4a9a39jhuMbqdXgw8TczjEOQ1GBTTwJEc4X1n5yc
+         kr7Cq3/tuCzKNdgE7IWK/C4TGHhUmAw5E6uB5VxB0I/ezg1qXmXEtind7A/785WkWIOS
+         G0hQ==
+X-Received: by 10.50.141.230 with SMTP id rr6mr9303398igb.89.1369833679775;
+ Wed, 29 May 2013 06:21:19 -0700 (PDT)
+Received: by 10.64.226.135 with HTTP; Wed, 29 May 2013 06:20:39 -0700 (PDT)
+In-Reply-To: <51A5FC17.8000608@intland.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225812>
 
-Thanks! I ill try using fetch.
+"=C3=81kos, Tajti" wrote:
+> "Cannot merge multiple branches into empty head"
+>
+> The command was:
+>
+> git pull ../dump.dmp refs/heads/*:refs/heads/*
+>
+> Is this a better way of doing this?
 
-=C1kos
+pull runs a fetch, which updated .git/FETCH_HEAD.  Now, if
+=2Egit/FETCH_HEAD has just one branch (and other not-for-merge entries)=
+,
+there's no problem.  We just run update-ref HEAD, and get it to point
+to the sole branch that was fetched.  If your fetch fetches multiple
+branches, and you have a real branch (not "unborn") with
+branch.<name>.merge set, we know which one of those branches to merge
+in.
 
-2013.05.29. 15:08 keltez=E9ssel, Matthieu Moy =EDrta:
-> "=C1kos, Tajti" <akos.tajti@intland.com> writes:
->
->> The command was:
->>
->> git pull ../dump.dmp refs/heads/*:refs/heads/*
-> "git pull" does internally a "git fetch" followed by a "git merge".
->
-> If you try to pull several branches at the same time, it means you wa=
-nt
-> to merge all of them together (octopus merge), which probably isn't w=
-hat
-> you're trying to do. You probably want just a "git fetch", or specify
-> only one branch to pull.
->
+Now, what you have is a fetch which fetches multiple branches, and
+you're trying to merge that into a non-existent HEAD (or unborn
+branch).  There is ambiguity and arguably no "right" thing to do,
+which is why git complains.  I'm not sure if it's possible to argue
+differently and patch git-pull.sh for your usecase.
+
+There are many possible solutions to the problem, depending on what
+you want.  The simplest I can suggest is: ignore the error for that
+command and run git reset --hard.
