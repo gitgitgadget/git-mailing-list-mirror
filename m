@@ -1,85 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fwd: [git-users] Highlevel (but simple to implement) commands provided by default for git
-Date: Wed, 29 May 2013 11:58:14 -0700
-Message-ID: <7vtxllsjeh.fsf@alter.siamese.dyndns.org>
-References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
-	<CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What's cooking in git.git (May 2013, #08; Tue, 28)
+Date: Wed, 29 May 2013 13:46:13 -0500
+Message-ID: <51a64cf542ee1_22511551e18464f5@nysa.mail>
+References: <7vli6yydmv.fsf@alter.siamese.dyndns.org>
+ <51a56e2db218d_807b33e18100177@nysa.mail>
+ <7v4ndlvgnq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?utf-8?Q?Br=C3=A1ulio?= Bhavamitra <brauliobo@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 20:58:22 2013
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 29 20:59:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhlZl-0006D4-VE
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:58:22 +0200
+	id 1Uhlam-000739-Jl
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:59:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965797Ab3E2S6S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 14:58:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61740 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759396Ab3E2S6R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 14:58:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FDCA23392;
-	Wed, 29 May 2013 18:58:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=9wgDqxlH/zH5
-	IVfBL0qYJSwgeTQ=; b=L9fWCBM12OJW+dQR6O0twfUPKFEhxNEkW3YY8qPBSvvK
-	gljK8r28Hb169wevreBZnHINaRskXtxayNzTyCW2Vxx04SFopsh7kjb1myTM57vh
-	CFPuvw+ZJrsjDXhwWQEw+f0nEi+quu5aQAVgPXZSl5WTfu0zDXb1eSXou7MLvgE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Wza78e
-	9fcK8D4+bjIKHJU/DIAV2UwHBZUkg9JV0q88tNAzwn/gJZvzpPtvp+0rGmgdDAtd
-	HfrbICfHKfFEOsq6mXeQO1Psqpm0PvTveAKcqqxVavnxNa6RROhA+OlvMWdSL7Dh
-	m4j7uodAJCgSp3M69aFnzkEnlSrrgp72udxNs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8747F23391;
-	Wed, 29 May 2013 18:58:16 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0CB5A2338F;
-	Wed, 29 May 2013 18:58:15 +0000 (UTC)
-In-Reply-To: <CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
-	(=?utf-8?Q?=22Br=C3=A1ulio?= Bhavamitra"'s message of "Wed, 29 May 2013
- 15:11:25 -0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B8318F48-C891-11E2-9545-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759421Ab3E2S7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 14:59:21 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:37745 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752657Ab3E2S7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 14:59:19 -0400
+Received: by mail-ob0-f172.google.com with SMTP id wo10so885018obc.17
+        for <git@vger.kernel.org>; Wed, 29 May 2013 11:59:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=lYFzumOyTcvBKuGgYNXptmbWQMz3/jnR+ZsIPJlFNuI=;
+        b=UVlJqW0aEOR6S1Oka3aiXeSHpjt13g1LfNFtssyWsG+fYUSIOOR9QIqCEqwy11NwPa
+         qgJQvAS+FYPpgUu96YKyWuUI3WcaBPEg8XomyHx+RMYTKWKXwq2S2xreif89QX9laVm3
+         gcIxwtYUpatiwTrhVtbiGNOlUgc2E6B6coS3wkf7DLfp4jliuvp/B4UHPIu9ebV3JX9v
+         iBidpAG+WioiZVhqT+7578cc7xAQsdYXRfBnaQdENr7Yv6K1cuDGo+W29/CtRf76CYTc
+         W3phpaIBPs1Y/3IadUXv7/WBq/wPYzMo6JXpcb6Aqdk4xAZ6RaZfS8Bp0bdzX0h/JSSQ
+         BLwQ==
+X-Received: by 10.60.58.33 with SMTP id n1mr2529668oeq.3.1369853959275;
+        Wed, 29 May 2013 11:59:19 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id i2sm11618205obz.11.2013.05.29.11.59.17
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 29 May 2013 11:59:18 -0700 (PDT)
+In-Reply-To: <7v4ndlvgnq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225868>
 
-Br=C3=A1ulio Bhavamitra <brauliobo@gmail.com> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Junio C Hamano wrote:
+> >> * fc/makefile (2013-05-26) 5 commits
+> >>  - build: do not install git-remote-testpy
+> >>  - build: add NO_INSTALL variable
+> >>  - build: cleanup using $<
+> >>  - build: cleanup using $^
+> >>  - build: trivial simplification
+> >>  (this branch is used by fc/remote-helpers-use-specified-python.)
+> >
+> > No, these are independent.
+> 
+> By the way, I dropped the order-only one and I explained my
+> reasoning for doing so, but I haven't heard back from you.
+> 
+> As I haven't used the order-only dependencies nor '|' myself so far
+> (primarily because I have not seen a case where it was needed), it
+> would have been nice if you responded with either "yes, this is not
+> order-only and the patch should be dropped", or "no, order-only is
+> correct because...".
 
->   root =3D rev-parse --show-toplevel
+I'm not sure, so I think it's OK to drop it. I've used order-only to
+dependencies that should not be listed when doing $^ which doesn't affect us
+anyway, so I thought it was more descriptive with the patch, but I can see why
+it would break the build if that file is updated and the targets that depend on
+it don't.
 
-Hmm, part of my "cdup" shell function looks something like
+I don't have time to investigate further, so I think it's OK.
 
-     cdup () {
-	... error detection etc...
-	d=3D$(git rev-parse --show-toplevel)
-        cd "$d"
-    }
+> In any case, I think the above remaining five were sensible changes,
+> and am thinking about having it graduating early in the cycle.
 
-so I can quickly go up to the top-level.  With "root", I could
-replace that rev-parse call with "git root", but I'd keep typing
+If you do that, please add git-remote-testgit.sh to the NO_INSTALL list. I
+didn't do that at the time because I was working on the master branch, but this
+changed in 'next'.
 
-	$ cdup
+> I somehow had an impression that the other series depended on this
+> for SCRIPT_PYTHON_* stuff, but this is about the installation step
+> and the other one is primarily about the build step, so in that
+> sense it may be independent.
 
-after doing so anyway.  I am not sure how much value it adds.
+They are completely independent. The improvments to the main Makefile is what I
+came up while trying to understand the code.
 
-You would need to handle error cases like "you are not in a working
-tree", you cannot expect to be able to say
+> >> * fc/remote-bzr (2013-05-28) 8 commits
+> >>  - remote-bzr: add fallback check for a partial clone
+> >>  - remote-bzr: reorganize the way 'wanted' works
+> >>  - remote-bzr: trivial cleanups
+> >>  - remote-bzr: change global repo
+> >>  - remote-bzr: delay cloning/pulling
+> >>  - remote-bzr: simplify get_remote_branch()
+> >>  - remote-bzr: fix for files with spaces
+> >>  - remote-bzr: recover from failed clones
+> >> 
+> >>  The ones near the tip conflicted with the hotfix for 1.8.3 so I
+> >>  discarded them for now.
+> >> 
+> >>  Will merge to 'next'?
+> >
+> > Didn't I resend these with the conflict fixed?
+> 
+> As the date above (05-28) shows, it seems that I did not forget to
+> drop the old one to replace with the new one, but I did forget to
+> remove the stale comment from the previous issue.  Thanks for
+> noticing.
 
-	$ cd "$(git root)"
+Oh, I see. Cool.
 
-anyway.
+-- 
+Felipe Contreras
