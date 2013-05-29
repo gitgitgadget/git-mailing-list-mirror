@@ -1,113 +1,107 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/3] cherry-pick: add support to copy notes
-Date: Wed, 29 May 2013 06:18:33 -0500
-Message-ID: <CAMP44s2aAvzeTtHb=rVP1TrCMcQjyqN6O7n1DYZLx0uJrm1j+w@mail.gmail.com>
-References: <1369745947-19416-1-git-send-email-felipe.contreras@gmail.com>
-	<1369745947-19416-2-git-send-email-felipe.contreras@gmail.com>
-	<7vobbv119k.fsf@alter.siamese.dyndns.org>
-	<87mwrfx9ug.fsf@linux-k42r.v.cablecom.net>
-	<51a56bef1b9c2_807b33e1899991@nysa.mail>
-	<877giixl4c.fsf@linux-k42r.v.cablecom.net>
-	<CAMP44s3vkJCr2f2zsZU++j4Wqxuefmpt8BQ9dJoP=JtTB=rgkQ@mail.gmail.com>
-	<87y5ayqivi.fsf@linux-k42r.v.cablecom.net>
+Subject: Re: [PATCH 1/2] sequencer: trivial fix
+Date: Wed, 29 May 2013 06:23:48 -0500
+Message-ID: <CAMP44s0U65oxCVy3EwQxF+4ZgRc31z29mwwdO=4x--oFVTFW+g@mail.gmail.com>
+References: <1369673539-28692-1-git-send-email-felipe.contreras@gmail.com>
+	<1369673539-28692-2-git-send-email-felipe.contreras@gmail.com>
+	<20130528110014.GA1264@hmsreliant.think-freely.org>
+	<7vobbv2fze.fsf@alter.siamese.dyndns.org>
+	<51a568db9c9b8_807b33e18996fa@nysa.mail>
+	<ko4jf7$e4d$1@ger.gmane.org>
+	<CAMP44s0vARKGsn2noBEAxSVHD1bkU9pR7nPCvFJwp5epwidkQw@mail.gmail.com>
+	<001601ce5c5d$89974830$9cc5d890$@schmitz-digital.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed May 29 13:18:41 2013
+Cc: git@vger.kernel.org
+To: Joachim Schmitz <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Wed May 29 13:23:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UheOu-0005QZ-Uq
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 13:18:41 +0200
+	id 1UheTy-00016x-Ta
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 13:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965711Ab3E2LSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 07:18:36 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:63914 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965683Ab3E2LSf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 07:18:35 -0400
-Received: by mail-la0-f42.google.com with SMTP id fg20so8550762lab.15
-        for <git@vger.kernel.org>; Wed, 29 May 2013 04:18:33 -0700 (PDT)
+	id S965683Ab3E2LXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 07:23:50 -0400
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:37592 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965525Ab3E2LXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 07:23:50 -0400
+Received: by mail-lb0-f182.google.com with SMTP id z5so8914678lbh.27
+        for <git@vger.kernel.org>; Wed, 29 May 2013 04:23:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=hEgCMPCNXEkUQmQ1eCQyJv+fwapY1NecIgwOzBpJo3E=;
-        b=lHg2C6c+X1XxJw5wl2F/Hf1ad8AGiJKmvSsPiWppIaFBG7778rzJGqSc9gazZGBJH7
-         M8G8qEBLsf94p7g/5wkyDXI+953bmHt3xzlD96sTR5R8ck0ifGyTfgLwvQzPeAEzKFUi
-         YhGTaMyTb2djl9HaUckXQFIdg5E3L6cQvh7uM80n4rZXf85/Eq8c314Pr2pdUssdm/vT
-         280ATcapgAx4dkuc+5P7QRclSxYk83m3CoHvLGA56cTrpRua8QRNg013JDo+K9PTKiIR
-         qSUJ0mTjpAIFtZUMEJl3nmddvweWM/Ae6NQP2nLoOB3IiQ0qKX0nJ6SyM0G+voQ+VTuh
-         FOTg==
-X-Received: by 10.112.156.164 with SMTP id wf4mr1311222lbb.76.1369826313618;
- Wed, 29 May 2013 04:18:33 -0700 (PDT)
-Received: by 10.114.177.164 with HTTP; Wed, 29 May 2013 04:18:33 -0700 (PDT)
-In-Reply-To: <87y5ayqivi.fsf@linux-k42r.v.cablecom.net>
+        bh=s/u9ksYFIW4EfhAei5KOC8+RBEBDwz+x5ceoKP5nFPE=;
+        b=CJu8zl7qltYUzVbgrYKvjRlSaQDVa4fCV4TzM9wwJKkHvqR/TFZtohKDLmSRf6kvb9
+         CO6dii1ShDURca6ucVP5G7a3gc1Esn+GIzz0Jzv+96kwwcV6N6X/nDr6pMdFUQDS1ubl
+         DNPXn9al3Z8VuGKKsmvnsnx9D8wtF3JC3VzgftqR+tkQkHBCO7tKecfHE9/DdiVcJXMO
+         /o3mi0jNoyUA33T2wsjuLCQAziVw9Dx0lF8l5krlBwuKksYgH0YgECXKC9oukxuI+z9J
+         0PNXrZO7uWWX0pgOnywS43Pvs3KaloqYtBGc/4hzwq3CQC6utgdkDu8TzVK0+SThcoct
+         +ylw==
+X-Received: by 10.152.1.137 with SMTP id 9mr1142309lam.10.1369826628473; Wed,
+ 29 May 2013 04:23:48 -0700 (PDT)
+Received: by 10.114.177.164 with HTTP; Wed, 29 May 2013 04:23:48 -0700 (PDT)
+In-Reply-To: <001601ce5c5d$89974830$9cc5d890$@schmitz-digital.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225789>
 
-On Wed, May 29, 2013 at 3:40 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> On Wed, May 29, 2013 at 3:09 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Wed, May 29, 2013 at 6:13 AM, Joachim Schmitz
+<jojo@schmitz-digital.de> wrote:
+>> From: Felipe Contreras [mailto:felipe.contreras@gmail.com]
+>> Sent: Wednesday, May 29, 2013 12:52 PM
+>> To: Joachim Schmitz
+>> Cc: git@vger.kernel.org
+>> Subject: Re: [PATCH 1/2] sequencer: trivial fix
 >>
->>>> Feel free to implement that. I'm just interested in 'git cherry-pick' being
->>>> usable for 'git rebase' purposes.
->>>
->>> Which would have been obvious to all but the most casual readers, eh?
+>> On Wed, May 29, 2013 at 4:58 AM, Joachim Schmitz
+>> <jojo@schmitz-digital.de> wrote:
+>> > Felipe Contreras wrote:
+>> >>
+>> >> Junio C Hamano wrote:
 >>
->> My motivations are irrelevant, the patch is good as it is.
+>> >>> It probably is better to fold this patch into the other one when it
+>> >>> is rerolled to correct the option name gotcha "on the tin".
+>> >>
+>> >>
+>> >> Why? This patch is standalone and fixes an issue that is independent
+>> >> of the other patch. Why squash two patches that do *two* different
+>> >> things?
+>> >>
+>> >> Anyway, I'll happily drop this patch if you want this memory leak to
+>> >> remain. But then I'll do the same in the other patch.
+>> >>
+>> >> This mantra of avodiing 'goto' is not helping anybody.
+>> >
+>> >
+>> > adding 5 letters (to change the next "if" into an "else if") versus your
+>> > addition of several lines and some 15 additional letters (ignoring the
+>> > whitsspace)  is IMHO enough to see what is better?
+>>
+>> This has nothing to do with what Junio said.
 >
-> You fooled both Junio (AFAICT anyway) and me, who both reviewed the
-> patch under the assumption that it implements note copying *along the
-> lines of existing note copying*.  This proved to be a wrong, and
-> time-wasting, assumption.
+> Well, it has, but you had snipped it. But replied to the goto issue regardless
 
-Whatever arbitrary rules you are talking about, they are not codified in tests.
+I didn't snip anything, this is a different context.
 
-If you care so much about "*the lines of existing note copying*", why
-don't you implement tests that check for those? This not only would
-prevent that some shmuck who is not well versed in the tradition of
-"the lines of existing note copying" from breaking that tradition,
-which is precisely what tests are for.
+>> This is better done without "goto" in general.
 
-If this was done, we wouldn't be "time-wasting" here.
+He din't say:
 
-This patch makes 'git cherry-pick' pass all the tests that 'git
-rebase' passes. Period.
+__
+It probably is better to fold this patch into the other one when it
+is rerolled to correct the option name gotcha "on the tin", AND you
+fix the goto issue.
+__
 
-Even if it was against "the lines of existing note copying", it's much
-better than the current situation, which is to do ABSOLUTELY NOTHING.
-
-If you were a productive person, you would take this patch and
-implement the code that makes it align to "the lines of existing note
-copying" that you care so much about, which should be easy, if the
-note framework was properly implement, but you won't.
-
-Why isn't this implemented?
-
-void copy_notes_for_rewrite(const char *rewrite_cmd, struct rewritten *list);
-
-If there was such a thing, other clients wouldn't need to implement
-their own methods of copying notes.
-
-But you didn't implement that, did you?
-
-You are punishing me because the notes framework is lacking, and
-because the testing framework is missing what you think is the proper
-behavior.
-
-Strike that, you are punishing the users.
+You added that last part in your mind. Moreover, he didn't say goto
+was an issue, he simply stated an opinion about some generality.
 
 -- 
 Felipe Contreras
