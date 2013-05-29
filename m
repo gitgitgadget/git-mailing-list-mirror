@@ -1,98 +1,73 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 5/5] rebase: fix cherry-pick invocations
-Date: Wed, 29 May 2013 00:57:58 -0500
-Message-ID: <51a598e6e58ff_7242869e1c715bf@nysa.mail>
-References: <1369747757-10192-1-git-send-email-felipe.contreras@gmail.com>
- <1369747757-10192-6-git-send-email-felipe.contreras@gmail.com>
- <7vzjvewwne.fsf@alter.siamese.dyndns.org>
- <7vvc62wwea.fsf@alter.siamese.dyndns.org>
+Subject: Re: [RFC/PATCH v2 3/8] rebase: cherry-pick: fix sequence continuation
+Date: Wed, 29 May 2013 01:05:42 -0500
+Message-ID: <CAMP44s0MQ-u=Yo1RAoxsVyiAe7xcorCW992xsa4YsEyH9RbzoQ@mail.gmail.com>
+References: <1369801000-3705-1-git-send-email-felipe.contreras@gmail.com>
+	<1369801000-3705-4-git-send-email-felipe.contreras@gmail.com>
+	<CANiSa6ivOnRfOVMTsgDygi=2dvxmMOqqWdqs7CBYohThOVzt7Q@mail.gmail.com>
+	<CAMP44s0Zy4KpPN1n6HOVXWyCuevenbSFnH589YngMB9NVWcamQ@mail.gmail.com>
+	<CANiSa6h7fY=GNM0VvFXvE-LD=nVWbEBGqWbaheZ6gr518_aPNA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 08:00:21 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 29 08:05:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhZQp-0002wF-SU
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 08:00:20 +0200
+	id 1UhZW8-0007aE-I1
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 08:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757847Ab3E2GAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 02:00:14 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:61099 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754040Ab3E2GAN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 02:00:13 -0400
-Received: by mail-oa0-f50.google.com with SMTP id l20so10893348oag.23
-        for <git@vger.kernel.org>; Tue, 28 May 2013 23:00:12 -0700 (PDT)
+	id S1753004Ab3E2GFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 02:05:44 -0400
+Received: from mail-we0-f171.google.com ([74.125.82.171]:54910 "EHLO
+	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752409Ab3E2GFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 02:05:44 -0400
+Received: by mail-we0-f171.google.com with SMTP id t59so6125421wes.16
+        for <git@vger.kernel.org>; Tue, 28 May 2013 23:05:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=N9/6QmE4CVkJEI/AWHha4efUEba66FRIlVh9tD6ZWmo=;
-        b=t+600UQVoe+d+QG8olSFSZ6cZwg8fbthM1UqdeW44xtpFYID5D6hPzh2QpNqb6DLLa
-         mNe38AR0okZSTpQ15pu9ZF4T6k+TcdLu3UiztFN5XsDFjUQTAjVxFVt23ZnpUj5pxOBX
-         gQmDQ0TD4nNzozYFblyJ8mkJ8nLFLwf+0e/nnUc6PZ3v6ScOeYPxJtSTgqftkgqVOECG
-         J5ipgWpy/NpS0WnUzgjRV6BuZC5CCUPM71Dc6LBA3j/9eWnsvg5tzWIg3KW+l7CjbKjZ
-         jXLgt1hRtZ4AW4k0W9uf6apTqgDpodX4yO6drhRHjA5/u/TfeyFgVnUWGcGMvOupI5Xg
-         KjFQ==
-X-Received: by 10.182.53.194 with SMTP id d2mr735940obp.28.1369807212742;
-        Tue, 28 May 2013 23:00:12 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id hv3sm38653162obb.7.2013.05.28.23.00.11
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 28 May 2013 23:00:11 -0700 (PDT)
-In-Reply-To: <7vvc62wwea.fsf@alter.siamese.dyndns.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=FhY/1OZ2Gx7QMXWzEqBEMwFjR0nsjomaFg6K2FaS1GQ=;
+        b=MhFii5sUbN8mWAb/sylS118WeqI3DuqyUPdF53aaSdXhibFfsAh4ipTvAhM4b6egud
+         o/95DqeQXcK02lsuc7N7ODqCbT7FHs9pWV0WhEf98hpa4FPCTCbUisfI+9VZAms0EWHW
+         O4x6bgODoTcoFXFNbMU3ilf7GIpSLGXCSAquW/CWMiP7rxqsuvhrW2W1/A41MPaRfzfO
+         qpDVUoWLOs6ROY4GGlFm1WFpVNG5q5ULCyJ8uwrfohLUI0HeqwV4DsKg61i/RtyNTLUC
+         vjMEb6y0O2UF12F23gX8SCcFxIrxeq9nP227mfsxXF5Atdn3UkjhgZAIA3QPxoCQJICe
+         A1jg==
+X-Received: by 10.194.77.66 with SMTP id q2mr888837wjw.34.1369807542864; Tue,
+ 28 May 2013 23:05:42 -0700 (PDT)
+Received: by 10.194.47.4 with HTTP; Tue, 28 May 2013 23:05:42 -0700 (PDT)
+In-Reply-To: <CANiSa6h7fY=GNM0VvFXvE-LD=nVWbEBGqWbaheZ6gr518_aPNA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225749>
 
-Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Felipe Contreras <felipe.contreras@gmail.com> writes:
-> >
-> >> So that all the tests pass.
-> >>
-> >> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> >> ---
-> >>  git-rebase--cherry.sh | 17 ++++++++++++++++-
-> >>  1 file changed, 16 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/git-rebase--cherry.sh b/git-rebase--cherry.sh
-> >> index ca78b1b..c3a2ac9 100644
-> >> --- a/git-rebase--cherry.sh
-> >> +++ b/git-rebase--cherry.sh
-> >> @@ -23,11 +23,26 @@ test -n "$rebase_root" && root_flag=--root
-> >>  mkdir "$state_dir" || die "Could not create temporary $state_dir"
-> >>  : > "$state_dir"/cherry || die "Could not mark as cherry"
-> >>  
-> >> +if test -n "$rebase_root"
-> >> +then
-> >> +	revisions="$onto...$orig_head"
-> >> +else
-> >> +	revisions="$upstream...$orig_head"
-> >> +fi
-> >
-> > "So that all the tests pass" needs a bit more explanation to say for
-> > cherry-pick codepath why and how two-dot range fails and why and how
-> > three-dot variant with --right-only fixes it.  What are the problematic
-> > cases?
-> 
-> Yikes, sorry, this was me being slow.  Walking A...B range with
-> right-only and --cherry applied will filter the duplicates, which is
-> wat you want, I think, and walking A..B range will not do the
-> filtering for you.
+On Wed, May 29, 2013 at 12:51 AM, Martin von Zweigbergk
+<martinvonz@gmail.com> wrote:
+> On Tue, May 28, 2013 at 10:41 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
 
-That's right.
+>> One change splits, the other change fixes, what's wrong with that?
+>
+> I didn't say there was anything wrong. I was asking if the bug was
+> there before (and I didn't see an answer when Junio asked).
+
+Why wouldn't it be before? Did I mention a commit that introduced a
+problem? No. Did any patch in this series introduce a problem? No.
+
+All we've done in this series is 1) reorganize the code without
+introducing *ANY* functional changes, and 2) fix a bug.
+
+If you see 1) introducing a problem, or 2) introducing a problem, then
+mention that in *those* patches. If there is no problem with 1) or 2)
+then it follows the problem already exists.
 
 -- 
 Felipe Contreras
