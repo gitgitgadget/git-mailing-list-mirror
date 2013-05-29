@@ -1,63 +1,122 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/3] push: fail early with detached HEAD and current
-Date: Thu, 30 May 2013 01:07:50 +0530
-Message-ID: <CALkWK0mCY0F-EgO6hQv-LvV1Nb5H9jNXBWLDrY07rVNqLBPjkw@mail.gmail.com>
-References: <1369855311-23367-1-git-send-email-artagnon@gmail.com>
- <1369855311-23367-3-git-send-email-artagnon@gmail.com> <7vppw9shq2.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [git-users] Highlevel (but simple to implement) commands provided
+ by default for git
+Date: Wed, 29 May 2013 14:39:37 -0500
+Message-ID: <CAMP44s0Cx-FCZLOFZxcpC86sY+H03HKBi0nKFMgit=B5XCy71g@mail.gmail.com>
+References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
+	<CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 29 21:38:37 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 29 21:39:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhmCj-0006EV-4F
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 21:38:37 +0200
+	id 1UhmDn-0007D4-Kb
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 21:39:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966297Ab3E2Tid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 15:38:33 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:65100 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966222Ab3E2Tib (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 15:38:31 -0400
-Received: by mail-ie0-f174.google.com with SMTP id aq17so2802048iec.19
-        for <git@vger.kernel.org>; Wed, 29 May 2013 12:38:30 -0700 (PDT)
+	id S966402Ab3E2Tjk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 15:39:40 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:62187 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966298Ab3E2Tji convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 15:39:38 -0400
+Received: by mail-wi0-f178.google.com with SMTP id hj6so3857771wib.17
+        for <git@vger.kernel.org>; Wed, 29 May 2013 12:39:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=nLff7hedDyM36ULJOuaU9PEuj8dGT+lktBuXbtUNaCg=;
-        b=z023Je8D52K2oS315xPIW9b/6s1OZK0mV8LrpbWnYdcHt0SNsKsnNQ2VD3R8h4LFCf
-         a7bnirjRavZ4SrshJtUsgGqMsrPCuam2X0waIWPA4oE9slkX2Gb+d3BJ2JBexJoaabyC
-         Uaq5Fp4zab7LacnlOY3+x0Hd1Esl11GIkiuc5lDhGOI1sqDZFttyS9BnuVf+GAZ6nENZ
-         us3k9v2diMTXMzLQyHBWetKMVZezaUnKsY3/ADpoIzUT6EAi0b0F31bqmQaSDWB0TtqM
-         8+CQMJCXwa7rOYM9uVYOlq2dweldWM+yTEfXMZgTtQ/V4x7pz09KnMGoc/ILJFNGP0VE
-         kTBQ==
-X-Received: by 10.50.153.6 with SMTP id vc6mr10012661igb.57.1369856310833;
- Wed, 29 May 2013 12:38:30 -0700 (PDT)
-Received: by 10.64.226.135 with HTTP; Wed, 29 May 2013 12:37:50 -0700 (PDT)
-In-Reply-To: <7vppw9shq2.fsf@alter.siamese.dyndns.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=IiZMsW7QG23FmfyC0vxotY4gphRPMZNeocUm3Es/P/g=;
+        b=HV/yOm9/f4Pj2Tab3noHFWd5fHCL0wyClua1T6Shg7GZibVIKEBecPHjCAitC4gZRM
+         n8bemysEpUQUrvepwyAdX/p4L9Jm6BJXO4uHeAuSFGTpsH7Ko2gu3XFY2pNGx9YrL2RZ
+         B53ptgR/FlUL5RkKKVrwZ/zJHjT++e486etHTaUY0qXfCsejqxD2nBpkKsMYirqQ6ToF
+         YDeX+m4NhBU5m0q3uJ6/asNReWYZUUCg2DSYgKFZrkc/YIq3Ekv+scZi/4v0LC3RJCSC
+         E1nxwFJZdv6LwEFZZMgq52pLh4w2Si6PjQrB2K7reyiB3IX65Ts2+s3T9BvjUJnErKWA
+         pCDg==
+X-Received: by 10.180.184.101 with SMTP id et5mr2186480wic.45.1369856377238;
+ Wed, 29 May 2013 12:39:37 -0700 (PDT)
+Received: by 10.194.47.4 with HTTP; Wed, 29 May 2013 12:39:37 -0700 (PDT)
+In-Reply-To: <CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225877>
 
-Junio C Hamano wrote:
->>       case PUSH_DEFAULT_CURRENT:
->> +             if (!branch)
->> +                     die(_(message_detached_head_die), remote->name);
->>               add_refspec("HEAD");
->>               break;
->
-> Would it hurt to do
->
->         if (!branch_get(NULL))
->                 die(...);
->
-> here, without the first hunk?
+On Wed, May 29, 2013 at 1:11 PM, Br=C3=A1ulio Bhavamitra <brauliobo@gma=
+il.com> wrote:
+> ---------- Forwarded message ----------
+> From: Br=C3=A1ulio Bhavamitra <brauliobo@gmail.com>
+> Date: Wed, May 29, 2013 at 8:23 AM
+> Subject: [git-users] Highlevel (but simple to implement) commands
+> provided by default for git
+> To: git-users@googlegroups.com
 
-And how would I change the add_refspec() call to take branch->name in [3/3]?
+> One of the things I note about git is that is provides mostly
+> low-level and strictly necessary commands.
+> Many highlevel commands are then implemented as alias by users, after
+> a deep search on the internet.
+>
+> Adding highlevel commands, even though it could be implemented by a
+> simple alias, would put git in another level
+> of user experience and create a new standard for newbie users.
+> What git developers think about this?
+
+Completely agree.
+
+>   root =3D rev-parse --show-toplevel
+>
+>  upstream =3D !git for-each-ref --format=3D'%(upstream:short)' $(git
+> symbolic-ref -q HEAD)
+
+git rev-parse --abbrev-ref @{u}
+
+>  upstream-remote =3D !git upstream | sed -e 's/\\/.*$//g'
+
+git config branch.$(git rev-parse --abbrev-ref HEAD).remote
+
+>  out =3D !git fetch `git upstream-remote` && git l `git upstream`..HE=
+AD
+
+'git fetch' without arguments is the same as git fetch `git upstream-re=
+mote`
+
+Junio: See? It's not the expected behavior for most of our user-base.
+
+'git log @{u}..HEAD' does the same as 'git log `git upstream`..HEAD'
+
+>  unmerged =3D !git ls-files --unmerged | cut -f2 | uniq
+>  untracked =3D ls-files --other --exclude-standard
+>  staged =3D ls-files --staged
+>  modified =3D ls-files --modified
+>  deleted =3D ls-files --deleted
+
+I think we should have a user-friendly 'git ls' command.
+
+>   head =3D !git l -1
+
+Or 'git show --quiet'.
+
+>  current =3D rev-parse --abbrev-ref HEAD
+
+We should probably also add typical shortucts:
+
+d =3D diff
+l =3D log
+f =3D fetch
+p =3D push
+r =3D reset
+ci =3D commit
+rb =3D rebase
+co =3D checkout
+st =3D status
+pi =3D cherry-pick
+mt =3D mergetool
+
+--=20
+=46elipe Contreras
