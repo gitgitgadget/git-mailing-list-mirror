@@ -1,128 +1,64 @@
-From: =?ISO-8859-1?Q?Nicolas_Despr=E8s?= <nicolas.despres@gmail.com>
-Subject: git ignore regression in 1.8.3
-Date: Wed, 29 May 2013 14:31:46 +0200
-Message-ID: <CAPqtr1KjmqRZZuVwput6=rKJrivb7siYePqT5QEOLJApg+phEg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v2 7/8] revert/cherry-pick: add --quiet option
+Date: Wed, 29 May 2013 18:03:25 +0530
+Message-ID: <CALkWK0=QyznWZt4sJCok9OZxjrdjtMTtpStA8LHdCCbn0Oi6TA@mail.gmail.com>
+References: <1369799788-24803-1-git-send-email-felipe.contreras@gmail.com> <1369799788-24803-8-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 29 14:32:19 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 29 14:34:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhfY7-0007M6-17
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 14:32:15 +0200
+	id 1Uhfa1-0000gJ-Vq
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 14:34:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966004Ab3E2McK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 08:32:10 -0400
-Received: from mail-vb0-f47.google.com ([209.85.212.47]:65235 "EHLO
-	mail-vb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965855Ab3E2McJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 08:32:09 -0400
-Received: by mail-vb0-f47.google.com with SMTP id x13so6198712vbb.34
-        for <git@vger.kernel.org>; Wed, 29 May 2013 05:32:07 -0700 (PDT)
+	id S966016Ab3E2MeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 08:34:07 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:61900 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965855Ab3E2MeG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 08:34:06 -0400
+Received: by mail-ie0-f178.google.com with SMTP id f4so8561741iea.37
+        for <git@vger.kernel.org>; Wed, 29 May 2013 05:34:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=QGJchar60O2GtTXOoWGH/Vj5ATyPVfsMAr87ped5Urc=;
-        b=oD6edAnKEYGUp0HCcOVXngl4Egd1zP6ad+Jr59DSMsa/K9SbZz+jm1DZ6zRdwJeC+w
-         KCIsEqgoUaZWgJRAJyFhf637KM6zk2K8aq5Ay1L/49G0X6yLXZ/wRo2yYNGSf7FzTRUd
-         4AYdvwFZA2ZnEEh7JcoN0r/nygQ4Uc2M3IwwBlg0YotDn97TWiq8tfdx8P2N5fiYfr+M
-         u4AddN9i6RF3Pr+q17CqFVN8mN20BESDVfNAXqR2yr87nQJYJ/wB7iK5MtLfThdSwkfW
-         8nTq/ri0sZbcDRG8Zi2r63rplt1JScs/NNnB+De6ve/g25cE0QfG4dlqvjudq/zxecnS
-         7q1Q==
-X-Received: by 10.220.138.13 with SMTP id y13mr1331351vct.59.1369830726649;
- Wed, 29 May 2013 05:32:06 -0700 (PDT)
-Received: by 10.221.10.7 with HTTP; Wed, 29 May 2013 05:31:46 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=vlh2wEOqd8ePg7V1jkD2u5VcXhrFv8rmopRK3HDgL08=;
+        b=LzE3X1nfSenBn8XDC/7QzQu0+a9OGx267A26zJVHBElgXeILV6r4gnsTDj/fG188Bx
+         nDuoBz84ZmbVBwtv9y8gK1HwmWEOMDr7TdUXDkpMAnex03yiFY65JM/C3WReGOGA32wu
+         ZLvtyAN+CCdKmPpC/U1cFIJMrgdkL4wg5JRCALX2UbiJt7//3fLC2RTTT85ve7bGzanp
+         cpDh1KJXv3ulZEpivn3EVNjrU7gOUvtaesoqBZSe51Q8PuKOEvPQA1mU2vEgrx29L/VF
+         PwITl5QUgHb8DWOkVohvosAqRIzmAPcLKFU1YB6RQGqehAqGYtqNPGakqpiAveRgC5iQ
+         UK2Q==
+X-Received: by 10.50.141.230 with SMTP id rr6mr9205832igb.89.1369830845203;
+ Wed, 29 May 2013 05:34:05 -0700 (PDT)
+Received: by 10.64.226.135 with HTTP; Wed, 29 May 2013 05:33:25 -0700 (PDT)
+In-Reply-To: <1369799788-24803-8-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225802>
 
-Hi all,
+Felipe Contreras wrote:
+>         if (opts->skip_empty && is_index_unchanged() == 1) {
+> -               warning(_("skipping %s... %s"),
+> -                       find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV),
+> -                       msg.subject);
+> +               if (!opts->quiet)
+> +                       warning(_("skipping %s... %s"),
+> +                               find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV),
+> +                               msg.subject);
+>                 goto leave;
+>         }
 
-=46irst of all I would like to thank you all for the great tool that is
-git. I love it and it makes my days way better.
-This is my first post on this mailing list so please apology if there
-is something wrong.
-
-I have noticed a regression in the behavior of ignore rules in 1.8.3.
-I have read the release notes and it might be related to all the great
-optimization you guys have done.
-My use case is quite uncommon but may happens to people who are
-tracking their "dot files" like I do.
-Basically I have a whitelist of non-ignored files at the top of my
-repository and a blacklist of ignored file in some of the direct
-sub-directories.
-
-Example:
-$ cd /tmp
-$ mkdir repo
-$ cd repo
-$ git init
-$ mkdir d
-$ touch tracked d/tracked
-$ git add tracked d/tracked
-$ git commit -m "Initial commit"
-$ touch untracked d/untracked
-$ touch ignored d/ignored
-$ echo '/*' >> .gitignore
-$ echo '!/d/' >> .gitignore
-$ echo '!/*' >> d/.gitignore
-$ echo 'ignored' >> d/.gitignore
-$ cat .gitignore
-/*
-!/d/
-$ cat d/.gitignore
-!/*
-ignored
-$ git --version
-git version 1.8.3
-$ git status -sb
-## master
-?? d/.gitignore
-?? d/ignored
-?? d/untracked
-$ /usr/local/Cellar/git/1.8.2.3/bin/git --version
-git version 1.8.2.3
-$ /usr/local/Cellar/git/1.8.2.3/bin/git status -sb
-## master
-?? d/.gitignore
-?? d/untracked
-$ git config status.showUntrackedFiles
-$ git check-ignore -v d/ignored
-=2Egitignore:2:!/d/ d/ignored
-$ /usr/local/Cellar/git/1.8.2.3/bin/git check-ignore -v d/ignored
-=2Egitignore:2:!/d/ d/ignored
-
-Although I am confused by the fact that both version of check-ignore
-print the same result, my understanding of this behavior is that the
-"local" d/.gitignore file is not taken into account and that once a
-negate rule is set I can not include other sub-pattern any longer. I
-have tried to only use the root .gitignore file like this
-
-/*
-!/d/
-/d/ignored
-
-but I have the same result. Removing the trailing slash in the
-negative pattern (like this !/d) does not change anything. If I use
-!/d/*, both version of git-status no longer report d/untracked.
-
-I was happy with the 1.8.2.3 behavior. Maybe I misunderstand the new
-behavior of 1.8.3. If yes please tell me how I could achieve the same
-tricks in 1.8.3 because I did not find out how.
-I have the same result with the next branch (version 1.8.3.430.gc6abf3f=
-).
-
-I have never hacked into git code base but I am willing to help if
-someone can guide me a bit.
-
-Regards,
-
---
-Nicolas Despr=E8s
+All this trouble just to suppress the "skipping ..." message.  Do you
+see anything else --quiet can be used to suppress?
