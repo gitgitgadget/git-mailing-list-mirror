@@ -1,69 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] patch-ids: check modified paths before calculating
- diff
-Date: Wed, 29 May 2013 14:36:58 -0400
-Message-ID: <20130529183658.GA15616@sigill.intra.peff.net>
-References: <a7088a74742b71a01423f3ddc1a6c7fd89474ed8.1368969438.git.john@keeping.me.uk>
- <20130529062007.GA11955@sigill.intra.peff.net>
- <7vip21u09d.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git init doesn't create master branch
+Date: Wed, 29 May 2013 11:37:28 -0700
+Message-ID: <7va9ndtyxj.fsf@alter.siamese.dyndns.org>
+References: <51A5F8E0.8060906@intland.com> <vpqk3migdb1.fsf@anie.imag.fr>
+	<CALkWK0m=m89QcnMNg9gEVeb7ZHSRd7ZMcL+y8gYuzn8YCTsSYw@mail.gmail.com>
+	<51A5FC17.8000608@intland.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Kevin Bracey <kevin@bracey.fi>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 29 20:37:09 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org
+To: =?utf-8?Q?=C3=81kos=2C_Tajti?= <akos.tajti@intland.com>
+X-From: git-owner@vger.kernel.org Wed May 29 20:37:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhlFD-0005Ku-DX
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:37:07 +0200
+	id 1UhlFf-0005ik-AL
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:37:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965518Ab3E2ShC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 14:37:02 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41192 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754206Ab3E2ShA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 14:37:00 -0400
-Received: (qmail 16660 invoked by uid 102); 29 May 2013 18:37:40 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 29 May 2013 13:37:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 May 2013 14:36:58 -0400
-Content-Disposition: inline
-In-Reply-To: <7vip21u09d.fsf@alter.siamese.dyndns.org>
+	id S965618Ab3E2Shc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 14:37:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43871 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965534Ab3E2Sha convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 14:37:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 486EB22614;
+	Wed, 29 May 2013 18:37:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ImLpzGDUy3WB
+	NorMWLOFmtkmjPE=; b=A39RiN6L5g3qWveocNeOtgycWv+IBCbswb4z04ryD9U1
+	5I3oQs+2XSKGZAg9AaoczQ3N2UiVucHc3ill9BnNX6Y2jJ0qf9Iuy99/qySg50GN
+	mIsex5eLyOJ5lW6RsE81TagC6UMzxU21S7gbfn65dv9hC21jhkubhsvkGowHu7U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=GwOSj0
+	MR1VjI6kucDSGAxmWMsP1BGabe1n83TthUhZCns2ieiezmqyqqJpgaVp0RLxhSlF
+	DitPQYd1V4NEW7Go8hmFNM9Tf+ZXqSm5nPlEntStbHTaZX5hDXJnEr3uUzwElh0+
+	2aNeJcK5s6u6kQzjuXFQ1CsIKPeMPGQJfePbk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D96B22613;
+	Wed, 29 May 2013 18:37:30 +0000 (UTC)
+Received: from pobox.com (unknown [50.152.208.16])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95CC92260F;
+	Wed, 29 May 2013 18:37:29 +0000 (UTC)
+In-Reply-To: <51A5FC17.8000608@intland.com> (=?utf-8?Q?=22=C3=81kos=2C?=
+ Tajti"'s message of "Wed,
+	29 May 2013 15:01:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D1429C5A-C88E-11E2-AD29-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225863>
 
-On Wed, May 29, 2013 at 11:08:46AM -0700, Junio C Hamano wrote:
+"=C3=81kos, Tajti" <akos.tajti@intland.com> writes:
 
-> This has rather interesting ramifications on cherry-pick and rebase,
-> though.  Both command can handle changes that come from an old tree
-> before some paths were renamed, but strict patch-id would not spot
-> equivalent changes we already have in our history if our change
-> happened after a rename, i.e.
-> 
->    Z
->   /
->  O---R---X---Y
-> 
-> where Z updates path F, R moves F to G and X changes G the same way
-> as Z changes F, and we are trying to cherry-pick Z on top of Y.  The
-> cherry-pick filter will see different patch-id for Z and X.
+> Thanks for clarifying this thing for me! I don't really insist on
+> having a master branch it's just that I tried to pull from a
+> repository bundle and I got this error message:
+>
+> "Cannot merge multiple branches into empty head"
+>
+> The command was:
+>
+> git pull ../dump.dmp refs/heads/*:refs/heads/*
+>
+> Is this a better way of doing this?
 
-True. That is a problem with the current patch-id system, no? Though my
-proposal would make it harder to change it in the future (as does
-John's).
+You are not trying to merge all branches contained in the dump, so
+"pull" is a wrong thing to use here.
 
-With mine, I wonder if you could use a different "loose" definition that
-does not take the filenames into account.  Using something like the
-changes in file sizes would be unique, but would not properly map to
-strict cases (a patch-id that adds 5 lines to the end of a 100-byte file
-may match one that adds the same five lines to the end of a 200-byte
-file).
+    $ git fetch --update-head-ok ../dump.dmp refs/heads/*:refs/heads/*
 
--Peff
+would be one way.  Or you could just use the dumpfile as if it were
+a normal remote and say (without running "git init")
+
+    $ git clone dump.dmp undump
+
+to extract it in a new directory "undump" (this may require your
+dumpfile created with HEAD, though).
