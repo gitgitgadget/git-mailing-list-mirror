@@ -1,133 +1,85 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/3] cherry-pick: add support to copy notes
-Date: Wed, 29 May 2013 06:56:54 -0500
-Message-ID: <CAMP44s2de-kNnxQvLNE5QrDFYMX=Omyu61+J=Dbxp0of3iYGxg@mail.gmail.com>
-References: <1369745947-19416-1-git-send-email-felipe.contreras@gmail.com>
-	<1369745947-19416-2-git-send-email-felipe.contreras@gmail.com>
-	<7vobbv119k.fsf@alter.siamese.dyndns.org>
-	<87mwrfx9ug.fsf@linux-k42r.v.cablecom.net>
-	<51a56bef1b9c2_807b33e1899991@nysa.mail>
-	<877giixl4c.fsf@linux-k42r.v.cablecom.net>
-	<CAMP44s3vkJCr2f2zsZU++j4Wqxuefmpt8BQ9dJoP=JtTB=rgkQ@mail.gmail.com>
-	<87y5ayqivi.fsf@linux-k42r.v.cablecom.net>
-	<CAMP44s2aAvzeTtHb=rVP1TrCMcQjyqN6O7n1DYZLx0uJrm1j+w@mail.gmail.com>
-	<874ndmqate.fsf@linux-k42r.v.cablecom.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] git-remote-mediawiki: better error message when HTTP(S) access fails
+Date: Wed, 29 May 2013 14:01:59 +0200
+Message-ID: <vpqzjvej8p4.fsf@anie.imag.fr>
+References: <1369339503-12426-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20130528180727.GB21210@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed May 29 13:57:02 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 29 14:02:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uhf02-0003LR-32
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 13:57:02 +0200
+	id 1Uhf56-0007pJ-2X
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 14:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965615Ab3E2L46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 07:56:58 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:58845 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965418Ab3E2L45 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 07:56:57 -0400
-Received: by mail-lb0-f173.google.com with SMTP id t10so8834360lbi.4
-        for <git@vger.kernel.org>; Wed, 29 May 2013 04:56:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=VXz+/U8iJqkfs4rzPbYPDGky6/P+6GBB35vMdhbhLWo=;
-        b=SfW2T7xu9+u+v/U2SCppJsl9aP3ZQ9uPqGHCvWCYG4XHEfsCTuWa+Q6NJUyXw/rJHK
-         z44hIpy4hRuC+r+4CyEegMrpQ1Ddd5kmc4Z3e22qeSVEODqe+lNLy8XGQpqxq3wLwEwu
-         JzregzDWPy6BIUpet/QdI6C7Vl63TwTPMDstNAmWmHveQG0OjOk+XSSFgAv88Mt6DLI+
-         zl8DPuFHWPmCeAv6g35Yz1TnCttLhatYZ2aBeSlz3KqMxMMfs64taxFrnnXeiQPjRL2N
-         d9M3Ne/daoBSwAxC+n8IZBnasOqV3e7QlSeEXtGUo9UBcvdOIZd1z0dpslDOVXXZIXq/
-         2j3w==
-X-Received: by 10.112.88.166 with SMTP id bh6mr1454196lbb.47.1369828614271;
- Wed, 29 May 2013 04:56:54 -0700 (PDT)
-Received: by 10.114.177.164 with HTTP; Wed, 29 May 2013 04:56:54 -0700 (PDT)
-In-Reply-To: <874ndmqate.fsf@linux-k42r.v.cablecom.net>
+	id S965912Ab3E2MCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 08:02:10 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:53645 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965418Ab3E2MCJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 08:02:09 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r4TC1wa0025858
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 29 May 2013 14:01:58 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Uhf4p-0005It-EX; Wed, 29 May 2013 14:01:59 +0200
+In-Reply-To: <20130528180727.GB21210@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 28 May 2013 14:07:27 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 29 May 2013 14:01:59 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225795>
 
-On Wed, May 29, 2013 at 6:34 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
+
+> On Thu, May 23, 2013 at 10:05:03PM +0200, Matthieu Moy wrote:
 >
->> On Wed, May 29, 2013 at 3:40 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>
->>>> On Wed, May 29, 2013 at 3:09 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
->>>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>>
->>>>>> Feel free to implement that. I'm just interested in 'git cherry-pick' being
->>>>>> usable for 'git rebase' purposes.
->>>>>
->>>>> Which would have been obvious to all but the most casual readers, eh?
->>>>
->>>> My motivations are irrelevant, the patch is good as it is.
->>>
->>> You fooled both Junio (AFAICT anyway) and me, who both reviewed the
->>> patch under the assumption that it implements note copying *along the
->>> lines of existing note copying*.  This proved to be a wrong, and
->>> time-wasting, assumption.
->>
->> Whatever arbitrary rules you are talking about, they are not codified in tests.
+>> My use-case is an invalid SSL certificate. Pulling from the wiki with a
+>> recent version of libwww-perl fails, and git-remote-mediawiki gave no
+>> clue about the reason. Give the mediawiki API detailed error message, and
+>> since it is not so informative, hint the user about an invalid SSL
+>> certificate on https:// urls.
 >
-> Tests or code don't have a thing to do with it.  This is about how you
-> are presenting your changes to the rest of the git community.  As
-> evidenced above, said presentation is not clear enough to communicate
-> your goals to at least two experienced git developers (if I may say so
-> myself).  How are we supposed to review a change if it is not even clear
-> what goal it satisfies?
+> This is definitely an improvement, but it seems like it just the tip of
+> the iceberg.
 
-My goals are irrelevant. This patch is good.
+Right.
 
-It implements a missing feature, if you don't like how it is implemented it:
+> I wonder if we can do something like:
+>
+>   our $mw_operation;
+>   $mediawiki->{config}->{on_error} = sub {
+> [...]
+>           die "$err\n";
+>   };
 
-a) Implement the code in the note framework that does it properly so
-other people can just call that.
+Probably, but that would hardcode the fact that mediawiki errors are
+fatal, while in an ideal world, some errors should be recoverable, and
+some would require some cleanups before die-ing.
 
-b) Implement the tests for other commands that check that the behavior
-you talk about does happen indeed.
+Also, an error during the first mediawiki operation should not
+necessarily have the same diagnosis hint as the others: if I just
+did a successfull querry, and the next fails, it can hardly be an SSL
+certificate error.
 
-c) Implement it yourself
+I'll send a v2 that covers a bit more (at least, push and pull with an
+invalid certificate both give the message).
 
-This has nothing to do with the way I presented the patch. I presented
-the patch as I thought it was; implementing the note copying as it was
-intended. Now you came along and say I wasted your time because I
-didn't say I implemented it wrongly, and you assume bad faith and what
-not.
-
-This wouldn't have happened because you didn't do a) or b). I realized
-that by replacing 'am' with 'cherry-pick' in 'git rebase'  the notes
-were not copied, according to the testing framework, so I implemented
-that, and the tests pass. Now you come along and say it should
-implemented some note.rewrite.command stuff, but the tests didn't
-check for that, so how was I supposed to know?
-
-And then you have the audacity to claim that *I*, the one who just
-wrote a bunch of code to implement a missing feature, is wasting
-*your* time, you, the one who is simply replying to an email and
-shooting from the hip.
-
-> Again: I'll be happy to review your proposed changes if and when you
-> resend the series with commit messages.
-
-I won't, I'll keep working on my actual objective.
-
-Plus, this patch does have a commit message, and the commit message
-says *EXACTLY* what the patch is doing: add support to copy notes.
-
-If *you* are interested in certain behavior, why don't you lift a
-finger and do something to make sure that such behavior is easy to
-implement and the test framework actually checks for that?
+More work is needed to get a real good error management, but I don't
+have time for that now.
 
 -- 
-Felipe Contreras
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
