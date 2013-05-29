@@ -1,72 +1,72 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: [RFC/PATCH v2 3/8] rebase: cherry-pick: fix sequence continuation
-Date: Tue, 28 May 2013 22:51:14 -0700
-Message-ID: <CANiSa6h7fY=GNM0VvFXvE-LD=nVWbEBGqWbaheZ6gr518_aPNA@mail.gmail.com>
-References: <1369801000-3705-1-git-send-email-felipe.contreras@gmail.com>
-	<1369801000-3705-4-git-send-email-felipe.contreras@gmail.com>
-	<CANiSa6ivOnRfOVMTsgDygi=2dvxmMOqqWdqs7CBYohThOVzt7Q@mail.gmail.com>
-	<CAMP44s0Zy4KpPN1n6HOVXWyCuevenbSFnH589YngMB9NVWcamQ@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 3/5] rebase: fix sequence continuation
+Date: Wed, 29 May 2013 00:53:45 -0500
+Message-ID: <51a597e95039e_7242869e1c713f5@nysa.mail>
+References: <1369747757-10192-1-git-send-email-felipe.contreras@gmail.com>
+ <1369747757-10192-4-git-send-email-felipe.contreras@gmail.com>
+ <7v4ndmybwl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 07:51:23 2013
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 29 07:56:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhZI8-0004Iv-NV
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 07:51:21 +0200
+	id 1UhZMt-000863-V3
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 07:56:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754257Ab3E2FvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 01:51:16 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:57312 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752117Ab3E2FvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 01:51:15 -0400
-Received: by mail-wi0-f181.google.com with SMTP id hi5so3164216wib.8
-        for <git@vger.kernel.org>; Tue, 28 May 2013 22:51:14 -0700 (PDT)
+	id S1754588Ab3E2F4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 01:56:11 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:48031 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752117Ab3E2F4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 01:56:11 -0400
+Received: by mail-ob0-f178.google.com with SMTP id fb19so2844901obc.9
+        for <git@vger.kernel.org>; Tue, 28 May 2013 22:56:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=HBSc9wlp07mSfCwPh5D4Wk6YIedxHThY6C8mZLgoZhE=;
-        b=mTO2Mgxybn/zqvPaGAn7hmmrcFw0KF6s5wPOXc3MMI3+1VgBvZk341smPUMO4VO0Hx
-         DEfmidKLQrFeoIOw0zMJI0GBm2DajWdBXPCYzmGR14t8/BOq9E7gn5Q6ag1igZ4f/EA2
-         Tek7faM6VYVwEvKQXtfQ8zZXJ+PoI+ulytwcsZMKcjRaOKsBrjE/Gkb1tWcNFOxfwIFO
-         aQ2oG2jdUJ7vyp0VKLHLKs9/PuNe97UBXGPtkIHp5XT5+2t++x/m92g/zoPXQT75woeH
-         LRsFrepva7V4l8p3Gr5ocSkOalUwFeX7OJcnr7jPjGHt3Z24wsgSIAU3NGPQUYlDcfCY
-         BtIg==
-X-Received: by 10.180.206.77 with SMTP id lm13mr858363wic.18.1369806674450;
- Tue, 28 May 2013 22:51:14 -0700 (PDT)
-Received: by 10.180.7.99 with HTTP; Tue, 28 May 2013 22:51:14 -0700 (PDT)
-In-Reply-To: <CAMP44s0Zy4KpPN1n6HOVXWyCuevenbSFnH589YngMB9NVWcamQ@mail.gmail.com>
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=lyKvn9GujwOJcAuEvMJYb+bbU9FN+KPUXKWAUUxASOA=;
+        b=ZUQX92NZ4cpdavxk3/g0usCDFCnlESnU9elmNebxEwA894apXMgzjCAnSc6ZUIJQrl
+         V4+GZLGItk7VCTC+6egs8zmJ2zuYS1WmCiEtPYwODUXkd0ImdeRy/5swpoFTBx48/Z3/
+         p36zOllhyJk2r3LTfN2fmSndoLkf0BP6GZAH2HUkfI+JP56uOfxW5yBjbHk5GPm+kNUg
+         Qjo/0mGRMqkoC2aiXniZ+nr7FNom9o09x5s88cK4ri2kVatDh1iv/yZbq2wXxc0wa8Yc
+         cHZcsSIUiBjK2ULvQG32uPUAKXWQ6oah5d8BEIHEwOoAX7xWR5EkPq0sBQ0Q9uzRD0jQ
+         eaJQ==
+X-Received: by 10.60.155.177 with SMTP id vx17mr766061oeb.9.1369806970391;
+        Tue, 28 May 2013 22:56:10 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id pm16sm39618512oeb.3.2013.05.28.22.56.08
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 28 May 2013 22:56:09 -0700 (PDT)
+In-Reply-To: <7v4ndmybwl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225746>
 
-On Tue, May 28, 2013 at 10:41 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Wed, May 29, 2013 at 12:33 AM, Martin von Zweigbergk
-> <martinvonz@gmail.com> wrote:
->>  As Junio asked in the previous iteration, shouldn't this have been in
->> the first patch?
->
-> No, the first patch is splitting the code without introducing any
-> functional changes.
->
-> This is fixing a bug that already exists, we could fix it before the
-> split, or after, but mixing the split and the fix at the same time is
-> a no-no.
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > We are not in am mode.
+> 
+> That may make sense, but shouldn't this part be like so from the
+> very beginning?  In other words, this looks like an "oops, 1/5 was
+> buggy and this is a hotfix".
 
-Oh, now I remember. I ran into that bug once.
+How can 1/5 be introducing a bug? It's merely splitting the code without
+introducing *ANY* functional changes.
 
-> One change splits, the other change fixes, what's wrong with that?
+The bug is already there in 'master'.
 
-I didn't say there was anything wrong. I was asking if the bug was
-there before (and I didn't see an answer when Junio asked).
-
-Thanks
+-- 
+Felipe Contreras
