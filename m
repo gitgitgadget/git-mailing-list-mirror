@@ -1,86 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] patch-ids: check modified paths before calculating diff
-Date: Wed, 29 May 2013 11:48:53 -0700
-Message-ID: <7vy5axsju2.fsf@alter.siamese.dyndns.org>
-References: <a7088a74742b71a01423f3ddc1a6c7fd89474ed8.1368969438.git.john@keeping.me.uk>
-	<20130529062007.GA11955@sigill.intra.peff.net>
-	<7vip21u09d.fsf@alter.siamese.dyndns.org>
-	<20130529183658.GA15616@sigill.intra.peff.net>
+From: =?utf-8?b?w5h5c3RlaW4=?= Walle <oystwa@gmail.com>
+Subject: Re: 1.8.3 - gitignore not being parsed correctly on OS X; regex support is broken?
+Date: Wed, 29 May 2013 18:49:58 +0000 (UTC)
+Message-ID: <loom.20130529T204310-306@post.gmane.org>
+References: <CAGLuM14_MQffwQWrB2YCQXzhkGaxdaYBuY74y7=pfb-hB6LskA@mail.gmail.com> <CACsJy8BqCUKhc8vhjhNz0OedBngk7zcSOk70ekRm3EiruHfNxA@mail.gmail.com> <CACsJy8DD=LxAKh_fUELJ5Mj0xS_gZE88N_rJFkKGer=YAOqsMg@mail.gmail.com> <51A62A96.6040009@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Kevin Bracey <kevin@bracey.fi>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 29 20:49:02 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 29 20:50:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhlQi-00075o-Jh
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:49:00 +0200
+	id 1UhlSN-0008Vn-7G
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:50:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965651Ab3E2Ss5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 14:48:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51852 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965602Ab3E2Ss4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 14:48:56 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2E9722E9A;
-	Wed, 29 May 2013 18:48:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BF18EzdU91CToIInTl4HLku4hsk=; b=ZEcak/
-	FkEG5yBYihD0vVX1Hbozb9cUEevsZuvgpxKCyDX3XwDgaNYktSKgAMtmE4zzTLhp
-	c1Q0R5zjlajJe7eyVAiwKi+bD3igVkwQOPWYxaWFnjiW3i7sylktb/UlsGOqEdUO
-	ezLubtrpmZSX0Q0QoXZIUgX3+zzUzGQmJ6reg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Vn11MKtj536Dz5JgdM32u5fl901Eeldq
-	31+/QUOR1XPRmsEAjBIFONNcwL13k1th9fvEmJS312VIMSM5TJ+r9A1Suft1gCVu
-	xOsXD/H4gvsr6rjgzDfBQdjo0YHZ0bUj5r0JwYCaIJVICrv6f11D7OcAeXuDHCCQ
-	phyYVqjkpz4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A557C22E98;
-	Wed, 29 May 2013 18:48:55 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0565422E97;
-	Wed, 29 May 2013 18:48:54 +0000 (UTC)
-In-Reply-To: <20130529183658.GA15616@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 29 May 2013 14:36:58 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 69CBA90C-C890-11E2-A64D-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S965898Ab3E2Sub convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 14:50:31 -0400
+Received: from plane.gmane.org ([80.91.229.3]:47829 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965807Ab3E2SuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 14:50:19 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UhlRw-00088r-55
+	for git@vger.kernel.org; Wed, 29 May 2013 20:50:16 +0200
+Received: from 233.5.200.37.customer.cdi.no ([37.200.5.233])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 May 2013 20:50:16 +0200
+Received: from oystwa by 233.5.200.37.customer.cdi.no with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 May 2013 20:50:16 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 37.200.5.233 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Ubuntu Chromium/25.0.1364.160 Chrome/25.0.1364.160 Safari/537.22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225866>
 
-Jeff King <peff@peff.net> writes:
+Karsten Blees <karsten.blees <at> gmail.com> writes:
 
-> On Wed, May 29, 2013 at 11:08:46AM -0700, Junio C Hamano wrote:
->
->> This has rather interesting ramifications on cherry-pick and rebase,
->> though.  Both command can handle changes that come from an old tree
->> before some paths were renamed, but strict patch-id would not spot
->> equivalent changes we already have in our history if our change
->> happened after a rename, i.e.
->> 
->>    Z
->>   /
->>  O---R---X---Y
->> 
->> where Z updates path F, R moves F to G and X changes G the same way
->> as Z changes F, and we are trying to cherry-pick Z on top of Y.  The
->> cherry-pick filter will see different patch-id for Z and X.
->
-> True. That is a problem with the current patch-id system, no?
+>  <at> =C3=98ystein: in the meantime, could you check if this fixes th=
+e problem=20
+for you?
+>=20
+> --- 8< ---
+> diff --git a/dir.c b/dir.c
+> index a5926fb..13858fe 100644
+> --- a/dir.c
+> +++ b/dir.c
+>  <at>  <at>  -821,6 +821,9  <at>  <at>  static void prep_exclude(stru=
+ct=20
+dir_struct *dir, const char *base, int baselen)
+>  				dir->basebuf, stk->baselen - 1,
+>  				dir->basebuf + current, &dt);
+>  			dir->basebuf[stk->baselen - 1] =3D '/';
+> +			if (dir->exclude &&
+> +			    dir->exclude->flags & EXC_FLAG_NEGATIVE)
+> +				dir->exclude =3D NULL;
+>  			if (dir->exclude) {
+>  				dir->basebuf[stk->baselen] =3D 0;
+>  				dir->exclude_stack =3D stk;
 
-Correct.  That is why I suggested not to change the external
-interface (i.e. what is shown from patch-id command) as people may
-have kept them, but wondered if a possible improvement may be to
-exclude the name from ids when we internally generate two sets of
-Ids and intersect them, i.e. log --cherry.
+Hi, Karsten
+
+I applied your fix on v1.8.3 on both systems I mentioned earlier and
+from my tests the issue I reported is fixed.
+
+Thank you very much! :)
+
+Regards
+=C3=98sse
