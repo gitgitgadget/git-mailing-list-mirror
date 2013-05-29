@@ -1,71 +1,77 @@
-From: Erik de Castro Lopo <mle+tools@mega-nerd.com>
-Subject: Retrieving a file at a before a specified commit
-Date: Wed, 29 May 2013 16:47:35 +1000
-Organization: Erik Conspiracy Secret Labs
-Message-ID: <20130529164735.5489ab47953406745d9034ef@mega-nerd.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2 2/7] add tests for rebasing with patch-equivalence
+ present
+Date: Wed, 29 May 2013 09:09:06 +0200
+Message-ID: <51A5A992.306@viscovery.net>
+References: <1347949878-12578-1-git-send-email-martinvonz@gmail.com> <1369809572-24431-1-git-send-email-martinvonz@gmail.com> <1369809572-24431-3-git-send-email-martinvonz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 29 08:55:11 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Chris Webb <chris@arachsys.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 29 09:09:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhaHu-0006Am-Ez
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 08:55:10 +0200
+	id 1UhaVZ-0001f7-M9
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 09:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935048Ab3E2GzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 02:55:04 -0400
-Received: from hendrix.mega-nerd.net ([203.206.230.162]:52984 "EHLO
-	hendrix.mega-nerd.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934396Ab3E2GzD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 02:55:03 -0400
-X-Greylist: delayed 447 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 May 2013 02:55:03 EDT
-Received: from rollins.mnn (pharoah-vpn [10.9.8.2])
-	by hendrix.mega-nerd.net (Postfix) with SMTP id 76958106DF9
-	for <git@vger.kernel.org>; Wed, 29 May 2013 16:47:35 +1000 (EST)
-X-Mailer: Sylpheed 3.3.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
+	id S934167Ab3E2HJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 03:09:13 -0400
+Received: from so.liwest.at ([212.33.55.13]:56121 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759485Ab3E2HJM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 03:09:12 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1UhaVP-00067W-8o; Wed, 29 May 2013 09:09:07 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 0307B1660F;
+	Wed, 29 May 2013 09:09:06 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <1369809572-24431-3-git-send-email-martinvonz@gmail.com>
+X-Enigmail-Version: 1.5.1
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225764>
 
-Hi all,
+Am 5/29/2013 8:39, schrieb Martin von Zweigbergk:
+> +#       f
+> +#      /
+> +# a---b---c---g---h
+> +#      \
+> +#       d---G---i
+...
+> +test_run_rebase () {
+> +	result=$1
+> +	shift
+> +	test_expect_$result "rebase $* --onto drops patches in onto" "
+> +		reset_rebase &&
+> +		git rebase $* --onto h f i &&
+> +		test_cmp_rev h HEAD~2 &&
+> +		test_linear_range 'd i' h..
 
-I have a commit like this:
+Isn't this expectation wrong? The upstream of the rebased branch is f, and
+it does not contain G. Hence, G should be replayed. Since h is the
+reversal of g, the state at h is the same as at c, and applying G should
+succeed (it is the same change as g). Therefore, I think the correct
+expectation is:
 
-    commit 4d77a3cee01db0412956d40875c79f51ac745acc
-    tree 3443c9f633114c3bd2e015453a8c55a171e62b53
-    parent 340d808ade8a79857bec40770f0eb4f98224c53d
-    author ....
-    committer .....
+		test_linear_range 'd G i' h..
 
-which modifies file A/B/C (ie specifically does not add, but changes
-an existing file in the repo).
+> +	"
+> +}
+> +test_run_rebase failure ''
+> +test_run_rebase failure -m
+> +test_run_rebase failure -i
+> +test_run_rebase failure -p
 
-I would then like to retrive the version of the file A/B/C before
-commit 4d77a3cee by using the parent commit 340d808a:
-
-   git show 340d808ade8a79857bec40770f0eb4f98224c53d:A/B/C
-
-which works for most files/commits I try this with, but doesn't work
-in one particular case.
-
-Questions:
-
-- Is my understanding of the above git command incorrect?
-- Is this a corrupt repo? Is there some way to check?
-- Is there some explaination of why I can't get the previous version
-  of that file?
-
-Appreciate any light that could be shed on this.
-
-Cheers,
-Erik
--- 
-----------------------------------------------------------------------
-Erik de Castro Lopo
-http://www.mega-nerd.com/
+-- Hannes
