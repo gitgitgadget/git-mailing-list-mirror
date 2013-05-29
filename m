@@ -1,88 +1,69 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [git-users] Highlevel (but simple to implement) commands provided
- by default for git
-Date: Wed, 29 May 2013 23:56:58 +0530
-Message-ID: <CALkWK0k8GkFYNkoGH4YCgmWtSR5rgFSG0dU9Aw2CO_arvuzKxQ@mail.gmail.com>
-References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com> <CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] patch-ids: check modified paths before calculating
+ diff
+Date: Wed, 29 May 2013 14:36:58 -0400
+Message-ID: <20130529183658.GA15616@sigill.intra.peff.net>
+References: <a7088a74742b71a01423f3ddc1a6c7fd89474ed8.1368969438.git.john@keeping.me.uk>
+ <20130529062007.GA11955@sigill.intra.peff.net>
+ <7vip21u09d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: =?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 20:27:44 2013
+Content-Type: text/plain; charset=utf-8
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Kevin Bracey <kevin@bracey.fi>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 29 20:37:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uhl67-0005gZ-9r
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:27:43 +0200
+	id 1UhlFD-0005Ku-DX
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:37:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965384Ab3E2S1k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 14:27:40 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:53601 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965160Ab3E2S1i convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 14:27:38 -0400
-Received: by mail-ie0-f180.google.com with SMTP id b11so11771327iee.11
-        for <git@vger.kernel.org>; Wed, 29 May 2013 11:27:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=zjcdEIbP9ss/lh7m/I5SWnQ/H2QJlGNq/Kv73uar0Lc=;
-        b=nRhQL6kNnynARRlgsxe7biQt5BzbH1vhA3PjdUoyoGxhhECdBjoPE7R72Ui2oGzex0
-         ypt5IQfY/EBeJodePluuLTMt73H+f/HDhjtCGTbaOT5gLL77/UeG1Xgp/e/K0H6eR0xg
-         FAC34hPxWCbQX4KrH64rcvDC1LsCM3qb8ERaMUPN0MEGVrh8dW5OwbjhQ9Y3b78Sq992
-         UMu5+P6EG7uTKIQgnzNdW5stmM/XVW8hyqqanw98Z7+kf7BKf/jpKAvr7klmS+PI+B4E
-         Yz05iAk24WN1Ukg/3z8zpDLmQtGmmLnlc7XmjleZyEpdd9oWGZygOjkmihu2Ido3ge9d
-         S9HA==
-X-Received: by 10.50.41.99 with SMTP id e3mr9960944igl.104.1369852058360; Wed,
- 29 May 2013 11:27:38 -0700 (PDT)
-Received: by 10.64.226.135 with HTTP; Wed, 29 May 2013 11:26:58 -0700 (PDT)
-In-Reply-To: <CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
+	id S965518Ab3E2ShC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 14:37:02 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41192 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754206Ab3E2ShA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 14:37:00 -0400
+Received: (qmail 16660 invoked by uid 102); 29 May 2013 18:37:40 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 29 May 2013 13:37:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 May 2013 14:36:58 -0400
+Content-Disposition: inline
+In-Reply-To: <7vip21u09d.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225862>
 
-Br=C3=A1ulio Bhavamitra wrote:
->   root =3D rev-parse --show-toplevel
+On Wed, May 29, 2013 at 11:08:46AM -0700, Junio C Hamano wrote:
 
-What is your usecase for this?
+> This has rather interesting ramifications on cherry-pick and rebase,
+> though.  Both command can handle changes that come from an old tree
+> before some paths were renamed, but strict patch-id would not spot
+> equivalent changes we already have in our history if our change
+> happened after a rename, i.e.
+> 
+>    Z
+>   /
+>  O---R---X---Y
+> 
+> where Z updates path F, R moves F to G and X changes G the same way
+> as Z changes F, and we are trying to cherry-pick Z on top of Y.  The
+> cherry-pick filter will see different patch-id for Z and X.
 
->  upstream =3D !git for-each-ref --format=3D'%(upstream:short)' $(git
-> symbolic-ref -q HEAD)
+True. That is a problem with the current patch-id system, no? Though my
+proposal would make it harder to change it in the future (as does
+John's).
 
-Again, what is the usecase?  What doesn't @{u} do?
+With mine, I wonder if you could use a different "loose" definition that
+does not take the filenames into account.  Using something like the
+changes in file sizes would be unique, but would not properly map to
+strict cases (a patch-id that adds 5 lines to the end of a 100-byte file
+may match one that adds the same five lines to the end of a 200-byte
+file).
 
->  upstream-remote =3D !git upstream | sed -e 's/\\/.*$//g'
-
-Windows back-slashes?
-
->  out =3D !git fetch `git upstream-remote` && git l `git upstream`..HE=
-AD
-
-I didn't understand this at all.  What are you doing?
-
->  in =3D pull --dry-run
-
-Why?
-
->  unmerged =3D !git ls-files --unmerged | cut -f2 | uniq
->  untracked =3D ls-files --other --exclude-standard
->  staged =3D ls-files --staged
->  modified =3D ls-files --modified
->  deleted =3D ls-files --deleted
-
-What is wrong with git status showing a unified output?
-
->   head =3D !git l -1
-
-What is git l again?
-
->  current =3D rev-parse --abbrev-ref HEAD
-
-Why don't you use a prompt?  Use the one in contrib/completion/git-prom=
-pt.sh.
+-Peff
