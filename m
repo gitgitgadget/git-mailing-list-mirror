@@ -1,92 +1,85 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] fixup! rebase: implement --[no-]autostash and rebase.autostash
-Date: Wed, 29 May 2013 16:41:20 +0530
-Message-ID: <1369825880-8608-1-git-send-email-artagnon@gmail.com>
-References: <7vli6yydmv.fsf@alter.siamese.dyndns.org>
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 29 13:12:53 2013
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [PATCH 1/2] sequencer: trivial fix
+Date: Wed, 29 May 2013 13:13:24 +0200
+Message-ID: <001601ce5c5d$89974830$9cc5d890$@schmitz-digital.de>
+References: <1369673539-28692-1-git-send-email-felipe.contreras@gmail.com>	<1369673539-28692-2-git-send-email-felipe.contreras@gmail.com>	<20130528110014.GA1264@hmsreliant.think-freely.org>	<7vobbv2fze.fsf@alter.siamese.dyndns.org>	<51a568db9c9b8_807b33e18996fa@nysa.mail>	<ko4jf7$e4d$1@ger.gmane.org> <CAMP44s0vARKGsn2noBEAxSVHD1bkU9pR7nPCvFJwp5epwidkQw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Felipe Contreras'" <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 29 13:13:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UheJI-0000mU-Q5
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 13:12:53 +0200
+	id 1UheJv-0001Ix-5k
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 13:13:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965697Ab3E2LMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 07:12:48 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:39788 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965579Ab3E2LMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 07:12:47 -0400
-Received: by mail-pd0-f176.google.com with SMTP id r11so8709579pdi.21
-        for <git@vger.kernel.org>; Wed, 29 May 2013 04:12:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=GM+TjwL6qiBJAxBDscZph3dnuam6ZFP4rpVLwoMg/tI=;
-        b=Zu+UhaCVqYpPSfWN/f9jM0zf+cjc524pu8/wHfQLT5nz3dh2y/X7sauCQLB72c5Bl8
-         LfvJwerSSjGBWom7FPz3MPi75ZUHPeFtee9fhqNHfa5HIsPpbiZvDn03clDzO8Ez3eI3
-         l7gcaQtb6m9CLBTqClVus70h5ljU4ZoB6VnCkEOhscUyBUZiar7kZ1mwuZUw0CUvWzWa
-         vwVAf9vYuiPHTpy++lvmn+SzqU6IRPoLS1bxh6pn6yN802gmxtkOAiievxma75nn1FIj
-         6bxxTH5ndfjAnR09PTeDm/Pjxz2fU+LqvIZI4P83dDN8SwDzoHrSK/BU9m66l5OrBvmj
-         khtw==
-X-Received: by 10.68.177.33 with SMTP id cn1mr2268463pbc.189.1369825967463;
-        Wed, 29 May 2013 04:12:47 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.41.150])
-        by mx.google.com with ESMTPSA id k8sm32733755pag.18.2013.05.29.04.12.44
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 29 May 2013 04:12:46 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc1.8.g8321729
-In-Reply-To: <7vli6yydmv.fsf@alter.siamese.dyndns.org>
+	id S965655Ab3E2LN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 07:13:28 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:61586 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965579Ab3E2LN1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 07:13:27 -0400
+Received: from DualCore (dsdf-4db5271a.pool.mediaWays.net [77.181.39.26])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0LpPi1-1UBMQq2oBp-00f4fD; Wed, 29 May 2013 13:13:25 +0200
+In-Reply-To: <CAMP44s0vARKGsn2noBEAxSVHD1bkU9pR7nPCvFJwp5epwidkQw@mail.gmail.com>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQIZRmwJ3YD97SQ9HOHpf/nu9snqLwILqjWaAN8L5zUCjtBjewKk33BDAcf4QhQBowjOiJgp4lBA
+Content-Language: de
+X-Provags-ID: V02:K0:zMfCxOrH+T+D2mjRgL9H1EeI6hk12ugfAZqo/FTBBpY
+ alBbsMLqNIpjEtcMQUfBSTmx+Fo6A7PH5jBSDWf0EKHTM5BSo+
+ cJF2VchCOhqJ56TnLu718jKC9rmO3Mz37XyE1BQYPb6uMO1E7d
+ XnIlp/s9eZr5fh65edXrWSB2eX8Gq5+o4eQp8dHLvKFVrx+gCd
+ KRxn0THevoGwnEnQAeTsT5U2eg/h3vilJQRIs/8PAPHgIgrIB7
+ /BMBnVk8WmYADoVdxkxMq2PQlpQxoeC8Ecszo1QtY3WZrGSF34
+ 3TzdSTOE7v8FXK+BR9C5kees1VGr0OgfNC+RGE3/+apXn6mVLa
+ dWOyrTngrWrj2/p32Nri8IICqRxz99Z7fsFciAZv+xeX+pi2Sc
+ a7MDrtahVly9A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225786>
 
-For rr/rebase-autostash, which is stalled in pu.  See $gmane/225689.
+> From: Felipe Contreras [mailto:felipe.contreras@gmail.com]
+> Sent: Wednesday, May 29, 2013 12:52 PM
+> To: Joachim Schmitz
+> Cc: git@vger.kernel.org
+> Subject: Re: [PATCH 1/2] sequencer: trivial fix
+> 
+> On Wed, May 29, 2013 at 4:58 AM, Joachim Schmitz
+> <jojo@schmitz-digital.de> wrote:
+> > Felipe Contreras wrote:
+> >>
+> >> Junio C Hamano wrote:
+> 
+> >>> It probably is better to fold this patch into the other one when it
+> >>> is rerolled to correct the option name gotcha "on the tin".
+> >>
+> >>
+> >> Why? This patch is standalone and fixes an issue that is independent
+> >> of the other patch. Why squash two patches that do *two* different
+> >> things?
+> >>
+> >> Anyway, I'll happily drop this patch if you want this memory leak to
+> >> remain. But then I'll do the same in the other patch.
+> >>
+> >> This mantra of avodiing 'goto' is not helping anybody.
+> >
+> >
+> > adding 5 letters (to change the next "if" into an "else if") versus your
+> > addition of several lines and some 15 additional letters (ignoring the
+> > whitsspace)  is IMHO enough to see what is better?
+> 
+> This has nothing to do with what Junio said. 
 
-This is a super-minor fix anyway: if you disagree with something, change
-it; there's no need to ask me.
+Well, it has, but you had snipped it. But replied to the goto issue regardless
 
-As for the follow-up introducing a 'stash store', I will submit it in
-good time: there's no hurry.  I'm working on some other interesting
-things in the meantime (see hot-branch and @{push}).
+> This is better done without "goto" in general.
 
-Thanks.
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- git-rebase.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 709ef6b..5906757 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -151,16 +151,16 @@ finish_rebase () {
- 		stash_sha1=$(cat "$state_dir/autostash")
- 		if git stash apply $stash_sha1 2>&1 >/dev/null
- 		then
--			echo "Applied autostash"
-+			echo "$(gettext 'Applied autostash.')"
- 		else
- 			ref_stash=refs/stash &&
- 			: >>"$GIT_DIR/logs/$ref_stash" &&
- 			git update-ref -m "autostash" $ref_stash $stash_sha1 \
- 				|| die "$(eval_gettext 'Cannot store $stash_sha1')"
--			echo "
--$(gettext 'Applying autostash resulted in conflicts.
-+			gettext 'Applying autostash resulted in conflicts.
- Your changes are safe in the stash.
--You can apply or drop it at any time.')"
-+You can run "git stash pop" or "git stash drop" it at any time.
-+'
- 		fi
- 	fi
- 	git gc --auto &&
--- 
-1.8.3.rc3.11.geb5ebca
+Bye, Jojo
