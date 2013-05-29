@@ -1,131 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/6] test-lib: verbose mode for only tests matching a pattern
-Date: Wed, 29 May 2013 10:53:18 -0700
-Message-ID: <7vmwrdu0z5.fsf@alter.siamese.dyndns.org>
-References: <cover.1368736093.git.trast@inf.ethz.ch>
-	<10e5eacece7fc9657c312b5c51747d23ae9ef40b.1368736093.git.trast@inf.ethz.ch>
-	<20130529050000.GB31762@sigill.intra.peff.net>
-	<20130529050732.GC31762@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/4] remote-helpers: rename tests
+Date: Wed, 29 May 2013 12:56:36 -0500
+Message-ID: <CAMP44s2-Of=AS9Jg7YAXnZ2346ozWPS4gL5irh0devwpkdBKmQ@mail.gmail.com>
+References: <1369449507-18269-1-git-send-email-felipe.contreras@gmail.com>
+	<1369449507-18269-3-git-send-email-felipe.contreras@gmail.com>
+	<7vmwrezx7n.fsf@alter.siamese.dyndns.org>
+	<51a56ce142986_807b33e18100084@nysa.mail>
+	<7v8v2xvhbu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 29 19:53:27 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	David Aguilar <davvid@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 29 19:56:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhkYw-0002Xz-7M
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 19:53:26 +0200
+	id 1Uhkc6-0005LU-2L
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 19:56:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964895Ab3E2RxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 13:53:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59110 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934979Ab3E2RxV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 13:53:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7FC022ED1;
-	Wed, 29 May 2013 17:53:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YNXuW6aDUR+LztVufaPXR/eArfA=; b=XZoRw8
-	SO5cHuXy6CuK13TpVsMk27svErV53Gi9Z9ozyR/cAIWl+zHQf+izMvD0zdE4sYai
-	7fsOZGZ0DZcS8LqMznRG37l2nhsdi9beTOVon9tJagtiYn9hMFOuRNh+X1NpToIF
-	4OikgWRIsBW/o/2KylbqefCXV0eFJco2F+GAU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l9kAkBIKV3DoEwH/NP+ZBWLGZIwwQyaP
-	gp1o8zQaqCUEk5wLH/hggA8qwlDpsYZFt0c6T/5G+EFx2grcezauONu8lmN801FD
-	vKB264HLz8ndsK8ozn8RewEc0clYxh6IR8jgM9Dml+QEtpr/bGNXtievzowSel7U
-	bvwQHZG1iR4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BAB4B22ECE;
-	Wed, 29 May 2013 17:53:20 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F0EB622ECC;
-	Wed, 29 May 2013 17:53:19 +0000 (UTC)
-In-Reply-To: <20130529050732.GC31762@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 29 May 2013 01:07:32 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A5F52410-C888-11E2-A66C-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S934992Ab3E2R4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 13:56:38 -0400
+Received: from mail-wg0-f46.google.com ([74.125.82.46]:43767 "EHLO
+	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933523Ab3E2R4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 13:56:37 -0400
+Received: by mail-wg0-f46.google.com with SMTP id l18so6533662wgh.1
+        for <git@vger.kernel.org>; Wed, 29 May 2013 10:56:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=VLpqrEetORt7k5S2amK5wllPB9JpXLgTOCY+zVHj6wM=;
+        b=zxkRpUidl33uKAC/cTar/a629OgNW0JjkeWyGj58iHATaa7fKSYCFNifmtp22cMmyZ
+         ak+2j3wMhy/UBtH1hQI2rXmOcDxbWvWHw3RQLWhHHQlpWlIkgmmHekAMeHlMpbpOduII
+         XSBgS/gsecSGzGXlVmyjlaAYvOqbTYFnwBDaXbUOFhUmrk7Lyf0HafXvzjp8Op25+W63
+         pV/UqPqzvU9UECJBlzWhglKD7bdXOBw36gvp9wUQ3KcV8Is3VukZuuufqyCVNqac90J/
+         EsH0LOTwWBdzDcR+zlXqpxjRST9/CYFu/BOhiaAItHGuj6fKHoy+T2nlKCcobPdo99Y9
+         //fw==
+X-Received: by 10.180.72.195 with SMTP id f3mr16295990wiv.32.1369850196285;
+ Wed, 29 May 2013 10:56:36 -0700 (PDT)
+Received: by 10.194.47.4 with HTTP; Wed, 29 May 2013 10:56:36 -0700 (PDT)
+In-Reply-To: <7v8v2xvhbu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225854>
 
-Jeff King <peff@peff.net> writes:
+On Wed, May 29, 2013 at 12:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>>> I do not see how it makes sense to copy how they deviate from us
+>>> back to our codebase, especially if we plan to eventually move some
+>>> of these tests out of contrib/ area, but even without such a plan in
+>>> the future.
+>>
+>> They deviate from us, we deviate from them, whatever. We are a single project,
+>> what more than one project does is more standard.
+>
+> We are a single project, so it is better to consistently follow the
+> local convention established here.
+>
+> If your proposal were to
+>
+>  - Convert t/*.sh to end with .t intead, to change the project
+>    convention, and
+>
+>  - Make contrib/ things also conform to that new convention.
+>
+> it may make some sense to discuss the pros and cons of such a move,
+> but changing only contrib/ has no effect other than making it even
+> less consistent with the rest of the project.
 
-> On Wed, May 29, 2013 at 01:00:00AM -0400, Jeff King wrote:
->
->> So we see 83 and 84 non-verbose, which is good. And we see the actual
->> output from 85 (the output from a "git checkout"). But we do not see the
->> "expecting success" for it. We see it for the _next_ test, which we
->> should not see at all. So I think your toggling is happening in the
->> wrong spot, but I haven't looked further than that.
->
-> I think you want something more like:
->
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 5251009..75351f5 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -349,6 +349,7 @@ test_expect_failure () {
->  	export test_prereq
->  	if ! test_skip "$@"
->  	then
-> +		toggle_verbose
->  		say >&3 "checking known breakage: $2"
->  		if test_run_ "$2" expecting_failure
->  		then
-> @@ -367,6 +368,7 @@ test_expect_success () {
->  	export test_prereq
->  	if ! test_skip "$@"
->  	then
-> +		toggle_verbose
->  		say >&3 "expecting success: $2"
->  		if test_run_ "$2"
->  		then
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index b4e81bc..165e84e 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -400,7 +400,6 @@ setup_test_eval () {
->  setup_test_eval () {
->  	setup_malloc_check
->  	toggle_valgrind
-> -	toggle_verbose
->  }
->  teardown_test_eval () {
->  	teardown_malloc_check
->
-> However, I'm not sure the toggle is the right thing. However, the whole
-> toggle thing seems weird to me, as there is a big "gap" between
-> finishing test X and starting test X+1 where we inherit the verbosity
-> (and valgrind) settings from X. In general we frown upon doing much at
-> all outside of test_expect_*, but I would think that:
->
->   test_expect_success 'one' '...'
->   git foo
->   test_expect_success 'two' '...'
->
-> when run with "--valgrind-only=1" would not run the intermediate "git
-> foo" with valgrind. I would have expected the implementation to be more
-> like:
->
->   maybe_turn_on_valgrind
->   maybe_turn_on_verbose
->   run_the_actual_test
->   maybe_turn_off_verbose
->   maybe_turn_off_valgrind
->
-> rather than relying on the next test to return to normal.
+It's already inconsistent with the rest of the project, as they are
+not named tNNNN-foo.sh.
 
-That matches my expectation as well (I had the same thought while
-reading the series).
+If you want I can give it a try at renaming all the tests in the whole
+project to *.t, but I don't think you are truly interested in finding
+a better extension for our tests.
 
-Thanks.
+-- 
+Felipe Contreras
