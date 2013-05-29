@@ -1,104 +1,100 @@
-From: =?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo@gmail.com>
-Subject: Fwd: [git-users] Highlevel (but simple to implement) commands
- provided by default for git
-Date: Wed, 29 May 2013 15:11:25 -0300
-Message-ID: <CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
-References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: What's cooking in git.git (May 2013, #08; Tue, 28)
+Date: Wed, 29 May 2013 23:45:32 +0530
+Message-ID: <CALkWK0kwdm+CP=_EsWgEsBPACnMWpy9-hV5wjdWDXYggCntFpA@mail.gmail.com>
+References: <7vli6yydmv.fsf@alter.siamese.dyndns.org> <CALkWK0m+t9DPrUbGBnaJ7jTqTVHohGgiiR-bjcTTRNmbT-Oq8A@mail.gmail.com>
+ <7vvc61u1cc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 29 20:12:13 2013
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 29 20:16:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uhkr7-0001RY-AA
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:12:13 +0200
+	id 1UhkvF-00057a-Lh
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:16:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965184Ab3E2SMK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 14:12:10 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:34984 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964985Ab3E2SMH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 14:12:07 -0400
-Received: by mail-la0-f48.google.com with SMTP id fs12so8904982lab.21
-        for <git@vger.kernel.org>; Wed, 29 May 2013 11:12:05 -0700 (PDT)
+	id S965416Ab3E2SQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 14:16:16 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:49334 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965312Ab3E2SQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 14:16:13 -0400
+Received: by mail-ie0-f179.google.com with SMTP id c13so25090921ieb.24
+        for <git@vger.kernel.org>; Wed, 29 May 2013 11:16:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        bh=NaVFhbMViw4edElVdEQinSTnx/YP5Mor/Mc9BvSoLJw=;
-        b=qyyR3G/RqgAwf18UEbgg7TGou70BUmi8jBXFWrzCAmrNJpKVdCJgVyv6P0cXuBZpVr
-         v7VehUJ5JgK3endD6eIEYDHYJmG3zkn+5Qe5mMurfIJXfEZVCL/BdnY18zwwvhQ0F6QP
-         fJbS531hkXRIKiIlcNwRFCsve7wFVVofgA4q1X6PrDKYpO82xTKFIdVk/eG3uz7HftiK
-         Z2neCLMiBw1POiZtlLDHqC9eZ7VXX7OEVxvIruYwRTBSO+oWw8RbAvmd+QnKj2uk1mER
-         cEfMBYGAPxnIuomb/0lyZiylpxNYLrxgBU4qQUfqpwqUbO2kR5gvz4eBUsytSvOZhQMj
-         D5fA==
-X-Received: by 10.152.9.104 with SMTP id y8mr1963957laa.1.1369851125274; Wed,
- 29 May 2013 11:12:05 -0700 (PDT)
-Received: by 10.114.39.104 with HTTP; Wed, 29 May 2013 11:11:25 -0700 (PDT)
-In-Reply-To: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
+         :cc:content-type;
+        bh=UDOPqsrSrvz8GMGCiJIDZRrsqESg31cxYUtbmju4gl0=;
+        b=zkDk4/D+ryV6ronLhqpkHhHqK33Sgs6JUTXgwiWWfdaId+vrrX7c7iXAyCTg1+cvLD
+         gmC6yRy4QVsBvH57UDHyK3qNWZrCefZl8slP14+WbOKiJTYFxcQweNbEGHpGp4vY5kIZ
+         rp1O1+hod51279swYQJ6mrK9s3C5VdTjWSXchqb8Ivw4Otj7HUN3r75bIn1rUAHRcCkO
+         4yElecm95uuNFER2GDg+oi8M0WXnMDKku+GR1jnX1hg6d3ORyRazuiv6X3UyJJxm0J7O
+         8nVndiJ775ACNRlyuCwyzDlhQ0dA2CYxreApdeF9aeT7aXc2ddh1S4pS3B2mwrJgHVtS
+         VGTw==
+X-Received: by 10.50.41.99 with SMTP id e3mr9937102igl.104.1369851372774; Wed,
+ 29 May 2013 11:16:12 -0700 (PDT)
+Received: by 10.64.226.135 with HTTP; Wed, 29 May 2013 11:15:32 -0700 (PDT)
+In-Reply-To: <7vvc61u1cc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225859>
 
----------- Forwarded message ----------
-=46rom: Br=C3=A1ulio Bhavamitra <brauliobo@gmail.com>
-Date: Wed, May 29, 2013 at 8:23 AM
-Subject: [git-users] Highlevel (but simple to implement) commands
-provided by default for git
-To: git-users@googlegroups.com
+Junio C Hamano wrote:
+>> Is there something you're not happy with?
+>
+> By the way, you probably should stop thinking in terms of "me" being
+> (un)happy.  I am just trying to help by preventing (collectively) us
+> making silly mistakes.
 
+As a general principle, okay.
 
-Hello all,
+IIRC, nobody else had comments on this one.
 
-One of the things I note about git is that is provides mostly
-low-level and strictly necessary commands.
-Many highlevel commands are then implemented as alias by users, after
-a deep search on the internet.
+>> * publish-rev: the @{push} thing is still in the early poc stages.
+>
+> I presume this is the one that may someday lay foundations for Tytso's
+> "do not rebase beyond this point, as I have published it already"?
 
-Adding highlevel commands, even though it could be implemented by a
-simple alias, would put git in another level
-of user experience and create a new standard for newbie users.
-What git developers think about this?
+Yep.  More importantly, I'll get something I've been wanting badly:
+the tracking info in the prompt.
 
-I have, as many other users, an enormous .gitconfig. I paste here some
-highlevel commands of it, according to my judgement.
-Mercurial provides many of these highlevel commands.
+>> * for-each-ref-pretty: not ready; working with Duy.
+>
+> I haven't been paying too much attention to it, but my impression
+> was a "superset" syntax is coming?  That would be going in the right
+> direction.
 
-  root =3D rev-parse --show-toplevel
+Yes, a superset with coming with one caveat: %ae will be interpreted
+as hex.  I hope to send a large'ish series that also strips out the
+-v, -vv code.  Duy basically did most of the work by coming up with a
+brilliant way to inject into the pretty-formats machinery.
 
- upstream =3D !git for-each-ref --format=3D'%(upstream:short)' $(git
-symbolic-ref -q HEAD)
- upstream-remote =3D !git upstream | sed -e 's/\\/.*$//g'
+>> * pickaxe-doc: you had some more comments in latest iteration, but the
+>> returns from a re-roll are diminishing.  Frankly, the work is too
+>> boring: the first few iterations were interesting, because I was
+>> learning;...
+>
+> Yeah, some parts of the project is boring and that is not a news.
+> Think of documentation updates as helping others to learn.
 
- out =3D !git fetch `git upstream-remote` && git l `git upstream`..HEAD
- in =3D pull --dry-run
+See, the problem is that I might drop the ball on patches like this
+(I've done it before, when I thought the change wasn't important
+enough for me to bore myself).  This is definitely important, and I
+will see it to completion.  But I'm echoing a more general problem:
 
+If people don't feel like working on it, how will the documentation
+improve?  And if the pickaxe-doc was in such bad shape, how could
+anyone have been using it?  Do an internet search and see for
+yourself.  This feature is _extremely_ useful, and it's a real shame
+that it has been so poorly documented for this long.
 
- unmerged =3D !git ls-files --unmerged | cut -f2 | uniq
- untracked =3D ls-files --other --exclude-standard
- staged =3D ls-files --staged
- modified =3D ls-files --modified
- deleted =3D ls-files --deleted
-
-
-  head =3D !git l -1
- current =3D rev-parse --abbrev-ref HEAD
-
-Source: https://github.com/brauliobo/gitconfig/blob/master/configs/.git=
-config
-
-regards,
-br=C3=A1ulio
-
---
-You received this message because you are subscribed to the Google
-Groups "Git for human beings" group.
-To unsubscribe from this group and stop receiving emails from it, send
-an email to git-users+unsubscribe@googlegroups.com.
-=46or more options, visit https://groups.google.com/groups/opt_out.
+I'm not advocating a lax review that checks in technically incorrect
+documentation; that will confuse users and turn it into a huge
+maintenance burden.  But we can maybe go down a notch on style?
