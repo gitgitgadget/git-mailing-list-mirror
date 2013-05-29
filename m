@@ -1,91 +1,64 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH v3] path: Fix a sparse warning
-Date: Thu, 30 May 2013 00:53:28 +0100
-Message-ID: <51A694F8.9090302@ramsay1.demon.co.uk>
+Subject: Re: [PATCH RESEND v2] path: Fix a sparse warning
+Date: Thu, 30 May 2013 00:57:56 +0100
+Message-ID: <51A69604.20500@ramsay1.demon.co.uk>
+References: <51A3B308.6000201@ramsay1.demon.co.uk> <7vhahn2fz2.fsf@alter.siamese.dyndns.org> <51A606A0.5060101@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>, tboegi@web.de
-To: Junio C Hamano <gitster@pobox.com>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
 X-From: git-owner@vger.kernel.org Thu May 30 01:59:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhqH8-0000Ap-Qo
+	id 1UhqH9-0000Ap-BI
 	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 01:59:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967267Ab3E2X7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 19:59:21 -0400
-Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:41739 "EHLO
+	id S967270Ab3E2X7Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 19:59:25 -0400
+Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:41750 "EHLO
 	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S967257Ab3E2X7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 19:59:19 -0400
+	with ESMTP id S967257Ab3E2X7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 19:59:24 -0400
 Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 06112384081;
-	Thu, 30 May 2013 00:59:19 +0100 (BST)
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 2A1D6384081;
+	Thu, 30 May 2013 00:59:23 +0100 (BST)
 Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 58E84384080;
-	Thu, 30 May 2013 00:59:18 +0100 (BST)
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 9423C384080;
+	Thu, 30 May 2013 00:59:22 +0100 (BST)
 Received: from [193.237.126.196] (unknown [193.237.126.196])
 	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;
-	Thu, 30 May 2013 00:59:17 +0100 (BST)
+	Thu, 30 May 2013 00:59:21 +0100 (BST)
 User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <51A606A0.5060101@web.de>
 X-MDF-HostID: 4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225902>
 
+Torsten B=F6gershausen wrote:
+> On 2013-05-28 19.04, Junio C Hamano wrote:
+>>
+>> Can you tell me what the conclusion on the discussion on your two
+>> other patches on 'pu'?
+>>
+>> * rj/mingw-cygwin (2013-05-08) 2 commits
+>>  - cygwin: Remove the CYGWIN_V15_WIN32API build variable
+>>  - mingw: rename WIN32 cpp macro to GIT_WINDOWS_NATIVE
+>>
+>> I stopped keeping track of the discussion and my vague recollection
+>> was that it is OK for 1.5 but not verified on 1.7 or something?
+>>
+>=20
+> The tests I did under cygwin 1.7 did not show any regression.
 
-On MinGW, sparse issues an "'get_st_mode_bits' not declared. Should
-it be static?" warning. The MinGW and MSVC builds do not see the
-declaration of this function, within git-compat-util.h, due to its
-placement within an preprocessor conditional.
-
-In order to suppress the warning, we simply move the declaration to
-the top level of the header.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
-
-Hi Junio,
-
-As promised, this fixes the build on cygwin. (tested on cygwin
-and MinGW. I have not tested on Linux, because I would have to
-re-boot twice, and I wanted to send this out tonight).
-
-Again, sorry for breaking the build.
+Thank you for testing this.
 
 ATB,
 Ramsay Jones
-
- git-compat-util.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 660b7f0..aa0404e 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -127,6 +127,9 @@
- #else
- #include <poll.h>
- #endif
-+
-+extern int get_st_mode_bits(const char *path, int *mode);
-+
- #if defined(__MINGW32__)
- /* pull in Windows compatibility stuff */
- #include "compat/mingw.h"
-@@ -163,7 +166,6 @@
- typedef long intptr_t;
- typedef unsigned long uintptr_t;
- #endif
--int get_st_mode_bits(const char *path, int *mode);
- #if defined(__CYGWIN__)
- #undef _XOPEN_SOURCE
- #include <grp.h>
--- 
-1.8.3
