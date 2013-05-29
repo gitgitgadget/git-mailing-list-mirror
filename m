@@ -1,70 +1,124 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git init doesn't create master branch
-Date: Wed, 29 May 2013 15:08:13 +0200
-Message-ID: <vpqbo7udjcy.fsf@anie.imag.fr>
-References: <51A5F8E0.8060906@intland.com> <vpqk3migdb1.fsf@anie.imag.fr>
-	<CALkWK0m=m89QcnMNg9gEVeb7ZHSRd7ZMcL+y8gYuzn8YCTsSYw@mail.gmail.com>
-	<51A5FC17.8000608@intland.com>
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: Re: [PATCH 1/2] sequencer: trivial fix
+Date: Wed, 29 May 2013 09:13:46 -0400
+Message-ID: <20130529131346.GA28198@hmsreliant.think-freely.org>
+References: <1369673539-28692-1-git-send-email-felipe.contreras@gmail.com>
+ <1369673539-28692-2-git-send-email-felipe.contreras@gmail.com>
+ <20130528110014.GA1264@hmsreliant.think-freely.org>
+ <7vobbv2fze.fsf@alter.siamese.dyndns.org>
+ <51a568db9c9b8_807b33e18996fa@nysa.mail>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
-To: =?iso-8859-1?Q?=C1kos=2C_Tajti?= <akos.tajti@intland.com>
-X-From: git-owner@vger.kernel.org Wed May 29 15:08:27 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 29 15:14:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uhg77-0004zN-Q9
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 15:08:26 +0200
+	id 1UhgCV-0001Ev-5l
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 15:13:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966119Ab3E2NIT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 09:08:19 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:58296 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966072Ab3E2NIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 09:08:18 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4TD8C8K000503
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 29 May 2013 15:08:12 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Uhg6v-0007PB-QT; Wed, 29 May 2013 15:08:13 +0200
-In-Reply-To: <51A5FC17.8000608@intland.com> (=?iso-8859-1?Q?=22=C1kos=2C?=
- Tajti"'s message of "Wed,
-	29 May 2013 15:01:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 29 May 2013 15:08:12 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r4TD8C8K000503
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1370437693.76525@JMTsx6pQJOFN0S+O7yvXSg
+	id S966118Ab3E2NNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 09:13:55 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:38738 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934233Ab3E2NNy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 09:13:54 -0400
+Received: from 99-127-245-201.lightspeed.rlghnc.sbcglobal.net ([99.127.245.201] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1UhgCK-00020l-La; Wed, 29 May 2013 09:13:50 -0400
+Content-Disposition: inline
+In-Reply-To: <51a568db9c9b8_807b33e18996fa@nysa.mail>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225809>
 
-"=C1kos, Tajti" <akos.tajti@intland.com> writes:
+On Tue, May 28, 2013 at 09:32:59PM -0500, Felipe Contreras wrote:
+> Junio C Hamano wrote:
+> > Neil Horman <nhorman@tuxdriver.com> writes:
+> > 
+> > > On Mon, May 27, 2013 at 11:52:18AM -0500, Felipe Contreras wrote:
+> > >> We should free objects before leaving.
+> > >> 
+> > >> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > >> ---
+> > >>  sequencer.c | 7 +++++--
+> > >>  1 file changed, 5 insertions(+), 2 deletions(-)
+> > >> 
+> > >> diff --git a/sequencer.c b/sequencer.c
+> > >> index ab6f8a7..7eeae2f 100644
+> > >> --- a/sequencer.c
+> > >> +++ b/sequencer.c
+> > >> @@ -626,12 +626,15 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+> > >>  		rerere(opts->allow_rerere_auto);
+> > >>  	} else {
+> > >>  		int allow = allow_empty(opts, commit);
+> > >> -		if (allow < 0)
+> > >> -			return allow;
+> > >> +		if (allow < 0) {
+> > >> +			res = allow;
+> > >> +			goto leave;
+> > >> +		}
+> > >>  		if (!opts->no_commit)
+> > >>  			res = run_git_commit(defmsg, opts, allow);
+> > >>  	}
+> > >>  
+> > >> +leave:
+> > >>  	free_message(&msg);
+> > >>  	free(defmsg);
+> > >>  
+> > >> -- 
+> > >> 1.8.3.rc3.312.g47657de
+> > >> 
+> > >> 
+> > > Acked-by: Neil Horman <nhorman@tuxdriver.com>
+> > 
+> > This is better done without "goto" in general.
+> > 
+> > The other patch 2/2/ adds one more "we need to exit from the middle
+> > of the flow" and makes it look handier to add an exit label here,
+> > but it would be even better to express the logic of that patch as a
+> > normal cascade of if/else if/..., which is small enough and we do
+> > not need the "leave:" label.
+> 
+> Linux kernel developers would disagree. In C 'goto' is quite of then the only
+> sane option, and you can see 'goto' used in the Linux kernel all over the place
+> for that reason.
+> 
+> In this particular case it also makes perfect sense.
+> 
+I agree with Felipe here.  Setting asside coding practice in other projects,
+while its nice to follow coding convention in a project, a jump label just makes
+more sense here.  To not use it either requires you to duplicate the free
+statements (undesireable), or to change the sense of theif clause here and nest
+your if statements (makes for ugly reading).
 
-> The command was:
->
-> git pull ../dump.dmp refs/heads/*:refs/heads/*
+> > It probably is better to fold this patch into the other one when it
+> > is rerolled to correct the option name gotcha "on the tin".
+> 
+> Why? This patch is standalone and fixes an issue that is independent of the
+> other patch. Why squash two patches that do *two* different things?
+> 
+I agree here as well.  This fixes a bug that has nothing to do with the other
+patch, save for it being in the same C file.  Fix them separately.
 
-"git pull" does internally a "git fetch" followed by a "git merge".
-
-If you try to pull several branches at the same time, it means you want
-to merge all of them together (octopus merge), which probably isn't wha=
-t
-you're trying to do. You probably want just a "git fetch", or specify
-only one branch to pull.
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> Anyway, I'll happily drop this patch if you want this memory leak to remain.
+> But then I'll do the same in the other patch.
+> 
+> This mantra of avodiing 'goto' is not helping anybody.
+> 
+> -- 
+> Felipe Contreras
+> 
