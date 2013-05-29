@@ -1,89 +1,85 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2 5/7] add tests for rebasing merged history
-Date: Wed, 29 May 2013 09:57:21 +0200
-Message-ID: <51A5B4E1.3070205@viscovery.net>
-References: <1347949878-12578-1-git-send-email-martinvonz@gmail.com> <1369809572-24431-1-git-send-email-martinvonz@gmail.com> <1369809572-24431-6-git-send-email-martinvonz@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Retrieving a file at a before a specified commit
+Date: Wed, 29 May 2013 03:58:11 -0400
+Message-ID: <20130529075811.GA7204@sigill.intra.peff.net>
+References: <20130529164735.5489ab47953406745d9034ef@mega-nerd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Chris Webb <chris@arachsys.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 09:57:32 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Erik de Castro Lopo <mle+tools@mega-nerd.com>
+X-From: git-owner@vger.kernel.org Wed May 29 09:58:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhbGE-0008Lp-QT
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 09:57:31 +0200
+	id 1UhbH2-0000aF-B7
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 09:58:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965004Ab3E2H51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 03:57:27 -0400
-Received: from so.liwest.at ([212.33.55.13]:33875 "EHLO so.liwest.at"
+	id S964958Ab3E2H6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 03:58:15 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36839 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964850Ab3E2H50 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 03:57:26 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UhbG6-0000v2-G0; Wed, 29 May 2013 09:57:22 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 40F471660F;
-	Wed, 29 May 2013 09:57:22 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <1369809572-24431-6-git-send-email-martinvonz@gmail.com>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S964850Ab3E2H6P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 03:58:15 -0400
+Received: (qmail 18394 invoked by uid 102); 29 May 2013 07:58:55 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 29 May 2013 02:58:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 May 2013 03:58:11 -0400
+Content-Disposition: inline
+In-Reply-To: <20130529164735.5489ab47953406745d9034ef@mega-nerd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225772>
 
-Am 5/29/2013 8:39, schrieb Martin von Zweigbergk:
-> +# a---b-----------c
-> +#      \           \
-> +#       d-------e   \
-> +#        \       \   \
-> +#         n---o---w---v
-> +#              \
-> +#               z
+On Wed, May 29, 2013 at 04:47:35PM +1000, Erik de Castro Lopo wrote:
 
-> +#TODO: make all flavors of rebase use --topo-order
-> +test_run_rebase success 'e n o' ''
-> +test_run_rebase success 'e n o' -m
-> +test_run_rebase success 'n o e' -i
+> I have a commit like this:
+> 
+>     commit 4d77a3cee01db0412956d40875c79f51ac745acc
+>     tree 3443c9f633114c3bd2e015453a8c55a171e62b53
+>     parent 340d808ade8a79857bec40770f0eb4f98224c53d
+>     author ....
+>     committer .....
+> 
+> which modifies file A/B/C (ie specifically does not add, but changes
+> an existing file in the repo).
+> 
+> I would then like to retrive the version of the file A/B/C before
+> commit 4d77a3cee by using the parent commit 340d808a:
+> 
+>    git show 340d808ade8a79857bec40770f0eb4f98224c53d:A/B/C
+> 
+> which works for most files/commits I try this with, but doesn't work
+> in one particular case.
 
-As test_commit offers predictable timestamps, I think you can work around
-this discrepancy by generating commits n and o before e. (That is not a
-solution--just a workaround that depends on the current
-implementation--because the order in which parents of a merge are listed
-is unspecified.)
+Yes, that should work as long as the file is modified and not added. You
+can also say "4d77a3cee^:A/B/C" if you do not want to look up the parent
+id yourself.
 
-> +test_expect_success "rebase -p re-creates internal merge" "
-> +	reset_rebase &&
-> +	git rebase -p c w &&
-> +	test_revision_subjects 'c d n e o w' HEAD~4 HEAD~3 HEAD~2 HEAD^2 HEAD^ HEAD
+Note that for a merge commit with multiple parents, the question is more
+complex, as there are two previous states that are merged.
 
-Shouldn't this better be
+You say that it doesn't work in one particular case. What is that case?
+What happens?
 
-	test_cmp_rev c HEAD~4 &&
-	test_revision_subjects 'd n e o w' HEAD~3 HEAD~2 HEAD^2 HEAD^ HEAD
+> Questions:
+> 
+> - Is my understanding of the above git command incorrect?
 
-to ensure that c is not a rewritten commit?
+No, I think it is correct.
 
-> +"
-> +
-> +test_expect_success "rebase -p can re-create two branches on onto" "
-> +	reset_rebase &&
-> +	git rebase -p --onto c d w &&
-> +	test_revision_subjects 'c n e o w' HEAD~3 HEAD~2 HEAD^2 HEAD^ HEAD
-> +"
+> - Is this a corrupt repo? Is there some way to check?
 
-Same here.
+Running "git fsck" can tell you if there is repository corruption.
 
-Time is fleeting. I have to stop here.
+> - Is there some explaination of why I can't get the previous version
+>   of that file?
 
--- Hannes
+Probably. Can you show us the commit that fails? What does git say when
+you try it?
+
+-Peff
