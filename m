@@ -1,108 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] remote-helpers: rename tests
-Date: Wed, 29 May 2013 11:44:06 -0700
-Message-ID: <7v61y1tymh.fsf@alter.siamese.dyndns.org>
-References: <1369449507-18269-1-git-send-email-felipe.contreras@gmail.com>
-	<1369449507-18269-3-git-send-email-felipe.contreras@gmail.com>
-	<7vmwrezx7n.fsf@alter.siamese.dyndns.org>
-	<51a56ce142986_807b33e18100084@nysa.mail>
-	<7v8v2xvhbu.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2-Of=AS9Jg7YAXnZ2346ozWPS4gL5irh0devwpkdBKmQ@mail.gmail.com>
+Subject: Re: [RFC/PATCH] patch-ids: check modified paths before calculating diff
+Date: Wed, 29 May 2013 11:48:53 -0700
+Message-ID: <7vy5axsju2.fsf@alter.siamese.dyndns.org>
+References: <a7088a74742b71a01423f3ddc1a6c7fd89474ed8.1368969438.git.john@keeping.me.uk>
+	<20130529062007.GA11955@sigill.intra.peff.net>
+	<7vip21u09d.fsf@alter.siamese.dyndns.org>
+	<20130529183658.GA15616@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	David Aguilar <davvid@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 20:44:17 2013
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Kevin Bracey <kevin@bracey.fi>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 29 20:49:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhlM7-0002uj-8w
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:44:15 +0200
+	id 1UhlQi-00075o-Jh
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 20:49:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964986Ab3E2SoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 14:44:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60763 "EHLO
+	id S965651Ab3E2Ss5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 14:48:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51852 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757319Ab3E2SoK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 14:44:10 -0400
+	id S965602Ab3E2Ss4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 14:48:56 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5531E22B0D;
-	Wed, 29 May 2013 18:44:09 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2E9722E9A;
+	Wed, 29 May 2013 18:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9cAqL9BKL2zD18/EvJ7nN8d7UHE=; b=TKVC0Y
-	crpcFmpDtjHQs/EI6mYqQmvgvoY1Txzo8Jjntz5rFD6QO6QwNC3qEr+vBe+9jKqq
-	qJab2t3yzyk/dyDOy9f21L9D2ja7pQTxkgTXV8UtGh9eOg00rjzag1rVY/QwRx3a
-	IK9Z00CE9t7SLiAKERMNqKL6SlTaPwwo4s6Kk=
+	:content-type; s=sasl; bh=BF18EzdU91CToIInTl4HLku4hsk=; b=ZEcak/
+	FkEG5yBYihD0vVX1Hbozb9cUEevsZuvgpxKCyDX3XwDgaNYktSKgAMtmE4zzTLhp
+	c1Q0R5zjlajJe7eyVAiwKi+bD3igVkwQOPWYxaWFnjiW3i7sylktb/UlsGOqEdUO
+	ezLubtrpmZSX0Q0QoXZIUgX3+zzUzGQmJ6reg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bM642w8IbUIF9LEgrycxJAdz6XoqRpFO
-	YKr4cVG5AO20v4x5175VCL2NvCfZ5kNW0fccdrTPSayoLowSOgvhuo52cn4YA+KT
-	/9u0dtPyVi7gv1HrsCRIl3UOymjaJ3FxZGp1n6r2FlVMl9EhMK+VSfFdPy+xixci
-	GIfywMiteb4=
+	:content-type; q=dns; s=sasl; b=Vn11MKtj536Dz5JgdM32u5fl901Eeldq
+	31+/QUOR1XPRmsEAjBIFONNcwL13k1th9fvEmJS312VIMSM5TJ+r9A1Suft1gCVu
+	xOsXD/H4gvsr6rjgzDfBQdjo0YHZ0bUj5r0JwYCaIJVICrv6f11D7OcAeXuDHCCQ
+	phyYVqjkpz4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C1F722B0C;
-	Wed, 29 May 2013 18:44:09 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A557C22E98;
+	Wed, 29 May 2013 18:48:55 +0000 (UTC)
 Received: from pobox.com (unknown [50.152.208.16])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A40D522B09;
-	Wed, 29 May 2013 18:44:07 +0000 (UTC)
-In-Reply-To: <CAMP44s2-Of=AS9Jg7YAXnZ2346ozWPS4gL5irh0devwpkdBKmQ@mail.gmail.com>
-	(Felipe Contreras's message of "Wed, 29 May 2013 12:56:36 -0500")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0565422E97;
+	Wed, 29 May 2013 18:48:54 +0000 (UTC)
+In-Reply-To: <20130529183658.GA15616@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 29 May 2013 14:36:58 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BE854634-C88F-11E2-8A15-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 69CBA90C-C890-11E2-A64D-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225865>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Wed, May 29, 2013 at 12:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>>> I do not see how it makes sense to copy how they deviate from us
->>>> back to our codebase, especially if we plan to eventually move some
->>>> of these tests out of contrib/ area, but even without such a plan in
->>>> the future.
->>>
->>> They deviate from us, we deviate from them, whatever. We are a single project,
->>> what more than one project does is more standard.
->>
->> We are a single project, so it is better to consistently follow the
->> local convention established here.
->>
->> If your proposal were to
->>
->>  - Convert t/*.sh to end with .t intead, to change the project
->>    convention, and
->>
->>  - Make contrib/ things also conform to that new convention.
->>
->> it may make some sense to discuss the pros and cons of such a move,
->> but changing only contrib/ has no effect other than making it even
->> less consistent with the rest of the project.
+> On Wed, May 29, 2013 at 11:08:46AM -0700, Junio C Hamano wrote:
 >
-> It's already inconsistent with the rest of the project, as they are
-> not named tNNNN-foo.sh.
+>> This has rather interesting ramifications on cherry-pick and rebase,
+>> though.  Both command can handle changes that come from an old tree
+>> before some paths were renamed, but strict patch-id would not spot
+>> equivalent changes we already have in our history if our change
+>> happened after a rename, i.e.
+>> 
+>>    Z
+>>   /
+>>  O---R---X---Y
+>> 
+>> where Z updates path F, R moves F to G and X changes G the same way
+>> as Z changes F, and we are trying to cherry-pick Z on top of Y.  The
+>> cherry-pick filter will see different patch-id for Z and X.
+>
+> True. That is a problem with the current patch-id system, no?
 
-Correct; that is why I said "even less consistent".
-
-> If you want I can give it a try at renaming all the tests in the whole
-> project to *.t, but I don't think you are truly interested in finding
-> a better extension for our tests.
-
-Again, correct.  I do not think it is worth the trouble to renaming
-them to *.t at this moment.
-
-Having said that, I suspect that in the very longer term it might
-turn out to be a good thing to do (if we want to make our test suite
-runnable under other people's tools that expect .t suffix, for
-example).  But I do not think that is the topic of this patch under
-discussion.
+Correct.  That is why I suggested not to change the external
+interface (i.e. what is shown from patch-id command) as people may
+have kept them, but wondered if a possible improvement may be to
+exclude the name from ids when we internally generate two sets of
+Ids and intersect them, i.e. log --cherry.
