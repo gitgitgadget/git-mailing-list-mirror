@@ -1,67 +1,61 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH v2 3/8] rebase: cherry-pick: fix sequence continuation
-Date: Wed, 29 May 2013 00:41:22 -0500
-Message-ID: <CAMP44s0Zy4KpPN1n6HOVXWyCuevenbSFnH589YngMB9NVWcamQ@mail.gmail.com>
-References: <1369801000-3705-1-git-send-email-felipe.contreras@gmail.com>
-	<1369801000-3705-4-git-send-email-felipe.contreras@gmail.com>
-	<CANiSa6ivOnRfOVMTsgDygi=2dvxmMOqqWdqs7CBYohThOVzt7Q@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Has anyone tried to implement git grep --blame?
+Date: Wed, 29 May 2013 07:41:52 +0200
+Message-ID: <CACBZZX5R=zaNBv4OGh30dxj+BAi26jDxDBO5pZTQ2QxGUB6WXw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 29 07:41:31 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 29 07:42:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhZ8a-0004L8-AJ
-	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 07:41:28 +0200
+	id 1UhZ9O-00053b-8T
+	for gcvg-git-2@plane.gmane.org; Wed, 29 May 2013 07:42:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754562Ab3E2FlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 01:41:24 -0400
-Received: from mail-wg0-f41.google.com ([74.125.82.41]:45723 "EHLO
-	mail-wg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754150Ab3E2FlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 01:41:23 -0400
-Received: by mail-wg0-f41.google.com with SMTP id k13so3767185wgh.2
-        for <git@vger.kernel.org>; Tue, 28 May 2013 22:41:22 -0700 (PDT)
+	id S1753912Ab3E2FmO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 01:42:14 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:51429 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753077Ab3E2FmN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 01:42:13 -0400
+Received: by mail-oa0-f49.google.com with SMTP id k14so11244118oag.36
+        for <git@vger.kernel.org>; Tue, 28 May 2013 22:42:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=VmJMt910e6Q/IAn0ZRWRo0oH0m2AWbojSF5aB+W4jKY=;
-        b=S4OnBLlEokH3DF+3L4yRDSMnSBTN7jdFlTrN85qjb7YfIpjc3sz1R2zvGrMFqomIdA
-         KUIgP+m5ZdzrCxZjgwVh1Cq+67j8FwdjMAEmtT9rJ9UgAuOSdokhDmYH3fTq+1F3XIqq
-         Yt9DZSgSsQhVBrTcTMLLFKYT2jMAs6WAf/D9KezLb1/JYm4dEK6GC5Jd+f/Fdyfecgj2
-         //sKFJV1SSnYq+uvufTgP+Wi94tntcnPATb09dBPeP7P4MLy1BmN34OgvJflMgCndKUw
-         3UYeN28w++BFB5tDndIzaLAp31ZCAiFz1wO7RjaO2u/ITqoby0cfOC8P2vcldgxo1Qpi
-         i4tg==
-X-Received: by 10.194.122.225 with SMTP id lv1mr865058wjb.21.1369806082501;
- Tue, 28 May 2013 22:41:22 -0700 (PDT)
-Received: by 10.194.47.4 with HTTP; Tue, 28 May 2013 22:41:22 -0700 (PDT)
-In-Reply-To: <CANiSa6ivOnRfOVMTsgDygi=2dvxmMOqqWdqs7CBYohThOVzt7Q@mail.gmail.com>
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=i+bS8TxSbExJ8Cf2n9HeCvq9tYFpu2FEJdsx6uPnTsg=;
+        b=PGj5Ey9cSZPwDKnn7O9+O6o479iJvyGN+Z6b+GPlxBLAHcdiWzuuwsb4Ybaf3+ZU7O
+         BppENiWNP3IiQssiNmybfyK143i+FI2/X+B5fKAfDs6kDnWG8RI2wBlBPD9LRYBq5vs4
+         8MUw6LKCjQCXIMqNeHfa27qGwFeAn35pZJT/Lo0Kw+P7qg+42tjNLss2CZKfnFBqWwd2
+         V3bZNVSQgCkbq54NsjaMoD1bQ0/aTCmYqp56fFhJvXRHISBhuEJ81xGCMdAxP2wo02EP
+         5PJDGBGflXAC1FKuC9J24dYTx7796rVsJxIJs3bkVWUD1jC9nvzTWkZ2gTPkKT5tZ2kd
+         Z0vw==
+X-Received: by 10.60.51.194 with SMTP id m2mr708380oeo.6.1369806133234; Tue,
+ 28 May 2013 22:42:13 -0700 (PDT)
+Received: by 10.76.93.238 with HTTP; Tue, 28 May 2013 22:41:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225742>
 
-On Wed, May 29, 2013 at 12:33 AM, Martin von Zweigbergk
-<martinvonz@gmail.com> wrote:
->  As Junio asked in the previous iteration, shouldn't this have been in
-> the first patch?
+This would be so much more convenient if git-grep supported it natively=
+:
 
-No, the first patch is splitting the code without introducing any
-functional changes.
+$ git grep -n 'if \(0\)' | perl -pe's/([^:]+):([^:]+).*/`git blame -L
+$2,$2 $1`/se'
+d18f76dc (=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason 2010-08-17 09:24:38 +0=
+000 2278)   if (0)
+65648283 (David Brown 2007-12-25 19:56:29 -0800 433) if (0) {
 
-This is fixing a bug that already exists, we could fix it before the
-split, or after, but mixing the split and the fix at the same time is
-a no-no.
+I.e. with all the coloring/pager interaction. Some Googling around
+reveals people piping things to git-blame like that, but has anyone
+made a stab at a smarter implementation (that would know to blame the
+whole file if it had lots of hits etc..).
 
-One change splits, the other change fixes, what's wrong with that?
-
-This way it's easy to see what each patch does.
-
--- 
-Felipe Contreras
+Don't know if I have time myself, but I'd be very pleased if someone
+hacked that up.
