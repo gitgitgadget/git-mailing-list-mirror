@@ -1,88 +1,101 @@
-From: Anthony Ramine <n.oxyde@gmail.com>
-Subject: Re: [PATCH] wildmatch: properly fold case everywhere
-Date: Thu, 30 May 2013 11:29:25 +0200
-Message-ID: <E670228E-B029-422C-B048-5F28E3AEB731@gmail.com>
-References: <CACsJy8CuaowyZJGKh7X+43qRwYAdUCDbVo8P5CpEtukBzRiReg@mail.gmail.com> <1369903506-72731-1-git-send-email-n.oxyde@gmail.com> <CAPig+cTfaj3e_sRZhHLQUDWYinFVsNieFFA027zJSfdSty1x1g@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu May 30 11:29:36 2013
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
+Date: Thu, 30 May 2013 11:47:14 +0200
+Message-ID: <87bo7slrz1.fsf@linux-k42r.v.cablecom.net>
+References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 30 11:47:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhzAs-0008BT-Us
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 11:29:35 +0200
+	id 1UhzS6-0004Tv-Tl
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 11:47:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967986Ab3E3J3b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 05:29:31 -0400
-Received: from mail-we0-f177.google.com ([74.125.82.177]:60465 "EHLO
-	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967400Ab3E3J3a convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 05:29:30 -0400
-Received: by mail-we0-f177.google.com with SMTP id n57so16109wev.22
-        for <git@vger.kernel.org>; Thu, 30 May 2013 02:29:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=QaUtSEz4tMZJGBMK/RBmm6lWSEGkjOb6lCkwC//P56o=;
-        b=mUNZDSHJTm+4UunSjOpFM/x4CQ6rcLgca7bKxPl3Ni9qUr4OIHTAye2cMBL++i+bxi
-         86YKgHMBUF2NC2p3MVXvkpCzlz9gLtvSKSc7J2MO6d3AXN2I80hQG0xJX3rwElyScjdF
-         SnnQTtqCrvMIhbkgqzWp5Z5gcQHyIiRUEf0wsTByRLf/i+cqzLfYQ7ddP7v+3qImW+uz
-         LiLpI7sCFzbapaVQ1K8BwlSIeECEZHgT9q6w4PMBQnxPbXavJ8AtLJM8+rj0FenIIjXj
-         /o+dlhtpf+/znsxyRm1P0VrcEhKlPDD4piB8b6QpXVBsppf4W2LENb4XVICbLYiZb6gT
-         MMSA==
-X-Received: by 10.180.206.228 with SMTP id lr4mr3695944wic.48.1369906168967;
-        Thu, 30 May 2013 02:29:28 -0700 (PDT)
-Received: from [192.168.118.188] (33-43.83-90.static-ip.oleane.fr. [90.83.43.33])
-        by mx.google.com with ESMTPSA id q13sm36631467wie.8.2013.05.30.02.29.27
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 30 May 2013 02:29:27 -0700 (PDT)
-In-Reply-To: <CAPig+cTfaj3e_sRZhHLQUDWYinFVsNieFFA027zJSfdSty1x1g@mail.gmail.com>
-X-Mailer: Apple Mail (2.1283)
+	id S1030307Ab3E3JrT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 05:47:19 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:27015 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S968065Ab3E3JrR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 05:47:17 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 30 May
+ 2013 11:47:13 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 30 May 2013 11:47:14 +0200
+In-Reply-To: <7va9ndqqyf.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 29 May 2013 16:58:00 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225950>
 
-Yes indeed. Will amend. Should I add your name in Reviewed-by as well?
+Junio C Hamano <gitster@pobox.com> writes:
 
---=20
-Anthony Ramine
+> * rr/die-on-missing-upstream (2013-05-22) 2 commits
+>  - sha1_name: fix error message for @{<N>}, @{<date>}
+>  - sha1_name: fix error message for @{u}
+>
+>  When a reflog notation is used for implicit "current branch", we
+>  did not say which branch and worse said "branch ''".
+>
+>  Will merge to 'next'.
 
-Le 30 mai 2013 =E0 11:07, Eric Sunshine a =E9crit :
+This interacts with the tests from
 
-> On Thu, May 30, 2013 at 4:45 AM, Anthony Ramine <n.oxyde@gmail.com> w=
-rote:
->> Case folding is not done correctly when matching against the [:upper=
-:]
->> character class and uppercased character ranges (e.g. A-Z).
->> Specifically, an uppercase letter fails to match against any of them
->> when case folding is requested because plain characters in the patte=
-rn
->> and the whole string and preemptively lowercased to handle the base =
-case
->=20
-> Did you mean s/and preemptively/are preemptively/ ?
->=20
->> fast.
->>=20
->> That optimization is kept and ISLOWER() is used in the [:upper:] cas=
-e
->> when case folding is requested, while matching against a character r=
-ange
->> is retried with toupper() if the character was lowercase, as the bou=
-nds
->> of the range itself cannot be modified (in a case-insensitive contex=
-t,
->> [A-_] is not equivalent to [a-_]).
->>=20
->> Signed-off-by: Anthony Ramine <n.oxyde@gmail.com>
+> * fc/at-head (2013-05-08) 13 commits
+
+to fail valgrind in t1508 like so:
+
+  ==22927== Invalid read of size 1
+  ==22927==    at 0x4C2C71B: __GI_strnlen (mc_replace_strmem.c:377)
+  ==22927==    by 0x567FF6B: vfprintf (in /lib64/libc-2.17.so)
+  ==22927==    by 0x56AC194: vsnprintf (in /lib64/libc-2.17.so)
+  ==22927==    by 0x4EAC39: vreportf (usage.c:12)
+  ==22927==    by 0x4EACA4: die_builtin (usage.c:36)
+  ==22927==    by 0x4EAEE0: die (usage.c:103)
+  ==22927==    by 0x4D8C51: get_sha1_1 (sha1_name.c:542)
+  ==22927==    by 0x4D8E5D: get_sha1_with_context_1 (sha1_name.c:1299)
+  ==22927==    by 0x4D992A: get_sha1_with_context (sha1_name.c:1417)
+  ==22927==    by 0x4D99E1: get_sha1 (sha1_name.c:1124)
+  ==22927==    by 0x45E1AC: cmd_rev_parse (rev-parse.c:761)
+  ==22927==    by 0x4051B3: handle_internal_command (git.c:284)
+  ==22927==  Address 0x5bebccb is 11 bytes inside a block of size 22 free'd
+  ==22927==    at 0x4C2ACDA: free (vg_replace_malloc.c:468)
+  ==22927==    by 0x4D8C37: get_sha1_1 (sha1_name.c:541)
+  ==22927==    by 0x4D8E5D: get_sha1_with_context_1 (sha1_name.c:1299)
+  ==22927==    by 0x4D992A: get_sha1_with_context (sha1_name.c:1417)
+  ==22927==    by 0x4D99E1: get_sha1 (sha1_name.c:1124)
+  ==22927==    by 0x45E1AC: cmd_rev_parse (rev-parse.c:761)
+  ==22927==    by 0x4051B3: handle_internal_command (git.c:284)
+  ==22927==    by 0x4053E7: main (git.c:492)
+
+I think it's enough to squash this little change; leaking some memory
+immediately before die() is not too bad, especially if we're going to
+pass real_ref+11 into die()...
+
+diff --git i/sha1_name.c w/sha1_name.c
+index 5ea16ff..a07558d 100644
+--- i/sha1_name.c
++++ w/sha1_name.c
+@@ -538,7 +538,6 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 					"back to %s.", len, str,
+ 					show_date(co_time, co_tz, DATE_RFC2822));
+ 			else {
+-				free(real_ref);
+ 				die("Log for '%.*s' only has %d entries.",
+ 				    len, str, co_cnt);
+ 			}
+
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
