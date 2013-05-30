@@ -1,107 +1,97 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [git-users] Highlevel (but simple to implement) commands provided
- by default for git
-Date: Thu, 30 May 2013 10:32:48 -0500
-Message-ID: <CAMP44s2G3NVUyVViF2NP0TEEuGLp-3z+xf-uhsjC-Np80WA-tA@mail.gmail.com>
-References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
-	<CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
-	<CAMP44s0Cx-FCZLOFZxcpC86sY+H03HKBi0nKFMgit=B5XCy71g@mail.gmail.com>
-	<CALkWK0mBOB1RM+MXH+Nvos29M5vqc2yAtC__zPyowf7imfnz9Q@mail.gmail.com>
-	<CAJri6_uScqjovt5eK9f9+Z4ehtsdYQNuiEX1MERiDBEJWueAXg@mail.gmail.com>
-	<CALkWK0=5BwterP7ATM1GgFvLUs391w_MW4YrwbnvsbM6Q4_Opg@mail.gmail.com>
-	<20130529234335.GE28153@google.com>
-	<CAMP44s3807Dk0SOZcBbaOKTLj5k36bW0SA9F5ZBY2MwS1Nnxiw@mail.gmail.com>
-	<20130530052318.GA2923@elie.Belkin>
-	<CAMP44s2ZWA8+ShRDX0uS==THgHPWtoTfXwECFkPXyjSoyXHM=A@mail.gmail.com>
-	<20130530145447.GC4884@elie.Belkin>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: Poor performance of git describe in big repos
+Date: Thu, 30 May 2013 17:33:26 +0200
+Message-ID: <87ehcoeb3t.fsf@linux-k42r.v.cablecom.net>
+References: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
+	<CALkWK0ndKMZRuWgdg6djqPUGxbDAqZPcv2q0qPrv_2b=1NEM5g@mail.gmail.com>
+	<CAJ-05NNAeLUfyk8+NU8PmjKqfTcZ1NT_NPAk3M1QROtzsQKJ8g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	=?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 30 17:32:55 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, <git@vger.kernel.org>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <kernel-hacker@bennee.com>
+X-From: git-owner@vger.kernel.org Thu May 30 17:33:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui4qU-0004JZ-SR
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 17:32:55 +0200
+	id 1Ui4r8-0004oZ-Dr
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 17:33:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933482Ab3E3Pcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 11:32:51 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:42349 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932445Ab3E3Pcu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 11:32:50 -0400
-Received: by mail-lb0-f173.google.com with SMTP id t10so706433lbi.18
-        for <git@vger.kernel.org>; Thu, 30 May 2013 08:32:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=y6s5T5w9Pn3iDIn44G5ILzEvHoq9zldP/9x3L4vcJ1A=;
-        b=bwBfkxPScx9/XR1qrbEDbnWto0r7f3PlCRuSrSNCJwhPf/+W/U7nQU+zkwlnqL3/tm
-         U9zEhYbSjiyw85O48xZftqouDWDOtbU6ZoM1JzmT43NuJWS6NVh5kvj5BJfqglpyLtcg
-         pcucnXmCQy3K6c/5W5qUNaKx0nIjMeLLrG9ncPAYdIZuVBwX7N3mGsjIlsyBztFgKv9w
-         ucLNluYYEmamJiOPUQuIAwE9DgRZDC7h0xdqjQaCM9MYmzZ2EjSSnHJPlJ3ujLezXO35
-         SeBrjJ72tAtpFhAUjF/+1o/m+UOSo0bRBNof+Ek2RApZ+OE2g9FmUy4HeLsAiP4AYE/Q
-         7nHA==
-X-Received: by 10.112.133.129 with SMTP id pc1mr1033262lbb.49.1369927968793;
- Thu, 30 May 2013 08:32:48 -0700 (PDT)
-Received: by 10.114.177.164 with HTTP; Thu, 30 May 2013 08:32:48 -0700 (PDT)
-In-Reply-To: <20130530145447.GC4884@elie.Belkin>
+	id S933663Ab3E3Pdb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 11:33:31 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:54527 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932445Ab3E3Pd3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 11:33:29 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 30 May
+ 2013 17:33:25 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS22.d.ethz.ch (172.31.51.112) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 30 May 2013 17:33:26 +0200
+In-Reply-To: <CAJ-05NNAeLUfyk8+NU8PmjKqfTcZ1NT_NPAk3M1QROtzsQKJ8g@mail.gmail.com>
+	("Alex \=\?utf-8\?Q\?Benn\=C3\=A9e\=22's\?\= message of "Thu, 30 May 2013 14:09:42
+ +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226014>
 
-On Thu, May 30, 2013 at 9:54 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Felipe Contreras wrote:
->> On Thu, May 30, 2013 at 12:23 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->>> Felipe Contreras wrote:
->>>> On Wed, May 29, 2013 at 6:43 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->
->>>>> A bigger problem (in my opinion) with allowing arbitrary changes to
->>>>> the meaning of existing commands is that scripts, whether placed in
->>>>> .sh files or given as commands to run over IRC, stop working
->>>>> altogether.  It's nice to have commands like "git log" and "git am"
->>>>> mean the same thing no matter what machine I am on.
->>>>
->>>> Except that's not true:
->>>
->>> It's not true that my opinion is that a bigger problem than the
->>> non-problem Ram mentioned with allowing arbitrary changes to the
->>> meaning of existing commands is that scripts stop working reliably?
->>
->> It's not true what you said:
->>
->> commands like "git log" and "git am" mean the same thing no matter
->> what machine I am on.
->
-> It's not true that it's nice when they do?
+Alex Benn=C3=A9e <kernel-hacker@bennee.com> writes:
 
-Yeah, it's nice that the sun is purple. Never-mind the fact that it's not true.
+>  41.58%   git  libcrypto.so.1.0.0  [.] sha1_block_data_order_ssse3
+>  33.62%   git  libz.so.1.2.3.4     [.] inflate_fast
+>  10.39%   git  libz.so.1.2.3.4     [.] adler32
+>   2.03%   git  [kernel.kallsyms]   [k] clear_page_c
 
-The consistency you experience across machines has absolutely nothing
-to do with Git, since Git can be configured in a way you don't
-consider nice.
+Do you have any large blobs in the repo that are referenced directly by
+a tag?
 
-So this argument is invalid. Any proposed change to make Git more
-configurable is not affected by this argument, because Git can
-*already* be configured in a way that would break your experience, yet
-it doesn't happen.
+Because this just so happens to exactly reproduce your symptoms:
 
-In other words; it's the policy or your machine users you have to
-thank for, not Git's code, and changing Git's code is not going to
-change that policy.
+  # in a random git.git
+  $ time git describe --debug
+  [...]
+  real    0m0.390s
+  user    0m0.037s
+  sys     0m0.011s
+  $ git tag big1 $(dd if=3D/dev/urandom bs=3D1M count=3D512 | git hash-=
+object -w --stdin)
+  512+0 records in
+  512+0 records out
+  536870912 bytes (537 MB) copied, 45.5088 s, 11.8 MB/s
+  $ time git describe --debug
+  [...]
+  real    0m1.875s
+  user    0m1.738s
+  sys     0m0.129s
+  $ git tag big2 $(dd if=3D/dev/urandom bs=3D1M count=3D512 | git hash-=
+object -w --stdin)
+  512+0 records in
+  512+0 records out
+  536870912 bytes (537 MB) copied, 44.972 s, 11.9 MB/s
+  $ time git describe --debugsuche zur Beschreibung von HEAD
+  [...]
+  real    0m3.620s
+  user    0m3.357s
+  sys     0m0.248s
 
-Either way this is a straw man, again, nobody is pushing to allow
-builtins to be overridable.
+(I actually ran the git-describe invocations more than once to ensure
+that they are again cache-hot.)
 
-The topic is default *aliases*.
+git-describe should probably be fixed to avoid loading blobs, though I'=
+m
+not sure off hand if we have any infrastructure to infer the type of a
+loose object without inflating it.  (This could probably be added by
+inflating only the first block.)  We do have this for packed objects, s=
+o
+at least for packed repos there's a speedup to be had.
 
--- 
-Felipe Contreras
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
