@@ -1,120 +1,110 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Poor performance of git describe in big repos
-Date: Thu, 30 May 2013 20:47:35 +0530
-Message-ID: <CALkWK0=6xg8X7ZLXoaTk_ZgRnhgXWsftsTzr6JAWFBJvmVOgFw@mail.gmail.com>
-References: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
- <CALkWK0ndKMZRuWgdg6djqPUGxbDAqZPcv2q0qPrv_2b=1NEM5g@mail.gmail.com>
- <CAJ-05NNAeLUfyk8+NU8PmjKqfTcZ1NT_NPAk3M1QROtzsQKJ8g@mail.gmail.com>
- <CALkWK0=bgM+fYcVEwjHHF8k2Q8wMmjdbM5bxXdPH6s9StDH_Ng@mail.gmail.com> <CAJ-05NMt6h=JFLLCP+LASKMcToENhF=BSsk1dPML0024hJTwTw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 7/7] unpack-trees: free cache_entry array members for merges
+Date: Thu, 30 May 2013 10:20:48 -0500
+Message-ID: <CAMP44s10a9fj4No6o3GZQrwkREQP2WXbXr+1F83Q11EJ1AxrcA@mail.gmail.com>
+References: <1369913664-49734-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
+	<1369913664-49734-8-git-send-email-rene.scharfe@lsrfire.ath.cx>
+	<CAMP44s2=YuBLHgz52ie-FZYU5iz4o4tY0-zH+6XuzpiupjomLA@mail.gmail.com>
+	<51A764CE.4000708@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <kernel-hacker@bennee.com>
-X-From: git-owner@vger.kernel.org Thu May 30 17:18:25 2013
+Cc: git@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu May 30 17:20:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui4cP-00022b-1L
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 17:18:21 +0200
+	id 1Ui4et-0003xp-2P
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 17:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932376Ab3E3PSS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 11:18:18 -0400
-Received: from mail-bk0-f42.google.com ([209.85.214.42]:35473 "EHLO
-	mail-bk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932244Ab3E3PSQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 11:18:16 -0400
-Received: by mail-bk0-f42.google.com with SMTP id jk14so228311bkc.15
-        for <git@vger.kernel.org>; Thu, 30 May 2013 08:18:15 -0700 (PDT)
+	id S933231Ab3E3PUw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 11:20:52 -0400
+Received: from mail-la0-f47.google.com ([209.85.215.47]:64286 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932699Ab3E3PUu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 11:20:50 -0400
+Received: by mail-la0-f47.google.com with SMTP id fq12so385341lab.34
+        for <git@vger.kernel.org>; Thu, 30 May 2013 08:20:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=MX704mTHWrbvCoKDoRNvoYGn0NuwPK+nqJCkc7Wm69Q=;
-        b=V59S48N8rjLxt006mZJIE+ud93mT/CeFBq1O0FA/MCh5Be+MV6Gm5nNLHM1UR2M6Fo
-         f6ESGBO9Y4f3bHk+N9IMsJvIDRuG5PV7oH1ZcoFVXrkpF4+Kburvx4XrbtgfPLevEZyY
-         MGXTByvXvyUnaE2zWO336XpyGlHpXYJzcX7SRct0ejhEAtFR+tmYCMpXfF/6T4ba3bIQ
-         0ffnd3QHyeP4agm49hFNgwXquntRQITn6IRmYLbWxPQomi9piuQ3GmDNu2lk2AqE2PkS
-         2dRxHIlgd5JTbwDLXaZpBwWG0lGweXBwd8i0pwpax06WS5Y8sp5BCBBIBWIY5N7Js/IQ
-         Xx+w==
-X-Received: by 10.204.109.200 with SMTP id k8mr2021959bkp.82.1369927095514;
- Thu, 30 May 2013 08:18:15 -0700 (PDT)
-Received: by 10.204.172.209 with HTTP; Thu, 30 May 2013 08:17:35 -0700 (PDT)
-In-Reply-To: <CAJ-05NMt6h=JFLLCP+LASKMcToENhF=BSsk1dPML0024hJTwTw@mail.gmail.com>
+        bh=bLB6We2RmgfKw3ldHB2+WoA9WrJj7d9F3I3Vf+a72g8=;
+        b=QHQDSigRYW7CTDZV+gMwCHzOkeqH/mU59Om1vDiLQ4v1z7N7X/Hx9C0JfEp0xDJ05b
+         bH4tf5554Q12w6fsNaiaVu1YzY9L+qY43E/5su+IFLWnDLo19xiAbp4j3jhjpfI5SFUK
+         rWqt/9fxDE7H7UCDBUeKqYB2ur0LO/KDfp14ldPD48Hg3nPxCQcoSFjDPGy674rmllY8
+         Yk5Vzc66u4t+EmqW9VMYUq+DA9ne4/T3XQSUJwH6YM/ChcUPpvioWx6pJmFhuirecr6H
+         96HgyJ/GH0u0pMFdahKd6/fWmVmdOrVgJvikA1NUBEBdolEJ5odZFiSRoxRlqrk1k2vO
+         lkbA==
+X-Received: by 10.112.156.164 with SMTP id wf4mr3866249lbb.76.1369927248604;
+ Thu, 30 May 2013 08:20:48 -0700 (PDT)
+Received: by 10.114.177.164 with HTTP; Thu, 30 May 2013 08:20:48 -0700 (PDT)
+In-Reply-To: <51A764CE.4000708@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226012>
 
-Alex Benn=C3=A9e wrote:
-> 15:50 ajb@sloy/x86_64 [work.git] >time git log --pretty=3Doneline | w=
-c -l
-> 24648
+On Thu, May 30, 2013 at 9:40 AM, Ren=C3=A9 Scharfe
+<rene.scharfe@lsrfire.ath.cx> wrote:
+> Am 30.05.2013 14:04, schrieb Felipe Contreras:
 >
-> real    0m0.434s
-> user    0m0.388s
-> sys     0m0.112s
+>> On Thu, May 30, 2013 at 6:34 AM, Ren=C3=A9 Scharfe
+>> <rene.scharfe@lsrfire.ath.cx> wrote:
+>>>
+>>> The merge functions duplicate entries as needed and they don't free
+>>> them.  Release them in unpack_nondirectories, the same function
+>>> where they were allocated, after we're done.
+>>
+>>
+>> Ah, you beat me to this change, but..
+>>
+>>> @@ -600,9 +600,14 @@ static int unpack_nondirectories(int n, unsign=
+ed
+>>> long mask,
+>>>                  src[i + o->merge] =3D create_ce_entry(info, names =
++ i,
+>>> stage);
+>>>          }
+>>>
+>>> -       if (o->merge)
+>>> -               return call_unpack_fn((const struct cache_entry * c=
+onst
+>>> *)src,
+>>> -                                     o);
+>>> +       if (o->merge) {
+>>> +               int rc =3D call_unpack_fn((const struct cache_entry=
+ * const
+>>> *)src,
+>>> +                                       o);
+>>> +               for (i =3D 1; i <=3D n; i++)
+>>> +                       if (src[i] && src[i] !=3D o->df_conflict_en=
+try)
+>>> +                               free(src[i]);
+>>
+>>
+>> Doesn't it make more sense to follow the code above and do src[i +
+>> o->merge]?
 >
-> Although it doesn't take too long to walk the whole mainline history
-> (obviously ignoring all the other branches).
-
-Damn, non-starter.  linux.git has 361k+ commits in mainline history.
-
-Nit: use git rev-list --count HEAD next time.
-
-> 15:52 ajb@sloy/x86_64 [work.git] >git count-objects -v -H
-> count: 581
-> size: 5.09 MiB
-> in-pack: 399307
-> packs: 1
-> size-pack: 1.49 GiB
-> prune-packable: 0
-> garbage: 0
-> size-garbage: 0 bytes
-
-linux.git has 2.9m+ in-pack.  The pack-size is much lower at about
-800+ MiB, but I don't think 1.49 GiB is a problem in itself.  Looking
-forward to your big-files report to see why it's so big.
-
-> It is a pick repo. The gc --aggressive nearly took out my machine kee=
-ping
-> around 4gb resident for most of the half hour and using nearly 8gb of=
- VM.
 >
-> Of course most of the history is not needed for day to day stuff. May=
-be
-> if I split the pack files up it wouldn't be quite such a strain to wo=
-rk
-> through them?
+> Not sure I understand.  Is the goal to avoid confusion for code reade=
+rs by
+> using the same indexing method for allocation and release?  Or are yo=
+u
+> worried about o->merge having a different value than 1 in that loop?
 
-Really out of my depth here, sorry.  Let's see what Duy (or the
-others) have to say.
+Both. In particular I'm eyeballing the code you can even see in this pa=
+tch:
 
->> 2. You have have huge (binary) files checked into your repository.  =
-Do
->> you?  If so, why isn't the code in streaming.c kicking in?
->
-> We do have some binary blobs in the repository (mainly DSP and FPGA i=
-mages)
-> although not a huge number:
->
-> 15:58 ajb@sloy/x86_64 [work.git] >time git log --pretty=3Doneline -- =
-xxx
-> xxx/xxxxxx/*.out ./xxx/xxx/*.out ./xxx/xxxxxxx/*.out | wc -l
-> 234
->
-> real    0m0.590s
-> user    0m0.552s
-> sys     0m0.040s
+ src[i + o->merge] =3D create_ce_entry(info, names + i, stage);
 
-log is streaming, and is not a good measure: it doesn't even walk the
-entire commit graph.  How big are these files?
+If you think it's better to use src[i], then I think the code above
+should do the same.
 
-> How can I tell if streaming is kicking in or now?
-
-I use callgrind (and kcachegrind to visualize).  Can you post
-callgrind output?  It will be helpful in figuring out where exactly
-git is spending time.
+--=20
+=46elipe Contreras
