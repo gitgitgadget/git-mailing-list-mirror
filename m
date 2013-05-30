@@ -1,109 +1,91 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [git-users] Highlevel (but simple to implement) commands provided
  by default for git
-Date: Wed, 29 May 2013 22:04:04 -0500
-Message-ID: <CAMP44s0YbQLAtmFxhgeY-18U63hF2n8L2LUOxaCnO8Mm7nsONQ@mail.gmail.com>
+Date: Wed, 29 May 2013 22:08:46 -0500
+Message-ID: <CAMP44s3807Dk0SOZcBbaOKTLj5k36bW0SA9F5ZBY2MwS1Nnxiw@mail.gmail.com>
 References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
 	<CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
 	<CAMP44s0Cx-FCZLOFZxcpC86sY+H03HKBi0nKFMgit=B5XCy71g@mail.gmail.com>
 	<CALkWK0mBOB1RM+MXH+Nvos29M5vqc2yAtC__zPyowf7imfnz9Q@mail.gmail.com>
+	<CAJri6_uScqjovt5eK9f9+Z4ehtsdYQNuiEX1MERiDBEJWueAXg@mail.gmail.com>
+	<CALkWK0=5BwterP7ATM1GgFvLUs391w_MW4YrwbnvsbM6Q4_Opg@mail.gmail.com>
+	<20130529234335.GE28153@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo@gmail.com>,
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	=?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo@gmail.com>,
 	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 30 05:04:39 2013
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 30 05:08:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhtAL-0005bF-NU
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 05:04:38 +0200
+	id 1UhtES-0000Bg-LW
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 05:08:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967384Ab3E3DEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 23:04:21 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:56025 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967393Ab3E3DEG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 23:04:06 -0400
-Received: by mail-la0-f48.google.com with SMTP id fs12so9432058lab.35
-        for <git@vger.kernel.org>; Wed, 29 May 2013 20:04:04 -0700 (PDT)
+	id S967365Ab3E3DIt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 23:08:49 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:51971 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965989Ab3E3DIr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 23:08:47 -0400
+Received: by mail-la0-f42.google.com with SMTP id fg20so9432466lab.29
+        for <git@vger.kernel.org>; Wed, 29 May 2013 20:08:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=zEvaIz1rCCk8boa58SLG2q5LIyEw+jq/QaFVdT5SXE8=;
-        b=z01YD56BlhHGL+V7svdAwQ5qxqrg56G4cxexCWIB6y2sy5ojd6ZsO6zOVfi2oZBDGH
-         3hv98JnZT85Q18E7hkqPoV5RdBVIoXklVTQnxjJ5Ar7VwXlemPD/HPq4x6UlxOobaLTW
-         7Y3//KfwhdbgnCxPlaXX3GkOue/lC+wNPOiszPauu61TGOSyWFVHagPfecE1bOc+XBVS
-         ka8SO0W1Rd1Qf/GuZf/rhAlwEMS3UYx/6KNHA3A5YUf4t/FlBbUv12gbe+Kcj7xmb46t
-         p24TE0iZJjqU7UpgdQfa4B2/RyKD5CK6JTFWIaBjZgfmvrdL0CGzWyVK/ZA9CnG0dqsw
-         YDWw==
-X-Received: by 10.112.33.17 with SMTP id n17mr2727516lbi.72.1369883044222;
- Wed, 29 May 2013 20:04:04 -0700 (PDT)
-Received: by 10.114.177.164 with HTTP; Wed, 29 May 2013 20:04:04 -0700 (PDT)
-In-Reply-To: <CALkWK0mBOB1RM+MXH+Nvos29M5vqc2yAtC__zPyowf7imfnz9Q@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=mdojZkooKMz4iL0kVBVkyFv5BFS20MAVKlC6LLsX6Wg=;
+        b=doyyI9P3AoedW5GUbVdYgGtFtvOZzUAg6Hpi7/hqIgn8Ro7DPStAho4Gyix1lbFybO
+         0XeOOGEIGCEQnqTAKhExx9r0ipOcagcuh0mr1PV6hMtVTc4SEyDpwYwxacwTOJB6r/QN
+         qBTUHcq6H9BofeDkHAB8ojthUdhUsKNR9GhCw7PdvXSJircAktdSF9wByOUioEyq6XGE
+         TN0e2l8UKeUKfU+hLMhnpmvBcN9bK/bQ3vOGjzci2aDUcOgD5HOy6NvGgamrx3zHTHnD
+         TTZ8Uc2CVpdGYTc2oGjhW/Zm84puZcXH9n3r6gBpUGIpeMLRetv/ZLfcl96GgHtY6DsI
+         jozg==
+X-Received: by 10.152.27.132 with SMTP id t4mr2509220lag.46.1369883326236;
+ Wed, 29 May 2013 20:08:46 -0700 (PDT)
+Received: by 10.114.177.164 with HTTP; Wed, 29 May 2013 20:08:46 -0700 (PDT)
+In-Reply-To: <20130529234335.GE28153@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225917>
 
-On Wed, May 29, 2013 at 3:27 PM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Felipe Contreras wrote:
->> We should probably also add typical shortucts:
->>
->> d = diff
->> l = log
->> f = fetch
->> p = push
->> r = reset
->> ci = commit
->> rb = rebase
->> co = checkout
->> st = status
->> pi = cherry-pick
->> mt = mergetool
+On Wed, May 29, 2013 at 6:43 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Ramkumar Ramachandra wrote:
+>> Br=C3=A1ulio Bhavamitra wrote:
 >
-> Terrible idea.
+>>> Agree, these aliased should work as a fallback or as an automatic s=
+hort
+>>> version
+>>
+>> Making builtins override'able is also a terrible idea.  It opens doo=
+rs
+>> to potential bugs we don't want to deal with.  Simple example:
+>>
+>>    am =3D log -1
+>>    log =3D am -3
+>
+> That's detectable and could be made to error out, so it's not too bad=
+=2E
+>
+> A bigger problem (in my opinion) with allowing arbitrary changes to
+> the meaning of existing commands is that scripts, whether placed in
+> .sh files or given as commands to run over IRC, stop working
+> altogether.  It's nice to have commands like "git log" and "git am"
+> mean the same thing no matter what machine I am on.
 
-A "terrible idea" that somehow each and every other SCM tool in the planet does.
+Except that's not true:
 
-I don't see Mercurial users demanding that they take their useful
-shortcuts away, I see the opposite; they demand useful shortcuts for
-Git.
+% git config --global format.pretty oneline
 
-I say it's a terrible idea **not** to do that.
+Either way, this is a red herring, I don't see anybody pushing for
+overriding builtins.
 
-> We'll be eating up more subcommands that the user
-> cannot override.
-
-We won't. We can easily implement these as special aliases that the
-moment the user specifies something else.
-
-But actually, we don't have to do anything because the current
-implementation already does that.
-
-If the user has 'alias.ci=commit -v', and then we specify a default
-'alias.ci=commit', the user's configuration takes precedence.
-
-> I'm already unhappy with am not having been called
-> apply-mailbox, because I want am to mean am -3 -c (too lazy to write
-> those configuration variables).
-
-cat > ~/bin/git-am <<EOF
-#!/bin/sh
-git am -3 -c "$@"
-EOF
-chmod +x ~/bin/git-am
-echo export GIT_EXEC_PATH=$HOME/bin:$(git --exec-path) >> ~/.profile
-
-Done.
-
-And I don't see what that has to do with default *aliases* the user
-can override. This is a red herring.
-
--- 
-Felipe Contreras
+--=20
+=46elipe Contreras
