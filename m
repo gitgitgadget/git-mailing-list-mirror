@@ -1,87 +1,166 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 1/4] commit: reload cache properly
-Date: Thu, 30 May 2013 20:08:01 +0700
-Message-ID: <CACsJy8BuSaY=H9Pb6FuTEiQkm18h-kW86ZOVtaaDpMkjFEnqcQ@mail.gmail.com>
-References: <1369915136-4248-1-git-send-email-felipe.contreras@gmail.com>
- <1369915136-4248-2-git-send-email-felipe.contreras@gmail.com> <87ehcok6gl.fsf@linux-k42r.v.cablecom.net>
+From: =?UTF-8?B?QWxleCBCZW5uw6ll?= <kernel-hacker@bennee.com>
+Subject: Re: Poor performance of git describe in big repos
+Date: Thu, 30 May 2013 14:09:42 +0100
+Message-ID: <CAJ-05NNAeLUfyk8+NU8PmjKqfTcZ1NT_NPAk3M1QROtzsQKJ8g@mail.gmail.com>
+References: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
+	<CALkWK0ndKMZRuWgdg6djqPUGxbDAqZPcv2q0qPrv_2b=1NEM5g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Adam Spiers <git@adamspiers.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Stephen Boyd <sboyd@codeaurora.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu May 30 15:08:41 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 30 15:09:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui2at-0002ls-F5
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 15:08:39 +0200
+	id 1Ui2bz-0003eG-IL
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 15:09:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754792Ab3E3NId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 09:08:33 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:52461 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754646Ab3E3NIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 09:08:32 -0400
-Received: by mail-ob0-f178.google.com with SMTP id fb19so488709obc.9
-        for <git@vger.kernel.org>; Thu, 30 May 2013 06:08:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=CrXy2AEcrAYbPd81PyfXzyqqo3vk33xogJJWp6o0SLo=;
-        b=Mr+n+KSRT5+5zDm3TUATUhAa9DT2cajQFvSnAjQ7q17lkNlFBTWleb6klU+P5hHtgD
-         EW7unuwWhiS654quHHOLqGaZ0lfJmAK7/7+0uD/TXyJEoZZLBU2IzllXu1MMSx/EryTA
-         0GgxjEkuuivvT5vbWrjh5NIhvpbtIlFnIz5hgazYANmVNDnb1mrU9rNFPY5EWRjOBfOP
-         yihyv9E15FJfY/taomLr0uE0k3Qy1sq0UhyzsmTfhDHjebDTho0yNOHh5FLPxAoQAn0s
-         R6YIOPuKNn7nibwR4i6ujqrzXXw5X0wskeCnLYv3qkZAjpH/5pGrLULVHU79wDO34WlD
-         7WpQ==
-X-Received: by 10.182.118.226 with SMTP id kp2mr3986898obb.48.1369919311757;
- Thu, 30 May 2013 06:08:31 -0700 (PDT)
-Received: by 10.76.171.199 with HTTP; Thu, 30 May 2013 06:08:01 -0700 (PDT)
-In-Reply-To: <87ehcok6gl.fsf@linux-k42r.v.cablecom.net>
+	id S1754518Ab3E3NJo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 09:09:44 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:61360 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751624Ab3E3NJm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 09:09:42 -0400
+Received: by mail-ob0-f176.google.com with SMTP id v19so477178obq.7
+        for <git@vger.kernel.org>; Thu, 30 May 2013 06:09:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding:x-gm-message-state;
+        bh=Nd9raqlLEqSWJMhq9+3sW21dPVTgsndPyaB6IkPD/g0=;
+        b=EHZWEMngq44XDP6AjZRgsnMrjdN4RImgTPOtJzqwfw4I4ryjjFjSytZsV5TNLYiEZO
+         KGiMER5VQ3uo045EsUFr8xjhpkIWjDWwLbCEc+cPRPonioeBmVeqyysUh6zDTD/sGx4F
+         PoQRlpx/6dl7MN0Ii3zwwi2xo6QDSiRcLvt95roZDDsoVtNVkw48CTNQxfilGVfnq/1L
+         6Xyj+FaRBlHHy3mLwHZ4Oac4uO6CRLUXUVtxkVLH3bSepnJp975ElFZ1ZVDTz+Zd6/zN
+         lIYW1xKWhcjS8FpViDmlx8Vo7tNnkI3aOUsdeBjmHAuzRB7uRkKnAQ1EUlZu01F87yeg
+         HO5A==
+X-Received: by 10.182.38.201 with SMTP id i9mr3973079obk.55.1369919382233;
+ Thu, 30 May 2013 06:09:42 -0700 (PDT)
+Received: by 10.76.98.137 with HTTP; Thu, 30 May 2013 06:09:42 -0700 (PDT)
+In-Reply-To: <CALkWK0ndKMZRuWgdg6djqPUGxbDAqZPcv2q0qPrv_2b=1NEM5g@mail.gmail.com>
+X-Google-Sender-Auth: CaMlNpsQJIGYpILfPrhWbESy1FY
+X-Gm-Message-State: ALoCoQkSmTrfg+aZFlSWxkkBKSZ0MsNUys8qqEGLdmXD4qEOc+CmWm07NKPBWNWdkHbvPntxj3CT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225983>
 
-On Thu, May 30, 2013 at 7:17 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+It looks like it's a file caching effect combined with my repo being
+more pathalogical in size and contents. Note run 1 (cold) vs run 2 on
+the linux file tree:
+
+13:52 ajb@sloy/x86_64 [linux.git] >time git describe --debug --long
+--tags HEAD~10000
+searching to describe HEAD~10000
+ annotated         57 v2.6.34-rc2
+ annotated       1688 v2.6.34-rc1
+ annotated       7932 v2.6.33
+ annotated       8157 v2.6.33-rc8
+ annotated       8381 v2.6.33-rc7
+ annotated       8637 v2.6.33-rc6
+ annotated       8964 v2.6.33-rc5
+ annotated       9493 v2.6.33-rc4
+ annotated       9912 v2.6.33-rc3
+ annotated      10202 v2.6.33-rc2
+traversed 10547 commits
+more than 10 tags found; listed 10 most recent
+gave up search at 55639353a0035052d9ea6cfe4dde0ac7fcbb2c9f
+v2.6.34-rc2-57-gef5da59
+
+real    0m7.332s
+user    0m0.308s
+sys     0m0.244s
+14:03 ajb@sloy/x86_64 [linux.git] >time git describe --debug --long
+--tags HEAD~10000
+searching to describe HEAD~10000
+ annotated         57 v2.6.34-rc2
+ annotated       1688 v2.6.34-rc1
+ annotated       7932 v2.6.33
+ annotated       8157 v2.6.33-rc8
+ annotated       8381 v2.6.33-rc7
+ annotated       8637 v2.6.33-rc6
+ annotated       8964 v2.6.33-rc5
+ annotated       9493 v2.6.33-rc4
+ annotated       9912 v2.6.33-rc3
+ annotated      10202 v2.6.33-rc2
+traversed 10547 commits
+more than 10 tags found; listed 10 most recent
+gave up search at 55639353a0035052d9ea6cfe4dde0ac7fcbb2c9f
+v2.6.34-rc2-57-gef5da59
+
+real    0m0.298s
+user    0m0.244s
+sys     0m0.036s
+
+Although the perf profile looks subtly different.
+
+=46irst through the linux tree:
+
+ 22.35%   git  libz.so.1.2.3.4    [.] inflate
+ 18.56%   git  libz.so.1.2.3.4    [.] inflate_fast
+ 17.48%   git  libz.so.1.2.3.4    [.] inflate_table
+  7.84%   git  git                [.] hashcmp
+  3.93%   git  git                [.] get_sha1_hex
+  3.46%   git  libz.so.1.2.3.4    [.] adler32
+
+And through my "special" repo:
+
+ 41.58%   git  libcrypto.so.1.0.0  [.] sha1_block_data_order_ssse3
+ 33.62%   git  libz.so.1.2.3.4     [.] inflate_fast
+ 10.39%   git  libz.so.1.2.3.4     [.] adler32
+  2.03%   git  [kernel.kallsyms]   [k] clear_page_c
+
+ I'm not sure why libcrypto features so highly in the results
+
+
+ --
+ Alex.
+
+On 30 May 2013 12:33, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> Alex Benn=C3=A9e wrote:
+>>>time /usr/bin/git --no-pager
+>> traversed 223 commits
+>>
+>> real    0m4.817s
+>> user    0m4.320s
+>> sys     0m0.464s
 >
->> We are supposedly adding files, to to which cache if 'the_index' is
->> discarded?
-> [...]
->>       if (!current_head) {
->>               discard_cache();
->> +             if (read_cache() < 0)
->> +                     die(_("cannot read the index"));
->>               return;
->>       }
+> I'm quite clueless about why it is taking this long: I think it's IO
+> because there's nothing to compute?  I really can't trace anything
+> unless you can reproduce it on a public repository.  On linux.git wit=
+h
+> my rotating hard disk:
 >
-> It is not obvious to me that this is a correct change.  discard_cache()
-> without subsequent reloading could also legitimately be used to empty
-> the index.  So if you are fixing a bug, please justify the change and
-> provide a testcase to guard against it in the future.
+> $ time git describe --debug --long --tags HEAD~10000
+> searching to describe HEAD~10000
+>  annotated       5445 v2.6.33
+>  annotated       5660 v2.6.33-rc8
+>  annotated       5884 v2.6.33-rc7
+>  annotated       6140 v2.6.33-rc6
+>  annotated       6467 v2.6.33-rc5
+>  annotated       6999 v2.6.33-rc4
+>  annotated       7430 v2.6.33-rc3
+>  annotated       7746 v2.6.33-rc2
+>  annotated       8212 v2.6.33-rc1
+>  annotated      13854 v2.6.32
+> traversed 18895 commits
+> more than 10 tags found; listed 10 most recent
+> gave up search at 648f4e3e50c4793d9dbf9a09afa193631f76fa26
+> v2.6.33-5445-ge7c84ee
+>
+> real    0m0.509s
+> user    0m0.470s
+> sys     0m0.037s
+>
+> 18k+ commits traversed in half a second here, so I really don't know
+> what is going on.
 
-That discard_cache line I think came from fa9dcf8 (Fix performance
-regression for partial commits - 2008-01-13). The code flow back then
-was
 
-if (initial_commit)
-   discard_cache();
 
-add_remove_files();
-/* do something more */
-
-A quick look from current code seems to indicate this pattern is still
-valid for creating partial commits, where temporary index will be
-thrown away afterwards. But I may be wrong.
---
-Duy
+--=20
+Alex, homepage: http://www.bennee.com/~alex/
