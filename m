@@ -1,83 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: Should "git help" respect the 'pager' setting?
-Date: Thu, 30 May 2013 22:26:36 +0530
-Message-ID: <CALkWK0=RUy6=4k9uGpy2efdL8DhOnNO52rHZWSmHP3C=2a4SUw@mail.gmail.com>
+Date: Thu, 30 May 2013 19:05:00 +0200
+Message-ID: <vpqhahko0ub.fsf@anie.imag.fr>
 References: <CAKtB=OCyoN8ECYiAzXc3UiCrLfWn7Pq7_5CSQUjJ2dhbzQ2RsQ@mail.gmail.com>
- <vpqtxlko1vn.fsf@anie.imag.fr>
+	<vpqtxlko1vn.fsf@anie.imag.fr>
+	<CALkWK0=RUy6=4k9uGpy2efdL8DhOnNO52rHZWSmHP3C=2a4SUw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Michael Campbell <michael.campbell@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu May 30 18:57:22 2013
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 30 19:05:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui6AD-0008W6-Gj
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 18:57:21 +0200
+	id 1Ui6Ho-0005NT-2D
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 19:05:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758368Ab3E3Q5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 12:57:17 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:51318 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756144Ab3E3Q5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 12:57:16 -0400
-Received: by mail-ie0-f178.google.com with SMTP id f4so1224485iea.9
-        for <git@vger.kernel.org>; Thu, 30 May 2013 09:57:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=+raO8VuE9HazsfklJSxYGDhb5vN4MaPCcOUiDLmx9F8=;
-        b=Qf/nahqzbWuvaaagNsQi/7fMuzd2eX5WHIEez6QiYTpIX+L/X91M5WWVXECYuEA4xQ
-         lPSUNiYBkVMIzHJimsCFu+OVuNiiWv2nngqKzqF5uQ9j1qrRmT0NsHbJdWY+ORMnlz3h
-         7cXy3Jw0OvENboERzOHqO4W0rvZshG769gxG8t1XdTsFAo80fm1kdhTgxZWJmGfstOfe
-         OS3E36gPCKFOFYKNGbqI7ikI7bLnVRqpS3L5410NXiO2KX3OXj8DQD9RvT7/SEhVP0h7
-         2X5DY+fzMeJSWF0/3BdEuBjDyxebLr1zjFM8rIUCTSs2VJG2bDcR7bTCyvicF6UNNISp
-         8pCg==
-X-Received: by 10.42.76.132 with SMTP id e4mr3487971ick.11.1369933036440; Thu,
- 30 May 2013 09:57:16 -0700 (PDT)
-Received: by 10.64.226.135 with HTTP; Thu, 30 May 2013 09:56:36 -0700 (PDT)
-In-Reply-To: <vpqtxlko1vn.fsf@anie.imag.fr>
+	id S1758438Ab3E3RFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 13:05:08 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:47263 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758405Ab3E3RFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 13:05:06 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r4UH4wLr023552
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 30 May 2013 19:04:58 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Ui6Hc-0004zn-OT; Thu, 30 May 2013 19:05:00 +0200
+In-Reply-To: <CALkWK0=RUy6=4k9uGpy2efdL8DhOnNO52rHZWSmHP3C=2a4SUw@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Thu, 30 May 2013 22:26:36 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 30 May 2013 19:04:58 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r4UH4wLr023552
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1370538301.6984@OWghZzmui7G7WQAi/SlkmQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226024>
 
-Matthieu Moy wrote:
-> Michael Campbell <michael.campbell@gmail.com> writes:
->> I have my global git config pager set to 'cat', but when I do a "git
->> help <command>", it still uses a pager.  This is especially irksome in
->> emacs shell buffers, where I am most of the time.  I know I can do a
->> M-x man -> git-<whatever>, but wondered if this was a bug or user
->> error.  ("git --no-pager help <command>" does the same.)
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+
+> It just needs to set $PAGER or $MANPAGER before the exec(), no?
+
+Yes, that should do the same as "man -P".
+
+> I would argue that it should do this. $GIT_PAGER works everywhere
+> else, but obviously man has no knowledge about it.
+
+I find it a bit weird that Git sets the configuration for external
+commands, but it may make sense. No strong opinion here.
+
+>> If you're an Emacs user, you can read about man.viewer and set it to
+>> woman, or set PAGER=cat when inside Emacs.
 >
-> "git help foo" just calls "man git-foo" by default, so what happens is
-> the same as if you called "man git-foo" by hand. Git does not have
-> much control over what man will do, it could probably call "man -P
-> $pager" when the Git pager is set, but I'd find it a bit weird.
+> I just learnt about man.viewer.  There's a small problem with it
+> though: why is there no option for Emacs man corresponding to Emacs
+> woman?
 
-It just needs to set $PAGER or $MANPAGER before the exec(), no?  I
-would argue that it should do this.  $GIT_PAGER works everywhere else,
-but obviously man has no knowledge about it.
+I guess because no one implemented it ;-).
 
-> If you're an Emacs user, you can read about man.viewer and set it to
-> woman, or set PAGER=cat when inside Emacs.
+>> I personally run M-x git-foo RET, and never run "git help".
+>
+> M-x man git-foo RET, you mean?
 
-I just learnt about man.viewer.  There's a small problem with it
-though: why is there no option for Emacs man corresponding to Emacs
-woman?
+Yes, sorry.
 
-> I personally run M-x git-foo RET, and never run "git help".
-
-M-x man git-foo RET, you mean?  My style is slightly different: I love
-typing out 'man git log' on the terminal (dashless); I get it to open
-in an Emacs buffer using this hack:
-
-function man_ () {
-	emacsclient -e "(man \"$*\")" 2>&1 >/dev/null || man "$*"
-}
-
-alias man=man_
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
