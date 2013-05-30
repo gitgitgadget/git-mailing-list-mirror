@@ -1,53 +1,73 @@
-From: Michael Campbell <michael.campbell@gmail.com>
-Subject: Should "git help" respect the 'pager' setting?
-Date: Thu, 30 May 2013 12:33:01 -0400
-Message-ID: <CAKtB=OCyoN8ECYiAzXc3UiCrLfWn7Pq7_5CSQUjJ2dhbzQ2RsQ@mail.gmail.com>
+From: Sandro Santilli <strk@keybit.net>
+Subject: preventing evil merges
+Date: Thu, 30 May 2013 18:34:59 +0200
+Message-ID: <20130530163459.GI31679@gnash>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 30 18:33:09 2013
+X-From: git-owner@vger.kernel.org Thu May 30 18:35:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui5mm-0000Y1-Kp
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 18:33:08 +0200
+	id 1Ui5oy-00027N-PN
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 18:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934587Ab3E3QdE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 12:33:04 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:63530 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933985Ab3E3QdC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 12:33:02 -0400
-Received: by mail-pd0-f175.google.com with SMTP id 6so650780pdd.34
-        for <git@vger.kernel.org>; Thu, 30 May 2013 09:33:01 -0700 (PDT)
+	id S935559Ab3E3QfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 12:35:11 -0400
+Received: from mail-ea0-f174.google.com ([209.85.215.174]:39586 "EHLO
+	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935536Ab3E3QfF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 12:35:05 -0400
+Received: by mail-ea0-f174.google.com with SMTP id z7so580289eaf.5
+        for <git@vger.kernel.org>; Thu, 30 May 2013 09:35:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=TH1kaxzjjw3zuhVkqVjgl89S8D2gKKyMa7LgnK4xVRw=;
-        b=Om5woKrCz9c1CVw0qn9eU7m3a7tre2gBj2Np+AvuJ/+VqKaPgyBu28nrTAbQ1sMBS6
-         ExWnDiEs8fZG2fTnwPzUQoBgC2DpwCM5iLMLrhFLij4DsdDIUNS8d7Zfb9SezM+DiZbD
-         nu1hAuoqVilHdjok1CICTpDPbPRxurPKOJmbRgz7rEaZNH4SrtaOmFqX8/LIuUYiiflL
-         iT8D+6YXAjIiL8GlKP4ndEZLxL5kBJ84WRxVDkQj+B80bkMPGNEHofMvPoMy34a/gEcy
-         oRrWoiP4N85VikikyVqoVLEyL3hxw2oTuwPaY8uRhHmpyKskicZj2qGBWfZWT4IlCe1Y
-         MCSw==
-X-Received: by 10.68.211.73 with SMTP id na9mr8847556pbc.90.1369931581812;
- Thu, 30 May 2013 09:33:01 -0700 (PDT)
-Received: by 10.70.91.225 with HTTP; Thu, 30 May 2013 09:33:01 -0700 (PDT)
+        h=sender:date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=zVhIw6fUA7n7EO20o8emRYFdaQt/RWzd+ytq2BAvaYk=;
+        b=dBlHHiiJvyt+7lfQHldE37yXwNrY+u0I5biMlVhck+8opZrEE+UgCtLWkwUEc9Svhg
+         rGCyRr+CqotsIjuwMee7M05ZZ/Cl2U9My06VTQ1m7G+YITLXQ94t7ACToGnHJCgjeRbV
+         kY+GHuEK17gx/9mV+JIJlgbXssgDFZ/MMyYYKwgP06yvIGAkMK51nj5MRghSN8HQe9Ii
+         h5FvFKEMtdzolv+iUO4F+BWAwNm/EbsCL46GtnC3o5u0RN85PS9MuYZKctBoKRd3kXfc
+         pzrucOsMtGj5/ndSN2FDNFG9wxToNBhlpZGb7Ac6kPo4KB2GHBKnc1IN0E+ADfXpe4YS
+         janQ==
+X-Received: by 10.15.109.142 with SMTP id cf14mr10515446eeb.77.1369931704455;
+        Thu, 30 May 2013 09:35:04 -0700 (PDT)
+Received: from gnash (ip-46-232-148-34.static.adsl.cheapnet.it. [46.232.148.34])
+        by mx.google.com with ESMTPSA id y2sm61376149eeu.2.2013.05.30.09.35.02
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 30 May 2013 09:35:03 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226020>
 
-I have my global git config pager set to 'cat', but when I do a "git
-help <command>", it still uses a pager.  This is especially irksome in
-emacs shell buffers, where I am most of the time.  I know I can do a
-M-x man -> git-<whatever>, but wondered if this was a bug or user
-error.  ("git --no-pager help <command>" does the same.)
+Hey all,
+I've be burnt by what someone on IRC referred to as "evil merges",
+that is loss of history after amending a merge commit:
 
+ git merge anotherbranch
+ git add something
+ git commit --amend
 
-12:31 [mcampbell] /tmp  % git --no-pager help log
-WARNING: terminal is not fully functional
--  (press RETURN)
+After the steps above the addition of "something" can't be found in
+the history anymore, but the file is there. Moreover (I think but
+didn't try to reproruce) a further rebase to a common ancestore of
+my working branch and "anotherbranch" resulted in further loss of
+the changes. The only way for me to get them back has been by 
+checking out from reflog.
+
+I've no idea about what was going on but this experience reminded me
+of another one I had in the past in which we could not figure out when
+some changes were added into a repository (!).
+
+If amending a merge is so dangerous, would it make sense to require
+and hard-to-type switch in order for it to really do anything ?
+
+--strk; 
