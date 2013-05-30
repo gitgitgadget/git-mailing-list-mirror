@@ -1,80 +1,83 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: [PATCH v2 4/7] add tests for rebasing root
-Date: Wed, 29 May 2013 22:51:12 -0700
-Message-ID: <CANiSa6hMcBVcpqwbvQkCBq=fnVhUv+Va8Q_5XFQ1bjFEHERh5A@mail.gmail.com>
-References: <1347949878-12578-1-git-send-email-martinvonz@gmail.com>
-	<1369809572-24431-1-git-send-email-martinvonz@gmail.com>
-	<1369809572-24431-5-git-send-email-martinvonz@gmail.com>
-	<51A5AECF.6070702@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Chris Webb <chris@arachsys.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu May 30 07:51:20 2013
+From: Doug Bell <madcityzen@gmail.com>
+Subject: [PATCH] show-ref: make --head always show the HEAD ref
+Date: Thu, 30 May 2013 01:08:25 -0500
+Message-ID: <1369894105-48434-1-git-send-email-madcityzen@gmail.com>
+Cc: Doug Bell <madcityzen@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 30 08:09:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uhvle-00009a-38
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 07:51:18 +0200
+	id 1Uhw2q-0005MV-7N
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 08:09:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967515Ab3E3FvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 01:51:15 -0400
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:57571 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966267Ab3E3FvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 01:51:13 -0400
-Received: by mail-wi0-f177.google.com with SMTP id hr14so4140651wib.4
-        for <git@vger.kernel.org>; Wed, 29 May 2013 22:51:12 -0700 (PDT)
+	id S967524Ab3E3GJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 02:09:00 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:42934 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967484Ab3E3GI6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 02:08:58 -0400
+Received: by mail-ie0-f182.google.com with SMTP id a14so27153569iee.41
+        for <git@vger.kernel.org>; Wed, 29 May 2013 23:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=UNSYpxxDV8kawXoD2u7Skzvj/mT/3sMec3noQHKoDLU=;
-        b=mzXo7XdynW3FHyuTi9UgwHRlGANiJIQdDQbSMrHDceJ9nfqvdJ1NU0JO8fh42gJrNn
-         hu6x6/1OWUgtRlkzG4ZFLfkx1SRElnTDaQ6gtp67HfP90pJsz06I+q0MsyUr2aDgBey3
-         +5eiUYda8yBiwfIrrY7KDGa2jtj5Ol1R53MjoDF4H30RUfC1AJkSHgXoF4tfkG9bCD/0
-         vRsYzhw1Urjbagx+hv1wFLcuhmXkvrpjyYk5r5IkxGfCs6jK7HgHjk5JZCPePyLkgAVZ
-         p+b8FmjY8eaCL7mSHp9mnOG8WKub99Ou2gh14U9txrN3zuvzYfNI8ZX37PPvo3R1KMID
-         ZEvw==
-X-Received: by 10.194.120.134 with SMTP id lc6mr2965658wjb.55.1369893072117;
- Wed, 29 May 2013 22:51:12 -0700 (PDT)
-Received: by 10.180.7.99 with HTTP; Wed, 29 May 2013 22:51:12 -0700 (PDT)
-In-Reply-To: <51A5AECF.6070702@viscovery.net>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=61Oh/IpZjsW2HeY6Y8SmPY9Gx5mZzXK2UxfTcPOIhyk=;
+        b=HWAByl0jF2ys02oFkWaBMiul9Lr8WihxelxMO2d1qOZFQpHzOSOmolTnx6xOC5DZtH
+         oH/nyGEKYVtqZAHVPvGkx3oCuN4O6LLTISPVqB9npJ/QYDy6lSVOszNwrHKqcxHiz0yG
+         U9AE9HMfIW87hnGBdy7i/JmIj7qX5b/DJYDpCPd9Sx22r4QV6l2mkNZhGX1qZNII7Gly
+         Cyr0+tlzmHafEwdrDHSFSjCTvG8GNgwtnUDOX6VtccwO6mfZfKsWQSKhyWTRZos5u7u5
+         iHMBwBBZ24aTyrtu17xOf4kw4UR1LM1m7RdoC+6KS8WkRzma6IppdVzTgwaDAsie5tCR
+         lJNw==
+X-Received: by 10.50.106.72 with SMTP id gs8mr10915260igb.80.1369894138143;
+        Wed, 29 May 2013 23:08:58 -0700 (PDT)
+Received: from localhost.localdomain (c-67-162-112-255.hsd1.il.comcast.net. [67.162.112.255])
+        by mx.google.com with ESMTPSA id w8sm26201341igl.9.2013.05.29.23.08.57
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 29 May 2013 23:08:57 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.101.g727a46b.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225928>
 
-On Wed, May 29, 2013 at 12:31 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 5/29/2013 8:39, schrieb Martin von Zweigbergk:
->> +test_run_rebase () {
->> +     result=$1
->> +     shift
->> +     test_expect_$result "rebase $* --onto --root with merge-base does not go to root" "
->> +             reset_rebase &&
->> +             git rebase $* --onto m --root g &&
->> +             test_cmp_rev m HEAD~2 &&
->> +             test_linear_range 'c g' m..
->
-> Here you check the outcome. There is no explicit check whether the rebase
-> attempted to replay a and b. But that check is implicit: If a or b were
-> attempted to replay, the rebase would have been interrupted with "no new
-> changes". Right?
+The docs seem to say that doing
 
-Because 'm' is a reverted 'b', I think if it had gone to the root, we
-would have seen 'b m c g' (I _think_ 'a' would be silently skipped at
-least in am mode).
+	git show-ref --head --tags
 
->> +test_run_rebase failure -p
->
-> Just curious: Does the last one fail because the result is not correct or
-> because it does go to the root?
+would show both the HEAD ref and all the tag refs. However, doing
+both --head and either of --tags or --heads would filter out the HEAD
+ref.
 
-Because the result is not correct; it first checks out 'm', but
-something goes wrong (maybe because 'm' gets written to
-/rewritten/root?) and it somehow fast-forwards to 'c' (from 'b'?).
+Signed-off-by: Doug Bell <madcityzen@gmail.com>
+---
+I think this patch could be done better if I refactor the show_ref() sub
+a bit...
+
+This commit passes the current test suite. Where would I put new
+tests for this? I can't find an existing show-ref test to append to.
+I would be happy to write show-ref tests if there aren't any already.
+
+ builtin/show-ref.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+index 8d9b76a..5954e9b 100644
+--- a/builtin/show-ref.c
++++ b/builtin/show-ref.c
+@@ -31,6 +31,9 @@ static int show_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 	const char *hex;
+ 	unsigned char peeled[20];
+ 
++	if (show_head && !strncmp(refname, "HEAD\0", 5))
++		goto match;
++
+ 	if (tags_only || heads_only) {
+ 		int match;
+ 
+-- 
+1.8.3.101.g727a46b.dirty
