@@ -1,67 +1,83 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3] wildmatch: properly fold case everywhere
-Date: Thu, 30 May 2013 07:04:30 +0700
-Message-ID: <CACsJy8CuaowyZJGKh7X+43qRwYAdUCDbVo8P5CpEtukBzRiReg@mail.gmail.com>
-References: <1369744361-44918-1-git-send-email-n.oxyde@gmail.com>
- <1369749497-55610-1-git-send-email-n.oxyde@gmail.com> <CACsJy8CY_T44ymUnLWv4FpF3zpL3WKSysJ1wBhfxGHNPJ6kSmg@mail.gmail.com>
- <4E816EBA-A22D-4507-BED0-0DE55D2E619C@gmail.com> <CACsJy8A61nYu9a-BhUiBhBEv-e6_CtYyZE3sG9iCiau+3EKVdw@mail.gmail.com>
- <BAB62C57-FE7D-476A-ACA7-5831BAF3E558@gmail.com>
+From: Erik de Castro Lopo <mle+tools@mega-nerd.com>
+Subject: Re: Retrieving a file at a before a specified commit
+Date: Thu, 30 May 2013 10:49:32 +1000
+Organization: Erik Conspiracy Secret Labs
+Message-ID: <20130530104932.d7ba4bfb426044ab9653057e@mega-nerd.com>
+References: <20130529164735.5489ab47953406745d9034ef@mega-nerd.com>
+	<20130529075811.GA7204@sigill.intra.peff.net>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Anthony Ramine <n.oxyde@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 30 02:05:12 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 30 02:49:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhqMh-0004ZY-4t
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 02:05:11 +0200
+	id 1Uhr3k-0002Y1-IK
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 02:49:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967266Ab3E3AFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 20:05:04 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:58102 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967257Ab3E3AFB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 20:05:01 -0400
-Received: by mail-ob0-f169.google.com with SMTP id up14so5015843obb.28
-        for <git@vger.kernel.org>; Wed, 29 May 2013 17:05:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=NIqTRdNqso/ulhCkR14eV0JtO/6Kqu3Ew8ECg2Wt6A4=;
-        b=MP/cprrFBe4XcGI55E/r0QaxQnNJNH4R0xHGx9Z7OydBBd3fmIBUVaU2OilSLRhmTA
-         qMWg7GjCdzctw2VwkFuTotv/zLJj1SG8ER5z5zer2FJQuHwF2i0Ot/P+9zsoqkr2PpGg
-         gz5LadakpnDxRagymJVJ71LPh1Wi9OlbJyaChdT6xkYqUowFiPzRqnNt7/223EUXWsma
-         Rr5vk45gqWZW1Vyz2h/WUcLUO9udmBjHtQ2fMJad4X+eU8LnSn6+j1toEhK7fXNMlo/+
-         qWY4eirhWOsxQuolXwMb34VqF/P9K0RMB+1g/YXDXKEM+lxbA305Lo19WZZliZZQrPUc
-         hrbQ==
-X-Received: by 10.182.19.168 with SMTP id g8mr3152289obe.21.1369872300946;
- Wed, 29 May 2013 17:05:00 -0700 (PDT)
-Received: by 10.76.171.199 with HTTP; Wed, 29 May 2013 17:04:30 -0700 (PDT)
-In-Reply-To: <BAB62C57-FE7D-476A-ACA7-5831BAF3E558@gmail.com>
+	id S1759696Ab3E3Ath (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 20:49:37 -0400
+Received: from hendrix.mega-nerd.net ([203.206.230.162]:37861 "EHLO
+	hendrix.mega-nerd.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759687Ab3E3Atf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 20:49:35 -0400
+Received: from rollins.mnn (pharoah-vpn [10.9.8.2])
+	by hendrix.mega-nerd.net (Postfix) with SMTP id C4B88106DF9;
+	Thu, 30 May 2013 10:49:32 +1000 (EST)
+In-Reply-To: <20130529075811.GA7204@sigill.intra.peff.net>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225904>
 
-On Thu, May 30, 2013 at 12:57 AM, Anthony Ramine <n.oxyde@gmail.com> wrote:
->>> If the range to match against is [A-_], it will become [a-_] which is an empty range, ord('a') > ord('_'). I think it is simpler to reuse toupper() after the fact as I did.
->>>
->>> Anyway maybe I should add a test for that corner case?
->>
->> Yeah I was thinking about such a case, but I saw glibc do it... I
->> guess we just found another bug, at least in compat/fnmatch.c. Yes a
->> test for it would be great, in case I change my mind 2 years from now
->> and decide to turn it the other way ;)
->
-> Should I patch compat/fnmatch.c too? That would make it different from the glibc's one.
+Jeff King wrote:
 
-No. I plan to remove compat/fnmatch and always use wildmatch, even
-ignoring system's fnmatch. That would keep the matching behavior
-consistent across platforms.
---
-Duy
+> Yes, that should work as long as the file is modified and not added. You
+> can also say "4d77a3cee^:A/B/C" if you do not want to look up the parent
+> id yourself.
+
+Thanks, that's useful to know.
+
+> Note that for a merge commit with multiple parents, the question is more
+> complex, as there are two previous states that are merged.
+
+This is not the case in the one I am currently looking at. There is a single
+parent commit.
+
+> You say that it doesn't work in one particular case. What is that case?
+> What happens?
+
+Here is an example. Grab this repository:
+
+    git clone git://github.com/qca/open-plc-utils.git
+    cd open-plc-utils/
+
+Look at this commit:
+
+    git log --name-status f51ac745a6d4087cc4d77a3cee01db0412955c79
+
+and notice that one of the files modified is "pib/chkpib2.7", so lets
+look at the parent version of that file:
+
+    git show f51ac745a6d4087cc4d77a3cee01db0412955c79^:pib/chkpib2.7
+
+which produces no output and exits with 0 status.
+
+However looking at the diff for commit f51ac745a suggests that while
+the file pib/chkpib2.7 may have existed before that commit, it must
+have been empty (ie zero length).
+
+Does this explanation make sense?
+
+Erik
+-- 
+----------------------------------------------------------------------
+Erik de Castro Lopo
+http://www.mega-nerd.com/
