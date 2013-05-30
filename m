@@ -1,64 +1,63 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Should "git help" respect the 'pager' setting?
-Date: Thu, 30 May 2013 18:42:36 +0200
-Message-ID: <vpqtxlko1vn.fsf@anie.imag.fr>
-References: <CAKtB=OCyoN8ECYiAzXc3UiCrLfWn7Pq7_5CSQUjJ2dhbzQ2RsQ@mail.gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: Poor performance of git describe in big repos
+Date: Thu, 30 May 2013 18:44:35 +0200
+Message-ID: <87bo7sbeoc.fsf@linux-k42r.v.cablecom.net>
+References: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
+	<CALkWK0ndKMZRuWgdg6djqPUGxbDAqZPcv2q0qPrv_2b=1NEM5g@mail.gmail.com>
+	<CAJ-05NNAeLUfyk8+NU8PmjKqfTcZ1NT_NPAk3M1QROtzsQKJ8g@mail.gmail.com>
+	<87ehcoeb3t.fsf@linux-k42r.v.cablecom.net>
+	<CAJ-05NOjVhb+3Cab7uQE8K3VE0Q2GhqR3FE=WzJZvSn8Djt6tw@mail.gmail.com>
+	<87ip20bfq4.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Michael Campbell <michael.campbell@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 30 18:42:45 2013
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <kernel-hacker@bennee.com>
+X-From: git-owner@vger.kernel.org Thu May 30 18:44:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui5w4-00078U-E5
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 18:42:44 +0200
+	id 1Ui5xy-00005Y-A2
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 18:44:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935573Ab3E3Qml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 12:42:41 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:41904 "EHLO shiva.imag.fr"
+	id S965025Ab3E3Qoj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 12:44:39 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:59204 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935566Ab3E3Qmj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 12:42:39 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r4UGgZsw025325
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 30 May 2013 18:42:35 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Ui5vw-0004Uv-UB; Thu, 30 May 2013 18:42:36 +0200
-In-Reply-To: <CAKtB=OCyoN8ECYiAzXc3UiCrLfWn7Pq7_5CSQUjJ2dhbzQ2RsQ@mail.gmail.com>
-	(Michael Campbell's message of "Thu, 30 May 2013 12:33:01 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 30 May 2013 18:42:35 +0200 (CEST)
+	id S964828Ab3E3Qoh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 12:44:37 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 30 May
+ 2013 18:44:34 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 30 May 2013 18:44:35 +0200
+In-Reply-To: <87ip20bfq4.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
+	of "Thu, 30 May 2013 18:21:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226022>
 
-Michael Campbell <michael.campbell@gmail.com> writes:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-> I have my global git config pager set to 'cat', but when I do a "git
-> help <command>", it still uses a pager.  This is especially irksome in
-> emacs shell buffers, where I am most of the time.  I know I can do a
-> M-x man -> git-<whatever>, but wondered if this was a bug or user
-> error.  ("git --no-pager help <command>" does the same.)
+> I had a brief look around sha1_file.c, in particular sha1_object_info,
+> and it turns out we lack the "deflate only early part" logic as I
+> suspected.  So that'll have to be fixed first.  After that I *think* it
+> should automatically carry over into the tag readers.
 
-"git help foo" just calls "man git-foo" by default, so what happens is
-the same as if you called "man git-foo" by hand. Git does not have
-much control over what man will do, it could probably call "man -P
-$pager" when the Git pager is set, but I'd find it a bit weird.
+Strike that, I'm wrong.  sha1_object_info is fast even for these big
+loose objects.
 
-If you're an Emacs user, you can read about man.viewer and set it to
-woman, or set PAGER=cat when inside Emacs.
-
-I personally run M-x git-foo RET, and never run "git help".
+The culprit, according to some callgrind investigation, is
+lookup_commit_reference_gently() [for the unannotated case] or
+deref_tag() [annotated case] calling parse_object().
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thomas Rast
+trast@{inf,student}.ethz.ch
