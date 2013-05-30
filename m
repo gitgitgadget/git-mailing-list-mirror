@@ -1,193 +1,106 @@
-From: Anthony Ramine <n.oxyde@gmail.com>
-Subject: [PATCH v5] wildmatch: properly fold case everywhere
-Date: Thu, 30 May 2013 12:19:10 +0200
-Message-ID: <1369909150-73114-1-git-send-email-n.oxyde@gmail.com>
-References: <1369903506-72731-1-git-send-email-n.oxyde@gmail.com>
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 30 12:19:42 2013
+From: =?UTF-8?B?QWxleCBCZW5uw6ll?= <kernel-hacker@bennee.com>
+Subject: Poor performance of git describe in big repos
+Date: Thu, 30 May 2013 11:38:32 +0100
+Message-ID: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 30 12:38:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhzxN-0001rR-JD
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 12:19:41 +0200
+	id 1Ui0Fk-0007SJ-P9
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 12:38:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968104Ab3E3KTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 06:19:37 -0400
-Received: from mail-we0-f173.google.com ([74.125.82.173]:60191 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751571Ab3E3KTg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 06:19:36 -0400
-Received: by mail-we0-f173.google.com with SMTP id p57so60693wes.32
-        for <git@vger.kernel.org>; Thu, 30 May 2013 03:19:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=hqsmEA+87q28MLAELDZUXJ3qvFm2su0kUYWQbcjWATM=;
-        b=wn9FDz75HcJLDCXQkS8zNKAOIO+jyU3JVq47QXV5oLGfdegdJdzUWpNFWvtJ0luGUg
-         MV9fnZDHej29jkRkC+1q7za0N/wLLXK4XXFqR6O0B9BH0De+dn52IOpSgDsAgjeXCv7/
-         ehM4nojwGTAO0vHhuDaeS43hUhdO8AcnSgo/SBifQcteSyoaVRG84nxTPFdP4L80Km7M
-         ido7fV8vXz3Tt5kqf0+Cvjy9AlalK+CfHwHOockNIAfuhKA4ij1/5+8QF+EYPNlzl4Y+
-         LbKJrYGODgvnti6amDaUC3PieMbCNngby9R0r2fMeWn3mpl7R7aSuy7Boz1rCm8sh2+V
-         Qj0g==
-X-Received: by 10.180.184.75 with SMTP id es11mr3831787wic.38.1369909171453;
-        Thu, 30 May 2013 03:19:31 -0700 (PDT)
-Received: from localhost.localdomain (33-43.83-90.static-ip.oleane.fr. [90.83.43.33])
-        by mx.google.com with ESMTPSA id d10sm36973734wik.0.2013.05.30.03.19.29
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 30 May 2013 03:19:30 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3
-In-Reply-To: <1369903506-72731-1-git-send-email-n.oxyde@gmail.com>
+	id S1030556Ab3E3Kif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 06:38:35 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:36056 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030549Ab3E3Kid (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 06:38:33 -0400
+Received: by mail-ob0-f169.google.com with SMTP id up14so161156obb.28
+        for <git@vger.kernel.org>; Thu, 30 May 2013 03:38:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:x-gm-message-state;
+        bh=q85I+gZwjwe7FjxI8S/zNrZY+4MWwPZJXYq8lHWpiLw=;
+        b=UuMnEtqrhI14E1iuXajOikvvu1jSAvsADJsbU7pFIwqmGpuIz6B/KRhqajkH6IW0mH
+         prOJACumYwipt827wIaS65sRlVe3vx8K0P6oBq18Uz9QJc1YnV5DolQPuu29P4grMu9i
+         JrJMn1obWSr17qZXVhV1CbCTzhjy3vFa35hLo1ASzja1aG3GG7QrtjhCWI9HpFUavoZo
+         lkgmcqZf3/OLJrtxqaFUoDWir/W/A7TzdwQfTn2pBrFFnOC5e2FUob2LyucdiGOxVfT4
+         be77AVq1QQ0FY5jXDqbA0H0wDldoil7lSpR51PW/C62NmdDdGqYQiRfosdGYCw5hakCL
+         phUw==
+X-Received: by 10.182.81.34 with SMTP id w2mr3830224obx.8.1369910312714; Thu,
+ 30 May 2013 03:38:32 -0700 (PDT)
+Received: by 10.76.98.137 with HTTP; Thu, 30 May 2013 03:38:32 -0700 (PDT)
+X-Google-Sender-Auth: gJgX8_EMug6Rl3WRuNys6h9UDFo
+X-Gm-Message-State: ALoCoQnJ17CnHUi3IFPwcE61vlhPCnnY9dWIJXIcfGuMQ+++FChGDQhAAJWc96SzRHnYbcb+ORNU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225955>
 
-Case folding is not done correctly when matching against the [:upper:]
-character class and uppercased character ranges (e.g. A-Z).
-Specifically, an uppercase letter fails to match against any of them
-when case folding is requested because plain characters in the pattern
-and the whole string are preemptively lowercased to handle the base case
-fast.
+Hi,
 
-That optimization is kept and ISLOWER() is used in the [:upper:] case
-when case folding is requested, while matching against a character range
-is retried with toupper() if the character was lowercase, as the bounds
-of the range itself cannot be modified (in a case-insensitive context,
-[A-_] is not equivalent to [a-_]).
+I'm a fairly heavy user of the magit Emacs extension for interacting
+with my git repos. However I've noticed there are some cases where lag
+is very high. By analysing strace output of emacs calling git I found
+two commands that where particularly problematic when interrogating
+the repo:
 
-Signed-off-by: Anthony Ramine <n.oxyde@gmail.com>
-Reviewed-by: Duy Nguyen <pclouds@gmail.com>
----
- t/t3070-wildmatch.sh | 55 ++++++++++++++++++++++++++++++++++++++++++++++------
- wildmatch.c          |  7 +++++++
- 2 files changed, 56 insertions(+), 6 deletions(-)
+11:00 ajb@sloy/x86_64 [work.git] >time /usr/bin/git --no-pager
+describe --long --tags
+ajb-build-test-5224-10-gfa296e6
 
-I added Duy as reviewer and fixed a typo in the commit message reported by
-Eric Sunshine.
+real    0m5.016s
+user    0m4.364s
+sys     0m0.444s
 
-diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
-index 4c37057..38446a0 100755
---- a/t/t3070-wildmatch.sh
-+++ b/t/t3070-wildmatch.sh
-@@ -6,20 +6,20 @@ test_description='wildmatch tests'
- 
- match() {
-     if [ $1 = 1 ]; then
--	test_expect_success "wildmatch:    match '$3' '$4'" "
-+	test_expect_success "wildmatch:     match '$3' '$4'" "
- 	    test-wildmatch wildmatch '$3' '$4'
- 	"
-     else
--	test_expect_success "wildmatch: no match '$3' '$4'" "
-+	test_expect_success "wildmatch:  no match '$3' '$4'" "
- 	    ! test-wildmatch wildmatch '$3' '$4'
- 	"
-     fi
-     if [ $2 = 1 ]; then
--	test_expect_success "fnmatch:      match '$3' '$4'" "
-+	test_expect_success "fnmatch:       match '$3' '$4'" "
- 	    test-wildmatch fnmatch '$3' '$4'
- 	"
-     elif [ $2 = 0 ]; then
--	test_expect_success "fnmatch:   no match '$3' '$4'" "
-+	test_expect_success "fnmatch:    no match '$3' '$4'" "
- 	    ! test-wildmatch fnmatch '$3' '$4'
- 	"
- #    else
-@@ -29,13 +29,25 @@ match() {
-     fi
- }
- 
-+imatch() {
-+    if [ $1 = 1 ]; then
-+	test_expect_success "iwildmatch:    match '$2' '$3'" "
-+	    test-wildmatch iwildmatch '$2' '$3'
-+	"
-+    else
-+	test_expect_success "iwildmatch: no match '$2' '$3'" "
-+	    ! test-wildmatch iwildmatch '$2' '$3'
-+	"
-+    fi
-+}
-+
- pathmatch() {
-     if [ $1 = 1 ]; then
--	test_expect_success "pathmatch:    match '$2' '$3'" "
-+	test_expect_success "pathmatch:     match '$2' '$3'" "
- 	    test-wildmatch pathmatch '$2' '$3'
- 	"
-     else
--	test_expect_success "pathmatch: no match '$2' '$3'" "
-+	test_expect_success "pathmatch:  no match '$2' '$3'" "
- 	    ! test-wildmatch pathmatch '$2' '$3'
- 	"
-     fi
-@@ -235,4 +247,35 @@ pathmatch 1 abcXdefXghi '*X*i'
- pathmatch 1 ab/cXd/efXg/hi '*/*X*/*/*i'
- pathmatch 1 ab/cXd/efXg/hi '*Xg*i'
- 
-+# Case-sensitivy features
-+match 0 x 'a' '[A-Z]'
-+match 1 x 'A' '[A-Z]'
-+match 0 x 'A' '[a-z]'
-+match 1 x 'a' '[a-z]'
-+match 0 x 'a' '[[:upper:]]'
-+match 1 x 'A' '[[:upper:]]'
-+match 0 x 'A' '[[:lower:]]'
-+match 1 x 'a' '[[:lower:]]'
-+match 0 x 'A' '[B-Za]'
-+match 1 x 'a' '[B-Za]'
-+match 0 x 'A' '[B-a]'
-+match 1 x 'a' '[B-a]'
-+match 0 x 'z' '[Z-y]'
-+match 1 x 'Z' '[Z-y]'
-+
-+imatch 1 'a' '[A-Z]'
-+imatch 1 'A' '[A-Z]'
-+imatch 1 'A' '[a-z]'
-+imatch 1 'a' '[a-z]'
-+imatch 1 'a' '[[:upper:]]'
-+imatch 1 'A' '[[:upper:]]'
-+imatch 1 'A' '[[:lower:]]'
-+imatch 1 'a' '[[:lower:]]'
-+imatch 1 'A' '[B-Za]'
-+imatch 1 'a' '[B-Za]'
-+imatch 1 'A' '[B-a]'
-+imatch 1 'a' '[B-a]'
-+imatch 1 'z' '[Z-y]'
-+imatch 1 'Z' '[Z-y]'
-+
- test_done
-diff --git a/wildmatch.c b/wildmatch.c
-index 7192bdc..f91ba99 100644
---- a/wildmatch.c
-+++ b/wildmatch.c
-@@ -196,6 +196,11 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
- 					}
- 					if (t_ch <= p_ch && t_ch >= prev_ch)
- 						matched = 1;
-+					else if ((flags & WM_CASEFOLD) && ISLOWER(t_ch)) {
-+						uchar t_ch_upper = toupper(t_ch);
-+						if (t_ch_upper <= p_ch && t_ch_upper >= prev_ch)
-+							matched = 1;
-+					}
- 					p_ch = 0; /* This makes "prev_ch" get set to 0. */
- 				} else if (p_ch == '[' && p[1] == ':') {
- 					const uchar *s;
-@@ -245,6 +250,8 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
- 					} else if (CC_EQ(s,i, "upper")) {
- 						if (ISUPPER(t_ch))
- 							matched = 1;
-+						else if ((flags & WM_CASEFOLD) && ISLOWER(t_ch))
-+							matched = 1;
- 					} else if (CC_EQ(s,i, "xdigit")) {
- 						if (ISXDIGIT(t_ch))
- 							matched = 1;
+11:34 ajb@sloy/x86_64 [work.git] >time /usr/bin/git --no-pager
+describe --contains HEAD
+fatal: cannot describe 'fa296e61f549a1252a65a13b2f734d7afbc7e88e'
+
+real    0m4.805s
+user    0m4.388s
+sys     0m0.400s
+
+Running with first command with the --debug flag on gives:
+
+11:34 ajb@sloy/x86_64 [work.git] >time /usr/bin/git --no-pager
+describe --long --tags --debug
+searching to describe HEAD
+ lightweight       10 ajb-build-test-5224
+ lightweight       41 ajb-build-test-5222
+ annotated        146 vnms-2-1-36-32
+ annotated        155 vnms-2-1-36-31
+ annotated        174 vnms-2-1-36-30
+ annotated        183 vnms-2-1-36-29
+ lightweight      188 vnms-2-1-36-28
+ annotated        193 vnms-2-1-36-27
+ annotated        206 vnms-2-1-36-26
+ annotated        215 vectastar-4-2-83-5
+traversed 223 commits
+more than 10 tags found; listed 10 most recent
+gave up search at 2b69df72d47be8440e3ce4cee91b9b7ceaf8b77c
+ajb-build-test-5224-10-gfa296e6
+
+real    0m4.817s
+user    0m4.320s
+sys     0m0.464s
+
+Which has only traversed 223 before coming to a decision. This seems
+like a very low number of commits given the time it's spent doing
+this.
+
+One factor might be the size of my repo (.git is around 2.4G). Could
+this just be due to computational cost of searching through large
+packs to walk the commit chain? Is there any way to make this easier
+for git to do?
+
+
 -- 
-1.8.3
+Alex, homepage: http://www.bennee.com/~alex/
