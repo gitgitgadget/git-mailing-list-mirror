@@ -1,64 +1,67 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH RESEND v2] path: Fix a sparse warning
-Date: Thu, 30 May 2013 00:57:56 +0100
-Message-ID: <51A69604.20500@ramsay1.demon.co.uk>
-References: <51A3B308.6000201@ramsay1.demon.co.uk> <7vhahn2fz2.fsf@alter.siamese.dyndns.org> <51A606A0.5060101@web.de>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3] wildmatch: properly fold case everywhere
+Date: Thu, 30 May 2013 07:04:30 +0700
+Message-ID: <CACsJy8CuaowyZJGKh7X+43qRwYAdUCDbVo8P5CpEtukBzRiReg@mail.gmail.com>
+References: <1369744361-44918-1-git-send-email-n.oxyde@gmail.com>
+ <1369749497-55610-1-git-send-email-n.oxyde@gmail.com> <CACsJy8CY_T44ymUnLWv4FpF3zpL3WKSysJ1wBhfxGHNPJ6kSmg@mail.gmail.com>
+ <4E816EBA-A22D-4507-BED0-0DE55D2E619C@gmail.com> <CACsJy8A61nYu9a-BhUiBhBEv-e6_CtYyZE3sG9iCiau+3EKVdw@mail.gmail.com>
+ <BAB62C57-FE7D-476A-ACA7-5831BAF3E558@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu May 30 01:59:28 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Anthony Ramine <n.oxyde@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 30 02:05:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhqH9-0000Ap-BI
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 01:59:27 +0200
+	id 1UhqMh-0004ZY-4t
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 02:05:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967270Ab3E2X7Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 19:59:25 -0400
-Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:41750 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S967257Ab3E2X7Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 19:59:24 -0400
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 2A1D6384081;
-	Thu, 30 May 2013 00:59:23 +0100 (BST)
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 9423C384080;
-	Thu, 30 May 2013 00:59:22 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;
-	Thu, 30 May 2013 00:59:21 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <51A606A0.5060101@web.de>
-X-MDF-HostID: 4
+	id S967266Ab3E3AFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 20:05:04 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:58102 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967257Ab3E3AFB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 20:05:01 -0400
+Received: by mail-ob0-f169.google.com with SMTP id up14so5015843obb.28
+        for <git@vger.kernel.org>; Wed, 29 May 2013 17:05:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=NIqTRdNqso/ulhCkR14eV0JtO/6Kqu3Ew8ECg2Wt6A4=;
+        b=MP/cprrFBe4XcGI55E/r0QaxQnNJNH4R0xHGx9Z7OydBBd3fmIBUVaU2OilSLRhmTA
+         qMWg7GjCdzctw2VwkFuTotv/zLJj1SG8ER5z5zer2FJQuHwF2i0Ot/P+9zsoqkr2PpGg
+         gz5LadakpnDxRagymJVJ71LPh1Wi9OlbJyaChdT6xkYqUowFiPzRqnNt7/223EUXWsma
+         Rr5vk45gqWZW1Vyz2h/WUcLUO9udmBjHtQ2fMJad4X+eU8LnSn6+j1toEhK7fXNMlo/+
+         qWY4eirhWOsxQuolXwMb34VqF/P9K0RMB+1g/YXDXKEM+lxbA305Lo19WZZliZZQrPUc
+         hrbQ==
+X-Received: by 10.182.19.168 with SMTP id g8mr3152289obe.21.1369872300946;
+ Wed, 29 May 2013 17:05:00 -0700 (PDT)
+Received: by 10.76.171.199 with HTTP; Wed, 29 May 2013 17:04:30 -0700 (PDT)
+In-Reply-To: <BAB62C57-FE7D-476A-ACA7-5831BAF3E558@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225903>
 
-Torsten B=F6gershausen wrote:
-> On 2013-05-28 19.04, Junio C Hamano wrote:
+On Thu, May 30, 2013 at 12:57 AM, Anthony Ramine <n.oxyde@gmail.com> wrote:
+>>> If the range to match against is [A-_], it will become [a-_] which is an empty range, ord('a') > ord('_'). I think it is simpler to reuse toupper() after the fact as I did.
+>>>
+>>> Anyway maybe I should add a test for that corner case?
 >>
->> Can you tell me what the conclusion on the discussion on your two
->> other patches on 'pu'?
->>
->> * rj/mingw-cygwin (2013-05-08) 2 commits
->>  - cygwin: Remove the CYGWIN_V15_WIN32API build variable
->>  - mingw: rename WIN32 cpp macro to GIT_WINDOWS_NATIVE
->>
->> I stopped keeping track of the discussion and my vague recollection
->> was that it is OK for 1.5 but not verified on 1.7 or something?
->>
->=20
-> The tests I did under cygwin 1.7 did not show any regression.
+>> Yeah I was thinking about such a case, but I saw glibc do it... I
+>> guess we just found another bug, at least in compat/fnmatch.c. Yes a
+>> test for it would be great, in case I change my mind 2 years from now
+>> and decide to turn it the other way ;)
+>
+> Should I patch compat/fnmatch.c too? That would make it different from the glibc's one.
 
-Thank you for testing this.
-
-ATB,
-Ramsay Jones
+No. I plan to remove compat/fnmatch and always use wildmatch, even
+ignoring system's fnmatch. That would keep the matching behavior
+consistent across platforms.
+--
+Duy
