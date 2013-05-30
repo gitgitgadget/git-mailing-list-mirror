@@ -1,126 +1,109 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: t0008-ignores failure
-Date: Wed, 29 May 2013 22:55:54 -0400
-Message-ID: <20130530025554.GC19860@sigill.intra.peff.net>
-References: <CABNJ2G+u96P+_=Q7it0KbK9E01qunz7XZ7e3zCZvaTaOUuTQqQ@mail.gmail.com>
- <51A6A7B7.4010802@gmail.com>
- <7vzjvdp5q8.fsf@alter.siamese.dyndns.org>
- <20130530025258.GB19860@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [git-users] Highlevel (but simple to implement) commands provided
+ by default for git
+Date: Wed, 29 May 2013 22:04:04 -0500
+Message-ID: <CAMP44s0YbQLAtmFxhgeY-18U63hF2n8L2LUOxaCnO8Mm7nsONQ@mail.gmail.com>
+References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
+	<CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
+	<CAMP44s0Cx-FCZLOFZxcpC86sY+H03HKBi0nKFMgit=B5XCy71g@mail.gmail.com>
+	<CALkWK0mBOB1RM+MXH+Nvos29M5vqc2yAtC__zPyowf7imfnz9Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Karsten Blees <karsten.blees@gmail.com>,
-	Pat Thoyts <patthoyts@gmail.com>,
-	msysGit <msysgit@googlegroups.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git List <git@vger.kernel.org>, Adam Spiers <git@adamspiers.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBDO2DJFKTEFBBPP7TKGQKGQEKQ3KV5Y@googlegroups.com Thu May 30 04:55:59 2013
-Return-path: <msysgit+bncBDO2DJFKTEFBBPP7TKGQKGQEKQ3KV5Y@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ve0-f192.google.com ([209.85.128.192])
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 30 05:04:39 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBBPP7TKGQKGQEKQ3KV5Y@googlegroups.com>)
-	id 1Uht1y-0008Nn-SJ
-	for gcvm-msysgit@m.gmane.org; Thu, 30 May 2013 04:55:59 +0200
-Received: by mail-ve0-f192.google.com with SMTP id pb11sf2215757veb.19
-        for <gcvm-msysgit@m.gmane.org>; Wed, 29 May 2013 19:55:58 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UhtAL-0005bF-NU
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 05:04:38 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S967384Ab3E3DEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 23:04:21 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:56025 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967393Ab3E3DEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 23:04:06 -0400
+Received: by mail-la0-f48.google.com with SMTP id fs12so9432058lab.35
+        for <git@vger.kernel.org>; Wed, 29 May 2013 20:04:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:date:from:to:cc:subject:message-id:references
-         :mime-version:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type:content-disposition;
-        bh=xgRZASEu9MF8GaQn7tlo+WNbUF/WbJSrhDoBCQwbFRI=;
-        b=Rcl3wKifXb3F21hVhIQf0aKIpTtnWE/4gGwns4JudU36IbckalVJjjNVeIfPqn0XQq
-         wFMXOCsb6VVbsJqb2GudAozHsoomxWgqZF16gzSsr0G/v51t+nY8CFbuzX+prOe75kV0
-         GoA56mdz0IYjGaYiQejNq/8EqeyNu+O1uK0zcWmP+IZr/169ylFht+Hj4mw2YYlL4EP7
-         PwbXR9rX//vwWmvG8IrZBP3fIt3Fe2spgt1AaQaUSVWSM2g4XACznzW/FI5t+Zl99XL5
-         tPiFVRKosAne+kLImRQBQ1L04TyhERhIEIgc0DPJ4SGVXqBoG9SHpJZEtz0DgHbaAfQ5
-         OYzQ==
-X-Received: by 10.49.1.197 with SMTP id 5mr495184qeo.24.1369882557941;
-        Wed, 29 May 2013 19:55:57 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.49.0.236 with SMTP id 12ls206059qeh.97.gmail; Wed, 29 May 2013
- 19:55:57 -0700 (PDT)
-X-Received: by 10.236.14.233 with SMTP id d69mr2865577yhd.51.1369882557037;
-        Wed, 29 May 2013 19:55:57 -0700 (PDT)
-Received: from peff.net (cloud.peff.net. [50.56.180.127])
-        by gmr-mx.google.com with ESMTPS id u22si906368yhh.7.2013.05.29.19.55.56
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 29 May 2013 19:55:57 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
-Received: (qmail 9104 invoked by uid 102); 30 May 2013 02:56:37 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 29 May 2013 21:56:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 May 2013 22:55:54 -0400
-In-Reply-To: <20130530025258.GB19860@sigill.intra.peff.net>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
- sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225915>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=zEvaIz1rCCk8boa58SLG2q5LIyEw+jq/QaFVdT5SXE8=;
+        b=z01YD56BlhHGL+V7svdAwQ5qxqrg56G4cxexCWIB6y2sy5ojd6ZsO6zOVfi2oZBDGH
+         3hv98JnZT85Q18E7hkqPoV5RdBVIoXklVTQnxjJ5Ar7VwXlemPD/HPq4x6UlxOobaLTW
+         7Y3//KfwhdbgnCxPlaXX3GkOue/lC+wNPOiszPauu61TGOSyWFVHagPfecE1bOc+XBVS
+         ka8SO0W1Rd1Qf/GuZf/rhAlwEMS3UYx/6KNHA3A5YUf4t/FlBbUv12gbe+Kcj7xmb46t
+         p24TE0iZJjqU7UpgdQfa4B2/RyKD5CK6JTFWIaBjZgfmvrdL0CGzWyVK/ZA9CnG0dqsw
+         YDWw==
+X-Received: by 10.112.33.17 with SMTP id n17mr2727516lbi.72.1369883044222;
+ Wed, 29 May 2013 20:04:04 -0700 (PDT)
+Received: by 10.114.177.164 with HTTP; Wed, 29 May 2013 20:04:04 -0700 (PDT)
+In-Reply-To: <CALkWK0mBOB1RM+MXH+Nvos29M5vqc2yAtC__zPyowf7imfnz9Q@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225916>
 
-On Wed, May 29, 2013 at 10:52:58PM -0400, Jeff King wrote:
+On Wed, May 29, 2013 at 3:27 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Felipe Contreras wrote:
+>> We should probably also add typical shortucts:
+>>
+>> d = diff
+>> l = log
+>> f = fetch
+>> p = push
+>> r = reset
+>> ci = commit
+>> rb = rebase
+>> co = checkout
+>> st = status
+>> pi = cherry-pick
+>> mt = mergetool
+>
+> Terrible idea.
 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index ca6bdef..5d84705 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -600,7 +600,7 @@ fi
->  fi
->  
->  # Test repository
-> -TRASH_DIRECTORY="trash directory.$(basename "$0" .sh)"
-> +TRASH_DIRECTORY="trash directory:$(basename "$0" .sh)"
->  test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
->  case "$TRASH_DIRECTORY" in
->  /*) ;; # absolute path is good
-> 
-> reveals the breakage on Linux. And it seems that a lot of other tests
-> break, too. I haven't looked into them yet, though.
+A "terrible idea" that somehow each and every other SCM tool in the planet does.
 
-Hrm. Just picking an example at random, t7006 fails because it uses
---exec-path="`pwd`". And of course colons are meaningful in any
-PATH-like context. It would be nice to be able to handle that case
-cleanly, but I think we would be breaking compatibility.
+I don't see Mercurial users demanding that they take their useful
+shortcuts away, I see the opposite; they demand useful shortcuts for
+Git.
 
-So while it would be nice to work on paths with colons everywhere, I
-doubt it is worth the effort to start checking it through the whole test
-suite.
+I say it's a terrible idea **not** to do that.
 
--Peff
+> We'll be eating up more subcommands that the user
+> cannot override.
+
+We won't. We can easily implement these as special aliases that the
+moment the user specifies something else.
+
+But actually, we don't have to do anything because the current
+implementation already does that.
+
+If the user has 'alias.ci=commit -v', and then we specify a default
+'alias.ci=commit', the user's configuration takes precedence.
+
+> I'm already unhappy with am not having been called
+> apply-mailbox, because I want am to mean am -3 -c (too lazy to write
+> those configuration variables).
+
+cat > ~/bin/git-am <<EOF
+#!/bin/sh
+git am -3 -c "$@"
+EOF
+chmod +x ~/bin/git-am
+echo export GIT_EXEC_PATH=$HOME/bin:$(git --exec-path) >> ~/.profile
+
+Done.
+
+And I don't see what that has to do with default *aliases* the user
+can override. This is a red herring.
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+Felipe Contreras
