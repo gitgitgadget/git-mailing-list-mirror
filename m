@@ -1,171 +1,154 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [git-users] Highlevel (but simple to implement) commands provided
- by default for git
-Date: Wed, 29 May 2013 21:48:05 -0500
-Message-ID: <CAMP44s313TM_5=DGax4PfyiNf_eoWgf8Ls1g5h_uZ6_j3-2b=g@mail.gmail.com>
-References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
-	<CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
-	<CALkWK0k8GkFYNkoGH4YCgmWtSR5rgFSG0dU9Aw2CO_arvuzKxQ@mail.gmail.com>
-	<CAMP44s1VFxarV4Gp5KsxhFKJbmd033-DW8koe9P4XUZQcX4mrA@mail.gmail.com>
-	<CALkWK0=Sn2myT3QPCWJnoxKH4hm4s7MaB=UrPixP87MFSwKoug@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: t0008-ignores failure
+Date: Wed, 29 May 2013 22:52:58 -0400
+Message-ID: <20130530025258.GB19860@sigill.intra.peff.net>
+References: <CABNJ2G+u96P+_=Q7it0KbK9E01qunz7XZ7e3zCZvaTaOUuTQqQ@mail.gmail.com>
+ <51A6A7B7.4010802@gmail.com>
+ <7vzjvdp5q8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo@gmail.com>,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 30 04:48:14 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Karsten Blees <karsten.blees@gmail.com>,
+	Pat Thoyts <patthoyts@gmail.com>,
+	msysGit <msysgit@googlegroups.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Git List <git@vger.kernel.org>, Adam Spiers <git@adamspiers.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBDO2DJFKTEFBBEX6TKGQKGQEGP3C7GA@googlegroups.com Thu May 30 04:53:12 2013
+Return-path: <msysgit+bncBDO2DJFKTEFBBEX6TKGQKGQEGP3C7GA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-pd0-f183.google.com ([209.85.192.183])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhsuT-0003jj-93
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 04:48:13 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967321Ab3E3CsJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 May 2013 22:48:09 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:50425 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756978Ab3E3CsH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 May 2013 22:48:07 -0400
-Received: by mail-lb0-f182.google.com with SMTP id z5so68948lbh.27
-        for <git@vger.kernel.org>; Wed, 29 May 2013 19:48:05 -0700 (PDT)
+	(envelope-from <msysgit+bncBDO2DJFKTEFBBEX6TKGQKGQEGP3C7GA@googlegroups.com>)
+	id 1UhszF-0006dP-6W
+	for gcvm-msysgit@m.gmane.org; Thu, 30 May 2013 04:53:09 +0200
+Received: by mail-pd0-f183.google.com with SMTP id q11sf3120447pdj.10
+        for <gcvm-msysgit@m.gmane.org>; Wed, 29 May 2013 19:53:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=sPZpGe63x4bmb+fywdTnMT14g8L3tNT1wS0H2xvh3d4=;
-        b=AuUWSd+zxkbF9X6fdYoojj0Ngm/OcJk2c3Mffif/VJCYxiv3HtSiLb0Sr3xUJnv6gA
-         etoUgAfGVNeiIpLfz3aRJkQKNo2qzTDBIncw3ZMIqIkYrf/54HqCW3unJSNQecieSE1O
-         eqNkgagTWDtCeDTlRGPLKw7VdLfAHqO4lPRBLcX+H7SgeR4HKEl8tD8V/WnLKCdxL6W8
-         UIM3tUH1R36mwfCdJ+lzzDcpWqfrEzSZFSJD32R+Ik2MMAQwGVTwfMrG9cbYJfl2rdbs
-         JaabDdqq/qtB+ARK9bSHW/SNqVY1SwfSQ9hLXgywNb+4SH39kf5sig2M98weRaSdNpjt
-         hFGw==
-X-Received: by 10.112.158.71 with SMTP id ws7mr2710385lbb.49.1369882085279;
- Wed, 29 May 2013 19:48:05 -0700 (PDT)
-Received: by 10.114.177.164 with HTTP; Wed, 29 May 2013 19:48:05 -0700 (PDT)
-In-Reply-To: <CALkWK0=Sn2myT3QPCWJnoxKH4hm4s7MaB=UrPixP87MFSwKoug@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225913>
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:date:from:to:cc:subject:message-id:references
+         :mime-version:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition;
+        bh=dC2E6bFKU8avg6SULlt88mEEI/m+FrrOsbR7t1RXvHg=;
+        b=kiCKm5vftwcnGzHJnxpe2ijnEbqPlZ1Knf6V7O0JNQ13Y6SH0EEmPXB/lPrnQ+TaVB
+         +tGvrkTnl2JBFXK+bd6jqYp2ifd8+g894hfOEntbuV+Sro3qnG9MLjZdy/3pIvO9QQtI
+         fxtuY5OjI/QfHVFV/jX6sVwDe5O8hA6L/ZOkWldcgbqYgOwvgRC8EM4sKD6IESJd7lJu
+         4NK471wPLYlgPAugKEyaRkvxQs3nhPp7k6yBQXTsjT0PEbYeaRizRsA7VapgjM2Ra3T+
+         WMENfsLMGE8rqUu1UPXUNFWe7MoZt0c0aYvowx4VprebkywIYtCMakbExYsM4exGr+kq
+         GWIQ==
+X-Received: by 10.49.83.137 with SMTP id q9mr489587qey.36.1369882387643;
+        Wed, 29 May 2013 19:53:07 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.49.58.172 with SMTP id s12ls207462qeq.18.gmail; Wed, 29 May
+ 2013 19:53:06 -0700 (PDT)
+X-Received: by 10.236.123.199 with SMTP id v47mr2703350yhh.21.1369882381404;
+        Wed, 29 May 2013 19:53:01 -0700 (PDT)
+Received: from peff.net (cloud.peff.net. [50.56.180.127])
+        by gmr-mx.google.com with ESMTPS id n78si2955443yhh.1.2013.05.29.19.53.01
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 29 May 2013 19:53:01 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
+Received: (qmail 8957 invoked by uid 102); 30 May 2013 02:53:41 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 29 May 2013 21:53:41 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 May 2013 22:52:58 -0400
+In-Reply-To: <7vzjvdp5q8.fsf@alter.siamese.dyndns.org>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
+ sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225914>
 
-On Wed, May 29, 2013 at 3:00 PM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Felipe Contreras wrote:
->> On Wed, May 29, 2013 at 1:26 PM, Ramkumar Ramachandra
->> <artagnon@gmail.com> wrote:
->>> Br=C3=A1ulio Bhavamitra wrote:
->>>>   root =3D rev-parse --show-toplevel
->>>
->>> What is your usecase for this?
->>
->> Some Git commands expect to be in the top level directory (e.g. git =
-blame).
->
-> Um, git blame revert.c when in builtin/ works for me: what am I missi=
-ng?
+On Wed, May 29, 2013 at 07:21:51PM -0700, Junio C Hamano wrote:
 
-I meant 'git bisect', but 'git blame' has a similar issue if it's
-receiving it's arguments from other git commands.
+> Karsten Blees <karsten.blees@gmail.com> writes:
+> 
+> > I realize colon was chosen to mimic git-check-attr, however,
+> > check-attr prints relative paths only (I think?).
+> >
+> > How about using TAB or '|' instead? AFAICT, these are typically
+> > not used in paths or glob patterns.
+> 
+> The primary reason to use ':' in "check-ignore -v" is to mimic the
+> output format of "grep -n".
+> 
+> Emacs users can then run the commands like check-attr/check-ignore
+> with "M-x find-grep" (or "M-x compile"), the output format is
+> recognized by the editor, and the user can jump around with \C-x` to
+> view hits.
+> 
+> I do not use vim myself, but I would be mildly surprised if there
+> isn't a similar feature there.
 
->>>>  out =3D !git fetch `git upstream-remote` && git l `git upstream`.=
-=2EHEAD
->>>
->>> I didn't understand this at all.  What are you doing?
->>
->> Finding out what changes haven't been pushed out yet?
->
-> ... but why would I want to club a slow network operation with
-> something like log?  Yeah, I use git log @{u}.. all the time.
+It does (it is how my "git jump" command feeds marks to vim). Usually we
+would quote ambiguous pathnames, but I think we do not here to retain
+compatibility with that microformat. Readers that care about quoting
+should use "-z" to get unambiguous output. And indeed, it seems that
+check-ignore behaves reasonably in this case. The tests fail because the
+test script itself is lazy. It does:
 
-Then we would be out-of-date all the time.
+  sed -e 's/      "/      /' -e 's/\\//' -e 's/"$//' expected-verbose | \
+        tr ":\t\n" "\0" >expected-verbose0
 
->>>>  in =3D pull --dry-run
->>>
->>> Why?
->>
->> Because it's very easy to mess things up with 'git pull'. This
->> probably wouldn't be needed if we change the default of 'git pull' t=
-o
->> barf when the changes are not a fast-forward, and print a message
->> suggesting to either merge or rebase, as it has been suggested.
->
-> Yeah, I saw that thread and I think shipping "sane" defaults is a los=
-t
-> cause.  I really want to make pull more useable, but by making it mor=
-e
-> configurable.
+which generates a bogus expectation; both the delimiter colons and any
+in the fields are converted, whereas only the former should be.
+Karsten's fix should work, or we could generate our expected output more
+carefully.
 
-Sane defaults still make sense, and still will happen, sooner or later.
+Long ago we switched to putting a space into our trash directory name to
+catch problems with such pathnames when we run the test suite. I wonder
+if we should do the same with ":". Doing this:
 
-In the meantime 'pull --dry-run' makes sense.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index ca6bdef..5d84705 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -600,7 +600,7 @@ fi
+ fi
+ 
+ # Test repository
+-TRASH_DIRECTORY="trash directory.$(basename "$0" .sh)"
++TRASH_DIRECTORY="trash directory:$(basename "$0" .sh)"
+ test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
+ case "$TRASH_DIRECTORY" in
+ /*) ;; # absolute path is good
 
->>>>  unmerged =3D !git ls-files --unmerged | cut -f2 | uniq
->>>>  untracked =3D ls-files --other --exclude-standard
->>>>  staged =3D ls-files --staged
->>>>  modified =3D ls-files --modified
->>>>  deleted =3D ls-files --deleted
->>>
->>> What is wrong with git status showing a unified output?
->>
->> It's not easy to be used in "scripts", say, 'gvim -p $(git unmerged)=
-'.
->
-> RIght, but we shouldn't ship anything "pretty" for scripts, otherwise
-> it'll become hard to understand them.
+reveals the breakage on Linux. And it seems that a lot of other tests
+break, too. I haven't looked into them yet, though.
 
-Not at all. The user is specifically asking for unmerged files, a
-straight-forward list is easier to understand that a list with a bunch
-of other stuff the user is not interested in, where the user has to
-manually browse with his eyes until he finds the section he is
-interested in.
+-Peff
 
-Your argument is akin to saying that 'ls foo' doesn't make sense,
-because the user can see 'foo' when he does 'ls'. That defeats the
-whole notion of letting the user query what he is looking for.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
->>>>   head =3D !git l -1
->>>
->>> What is git l again?
->>
->> 'git log', of course.
->
-> I use 'git show' all the time.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-Even more characters to type.
-
->>>>  current =3D rev-parse --abbrev-ref HEAD
->>>
->>> Why don't you use a prompt?  Use the one in contrib/completion/git-=
-prompt.sh.
->>
->> While this is probably a good idea, not everybody has a prompt
->> configured. Imagine ssh'ing to a machine you haven't touched before,
->> or shouldn't configure. Sure, right now you need to configure it
->> anyway, but the whole proposal is to make these default aliases.
->
-> Like I said earlier, I'm really not interested in sane defaults: I
-> don't think all of us can agree on one thing.
-
-This is not a matter of "us" (developers) agreeing, it's a matter of
-the vast majority of *users* suffering.
-
-If you are not interested in them, then don't distract us that do.
-
->> In Mercurial 'hg branch' shows only the current branch, and I think
->> that's more appropriate.
->>
->> Before I configured my prompt, 'git branch' was by far the command I
->> used the most.
->
-> Yeah, we're fixing 'git branch' (by making it more configurable): the
-> topic is in progress.
-
-This is about the default. 'git branch' doesn't do what it should *by
-default*, so 'git current' makes sense in the meantime.
-
---=20
-=46elipe Contreras
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
