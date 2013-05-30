@@ -1,74 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Retrieving a file at a before a specified commit
-Date: Wed, 29 May 2013 19:27:18 -0700
-Message-ID: <7vobbtp5h5.fsf@alter.siamese.dyndns.org>
+Date: Wed, 29 May 2013 22:34:46 -0400
+Message-ID: <20130530023446.GA19860@sigill.intra.peff.net>
 References: <20130529164735.5489ab47953406745d9034ef@mega-nerd.com>
-	<20130529075811.GA7204@sigill.intra.peff.net>
-	<20130530104932.d7ba4bfb426044ab9653057e@mega-nerd.com>
-	<20130530105956.dbf5e3363fa0abbc0143d463@mega-nerd.com>
+ <20130529075811.GA7204@sigill.intra.peff.net>
+ <20130530104932.d7ba4bfb426044ab9653057e@mega-nerd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Erik de Castro Lopo <erikd@mega-nerd.com>
-X-From: git-owner@vger.kernel.org Thu May 30 04:27:27 2013
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 30 04:34:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UhsaL-0005Pn-Jf
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 04:27:25 +0200
+	id 1UhshZ-0002Zt-M2
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 04:34:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967307Ab3E3C1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 May 2013 22:27:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37693 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966805Ab3E3C1V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 May 2013 22:27:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B559E1A2DE;
-	Thu, 30 May 2013 02:27:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8p2rD31CtpGdwqMd48gCreizp0Q=; b=DsUMif
-	Dg+J9bf/zDZHKX3xuIkPKTltgGWufiBHcheGuXtmO2xpEdH11hZEjpeTdbfwfuhG
-	b+azyMi9vUWe0jpUgWlRQCQqjrl8VmeFfcR4qalK/5WX5AOWnYhrOGEIn0TEZCD/
-	mAffKHeRqirDPKWoJDHBBUYz19cUevzlbxqrQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lomT8w9Htmp8/RNa1mPhY1osOKuH35yC
-	6SmqyoW7nRBEpZwqiJMC1BqfrbyGQU6TS5M99YCLH4H3eifKsEMhzD9tsS86OdeC
-	+BqwpRP1W6P+lK0dH8DvDb7HWP1F10mU5tEk1Zkpz5VrV+1L49Pe6doH21NBgyVx
-	FWd4sd8Lwa8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC6A41A2DD;
-	Thu, 30 May 2013 02:27:20 +0000 (UTC)
-Received: from pobox.com (unknown [50.152.208.16])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 265631A2DB;
-	Thu, 30 May 2013 02:27:20 +0000 (UTC)
-In-Reply-To: <20130530105956.dbf5e3363fa0abbc0143d463@mega-nerd.com> (Erik de
-	Castro Lopo's message of "Thu, 30 May 2013 10:59:56 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7421AF56-C8D0-11E2-89C1-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S967315Ab3E3Ceu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 May 2013 22:34:50 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44416 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965859Ab3E3Cet (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 May 2013 22:34:49 -0400
+Received: (qmail 8129 invoked by uid 102); 30 May 2013 02:35:29 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 29 May 2013 21:35:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 May 2013 22:34:46 -0400
+Content-Disposition: inline
+In-Reply-To: <20130530104932.d7ba4bfb426044ab9653057e@mega-nerd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225911>
 
-Erik de Castro Lopo <erikd@mega-nerd.com> writes:
+On Thu, May 30, 2013 at 10:49:32AM +1000, Erik de Castro Lopo wrote:
 
-> Erik de Castro Lopo wrote:
->
->> Does this explanation make sense?
->
-> Just to answer my own question, Yes it does.
->
-> The file was added in commit 53266574 and was actually zero length
-> at that time.
+> Look at this commit:
+> 
+>     git log --name-status f51ac745a6d4087cc4d77a3cee01db0412955c79
+> 
+> and notice that one of the files modified is "pib/chkpib2.7", so lets
+> look at the parent version of that file:
+> 
+>     git show f51ac745a6d4087cc4d77a3cee01db0412955c79^:pib/chkpib2.7
+> 
+> which produces no output and exits with 0 status.
+> 
+> However looking at the diff for commit f51ac745a suggests that while
+> the file pib/chkpib2.7 may have existed before that commit, it must
+> have been empty (ie zero length).
+> 
+> Does this explanation make sense?
 
-While you are at it, you may want to check your LESS environment
-variable settings, especially if you find that the command gives you
-control without showing anything for a small (not zero length) file.
+Yes, that is what I would expect git to do in such a situation. You can
+inspect it further, too:
+
+  $ git rev-parse f51ac745^:pib/chkpib2.7
+  e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+
+That's the sha1 of the blob containing the content.  You can investigate
+information about that object like this:
+
+  $ git cat-file -t e69de29b
+  blob
+  $ git cat-file -s e69de29b
+  0
+  $ git cat-file blob e69de29b
+
+Of course since its size is 0, the last one is not that interesting. :)
+
+You could also just look at the tree, which gives similar information:
+
+  $ git ls-tree -lr f51ac745^ | grep pib/chkpib2.7
+  100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0 pib/chkpib2.7
+
+Hope that helps.
+
+-Peff
