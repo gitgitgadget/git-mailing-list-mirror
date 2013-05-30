@@ -1,73 +1,93 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 FIXUP 22/25] fixup! string_list_add_refs_by_glob(): add a comment about memory management
-Date: Fri, 31 May 2013 00:05:51 +0200
-Message-ID: <1369951551-25662-1-git-send-email-mhagger@alum.mit.edu>
-References: <87ppwaurfy.fsf@linux-k42r.v.cablecom.net>
-Cc: Johan Herland <johan@herland.net>, Thomas Rast <trast@inf.ethz.ch>,
-	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 31 00:06:29 2013
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v2 24/25] register_ref(): make a copy of the bad reference SHA-1
+Date: Thu, 30 May 2013 23:09:09 +0100
+Organization: OPDS
+Message-ID: <35D3DD46364C40A391B3DB72C7D18798@PhilipOakley>
+References: <1369472904-12875-1-git-send-email-mhagger@alum.mit.edu> <1369472904-12875-25-git-send-email-mhagger@alum.mit.edu> <7vk3mhviaw.fsf@alter.siamese.dyndns.org> <51A7C9E8.10108@alum.mit.edu>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff King" <peff@peff.net>, "Johan Herland" <johan@herland.net>,
+	"Thomas Rast" <trast@inf.ethz.ch>, <git@vger.kernel.org>
+To: "Michael Haggerty" <mhagger@alum.mit.edu>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 31 00:09:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiAzM-0007X4-3N
-	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 00:06:28 +0200
+	id 1UiB23-0000cx-9F
+	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 00:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758819Ab3E3WGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 18:06:25 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:58109 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758178Ab3E3WGX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 18:06:23 -0400
-X-AuditID: 1207440e-b7f2b6d00000094c-0a-51a7cd5e8805
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id BF.F4.02380.E5DC7A15; Thu, 30 May 2013 18:06:22 -0400 (EDT)
-Received: from michael.fritz.box (p57A24A59.dip0.t-ipconnect.de [87.162.74.89])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4UM5vX8031018
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 30 May 2013 18:06:20 -0400
-X-Mailer: git-send-email 1.8.3
-In-Reply-To: <87ppwaurfy.fsf@linux-k42r.v.cablecom.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqBt3dnmgwdz95hZdV7qZLBp6rzBb
-	zLu7i8ni9or5zBY/WnqYLe5eXsXuwObx9/0HJo9LL7+zedx+PZ/Z41nvHkaPi5eUPT5vkgtg
-	i+K2SUosKQvOTM/Tt0vgzlh0Or/gNUvFgnWXmBoY/zF3MXJySAiYSCy8e4IRwhaTuHBvPVsX
-	IxeHkMBlRolLhx+xQzjnmSSW3r0D1sEmoCuxqKeZCcQWEXCUOPHgOitIEbNAL6PEw0ffwRLC
-	AjkSB1r+gzWwCKhKTL23ECzOK+Ai8eXpQhaIdXIS7+/sArM5Bcwldk7qBqsREjCTmPD8FeME
-	Rt4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3SN9XIzS/RSU0o3MUICjW8HY/t6mUOMAhyM
-	Sjy8B1OWBwqxJpYVV+YeYpTkYFIS5f15CijEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhFfyKFCO
-	NyWxsiq1KB8mJc3BoiTOq7ZE3U9IID2xJDU7NbUgtQgmK8PBoSTBW30GqFGwKDU9tSItM6cE
-	Ic3EwQkiuEA28ABtSAUp5C0uSMwtzkyHKDrFqCglzhsKkhAASWSU5sENgKWEV4ziQP8I81aC
-	VPEA0wlc9yugwUxAg59Ygw0uSURISTUwzhAolCpPX/BvdjnLHd4um4CCkptffu34wuvy7l33
-	I5dNpqGn9kxSZow7eiqWI964eW4X57XDW6J3+zRMv9ozdbF/apXeDfUmxzuFlYXL7zftznq6
-	5TTnxcv6Wao7xQVWtxz81H1i4sLLHyKL05kP69sYbxNyb77SxKtxIcTrbseNug83 
+	id S1758014Ab3E3WJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 18:09:11 -0400
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:37299 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754680Ab3E3WJI (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 18:09:08 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ArkNAHzNp1FOl3th/2dsb2JhbABaDoJ7MIh6tmIEAQMBfRd0gh4FAQEEAQgBAS4eAQEhBQYCAwUCAQMOBwECCSUUAQQaBgcXBgESCAIBAgMBh3YKCLsljjJqgn1hA4hohgWJeohyhyWCUT87
+X-IronPort-AV: E=Sophos;i="4.87,773,1363132800"; 
+   d="scan'208";a="429847251"
+Received: from host-78-151-123-97.as13285.net (HELO PhilipOakley) ([78.151.123.97])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 30 May 2013 23:09:06 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226040>
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
-Junio, would you mind squashing this patch onto mh/reflife 22/25?
+From: "Michael Haggerty" <mhagger@alum.mit.edu>
+Sent: Thursday, May 30, 2013 10:51 PM
+> On 05/29/2013 06:53 PM, Junio C Hamano wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>>> [...]
+>>> + current_bad_sha1 = xmalloc(20);
+>>> + hashcpy(current_bad_sha1, sha1);
+>>
+>> This, together with 18/25, may hint that we want hashdup()?
+>
+> I thought about it, but was surprised that I could only find one or 
+> two
+> other places in the existing code that would use such a function.  But
+> sure, I would be happy to submit a patch.
+>
+> I think hashdup() needn't be inline, so the definition can't go with 
+> its
+> cousins in cache.h.  There is no cache.c.  So where would be the best
+> place to define hashdup()?  object.c?  sha1_name.c?
+>
+> While I'm at it, I think it would be nice to have constants like
+>
+> #define SHA1_LEN 20
+> #define SHA1_HEX_LEN 40
+>
+> and start using those instead of magic numbers.  Any objections (or
+> suggestions for better names)?
+>
 
- notes.c | 1 +
- 1 file changed, 1 insertion(+)
+The first named constant should be fully qualified to the same extent as 
+the second, perhaps:
+    #define SHA1_BYTE_LEN 20
 
-diff --git a/notes.c b/notes.c
-index 602d956..b69c0b8 100644
---- a/notes.c
-+++ b/notes.c
-@@ -932,6 +932,7 @@ static int string_list_add_one_ref(const char *refname, const unsigned char *sha
-  */
- void string_list_add_refs_by_glob(struct string_list *list, const char *glob)
- {
-+	assert(list->strdup_strings);
- 	if (has_glob_specials(glob)) {
- 		for_each_glob_ref(string_list_add_one_ref, glob, list);
- 	} else {
--- 
-1.8.3
+and perhaps with an alternate of (though HEX is just as good):
+    #define SHA1_CHAR_LEN 40
+
+
+> Michael
+>
+> -- 
+> Michael Haggerty
+> mhagger@alum.mit.edu
+> http://softwareswirl.blogspot.com/
+> --
+Philip 
