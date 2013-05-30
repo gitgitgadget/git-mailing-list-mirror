@@ -1,69 +1,88 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
+From: Anthony Ramine <n.oxyde@gmail.com>
 Subject: Re: [PATCH] wildmatch: properly fold case everywhere
-Date: Thu, 30 May 2013 05:07:26 -0400
-Message-ID: <CAPig+cTfaj3e_sRZhHLQUDWYinFVsNieFFA027zJSfdSty1x1g@mail.gmail.com>
-References: <CACsJy8CuaowyZJGKh7X+43qRwYAdUCDbVo8P5CpEtukBzRiReg@mail.gmail.com>
-	<1369903506-72731-1-git-send-email-n.oxyde@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Date: Thu, 30 May 2013 11:29:25 +0200
+Message-ID: <E670228E-B029-422C-B048-5F28E3AEB731@gmail.com>
+References: <CACsJy8CuaowyZJGKh7X+43qRwYAdUCDbVo8P5CpEtukBzRiReg@mail.gmail.com> <1369903506-72731-1-git-send-email-n.oxyde@gmail.com> <CAPig+cTfaj3e_sRZhHLQUDWYinFVsNieFFA027zJSfdSty1x1g@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	=?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
 	<pclouds@gmail.com>
-To: Anthony Ramine <n.oxyde@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 30 11:07:35 2013
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu May 30 11:29:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uhypa-000189-KL
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 11:07:34 +0200
+	id 1UhzAs-0008BT-Us
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 11:29:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967953Ab3E3JHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 05:07:31 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:62842 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030210Ab3E3JH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 05:07:29 -0400
-Received: by mail-lb0-f182.google.com with SMTP id z5so283848lbh.41
-        for <git@vger.kernel.org>; Thu, 30 May 2013 02:07:26 -0700 (PDT)
+	id S967986Ab3E3J3b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 05:29:31 -0400
+Received: from mail-we0-f177.google.com ([74.125.82.177]:60465 "EHLO
+	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967400Ab3E3J3a convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 05:29:30 -0400
+Received: by mail-we0-f177.google.com with SMTP id n57so16109wev.22
+        for <git@vger.kernel.org>; Thu, 30 May 2013 02:29:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=MLpGnyVQdXEjpIxTXIq0d21qavvBZNGxcEgjBz4yLAQ=;
-        b=meb7HQSei83cbwLdtU2SM5s4MhkMuZqM7nmWsHc2lVq5cQf0avzJNln2uOKDuYZ9ZJ
-         5fP8DF1FJFcCnFV2jgTC02XP7y4kR49zEOE1IV+EorI2gi2HQBSLy+EhXgNOw4ZMo5Ti
-         U6+h4d1Mgo5CGjl06Usieg5EtJ4tiohHL28zkmtNh9dmBRcC/MPOxbTHH6W0rxojueS2
-         oq57vObRs/MsirMM4JOYiMdhjwIihV0m3biizb8mV3JvfaoU3wm7g1JpjB8WTvNyG6BG
-         Om2oPCiWi6mPw0Zj+87eCvh0aTBt/DfJTq9s6rPV3HTv+RzIJ3rtafPd79j73nibKeO4
-         qSzA==
-X-Received: by 10.112.164.105 with SMTP id yp9mr3226257lbb.103.1369904846660;
- Thu, 30 May 2013 02:07:26 -0700 (PDT)
-Received: by 10.114.161.4 with HTTP; Thu, 30 May 2013 02:07:26 -0700 (PDT)
-In-Reply-To: <1369903506-72731-1-git-send-email-n.oxyde@gmail.com>
-X-Google-Sender-Auth: wvE7mwMOy8DivO6nHPa9WmbHZLY
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        bh=QaUtSEz4tMZJGBMK/RBmm6lWSEGkjOb6lCkwC//P56o=;
+        b=mUNZDSHJTm+4UunSjOpFM/x4CQ6rcLgca7bKxPl3Ni9qUr4OIHTAye2cMBL++i+bxi
+         86YKgHMBUF2NC2p3MVXvkpCzlz9gLtvSKSc7J2MO6d3AXN2I80hQG0xJX3rwElyScjdF
+         SnnQTtqCrvMIhbkgqzWp5Z5gcQHyIiRUEf0wsTByRLf/i+cqzLfYQ7ddP7v+3qImW+uz
+         LiLpI7sCFzbapaVQ1K8BwlSIeECEZHgT9q6w4PMBQnxPbXavJ8AtLJM8+rj0FenIIjXj
+         /o+dlhtpf+/znsxyRm1P0VrcEhKlPDD4piB8b6QpXVBsppf4W2LENb4XVICbLYiZb6gT
+         MMSA==
+X-Received: by 10.180.206.228 with SMTP id lr4mr3695944wic.48.1369906168967;
+        Thu, 30 May 2013 02:29:28 -0700 (PDT)
+Received: from [192.168.118.188] (33-43.83-90.static-ip.oleane.fr. [90.83.43.33])
+        by mx.google.com with ESMTPSA id q13sm36631467wie.8.2013.05.30.02.29.27
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 30 May 2013 02:29:27 -0700 (PDT)
+In-Reply-To: <CAPig+cTfaj3e_sRZhHLQUDWYinFVsNieFFA027zJSfdSty1x1g@mail.gmail.com>
+X-Mailer: Apple Mail (2.1283)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225949>
 
-On Thu, May 30, 2013 at 4:45 AM, Anthony Ramine <n.oxyde@gmail.com> wrote:
-> Case folding is not done correctly when matching against the [:upper:]
-> character class and uppercased character ranges (e.g. A-Z).
-> Specifically, an uppercase letter fails to match against any of them
-> when case folding is requested because plain characters in the pattern
-> and the whole string and preemptively lowercased to handle the base case
+Yes indeed. Will amend. Should I add your name in Reviewed-by as well?
 
-Did you mean s/and preemptively/are preemptively/ ?
+--=20
+Anthony Ramine
 
-> fast.
->
-> That optimization is kept and ISLOWER() is used in the [:upper:] case
-> when case folding is requested, while matching against a character range
-> is retried with toupper() if the character was lowercase, as the bounds
-> of the range itself cannot be modified (in a case-insensitive context,
-> [A-_] is not equivalent to [a-_]).
->
-> Signed-off-by: Anthony Ramine <n.oxyde@gmail.com>
+Le 30 mai 2013 =E0 11:07, Eric Sunshine a =E9crit :
+
+> On Thu, May 30, 2013 at 4:45 AM, Anthony Ramine <n.oxyde@gmail.com> w=
+rote:
+>> Case folding is not done correctly when matching against the [:upper=
+:]
+>> character class and uppercased character ranges (e.g. A-Z).
+>> Specifically, an uppercase letter fails to match against any of them
+>> when case folding is requested because plain characters in the patte=
+rn
+>> and the whole string and preemptively lowercased to handle the base =
+case
+>=20
+> Did you mean s/and preemptively/are preemptively/ ?
+>=20
+>> fast.
+>>=20
+>> That optimization is kept and ISLOWER() is used in the [:upper:] cas=
+e
+>> when case folding is requested, while matching against a character r=
+ange
+>> is retried with toupper() if the character was lowercase, as the bou=
+nds
+>> of the range itself cannot be modified (in a case-insensitive contex=
+t,
+>> [A-_] is not equivalent to [a-_]).
+>>=20
+>> Signed-off-by: Anthony Ramine <n.oxyde@gmail.com>
