@@ -1,62 +1,71 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Poor performance of git describe in big repos
-Date: Thu, 30 May 2013 12:48:08 +0100
-Message-ID: <20130530114808.GD17475@serenity.lan>
-References: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Alex =?iso-8859-1?Q?Benn=E9e?= <kernel-hacker@bennee.com>
-X-From: git-owner@vger.kernel.org Thu May 30 13:48:22 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/4] cherry-pick: fix memory leaks
+Date: Thu, 30 May 2013 06:58:52 -0500
+Message-ID: <1369915136-4248-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Adam Spiers <git@adamspiers.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Stephen Boyd <sboyd@codeaurora.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 30 14:00:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui1LB-0000Dc-7E
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 13:48:21 +0200
+	id 1Ui1XA-0001Dx-OY
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 14:00:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751833Ab3E3LsS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 07:48:18 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:51871 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750981Ab3E3LsQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 07:48:16 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id C7BCF22FDA;
-	Thu, 30 May 2013 12:48:15 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8X4A+tA2A5hz; Thu, 30 May 2013 12:48:14 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 23A9522CFC;
-	Thu, 30 May 2013 12:48:10 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751454Ab3E3MAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 08:00:41 -0400
+Received: from mail-yh0-f43.google.com ([209.85.213.43]:51616 "EHLO
+	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750885Ab3E3MAk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 08:00:40 -0400
+Received: by mail-yh0-f43.google.com with SMTP id a41so24467yho.30
+        for <git@vger.kernel.org>; Thu, 30 May 2013 05:00:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=TCwZUIUkQ/Pmg/29Hj+CB0So2ht05xVGX1WPkeRiYdY=;
+        b=sRKBJKw43Ze/ZmjqlIdFRzQCQ05hzKkds1i+RHx91EBYAoWTC1zGLlUuAoycBzJgIH
+         CikiMPIQ2wNYZmfKG0gQN0AWlYIH9Xtn68K9CB3y1KJElW5inGZownZb8E3eE7DQYLdf
+         DajNtQZ79cYZ25GJElgH3yhWpirQYm2myfl/Mv+aXwUccfUKCAfc5m3dSZ1Qzqbbpboc
+         W/Y5EnX+iDn8jKiXrxrJjdu0tsi1A8IQvckz6uDoK7sH1lsCH4xdO52FNS3PZPLrnRet
+         Zp/npZNVItMBYIEPUN82GhnZDEGfIi6RAFwnAQVImejkerRmcA9edKlcgbUGWrcV/rFv
+         Pu9Q==
+X-Received: by 10.236.169.132 with SMTP id n4mr3342754yhl.173.1369915239200;
+        Thu, 30 May 2013 05:00:39 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id j20sm11813925yhi.1.2013.05.30.05.00.37
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 30 May 2013 05:00:38 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc3.312.g47657de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225968>
 
-On Thu, May 30, 2013 at 11:38:32AM +0100, Alex Benn=E9e wrote:
-> One factor might be the size of my repo (.git is around 2.4G). Could
-> this just be due to computational cost of searching through large
-> packs to walk the commit chain? Is there any way to make this easier
-> for git to do?
+Hi,
 
-What does "git count-objects -v" say for your repository?
+I took a shot at fixing the memory leaks of cherry-pick, and at least in my
+tests the memory doesn't seem to increase any more.
 
-You may find that performance improves if you repack with "git gc
---aggressive".
+Felipe Contreras (4):
+  commit: reload cache properly
+  read-cache: plug small memory leak
+  unpack-trees: plug a memory leak
+  unpack-trees: free created cache entries
+
+ builtin/commit.c |  2 ++
+ read-cache.c     |  2 ++
+ unpack-trees.c   | 16 +++++++++++++---
+ 3 files changed, 17 insertions(+), 3 deletions(-)
+
+-- 
+1.8.3.rc3.312.g47657de
