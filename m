@@ -1,110 +1,107 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 7/7] unpack-trees: free cache_entry array members for merges
-Date: Thu, 30 May 2013 10:20:48 -0500
-Message-ID: <CAMP44s10a9fj4No6o3GZQrwkREQP2WXbXr+1F83Q11EJ1AxrcA@mail.gmail.com>
-References: <1369913664-49734-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
-	<1369913664-49734-8-git-send-email-rene.scharfe@lsrfire.ath.cx>
-	<CAMP44s2=YuBLHgz52ie-FZYU5iz4o4tY0-zH+6XuzpiupjomLA@mail.gmail.com>
-	<51A764CE.4000708@lsrfire.ath.cx>
+Subject: Re: [git-users] Highlevel (but simple to implement) commands provided
+ by default for git
+Date: Thu, 30 May 2013 10:32:48 -0500
+Message-ID: <CAMP44s2G3NVUyVViF2NP0TEEuGLp-3z+xf-uhsjC-Np80WA-tA@mail.gmail.com>
+References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
+	<CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
+	<CAMP44s0Cx-FCZLOFZxcpC86sY+H03HKBi0nKFMgit=B5XCy71g@mail.gmail.com>
+	<CALkWK0mBOB1RM+MXH+Nvos29M5vqc2yAtC__zPyowf7imfnz9Q@mail.gmail.com>
+	<CAJri6_uScqjovt5eK9f9+Z4ehtsdYQNuiEX1MERiDBEJWueAXg@mail.gmail.com>
+	<CALkWK0=5BwterP7ATM1GgFvLUs391w_MW4YrwbnvsbM6Q4_Opg@mail.gmail.com>
+	<20130529234335.GE28153@google.com>
+	<CAMP44s3807Dk0SOZcBbaOKTLj5k36bW0SA9F5ZBY2MwS1Nnxiw@mail.gmail.com>
+	<20130530052318.GA2923@elie.Belkin>
+	<CAMP44s2ZWA8+ShRDX0uS==THgHPWtoTfXwECFkPXyjSoyXHM=A@mail.gmail.com>
+	<20130530145447.GC4884@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu May 30 17:20:59 2013
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	=?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 30 17:32:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui4et-0003xp-2P
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 17:20:55 +0200
+	id 1Ui4qU-0004JZ-SR
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 17:32:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933231Ab3E3PUw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 11:20:52 -0400
-Received: from mail-la0-f47.google.com ([209.85.215.47]:64286 "EHLO
-	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932699Ab3E3PUu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 11:20:50 -0400
-Received: by mail-la0-f47.google.com with SMTP id fq12so385341lab.34
-        for <git@vger.kernel.org>; Thu, 30 May 2013 08:20:48 -0700 (PDT)
+	id S933482Ab3E3Pcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 11:32:51 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:42349 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932445Ab3E3Pcu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 11:32:50 -0400
+Received: by mail-lb0-f173.google.com with SMTP id t10so706433lbi.18
+        for <git@vger.kernel.org>; Thu, 30 May 2013 08:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=bLB6We2RmgfKw3ldHB2+WoA9WrJj7d9F3I3Vf+a72g8=;
-        b=QHQDSigRYW7CTDZV+gMwCHzOkeqH/mU59Om1vDiLQ4v1z7N7X/Hx9C0JfEp0xDJ05b
-         bH4tf5554Q12w6fsNaiaVu1YzY9L+qY43E/5su+IFLWnDLo19xiAbp4j3jhjpfI5SFUK
-         rWqt/9fxDE7H7UCDBUeKqYB2ur0LO/KDfp14ldPD48Hg3nPxCQcoSFjDPGy674rmllY8
-         Yk5Vzc66u4t+EmqW9VMYUq+DA9ne4/T3XQSUJwH6YM/ChcUPpvioWx6pJmFhuirecr6H
-         96HgyJ/GH0u0pMFdahKd6/fWmVmdOrVgJvikA1NUBEBdolEJ5odZFiSRoxRlqrk1k2vO
-         lkbA==
-X-Received: by 10.112.156.164 with SMTP id wf4mr3866249lbb.76.1369927248604;
- Thu, 30 May 2013 08:20:48 -0700 (PDT)
-Received: by 10.114.177.164 with HTTP; Thu, 30 May 2013 08:20:48 -0700 (PDT)
-In-Reply-To: <51A764CE.4000708@lsrfire.ath.cx>
+         :cc:content-type;
+        bh=y6s5T5w9Pn3iDIn44G5ILzEvHoq9zldP/9x3L4vcJ1A=;
+        b=bwBfkxPScx9/XR1qrbEDbnWto0r7f3PlCRuSrSNCJwhPf/+W/U7nQU+zkwlnqL3/tm
+         U9zEhYbSjiyw85O48xZftqouDWDOtbU6ZoM1JzmT43NuJWS6NVh5kvj5BJfqglpyLtcg
+         pcucnXmCQy3K6c/5W5qUNaKx0nIjMeLLrG9ncPAYdIZuVBwX7N3mGsjIlsyBztFgKv9w
+         ucLNluYYEmamJiOPUQuIAwE9DgRZDC7h0xdqjQaCM9MYmzZ2EjSSnHJPlJ3ujLezXO35
+         SeBrjJ72tAtpFhAUjF/+1o/m+UOSo0bRBNof+Ek2RApZ+OE2g9FmUy4HeLsAiP4AYE/Q
+         7nHA==
+X-Received: by 10.112.133.129 with SMTP id pc1mr1033262lbb.49.1369927968793;
+ Thu, 30 May 2013 08:32:48 -0700 (PDT)
+Received: by 10.114.177.164 with HTTP; Thu, 30 May 2013 08:32:48 -0700 (PDT)
+In-Reply-To: <20130530145447.GC4884@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226013>
 
-On Thu, May 30, 2013 at 9:40 AM, Ren=C3=A9 Scharfe
-<rene.scharfe@lsrfire.ath.cx> wrote:
-> Am 30.05.2013 14:04, schrieb Felipe Contreras:
+On Thu, May 30, 2013 at 9:54 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Felipe Contreras wrote:
+>> On Thu, May 30, 2013 at 12:23 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>>> Felipe Contreras wrote:
+>>>> On Wed, May 29, 2013 at 6:43 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 >
->> On Thu, May 30, 2013 at 6:34 AM, Ren=C3=A9 Scharfe
->> <rene.scharfe@lsrfire.ath.cx> wrote:
+>>>>> A bigger problem (in my opinion) with allowing arbitrary changes to
+>>>>> the meaning of existing commands is that scripts, whether placed in
+>>>>> .sh files or given as commands to run over IRC, stop working
+>>>>> altogether.  It's nice to have commands like "git log" and "git am"
+>>>>> mean the same thing no matter what machine I am on.
+>>>>
+>>>> Except that's not true:
 >>>
->>> The merge functions duplicate entries as needed and they don't free
->>> them.  Release them in unpack_nondirectories, the same function
->>> where they were allocated, after we're done.
+>>> It's not true that my opinion is that a bigger problem than the
+>>> non-problem Ram mentioned with allowing arbitrary changes to the
+>>> meaning of existing commands is that scripts stop working reliably?
 >>
+>> It's not true what you said:
 >>
->> Ah, you beat me to this change, but..
->>
->>> @@ -600,9 +600,14 @@ static int unpack_nondirectories(int n, unsign=
-ed
->>> long mask,
->>>                  src[i + o->merge] =3D create_ce_entry(info, names =
-+ i,
->>> stage);
->>>          }
->>>
->>> -       if (o->merge)
->>> -               return call_unpack_fn((const struct cache_entry * c=
-onst
->>> *)src,
->>> -                                     o);
->>> +       if (o->merge) {
->>> +               int rc =3D call_unpack_fn((const struct cache_entry=
- * const
->>> *)src,
->>> +                                       o);
->>> +               for (i =3D 1; i <=3D n; i++)
->>> +                       if (src[i] && src[i] !=3D o->df_conflict_en=
-try)
->>> +                               free(src[i]);
->>
->>
->> Doesn't it make more sense to follow the code above and do src[i +
->> o->merge]?
+>> commands like "git log" and "git am" mean the same thing no matter
+>> what machine I am on.
 >
->
-> Not sure I understand.  Is the goal to avoid confusion for code reade=
-rs by
-> using the same indexing method for allocation and release?  Or are yo=
-u
-> worried about o->merge having a different value than 1 in that loop?
+> It's not true that it's nice when they do?
 
-Both. In particular I'm eyeballing the code you can even see in this pa=
-tch:
+Yeah, it's nice that the sun is purple. Never-mind the fact that it's not true.
 
- src[i + o->merge] =3D create_ce_entry(info, names + i, stage);
+The consistency you experience across machines has absolutely nothing
+to do with Git, since Git can be configured in a way you don't
+consider nice.
 
-If you think it's better to use src[i], then I think the code above
-should do the same.
+So this argument is invalid. Any proposed change to make Git more
+configurable is not affected by this argument, because Git can
+*already* be configured in a way that would break your experience, yet
+it doesn't happen.
 
---=20
-=46elipe Contreras
+In other words; it's the policy or your machine users you have to
+thank for, not Git's code, and changing Git's code is not going to
+change that policy.
+
+Either way this is a straw man, again, nobody is pushing to allow
+builtins to be overridable.
+
+The topic is default *aliases*.
+
+-- 
+Felipe Contreras
