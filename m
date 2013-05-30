@@ -1,151 +1,130 @@
-From: Pat Thoyts <patthoyts@gmail.com>
-Subject: Re: t0008-ignores failure (was: Git for Windows 1.8.3)
-Date: Thu, 30 May 2013 16:45:58 +0100
-Message-ID: <CABNJ2GKPvbYFgqGL-g3Pnp7OghpoSfeuPEF0vNHixhQFkY+Uow@mail.gmail.com>
-References: <CABNJ2G+u96P+_=Q7it0KbK9E01qunz7XZ7e3zCZvaTaOUuTQqQ@mail.gmail.com>
-	<51A6A7B7.4010802@gmail.com>
-	<alpine.DEB.1.00.1305301713400.650@s15462909.onlinehome-server.info>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] git-gui: fix file name handling with non-empty prefix
+Date: Thu, 30 May 2013 16:55:02 +0100
+Message-ID: <20130530155502.GE17475@serenity.lan>
+References: <264998b2b2201b7d6ab9bfa8b5518f712b3a6a08.1367069056.git.john@keeping.me.uk>
+ <20130427141839.GF472@serenity.lan>
+ <518EF86D.3060207@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Karsten Blees <karsten.blees@gmail.com>, msysGit <msysgit@googlegroups.com>, 
-	Sebastian Schuberth <sschuberth@gmail.com>, Git List <git@vger.kernel.org>, 
-	Adam Spiers <git@adamspiers.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBDRPLLPZ44IBBNXITWGQKGQE6GC53XA@googlegroups.com Thu May 30 17:46:02 2013
-Return-path: <msysgit+bncBDRPLLPZ44IBBNXITWGQKGQE6GC53XA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vb0-f59.google.com ([209.85.212.59])
+Content-Type: text/plain; charset=us-ascii
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org,
+	Andrew Wong <andrew.kw.w@gmail.com>
+To: Pat Thoyts <patthoyts@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 30 17:55:30 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDRPLLPZ44IBBNXITWGQKGQE6GC53XA@googlegroups.com>)
-	id 1Ui539-0006UF-Qq
-	for gcvm-msysgit@m.gmane.org; Thu, 30 May 2013 17:46:00 +0200
-Received: by mail-vb0-f59.google.com with SMTP id p14sf133955vbm.14
-        for <gcvm-msysgit@m.gmane.org>; Thu, 30 May 2013 08:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:mime-version:in-reply-to:references:date:message-id
-         :subject:from:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=B/vaGz4A+JAM4Vb6V6mH3+H/rgOoG2wfKp6FFtgHSns=;
-        b=f7E36UUivKFxSYdp+Lp+i8vwd19ZDnE5TnfQVZxcuwXMk7fCwumZcJUxMieFgZnxy0
-         rxXhjG+aVkD+XFj4WiIaFvypU+bZ3TYAm8q548Cuh8GMRwuWVt7RoeSyD2K7d/5JPxqB
-         t5DM0WfrEjaNMCG3yQgafaLwcZKmxX8aFV4eILIu+fFk5gH5MZGm2Ws7ooH7CalcVxbD
-         dEQnLmA7nw6uWkca6mlV1p1wa0beVmxn9e0tlmdnkY78D1XU1I8yo90d43xH3MvjkUEh
-         TMOOKxh+DT+c/9Wfu+GMRVOZ4BdqAvBHYQ6vpTSUWCVpZ9GNvxyOwf7vs+kPJRC6qIyz
-         Oxcg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-beenthere:mime-version:in-reply-to:references:date:message-id
-         :subject:from:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=B/vaGz4A+JAM4Vb6V6mH3+H/rgOoG2wfKp6FFtgHSns=;
-        b=K7PO1Yk6wf2TySf0QPXdrIXOaCi2tpE8qoCDqEcqPolj6UikrkXUs2JLbIHCpIB3Fg
-         i+yN4dTjIrMVA4nd613moZWcEEGpArHyKInF6vnFOtjEyw4fjceoB0AuC3f14nAByxe6
-         ++7m8IiQk8ynBz8Kr7rjI79BKp/N3limoFE9TR7xSbNr33YZ27vAkkmzy7U0NOxuq/Wy
-         WevPEV2wJYvl7tqKOmuJ4Yoo/R9bhZcRHhIn1AvvYw737UQnjJpQ2yRVXc5JdhY+dxGQ
-         nelMMSZgc7ds0/sHrl5yoFltoLEWZdKQgOmtgAk89ODO+9ujBGQvJxzVw4IVBcJNE/YW
-         sKgg==
-X-Received: by 10.50.73.196 with SMTP id n4mr3135418igv.3.1369928758775;
-        Thu, 30 May 2013 08:45:58 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.39.81 with SMTP id n17ls665303igk.21.gmail; Thu, 30 May
- 2013 08:45:58 -0700 (PDT)
-X-Received: by 10.66.146.168 with SMTP id td8mr1171954pab.17.1369928758203;
-        Thu, 30 May 2013 08:45:58 -0700 (PDT)
-Received: from mail-pd0-f178.google.com (mail-pd0-f178.google.com [209.85.192.178])
-        by gmr-mx.google.com with ESMTPS id cw1si6070720pbb.0.2013.05.30.08.45.58
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 30 May 2013 08:45:58 -0700 (PDT)
-Received-SPF: pass (google.com: domain of patthoyts@gmail.com designates 209.85.192.178 as permitted sender) client-ip=209.85.192.178;
-Received: by mail-pd0-f178.google.com with SMTP id w11so576396pde.9
-        for <msysgit@googlegroups.com>; Thu, 30 May 2013 08:45:58 -0700 (PDT)
-X-Received: by 10.68.231.65 with SMTP id te1mr8454222pbc.98.1369928758122;
- Thu, 30 May 2013 08:45:58 -0700 (PDT)
-Received: by 10.68.63.132 with HTTP; Thu, 30 May 2013 08:45:58 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1305301713400.650@s15462909.onlinehome-server.info>
-X-Original-Sender: patthoyts@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of patthoyts@gmail.com designates 209.85.192.178 as
- permitted sender) smtp.mail=patthoyts@gmail.com;       dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226015>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Ui5CL-0005V9-JB
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 17:55:29 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1757594Ab3E3PzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 11:55:17 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:37855 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757536Ab3E3PzO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 11:55:14 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id F1BB722F72;
+	Thu, 30 May 2013 16:55:13 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8dJkLpKVpMQ9; Thu, 30 May 2013 16:55:12 +0100 (BST)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id 3A61A230E0;
+	Thu, 30 May 2013 16:55:04 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <518EF86D.3060207@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226016>
 
-On 30 May 2013 16:15, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi Karsten,
->
-> On Thu, 30 May 2013, Karsten Blees wrote:
->
->> Am 25.05.2013 21:16, schrieb Pat Thoyts:
->> > On that note -- with this merge as it now stands I get the following
->> > test failures:
->> >
->> > t0008-ignores.sh                     155, 158, 162, 164
->>
->> These tests fail because they use absolute paths, e.g. "C:/.../global-excludes", which is then translated to "C<NUL>/.../global-excludes". Can be fixed like so:
->>
->> --- 8< ---
->> --- a/t/t0008-ignores.sh
->> +++ b/t/t0008-ignores.sh
->> @@ -5,7 +5,7 @@ test_description=check-ignore
->>  . ./test-lib.sh
->>
->>  init_vars () {
->> -       global_excludes="$(pwd)/global-excludes"
->> +       global_excludes="global-excludes"
->>  }
->>
->>  enable_global_excludes () {
->> ---
->
-> Since I do not have time for the lengthy, undirected discussion upstream
-> seems to want to start, let's make your change, but only conditional on
-> MINGW?
->
-> Ciao,
-> Dscho
+In the hope that the Pat Thoyts who just posted in another thread from a
+GMail address is the same one that maintains git-gui, let's see if that
+address works...
 
-I was just testing this -- I've already wrapped the suggested fix
-within a "test_have_prereq MINGW" for our fork and committed it. This
-was  an issue partly because was alias pwd to "pwd -W" and so always
-get Windows paths. It means the test here doesn't check absolute paths
-but I think we can live with that. I tried using $(builtin pwd) to
-avoid the "-W" but it didn't help and I still got C: style paths.
-
-I also grabbed Karsten's patch "dir.c: fix ignore processing within
-not-ignored directories" as this appears to deal with a .gitignore
-regression in 1.8.3. We can carry this until the next merge with
-upstream.
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+On Sat, May 11, 2013 at 10:03:25PM -0400, Andrew Wong wrote:
+> Sorry for the late reply. I was able to reproduce the problem that you
+> were describing a while ago. And your patch indeed fixes it. It's a much
+> more elegant way of dealing with the "absolute vs relative" path problem
+> that I was trying to fix.
+> 
+> Thanks!
+> 
+> As for Pat, I'm not sure wha'ts going on with his email address. It was
+> working back in October, and his username still seems to be active over
+> at SourceForge... let's see if this email reaches him.
+> 
+> Here's a link for his reference just in case he missed your original email:
+> http://thread.gmane.org/gmane.comp.version-control.git/222646
+> 
+> 
+> On 04/27/13 10:18, John Keeping wrote:
+> > I got a bounce with "550 no such user" for Pat's email address when
+> > sending this.  Does anyone have more up-to-date contact details?  Or is
+> > it just SourceForge being broken?
+> >
+> > On Sat, Apr 27, 2013 at 02:24:16PM +0100, John Keeping wrote:
+> >> Commit e3d06ca (git-gui: Detect full path when parsing arguments -
+> >> 2012-10-02) fixed the handling of absolute paths passed to the browser
+> >> and blame subcommands by checking whether the file exists without the
+> >> prefix before prepending the prefix and checking again.  Since we have
+> >> chdir'd to the top level of the working tree before doing this, this
+> >> does not work if a file with the same name exists in a subdirectory and
+> >> at the top level (for example Makefile in git.git's t/ directory).
+> >>
+> >> Instead of doing this, revert that patch and fix absolute path issue by
+> >> using "file join" to prepend the prefix to the supplied path.  This will
+> >> correctly handle absolute paths by skipping the prefix in that case.
+> >>
+> >> Signed-off-by: John Keeping <john@keeping.me.uk>
+> >> ---
+> >>  git-gui.sh | 14 +++-----------
+> >>  1 file changed, 3 insertions(+), 11 deletions(-)
+> >>
+> >> diff --git a/git-gui.sh b/git-gui.sh
+> >> index e133331..a94ad7f 100755
+> >> --- a/git-gui.sh
+> >> +++ b/git-gui.sh
+> >> @@ -3003,19 +3003,11 @@ blame {
+> >>  	set jump_spec {}
+> >>  	set is_path 0
+> >>  	foreach a $argv {
+> >> -		if {[file exists $a]} {
+> >> -			if {$path ne {}} usage
+> >> -			set path [normalize_relpath $a]
+> >> -			break
+> >> -		} elseif {[file exists $_prefix$a]} {
+> >> -			if {$path ne {}} usage
+> >> -			set path [normalize_relpath $_prefix$a]
+> >> -			break
+> >> -		}
+> >> +		set p [file join $_prefix $a]
+> >>  
+> >> -		if {$is_path} {
+> >> +		if {$is_path || [file exists $p]} {
+> >>  			if {$path ne {}} usage
+> >> -			set path [normalize_relpath $_prefix$a]
+> >> +			set path [normalize_relpath $p]
+> >>  			break
+> >>  		} elseif {$a eq {--}} {
+> >>  			if {$path ne {}} {
+> >> -- 
+> >> 1.8.3.rc0.149.g98a72f2.dirty
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
