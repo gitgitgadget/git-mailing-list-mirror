@@ -1,106 +1,207 @@
-From: =?UTF-8?B?QWxleCBCZW5uw6ll?= <kernel-hacker@bennee.com>
-Subject: Poor performance of git describe in big repos
-Date: Thu, 30 May 2013 11:38:32 +0100
-Message-ID: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v7] Add new git-related helper to contrib
+Date: Thu, 30 May 2013 06:31:20 -0500
+Message-ID: <CAMP44s25vX1p1Np7yqc9_AqVBme+MCTY88hjhfWdL6KZkxgs7Q@mail.gmail.com>
+References: <1369884777-7227-1-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0=ZbOy6sXOvnTNAqz_UBsUymY1CR_WczT-O3Q+18HJjzQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 30 12:38:41 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 30 13:31:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui0Fk-0007SJ-P9
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 12:38:41 +0200
+	id 1Ui14q-0004JH-2q
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 13:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030556Ab3E3Kif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 06:38:35 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:36056 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030549Ab3E3Kid (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 06:38:33 -0400
-Received: by mail-ob0-f169.google.com with SMTP id up14so161156obb.28
-        for <git@vger.kernel.org>; Thu, 30 May 2013 03:38:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type:x-gm-message-state;
-        bh=q85I+gZwjwe7FjxI8S/zNrZY+4MWwPZJXYq8lHWpiLw=;
-        b=UuMnEtqrhI14E1iuXajOikvvu1jSAvsADJsbU7pFIwqmGpuIz6B/KRhqajkH6IW0mH
-         prOJACumYwipt827wIaS65sRlVe3vx8K0P6oBq18Uz9QJc1YnV5DolQPuu29P4grMu9i
-         JrJMn1obWSr17qZXVhV1CbCTzhjy3vFa35hLo1ASzja1aG3GG7QrtjhCWI9HpFUavoZo
-         lkgmcqZf3/OLJrtxqaFUoDWir/W/A7TzdwQfTn2pBrFFnOC5e2FUob2LyucdiGOxVfT4
-         be77AVq1QQ0FY5jXDqbA0H0wDldoil7lSpR51PW/C62NmdDdGqYQiRfosdGYCw5hakCL
-         phUw==
-X-Received: by 10.182.81.34 with SMTP id w2mr3830224obx.8.1369910312714; Thu,
- 30 May 2013 03:38:32 -0700 (PDT)
-Received: by 10.76.98.137 with HTTP; Thu, 30 May 2013 03:38:32 -0700 (PDT)
-X-Google-Sender-Auth: gJgX8_EMug6Rl3WRuNys6h9UDFo
-X-Gm-Message-State: ALoCoQnJ17CnHUi3IFPwcE61vlhPCnnY9dWIJXIcfGuMQ+++FChGDQhAAJWc96SzRHnYbcb+ORNU
+	id S1751247Ab3E3LbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 07:31:24 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:53992 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751113Ab3E3LbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 07:31:23 -0400
+Received: by mail-la0-f48.google.com with SMTP id fs12so119540lab.7
+        for <git@vger.kernel.org>; Thu, 30 May 2013 04:31:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=NeSomND8EVWsr7BC0oVmctIhWVsdYik62Jn291UQS5Y=;
+        b=i4lCrlwUOvlfVTljS1lNxIC1IgB4WyG2U0uCRvtL+DBopv7A8KRrRjROg7l1Ifxg2Z
+         0LmvsosdQW67mAPIg/iimpzprwVOWkgsBx3WmorVm0+IqvSNjZpWtcJgS6FGkbnua8q8
+         YOw9kB4fA11NqBJiQcZEiczoU28nBAJWyEqC/f09BgAGESWkPDC54ke/tv3BTH49v5VY
+         ERVwgKEOUMGMHuVGgfReGyc1Pe203zOUQmocKXaCD/DNn8KxcogPdgkmYW1N++UVOOJR
+         VzzWw24Qc6vzMRg3YvXF03kAoKNHtoCqAfnMUW25PapkZssPkZLl8Y9I1mi3AA8qS6p/
+         MQNA==
+X-Received: by 10.112.33.17 with SMTP id n17mr3512114lbi.72.1369913481094;
+ Thu, 30 May 2013 04:31:21 -0700 (PDT)
+Received: by 10.114.177.164 with HTTP; Thu, 30 May 2013 04:31:20 -0700 (PDT)
+In-Reply-To: <CALkWK0=ZbOy6sXOvnTNAqz_UBsUymY1CR_WczT-O3Q+18HJjzQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225956>
 
-Hi,
+On Thu, May 30, 2013 at 4:01 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Let's do one more review.
+>
+> Felipe Contreras wrote:
+>> diff --git a/contrib/related/git-related b/contrib/related/git-related
+>> new file mode 100755
+>> index 0000000..1b9b1e7
+>> --- /dev/null
+>> +++ b/contrib/related/git-related
+>> @@ -0,0 +1,120 @@
+>> +#!/usr/bin/env ruby
+>> +
+>> +# This script finds people that might be interested in a patch
+>> +# usage: git related <file>
+>> +
+>> +$since = '5-years-ago'
+>> +$min_percent = 10
+>> +
+>> +class Commit
+>> +
+>> +  attr_reader :persons
+>
+> Unless you plan to introduce many more fields (I haven't looked at the
+> later patches), you might as well implement an #each, like in Commits.
 
-I'm a fairly heavy user of the magit Emacs extension for interacting
-with my git repos. However I've noticed there are some cases where lag
-is very high. By analysing strace output of emacs calling git I found
-two commands that where particularly problematic when interrogating
-the repo:
+commit.each doesn't make sense; each what?
 
-11:00 ajb@sloy/x86_64 [work.git] >time /usr/bin/git --no-pager
-describe --long --tags
-ajb-build-test-5224-10-gfa296e6
+We could do 'commit.each_person', but why is that so better than
+commit.persons.each? It's not.
 
-real    0m5.016s
-user    0m4.364s
-sys     0m0.444s
+>> +    data.each_line do |line|
+>> +      if not msg
+>> +        case line
+>> +        when /^author ([^<>]+) <(\S+)> (.+)$/
+>> +          @persons << '%s <%s>' % [$1, $2]
+>
+> Why capture the third group when $3 is unused?
 
-11:34 ajb@sloy/x86_64 [work.git] >time /usr/bin/git --no-pager
-describe --contains HEAD
-fatal: cannot describe 'fa296e61f549a1252a65a13b2f734d7afbc7e88e'
+Completeness.
 
-real    0m4.805s
-user    0m4.388s
-sys     0m0.400s
+>> +        when /^$/
+>> +          msg = true
+>> +        end
+>> +      else
+>> +        if line =~ /^(Signed-off|Reviewed|Acked)-by: ([^<>]+) <(\S+?)>$/
+>> +          @persons << '%s <%s>' % [$2, $3]
+>
+> Why capture the first group when $1 is unused?
 
-Running with first command with the --debug flag on gives:
+You want to complicate the regex even more with:
 
-11:34 ajb@sloy/x86_64 [work.git] >time /usr/bin/git --no-pager
-describe --long --tags --debug
-searching to describe HEAD
- lightweight       10 ajb-build-test-5224
- lightweight       41 ajb-build-test-5222
- annotated        146 vnms-2-1-36-32
- annotated        155 vnms-2-1-36-31
- annotated        174 vnms-2-1-36-30
- annotated        183 vnms-2-1-36-29
- lightweight      188 vnms-2-1-36-28
- annotated        193 vnms-2-1-36-27
- annotated        206 vnms-2-1-36-26
- annotated        215 vectastar-4-2-83-5
-traversed 223 commits
-more than 10 tags found; listed 10 most recent
-gave up search at 2b69df72d47be8440e3ce4cee91b9b7ceaf8b77c
-ajb-build-test-5224-10-gfa296e6
+/^(?:Signed-off|Reviewed|Acked)-by: ([^<>]+) <(\S+?)>$/
 
-real    0m4.817s
-user    0m4.320s
-sys     0m0.464s
+For what purpose?
 
-Which has only traversed 223 before coming to a decision. This seems
-like a very low number of commits given the time it's spent doing
-this.
+>> +        end
+>> +      end
+>> +    end
+>> +    @persons.uniq!
+>> +  end
+>> +
+>> +end
+>> +
+>> +class Commits
+>> +
+>> +  def initialize
+>> +    @items = {}
+>> +  end
+>> +
+>> +  def size
+>> +    @items.size
+>> +  end
+>> +
+>> +  def each(&block)
+>> +    @items.each(&block)
+>> +  end
+>> +
+>> +  def import
+>> +    return if @items.empty?
+>> +    File.popen(%w[git cat-file --batch], 'r+') do |p|
+>
+> Don't you need rb+ to suppress the CRLF nonsense on Windows?
 
-One factor might be the size of my repo (.git is around 2.4G). Could
-this just be due to computational cost of searching through large
-packs to walk the commit chain? Is there any way to make this easier
-for git to do?
+Who knows.
 
+>> +      p.write(@items.keys.join("\n"))
+>
+> As you might have realized, the parentheses are optional everywhere
+> (except when it is required for disambiguation).  I'm merely pointing
+> it out here, because this line looks especially ugly.
+
+I suspect most Git developers would prefer the traditional function call style.
+
+>> +      p.close_write
+>> +      p.each do |line|
+>> +        if line =~ /^(\h{40}) commit (\d+)/
+>> +          id, len = $1, $2
+>
+> id, len = $1, Integer $2.  And drop the .to_i on the next line.
+
+This is way is better.
+
+>> +          data = p.read($2.to_i)
+>> +          @items[id].parse(data)
+>> +        end
+>> +      end
+>> +    end
+>> +  end
+>> +
+>> +  def get_blame(source, start, len, from)
+>> +    return if len == 0
+>> +    len ||= 1
+>
+> I asked you to use 'len =1 if not len' for clarity, but you didn't like it.
+
+git grep "||=" disagrees.
+
+>> +    File.popen(['git', 'blame', '--incremental', '-C', '-C',
+>> +               '-L', '%u,+%u' % [start, len],
+>> +               '--since', $since, from + '^',
+>> +               '--', source]) do |p|
+>> +      p.each do |line|
+>> +        if line =~ /^\h{40}/
+>> +          id = $&
+>> +          @items[id] = Commit.new(id)
+>> +        end
+>> +      end
+>> +    end
+>> +  end
+>> +
+>> +  def from_patch(file)
+>> +    from = source = nil
+>> +    File.open(file) do |f|
+>> +      f.each do |line|
+>
+> File.readlines(file).each do |line|.
+
+That's less efficient.
+
+>> +        when /^---\s+(\S+)/
+>> +          source = $1 != '/dev/null' ? $1[2..-1] : nil
+>> +        when /^@@ -(\d+)(?:,(\d+))?/
+>> +          get_blame(source, $1, $2, from) if source and from
+>
+> Useless capture.  When is len ($2) going to be nil?
+
+Junio already went over it, see the diff format.
+
+What's your objective? Block this patch from ever going in?
+
+Not a single one of these comments makes a difference at all, all of
+them can wait until after the patch is merged, many of them are a
+matter of preferences, and some of them have already been addressed as
+precisely that: disagreements in style.
 
 -- 
-Alex, homepage: http://www.bennee.com/~alex/
+Felipe Contreras
