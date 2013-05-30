@@ -1,208 +1,94 @@
-From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 6/7] diff-lib, read-tree, unpack-trees: mark cache_entry array paramters const
-Date: Thu, 30 May 2013 13:34:23 +0200
-Message-ID: <1369913664-49734-7-git-send-email-rene.scharfe@lsrfire.ath.cx>
-References: <1369913664-49734-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] Makefile: promote wildmatch to be the default fnmatch implementation
+Date: Thu, 30 May 2013 18:37:08 +0700
+Message-ID: <CACsJy8Cz5z6adg1ZUP2Lf+WL1VdNdhLot+JhONUMwQaSHCeEyA@mail.gmail.com>
+References: <1369877684-5050-1-git-send-email-pclouds@gmail.com> <7vvc61p5jw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Boyd <sboyd@codeaurora.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 30 13:35:01 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 30 13:37:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui18E-0006uB-UB
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 13:34:59 +0200
+	id 1Ui1Au-0000bc-4I
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 13:37:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933305Ab3E3Let convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 07:34:49 -0400
-Received: from india601.server4you.de ([85.25.151.105]:57606 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932568Ab3E3Led (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 07:34:33 -0400
-Received: from debian.Speedport_W_504V_Typ_A (p579BEB6E.dip0.t-ipconnect.de [87.155.235.110])
-	by india601.server4you.de (Postfix) with ESMTPSA id D1B154C6;
-	Thu, 30 May 2013 13:34:30 +0200 (CEST)
-X-Mailer: git-send-email 1.8.3
-In-Reply-To: <1369913664-49734-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
+	id S1751958Ab3E3Lhk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 07:37:40 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:65102 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751474Ab3E3Lhj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 07:37:39 -0400
+Received: by mail-ob0-f170.google.com with SMTP id ef5so279246obb.29
+        for <git@vger.kernel.org>; Thu, 30 May 2013 04:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=qdpLvMzLl+G3N9vHREMpojOaPka1sB7/EIRP+URhEjs=;
+        b=F3zh4mlgW4fS3JXDP1wYTv7LI4Bm1XayUA40x0OX3S1St8TxCLEovBa0sysA+4kTou
+         l9b0DBSjZefBQ9dlnzJ6tu0vIBa8VBQ3H5rCC9YcWejK2/c6nkifGfJgBOkk+GonrmCO
+         EfV1IWUX8deehkWGiQF/S0yLxB7pYytsXBa47mFFeqLujKlv47pDfQuYsgR4TmOCkHah
+         UV4GGLv21qNK6Em6g0Lu9+CwN+nzbgu/vexU52iAPpQiv5F8AmQhvrG7R3izpLRRyh6i
+         I5eKiY0j6qj6gz7eAH4JYA4BybvBnxd+KH+d7/uuLQjnzi7Aw8TcV6IBlGLM1pDKWp+w
+         rLug==
+X-Received: by 10.60.59.37 with SMTP id w5mr3916009oeq.7.1369913858637; Thu,
+ 30 May 2013 04:37:38 -0700 (PDT)
+Received: by 10.76.171.199 with HTTP; Thu, 30 May 2013 04:37:08 -0700 (PDT)
+In-Reply-To: <7vvc61p5jw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225966>
 
-Change the type merge_fn_t to accept the array of cache_entry pointers
-as const pointers to const pointers.  This documents the fact that the
-merge functions don't modify the cache_entry contents or replace any of
-the pointers in the array.
+On Thu, May 30, 2013 at 9:25 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> This makes git use wildmatch by default for all fnmatch() calls. Use=
+rs
+>> who want to use system fnmatch (or compat fnmatch) need to set
+>> NO_WILDMATCH flag.
+>>
+>> wildmatch is a drop-in fnmatch replacement with more features. Using
+>> wildmatch gives us a consistent behavior across platforms.
+>
+> While I agree this is a good move in the longer term in that we get
+> the often-asked-for "foo/**/*.c" match and also we have one less
+> platform differences to worry about, I somehow have a recollection
+> that we discussed that there are incompatibilities in dark corners
+> we would want to warn users about and lay a transition plan across
+> some major version bump.
 
-Only a single cast is necessary in unpack_nondirectories because adding
-two const modifiers at once is not allowed in C.  The cast is safe in
-that it doesn't mask any modfication; call_unpack_fn only needs the
-array for reading.
+I've skimmed through all wildmatch related mails in my gmail archive.
+There are differences between fnmatch versions, e.g. [1], but I don't
+think anyone would run into those cases on purpose. There were
+performance concerns [2] and they should have been addressed with
+nd/retire-fnmatch series. Originally I was worried that this new code
+might not be mature enough, but I've been running wildmatch-only git
+for quite some time, can't really complain.
 
-Signed-off-by: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- builtin/read-tree.c |  3 ++-
- diff-lib.c          |  3 ++-
- unpack-trees.c      | 21 +++++++++++++--------
- unpack-trees.h      | 14 +++++++++-----
- 4 files changed, 26 insertions(+), 15 deletions(-)
+Not really a transition plan, but maybe we could provide a runtime
+switch to return to system fnmatch when wildmatch becomes default, for
+a few cycles. This way if wildmatch turns out broken, people can
+switch back while we work on a fix.
 
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index b847486..0f5d7fe 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -80,7 +80,8 @@ static void debug_stage(const char *label, const stru=
-ct cache_entry *ce,
- 		       sha1_to_hex(ce->sha1));
- }
-=20
--static int debug_merge(struct cache_entry **stages, struct unpack_tree=
-s_options *o)
-+static int debug_merge(const struct cache_entry * const *stages,
-+		       struct unpack_trees_options *o)
- {
- 	int i;
-=20
-diff --git a/diff-lib.c b/diff-lib.c
-index 83d0cb8..b6f4b21 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -424,7 +424,8 @@ static void do_oneway_diff(struct unpack_trees_opti=
-ons *o,
-  * the fairly complex unpack_trees() semantic requirements, including
-  * the skipping, the path matching, the type conflict cases etc.
-  */
--static int oneway_diff(struct cache_entry **src, struct unpack_trees_o=
-ptions *o)
-+static int oneway_diff(const struct cache_entry * const *src,
-+		       struct unpack_trees_options *o)
- {
- 	const struct cache_entry *idx =3D src[0];
- 	const struct cache_entry *tree =3D src[1];
-diff --git a/unpack-trees.c b/unpack-trees.c
-index c5a40df..2dbc05d 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -300,7 +300,8 @@ static int apply_sparse_checkout(struct cache_entry=
- *ce, struct unpack_trees_opt
- 	return 0;
- }
-=20
--static inline int call_unpack_fn(struct cache_entry **src, struct unpa=
-ck_trees_options *o)
-+static inline int call_unpack_fn(const struct cache_entry * const *src=
-,
-+				 struct unpack_trees_options *o)
- {
- 	int ret =3D o->fn(src, o);
- 	if (ret > 0)
-@@ -397,7 +398,7 @@ static void add_same_unmerged(struct cache_entry *c=
-e,
- static int unpack_index_entry(struct cache_entry *ce,
- 			      struct unpack_trees_options *o)
- {
--	struct cache_entry *src[MAX_UNPACK_TREES + 1] =3D { NULL, };
-+	const struct cache_entry *src[MAX_UNPACK_TREES + 1] =3D { NULL, };
- 	int ret;
-=20
- 	src[0] =3D ce;
-@@ -600,7 +601,8 @@ static int unpack_nondirectories(int n, unsigned lo=
-ng mask,
- 	}
-=20
- 	if (o->merge)
--		return call_unpack_fn(src, o);
-+		return call_unpack_fn((const struct cache_entry * const *)src,
-+				      o);
-=20
- 	for (i =3D 0; i < n; i++)
- 		if (src[i] && src[i] !=3D o->df_conflict_entry)
-@@ -1574,7 +1576,8 @@ static void show_stage_entry(FILE *o,
- }
- #endif
-=20
--int threeway_merge(struct cache_entry **stages, struct unpack_trees_op=
-tions *o)
-+int threeway_merge(const struct cache_entry * const *stages,
-+		   struct unpack_trees_options *o)
- {
- 	const struct cache_entry *index;
- 	const struct cache_entry *head;
-@@ -1746,7 +1749,8 @@ int threeway_merge(struct cache_entry **stages, s=
-truct unpack_trees_options *o)
-  * "carry forward" rule, please see <Documentation/git-read-tree.txt>.
-  *
-  */
--int twoway_merge(struct cache_entry **src, struct unpack_trees_options=
- *o)
-+int twoway_merge(const struct cache_entry * const *src,
-+		 struct unpack_trees_options *o)
- {
- 	const struct cache_entry *current =3D src[0];
- 	const struct cache_entry *oldtree =3D src[1];
-@@ -1812,8 +1816,8 @@ int twoway_merge(struct cache_entry **src, struct=
- unpack_trees_options *o)
-  * Keep the index entries at stage0, collapse stage1 but make sure
-  * stage0 does not have anything there.
-  */
--int bind_merge(struct cache_entry **src,
--		struct unpack_trees_options *o)
-+int bind_merge(const struct cache_entry * const *src,
-+	       struct unpack_trees_options *o)
- {
- 	const struct cache_entry *old =3D src[0];
- 	const struct cache_entry *a =3D src[1];
-@@ -1836,7 +1840,8 @@ int bind_merge(struct cache_entry **src,
-  * The rule is:
-  * - take the stat information from stage0, take the data from stage1
-  */
--int oneway_merge(struct cache_entry **src, struct unpack_trees_options=
- *o)
-+int oneway_merge(const struct cache_entry * const *src,
-+		 struct unpack_trees_options *o)
- {
- 	const struct cache_entry *old =3D src[0];
- 	const struct cache_entry *a =3D src[1];
-diff --git a/unpack-trees.h b/unpack-trees.h
-index 5e432f5..36a73a6 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -8,7 +8,7 @@
- struct unpack_trees_options;
- struct exclude_list;
-=20
--typedef int (*merge_fn_t)(struct cache_entry **src,
-+typedef int (*merge_fn_t)(const struct cache_entry * const *src,
- 		struct unpack_trees_options *options);
-=20
- enum unpack_trees_error_types {
-@@ -77,9 +77,13 @@ struct unpack_trees_options {
- extern int unpack_trees(unsigned n, struct tree_desc *t,
- 		struct unpack_trees_options *options);
-=20
--int threeway_merge(struct cache_entry **stages, struct unpack_trees_op=
-tions *o);
--int twoway_merge(struct cache_entry **src, struct unpack_trees_options=
- *o);
--int bind_merge(struct cache_entry **src, struct unpack_trees_options *=
-o);
--int oneway_merge(struct cache_entry **src, struct unpack_trees_options=
- *o);
-+int threeway_merge(const struct cache_entry * const *stages,
-+		   struct unpack_trees_options *o);
-+int twoway_merge(const struct cache_entry * const *src,
-+		 struct unpack_trees_options *o);
-+int bind_merge(const struct cache_entry * const *src,
-+	       struct unpack_trees_options *o);
-+int oneway_merge(const struct cache_entry * const *src,
-+		 struct unpack_trees_options *o);
-=20
- #endif
---=20
-1.8.3
+> Hmph, could you (no need to hurry, though) check the previous
+> discussion and point at what we decided if we did reach any
+> conclusion to refresh our collective memory?
+
+We all seemed to agree that the replacement would be a way to go. But
+not hard decision was reached.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/207385/focus=
+=3D207540
+[2] http://thread.gmane.org/gmane.comp.version-control.git/211823/focus=
+=3D211836
+--
+Duy
