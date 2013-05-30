@@ -1,71 +1,67 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v7] Add new git-related helper to contrib
-Date: Thu, 30 May 2013 07:12:13 -0500
-Message-ID: <CAMP44s0ystM--SJgY-zgM+KKC9NKfHK_jF-w+nUN2tZ1dXmzJw@mail.gmail.com>
-References: <1369884777-7227-1-git-send-email-felipe.contreras@gmail.com>
-	<CALkWK0=ZbOy6sXOvnTNAqz_UBsUymY1CR_WczT-O3Q+18HJjzQ@mail.gmail.com>
-	<CAMP44s25vX1p1Np7yqc9_AqVBme+MCTY88hjhfWdL6KZkxgs7Q@mail.gmail.com>
-	<CALkWK0=LfhDtOAgsq2KYSCbTocf2R8FjTWg4S6jxGiGxDxeg1A@mail.gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 1/4] commit: reload cache properly
+Date: Thu, 30 May 2013 14:17:14 +0200
+Message-ID: <87ehcok6gl.fsf@linux-k42r.v.cablecom.net>
+References: <1369915136-4248-1-git-send-email-felipe.contreras@gmail.com>
+	<1369915136-4248-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 30 14:12:22 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?Q?R?= =?utf-8?Q?en=C3=A9?= Scharfe 
+	<rene.scharfe@lsrfire.ath.cx>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	"Adam Spiers" <git@adamspiers.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Stephen Boyd <sboyd@codeaurora.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 30 14:17:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui1iO-0001BR-2S
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 14:12:20 +0200
+	id 1Ui1nG-0005Aa-1x
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 14:17:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752917Ab3E3MMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 08:12:16 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:34942 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752568Ab3E3MMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 08:12:15 -0400
-Received: by mail-la0-f52.google.com with SMTP id fo13so157861lab.25
-        for <git@vger.kernel.org>; Thu, 30 May 2013 05:12:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=gkgeWv/My4WNdRjPnMLQtm4sRR5zBQCHS/QnvcqqzpQ=;
-        b=HYTr40CkYzIrsb3WijhrKhKVk+SoGujQK9qmJNay/91toenPTZgpDm6lSKG2HcUXF7
-         FXmtwidVp3byA1wMFV29rIcZCuq6On/yjauEgdiMPJps828b10q6hxqJACgN+1pfPtFL
-         P15f4ZVKovgR6PnVgrLLRZtQ37IyzHqHwGGgFhLq7SYdr2qUoCgFRWoAZSaeEMQcRuhk
-         81dknwOgwCjAn42HdPzDW7aAlaPoTeUDMnXoxD9j9wB1HcIUicB9XAMeZdN4BBoR8KdR
-         wGagfCeawVUct8343qgGEcHqCIlGR56nuOeYT978Dj8hzXJyLUAX/egDDiL5PoVqvOS2
-         Evrg==
-X-Received: by 10.112.236.70 with SMTP id us6mr3484092lbc.121.1369915933818;
- Thu, 30 May 2013 05:12:13 -0700 (PDT)
-Received: by 10.114.177.164 with HTTP; Thu, 30 May 2013 05:12:13 -0700 (PDT)
-In-Reply-To: <CALkWK0=LfhDtOAgsq2KYSCbTocf2R8FjTWg4S6jxGiGxDxeg1A@mail.gmail.com>
+	id S1752939Ab3E3MRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 08:17:18 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:37284 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751093Ab3E3MRR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 08:17:17 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 30 May
+ 2013 14:17:14 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 30 May 2013 14:17:14 +0200
+In-Reply-To: <1369915136-4248-2-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Thu, 30 May 2013 06:58:53 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225976>
 
-On Thu, May 30, 2013 at 7:08 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Felipe Contreras wrote:
->> What's your objective? Block this patch from ever going in?
->>
->> Not a single one of these comments makes a difference at all, all of
->> them can wait until after the patch is merged, many of them are a
->> matter of preferences, and some of them have already been addressed as
->> precisely that: disagreements in style.
->
-> You posted a patch, and I reviewed it.  End of story.  I never
-> explicitly or implicitly indicated that I want to block the patch, so
-> stop pulling stuff out of your arse.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-That's exactly what you are doing.
+> We are supposedly adding files, to to which cache if 'the_index' is
+> discarded?
+[...]
+>  	if (!current_head) {
+>  		discard_cache();
+> +		if (read_cache() < 0)
+> +			die(_("cannot read the index"));
+>  		return;
+>  	}
 
-Do you see any other reason for not merging this if not your comments?
+It is not obvious to me that this is a correct change.  discard_cache()
+without subsequent reloading could also legitimately be used to empty
+the index.  So if you are fixing a bug, please justify the change and
+provide a testcase to guard against it in the future.
 
 -- 
-Felipe Contreras
+Thomas Rast
+trast@{inf,student}.ethz.ch
