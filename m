@@ -1,83 +1,104 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 22/25] string_list_add_refs_by_glob(): add a comment
- about memory management
-Date: Thu, 30 May 2013 21:29:16 +0200
-Message-ID: <51A7A88C.2020307@alum.mit.edu>
-References: <1369472904-12875-1-git-send-email-mhagger@alum.mit.edu> <1369472904-12875-23-git-send-email-mhagger@alum.mit.edu> <87ppwaurfy.fsf@linux-k42r.v.cablecom.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: Poor performance of git describe in big repos
+Date: Thu, 30 May 2013 20:30:46 +0100
+Message-ID: <20130530193046.GG17475@serenity.lan>
+References: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
+ <CALkWK0ndKMZRuWgdg6djqPUGxbDAqZPcv2q0qPrv_2b=1NEM5g@mail.gmail.com>
+ <CAJ-05NNAeLUfyk8+NU8PmjKqfTcZ1NT_NPAk3M1QROtzsQKJ8g@mail.gmail.com>
+ <87ehcoeb3t.fsf@linux-k42r.v.cablecom.net>
+ <CAJ-05NOjVhb+3Cab7uQE8K3VE0Q2GhqR3FE=WzJZvSn8Djt6tw@mail.gmail.com>
+ <87ip20bfq4.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <kernel-hacker@bennee.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu May 30 21:29:27 2013
+X-From: git-owner@vger.kernel.org Thu May 30 21:31:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui8XO-0006ht-CX
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 21:29:26 +0200
+	id 1Ui8Yx-0007l1-1p
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 21:31:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758515Ab3E3T3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 15:29:22 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:46148 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753162Ab3E3T3V (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 15:29:21 -0400
-X-AuditID: 12074412-b7f216d0000008d4-86-51a7a890c17c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id AD.04.02260.098A7A15; Thu, 30 May 2013 15:29:20 -0400 (EDT)
-Received: from [192.168.69.140] (p57A24A59.dip0.t-ipconnect.de [87.162.74.89])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4UJTGXD023775
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 30 May 2013 15:29:18 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <87ppwaurfy.fsf@linux-k42r.v.cablecom.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIKsWRmVeSWpSXmKPExsUixO6iqDthxfJAgy9fZC26rnQzWTT0XmG2
-	mHd3F5PFj5YeZou7l1exO7B6XHr5nc3j9uv5zB7Pevcwely8pOzxeZNcAGsUt01SYklZcGZ6
-	nr5dAnfGtOVdLAVT2Sr2njvH2MD4l6WLkZNDQsBEYvLvx1C2mMSFe+vZuhi5OIQELjNK7Hm7
-	kwnCOcck8WDmRMYuRg4OXgFtiS/Ts0EaWARUJWY07GYDsdkEdCUW9TQzgdiiAmES75dNZQWx
-	eQUEJU7OfMIC0ioioCyxbWENyEhmgSZGidsXVoPVCAukSvz9s4kVYtdKRolJWyeBXcQpYC6x
-	c1I32FBmAR2Jd30PmCFseYntb+cwT2AUmIVkxywkZbOQlC1gZF7FKJeYU5qrm5uYmVOcmqxb
-	nJyYl5dapGuml5tZopeaUrqJERLkQjsY15+UO8QowMGoxMObkbQ8UIg1say4MvcQoyQHk5Io
-	78YFQCG+pPyUyozE4oz4otKc1OJDjBIczEoivEt7gHK8KYmVValF+TApaQ4WJXHen4vV/YQE
-	0hNLUrNTUwtSi2CyMhwcShK8UcuBGgWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJB
-	sRpfDIxWkBQP0N5OkHbe4oLEXKAoROspRl2OGT8mv2MUYsnLz0uVEudNASkSACnKKM2DWwFL
-	aa8YxYE+FuZ9vgyoigeYDuEmvQJawgS05Ik12JKSRISUVANjZGfbXcMJ3+pv7HyXYeMrGRRT
-	ufr7eeevPgsn+nTU7HS+dEngzAn5GeqJm+ddtuSvaVmm06pguvvPS9WJ37Vm1k9/ 
+	id S1759583Ab3E3Ta7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 15:30:59 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:48034 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759374Ab3E3Ta6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 15:30:58 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id BE0C0CDA595;
+	Thu, 30 May 2013 20:30:57 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CPRR8+Vhc1Xg; Thu, 30 May 2013 20:30:54 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id B1FF2CDA5D1;
+	Thu, 30 May 2013 20:30:48 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <87ip20bfq4.fsf@linux-k42r.v.cablecom.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226032>
 
-On 05/29/2013 10:21 AM, Thomas Rast wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> Since string_list_add_one_ref() adds refname to the string list, but
->> the lifetime of refname is limited, it is important that the
->> string_list passed to string_list_add_one_ref() has strdup_strings
->> set.  Document this fact.
->>
->> All current callers do the right thing.
+On Thu, May 30, 2013 at 06:21:55PM +0200, Thomas Rast wrote:
+> Alex Benn=E9e <kernel-hacker@bennee.com> writes:
+>=20
+> > On 30 May 2013 16:33, Thomas Rast <trast@inf.ethz.ch> wrote:
+> >> Alex Benn=E9e <kernel-hacker@bennee.com> writes:
+> >>
+> >>>  41.58%   git  libcrypto.so.1.0.0  [.] sha1_block_data_order_ssse=
+3
+> >>>  33.62%   git  libz.so.1.2.3.4     [.] inflate_fast
+> >>>  10.39%   git  libz.so.1.2.3.4     [.] adler32
+> >>>   2.03%   git  [kernel.kallsyms]   [k] clear_page_c
+> >>
+> >> Do you have any large blobs in the repo that are referenced direct=
+ly by
+> >> a tag?
+> >
+> > Most probably. I've certainly done a bunch of releases (which are t=
+agged) were
+> > the last thing that was updated was an FPGA image.
 > [...]
->> +/*
->> + * The list argument must have strdup_strings set on it.
->> + */
->>  void string_list_add_refs_by_glob(struct string_list *list, const char *glob)
->>  {
->>  	if (has_glob_specials(glob)) {
-> 
-> Maybe add an assert() so that this is bulletproof?
+> >> git-describe should probably be fixed to avoid loading blobs, thou=
+gh I'm
+> >> not sure off hand if we have any infrastructure to infer the type =
+of a
+> >> loose object without inflating it.  (This could probably be added =
+by
+> >> inflating only the first block.)  We do have this for packed objec=
+ts, so
+> >> at least for packed repos there's a speedup to be had.
+> >
+> > Will it be loading the blob for every commit it traverses or just o=
+nes that hit
+> > a tag? Why does it need to load the blob at all? Surely the commit
+> > tree state doesn't
+> > need to be walked down?
+>=20
+> No, my theory is that you tagged *the blobs*.  Git supports this.
 
-Good idea.  Will be added in v3.
+You can see if that is the case by doing something like this:
 
-Michael
+    eval $(git for-each-ref --shell --format '
+        test $(git cat-file -t %(objectname)^{}) =3D commit ||
+        echo %(refname);')
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+That will print out the name of any ref that doesn't point at a commit.
