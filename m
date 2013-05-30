@@ -1,68 +1,88 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 00/25] Remove assumptions about each_ref_fn arg lifetimes
-Date: Thu, 30 May 2013 21:55:31 +0200
-Message-ID: <51A7AEB3.6090309@alum.mit.edu>
-References: <1369472904-12875-1-git-send-email-mhagger@alum.mit.edu> <8761y2ura8.fsf@linux-k42r.v.cablecom.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: [PATCH 2/2] lookup_commit_reference_gently: do not read non-{tag,commit}
+Date: Thu, 30 May 2013 22:00:23 +0200
+Message-ID: <5cc40825d5b4fb3382e4c054c49adf5e6b6fe110.1369943791.git.trast@inf.ethz.ch>
+References: <2d926e4dbd218b2305f50652c00a5c1d87e81208.1369943791.git.trast@inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu May 30 21:55:41 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	=?UTF-8?q?Alex=20Benn=C3=A9e?= <kernel-hacker@bennee.com>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	"John Keeping" <john@keeping.me.uk>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 30 22:00:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ui8wm-0006WE-4u
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 21:55:40 +0200
+	id 1Ui91Z-0001Cz-77
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 22:00:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756423Ab3E3Tzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 15:55:37 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:64826 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752874Ab3E3Tzf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 15:55:35 -0400
-X-AuditID: 12074414-b7fb86d000000905-61-51a7aeb60030
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 2F.E2.02309.6BEA7A15; Thu, 30 May 2013 15:55:34 -0400 (EDT)
-Received: from [192.168.69.140] (p57A24A59.dip0.t-ipconnect.de [87.162.74.89])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r4UJtWH5024932
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 30 May 2013 15:55:33 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <8761y2ura8.fsf@linux-k42r.v.cablecom.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAKsWRmVeSWpSXmKPExsUixO6iqLtt3fJAg3W7TSy6rnQzWTT0XmG2
-	mHd3F5PFj5YeZou7l1exO7B6XHr5nc3j9uv5zB7Pevcwely8pOzxeZNcAGsUt01SYklZcGZ6
-	nr5dAnfG0hltrAUTmCsurHjP3MB4gKmLkZNDQsBE4sPnkywQtpjEhXvr2boYuTiEBC4zSjSt
-	2s8C4Zxjktj59CsrSBWvgLbE78Z3YN0sAqoSDxdOB4uzCehKLOppBouLCoRJvF82FapeUOLk
-	zCdAgzg4RASUJbYtrAGZySzQxChx+8JqsBphgQCJxgs3mUFsIYF8ieftTawg9ZwC5hIvv+iB
-	hJkFdCTe9T1ghrDlJba/ncM8gVFgFpINs5CUzUJStoCReRWjXGJOaa5ubmJmTnFqsm5xcmJe
-	XmqRroVebmaJXmpK6SZGSIiL7GA8clLuEKMAB6MSD29m0vJAIdbEsuLK3EOMkhxMSqK8gauA
-	QnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4l/YA5XhTEiurUovyYVLSHCxK4rzfFqv7CQmkJ5ak
-	ZqemFqQWwWRlODiUJHit1wI1ChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIMiNb4Y
-	GKsgKR6gvZog7bzFBYm5QFGI1lOMuhwzfkx+xyjEkpeflyolzhsAUiQAUpRRmge3ApbQXjGK
-	A30szMsEUsUDTIZwk14BLWECWvLEGmxJSSJCSqqBMdWgeZ6I24Oqc9+Tti3yYTFJ0pCrWDKl
-	RnFXo9CKKSf+TjLz/GwYOtGjZHv7qtpPCnpBb39nt2Qrarh1tNUoPv/2YorJrFWB 
+	id S1759148Ab3E3UAb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 16:00:31 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:12658 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757368Ab3E3UA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 16:00:26 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 30 May
+ 2013 22:00:23 +0200
+Received: from hexa.v.cablecom.net (46.126.8.85) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 30 May
+ 2013 22:00:24 +0200
+X-Mailer: git-send-email 1.8.3.506.g4fdeee5
+In-Reply-To: <2d926e4dbd218b2305f50652c00a5c1d87e81208.1369943791.git.trast@inf.ethz.ch>
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226034>
 
-On 05/29/2013 10:25 AM, Thomas Rast wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> I read the entire series on Monday, and give it an Ack at maybe 90%
-> confidence level -- sorry, I was short on caffeine and sleep ;-)
+lookup_commit_reference_gently unconditionally parses the object given
+to it.  This slows down git-describe a lot if you have a repository
+with large tagged blobs in it: parse_object() will read the entire
+blob and verify that its sha1 matches, only to then throw it away.
 
-Thanks very much.  I'll buy you a coffee the next time I see you :-)
+Speed it up by checking the type with sha1_object_info() prior to
+unpacking.
 
-Michael
+The reason that deref_tag() does not need the same fix is a bit
+subtle: parse_tag_buffer() does not fill the 'tagged' member of the
+tag struct if the tagged object is a blob.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Reported-by: Alex Benn=C3=A9e <kernel-hacker@bennee.com>
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+---
+ commit.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/commit.c b/commit.c
+index 888e02a..00e8d4a 100644
+--- a/commit.c
++++ b/commit.c
+@@ -31,8 +31,12 @@ static struct commit *check_commit(struct object *ob=
+j,
+ struct commit *lookup_commit_reference_gently(const unsigned char *sha=
+1,
+ 					      int quiet)
+ {
+-	struct object *obj =3D deref_tag(parse_object(sha1), NULL, 0);
+-
++	struct object *obj;
++	int type =3D sha1_object_info(sha1, NULL);
++	/* If it's neither tag nor commit, parsing the object is wasted effor=
+t */
++	if (type !=3D OBJ_TAG && type !=3D OBJ_COMMIT)
++		return NULL;
++	obj =3D deref_tag(parse_object(sha1), NULL, 0);
+ 	if (!obj)
+ 		return NULL;
+ 	return check_commit(obj, sha1, quiet);
+--=20
+1.8.3.506.g4fdeee5
