@@ -1,128 +1,73 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2 4/6] send-email: make --suppress-cc=self sanitize input
-Date: Thu, 30 May 2013 10:11:21 +0300
-Message-ID: <1369897638-27299-5-git-send-email-mst@redhat.com>
-References: <1369897638-27299-1-git-send-email-mst@redhat.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [git-users] Highlevel (but simple to implement) commands provided
+ by default for git
+Date: Thu, 30 May 2013 13:00:02 +0530
+Message-ID: <CALkWK0mU1XhsjNaQdvOC=Lq5ELgMKnL7ykH8wt8o6coST48Y6Q@mail.gmail.com>
+References: <f611150e-a12a-47f6-97f0-8aaff3045338@googlegroups.com>
+ <CAJri6_tm=tk6L1DT=A_BB25jm7b+2Uniw1uSCGtrY5_8X=t_hw@mail.gmail.com>
+ <CAMP44s0Cx-FCZLOFZxcpC86sY+H03HKBi0nKFMgit=B5XCy71g@mail.gmail.com>
+ <CALkWK0mBOB1RM+MXH+Nvos29M5vqc2yAtC__zPyowf7imfnz9Q@mail.gmail.com>
+ <CAJri6_uScqjovt5eK9f9+Z4ehtsdYQNuiEX1MERiDBEJWueAXg@mail.gmail.com>
+ <CALkWK0=5BwterP7ATM1GgFvLUs391w_MW4YrwbnvsbM6Q4_Opg@mail.gmail.com> <20130529234335.GE28153@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 30 09:11:16 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo@gmail.com>,
+	git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 30 09:30:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uhx0x-0003LS-Kh
-	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 09:11:11 +0200
+	id 1UhxJx-0000UH-1v
+	for gcvg-git-2@plane.gmane.org; Thu, 30 May 2013 09:30:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967767Ab3E3HK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 03:10:59 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:46788 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S967764Ab3E3HKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 03:10:54 -0400
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r4U7Aq88030803
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Thu, 30 May 2013 03:10:52 -0400
-Received: from redhat.com (vpn-203-5.tlv.redhat.com [10.35.203.5])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id r4U7AoYI027357;
-	Thu, 30 May 2013 03:10:51 -0400
-Content-Disposition: inline
-In-Reply-To: <1369897638-27299-1-git-send-email-mst@redhat.com>
-X-Mutt-Fcc: =sent
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+	id S967633Ab3E3Hap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 May 2013 03:30:45 -0400
+Received: from mail-bk0-f42.google.com ([209.85.214.42]:40654 "EHLO
+	mail-bk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751488Ab3E3Hao (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 May 2013 03:30:44 -0400
+Received: by mail-bk0-f42.google.com with SMTP id jk14so56010bkc.29
+        for <git@vger.kernel.org>; Thu, 30 May 2013 00:30:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=OAhjEuWtH0YUfRt88Kbc/VBqgOhqZdhzpV3XP2OO5Ac=;
+        b=wXFJNOI1kRquHDI4LNftpcvqg2RENMiBylA3o2yvLXnat4SFNs+KRRkqvVPFw5WP5+
+         Tb3tlw48XIz6eyjsaOjqQjP9xhRPVyqJjzWtRWAMNP4BRaTGyZQCFwYmhVgsT+LIY+YW
+         3rR6xdtiPIkr5aGBgSQIgmD8HQvvzlPrIFXYPIjGC4BT5/kqYi2geslULdzxTd7clHXz
+         YkzKMyo86mGWtw0ci0c0QgmwUfk0/m6FeWOtvi89MG+x5QR/MyApqJlvP4OlojVeo8J1
+         1QlHkqJwRYJdVzds5NLr4JQ4h3X++6Z2NCwrxcVquuGE59++uIKl4Fg3CVfnCyhkQN/w
+         e67g==
+X-Received: by 10.205.8.67 with SMTP id or3mr1356293bkb.172.1369899042722;
+ Thu, 30 May 2013 00:30:42 -0700 (PDT)
+Received: by 10.204.172.209 with HTTP; Thu, 30 May 2013 00:30:02 -0700 (PDT)
+In-Reply-To: <20130529234335.GE28153@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/225943>
 
---suppress-cc=self fails to filter sender address in many cases where it
-needs to be sanitized in some way, for example quoted:
-"A U. Thor" <author@example.com>
-To fix, make send-email sanitize both sender and the address it is
-compared against.
+Jonathan Nieder wrote:
+> That's detectable and could be made to error out, so it's not too bad.
 
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- git-send-email.perl | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+Sure it's possible, but I'm arguing about whether it's worth the
+effort.  There can be loops like a -> b -> c -> d -> e -> a.  Given
+that nobody has even bothered to get git to print an error message
+when a builtin command is overridden, do you think anyone will be
+interested in this?
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index a138615..92df393 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -760,6 +760,8 @@ if (!defined $sender) {
- 	$sender = $repoauthor || $repocommitter || '';
- }
- 
-+$sender = sanitize_address($sender);
-+
- my $prompting = 0;
- if (!@initial_to && !defined $to_cmd) {
- 	my $to = ask("Who should the emails be sent to (if any)? ",
-@@ -1113,10 +1115,9 @@ sub send_message {
- 	if ($cc ne '') {
- 		$ccline = "\nCc: $cc";
- 	}
--	my $sanitized_sender = sanitize_address($sender);
- 	make_message_id() unless defined($message_id);
- 
--	my $header = "From: $sanitized_sender
-+	my $header = "From: $sender
- To: $to${ccline}
- Subject: $subject
- Date: $date
-@@ -1133,7 +1134,7 @@ X-Mailer: git-send-email $gitversion
- 	}
- 
- 	my @sendmail_parameters = ('-i', @recipients);
--	my $raw_from = $sanitized_sender;
-+	my $raw_from = $sender;
- 	if (defined $envelope_sender && $envelope_sender ne "auto") {
- 		$raw_from = $envelope_sender;
- 	}
-@@ -1308,8 +1309,9 @@ foreach my $t (@files) {
- 			}
- 			elsif (/^From:\s+(.*)$/i) {
- 				($author, $author_encoding) = unquote_rfc2047($1);
-+				my $sauthor = sanitize_address($author);
- 				next if $suppress_cc{'author'};
--				next if $suppress_cc{'self'} and $author eq $sender;
-+				next if $suppress_cc{'self'} and $sauthor eq $sender;
- 				printf("(mbox) Adding cc: %s from line '%s'\n",
- 					$1, $_) unless $quiet;
- 				push @cc, $1;
-@@ -1323,7 +1325,9 @@ foreach my $t (@files) {
- 			}
- 			elsif (/^Cc:\s+(.*)$/i) {
- 				foreach my $addr (parse_address_line($1)) {
--					if (unquote_rfc2047($addr) eq $sender) {
-+					my $qaddr = unquote_rfc2047($addr);
-+					my $saddr = sanitize_address($qaddr);
-+					if ($saddr eq $sender) {
- 						next if ($suppress_cc{'self'});
- 					} else {
- 						next if ($suppress_cc{'cc'});
-@@ -1370,7 +1374,8 @@ foreach my $t (@files) {
- 			chomp;
- 			my ($what, $c) = ($1, $2);
- 			chomp $c;
--			if ($c eq $sender) {
-+			my $sc = sanitize_address($c);
-+			if ($sc eq $sender) {
- 				next if ($suppress_cc{'self'});
- 			} else {
- 				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
-@@ -1454,7 +1459,6 @@ foreach my $t (@files) {
- sub recipients_cmd {
- 	my ($prefix, $what, $cmd, $file) = @_;
- 
--	my $sanitized_sender = sanitize_address($sender);
- 	my @addresses = ();
- 	open my $fh, "-|", "$cmd \Q$file\E"
- 	    or die "($prefix) Could not execute '$cmd'";
--- 
-MST
+> A bigger problem (in my opinion) with allowing arbitrary changes to
+> the meaning of existing commands is that scripts, whether placed in
+> .sh files or given as commands to run over IRC, stop working
+> altogether.  It's nice to have commands like "git log" and "git am"
+> mean the same thing no matter what machine I am on.
+
+Yeah, I agree with this to a large extent.  It's nice to have a
+minimal set of unambiguous commands for the purposes of communicating,
+and I'm quite happy with the present state of things.
