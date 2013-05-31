@@ -1,106 +1,103 @@
-From: =?UTF-8?B?QWxleCBCZW5uw6ll?= <kernel-hacker@bennee.com>
-Subject: Re: Poor performance of git describe in big repos
-Date: Fri, 31 May 2013 09:14:49 +0100
-Message-ID: <CAJ-05NOEuxOVy7LFp_XRa_08G-Mj0x7q+RiR=u71-iyfOXpHow@mail.gmail.com>
-References: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
-	<CALkWK0ndKMZRuWgdg6djqPUGxbDAqZPcv2q0qPrv_2b=1NEM5g@mail.gmail.com>
-	<CAJ-05NNAeLUfyk8+NU8PmjKqfTcZ1NT_NPAk3M1QROtzsQKJ8g@mail.gmail.com>
-	<87ehcoeb3t.fsf@linux-k42r.v.cablecom.net>
-	<CAJ-05NOjVhb+3Cab7uQE8K3VE0Q2GhqR3FE=WzJZvSn8Djt6tw@mail.gmail.com>
-	<87ip20bfq4.fsf@linux-k42r.v.cablecom.net>
-	<20130530193046.GG17475@serenity.lan>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 2/2] lookup_commit_reference_gently: do not read non-{tag,commit}
+Date: Fri, 31 May 2013 10:16:44 +0200
+Message-ID: <87fvx37edv.fsf@linux-k42r.v.cablecom.net>
+References: <2d926e4dbd218b2305f50652c00a5c1d87e81208.1369943791.git.trast@inf.ethz.ch>
+	<5cc40825d5b4fb3382e4c054c49adf5e6b6fe110.1369943791.git.trast@inf.ethz.ch>
+	<CALkWK0nL4hPio74Hm+ctObNNFg9+=9brKXFK2ymGB=sPTAk1Hg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri May 31 10:15:13 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Alex =?utf-8?Q?Benn=C3=A9e?= <kernel-hacker@bennee.com>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	John Keeping <john@keeping.me.uk>,
+	=?utf-8?B?Tmd1?= =?utf-8?B?eeG7hW4gVGjDoWkgTmfhu41j?= Duy 
+	<pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 31 10:16:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiKUP-0002kl-4x
-	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 10:15:09 +0200
+	id 1UiKW6-0003jA-1W
+	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 10:16:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753944Ab3EaIO6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 May 2013 04:14:58 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:50677 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753888Ab3EaIOv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 May 2013 04:14:51 -0400
-Received: by mail-ob0-f172.google.com with SMTP id wo10so2466483obc.17
-        for <git@vger.kernel.org>; Fri, 31 May 2013 01:14:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=1RCtukshvp6+iWzfjpszPt5pjfpyq3ffFy0Z9kb60hA=;
-        b=fGITMEswU56IwjRlfLA2kVOvTKjMpIpsOu7PR1n7iCYZrN8QKa2ea4/5mYna2vMAqT
-         nkDzeicS/HhoFNUdT3fKhRZYnmqOfYsKwr45Qt3JOKJ8U2WlsECeef8OmgDHJQgFy1eE
-         KB5uMTvHAXj4R3WTcdGwhdOR2ZpnM48HsBKi8QUsiJZKQv9VsaOibYhHOs2Rm68Ijdci
-         54k+jIemVM+HvUsyhUEqVLvkMTF5fy+GhTHX2PFZ9mUWzZMZceUr+a9vNuj8fAnVu4Dr
-         antlZ8AH08AbAbjE9GhaBTbGiGVtUzBPzKwEDF2DLiasnhZ1SjickE4qlVFJm58rQOeg
-         E+rw==
-X-Received: by 10.60.116.202 with SMTP id jy10mr5393257oeb.82.1369988089453;
- Fri, 31 May 2013 01:14:49 -0700 (PDT)
-Received: by 10.76.98.137 with HTTP; Fri, 31 May 2013 01:14:49 -0700 (PDT)
-In-Reply-To: <20130530193046.GG17475@serenity.lan>
-X-Google-Sender-Auth: svlwR5S29smPFB1v1Hrj_qsVTUg
-X-Gm-Message-State: ALoCoQmXlgnjjhP+FW8dm2gXTp8q39AEVhibK3c6ku3WQkNszI8HsmtR8FeCfPp4b/8a/Db1oMsJ
+	id S1753540Ab3EaIQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 May 2013 04:16:50 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:21696 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751997Ab3EaIQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 May 2013 04:16:47 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 31 May
+ 2013 10:16:43 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS21.d.ethz.ch (172.31.51.111) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Fri, 31 May 2013 10:16:44 +0200
+In-Reply-To: <CALkWK0nL4hPio74Hm+ctObNNFg9+=9brKXFK2ymGB=sPTAk1Hg@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Fri, 31 May 2013 12:13:00 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226076>
 
-On 30 May 2013 20:30, John Keeping <john@keeping.me.uk> wrote:
-> On Thu, May 30, 2013 at 06:21:55PM +0200, Thomas Rast wrote:
->> Alex Benn=C3=A9e <kernel-hacker@bennee.com> writes:
->>
->> > On 30 May 2013 16:33, Thomas Rast <trast@inf.ethz.ch> wrote:
->> >> Alex Benn=C3=A9e <kernel-hacker@bennee.com> writes:
-> <snip>
->> > Will it be loading the blob for every commit it traverses or just =
-ones that hit
->> > a tag? Why does it need to load the blob at all? Surely the commit
->> > tree state doesn't
->> > need to be walked down?
->>
->> No, my theory is that you tagged *the blobs*.  Git supports this.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Wait is this the difference between annotated and non-annotated tags?
-I thought a non-annotated just acted like references to a particular
-tree state?
-
+> Thomas Rast wrote:
+>> +       struct object *obj;
+>> +       int type = sha1_object_info(sha1, NULL);
+>> +       /* If it's neither tag nor commit, parsing the object is wasted effort */
+>> +       if (type != OBJ_TAG && type != OBJ_COMMIT)
+>> +               return NULL;
+>> +       obj = deref_tag(parse_object(sha1), NULL, 0);
+[...]
+> In contrast, parse_object() first calls lookup_object() to look it up
+> in some hashtable to get the type -- the packfile idx, presumably?
+> Why don't you also do that instead of sha1_object_info()?  Or, why
+> don't you wrap parse_object() in an API that doesn't go beyond the
+> first blob check (and not execute parse_object_buffer())?
 >
-> You can see if that is the case by doing something like this:
+> Also, does this patch fix the bug Alex reported?
 >
->     eval $(git for-each-ref --shell --format '
->         test $(git cat-file -t %(objectname)^{}) =3D commit ||
->         echo %(refname);')
->
-> That will print out the name of any ref that doesn't point at a
-> commit.
+> Apologies if I've misunderstood something horribly (which does seem to
+> be the case).
 
-Hmm that didn't seem to work. But looking at the output by hand I
-certainly have a mix of tags that are commits vs tags:
+Yes, it does fix the bug.  (It's not really buggy, just slow.)
+
+However, you implicitly point out an important point: If we have the
+object, and it was already parsed (obj->parsed is set), parse_object()
+is essentially free.  But sha1_object_info is not, it will in particular
+unconditionally dig through long delta chains to discover the base type
+of an object that has already been unpacked.
 
 
-09:08 ajb@sloy/x86_64 [work.git] >git for-each-ref | grep "refs/tags"
-| grep "commit" | wc -l
-1345
-09:12 ajb@sloy/x86_64 [work.git] >git for-each-ref | grep "refs/tags"
-| grep -v "commit" | wc -l
-66
+As for your original questions: lookup_object() is "do we have it in our
+big object hashtable?" -- the one that holds many[1] objects, that Peff
+recently sped up.
 
-Unfortunately I can't just delete those tags as they do refer to known
-releases which we obviously care about. If I delete the tags on my
-local repo and test for a speed increase can I re-create them as
-annotated tag objects?
+sha1_object_info() and read_object() are in many ways parallel functions
+that do approximately the following:
 
---=20
-Alex, homepage: http://www.bennee.com/~alex/
+  check all pack indexes for this object
+  if we found a hit:
+    attempt to unpack by recursively going through deltas
+    (for _info, no need to unpack, but we still go through the delta
+    chain because the type of object is determined by the innermost
+    delta base)
+  try to load it as a loose object
+  it could have been repacked and pruned while we were looking, so:
+    reload pack index information
+    try the packs again (search indexes, then unpack)
+  complain
+
+
+[1]  blobs in particular are frequently not stored in that hash table,
+because it is an insert-only table
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
