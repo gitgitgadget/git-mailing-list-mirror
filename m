@@ -1,108 +1,88 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/2] lookup_commit_reference_gently: do not read non-{tag,commit}
-Date: Fri, 31 May 2013 12:13:00 +0530
-Message-ID: <CALkWK0nL4hPio74Hm+ctObNNFg9+=9brKXFK2ymGB=sPTAk1Hg@mail.gmail.com>
-References: <2d926e4dbd218b2305f50652c00a5c1d87e81208.1369943791.git.trast@inf.ethz.ch>
- <5cc40825d5b4fb3382e4c054c49adf5e6b6fe110.1369943791.git.trast@inf.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?QWxleCBCZW5uw6ll?= <kernel-hacker@bennee.com>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	John Keeping <john@keeping.me.uk>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri May 31 08:43:47 2013
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: [PATCH v3 0/7] Rebase topology test
+Date: Thu, 30 May 2013 23:49:40 -0700
+Message-ID: <1369982987-18954-1-git-send-email-martinvonz@gmail.com>
+References: <1369809572-24431-1-git-send-email-martinvonz@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Chris Webb <chris@arachsys.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Martin von Zweigbergk <martinvonz@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 31 08:50:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiJ3x-0005zT-O4
-	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 08:43:46 +0200
+	id 1UiJAA-0000Y3-4S
+	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 08:50:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751968Ab3EaGnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 May 2013 02:43:42 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:58800 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751161Ab3EaGnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 May 2013 02:43:41 -0400
-Received: by mail-ie0-f172.google.com with SMTP id 17so3078945iea.3
-        for <git@vger.kernel.org>; Thu, 30 May 2013 23:43:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=8Kgjo/hxDPWNYiinxFSE3OqBHhvXm0rfBDgO/bo74k8=;
-        b=gDr6zpiy71E+SJuy50GiBgfDAPVAQztk6LSvZ4Z5GiKPJvRjxW/IaRH/MJgp6FWe/Q
-         UduqBLb53P3UyvPKSb5zrzD11yLlfIbytQbcdppQLKxaCJUw1TkslcYSx74tluKyLfUD
-         L5ciNz8wYZ1I8+8SqL1KcGsDyUeR8J6XDfLAYmIrkyPYoGaUfcHUJ/Td65las7mdq3ao
-         sYcvgrzadS2ul4rKQG87o1BKcm8Y3Bm0CKmNDjdxrHbOjc2RqC6rGUotDT/xR37BgcAJ
-         UAtfm50Ha0wF9lxPQ9e3VEmtohSSa1WCDDG+U6n2tlXp5RkJIUZKF+hprAe4TU2uTH1q
-         ko7Q==
-X-Received: by 10.50.153.6 with SMTP id vc6mr1015000igb.57.1369982620605; Thu,
- 30 May 2013 23:43:40 -0700 (PDT)
-Received: by 10.64.226.135 with HTTP; Thu, 30 May 2013 23:43:00 -0700 (PDT)
-In-Reply-To: <5cc40825d5b4fb3382e4c054c49adf5e6b6fe110.1369943791.git.trast@inf.ethz.ch>
+	id S1752725Ab3EaGuG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 May 2013 02:50:06 -0400
+Received: from mail-qc0-f202.google.com ([209.85.216.202]:61414 "EHLO
+	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750837Ab3EaGuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 May 2013 02:50:04 -0400
+Received: by mail-qc0-f202.google.com with SMTP id d1so113180qcz.3
+        for <git@vger.kernel.org>; Thu, 30 May 2013 23:50:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :x-gm-message-state;
+        bh=iKBY1BlzyDnjDZxYw1/TFjvaikH07EKRcJCOQ+I+6Zk=;
+        b=P8R/1Bd5GnX8nBvXpEDyDBapfgtgqyVlKmMCTeh+Cdst9pz9UoK/ic12nrDIWD7LfP
+         yylFT/vo1jtbVnaQLa9aVFWc1o3/l3SCgXX7KGjfcoP9ij6ARUZ+IpZHse0NhYxOnTuk
+         96EdBlux+G6Qy+iYKdauh/U1CJpi69J0MnsVzul0ij8IspRfL9jBqMw9QhWRaEt1EYAg
+         7T0oXiDCU4E5pFEGSiJNShd4bT65tht62IU9p1869GCFVvNAcuurk/NxbU229r3gpnbD
+         vtSWhdPwaAT6XV9I3NOO3IjN+pClrhvvdMLt4jB/wGp6CjWso6um59SnXeRqpiaF0LR/
+         WEOw==
+X-Received: by 10.236.19.198 with SMTP id n46mr5781828yhn.8.1369983002336;
+        Thu, 30 May 2013 23:50:02 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id b23si3621204yhj.4.2013.05.30.23.50.02
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=AES128-SHA bits=128/128);
+        Thu, 30 May 2013 23:50:02 -0700 (PDT)
+Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 25A205A430F;
+	Thu, 30 May 2013 23:50:02 -0700 (PDT)
+Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
+	id 4963E100D20; Thu, 30 May 2013 23:50:01 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.674.gd17d3d2
+In-Reply-To: <1369809572-24431-1-git-send-email-martinvonz@gmail.com>
+X-Gm-Message-State: ALoCoQnmgrmJlAppuceKAiI9yEuOMNiery6XP0bfxT5fXl3KP9In8Rg3aNoy9gGJ2WXFCBEYRCLlV2F08gTlZMbVnIXNunyv55n3jJljnNa/Nk2zg6Bd2u0ts0e/NVHVaKInbJGjuSriArC/RdlvwCaTstwMoeDtt5+QXqyGgUIBhVVHb1yk20xb5v7qo75Ie2lUBThUKd4d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226050>
 
-Thomas Rast wrote:
-> diff --git a/commit.c b/commit.c
-> index 888e02a..00e8d4a 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -31,8 +31,12 @@ static struct commit *check_commit(struct object *obj,
->  struct commit *lookup_commit_reference_gently(const unsigned char *sha1,
->                                               int quiet)
->  {
-> -       struct object *obj = deref_tag(parse_object(sha1), NULL, 0);
-> -
-> +       struct object *obj;
-> +       int type = sha1_object_info(sha1, NULL);
-> +       /* If it's neither tag nor commit, parsing the object is wasted effort */
-> +       if (type != OBJ_TAG && type != OBJ_COMMIT)
-> +               return NULL;
-> +       obj = deref_tag(parse_object(sha1), NULL, 0);
->         if (!obj)
->                 return NULL;
->         return check_commit(obj, sha1, quiet);
+Patches are now expected to be dropped iff they are on upstream. I've
+also followed all of Johannes's other suggestions except for the one
+about topo-order.
 
-As Jeff points out, you've introduced an extra sha1_object_info() call
-in the common case of tag (which derefs into a commit anyway) and
-commit slowing things down.
+Martin von Zweigbergk (7):
+  add simple tests of consistency across rebase types
+  add tests for rebasing with patch-equivalence present
+  add tests for rebasing of empty commits
+  add tests for rebasing root
+  add tests for rebasing merged history
+  t3406: modernize style
+  tests: move test for rebase messages from t3400 to t3406
 
-So, my main doubt centres around how sha1_object_info() determines the
-type of the object without actually parsing it.  You have to open up
-the file and look at the fields near the top, no? (or fallback to blob
-failing that).  I am reading it:
+ t/lib-rebase.sh                   |  32 ++++
+ t/t3400-rebase.sh                 |  53 +-----
+ t/t3401-rebase-partial.sh         |  69 --------
+ t/t3404-rebase-interactive.sh     |  10 +-
+ t/t3406-rebase-message.sh         |  50 +++---
+ t/t3409-rebase-preserve-merges.sh |  53 ------
+ t/t3420-rebase-topology-linear.sh | 350 ++++++++++++++++++++++++++++++++++++++
+ t/t3425-rebase-topology-merges.sh | 252 +++++++++++++++++++++++++++
+ 8 files changed, 666 insertions(+), 203 deletions(-)
+ delete mode 100755 t/t3401-rebase-partial.sh
+ create mode 100755 t/t3420-rebase-topology-linear.sh
+ create mode 100755 t/t3425-rebase-topology-merges.sh
 
-1. It calls sha1_loose_object_info() or sha1_packed_object_info(),
-depending on whether the particular file is in-pack or not.  Lets see
-what is common between them.
-
-2. The loose counterpart seems to call unpack_sha1_header() after
-mmap'ing the file.  This ultimately ends up calling
-unpack_object_header_buffer(), which is also what the packed
-counterpart calls.
-
-3. I didn't understand what unpack_object_header_buffer() is doing.
-And'ing with some magic 0x80 and shifting by 4 bits iteratively? type
-= (c >> 4) & 7?
-
-In contrast, parse_object() first calls lookup_object() to look it up
-in some hashtable to get the type -- the packfile idx, presumably?
-Why don't you also do that instead of sha1_object_info()?  Or, why
-don't you wrap parse_object() in an API that doesn't go beyond the
-first blob check (and not execute parse_object_buffer())?
-
-Also, does this patch fix the bug Alex reported?
-
-Apologies if I've misunderstood something horribly (which does seem to
-be the case).
-
-Thanks.
+-- 
+1.8.2.674.gd17d3d2
