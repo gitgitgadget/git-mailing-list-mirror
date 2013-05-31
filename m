@@ -1,94 +1,82 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH 2/2] lookup_commit_reference_gently: do not read non-{tag,commit}
-Date: Fri, 31 May 2013 10:08:06 +0200
-Message-ID: <87sj138tcp.fsf@linux-k42r.v.cablecom.net>
-References: <2d926e4dbd218b2305f50652c00a5c1d87e81208.1369943791.git.trast@inf.ethz.ch>
-	<5cc40825d5b4fb3382e4c054c49adf5e6b6fe110.1369943791.git.trast@inf.ethz.ch>
-	<20130530212223.GA2135@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v7] Add new git-related helper to contrib
+Date: Fri, 31 May 2013 03:14:33 -0500
+Message-ID: <CAMP44s1z8CvF_K4uTn=p2c2pbjv8TKRyMo7QXR2CAqopOnyg_g@mail.gmail.com>
+References: <1369884777-7227-1-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0=ZbOy6sXOvnTNAqz_UBsUymY1CR_WczT-O3Q+18HJjzQ@mail.gmail.com>
+	<CAMP44s25vX1p1Np7yqc9_AqVBme+MCTY88hjhfWdL6KZkxgs7Q@mail.gmail.com>
+	<CAMP44s0peXDtFB31pEqF49xM8z5OtDKAWaOR65aZSkCndL2bhQ@mail.gmail.com>
+	<CALkWK0nVDBv9bfFpAJ+pzON-uD_4HQ0Bcg=CN32fgFvNJnnjgA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	"Ramkumar Ramachandra" <artagnon@gmail.com>,
-	Alex =?utf-8?Q?Benn=C3=A9e?= <kernel-hacker@bennee.com>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	"John Keeping" <john@keeping.me.uk>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 31 10:08:22 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 31 10:14:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiKNp-0007Et-NZ
-	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 10:08:22 +0200
+	id 1UiKU1-0002XQ-VG
+	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 10:14:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753283Ab3EaIIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 May 2013 04:08:17 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:22659 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752183Ab3EaIIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 May 2013 04:08:09 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 31 May
- 2013 10:08:04 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS21.d.ethz.ch (172.31.51.111) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Fri, 31 May 2013 10:08:06 +0200
-In-Reply-To: <20130530212223.GA2135@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 30 May 2013 17:22:23 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1753790Ab3EaIOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 May 2013 04:14:41 -0400
+Received: from mail-la0-f47.google.com ([209.85.215.47]:45481 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753525Ab3EaIOf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 May 2013 04:14:35 -0400
+Received: by mail-la0-f47.google.com with SMTP id fq12so1093675lab.20
+        for <git@vger.kernel.org>; Fri, 31 May 2013 01:14:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=l0W02ExGes6YxWKWV4wonSBEUF6nC5iGOGqjjKcUBAc=;
+        b=WYyuMSR6s0JF2+lqLnUUfa9yfRwgpAzpL9gaX9PMOq3mIqwPPeqA2kd3KHuvR55yUJ
+         vEwA9+SCzLjlqCTfjOJbRC8etEzLEq4OW+l3eoRxDZzWcZs16FMLu8rGNKeP/vD5pMNj
+         oksKa0qTsNMfBrUf5DHAtb2Zp7PE1K5D+dAAop67AvjMXP9dtLW6fuixGdPOJXcq97vT
+         /ItdQrmkzwVqmGKgmiSzplijkahxd6A41OIL6mPhXqzJDyLKMkY8O4U3MfrjePBUhSjo
+         EeIUTW3Irca1EV1z0Wj6QWyKSV81e8f3sTsmSqTh122zUy63jbxaNisC+hL9t8wBYYCE
+         UH3Q==
+X-Received: by 10.112.133.129 with SMTP id pc1mr2440804lbb.49.1369988073887;
+ Fri, 31 May 2013 01:14:33 -0700 (PDT)
+Received: by 10.114.177.164 with HTTP; Fri, 31 May 2013 01:14:33 -0700 (PDT)
+In-Reply-To: <CALkWK0nVDBv9bfFpAJ+pzON-uD_4HQ0Bcg=CN32fgFvNJnnjgA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226074>
 
-Jeff King <peff@peff.net> writes:
-
-> On Thu, May 30, 2013 at 10:00:23PM +0200, Thomas Rast wrote:
+On Fri, May 31, 2013 at 3:03 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Felipe Contreras wrote:
+>> I was going to make these stylistic changes to make you happy, but
+>> then I realized the only that does really make sense is to change msg
+>> = nil to msg = false, and it's not even worth to waste a thought on
+>> changes like that.
 >
->> lookup_commit_reference_gently unconditionally parses the object given
->> to it.  This slows down git-describe a lot if you have a repository
->> with large tagged blobs in it: parse_object() will read the entire
->> blob and verify that its sha1 matches, only to then throw it away.
->> 
->> Speed it up by checking the type with sha1_object_info() prior to
->> unpacking.
+> We don't have existing Ruby code in git.git to follow, so what I say
+> can obviously not have more weightage than "personal opinion".  Don't
+> do things to "make me happy"; I am nobody.  Have a good sense of style
+> and defend it instead of flaming me because you thought I was stalling
+> work.
+
+I already defended the style, only to hear the same comment again in
+the next iteration.
+
+>> So I'll move on to the next patches, hopefully Duy or Junio would have
+>> some comments of actual significance, or maybe you would too, but for
+>> the moment it seems pretty clear you are only stating opinions about
+>> what Ruby code-style you like best.
 >
-> This would speed up the case where we do not end up looking at the
-> object at all, but it will slow down the (presumably common) case where
-> we will in fact find a commit and end up parsing the object anyway.
->
-> Have you measured the impact of this on normal operations? During a
-> traversal, we spend a measurable amount of time looking up commits in
-> packfiles, and this would presumably double it.
+> I've done reviews of several iterations of this patch, and stylistic
+> comments were all that I had left:
 
-I don't think so, but admittedly I didn't measure it.
-
-The reason why it's unlikely is that this is specific to
-lookup_commit_reference_gently, which according to some grepping is
-usually done on refs or values that refs might have; e.g. on the old&new
-sides of a fetch in remote.c, or in many places in the callback of some
-variant of for_each_ref.
-
-Of course if you have a ridiculously large number of refs (and I gather
-_you_ do), this will hurt somewhat in the usual case, but speed up the
-case where there is a ref (usually a lightweight tag) directly pointing
-at a large blob.
-
-I'm not sure this can be fixed without the change you outline here:
-
-> This is not the first time I have seen this tradeoff in git.  It would
-> be nice if our object access was structured to do incremental
-> examination of the objects (i.e., store the packfile index lookup or
-> partial unpack of a loose object header, and then use that to complete
-> the next step of actually getting the contents).
-
-But in any case I see the point, I should try and gather some
-performance numbers.
+When a reviewer reaches that point, (s)he usually says: other than
+cosmetic preferences: Reviewed-by: me.
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Felipe Contreras
