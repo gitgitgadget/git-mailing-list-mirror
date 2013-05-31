@@ -1,127 +1,142 @@
-From: John Keeping <john@keeping.me.uk>
+From: =?UTF-8?B?QWxleCBCZW5uw6ll?= <kernel-hacker@bennee.com>
 Subject: Re: Poor performance of git describe in big repos
-Date: Fri, 31 May 2013 09:32:52 +0100
-Message-ID: <20130531083252.GA1072@serenity.lan>
+Date: Fri, 31 May 2013 09:40:01 +0100
+Message-ID: <CAJ-05NOdg5TvjzEMrXaPgogU5z5W6kywZhD-82eTUmvE9Hp=Lw@mail.gmail.com>
 References: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
- <CALkWK0ndKMZRuWgdg6djqPUGxbDAqZPcv2q0qPrv_2b=1NEM5g@mail.gmail.com>
- <CAJ-05NNAeLUfyk8+NU8PmjKqfTcZ1NT_NPAk3M1QROtzsQKJ8g@mail.gmail.com>
- <87ehcoeb3t.fsf@linux-k42r.v.cablecom.net>
- <CAJ-05NOjVhb+3Cab7uQE8K3VE0Q2GhqR3FE=WzJZvSn8Djt6tw@mail.gmail.com>
- <87ip20bfq4.fsf@linux-k42r.v.cablecom.net>
- <20130530193046.GG17475@serenity.lan>
- <CAJ-05NOEuxOVy7LFp_XRa_08G-Mj0x7q+RiR=u71-iyfOXpHow@mail.gmail.com>
+	<CALkWK0ndKMZRuWgdg6djqPUGxbDAqZPcv2q0qPrv_2b=1NEM5g@mail.gmail.com>
+	<CAJ-05NNAeLUfyk8+NU8PmjKqfTcZ1NT_NPAk3M1QROtzsQKJ8g@mail.gmail.com>
+	<87ehcoeb3t.fsf@linux-k42r.v.cablecom.net>
+	<CAJ-05NOjVhb+3Cab7uQE8K3VE0Q2GhqR3FE=WzJZvSn8Djt6tw@mail.gmail.com>
+	<87ip20bfq4.fsf@linux-k42r.v.cablecom.net>
+	<20130530193046.GG17475@serenity.lan>
+	<CAJ-05NOEuxOVy7LFp_XRa_08G-Mj0x7q+RiR=u71-iyfOXpHow@mail.gmail.com>
+	<87obbr5zg3.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@inf.ethz.ch>,
+Cc: John Keeping <john@keeping.me.uk>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Alex =?iso-8859-1?Q?Benn=E9e?= <kernel-hacker@bennee.com>
-X-From: git-owner@vger.kernel.org Fri May 31 10:33:15 2013
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri May 31 10:40:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiKlv-0003v8-Av
-	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 10:33:15 +0200
+	id 1UiKsr-0007do-RX
+	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 10:40:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750962Ab3EaIdM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 May 2013 04:33:12 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:54492 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750791Ab3EaIdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 May 2013 04:33:08 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 45A9622EE8;
-	Fri, 31 May 2013 09:33:07 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id C65UngKY3HAl; Fri, 31 May 2013 09:33:04 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id A7B6122F7C;
-	Fri, 31 May 2013 09:32:58 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CAJ-05NOEuxOVy7LFp_XRa_08G-Mj0x7q+RiR=u71-iyfOXpHow@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751891Ab3EaIkV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 May 2013 04:40:21 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:47727 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752121Ab3EaIkC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 May 2013 04:40:02 -0400
+Received: by mail-ob0-f169.google.com with SMTP id up14so2480011obb.28
+        for <git@vger.kernel.org>; Fri, 31 May 2013 01:40:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding:x-gm-message-state;
+        bh=dwWVGQxANuAVpJqP/7Kwa+zM/AQccwgpw9+HPhMQCjg=;
+        b=c8gQRb2JwnkIBEnUI3063bZvNFW69bDH5Ik2gvqgjj7Z4FjQOSOo2A/b/pvaESU19U
+         YxjBcmi7oNZEh/B2nSn2thVx05EuCvdwup5wLuygiRdIR3q1uGepbc0O+hkz0PvfZi3I
+         cR1lTgJZuPxLQ/ncetf7PNshLwJldVkVWMGEyit4uUvr66W3y9h8heXRIfJh1JwgqF6F
+         +1Rz9mVt7v6MCI2Q4nTVy1/U3YKWqXeJmHgDk9u2v8DcXycRQWdtR9EJezV2F+oW2qqZ
+         a7BTTB3FetHZ9lGi5Z4eIVJRicvenkqgS7vS2Zl99Ece9Bx4QOJtUMtD8Q/RaLA9wQB/
+         y7HQ==
+X-Received: by 10.182.233.227 with SMTP id tz3mr5625226obc.23.1369989601743;
+ Fri, 31 May 2013 01:40:01 -0700 (PDT)
+Received: by 10.76.98.137 with HTTP; Fri, 31 May 2013 01:40:01 -0700 (PDT)
+In-Reply-To: <87obbr5zg3.fsf@linux-k42r.v.cablecom.net>
+X-Google-Sender-Auth: whOxIaqAZJt_FWIH_3W0Kh7NQcc
+X-Gm-Message-State: ALoCoQlMXqeayXt+UyF33RgXge9fbSz40UCIaOM/hVN2b/E22D8OTQaozg2XaBd8TCtC/zLpt3U+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226082>
 
-On Fri, May 31, 2013 at 09:14:49AM +0100, Alex Benn=E9e wrote:
-> On 30 May 2013 20:30, John Keeping <john@keeping.me.uk> wrote:
-> > On Thu, May 30, 2013 at 06:21:55PM +0200, Thomas Rast wrote:
-> >> Alex Benn=E9e <kernel-hacker@bennee.com> writes:
-> >>
-> >> > On 30 May 2013 16:33, Thomas Rast <trast@inf.ethz.ch> wrote:
-> >> >> Alex Benn=E9e <kernel-hacker@bennee.com> writes:
-> > <snip>
-> >> > Will it be loading the blob for every commit it traverses or jus=
-t ones that hit
-> >> > a tag? Why does it need to load the blob at all? Surely the comm=
-it
-> >> > tree state doesn't
-> >> > need to be walked down?
-> >>
-> >> No, my theory is that you tagged *the blobs*.  Git supports this.
->=20
-> Wait is this the difference between annotated and non-annotated tags?
-> I thought a non-annotated just acted like references to a particular
-> tree state?
+On 31 May 2013 09:24, Thomas Rast <trast@inf.ethz.ch> wrote:
+> Alex Benn=C3=A9e <kernel-hacker@bennee.com> writes:
+>> On 30 May 2013 20:30, John Keeping <john@keeping.me.uk> wrote:
+>>> On Thu, May 30, 2013 at 06:21:55PM +0200, Thomas Rast wrote:
+>>>> Alex Benn=C3=A9e <kernel-hacker@bennee.com> writes:
+>>>> > On 30 May 2013 16:33, Thomas Rast <trast@inf.ethz.ch> wrote:
+> <snip>
+>>>> No, my theory is that you tagged *the blobs*.  Git supports this.
+>>
+>> Wait is this the difference between annotated and non-annotated tags=
+?
+>> I thought a non-annotated just acted like references to a particular
+>> tree state?
+>
+> A tag is just a ref.  It can point at anything, in particular also a
+> blob (=3D some file *contents*).
+>
+> An annotated tag is just a tag pointing at a "tag object".  A tag obj=
+ect
+> contains tagger name/email/date, a reference to an object, and a tag
+> message.
+>
+> The slowness I found relates to having tags that point at blobs direc=
+tly
+> (unannotated).
 
-No, this is something slightly different.  In Git there are four types
-of object: tag, commit, tree and blob.  When you have a heavyweight tag=
-,
-the tag reference points at a tag object (which in turn points at
-another object).  With a lightweight tag, the tag reference typically
-points at a commit object.
+I think you are right. I was brave (well I assumed the tags would come
+back from the upstream repo) and ran:
 
-However, there is no restriction that says that a tag object must point
-to a commit or that a lightweight tag must point at a commit - it is
-equally possible to point directly at a tree or a blob (although a lot
-less common).
+git for-each-ref | grep "refs/tags" | grep "commit" | cut -d '/' -f 3
+| xargs git tag -d
 
-Thomas is suggesting that you might have a tag that does not point at a
-commit but instead points to a blob object.
+And boom:
 
-> > You can see if that is the case by doing something like this:
-> >
-> >     eval $(git for-each-ref --shell --format '
-> >         test $(git cat-file -t %(objectname)^{}) =3D commit ||
-> >         echo %(refname);')
-> >
-> > That will print out the name of any ref that doesn't point at a
-> > commit.
->=20
-> Hmm that didn't seem to work.
+09:19 ajb@sloy/x86_64 [work.git] >time /usr/bin/git --no-pager
+describe --long --tags
+ajb-build-test-5225-2-gdc0b771
 
-You mean there was no output?  In that case it's likely that all your
-references do indeed point at commits.
+real    0m0.009s
+user    0m0.008s
+sys     0m0.000s
 
->                               But looking at the output by hand I
-> certainly have a mix of tags that are commits vs tags:
->=20
->=20
-> 09:08 ajb@sloy/x86_64 [work.git] >git for-each-ref | grep "refs/tags"
-> | grep "commit" | wc -l
-> 1345
-> 09:12 ajb@sloy/x86_64 [work.git] >git for-each-ref | grep "refs/tags"
-> | grep -v "commit" | wc -l
-> 66
+Which is much better performance. So it does look like unannotated
+tags pointing at binary blobs is the failure case.
 
-This means that you have 1345 lightweight tags and 66 heavyweight tags,
-assuming that all of the lines that don't say "commit" do say "tag".
+<snip>
+>
+> I would be more interested in this:
+>
+>   git for-each-ref | grep ' blob'
 
-By the way, I don't remember if you said which version of Git you're
-using.  If it's an older version then it's possible that something has
-changed.
+Hmmm that gives nothing. All the refs are either tag or commit
+
+> and
+>
+>   (git for-each-ref | grep ' blob' | cut -d\  -f1 | xargs -n1 git
+>cat-file blob) | wc -c
+
+However I have some big commits it seems:
+
+09:37 ajb@sloy/x86_64 [work.git] >(git for-each-ref | grep ' commit' |
+cut -d\  -f1 | xargs -n1 git cat-file commit) | wc -c
+1147231984
+
+>
+> The first tells you if you have any refs pointing at blobs.  The seco=
+nd
+> computes their total unpacked size.  My theory is that the second yie=
+lds
+> some large number (hundreds of megabytes at least).
+>
+> It would be nice if you checked, because if there turn out to be big
+> blobs, we have all the pieces and just need to assemble the best
+> solution.  Otherwise, there's something else going on and the problem
+> remains open.
+
+If you want any other numbers I'm only too happy to help. Sorry I
+can't share the repo though...
+
+--=20
+Alex, homepage: http://www.bennee.com/~alex/
