@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: [PATCH v3 1/7] add simple tests of consistency across rebase types
-Date: Thu, 30 May 2013 23:49:41 -0700
-Message-ID: <1369982987-18954-2-git-send-email-martinvonz@gmail.com>
+Subject: [PATCH v3 2/7] add tests for rebasing with patch-equivalence present
+Date: Thu, 30 May 2013 23:49:42 -0700
+Message-ID: <1369982987-18954-3-git-send-email-martinvonz@gmail.com>
 References: <1369809572-24431-1-git-send-email-martinvonz@gmail.com>
  <1369982987-18954-1-git-send-email-martinvonz@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -16,111 +16,165 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiJAH-0000co-14
-	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 08:50:17 +0200
+	id 1UiJAG-0000co-GY
+	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 08:50:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753250Ab3EaGuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 May 2013 02:50:12 -0400
-Received: from mail-gg0-f202.google.com ([209.85.161.202]:41371 "EHLO
-	mail-gg0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752094Ab3EaGuE (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753164Ab3EaGuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 May 2013 02:50:09 -0400
+Received: from mail-yh0-f73.google.com ([209.85.213.73]:57668 "EHLO
+	mail-yh0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752048Ab3EaGuE (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 31 May 2013 02:50:04 -0400
-Received: by mail-gg0-f202.google.com with SMTP id o1so112834ggn.3
+Received: by mail-yh0-f73.google.com with SMTP id a41so113525yho.2
         for <git@vger.kernel.org>; Thu, 30 May 2013 23:50:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :x-gm-message-state;
-        bh=bKNN+QHV3zJpwue1lQgFL44Un1BX05o0Z6aDJKXwNQY=;
-        b=nGcs68dniFKDjmPKYMjzIZCg4J1qvjfXpoLlTkWqudVybHp+T4L3NK5ZNaY8YkP/yT
-         AS7w1ZqNmz3//Qu/vFkwCJkZqIOGIDG1Z4FKDYQP/7/pLQlEatFdSBgLdhaySYfqlqe+
-         aZP41aTrYUjMN9f+1gzdhZ+xIip8kXm5aO30Q3vWoYzGz0UHqwhfHGqYUJgUOq1wvQfl
-         YWt8CLNY/deLUergguGXnPG4nfwYBs37blm3cax7vJ1W64UQcsBM3LcgbXvhNOeX+rBw
-         E5yreW/BwSmCGFLwILuJhGcw38b3Tg0JbXCc/MqhKxuRLdDKhkquN0hsuvwy2LYiIf0b
-         27Og==
-X-Received: by 10.236.231.10 with SMTP id k10mr5717131yhq.30.1369983003443;
+        bh=zajv2FHfVkRJOIk5rLwk84+x1Z8qSJPwsBDJZBHH0kQ=;
+        b=dMuwl95+hxk5GipqkqI9i9OZuFxCM/FsLwTll1cTzZYmDdOBD3ZSxptQe8BwFvpFEz
+         dCn+WvvurgXfXyIN81RErQ/+lVVx19kwhl8za9kEmpCGgSbePYrKO/cg0GMasUXZu1s6
+         iqTPj11qFJMHWYUFY/IuwhaevzddehPI1v6R/wEtkpcIhuP2BUzpsi9ZBAk0N4tVlyTB
+         RzdwNGwVjx8Yz0QXi2Muool5i0vFBQbd7r9o+7PXzSUQsuc1Ovv80JR/uku8o6VVh3cW
+         eO86a1VYLSCxz1yAcCG9H//PGSFzLku7nDK4qVzBCXZk21VEKjxPI6sOsi4iBhEJrNfL
+         m3Kw==
+X-Received: by 10.236.61.42 with SMTP id v30mr5806025yhc.15.1369983003450;
         Thu, 30 May 2013 23:50:03 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id y4si2042755yhi.3.2013.05.30.23.50.03
+        by gmr-mx.google.com with ESMTPS id b23si3620873yhj.4.2013.05.30.23.50.03
         for <multiple recipients>
         (version=TLSv1.1 cipher=AES128-SHA bits=128/128);
         Thu, 30 May 2013 23:50:03 -0700 (PDT)
 Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 38F8331C1B9;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 49E9D31C2DF;
 	Thu, 30 May 2013 23:50:03 -0700 (PDT)
 Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id DA3B8100D20; Thu, 30 May 2013 23:50:02 -0700 (PDT)
+	id E8906100576; Thu, 30 May 2013 23:50:02 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.674.gd17d3d2
 In-Reply-To: <1369982987-18954-1-git-send-email-martinvonz@gmail.com>
-X-Gm-Message-State: ALoCoQlflmFuZ1AW8i4sBS8sC2fKSJx6xYqlUjxaYznLGXUGMvs9Jo48gTQl2yyT53FBZDTyOOn2t/VazOY0QzE/LW8vhBcY0V1A4yAcou+cFXjGP5znvTUJPsndDksuma/zppMDZ+m0hh3iMnyXUnxzpMPYGzs9TfCvNNtNJd+tf/mDbTIcfKEfJDZd2QzWg/IWCTNJ91aS
+X-Gm-Message-State: ALoCoQm33Al3wAqMNHc51YLCfJBJLlbyZ3Pc+Xgyv+jJUIP2fNXanIgzB3Sn/wwVckfVoKfk+RU+KMQKI3UaUchfUPniKQGEz1oMSIyIjnXpTWXhmM1L0iafP8fjfueokwKUFI+3YF7oSdCQV4TyeOLtiBaDmD4HW1/93ZWni82YLf6fhT/JQcaezJkqmjQYf7QmdVp2RkKG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226052>
 
-Helped-by: Johannes Sixt <j6t@kdbg.org>
 ---
- t/lib-rebase.sh                   | 15 ++++++++
- t/t3420-rebase-topology-linear.sh | 78 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 93 insertions(+)
- create mode 100755 t/t3420-rebase-topology-linear.sh
+ t/lib-rebase.sh                   | 17 ++++++++
+ t/t3420-rebase-topology-linear.sh | 85 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 102 insertions(+)
 
 diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index 6ccf797..62b3887 100644
+index 62b3887..16eeb1c 100644
 --- a/t/lib-rebase.sh
 +++ b/t/lib-rebase.sh
-@@ -65,3 +65,18 @@ EOF
- 	test_set_editor "$(pwd)/fake-editor.sh"
- 	chmod a+x fake-editor.sh
+@@ -80,3 +80,20 @@ reset_rebase () {
+ 	git reset --hard &&
+ 	git clean -f
  }
 +
-+# checks that the revisions in "$2" represent a linear range with the
-+# subjects in "$1"
-+test_linear_range () {
-+	! { git log --format=%p "$2" | sane_grep " " ;} &&
-+	expected=$1
-+	set -- $(git log --reverse --format=%s "$2")
-+	test "$expected" = "$*"
++cherry_pick () {
++	git cherry-pick -n "$2" &&
++	git commit -m "$1" &&
++	git tag "$1"
 +}
 +
-+reset_rebase () {
-+	git rebase --abort # may fail; ignore exit code
-+	git reset --hard &&
-+	git clean -f
++revert () {
++	git revert -n "$2" &&
++	git commit -m "$1" &&
++	git tag "$1"
++}
++
++make_empty () {
++	git commit --allow-empty -m "$1" &&
++	git tag "$1"
 +}
 diff --git a/t/t3420-rebase-topology-linear.sh b/t/t3420-rebase-topology-linear.sh
-new file mode 100755
-index 0000000..c4b32db
---- /dev/null
+index c4b32db..75cc476 100755
+--- a/t/t3420-rebase-topology-linear.sh
 +++ b/t/t3420-rebase-topology-linear.sh
-@@ -0,0 +1,78 @@
-+#!/bin/sh
-+
-+test_description='basic rebase topology tests'
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
-+# a---b---c
+@@ -75,4 +75,89 @@ test_run_rebase success -m
+ test_run_rebase success -i
+ test_run_rebase success -p
+ 
++#       f
++#      /
++# a---b---c---g---h
 +#      \
-+#       d---e
-+test_expect_success 'setup' '
-+	test_commit a &&
-+	test_commit b &&
-+	test_commit c &&
++#       d---G---i
++#
++# uppercase = cherry-picked
++# h = reverted g
++#
++# Reverted patches are there for tests to be able to check if a commit
++# that introduced the same change as another commit is
++# dropped. Without reverted commits, we could get false positives
++# because applying the patch succeeds, but simply results in no
++# changes.
++test_expect_success 'setup of linear history for range selection tests' '
++	git checkout c &&
++	test_commit g &&
++	revert h g &&
++	git checkout d &&
++	cherry_pick G g &&
++	test_commit i &&
 +	git checkout b &&
-+	test_commit d &&
-+	test_commit e
++	test_commit f
 +'
 +
 +test_run_rebase () {
 +	result=$1
 +	shift
-+	test_expect_$result "simple rebase $*" "
++	test_expect_$result "rebase $* drops patches in upstream" "
 +		reset_rebase &&
-+		git rebase $* c e &&
-+		test_cmp_rev c HEAD~2 &&
-+		test_linear_range 'd e' c..
++		git rebase $* h i &&
++		test_cmp_rev h HEAD~2 &&
++		test_linear_range 'd i' h..
++	"
++}
++test_run_rebase success ''
++test_run_rebase failure -m
++test_run_rebase success -i
++test_run_rebase success -p
++
++test_run_rebase () {
++	result=$1
++	shift
++	test_expect_$result "rebase $* can drop last patch if in upstream" "
++		reset_rebase &&
++		git rebase $* h G &&
++		test_cmp_rev h HEAD^ &&
++		test_linear_range 'd' h..
++	"
++}
++test_run_rebase success ''
++test_run_rebase failure -m
++test_run_rebase success -i
++test_run_rebase success -p
++
++test_run_rebase () {
++	result=$1
++	shift
++	test_expect_$result "rebase $* --onto drops patches in upstream" "
++		reset_rebase &&
++		git rebase $* --onto f h i &&
++		test_cmp_rev f HEAD~2 &&
++		test_linear_range 'd i' f..
++	"
++}
++test_run_rebase success ''
++test_run_rebase failure -m
++test_run_rebase success -i
++test_run_rebase success -p
++
++test_run_rebase () {
++	result=$1
++	shift
++	test_expect_$result "rebase $* --onto does not drop patches in onto" "
++		reset_rebase &&
++		git rebase $* --onto h f i &&
++		test_cmp_rev h HEAD~3 &&
++		test_linear_range 'd G i' h..
 +	"
 +}
 +test_run_rebase success ''
@@ -128,50 +182,6 @@ index 0000000..c4b32db
 +test_run_rebase success -i
 +test_run_rebase success -p
 +
-+test_run_rebase () {
-+	result=$1
-+	shift
-+	test_expect_$result "rebase $* is no-op if upstream is an ancestor" "
-+		reset_rebase &&
-+		git rebase $* b e &&
-+		test_cmp_rev e HEAD
-+	"
-+}
-+test_run_rebase success ''
-+test_run_rebase success -m
-+test_run_rebase success -i
-+test_run_rebase success -p
-+
-+test_run_rebase () {
-+	result=$1
-+	shift
-+	test_expect_$result "rebase $* -f rewrites even if upstream is an ancestor" "
-+		reset_rebase &&
-+		git rebase $* -f b e &&
-+		! test_cmp_rev e HEAD &&
-+		test_cmp_rev b HEAD~2 &&
-+		test_linear_range 'd e' b..
-+	"
-+}
-+test_run_rebase success ''
-+test_run_rebase success -m
-+test_run_rebase success -i
-+test_run_rebase failure -p
-+
-+test_run_rebase () {
-+	result=$1
-+	shift
-+	test_expect_$result "rebase $* fast-forwards if an ancestor of upstream" "
-+		reset_rebase &&
-+		git rebase $* e b &&
-+		test_cmp_rev e HEAD
-+	"
-+}
-+test_run_rebase success ''
-+test_run_rebase success -m
-+test_run_rebase success -i
-+test_run_rebase success -p
-+
-+test_done
+ test_done
 -- 
 1.8.2.674.gd17d3d2
