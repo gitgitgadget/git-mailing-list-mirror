@@ -1,132 +1,112 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [RFC] reflog: show committer date in verbose mode
-Date: Fri, 31 May 2013 09:44:53 +0800
-Message-ID: <c05d3472f28695a10154cda8ed2c973baf5e20b7.1369964641.git.worldhello.net@gmail.com>
+Subject: Re: [RFC] reflog: show committer date in verbose mode
+Date: Fri, 31 May 2013 09:52:15 +0800
+Message-ID: <CANYiYbG0Wy1kL7p6GfzBxfTGFJon21Ob5VVno=N5Wf2vqwxchA@mail.gmail.com>
+References: <c05d3472f28695a10154cda8ed2c973baf5e20b7.1369964641.git.worldhello.net@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=GB2312
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Jiang Xin <worldhello.net@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 31 03:45:30 2013
+X-From: git-owner@vger.kernel.org Fri May 31 03:52:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiEPJ-0002DD-JL
-	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 03:45:29 +0200
+	id 1UiEVx-00058E-AF
+	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 03:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751469Ab3EaBpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 May 2013 21:45:09 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:59169 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751210Ab3EaBpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 May 2013 21:45:07 -0400
-Received: by mail-pd0-f179.google.com with SMTP id q11so1349704pdj.10
-        for <git@vger.kernel.org>; Thu, 30 May 2013 18:45:07 -0700 (PDT)
+	id S1751407Ab3EaBwS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 May 2013 21:52:18 -0400
+Received: from mail-wg0-f45.google.com ([74.125.82.45]:38913 "EHLO
+	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750842Ab3EaBwQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 May 2013 21:52:16 -0400
+Received: by mail-wg0-f45.google.com with SMTP id n12so797049wgh.12
+        for <git@vger.kernel.org>; Thu, 30 May 2013 18:52:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=V2FUMVbAiIiUmmysF3KdpfiQEN+QoyjKmWdnYRdBYbI=;
-        b=Dy2llQA4dkU+qwres0QZTZcBazFoBT3+cosTGNksbfBIhh5cJJw/eMNTrCY0fO3WJK
-         WdWEBv7Od0mT0u5+eSwzq8geVSyOOdZk5J8Kw7Nb65LcvCQEzYV1reyTjVdw9XEQEvoq
-         AGN6/9VKGiSeWbhrnzwT6oKvf6HtlcOLUAfP+E7CegJ5Y39OKPpsl/E9bd06ScYvR/HG
-         T7eMNKX+hIclb0WNX1kzCvx6wDXu7/xbLUT7Q9MggA8TByZvQXjpwjJKKVG2BNfmxcaC
-         4GWfFyrT5ZAc3JUqspewA+sYS2gea5ED7tizCD+uvntg6YRgJTemevSXwcVPIq6Lmaw2
-         foaw==
-X-Received: by 10.68.217.197 with SMTP id pa5mr10538380pbc.127.1369964707118;
-        Thu, 30 May 2013 18:45:07 -0700 (PDT)
-Received: from localhost.localdomain ([114.248.151.127])
-        by mx.google.com with ESMTPSA id xu10sm47248032pab.3.2013.05.30.18.45.04
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 30 May 2013 18:45:06 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.466.g52d8e0f
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=kW5ReG5bnbFcIv7YXR4gpgK96bRPnEuuMZPEfZu6VeY=;
+        b=UuQqCnXVZFGdTde2/24KwyhtJdFvHXa3XPR3lXIB68kNMyOP08IxQfUVPWsL7zFyaf
+         nl5oji3JgSirck5Bdd1nFkumbgicFiZfBReDQKrzNv0P7/DpJXbsusiaqa2LEf8EvlYc
+         0sV72mF3TrA4XW2nFr776nuPCynCNgPmholig+6BNb2Si1COCDcBiT0upZMfDw1jaTXu
+         3OB1XElt3vzpbDpV+Rkjd1iwsyuEzCn4KN1RsymiKQgViEhIzn0Zv/k80itYj74fKM52
+         UHvEW7ybjUWQO7d/qh45BWNsL0SmTb3TjkthVueXYuJjGIRUDzjZ+ma1GlbRY5XPckTo
+         x5Ow==
+X-Received: by 10.180.9.80 with SMTP id x16mr1048560wia.63.1369965135348; Thu,
+ 30 May 2013 18:52:15 -0700 (PDT)
+Received: by 10.194.176.129 with HTTP; Thu, 30 May 2013 18:52:15 -0700 (PDT)
+In-Reply-To: <c05d3472f28695a10154cda8ed2c973baf5e20b7.1369964641.git.worldhello.net@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226044>
 
-By default, reflog won't show committer date and for some cases won't
-show commit log either. It will be helpful to show them all by passing
-a more complicated pretty formatter to `git reflog` like this:
+2013/5/31 Jiang Xin <worldhello.net@gmail.com>:
+> By default, reflog won't show committer date and for some cases won't
+> show commit log either. It will be helpful to show them all by passin=
+g
+> a more complicated pretty formatter to `git reflog` like this:
+>
+>     $ git reflog show \
+>       --pretty=3D"%Cred%h%Creset %gd: %gs%n  >> %Cblue%ci (%cr)%Crese=
+t: %s"
+>
 
-    $ git reflog show \
-      --pretty="%Cred%h%Creset %gd: %gs%n  >> %Cblue%ci (%cr)%Creset: %s"
+=46or example:
 
-It will be nice to add this pretty formatter automatically when run
-`git reflog` in verbose mode. Also add new flag "verbose" to rev_info.
+$ git reflog show master
+edca41 master@{0}: merge kernel/master: Fast-forward
+5e49f master@{1}: merge kernel/master: Fast-forward
+de3a5 master@{2}: merge kernel/master: Fast-forward
+0c2b1 master@{3}: merge kernel/master: Fast-forward
+b387c master@{4}: merge kernel/master: Fast-forward
+9b795 master@{5}: merge kernel/master: Fast-forward
+4dcdc master@{6}: merge jx/zh_CN: Fast-forward
+a09ab0 master@{7}: merge de-ralfth/master: Fast-forward
+674c5
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
----
- builtin/log.c | 31 +++++++++++++++++++++++++++++++
- revision.c    |  1 +
- revision.h    |  1 +
- 3 files changed, 33 insertions(+)
+$ git reflog show -v -v master
+edca41 master@{0}: merge kernel/master: Fast-forward
+    >> Fri, 24 May 2013 11:34:46 -0700 (6 days ago), by Junio C
+Hamano: Git 1.8.3
+5e49f master@{1}: merge kernel/master: Fast-forward
+    >> Tue, 21 May 2013 09:33:24 -0700 (9 days ago), by Felipe
+Contreras: remote-hg: fix order of configuration comments
+de3a5 master@{2}: merge kernel/master: Fast-forward
+    >> Fri, 17 May 2013 12:19:20 -0700 (13 days ago), by Junio C
+Hamano: Git 1.8.3-rc3
+0c2b1 master@{3}: merge kernel/master: Fast-forward
+    >> Wed, 15 May 2013 14:58:56 -0700 (2 weeks ago), by Junio C
+Hamano: Merge branch 'fc/remote-hg' (early part)
+b387c master@{4}: merge kernel/master: Fast-forward
+    >> Thu, 9 May 2013 13:32:54 -0700 (3 weeks ago), by Junio C
+Hamano: Sync with v1.8.2.3
+9b795 master@{5}: merge kernel/master: Fast-forward
+    >> Tue, 7 May 2013 22:50:05 -0700 (3 weeks ago), by Junio C
+Hamano: Update draft release notes for 1.8.3
+4dcdc master@{6}: merge jx/zh_CN: Fast-forward
+    >> Wed, 8 May 2013 08:13:32 +0800 (3 weeks ago), by Jiang Xin:
+l10n: zh_CN.po: translate 44 messages (2080t0f0u)
+a09ab0 master@{7}: merge de-ralfth/master: Fast-forward
+    >> Tue, 7 May 2013 19:28:19 +0200 (3 weeks ago), by Ralf Thielow:
+l10n: de.po: translate 44 new messages
+674c5 :
+    >> Wed, 1 May 2013 19:49:18 +0800 (4 weeks ago), by Jiang Xin:
+Merge remote-tracking branch 'vi-vnwildman/master'
 
-diff --git a/builtin/log.c b/builtin/log.c
-index dd3f10..fd213 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -615,6 +615,37 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
- 	rev.use_terminator = 1;
- 	rev.always_show_header = 1;
- 	cmd_log_init_finish(argc, argv, prefix, &rev, &opt);
-+	if (rev.verbose && !rev.pretty_given) {
-+		struct strbuf formatter = STRBUF_INIT;
-+		rev.verbose_header = 1;
-+		rev.pretty_given = 1;
-+		strbuf_addf(&formatter, "%s%%h%s %%gd: %%gs%%n",
-+			    diff_get_color_opt(&rev.diffopt, DIFF_COMMIT),
-+			    diff_get_color_opt(&rev.diffopt, DIFF_RESET));
-+		switch (rev.verbose) {
-+		case 1:
-+			strbuf_addf(&formatter, "    >> %s%%ci%s (%s%%cr%s)",
-+				    diff_get_color_opt(&rev.diffopt, DIFF_METAINFO),
-+				    diff_get_color_opt(&rev.diffopt, DIFF_RESET),
-+				    diff_get_color_opt(&rev.diffopt, DIFF_METAINFO),
-+				    diff_get_color_opt(&rev.diffopt, DIFF_RESET));
-+			strbuf_addstr(&formatter, ": %s");
-+			break;
-+		default:
-+			strbuf_addf(&formatter, "    >> %s%%cD%s (%s%%cr%s)",
-+				    diff_get_color_opt(&rev.diffopt, DIFF_METAINFO),
-+				    diff_get_color_opt(&rev.diffopt, DIFF_RESET),
-+				    diff_get_color_opt(&rev.diffopt, DIFF_METAINFO),
-+				    diff_get_color_opt(&rev.diffopt, DIFF_RESET));
-+			strbuf_addf(&formatter, ", by %s%%an%s",
-+				    diff_get_color_opt(&rev.diffopt, DIFF_METAINFO),
-+				    diff_get_color_opt(&rev.diffopt, DIFF_RESET));
-+			strbuf_addstr(&formatter, ": %s");
-+			break;
-+		}
-+		get_commit_format(formatter.buf, &rev);
-+		strbuf_release(&formatter);
-+	}
- 
- 	return cmd_log_walk(&rev);
- }
-diff --git a/revision.c b/revision.c
-index 518cd..f7483 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1514,6 +1514,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->combine_merges = 1;
- 	} else if (!strcmp(arg, "-v")) {
- 		revs->verbose_header = 1;
-+		revs->verbose++;
- 	} else if (!strcmp(arg, "--pretty")) {
- 		revs->verbose_header = 1;
- 		revs->pretty_given = 1;
-diff --git a/revision.h b/revision.h
-index a313a..032ec 100644
---- a/revision.h
-+++ b/revision.h
-@@ -119,6 +119,7 @@ struct rev_info {
- 			show_notes_given:1,
- 			show_signature:1,
- 			pretty_given:1,
-+			verbose:4,
- 			abbrev_commit:1,
- 			abbrev_commit_given:1,
- 			use_terminator:1,
--- 
-1.8.3.466.g52d8e0f
+
+--=20
+=BD=AF=F6=CE
+
+=B1=B1=BE=A9=C8=BA=D3=A2=BB=E3=D0=C5=CF=A2=BC=BC=CA=F5=D3=D0=CF=DE=B9=AB=
+=CB=BE
+=D3=CA=BC=FE: worldhello.net@gmail.com
+=CD=F8=D6=B7: http://www.ossxp.com/
+=B2=A9=BF=CD: http://www.worldhello.net/
+=CE=A2=B2=A9: http://weibo.com/gotgit/
+=B5=E7=BB=B0: 18601196889
