@@ -1,80 +1,82 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] lookup_commit_reference_gently: do not read
- non-{tag,commit}
-Date: Fri, 31 May 2013 12:00:20 -0400
-Message-ID: <20130531160020.GA1365@sigill.intra.peff.net>
-References: <2d926e4dbd218b2305f50652c00a5c1d87e81208.1369943791.git.trast@inf.ethz.ch>
- <5cc40825d5b4fb3382e4c054c49adf5e6b6fe110.1369943791.git.trast@inf.ethz.ch>
- <20130530212223.GA2135@sigill.intra.peff.net>
- <87sj138tcp.fsf@linux-k42r.v.cablecom.net>
+Subject: Re: Poor performance of git describe in big repos
+Date: Fri, 31 May 2013 12:17:10 -0400
+Message-ID: <20130531161710.GB1365@sigill.intra.peff.net>
+References: <CAJ-05NNAeLUfyk8+NU8PmjKqfTcZ1NT_NPAk3M1QROtzsQKJ8g@mail.gmail.com>
+ <87ehcoeb3t.fsf@linux-k42r.v.cablecom.net>
+ <CAJ-05NOjVhb+3Cab7uQE8K3VE0Q2GhqR3FE=WzJZvSn8Djt6tw@mail.gmail.com>
+ <87ip20bfq4.fsf@linux-k42r.v.cablecom.net>
+ <20130530193046.GG17475@serenity.lan>
+ <CAJ-05NOEuxOVy7LFp_XRa_08G-Mj0x7q+RiR=u71-iyfOXpHow@mail.gmail.com>
+ <87obbr5zg3.fsf@linux-k42r.v.cablecom.net>
+ <CAJ-05NOdg5TvjzEMrXaPgogU5z5W6kywZhD-82eTUmvE9Hp=Lw@mail.gmail.com>
+ <87y5av4jvj.fsf@linux-k42r.v.cablecom.net>
+ <87txlj30n4.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Alex =?utf-8?Q?Benn=C3=A9e?= <kernel-hacker@bennee.com>,
-	Antoine Pelisse <apelisse@gmail.com>,
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <kernel-hacker@bennee.com>,
 	John Keeping <john@keeping.me.uk>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri May 31 18:00:29 2013
+X-From: git-owner@vger.kernel.org Fri May 31 18:17:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiRki-0006gr-DU
-	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 18:00:28 +0200
+	id 1UiS0z-0008KO-SJ
+	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 18:17:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756728Ab3EaQAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 May 2013 12:00:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59417 "EHLO peff.net"
+	id S1756872Ab3EaQRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 May 2013 12:17:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59536 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752843Ab3EaQAX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 May 2013 12:00:23 -0400
-Received: (qmail 16176 invoked by uid 102); 31 May 2013 16:01:05 -0000
+	id S1756761Ab3EaQRN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 May 2013 12:17:13 -0400
+Received: (qmail 17084 invoked by uid 102); 31 May 2013 16:17:55 -0000
 Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 31 May 2013 11:01:05 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 31 May 2013 12:00:20 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 31 May 2013 11:17:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 31 May 2013 12:17:10 -0400
 Content-Disposition: inline
-In-Reply-To: <87sj138tcp.fsf@linux-k42r.v.cablecom.net>
+In-Reply-To: <87txlj30n4.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226095>
 
-On Fri, May 31, 2013 at 10:08:06AM +0200, Thomas Rast wrote:
+On Fri, May 31, 2013 at 12:27:11PM +0200, Thomas Rast wrote:
 
-> > Have you measured the impact of this on normal operations? During a
-> > traversal, we spend a measurable amount of time looking up commits in
-> > packfiles, and this would presumably double it.
+> Thomas Rast <trast@inf.ethz.ch> writes:
 > 
-> I don't think so, but admittedly I didn't measure it.
+> > However, if that turns out to be the culprit, it's not fixable
+> > currently[1].  Having commits with insanely long messages is just, well,
+> > insane.
+> >
+> > [1]  unless we do a major rework of the loading infrastructure, so that
+> > we can teach it to load only the beginning of a commit as long as we are
+> > only interested in parents and such
 > 
-> The reason why it's unlikely is that this is specific to
-> lookup_commit_reference_gently, which according to some grepping is
-> usually done on refs or values that refs might have; e.g. on the old&new
-> sides of a fetch in remote.c, or in many places in the callback of some
-> variant of for_each_ref.
+> Actually, Peff, doesn't your commit parent/tree pointer caching give us
+> this for free?
 
-Yeah, I saw that the "_gently" form backs some of the other forms
-(non-gently, lookup_commit_or_die) and was worried that we would use it
-as part of the revision traversal to find parents. But we don't, of
-course; we use lookup_commit, because we would not accept a parent that
-is a tag pointing to a commit.
+It does. You can test it from the "jk/metapacks" branch at
+git://github.com/peff/git. After building, you'd need to do:
 
-So I think it probably won't matter in any sane case.
+  $ git gc
+  $ git metapack --all --commits
 
-> Of course if you have a ridiculously large number of refs (and I gather
-> _you_ do), this will hurt somewhat in the usual case, but speed up the
-> case where there is a ref (usually a lightweight tag) directly pointing
-> at a large blob.
+in the target repository. You can check that it's working because "git
+rev-list --all --count" should be an order of magnitude faster. You may
+need to add "save_commit_buffer = 0" in any commands you are checking,
+though, as the optimization can only kick in if parse_commit does not
+want to save the buffer as a side effect.
 
-In my large-ref cases, there are often a lot of duplicate refs anyway
-(e.g., many forks of a project having the same tags). So usually the
-right thing there is to use lookup_object to see if we have the object
-already anyway. parse_object has this optimization, but we can add it
-into sha1_object_info, too, if it turns out to be a problem.
+I also looked into trying to just read the beginning part of a commit[1],
+but it turned out not to be all that much of an improvement.
 
 -Peff
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/212301
