@@ -1,103 +1,83 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
-Date: Fri, 31 May 2013 20:40:51 +0100
-Message-ID: <20130531194051.GC1072@serenity.lan>
-References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org>
- <51A7A73C.6070103@web.de>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: git daemon --access-hook problem
+Date: Fri, 31 May 2013 16:22:38 -0400
+Message-ID: <CAPZPVFZDHHGyHhzBVVK6jS=XhEd2+JpmBT8ofiGOww8vuLUWWw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri May 31 21:41:06 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 31 22:22:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiVCD-0000sI-CN
-	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 21:41:05 +0200
+	id 1UiVqW-00067M-Ix
+	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 22:22:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755282Ab3EaTlB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 May 2013 15:41:01 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:47764 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754845Ab3EaTk7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 May 2013 15:40:59 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 2928B60650D;
-	Fri, 31 May 2013 20:40:59 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -11
-X-Spam-Level: 
-X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Knvis7roPnpX; Fri, 31 May 2013 20:40:58 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 449FE606507;
-	Fri, 31 May 2013 20:40:53 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <51A7A73C.6070103@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754281Ab3EaUWk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 May 2013 16:22:40 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:61739 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754054Ab3EaUWi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 May 2013 16:22:38 -0400
+Received: by mail-ie0-f178.google.com with SMTP id f4so5032609iea.23
+        for <git@vger.kernel.org>; Fri, 31 May 2013 13:22:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=oimfKWeOx6t032h27Iy7AM6C6eqBAsyJkjM50Zy0DTY=;
+        b=kKvM7cvMF5x3UsyUTC7h7W11JT8DJ05tS6/R/0RRw/psIleAXIGUN/KrwxdV6I6y7E
+         RAJwRaW9R0XmRWt7w5aExXR3oqITmWWdRWNFRDboKz1x3jo2+2mBsf+I61GX244EPNPT
+         O3x207GytQfhKpiPBQzVZmJtNgTvv7ZLr1BxWsqxWOCK+bOhil/Y5/WyxTtiTo28furE
+         Me9gzhndA80u99G3CY2pQJdUFWgBzB9wRjlJaJ3V9LXvNyqNZjlIoTEHht9eWZD7XR2v
+         6VsvJ2AMM4lqwWu9qBqvjNyx/ijkspx034Ns8RW3a8VvM1mOCUjkx9HBS3K1xu9XXN9O
+         mAoA==
+X-Received: by 10.50.80.101 with SMTP id q5mr2578360igx.2.1370031758445; Fri,
+ 31 May 2013 13:22:38 -0700 (PDT)
+Received: by 10.43.85.7 with HTTP; Fri, 31 May 2013 13:22:38 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226097>
 
-On Thu, May 30, 2013 at 09:23:40PM +0200, Jens Lehmann wrote:
-> Am 30.05.2013 01:58, schrieb Junio C Hamano:
-> > * jk/submodule-subdirectory-ok (2013-04-24) 3 commits
-> >   (merged to 'next' on 2013-04-24 at 6306b29)
-> >  + submodule: fix quoting in relative_path()
-> >   (merged to 'next' on 2013-04-22 at f211e25)
-> >  + submodule: drop the top-level requirement
-> >  + rev-parse: add --prefix option
-> > 
-> >  Allow various subcommands of "git submodule" to be run not from the
-> >  top of the working tree of the superproject.
-> 
-> The summary and status commands are looking good in this version
-> (they are now showing the submodule directory paths relative to
-> the current directory). Apart from that my other remarks from
-> gmane $221575 still seem to apply. And this series has only tests
-> for status, summary and add (and that just with an absolute URL),
-> I'd rather like to see a test for each submodule command (and a
-> relative add to) to document the desired behavior.
+Hi,
 
-To summarize what I think are the outstanding issues from your email:
+I'm trying to test this new feature and having problems getting any
+results in the following scenario:
 
-* Should '$sm_path' be relative in "submodule foreach"?
-* "submodule add" with a relative path
-* "submodule init" initializes all submodules
-* Tests
+i have a repo in local folder
 
-The current version does make '$sm_path' relative in "submodule
-foreach", although it's hard to spot because we have to leave doing so
-until right before the "eval".
+/home/users/myuser/repos/projectA/.git
 
-I'm not sure what you mean about "submodule add" - the new version
-treats the "path" argument as relative (providing it is not an absolute
-path).  The "repository" argument is not changed by running from a
-subdirectory but I think that's correct since it is documented as being
-relative to the superproject's origin repository.
+i start the daemon with the following:
 
-"submodule init" is behaving in the same way as "deinit" - if you say
-"submodule init ." then it will only initialize submodules below the
-current directory.  The difference is that "deinit" dies if it is not
-given any arguments whereas "init" will initialize everything from the
-top level down.  I'm not sure whether to change this; given the
-direction "git add -u" is heading in for 2.0 I think the current
-behaviour is the most consistent with the rest of Git.
+git daemon --export-all --base-path=/home/users/myuser/repos
+--enable=receive-pack --access-hook=/home/users/myuser/test_hook.bash
 
-> But I'm not sure if it's better to have another iteration of this
-> series or to address the open issues a follow-up series. Having
-> status, summary and add - at least with absolute URLs - lose the
-> toplevel requirement is already a huge improvement IMO. Opinions?
+test_hook.bash has the following:
 
-I think the only thing outstanding is tests.  I'm happy to add those as
-a follow-up or in a re-roll.
+#!/bin/bash
+echo $@ >> test_hook_out.txt
+echo $REMOTE_ADDR >> test_hook_out.txt
+
+the hook is set to be executable - otherwise it complains when i do
+anything via git protocol, which proves that it seems to or check the
+hook:
+
+then i did:
+
+cd ~/tmp/
+
+git clone git://myhost/projectA projectA
+cd projectA
+
+and trying to perform some operations like fetch or push. It is cloned
+and fetches and pushes successfully.
+The problem is that the file test_hook_out.txt doesn't have anything
+in it after the execution, So the hook doesn't seem to work.
+
+What might be the issue here?
+
+Thanks,
+Eugene
