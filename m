@@ -1,100 +1,118 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/2] diffcore-pickaxe doc: document -S and -G properly
-Date: Fri, 31 May 2013 17:34:54 +0530
-Message-ID: <CALkWK0m+kUa0QUotHXSYK40vFviFFv2yETnf6sEZMh05gOgLKg@mail.gmail.com>
-References: <1369391635-13056-1-git-send-email-artagnon@gmail.com>
- <1369391635-13056-3-git-send-email-artagnon@gmail.com> <7v38tcb7yx.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 31 14:05:40 2013
+Subject: [PATCH v4 0/2] Improve diffcore-pickaxe documentation
+Date: Fri, 31 May 2013 17:42:13 +0530
+Message-ID: <1370002335-6596-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 31 14:10:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiO5T-0006xp-Mf
-	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 14:05:40 +0200
+	id 1UiOAE-0001K2-F7
+	for gcvg-git-2@plane.gmane.org; Fri, 31 May 2013 14:10:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754864Ab3EaMFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 May 2013 08:05:36 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:47741 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754125Ab3EaMFf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 May 2013 08:05:35 -0400
-Received: by mail-ie0-f173.google.com with SMTP id k13so3725416iea.32
-        for <git@vger.kernel.org>; Fri, 31 May 2013 05:05:34 -0700 (PDT)
+	id S1754839Ab3EaMKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 May 2013 08:10:30 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:57312 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753934Ab3EaMK3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 May 2013 08:10:29 -0400
+Received: by mail-pd0-f178.google.com with SMTP id w11so2097332pde.37
+        for <git@vger.kernel.org>; Fri, 31 May 2013 05:10:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=DQ0uHKCT9ZLTXXzcj+daBCn9kHt++8gDBElj7Zv6eaA=;
-        b=LccXDhsBRLDE6dfalkG4iZ6zXEcLjQuj/GKikHuq82dESpsHYNUrjB1wTA1Mny/mJ7
-         H7HVJBdmmrYE0gVxH382kToS7nDpU/GeLsWs5hb2xQ2O+VmAaSZuXL2ilGlurGDuABA1
-         bnVk8na2yB4tIZ+QRIW1MqTHKkE0he2SkOjSbDnd2ROxX55Ixe4YI2sQ5nj9a93SNFdX
-         tWKfDvwX50iNdQOqP/g42v54tEnIADP18hl2eJCVLZ16MOh2L1ppDO4pyViQzaL5MfLv
-         ukKGQIRRc/o3gaU5KBCg83Xngv6V/N+U54TtCuyXzFnDsvV5m7SddiYdKvhBoZ5ihbXE
-         BTog==
-X-Received: by 10.50.141.230 with SMTP id rr6mr1500608igb.89.1370001934436;
- Fri, 31 May 2013 05:05:34 -0700 (PDT)
-Received: by 10.64.226.135 with HTTP; Fri, 31 May 2013 05:04:54 -0700 (PDT)
-In-Reply-To: <7v38tcb7yx.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=S+eOjD+tFd9fCpHm5KeIGEbNa5aS00QnWjMbg0hHIIg=;
+        b=JbKO2lpA/wB1IZGbJ08udpwfS9X4x2dTtVZ/kaDw52/APTbNGOsvYhE89kq04Ix4Pk
+         okQhvsnfZdjq4tUo/iXMM71npXjczcrfgLuq9PXDq6tGxWhoR7tcPMOCG32xRtP5Hpgq
+         UcLE6MXu/TdmmVYrTrFbKyc9b+J8JbV9aQUNfwCKrza3ypT/p3rbK4DNw6ozVLfeBizu
+         DgDLMzAQc8GeXn3zJkibXURIMNeiUoFgyL2DCX3akWgDxq/odZxCn6FWkbmaqpI3wHfR
+         wZXlaFc1Jj/rwUjv7PIwhSaXRbWJR6ZWEod6WioBLnnB3nTCPDRvVQfj88VP+RT4JhcC
+         sDOA==
+X-Received: by 10.66.26.52 with SMTP id i20mr12986615pag.209.1370002228818;
+        Fri, 31 May 2013 05:10:28 -0700 (PDT)
+Received: from luneth.maa.corp.collab.net ([182.71.239.158])
+        by mx.google.com with ESMTPSA id cp1sm46430663pbc.42.2013.05.31.05.10.25
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 31 May 2013 05:10:28 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.114.gcd03571
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226089>
 
-Junio C Hamano wrote:
-> [...]
+Junio had some suggestions in the previous round.  The inter-diff
+follows.
 
-I agree with everything else, and made changes accordingly.
+Yeah, word-diff is a bit messy.  Which brings me to: is it possible to
+turn on word-diff only where heuristically appropriate?  word-diff
+applied on the rewrite of the first paragraph of gitdiffcore.txt is a
+disaster, but okay everywhere else.
 
->         This transformation limits the set of filepairs to those
->         that change specified strings between the preimage and the
->         postimage in a certain way.
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index efb5dfe..a85288f 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -387,11 +387,11 @@ ifndef::git-format-patch[]
+	the specified string (i.e. addition/deletion) in a file.
+	Intended for the scripter's use.
++
+It is[-especially-] useful when you're looking for an exact block of code (like a
+struct), and want to know the history of that block since it first
+came into being: use the feature iteratively to feed the interesting
+block in the preimage back into `-S`, and keep going until you get the
+very first version of the block.
 
-Definitely good.
+-G<regex>::
+	Look for differences whose patch text contains added/removed
+diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
+index ef4c04a..c8b3e51 100644
+--- a/Documentation/gitdiffcore.txt
++++ b/Documentation/gitdiffcore.txt
+@@ -222,25 +222,27 @@ version prefixed with '+'.
+diffcore-pickaxe: For Detecting Addition/Deletion of Specified String
+---------------------------------------------------------------------
 
->         -S<block of text> and -G<regex> options are used to specify
->         different ways these strings are sought.
+[-There are two kinds of pickaxe:-]{+This transformation limits+} the [-S kind (corresponding-]{+set of filepairs+} to [-'git log-]
+[--S')-]{+those that change+}
+{+specified strings between the preimage+} and the [-G kind (mnemonic: grep; corresponding-]{+postimage in a certain+}
+{+way.  -S<block of text> and -G<regular expression> options are used+} to
+[-'git log -G').-]{+specify different ways these strings are sought.+}
 
-Definitely better than the "two kinds of pickaxe" thing.
+"-S<block of text>" detects filepairs whose preimage and postimage
+have different number of occurrences of the specified block of text.
+By definition, it will not detect in-file moves.  Also, when a
+changeset moves a file wholesale without affecting the interesting
+string, [-rename detection-]{+diffcore-rename+} kicks in as usual, and `-S` omits the filepair
+(since the number of occurrences of that string didn't change in that
+rename-detected filepair).[-The implementation essentially-]
+[-runs a count, and is significantly cheaper than the G kind.-]  When used with `--pickaxe-regex`, treat
+the <block of text> as an extended POSIX regular expression to match,
+instead of a literal string.
 
->         Without
->         --pickaxe-all, only the filepairs matching the given
->         criterion is left in the output; all filepairs are left in
->         the output when --pickaxe-all is used and if at least one
->         filepair matches the given criterion.
-
-Why do a poor-man's version of --pickaxe-all here, when the last
-paragraph already does justice to this?
+"-G<regular expression>" {+(mnemonic: grep)+} detects filepairs whose
+textual diff has an added or a deleted line that matches the given
+regular expression.  This means that it [-can-]{+will+} detect in-file (or what
+rename-detection considers the same file) [-moves.-]{+moves, which is noise.+}  The
+implementation runs diff twice and greps, and this can be quite
+expensive.
 
 When `-S` or `-G` are used without `--pickaxe-all`, only filepairs
 that match their respective criterion are kept in the output.  When
-`--pickaxe-all` is used, if even one filepair matches their respective
-criterion in a changeset, the entire changeset is kept.  This behavior
-is designed to make reviewing changes in the context of the whole
-changeset easier.
 
-> I am not sure why it is necessary to say anything about what the
-> previous step (diffcore-rename) might have done.  The input of this
-> (or any other) step in the diffcore pipeline is a preimage-postimage
-> filepairs, and to this transformation the filename does not matter.
-> Whether a file was moved (either "wholesale", implying nothing
-> changed, or renamed with modification at the same time) without
-> touching the block of text, or a file did not get involved in any
-> renaming, the only thing that matters is what the preimage and the
-> postimage in a filepair has (or does not have).
 
-While what you're saying is technically true, I think it is important
-to explain the interaction between diffcore-pickaxe and
-diffcore-rename as I have done.  Someone who wants to understand what
-`git log -S` does will come to this page and read this section:
-without reading diffcore-rename, she will have an incomplete picture;
-what's the harm in explaining diffcore-rename in the context of
-diffcore-pickaxe?
+Ramkumar Ramachandra (2):
+  diffcore-pickaxe: make error messages more consistent
+  diffcore-pickaxe doc: document -S and -G properly
 
-I did do a s/rename detection/diffcore-rename/ though, so the user
-knows where to look for more on this rename thing.
+ Documentation/diff-options.txt | 38 +++++++++++++++++++++++++++--------
+ Documentation/gitdiffcore.txt  | 45 +++++++++++++++++++++++++-----------------
+ diffcore-pickaxe.c             |  4 ++--
+ 3 files changed, 59 insertions(+), 28 deletions(-)
+
+-- 
+1.8.3.114.gcd03571
