@@ -1,115 +1,87 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] dir.c: fix ignore processing within not-ignored directories
-Date: Sat, 1 Jun 2013 17:44:44 +0700
-Message-ID: <CACsJy8D4wmhGkEsn8r5OEQv_hX=OFD5W8abnBnYFcFCQZfLOoQ@mail.gmail.com>
-References: <CAGLuM14_MQffwQWrB2YCQXzhkGaxdaYBuY74y7=pfb-hB6LskA@mail.gmail.com>
- <CACsJy8BqCUKhc8vhjhNz0OedBngk7zcSOk70ekRm3EiruHfNxA@mail.gmail.com>
- <CACsJy8DD=LxAKh_fUELJ5Mj0xS_gZE88N_rJFkKGer=YAOqsMg@mail.gmail.com>
- <51A62A96.6040009@gmail.com> <51A665E4.9080307@gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: [PATCH] Test 'commit --only' after 'checkout --orphan'
+Date: Sat, 1 Jun 2013 13:02:00 +0200
+Message-ID: <78176f4fca45213961f0e4d15ac72012d6a0a10b.1370084247.git.trast@inf.ethz.ch>
+References: <CACsJy8A6Hq_LEqAxUTLKP9-TA6aTq+91Wx2vYLhSuMSmRvpYiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Misty De Meo <misty@brew.sh>,
-	=?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 01 12:45:35 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Stephen Boyd <sboyd@codeaurora.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 01 13:02:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UijJW-0001kU-K2
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 12:45:34 +0200
+	id 1UijZl-0001F3-SU
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 13:02:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755721Ab3FAKpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Jun 2013 06:45:20 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:45581 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753884Ab3FAKpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jun 2013 06:45:17 -0400
-Received: by mail-lb0-f179.google.com with SMTP id r11so2464251lbv.38
-        for <git@vger.kernel.org>; Sat, 01 Jun 2013 03:45:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=34vtRbDasWe7G+NYpZLhFnBZmaV/PFP5wVFGB1mjdLs=;
-        b=QagNWftlC8/p6euvrR9ZixVACG1ZBQzAZ9AzAVnTNv4M+icYvQ2CPXdhFbXLqhBqay
-         qdo0LwYJH62Ow121fqBgW8WFBzORaK6Hnn0+uUfrHyIhn1+c5hZziGr0WA52qsjgVIGM
-         eyMRyp/c27CaJtp9QmN06vqWvjWaVxEYwUXp94j5rW6mhK1fO18zg9Yv1fmw1WpetnTG
-         VWbkRi2Z2ECvCbcjDzXDw/+m8a4RXvcYxRhev+7XGvYZECL39sby/c1wEhyPWIDAd0IY
-         O+74LXR8srZdWf+a6mYkfK6SOrsTzU4yWZYH+TopwcQB9qUwjF5DP9ftobTXm6RuZUN/
-         kN5w==
-X-Received: by 10.112.182.10 with SMTP id ea10mr7430769lbc.36.1370083514153;
- Sat, 01 Jun 2013 03:45:14 -0700 (PDT)
-Received: by 10.114.24.234 with HTTP; Sat, 1 Jun 2013 03:44:44 -0700 (PDT)
-In-Reply-To: <51A665E4.9080307@gmail.com>
+	id S1755778Ab3FALCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Jun 2013 07:02:14 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:36176 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754013Ab3FALCE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Jun 2013 07:02:04 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 1 Jun
+ 2013 13:01:58 +0200
+Received: from hexa.v.cablecom.net (46.126.8.85) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 1 Jun
+ 2013 13:02:00 +0200
+X-Mailer: git-send-email 1.8.3.509.g0de0faa
+In-Reply-To: <CACsJy8A6Hq_LEqAxUTLKP9-TA6aTq+91Wx2vYLhSuMSmRvpYiA@mail.gmail.com>
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226121>
 
-On Thu, May 30, 2013 at 3:32 AM, Karsten Blees <karsten.blees@gmail.com> wrote:
-> As of 95c6f271 "dir.c: unify is_excluded and is_path_excluded APIs", the
-> is_excluded API no longer recurses into directories that match an ignore
-> pattern, and returns the directory's ignored state for all contained paths.
->
-> This is OK for normal ignore patterns, i.e. ignoring a directory affects
-> the entire contents recursively.
->
-> Unfortunately, this also "works" for negated ignore patterns ('!dir'), i.e.
-> the entire contents is "not-ignored" recursively, regardless of ignore
-> patterns that match the contents directly.
->
-> In prep_exclude, skip recursing into a directory only if it is really
-> ignored (i.e. the ignore pattern is not negated).
->
-> Signed-off-by: Karsten Blees <blees@dcon.de>
+There are some index handling subtleties in 'commit --only' that are
+best tested when we have an existing index, but an unborn or empty
+HEAD.  These circumstances are easily produced by 'checkout --orphan',
+but we did not previously have a test for it.
 
-I think I've got a hang on the "unify" patch now.
+The main expected failure mode would be: erroneously loading the
+existing index contents when building the temporary index that is used
+for --only.  Cf.
 
-Reviewed-by: Duy Nguyen <pclouds@gmail.com>
+  http://article.gmane.org/gmane.comp.version-control.git/225969
 
+and subsequent discussion.
 
-> diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
-> +test_expect_success 'excluded directory overrides content patterns' '
-> +
-> +       git ls-files --others --exclude="one" --exclude="!one/a.1" >output &&
-> +       if grep "^one/a.1" output
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+---
+ t/t7501-commit.sh | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-Actually I think this is a shortcoming of gitignore. You ask to
-"exclude one except one/a.1" and one/a.1 should show up. '!' is
-designed from day one to deal with the other way around ("include one
-except one/a.1"). And it's arguable (and it was in the mail archive)
-that if you already exclude "one", we should never ever descend there
-to pick up "!a.1" from one/.gitignore. But we should do it with
-already collected patterns, at least if we detect there are negated
-patterns following the pattern that excludes a directory, e.g.
-!one/a.1 or even !*.c. For the latter case, the user can always move
-"!*.c" up before "one" if they don't want git to misinterpret and
-descend in every excluded directory.
-
-> +       then
-> +               false
-> +       fi
-> +'
-
-Nit pick, maybe this instead?
-
-test_must_fail grep "^one/a.1" output
-
-> +
-> +test_expect_success 'negated directory doesn'\''t affect content patterns' '
-> +
-> +       git ls-files --others --exclude="!one" --exclude="one/a.1" >output &&
-> +       if grep "^one/a.1" output
-> +       then
-> +               false
-> +       fi
-> +'
-
-Same.
---
-Duy
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index 195e747..99ce36f 100755
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -524,4 +524,17 @@ test_expect_success 'commit a file whose name is a dash' '
+ 	test_i18ngrep " changed, 5 insertions" output
+ '
+ 
++test_expect_success '--only works on to-be-born branch' '
++	# This test relies on having something in the index, as it
++	# would not otherwise actually prove much.  So check this.
++	test -n "$(git ls-files)" &&
++	git checkout --orphan orphan &&
++	echo foo >newfile &&
++	git add newfile &&
++	git commit --only newfile -m"--only on unborn branch" &&
++	echo newfile >expected &&
++	git ls-tree -r --name-only HEAD >actual &&
++	test_cmp expected actual
++'
++
+ test_done
+-- 
+1.8.3.509.g0de0faa
