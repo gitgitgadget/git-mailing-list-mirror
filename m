@@ -1,101 +1,105 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] completion: avoid ls-remote in certain scenarios
-Date: Sat, 1 Jun 2013 08:58:28 -0500
-Message-ID: <CAMP44s3abuEuXdRsAkuCVZiBkaFc+pT3kfXK9uN-U7tc4CR3tA@mail.gmail.com>
-References: <1369797648-2921-1-git-send-email-felipe.contreras@gmail.com>
-	<20130529074408.GA7955@goldbirke>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] run-command: simplify wait_or_whine
+Date: Sat, 1 Jun 2013 21:03:31 +0700
+Message-ID: <CACsJy8BRYHkSj1YR9mW=_tdKX_+xKNxpVx+RNYEdoW3S36w=8Q@mail.gmail.com>
+References: <1370094715-2684-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sat Jun 01 15:58:34 2013
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"John J. Franey" <jjfraney@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 01 16:04:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UimKH-0002Zf-LD
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 15:58:34 +0200
+	id 1UimPg-00052K-UV
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 16:04:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754732Ab3FAN6a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Jun 2013 09:58:30 -0400
-Received: from mail-we0-f173.google.com ([74.125.82.173]:39069 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753981Ab3FAN63 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Jun 2013 09:58:29 -0400
-Received: by mail-we0-f173.google.com with SMTP id x55so514460wes.32
-        for <git@vger.kernel.org>; Sat, 01 Jun 2013 06:58:28 -0700 (PDT)
+	id S1753981Ab3FAOEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Jun 2013 10:04:05 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:54721 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752438Ab3FAOED (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Jun 2013 10:04:03 -0400
+Received: by mail-ob0-f174.google.com with SMTP id wd20so4833100obb.33
+        for <git@vger.kernel.org>; Sat, 01 Jun 2013 07:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=lh9RUwrsJuZdanLCUv772e2FV4c6GQ/Hcu+nS3NoYeU=;
-        b=XVvJ4YfUdvKfEVHEpOCTnctPXL+RH4wTQxJLUINpyvzo1Tw4BmuvthaxVnQmGtSiOH
-         JS5YDoH53dxSq/l+0c2QrHxIkmuq/wLepwFmlgSlVAOKErMcOhW/YKhwUsiMl5NiN0CN
-         d8me0mFwN9PhY97BcEJjB0SRMnWNSQfNwTU6gwKx2lX0TY/oRpRQZn5K52uIOheEMmwi
-         FcR/XkGNiZBPoGrHVhLN+qRHzS8HrKy8Dvy6GlIA4NaIp1PQoIthkvpU8RwDce4yFaCq
-         4bQkUlhNDnTBsq9WjnlNI7uLv3yZMWqKfIWDcIbjLiH8WTA338+7UZHRbrBbDWGF8fWl
-         QBrg==
-X-Received: by 10.180.184.101 with SMTP id et5mr6954194wic.45.1370095108096;
- Sat, 01 Jun 2013 06:58:28 -0700 (PDT)
-Received: by 10.194.47.4 with HTTP; Sat, 1 Jun 2013 06:58:28 -0700 (PDT)
-In-Reply-To: <20130529074408.GA7955@goldbirke>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=kb1f6SSdW8PUeOaGO8CnLJMv9mnNc02IcJnPqYAs7IA=;
+        b=l8XvDG9PknxVFTq0PxnjIQ8ZK+Diz0ptZevHJSm8RW508Dct39YkZ8Qr8e9smIQbFT
+         QTCxWfGmkZ9kF5CA9DzJftgc7ryjoK52/zb/YBo7XzHa8cozHVk92z+ZiD8kl9TxxuWw
+         ++18FrlifpUOGtEQSi0Kf5Mk9d/TBobuNs+oD4m5/Y91OPLJMxbH8ghXdqzvE2I1a+db
+         S/HHEDwGauHeTJXc/VcY/yvYadH5ciQXQ32MdiXys/2A/vDwjbz+t60+XCHyfv/9hJhy
+         IdpymIAk77p1CSe2+uWD53fnKvVSeqvlFQRr3EyxK14I1PteqR8hXunYRJ2XVw1a0CUF
+         O/xA==
+X-Received: by 10.182.134.231 with SMTP id pn7mr7365523obb.11.1370095441995;
+ Sat, 01 Jun 2013 07:04:01 -0700 (PDT)
+Received: by 10.76.171.199 with HTTP; Sat, 1 Jun 2013 07:03:31 -0700 (PDT)
+In-Reply-To: <1370094715-2684-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226127>
 
-On Wed, May 29, 2013 at 2:44 AM, SZEDER G=C3=A1bor <szeder@ira.uka.de> =
-wrote:
-> On Tue, May 28, 2013 at 10:20:48PM -0500, Felipe Contreras wrote:
->> It's _very_ slow in many cases, and there's really no point in fetch=
-ing
->> *everything* from the remote just for completion. In many cases it m=
-ight
->> be faster for the user to type the whole thing.
->>
->> If the user manually specifies 'refs/*', then the full ls-remote
->> completion is triggered.
->>
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> ---
->>  contrib/completion/git-completion.bash | 10 ++--------
->>  1 file changed, 2 insertions(+), 8 deletions(-)
->>
->> diff --git a/contrib/completion/git-completion.bash b/contrib/comple=
-tion/git-completion.bash
->> index 1c35eef..2ce4f7d 100644
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -427,14 +427,8 @@ __git_refs ()
->>               done
->>               ;;
->>       *)
->> -             git ls-remote "$dir" HEAD ORIG_HEAD 'refs/tags/*' 'ref=
-s/heads/*' 'refs/remotes/*' 2>/dev/null | \
->> -             while read -r hash i; do
->> -                     case "$i" in
->> -                     *^{}) ;;
->> -                     refs/*) echo "${i#refs/*/}" ;;
->> -                     *) echo "$i" ;;
->> -                     esac
->> -             done
->> +             echo "HEAD"
->> +             git for-each-ref --format=3D"%(refname:short)" -- "ref=
-s/remotes/$dir/" | sed -e "s#^$dir/##"
+On Sat, Jun 1, 2013 at 8:51 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Nobody is checking for specific error codes; it's the errno that's
+> important.
+
+Have you just disregarded the in-code comment you just removed with
+one statement? Did you check all its callers?
+
 >
-> This case statement is only executed when $dir is not a git directory=
-,
-> so what ensures that the cwd is in a git repo or work tree when
-> executing this brach of the case statement?  What about 'git
-> --git-dir=3D/path/to/repo' invocations or when $GIT_DIR is specified?
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  run-command.c | 14 ++------------
+>  1 file changed, 2 insertions(+), 12 deletions(-)
+>
+> diff --git a/run-command.c b/run-command.c
+> index 1b32a12..e54e943 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -244,21 +244,11 @@ static int wait_or_whine(pid_t pid, const char *argv0)
+>                 code = WTERMSIG(status);
+>                 if (code != SIGINT && code != SIGQUIT)
+>                         error("%s died of signal %d", argv0, code);
+> -               /*
+> -                * This return value is chosen so that code & 0xff
+> -                * mimics the exit code that a POSIX shell would report for
+> -                * a program that died from this signal.
+> -                */
+> -               code += 128;
+>         } else if (WIFEXITED(status)) {
+>                 code = WEXITSTATUS(status);
+> -               /*
+> -                * Convert special exit code when execvp failed.
+> -                */
+> -               if (code == 127) {
+> -                       code = -1;
+> +               /* convert special exit code when execvp failed. */
+> +               if (code == 127)
+>                         failed_errno = ENOENT;
+> -               }
+>         } else {
+>                 error("waitpid is confused (%s)", argv0);
+>         }
+> --
+> 1.8.3.358.g5a91d05
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-'git --git-dir=3Dfoo fetch <tab>' doesn't even work. I sent the patches
-to fix it, but as usual, nobody cared about actual real fixes.
 
-$GIT_DIR works fine, why wouldn't it?
 
---=20
-=46elipe Contreras
+--
+Duy
