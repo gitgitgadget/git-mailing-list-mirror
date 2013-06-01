@@ -1,29 +1,29 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 04/11] tests: introduce test_ln_s and test_ln_s_add
-Date: Sat,  1 Jun 2013 11:34:23 +0200
-Message-ID: <c7be5891891d1eeba540a5a24f07d58514345b2b.1370076477.git.j6t@kdbg.org>
+Subject: [PATCH 03/11] t3010: modernize style
+Date: Sat,  1 Jun 2013 11:34:22 +0200
+Message-ID: <38a0a3fdeda9087894935052e5a72c1761274221.1370076477.git.j6t@kdbg.org>
 References: <cover.1370076477.git.j6t@kdbg.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 01 11:35:13 2013
+X-From: git-owner@vger.kernel.org Sat Jun 01 11:35:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiiDM-0002Bb-H2
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 11:35:08 +0200
+	id 1UiiDN-0002Bb-1X
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 11:35:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757015Ab3FAJfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Jun 2013 05:35:00 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:48451 "EHLO bsmtp.bon.at"
+	id S1757036Ab3FAJfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Jun 2013 05:35:03 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:7475 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756271Ab3FAJef (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756281Ab3FAJef (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 1 Jun 2013 05:34:35 -0400
 Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 0D776A7EB5
-	for <git@vger.kernel.org>; Sat,  1 Jun 2013 11:34:33 +0200 (CEST)
+	by bsmtp.bon.at (Postfix) with ESMTP id C0B63A7EB4
+	for <git@vger.kernel.org>; Sat,  1 Jun 2013 11:34:32 +0200 (CEST)
 Received: from dx.sixt.local (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 2A4FA19F5E4
+	by dx.sixt.local (Postfix) with ESMTP id 1494419F5E2
 	for <git@vger.kernel.org>; Sat,  1 Jun 2013 11:34:32 +0200 (CEST)
 X-Mailer: git-send-email 1.8.3.rc1.32.g8b61cbb
 In-Reply-To: <cover.1370076477.git.j6t@kdbg.org>
@@ -31,83 +31,157 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226117>
 
-Add new functions that create symbolic links and add them to the index to
-be used in cases where a symbolic link is not required on the file system.
-We will use them to remove many SYMLINKS prerequisites from test cases.
+In particular:
+
+- move test preparations inside test_expect_success
+
+- place test description on the test_expect_success line
+
+- indent with a tab
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- t/README                | 17 +++++++++++++++++
- t/test-lib-functions.sh | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
+ t/t3010-ls-files-killed-modified.sh | 123 ++++++++++++++++++------------------
+ 1 file changed, 61 insertions(+), 62 deletions(-)
 
-diff --git a/t/README b/t/README
-index e669bb3..bb938f2 100644
---- a/t/README
-+++ b/t/README
-@@ -592,6 +592,23 @@ library for your script to use.
- 		test_cmp expected actual
- 	'
+diff --git a/t/t3010-ls-files-killed-modified.sh b/t/t3010-ls-files-killed-modified.sh
+index 95671c2..2d0ff2d 100755
+--- a/t/t3010-ls-files-killed-modified.sh
++++ b/t/t3010-ls-files-killed-modified.sh
+@@ -37,71 +37,70 @@ modified without reporting path9 and path10.
+ '
+ . ./test-lib.sh
  
-+ - test_ln_s <path1> <path2>
-+   test_ln_s_add <path1> <path2>
-+
-+   These functions help systems whose filesystem does not support symbolic
-+   links. Use them to add a symbolic link entry to the index when it is
-+   not important that the file system entry is a symbolic link.
-+
-+   Use test_ln_s instead of plain "ln -s foo bar" and test_ln_s_add instead
-+   of the sequence
-+
-+	ln -s foo bar &&
-+	git add bar
-+
-+   Sometimes it is possible to split a test in a part that does not need
-+   the symbolic link in the file system and a part that does; then only
-+   the latter part need be protected by a SYMLINKS prerequisite (see below).
-+
- Prerequisites
- -------------
- 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 5251009..ad7905a 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -679,3 +679,33 @@ test_create_repo () {
- 		mv .git/hooks .git/hooks-disabled
- 	) || exit
- }
-+
-+# These functions help on symlink challenged file systems when it is not
-+# important that the file system entry is a symbolic link:
-+#
-+# - Use test_ln_s_add instead of "ln -s x y && git add y" to add a
-+#   symbolic link entry y to the index.
-+#
-+# - Use test_ln_s instead of "ln -s x y" when y has been added as a
-+#   symbolic link entry earlier.
-+
-+test_ln_s_add () {
+-date >path0
+-if test_have_prereq SYMLINKS
+-then
+-	ln -s xyzzy path1
+-else
+-	date > path1
+-fi
+-mkdir path2 path3
+-date >path2/file2
+-date >path3/file3
+-: >path7
+-date >path8
+-: >path9
+-date >path10
+-test_expect_success \
+-    'git update-index --add to add various paths.' \
+-    "git update-index --add -- path0 path1 path?/file? path7 path8 path9 path10"
+-
+-rm -fr path? ;# leave path10 alone
+-date >path2
+-if test_have_prereq SYMLINKS
+-then
+-	ln -s frotz path3
+-	ln -s nitfol path5
+-else
+-	date > path3
+-	date > path5
+-fi
+-mkdir path0 path1 path6
+-date >path0/file0
+-date >path1/file1
+-date >path6/file6
+-date >path7
+-: >path8
+-: >path9
+-touch path10
++test_expect_success 'git update-index --add to add various paths.' '
++	date >path0 &&
 +	if test_have_prereq SYMLINKS
 +	then
-+		ln -s "$1" "$2" &&
-+		git update-index --add "$2"
++		ln -s xyzzy path1
 +	else
-+		printf '%s' "$1" >"$2" &&
-+		ln_s_obj=$(git hash-object -w "$2") &&
-+		git update-index --add --cacheinfo 120000 $ln_s_obj "$2"
-+	fi
-+}
-+
-+test_ln_s () {
++		date > path1
++	fi &&
++	mkdir path2 path3 &&
++	date >path2/file2 &&
++	date >path3/file3 &&
++	: >path7 &&
++	date >path8 &&
++	: >path9 &&
++	date >path10 &&
++	git update-index --add -- path0 path1 path?/file? path7 path8 path9 path10 &&
++	rm -fr path?	# leave path10 alone
++'
+ 
+-test_expect_success \
+-    'git ls-files -k to show killed files.' \
+-    'git ls-files -k >.output'
+-cat >.expected <<EOF
+-path0/file0
+-path1/file1
+-path2
+-path3
+-EOF
++test_expect_success 'git ls-files -k to show killed files.' '
++	date >path2 &&
 +	if test_have_prereq SYMLINKS
 +	then
-+		ln -s "$1" "$2"
++		ln -s frotz path3 &&
++		ln -s nitfol path5
 +	else
-+		printf '%s' "$1" >"$2"
-+	fi
-+}
++		date >path3 &&
++		date >path5
++	fi &&
++	mkdir path0 path1 path6 &&
++	date >path0/file0 &&
++	date >path1/file1 &&
++	date >path6/file6 &&
++	date >path7 &&
++	: >path8 &&
++	: >path9 &&
++	touch path10 &&
++	git ls-files -k >.output
++'
+ 
+-test_expect_success \
+-    'validate git ls-files -k output.' \
+-    'test_cmp .expected .output'
++test_expect_success 'validate git ls-files -k output.' '
++	cat >.expected <<-\EOF &&
++	path0/file0
++	path1/file1
++	path2
++	path3
++	EOF
++	test_cmp .expected .output
++'
+ 
+-test_expect_success \
+-    'git ls-files -m to show modified files.' \
+-    'git ls-files -m >.output'
+-cat >.expected <<EOF
+-path0
+-path1
+-path2/file2
+-path3/file3
+-path7
+-path8
+-EOF
++test_expect_success 'git ls-files -m to show modified files.' '
++	git ls-files -m >.output
++'
+ 
+-test_expect_success \
+-    'validate git ls-files -m output.' \
+-    'test_cmp .expected .output'
++test_expect_success 'validate git ls-files -m output.' '
++	cat >.expected <<-\EOF &&
++	path0
++	path1
++	path2/file2
++	path3/file3
++	path7
++	path8
++	EOF
++	test_cmp .expected .output
++'
+ 
+ test_done
 -- 
 1.8.3.rc1.32.g8b61cbb
