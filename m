@@ -1,80 +1,89 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: git fetch documentation
-Date: Sat, 1 Jun 2013 16:55:42 +0530
-Message-ID: <CALkWK0mqkOZ__Gk-5VUpzLCaUHx1kA1JTrFunF3tUSeX6tDkgA@mail.gmail.com>
-References: <87sj12rt13.fsf@yahoo.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Nicolas Richard <theonewiththeevillook@yahoo.fr>
-X-From: git-owner@vger.kernel.org Sat Jun 01 13:26:31 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] run-command: simplify wait_or_whine
+Date: Sat,  1 Jun 2013 08:51:55 -0500
+Message-ID: <1370094715-2684-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"John J. Franey" <jjfraney@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 01 15:53:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uijx8-0004Pi-Nv
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 13:26:31 +0200
+	id 1UimFc-0000O4-3u
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 15:53:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755507Ab3FAL0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Jun 2013 07:26:25 -0400
-Received: from mail-bk0-f53.google.com ([209.85.214.53]:34083 "EHLO
-	mail-bk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755160Ab3FAL0Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jun 2013 07:26:24 -0400
-Received: by mail-bk0-f53.google.com with SMTP id mx10so1153818bkb.12
-        for <git@vger.kernel.org>; Sat, 01 Jun 2013 04:26:22 -0700 (PDT)
+	id S1753606Ab3FANxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Jun 2013 09:53:40 -0400
+Received: from mail-ye0-f172.google.com ([209.85.213.172]:61070 "EHLO
+	mail-ye0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753284Ab3FANxj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Jun 2013 09:53:39 -0400
+Received: by mail-ye0-f172.google.com with SMTP id m15so648366yen.31
+        for <git@vger.kernel.org>; Sat, 01 Jun 2013 06:53:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=+wOSc+eeNWbctr26W9T/tieyjxtE6V68lhDqomYs5GY=;
-        b=ZovVWjta+jbrBgskmWFXATcKJNheCmwvER3Dc2WxdlMQ3UxB9dEIIwNLtflHnHYUPz
-         CUtzLWb+B8fzEccZYngq7VWKZWzXsoHVCLBedL6jnN9N4+ntviuH0xrlYP5FMvLyWwA3
-         Xa1vGGzdVRar1diqj2RT5nyE6rZ8TL0QFOgSv1zMVJyKqd1v9L8tVWNl14m2tFc/Ddrs
-         tQ4/sSw7pmo0nja20cLlOkjyuEL6lPT54RoDqdGr6XNA2ESPzA9BvonwYEfYIPuVJD7V
-         vzzJqy+ous0pTutbovWAg4zeFIqQBSnMrZdC9/E470Lq9KKCIEuCpcOQUFaCpe0lkPaa
-         2Asg==
-X-Received: by 10.204.225.132 with SMTP id is4mr4431380bkb.77.1370085982459;
- Sat, 01 Jun 2013 04:26:22 -0700 (PDT)
-Received: by 10.204.172.209 with HTTP; Sat, 1 Jun 2013 04:25:42 -0700 (PDT)
-In-Reply-To: <87sj12rt13.fsf@yahoo.fr>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=JMB2fKZCuz97Mc/91aJhjB2eUl0ythKsip66w/qEgH0=;
+        b=y7Bo+PMT3fXOxZXLKJpoSwyYv9dnrfqWwjIdcuDYpKB1GCqJBCCGTqNtGgtEdvUtyZ
+         5K9ytIsjtrBO7zs2UurrtGZlF9cA7ePQ6V92qlQObxBDtP9wQY+qgbKFH+Mw3s55HhB7
+         Tgo14WRIbEfGImEmmLGTmmuPyFF63yNPqVSEwfeekfLmvkplVxEteHZYDtCw9z84jqm+
+         JbX9XM+4ZL6/gU7OXAgV7Kj25dfan6l13TeX38JuDIby9wUYR95VwOgdilIYgXQtgFjx
+         +C6lWje7QLZh95CGnW8ME/oIDbzYpOtlO+9BQkYXyIENJHJ2HRm28CeCItFFZXxWO2wT
+         3DiQ==
+X-Received: by 10.236.83.173 with SMTP id q33mr9802999yhe.148.1370094818707;
+        Sat, 01 Jun 2013 06:53:38 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id j64sm75779577yhj.25.2013.06.01.06.53.36
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 01 Jun 2013 06:53:37 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.358.g5a91d05
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226125>
 
-Nicolas Richard wrote:
-> - A '*' can be used both in src and dest, and it matches any name,
->   including subdirectories, but not partial names (i.e. refs/heads/foo*
->   is invalid).
-> - multiple fetch lines can be given in .git/config, each of them will be
->   obeyed
->
-> These are probably obvious for most users, but I think documenting them
-> would be good for newcomers. (I tried to come up with a patch but I
-> can't find a precise yet concise way to explain the role of '*' in
-> english.)
+Nobody is checking for specific error codes; it's the errno that's
+important.
 
-Good.  Yes, we don't even have examples showing that a rewrite like
-refs/heads/nr/*:refs/heads/* can be done.  The documentation is
-definitely lacking.  However, I'd urge you to get started by
-submitting an initial draft: we will review it and help you learn and
-contribute.  Some pointers:
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ run-command.c | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-- What you are attempting to document is called a refspec.  Look at
-'struct refspec' in remote.h, and attempt to understand what its
-fields mean by looking at how it is used in remote.c.
-
-- Notice that there is a push refspec corresponding to the fetch
-refspec.  This feature is even more obscure and undocumented.
-
-- See remote.c:get_ref_match(); specifically,
-match_name_with_pattern() is doing the pattern matching.  As you can
-see, match_name_with_pattern() hard-codes a '*' and tries to match
-just that: there is no support for anything else.  Try to skim through
-the code once.
-
-- Read Documentation/SubmittingPatches and submit a first version
-quickly.  It doesn't have to be perfect at all.
+diff --git a/run-command.c b/run-command.c
+index 1b32a12..e54e943 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -244,21 +244,11 @@ static int wait_or_whine(pid_t pid, const char *argv0)
+ 		code = WTERMSIG(status);
+ 		if (code != SIGINT && code != SIGQUIT)
+ 			error("%s died of signal %d", argv0, code);
+-		/*
+-		 * This return value is chosen so that code & 0xff
+-		 * mimics the exit code that a POSIX shell would report for
+-		 * a program that died from this signal.
+-		 */
+-		code += 128;
+ 	} else if (WIFEXITED(status)) {
+ 		code = WEXITSTATUS(status);
+-		/*
+-		 * Convert special exit code when execvp failed.
+-		 */
+-		if (code == 127) {
+-			code = -1;
++		/* convert special exit code when execvp failed. */
++		if (code == 127)
+ 			failed_errno = ENOENT;
+-		}
+ 	} else {
+ 		error("waitpid is confused (%s)", argv0);
+ 	}
+-- 
+1.8.3.358.g5a91d05
