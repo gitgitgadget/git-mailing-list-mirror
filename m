@@ -1,86 +1,84 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 1/4] commit: reload cache properly
-Date: Sat, 1 Jun 2013 16:09:39 +0700
-Message-ID: <CACsJy8A6Hq_LEqAxUTLKP9-TA6aTq+91Wx2vYLhSuMSmRvpYiA@mail.gmail.com>
-References: <1369915136-4248-1-git-send-email-felipe.contreras@gmail.com>
- <1369915136-4248-2-git-send-email-felipe.contreras@gmail.com>
- <87ehcok6gl.fsf@linux-k42r.v.cablecom.net> <CAMP44s1O=VTu8EZi+yOfGMccCpS+pozvZJuDW1mK95U8-YEquA@mail.gmail.com>
- <8761y0k4ja.fsf@linux-k42r.v.cablecom.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Adam Spiers <git@adamspiers.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Stephen Boyd <sboyd@codeaurora.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Jun 01 11:10:18 2013
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 01/11] test-chmtime: Fix exit code on Windows
+Date: Sat,  1 Jun 2013 11:34:20 +0200
+Message-ID: <c5913d1a95ed5a9aaa92eece2484274949acc78e.1370076477.git.j6t@kdbg.org>
+References: <cover.1370076477.git.j6t@kdbg.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 01 11:34:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UihpJ-0007tX-4G
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 11:10:17 +0200
+	id 1UiiCu-0001y1-JY
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 11:34:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755098Ab3FAJKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Jun 2013 05:10:13 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:47350 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753524Ab3FAJKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jun 2013 05:10:11 -0400
-Received: by mail-la0-f42.google.com with SMTP id fg20so2095665lab.1
-        for <git@vger.kernel.org>; Sat, 01 Jun 2013 02:10:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=WAHVrVXJ7Y111qjQkSPNS3wGppSt72XL2+gOkFv3KOQ=;
-        b=uGI5M+PvbE6gm/wYdSEsmGqJHtE4v92VOZLMjr73HEN3apiDqfA2lH9JYZgpPuIsae
-         Jy3i521h1a8BQrHlkkmQy+l0WniQc7/xSGdFFAvmo9EQzHz9uwKpFR6YbnxlmgVqRdtg
-         RWQoEFAhOVS8KDbJd54vssg5po8AV0oGdDIxasrU1yfQ7BSusfXfFVeQrh8nVnxtIXBX
-         +J3zq//WOt0T0vA8cL3oBByB2HF6ctFttFMYBSlXIDMEi4B/P/f369/dXEow0a9GpioA
-         MDvSF/yqPXLERyWt9kwSfSIyPjWj1HVpBS+hK4IyaSzQ5GwwSUEP23OjyNAtpke8xHfx
-         RBmw==
-X-Received: by 10.112.6.6 with SMTP id w6mr7293691lbw.123.1370077809266; Sat,
- 01 Jun 2013 02:10:09 -0700 (PDT)
-Received: by 10.114.24.234 with HTTP; Sat, 1 Jun 2013 02:09:39 -0700 (PDT)
-In-Reply-To: <8761y0k4ja.fsf@linux-k42r.v.cablecom.net>
+	id S1756519Ab3FAJeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Jun 2013 05:34:36 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:17796 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751669Ab3FAJee (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Jun 2013 05:34:34 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 97BE1CDF8D
+	for <git@vger.kernel.org>; Sat,  1 Jun 2013 11:34:32 +0200 (CEST)
+Received: from dx.sixt.local (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id C856219F5E0
+	for <git@vger.kernel.org>; Sat,  1 Jun 2013 11:34:31 +0200 (CEST)
+X-Mailer: git-send-email 1.8.3.rc1.32.g8b61cbb
+In-Reply-To: <cover.1370076477.git.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226107>
 
-On Thu, May 30, 2013 at 7:58 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> On Thu, May 30, 2013 at 7:17 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> diff --git i/t/t7501-commit.sh w/t/t7501-commit.sh
-> index 195e747..1608254 100755
-> --- i/t/t7501-commit.sh
-> +++ w/t/t7501-commit.sh
-> @@ -524,4 +524,16 @@ test_expect_success 'commit a file whose name is a dash' '
->         test_i18ngrep " changed, 5 insertions" output
->  '
->
-> +test_expect_success '--only works on to-be-born branch' '
-> +       git checkout --orphan orphan &&
-> +       echo foo >newfile &&
-> +       git add newfile &&
-> +       git commit --only newfile -m"--only on unborn branch" &&
-> +       cat >expected <<EOF &&
-> +100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99   newfile
-> +EOF
-> +       git ls-tree -r HEAD >actual &&
-> +       test_cmp expected actual
-> +'
-> +
->  test_done
+MinGW's bash does not recognize an exit code -1 as failure. See also
+47e3de0e (MinGW: truncate exit()'s argument to lowest 8 bits) and 2488df84
+(builtin run_command: do not exit with -1). Exit code 1 is good enough.
 
-Thomas, can you resubmit this as a patch to Junio? It's good that the
-test suite covers all correct behaviors (and the incorrect ones).
---
-Duy
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ test-chmtime.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/test-chmtime.c b/test-chmtime.c
+index 94903c4..28b2313 100644
+--- a/test-chmtime.c
++++ b/test-chmtime.c
+@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
+ 		if (stat(argv[i], &sb) < 0) {
+ 			fprintf(stderr, "Failed to stat %s: %s\n",
+ 			        argv[i], strerror(errno));
+-			return -1;
++			return 1;
+ 		}
+ 
+ #ifdef WIN32
+@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
+ 				chmod(argv[i], sb.st_mode | S_IWUSR)) {
+ 			fprintf(stderr, "Could not make user-writable %s: %s",
+ 				argv[i], strerror(errno));
+-			return -1;
++			return 1;
+ 		}
+ #endif
+ 
+@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
+ 		if (utb.modtime != sb.st_mtime && utime(argv[i], &utb) < 0) {
+ 			fprintf(stderr, "Failed to modify time on %s: %s\n",
+ 			        argv[i], strerror(errno));
+-			return -1;
++			return 1;
+ 		}
+ 	}
+ 
+@@ -115,5 +115,5 @@ int main(int argc, char *argv[])
+ 
+ usage:
+ 	fprintf(stderr, "usage: %s %s\n", argv[0], usage_str);
+-	return -1;
++	return 1;
+ }
+-- 
+1.8.3.rc1.32.g8b61cbb
