@@ -1,104 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] run-command: simplify wait_or_whine
-Date: Sat, 1 Jun 2013 13:01:48 -0400
-Message-ID: <20130601170147.GA19234@sigill.intra.peff.net>
-References: <1370094715-2684-1-git-send-email-felipe.contreras@gmail.com>
- <CACsJy8Df-O=D5LQBXCbiVLB=uHfn6ETbAxADWq3hd-9pPX4+mg@mail.gmail.com>
- <CAMP44s0L1M+_s2eDM=Ogy=rxLhpZYwSb8qWTuEe30pB4KGDVtA@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 04/11] tests: introduce test_ln_s and test_ln_s_add
+Date: Sat, 1 Jun 2013 22:40:12 +0530
+Message-ID: <CALkWK0k3KG2657BJLOyGSaRF8teaigpRLwiq=-ppQWOCO7w0tA@mail.gmail.com>
+References: <cover.1370076477.git.j6t@kdbg.org> <c7be5891891d1eeba540a5a24f07d58514345b2b.1370076477.git.j6t@kdbg.org>
+ <CALkWK0nN2V3Cwi3n+DV7Bcme7jE=B+COFioqPFfHQgxGTWEtiA@mail.gmail.com> <51AA0DD9.9030704@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"John J. Franey" <jjfraney@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 01 19:01:55 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Jun 01 19:11:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UipBi-0000UJ-RN
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 19:01:55 +0200
+	id 1UipKi-0004uq-8j
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 19:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751427Ab3FARBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Jun 2013 13:01:51 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42374 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750979Ab3FARBu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jun 2013 13:01:50 -0400
-Received: (qmail 21878 invoked by uid 102); 1 Jun 2013 17:02:33 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 01 Jun 2013 12:02:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Jun 2013 13:01:48 -0400
-Content-Disposition: inline
-In-Reply-To: <CAMP44s0L1M+_s2eDM=Ogy=rxLhpZYwSb8qWTuEe30pB4KGDVtA@mail.gmail.com>
+	id S1751568Ab3FARKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Jun 2013 13:10:54 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:37514 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750856Ab3FARKx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Jun 2013 13:10:53 -0400
+Received: by mail-ie0-f179.google.com with SMTP id c10so965277ieb.38
+        for <git@vger.kernel.org>; Sat, 01 Jun 2013 10:10:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=xlEIaNu4REB7sn4ekdkPh7VyEwXHHf5VH7vMoJaCOIk=;
+        b=DehR6tEskrwL427oHegs+Pi6E8AmiCpf/5lvL01s+63q8YsyHqoAZE3X3aNqN8mJ0O
+         NQjtfILEQbvkdALJj5ey5Ktij3M7GAYXi4p3RIQdTaLIEEgPdN/IBnxKLU5G9OXrNv1/
+         pfqBX/NfU1z4Hkm+Z9N0fY+stMH2yfuhDPJPgQmc/qbWRgTUdMCoI8u/2g9a06wQmpbf
+         hodlTpwWu7/J2hpTX3DBWTNhM/FqNwWRXmU13NrYoh/ulTTLeIOYwMlBsl+IbA4f3BXG
+         ssukJ/mDnGAkwbnRaAWIdyZ5mP6KMpSoA/Ff5DgSrYvJwvZDYug5zYWsTU6tE5jOwP/h
+         8LIw==
+X-Received: by 10.42.76.132 with SMTP id e4mr7192647ick.11.1370106652457; Sat,
+ 01 Jun 2013 10:10:52 -0700 (PDT)
+Received: by 10.64.226.135 with HTTP; Sat, 1 Jun 2013 10:10:12 -0700 (PDT)
+In-Reply-To: <51AA0DD9.9030704@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226140>
 
-On Sat, Jun 01, 2013 at 09:30:50AM -0500, Felipe Contreras wrote:
+Johannes Sixt wrote:
+> # - Use test_ln_s instead of "ln -s x y" when y has been added as a
+> #   symbolic link entry earlier.
 
-> > The original commit that introduces this says
-> >
-> >     run_command: encode deadly signal number in the return value
-> >
-> >     We now write the signal number in the error message if the program
-> >     terminated by a signal. The negative return value is constructed such that
-> >     after truncation to 8 bits it looks like a POSIX shell's $?:
-> >
-> >        $ echo 0000 | { git upload-pack .; echo $? >&2; } | :
-> >        error: git-upload-pack died of signal 13
-> >        141
-> >
-> >     Previously, the exit code was 255 instead of 141.
-> >
-> > So this is part of the interface to the user. With your changes, the
-> > exit code is now different. I tested by force segfaulting upload-pack.
-> > $? returned 11. So NAK.
-> 
-> Yeah, and last year we returned a different code. The world didn't
-> end, because nobody is checking for the specific code. But if you want
-> to retain complexity forever, suit yourselves.
-
-Last year we returned a different code from the function that other C
-code saw. But what got returned via exit() to exterior programs was
-always 141 in the SIGPIPE case, both before and after my 709ca730. That
-is explained in the first two paragraphs here:
-
-> commit 709ca730f8e093005cc882bfb86c0ca9c83d345b
-> Author: Jeff King <peff@peff.net>
-> Date:   Sat Jan 5 09:49:49 2013 -0500
-> 
->     run-command: encode signal death as a positive integer
-> 
->     When a sub-command dies due to a signal, we encode the
->     signal number into the numeric exit status as "signal -
->     128". This is easy to identify (versus a regular positive
->     error code), and when cast to an unsigned integer (e.g., by
->     feeding it to exit), matches what a POSIX shell would return
->     when reporting a signal death in $? or through its own exit
->     code.
-> 
->     So we have a negative value inside the code, but once it
->     passes across an exit() barrier, it looks positive (and any
->     code we receive from a sub-shell will have the positive
->     form). E.g., death by SIGPIPE (signal 13) will look like
->     -115 to us in inside git, but will end up as 141 when we
->     call exit() with it. And a program killed by SIGPIPE but run
->     via the shell will come to us with an exit code of 141.
-
-Your patch changes the error code that is propagated via exit() in this
-case. We cannot know "nobody is checking for the specific code", because
-the list of callers is every shell script or program which execs git.
-Some of them do care about the exit code. I can give an example of a
-case I have that cares, but I do not think it is even important. The
-point is that we would be regressing an existing interface, and cannot
-know who is broken by it.
-
--Peff
+Ah, sorry I skipped over the comments.
