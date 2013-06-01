@@ -1,104 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: can we prevent reflog deletion when branch is deleted?
-Date: Sat, 1 Jun 2013 05:09:35 -0400
-Message-ID: <20130601090934.GA13904@sigill.intra.peff.net>
-References: <CAMK1S_jY1tDCkyOamX8XNW9g8Dzf6yN9znwN6he-EVcOkBM1fQ@mail.gmail.com>
- <51A963B7.6060002@alum.mit.edu>
- <20130601050355.GA23408@sigill.intra.peff.net>
- <CALkWK0kcJH0t4i0BAPmMkNWwNzeJNdmg_wbt3ao-=R31kJ5noA@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 1/4] commit: reload cache properly
+Date: Sat, 1 Jun 2013 16:09:39 +0700
+Message-ID: <CACsJy8A6Hq_LEqAxUTLKP9-TA6aTq+91Wx2vYLhSuMSmRvpYiA@mail.gmail.com>
+References: <1369915136-4248-1-git-send-email-felipe.contreras@gmail.com>
+ <1369915136-4248-2-git-send-email-felipe.contreras@gmail.com>
+ <87ehcok6gl.fsf@linux-k42r.v.cablecom.net> <CAMP44s1O=VTu8EZi+yOfGMccCpS+pozvZJuDW1mK95U8-YEquA@mail.gmail.com>
+ <8761y0k4ja.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
-	Elijah Newren <newren@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 01 11:09:54 2013
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Adam Spiers <git@adamspiers.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Stephen Boyd <sboyd@codeaurora.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Jun 01 11:10:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uihov-0007ic-3F
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 11:09:53 +0200
+	id 1UihpJ-0007tX-4G
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 11:10:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754550Ab3FAJJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Jun 2013 05:09:41 -0400
-Received: from cloud.peff.net ([50.56.180.127]:39250 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753524Ab3FAJJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jun 2013 05:09:38 -0400
-Received: (qmail 32393 invoked by uid 102); 1 Jun 2013 09:10:21 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 01 Jun 2013 04:10:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Jun 2013 05:09:35 -0400
-Content-Disposition: inline
-In-Reply-To: <CALkWK0kcJH0t4i0BAPmMkNWwNzeJNdmg_wbt3ao-=R31kJ5noA@mail.gmail.com>
+	id S1755098Ab3FAJKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Jun 2013 05:10:13 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:47350 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753524Ab3FAJKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Jun 2013 05:10:11 -0400
+Received: by mail-la0-f42.google.com with SMTP id fg20so2095665lab.1
+        for <git@vger.kernel.org>; Sat, 01 Jun 2013 02:10:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=WAHVrVXJ7Y111qjQkSPNS3wGppSt72XL2+gOkFv3KOQ=;
+        b=uGI5M+PvbE6gm/wYdSEsmGqJHtE4v92VOZLMjr73HEN3apiDqfA2lH9JYZgpPuIsae
+         Jy3i521h1a8BQrHlkkmQy+l0WniQc7/xSGdFFAvmo9EQzHz9uwKpFR6YbnxlmgVqRdtg
+         RWQoEFAhOVS8KDbJd54vssg5po8AV0oGdDIxasrU1yfQ7BSusfXfFVeQrh8nVnxtIXBX
+         +J3zq//WOt0T0vA8cL3oBByB2HF6ctFttFMYBSlXIDMEi4B/P/f369/dXEow0a9GpioA
+         MDvSF/yqPXLERyWt9kwSfSIyPjWj1HVpBS+hK4IyaSzQ5GwwSUEP23OjyNAtpke8xHfx
+         RBmw==
+X-Received: by 10.112.6.6 with SMTP id w6mr7293691lbw.123.1370077809266; Sat,
+ 01 Jun 2013 02:10:09 -0700 (PDT)
+Received: by 10.114.24.234 with HTTP; Sat, 1 Jun 2013 02:09:39 -0700 (PDT)
+In-Reply-To: <8761y0k4ja.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226106>
 
-On Sat, Jun 01, 2013 at 01:29:07PM +0530, Ramkumar Ramachandra wrote:
+On Thu, May 30, 2013 at 7:58 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> On Thu, May 30, 2013 at 7:17 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> diff --git i/t/t7501-commit.sh w/t/t7501-commit.sh
+> index 195e747..1608254 100755
+> --- i/t/t7501-commit.sh
+> +++ w/t/t7501-commit.sh
+> @@ -524,4 +524,16 @@ test_expect_success 'commit a file whose name is a dash' '
+>         test_i18ngrep " changed, 5 insertions" output
+>  '
+>
+> +test_expect_success '--only works on to-be-born branch' '
+> +       git checkout --orphan orphan &&
+> +       echo foo >newfile &&
+> +       git add newfile &&
+> +       git commit --only newfile -m"--only on unborn branch" &&
+> +       cat >expected <<EOF &&
+> +100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99   newfile
+> +EOF
+> +       git ls-tree -r HEAD >actual &&
+> +       test_cmp expected actual
+> +'
+> +
+>  test_done
 
-> Jeff King wrote:
-> > I wonder if simply sticking
-> > the reflog entries into a big GRAVEYARD reflog wouldn't be a great deal
-> > simpler and accomplish the "keep deleted reflogs" goal, which is what
-> > people actually want.
-> 
-> Exactly what I was thinking when I read your proposal.  What is the
-> point of having individual graveyards for deleted branches?  The
-> branch names no longer have any significance, and separating the
-> reflogs using branch names nobody remembers is only making
-> discoverability harder.
-
-Why don't the branch names have significance? If I deleted branch "foo"
-yesterday evening, wouldn't I want to be able to say "show me foo from
-2pm yesterday" or even "show me all logs for foo, so that I can pick the
-useful bit from the list"?
-
-When I suggested a big graveyard reflog, I did not mean a straight
-concatenation of the deleted reflogs; I meant one which would also
-record the name of the ref whose log each entry came from.
-
-If you mean "the branch names in the filesystem don't have
-significance", I agree. Using a parallel hierarchy of reflogs was an
-implementation choice that let us use the same reflog format.  Defining
-a new GRAVEYARD format would need an additional field for the ref name
-of each entry, but lets us drop the other naming complexities.
-
-> What is the problem we are trying to solve?  Someone deletes a branch
-> by mistake, and wants to get it back?  There's the HEAD reflog for
-> that.
-
-The HEAD reflog is not sufficient for two reasons:
-
-  1. Not all ref updates were part of the HEAD reflog (e.g.,
-     refs/remotes, tags).
-
-  2. It is not easy to see deduce which ref each entry comes from, which
-     makes "deleted_branch@{yesterday}" difficult. You can sometimes
-     deduce the branch by reading the surrounding entries (e.g., for
-     "checkout" entries), but I do not know offhand whether it can be
-     done reliably in all cases (I suspect not, given that unreachable
-     reflog entries may be pruned sooner than reachable ones, leaving
-     "holes" in the reflog's story).
-
-> More than adding a graveyard to provide hard-to-dissect information,
-> I'm interested in tooling support for the information we already have.
-
-I think that is an orthogonal concern. Already with the current reflogs,
-such a tool would be useful. And even without such a tool, being able to
-access reflog entries of deleted branches is still useful. Even simple
-things like "git branch foo deleted@{yesterday}" and "git log -g
-deleted" would give a safety net. And those are supported by the
-existing porcelain tooling.
-
-I do not necessarily disagree with your criticisms of the tooling around
-reflogs, but they are just not my interest right now, and I do not think
-working on one concept needs to hold up the other.
-
--Peff
+Thomas, can you resubmit this as a patch to Junio? It's good that the
+test suite covers all correct behaviors (and the incorrect ones).
+--
+Duy
