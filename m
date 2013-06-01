@@ -1,75 +1,80 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 04/11] tests: introduce test_ln_s and test_ln_s_add
-Date: Sat, 1 Jun 2013 16:41:35 +0530
-Message-ID: <CALkWK0nN2V3Cwi3n+DV7Bcme7jE=B+COFioqPFfHQgxGTWEtiA@mail.gmail.com>
-References: <cover.1370076477.git.j6t@kdbg.org> <c7be5891891d1eeba540a5a24f07d58514345b2b.1370076477.git.j6t@kdbg.org>
+Subject: Re: git fetch documentation
+Date: Sat, 1 Jun 2013 16:55:42 +0530
+Message-ID: <CALkWK0mqkOZ__Gk-5VUpzLCaUHx1kA1JTrFunF3tUSeX6tDkgA@mail.gmail.com>
+References: <87sj12rt13.fsf@yahoo.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Jun 01 13:12:23 2013
+To: Nicolas Richard <theonewiththeevillook@yahoo.fr>
+X-From: git-owner@vger.kernel.org Sat Jun 01 13:26:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UijjS-0005wv-EU
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 13:12:22 +0200
+	id 1Uijx8-0004Pi-Nv
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 13:26:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228Ab3FALMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Jun 2013 07:12:18 -0400
-Received: from mail-bk0-f41.google.com ([209.85.214.41]:64811 "EHLO
-	mail-bk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751485Ab3FALMR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jun 2013 07:12:17 -0400
-Received: by mail-bk0-f41.google.com with SMTP id jc10so1152387bkc.0
-        for <git@vger.kernel.org>; Sat, 01 Jun 2013 04:12:15 -0700 (PDT)
+	id S1755507Ab3FAL0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Jun 2013 07:26:25 -0400
+Received: from mail-bk0-f53.google.com ([209.85.214.53]:34083 "EHLO
+	mail-bk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755160Ab3FAL0Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Jun 2013 07:26:24 -0400
+Received: by mail-bk0-f53.google.com with SMTP id mx10so1153818bkb.12
+        for <git@vger.kernel.org>; Sat, 01 Jun 2013 04:26:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=FDlKUJsiGCL1stF3djG3sy58BfYp+tLYGgHgJ9Y+gTk=;
-        b=jtmW58AGFhjxtxzYMpbGgnOmtE0krKyf7mvYsvT6H2AX6ZLTvuvjudlP1hEkzwjbjr
-         2xFwwjeW2jlzEolDkkFPEMSbD1WplLyfIm5KWsdLTZa6Q1GGm2lr9FhhwptT/4JlezC8
-         0yHhXDIrE2Diy+ITdLDoMhUErvrvfl7Skue/lRaRvLXKUnr/FBH44FPaWZ4u8VRDSsoi
-         fNOZhYjz4NdscqvQqTZkkGC4IatFxfE04M6huKaTTBUeuIbEErR8sxXz9jJPrnP/ga7k
-         W7k6P1ly2NsQBi4P7Xink9mjov34Km2nar+/vWa+FE0vbr0Y4GEiBAs5Qy5K2/X9BRLg
-         8+CQ==
-X-Received: by 10.205.115.5 with SMTP id fc5mr4354403bkc.155.1370085135519;
- Sat, 01 Jun 2013 04:12:15 -0700 (PDT)
-Received: by 10.204.172.209 with HTTP; Sat, 1 Jun 2013 04:11:35 -0700 (PDT)
-In-Reply-To: <c7be5891891d1eeba540a5a24f07d58514345b2b.1370076477.git.j6t@kdbg.org>
+        bh=+wOSc+eeNWbctr26W9T/tieyjxtE6V68lhDqomYs5GY=;
+        b=ZovVWjta+jbrBgskmWFXATcKJNheCmwvER3Dc2WxdlMQ3UxB9dEIIwNLtflHnHYUPz
+         CUtzLWb+B8fzEccZYngq7VWKZWzXsoHVCLBedL6jnN9N4+ntviuH0xrlYP5FMvLyWwA3
+         Xa1vGGzdVRar1diqj2RT5nyE6rZ8TL0QFOgSv1zMVJyKqd1v9L8tVWNl14m2tFc/Ddrs
+         tQ4/sSw7pmo0nja20cLlOkjyuEL6lPT54RoDqdGr6XNA2ESPzA9BvonwYEfYIPuVJD7V
+         vzzJqy+ous0pTutbovWAg4zeFIqQBSnMrZdC9/E470Lq9KKCIEuCpcOQUFaCpe0lkPaa
+         2Asg==
+X-Received: by 10.204.225.132 with SMTP id is4mr4431380bkb.77.1370085982459;
+ Sat, 01 Jun 2013 04:26:22 -0700 (PDT)
+Received: by 10.204.172.209 with HTTP; Sat, 1 Jun 2013 04:25:42 -0700 (PDT)
+In-Reply-To: <87sj12rt13.fsf@yahoo.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226124>
 
-Johannes Sixt wrote:
-> +test_ln_s_add () {
-> +       if test_have_prereq SYMLINKS
-> +       then
-> +               ln -s "$1" "$2" &&
-> +               git update-index --add "$2"
-> +       else
-> +               printf '%s' "$1" >"$2" &&
-> +               ln_s_obj=$(git hash-object -w "$2") &&
-> +               git update-index --add --cacheinfo 120000 $ln_s_obj "$2"
-> +       fi
-> +}
+Nicolas Richard wrote:
+> - A '*' can be used both in src and dest, and it matches any name,
+>   including subdirectories, but not partial names (i.e. refs/heads/foo*
+>   is invalid).
+> - multiple fetch lines can be given in .git/config, each of them will be
+>   obeyed
+>
+> These are probably obvious for most users, but I think documenting them
+> would be good for newcomers. (I tried to come up with a patch but I
+> can't find a precise yet concise way to explain the role of '*' in
+> english.)
 
-Nicely done.  As far as git is concerned, a symlink is nothing but a
-plain file containing the destination filename (minus the newline)
-with mode 120000 in the index.
+Good.  Yes, we don't even have examples showing that a rewrite like
+refs/heads/nr/*:refs/heads/* can be done.  The documentation is
+definitely lacking.  However, I'd urge you to get started by
+submitting an initial draft: we will review it and help you learn and
+contribute.  Some pointers:
 
-> +test_ln_s () {
-> +       if test_have_prereq SYMLINKS
-> +       then
-> +               ln -s "$1" "$2"
-> +       else
-> +               printf '%s' "$1" >"$2"
-> +       fi
-> +}
+- What you are attempting to document is called a refspec.  Look at
+'struct refspec' in remote.h, and attempt to understand what its
+fields mean by looking at how it is used in remote.c.
 
-What is this?  We can't test_ln_s something and then 'git add' it, so
-what purpose does this serve?
+- Notice that there is a push refspec corresponding to the fetch
+refspec.  This feature is even more obscure and undocumented.
+
+- See remote.c:get_ref_match(); specifically,
+match_name_with_pattern() is doing the pattern matching.  As you can
+see, match_name_with_pattern() hard-codes a '*' and tries to match
+just that: there is no support for anything else.  Try to skim through
+the code once.
+
+- Read Documentation/SubmittingPatches and submit a first version
+quickly.  It doesn't have to be perfect at all.
