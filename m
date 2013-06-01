@@ -1,84 +1,98 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 01/11] test-chmtime: Fix exit code on Windows
-Date: Sat,  1 Jun 2013 11:34:20 +0200
-Message-ID: <c5913d1a95ed5a9aaa92eece2484274949acc78e.1370076477.git.j6t@kdbg.org>
-References: <cover.1370076477.git.j6t@kdbg.org>
+Subject: [PATCH 00/11] Increase test coverage on Windows by removing SYMLINKS from many tests
+Date: Sat,  1 Jun 2013 11:34:19 +0200
+Message-ID: <cover.1370076477.git.j6t@kdbg.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 01 11:34:41 2013
+X-From: git-owner@vger.kernel.org Sat Jun 01 11:34:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiiCu-0001y1-JY
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 11:34:40 +0200
+	id 1UiiD3-00022T-Nc
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 11:34:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756519Ab3FAJeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Jun 2013 05:34:36 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:17796 "EHLO bsmtp.bon.at"
+	id S1756692Ab3FAJei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Jun 2013 05:34:38 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:34512 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751669Ab3FAJee (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jun 2013 05:34:34 -0400
+	id S1751566Ab3FAJef (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Jun 2013 05:34:35 -0400
 Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 97BE1CDF8D
+	by bsmtp.bon.at (Postfix) with ESMTP id 9943110011
 	for <git@vger.kernel.org>; Sat,  1 Jun 2013 11:34:32 +0200 (CEST)
 Received: from dx.sixt.local (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id C856219F5E0
+	by dx.sixt.local (Postfix) with ESMTP id AD42519F480
 	for <git@vger.kernel.org>; Sat,  1 Jun 2013 11:34:31 +0200 (CEST)
 X-Mailer: git-send-email 1.8.3.rc1.32.g8b61cbb
-In-Reply-To: <cover.1370076477.git.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226108>
 
-MinGW's bash does not recognize an exit code -1 as failure. See also
-47e3de0e (MinGW: truncate exit()'s argument to lowest 8 bits) and 2488df84
-(builtin run_command: do not exit with -1). Exit code 1 is good enough.
+Many tests that involve symbolic links actually check only whether our
+algorithms are correct by investigating the contents of the object
+database and the index. Only some of them check the filesystem.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- test-chmtime.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+This series introduces a function test_ln_s_add that inserts a symbolic
+link in the index even if the filesystem does not support symbolic links.
+By using this function, many more tests can be run when the filesystem
+does not have symblic links, aka Windows.
 
-diff --git a/test-chmtime.c b/test-chmtime.c
-index 94903c4..28b2313 100644
---- a/test-chmtime.c
-+++ b/test-chmtime.c
-@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
- 		if (stat(argv[i], &sb) < 0) {
- 			fprintf(stderr, "Failed to stat %s: %s\n",
- 			        argv[i], strerror(errno));
--			return -1;
-+			return 1;
- 		}
- 
- #ifdef WIN32
-@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
- 				chmod(argv[i], sb.st_mode | S_IWUSR)) {
- 			fprintf(stderr, "Could not make user-writable %s: %s",
- 				argv[i], strerror(errno));
--			return -1;
-+			return 1;
- 		}
- #endif
- 
-@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
- 		if (utb.modtime != sb.st_mtime && utime(argv[i], &utb) < 0) {
- 			fprintf(stderr, "Failed to modify time on %s: %s\n",
- 			        argv[i], strerror(errno));
--			return -1;
-+			return 1;
- 		}
- 	}
- 
-@@ -115,5 +115,5 @@ int main(int argc, char *argv[])
- 
- usage:
- 	fprintf(stderr, "usage: %s %s\n", argv[0], usage_str);
--	return -1;
-+	return 1;
- }
+The patches touch a number of test files that do not follow the modern
+style. But I modernized only the two test files where the subsequent
+change to use test_ln_s_add would otherwise be rather inconvenient or
+obscure.
+
+Johannes Sixt (11):
+  test-chmtime: Fix exit code on Windows
+  t2100: modernize style and unroll a loop of test cases
+  t3010: modernize style
+  tests: introduce test_ln_s and test_ln_s_add
+  tests: use test_ln_s_add to remove SYMLINKS prerequisite (trivial
+    cases)
+  t0000: use test_ln_s_add to remove SYMLINKS prerequisite
+  t2100: use test_ln_s_add to remove SYMLINKS prerequisite
+  t3030: use test_ln_s_add to remove SYMLINKS prerequisite
+  t3100: use test_ln_s_add to remove SYMLINKS prerequisite
+  t3509, t4023, t4114: use test_ln_s_add to remove SYMLINKS prerequisite
+  t6035: use test_ln_s_add to remove SYMLINKS prerequisite
+
+ t/README                               |  17 +++++
+ t/t0000-basic.sh                       |  39 +++---------
+ t/t1004-read-tree-m-u-wf.sh            |   7 +--
+ t/t2001-checkout-cache-clash.sh        |   7 +--
+ t/t2003-checkout-cache-mkdir.sh        |   8 +--
+ t/t2004-checkout-cache-temp.sh         |   5 +-
+ t/t2007-checkout-symlink.sh            |  12 ++--
+ t/t2021-checkout-overwrite.sh          |  12 ++--
+ t/t2100-update-cache-badpath.sh        |  71 +++++++++++----------
+ t/t2200-add-update.sh                  |   5 +-
+ t/t3000-ls-files-others.sh             |   7 +--
+ t/t3010-ls-files-killed-modified.sh    | 112 +++++++++++++++------------------
+ t/t3030-merge-recursive.sh             |  62 ++++++++----------
+ t/t3100-ls-tree-restrict.sh            |  42 +++++--------
+ t/t3509-cherry-pick-merge-df.sh        |  12 ++--
+ t/t3700-add.sh                         |  15 ++---
+ t/t3903-stash.sh                       |  39 ++++++++----
+ t/t4008-diff-break-rewrite.sh          |  12 ++--
+ t/t4011-diff-symlink.sh                |  23 ++++---
+ t/t4023-diff-rename-typechange.sh      |  28 ++++-----
+ t/t4030-diff-textconv.sh               |   8 +--
+ t/t4114-apply-typechange.sh            |  29 +++++----
+ t/t4115-apply-symlink.sh               |  10 ++-
+ t/t4122-apply-symlink-inside.sh        |   8 +--
+ t/t6035-merge-dir-to-symlink.sh        |  73 +++++++++++++--------
+ t/t7001-mv.sh                          |  18 +++---
+ t/t7607-merge-overwrite.sh             |   5 +-
+ t/t8006-blame-textconv.sh              |  14 ++---
+ t/t8007-cat-file-textconv.sh           |  10 ++-
+ t/t9350-fast-export.sh                 |   5 +-
+ t/t9500-gitweb-standalone-no-errors.sh |  15 ++---
+ t/test-lib-functions.sh                |  30 +++++++++
+ test-chmtime.c                         |   8 +--
+ 33 files changed, 391 insertions(+), 377 deletions(-)
+
 -- 
 1.8.3.rc1.32.g8b61cbb
