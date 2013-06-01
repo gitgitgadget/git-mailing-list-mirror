@@ -1,53 +1,113 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 04/11] tests: introduce test_ln_s and test_ln_s_add
-Date: Sat, 1 Jun 2013 22:40:12 +0530
-Message-ID: <CALkWK0k3KG2657BJLOyGSaRF8teaigpRLwiq=-ppQWOCO7w0tA@mail.gmail.com>
-References: <cover.1370076477.git.j6t@kdbg.org> <c7be5891891d1eeba540a5a24f07d58514345b2b.1370076477.git.j6t@kdbg.org>
- <CALkWK0nN2V3Cwi3n+DV7Bcme7jE=B+COFioqPFfHQgxGTWEtiA@mail.gmail.com> <51AA0DD9.9030704@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] t0005: test git exit code from signal death
+Date: Sat, 1 Jun 2013 13:24:41 -0400
+Message-ID: <20130601172441.GB19234@sigill.intra.peff.net>
+References: <1370094715-2684-1-git-send-email-felipe.contreras@gmail.com>
+ <CACsJy8Df-O=D5LQBXCbiVLB=uHfn6ETbAxADWq3hd-9pPX4+mg@mail.gmail.com>
+ <CAMP44s0L1M+_s2eDM=Ogy=rxLhpZYwSb8qWTuEe30pB4KGDVtA@mail.gmail.com>
+ <CACsJy8BFv7kJkymJ_rj9dwaN-zMcHtS9sjmqDSpLWB5TsUU_kg@mail.gmail.com>
+ <CAMP44s2cBGc+uKH0t-KZko-5GYkZUK54+7wiYbWim55B7KGaGA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Jun 01 19:11:15 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"John J. Franey" <jjfraney@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 01 19:25:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UipKi-0004uq-8j
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 19:11:12 +0200
+	id 1UipY5-0003MT-Ku
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 19:25:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568Ab3FARKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Jun 2013 13:10:54 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:37514 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750856Ab3FARKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jun 2013 13:10:53 -0400
-Received: by mail-ie0-f179.google.com with SMTP id c10so965277ieb.38
-        for <git@vger.kernel.org>; Sat, 01 Jun 2013 10:10:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=xlEIaNu4REB7sn4ekdkPh7VyEwXHHf5VH7vMoJaCOIk=;
-        b=DehR6tEskrwL427oHegs+Pi6E8AmiCpf/5lvL01s+63q8YsyHqoAZE3X3aNqN8mJ0O
-         NQjtfILEQbvkdALJj5ey5Ktij3M7GAYXi4p3RIQdTaLIEEgPdN/IBnxKLU5G9OXrNv1/
-         pfqBX/NfU1z4Hkm+Z9N0fY+stMH2yfuhDPJPgQmc/qbWRgTUdMCoI8u/2g9a06wQmpbf
-         hodlTpwWu7/J2hpTX3DBWTNhM/FqNwWRXmU13NrYoh/ulTTLeIOYwMlBsl+IbA4f3BXG
-         ssukJ/mDnGAkwbnRaAWIdyZ5mP6KMpSoA/Ff5DgSrYvJwvZDYug5zYWsTU6tE5jOwP/h
-         8LIw==
-X-Received: by 10.42.76.132 with SMTP id e4mr7192647ick.11.1370106652457; Sat,
- 01 Jun 2013 10:10:52 -0700 (PDT)
-Received: by 10.64.226.135 with HTTP; Sat, 1 Jun 2013 10:10:12 -0700 (PDT)
-In-Reply-To: <51AA0DD9.9030704@kdbg.org>
+	id S1752333Ab3FARYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Jun 2013 13:24:45 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42535 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751881Ab3FARYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Jun 2013 13:24:43 -0400
+Received: (qmail 23003 invoked by uid 102); 1 Jun 2013 17:25:26 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 01 Jun 2013 12:25:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Jun 2013 13:24:41 -0400
+Content-Disposition: inline
+In-Reply-To: <CAMP44s2cBGc+uKH0t-KZko-5GYkZUK54+7wiYbWim55B7KGaGA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226141>
 
-Johannes Sixt wrote:
-> # - Use test_ln_s instead of "ln -s x y" when y has been added as a
-> #   symbolic link entry earlier.
+On Sat, Jun 01, 2013 at 10:01:49AM -0500, Felipe Contreras wrote:
 
-Ah, sorry I skipped over the comments.
+> Anyway, if you care so much about the current behavior, why isn't
+> there any tests that check for this?
+> 
+> My patch passes *all* the tests.
+
+The test suite has never been (and probably never will be) a complete
+specification of git's behavior. Noticing that a desired behavior is not
+in the test suite is an opportunity to improve its coverage, not argue
+that a change which breaks the desired behavior must therefore be
+acceptable.
+
+We could do something like the patch below, with two caveats:
+
+  1. The test immediately before it checks for exit codes other than
+     "143" on various platforms. I do not know to what degree we need to
+     deal with that here. Git is doing the interpretation here rather
+     than the shell, so the ksh case should not matter. But I do not
+     know what part of Windows converts the exit code to 3. Do we need
+     to be looking for 3? Or 131 (128+3)?
+
+  2. The test detects a total breakage of the exit code, like the one
+     caused by your patch. But I do not know if it would reliably detect
+     us failing to convert the code at all, as the shell running the
+     test harness would presumably convert it to shell-convention
+     itself. Getting around that would require a custom C program
+     checking the status returned by waitpid().
+
+     On the other hand, perhaps it is not the conversion we care about;
+     as long as we end up with 143, we are fine. We just want to make
+     sure that signal death is recorded in _one_ of the potential signal
+     formats. So we do not care if git or the shell did the conversion,
+     as long as we end up with 143. The real breakage is exiting with
+     code 15, which is losing information.
+
+-- >8 --
+Subject: [PATCH] t0005: test git exit code from signal death
+
+When a sub-process dies with a signal, we convert the exit
+code to the shell convention of 128+sig. Callers of git may
+be relying on this behavior, so let's make sure it does not
+break.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t0005-signals.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
+index 93e58c0..63f9764 100755
+--- a/t/t0005-signals.sh
++++ b/t/t0005-signals.sh
+@@ -20,4 +20,11 @@ test_expect_success 'sigchain works' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'signals are propagated using shell convention' '
++	# we use exec here to avoid any sub-shell interpretation
++	# of the exit code
++	git config alias.sigterm "!exec test-sigchain" &&
++	test_expect_code 143 git sigterm
++'
++
+ test_done
+-- 
+1.8.3.rc1.2.g12db477
