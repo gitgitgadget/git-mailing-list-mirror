@@ -1,87 +1,62 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [PATCH] Test 'commit --only' after 'checkout --orphan'
-Date: Sat, 1 Jun 2013 13:02:00 +0200
-Message-ID: <78176f4fca45213961f0e4d15ac72012d6a0a10b.1370084247.git.trast@inf.ethz.ch>
-References: <CACsJy8A6Hq_LEqAxUTLKP9-TA6aTq+91Wx2vYLhSuMSmRvpYiA@mail.gmail.com>
+From: "Nicolas Richard" <theonewiththeevillook@yahoo.fr>
+Subject: git fetch documentation
+Date: Sat, 01 Jun 2013 13:04:40 +0200
+Message-ID: <87sj12rt13.fsf@yahoo.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: <git@vger.kernel.org>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>,
-	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Stephen Boyd <sboyd@codeaurora.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 01 13:02:23 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 01 13:10:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UijZl-0001F3-SU
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 13:02:22 +0200
+	id 1UijhL-0004nb-SK
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 13:10:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755778Ab3FALCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Jun 2013 07:02:14 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:36176 "EHLO edge10.ethz.ch"
+	id S1756242Ab3FALKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Jun 2013 07:10:08 -0400
+Received: from plane.gmane.org ([80.91.229.3]:33771 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754013Ab3FALCE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jun 2013 07:02:04 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 1 Jun
- 2013 13:01:58 +0200
-Received: from hexa.v.cablecom.net (46.126.8.85) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 1 Jun
- 2013 13:02:00 +0200
-X-Mailer: git-send-email 1.8.3.509.g0de0faa
-In-Reply-To: <CACsJy8A6Hq_LEqAxUTLKP9-TA6aTq+91Wx2vYLhSuMSmRvpYiA@mail.gmail.com>
-X-Originating-IP: [46.126.8.85]
+	id S1754485Ab3FALKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Jun 2013 07:10:06 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UijhD-0004kr-Uk
+	for git@vger.kernel.org; Sat, 01 Jun 2013 13:10:03 +0200
+Received: from geodiff-mac3.ulb.ac.be ([164.15.131.113])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 01 Jun 2013 13:10:03 +0200
+Received: from theonewiththeevillook by geodiff-mac3.ulb.ac.be with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 01 Jun 2013 13:10:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: geodiff-mac3.ulb.ac.be
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Cancel-Lock: sha1:O6zXBz4h5e2pwItgX6QN9GwBX/A=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226122>
 
-There are some index handling subtleties in 'commit --only' that are
-best tested when we have an existing index, but an unborn or empty
-HEAD.  These circumstances are easily produced by 'checkout --orphan',
-but we did not previously have a test for it.
+Hello,
 
-The main expected failure mode would be: erroneously loading the
-existing index contents when building the temporary index that is used
-for --only.  Cf.
+Regarding the git-fetch man page (IIUC, in pull-fetch-param.txt), in
+particular the <refspec> explanation, I feel that two facts are missing:
 
-  http://article.gmane.org/gmane.comp.version-control.git/225969
+- A '*' can be used both in src and dest, and it matches any name,
+  including subdirectories, but not partial names (i.e. refs/heads/foo*
+  is invalid).
+- multiple fetch lines can be given in .git/config, each of them will be
+  obeyed
 
-and subsequent discussion.
+These are probably obvious for most users, but I think documenting them
+would be good for newcomers. (I tried to come up with a patch but I
+can't find a precise yet concise way to explain the role of '*' in
+english.)
 
-Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
----
- t/t7501-commit.sh | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index 195e747..99ce36f 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -524,4 +524,17 @@ test_expect_success 'commit a file whose name is a dash' '
- 	test_i18ngrep " changed, 5 insertions" output
- '
- 
-+test_expect_success '--only works on to-be-born branch' '
-+	# This test relies on having something in the index, as it
-+	# would not otherwise actually prove much.  So check this.
-+	test -n "$(git ls-files)" &&
-+	git checkout --orphan orphan &&
-+	echo foo >newfile &&
-+	git add newfile &&
-+	git commit --only newfile -m"--only on unborn branch" &&
-+	echo newfile >expected &&
-+	git ls-tree -r --name-only HEAD >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
 -- 
-1.8.3.509.g0de0faa
+Nico.
