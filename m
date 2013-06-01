@@ -1,29 +1,29 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 08/11] t3030: use test_ln_s_add to remove SYMLINKS prerequisite
-Date: Sat,  1 Jun 2013 11:34:27 +0200
-Message-ID: <4af20d7b181e9c5eadb00cb2b6e349161901bbb8.1370076477.git.j6t@kdbg.org>
+Subject: [PATCH 09/11] t3100: use test_ln_s_add to remove SYMLINKS prerequisite
+Date: Sat,  1 Jun 2013 11:34:28 +0200
+Message-ID: <4cc6378373fe8c0002c22a65192abe82638cb6d4.1370076477.git.j6t@kdbg.org>
 References: <cover.1370076477.git.j6t@kdbg.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 01 11:34:51 2013
+X-From: git-owner@vger.kernel.org Sat Jun 01 11:34:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UiiD4-00022T-Sv
+	id 1UiiD5-00022T-DQ
 	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 11:34:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756757Ab3FAJeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Jun 2013 05:34:44 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:7447 "EHLO bsmtp.bon.at"
+	id S1756785Ab3FAJer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Jun 2013 05:34:47 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:7450 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755070Ab3FAJef (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755958Ab3FAJef (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 1 Jun 2013 05:34:35 -0400
 Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 77085CDF8F
+	by bsmtp.bon.at (Postfix) with ESMTP id 867061000B
 	for <git@vger.kernel.org>; Sat,  1 Jun 2013 11:34:33 +0200 (CEST)
 Received: from dx.sixt.local (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 9CF9D19F5E8
+	by dx.sixt.local (Postfix) with ESMTP id B2E0619F5E1
 	for <git@vger.kernel.org>; Sat,  1 Jun 2013 11:34:32 +0200 (CEST)
 X-Mailer: git-send-email 1.8.3.rc1.32.g8b61cbb
 In-Reply-To: <cover.1370076477.git.j6t@kdbg.org>
@@ -31,112 +31,159 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226111>
 
-The test cases include many corner-cases of merge-recursive's behavior,
-some of them involve type changes and symbolic links. All cases, including
-those that are protected by SYMLINKS check only whether the result of
-merge-recursive is correctly stored in the database and the index; the
-file system is not investigated. Use test_ln_s_add to enter a symbolic
-link in the index in the test setup and run the tests without the
-SYMLINKS prerequisite.
-
-Notice that one test that has the SYMLINKS protection removed is an
-expect_failure. There is a possibility that the test fails differently
-depending on whether SYMLINKS is present or not; but this is not the case
-presently.
+This undoes the special casing introduced in this test by 704a3143
+(Use prerequisite tags to skip tests that depend on symbolic links,
+2009-03-04).
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- t/t3030-merge-recursive.sh | 62 +++++++++++++++++++---------------------------
- 1 file changed, 26 insertions(+), 36 deletions(-)
+ t/t3100-ls-tree-restrict.sh | 42 +++++++++++++++---------------------------
+ 1 file changed, 15 insertions(+), 27 deletions(-)
 
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index a5e3da7..2f96100 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -25,10 +25,7 @@ test_expect_success 'setup 1' '
- 	git branch submod &&
- 	git branch copy &&
- 	git branch rename &&
--	if test_have_prereq SYMLINKS
--	then
--		git branch rename-ln
--	fi &&
-+	git branch rename-ln &&
+diff --git a/t/t3100-ls-tree-restrict.sh b/t/t3100-ls-tree-restrict.sh
+index 81d90b6..eb73c06 100755
+--- a/t/t3100-ls-tree-restrict.sh
++++ b/t/t3100-ls-tree-restrict.sh
+@@ -22,20 +22,8 @@ test_expect_success \
+     'setup' \
+     'mkdir path2 path2/baz &&
+      echo Hi >path0 &&
+-     if test_have_prereq SYMLINKS
+-     then
+-	ln -s path0 path1 &&
+-	ln -s ../path1 path2/bazbo
+-	make_expected () {
+-		cat >expected
+-	}
+-     else
+-	printf path0 > path1 &&
+-	printf ../path1 > path2/bazbo
+-	make_expected () {
+-		sed -e "s/120000 /100644 /" >expected
+-	}
+-     fi &&
++     test_ln_s_add path0 path1 &&
++     test_ln_s_add ../path1 path2/bazbo &&
+      echo Lo >path2/foo &&
+      echo Mi >path2/baz/b &&
+      find path? \( -type f -o -type l \) -print |
+@@ -51,7 +39,7 @@ test_output () {
+ test_expect_success \
+     'ls-tree plain' \
+     'git ls-tree $tree >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ 100644 blob X	path0
+ 120000 blob X	path1
+ 040000 tree X	path2
+@@ -61,7 +49,7 @@ EOF
+ test_expect_success \
+     'ls-tree recursive' \
+     'git ls-tree -r $tree >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ 100644 blob X	path0
+ 120000 blob X	path1
+ 100644 blob X	path2/baz/b
+@@ -73,7 +61,7 @@ EOF
+ test_expect_success \
+     'ls-tree recursive with -t' \
+     'git ls-tree -r -t $tree >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ 100644 blob X	path0
+ 120000 blob X	path1
+ 040000 tree X	path2
+@@ -87,7 +75,7 @@ EOF
+ test_expect_success \
+     'ls-tree recursive with -d' \
+     'git ls-tree -r -d $tree >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ 040000 tree X	path2
+ 040000 tree X	path2/baz
+ EOF
+@@ -96,7 +84,7 @@ EOF
+ test_expect_success \
+     'ls-tree filtered with path' \
+     'git ls-tree $tree path >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ EOF
+      test_output'
  
- 	echo hello >>a &&
- 	cp a d/e &&
-@@ -260,16 +257,12 @@ test_expect_success 'setup 8' '
- 	git add e &&
- 	test_tick &&
- 	git commit -m "rename a->e" &&
--	if test_have_prereq SYMLINKS
--	then
--		git checkout rename-ln &&
--		git mv a e &&
--		ln -s e a &&
--		git add a e &&
--		test_tick &&
--		git commit -m "rename a->e, symlink a->e" &&
--		oln=`printf e | git hash-object --stdin`
--	fi
-+	git checkout rename-ln &&
-+	git mv a e &&
-+	test_ln_s_add e a &&
-+	test_tick &&
-+	git commit -m "rename a->e, symlink a->e" &&
-+	oln=`printf e | git hash-object --stdin`
- '
+@@ -106,7 +94,7 @@ EOF
+ test_expect_success \
+     'ls-tree filtered with path1 path0' \
+     'git ls-tree $tree path1 path0 >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ 100644 blob X	path0
+ 120000 blob X	path1
+ EOF
+@@ -115,7 +103,7 @@ EOF
+ test_expect_success \
+     'ls-tree filtered with path0/' \
+     'git ls-tree $tree path0/ >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ EOF
+      test_output'
  
- test_expect_success 'setup 9' '
-@@ -569,28 +562,25 @@ test_expect_success 'merge-recursive copy vs. rename' '
- 	test_cmp expected actual
- '
+@@ -124,7 +112,7 @@ EOF
+ test_expect_success \
+     'ls-tree filtered with path2' \
+     'git ls-tree $tree path2 >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ 040000 tree X	path2
+ EOF
+      test_output'
+@@ -133,7 +121,7 @@ EOF
+ test_expect_success \
+     'ls-tree filtered with path2/' \
+     'git ls-tree $tree path2/ >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ 040000 tree X	path2/baz
+ 120000 blob X	path2/bazbo
+ 100644 blob X	path2/foo
+@@ -145,7 +133,7 @@ EOF
+ test_expect_success \
+     'ls-tree filtered with path2/baz' \
+     'git ls-tree $tree path2/baz >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ 040000 tree X	path2/baz
+ EOF
+      test_output'
+@@ -153,14 +141,14 @@ EOF
+ test_expect_success \
+     'ls-tree filtered with path2/bak' \
+     'git ls-tree $tree path2/bak >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ EOF
+      test_output'
  
--if test_have_prereq SYMLINKS
--then
--	test_expect_failure 'merge-recursive rename vs. rename/symlink' '
--
--		git checkout -f rename &&
--		git merge rename-ln &&
--		( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
--		(
--			echo "120000 blob $oln	a"
--			echo "100644 blob $o0	b"
--			echo "100644 blob $o0	c"
--			echo "100644 blob $o0	d/e"
--			echo "100644 blob $o0	e"
--			echo "120000 $oln 0	a"
--			echo "100644 $o0 0	b"
--			echo "100644 $o0 0	c"
--			echo "100644 $o0 0	d/e"
--			echo "100644 $o0 0	e"
--		) >expected &&
--		test_cmp expected actual
--	'
--fi
-+test_expect_failure 'merge-recursive rename vs. rename/symlink' '
-+
-+	git checkout -f rename &&
-+	git merge rename-ln &&
-+	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	(
-+		echo "120000 blob $oln	a"
-+		echo "100644 blob $o0	b"
-+		echo "100644 blob $o0	c"
-+		echo "100644 blob $o0	d/e"
-+		echo "100644 blob $o0	e"
-+		echo "120000 $oln 0	a"
-+		echo "100644 $o0 0	b"
-+		echo "100644 $o0 0	c"
-+		echo "100644 $o0 0	d/e"
-+		echo "100644 $o0 0	e"
-+	) >expected &&
-+	test_cmp expected actual
-+'
- 
- 
- test_done
+ test_expect_success \
+     'ls-tree -t filtered with path2/bak' \
+     'git ls-tree -t $tree path2/bak >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ 040000 tree X	path2
+ EOF
+      test_output'
+@@ -168,7 +156,7 @@ EOF
+ test_expect_success \
+     'ls-tree with one path a prefix of the other' \
+     'git ls-tree $tree path2/baz path2/bazbo >current &&
+-     make_expected <<\EOF &&
++     cat >expected <<\EOF &&
+ 040000 tree X	path2/baz
+ 120000 blob X	path2/bazbo
+ EOF
 -- 
 1.8.3.rc1.32.g8b61cbb
