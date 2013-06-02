@@ -1,7 +1,7 @@
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH v2 4/7] unpack-trees: create working copy of merge entry in merged_entry
-Date: Sun,  2 Jun 2013 17:46:54 +0200
-Message-ID: <1370188017-24672-5-git-send-email-rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH v2 2/7] read-cache: mark cache_entry pointers const
+Date: Sun,  2 Jun 2013 17:46:52 +0200
+Message-ID: <1370188017-24672-3-git-send-email-rene.scharfe@lsrfire.ath.cx>
 References: <1370188017-24672-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -16,104 +16,150 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjAV9-0006uU-H0
+	id 1UjAV8-0006uU-WA
 	for gcvg-git-2@plane.gmane.org; Sun, 02 Jun 2013 17:47:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753456Ab3FBPrO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Jun 2013 11:47:14 -0400
-Received: from india601.server4you.de ([85.25.151.105]:58117 "EHLO
+	id S1753454Ab3FBPrL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Jun 2013 11:47:11 -0400
+Received: from india601.server4you.de ([85.25.151.105]:58110 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753008Ab3FBPrF (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1752972Ab3FBPrF (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 2 Jun 2013 11:47:05 -0400
 Received: from debian.Speedport_W_504V_Typ_A (p579BEE4A.dip0.t-ipconnect.de [87.155.238.74])
-	by india601.server4you.de (Postfix) with ESMTPSA id 6E00B4CC;
-	Sun,  2 Jun 2013 17:47:03 +0200 (CEST)
+	by india601.server4you.de (Postfix) with ESMTPSA id C2BC045E;
+	Sun,  2 Jun 2013 17:47:02 +0200 (CEST)
 X-Mailer: git-send-email 1.8.3
 In-Reply-To: <1370188017-24672-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226162>
 
-Duplicate the merge entry right away and work with that instead of
-modifying the entry we got and duplicating it only at the end of
-the function.  Then mark that pointer const to document that we
-don't modify the referenced cache_entry.
-
-This change is safe because all existing merge functions call
-merged_entry just before returning (or not at all), i.e. they don't
-care about changes to the referenced cache_entry after the call.
-unpack_nondirectories and unpack_index_entry, which call the merge
-functions through call_unpack_fn, aren't interested in such changes
-neither.
-
-The change complicates merged_entry a bit because we have to free the
-copy if we error out, but allows callers to pass a const pointer.
+ie_match_stat and ie_modified only derefence their struct cache_entry
+pointers for reading.  Add const to the parameter declaration here and
+do the same for the static helper function used by them, as it's the
+same there as well.  This allows callers to pass in const pointers.
 
 Signed-off-by: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
- unpack-trees.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ cache.h      |  4 ++--
+ read-cache.c | 18 ++++++++++--------
+ 2 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index e8b4cc1..2fecef8 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1466,10 +1466,12 @@ static int verify_absent_sparse(struct cache_en=
-try *ce,
- 	return verify_absent_1(ce, orphaned_error, o);
+diff --git a/cache.h b/cache.h
+index 43a27e7..01e8760 100644
+--- a/cache.h
++++ b/cache.h
+@@ -482,8 +482,8 @@ extern void *read_blob_data_from_index(struct index=
+_state *, const char *, unsig
+ #define CE_MATCH_RACY_IS_DIRTY		02
+ /* do stat comparison even if CE_SKIP_WORKTREE is true */
+ #define CE_MATCH_IGNORE_SKIP_WORKTREE	04
+-extern int ie_match_stat(const struct index_state *, struct cache_entr=
+y *, struct stat *, unsigned int);
+-extern int ie_modified(const struct index_state *, struct cache_entry =
+*, struct stat *, unsigned int);
++extern int ie_match_stat(const struct index_state *, const struct cach=
+e_entry *, struct stat *, unsigned int);
++extern int ie_modified(const struct index_state *, const struct cache_=
+entry *, struct stat *, unsigned int);
+=20
+ #define PATHSPEC_ONESTAR 1	/* the pathspec pattern sastisfies GFNM_ONE=
+STAR */
+=20
+diff --git a/read-cache.c b/read-cache.c
+index 04ed561..e6e0466 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -91,7 +91,7 @@ void fill_stat_cache_info(struct cache_entry *ce, str=
+uct stat *st)
+ 		ce_mark_uptodate(ce);
  }
 =20
--static int merged_entry(struct cache_entry *merge, struct cache_entry =
-*old,
--		struct unpack_trees_options *o)
-+static int merged_entry(const struct cache_entry *ce,
-+			struct cache_entry *old,
-+			struct unpack_trees_options *o)
+-static int ce_compare_data(struct cache_entry *ce, struct stat *st)
++static int ce_compare_data(const struct cache_entry *ce, struct stat *=
+st)
  {
- 	int update =3D CE_UPDATE;
-+	struct cache_entry *merge =3D dup_entry(ce);
-=20
- 	if (!old) {
- 		/*
-@@ -1487,8 +1489,11 @@ static int merged_entry(struct cache_entry *merg=
-e, struct cache_entry *old,
- 		update |=3D CE_ADDED;
- 		merge->ce_flags |=3D CE_NEW_SKIP_WORKTREE;
-=20
--		if (verify_absent(merge, ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN, o))
-+		if (verify_absent(merge,
-+				  ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN, o)) {
-+			free(merge);
- 			return -1;
-+		}
- 		invalidate_ce_path(merge, o);
- 	} else if (!(old->ce_flags & CE_CONFLICTED)) {
- 		/*
-@@ -1502,8 +1507,10 @@ static int merged_entry(struct cache_entry *merg=
-e, struct cache_entry *old,
- 			copy_cache_entry(merge, old);
- 			update =3D 0;
- 		} else {
--			if (verify_uptodate(old, o))
-+			if (verify_uptodate(old, o)) {
-+				free(merge);
- 				return -1;
-+			}
- 			/* Migrate old flags over */
- 			update |=3D old->ce_flags & (CE_SKIP_WORKTREE | CE_NEW_SKIP_WORKTRE=
-E);
- 			invalidate_ce_path(old, o);
-@@ -1516,7 +1523,7 @@ static int merged_entry(struct cache_entry *merge=
-, struct cache_entry *old,
- 		invalidate_ce_path(old, o);
- 	}
-=20
--	add_entry(o, merge, update, CE_STAGEMASK);
-+	do_add_entry(o, merge, update, CE_STAGEMASK);
- 	return 1;
+ 	int match =3D -1;
+ 	int fd =3D open(ce->name, O_RDONLY);
+@@ -105,7 +105,7 @@ static int ce_compare_data(struct cache_entry *ce, =
+struct stat *st)
+ 	return match;
  }
+=20
+-static int ce_compare_link(struct cache_entry *ce, size_t expected_siz=
+e)
++static int ce_compare_link(const struct cache_entry *ce, size_t expect=
+ed_size)
+ {
+ 	int match =3D -1;
+ 	void *buffer;
+@@ -126,7 +126,7 @@ static int ce_compare_link(struct cache_entry *ce, =
+size_t expected_size)
+ 	return match;
+ }
+=20
+-static int ce_compare_gitlink(struct cache_entry *ce)
++static int ce_compare_gitlink(const struct cache_entry *ce)
+ {
+ 	unsigned char sha1[20];
+=20
+@@ -143,7 +143,7 @@ static int ce_compare_gitlink(struct cache_entry *c=
+e)
+ 	return hashcmp(sha1, ce->sha1);
+ }
+=20
+-static int ce_modified_check_fs(struct cache_entry *ce, struct stat *s=
+t)
++static int ce_modified_check_fs(const struct cache_entry *ce, struct s=
+tat *st)
+ {
+ 	switch (st->st_mode & S_IFMT) {
+ 	case S_IFREG:
+@@ -163,7 +163,7 @@ static int ce_modified_check_fs(struct cache_entry =
+*ce, struct stat *st)
+ 	return 0;
+ }
+=20
+-static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st=
+)
++static int ce_match_stat_basic(const struct cache_entry *ce, struct st=
+at *st)
+ {
+ 	unsigned int changed =3D 0;
+=20
+@@ -239,7 +239,8 @@ static int ce_match_stat_basic(struct cache_entry *=
+ce, struct stat *st)
+ 	return changed;
+ }
+=20
+-static int is_racy_timestamp(const struct index_state *istate, struct =
+cache_entry *ce)
++static int is_racy_timestamp(const struct index_state *istate,
++			     const struct cache_entry *ce)
+ {
+ 	return (!S_ISGITLINK(ce->ce_mode) &&
+ 		istate->timestamp.sec &&
+@@ -255,7 +256,7 @@ static int is_racy_timestamp(const struct index_sta=
+te *istate, struct cache_entr
+ }
+=20
+ int ie_match_stat(const struct index_state *istate,
+-		  struct cache_entry *ce, struct stat *st,
++		  const struct cache_entry *ce, struct stat *st,
+ 		  unsigned int options)
+ {
+ 	unsigned int changed;
+@@ -311,7 +312,8 @@ int ie_match_stat(const struct index_state *istate,
+ }
+=20
+ int ie_modified(const struct index_state *istate,
+-		struct cache_entry *ce, struct stat *st, unsigned int options)
++		const struct cache_entry *ce,
++		struct stat *st, unsigned int options)
+ {
+ 	int changed, changed_fs;
 =20
 --=20
 1.8.3
