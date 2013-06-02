@@ -1,106 +1,67 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
-Date: Sun, 02 Jun 2013 16:44:23 -0700
-Message-ID: <7vr4gkkrhk.fsf@alter.siamese.dyndns.org>
-References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org>
-	<87bo7slrz1.fsf@linux-k42r.v.cablecom.net>
+Subject: Re: [PATCH 10/11] t3509, t4023, t4114: use test_ln_s_add to remove SYMLINKS prerequisite
+Date: Sun, 02 Jun 2013 16:44:49 -0700
+Message-ID: <7vk3mckrgu.fsf@alter.siamese.dyndns.org>
+References: <cover.1370076477.git.j6t@kdbg.org>
+	<984288047a44d58c55009c32a96d92104d7988c6.1370076477.git.j6t@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jun 03 01:44:32 2013
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Jun 03 01:44:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjHwu-0003w1-1A
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 01:44:32 +0200
+	id 1UjHxI-00048p-7n
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 01:44:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756105Ab3FBXo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Jun 2013 19:44:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58462 "EHLO
+	id S1755301Ab3FBXox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Jun 2013 19:44:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61447 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755181Ab3FBXo0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jun 2013 19:44:26 -0400
+	id S1755181Ab3FBXov (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jun 2013 19:44:51 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C87FE24F15;
-	Sun,  2 Jun 2013 23:44:25 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9897724F6F;
+	Sun,  2 Jun 2013 23:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=efsXUAkcxUE9wCIN+4/4/zM0UcI=; b=JYqzivetmiPYHQzhpK/z
-	yUQR+FkAqKU6/dQ3qSV0QIGHhtuxLxMR8UzG+A5nu1fqhFpuQ6DaIgyfSBktnceA
-	bZ/VUGacvWqRYFLb0JX4iGugfst/2tZZbqLZzNxpbWR2DROCPG8esx40OBCQcju0
-	WHs4wuyo2F4OOkcn21/+rWM=
+	 s=sasl; bh=bRB2Nr0GM0YDbOzshH9YpsMBCCs=; b=uFIVx+LNc0I0BLrdcDVM
+	vmdtgqfk0QicuWDWNOrFf0+5452qoP2e/697sZrwcxNLpMF1GzdDgwFMpSQ0BXjR
+	+GKlvlL3Rcztg5B5+3T6LARjcdUee2sA6Iy78ID0/V6OS1ahHSPte9JxAHA+lOIP
+	bQLXYijIbD5W0czP+h8ve3g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=luufkrdhiWnnosdw/1RT1oP0F9baZGc9PIt7ZfIehBn7c2
-	LZpPSRzlA+faKEiiAG6+VGViu3DAPCgy6M64kitDA91dSlLc7NiKgMUqvs+hVSts
-	BryKnQmFEfQRO4D6Z/5gmfG48USi2LdQcGGi2ODLX59aJLM2k8IY85Ir1lFfI=
+	 q=dns; s=sasl; b=wwZXnf9yuaswLZk/4lBsqtB4WCepmYV/ysvr84TlbhF13S
+	In/TZBqwXtEoTwisP9xoXghnboX93GEHvB2on8s3LXOcQbhTaK20plG4QcftDwJ6
+	xgSZGoPXkXzbQmJ5xNZCexH3pS9STvUp/t8FvLESHnB1TiUm3WxnqkN2kw4j4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB0B524F14;
-	Sun,  2 Jun 2013 23:44:25 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F2F124F6E;
+	Sun,  2 Jun 2013 23:44:51 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 16A9424F12;
-	Sun,  2 Jun 2013 23:44:24 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0603F24F6B;
+	Sun,  2 Jun 2013 23:44:50 +0000 (UTC)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B6455F2-CBDE-11E2-BE8D-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6AD90FB4-CBDE-11E2-A03D-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226196>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> This interacts with the tests from
+> In t4023 and t4114, we have to remove the entries using 'git rm' because
+> otherwise the entries that must turn from symbolic links to regular files
+> would stay symbolic links in the index. For the same reason, we have to
+> use 'git mv' instead of plain 'mv' in t3509.
 >
->> * fc/at-head (2013-05-08) 13 commits
->
-> to fail valgrind in t1508 like so:
->
->   ==22927== Invalid read of size 1
->   ==22927==    at 0x4C2C71B: __GI_strnlen (mc_replace_strmem.c:377)
->   ==22927==    by 0x567FF6B: vfprintf (in /lib64/libc-2.17.so)
->   ==22927==    by 0x56AC194: vsnprintf (in /lib64/libc-2.17.so)
->   ==22927==    by 0x4EAC39: vreportf (usage.c:12)
->   ==22927==    by 0x4EACA4: die_builtin (usage.c:36)
->   ==22927==    by 0x4EAEE0: die (usage.c:103)
->   ==22927==    by 0x4D8C51: get_sha1_1 (sha1_name.c:542)
->   ==22927==    by 0x4D8E5D: get_sha1_with_context_1 (sha1_name.c:1299)
->   ==22927==    by 0x4D992A: get_sha1_with_context (sha1_name.c:1417)
->   ==22927==    by 0x4D99E1: get_sha1 (sha1_name.c:1124)
->   ==22927==    by 0x45E1AC: cmd_rev_parse (rev-parse.c:761)
->   ==22927==    by 0x4051B3: handle_internal_command (git.c:284)
->   ==22927==  Address 0x5bebccb is 11 bytes inside a block of size 22 free'd
->   ==22927==    at 0x4C2ACDA: free (vg_replace_malloc.c:468)
->   ==22927==    by 0x4D8C37: get_sha1_1 (sha1_name.c:541)
->   ==22927==    by 0x4D8E5D: get_sha1_with_context_1 (sha1_name.c:1299)
->   ==22927==    by 0x4D992A: get_sha1_with_context (sha1_name.c:1417)
->   ==22927==    by 0x4D99E1: get_sha1 (sha1_name.c:1124)
->   ==22927==    by 0x45E1AC: cmd_rev_parse (rev-parse.c:761)
->   ==22927==    by 0x4051B3: handle_internal_command (git.c:284)
->   ==22927==    by 0x4053E7: main (git.c:492)
->
-> I think it's enough to squash this little change; leaking some memory
-> immediately before die() is not too bad, especially if we're going to
-> pass real_ref+11 into die()...
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
 
-Good catch, thanks.  when !len and real_ref is the current branch,
-str just points into real_ref that is geting freed.
-
->
-> diff --git i/sha1_name.c w/sha1_name.c
-> index 5ea16ff..a07558d 100644
-> --- i/sha1_name.c
-> +++ w/sha1_name.c
-> @@ -538,7 +538,6 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->  					"back to %s.", len, str,
->  					show_date(co_time, co_tz, DATE_RFC2822));
->  			else {
-> -				free(real_ref);
->  				die("Log for '%.*s' only has %d entries.",
->  				    len, str, co_cnt);
->  			}
+I am in general in favor of the direction this one is going.  Thanks
+for working on this.
