@@ -1,74 +1,102 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 4/6] completion: correct completion for format-patch
-Date: Sun, 2 Jun 2013 12:20:28 -0500
-Message-ID: <CAMP44s16s3Uz6ybjYuqni9JdDX0XvG7F3z7F1cyNS2k=AqrkKQ@mail.gmail.com>
-References: <1370181822-23450-1-git-send-email-artagnon@gmail.com>
-	<1370181822-23450-5-git-send-email-artagnon@gmail.com>
+Subject: Re: [PATCH v2 7/7] unpack-trees: free cache_entry array members for merges
+Date: Sun, 2 Jun 2013 12:25:08 -0500
+Message-ID: <CAMP44s2ym5UEPo8kr6YKf1x_P_0L+o_9vWdCTA6MPDQsRy7d1A@mail.gmail.com>
+References: <1370188017-24672-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
+	<1370188017-24672-8-git-send-email-rene.scharfe@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 02 19:20:43 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Jun 02 19:25:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjBxT-0001eK-57
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Jun 2013 19:20:43 +0200
+	id 1UjC1u-0004N6-Dv
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Jun 2013 19:25:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754562Ab3FBRUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Jun 2013 13:20:31 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:60197 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754361Ab3FBRUa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jun 2013 13:20:30 -0400
-Received: by mail-lb0-f171.google.com with SMTP id v5so303836lbc.16
-        for <git@vger.kernel.org>; Sun, 02 Jun 2013 10:20:29 -0700 (PDT)
+	id S1754604Ab3FBRZM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Jun 2013 13:25:12 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:61045 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754581Ab3FBRZK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Jun 2013 13:25:10 -0400
+Received: by mail-lb0-f175.google.com with SMTP id v10so3057364lbd.20
+        for <git@vger.kernel.org>; Sun, 02 Jun 2013 10:25:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=youcWp5qSwGVTtQwDN1Fp3t+NMwprhLlZkbKuuFY3CU=;
-        b=VOrllcw3qwxbJnebhUaYpMFbb5/PDeJA0lwZFcfGKAzyGD6K+lUwWEVNMr3Ilneb7p
-         Amir3ejo8ZOf8/Ev7Z06dQHpeYirSjzKopOYsFogGrMr8PY1D2eYGzg3nxOK9Q+C2fRg
-         cJJSKl2b0DzU4WduMSjSrfuD02VRnZzJ1XvsglAkOxq6YMhI4X3PFaaxw1USCZRp2+zq
-         qlmCi7bQZzF3ZqIBLc/Ea73DJFPGiyUDHpSifGBL+3BFPs2bWynjB5U9mtqzdtBg3zyC
-         1fKPSfkKLvL7h6AcF2aAwFDgsqPb8Ach5t9B5H/F0TPoxL0+SCfl9VvGwaQTSwKB2BHt
-         o31w==
-X-Received: by 10.112.138.131 with SMTP id qq3mr9448060lbb.46.1370193628946;
- Sun, 02 Jun 2013 10:20:28 -0700 (PDT)
-Received: by 10.114.177.164 with HTTP; Sun, 2 Jun 2013 10:20:28 -0700 (PDT)
-In-Reply-To: <1370181822-23450-5-git-send-email-artagnon@gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=n9rYHlKKJOS/KEwe09oVEKPMnZnKF6F4DpmR9/KGZbQ=;
+        b=Wk/GDzLd4rqkcBMirTHADwzuD5VFAP8FrIYohEEcjbu6/hOiuJkmiFaXzLkPJGs0eI
+         Ge4zLulT92J8D8vZASAWoVX/LWQhJ7I2afMFcjqCQUI54s3BNB/lxIXb62z5zhLIfdSZ
+         zs6bYUamErTqSM0OpmbBFp4IWShoEBdunNTkymMRyKGaGF0e3+ZZBfMX/TdsY2/LkffN
+         FAnikEqUq0CjG4lQk4VAm1B1wPtqPgzDCbUb28uLv8+M9wgKfbH6c5AtZUXesebKr1ws
+         zZDh61HBt2BxY92vepuTq7fSDU18gUC7ipiOZUP9nsIJDvlu3r36mehgJKwDGP0suED4
+         4ZPQ==
+X-Received: by 10.112.160.105 with SMTP id xj9mr6809628lbb.11.1370193908970;
+ Sun, 02 Jun 2013 10:25:08 -0700 (PDT)
+Received: by 10.114.177.164 with HTTP; Sun, 2 Jun 2013 10:25:08 -0700 (PDT)
+In-Reply-To: <1370188017-24672-8-git-send-email-rene.scharfe@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226168>
 
-On Sun, Jun 2, 2013 at 9:03 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
-> Currently, the completion for 'git format-patch' uses
-> __git_complete_revlist.  Although this is technically correct, and you
-> can
+On Sun, Jun 2, 2013 at 10:46 AM, Ren=C3=A9 Scharfe
+<rene.scharfe@lsrfire.ath.cx> wrote:
+> The merge functions duplicate entries as needed and they don't free
+> them.  Release them in unpack_nondirectories, the same function
+> where they were allocated, after we're done.
 >
->   $ git format-patch master contrib
+> As suggested by Felipe, use the same loop style (zero-based for loop)
+> for freeing as for allocating.
 >
-> where master is a ref and contrib is a pathspec, just like in 'git log',
-> the usage is unidiomatic and undocumented.  'git format-patch' is used
-> without pathspec filtering most of the time, and it makes sense to
-> provide sensible completions using __git_refs.
+> Improved-by: Felipe Contreras <felipe.contreras@gmail.com>
+> Signed-off-by: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
+> ---
+>  unpack-trees.c | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
+>
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 2dbc05d..57b4074 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -600,9 +600,16 @@ static int unpack_nondirectories(int n, unsigned=
+ long mask,
+>                 src[i + o->merge] =3D create_ce_entry(info, names + i=
+, stage);
+>         }
+>
+> -       if (o->merge)
+> -               return call_unpack_fn((const struct cache_entry * con=
+st *)src,
+> -                                     o);
+> +       if (o->merge) {
+> +               int rc =3D call_unpack_fn((const struct cache_entry *=
+ const *)src,
+> +                                       o);
+> +               for (i =3D 0; i < n; i++) {
+> +                       struct cache_entry *ce =3D src[i + o->merge];
+> +                       if (ce !=3D o->df_conflict_entry)
 
-This breaks 'git format-patch master..<TAB>'.
+It's possible that ce is NULL, but you didn't add that check because
+free(NULL) still works? Or because ce cannot be NULL?
 
-Moreover, this is a perfectly fine usage of 'git format-patch':
+If it's the former, I think it's clearer if we check that ce is not
+NULL either way.
 
-% git format-patch --full-diff master..fc/remote/hg-next --
-contrib/remote-helpers/git-remote-bzr
+Otherwise it's OK by me.
 
-Plus, even even with your patch 'contrib' will be completed regardless
-(by default completion), wouldn't it?
+> +                               free(ce);
+> +               }
+> +               return rc;
+> +       }
 
-NAK.
-
--- 
-Felipe Contreras
+--=20
+=46elipe Contreras
