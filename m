@@ -1,67 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/11] t3509, t4023, t4114: use test_ln_s_add to remove SYMLINKS prerequisite
-Date: Sun, 02 Jun 2013 16:44:49 -0700
-Message-ID: <7vk3mckrgu.fsf@alter.siamese.dyndns.org>
-References: <cover.1370076477.git.j6t@kdbg.org>
-	<984288047a44d58c55009c32a96d92104d7988c6.1370076477.git.j6t@kdbg.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH v2 7/7] unpack-trees: free cache_entry array members for
+ merges
+Date: Mon, 03 Jun 2013 01:47:38 +0200
+Message-ID: <51ABD99A.2030303@lsrfire.ath.cx>
+References: <1370188017-24672-1-git-send-email-rene.scharfe@lsrfire.ath.cx> <1370188017-24672-8-git-send-email-rene.scharfe@lsrfire.ath.cx> <CAMP44s2ym5UEPo8kr6YKf1x_P_0L+o_9vWdCTA6MPDQsRy7d1A@mail.gmail.com> <51AB86BB.3080203@lsrfire.ath.cx> <CAMP44s0Af90Sfi47_mxEGRFHAsAhaoO6T1jjbj7SptucNO-k0w@mail.gmail.com> <51ABAA84.8090301@lsrfire.ath.cx> <CAMP44s3cqa-jETHX+ftbAVMx+oV6PMcVkdH63P93ER-4fH28Hw@mail.gmail.com> <51ABD00C.7080503@lsrfire.ath.cx> <CAMP44s2+Hx-6E7DkmWL_m92jDt5-Cj8FGHpACBZcqp1sn5Tfzw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Jun 03 01:44:56 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 01:47:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjHxI-00048p-7n
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 01:44:56 +0200
+	id 1UjI05-0005Dq-2L
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 01:47:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755301Ab3FBXox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Jun 2013 19:44:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61447 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755181Ab3FBXov (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jun 2013 19:44:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9897724F6F;
-	Sun,  2 Jun 2013 23:44:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=bRB2Nr0GM0YDbOzshH9YpsMBCCs=; b=uFIVx+LNc0I0BLrdcDVM
-	vmdtgqfk0QicuWDWNOrFf0+5452qoP2e/697sZrwcxNLpMF1GzdDgwFMpSQ0BXjR
-	+GKlvlL3Rcztg5B5+3T6LARjcdUee2sA6Iy78ID0/V6OS1ahHSPte9JxAHA+lOIP
-	bQLXYijIbD5W0czP+h8ve3g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=wwZXnf9yuaswLZk/4lBsqtB4WCepmYV/ysvr84TlbhF13S
-	In/TZBqwXtEoTwisP9xoXghnboX93GEHvB2on8s3LXOcQbhTaK20plG4QcftDwJ6
-	xgSZGoPXkXzbQmJ5xNZCexH3pS9STvUp/t8FvLESHnB1TiUm3WxnqkN2kw4j4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F2F124F6E;
-	Sun,  2 Jun 2013 23:44:51 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0603F24F6B;
-	Sun,  2 Jun 2013 23:44:50 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6AD90FB4-CBDE-11E2-A03D-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755516Ab3FBXrp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Jun 2013 19:47:45 -0400
+Received: from india601.server4you.de ([85.25.151.105]:58196 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755181Ab3FBXro (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jun 2013 19:47:44 -0400
+Received: from [192.168.2.105] (p579BEDD3.dip0.t-ipconnect.de [87.155.237.211])
+	by india601.server4you.de (Postfix) with ESMTPSA id 9DB191FD;
+	Mon,  3 Jun 2013 01:47:42 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <CAMP44s2+Hx-6E7DkmWL_m92jDt5-Cj8FGHpACBZcqp1sn5Tfzw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226197>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Am 03.06.2013 01:23, schrieb Felipe Contreras:
+> I didn't say we should do 'if (ce) free(ce);' instead of 'free(ce);' =
+I
+> said we should do 'if (cd && ce !=3D o->df_conflict_entry)' instead o=
+f
+> 'if (ce !=3D o->df_conflict_entry)'.
 
-> In t4023 and t4114, we have to remove the entries using 'git rm' because
-> otherwise the entries that must turn from symbolic links to regular files
-> would stay symbolic links in the index. For the same reason, we have to
-> use 'git mv' instead of plain 'mv' in t3509.
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
+I did assume you meant the latter.
 
-I am in general in favor of the direction this one is going.  Thanks
-for working on this.
+> There's no reason not to.
+
+Only the minor ones already mentioned: More text, one more branch in=20
+object code, no benefit except for some hypothetical future case that's=
+=20
+caught by the test suite anyway -- or by code review.
+
+I wonder if we already reached the point where we spent more time=20
+discussing this change than the time needed by the envisioned developer=
+=20
+to find and fix the NULL check that suddenly became necessary. :)
+
+Ren=C3=A9
