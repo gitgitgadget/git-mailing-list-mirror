@@ -1,76 +1,91 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] t0005: test git exit code from signal death
-Date: Sat, 1 Jun 2013 16:41:36 -0500
-Message-ID: <CAMP44s0skh8LGFpNNfTfYn0sMrmKi=s0hV=SZwW2mT_F8KKSzg@mail.gmail.com>
-References: <1370094715-2684-1-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8Df-O=D5LQBXCbiVLB=uHfn6ETbAxADWq3hd-9pPX4+mg@mail.gmail.com>
-	<CAMP44s0L1M+_s2eDM=Ogy=rxLhpZYwSb8qWTuEe30pB4KGDVtA@mail.gmail.com>
-	<CACsJy8BFv7kJkymJ_rj9dwaN-zMcHtS9sjmqDSpLWB5TsUU_kg@mail.gmail.com>
-	<CAMP44s2cBGc+uKH0t-KZko-5GYkZUK54+7wiYbWim55B7KGaGA@mail.gmail.com>
-	<20130601172441.GB19234@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] object.c: Fix a sparse warning
+Date: Sun, 02 Jun 2013 08:12:42 +0200
+Message-ID: <51AAE25A.6080009@alum.mit.edu>
+References: <51AA3363.8030705@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"John J. Franey" <jjfraney@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jun 01 23:41:46 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 02 08:13:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UitYU-0000NA-6j
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Jun 2013 23:41:42 +0200
+	id 1Uj1XT-0006hk-B9
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Jun 2013 08:13:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755509Ab3FAVlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Jun 2013 17:41:39 -0400
-Received: from mail-la0-f50.google.com ([209.85.215.50]:55250 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752590Ab3FAVlh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jun 2013 17:41:37 -0400
-Received: by mail-la0-f50.google.com with SMTP id ed20so2400737lab.9
-        for <git@vger.kernel.org>; Sat, 01 Jun 2013 14:41:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ejO+zGPHARPJN59LCxn6TamhQHHA/g/kWHiyPKe9lgw=;
-        b=KGM5RoNZ13Pl5hZQM/dVZqvztGIDsb/orxILaLoOYFqIF57upzGeIw0TIUnTeQuvEC
-         Lv+ZUgoQ1TUYVKZOnwot40pMtS/431eMoqoKfd7bv9Q2DJyWLpd4gBDYeJlEeBnY75Fo
-         IlLf7/X3XLjofAXC0gh64kwTrFC/AzX6G3+1ASFQ76NrfXaC9QEFhgPGq1DXDveDIV5G
-         yckiZ/+6DwYfbElJ7W1BLxfTkaqRTwnZ5tlrvmFUWXrUfI+Po20vevYoGCxYbGZM4iY3
-         fbquhuOSNLeC+iAiSFJVWJ7AGBvwvoP5pbqOkb98I6fHGFRkqIb72mAV/w3o3YM+Q5cM
-         jBPg==
-X-Received: by 10.112.33.17 with SMTP id n17mr8209102lbi.72.1370122896351;
- Sat, 01 Jun 2013 14:41:36 -0700 (PDT)
-Received: by 10.114.177.164 with HTTP; Sat, 1 Jun 2013 14:41:36 -0700 (PDT)
-In-Reply-To: <20130601172441.GB19234@sigill.intra.peff.net>
+	id S1751354Ab3FBGMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Jun 2013 02:12:53 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:43311 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751300Ab3FBGMv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Jun 2013 02:12:51 -0400
+X-AuditID: 12074414-b7fb86d000000905-0e-51aae2620d1c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 22.9D.02309.262EAA15; Sun,  2 Jun 2013 02:12:50 -0400 (EDT)
+Received: from [192.168.69.140] (p4FDD4528.dip0.t-ipconnect.de [79.221.69.40])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r526CiE2004875
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 2 Jun 2013 02:12:47 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <51AA3363.8030705@ramsay1.demon.co.uk>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqJv0aFWgwcxjlhZdV7qZLBp6rzBb
+	7J62gM2B2ePiJWWPxxNPsHp83iQXwBzFbZOUWFIWnJmep2+XwJ2x+OgdpoI2zorObUdYGhhX
+	sXcxcnJICJhIbNy9mQXCFpO4cG89WxcjF4eQwGVGiSsbDoAlhATOMkk8mJEBYvMKaEt0fJjM
+	BmKzCKhKLH/TCVbDJqArsainmQnEFhUIk3i/bCorRL2gxMmZT8BqRASiJHp27gZazMHBLKAl
+	sWCNJUhYWMBYYsOjk2wQq4wkNq2bAVbOCRTf1zybGcRmFtCReNf3AMqWl9j+dg7zBEaBWUg2
+	zEJSNgtJ2QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealFuhZ6uZkleqkppZsYIYErsoPxyEm5
+	Q4wCHIxKPLwd21cFCrEmlhVX5h5ilORgUhLlLX4AFOJLyk+pzEgszogvKs1JLT7EKMHBrCTC
+	u3INUI43JbGyKrUoHyYlzcGiJM77bbG6n5BAemJJanZqakFqEUxWhoNDSYJ39UOgRsGi1PTU
+	irTMnBKENBMHJ8hwLimR4tS8lNSixNKSjHhQnMYXAyMVJMUDtLcTpJ23uCAxFygK0XqKUZdj
+	xo/J7xiFWPLy81KlxHlngBQJgBRllObBrYClqVeM4kAfC/POB6niAaY4uEmvgJYwAS15Yr0c
+	ZElJIkJKqoFReLt4avmD8rOzDP4fWjPZuejMzk9+l6KXLuE6uGfXuqP8N9bN0+h9H3R5o+66
+	klizLw6MnxuXLDvBfZhzZt0bqeNNjY9+3ecOXvWTL/1a9fHVP+yun+s6b/xl8zKP 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226149>
 
-On Sat, Jun 1, 2013 at 12:24 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, Jun 01, 2013 at 10:01:49AM -0500, Felipe Contreras wrote:
->
->> Anyway, if you care so much about the current behavior, why isn't
->> there any tests that check for this?
->>
->> My patch passes *all* the tests.
->
-> The test suite has never been (and probably never will be) a complete
-> specification of git's behavior. Noticing that a desired behavior is not
-> in the test suite is an opportunity to improve its coverage, not argue
-> that a change which breaks the desired behavior must therefore be
-> acceptable.
+On 06/01/2013 07:46 PM, Ramsay Jones wrote:
+> 
+> Sparse issues an "'object_array_slopbuf' not declared. Should it be
+> static?" warning. In order to suppress the warning, since this
+> symbol does not need more than file visibility, we simply add the
+> static modifier to its declaration.
+> 
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> ---
+> 
+> Hi Michael,
+> 
+> If you need to re-roll the patches in your 'mh/reflife' branch,
+> could you please squash this into the patch corresponding to
+> commit cbdeb23e ("object_array_entry: fix memory handling of
+> the name field", 25-05-2013).
 
-Nobody did such a thing. I asked a question, and it's good that you
-are answering by filling the missing test-case.
+Ramsay, thanks for fixing this.
+
+Junio, it doesn't seem worth spamming the list with a re-roll for this
+and the other 1-line fixup commit that I already sent.  Would you mind
+either pulling the re-rolled version that I published here:
+
+    git://github.com/mhagger/git.git
+    branch reflife-v3, 50f7a18ee9ad537a7bf7992d6eb145299a4884b9
+
+or squashing them onto the patch series yourself?  Let me know if this
+is inconvenient.
+
+Thanks,
+Michael
 
 -- 
-Felipe Contreras
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
