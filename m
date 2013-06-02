@@ -1,167 +1,118 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
-Date: Sun, 02 Jun 2013 11:50:14 -0700
-Message-ID: <7v61xwpct5.fsf@alter.siamese.dyndns.org>
-References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org>
-	<51A7A5F9.2030107@web.de>
+Subject: Re: [PATCH] git clone depth of 0 not possible.
+Date: Sun, 02 Jun 2013 12:14:04 -0700
+Message-ID: <7vsj10nx4z.fsf@alter.siamese.dyndns.org>
+References: <1357581996-17505-1-git-send-email-stefanbeller@googlemail.com>
+	<20130108062811.GA3131@elie.Belkin>
+	<7vip78go6b.fsf@alter.siamese.dyndns.org>
+	<CACsJy8D9+KHT=YfU0+rPCbs+AwxQOpfKzPChDhk8d-MMkRzZug@mail.gmail.com>
+	<7vvcb8f6aw.fsf@alter.siamese.dyndns.org>
+	<20130528091812.GG25742@login.drsnuggles.stderr.nl>
+	<7va9nf2fyp.fsf@alter.siamese.dyndns.org>
+	<20130530082322.GW25742@login.drsnuggles.stderr.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Jun 02 20:50:37 2013
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Stefan Beller <stefanbeller@googlemail.com>,
+	schlotter@users.sourceforge.net, Ralf.Wildenhues@gmx.de,
+	git@vger.kernel.org
+To: Matthijs Kooijman <matthijs@stdin.nl>
+X-From: git-owner@vger.kernel.org Sun Jun 02 21:14:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjDMS-0003AK-VV
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Jun 2013 20:50:37 +0200
+	id 1UjDjW-0005oH-Nn
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Jun 2013 21:14:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755423Ab3FBSuT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Jun 2013 14:50:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47150 "EHLO
+	id S1755695Ab3FBTOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Jun 2013 15:14:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61757 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755401Ab3FBSuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jun 2013 14:50:17 -0400
+	id S1755666Ab3FBTOG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jun 2013 15:14:06 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E51723DA9;
-	Sun,  2 Jun 2013 18:50:16 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E5DF24BB1;
+	Sun,  2 Jun 2013 19:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=25ejIgi+wXL8QULlp9j5hCkYx+0=; b=IlYHE1
-	YnOphz32BNluI0iV3pxsb5WfqrNeD5aUj8DoNvqIIuJHS9sYfFlwZOIcqkzWEs6r
-	+AWor4l9s/s+TQ4NSCIHgLlxHYfz1HVfm/pFZxwDz8EkLj2eLsHKN1PVIDSwcopT
-	+BYKynwC77Bxpm1imGeEzB5SMTc/EvGhexNtM=
+	:content-type; s=sasl; bh=A4OFIhs0sOuSB2RV9PnHJ/rPSgc=; b=mVN5H2
+	79euCQvzZjf+nw0MiFKlk+pmoTsRUNQQCjI98ne8IgshS+Hv5+vtK2a+OvbkL/MU
+	wOJsAcdzUaEp7HPfPVGquum9FOJ1ngVJk5yM7X8jVeDnNJrDesHflYfdk3HST6nB
+	X41FKVIznt9jORSb4UNh1LaAJ2MXRD0tFdIgU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X5kPu+pE+c0/EeSxKa+XbGBNxqIh5N6G
-	tRJTJYM/x+KCbLdWqH+60WSLxroZ78yGvSJ53+yToo9SxRN+82B/Vo6PckB70kCa
-	0AlTTrsNycBzmHyuZOWTO8AGJ/TYHTn4t3HKFEmMv8YigVxa2KVbg4m32puLFGch
-	kKzAJxa/3kU=
+	:content-type; q=dns; s=sasl; b=i88c5dxSVWkODfRhDwopyy7LsNONkc+t
+	Vl6cE+eafcqz6KchM4nhQ5wFYIME52ZJmODP4nvSUCF2I+rh4kUghrqYEvG3krx/
+	pbTj/AWqvhfXi6P7JkiZxXEIvYSZ2t21NFBDqvT18KyrObmVqgGjPa1GVUDEeCE+
+	RraWYt36pZw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92E9123DA8;
-	Sun,  2 Jun 2013 18:50:16 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55A4924BB0;
+	Sun,  2 Jun 2013 19:14:06 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD77C23DA3;
-	Sun,  2 Jun 2013 18:50:15 +0000 (UTC)
-In-Reply-To: <51A7A5F9.2030107@web.de> (Jens Lehmann's message of "Thu, 30 May
-	2013 21:18:17 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B597524BAD;
+	Sun,  2 Jun 2013 19:14:05 +0000 (UTC)
+In-Reply-To: <20130530082322.GW25742@login.drsnuggles.stderr.nl> (Matthijs
+	Kooijman's message of "Thu, 30 May 2013 10:23:22 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 439E6D82-CBB5-11E2-9E88-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 97F40236-CBB8-11E2-AE62-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226173>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Matthijs Kooijman <matthijs@stdin.nl> writes:
 
-> Am 30.05.2013 01:58, schrieb Junio C Hamano:
->> * jl/submodule-mv (2013-04-23) 5 commits
->>   (merged to 'next' on 2013-04-23 at c04f574)
->>  + submodule.c: duplicate real_path's return value
->>   (merged to 'next' on 2013-04-19 at 45ae3c9)
->>  + rm: delete .gitmodules entry of submodules removed from the work tree
->>  + Teach mv to update the path entry in .gitmodules for moved submodules
->>  + Teach mv to move submodules using a gitfile
->>  + Teach mv to move submodules together with their work trees
+>> Doing it "correctly" (in the shorter term) would involve:
+>
+> Given below suggestion, I take it you don't like what Jonathan proposed
+> (changing the meaning of the deepen parameter in the protocol so that
+> the server effectively decides how to interpret --depth)?
+
+Correct.
+
+> We can implement these two in current git already, since they only
+> add to the protocol, not break it in an incompatible manner, right?
+
+Correct.
+
+>>  - teaching the requestor that got --depth=N from the end user to
+>>    pay attention to the new capability in such a way that:
 >> 
->>  "git mv A B" when moving a submodule A does "the right thing",
->>  inclusing relocating its working tree and adjusting the paths in
->>  the .gitmodules file.
->
-> There are only two issues I'm aware of:
->
-> *) When the .gitmodules file is already modified but unchanged
->    running rm or mv on a submodule will stage those changes too.
->
-> *) There is a harmless but unnecessary double invocation of strlen()
->    in the function (fixed by the diff below).
->
-> I plan to fix the first issue in another patch which would also get
-> rid of the second issue, as exactly that code would have to be touched
-> anyways.
->
-> Does that make sense?
+>>    - when talking to an old sender (i.e. without the off-by-one
+>>      fix), send N-1 for N greater than 1.  Punt on N==1;
+>> 
+>>    - when talking to a fixed sender, ask to enable the capability,
+>>      and send N as is (including N==1).
+> And these should wait for git2, since they change the meaning of the
+> --depth parameter? Or is this change ok for current git as well?
 
-In general I think whatever you think that makes sense in this area
-would make sense ;-).
+My suggestion was based on the understanding that everybody agreed
+that the current behaviour of --depth=1 to have one extra commit
+behind the shallow "snapshot" aka "poor-man's tarball", is a *bug*
+to be fixed, so I didn't mean it as a "backward incompatible change"
+at all.
 
-I do not feel confident that I am reading what you mean by "already
-modified but unchanged" right.  Do you mean the working tree version
-is different from both HEAD and the index (HEAD and the index may or
-may not match and that does not change the situation)?  Assuming
-that is the case, i.e. the situation you are worried about is:
+> What do you mean by "punt" exactly?
 
-    When ".gitmodules" has a local modification the user chose not
-    to "add" yet.  Then the user does "git rm/mv" on a submodule
-    that is unrelated to the submodule whose setting the user has
-    changes for.
-
-I am curious what the plan is to "fix" this.  An obviously safe
-thing to do is to error out with a "You have local modification;
-please 'git add .gitmodules' first." but if that advice/suggestion
-is always the right course of action for the user, it invites "then
-why doesn't Git do so for me?", which would in turn support that it
-is not an issue in the first place (it deserves to be mentioned in a
-warning, "adding your local modifications together with change
-needed for rm/mv", though).
-
-I think in the ideal world, you may want to apply the change needed
-for rm/mv to the version in the index, and then update the working
-tree version by doing a 3-way merge. We already know that eventually
-we would need a merge driver that is specific to the file format
-that git-config uses, possibly even taking an advantage of the
-knowledge of not just the file format but also the semantics of
-individual variables [*1*], so we may want to keep it in mind that a
-three-way merge would be the eventual goal, while settling on an
-"error out on local mod" just like "git checkout anotherbranch" used
-to always stop (before we taught the "-m" option to it) when a local
-change needed a 3-way merge to be carried along to the new branch.
-
-So my gut feeling of the "fix" at this point in the evolution of the
-program may be to error out with a message like "You have local
-changes to .gitmodules; please stash it before moving or removing".
-
-[Footnote]
-
-*1* I think all the variables in .gitmodules are single-valued, so
-    the original submodule.dir.path's value was "dir", the local
-    modification by the user was to make it "folder", and rm wants
-    to delete an unrelated submodule.mod.* altogether, we can apply
-    the usual 3-way merge policy per variable basis to update
-    submodule.dir.pah to "folder".
-
-    A more general merge driver to handle git-config format files
-    would have a way to be told that some variables are additive
-    with the -X<driver-specific-option> mechanism.  When variable
-    foo.bar is specified as a multi-valued set of variables, the
-    original has a single foo.bar="xyzzy", one side adds a
-    foo.bar="frotz while the other side modifies the original to
-    foo.bar="nitfol", the ideal way for such a merge driver to
-    operate is to leave two definitions (xyzzy will be gone and
-    frotz and nitfol remain).
-
-    But I highly suspect that would need a much larger change to the
-    configuration file parser and writer that is totally out of
-    scope with this change, and that is why my recommendation at
-    this point is just to follow the example of pre-"-m" era of "git
-    checkout anotherbranch".
+As old senders can only send a history with 2 or more commits deep,
+it would be sensible for the receiver to warn the user that we are
+buggily asking for one more than the user asked for to the sender,
+and fetch history with two commits.  It would be a regression to
+error it out.
 
 
-> ----------8<-----------------
-> diff --git a/submodule.c b/submodule.c
-> index edfc23c..4670af7 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -102,7 +102,7 @@ void stage_updated_gitmodules(void)
->         struct cache_entry *ce;
->         int namelen = strlen(".gitmodules");
->
-> -       pos = cache_name_pos(".gitmodules", strlen(".gitmodules"));
-> +       pos = cache_name_pos(".gitmodules", namelen);
->         if (pos < 0) {
->                 warning(_("could not find .gitmodules in index"));
->                 return;
+>> In the longer term, I think we should introduce a better deepening
+>> mechanism.  Cf.
+> Even when there will be a better deepening mechanism, the above is still
+> useful (passing --depth=1 serves to get just a single commit without
+> history, which is a distinct usecase from deepening the history of an
+> existing shallow repository).
+
+Correct.  That is why I said "in the longer term, we should
+introduce".  Did I say "introduce and replace with it"?
