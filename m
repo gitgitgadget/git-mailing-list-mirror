@@ -1,89 +1,105 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] completion: avoid ls-remote in certain scenarios
-Date: Sun, 2 Jun 2013 17:57:04 -0500
-Message-ID: <CAMP44s0or-wtNc85HPO8hMA47xbcXVOcF0QcWvpLAyay0bB2Ag@mail.gmail.com>
-References: <1369797648-2921-1-git-send-email-felipe.contreras@gmail.com>
-	<7vip1wmahf.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH v2 7/7] unpack-trees: free cache_entry array members for
+ merges
+Date: Mon, 03 Jun 2013 01:06:52 +0200
+Message-ID: <51ABD00C.7080503@lsrfire.ath.cx>
+References: <1370188017-24672-1-git-send-email-rene.scharfe@lsrfire.ath.cx> <1370188017-24672-8-git-send-email-rene.scharfe@lsrfire.ath.cx> <CAMP44s2ym5UEPo8kr6YKf1x_P_0L+o_9vWdCTA6MPDQsRy7d1A@mail.gmail.com> <51AB86BB.3080203@lsrfire.ath.cx> <CAMP44s0Af90Sfi47_mxEGRFHAsAhaoO6T1jjbj7SptucNO-k0w@mail.gmail.com> <51ABAA84.8090301@lsrfire.ath.cx> <CAMP44s3cqa-jETHX+ftbAVMx+oV6PMcVkdH63P93ER-4fH28Hw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 03 00:57:13 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 01:07:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjHD7-0002Rx-4k
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 00:57:13 +0200
+	id 1UjHMd-0006DM-Hv
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 01:07:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754841Ab3FBW5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Jun 2013 18:57:08 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:54653 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753968Ab3FBW5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jun 2013 18:57:07 -0400
-Received: by mail-lb0-f178.google.com with SMTP id w10so3220584lbi.9
-        for <git@vger.kernel.org>; Sun, 02 Jun 2013 15:57:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1XXF58G8u2s3IB1KAlW4X6dLEnzy5kAJoDkEKUetwiU=;
-        b=v+IAZtt9NUcF46pNtLvojdVd8VBhIol46hyAw/PCw+WvWGoOavwQDdzREkiofEi7Je
-         z7V31/6pkOEVH3Xp09IKE656ZqT1/R8IaSy55lFTKRfwJeKPf3Axwqm7vMWO+F+5UsIN
-         jf336FyI9o407SxMdH+SGwotzQ5I2EwXQAw2ONw2FM7C8bElWHOy9c0jRqVQ9k2W9ULj
-         YqOp1Uvya0vMJfE4CW0TghknUWw1ErNpnjVlZ1V7bK4gX1nqMQ2TKTCn8ZMviixOIiF5
-         B7CmbTxrITBeYoixeF6BxMiIDWuNLGcF16SHscgzjGfCXyhsI4lQt9X1NTfDbTUZpTbx
-         KD5A==
-X-Received: by 10.112.33.17 with SMTP id n17mr9651944lbi.72.1370213824608;
- Sun, 02 Jun 2013 15:57:04 -0700 (PDT)
-Received: by 10.114.177.164 with HTTP; Sun, 2 Jun 2013 15:57:04 -0700 (PDT)
-In-Reply-To: <7vip1wmahf.fsf@alter.siamese.dyndns.org>
+	id S1755224Ab3FBXHA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Jun 2013 19:07:00 -0400
+Received: from india601.server4you.de ([85.25.151.105]:58189 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755029Ab3FBXG7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jun 2013 19:06:59 -0400
+Received: from [192.168.2.105] (p579BEDD3.dip0.t-ipconnect.de [87.155.237.211])
+	by india601.server4you.de (Postfix) with ESMTPSA id 5400E1FF;
+	Mon,  3 Jun 2013 01:06:57 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <CAMP44s3cqa-jETHX+ftbAVMx+oV6PMcVkdH63P93ER-4fH28Hw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226192>
 
-On Sun, Jun 2, 2013 at 5:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Am 03.06.2013 00:38, schrieb Felipe Contreras:
+> On Sun, Jun 2, 2013 at 3:26 PM, Ren=C3=A9 Scharfe
+> <rene.scharfe@lsrfire.ath.cx> wrote:
+>> Am 02.06.2013 19:59, schrieb Felipe Contreras:
+>>
+>>> On Sun, Jun 2, 2013 at 12:54 PM, Ren=C3=A9 Scharfe
+>>> <rene.scharfe@lsrfire.ath.cx> wrote:
+>>>>
+>>>> Am 02.06.2013 19:25, schrieb Felipe Contreras:
+>>>>>
+>>>>>
+>>>>> On Sun, Jun 2, 2013 at 10:46 AM, Ren=C3=A9 Scharfe
+>>>>> <rene.scharfe@lsrfire.ath.cx> wrote:
+>>>>>>
+>>>>>>
+>>>>>> +               for (i =3D 0; i < n; i++) {
+>>>>>> +                       struct cache_entry *ce =3D src[i + o->me=
+rge];
+>>>>>> +                       if (ce !=3D o->df_conflict_entry)
+>>>>>
+>>>>>
+>>>>>
+>>>>> It's possible that ce is NULL, but you didn't add that check beca=
+use
+>>>>> free(NULL) still works? Or because ce cannot be NULL?
+>>>>>
+>>>>> If it's the former, I think it's clearer if we check that ce is n=
+ot
+>>>>> NULL either way.
+>>>>
+>>>>
+>>>>
+>>>> It is NULL if one tree misses an entry (e.g. a new or removed file=
+). free
+>>>> handles NULL and we generally avoid duplicating its NULL-check.
+>>>
+>>>
+>>> Yeah, but I can see somebody adding code inside that 'if' clause to
+>>> print the cache entry, and see a crash only to wonder what's going =
+on.
+>>> And to save what? 5 characters?
+>>
+>>
+>> The person adding code that depends on ce not being NULL needs to ad=
+d that
+>> check as well.  Let's not worry too much about future changes that m=
+ay or
+>> (more likely IMHO) may not be done.  The test suite covers this case
+>> multiple times, so such a mistake doesn't have a realistic chance to=
+ hit
+>> master.
 >
->> It's _very_ slow in many cases, and there's really no point in fetching
->> *everything* from the remote just for completion. In many cases it might
->> be faster for the user to type the whole thing.
->
-> Besides, if I understand the use of __git_refs correctly, it is
-> primarily about completing things like
->
->         git checkout -b topic origin/<TAB>
->
-> where you actively want _local_ copies of what you currently have in
-> refs/remotes/origin/, not what you would get if you were to fetch
-> and then type the command again, so in that sense, using ls-remote
-> is a wrong thing to do in the first place.
+> What do we gain by not doing this? 5 less characters?
 
-Yeah, but we wouldn't use ls-remote in those cases, only when __gitdir
-is not available. Try 'git checkout <TAB>' outside a git repository.
+By following the convention of not checking for NULL when freeing, we=20
+reduce the size of the code slightly and have one less branch=20
+instruction in the object code.  That's not particularly exciting in a=20
+single instance but makes a difference if followed throughout the code =
+base.
 
-> This however may need to be made optional if this is also being used
-> to complete
->
->         git fetch git://g.k.org/pub/scm/git/git.git/ <TAB>
->
-> to list what can be fetched, but I do not think that is a very
-> common thing to do (you either know what you want to fetch, in which
-> case you do not complete but copy & paste, or more likely you have a
-> named remote and fetch the whole thing).
+What do we gain by adding a duplicate check?  A few minutes of debuggin=
+g=20
+time by the person who will add some code and forget the NULL check?=20
+And how likely is that to happen?
 
-Indeed. And it doesn't make sense to punish the typical use-cases
-because of the atypical ones.
-
-Besides:
-
-git fetch git://g.k.org/pub/scm/git/git.git/ refs/<TAB>
-
-Would still complete everything.
-
--- 
-Felipe Contreras
+Ren=C3=A9
