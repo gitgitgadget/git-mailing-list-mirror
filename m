@@ -1,78 +1,74 @@
-From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH v2 7/7] unpack-trees: free cache_entry array members for merges
-Date: Sun,  2 Jun 2013 17:46:57 +0200
-Message-ID: <1370188017-24672-8-git-send-email-rene.scharfe@lsrfire.ath.cx>
-References: <1370188017-24672-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 4/6] completion: correct completion for format-patch
+Date: Sun, 2 Jun 2013 12:20:28 -0500
+Message-ID: <CAMP44s16s3Uz6ybjYuqni9JdDX0XvG7F3z7F1cyNS2k=AqrkKQ@mail.gmail.com>
+References: <1370181822-23450-1-git-send-email-artagnon@gmail.com>
+	<1370181822-23450-5-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Boyd <sboyd@codeaurora.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 02 17:47:38 2013
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 02 19:20:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjAVK-00070x-E9
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Jun 2013 17:47:34 +0200
+	id 1UjBxT-0001eK-57
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Jun 2013 19:20:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753524Ab3FBPr1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Jun 2013 11:47:27 -0400
-Received: from india601.server4you.de ([85.25.151.105]:58128 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753393Ab3FBPrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jun 2013 11:47:06 -0400
-Received: from debian.Speedport_W_504V_Typ_A (p579BEE4A.dip0.t-ipconnect.de [87.155.238.74])
-	by india601.server4you.de (Postfix) with ESMTPSA id 5D9D26F2;
-	Sun,  2 Jun 2013 17:47:04 +0200 (CEST)
-X-Mailer: git-send-email 1.8.3
-In-Reply-To: <1370188017-24672-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
+	id S1754562Ab3FBRUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Jun 2013 13:20:31 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:60197 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754361Ab3FBRUa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jun 2013 13:20:30 -0400
+Received: by mail-lb0-f171.google.com with SMTP id v5so303836lbc.16
+        for <git@vger.kernel.org>; Sun, 02 Jun 2013 10:20:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=youcWp5qSwGVTtQwDN1Fp3t+NMwprhLlZkbKuuFY3CU=;
+        b=VOrllcw3qwxbJnebhUaYpMFbb5/PDeJA0lwZFcfGKAzyGD6K+lUwWEVNMr3Ilneb7p
+         Amir3ejo8ZOf8/Ev7Z06dQHpeYirSjzKopOYsFogGrMr8PY1D2eYGzg3nxOK9Q+C2fRg
+         cJJSKl2b0DzU4WduMSjSrfuD02VRnZzJ1XvsglAkOxq6YMhI4X3PFaaxw1USCZRp2+zq
+         qlmCi7bQZzF3ZqIBLc/Ea73DJFPGiyUDHpSifGBL+3BFPs2bWynjB5U9mtqzdtBg3zyC
+         1fKPSfkKLvL7h6AcF2aAwFDgsqPb8Ach5t9B5H/F0TPoxL0+SCfl9VvGwaQTSwKB2BHt
+         o31w==
+X-Received: by 10.112.138.131 with SMTP id qq3mr9448060lbb.46.1370193628946;
+ Sun, 02 Jun 2013 10:20:28 -0700 (PDT)
+Received: by 10.114.177.164 with HTTP; Sun, 2 Jun 2013 10:20:28 -0700 (PDT)
+In-Reply-To: <1370181822-23450-5-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226167>
 
-The merge functions duplicate entries as needed and they don't free
-them.  Release them in unpack_nondirectories, the same function
-where they were allocated, after we're done.
+On Sun, Jun 2, 2013 at 9:03 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> Currently, the completion for 'git format-patch' uses
+> __git_complete_revlist.  Although this is technically correct, and you
+> can
+>
+>   $ git format-patch master contrib
+>
+> where master is a ref and contrib is a pathspec, just like in 'git log',
+> the usage is unidiomatic and undocumented.  'git format-patch' is used
+> without pathspec filtering most of the time, and it makes sense to
+> provide sensible completions using __git_refs.
 
-As suggested by Felipe, use the same loop style (zero-based for loop)
-for freeing as for allocating.
+This breaks 'git format-patch master..<TAB>'.
 
-Improved-by: Felipe Contreras <felipe.contreras@gmail.com>
-Signed-off-by: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- unpack-trees.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+Moreover, this is a perfectly fine usage of 'git format-patch':
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 2dbc05d..57b4074 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -600,9 +600,16 @@ static int unpack_nondirectories(int n, unsigned l=
-ong mask,
- 		src[i + o->merge] =3D create_ce_entry(info, names + i, stage);
- 	}
-=20
--	if (o->merge)
--		return call_unpack_fn((const struct cache_entry * const *)src,
--				      o);
-+	if (o->merge) {
-+		int rc =3D call_unpack_fn((const struct cache_entry * const *)src,
-+					o);
-+		for (i =3D 0; i < n; i++) {
-+			struct cache_entry *ce =3D src[i + o->merge];
-+			if (ce !=3D o->df_conflict_entry)
-+				free(ce);
-+		}
-+		return rc;
-+	}
-=20
- 	for (i =3D 0; i < n; i++)
- 		if (src[i] && src[i] !=3D o->df_conflict_entry)
---=20
-1.8.3
+% git format-patch --full-diff master..fc/remote/hg-next --
+contrib/remote-helpers/git-remote-bzr
+
+Plus, even even with your patch 'contrib' will be completed regardless
+(by default completion), wouldn't it?
+
+NAK.
+
+-- 
+Felipe Contreras
