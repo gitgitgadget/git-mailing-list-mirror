@@ -1,98 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] credential-osxkeychain: support more protocols
-Date: Sun, 02 Jun 2013 12:46:40 -0700
-Message-ID: <7vbo7onvmn.fsf@alter.siamese.dyndns.org>
-References: <1369973275-13353-1-git-send-email-quanxunzhen@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 3/4] unpack-trees: plug a memory leak
+Date: Sun, 2 Jun 2013 14:51:27 -0500
+Message-ID: <CAMP44s3aF8VsNqJA3GNLN=cw6Vp4iJEcTn5WDq2XPs-Le--szg@mail.gmail.com>
+References: <1369915136-4248-1-git-send-email-felipe.contreras@gmail.com>
+	<1369915136-4248-4-git-send-email-felipe.contreras@gmail.com>
+	<7vfvx0nw7t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Xidorn Quan <quanxunzhen@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 02 21:46:50 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	Adam Spiers <git@adamspiers.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Stephen Boyd <sboyd@codeaurora.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 02 21:51:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjEEs-0003Uj-H0
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Jun 2013 21:46:50 +0200
+	id 1UjEJT-0005io-0a
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Jun 2013 21:51:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756122Ab3FBTqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Jun 2013 15:46:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57002 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756075Ab3FBTqq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jun 2013 15:46:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A53512418D;
-	Sun,  2 Jun 2013 19:46:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aDAG6kuRzNzizomEHdzuL2s8iqg=; b=ySDomE
-	s2V3g/CFdWgTf4EbKzj0ljn2gerBtxuuDTqY8zCPfGlT4Yw3VPFiAQx7y9qYSZ2F
-	SZuYirPb2rRHqGOjwdj7Xyt04d7AXKk7cwyazf9B1+y/hYpOyPGaNGHP1ffRE40W
-	mNvgvMTRVDQ3sffGv8c7pNZZVU4EN1lNgqFQY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ci2psFxVNqg/GzQlWjiw1ZuofjkdorRt
-	tXJADprCWDNuWnfJ2RM+vbb/zbo6Ehu8oEzRj47q6MEoB4lHQPPKmRLnLxchB6Aq
-	0ku69kIEEOsjKAapRxMFkGqunrLVtMVjaXbLW0hchAp0QAHJggzBWBC8w2ozdqGI
-	97qkMSTr9Kk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9917D2418C;
-	Sun,  2 Jun 2013 19:46:45 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F1B5224189;
-	Sun,  2 Jun 2013 19:46:44 +0000 (UTC)
-In-Reply-To: <1369973275-13353-1-git-send-email-quanxunzhen@gmail.com> (Xidorn
-	Quan's message of "Fri, 31 May 2013 12:07:55 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 27B55DA8-CBBD-11E2-A21E-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756189Ab3FBTvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Jun 2013 15:51:31 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:50882 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756157Ab3FBTv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jun 2013 15:51:29 -0400
+Received: by mail-la0-f42.google.com with SMTP id fg20so2824440lab.1
+        for <git@vger.kernel.org>; Sun, 02 Jun 2013 12:51:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=vfirEaLMKQHbFcppAkl3tQLXLveah/O9w4/zrP7dEw8=;
+        b=wok+kyty1K0iSyZoQzMMW+3gCTNPOW0iUWM97TevKZPTS6ea/Rpw0O+L9xmRvLJ1n+
+         2+5Yag6rnlBJpol30S6vo9rhEG5UglC09qpqus1Mmg/tlO6zpEBQgAo2eOTtUb1vwd7U
+         B0Ec0ScB8p5lByvGSD4XdM/UDw/c2cZZuZ7UJ5ebpsctWSBKHtnyH8l/SqBE38my7yc+
+         ztCmub/EvKS5RA0AaUgVHo3BjPn4YqdITBJhlGEvAwBE7hNFB/9pXZEKXXU2j4iKSwkS
+         WHHIuHk5PhPkV0V3Ij7/TtaXSOafG2WFs3e7RU5zTw+4uem78P6a9vWjnVzfEibQndHa
+         YyTg==
+X-Received: by 10.112.160.105 with SMTP id xj9mr6951079lbb.11.1370202687944;
+ Sun, 02 Jun 2013 12:51:27 -0700 (PDT)
+Received: by 10.114.177.164 with HTTP; Sun, 2 Jun 2013 12:51:27 -0700 (PDT)
+In-Reply-To: <7vfvx0nw7t.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226178>
 
-Xidorn Quan <quanxunzhen@gmail.com> writes:
-
-> Add protocol imap, imaps, ftp and smtp for credential-osxkeychain.
+On Sun, Jun 2, 2013 at 2:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> Signed-off-by: Xidorn Quan <quanxunzhen@gmail.com>
-> Acked-by: John Szakmeister <john@szakmeister.net>
-> Acked-by: Jeff King <peff@peff.net>
-> ---
-
-Hmph, I think I already have an identical copy in my tree.  Sent a
-wrong patch?
-
->  contrib/credential/osxkeychain/git-credential-osxkeychain.c | 12 +++++++++++-
->  1 file changed, 11 insertions(+), 1 deletion(-)
+>> Before overwriting the destination index, first let's discard it's
+>> contents.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>  unpack-trees.c | 4 +++-
+>>  1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/unpack-trees.c b/unpack-trees.c
+>> index ede4299..eff2944 100644
+>> --- a/unpack-trees.c
+>> +++ b/unpack-trees.c
+>> @@ -1146,8 +1146,10 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+>>
+>>       o->src_index = NULL;
+>>       ret = check_updates(o) ? (-2) : 0;
+>> -     if (o->dst_index)
+>> +     if (o->dst_index) {
+>> +             discard_index(o->dst_index);
+>>               *o->dst_index = o->result;
+>> +     }
 >
-> diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> index 3940202..bcd3f57 100644
-> --- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> +++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> @@ -127,10 +127,20 @@ static void read_credential(void)
->  		*v++ = '\0';
->  
->  		if (!strcmp(buf, "protocol")) {
-> -			if (!strcmp(v, "https"))
-> +			if (!strcmp(v, "imap"))
-> +				protocol = kSecProtocolTypeIMAP;
-> +			else if (!strcmp(v, "imaps"))
-> +				protocol = kSecProtocolTypeIMAPS;
-> +			else if (!strcmp(v, "ftp"))
-> +				protocol = kSecProtocolTypeFTP;
-> +			else if (!strcmp(v, "ftps"))
-> +				protocol = kSecProtocolTypeFTPS;
-> +			else if (!strcmp(v, "https"))
->  				protocol = kSecProtocolTypeHTTPS;
->  			else if (!strcmp(v, "http"))
->  				protocol = kSecProtocolTypeHTTP;
-> +			else if (!strcmp(v, "smtp"))
-> +				protocol = kSecProtocolTypeSMTP;
->  			else /* we don't yet handle other protocols */
->  				exit(0);
->  		}
+> I seem to recall that many callers set src_index and dst_index to
+> the same istate, and expect that the original istate pointed by the
+> src_index to remain usable.  Is it safe to discard it like this at
+> this point?
+
+Who expects that?
+
+-- 
+Felipe Contreras
