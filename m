@@ -1,100 +1,121 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Poor performance of git describe in big repos
-Date: Mon, 3 Jun 2013 10:49:08 -0400
-Message-ID: <20130603144907.GA5938@sigill.intra.peff.net>
-References: <CAJ-05NOjVhb+3Cab7uQE8K3VE0Q2GhqR3FE=WzJZvSn8Djt6tw@mail.gmail.com>
- <87ip20bfq4.fsf@linux-k42r.v.cablecom.net>
- <20130530193046.GG17475@serenity.lan>
- <CAJ-05NOEuxOVy7LFp_XRa_08G-Mj0x7q+RiR=u71-iyfOXpHow@mail.gmail.com>
- <87obbr5zg3.fsf@linux-k42r.v.cablecom.net>
- <CAJ-05NOdg5TvjzEMrXaPgogU5z5W6kywZhD-82eTUmvE9Hp=Lw@mail.gmail.com>
- <87y5av4jvj.fsf@linux-k42r.v.cablecom.net>
- <87txlj30n4.fsf@linux-k42r.v.cablecom.net>
- <20130531161710.GB1365@sigill.intra.peff.net>
- <CAJ-05NO2reGkboet1c2kYy0Y7xzkb9K45mTdCLq_AU7dp1OTNw@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
+Date: Mon, 3 Jun 2013 15:54:05 +0100
+Message-ID: <20130603145405.GJ1072@serenity.lan>
+References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org>
+ <51A7A73C.6070103@web.de>
+ <20130531194051.GC1072@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@inf.ethz.ch>, John Keeping <john@keeping.me.uk>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <kernel-hacker@bennee.com>
-X-From: git-owner@vger.kernel.org Mon Jun 03 16:49:17 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Jun 03 16:54:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjW4R-0005P9-Mp
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 16:49:16 +0200
+	id 1UjW9K-00086a-97
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 16:54:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758072Ab3FCOtM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Jun 2013 10:49:12 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60315 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755177Ab3FCOtK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 10:49:10 -0400
-Received: (qmail 17934 invoked by uid 102); 3 Jun 2013 14:49:54 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 03 Jun 2013 09:49:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Jun 2013 10:49:08 -0400
+	id S1758097Ab3FCOyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 10:54:15 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:46330 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757501Ab3FCOyO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 10:54:14 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id A457360653F;
+	Mon,  3 Jun 2013 15:54:13 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NfDvLpda70Kc; Mon,  3 Jun 2013 15:54:13 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id 1123360652A;
+	Mon,  3 Jun 2013 15:54:12 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id E3640161E424;
+	Mon,  3 Jun 2013 15:54:12 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id kXYRylarAsyS; Mon,  3 Jun 2013 15:54:12 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 1F0D4161E461;
+	Mon,  3 Jun 2013 15:54:07 +0100 (BST)
 Content-Disposition: inline
-In-Reply-To: <CAJ-05NO2reGkboet1c2kYy0Y7xzkb9K45mTdCLq_AU7dp1OTNw@mail.gmail.com>
+In-Reply-To: <20130531194051.GC1072@serenity.lan>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226219>
 
-On Mon, Jun 03, 2013 at 09:39:21AM +0100, Alex Benn=C3=A9e wrote:
+On Fri, May 31, 2013 at 08:40:51PM +0100, John Keeping wrote:
+> On Thu, May 30, 2013 at 09:23:40PM +0200, Jens Lehmann wrote:
+> > Am 30.05.2013 01:58, schrieb Junio C Hamano:
+> > > * jk/submodule-subdirectory-ok (2013-04-24) 3 commits
+> > >   (merged to 'next' on 2013-04-24 at 6306b29)
+> > >  + submodule: fix quoting in relative_path()
+> > >   (merged to 'next' on 2013-04-22 at f211e25)
+> > >  + submodule: drop the top-level requirement
+> > >  + rev-parse: add --prefix option
+> > > 
+> > >  Allow various subcommands of "git submodule" to be run not from the
+> > >  top of the working tree of the superproject.
+> > 
+> > The summary and status commands are looking good in this version
+> > (they are now showing the submodule directory paths relative to
+> > the current directory). Apart from that my other remarks from
+> > gmane $221575 still seem to apply. And this series has only tests
+> > for status, summary and add (and that just with an absolute URL),
+> > I'd rather like to see a test for each submodule command (and a
+> > relative add to) to document the desired behavior.
+> 
+> To summarize what I think are the outstanding issues from your email:
+> 
+> * Should '$sm_path' be relative in "submodule foreach"?
+> * "submodule add" with a relative path
+> * "submodule init" initializes all submodules
+> * Tests
+> 
+> The current version does make '$sm_path' relative in "submodule
+> foreach", although it's hard to spot because we have to leave doing so
+> until right before the "eval".
+> 
+> I'm not sure what you mean about "submodule add" - the new version
+> treats the "path" argument as relative (providing it is not an absolute
+> path).  The "repository" argument is not changed by running from a
+> subdirectory but I think that's correct since it is documented as being
+> relative to the superproject's origin repository.
+> 
+> "submodule init" is behaving in the same way as "deinit" - if you say
+> "submodule init ." then it will only initialize submodules below the
+> current directory.  The difference is that "deinit" dies if it is not
+> given any arguments whereas "init" will initialize everything from the
+> top level down.  I'm not sure whether to change this; given the
+> direction "git add -u" is heading in for 2.0 I think the current
+> behaviour is the most consistent with the rest of Git.
+> 
+> > But I'm not sure if it's better to have another iteration of this
+> > series or to address the open issues a follow-up series. Having
+> > status, summary and add - at least with absolute URLs - lose the
+> > toplevel requirement is already a huge improvement IMO. Opinions?
+> 
+> I think the only thing outstanding is tests.  I'm happy to add those as
+> a follow-up or in a re-roll.
 
-> > in the target repository. You can check that it's working because "=
-git
-> > rev-list --all --count" should be an order of magnitude faster. You=
- may
-> > need to add "save_commit_buffer =3D 0" in any commands you are chec=
-king,
-> > though, as the optimization can only kick in if parse_commit does n=
-ot
-> > want to save the buffer as a side effect.
->=20
-> Is this a command line argument? The tools don't seem to think so.
-
-If you mean the "save_commit_buffer =3D 0", no; I mean you would have t=
-o
-insert it somewhere in builtin/$CMD.c, and then recompile. However,
-git-describe already has it, so it should work.
-
-> Anyway it seems to make a marginal difference to my case:
-
-I get much better results:
-
-  $ cd linux-2.6
-  $ time git --no-pager describe --long --tags HEAD~800
-  v3.5-6956-gaa0b3b2
-
-  real    0m0.261s
-  user    0m0.248s
-  sys     0m0.012s
-
-  $ git metapack --commits --all
-  $ time git --no-pager describe --long --tags HEAD~800
-  v3.5-6956-gaa0b3b2
-
-  real    0m0.057s
-  user    0m0.032s
-  sys     0m0.024s
-
-which implies that your time is being spent elsewhere. That topic
-wouldn't avoid inflating tag objects from disk. Do you have really big
-tag objects (or unannotated tags pointing to blobs)? What does:
-
-  git for-each-ref --format=3D'%(object)' refs/tags |
-  git cat-file --batch-check |
-  sort -k 3nr |
-  head
-
-say?
-
--Peff
+I started looking at this over the weekend but didn't get time to get
+something ready to be submitted.  I did find a couple of issues in
+cmd_foreach that make me think this topic should be dropped when "next"
+is rewound and held in pu waiting for a re-roll.
