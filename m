@@ -1,83 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: preventing evil merges
-Date: Mon, 03 Jun 2013 10:20:06 -0700
-Message-ID: <7vvc5vglh5.fsf@alter.siamese.dyndns.org>
-References: <20130530163459.GI31679@gnash>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: git daemon --access-hook problem
+Date: Mon, 3 Jun 2013 19:20:54 +0200
+Message-ID: <CALWbr2ypPCoftVLfP9uKeKStg3TWwLDchkUaL1d9s9O3kcuPwA@mail.gmail.com>
+References: <CAPZPVFZDHHGyHhzBVVK6jS=XhEd2+JpmBT8ofiGOww8vuLUWWw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sandro Santilli <strk@keybit.net>
-X-From: git-owner@vger.kernel.org Mon Jun 03 19:20:15 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 19:21:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjYQY-0000c0-Tv
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 19:20:15 +0200
+	id 1UjYRH-00010T-SR
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 19:21:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759101Ab3FCRUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 13:20:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39855 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752412Ab3FCRUJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 13:20:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 18B182495D;
-	Mon,  3 Jun 2013 17:20:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qLUsvlxe0Us7Ts135EnrbFdyAZ8=; b=xa5lyy
-	ebJI0NqgEcSwU/y0wpcQpWpGuWlp21UugnQlgJ9BP/5X4dC7D7ld/x1VqH5ywzCk
-	2uS/DM+4TsmMUJelkjjdALRuebNcohbUPsNZ9fg7MYX+A3UGnUap0OrtrnIUYOTq
-	OKMlVY4NH0eX1THjD+zZXgL8yr9pqrdfIHN6s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aya5g7AOzScS35W/hjFQR0x8Me/D5RvH
-	r5ahkk4If6HNIz3vywgxLT7x0wxxsM0qUjtHqswa7gP7nV4QHY+/rwvgbsMDYD+C
-	jhR/9AV/EpqG/KPio5ai2+btefSx77+0PkIBoQkVo6K0WOCbFizEudKbp3jTXRaX
-	x+/paUllyVM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 03C032495C;
-	Mon,  3 Jun 2013 17:20:09 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7B4822495B;
-	Mon,  3 Jun 2013 17:20:08 +0000 (UTC)
-In-Reply-To: <20130530163459.GI31679@gnash> (Sandro Santilli's message of
-	"Thu, 30 May 2013 18:34:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D7020F36-CC71-11E2-A15E-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759053Ab3FCRU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 13:20:57 -0400
+Received: from mail-qe0-f52.google.com ([209.85.128.52]:58406 "EHLO
+	mail-qe0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752412Ab3FCRUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 13:20:55 -0400
+Received: by mail-qe0-f52.google.com with SMTP id i11so675597qej.11
+        for <git@vger.kernel.org>; Mon, 03 Jun 2013 10:20:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ESN0JmehM/QnyriPvbIH1eZoVXNuYfduY9pfpFyjcxk=;
+        b=FP/rjZEYfailM6xrQ62eGJyiFUW/yZYHgqhq4wwOaA4EHh4CKyTagxGyU91bldF5gK
+         GTj2yvcKHYCTJAlFc8DOVdIKoCySqY83hL1o2dSSp82uE1v0CKZVIYSWlMGyM46+RPoA
+         DNeJsmjmF58GHgTRFrUdEIbVtCh9HS6Wot0n4hjqIgZqVj7LcnySGM8qtBYG86CpyBMh
+         0B4X+iSgtL/Pl/oQaopB0MpqF4U49t20F7A2cW/RRKy6y+iq9Wi/ib9lbq089Y88gYsp
+         YAKPt+xiBXGzm8R8S1VDMcNSwvfuVlvWZAM1MoHnyjXs8KDk1v91IH5AArnBxlEDO04o
+         /uqg==
+X-Received: by 10.224.79.209 with SMTP id q17mr19569358qak.88.1370280054912;
+ Mon, 03 Jun 2013 10:20:54 -0700 (PDT)
+Received: by 10.49.14.40 with HTTP; Mon, 3 Jun 2013 10:20:54 -0700 (PDT)
+In-Reply-To: <CAPZPVFZDHHGyHhzBVVK6jS=XhEd2+JpmBT8ofiGOww8vuLUWWw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226240>
 
-Sandro Santilli <strk@keybit.net> writes:
-
->  git merge anotherbranch
->  git add something
->  git commit --amend
+On Fri, May 31, 2013 at 10:22 PM, Eugene Sajine <euguess@gmail.com> wrote:
+> and trying to perform some operations like fetch or push. It is cloned
+> and fetches and pushes successfully.
+> The problem is that the file test_hook_out.txt doesn't have anything
+> in it after the execution, So the hook doesn't seem to work.
 >
-> After the steps above the addition of "something" can't be found in
-> the history anymore, but the file is there.
+> What might be the issue here?
 
-This is a very common and sensible thing to do when dealing with
-semantic conflict.  Imagine that you changed the name of a global
-variable in the code on your current branch since the anotherbranch
-you are pulling from forked from you.  Then imagine further that the 
-anotherbranch added one location that refers to that variable.
+I have no idea what the issue might be, but here's how I usually debug
+this kind of situations:
+- Exit with a non-zero value will make it an error, try "exit 1" at
+the end of your script, you will know if it's executed or not
+- Your log file might not be located where you expect, you should use
+absolute path to dump text
+- Dump the cwd to know where it's executed from
+- The documentation says you can print one line before a failure, also
+try this to show the cwd
 
-Since they are not aware of the name change, they added the new
-reference with the old variable name.  The part they added is a new
-code, so it is very likely that there is no textual conflict when
-you did "git merge anotherbranch".  But now the result is broken.
-
-And you fix that semantic conflict by editing the file they added
-the new reference to the variable under the old name and make it use
-the variable with the new name.  You "git add something" and amend
-the merge.
-
-"git show" of the result will show you what happened, I think.
+Hope that helps,
+Antoine,
