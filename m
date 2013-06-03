@@ -1,69 +1,66 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: [PATCH v2 1/7] add simple tests of consistency across rebase types
-Date: Mon, 3 Jun 2013 11:12:31 -0700
-Message-ID: <CANiSa6g_QgvQgaTmVdTxbhdf=sxYmNjhYszxxXeh66rGrR1A_Q@mail.gmail.com>
-References: <1347949878-12578-1-git-send-email-martinvonz@gmail.com>
-	<1369809572-24431-1-git-send-email-martinvonz@gmail.com>
-	<1369809572-24431-2-git-send-email-martinvonz@gmail.com>
-	<CANiSa6hH3APigj_vozsbBQriNhqnPT=2Qcb0T76qs9hPhbhacg@mail.gmail.com>
-	<7v8v2rf4sb.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jun 2013, #01; Sun, 2)
+Date: Mon, 03 Jun 2013 11:30:21 -0700
+Message-ID: <7v4ndff3nm.fsf@alter.siamese.dyndns.org>
+References: <7vfvx0kqtn.fsf@alter.siamese.dyndns.org>
+	<CANYiYbHkw1hQpscFFEyx8za9bniHtBriKb=C1CFSpjKntshVHQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Johannes Sixt <j.sixt@viscovery.net>,
-	Chris Webb <chris@arachsys.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 03 20:12:44 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 20:30:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjZFI-0004DM-7Z
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 20:12:40 +0200
+	id 1UjZWY-0006Ek-PZ
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 20:30:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759543Ab3FCSMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 14:12:35 -0400
-Received: from mail-wg0-f48.google.com ([74.125.82.48]:55999 "EHLO
-	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758131Ab3FCSMd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 14:12:33 -0400
-Received: by mail-wg0-f48.google.com with SMTP id f12so3474789wgh.15
-        for <git@vger.kernel.org>; Mon, 03 Jun 2013 11:12:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=YqBtOWJFVuCl/JmCkGz6CwsbWDclJHxh1g0n/NB517Q=;
-        b=Jq38myxFX+d6ntntA9/codwxgQUXYU4/Ys2MzZi7IMTnP4L0boQLfZZQwG4BUDpcM4
-         OfrHITT9R6L/9E9F8rlZhiQ5LBDYSUmOW8LdPBqZu8kyts0KJlUA0bz3iaO9eH/HeTBP
-         XH9KqORtDgKfYVZmNVIVntgCSChKS+OM4PS6uW8DuDHmZXSZbHq7RNKdv0AmjYQ+oHaC
-         HP6f1YAM5hiewyhAblXCwOsUEFzKpADgB8GYb1CpzhK1qHzfyTJcqA/zhfHr26AEYBdR
-         HvGib6R61jJGj2eNLb/UhxJFEj1PQb15gIPBoQo2p2tnfZ05SW0apJQoXbZNmlnwL1mn
-         EULg==
-X-Received: by 10.180.108.3 with SMTP id hg3mr13864944wib.17.1370283151836;
- Mon, 03 Jun 2013 11:12:31 -0700 (PDT)
-Received: by 10.180.7.99 with HTTP; Mon, 3 Jun 2013 11:12:31 -0700 (PDT)
-In-Reply-To: <7v8v2rf4sb.fsf@alter.siamese.dyndns.org>
+	id S1759607Ab3FCSa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 14:30:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36685 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755148Ab3FCSa0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 14:30:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90541259BB;
+	Mon,  3 Jun 2013 18:30:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vyxSv5YKhIxMN4UpTmj0dwFzh70=; b=vOQIpK
+	qFs2J2tglyJKmYYaD/2ixPUVN4IkcPWv1U0O/vTUscKc8iLf5OvpjgGyt9I2N5a7
+	+yGFK6HHAskATUgjsX8iZYyjrBPaxhVbAQNGYYkd8aM1rzVJo7tEUquPP5Ry89lI
+	p0uAx69D1VtFcDjQVJgyp2Cyt+pJOUZ7xFdU8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fS5fkO35IEYcEtm+0JB1ul5B1HDYEZoQ
+	Gyv7X+ZchAHRxYaQQ7noqdwGZIntkCMwJUyw02BC6dJg7Yi5xR2bCgJ0YvJjWnjr
+	x64T64RBjYu0UVGbo8xG5tGIvRTGypJjlromnWVntD+Uf5dkvy8HwCr0C6HHOr0n
+	U3K0WG36rSo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C77E259B9;
+	Mon,  3 Jun 2013 18:30:25 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E033B259B3;
+	Mon,  3 Jun 2013 18:30:22 +0000 (UTC)
+In-Reply-To: <CANYiYbHkw1hQpscFFEyx8za9bniHtBriKb=C1CFSpjKntshVHQ@mail.gmail.com>
+	(Jiang Xin's message of "Mon, 3 Jun 2013 08:35:35 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A74427F2-CC7B-11E2-9949-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226259>
 
-On Mon, Jun 3, 2013 at 11:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin von Zweigbergk <martinvonz@gmail.com> writes:
->
->> On Tue, May 28, 2013 at 11:39 PM, Martin von Zweigbergk
->> <martinvonz@gmail.com> wrote:
->>>  create mode 100755 t/t3420-rebase-topology-linear.sh
->>
->> Just FYI, there's another test case with the same number
->> (t3420-rebase-autostash) in pu. I don't know how you normally handle
->> such cases.
->
-> Thanks for a heads-up.  Usually, the series that appears later on
-> the list yields and finds a unique number.
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-In this case, that's my series. Want a resend or do you want to do it
-yourself? I'm fine either way, whatever is easiest for you.
+> I have updated the patch in the new reply for this thread, and it need
+> some feedbacks:
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/225139/focus=225934
+
+Will re-queue and wait for "some feedbacks" then.  Thanks.
