@@ -1,85 +1,111 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC v2] reflog: show committer date in verbose mode
-Date: Mon, 03 Jun 2013 10:43:18 -0700
-Message-ID: <7v61xvgkeh.fsf@alter.siamese.dyndns.org>
-References: <517a09251fbbc81073fbd53f04a3f4b58cb8b3f7.1370224175.git.worldhello.net@gmail.com>
-	<CALkWK0k-cikpwue4iQDGJgP4NrGdkCw2r=dzzP78+QbsA5BiMA@mail.gmail.com>
-	<CANYiYbG-f+bM0jP0f-R-ciuR0sR13+8FcYkTas-X0LOh1mPRfg@mail.gmail.com>
+Subject: Re: Poor performance of git describe in big repos
+Date: Mon, 03 Jun 2013 10:48:54 -0700
+Message-ID: <7v1u8jgk55.fsf@alter.siamese.dyndns.org>
+References: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
+	<CALkWK0ndKMZRuWgdg6djqPUGxbDAqZPcv2q0qPrv_2b=1NEM5g@mail.gmail.com>
+	<CAJ-05NNAeLUfyk8+NU8PmjKqfTcZ1NT_NPAk3M1QROtzsQKJ8g@mail.gmail.com>
+	<87ehcoeb3t.fsf@linux-k42r.v.cablecom.net>
+	<CAJ-05NOjVhb+3Cab7uQE8K3VE0Q2GhqR3FE=WzJZvSn8Djt6tw@mail.gmail.com>
+	<87ip20bfq4.fsf@linux-k42r.v.cablecom.net>
+	<20130530193046.GG17475@serenity.lan>
+	<CAJ-05NOEuxOVy7LFp_XRa_08G-Mj0x7q+RiR=u71-iyfOXpHow@mail.gmail.com>
+	<87obbr5zg3.fsf@linux-k42r.v.cablecom.net>
+	<CAJ-05NOdg5TvjzEMrXaPgogU5z5W6kywZhD-82eTUmvE9Hp=Lw@mail.gmail.com>
+	<87y5av4jvj.fsf@linux-k42r.v.cablecom.net>
+	<CAJ-05NN8cARpPTnsCfHt3kY6gTnhZ=Vq55EzqxWBV_3ju-oczQ@mail.gmail.com>
+	<CAJ-05NNgcj_pPer2Tw4HvKkVib7N1ZFo7rZOrR9z8NMV1WHQsQ@mail.gmail.com>
+	<7vfvwzi29f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 03 19:43:26 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@inf.ethz.ch>, John Keeping <john@keeping.me.uk>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <kernel-hacker@bennee.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 19:49:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjYn0-000533-1k
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 19:43:26 +0200
+	id 1UjYsR-0007zd-TI
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 19:49:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756683Ab3FCRnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 13:43:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43160 "EHLO
+	id S1759407Ab3FCRs7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Jun 2013 13:48:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57718 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752663Ab3FCRnV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 13:43:21 -0400
+	id S1759159Ab3FCRs4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Jun 2013 13:48:56 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1782B24CE7;
-	Mon,  3 Jun 2013 17:43:21 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20C0E24183;
+	Mon,  3 Jun 2013 17:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=r0kgMrQo4aE5bwePvIh5JQ7yPcw=; b=Xc8uOb
-	U7VDOG8o2dwWs+UWG+AVq5jMhOyWoLDdPYcJhiUWywLnJf47Xh2VnUxVLWAwxaA9
-	oFbs74iqrYbSM4IKXRuJPS0Ajlg8PGy0fJ5EJqDdiN0ar7Yh9MetwIq8oxtu9DoN
-	o9ysrOw0yJa+w3RZzk01Cn9s4CC+h7moIx7AE=
+	:content-type:content-transfer-encoding; s=sasl; bh=o8lH7rO2GU5W
+	X0z5NMZvu1wRZNs=; b=g9Rs3/BwlDB+Buj0/Db4ws0AW2j9uqHN0PP3RoiB4Rtt
+	Mrcq+sgk6o7MYScfsD3PcwZ5VldatEd3ES9+WY63bxmQwLEtIkcrtvuMmIMlOycy
+	w/rTrRnG+8lbTpsf+YTCqLSKB9MnlwZAo6rnwhz621X6ajTEzWmdtrkKqdogbhk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ApY2cTqfW9WuqUKqQr4BwnR4HnWtXyN2
-	OwpUlFb2YqGEzNGDHrZu5ncUVy/Vmz8fJp7fA6apF2sI69YId4NYhtu3A2MuBIvh
-	RJecgvyIWbEkYR1t/4r0Qn+S9rO9rUjaFV08Mh+52YYFS7kQUdSbA3xPjwghT6DK
-	ETjJjAPzU1g=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=d6Oi8N
+	/4FILjY55XmCGvB9Sq4zUYGe8wMRpXvD9xXPlcJDhnuUBpXFeyiurFS+Hut75MBa
+	l5NDlYTyXEcpON2yaL/J+0Q0DePQ4aycz5z3oHOAKVVsbzmo7ZJHDneEw6wI8jIn
+	DmFuRAYMsUfgBtv6sOQXV57eYj+vEsSWw0Les=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 037B624CE6;
-	Mon,  3 Jun 2013 17:43:21 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15BE824182;
+	Mon,  3 Jun 2013 17:48:56 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5E0E224CE3;
-	Mon,  3 Jun 2013 17:43:19 +0000 (UTC)
-In-Reply-To: <CANYiYbG-f+bM0jP0f-R-ciuR0sR13+8FcYkTas-X0LOh1mPRfg@mail.gmail.com>
-	(Jiang Xin's message of "Mon, 3 Jun 2013 19:20:18 +0800")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76F6924180;
+	Mon,  3 Jun 2013 17:48:55 +0000 (UTC)
+In-Reply-To: <7vfvwzi29f.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 03 Jun 2013 09:32:12 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 14A24DC6-CC75-11E2-ADAD-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DC5E5E54-CC75-11E2-898F-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226249>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> 2013/6/3 Ramkumar Ramachandra <artagnon@gmail.com>:
->> Jiang Xin wrote:
->>> It will be nice to add this pretty formatter automatically when run
->>> `git reflog` in verbose mode. And in order to support verbose mode, add
->>> new flag "verbose" in struct rev_info.
->>
->> Sorry I missed earlier revisions of this patch.  Generally speaking,
->> "verbose" is a bad way to control format-specifiers.  Why not add to
->> the list of pretty-format specifiers (like oneline, short, medium,
->> full)?  Also, this patch is extremely pervasive in that it teaches a
->> poorly defined "verbosity" to a very low layer: revision.c/revision.h.
+> Alex Benn=C3=A9e <kernel-hacker@bennee.com> writes:
 >
-> I also feel bad when adding new flag "verbose" into rev_info. = =b
+>> Why is git attempting to parse a commit not on the DAG for the branc=
+h
+>> I'm attempting to describe?
 >
-> CommitDate is more significant than AuthorDate for reflog.
+> I think that is because you need to parse the objects at the tip of
+> refs to see if they are on the DAG in the first place.
+>
+> If there weren't any annotated tag, conceivably you could do without
+> parsing these objects.  You would:
+>
+>  - First read the refs without parsing anything to learn the object
+>    name of the tips of refs;
+>
+>  - Traverse the DAG, starting from the commit and notice when you
+>    see commits that are at the tips of refs you learned in the first
+>    step, arranging to stop when you found the "closest" tip.
+>
+> But with annotated tags (and "git describe" is designed to be
+> primarily used with them; you would need "--tags" option to make it
+> notice unannotated tags), the object name you see sitting at the tip
+> will never appear during the DAG traversal.  You will only see
+> commits from the latter, so you would need to parse the tips to
+> learn what commits they refer to.
+>
+> And of course, "then parse only annotated tags, without parsing
+> commits" would not work, because you wouldn't know what the object
+> is without looking at it ;-)
 
-This is a curious statement, as I've seen it in a different context
-recently.
-
-Is it committer date that you really care about, or are you using it
-as a substitute for something else you care more about, namely, the
-time of the event the reflog entry was created (i.e. when you
-committed, when you resetted, when you "branch -f"ed)?
+Having said all that, with changes by Peff and Michael Haggerty
+around f85354b5c7b8 (pack_one_ref(): use function peel_entry(),
+2013-04-22), recent Git does not "parse" as many refs as it used to,
+only to figure out what commit an annotated tag points at when your
+refs are packed, so we may be a lot closer to the optimum than I
+hinted by the above description.
