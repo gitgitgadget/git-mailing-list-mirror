@@ -1,127 +1,97 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 7/7] unpack-trees: free cache_entry array members for merges
-Date: Mon, 3 Jun 2013 11:10:05 -0500
-Message-ID: <CAMP44s09s26Gyvqu___cQg2LsUnMrzZAa0pbUnGp85fDUEeapg@mail.gmail.com>
-References: <1370188017-24672-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
-	<1370188017-24672-8-git-send-email-rene.scharfe@lsrfire.ath.cx>
-	<CAMP44s2ym5UEPo8kr6YKf1x_P_0L+o_9vWdCTA6MPDQsRy7d1A@mail.gmail.com>
-	<51AB86BB.3080203@lsrfire.ath.cx>
-	<CAMP44s0Af90Sfi47_mxEGRFHAsAhaoO6T1jjbj7SptucNO-k0w@mail.gmail.com>
-	<51ABAA84.8090301@lsrfire.ath.cx>
-	<CAMP44s3cqa-jETHX+ftbAVMx+oV6PMcVkdH63P93ER-4fH28Hw@mail.gmail.com>
-	<51ABD00C.7080503@lsrfire.ath.cx>
-	<CAMP44s2+Hx-6E7DkmWL_m92jDt5-Cj8FGHpACBZcqp1sn5Tfzw@mail.gmail.com>
-	<51ABD99A.2030303@lsrfire.ath.cx>
-	<CAMP44s2HotyK7hh0nFjCe+BBtu1pyqmkn6=yt9WV6UyhxjrXoQ@mail.gmail.com>
-	<51ACBD68.4070506@lsrfire.ath.cx>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v2 2/6] send-email: fix suppress-cc=self on cccmd
+Date: Mon, 3 Jun 2013 19:15:56 +0300
+Message-ID: <20130603161556.GA16750@redhat.com>
+References: <1369897638-27299-1-git-send-email-mst@redhat.com>
+ <1369897638-27299-3-git-send-email-mst@redhat.com>
+ <7v7gibjieh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Jun 03 18:10:13 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 18:15:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjXKn-0002Dy-9F
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 18:10:13 +0200
+	id 1UjXPy-0005OJ-TR
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 18:15:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759049Ab3FCQKJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Jun 2013 12:10:09 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:46193 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756567Ab3FCQKH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jun 2013 12:10:07 -0400
-Received: by mail-lb0-f170.google.com with SMTP id t11so1283679lbd.1
-        for <git@vger.kernel.org>; Mon, 03 Jun 2013 09:10:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=e+VqT4kzhoP4eCngt412er1f05HntmcO8GRN4/ygu1E=;
-        b=cp79eKyJa6mxMvGzRzoctan3765dfkrI5XpSTVmIIo/TTI8VzLqOs/Un09+TNwvXfg
-         mrj4kwYHqLn6Je+ZaqzB/Q83DF/3GIsnZwNDAdPVx2E3xr57/pVQ2VIkzP1BtfTxV9TK
-         b1tfLnQkAURVBDTSIIEqw+MrGUNHrkI7DCqQLNCUUcReUGfW+6DUDxoSc6Q+YNa4ed8E
-         ZmQmlZMvhBdxZjMt8HeZBuIkByFrF3uA5ZckAKn86WairQq6nFjnOiaK9Aplr1ArlgqK
-         7yap2MVwS+vEuJrVhpIZDJDqIuZ7DaHHPsKtcOa6tyetKAtHCDGpFXOM5Jb2B2ep8OJ1
-         bT6w==
-X-Received: by 10.112.33.17 with SMTP id n17mr11070141lbi.72.1370275805671;
- Mon, 03 Jun 2013 09:10:05 -0700 (PDT)
-Received: by 10.114.177.164 with HTTP; Mon, 3 Jun 2013 09:10:05 -0700 (PDT)
-In-Reply-To: <51ACBD68.4070506@lsrfire.ath.cx>
+	id S1759401Ab3FCQP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 12:15:29 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:25422 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759038Ab3FCQP1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 12:15:27 -0400
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r53GFOfG017673
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Mon, 3 Jun 2013 12:15:25 -0400
+Received: from redhat.com (vpn1-4-128.ams2.redhat.com [10.36.4.128])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id r53GFMbL003198;
+	Mon, 3 Jun 2013 12:15:23 -0400
+Content-Disposition: inline
+In-Reply-To: <7v7gibjieh.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226228>
 
-On Mon, Jun 3, 2013 at 10:59 AM, Ren=C3=A9 Scharfe
-<rene.scharfe@lsrfire.ath.cx> wrote:
-> Am 03.06.2013 02:04, schrieb Felipe Contreras:
->>
->> On Sun, Jun 2, 2013 at 6:47 PM, Ren=C3=A9 Scharfe
->> <rene.scharfe@lsrfire.ath.cx> wrote:
->>>
->>> Am 03.06.2013 01:23, schrieb Felipe Contreras:
->>>
->>>> I didn't say we should do 'if (ce) free(ce);' instead of 'free(ce)=
-;' I
->>>> said we should do 'if (cd && ce !=3D o->df_conflict_entry)' instea=
-d of
->>>> 'if (ce !=3D o->df_conflict_entry)'.
->>>
->>>
->>>
->>> I did assume you meant the latter.
->>>
->>>
->>>> There's no reason not to.
->>>
->>>
->>>
->>> Only the minor ones already mentioned: More text,
->>
->>
->> Five characters.
->>
->>> one more branch in object
->>> code,
->>
->>
->> Which might actually be more optimal.
->
->
-> The difference in absolute numbers will most certainly be within the =
-noise
-> for this one case.
+On Mon, Jun 03, 2013 at 08:58:14AM -0700, Junio C Hamano wrote:
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
+> 
+> > When cccmd is used, old-style suppress-from filter
+> > is applied by the newer suppress-cc=self isn't.
+> > Fix this up.
+> >
+> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > ---
+> >  git-send-email.perl | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/git-send-email.perl b/git-send-email.perl
+> > index bd13cc8..a138615 100755
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -1462,7 +1462,7 @@ sub recipients_cmd {
+> >  		$address =~ s/^\s*//g;
+> >  		$address =~ s/\s*$//g;
+> >  		$address = sanitize_address($address);
+> > -		next if ($address eq $sanitized_sender and $suppress_from);
+> > +		next if ($address eq $sender and $suppress_cc{'self'});
+> 
+> If $suppress_from is defined, $suppress_cc{'self'} gets its value,
+> so the latter half of this change is very understandable.
+> 
+> The original comparison uses $address that is "sanitized" (whose
+> definition is roughly "mangled/quoted with rfc2047 etc to fit on
+> To/Cc headers") against $sanitized_sender, which means for a
+> 
+>     $sender = 'Michael S. Tsirkin <mst@redhat.com>';
+> 
+> we used
+> 
+>     $sanitized_sender = '"Michael S. Tsirkin" <mst@redhat.com>';
+> 
+> for comparison, but the new code does not quote the $recipient_name
+> part inside dq for the single dot after the middle name.  Is this a
+> desirable change?
 
-If you want to ignore the performance, you should ignore the branch as =
-well.
+What I tried to do here is split the changes to small
+chunks and I picked a chunk of a later patch in an earlier one
+by mistake.
 
->>> no benefit except for some hypothetical future case that's caught b=
-y
->>> the test suite anyway -- or by code review.
->>
->>
->> That's not the benefit, the benefit is that the code is clearer.
->
->
-> I don't see that, and I don't like adding a check that I don't expect=
- to be
-> ever needed.
+So this is fixed up by patch 4/6
+in the series, which redefines sender to have
+the sanitized value, everywhere.
 
-It's called self-documenting code; by adding a check for the NULL
-pointer, we are stating that ce can be NULL, if we don't do that,
-people reading that code would need to figure that out themselves.
+I guess I'll have to repost moving this former
+chunk to patch 4.
 
-> Or you could submit a patch on top that adds the check.
 
-I already sent a patch that has that check.
-
-http://article.gmane.org/gmane.comp.version-control.git/225972
-
---=20
-=46elipe Contreras
+> >  		push @addresses, $address;
+> >  		printf("($prefix) Adding %s: %s from: '%s'\n",
+> >  		       $what, $address, $cmd) unless $quiet;
