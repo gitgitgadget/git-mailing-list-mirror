@@ -1,74 +1,73 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: git daemon --access-hook problem
-Date: Mon, 3 Jun 2013 14:02:56 -0400
-Message-ID: <CAPZPVFYdeuusW3=iBTBC+iPuOeAekvtMx6d_dozB9tsDCg3C8Q@mail.gmail.com>
-References: <CAPZPVFZDHHGyHhzBVVK6jS=XhEd2+JpmBT8ofiGOww8vuLUWWw@mail.gmail.com>
-	<CALWbr2ypPCoftVLfP9uKeKStg3TWwLDchkUaL1d9s9O3kcuPwA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/6] send-email: fix suppress-cc=self on cccmd
+Date: Mon, 03 Jun 2013 11:04:31 -0700
+Message-ID: <7vd2s3f4uo.fsf@alter.siamese.dyndns.org>
+References: <1369897638-27299-1-git-send-email-mst@redhat.com>
+	<1369897638-27299-3-git-send-email-mst@redhat.com>
+	<7v7gibjieh.fsf@alter.siamese.dyndns.org>
+	<20130603161556.GA16750@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 03 20:03:02 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 20:04:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjZ5x-0007Co-8y
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 20:03:01 +0200
+	id 1UjZ7X-00088j-1p
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 20:04:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757107Ab3FCSC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 14:02:58 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:53948 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753430Ab3FCSC5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 14:02:57 -0400
-Received: by mail-ie0-f176.google.com with SMTP id at20so11157740iec.35
-        for <git@vger.kernel.org>; Mon, 03 Jun 2013 11:02:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=EF67g+kJbE6kr/raiNrSjCN6ENTguodwVNcHGC4Y8ug=;
-        b=jSmvGYiQ9iC3NMbMm3xxK+/7F8JqLmPr+RZ1F2KRugdoXlTSCggiuk+F13z8cWX+M3
-         AjFX4k/DQjOp+d6VEMWXInqprXVv6OTzmxomvTFT7BnovFXnargIpEDKZFuBDsM+rzNp
-         QeNj6kxw5NwJcadvO/NfA2ZK2GcreF/9cuwxkfTrIv19UDN43H8OW3gF2LSDxByG3pT0
-         qgw4Pxm/GjrOtudQ3wd88/oBilcTr8D9cnFiBEdYJekcuOeBAFbbzUTVzMXOMTJcxOLX
-         5ZnWocXl8lq8k2LISJaVn33FXs4kyg/VWXLIBav6zMfaDWeXjiLVO2vvYIcNn1/yqj0H
-         H3VQ==
-X-Received: by 10.50.92.70 with SMTP id ck6mr8833443igb.76.1370282576603; Mon,
- 03 Jun 2013 11:02:56 -0700 (PDT)
-Received: by 10.43.85.7 with HTTP; Mon, 3 Jun 2013 11:02:56 -0700 (PDT)
-In-Reply-To: <CALWbr2ypPCoftVLfP9uKeKStg3TWwLDchkUaL1d9s9O3kcuPwA@mail.gmail.com>
+	id S1758076Ab3FCSEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 14:04:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55732 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756683Ab3FCSEe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 14:04:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2AEB24A47;
+	Mon,  3 Jun 2013 18:04:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=T2fpHXVxbq8s2ngtW3LpNM+PcFE=; b=hXF3Jt
+	ikCpjcgRBSVz8KBffZuEyEaxN3J3wNIjOkti67ldOlNhS9AE4n8KxMvaL5YyzTCp
+	SVKiL3WXNCqqzfpBCX2z+maK9W9mHLJatR4PEtF6+GRDQSOUrq1ZWJylWkHxr+oE
+	U+r3CFlXisOgpfyolebV2AXfySI9lJNDTdvO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pTtOrFR+58jGePGkFjryqPe9fQmDg+Hc
+	/Yv1326rJUSo/89dRJF/hTbBYo0xwbnddeYHALUQbWzN7CUHksbyDJ6BULEryoXf
+	l1DofqhLOoAmku5jKypzdgmUIdV0zUMVzcItlzbR5cw913d4UU23SErjJFYexQ9J
+	Vi+RKEcmHls=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6A9A24A46;
+	Mon,  3 Jun 2013 18:04:33 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6AD1424A43;
+	Mon,  3 Jun 2013 18:04:33 +0000 (UTC)
+In-Reply-To: <20130603161556.GA16750@redhat.com> (Michael S. Tsirkin's message
+	of "Mon, 3 Jun 2013 19:15:56 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0B6E7060-CC78-11E2-BA31-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226255>
 
-> - Your log file might not be located where you expect, you should use
-> absolute path to dump text
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-You were right! The problem was with the script itself - the log file
-not being specified with absolute path! Stupid me!
-
-...
-> - The documentation says you can print one line before a failure, also
-> try this to show the cwd
-
-Would you be able to advise how this should be done?
-I don't get the error message (i mean the output of pwd) if i do this:
-
-echo `pwd`
-exit 1
-
-What should it be?
-
-Thanks!
-Eugene
-
-
-
+> What I tried to do here is split the changes to small chunks and I
+> picked a chunk of a later patch in an earlier one by mistake.
 >
-> Hope that helps,
-> Antoine,
+> So this is fixed up by patch 4/6 in the series, which redefines
+> sender to have the sanitized value, everywhere.
+>
+> I guess I'll have to repost moving this former chunk to patch 4.
+
+Yeah, that may be a good idea.
+
+Thanks.
