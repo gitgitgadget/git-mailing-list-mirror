@@ -1,78 +1,119 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
-Date: Mon, 03 Jun 2013 23:27:01 +0200
-Message-ID: <51AD0A25.5080101@web.de>
-References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org> <51A7A5F9.2030107@web.de> <7v61xwpct5.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/8] cherry-pick: add --skip-empty option
+Date: Mon, 03 Jun 2013 14:45:45 -0700
+Message-ID: <7vehcidg1i.fsf@alter.siamese.dyndns.org>
+References: <1369799788-24803-1-git-send-email-felipe.contreras@gmail.com>
+	<1369799788-24803-4-git-send-email-felipe.contreras@gmail.com>
+	<7vr4gjdomk.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1GQ2iwwscx4Sx1cxK0U6yWWYvOJqDk_FO_GkFcNKREYw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 03 23:27:14 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 23:46:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjcHZ-0005fS-74
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 23:27:13 +0200
+	id 1UjcZe-0005oY-5I
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 23:45:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757635Ab3FCV1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 17:27:08 -0400
-Received: from mout.web.de ([212.227.15.4]:61648 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756402Ab3FCV1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 17:27:07 -0400
-Received: from [192.168.178.41] ([91.3.151.162]) by smtp.web.de (mrweb004)
- with ESMTPA (Nemesis) id 0MHdwC-1UgJQS2gYu-003Jiu; Mon, 03 Jun 2013 23:27:04
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <7v61xwpct5.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5.1
-X-Provags-ID: V03:K0:4ppq2fB+lbp0Xx65dHYQ4RZnQJqn/nxKOTNLoKmRre1o4Ey5C8U
- PY+FbjANLNV8nU+sPKwFh7P3jtj2BHUvVGQdSXTCNdf6Bb4nfOFb63qVsze4vaSqwa4vfFW
- pTHGl9MRJRROyqIE/RPqQUlGqGYYR6IJTt4FGCJFtf+hFmMNgqs509UT8JPVmC1sz08dx73
- w8nm7244SuKgjK8xOoC8A==
+	id S1757697Ab3FCVpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 17:45:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44603 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753676Ab3FCVpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 17:45:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AE55251C2;
+	Mon,  3 Jun 2013 21:45:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iF73GuJBkwATVTO+ocM6A1IWTSk=; b=L5yc3N
+	t0TZz+lMbWpvgJI61CDTxM6Chg4jDjrpwyGWatZ6CUC6u/5y0J5q5tQnjvOjLALy
+	7IkiA0ark8zQs/buG6RPF9X9SFRBraE3KJCk80En9qgboaMygjT1/XytAYNu5S82
+	1oh8a1TxznsFDI7vuA72Qr9BaN8uYyiKkwd8k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tHJExLd+NpmfMtYkw+Ibit5a5BJ/Cajj
+	FXKHAbB7VISiH0Bts6K7JNRjnfdBuzNzby77E6CrpG/ZrGCUmnhi3U4/z7D32KHg
+	J1fLuKsWtrU8onKwKhwM9zCMMIQq66GiwLXcq0HN5dY+csQ9vvt1isJy4XXIoJbc
+	+GUpSh7twA4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2BC5251C1;
+	Mon,  3 Jun 2013 21:45:48 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2483D251BD;
+	Mon,  3 Jun 2013 21:45:48 +0000 (UTC)
+In-Reply-To: <CAMP44s1GQ2iwwscx4Sx1cxK0U6yWWYvOJqDk_FO_GkFcNKREYw@mail.gmail.com>
+	(Felipe Contreras's message of "Mon, 3 Jun 2013 16:10:46 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F3D55774-CC96-11E2-AA68-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226295>
 
-Am 02.06.2013 20:50, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> Am 30.05.2013 01:58, schrieb Junio C Hamano:
->>> * jl/submodule-mv (2013-04-23) 5 commits
->>>   (merged to 'next' on 2013-04-23 at c04f574)
->>>  + submodule.c: duplicate real_path's return value
->>>   (merged to 'next' on 2013-04-19 at 45ae3c9)
->>>  + rm: delete .gitmodules entry of submodules removed from the work tree
->>>  + Teach mv to update the path entry in .gitmodules for moved submodules
->>>  + Teach mv to move submodules using a gitfile
->>>  + Teach mv to move submodules together with their work trees
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> On Mon, Jun 3, 2013 at 1:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>
+>>> Pretty much what it says on the tin.
 >>>
->>>  "git mv A B" when moving a submodule A does "the right thing",
->>>  inclusing relocating its working tree and adjusting the paths in
->>>  the .gitmodules file.
+>>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>>> ---
+>>>  Documentation/git-cherry-pick.txt   |  3 +++
+>>>  builtin/revert.c                    |  2 ++
+>>>  sequencer.c                         |  6 ++++++
+>>>  sequencer.h                         |  1 +
+>>>  t/t3508-cherry-pick-many-commits.sh | 13 +++++++++++++
+>>>  5 files changed, 25 insertions(+)
+>>>
+>>> diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+>>> index c205d23..fccd936 100644
+>>> --- a/Documentation/git-cherry-pick.txt
+>>> +++ b/Documentation/git-cherry-pick.txt
+>>> @@ -129,6 +129,9 @@ effect to your index in a row.
+>>>       redundant commits are ignored.  This option overrides that behavior and
+>>>       creates an empty commit object.  Implies `--allow-empty`.
+>>>
+>>> +--skip-empty::
+>>> +     Instead of failing, skip commits that are or become empty.
+>>
+>> Not quite sure.  Is this "instead of recording an empty commit,"
+>> (which may or may not fail depending on the allow-empty settings)?
+>
+> We are explaining --skip-empty, not --allow-empty.
 
-<detailed discussion snipped>
+Exactly.  That is why I found the "Instead of failing" questionable.
+It is very easy to read the above as "commits that are or become
+empty usually causes the command to fail, and this is a way to cause
+it not to fail.".
 
-> So my gut feeling of the "fix" at this point in the evolution of the
-> program may be to error out with a message like "You have local
-> changes to .gitmodules; please stash it before moving or removing".
+It is true that
 
-Yeah, me too thinks that this is a sane short term solution (even
-though a "git submodule add" currently happily stages any unstaged
-modifications to the .gitmodules file too, that should not stop us
-from doing better for rm and mv ;-).
+    cherry-pick A
 
-And I also agree that in the long run the the git-config aware merge
-driver together with the 3-way merge of a modified .gitmodules file
-you described is the best solution. But I'd really like to complete
-the recursive update before tackling that, so for now I just added
-these two to the to-do list on my GitHub wiki page.
+when A becomes empty, dies.  But
 
-I'll resubmit this series with the strlen() fix and the erroring out
-in case of unstaged modifications of the .gitmodules file as soon as
-I find some time.
+    cherry-pick --allow-empty A
+
+when A becomes empty, does not fail, but still does create an empty
+commit.  A large difference with --skip-empty, which applies to use
+scenario different from --allow-empty was meant to address, is that
+
+    cherry-pick --skip-empty A
+
+when A becomes empty, does not fail and does not create an empty
+commit, either.
+
+I think just "Skip commits that are or become empty" without saying
+"Instead of failing," is fine, too.
