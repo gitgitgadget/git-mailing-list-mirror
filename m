@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: [PATCH v5 1/7] add simple tests of consistency across rebase types
-Date: Mon,  3 Jun 2013 13:42:09 -0700
-Message-ID: <1370292135-1236-2-git-send-email-martinvonz@gmail.com>
+Subject: [PATCH v5 6/7] t3406: modernize style
+Date: Mon,  3 Jun 2013 13:42:14 -0700
+Message-ID: <1370292135-1236-7-git-send-email-martinvonz@gmail.com>
 References: <1369982987-18954-1-git-send-email-martinvonz@gmail.com>
  <1370292135-1236-1-git-send-email-martinvonz@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -10,168 +10,118 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
 	Martin von Zweigbergk <martinvonz@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 03 22:42:48 2013
+X-From: git-owner@vger.kernel.org Mon Jun 03 22:42:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjbaX-0000k0-Dw
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 22:42:45 +0200
+	id 1UjbaW-0000k0-Cf
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 22:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758312Ab3FCUmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 16:42:40 -0400
-Received: from mail-gg0-f201.google.com ([209.85.161.201]:64127 "EHLO
-	mail-gg0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757674Ab3FCUm1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 16:42:27 -0400
-Received: by mail-gg0-f201.google.com with SMTP id f4so420968ggn.4
+	id S1757895Ab3FCUmf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 16:42:35 -0400
+Received: from mail-vc0-f202.google.com ([209.85.220.202]:64966 "EHLO
+	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757732Ab3FCUm3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 16:42:29 -0400
+Received: by mail-vc0-f202.google.com with SMTP id ha11so325365vcb.1
         for <git@vger.kernel.org>; Mon, 03 Jun 2013 13:42:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :x-gm-message-state;
-        bh=NX92VqxjMlSD3sGMnvsam3+2aceXPwkl6helm/pEtiI=;
-        b=bFTC9SAvoaRUMPYkypuvABCfLcMX2uBvwgTLCvgUXaKD8jcpOVW8obVgFKph5WciwS
-         f/MJ3Juv4DDHJm7y/21QVJsW6D8t70z0J/gUTRTVStObklC+PaHpZLNgoaE5rF5Jfe+K
-         7tStCJJc3nzflQ9JoOsaqQ7fYQRDpEF5A8J0MJg2mci4gxCBaSuAmMQQtWN6V4+i6SqU
-         M5LDRVb8nF1uGWbDmjI6YYUl3OZQ6uGo5Q3uJuS8Me5U/e3o6NjPhWmmaCFaFCVAGB47
-         9HR21S78PnTLUy6ROYqadto2GcHYFKzzApWYS6EI1DwBnT0uENTUaHoIdwb8QNNeZSQs
-         qTdA==
-X-Received: by 10.236.209.196 with SMTP id s44mr9162756yho.25.1370292146579;
+        bh=sEUL4VZZyzEkraNj1z0h/8pk1B9wrHQamefJUEcXEG4=;
+        b=cHszehff/SRI9rlXFtU3xxEcW1Hf0C5cYYVVapov2p+B4NlpMQ/MJcnu+13/9KCYQH
+         F/ecy8SUxZ9KRA3a3w+kNALgwLo0nZ+2wfaPtjgzvrXhvTEcVLkBRJBWmVdrgCeAQ1ch
+         V5z2jV4ffqrVL9NSvf8QoWFqqm8XA8k/lwN/Rgwr0pusOM5aPgBYcm9BySvjnBvZT3Ik
+         ov/ctVcE3uCSojvos+fGdALPj916lkJAPmEKC18xt5r9Ss293SIJZZt9wN/J24LpgFPY
+         bDS4reborYgqkAyBtUlHyVBlKspJlTuVO/VMLBckHd4PDg3AGVj2DpYSYG4r8Yk2Zku/
+         L4cQ==
+X-Received: by 10.236.175.234 with SMTP id z70mr4818244yhl.50.1370292146577;
         Mon, 03 Jun 2013 13:42:26 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id o42si5782802yhe.5.2013.06.03.13.42.26
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id r76si4037644yhe.2.2013.06.03.13.42.26
         for <multiple recipients>
         (version=TLSv1.1 cipher=AES128-SHA bits=128/128);
         Mon, 03 Jun 2013 13:42:26 -0700 (PDT)
 Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 6879231C1ED;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 6847C5A4217;
 	Mon,  3 Jun 2013 13:42:26 -0700 (PDT)
 Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id A1B35100F96; Mon,  3 Jun 2013 13:42:25 -0700 (PDT)
+	id A7EB2100A85; Mon,  3 Jun 2013 13:42:25 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.497.g83fddbe
 In-Reply-To: <1370292135-1236-1-git-send-email-martinvonz@gmail.com>
-X-Gm-Message-State: ALoCoQkL9V6wzXBingZuArrg06wgnxqA0gkJZcZ7rhDgcAFmeOb6blqkrppXjTyUnI192lDPmJT3TjFKfKCteP9QLap3rJbBc4yuvcV44cmm/326GKQ/XVcMDwQSMvRmlwGJlCRI1Ciw5xA4KDYbkRimXs7OR2nRkqBeWSk7ju1JU2PKxIXLS4/tSZynsw6zA3yE26406x4C
+X-Gm-Message-State: ALoCoQl6v3Qw2hh741XnlX46FV0ySoqTQhR0hMZfWKWFE3C8pHkWaahoUoqhyck5/qk4YAhkbOXZGP3hXb6ZWMxcxaunq3Nm0paUHEvCuj5XiS/Y5Oir2p43SeDrQnsbI9mOb/hohtuLgb6098+vqBCw96zBr44Da6/FDC6bjWQS/4gNKtx4l9H0ZguPdNK9gKgmtghe7F/L
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226283>
 
-Helped-by: Johannes Sixt <j6t@kdbg.org>
+Update the following:
+
+ - Quote 'setup'
+ - Remove blank lines within test case body
+ - Use test_commit instead of custom quick_one
+ - Create branch "topic" from tag created by test_commit
 ---
- t/lib-rebase.sh                   | 15 ++++++++
- t/t3421-rebase-topology-linear.sh | 78 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 93 insertions(+)
- create mode 100755 t/t3421-rebase-topology-linear.sh
+ t/t3406-rebase-message.sh | 30 +++++++++---------------------
+ 1 file changed, 9 insertions(+), 21 deletions(-)
 
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index 6ccf797..62b3887 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -65,3 +65,18 @@ EOF
- 	test_set_editor "$(pwd)/fake-editor.sh"
- 	chmod a+x fake-editor.sh
- }
-+
-+# checks that the revisions in "$2" represent a linear range with the
-+# subjects in "$1"
-+test_linear_range () {
-+	! { git log --format=%p "$2" | sane_grep " " ;} &&
-+	expected=$1
-+	set -- $(git log --reverse --format=%s "$2")
-+	test "$expected" = "$*"
-+}
-+
-+reset_rebase () {
-+	git rebase --abort # may fail; ignore exit code
-+	git reset --hard &&
-+	git clean -f
-+}
-diff --git a/t/t3421-rebase-topology-linear.sh b/t/t3421-rebase-topology-linear.sh
-new file mode 100755
-index 0000000..c4b32db
---- /dev/null
-+++ b/t/t3421-rebase-topology-linear.sh
-@@ -0,0 +1,78 @@
-+#!/bin/sh
-+
-+test_description='basic rebase topology tests'
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
-+# a---b---c
-+#      \
-+#       d---e
+diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
+index e6a9a0d..fe8c27f 100755
+--- a/t/t3406-rebase-message.sh
++++ b/t/t3406-rebase-message.sh
+@@ -4,27 +4,17 @@ test_description='messages from rebase operation'
+ 
+ . ./test-lib.sh
+ 
+-quick_one () {
+-	echo "$1" >"file$1" &&
+-	git add "file$1" &&
+-	test_tick &&
+-	git commit -m "$1"
+-}
 +test_expect_success 'setup' '
-+	test_commit a &&
-+	test_commit b &&
-+	test_commit c &&
-+	git checkout b &&
-+	test_commit d &&
-+	test_commit e
-+'
-+
-+test_run_rebase () {
-+	result=$1
-+	shift
-+	test_expect_$result "simple rebase $*" "
-+		reset_rebase &&
-+		git rebase $* c e &&
-+		test_cmp_rev c HEAD~2 &&
-+		test_linear_range 'd e' c..
-+	"
-+}
-+test_run_rebase success ''
-+test_run_rebase success -m
-+test_run_rebase success -i
-+test_run_rebase success -p
-+
-+test_run_rebase () {
-+	result=$1
-+	shift
-+	test_expect_$result "rebase $* is no-op if upstream is an ancestor" "
-+		reset_rebase &&
-+		git rebase $* b e &&
-+		test_cmp_rev e HEAD
-+	"
-+}
-+test_run_rebase success ''
-+test_run_rebase success -m
-+test_run_rebase success -i
-+test_run_rebase success -p
-+
-+test_run_rebase () {
-+	result=$1
-+	shift
-+	test_expect_$result "rebase $* -f rewrites even if upstream is an ancestor" "
-+		reset_rebase &&
-+		git rebase $* -f b e &&
-+		! test_cmp_rev e HEAD &&
-+		test_cmp_rev b HEAD~2 &&
-+		test_linear_range 'd e' b..
-+	"
-+}
-+test_run_rebase success ''
-+test_run_rebase success -m
-+test_run_rebase success -i
-+test_run_rebase failure -p
-+
-+test_run_rebase () {
-+	result=$1
-+	shift
-+	test_expect_$result "rebase $* fast-forwards if an ancestor of upstream" "
-+		reset_rebase &&
-+		git rebase $* e b &&
-+		test_cmp_rev e HEAD
-+	"
-+}
-+test_run_rebase success ''
-+test_run_rebase success -m
-+test_run_rebase success -i
-+test_run_rebase success -p
-+
-+test_done
++	test_commit O fileO &&
++	test_commit X fileX &&
++	test_commit A fileA &&
++	test_commit B fileB &&
++	test_commit Y fileY &&
+ 
+-test_expect_success setup '
+-	quick_one O &&
+-	git branch topic &&
+-	quick_one X &&
+-	quick_one A &&
+-	quick_one B &&
+-	quick_one Y &&
+-
+-	git checkout topic &&
+-	quick_one A &&
+-	quick_one B &&
+-	quick_one Z &&
++	git checkout -b topic O &&
++	git cherry-pick A B &&
++	test_commit Z fileZ &&
+ 	git tag start
+-
+ '
+ 
+ cat >expect <<\EOF
+@@ -34,12 +24,10 @@ Committed: 0003 Z
+ EOF
+ 
+ test_expect_success 'rebase -m' '
+-
+ 	git rebase -m master >report &&
+ 	sed -n -e "/^Already applied: /p" \
+ 		-e "/^Committed: /p" report >actual &&
+ 	test_cmp expect actual
+-
+ '
+ 
+ test_expect_success 'rebase --stat' '
 -- 
 1.8.3.497.g83fddbe
