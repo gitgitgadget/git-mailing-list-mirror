@@ -1,80 +1,99 @@
-From: Peter Oberndorfer <kumbayo84@arcor.de>
-Subject: Re: crash on git diff-tree -Ganything <tree> for new files with textconv
- filter
-Date: Mon, 03 Jun 2013 19:25:06 +0200
-Message-ID: <51ACD172.4070608@arcor.de>
-References: <508C29E4.5000801@arcor.de> <20121028120104.GE11434@sigill.intra.peff.net> <508D8DF7.7040007@arcor.de> <20121029060524.GB4457@sigill.intra.peff.net> <508EE4E4.1080407@arcor.de> <20121029223521.GJ20513@sigill.intra.peff.net> <509ACE63.9070007@arcor.de> <20121107211339.GA29184@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] completion: clarify difftool completion
+Date: Mon, 03 Jun 2013 10:29:40 -0700
+Message-ID: <7vip1vgl17.fsf@alter.siamese.dyndns.org>
+References: <1370181822-23450-1-git-send-email-artagnon@gmail.com>
+	<1370181822-23450-6-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 03 19:25:50 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 19:29:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjYVv-0003aP-EH
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 19:25:47 +0200
+	id 1UjYZo-0005jm-5Y
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 19:29:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759064Ab3FCRZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 13:25:44 -0400
-Received: from mail-in-10.arcor-online.net ([151.189.21.50]:36549 "EHLO
-	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753430Ab3FCRZm (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jun 2013 13:25:42 -0400
-Received: from mail-in-19-z2.arcor-online.net (mail-in-19-z2.arcor-online.net [151.189.8.36])
-	by mx.arcor.de (Postfix) with ESMTP id 6FAEE2D704C;
-	Mon,  3 Jun 2013 19:25:41 +0200 (CEST)
-Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
-	by mail-in-19-z2.arcor-online.net (Postfix) with ESMTP id 6B8933F83C5;
-	Mon,  3 Jun 2013 19:25:41 +0200 (CEST)
-Received: from [10.0.0.5] (62-47-252-102.adsl.highway.telekom.at [62.47.252.102])
-	(Authenticated sender: kumbayo84@arcor.de)
-	by mail-in-01.arcor-online.net (Postfix) with ESMTPA id 0BFA65AFE0;
-	Mon,  3 Jun 2013 19:25:40 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-01.arcor-online.net 0BFA65AFE0
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1370280341; bh=2LdnE5zH0/JMoGa/e97veAELnIPnZxlZ7w3sEnMrK48=;
-	h=Message-ID:Date:From:MIME-Version:To:CC:Subject:References:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	b=OTFNJPLB5hy+oTLsoYtlhRqO3N0K2xucP753muJafkMaZ7GJtH/OBcQgnz5/q7dPj
-	 qxNDanXii9f88eMOTQ6Jds30+6znG5WWM/jrNBRTmsjxOy1qXbrrBfwMrj/2FS3V0/
-	 LxsBUSGSQ7Jjq5uj3NhBhHi8iGDLX/WWbgyj0XNs=
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <20121107211339.GA29184@sigill.intra.peff.net>
+	id S1759376Ab3FCR3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 13:29:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53210 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759346Ab3FCR3n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 13:29:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E1045240C0;
+	Mon,  3 Jun 2013 17:29:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+RDaq9KdvQODbttx6arNJyzPg8I=; b=Dn3mRp
+	1uIYrlze5JrxwLsw0ixrHwzpCxdRe/jfQEv1jltb5tvOiOBciwf6FSYOis/aI3Y/
+	4WQ2+VpIRz133I0utReu+1wR+TTf714QyNsp1Qnc7ybE4oPlOwcFO83Qxn6dxwaY
+	zSAAFR8CUAI0Qc3+93QQAuiwNCzk1k6ILew1M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TXdO41rUQbTCmsWJP/BwFNAOfodiUfej
+	tAACWc16RIflnRXp9a28MMg5C1gUsQFOCyiG80lUzotBGaygIR40rVhmRazNjg7m
+	DVgo6A3OQ8aCh8bjm61rT/LIx9tjl70OLGwxUSBDFbqVRyckpIJUjwHiTe8hNZyb
+	zQ0VgPdCE1o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA1A7240BF;
+	Mon,  3 Jun 2013 17:29:42 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E964B240BD;
+	Mon,  3 Jun 2013 17:29:41 +0000 (UTC)
+In-Reply-To: <1370181822-23450-6-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Sun, 2 Jun 2013 19:33:41 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2CCFC7CC-CC73-11E2-A8C3-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226244>
 
-On 2012-11-07 22:13, Jeff King wrote:
-> On Wed, Nov 07, 2012 at 10:10:59PM +0100, Peter Oberndorfer wrote:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+
+> 'git difftool' is clearly a frontend to 'git diff' and is used in
+> exactly the same way, but it uses a misleading completion function name
+> __git_complete_file (aliased to to __git_complete_revlist_file).  Change
+> it to use __git_complete_revlist_file, just like 'git diff'.  No
+> functional changes.
+
+Makes sense.  The completion helper for both revname and pathname
+should not be called __git_complete_file, and this is a step in the
+right direction.
+
+If we have a situation where we _know_ we only want to complete
+pathname and never revname, we may want to keep __git_complete_file
+function.  For example, after seeing "--" on the command line, we
+may want to use __git_complete_file (that does not look at revs,
+instead of __git_complete_revlist_file function.
+
+Will apply.
+
+Thanks.
+
 >
->>>> For me the key to reproduce the problem was to have 2 commits.
->>>> Adding the file in the root commit it did not work. [1]
->>> You probably would need to pass "--root" for it to do the diff of the
->>> initial commit.
->>>
->>> The patch below fixes it, but it's terribly inefficient (it just detects
->>> the situation and reallocates). It would be much better to disable the
->>> reuse_worktree_file mmap when we populate the filespec, but it is too
->>> late to pass an option; we may have already populated from an earlier
->>> diffcore stage.
->> Hi,
->> I tested your patch, and i can confirm it fixes the problem for me.
->> (also on my real world test in msysgit)
-> Thanks for the report. I'd still like to pursue using a regex library
-> that does not require NUL-termination, but I've been distracted by other
-> things. I'm going to hold back my copy-to-a-NUL-buffer patch for now and
-> see if I can get to the regex thing this week.
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-Hi,
-
-are there any news regarding this problem?
-The crash seems to still exist in the current version 1.8.3 and master.
-
-Thanks,
-Greetings Peter
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index f46964d..8d70c30 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1305,7 +1305,7 @@ _git_difftool ()
+>  		return
+>  		;;
+>  	esac
+> -	__git_complete_file
+> +	__git_complete_revlist_file
+>  }
+>  
+>  __git_fetch_options="
