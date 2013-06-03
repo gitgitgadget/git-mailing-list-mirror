@@ -1,70 +1,57 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/6] prompt: don't scream continuation state
-Date: Mon, 3 Jun 2013 15:17:27 +0530
-Message-ID: <CALkWK0=LzUe0k7rWcrbiiTZNOOGg+=SsQB3u2F2ysjb5AJ=qZw@mail.gmail.com>
-References: <1370181822-23450-1-git-send-email-artagnon@gmail.com>
- <1370181822-23450-2-git-send-email-artagnon@gmail.com> <87r4gjzi3d.fsf@linux-k42r.v.cablecom.net>
+Subject: Re: [RFC v2] reflog: show committer date in verbose mode
+Date: Mon, 3 Jun 2013 15:30:48 +0530
+Message-ID: <CALkWK0k-cikpwue4iQDGJgP4NrGdkCw2r=dzzP78+QbsA5BiMA@mail.gmail.com>
+References: <517a09251fbbc81073fbd53f04a3f4b58cb8b3f7.1370224175.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jun 03 11:48:16 2013
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 12:01:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjRN8-00072T-AI
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 11:48:14 +0200
+	id 1UjRa1-00052o-Bu
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 12:01:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755566Ab3FCJsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 05:48:10 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:65074 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751423Ab3FCJsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 05:48:08 -0400
-Received: by mail-ie0-f172.google.com with SMTP id 17so9963864iea.31
-        for <git@vger.kernel.org>; Mon, 03 Jun 2013 02:48:08 -0700 (PDT)
+	id S1756758Ab3FCKBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 06:01:30 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:56478 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754625Ab3FCKB2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 06:01:28 -0400
+Received: by mail-ie0-f174.google.com with SMTP id aq17so9565136iec.5
+        for <git@vger.kernel.org>; Mon, 03 Jun 2013 03:01:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=QvbUGQtLlqqWBi1yqsdLVH8AE5qBCDSogSVywPZxEm0=;
-        b=N+rMtIeENQ8GPYaLH2EYtkGlNPfD5ydZFgDZD8F4bOf91UmtyS8TcDtZXOu5CZIxrR
-         LuTFszCGe4xKWWrYx2j9zn/IsZBVROQoS6QPCLPdimx8BPvLDexSHfejAqWsjyTskgQE
-         oT54trZHxinVmYrI7vDfY9dcup4Wk22YYAaWHW4LgNASmzj5lZPr6eOJCAEC6E0V1l1l
-         d1PHHkochU8aBiKWMRFauGFzQI4QRgeXEX7rZ+e6vg8HDsUai7ShmumkMsxM/rqbeNCq
-         wLYq5B5OFqM2zI8aRO3SqG+KEd3w8tm9VnCo0S6jk5y07ew0u4PnqdKF2CbnTFc8LGTm
-         xkyg==
-X-Received: by 10.50.32.8 with SMTP id e8mr7496966igi.89.1370252888428; Mon,
- 03 Jun 2013 02:48:08 -0700 (PDT)
-Received: by 10.64.136.104 with HTTP; Mon, 3 Jun 2013 02:47:27 -0700 (PDT)
-In-Reply-To: <87r4gjzi3d.fsf@linux-k42r.v.cablecom.net>
+        bh=KFF2ZKXQHGYapiPpmR/FSyJVKCBgxK+hrVIshIBAtuI=;
+        b=QGK9VborldU62AFGzaLOhKLikMbvSQ5iB/qg+vy5k+Rh3vS1IpxEOit+1Ma2qu90Hy
+         cpKSRSVTp6YiMHgyTs9kEJkQo3uYvghxzRIpliyJSHeSovIA3OMoDNKfogJMoPDKE9ui
+         nqAk8cjuHTLtBvkBvQVEpmcT4xomi2iMha/smvz8xnSyKECUOcq3z65YHgbnu/fuIWBp
+         GtyQi9iPp1EGfM2W5GFujJgszkRL1ITxxASuu69arMugQjJayrxikTal2aY/ESDrLxVE
+         znvu6vplz5O+JRpyWcamIP1GRXK/PoINOFVUd7QP6V/7KS84nyrhZNz8dTJ4mfbmhqB4
+         hnKQ==
+X-Received: by 10.50.32.8 with SMTP id e8mr7522976igi.89.1370253688360; Mon,
+ 03 Jun 2013 03:01:28 -0700 (PDT)
+Received: by 10.64.136.104 with HTTP; Mon, 3 Jun 2013 03:00:48 -0700 (PDT)
+In-Reply-To: <517a09251fbbc81073fbd53f04a3f4b58cb8b3f7.1370224175.git.worldhello.net@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226210>
 
-Thomas Rast wrote:
-> Do you have other ways of distinguishing the branch and the state?
-> Colors?  I'm a bit too lazy to check.  Perhaps it could be made to only
-> use caps if not in colored mode?
+Jiang Xin wrote:
+> It will be nice to add this pretty formatter automatically when run
+> `git reflog` in verbose mode. And in order to support verbose mode, add
+> new flag "verbose" in struct rev_info.
 
-Currently, no.   See git-prompt.sh:401, 403, 409; we don't have a
-separate color for $r.  I didn't introduce a color in this series
-because it would conflict with rr/zsh-color-prompt which is in pu: we
-can introduce it after that graduates.  I was thinking yellow, since
-that's not taken?
-
-You really should use colors.  I don't think it's worth the extra
-ugliness to scream in the no-color case.
-
-As such, the prompt is a fine bikeshedding target.  I even introduced
-GIT_PS1_SEPARATOR, because some people were unhappy with me stripping
-one whitespace (yes, one).  If we go down the configurability road,
-we'll either end up with a ton of environment variables, or be made to
-write a generalized custom formatter which splices together tons of
-arguments using color (super painful).  While I do agree that it is a
-matter of taste, we have to make a few compromises for the sake of
-sanity.
+Sorry I missed earlier revisions of this patch.  Generally speaking,
+"verbose" is a bad way to control format-specifiers.  Why not add to
+the list of pretty-format specifiers (like oneline, short, medium,
+full)?  Also, this patch is extremely pervasive in that it teaches a
+poorly defined "verbosity" to a very low layer: revision.c/revision.h.
