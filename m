@@ -1,156 +1,101 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v2 4/6] send-email: make --suppress-cc=self sanitize input
-Date: Mon, 3 Jun 2013 19:32:41 +0300
-Message-ID: <20130603163241.GB16841@redhat.com>
-References: <1369897638-27299-1-git-send-email-mst@redhat.com>
- <1369897638-27299-5-git-send-email-mst@redhat.com>
- <7v38szjhim.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Poor performance of git describe in big repos
+Date: Mon, 03 Jun 2013 09:32:12 -0700
+Message-ID: <7vfvwzi29f.fsf@alter.siamese.dyndns.org>
+References: <CAJ-05NPQLVFhtb9KMLNLc5MqguBYM1=gKEVrrtT3kSMiZKma_g@mail.gmail.com>
+	<CALkWK0ndKMZRuWgdg6djqPUGxbDAqZPcv2q0qPrv_2b=1NEM5g@mail.gmail.com>
+	<CAJ-05NNAeLUfyk8+NU8PmjKqfTcZ1NT_NPAk3M1QROtzsQKJ8g@mail.gmail.com>
+	<87ehcoeb3t.fsf@linux-k42r.v.cablecom.net>
+	<CAJ-05NOjVhb+3Cab7uQE8K3VE0Q2GhqR3FE=WzJZvSn8Djt6tw@mail.gmail.com>
+	<87ip20bfq4.fsf@linux-k42r.v.cablecom.net>
+	<20130530193046.GG17475@serenity.lan>
+	<CAJ-05NOEuxOVy7LFp_XRa_08G-Mj0x7q+RiR=u71-iyfOXpHow@mail.gmail.com>
+	<87obbr5zg3.fsf@linux-k42r.v.cablecom.net>
+	<CAJ-05NOdg5TvjzEMrXaPgogU5z5W6kywZhD-82eTUmvE9Hp=Lw@mail.gmail.com>
+	<87y5av4jvj.fsf@linux-k42r.v.cablecom.net>
+	<CAJ-05NN8cARpPTnsCfHt3kY6gTnhZ=Vq55EzqxWBV_3ju-oczQ@mail.gmail.com>
+	<CAJ-05NNgcj_pPer2Tw4HvKkVib7N1ZFo7rZOrR9z8NMV1WHQsQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 03 18:32:23 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@inf.ethz.ch>, John Keeping <john@keeping.me.uk>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <kernel-hacker@bennee.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 18:32:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjXgE-0007Uh-AN
+	id 1UjXgD-0007Uh-Pd
 	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 18:32:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759252Ab3FCQcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 12:32:19 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:41545 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758924Ab3FCQcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 12:32:18 -0400
-Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r53GW9Va030990
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Mon, 3 Jun 2013 12:32:09 -0400
-Received: from redhat.com (vpn1-4-128.ams2.redhat.com [10.36.4.128])
-	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id r53GW84n023744;
-	Mon, 3 Jun 2013 12:32:08 -0400
-Content-Disposition: inline
-In-Reply-To: <7v38szjhim.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
+	id S1759106Ab3FCQcR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Jun 2013 12:32:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46457 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758924Ab3FCQcP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Jun 2013 12:32:15 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B18124BE4;
+	Mon,  3 Jun 2013 16:32:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=tOIPSw2dvPBE
+	M3QpIfirdY4fpPA=; b=F2lvDZCEgVliKkRy5cptm9n4NSWRJMqpp0B3nh2yhNGN
+	Qu5Wh+8jR7zE6U5L/7vhDHxFfIpAJd5oaSbIjsmV0gb5EnRqICdvzI1/tmQoCbkx
+	bxoHigfSYbkAgBLxsBMGsLw8YAf2PfNtsLR0SffyyfOZsX3BKQnYkuWOp6EvI5o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=bGECMV
+	lwvS8ZOljk1Rl4KqoxCnPNdmGyCUP4QNTlHYAUUjRAYOBzn9G4jXoLuXffKXJeoQ
+	kCphX34BQKFCRN0UvkPX0Cf/JqDGEX1OSTUFSCWOF0mjCQKjsvx4USSU3WvD9kff
+	NzE4RoT4dEiQpkfpSv3BPazQgo1E0QZOk443M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E09424BE2;
+	Mon,  3 Jun 2013 16:32:15 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7390424BDE;
+	Mon,  3 Jun 2013 16:32:14 +0000 (UTC)
+In-Reply-To: <CAJ-05NNgcj_pPer2Tw4HvKkVib7N1ZFo7rZOrR9z8NMV1WHQsQ@mail.gmail.com>
+	("Alex =?utf-8?Q?Benn=C3=A9e=22's?= message of "Mon, 3 Jun 2013 09:02:55
+ +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 25F5C846-CC6B-11E2-9B9E-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226233>
 
-On Mon, Jun 03, 2013 at 09:17:21AM -0700, Junio C Hamano wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> 
-> > --suppress-cc=self fails to filter sender address in many cases where it
-> > needs to be sanitized in some way, for example quoted:
-> > "A U. Thor" <author@example.com>
-> > To fix, make send-email sanitize both sender and the address it is
-> > compared against.
-> >
-> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > ---
-> 
-> OK, so you are getting rid of distinctions between sanitized_sender
-> and sender, and $sender is now defined to be always "sanitized"
-> form.
-> 
-> That change makes things consistent with respect to the question I
-> had on [2/6].
-> 
-> I however wondered how this would affect those who have configured
-> "sendemail.from" with an already "sanitized" address.  That is, you
-> may have used:
-> 
-> 	[sendemail]
->         	from = "Michael S. Tsirkin" <mst@redhat.com>
-> 
-> with the older and current versions of Git.  I _think_ the safetly
-> of this change relies on that it is a no-op to run sanitize_address
-> on an already sanitized address (i.e. feeding the above example
-> sendemail.from to sanitize_address gives back the same string),
-> which holds true for all practical purposes, but it is a bit subtle.
+Alex Benn=C3=A9e <kernel-hacker@bennee.com> writes:
 
-Yes, I think so too. So - what do you suggest?
-	Add a test?
-	Add a comment?
-more?
+> Why is git attempting to parse a commit not on the DAG for the branch
+> I'm attempting to describe?
 
-> >  git-send-email.perl | 18 +++++++++++-------
-> >  1 file changed, 11 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/git-send-email.perl b/git-send-email.perl
-> > index a138615..92df393 100755
-> > --- a/git-send-email.perl
-> > +++ b/git-send-email.perl
-> > @@ -760,6 +760,8 @@ if (!defined $sender) {
-> >  	$sender = $repoauthor || $repocommitter || '';
-> >  }
-> >  
-> > +$sender = sanitize_address($sender);
-> > +
-> >  my $prompting = 0;
-> >  if (!@initial_to && !defined $to_cmd) {
-> >  	my $to = ask("Who should the emails be sent to (if any)? ",
-> > @@ -1113,10 +1115,9 @@ sub send_message {
-> >  	if ($cc ne '') {
-> >  		$ccline = "\nCc: $cc";
-> >  	}
-> > -	my $sanitized_sender = sanitize_address($sender);
-> >  	make_message_id() unless defined($message_id);
-> >  
-> > -	my $header = "From: $sanitized_sender
-> > +	my $header = "From: $sender
-> >  To: $to${ccline}
-> >  Subject: $subject
-> >  Date: $date
-> > @@ -1133,7 +1134,7 @@ X-Mailer: git-send-email $gitversion
-> >  	}
-> >  
-> >  	my @sendmail_parameters = ('-i', @recipients);
-> > -	my $raw_from = $sanitized_sender;
-> > +	my $raw_from = $sender;
-> >  	if (defined $envelope_sender && $envelope_sender ne "auto") {
-> >  		$raw_from = $envelope_sender;
-> >  	}
-> > @@ -1308,8 +1309,9 @@ foreach my $t (@files) {
-> >  			}
-> >  			elsif (/^From:\s+(.*)$/i) {
-> >  				($author, $author_encoding) = unquote_rfc2047($1);
-> > +				my $sauthor = sanitize_address($author);
-> >  				next if $suppress_cc{'author'};
-> > -				next if $suppress_cc{'self'} and $author eq $sender;
-> > +				next if $suppress_cc{'self'} and $sauthor eq $sender;
-> >  				printf("(mbox) Adding cc: %s from line '%s'\n",
-> >  					$1, $_) unless $quiet;
-> >  				push @cc, $1;
-> > @@ -1323,7 +1325,9 @@ foreach my $t (@files) {
-> >  			}
-> >  			elsif (/^Cc:\s+(.*)$/i) {
-> >  				foreach my $addr (parse_address_line($1)) {
-> > -					if (unquote_rfc2047($addr) eq $sender) {
-> > +					my $qaddr = unquote_rfc2047($addr);
-> > +					my $saddr = sanitize_address($qaddr);
-> > +					if ($saddr eq $sender) {
-> >  						next if ($suppress_cc{'self'});
-> >  					} else {
-> >  						next if ($suppress_cc{'cc'});
-> > @@ -1370,7 +1374,8 @@ foreach my $t (@files) {
-> >  			chomp;
-> >  			my ($what, $c) = ($1, $2);
-> >  			chomp $c;
-> > -			if ($c eq $sender) {
-> > +			my $sc = sanitize_address($c);
-> > +			if ($sc eq $sender) {
-> >  				next if ($suppress_cc{'self'});
-> >  			} else {
-> >  				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
-> > @@ -1454,7 +1459,6 @@ foreach my $t (@files) {
-> >  sub recipients_cmd {
-> >  	my ($prefix, $what, $cmd, $file) = @_;
-> >  
-> > -	my $sanitized_sender = sanitize_address($sender);
-> >  	my @addresses = ();
-> >  	open my $fh, "-|", "$cmd \Q$file\E"
-> >  	    or die "($prefix) Could not execute '$cmd'";
+I think that is because you need to parse the objects at the tip of
+refs to see if they are on the DAG in the first place.
+
+If there weren't any annotated tag, conceivably you could do without
+parsing these objects.  You would:
+
+ - First read the refs without parsing anything to learn the object
+   name of the tips of refs;
+
+ - Traverse the DAG, starting from the commit and notice when you
+   see commits that are at the tips of refs you learned in the first
+   step, arranging to stop when you found the "closest" tip.
+
+But with annotated tags (and "git describe" is designed to be
+primarily used with them; you would need "--tags" option to make it
+notice unannotated tags), the object name you see sitting at the tip
+will never appear during the DAG traversal.  You will only see
+commits from the latter, so you would need to parse the tips to
+learn what commits they refer to.
+
+And of course, "then parse only annotated tags, without parsing
+commits" would not work, because you wouldn't know what the object
+is without looking at it ;-)
