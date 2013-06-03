@@ -1,168 +1,94 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: [PATCH v5 3/7] add tests for rebasing of empty commits
-Date: Mon,  3 Jun 2013 13:42:11 -0700
-Message-ID: <1370292135-1236-4-git-send-email-martinvonz@gmail.com>
-References: <1369982987-18954-1-git-send-email-martinvonz@gmail.com>
- <1370292135-1236-1-git-send-email-martinvonz@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Chris Webb <chris@arachsys.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Martin von Zweigbergk <martinvonz@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 03 22:42:51 2013
+From: Devin Rhode <drhode@amobee.com>
+Subject: Re: info/exclude not working
+Date: Mon, 3 Jun 2013 13:44:06 -0700
+Message-ID: <CALy29p+pdXSLmMOGcJ+YcWe4TDDUsE3=Shg=jNp-=Nhw+OkORg@mail.gmail.com>
+References: <CALy29pLQ-LWg0knzbzLoQfwSt+df_b3tNdWk7OeSN-CjkJhfsQ@mail.gmail.com>
+ <20130603203226.GA23224@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Devin Rhode <drhode@amobee.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 03 22:44:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjbaW-0000k0-TR
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 22:42:45 +0200
+	id 1UjbcH-0001cz-N5
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 22:44:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758289Ab3FCUmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 16:42:38 -0400
-Received: from mail-ye0-f202.google.com ([209.85.213.202]:36669 "EHLO
-	mail-ye0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757699Ab3FCUm1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 16:42:27 -0400
-Received: by mail-ye0-f202.google.com with SMTP id r11so295150yen.3
-        for <git@vger.kernel.org>; Mon, 03 Jun 2013 13:42:26 -0700 (PDT)
+	id S1757776Ab3FCUo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 16:44:29 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:58708 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757635Ab3FCUo2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 16:44:28 -0400
+Received: by mail-lb0-f173.google.com with SMTP id t10so4301453lbi.18
+        for <git@vger.kernel.org>; Mon, 03 Jun 2013 13:44:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=adjitsu.com; s=google;
+        h=mime-version:sender:x-originating-ip:in-reply-to:references:from
+         :date:x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=s0z5XjUqz3yzFbJlaaaemdnhj8IcWnnzJpQ+0DHff/8=;
+        b=GoDZphIOEANmvIhkEC3PqudaFAhM38XaDyoU3VopLz+dFc8tnqU48JIT4QHuhwXabU
+         5tZkY1QOQ9gBjNInxIiGDaUHh/Bqv6MiATcEridOGBd/GUdow7BCjmODcS7a5SRjMMQc
+         VzkzTa9Rzrs4E67Ix87Y8LZBN/oK6jmQEFq5M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+        h=mime-version:sender:x-originating-ip:in-reply-to:references:from
+         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
          :x-gm-message-state;
-        bh=ILFe3/Jt5PSy7xV0AQMJNX+PQrbLCJcZzHhqstHhJTQ=;
-        b=f8jktUodPxNKu4DS4nu8J8lCkL68v4avJEdhXz5z8VY+Xs+XcI/Bp6VbO0GobhTaLe
-         r9Ao6Puk8UT86Htgg3Gb5LgYCyN8U0y0RKgDV7AQRsd+QYFau6P5HnxwlqvrT/CbEY2u
-         EAogvXHLchmPiB0bZxjU1eAT6JfTAOQhmhUhdwwulMnJ7KcL+mAvIfLJE86yR2PEkIwh
-         HK2XewBYPBNhsdR5r7DEOgXNS3vnaSQ+uGBxah91UJNFR4rPWFqItm2oIlZZ2FdTpuZE
-         J0iWb6Y4MOw5llIP7pRtOXgxkD27riZPNpPzX4hGXrl/tioDyrr3cEdUdlG6Ntm4hUZ3
-         zaqw==
-X-Received: by 10.236.80.106 with SMTP id j70mr13800612yhe.11.1370292146591;
-        Mon, 03 Jun 2013 13:42:26 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id r76si4037533yhe.2.2013.06.03.13.42.26
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=AES128-SHA bits=128/128);
-        Mon, 03 Jun 2013 13:42:26 -0700 (PDT)
-Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.144.137])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 6A5A55A429D;
-	Mon,  3 Jun 2013 13:42:26 -0700 (PDT)
-Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id 97690101AB5; Mon,  3 Jun 2013 13:42:25 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.497.g83fddbe
-In-Reply-To: <1370292135-1236-1-git-send-email-martinvonz@gmail.com>
-X-Gm-Message-State: ALoCoQn0gRBsBAPhPALbPCOeoZ3V8lLxWV1Bi8tBGp9SBxrXj3u6OkxYKAkquUZG7ufpIfQ9QczwFHScyhUfjTSzy2oj+cY+cstGj1ziUrQlC4XobZyUmdt3etDqReT6/O8Ige4wp3ZLxFfkogZFU0C259bu9yiU/5mhwnvHiAhy5tdyiX9gWdn+h/3ywRQ8OaK+oxDXMJJR
+        bh=s0z5XjUqz3yzFbJlaaaemdnhj8IcWnnzJpQ+0DHff/8=;
+        b=Rmv4HENJdf/LTSmRWTY8yguuOM9TzYyvGzlaC72uwZb3nRL5Ett1TKzgfJZ8Wf2+Lh
+         3LaFOdp5UsA1e5peSYwZ06/7+u0pPOSx2+P7n/cZho45EkbKAgaT+woj1e0U7O7rYy9b
+         GPpCVpVqjss/U/NByEk+8vezJE28k3kbqFpAsqEIh0DdiA6Iz54zi9QaLyU7trZJ6RFj
+         J1KKejUBZsVGo6GXzNnuCTKKSMvzWQaZ9VqQT02FcgqMv0IxmdEU/SmACEdXOSzEumsy
+         oHqChvoMMA6aX+t/sxrPAhtOEybK7QyQI+QMSyK20kGRFH9uEnIfE8k0SV9hDs79MG+F
+         +OjQ==
+X-Received: by 10.152.22.199 with SMTP id g7mr10929318laf.20.1370292266528;
+ Mon, 03 Jun 2013 13:44:26 -0700 (PDT)
+Received: by 10.112.167.228 with HTTP; Mon, 3 Jun 2013 13:44:06 -0700 (PDT)
+X-Originating-IP: [50.76.62.185]
+In-Reply-To: <20130603203226.GA23224@sigill.intra.peff.net>
+X-Google-Sender-Auth: gO8idB15XF6Z1aoeGwAN-FfyByQ
+X-Gm-Message-State: ALoCoQlHERbp6uIMlgkl2jH7+gYYKzMnYxH+jjN7FZ5l4Jfw6PNdFU6cJraOuomgajvIudMm3bLp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226286>
 
----
- t/t3401-rebase-partial.sh         | 24 ----------------
- t/t3421-rebase-topology-linear.sh | 58 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 58 insertions(+), 24 deletions(-)
+I wouldn't worry too much about this use case, we have a pretty lame workflow
 
-diff --git a/t/t3401-rebase-partial.sh b/t/t3401-rebase-partial.sh
-index 58f4823..7ba1797 100755
---- a/t/t3401-rebase-partial.sh
-+++ b/t/t3401-rebase-partial.sh
-@@ -42,28 +42,4 @@ test_expect_success 'rebase --merge topic branch that was partially merged upstr
- 	test_path_is_missing .git/rebase-merge
- '
- 
--test_expect_success 'rebase ignores empty commit' '
--	git reset --hard A &&
--	git commit --allow-empty -m empty &&
--	test_commit D &&
--	git rebase C &&
--	test "$(git log --format=%s C..)" = "D"
--'
--
--test_expect_success 'rebase --keep-empty' '
--	git reset --hard D &&
--	git rebase --keep-empty C &&
--	test "$(git log --format=%s C..)" = "D
--empty"
--'
--
--test_expect_success 'rebase --keep-empty keeps empty even if already in upstream' '
--	git reset --hard A &&
--	git commit --allow-empty -m also-empty &&
--	git rebase --keep-empty D &&
--	test "$(git log --format=%s A..)" = "also-empty
--D
--empty"
--'
--
- test_done
-diff --git a/t/t3421-rebase-topology-linear.sh b/t/t3421-rebase-topology-linear.sh
-index 75cc476..81e3d59 100755
---- a/t/t3421-rebase-topology-linear.sh
-+++ b/t/t3421-rebase-topology-linear.sh
-@@ -160,4 +160,62 @@ test_run_rebase success -m
- test_run_rebase success -i
- test_run_rebase success -p
- 
-+# a---b---c---j!
-+#      \
-+#       d---k!--l
-+#
-+# ! = empty
-+test_expect_success 'setup of linear history for empty commit tests' '
-+	git checkout c &&
-+	make_empty j &&
-+	git checkout d &&
-+	make_empty k &&
-+	test_commit l
-+'
-+
-+test_run_rebase () {
-+	result=$1
-+	shift
-+	test_expect_$result "rebase $* drops empty commit" "
-+		reset_rebase &&
-+		git rebase $* c l &&
-+		test_cmp_rev c HEAD~2 &&
-+		test_linear_range 'd l' c..
-+	"
-+}
-+test_run_rebase success ''
-+test_run_rebase success -m
-+test_run_rebase success -i
-+test_run_rebase success -p
-+
-+test_run_rebase () {
-+	result=$1
-+	shift
-+	test_expect_$result "rebase $* --keep-empty" "
-+		reset_rebase &&
-+		git rebase $* --keep-empty c l &&
-+		test_cmp_rev c HEAD~3 &&
-+		test_linear_range 'd k l' c..
-+	"
-+}
-+test_run_rebase success ''
-+test_run_rebase failure -m
-+test_run_rebase success -i
-+test_run_rebase failure -p
-+
-+test_run_rebase () {
-+	result=$1
-+	shift
-+	test_expect_$result "rebase $* --keep-empty keeps empty even if already in upstream" "
-+		reset_rebase &&
-+		git rebase $* --keep-empty j l &&
-+		test_cmp_rev j HEAD~3 &&
-+		test_linear_range 'd k l' j..
-+	"
-+}
-+test_run_rebase success ''
-+test_run_rebase failure -m
-+test_run_rebase failure -i
-+test_run_rebase failure -p
-+
- test_done
--- 
-1.8.3.497.g83fddbe
+On Mon, Jun 3, 2013 at 1:32 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jun 03, 2013 at 01:04:39PM -0700, Devin Rhode wrote:
+>
+>> MBP:dish devin$ cat ../.git/info/exclude
+>> # git ls-files --others --exclude-from=.git/info/exclude
+>> # Lines that start with '#' are comments.
+>> # For a project mostly in C, the following would be a good set of
+>> # exclude patterns (uncomment them if you want to use them):
+>> # *.[oa]
+>> # *~
+>> models/CAFE.json
+>> dish/models/CAFE.json
+>>
+>> MBP:dish devin$ git status
+>> # On branch master
+>> # Changes not staged for commit:
+>> #   (use "git add <file>..." to update what will be committed)
+>> #   (use "git checkout -- <file>..." to discard changes in working directory)
+>> #
+>> # modified:   models/CAFE.json ***Shouldn't appear
+>
+> The exclude mechanism does not mean "do not ever look at this file". It
+> means "when you are adding untracked files, do not include this one".
+> Somebody has already added the file to the repository before your
+> exclude was in place, so it is a tracked file.
+>
+> There is currently no official mechanism in git to do what you want
+> (there are some hacks, but they include many pitfalls).
+>
+> -Peff
+>
+>
