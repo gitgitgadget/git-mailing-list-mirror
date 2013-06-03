@@ -1,152 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/6] send-email: make --suppress-cc=self sanitize input
-Date: Mon, 03 Jun 2013 11:02:35 -0700
-Message-ID: <7vk3mbf4xw.fsf@alter.siamese.dyndns.org>
-References: <1369897638-27299-1-git-send-email-mst@redhat.com>
-	<1369897638-27299-5-git-send-email-mst@redhat.com>
-	<7v38szjhim.fsf@alter.siamese.dyndns.org>
-	<20130603163241.GB16841@redhat.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: git daemon --access-hook problem
+Date: Mon, 3 Jun 2013 14:02:56 -0400
+Message-ID: <CAPZPVFYdeuusW3=iBTBC+iPuOeAekvtMx6d_dozB9tsDCg3C8Q@mail.gmail.com>
+References: <CAPZPVFZDHHGyHhzBVVK6jS=XhEd2+JpmBT8ofiGOww8vuLUWWw@mail.gmail.com>
+	<CALWbr2ypPCoftVLfP9uKeKStg3TWwLDchkUaL1d9s9O3kcuPwA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Jun 03 20:02:44 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 20:03:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjZ5f-00075g-Cr
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 20:02:43 +0200
+	id 1UjZ5x-0007Co-8y
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 20:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756029Ab3FCSCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 14:02:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55044 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753430Ab3FCSCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 14:02:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C28A2497F;
-	Mon,  3 Jun 2013 18:02:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9BXobgZCpQ5HKRlZj+nyqgwBAyY=; b=Ub28sz
-	A+2bPZ67FbBfO7L3G6sTDwkifkoSJVbZEIQFjC8+J5ajqcFzleIeUOPuhHgLeKtD
-	iqH7v2yFA8SYRoCbMZm+JbP2uy5wsJw18cXPlXW3c0BZNM26wSZsIYnzRRsSbMI7
-	75waHSdZdNqCSTgEtskILFUYu25+IRbir6u1w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=stk9+8HdMGBgdFtOqFUOxgVmth7Voj+4
-	AviQPRV+xZ0s5lrvRGYvgFInanUsdsgMT44QwdowmaShYm76UpzviCRoJsmFNomD
-	0yyblk0gW3PW9fYSuoenI8VEC1q5gZ2+Jd5KH2+0IMpDgZuyVG9ksZWx2idrcfST
-	BRg7b5Asw/s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00A1B2497E;
-	Mon,  3 Jun 2013 18:02:38 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 187B62497C;
-	Mon,  3 Jun 2013 18:02:37 +0000 (UTC)
-In-Reply-To: <20130603163241.GB16841@redhat.com> (Michael S. Tsirkin's message
-	of "Mon, 3 Jun 2013 19:32:41 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C616CB98-CC77-11E2-AAE5-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757107Ab3FCSC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 14:02:58 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:53948 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753430Ab3FCSC5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 14:02:57 -0400
+Received: by mail-ie0-f176.google.com with SMTP id at20so11157740iec.35
+        for <git@vger.kernel.org>; Mon, 03 Jun 2013 11:02:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=EF67g+kJbE6kr/raiNrSjCN6ENTguodwVNcHGC4Y8ug=;
+        b=jSmvGYiQ9iC3NMbMm3xxK+/7F8JqLmPr+RZ1F2KRugdoXlTSCggiuk+F13z8cWX+M3
+         AjFX4k/DQjOp+d6VEMWXInqprXVv6OTzmxomvTFT7BnovFXnargIpEDKZFuBDsM+rzNp
+         QeNj6kxw5NwJcadvO/NfA2ZK2GcreF/9cuwxkfTrIv19UDN43H8OW3gF2LSDxByG3pT0
+         qgw4Pxm/GjrOtudQ3wd88/oBilcTr8D9cnFiBEdYJekcuOeBAFbbzUTVzMXOMTJcxOLX
+         5ZnWocXl8lq8k2LISJaVn33FXs4kyg/VWXLIBav6zMfaDWeXjiLVO2vvYIcNn1/yqj0H
+         H3VQ==
+X-Received: by 10.50.92.70 with SMTP id ck6mr8833443igb.76.1370282576603; Mon,
+ 03 Jun 2013 11:02:56 -0700 (PDT)
+Received: by 10.43.85.7 with HTTP; Mon, 3 Jun 2013 11:02:56 -0700 (PDT)
+In-Reply-To: <CALWbr2ypPCoftVLfP9uKeKStg3TWwLDchkUaL1d9s9O3kcuPwA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226254>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+> - Your log file might not be located where you expect, you should use
+> absolute path to dump text
 
-> Yes, I think so too. So - what do you suggest?
-> 	Add a test?
-> 	Add a comment?
-> more?
+You were right! The problem was with the script itself - the log file
+not being specified with absolute path! Stupid me!
 
-Nothing major comes to my mind at this moment.
+...
+> - The documentation says you can print one line before a failure, also
+> try this to show the cwd
 
-I guess it would be good to add a test or two to use "A U. Thor"
-example with and without end-user added quotes, but that can be done
-as a follow-up patch on top of this series (i.e. [PATCH 7/6]).
+Would you be able to advise how this should be done?
+I don't get the error message (i mean the output of pwd) if i do this:
 
-Thanks.
+echo `pwd`
+exit 1
 
->> >  git-send-email.perl | 18 +++++++++++-------
->> >  1 file changed, 11 insertions(+), 7 deletions(-)
->> >
->> > diff --git a/git-send-email.perl b/git-send-email.perl
->> > index a138615..92df393 100755
->> > --- a/git-send-email.perl
->> > +++ b/git-send-email.perl
->> > @@ -760,6 +760,8 @@ if (!defined $sender) {
->> >  	$sender = $repoauthor || $repocommitter || '';
->> >  }
->> >  
->> > +$sender = sanitize_address($sender);
->> > +
->> >  my $prompting = 0;
->> >  if (!@initial_to && !defined $to_cmd) {
->> >  	my $to = ask("Who should the emails be sent to (if any)? ",
->> > @@ -1113,10 +1115,9 @@ sub send_message {
->> >  	if ($cc ne '') {
->> >  		$ccline = "\nCc: $cc";
->> >  	}
->> > -	my $sanitized_sender = sanitize_address($sender);
->> >  	make_message_id() unless defined($message_id);
->> >  
->> > -	my $header = "From: $sanitized_sender
->> > +	my $header = "From: $sender
->> >  To: $to${ccline}
->> >  Subject: $subject
->> >  Date: $date
->> > @@ -1133,7 +1134,7 @@ X-Mailer: git-send-email $gitversion
->> >  	}
->> >  
->> >  	my @sendmail_parameters = ('-i', @recipients);
->> > -	my $raw_from = $sanitized_sender;
->> > +	my $raw_from = $sender;
->> >  	if (defined $envelope_sender && $envelope_sender ne "auto") {
->> >  		$raw_from = $envelope_sender;
->> >  	}
->> > @@ -1308,8 +1309,9 @@ foreach my $t (@files) {
->> >  			}
->> >  			elsif (/^From:\s+(.*)$/i) {
->> >  				($author, $author_encoding) = unquote_rfc2047($1);
->> > +				my $sauthor = sanitize_address($author);
->> >  				next if $suppress_cc{'author'};
->> > -				next if $suppress_cc{'self'} and $author eq $sender;
->> > +				next if $suppress_cc{'self'} and $sauthor eq $sender;
->> >  				printf("(mbox) Adding cc: %s from line '%s'\n",
->> >  					$1, $_) unless $quiet;
->> >  				push @cc, $1;
->> > @@ -1323,7 +1325,9 @@ foreach my $t (@files) {
->> >  			}
->> >  			elsif (/^Cc:\s+(.*)$/i) {
->> >  				foreach my $addr (parse_address_line($1)) {
->> > -					if (unquote_rfc2047($addr) eq $sender) {
->> > +					my $qaddr = unquote_rfc2047($addr);
->> > +					my $saddr = sanitize_address($qaddr);
->> > +					if ($saddr eq $sender) {
->> >  						next if ($suppress_cc{'self'});
->> >  					} else {
->> >  						next if ($suppress_cc{'cc'});
->> > @@ -1370,7 +1374,8 @@ foreach my $t (@files) {
->> >  			chomp;
->> >  			my ($what, $c) = ($1, $2);
->> >  			chomp $c;
->> > -			if ($c eq $sender) {
->> > +			my $sc = sanitize_address($c);
->> > +			if ($sc eq $sender) {
->> >  				next if ($suppress_cc{'self'});
->> >  			} else {
->> >  				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
->> > @@ -1454,7 +1459,6 @@ foreach my $t (@files) {
->> >  sub recipients_cmd {
->> >  	my ($prefix, $what, $cmd, $file) = @_;
->> >  
->> > -	my $sanitized_sender = sanitize_address($sender);
->> >  	my @addresses = ();
->> >  	open my $fh, "-|", "$cmd \Q$file\E"
->> >  	    or die "($prefix) Could not execute '$cmd'";
+What should it be?
+
+Thanks!
+Eugene
+
+
+
+>
+> Hope that helps,
+> Antoine,
