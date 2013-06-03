@@ -1,127 +1,62 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
-Date: Mon, 3 Jun 2013 23:23:41 +0100
-Message-ID: <20130603222341.GL1072@serenity.lan>
-References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org>
- <51A7A73C.6070103@web.de>
- <20130531194051.GC1072@serenity.lan>
- <51AD0EEB.4020106@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git status reports untracked on tracked files
+Date: Mon, 3 Jun 2013 18:26:18 -0400
+Message-ID: <20130603222618.GA26180@sigill.intra.peff.net>
+References: <CAO-zUnh4018FSnsXzX4gLw-4AnWsKgEiZ5P4pktjxNokargQwA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Jun 04 00:24:11 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Karsten Blees <karsten.blees@gmail.com>, git@vger.kernel.org
+To: Andrey Kiyanovsky <andrey.kiyanovsky@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 04 00:26:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjdAb-0006WX-L4
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 00:24:05 +0200
+	id 1UjdCs-0007hh-Ub
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 00:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759880Ab3FCWX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 18:23:58 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:34058 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758856Ab3FCWXu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 18:23:50 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 122D9CDA59C;
-	Mon,  3 Jun 2013 23:23:50 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8HjMTkW19m3O; Mon,  3 Jun 2013 23:23:49 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id 703F0866003;
-	Mon,  3 Jun 2013 23:23:49 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 56763161E2DC;
-	Mon,  3 Jun 2013 23:23:49 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Nw7ubZYdAF0t; Mon,  3 Jun 2013 23:23:48 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id EB177161E418;
-	Mon,  3 Jun 2013 23:23:43 +0100 (BST)
+	id S1759241Ab3FCW0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 18:26:23 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35151 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758645Ab3FCW0W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 18:26:22 -0400
+Received: (qmail 8454 invoked by uid 102); 3 Jun 2013 22:27:07 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 03 Jun 2013 17:27:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Jun 2013 18:26:18 -0400
 Content-Disposition: inline
-In-Reply-To: <51AD0EEB.4020106@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAO-zUnh4018FSnsXzX4gLw-4AnWsKgEiZ5P4pktjxNokargQwA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226301>
 
-On Mon, Jun 03, 2013 at 11:47:23PM +0200, Jens Lehmann wrote:
-> Am 31.05.2013 21:40, schrieb John Keeping:
-> > The current version does make '$sm_path' relative in "submodule
-> > foreach", although it's hard to spot because we have to leave doing so
-> > until right before the "eval".
+On Wed, May 29, 2013 at 11:40:56AM +0300, Andrey Kiyanovsky wrote:
+
+> Git version 1.8.1.2. for Windows
 > 
-> Yes. If I read the code correctly the submodule is cd'ed in before
-> the foreach command is executed, so $sm_path should only be used for
-> displaying info about where the command is executed anyway. Looks
-> like your code is doing the right thing adjusting $sm_path to be
-> relative to the directory the user is in. But a test showing that
-> would really be nice ;-)
-
-Agreed.  I've also noticed that the legacy "path" variable hasn't been
-adjusted and the printing of the module paths does not make them
-relative.  I'll fix them in the next version.
-
-> > I'm not sure what you mean about "submodule add" - the new version
-> > treats the "path" argument as relative (providing it is not an absolute
-> > path).  The "repository" argument is not changed by running from a
-> > subdirectory but I think that's correct since it is documented as being
-> > relative to the superproject's origin repository.
+> Git config:
 > 
-> Sorry, I should have been more specific here. I saw that you did some
-> changes to make "submodule add" do the right thing with relative paths,
-> but the following change to t7406 does not work like I believe it
-> should but instead makes the test fail:
-> -------------------8<---------------------
-> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> index a4ffea0..9766b9e 100755
-> --- a/t/t7406-submodule-update.sh
-> +++ b/t/t7406-submodule-update.sh
-> @@ -559,7 +559,9 @@ test_expect_success 'add different submodules to the same pa
->  test_expect_success 'submodule add places git-dir in superprojects git-dir' '
->         (cd super &&
->          mkdir deeper &&
-> -        git submodule add ../submodule deeper/submodule &&
-> +        (cd deeper &&
-> +         git submodule add ../../submodule submodule
-> +        ) &&
->          (cd deeper/submodule &&
->           git log > ../../expected
->          ) &&
-> -------------------8<---------------------
+> [core]
+> 	repositoryformatversion = 0
+> 	filemode = false
+> 	bare = false
+> 	logallrefupdates = true
+> 	symlinks = false
+> 	ignorecase = true
+> 	hideDotFiles = dotGitOnly
+> 	compression = 1
 
-Ah, ok.  I think this case is problematic because the repository
-argument is either relative to "remote.origin.url" or to the top of the
-working tree if there is no "origin" remote.  I wonder if we should just
-die when a relative path is given for the repository and we're not at
-the top of the working tree.
+In the past there have been some problems with status listings of
+untracked files when core.ignorecase is in use. I fixed some cases with
+a commit that went into v1.7.8, but some problems remained. Karsten
+Blees (cc'd) did some work that went into git v1.8.1.6, but I do not
+know off-hand if it would fix your case or not.
 
-> > "submodule init" is behaving in the same way as "deinit" - if you say
-> > "submodule init ." then it will only initialize submodules below the
-> > current directory.  The difference is that "deinit" dies if it is not
-> > given any arguments whereas "init" will initialize everything from the
-> > top level down.  I'm not sure whether to change this; given the
-> > direction "git add -u" is heading in for 2.0 I think the current
-> > behaviour is the most consistent with the rest of Git.
-> 
-> I meant that both commands still print the submodule names from the
-> top-level directory, not the one the user is in.
+Can you try with a more recent version of git?
 
-Will fix.
+-Peff
