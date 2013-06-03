@@ -1,149 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] completion: clarify ls-tree, archive, show completion
-Date: Mon, 03 Jun 2013 10:33:33 -0700
-Message-ID: <7vehcjgkuq.fsf@alter.siamese.dyndns.org>
-References: <1370181822-23450-1-git-send-email-artagnon@gmail.com>
-	<1370181822-23450-7-git-send-email-artagnon@gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: preventing evil merges
+Date: Mon, 3 Jun 2013 19:37:00 +0200
+Message-ID: <CALWbr2yLHN7VgPhH-HvyBx04pHasH=zr6fTXtjjsKJgqHA8kKQ@mail.gmail.com>
+References: <20130530163459.GI31679@gnash>
+	<7vvc5vglh5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 03 19:33:42 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Sandro Santilli <strk@keybit.net>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 03 19:37:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjYdZ-0007up-Bl
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 19:33:41 +0200
+	id 1UjYgt-0001Qn-Hl
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Jun 2013 19:37:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758911Ab3FCRdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jun 2013 13:33:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59232 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753395Ab3FCRdg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jun 2013 13:33:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BDB242446E;
-	Mon,  3 Jun 2013 17:33:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Scj8CDsVPPH+Q2GnoZbnXalbZxw=; b=aI/woC
-	MaLHwAw/0eFZEAcTg1WUGE3+jC+mi7af56R92+gv4RddCIIylVtJA3icD2fRwRFj
-	isF75b14Kl9Xyxizicq7RA3ymt5NwluezD3y2brLT8/tVmjb+EEcjAri6Kle2d2m
-	LWEnFmHWBa+yvYVQSJXci1QYuzolBSimwaYyQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ip4cPuwZJEoqgctbfRUz/DWJ4kOeJ0Ce
-	uiN8X9tj4igBcYoB/L45zkuWz77FXFmgUs6agWqvY+mmmrLPKGWcl7vk0LzSg7X+
-	hsRlyuETk0P9ZEocq/M+h14t7wMKCB5eTOceQ+9blwvsmFNEb3ybkkX+z2Dc2eR0
-	YOq8cXystAs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B296C2446D;
-	Mon,  3 Jun 2013 17:33:35 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C563424465;
-	Mon,  3 Jun 2013 17:33:34 +0000 (UTC)
-In-Reply-To: <1370181822-23450-7-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Sun, 2 Jun 2013 19:33:42 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B79A59BC-CC73-11E2-ACF9-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758131Ab3FCRhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jun 2013 13:37:04 -0400
+Received: from mail-qc0-f175.google.com ([209.85.216.175]:47387 "EHLO
+	mail-qc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754870Ab3FCRhC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jun 2013 13:37:02 -0400
+Received: by mail-qc0-f175.google.com with SMTP id a1so2313061qcx.20
+        for <git@vger.kernel.org>; Mon, 03 Jun 2013 10:37:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=p5cwB4iCMf2ITIwZaBQ89dZ3yJYFHDeJf/ucGz/dN7w=;
+        b=zqzgZzynx3ygAQtVCfB/P43iMWKtOUF8vw8tFiTBPHb/gub/kI/Pyf1HYjvinQgzm2
+         qMa/E9IgstVJ009v1Nfi/e4HsAoKJQXkybGIeLLf5y94eDimOnxyWHVxMt8KIh1xMlgx
+         WKgDPYAghyXQ5Ick4DpUTk66KiR8j355tKCcJjp4x7sG2qVPJZdY8/4oGG+pgMtp1Rlw
+         DxYXMIbPCOulpus7/oOIdbVUZHBn8jasznjylO1RgMKJq5VxWz2gGmdsMlz3w0C9kc6Q
+         CFwQcl+dYur8XMwjT6wjc1Eizp6GmnUq7acnc448mqHRuHyJeeCXu5ulXAOm33U2eEus
+         QEJw==
+X-Received: by 10.224.168.145 with SMTP id u17mr969445qay.83.1370281021023;
+ Mon, 03 Jun 2013 10:37:01 -0700 (PDT)
+Received: by 10.49.14.40 with HTTP; Mon, 3 Jun 2013 10:37:00 -0700 (PDT)
+In-Reply-To: <7vvc5vglh5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226246>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Mon, Jun 3, 2013 at 7:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Sandro Santilli <strk@keybit.net> writes:
+>
+>>  git merge anotherbranch
+>>  git add something
+>>  git commit --amend
+>>
+>> After the steps above the addition of "something" can't be found in
+>> the history anymore, but the file is there.
+>
+> This is a very common and sensible thing to do when dealing with
+> semantic conflict.  Imagine that you changed the name of a global
+> variable in the code on your current branch since the anotherbranch
+> you are pulling from forked from you.  Then imagine further that the
+> anotherbranch added one location that refers to that variable.
+>
+> Since they are not aware of the name change, they added the new
+> reference with the old variable name.  The part they added is a new
+> code, so it is very likely that there is no textual conflict when
+> you did "git merge anotherbranch".  But now the result is broken.
+>
+> And you fix that semantic conflict by editing the file they added
+> the new reference to the variable under the old name and make it use
+> the variable with the new name.  You "git add something" and amend
+> the merge.
+>
+> "git show" of the result will show you what happened, I think.
 
-> Currently, the 'git ls-tree', 'git archive', and 'git show' completions
-> use __git_complete_file (aliased to __git_complete_revlist_file).
->
-> In the case of 'git ls-tree' and 'git archive', they necessarily require
-> a tree-ish argument (and optionally a pathspec filter, or "file
-> argument"):
->
->   $ git ls-tree hot-branch git.c
->   $ git archive HEAD~4 git.c
->
-> So, __git_complete_file is a misleading name.
->
-> In the case of 'git show', it can take a pathspec and default the
-> revision to HEAD like:
->
->   $ git show git.c
->
-> (which is useful if git.c was modified in HEAD)
->
-> However, this usage is not idiomatic at all.  The more common usage is
-> like:
->
->   $ git show HEAD~1
->   $ git show origin/pu:git.c
->
-> So, __git_complete_file is again a poor name.
->
-> Replace these three instances of __git_complete_file with
-> __git_complete_revlist_file, without making any functional changes.
->
-> Remove __git_complete_file, as it has no other callers.
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
+Also, you need to use --cc option of log to see the change in history
+(in addition to -p):
 
-I think this is the same as 5/6 and better explained in a single
-patch, as the rationale is the same: these commands can all take the
-usual revs and then paths, so using misnamed complete_FILE helper is
-wrong.
-
-Mind if I squashed them together?
-
-
->  contrib/completion/git-completion.bash | 11 +++--------
->  1 file changed, 3 insertions(+), 8 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 8d70c30..84d1548 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -592,11 +592,6 @@ __git_complete_diff_index_file ()
->  	esac
->  }
->  
-> -__git_complete_file ()
-> -{
-> -	__git_complete_revlist_file
-> -}
-> -
->  __git_complete_revlist ()
->  {
->  	__git_complete_revlist_file
-> @@ -1007,7 +1002,7 @@ _git_archive ()
->  		return
->  		;;
->  	esac
-> -	__git_complete_file
-> +	__git_complete_revlist_file
->  }
->  
->  _git_bisect ()
-> @@ -1476,7 +1471,7 @@ _git_ls_remote ()
->  
->  _git_ls_tree ()
->  {
-> -	__git_complete_file
-> +	__git_complete_revlist_file
->  }
->  
->  # Options that go well for log, shortlog and gitk
-> @@ -2382,7 +2377,7 @@ _git_show ()
->  		return
->  		;;
->  	esac
-> -	__git_complete_file
-> +	__git_complete_revlist_file
->  }
->  
->  _git_show_branch ()
+    git log --cc -p
