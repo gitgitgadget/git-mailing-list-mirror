@@ -1,164 +1,87 @@
-From: benoit.person@gmail.com
-Subject: [PATCH] git-remote-mediawiki: use git.pm functions for credentials
-Date: Tue,  4 Jun 2013 13:11:32 +0200
-Message-ID: <1370344292-7088-1-git-send-email-benoit.person@ensimag.fr>
-Cc: celestin.matte@ensimag.fr,
-	Benoit Person <benoit.person@ensimag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 04 13:13:02 2013
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
+Date: Tue, 4 Jun 2013 21:17:17 +1000
+Message-ID: <20130604111717.GA306@book.hvoigt.net>
+References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org> <51A7A73C.6070103@web.de> <20130531194051.GC1072@serenity.lan> <51AD0EEB.4020106@web.de> <20130603222341.GL1072@serenity.lan> <20130604052950.GA2943@book.hvoigt.net> <20130604081045.GM1072@serenity.lan>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Jun 04 13:17:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjpAh-0007oU-JW
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 13:12:59 +0200
+	id 1UjpFD-00048N-PB
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 13:17:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753189Ab3FDLM4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 07:12:56 -0400
-Received: from mail-ea0-f180.google.com ([209.85.215.180]:35421 "EHLO
-	mail-ea0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751026Ab3FDLMy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 07:12:54 -0400
-Received: by mail-ea0-f180.google.com with SMTP id k10so62909eaj.39
-        for <git@vger.kernel.org>; Tue, 04 Jun 2013 04:12:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=ld7JktfkDkJU7nCEEAjA37bYmnBa/EtS/uJsvj2k+tM=;
-        b=roTOHPcubCZmZ8ilLfA6MdjKyr6Efla7kw/cNg201NzobkUOT/t6BKH/aOfmDJcMjI
-         ePw9851V/CSnXrI1iuYJfSbuYKvKvjvnzF8swc584R7vIQPuebtWwnq+itDDvZm81HgL
-         1uI0iMqhGB2tkTgJfyXEs3lJULt7De7rKT+rR4ESAekWjNPMJR8LiQQ1b/2B16QrwnJ+
-         fXWJmvplkz1GCjg1rEYMEa2HvLA6p7LaV/28FcW4oNxI+GsgIi143lNaj5j6F0qJyYyr
-         mAjYpsUNorHN4bzeBWH7MY7FxEM+Y9d1dCZMnCpwxbhkMW+S0r+JUBdDh75TjkY+VqPZ
-         H8XA==
-X-Received: by 10.14.47.136 with SMTP id t8mr26424837eeb.47.1370344372035;
-        Tue, 04 Jun 2013 04:12:52 -0700 (PDT)
-Received: from localhost.localdomain (ip-54.net-81-220-163.rev.numericable.fr. [81.220.163.54])
-        by mx.google.com with ESMTPSA id y10sm91077830eev.3.2013.06.04.04.12.50
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 04 Jun 2013 04:12:51 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc3.7.gc2f33ed.dirty
+	id S1752770Ab3FDLRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 07:17:36 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.100]:53539 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751085Ab3FDLRe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 07:17:34 -0400
+Received: from [211.30.231.44] (helo=book.hvoigt.net)
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1UjpF1-0007nQ-Pw; Tue, 04 Jun 2013 13:17:29 +0200
+Content-Disposition: inline
+In-Reply-To: <20130604081045.GM1072@serenity.lan>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226341>
 
-From: Benoit Person <benoit.person@ensimag.fr>
+On Tue, Jun 04, 2013 at 09:10:45AM +0100, John Keeping wrote:
+> On Tue, Jun 04, 2013 at 03:29:51PM +1000, Heiko Voigt wrote:
+> > On Mon, Jun 03, 2013 at 11:23:41PM +0100, John Keeping wrote:
+> > > > Sorry, I should have been more specific here. I saw that you did some
+> > > > changes to make "submodule add" do the right thing with relative paths,
+> > > > but the following change to t7406 does not work like I believe it
+> > > > should but instead makes the test fail:
+> > > > -------------------8<---------------------
+> > > > diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+> > > > index a4ffea0..9766b9e 100755
+> > > > --- a/t/t7406-submodule-update.sh
+> > > > +++ b/t/t7406-submodule-update.sh
+> > > > @@ -559,7 +559,9 @@ test_expect_success 'add different submodules to the same pa
+> > > >  test_expect_success 'submodule add places git-dir in superprojects git-dir' '
+> > > >         (cd super &&
+> > > >          mkdir deeper &&
+> > > > -        git submodule add ../submodule deeper/submodule &&
+> > > > +        (cd deeper &&
+> > > > +         git submodule add ../../submodule submodule
+> > > > +        ) &&
+> > > >          (cd deeper/submodule &&
+> > > >           git log > ../../expected
+> > > >          ) &&
+> > > > -------------------8<---------------------
+> > > 
+> > > Ah, ok.  I think this case is problematic because the repository
+> > > argument is either relative to "remote.origin.url" or to the top of the
+> > > working tree if there is no "origin" remote.  I wonder if we should just
+> > > die when a relative path is given for the repository and we're not at
+> > > the top of the working tree.
+> > 
+> > Why not behave as if we are at the top of the working tree for relative
+> > paths? If there is an origin remote thats fine. If there is no origin
+> > remote you could warn that the path used is taken relative from the root
+> > of the superproject during add. What do you think?
+> 
+> That's what the patch currently queued on "pu" does, which Jens wants to
+> change, isn't it?
 
-In 52dce6d, a new credential function was added to git.pm, based on
-git-remote-mediawiki's functions. The logical follow-up is to use
-those functions in git-remote-mediawiki.
+True I did not realize this when reading it the first time. But I think
+we should still not die when in a subdirectory. After all this series is
+trying to archive that the submodule command works in subdirectories
+seamlessly right? So you probably want to translate a relative path
+without "origin" remote given from a subdirectory to the superproject
+level and use that. Then you do not have to die.
 
-Signed-off-by: Benoit Person <benoit.person@ensimag.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
----
- contrib/mw-to-git/git-remote-mediawiki.perl | 66 ++++-------------------------
- 1 file changed, 9 insertions(+), 57 deletions(-)
-
-diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
-index 9c14c1f..9fb281e 100755
---- a/contrib/mw-to-git/git-remote-mediawiki.perl
-+++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -13,6 +13,7 @@
- 
- use strict;
- use MediaWiki::API;
-+use Git;
- use DateTime::Format::ISO8601;
- 
- # By default, use UTF-8 to communicate with Git and the user
-@@ -156,57 +157,6 @@ while (<STDIN>) {
- 
- ########################## Functions ##############################
- 
--## credential API management (generic functions)
--
--sub credential_read {
--	my %credential;
--	my $reader = shift;
--	my $op = shift;
--	while (<$reader>) {
--		my ($key, $value) = /([^=]*)=(.*)/;
--		if (not defined $key) {
--			die "ERROR receiving response from git credential $op:\n$_\n";
--		}
--		$credential{$key} = $value;
--	}
--	return %credential;
--}
--
--sub credential_write {
--	my $credential = shift;
--	my $writer = shift;
--	# url overwrites other fields, so it must come first
--	print $writer "url=$credential->{url}\n" if exists $credential->{url};
--	while (my ($key, $value) = each(%$credential) ) {
--		if (length $value && $key ne 'url') {
--			print $writer "$key=$value\n";
--		}
--	}
--}
--
--sub credential_run {
--	my $op = shift;
--	my $credential = shift;
--	my $pid = open2(my $reader, my $writer, "git credential $op");
--	credential_write($credential, $writer);
--	print $writer "\n";
--	close($writer);
--
--	if ($op eq "fill") {
--		%$credential = credential_read($reader, $op);
--	} else {
--		if (<$reader>) {
--			die "ERROR while running git credential $op:\n$_";
--		}
--	}
--	close($reader);
--	waitpid($pid, 0);
--	my $child_exit_status = $? >> 8;
--	if ($child_exit_status != 0) {
--		die "'git credential $op' failed with code $child_exit_status.";
--	}
--}
--
- # MediaWiki API instance, created lazily.
- my $mediawiki;
- 
-@@ -217,22 +167,24 @@ sub mw_connect_maybe {
- 	$mediawiki = MediaWiki::API->new;
- 	$mediawiki->{config}->{api_url} = "$url/api.php";
- 	if ($wiki_login) {
--		my %credential = (url => $url);
--		$credential{username} = $wiki_login;
--		$credential{password} = $wiki_passwd;
--		credential_run("fill", \%credential);
-+		my %credential = (
-+			'url' => $url,
-+			'username' => $wiki_login,
-+			'password' => $wiki_passwd
-+		);
-+		Git::credential \%credential;
- 		my $request = {lgname => $credential{username},
- 			       lgpassword => $credential{password},
- 			       lgdomain => $wiki_domain};
- 		if ($mediawiki->login($request)) {
--			credential_run("approve", \%credential);
-+			Git::credential \%credential, 'approve';
- 			print STDERR "Logged in mediawiki user \"$credential{username}\".\n";
- 		} else {
- 			print STDERR "Failed to log in mediawiki user \"$credential{username}\" on $url\n";
- 			print STDERR "  (error " .
- 				$mediawiki->{error}->{code} . ': ' .
- 				$mediawiki->{error}->{details} . ")\n";
--			credential_run("reject", \%credential);
-+			Git::credential \%credential, 'reject';
- 			exit 1;
- 		}
- 	}
--- 
-1.8.3.rc3.7.gc2f33ed.dirty
+Cheers Heiko
