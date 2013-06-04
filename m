@@ -1,99 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Fix `git svn rebase` if top-level HEAD directory exist
-Date: Tue, 4 Jun 2013 03:49:56 -0400
-Message-ID: <20130604074956.GA13555@sigill.intra.peff.net>
-References: <51AD9828.7080508@ojab.ru>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v3 0/6] git send-email suppress-cc=self fixes
+Date: Tue, 4 Jun 2013 10:55:59 +0300
+Message-ID: <1370332482-12329-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: ojab <ojab@ojab.ru>
-X-From: git-owner@vger.kernel.org Tue Jun 04 09:50:09 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 04 09:55:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ujm0L-0007Ml-FO
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 09:50:05 +0200
+	id 1Ujm5d-00046Y-V7
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 09:55:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760057Ab3FDHuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 03:50:00 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38850 "EHLO peff.net"
+	id S1759897Ab3FDHza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 03:55:30 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:11744 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759665Ab3FDHt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 03:49:59 -0400
-Received: (qmail 2629 invoked by uid 102); 4 Jun 2013 07:50:44 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 04 Jun 2013 02:50:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Jun 2013 03:49:56 -0400
+	id S1755580Ab3FDHz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 03:55:29 -0400
+Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r547tQho022904
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Tue, 4 Jun 2013 03:55:26 -0400
+Received: from redhat.com (vpn-203-14.tlv.redhat.com [10.35.203.14])
+	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id r547tOEB015211;
+	Tue, 4 Jun 2013 03:55:25 -0400
 Content-Disposition: inline
-In-Reply-To: <51AD9828.7080508@ojab.ru>
+X-Mutt-Fcc: =sent
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226324>
 
-On Tue, Jun 04, 2013 at 11:32:56AM +0400, ojab wrote:
+This includes bugfixes related to handling of --suppress-cc=self
+flag. Tests are also included.
 
-> Oh hai!
+Changes from v2:
+	- add a new test, split patches differently add code comments
+		 to address comments by Junio
+	- rename example addresses in tests from redhat.com to example.com
+Changes from v1:
+        - tweak coding style in tests to address comments by Junio
 
-You can haz patch?
 
-> I have a svn repo with the top-level directory named HEAD and `git
-> svn rebase [HEAD] [--]` fails with
-> >$ git svn rebase
-> >fatal: ambiguous argument 'HEAD': both revision and filename
-> >Use '--' to separate paths from revisions, like this:
-> >'git <command> [<revision>...] -- [<file>...]'
-> >rev-list --first-parent --pretty=medium HEAD: command returned error: 128
+Michael S. Tsirkin (6):
+  send-email: fix suppress-cc=self on cccmd
+  t/send-email: test suppress-cc=self on cccmd
+  send-email: make --suppress-cc=self sanitize input
+  t/send-email: add test with quoted sender
+  t/send-email: test suppress-cc=self with non-ascii
+  test-send-email: test for pre-sanitized self name
 
-This rationale should probably go in the commit message.
+ git-send-email.perl   | 23 +++++++++++++++--------
+ t/t9001-send-email.sh | 34 +++++++++++++++++++++++++++++++++-
+ 2 files changed, 48 insertions(+), 9 deletions(-)
 
-> From 522cbc8b8a7c4f2ab4268551a550585753164677 Mon Sep 17 00:00:00 2001
-> From: ojab <ojab@ojab.ru>
-> Date: Tue, 4 Jun 2013 11:28:16 +0400
-> Subject: [PATCH] Fix `git svn rebase` if top-level HEAD directory exist
-
-We prefer patches to be inline in the email; these lines can be
-dropped, as they are picked up from your email headers.
-
-> Signed-off-by: ojab <ojab@ojab.ru>
-
-Do you mind providing a real name? The point of Signed-off-by is for
-licensing and attribution.
-
-> diff --git a/git-svn.perl b/git-svn.perl
-> index d070de0..e35a66a 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -1932,7 +1932,7 @@ sub cmt_sha2rev_batch {
->  sub working_head_info {
->  	my ($head, $refs) = @_;
->  	my @args = qw/rev-list --first-parent --pretty=medium/;
-> -	my ($fh, $ctx) = command_output_pipe(@args, $head);
-> +	my ($fh, $ctx) = command_output_pipe(@args, $head, "--");
-
-Looks obviously correct to me. I did a quick grep, and there is one
-other spot that probably should get the same treatment:
-
-diff --git a/git-svn.perl b/git-svn.perl
-index d070de0..07797ad 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -831,7 +831,7 @@ sub cmd_dcommit {
- sub cmd_dcommit {
- 	my $head = shift;
- 	command_noisy(qw/update-index --refresh/);
--	git_cmd_try { command_oneline(qw/diff-index --quiet HEAD/) }
-+	git_cmd_try { command_oneline(qw/diff-index --quiet HEAD --/) }
- 		'Cannot dcommit with a dirty index.  Commit your changes first, '
- 		. "or stash them with `git stash'.\n";
- 	$head ||= 'HEAD';
-
-Feel free to squash it in if you re-roll your patch. There are a few
-other spots that feed full sha1s. They are probably less likely to
-trigger, but perhaps should be protected, too, just in case.
-
--Peff
+-- 
+MST
