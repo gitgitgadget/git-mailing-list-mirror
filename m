@@ -1,87 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t/README: test_must_fail is for testing Git
-Date: Tue, 04 Jun 2013 09:50:12 -0700
-Message-ID: <7vppw195x7.fsf_-_@alter.siamese.dyndns.org>
-References: <CAGLuM14_MQffwQWrB2YCQXzhkGaxdaYBuY74y7=pfb-hB6LskA@mail.gmail.com>
-	<CACsJy8BqCUKhc8vhjhNz0OedBngk7zcSOk70ekRm3EiruHfNxA@mail.gmail.com>
-	<CACsJy8DD=LxAKh_fUELJ5Mj0xS_gZE88N_rJFkKGer=YAOqsMg@mail.gmail.com>
-	<51A62A96.6040009@gmail.com> <51A665E4.9080307@gmail.com>
-	<CACsJy8D4wmhGkEsn8r5OEQv_hX=OFD5W8abnBnYFcFCQZfLOoQ@mail.gmail.com>
-	<7vk3mcnwlj.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 3/8] cherry-pick: add --skip-empty option
+Date: Tue, 4 Jun 2013 12:10:00 -0500
+Message-ID: <CAMP44s2DvtiT6hi-RoPt_bVdGr01S367usz=089E1Ht+Bvh-tA@mail.gmail.com>
+References: <1369799788-24803-1-git-send-email-felipe.contreras@gmail.com>
+	<1369799788-24803-4-git-send-email-felipe.contreras@gmail.com>
+	<7vr4gjdomk.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1GQ2iwwscx4Sx1cxK0U6yWWYvOJqDk_FO_GkFcNKREYw@mail.gmail.com>
+	<7vehcidg1i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Karsten Blees <karsten.blees@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 04 18:50:21 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 04 19:10:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjuRB-00019Q-Hx
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 18:50:21 +0200
+	id 1UjukN-0000gi-Su
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 19:10:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755792Ab3FDQuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 12:50:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41096 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752966Ab3FDQuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 12:50:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2046E2510D;
-	Tue,  4 Jun 2013 16:50:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U2UE7Iu2nWuSf4gZ7Sxn1pLcdjQ=; b=UttDSY
-	YnlEneNz2lphGaTP833DKsEaWEUtXPc8IHaXjivWuBF+Y3Fel+d4s+GAOxUcrttv
-	KHFsq3VWtTFIbJ7MG49AzYgZk1Ct8rZXyvJL8IpQixs1Fwl5KotoNN7qzUZ8sjxr
-	PPRZfelRB4wp2Kllk6StlIDTERqAZPd0tyBK0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WYygpLEwobtJP6e829oO9P7FU7bQCNjM
-	MPS//2b4jyN0/1ULxFlLDiS9ZWsW1x0k5l4O0EK5wzHOZPWjABjMQttKx92uTfZs
-	PH3UbWODeu8QA0OARcHT4kijEyQuk6oPs7UXZvILXjAB90k8ieyQ0bFGycBG1+Tp
-	hWVcow8HKjE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 147952510C;
-	Tue,  4 Jun 2013 16:50:15 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6DF8A2510A;
-	Tue,  4 Jun 2013 16:50:14 +0000 (UTC)
-In-Reply-To: <7vk3mcnwlj.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 02 Jun 2013 12:25:44 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D414F08E-CD36-11E2-8E22-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758231Ab3FDRKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 13:10:06 -0400
+Received: from mail-la0-f53.google.com ([209.85.215.53]:50076 "EHLO
+	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758286Ab3FDRKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 13:10:03 -0400
+Received: by mail-la0-f53.google.com with SMTP id ea20so490994lab.40
+        for <git@vger.kernel.org>; Tue, 04 Jun 2013 10:10:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=6+bMZvfwTwnZvp5bZJzHtukndrq4ZpWNN3U93M6YFOI=;
+        b=u4VYlgWN2PabQl1bGuYfFcvRmQER8MCGrQDO+DdgqASqK/8XVkvfmii6221vClAqBC
+         P86AQQSItnGeHvP7Ohhnc6h649bFaQOoaV2mlOOAJOdOqw807ELnOLbPdqZi+dS5Wu9T
+         JhYpIhNr9/PjnHpnkm4pzE7ZiOuvvK9k+6su4b9DcatKS+S3Ws4HPD++V91wvZAdXGDh
+         MvufL3lSvIrnyavgf8kTjG5KtDtcawdzWUvsDpS4PCHv17/TZSpacU63WUE2PXDAcfLM
+         TWiXqOZE176/2FmLX/W2yOcF4KbWiEDZR3y9hlsoZlhAQ+6QPO7k7fwWlSMOn2XRZogv
+         WkvQ==
+X-Received: by 10.152.26.137 with SMTP id l9mr13686596lag.2.1370365800667;
+ Tue, 04 Jun 2013 10:10:00 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Tue, 4 Jun 2013 10:10:00 -0700 (PDT)
+In-Reply-To: <7vehcidg1i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226378>
 
-When a test wants to make sure there is no <string> in an output
-file, we should just say "! grep string output"; "test_must_fail"
-is there only to test Git command and catch unusual deaths we know
-about (e.g. segv) as an error, not as an expected failure.
+On Mon, Jun 3, 2013 at 4:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> On Mon, Jun 3, 2013 at 1:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>
+>>>> Pretty much what it says on the tin.
+>>>>
+>>>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>>>> ---
+>>>>  Documentation/git-cherry-pick.txt   |  3 +++
+>>>>  builtin/revert.c                    |  2 ++
+>>>>  sequencer.c                         |  6 ++++++
+>>>>  sequencer.h                         |  1 +
+>>>>  t/t3508-cherry-pick-many-commits.sh | 13 +++++++++++++
+>>>>  5 files changed, 25 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+>>>> index c205d23..fccd936 100644
+>>>> --- a/Documentation/git-cherry-pick.txt
+>>>> +++ b/Documentation/git-cherry-pick.txt
+>>>> @@ -129,6 +129,9 @@ effect to your index in a row.
+>>>>       redundant commits are ignored.  This option overrides that behavior and
+>>>>       creates an empty commit object.  Implies `--allow-empty`.
+>>>>
+>>>> +--skip-empty::
+>>>> +     Instead of failing, skip commits that are or become empty.
+>>>
+>>> Not quite sure.  Is this "instead of recording an empty commit,"
+>>> (which may or may not fail depending on the allow-empty settings)?
+>>
+>> We are explaining --skip-empty, not --allow-empty.
+>
+> Exactly.  That is why I found the "Instead of failing" questionable.
+> It is very easy to read the above as "commits that are or become
+> empty usually causes the command to fail, and this is a way to cause
+> it not to fail.".
+>
+> It is true that
+>
+>     cherry-pick A
+>
+> when A becomes empty, dies.  But
+>
+>     cherry-pick --allow-empty A
+>
+> when A becomes empty, does not fail, but still does create an empty
+> commit.  A large difference with --skip-empty, which applies to use
+> scenario different from --allow-empty was meant to address, is that
+>
+>     cherry-pick --skip-empty A
+>
+> when A becomes empty, does not fail and does not create an empty
+> commit, either.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/README | 3 +++
- 1 file changed, 3 insertions(+)
+We are not explaining --allow-empty.
 
-diff --git a/t/README b/t/README
-index e669bb3..35b3c5c 100644
---- a/t/README
-+++ b/t/README
-@@ -324,6 +324,9 @@ Don't:
-    use 'test_must_fail git cmd'.  This will signal a failure if git
-    dies in an unexpected way (e.g. segfault).
- 
-+   On the other hand, don't use test_must_fail for running regular
-+   platform commands; just use '! cmd'.
-+
-  - use perl without spelling it as "$PERL_PATH". This is to help our
-    friends on Windows where the platform Perl often adds CR before
-    the end of line, and they bundle Git with a version of Perl that
+What happens when you do --skip-empty --allow-empty? Somebody
+suggested a new option, so we could do --foo-empty=skip,allow to
+clarify that.
+
+> I think just "Skip commits that are or become empty" without saying
+> "Instead of failing," is fine, too.
+
+I think "Instead of failing" makes perfect sense, because it's not our
+job to describe what other options do, simply explain what this option
+do. If the user is interested in other options, he can read them in
+the help for those.
+
+-- 
+Felipe Contreras
