@@ -1,75 +1,69 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
-Date: Tue, 4 Jun 2013 15:29:51 +1000
-Message-ID: <20130604052950.GA2943@book.hvoigt.net>
-References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org> <51A7A73C.6070103@web.de> <20130531194051.GC1072@serenity.lan> <51AD0EEB.4020106@web.de> <20130603222341.GL1072@serenity.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 1/7] add simple tests of consistency across rebase types
+Date: Mon, 03 Jun 2013 22:49:18 -0700
+Message-ID: <7vehcia0ip.fsf@alter.siamese.dyndns.org>
+References: <1369982987-18954-1-git-send-email-martinvonz@gmail.com>
+	<1370292135-1236-1-git-send-email-martinvonz@gmail.com>
+	<1370292135-1236-2-git-send-email-martinvonz@gmail.com>
+	<7v1u8ide2b.fsf@alter.siamese.dyndns.org>
+	<CANiSa6hGLKATn3uUJKoi4917R4qoiyRHHJWo-p8vFrCZsg5joQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Jun 04 07:30:11 2013
+Cc: git <git@vger.kernel.org>, Johannes Sixt <j.sixt@viscovery.net>,
+	Chris Webb <chris@arachsys.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 04 07:49:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ujjox-0004k6-Dh
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 07:30:11 +0200
+	id 1Ujk7a-0004Ov-G1
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 07:49:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754284Ab3FDFaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 01:30:07 -0400
-Received: from smtprelay06.ispgateway.de ([80.67.31.104]:54242 "EHLO
-	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498Ab3FDFaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 01:30:06 -0400
-Received: from [211.30.231.44] (helo=book.hvoigt.net)
-	by smtprelay06.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Ujjol-0003lT-Hr; Tue, 04 Jun 2013 07:30:00 +0200
-Content-Disposition: inline
-In-Reply-To: <20130603222341.GL1072@serenity.lan>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1755438Ab3FDFtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 01:49:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35001 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754466Ab3FDFtV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 01:49:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6981C1F66A;
+	Tue,  4 Jun 2013 05:49:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1PvRjmfU5DZcp8NmDTEb3yJhy0Q=; b=TKKZEu
+	0B7lFzeWZxfkWVx7wKujXngKvAuH4GQSt2psxbqh9KnMhm0mJvJhlxUi2DzOA+Cs
+	GaZSav9MiAuRLCXhJ4xrBzM6nVq1s7J6icux9eW+pLJHUvKAPI7e0yJ0eS1CnTpy
+	hcKpzIdtm3ZfuibWEwVDvu3660H9XNzHS3jfA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=orrv+YEuVs/0ZNgNtzOllOsprNQfjUE/
+	V5AscCSJG+AJxDZ1JFUjqw2Sp8gdU6+lDcS+2Ifjuw+eUDRCv8iKdaewisGjbk/t
+	iGQ6hiGEi7nDvLenvAs38PF5XMuA/lmonr/Qtn9eYlbY6JGDBIode5KKavEWjNTE
+	StXW/C+douE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D72A1F669;
+	Tue,  4 Jun 2013 05:49:20 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D0D521F666;
+	Tue,  4 Jun 2013 05:49:19 +0000 (UTC)
+In-Reply-To: <CANiSa6hGLKATn3uUJKoi4917R4qoiyRHHJWo-p8vFrCZsg5joQ@mail.gmail.com>
+	(Martin von Zweigbergk's message of "Mon, 3 Jun 2013 22:14:43 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 801AD770-CCDA-11E2-A75F-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226315>
 
-On Mon, Jun 03, 2013 at 11:23:41PM +0100, John Keeping wrote:
-> > Sorry, I should have been more specific here. I saw that you did some
-> > changes to make "submodule add" do the right thing with relative paths,
-> > but the following change to t7406 does not work like I believe it
-> > should but instead makes the test fail:
-> > -------------------8<---------------------
-> > diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> > index a4ffea0..9766b9e 100755
-> > --- a/t/t7406-submodule-update.sh
-> > +++ b/t/t7406-submodule-update.sh
-> > @@ -559,7 +559,9 @@ test_expect_success 'add different submodules to the same pa
-> >  test_expect_success 'submodule add places git-dir in superprojects git-dir' '
-> >         (cd super &&
-> >          mkdir deeper &&
-> > -        git submodule add ../submodule deeper/submodule &&
-> > +        (cd deeper &&
-> > +         git submodule add ../../submodule submodule
-> > +        ) &&
-> >          (cd deeper/submodule &&
-> >           git log > ../../expected
-> >          ) &&
-> > -------------------8<---------------------
-> 
-> Ah, ok.  I think this case is problematic because the repository
-> argument is either relative to "remote.origin.url" or to the top of the
-> working tree if there is no "origin" remote.  I wonder if we should just
-> die when a relative path is given for the repository and we're not at
-> the top of the working tree.
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
 
-Why not behave as if we are at the top of the working tree for relative
-paths? If there is an origin remote thats fine. If there is no origin
-remote you could warn that the path used is taken relative from the root
-of the superproject during add. What do you think?
+> Thanks. Will wait another day or two for further comments before I
+> send another version.
 
-Cheers Heiko
+Thanks; I just noticed that your patches lack S-o-b:.
