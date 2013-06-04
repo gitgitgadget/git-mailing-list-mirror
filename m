@@ -1,81 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-daemon: needs /root/.config/git/config?
-Date: Tue, 4 Jun 2013 12:08:15 -0400
-Message-ID: <20130604160815.GB15953@sigill.intra.peff.net>
-References: <20130604141314.GD22308@pomac.netswarm.net>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH] dir.c: fix ignore processing within not-ignored directories
+Date: Tue, 04 Jun 2013 18:10:24 +0200
+Message-ID: <51AE1170.8090402@gmail.com>
+References: <CAGLuM14_MQffwQWrB2YCQXzhkGaxdaYBuY74y7=pfb-hB6LskA@mail.gmail.com> <CACsJy8BqCUKhc8vhjhNz0OedBngk7zcSOk70ekRm3EiruHfNxA@mail.gmail.com> <CACsJy8DD=LxAKh_fUELJ5Mj0xS_gZE88N_rJFkKGer=YAOqsMg@mail.gmail.com> <51A62A96.6040009@gmail.com> <51A665E4.9080307@gmail.com> <CACsJy8D4wmhGkEsn8r5OEQv_hX=OFD5W8abnBnYFcFCQZfLOoQ@mail.gmail.com> <7vk3mcnwlj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Ian Kumlien <pomac@vapor.com>
-X-From: git-owner@vger.kernel.org Tue Jun 04 18:08:24 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Misty De Meo <misty@brew.sh>,
+	=?ISO-8859-1?Q?=D8ystein_Walle?= <oystwa@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 04 18:10:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjtmZ-0000kF-MO
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 18:08:24 +0200
+	id 1Ujtop-0002iO-S3
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 18:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755853Ab3FDQIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 12:08:19 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42182 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754916Ab3FDQIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 12:08:18 -0400
-Received: (qmail 26078 invoked by uid 102); 4 Jun 2013 16:09:04 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 04 Jun 2013 11:09:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Jun 2013 12:08:15 -0400
-Content-Disposition: inline
-In-Reply-To: <20130604141314.GD22308@pomac.netswarm.net>
+	id S1755792Ab3FDQKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 12:10:33 -0400
+Received: from mail-bk0-f42.google.com ([209.85.214.42]:44052 "EHLO
+	mail-bk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755879Ab3FDQK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 12:10:26 -0400
+Received: by mail-bk0-f42.google.com with SMTP id jk13so284904bkc.29
+        for <git@vger.kernel.org>; Tue, 04 Jun 2013 09:10:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=jTXuCLcmQD5QIqf9RwEjm1sb7XiaBTuQYXy86Sljih0=;
+        b=gB4iMM8v/Dr3sneQlScDwaivW5KCT5IjPG4mQQkS7t3rEP288ihb5Qen7dq6gXeF6W
+         aoA034NeGSkVwArp8lZ5Z3TWSxsyazAnomvvbbt1EOOXYItslR0fiGvZ2HLwJ7DIf+oN
+         VJBPObSQXAcdpM7VRYeS45c4jT5bxA91Dqhi+3Fw3Fn5N84exqkR985t4Oe3jtzr0Ui/
+         yu6yWFBatC8XXQDufcgXaIfzgEFTurHWMcAMgAAjyYXvKDDAYnvgyYzaHIvsm85dgq1v
+         gCSu6LbUEOvN1F8kYKzFaWgxhpxHhb44Pwzek4QKYFbvY+d+iwJYm6xBuBLfFwto3aS5
+         cvaw==
+X-Received: by 10.204.171.136 with SMTP id h8mr8208526bkz.18.1370362223692;
+        Tue, 04 Jun 2013 09:10:23 -0700 (PDT)
+Received: from [10.1.100.50] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id jy7sm15180755bkb.6.2013.06.04.09.10.22
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 04 Jun 2013 09:10:22 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <7vk3mcnwlj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226372>
 
-On Tue, Jun 04, 2013 at 04:13:14PM +0200, Ian Kumlien wrote:
-
-> Due to the earlier problem I upgraded git on all machines 
-> and eneded up with a ubunut machine running in to problems.
+Am 02.06.2013 21:25, schrieb Junio C Hamano:
+> Duy Nguyen <pclouds@gmail.com> writes:
 > 
-> I started getting errors like:
-> "fatal: protocol error: bad line length character: fata"
+>>> +       then
+>>> +               false
+>>> +       fi
+>>> +'
+>>
+>> Nit pick, maybe this instead?
+>>
+>> test_must_fail grep "^one/a.1" output
 > 
-> Which after some head scratching caused me to tell xinetd to directly
-> launch git-daemon, eventually it worked fine, but i did get this error
-> message:
-
-Looks like your stderr was being redirected to your stdout; this
-particular error aside, that is likely to cause weird protocol problems
-for any error that git outputs.
-
-> Jun  4 16:12:05 xyz git-daemon[10246]: unable to access
-> '/root/.config/git/config': Permission denied
+> Neither.
 > 
-> It's not the first time i've seen it but i've been able to ignore it
-> before. This is running as a local user (as in not root) and this user
-> shouldn't have access to /root. But i eventually had to do chown o+x
-> /root to workaround this error.
+> 	! grep "^one/a.1" output
+> 
 
-The problem is that you have presumably dropped privileges in the daemon
-instance, but your $HOME environment variable still points to /root. Git
-cannot read all of its config files (nor even find out if they exist),
-so it bails rather than continue.
-
-Older versions of git silently ignored errors reading config files, but
-it was tightened in v1.8.1.1, as there can be quite serious implications
-to failing to read expected config (e.g., imagine transfer.fsckobjects,
-or receive.deny* is ignored).
-
-However, since changing user id and leaving $HOME is so common, there is
-a patch under consideration to loosen the check only for the case of
-EACCES on files in $HOME. That commit is 4698c8f (config: allow
-inaccessible configuration under $HOME, 2013-04-12); it's not yet in any
-released version of git, though.
-
-In the meantime, the suggested workaround is to set $HOME for the
-git-daemon user, rather than loosening /root.
-
--Peff
+Nice. I actually tried "!" but without the space - which didn't work so I took the other t3001 tests as example...
