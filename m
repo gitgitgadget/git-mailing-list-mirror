@@ -1,87 +1,71 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
-Date: Tue, 4 Jun 2013 21:17:17 +1000
-Message-ID: <20130604111717.GA306@book.hvoigt.net>
-References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org> <51A7A73C.6070103@web.de> <20130531194051.GC1072@serenity.lan> <51AD0EEB.4020106@web.de> <20130603222341.GL1072@serenity.lan> <20130604052950.GA2943@book.hvoigt.net> <20130604081045.GM1072@serenity.lan>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: SNI (SSL virtual hosts)
+Date: Tue, 4 Jun 2013 13:58:07 +0200 (CEST)
+Message-ID: <alpine.DEB.2.00.1306041349290.32021@tvnag.unkk.fr>
+References: <DC851F5EA18E478DACB62178624BF5B7@gmail.com> <97F8F367D27D4B3E93439FF8D0F121FA@gmail.com> <alpine.DEB.2.00.1306041142200.16303@tvnag.unkk.fr> <8B7A2C3A8CC346D6B34D153F591F878F@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Jun 04 13:17:40 2013
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Janusz Harkot <janusz.harkot@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 04 13:58:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjpFD-00048N-PB
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 13:17:40 +0200
+	id 1Ujpsb-000352-NT
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 13:58:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752770Ab3FDLRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 07:17:36 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.31.100]:53539 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751085Ab3FDLRe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 07:17:34 -0400
-Received: from [211.30.231.44] (helo=book.hvoigt.net)
-	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1UjpF1-0007nQ-Pw; Tue, 04 Jun 2013 13:17:29 +0200
-Content-Disposition: inline
-In-Reply-To: <20130604081045.GM1072@serenity.lan>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1754300Ab3FDL6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 07:58:18 -0400
+Received: from giant.haxx.se ([80.67.6.50]:44560 "EHLO giant.haxx.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754278Ab3FDL6Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 07:58:16 -0400
+Received: from giant.haxx.se (localhost.localdomain [127.0.0.1])
+	by giant.haxx.se (8.14.4/8.14.4/Debian-2) with ESMTP id r54Bw7NV015029
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 4 Jun 2013 13:58:07 +0200
+Received: from localhost (dast@localhost)
+	by giant.haxx.se (8.14.4/8.14.4/Submit) with ESMTP id r54Bw7Vi015025;
+	Tue, 4 Jun 2013 13:58:07 +0200
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+X-X-Sender: dast@giant.haxx.se
+In-Reply-To: <8B7A2C3A8CC346D6B34D153F591F878F@gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226342>
 
-On Tue, Jun 04, 2013 at 09:10:45AM +0100, John Keeping wrote:
-> On Tue, Jun 04, 2013 at 03:29:51PM +1000, Heiko Voigt wrote:
-> > On Mon, Jun 03, 2013 at 11:23:41PM +0100, John Keeping wrote:
-> > > > Sorry, I should have been more specific here. I saw that you did some
-> > > > changes to make "submodule add" do the right thing with relative paths,
-> > > > but the following change to t7406 does not work like I believe it
-> > > > should but instead makes the test fail:
-> > > > -------------------8<---------------------
-> > > > diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> > > > index a4ffea0..9766b9e 100755
-> > > > --- a/t/t7406-submodule-update.sh
-> > > > +++ b/t/t7406-submodule-update.sh
-> > > > @@ -559,7 +559,9 @@ test_expect_success 'add different submodules to the same pa
-> > > >  test_expect_success 'submodule add places git-dir in superprojects git-dir' '
-> > > >         (cd super &&
-> > > >          mkdir deeper &&
-> > > > -        git submodule add ../submodule deeper/submodule &&
-> > > > +        (cd deeper &&
-> > > > +         git submodule add ../../submodule submodule
-> > > > +        ) &&
-> > > >          (cd deeper/submodule &&
-> > > >           git log > ../../expected
-> > > >          ) &&
-> > > > -------------------8<---------------------
-> > > 
-> > > Ah, ok.  I think this case is problematic because the repository
-> > > argument is either relative to "remote.origin.url" or to the top of the
-> > > working tree if there is no "origin" remote.  I wonder if we should just
-> > > die when a relative path is given for the repository and we're not at
-> > > the top of the working tree.
-> > 
-> > Why not behave as if we are at the top of the working tree for relative
-> > paths? If there is an origin remote thats fine. If there is no origin
-> > remote you could warn that the path used is taken relative from the root
-> > of the superproject during add. What do you think?
-> 
-> That's what the patch currently queued on "pu" does, which Jens wants to
-> change, isn't it?
+On Tue, 4 Jun 2013, Janusz Harkot wrote:
 
-True I did not realize this when reading it the first time. But I think
-we should still not die when in a subdirectory. After all this series is
-trying to archive that the submodule command works in subdirectories
-seamlessly right? So you probably want to translate a relative path
-without "origin" remote given from a subdirectory to the superproject
-level and use that. Then you do not have to die.
+>> Which libcurl version and SSL backend is this? (curl -V usually tells)
+> $ curl -V
+> curl 7.24.0 (x86_64-apple-darwin12.0) libcurl/7.24.0 OpenSSL/0.9.8r 
+> zlib/1.2.5
 
-Cheers Heiko
+>From what I can tell, that OpenSSL version supports SNI fine and libcurl has 
+supported it since 7.18.1.
+
+> here is a log (with GIT_CURL_VERBOSE=1)
+>
+> https://gist.github.com/anonymous/8f6533a755ae5c710c75
+>
+> Initial connection is correct (line 10 - shows that it reads correct 
+> certificate), but then subsequent call to the server (line 68) shows that 
+> the defat server certificate is used.
+>
+> It looks like the second call was without hostname (?).
+
+What makes you suggest that's what's happening? Sure, if it would've sent no 
+or the wrong host name it would probably have that effect.
+
+Any chance you can snoop on the network and the SSL handshake to see who's to 
+blame? I can't but to think that is is a very common use case!
+
+-- 
+
+  / daniel.haxx.se
