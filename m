@@ -1,63 +1,80 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] diff: add --ignore-blank-lines option
-Date: Tue, 4 Jun 2013 21:08:03 +0200
-Message-ID: <CALWbr2zJCxbW8Qug0i=oGvKZV5-vcAugextxMuQp9jaoaZYpyg@mail.gmail.com>
-References: <1369591098-11267-1-git-send-email-apelisse@gmail.com>
-	<7vzjv57mwx.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git-daemon: needs /root/.config/git/config?
+Date: Tue, 4 Jun 2013 12:10:25 -0700
+Message-ID: <20130604191025.GG28153@google.com>
+References: <20130604141314.GD22308@pomac.netswarm.net>
+ <20130604160815.GB15953@sigill.intra.peff.net>
+ <51AE3A88.2080203@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 04 21:08:22 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Ian Kumlien <pomac@vapor.com>,
+	git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Jun 04 21:10:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ujwaa-0006qR-Sh
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 21:08:13 +0200
+	id 1Ujwcs-0000Zm-L2
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 21:10:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750929Ab3FDTIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 15:08:06 -0400
-Received: from mail-qa0-f47.google.com ([209.85.216.47]:60362 "EHLO
-	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890Ab3FDTIF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 15:08:05 -0400
-Received: by mail-qa0-f47.google.com with SMTP id hv16so456256qab.6
-        for <git@vger.kernel.org>; Tue, 04 Jun 2013 12:08:03 -0700 (PDT)
+	id S1750808Ab3FDTKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 15:10:31 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:37752 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750773Ab3FDTKa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 15:10:30 -0400
+Received: by mail-pb0-f44.google.com with SMTP id wz12so663324pbc.17
+        for <git@vger.kernel.org>; Tue, 04 Jun 2013 12:10:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=bWBUf1Y8N3HhAeY/erzczTj23EC0PRCuS5qH29HxvYs=;
-        b=UnrhYYwTpujfjO97lDaotVf9Q0Gemm5CbOFy26esJIDU6mbgbSgTOTMhM59+OjL1gl
-         pU/a7D3kXH9PKvY2/tyvUg1JloyvbVvDekc2+acHn390Htjd6aT5oBfnGU786bH0IdjM
-         VjgY6QMxmg8BPgdtuAhkO+dDaB1OlzClH8zZ2d/eFN4bRHfrxf7vyynlJVqk2NRlwPBq
-         67SgL0egc64XQR7kjME2OWLJb1+cHJczf43Iiln27I+g3GudeoaZpwmLFfeEMN2PE8Xs
-         Y6pRRdeH3FsuQOnrB5kULEa9m2NXGiG6veEnlukBV04b4ltOmq/jYb+XxIUgdqY7H2Os
-         ASIg==
-X-Received: by 10.229.73.72 with SMTP id p8mr2492761qcj.53.1370372883870; Tue,
- 04 Jun 2013 12:08:03 -0700 (PDT)
-Received: by 10.49.108.105 with HTTP; Tue, 4 Jun 2013 12:08:03 -0700 (PDT)
-In-Reply-To: <7vzjv57mwx.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=JMXz16UX1OWmuWQF31fDMc2j4EZPAK7fJJ1btj4or6M=;
+        b=siCqmtGb++pYae78+82RZ4yAiZgLupLkaxfrR8F+W81rIAVeaSjpHFldkYG2GUAQ83
+         mmaEenInF0FIipfSqd/5Pc2CLknQ+81e1yYhKX8P3OyQ/cPoXrdLirE6cCEK1WTKjaaJ
+         chxJSKMiguYjssP0sq4sCPjEYx27w3An8NhyDuwbhKtsz1eaBHRhF8NHzeNFBywmdXIX
+         Wxh2JflZb7Za+eOCleqo9Pg4Ft/GMcqEUoKyrAhY22rd3pWaC6lRFvKY/Gkp7fgGMv4X
+         zKZFuqx107V4gj5kAo8bnOBV728WXdRiOpiO2IXx5U0llrW3JynNWQ1/XrLpJjnWSEm3
+         TzBA==
+X-Received: by 10.68.178.229 with SMTP id db5mr29617190pbc.79.1370373029711;
+        Tue, 04 Jun 2013 12:10:29 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id cp1sm64303755pbc.42.2013.06.04.12.10.27
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 04 Jun 2013 12:10:28 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <51AE3A88.2080203@kdbg.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226395>
 
-On Tue, Jun 4, 2013 at 8:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Antoine Pelisse <apelisse@gmail.com> writes:
->
->> +xdchange_t *xdl_get_hunk(xdchange_t **xscr, xdemitconf_t const *xecfg) {
->>       xdchange_t *xch, *xchp;
->>       long max_common = 2 * xecfg->ctxlen + xecfg->interhunkctxlen;
->> +     long ignorable_context = max_common / 2 - 1;
->
-> Could you explain how this math works?
+Johannes Sixt wrote:
+> Am 04.06.2013 18:08, schrieb Jeff King:
 
-I think it doesn't, mostly because I misinterpreted the "interhunkctxlen".
-I will try to think about that and provide a reroll.
+>> However, since changing user id and leaving $HOME is so common, there is
+>> a patch under consideration to loosen the check only for the case of
+>> EACCES on files in $HOME. That commit is 4698c8f (config: allow
+>> inaccessible configuration under $HOME, 2013-04-12); it's not yet in any
+>> released version of git, though.
+[...]
+> I've a PHP script in ~/public_html that runs git. Without the mentioned
+> patch, the script bails out due to this error. This time it's Apache
+> that gets me into trouble because at the time the PHP script and git
+> run, $HOME is still /root, but the user identity is not root anymore.
+> The patch is direly needed; without it, I need to use 'env
+> HOME=/home/j6t /usr/local/bin/git' in my script.
 
-Thanks for the review and analysis.
-Antoine,
+I could be remembering wrong, but I thought it was not so much "under
+consideration" as "accepted for 1.8.4".  I haven't heard any
+compelling reasons not to apply it.
+
+Would it would make sense against earlier releases as well?
+
+Thanks,
+Jonathan
