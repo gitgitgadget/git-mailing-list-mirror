@@ -1,92 +1,164 @@
-From: Janusz Harkot <janusz.harkot@gmail.com>
-Subject: Re: SNI (SSL virtual hosts)
-Date: Tue, 4 Jun 2013 12:19:54 +0200
-Message-ID: <8B7A2C3A8CC346D6B34D153F591F878F@gmail.com>
-References: <DC851F5EA18E478DACB62178624BF5B7@gmail.com>
- <97F8F367D27D4B3E93439FF8D0F121FA@gmail.com>
- <alpine.DEB.2.00.1306041142200.16303@tvnag.unkk.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Daniel Stenberg <daniel@haxx.se>
-X-From: git-owner@vger.kernel.org Tue Jun 04 12:20:11 2013
+From: benoit.person@gmail.com
+Subject: [PATCH] git-remote-mediawiki: use git.pm functions for credentials
+Date: Tue,  4 Jun 2013 13:11:32 +0200
+Message-ID: <1370344292-7088-1-git-send-email-benoit.person@ensimag.fr>
+Cc: celestin.matte@ensimag.fr,
+	Benoit Person <benoit.person@ensimag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 04 13:13:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjoLU-0006dX-R5
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 12:20:05 +0200
+	id 1UjpAh-0007oU-JW
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 13:12:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752927Ab3FDKUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 06:20:01 -0400
-Received: from mail-ea0-f178.google.com ([209.85.215.178]:58658 "EHLO
-	mail-ea0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751299Ab3FDKT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 06:19:59 -0400
-Received: by mail-ea0-f178.google.com with SMTP id q15so18132ead.37
-        for <git@vger.kernel.org>; Tue, 04 Jun 2013 03:19:58 -0700 (PDT)
+	id S1753189Ab3FDLM4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 07:12:56 -0400
+Received: from mail-ea0-f180.google.com ([209.85.215.180]:35421 "EHLO
+	mail-ea0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751026Ab3FDLMy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 07:12:54 -0400
+Received: by mail-ea0-f180.google.com with SMTP id k10so62909eaj.39
+        for <git@vger.kernel.org>; Tue, 04 Jun 2013 04:12:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject:x-mailer
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=ZS+Ycn0hUDpYv+UvwiELaVeWIS82UOlzz3b0iTIZG4A=;
-        b=TX2hBmVyQjHS2rmnsrDI8oMW11dJKO23RWlKUWPNGY34ls0zJcEG9/kTPcqz9uOP6H
-         5avXuuMYoPm2ooCkUO1JE+e8XKq+5bHcyJvQujn1gRNXQI+5oN8sjUuISUccRMEmCm33
-         /MnBRoVSMBUXSUBKrgye3Nc8PNqaMfxVKsmyKkxmrPf2ZrmraM/R9gC+ITAooI2bKESD
-         LAXMO/oGEIM/HrYNGhY6TiHYf99cBgF2WSPMlIivigp5Rg17EApU9qT+1sWRh393tI74
-         FqkMeDy969CbricMApeTRrCdBQSp8n8go5lbfAj/J+vH4U8NFFn8JCPcEZ6SZOmU8Sz0
-         wBbw==
-X-Received: by 10.15.64.66 with SMTP id n42mr25516230eex.148.1370341198077;
-        Tue, 04 Jun 2013 03:19:58 -0700 (PDT)
-Received: from [10.0.1.200] (77-252-124-82.ip.netia.com.pl. [77.252.124.82])
-        by mx.google.com with ESMTPSA id a5sm90813181ees.6.2013.06.04.03.19.56
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=ld7JktfkDkJU7nCEEAjA37bYmnBa/EtS/uJsvj2k+tM=;
+        b=roTOHPcubCZmZ8ilLfA6MdjKyr6Efla7kw/cNg201NzobkUOT/t6BKH/aOfmDJcMjI
+         ePw9851V/CSnXrI1iuYJfSbuYKvKvjvnzF8swc584R7vIQPuebtWwnq+itDDvZm81HgL
+         1uI0iMqhGB2tkTgJfyXEs3lJULt7De7rKT+rR4ESAekWjNPMJR8LiQQ1b/2B16QrwnJ+
+         fXWJmvplkz1GCjg1rEYMEa2HvLA6p7LaV/28FcW4oNxI+GsgIi143lNaj5j6F0qJyYyr
+         mAjYpsUNorHN4bzeBWH7MY7FxEM+Y9d1dCZMnCpwxbhkMW+S0r+JUBdDh75TjkY+VqPZ
+         H8XA==
+X-Received: by 10.14.47.136 with SMTP id t8mr26424837eeb.47.1370344372035;
+        Tue, 04 Jun 2013 04:12:52 -0700 (PDT)
+Received: from localhost.localdomain (ip-54.net-81-220-163.rev.numericable.fr. [81.220.163.54])
+        by mx.google.com with ESMTPSA id y10sm91077830eev.3.2013.06.04.04.12.50
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 04 Jun 2013 03:19:57 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1306041142200.16303@tvnag.unkk.fr>
-X-Mailer: sparrow 1.6.4 (build 1178)
-Content-Disposition: inline
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 04 Jun 2013 04:12:51 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.rc3.7.gc2f33ed.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226340>
 
-> It does. git uses libcurl for the HTTPS parts and it has support SNI for a 
-> long time, assuming you built libcurl with a TLS library that handles it.
-> 
-> Which libcurl version and SSL backend is this? (curl -V usually tells)
-$ curl -V
-curl 7.24.0 (x86_64-apple-darwin12.0) libcurl/7.24.0 OpenSSL/0.9.8r zlib/1.2.5
-Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp smtp smtps telnet tftp 
-Features: AsynchDNS GSS-Negotiate IPv6 Largefile NTLM NTLM_WB SSL libz 
+From: Benoit Person <benoit.person@ensimag.fr>
 
-$ otool -L /usr/local/bin/git
-/usr/local/bin/git:
-/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.5)
-/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)
-/usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib (compatibility version 1.0.0, current version 1.0.0)
-/usr/local/opt/openssl/lib/libssl.1.0.0.dylib (compatibility version 1.0.0, current version 1.0.0)
-/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 169.3.0)
+In 52dce6d, a new credential function was added to git.pm, based on
+git-remote-mediawiki's functions. The logical follow-up is to use
+those functions in git-remote-mediawiki.
 
+Signed-off-by: Benoit Person <benoit.person@ensimag.fr>
+Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+---
+ contrib/mw-to-git/git-remote-mediawiki.perl | 66 ++++-------------------------
+ 1 file changed, 9 insertions(+), 57 deletions(-)
 
-
-> If you made it working by disabling certificate verification then it sounds as 
-> if SNI might still have worked and the problem was rahter something else, as 
-> without SNI you can't do name-based virtual hosting over HTTPS - but perhaps 
-> you wanted to communicate with the "default" server on that IP?
-
-here is a log (with GIT_CURL_VERBOSE=1)
-
-https://gist.github.com/anonymous/8f6533a755ae5c710c75 
-
-Initial connection is correct (line 10 - shows that it reads correct certificate),
- but then subsequent call to the server (line 68) shows that the defat server certificate is used.
-
-It looks like the second call was without hostname (?).
-
-Thanks!
-Janusz
+diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
+index 9c14c1f..9fb281e 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki.perl
++++ b/contrib/mw-to-git/git-remote-mediawiki.perl
+@@ -13,6 +13,7 @@
+ 
+ use strict;
+ use MediaWiki::API;
++use Git;
+ use DateTime::Format::ISO8601;
+ 
+ # By default, use UTF-8 to communicate with Git and the user
+@@ -156,57 +157,6 @@ while (<STDIN>) {
+ 
+ ########################## Functions ##############################
+ 
+-## credential API management (generic functions)
+-
+-sub credential_read {
+-	my %credential;
+-	my $reader = shift;
+-	my $op = shift;
+-	while (<$reader>) {
+-		my ($key, $value) = /([^=]*)=(.*)/;
+-		if (not defined $key) {
+-			die "ERROR receiving response from git credential $op:\n$_\n";
+-		}
+-		$credential{$key} = $value;
+-	}
+-	return %credential;
+-}
+-
+-sub credential_write {
+-	my $credential = shift;
+-	my $writer = shift;
+-	# url overwrites other fields, so it must come first
+-	print $writer "url=$credential->{url}\n" if exists $credential->{url};
+-	while (my ($key, $value) = each(%$credential) ) {
+-		if (length $value && $key ne 'url') {
+-			print $writer "$key=$value\n";
+-		}
+-	}
+-}
+-
+-sub credential_run {
+-	my $op = shift;
+-	my $credential = shift;
+-	my $pid = open2(my $reader, my $writer, "git credential $op");
+-	credential_write($credential, $writer);
+-	print $writer "\n";
+-	close($writer);
+-
+-	if ($op eq "fill") {
+-		%$credential = credential_read($reader, $op);
+-	} else {
+-		if (<$reader>) {
+-			die "ERROR while running git credential $op:\n$_";
+-		}
+-	}
+-	close($reader);
+-	waitpid($pid, 0);
+-	my $child_exit_status = $? >> 8;
+-	if ($child_exit_status != 0) {
+-		die "'git credential $op' failed with code $child_exit_status.";
+-	}
+-}
+-
+ # MediaWiki API instance, created lazily.
+ my $mediawiki;
+ 
+@@ -217,22 +167,24 @@ sub mw_connect_maybe {
+ 	$mediawiki = MediaWiki::API->new;
+ 	$mediawiki->{config}->{api_url} = "$url/api.php";
+ 	if ($wiki_login) {
+-		my %credential = (url => $url);
+-		$credential{username} = $wiki_login;
+-		$credential{password} = $wiki_passwd;
+-		credential_run("fill", \%credential);
++		my %credential = (
++			'url' => $url,
++			'username' => $wiki_login,
++			'password' => $wiki_passwd
++		);
++		Git::credential \%credential;
+ 		my $request = {lgname => $credential{username},
+ 			       lgpassword => $credential{password},
+ 			       lgdomain => $wiki_domain};
+ 		if ($mediawiki->login($request)) {
+-			credential_run("approve", \%credential);
++			Git::credential \%credential, 'approve';
+ 			print STDERR "Logged in mediawiki user \"$credential{username}\".\n";
+ 		} else {
+ 			print STDERR "Failed to log in mediawiki user \"$credential{username}\" on $url\n";
+ 			print STDERR "  (error " .
+ 				$mediawiki->{error}->{code} . ': ' .
+ 				$mediawiki->{error}->{details} . ")\n";
+-			credential_run("reject", \%credential);
++			Git::credential \%credential, 'reject';
+ 			exit 1;
+ 		}
+ 	}
+-- 
+1.8.3.rc3.7.gc2f33ed.dirty
