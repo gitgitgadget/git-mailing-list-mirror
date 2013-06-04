@@ -1,93 +1,81 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Can `git blame` show the date that each line was merged?
-Date: Tue, 4 Jun 2013 11:56:05 -0400
-Message-ID: <20130604155605.GA15953@sigill.intra.peff.net>
-References: <CAJELnLEiK1C9PeimSwDoJoy=wFbFF0+KoK3jhXSAV4b2DsBKqw@mail.gmail.com>
+Subject: Re: git-daemon: needs /root/.config/git/config?
+Date: Tue, 4 Jun 2013 12:08:15 -0400
+Message-ID: <20130604160815.GB15953@sigill.intra.peff.net>
+References: <20130604141314.GD22308@pomac.netswarm.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matt McClure <matthewlmcclure@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 04 17:56:23 2013
+Cc: git@vger.kernel.org
+To: Ian Kumlien <pomac@vapor.com>
+X-From: git-owner@vger.kernel.org Tue Jun 04 18:08:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ujtat-0007as-Uz
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 17:56:20 +0200
+	id 1UjtmZ-0000kF-MO
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 18:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755271Ab3FDP4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 11:56:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42099 "EHLO peff.net"
+	id S1755853Ab3FDQIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 12:08:19 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42182 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755366Ab3FDP4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 11:56:09 -0400
-Received: (qmail 25471 invoked by uid 102); 4 Jun 2013 15:56:54 -0000
+	id S1754916Ab3FDQIS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 12:08:18 -0400
+Received: (qmail 26078 invoked by uid 102); 4 Jun 2013 16:09:04 -0000
 Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 04 Jun 2013 10:56:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Jun 2013 11:56:05 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 04 Jun 2013 11:09:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Jun 2013 12:08:15 -0400
 Content-Disposition: inline
-In-Reply-To: <CAJELnLEiK1C9PeimSwDoJoy=wFbFF0+KoK3jhXSAV4b2DsBKqw@mail.gmail.com>
+In-Reply-To: <20130604141314.GD22308@pomac.netswarm.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226371>
 
-On Tue, Jun 04, 2013 at 09:39:45AM -0400, Matt McClure wrote:
+On Tue, Jun 04, 2013 at 04:13:14PM +0200, Ian Kumlien wrote:
 
-> Can `git blame` show the date that each line was merged to the current
-> branch rather than the date it was committed?
-
-Not exactly. Git does not record when a commit entered a particular
-branch (or what the "ours" branch was called during a merge).  If you
-follow a topic branch workflow in which an integrator merges each branch
-into master, then following the first parent of each merge will show the
-commits directly on master.
-
-You can see this in action in git.git, which follows such a workflow, by
-doing "git log --first-parent", which shows only the commits created
-directly on master (mostly merges of topics, with a few trivial fixups
-interspersed).
-
-Similarly, you should be able to do "git blame --first-parent foo.c" to
-pass blame only along the first-parent lines. Unfortunately, while
-"blame" uses the regular revision code to parse its options, it does its
-own traversal and does not respect each option. However, the patch to
-teach it about --first-parent is pretty trivial:
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 57a487e..0fb67af 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1199,6 +1199,8 @@ static int num_scapegoats(struct rev_info *revs, struct commit *commit)
- {
- 	int cnt;
- 	struct commit_list *l = first_scapegoat(revs, commit);
-+	if (revs->first_parent_only)
-+		return l ? 1 : 0;
- 	for (cnt = 0; l; l = l->next)
- 		cnt++;
- 	return cnt;
-
-(though I suspect it would interact oddly with the "--reverse" option,
-and we would want to either declare them mutually exclusive or figure
-out some sane semantics).
-
-> Aside: in some trial and error I notice this oddity:
+> Due to the earlier problem I upgraded git on all machines 
+> and eneded up with a ubunut machine running in to problems.
 > 
->     $ git blame --merges
->     usage: git blame [options] [rev-opts] [rev] [--] file
+> I started getting errors like:
+> "fatal: protocol error: bad line length character: fata"
 > 
->         [rev-opts] are documented in git-rev-list(1)
->     ...
+> Which after some head scratching caused me to tell xinetd to directly
+> launch git-daemon, eventually it worked fine, but i did get this error
+> message:
 
-Your problem is not the presence of "--merges" here, but that you forgot
-the necessary "file" argument. Try "git blame --merges foo.c".
+Looks like your stderr was being redirected to your stdout; this
+particular error aside, that is likely to cause weird protocol problems
+for any error that git outputs.
 
-However, this suffers from the same problem as --first-parent, in that
-it is accepted but not respected. Doing so would not be impossible, but
-it is a little more than the two-liner above.
+> Jun  4 16:12:05 xyz git-daemon[10246]: unable to access
+> '/root/.config/git/config': Permission denied
+> 
+> It's not the first time i've seen it but i've been able to ignore it
+> before. This is running as a local user (as in not root) and this user
+> shouldn't have access to /root. But i eventually had to do chown o+x
+> /root to workaround this error.
+
+The problem is that you have presumably dropped privileges in the daemon
+instance, but your $HOME environment variable still points to /root. Git
+cannot read all of its config files (nor even find out if they exist),
+so it bails rather than continue.
+
+Older versions of git silently ignored errors reading config files, but
+it was tightened in v1.8.1.1, as there can be quite serious implications
+to failing to read expected config (e.g., imagine transfer.fsckobjects,
+or receive.deny* is ignored).
+
+However, since changing user id and leaving $HOME is so common, there is
+a patch under consideration to loosen the check only for the case of
+EACCES on files in $HOME. That commit is 4698c8f (config: allow
+inaccessible configuration under $HOME, 2013-04-12); it's not yet in any
+released version of git, though.
+
+In the meantime, the suggested workaround is to set $HOME for the
+git-daemon user, rather than loosening /root.
 
 -Peff
