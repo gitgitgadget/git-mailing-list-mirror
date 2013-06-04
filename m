@@ -1,87 +1,87 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 3/8] cherry-pick: add --skip-empty option
-Date: Tue, 4 Jun 2013 12:40:14 -0500
-Message-ID: <CAMP44s2_Xr4bymmDezTF8BMiMKQZFpNuxXpFZd_TGJ3BkJWdGw@mail.gmail.com>
-References: <1369799788-24803-1-git-send-email-felipe.contreras@gmail.com>
-	<1369799788-24803-4-git-send-email-felipe.contreras@gmail.com>
-	<7vr4gjdomk.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1GQ2iwwscx4Sx1cxK0U6yWWYvOJqDk_FO_GkFcNKREYw@mail.gmail.com>
-	<7vehcidg1i.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2DvtiT6hi-RoPt_bVdGr01S367usz=089E1Ht+Bvh-tA@mail.gmail.com>
-	<7vbo7l93t6.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/6] git send-email suppress-cc=self fixes
+Date: Tue, 04 Jun 2013 10:40:51 -0700
+Message-ID: <7v4ndd93ks.fsf@alter.siamese.dyndns.org>
+References: <1370332482-12329-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@inf.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 04 19:40:27 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Jun 04 19:41:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjvDa-00089S-81
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 19:40:22 +0200
+	id 1UjvER-0000SS-CK
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 19:41:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755609Ab3FDRkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 13:40:18 -0400
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:40944 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752783Ab3FDRkQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 13:40:16 -0400
-Received: by mail-lb0-f176.google.com with SMTP id z5so960605lbh.21
-        for <git@vger.kernel.org>; Tue, 04 Jun 2013 10:40:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=x8WoHucivLvlQ/L/8ohaUVIcyl2wlMeIbeiVq5TmlL0=;
-        b=a9gL5/GruD8VeQklxkjxQUlUT9AFDi2gGVQF8ETvDPGleKoqL0OILjlrsf5wd8dimw
-         J+K5kZ60AsFrV/ikVF68Dho64A3rfgQeU7DocS6kFDQCqalPQDUMtEyMvW+b1xkeY7oF
-         tCVPunm7eRLhkrrXiCVDeWubOufr9a6Pj8g0Fxjn9+asje6OgqaYQu1BXO28MyA6A40v
-         PBEoHdLyc+DyLhS7FJLNcR1R7/PJjp2eEiJsLywjYUEBDjcAnEKCvjv+FJ1fVN8Y9/Vx
-         NOwoNGivqE6Ec0Jp7mFDK7sseyBqXaWoO+Rf3kRG7CVnWhyxcuq45JdDGNUQRn6Y3R5W
-         UABA==
-X-Received: by 10.152.26.137 with SMTP id l9mr13739875lag.2.1370367614600;
- Tue, 04 Jun 2013 10:40:14 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Tue, 4 Jun 2013 10:40:14 -0700 (PDT)
-In-Reply-To: <7vbo7l93t6.fsf@alter.siamese.dyndns.org>
+	id S1756046Ab3FDRlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 13:41:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64004 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752009Ab3FDRlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 13:41:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AC8025287;
+	Tue,  4 Jun 2013 17:41:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xgn5ZN64whgU/yD39cf9DvS9NpM=; b=RXPHgs
+	ff4s0hTokc9V+oH9D7Od4Fhcx3KwVx7/9UxcwjoZG1fS20/mP8nAWgpS7eYNs4+Z
+	hYyspJGucM+fjxDvB9kHeCeDoDDqoDkMmAtKaLTIybhz0Gr0WtWYAM2iXhFebzKA
+	vDz1muhrerANpDCdY3y3RQ9Fw1sgAYShCg4k0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rMTBQUARAJZcL8nlJfOU24/YCBfpebED
+	IXKUuNl5SpeZfeRgeFdqyCUISKrFCfKoSaW08YYAsgneHhOI9YzWuVBOicB2+Mxj
+	BCTwlcXRjnZr9c0N2KvqvVFKLrqoALNAEi0w7NH8U2roPZYh2jlV97N9IgG058rs
+	dcjhBjPfMPw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F09AD25286;
+	Tue,  4 Jun 2013 17:41:08 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 27B7A25270;
+	Tue,  4 Jun 2013 17:40:53 +0000 (UTC)
+In-Reply-To: <1370332482-12329-1-git-send-email-mst@redhat.com> (Michael
+	S. Tsirkin's message of "Tue, 4 Jun 2013 10:55:59 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E74B815C-CD3D-11E2-B7E4-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226385>
 
-On Tue, Jun 4, 2013 at 12:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+"Michael S. Tsirkin" <mst@redhat.com> writes:
+
+> This includes bugfixes related to handling of --suppress-cc=self
+> flag. Tests are also included.
+
+Hmph, flipped the patches without test-applying first?
+
+2/6 adds two lines to test_suppress_self_quoted helper function, but
+that is introduced only at 4/6.
+
 >
->>> I think just "Skip commits that are or become empty" without saying
->>> "Instead of failing," is fine, too.
->>
->> I think "Instead of failing" makes perfect sense, because it's not our
->> job to describe what other options do,...
->> ...
->> simply explain what this option
->> do.
+> Changes from v2:
+> 	- add a new test, split patches differently add code comments
+> 		 to address comments by Junio
+> 	- rename example addresses in tests from redhat.com to example.com
+> Changes from v1:
+>         - tweak coding style in tests to address comments by Junio
 >
-> Which means "Skip commits" and nothing else.  Saying "Instead of
-> failing" explains what would happen if you ran the command without
-> any option,
-
-Which *BY FAR* the most widely use-case of cherry-pick. What? 99% of the time?
-
-> which is entirely irrelevant,
-
-It's totally and completely relevant. It couldn't be more relevant.
-
-> We share the same "the --skip-empty option does not have anything to
-> do with the --allow-empty option, and we do not have to say anything
-> about what happens when the command is run with that unrelated
-> option".
-
-You didn't answer, what happens when you run --skip-empty and --allow-empty?
-
--- 
-Felipe Contreras
+>
+> Michael S. Tsirkin (6):
+>   send-email: fix suppress-cc=self on cccmd
+>   t/send-email: test suppress-cc=self on cccmd
+>   send-email: make --suppress-cc=self sanitize input
+>   t/send-email: add test with quoted sender
+>   t/send-email: test suppress-cc=self with non-ascii
+>   test-send-email: test for pre-sanitized self name
+>
+>  git-send-email.perl   | 23 +++++++++++++++--------
+>  t/t9001-send-email.sh | 34 +++++++++++++++++++++++++++++++++-
+>  2 files changed, 48 insertions(+), 9 deletions(-)
