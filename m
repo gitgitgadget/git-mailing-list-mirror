@@ -1,80 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] add --authorship-order flag to git log / rev-list
-Date: Tue, 04 Jun 2013 11:53:02 -0700
-Message-ID: <7vmwr57lo1.fsf@alter.siamese.dyndns.org>
-References: <1370369299-20744-1-git-send-email-me@ell.io>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: git-daemon: needs /root/.config/git/config?
+Date: Tue, 04 Jun 2013 21:05:44 +0200
+Message-ID: <51AE3A88.2080203@kdbg.org>
+References: <20130604141314.GD22308@pomac.netswarm.net> <20130604160815.GB15953@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: elliottcable <me@ell.io>
-X-From: git-owner@vger.kernel.org Tue Jun 04 20:53:12 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Ian Kumlien <pomac@vapor.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 04 21:05:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjwM3-00024t-ED
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 20:53:11 +0200
+	id 1UjwYM-0004dy-K6
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 21:05:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750858Ab3FDSxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 14:53:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65239 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750768Ab3FDSxF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 14:53:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D511325164;
-	Tue,  4 Jun 2013 18:53:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y1H9RwqdndIdIzZuSTevIv/Zb2Y=; b=Yd/cCK
-	KihFc6M83wQsFfvKTwcAldyyflKI4pCc1Pn+p/JvRCXTAXSJYzKV6jiwhX7IvKSW
-	inFtvx2/jG/wjWB1EvMLLLjkcBYwxhUh1G7ZC2P4KwS9aaBlqeePR9SFmjpqny2w
-	DG4HvckKMgCd2G2xSFryF9A3zLW9gaE/2QVZE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X84boF90l55h7f0GDsUsvOlo5vixG/n+
-	AJTGn2xnRmDeSAnahKykCIM/H2aDT+b+SVkWP0YWizfhEcomk10DWyIi/6/Xy/Fj
-	z9uuQeThHr1/qzpqoSdCximWyPWRUVHGnAI3T+QFRqPXcLB2BB6WPQ0jSASKt5zP
-	zUKsL1vN3wQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9A7925162;
-	Tue,  4 Jun 2013 18:53:04 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4DFFE2515F;
-	Tue,  4 Jun 2013 18:53:04 +0000 (UTC)
-In-Reply-To: <1370369299-20744-1-git-send-email-me@ell.io> (elliottcable's
-	message of "Tue, 4 Jun 2013 14:08:17 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FCDD7B9C-CD47-11E2-B097-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750872Ab3FDTFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 15:05:50 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:51735 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750784Ab3FDTFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 15:05:49 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 6B9F2130055;
+	Tue,  4 Jun 2013 21:04:53 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 1460919F5E2;
+	Tue,  4 Jun 2013 21:05:44 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <20130604160815.GB15953@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226393>
 
-elliottcable <me@ell.io> writes:
+Am 04.06.2013 18:08, schrieb Jeff King:
+> Older versions of git silently ignored errors reading config files, but
+> it was tightened in v1.8.1.1, as there can be quite serious implications
+> to failing to read expected config (e.g., imagine transfer.fsckobjects,
+> or receive.deny* is ignored).
+> 
+> However, since changing user id and leaving $HOME is so common, there is
+> a patch under consideration to loosen the check only for the case of
+> EACCES on files in $HOME. That commit is 4698c8f (config: allow
+> inaccessible configuration under $HOME, 2013-04-12); it's not yet in any
+> released version of git, though.
+> 
+> In the meantime, the suggested workaround is to set $HOME for the
+> git-daemon user, rather than loosening /root.
 
-> This is my first time submitting a patch to this list, so please, let me know if
-> I'm doing any of this the wrong way! I've striven to follow
-> `Documentation/SubmittingPatches`. I hope I've succeeded. For that matter, it's
-> my first time diving into git's sources, so I obviously would love some
-> commentary on the patch itself, as well. ;)
->
-> I've tried herein to add an `--authorship-order` flag to complement git-log's
-> `--topo-order` and `--date-order` flags; it should operate the same as
-> `--date-order`, but using the `AUTHOR_DATE` instead of the `COMMITTER_DATE`.
+I've a PHP script in ~/public_html that runs git. Without the mentioned
+patch, the script bails out due to this error. This time it's Apache
+that gets me into trouble because at the time the PHP script and git
+run, $HOME is still /root, but the user identity is not root anymore.
+The patch is direly needed; without it, I need to use 'env
+HOME=/home/j6t /usr/local/bin/git' in my script.
 
-After reading the subject alone, my reaction was "is this sorting
-commits by the name of the author"?
-
-That is one of the expected natural reactions when people hear about
-this option, which is not what you want.
-
-Perhaps naming it --authordate-order (or enhance the command line
-parsing to allow --date-order=author|committer) would give us a
-better UI.
-
-(the above comment is before reading any of the code in the patch).
+-- Hannes
