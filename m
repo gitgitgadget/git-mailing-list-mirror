@@ -1,111 +1,175 @@
-From: Gianfranco Costamagna <costamagnagianfranco@yahoo.it>
-Subject: I: git archive --worktree-attributes doesn't exclude .gitattributes anymore
-Date: Tue, 4 Jun 2013 23:24:26 +0100 (BST)
-Message-ID: <1370384666.57411.YahooMailNeo@web172701.mail.ir2.yahoo.com>
-References: <1370384339.31882.YahooMailNeo@web172702.mail.ir2.yahoo.com>
-Reply-To: Gianfranco Costamagna <costamagnagianfranco@yahoo.it>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Re: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
+Date: Tue, 4 Jun 2013 18:57:34 -0400
+Message-ID: <CABURp0qPt8S4WWhjb22qEJwnUOoT7SFr9=cZBv3Syp-uEX-ycg@mail.gmail.com>
+References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org> <51A7A73C.6070103@web.de>
+ <20130531194051.GC1072@serenity.lan> <51AD0EEB.4020106@web.de>
+ <20130603222341.GL1072@serenity.lan> <20130604052950.GA2943@book.hvoigt.net>
+ <20130604081045.GM1072@serenity.lan> <20130604111717.GA306@book.hvoigt.net> <20130604124826.GN1072@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 05 00:31:19 2013
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Jun 05 00:58:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ujzl2-0007bS-SP
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 00:31:13 +0200
+	id 1Uk0B3-0004vV-J5
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 00:58:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751136Ab3FDWbI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jun 2013 18:31:08 -0400
-Received: from nm16-vm1.bullet.mail.ird.yahoo.com ([77.238.189.88]:29143 "EHLO
-	nm16-vm1.bullet.mail.ird.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751112Ab3FDWbH convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 4 Jun 2013 18:31:07 -0400
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Jun 2013 18:31:07 EDT
-Received: from [77.238.189.57] by nm16.bullet.mail.ird.yahoo.com with NNFMP; 04 Jun 2013 22:24:26 -0000
-Received: from [212.82.98.79] by tm10.bullet.mail.ird.yahoo.com with NNFMP; 04 Jun 2013 22:24:26 -0000
-Received: from [127.0.0.1] by omp1016.mail.ir2.yahoo.com with NNFMP; 04 Jun 2013 22:24:26 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 793406.48426.bm@omp1016.mail.ir2.yahoo.com
-Received: (qmail 73904 invoked by uid 60001); 4 Jun 2013 22:24:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.it; s=s1024; t=1370384666; bh=eTGeKTc25vidx+AnLndLpDe6zuazvHp4u27UeDWxDsg=; h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:References:Message-ID:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=AmqYThDqnLAk4w0NQVAGT8HFSqGfMoOqSsQO5xIK9/+2GE99lb3sBDEyE/PDH2GX0NIh5TGizUtqLr0cDKlzwFFGiPiPqdV7h0bdwztmCKv0+8F7NqYRVwuZkXOk9Ja2Wk0mglLHUCA0WVqN3nkdYTw6v/Tw7QgVah3kiYPqWws=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:References:Message-ID:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=wWpcSQ7SDfZozpk6W6DX+gGS6nZMEplTqZvWYIKjDXLkg/6zYG53ONm+a4zgomRfNd2pmMcNy9MSP+gRjZP+oqBKwihcx1LAZQY/hsku9fX9lf7WKvxp94lEo+2JIS1p1DZRNmRbLlzo3d8pnXxariNfYl4zBJ9VmdeqX7wm+Qk=;
-X-YMail-OSG: IEJyymwVM1nZ_ptf7jvrZh0Q._Rea.yt8n4kptjsBsz2TFU
- vp7zh77xRh22OtgEOxTtf7GesgGgfJ_QlqsSdHTkwMqjFK2c9BqLrU8UdBkg
- mnHhBjtH._aF5FXRcF8QANkW7q7ZJ__FE.oyVTb90bQbgzFQx4zmr3s5l5N3
- tvMfG2MgNYLRFR3yG12MUKhnvFYQsfIL2IF0Tq9Qq20ovk_ufQKStoMbgxGD
- dBG2wL0RT04EeKj85b8Y882bj1hKc2wWlCDwmvX503XOyWWY2kgiO7KY.qDG
- VTmCpQYhph45fcK6MV64iuWuPhzJDRIRReUtRgRuaJcj6O.axB3zXS2.Rmz8
- 5v_CKsP4QdAuW2pZrq0iZ.6lmIAZZZq._eyExQsPK6ZuW8FVwnpuKOj3o3XN
- iapk4JmhmfLPXtpOl13XaMek46Jr2pjni_ciS67KysB2hlCRG5bY4KBIJ10g
- 6dNPhQ1bbx5nYFeKmvZGTu_QPXBeynn_efkktaRERxnwU7Gjhw4YgaI1qOiC
- LowbmPAUDcv4gy3tOkCZqSLpVCdgD5ulYjB.pXQzk5dFkoq_edKV1YwTLs_j
- B51paQMSiIj6_m_pOI8GD3dVAQebpjSb0mTuJHGkqo03.1Jq8zEeejqrRlcg
- iXxsBLsQ.J00TAateXkOgWPgxZuglyI_774Gy8uildWk0U5fQefIqoACum_g
- VV1mrq3W0flZfRIzi7w--
-Received: from [151.18.140.52] by web172701.mail.ir2.yahoo.com via HTTP; Tue, 04 Jun 2013 23:24:26 BST
-X-Rocket-MIMEInfo: 002.001,Rm9yZ290IHRvIG1lbnRpb24sIGFsc28gdGhpcyBjb21tYW5kIGRvZXNuJ3Qgd29yawoKCmdpdCBhcmNoaXZlIC0td29ya3RyZWUtYXR0cmlidXRlc8KgIC12IC0tZm9ybWF0IHRneiAtbyAuLi9ib2luY183LjEuNytkZnNnLm9yaWcudGFyLmd6IC05IC0tcHJlZml4IGJvaW5jLTcuMS43K2Rmc2cvIGNsaWVudF9yZWxlYXNlLzcuMS83LjEuNwoKCkdpYW5mcmFuY28KCgoKLS0tLS0gTWVzc2FnZ2lvIGlub2x0cmF0byAtLS0tLQo.IERhOiBHaWFuZnJhbmNvIENvc3RhbWFnbmEgPGNvc3RhbWFnbmFnaWFuZnJhbmMBMAEBAQE-
-X-Mailer: YahooMailWebService/0.8.145.547
-In-Reply-To: <1370384339.31882.YahooMailNeo@web172702.mail.ir2.yahoo.com>
+	id S1753620Ab3FDW56 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jun 2013 18:57:58 -0400
+Received: from mail-vc0-f171.google.com ([209.85.220.171]:64449 "EHLO
+	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752101Ab3FDW54 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jun 2013 18:57:56 -0400
+Received: by mail-vc0-f171.google.com with SMTP id m16so663104vca.2
+        for <git@vger.kernel.org>; Tue, 04 Jun 2013 15:57:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=MosSxBikDnftruNqq2d5EJ92wq01BbB7g+e5q00DM9Q=;
+        b=H5FCYL/qtp2qxYdrKCX+cO36uxkuf3BFp1h1LlU0U97MoLwJghYcZ0lAavXaGwlMO8
+         5up0ceE8sKDInaXOblsNltEUZo0llX/zZDhEZ7kVBUqb0QMKBJ4SacWQjn7/aA9VXCvt
+         cchc74tsX39snqjZ477zrQ2uKJNjB5NYmTBFjPr/+04POwfmmlXF7U3s0M3/3jPWZeJ8
+         0oxGJ7VBIyAj6rHoLUIJNdo4wQ0GATjOIHYcPrKMcCCq7HSPC87M5G0KibI9zqsKYXSo
+         QRMkijvWdmh+NVK/fM91gXNABNhuDdEoFg7a5ssTFRbGK6sLkLzLYJ89Bjy7RFcsgZaF
+         4WDA==
+X-Received: by 10.52.66.229 with SMTP id i5mr16510616vdt.131.1370386674812;
+ Tue, 04 Jun 2013 15:57:54 -0700 (PDT)
+Received: by 10.59.5.138 with HTTP; Tue, 4 Jun 2013 15:57:34 -0700 (PDT)
+In-Reply-To: <20130604124826.GN1072@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226421>
 
-=46orgot to mention, also this command doesn't work
+On Tue, Jun 4, 2013 at 8:48 AM, John Keeping <john@keeping.me.uk> wrote=
+:
+> On Tue, Jun 04, 2013 at 09:17:17PM +1000, Heiko Voigt wrote:
+>> On Tue, Jun 04, 2013 at 09:10:45AM +0100, John Keeping wrote:
+>> > On Tue, Jun 04, 2013 at 03:29:51PM +1000, Heiko Voigt wrote:
+>> > > On Mon, Jun 03, 2013 at 11:23:41PM +0100, John Keeping wrote:
+>> > > > > Sorry, I should have been more specific here. I saw that you=
+ did some
+>> > > > > changes to make "submodule add" do the right thing with rela=
+tive paths,
+>> > > > > but the following change to t7406 does not work like I belie=
+ve it
+>> > > > > should but instead makes the test fail:
+>> > > > > -------------------8<---------------------
+>> > > > > diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule=
+-update.sh
+>> > > > > index a4ffea0..9766b9e 100755
+>> > > > > --- a/t/t7406-submodule-update.sh
+>> > > > > +++ b/t/t7406-submodule-update.sh
+>> > > > > @@ -559,7 +559,9 @@ test_expect_success 'add different submo=
+dules to the same pa
+>> > > > >  test_expect_success 'submodule add places git-dir in superp=
+rojects git-dir' '
+>> > > > >         (cd super &&
+>> > > > >          mkdir deeper &&
+>> > > > > -        git submodule add ../submodule deeper/submodule &&
+>> > > > > +        (cd deeper &&
+>> > > > > +         git submodule add ../../submodule submodule
+>> > > > > +        ) &&
+>> > > > >          (cd deeper/submodule &&
+>> > > > >           git log > ../../expected
+>> > > > >          ) &&
+>> > > > > -------------------8<---------------------
+>> > > >
+>> > > > Ah, ok.  I think this case is problematic because the reposito=
+ry
+>> > > > argument is either relative to "remote.origin.url" or to the t=
+op of the
+>> > > > working tree if there is no "origin" remote.  I wonder if we s=
+hould just
+>> > > > die when a relative path is given for the repository and we're=
+ not at
+>> > > > the top of the working tree.
+>> > >
+>> > > Why not behave as if we are at the top of the working tree for r=
+elative
+>> > > paths? If there is an origin remote thats fine. If there is no o=
+rigin
+>> > > remote you could warn that the path used is taken relative from =
+the root
+>> > > of the superproject during add. What do you think?
+>> >
+>> > That's what the patch currently queued on "pu" does, which Jens wa=
+nts to
+>> > change, isn't it?
+>>
+>> True I did not realize this when reading it the first time. But I th=
+ink
+>> we should still not die when in a subdirectory. After all this serie=
+s is
+>> trying to archive that the submodule command works in subdirectories
+>> seamlessly right? So you probably want to translate a relative path
+>> without "origin" remote given from a subdirectory to the superprojec=
+t
+>> level and use that. Then you do not have to die.
+>
+> The problem is that sometimes you do want to adjust the path and
+> sometimes you don't.  Reading git-submodule(1), it says:
+>
+>      This may be either an absolute URL, or (if it begins with ./ or
+>      ../), the location relative to the superproject=92s origin
+>      repository.
+>      [snip]
+>      If the superproject doesn=92t have an origin configured the
+>      superproject is its own authoritative upstream and the current
+>      working directory is used instead.
+>
+> So I think it's quite reasonable to have a server layout that looks l=
+ike
+> this:
+>
+>     project
+>     |- libs
+>     |  |- libA
+>     |  `- libB
+>     |- core.git
+>
+> and with only core.git on your local system do:
+>
+>     cd core/libs
+>     git submodule add ../libs/libB
+>
+> expecting that to point to libB.  But if we adjust the path then the
+> user has to do:
+>
+>     git submodule add ../../libs/libB
+>
+> However, it is also perfectly reasonable to have no remote configured
+> and the library next to the repository itself.  In which case we do w=
+ant
+> to specify the additional "../" so that shell completion works in the
+> natural way.
 
+In submodule add, the leading '../' prefix on the repository url has
+always meant that the url is relative to the url of the current repo.
+The given repo-url is precisely what ends up in .gitmodules'
+submodule.$name.url.  It works this way whether there is a remote
+configured or not.
 
-git archive --worktree-attributes=A0 -v --format tgz -o ../boinc_7.1.7+=
-dfsg.orig.tar.gz -9 --prefix boinc-7.1.7+dfsg/ client_release/7.1/7.1.7
+It does seem like we need to be cautious around this change.
 
+> The only way I can see to resolve the ambiguity is to die when we hit
+> this particular case.  This should be acceptable because people
+> shouldn't be adding new submodules anywhere near as often as they
+> perform other submodule operations and it doesn't affect absolute URL=
+s.
 
-Gianfranco
+I don't think I like that.  But I don't know if I like anything I
+dreamed up, either.
 
-
-
------ Messaggio inoltrato -----
-> Da: Gianfranco Costamagna <costamagnagianfranco@yahoo.it>
-> A: "git@vger.kernel.org" <git@vger.kernel.org>
-> Cc:=20
-> Inviato: Mercoled=EC 5 Giugno 2013 0:18
-> Oggetto: git archive --worktree-attributes doesn't exclude .gitattrib=
-utes anymore
->=20
->g it version 1.8.1.2
-> (please cc me, I'm not subscribed to this list)
->=20
->=20
-> Hi Developers, I write here because since my ubuntu update (quantal t=
-o raring)
-> and git update from 1.7.10.4-1ubuntu1 to 1.8.1.2
->=20
-> my export script doesn't work anymore.
->=20
-> I tried to put .gitattributes or .git/info/attributes, the file is th=
-e following
-> http://pastebin.com/irngA1L8
->=20
-> the git is
-> git clone http://boinc.berkeley.edu/git/boinc-v2.git
->=20
-> and the command is
->=20
-> git archive --prefix boinc-7.1.7+dfsg/ --format tgz -o=20
-> ../boinc_7.1.7+dfsg.orig.tar.gz -9=A0 client_release/7.1/7.1.7
->=20
-> The archive gets created, but every file is inside, no exclusions at =
-all.
->=20
-> I suspect a regression between git 1.7 and 1.8
->=20
-> thanks for your time
->=20
->=20
-> Gianfranco
->=20
+P
