@@ -1,175 +1,137 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: Re: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
-Date: Tue, 4 Jun 2013 18:57:34 -0400
-Message-ID: <CABURp0qPt8S4WWhjb22qEJwnUOoT7SFr9=cZBv3Syp-uEX-ycg@mail.gmail.com>
-References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org> <51A7A73C.6070103@web.de>
- <20130531194051.GC1072@serenity.lan> <51AD0EEB.4020106@web.de>
- <20130603222341.GL1072@serenity.lan> <20130604052950.GA2943@book.hvoigt.net>
- <20130604081045.GM1072@serenity.lan> <20130604111717.GA306@book.hvoigt.net> <20130604124826.GN1072@serenity.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 02/15] for-each-ref: don't print out elements directly
+Date: Tue, 04 Jun 2013 16:13:09 -0700
+Message-ID: <7vsj0x4ghm.fsf@alter.siamese.dyndns.org>
+References: <1370349337-20938-1-git-send-email-artagnon@gmail.com>
+	<1370349337-20938-3-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Jun 05 00:58:06 2013
+Cc: Git List <git@vger.kernel.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmc=?= =?utf-8?B?4buNYw==?= Duy 
+	<pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 05 01:13:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uk0B3-0004vV-J5
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 00:58:05 +0200
+	id 1Uk0Pp-0001ah-AU
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 01:13:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753620Ab3FDW56 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jun 2013 18:57:58 -0400
-Received: from mail-vc0-f171.google.com ([209.85.220.171]:64449 "EHLO
-	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752101Ab3FDW54 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jun 2013 18:57:56 -0400
-Received: by mail-vc0-f171.google.com with SMTP id m16so663104vca.2
-        for <git@vger.kernel.org>; Tue, 04 Jun 2013 15:57:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=MosSxBikDnftruNqq2d5EJ92wq01BbB7g+e5q00DM9Q=;
-        b=H5FCYL/qtp2qxYdrKCX+cO36uxkuf3BFp1h1LlU0U97MoLwJghYcZ0lAavXaGwlMO8
-         5up0ceE8sKDInaXOblsNltEUZo0llX/zZDhEZ7kVBUqb0QMKBJ4SacWQjn7/aA9VXCvt
-         cchc74tsX39snqjZ477zrQ2uKJNjB5NYmTBFjPr/+04POwfmmlXF7U3s0M3/3jPWZeJ8
-         0oxGJ7VBIyAj6rHoLUIJNdo4wQ0GATjOIHYcPrKMcCCq7HSPC87M5G0KibI9zqsKYXSo
-         QRMkijvWdmh+NVK/fM91gXNABNhuDdEoFg7a5ssTFRbGK6sLkLzLYJ89Bjy7RFcsgZaF
-         4WDA==
-X-Received: by 10.52.66.229 with SMTP id i5mr16510616vdt.131.1370386674812;
- Tue, 04 Jun 2013 15:57:54 -0700 (PDT)
-Received: by 10.59.5.138 with HTTP; Tue, 4 Jun 2013 15:57:34 -0700 (PDT)
-In-Reply-To: <20130604124826.GN1072@serenity.lan>
+	id S1753035Ab3FDXNO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jun 2013 19:13:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62194 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752885Ab3FDXNM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jun 2013 19:13:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3929E25659;
+	Tue,  4 Jun 2013 23:13:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=GLXVCLnsr36F
+	Jr+UlnvbcxaUQtM=; b=AXLEFQtqoAjUMSnR9G/HojGJFZCPn5Fdll7nDKmzZWUL
+	ldBoyvlzMGzIbQ9cAD8/DMCAyeZAT6yZO3bi+WjWbDcLk3awbrgtYZ1fUHo52ZIr
+	Veln56IqKztGGzOoKOxFCkxBRazyfE4GiiLnxo6WtN5QJuNDJ4KU3g8q6aOfmzE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=vKAzPX
+	/B++BTaS2Dk9OOHq8TKHc6VNwc8dppdfvrdv6/vgrAPVr+v8EGKwCl5ZGdWNGWiL
+	EsP4zQWONEhyqKcBXHcG51J1tskrG4MirLzi7Doc4zsAY6wSc8rE1vHnVBFHZ1Ai
+	+Ju0w6loA+sbj0XxDh4ZIdCRk6HBBG5OUDtxY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 305BA25658;
+	Tue,  4 Jun 2013 23:13:11 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 74E9A25657;
+	Tue,  4 Jun 2013 23:13:10 +0000 (UTC)
+In-Reply-To: <1370349337-20938-3-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Tue, 4 Jun 2013 18:05:24 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 52DC68F4-CD6C-11E2-A4D8-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226422>
 
-On Tue, Jun 4, 2013 at 8:48 AM, John Keeping <john@keeping.me.uk> wrote=
-:
-> On Tue, Jun 04, 2013 at 09:17:17PM +1000, Heiko Voigt wrote:
->> On Tue, Jun 04, 2013 at 09:10:45AM +0100, John Keeping wrote:
->> > On Tue, Jun 04, 2013 at 03:29:51PM +1000, Heiko Voigt wrote:
->> > > On Mon, Jun 03, 2013 at 11:23:41PM +0100, John Keeping wrote:
->> > > > > Sorry, I should have been more specific here. I saw that you=
- did some
->> > > > > changes to make "submodule add" do the right thing with rela=
-tive paths,
->> > > > > but the following change to t7406 does not work like I belie=
-ve it
->> > > > > should but instead makes the test fail:
->> > > > > -------------------8<---------------------
->> > > > > diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule=
--update.sh
->> > > > > index a4ffea0..9766b9e 100755
->> > > > > --- a/t/t7406-submodule-update.sh
->> > > > > +++ b/t/t7406-submodule-update.sh
->> > > > > @@ -559,7 +559,9 @@ test_expect_success 'add different submo=
-dules to the same pa
->> > > > >  test_expect_success 'submodule add places git-dir in superp=
-rojects git-dir' '
->> > > > >         (cd super &&
->> > > > >          mkdir deeper &&
->> > > > > -        git submodule add ../submodule deeper/submodule &&
->> > > > > +        (cd deeper &&
->> > > > > +         git submodule add ../../submodule submodule
->> > > > > +        ) &&
->> > > > >          (cd deeper/submodule &&
->> > > > >           git log > ../../expected
->> > > > >          ) &&
->> > > > > -------------------8<---------------------
->> > > >
->> > > > Ah, ok.  I think this case is problematic because the reposito=
-ry
->> > > > argument is either relative to "remote.origin.url" or to the t=
-op of the
->> > > > working tree if there is no "origin" remote.  I wonder if we s=
-hould just
->> > > > die when a relative path is given for the repository and we're=
- not at
->> > > > the top of the working tree.
->> > >
->> > > Why not behave as if we are at the top of the working tree for r=
-elative
->> > > paths? If there is an origin remote thats fine. If there is no o=
-rigin
->> > > remote you could warn that the path used is taken relative from =
-the root
->> > > of the superproject during add. What do you think?
->> >
->> > That's what the patch currently queued on "pu" does, which Jens wa=
-nts to
->> > change, isn't it?
->>
->> True I did not realize this when reading it the first time. But I th=
-ink
->> we should still not die when in a subdirectory. After all this serie=
-s is
->> trying to archive that the submodule command works in subdirectories
->> seamlessly right? So you probably want to translate a relative path
->> without "origin" remote given from a subdirectory to the superprojec=
-t
->> level and use that. Then you do not have to die.
->
-> The problem is that sometimes you do want to adjust the path and
-> sometimes you don't.  Reading git-submodule(1), it says:
->
->      This may be either an absolute URL, or (if it begins with ./ or
->      ../), the location relative to the superproject=92s origin
->      repository.
->      [snip]
->      If the superproject doesn=92t have an origin configured the
->      superproject is its own authoritative upstream and the current
->      working directory is used instead.
->
-> So I think it's quite reasonable to have a server layout that looks l=
-ike
-> this:
->
->     project
->     |- libs
->     |  |- libA
->     |  `- libB
->     |- core.git
->
-> and with only core.git on your local system do:
->
->     cd core/libs
->     git submodule add ../libs/libB
->
-> expecting that to point to libB.  But if we adjust the path then the
-> user has to do:
->
->     git submodule add ../../libs/libB
->
-> However, it is also perfectly reasonable to have no remote configured
-> and the library next to the repository itself.  In which case we do w=
-ant
-> to specify the additional "../" so that shell completion works in the
-> natural way.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-In submodule add, the leading '../' prefix on the repository url has
-always meant that the url is relative to the url of the current repo.
-The given repo-url is precisely what ends up in .gitmodules'
-submodule.$name.url.  It works this way whether there is a remote
-configured or not.
+> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+>
+> Currently, the entire callchain starting from show_ref() parses and
+> prints immediately.  This inflexibility limits our ability to extend =
+the
+> parser.  So, convert the entire callchain to accept a strbuf argument=
+ to
+> write to.  Also introduce a show_refs() helper that calls show_ref() =
+in
+> a loop to avoid cluttering up cmd_for_each_ref() with the task of
+> initializing/freeing the strbuf.
+>
+> [rr: commit message]
+>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  builtin/for-each-ref.c | 55 ++++++++++++++++++++++++++++++++--------=
+----------
+>  1 file changed, 35 insertions(+), 20 deletions(-)
+>
+> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> index 1d4083c..e2d6c5a 100644
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -864,31 +864,31 @@ static void sort_refs(struct ref_sort *sort, st=
+ruct refinfo **refs, int num_refs
+>  	qsort(refs, num_refs, sizeof(struct refinfo *), compare_refs);
+>  }
+> =20
+> -static void print_value(struct refinfo *ref, int atom, int quote_sty=
+le)
+> +static void print_value(struct strbuf *sb, struct refinfo *ref,
+> +			int atom, int quote_style)
+>  {
+>  	struct atom_value *v;
+> -	struct strbuf sb =3D STRBUF_INIT;
+>  	get_value(ref, atom, &v);
+>  	switch (quote_style) {
+>  	case QUOTE_NONE:
+> -		fputs(v->s, stdout);
+> +		strbuf_addstr(sb, v->s);
+>  		break;
+>  	case QUOTE_SHELL:
+> -		sq_quote_buf(&sb, v->s);
+> +		sq_quote_buf(sb, v->s);
+>  		break;
+>  	case QUOTE_PERL:
+> -		perl_quote_buf(&sb, v->s);
+> +		perl_quote_buf(sb, v->s);
+>  		break;
+>  	case QUOTE_PYTHON:
+> -		python_quote_buf(&sb, v->s);
+> +		python_quote_buf(sb, v->s);
+>  		break;
+>  	case QUOTE_TCL:
+> -		tcl_quote_buf(&sb, v->s);
+> +		tcl_quote_buf(sb, v->s);
+>  		break;
+>  	}
+>  	if (quote_style !=3D QUOTE_NONE) {
+> -		fputs(sb.buf, stdout);
+> -		strbuf_release(&sb);
+> +		fputs(sb->buf, stdout);
+> +		strbuf_release(sb);
+>  	}
+>  }
 
-It does seem like we need to be cautious around this change.
+The change in the first step made some sense; if asked not to quote,
+it just emits the atom with fputs() in the switch (quote_style), so
+there is nothing more to do after the switch.
 
-> The only way I can see to resolve the ambiguity is to die when we hit
-> this particular case.  This should be acceptable because people
-> shouldn't be adding new submodules anywhere near as often as they
-> perform other submodule operations and it doesn't affect absolute URL=
-s.
-
-I don't think I like that.  But I don't know if I like anything I
-dreamed up, either.
-
-P
+But this change cannot be correct.  It prints literally to sb, and
+leaves the function without emitting anything nor freeing the
+resource in sb.
