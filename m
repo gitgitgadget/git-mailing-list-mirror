@@ -1,99 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/6] git send-email suppress-cc=self fixes
-Date: Tue, 04 Jun 2013 15:11:34 -0700
-Message-ID: <7v4ndd5xwp.fsf@alter.siamese.dyndns.org>
-References: <1370332482-12329-1-git-send-email-mst@redhat.com>
-	<7v4ndd93ks.fsf@alter.siamese.dyndns.org>
-	<20130604214921.GA30400@redhat.com>
+From: Gianfranco Costamagna <costamagnagianfranco@yahoo.it>
+Subject: git archive --worktree-attributes doesn't exclude .gitattributes anymore
+Date: Tue, 4 Jun 2013 23:18:59 +0100 (BST)
+Message-ID: <1370384339.31882.YahooMailNeo@web172702.mail.ir2.yahoo.com>
+Reply-To: Gianfranco Costamagna <costamagnagianfranco@yahoo.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Jun 05 00:11:44 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 05 00:19:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjzSA-0008H6-As
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 00:11:42 +0200
+	id 1UjzZL-0006Eu-Ot
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 00:19:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751053Ab3FDWLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 18:11:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64343 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750811Ab3FDWLh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 18:11:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E82225052;
-	Tue,  4 Jun 2013 22:11:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=B8cZtxpdDDBHUNchoWlYbj5hsDQ=; b=VzcVdy
-	ZxYcu3WHbI/ew/YPn4SatHPIhHU111udTfhYXQOXzjCHKPeOknRtC2fg1iOaTDWU
-	AC4WT1drtXz647iMSovdzAEqPXCE7WnflvKVOyEL6BCBR2BbKUhaxRxJCcw6ngUU
-	7l+6vn14MzSFcEVXNGLJW0OX4VI9S25nVp0L0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cwMULwulIFczC3c/34oJKmf+x9texWia
-	JywPXBTwbcee4reJ476PMqw9FAijwhV70fs1BTcXa2e9yl/nso+6MsqidrrXzhXK
-	StOe+KoyNrKB2x7FoBGKwcxlcGtPtgzTVh/I6SAdxSZ5UL60Lo1ur8rje4HwT//O
-	2AJLON9SZKQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 91DF12504F;
-	Tue,  4 Jun 2013 22:11:36 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EF3802504E;
-	Tue,  4 Jun 2013 22:11:35 +0000 (UTC)
-In-Reply-To: <20130604214921.GA30400@redhat.com> (Michael S. Tsirkin's message
-	of "Wed, 5 Jun 2013 00:49:22 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B8C4B896-CD63-11E2-8451-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751112Ab3FDWTD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jun 2013 18:19:03 -0400
+Received: from nm13-vm0.bullet.mail.ird.yahoo.com ([77.238.189.195]:38511 "HELO
+	nm13-vm0.bullet.mail.ird.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1750811Ab3FDWTB convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 4 Jun 2013 18:19:01 -0400
+Received: from [77.238.189.52] by nm13.bullet.mail.ird.yahoo.com with NNFMP; 04 Jun 2013 22:18:59 -0000
+Received: from [212.82.98.66] by tm5.bullet.mail.ird.yahoo.com with NNFMP; 04 Jun 2013 22:18:59 -0000
+Received: from [127.0.0.1] by omp1003.mail.ir2.yahoo.com with NNFMP; 04 Jun 2013 22:18:59 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 895791.61453.bm@omp1003.mail.ir2.yahoo.com
+Received: (qmail 50474 invoked by uid 60001); 4 Jun 2013 22:18:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.it; s=s1024; t=1370384339; bh=YwqYXPZljZVtAUi//ou9nOo1HOaAYKFnquImH5XaSnc=; h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=Bex5zoEpK9nAgivyfuA3rDOZsD8puzCrF7N3FXdkRWVUk4pgo0aXQZK7UYNNc2DUJI7bbal01WIA2cOqKqJ/vHJn9zgnFgsgYMGES9ZJNiVKNa98NN8a1dVHL5xA6uyKhhVUbTGoprholLI83X9C7cifkX3lWt/EZyKLDPhjPME=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=aRmVNoueHIyHr0Ju+F+/m6tHNrIYrShisFO/zMzs/cY9eeEtMzS5veJEhWKTuDfFHrxAMPPfwDyEmmYontI/n+GDQvD9bOisc8jDkkhF4ro0X8rCwax5FWuIkE90cU6/wF+MCp2SWmcMhv0t6qh2Zo7601TTdGkuMCiPzAvzJUA=;
+X-YMail-OSG: 0Q_La6kVM1kfqlQ4Pg8E4ejx1wXMA.tuYZL023RR0lW7kaK
+ 0RL_cF98I2kWIYv3NM70QL0KV24SNHNFhVgTjcUpjeKixmfZJAHQjdPA_wyW
+ xDSGOI0v1VVdh5qg8ztZ63aC6lvdGUN.uKimU5vdqAuXlo_gejYK8R283xjY
+ avrddHdI3Xmc8yu2XeTYypk1k41CRsrmxktL0C.FUY1TjWu2VyVTCL7aAbvG
+ yXyJxU5B8_JM6QQXN4ooHkvGpITZmLaMiOk7sRahy9Nb7C1dfT.Px61tRXeH
+ hr.69BZSmF.ueBuFuzQ6BiW9wWpra56wVW3.MwSkCjdQmCSVn13O.AVhDQ99
+ FkAIdIlNckZhdNed4lAiCVuu5sa_7eGGWOh3dyO3JYu6KLExdEw8sZoQIcOs
+ 6jlUTbSxPvmF6qGcJuzWb9YJglx1UWJTS9KmQnyykgtv2.D9pAwSUeyGAiY.
+ 4ygoF7q6fb8xsg7Yq.mdGFFySszPLOOraMbr5W.1gwwYEe9A4uDzolx5.F1N
+ DiWgyh8F7vKbm3RdO8lVwqYI81YDLWpYFZBuMdFeponWimnZUWGDU98GtecI
+ qDJtOXeNcP0UGF6g6kno.kkhMKfLpllzfojV3NRpKgLpEm4MQJfyVI5ByT0t
+ 2WixZlaP6w_SBQGXA40R1uSYb3IP8UQWEp0qbx.ScyeOSn9Qi4rc.nBX4yg-
+ -
+Received: from [151.18.140.52] by web172702.mail.ir2.yahoo.com via HTTP; Tue, 04 Jun 2013 23:18:59 BST
+X-Rocket-MIMEInfo: 002.001,Z2l0IHZlcnNpb24gMS44LjEuMgoocGxlYXNlIGNjIG1lLCBJJ20gbm90IHN1YnNjcmliZWQgdG8gdGhpcyBsaXN0KQoKCkhpIERldmVsb3BlcnMsIEkgd3JpdGUgaGVyZSBiZWNhdXNlIHNpbmNlIG15IHVidW50dSB1cGRhdGUgKHF1YW50YWwgdG8gcmFyaW5nKQphbmQgZ2l0IHVwZGF0ZSBmcm9tIDEuNy4xMC40LTF1YnVudHUxIHRvIDEuOC4xLjIKCm15IGV4cG9ydCBzY3JpcHQgZG9lc24ndCB3b3JrIGFueW1vcmUuCgpJIHRyaWVkIHRvIHB1dCAuZ2l0YXR0cmlidXRlcyBvciAuZ2l0L2luZm8vYXR0cmlidXQBMAEBAQE-
+X-Mailer: YahooMailWebService/0.8.145.547
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226419>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+git version 1.8.1.2
+(please cc me, I'm not subscribed to this list)
 
-> All I see in 2/6 is this:
->
-> 	diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> 	index e1a7f3e..f81e5f5 100755
-> 	--- a/t/t9001-send-email.sh
-> 	+++ b/t/t9001-send-email.sh
-> 	@@ -204,13 +204,15 @@ test_suppress_self_unquoted () {
 
-After noticing what is after "@@" here...
+Hi Developers, I write here because since my ubuntu update (quantal to =
+raring)
+and git update from 1.7.10.4-1ubuntu1 to 1.8.1.2
 
->
-> 			unquoted-$3
->
-> 	+               cccmd--$1 <$2>
-> 	+
-> 			Cc: $1 <$2>
-> 			Signed-off-by: $1 <$2>
-> 		EOF
-> 	 }
->
-> 	 test_expect_success $PREREQ 'self name is suppressed' "
-> 	-       test_suppress_self_unquoted 'A U Thor' 'author@redhat.com' \
-> 	+       test_suppress_self_unquoted 'A U Thor' 'author@example.com' \
-> 			'self_name_suppressed'
-> 	 "
->
-> where's test_suppress_self_quoted here?
+my export script doesn't work anymore.
 
-... isn't addition of "cccmd--$1 <$2>" made to that function?
+I tried to put .gitattributes or .git/info/attributes, the file is the =
+following
+http://pastebin.com/irngA1L8
 
-After applying [PATCH v3 1/6] to 'master', I do not see unquoted-$3
-that we see in the context, either.
+the git is
+git clone http://boinc.berkeley.edu/git/boinc-v2.git
 
-"git grep unquoted- pu t/t9001*" does show us a hit, but that is
-coming from your previous round you are replacing with this series,
-so....
+and the command is
 
-Confused...
+git archive --prefix boinc-7.1.7+dfsg/ --format tgz -o ../boinc_7.1.7+d=
+fsg.orig.tar.gz -9=A0 client_release/7.1/7.1.7
+
+The archive gets created, but every file is inside, no exclusions at al=
+l.
+
+I suspect a regression between git 1.7 and 1.8
+
+thanks for your time
+
+
+Gianfranco
