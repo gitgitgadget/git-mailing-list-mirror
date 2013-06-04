@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 02/15] for-each-ref: don't print out elements directly
-Date: Tue,  4 Jun 2013 18:05:24 +0530
-Message-ID: <1370349337-20938-3-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 01/15] for-each-ref, quote: convert *_quote_print -> *_quote_buf
+Date: Tue,  4 Jun 2013 18:05:23 +0530
+Message-ID: <1370349337-20938-2-git-send-email-artagnon@gmail.com>
 References: <1370349337-20938-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,194 +15,217 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjqRE-0006cZ-Jz
+	id 1UjqRE-0006cZ-3E
 	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 14:34:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753856Ab3FDMd7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jun 2013 08:33:59 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:34302 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753587Ab3FDMdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 08:33:55 -0400
-Received: by mail-pb0-f44.google.com with SMTP id wz12so171161pbc.31
-        for <git@vger.kernel.org>; Tue, 04 Jun 2013 05:33:55 -0700 (PDT)
+	id S1753624Ab3FDMdz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jun 2013 08:33:55 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:38907 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752718Ab3FDMdx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 08:33:53 -0400
+Received: by mail-pd0-f179.google.com with SMTP id q11so175002pdj.10
+        for <git@vger.kernel.org>; Tue, 04 Jun 2013 05:33:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=xGefcPi1ZR+Jm3wap1nA/Qf+zY6RRIbz84iRfh54BaM=;
-        b=yzuLAImycQ3lEe8qmCEXj4y77VFVDpJYYCwnfOhYD/5VVcOQKjEmFHBJpj/HYpTWM4
-         6GCaXtqp6HRJ0dLdGISETXXYq5vgchB06p9UndeMn2TvEs3zRlBTXLYXvXpg/DrVMwiy
-         RuYTull/CxHQvR5HG4jkN5NdVVajbOrD/nH+O6yNoSKHSdZ+pqLsUxZhFLUiOkLhlmUb
-         9gdq/BwYe0pXvqfckYUVS2MhidygjizM8sDnx60fWrkcjL1bMs81qNl+zYG+0MQtXKSW
-         W0P+V9WD87WnQwmxO/VCnLxEfk7c8HB4nr/OAOT8k/lOtBJuWVlzA1OQglN/MqJcBXJS
-         J1JQ==
-X-Received: by 10.66.245.49 with SMTP id xl17mr29125689pac.101.1370349235315;
-        Tue, 04 Jun 2013 05:33:55 -0700 (PDT)
+        bh=WH+b+9P9zkNqgVV9f5I0JcdfhTjWUxVwLgxysrYe6CI=;
+        b=NJAcokBs3VHUWyG0+P8MXyF59nQdz02fsfyABCxoYUxJ3DfOA2nBzCA54XlDkqB4LP
+         RviVg9SoUKkzs5/JtqkTHbvJFAvJiOoPx+4Tb9mhZ84pfC+wXl3xqCFPbcRHGteIJhJ6
+         4yk9v5kd/0AOYzBXvL3J1riTGTWZqs6u6lLYuDZ+ZXuf9joz7yitlDPvzlhNQYm45ZQt
+         RV2E0z+9qqbVBMXi28tOoWh0RVqAPDAamBGcWigEes9LztAjPF849elKT7m8Lk2MXqjd
+         I84/5vl7lRKqjFQqTqqAFVIoGiOUwDYXjE/GDuWIR7neg3vDmlBAGLcezMdJigCTo5O7
+         RO0g==
+X-Received: by 10.66.172.197 with SMTP id be5mr29259908pac.50.1370349232472;
+        Tue, 04 Jun 2013 05:33:52 -0700 (PDT)
 Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPSA id vz8sm67423587pac.20.2013.06.04.05.33.52
+        by mx.google.com with ESMTPSA id vz8sm67423587pac.20.2013.06.04.05.33.49
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 04 Jun 2013 05:33:54 -0700 (PDT)
+        Tue, 04 Jun 2013 05:33:51 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.GIT
 In-Reply-To: <1370349337-20938-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226345>
 
 =46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-Currently, the entire callchain starting from show_ref() parses and
-prints immediately.  This inflexibility limits our ability to extend th=
-e
-parser.  So, convert the entire callchain to accept a strbuf argument t=
-o
-write to.  Also introduce a show_refs() helper that calls show_ref() in
-a loop to avoid cluttering up cmd_for_each_ref() with the task of
-initializing/freeing the strbuf.
+for-each-ref.c:print_value() currently prints values to stdout
+immediately using {sq|perl|python|tcl}_quote_print, giving us no
+opportunity to do any further processing.  In preparation for getting
+print_value() to accept an additional strbuf argument to write to,
+convert the *_quote_print functions and callers to *_quote_buf.
 
-[rr: commit message]
+[rr: commit message, minor modifications]
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/for-each-ref.c | 55 ++++++++++++++++++++++++++++++++----------=
---------
- 1 file changed, 35 insertions(+), 20 deletions(-)
+ builtin/for-each-ref.c | 13 +++++++++----
+ quote.c                | 44 ++++++++++++++++++++++--------------------=
+--
+ quote.h                |  6 +++---
+ 3 files changed, 34 insertions(+), 29 deletions(-)
 
 diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 1d4083c..e2d6c5a 100644
+index 7f059c3..1d4083c 100644
 --- a/builtin/for-each-ref.c
 +++ b/builtin/for-each-ref.c
-@@ -864,31 +864,31 @@ static void sort_refs(struct ref_sort *sort, stru=
+@@ -867,24 +867,29 @@ static void sort_refs(struct ref_sort *sort, stru=
 ct refinfo **refs, int num_refs
- 	qsort(refs, num_refs, sizeof(struct refinfo *), compare_refs);
- }
-=20
--static void print_value(struct refinfo *ref, int atom, int quote_style=
+ static void print_value(struct refinfo *ref, int atom, int quote_style=
 )
-+static void print_value(struct strbuf *sb, struct refinfo *ref,
-+			int atom, int quote_style)
  {
  	struct atom_value *v;
--	struct strbuf sb =3D STRBUF_INIT;
++	struct strbuf sb =3D STRBUF_INIT;
  	get_value(ref, atom, &v);
  	switch (quote_style) {
  	case QUOTE_NONE:
--		fputs(v->s, stdout);
-+		strbuf_addstr(sb, v->s);
+ 		fputs(v->s, stdout);
  		break;
  	case QUOTE_SHELL:
--		sq_quote_buf(&sb, v->s);
-+		sq_quote_buf(sb, v->s);
+-		sq_quote_print(stdout, v->s);
++		sq_quote_buf(&sb, v->s);
  		break;
  	case QUOTE_PERL:
--		perl_quote_buf(&sb, v->s);
-+		perl_quote_buf(sb, v->s);
+-		perl_quote_print(stdout, v->s);
++		perl_quote_buf(&sb, v->s);
  		break;
  	case QUOTE_PYTHON:
--		python_quote_buf(&sb, v->s);
-+		python_quote_buf(sb, v->s);
+-		python_quote_print(stdout, v->s);
++		python_quote_buf(&sb, v->s);
  		break;
  	case QUOTE_TCL:
--		tcl_quote_buf(&sb, v->s);
-+		tcl_quote_buf(sb, v->s);
+-		tcl_quote_print(stdout, v->s);
++		tcl_quote_buf(&sb, v->s);
  		break;
  	}
- 	if (quote_style !=3D QUOTE_NONE) {
--		fputs(sb.buf, stdout);
--		strbuf_release(&sb);
-+		fputs(sb->buf, stdout);
-+		strbuf_release(sb);
- 	}
- }
-=20
-@@ -910,7 +910,7 @@ static int hex2(const char *cp)
- 		return -1;
- }
-=20
--static void emit(const char *cp, const char *ep)
-+static void emit(struct strbuf *sb, const char *cp, const char *ep)
- {
- 	while (*cp && (!ep || cp < ep)) {
- 		if (*cp =3D=3D '%') {
-@@ -919,32 +919,47 @@ static void emit(const char *cp, const char *ep)
- 			else {
- 				int ch =3D hex2(cp + 1);
- 				if (0 <=3D ch) {
--					putchar(ch);
-+					strbuf_addch(sb, ch);
- 					cp +=3D 3;
- 					continue;
- 				}
- 			}
- 		}
--		putchar(*cp);
-+		strbuf_addch(sb, *cp);
- 		cp++;
- 	}
- }
-=20
--static void show_ref(struct refinfo *info, const char *format, int quo=
-te_style)
-+static void show_ref(struct strbuf *sb, struct refinfo *info,
-+		     const char *format, int quote_style)
- {
- 	const char *cp, *sp, *ep;
-=20
- 	for (cp =3D format; *cp && (sp =3D find_next(cp)); cp =3D ep + 1) {
- 		ep =3D strchr(sp, ')');
- 		if (cp < sp)
--			emit(cp, sp);
--		print_value(info, parse_atom(sp + 2, ep), quote_style);
-+			emit(sb, cp, sp);
-+		print_value(sb, info, parse_atom(sp + 2, ep), quote_style);
- 	}
- 	if (*cp) {
- 		sp =3D cp + strlen(cp);
--		emit(cp, sp);
-+		emit(sb, cp, sp);
- 	}
--	putchar('\n');
-+	strbuf_addch(sb, '\n');
-+}
-+
-+static void show_refs(struct refinfo **refs, int maxcount,
-+		      const char *format, int quote_style)
-+{
-+	struct strbuf sb =3D STRBUF_INIT;
-+	int i;
-+
-+	for (i =3D 0; i < maxcount; i++) {
-+		strbuf_reset(&sb);
-+		show_ref(&sb, refs[i], format, quote_style);
++	if (quote_style !=3D QUOTE_NONE) {
 +		fputs(sb.buf, stdout);
++		strbuf_release(&sb);
 +	}
-+	strbuf_release(&sb);
  }
 =20
- static struct ref_sort *default_sort(void)
-@@ -987,7 +1002,7 @@ static char const * const for_each_ref_usage[] =3D=
- {
+ static int hex1(char ch)
+diff --git a/quote.c b/quote.c
+index 911229f..8c294df 100644
+--- a/quote.c
++++ b/quote.c
+@@ -463,72 +463,72 @@ int unquote_c_style(struct strbuf *sb, const char=
+ *quoted, const char **endp)
 =20
- int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- {
--	int i, num_refs;
-+	int num_refs;
- 	const char *format =3D "%(objectname) %(objecttype)\t%(refname)";
- 	struct ref_sort *sort =3D NULL, **sort_tail =3D &sort;
- 	int maxcount =3D 0, quote_style =3D 0;
-@@ -1041,7 +1056,7 @@ int cmd_for_each_ref(int argc, const char **argv,=
- const char *prefix)
+ /* quoting as a string literal for other languages */
 =20
- 	if (!maxcount || num_refs < maxcount)
- 		maxcount =3D num_refs;
--	for (i =3D 0; i < maxcount; i++)
--		show_ref(refs[i], format, quote_style);
-+
-+	show_refs(refs, maxcount, format, quote_style);
- 	return 0;
+-void perl_quote_print(FILE *stream, const char *src)
++void perl_quote_buf(struct strbuf *sb, const char *src)
+ {
+ 	const char sq =3D '\'';
+ 	const char bq =3D '\\';
+ 	char c;
+=20
+-	fputc(sq, stream);
++	strbuf_addch(sb, sq);
+ 	while ((c =3D *src++)) {
+ 		if (c =3D=3D sq || c =3D=3D bq)
+-			fputc(bq, stream);
+-		fputc(c, stream);
++			strbuf_addch(sb, bq);
++		strbuf_addch(sb, c);
+ 	}
+-	fputc(sq, stream);
++	strbuf_addch(sb, sq);
  }
+=20
+-void python_quote_print(FILE *stream, const char *src)
++void python_quote_buf(struct strbuf *sb, const char *src)
+ {
+ 	const char sq =3D '\'';
+ 	const char bq =3D '\\';
+ 	const char nl =3D '\n';
+ 	char c;
+=20
+-	fputc(sq, stream);
++	strbuf_addch(sb, sq);
+ 	while ((c =3D *src++)) {
+ 		if (c =3D=3D nl) {
+-			fputc(bq, stream);
+-			fputc('n', stream);
++			strbuf_addch(sb, bq);
++			strbuf_addch(sb, 'n');
+ 			continue;
+ 		}
+ 		if (c =3D=3D sq || c =3D=3D bq)
+-			fputc(bq, stream);
+-		fputc(c, stream);
++			strbuf_addch(sb, bq);
++		strbuf_addch(sb, c);
+ 	}
+-	fputc(sq, stream);
++	strbuf_addch(sb, sq);
+ }
+=20
+-void tcl_quote_print(FILE *stream, const char *src)
++void tcl_quote_buf(struct strbuf *sb, const char *src)
+ {
+ 	char c;
+=20
+-	fputc('"', stream);
++	strbuf_addch(sb, '"');
+ 	while ((c =3D *src++)) {
+ 		switch (c) {
+ 		case '[': case ']':
+ 		case '{': case '}':
+ 		case '$': case '\\': case '"':
+-			fputc('\\', stream);
++			strbuf_addch(sb, '\\');
+ 		default:
+-			fputc(c, stream);
++			strbuf_addch(sb, c);
+ 			break;
+ 		case '\f':
+-			fputs("\\f", stream);
++			strbuf_addstr(sb, "\\f");
+ 			break;
+ 		case '\r':
+-			fputs("\\r", stream);
++			strbuf_addstr(sb, "\\r");
+ 			break;
+ 		case '\n':
+-			fputs("\\n", stream);
++			strbuf_addstr(sb, "\\n");
+ 			break;
+ 		case '\t':
+-			fputs("\\t", stream);
++			strbuf_addstr(sb, "\\t");
+ 			break;
+ 		case '\v':
+-			fputs("\\v", stream);
++			strbuf_addstr(sb, "\\v");
+ 			break;
+ 		}
+ 	}
+-	fputc('"', stream);
++	strbuf_addch(sb, '"');
+ }
+diff --git a/quote.h b/quote.h
+index 133155a..ed06df5 100644
+--- a/quote.h
++++ b/quote.h
+@@ -69,8 +69,8 @@ extern char *quote_path_relative(const char *in, int =
+len,
+ 			  struct strbuf *out, const char *prefix);
+=20
+ /* quoting as a string literal for other languages */
+-extern void perl_quote_print(FILE *stream, const char *src);
+-extern void python_quote_print(FILE *stream, const char *src);
+-extern void tcl_quote_print(FILE *stream, const char *src);
++extern void perl_quote_buf(struct strbuf *sb, const char *src);
++extern void python_quote_buf(struct strbuf *sb, const char *src);
++extern void tcl_quote_buf(struct strbuf *sb, const char *src);
+=20
+ #endif
 --=20
 1.8.3.GIT
