@@ -1,80 +1,163 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git-daemon: needs /root/.config/git/config?
-Date: Tue, 4 Jun 2013 12:10:25 -0700
-Message-ID: <20130604191025.GG28153@google.com>
-References: <20130604141314.GD22308@pomac.netswarm.net>
- <20130604160815.GB15953@sigill.intra.peff.net>
- <51AE3A88.2080203@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] rev-list: add --authorship-order alternative ordering
+Date: Tue, 04 Jun 2013 12:14:21 -0700
+Message-ID: <7vip1t7koi.fsf@alter.siamese.dyndns.org>
+References: <1370369299-20744-1-git-send-email-me@ell.io>
+	<1370369299-20744-2-git-send-email-me@ell.io>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Ian Kumlien <pomac@vapor.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Jun 04 21:10:38 2013
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: git@vger.kernel.org
+To: elliottcable <me@ell.io>
+X-From: git-owner@vger.kernel.org Tue Jun 04 21:14:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ujwcs-0000Zm-L2
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 21:10:34 +0200
+	id 1Ujwgg-0004md-GJ
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 21:14:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750808Ab3FDTKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 15:10:31 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:37752 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750773Ab3FDTKa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 15:10:30 -0400
-Received: by mail-pb0-f44.google.com with SMTP id wz12so663324pbc.17
-        for <git@vger.kernel.org>; Tue, 04 Jun 2013 12:10:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=JMXz16UX1OWmuWQF31fDMc2j4EZPAK7fJJ1btj4or6M=;
-        b=siCqmtGb++pYae78+82RZ4yAiZgLupLkaxfrR8F+W81rIAVeaSjpHFldkYG2GUAQ83
-         mmaEenInF0FIipfSqd/5Pc2CLknQ+81e1yYhKX8P3OyQ/cPoXrdLirE6cCEK1WTKjaaJ
-         chxJSKMiguYjssP0sq4sCPjEYx27w3An8NhyDuwbhKtsz1eaBHRhF8NHzeNFBywmdXIX
-         Wxh2JflZb7Za+eOCleqo9Pg4Ft/GMcqEUoKyrAhY22rd3pWaC6lRFvKY/Gkp7fgGMv4X
-         zKZFuqx107V4gj5kAo8bnOBV728WXdRiOpiO2IXx5U0llrW3JynNWQ1/XrLpJjnWSEm3
-         TzBA==
-X-Received: by 10.68.178.229 with SMTP id db5mr29617190pbc.79.1370373029711;
-        Tue, 04 Jun 2013 12:10:29 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id cp1sm64303755pbc.42.2013.06.04.12.10.27
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 04 Jun 2013 12:10:28 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <51AE3A88.2080203@kdbg.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1750821Ab3FDTO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 15:14:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54171 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750773Ab3FDTOZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 15:14:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 464FE25024;
+	Tue,  4 Jun 2013 19:14:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HNwMp9BuDGsWMBv12IezX8qhbHw=; b=uVIVRr
+	K0CKFMub6rBfEDRSHATBkYtCkN0lEnVwUxwZE747bCgu9p0VFNq1Drhm7GgUjCH4
+	b+ICkt8oWVV6ZnQMrjN4Pf8M/JzU2BePygTNLid/hWQmHpWIQNtRUdDj6E9ZNnst
+	iPUYoLNIiu2Ki2cMEf97uq/ONwZeXTawpmhJo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CzD5HHo6d681UKQmKMBwHWYgrLhQIhjJ
+	iYvtmIUCezx2l7k3VZlnxCC1GVq7y+q4/WOQE+RyjBjAzprqvHNPg6hDWrH9icjN
+	Zx2Y2wo3uAnDEcDwPScxIHIEiuQAElwkd4BJCXzQMdpx0muqvTDa2WhdcPAyWAYy
+	nIShoYl3llk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 24AB525023;
+	Tue,  4 Jun 2013 19:14:24 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B44325022;
+	Tue,  4 Jun 2013 19:14:23 +0000 (UTC)
+In-Reply-To: <1370369299-20744-2-git-send-email-me@ell.io> (elliottcable's
+	message of "Tue, 4 Jun 2013 14:08:18 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F73E0212-CD4A-11E2-AD0A-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226396>
 
-Johannes Sixt wrote:
-> Am 04.06.2013 18:08, schrieb Jeff King:
+elliottcable <me@ell.io> writes:
 
->> However, since changing user id and leaving $HOME is so common, there is
->> a patch under consideration to loosen the check only for the case of
->> EACCES on files in $HOME. That commit is 4698c8f (config: allow
->> inaccessible configuration under $HOME, 2013-04-12); it's not yet in any
->> released version of git, though.
-[...]
-> I've a PHP script in ~/public_html that runs git. Without the mentioned
-> patch, the script bails out due to this error. This time it's Apache
-> that gets me into trouble because at the time the PHP script and git
-> run, $HOME is still /root, but the user identity is not root anymore.
-> The patch is direly needed; without it, I need to use 'env
-> HOME=/home/j6t /usr/local/bin/git' in my script.
+> --date-order is an excellent alternative to --topo-order if you want a feel for
+> the *actual history*, chronologically, of your project. I use it often, with
+> --graph as well; it's a great way to get an overview of a project's recent
+> development history.
+>
+> However, in a project that rebases various in-development topic-branches often,
+> it gets hard to demonstrate a *chronological history* of changes to the
+> codebase, as this always “resets” the COMMITTER_DATE (which --date-order uses)
+> to the time the rebase happened; which often means ‘last time all of the
+> topic-branches were rebased on the latest fixes in master.’
+>
+> Thus, I've added an --authorship-order version of --date-order, which relies
+> upon the AUTHOR_DATE instead of the COMMITTER_DATE; this means that old commits
+> will continue to show up chronologically in-order despite rebasing.
+> ---
 
-I could be remembering wrong, but I thought it was not so much "under
-consideration" as "accepted for 1.8.4".  I haven't heard any
-compelling reasons not to apply it.
+Missing sign-off.  Please see Documentation/SubmittingPatches.
 
-Would it would make sense against earlier releases as well?
+>  builtin/log.c                          |  2 +-
+>  builtin/rev-list.c                     |  1 +
+>  builtin/rev-parse.c                    |  1 +
+>  builtin/show-branch.c                  | 12 ++++-
+>  commit.c                               | 83 ++++++++++++++++++++++++++++++----
+>  commit.h                               |  3 +-
+>  contrib/completion/git-completion.bash |  4 +-
+>  po/de.po                               |  4 +-
+>  po/git.pot                             |  2 +-
+>  po/sv.po                               |  4 +-
+>  po/vi.po                               |  4 +-
+>  po/zh_CN.po                            |  4 +-
 
-Thanks,
-Jonathan
+Please drop all the changes to po/ area; it is managed by the i18n
+coordinator and generated by an automated tool that extracts these
+strings from the code.
+
+People who code should not (and do not have to) touch these files.
+
+>  revision.c                             | 11 ++++-
+>  revision.h                             |  1 +
+>  14 files changed, 110 insertions(+), 26 deletions(-)
+>
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 9e21232..54d4d7f 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -237,7 +237,7 @@ static void log_show_early(struct rev_info *revs, struct commit_list *list)
+>  	int i = revs->early_output;
+>  	int show_header = 1;
+>  
+> -	sort_in_topological_order(&list, revs->lifo);
+> +	sort_in_topological_order(&list, revs->lifo, revs->use_author);
+
+The name "use-author" is a clear sign that the person who added this
+code were too narrowly focused to think "author" automatically would
+mean "author date" ;-).
+
+It probably makes sense to revamp sort_in_topological_order(), so
+that its second parameter is not a boolean 'lifo' that tells too
+much about its implementation without telling what it actually
+means.  Instead, we can make it an enum sort_order, that tells it to
+emit the commits in committer-date order, author-date order, or
+graph-traversal order.
+
+And update revs->lifo to use that same enum, without adding
+use_author_date bit to rev_info.
+
+> @@ -694,6 +697,11 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+>  			   show_branch_usage, PARSE_OPT_STOP_AT_NON_OPTION);
+>  	if (all_heads)
+>  		all_remotes = 1;
+> +	/* I'm having trouble figuring out exactly what `lifo` stores. Why do both 'date-order' and
+> +	 * 'topo-order' set the same variable!? Aren't they mutually exclusive? Since *both* set it, for
+> +	 * the moment, I'm going to set it for '--authorship-order'; but that seems counterintuitive. */
+
+Lines that are too wide.
+
+	/*
+         * Also please format multi-line comments
+         * like this, nothing other than slash-asterisk
+         * on the first and the last lines.
+         */
+
+> @@ -301,7 +328,8 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
+>  			pptr = &commit_list_insert(new_parent, pptr)->next;
+>  		}
+>  	}
+> -	item->date = parse_commit_date(bufptr, tail);
+> +	item->date = parse_commit_committer_date(bufptr, tail);
+> +	item->author_date = parse_commit_author_date(bufptr, tail);
+> ...
+> diff --git a/commit.h b/commit.h
+> index 67bd509..de07525 100644
+> --- a/commit.h
+> +++ b/commit.h
+> @@ -17,6 +17,7 @@ struct commit {
+>  	void *util;
+>  	unsigned int indegree;
+>  	unsigned long date;
+> +	unsigned long author_date;
+
+While walking we keep many of them in-core, and 8-byte each for each
+commit objects add up.  We do not want to make "struct commit" any
+larger than it already is.
