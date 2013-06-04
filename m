@@ -1,115 +1,119 @@
-From: Janusz Harkot <janusz.harkot@gmail.com>
-Subject: Re: SNI (SSL virtual hosts)
-Date: Tue, 4 Jun 2013 18:59:52 +0200
-Message-ID: <CEC3E2C7A86A477DAC658432461A60BC@gmail.com>
-References: <DC851F5EA18E478DACB62178624BF5B7@gmail.com>
- <97F8F367D27D4B3E93439FF8D0F121FA@gmail.com>
- <alpine.DEB.2.00.1306041142200.16303@tvnag.unkk.fr>
- <8B7A2C3A8CC346D6B34D153F591F878F@gmail.com>
- <alpine.DEB.2.00.1306041349290.32021@tvnag.unkk.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 5/7] add tests for rebasing merged history
+Date: Tue, 04 Jun 2013 10:18:01 -0700
+Message-ID: <7vk3m994mu.fsf@alter.siamese.dyndns.org>
+References: <1369982987-18954-1-git-send-email-martinvonz@gmail.com>
+	<1370292135-1236-1-git-send-email-martinvonz@gmail.com>
+	<1370292135-1236-6-git-send-email-martinvonz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Daniel Stenberg <daniel@haxx.se>
-X-From: git-owner@vger.kernel.org Tue Jun 04 19:12:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
+	Chris Webb <chris@arachsys.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 04 19:18:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ujumn-0002lg-Ih
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 19:12:41 +0200
+	id 1UjusQ-0007Sm-Jm
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 19:18:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757660Ab3FDRMg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jun 2013 13:12:36 -0400
-Received: from mail-bk0-f54.google.com ([209.85.214.54]:63296 "EHLO
-	mail-bk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757485Ab3FDQ75 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jun 2013 12:59:57 -0400
-Received: by mail-bk0-f54.google.com with SMTP id it19so316298bkc.13
-        for <git@vger.kernel.org>; Tue, 04 Jun 2013 09:59:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject:x-mailer
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=rEeAuZvE+rJJ7vdzIpQGWF4Sm9nAy2rGpegwNIWHHyQ=;
-        b=G5Fp0bF0pEtVPnMSanWAU/3ygfgUc8gdog1+6aF/f6TYUkNIXbXwAn4h1Jz7OqinPd
-         zgX6fQWJlezrspZj2M41fDuvH1ccQkR6T/m6pN5rmGtB8yJWxXUVF8eJ0B1Q5iR3new+
-         eqsw9+KB5ANfm0uReULmlo3EgGGTADbtBz1gK2Lp+5yQ1jXPg9NvpdNEn3DcFvX4fXXS
-         fWL1BkWLMcC2fguMw4K6hEUD+P6BSS9ovnL6VQ0u1okpZa5ZsLihQCJPh3JioWSZzqC+
-         2H5boYLPGHEaRgtm36akJAchrMRoadBjtCeaNg9ctXdNXANHfJfkqTJMtCWUKUtChTbv
-         SbRA==
-X-Received: by 10.204.185.136 with SMTP id co8mr8361403bkb.23.1370365195827;
-        Tue, 04 Jun 2013 09:59:55 -0700 (PDT)
-Received: from [10.0.1.200] (77-252-124-82.ip.netia.com.pl. [77.252.124.82])
-        by mx.google.com with ESMTPSA id so13sm23769224bkb.15.2013.06.04.09.59.54
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 04 Jun 2013 09:59:54 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1306041349290.32021@tvnag.unkk.fr>
-X-Mailer: sparrow 1.6.4 (build 1178)
-Content-Disposition: inline
+	id S1754309Ab3FDRSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 13:18:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50870 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752755Ab3FDRSE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 13:18:04 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71EBB25129;
+	Tue,  4 Jun 2013 17:18:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ETKq8jsjGke0ISSmgwDtd7OphgA=; b=mIQiwD
+	I7TBbgOYBKlurpC1GqwyOxLtBaD/1GQb9WY9qfRV21qnTgnvJwAGC1AzxYM9W+UY
+	kFgTKfFDc++QJTsAW43A2vnJMULrFls37pYQf8inoqfXhgLNG88bGeyrNs/zdkGb
+	Azkys20Ar7u0zN5gC+vsiISjISEPiXeM1L5xY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XQFBhNdpyLZL/SAr/dA927pcpHq7q3lq
+	RVseicVIZdnhbkW6C1pqHkJJ+qtrOkR4IScu6DZGukniiNV1sdx6uBtdhpQGQP+O
+	WqUq5ewti4BeWqCmkU8iod7i7yiJ+5PntwkbI68SBbN/LH3/mYZUhnB23hZi8O/w
+	itss1Trt4QY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 66EC625126;
+	Tue,  4 Jun 2013 17:18:03 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D90AB25124;
+	Tue,  4 Jun 2013 17:18:02 +0000 (UTC)
+In-Reply-To: <1370292135-1236-6-git-send-email-martinvonz@gmail.com> (Martin
+	von Zweigbergk's message of "Mon, 3 Jun 2013 13:42:13 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B68C30FA-CD3A-11E2-ADB4-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226380>
 
-> What makes you suggest that's what's happening? Sure, if it would've =
-sent no =20
-> or the wrong host name it would probably have that effect.
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
 
-line:
+> ---
+> +#TODO: make all flavors of rebase use --topo-order
+> +test_run_rebase success 'e n o' ''
+> +test_run_rebase success 'e n o' -m
+> +test_run_rebase success 'n o e' -i
 
-[36] * Re-using existing connection! (#0) with host (nil) =20
-> Any chance you can snoop on the network and the SSL handshake to see =
-who's to =20
-> blame? I can't but to think that is is a very common use case!
+I do not quite follow this TODO.
 
+While I think it would be nice to update "rebase" so that all
+variants consider replaying the commits in the same order, in this
+history you have:
 
-I was trying to verify this via command line curl, and GET/POST is work=
-ing fine.
++# a---b-----------c
++#      \           \
++#       d-------e   \
++#        \       \   \
++#         n---o---w---v
++#              \
++#               z
 
-There is one thing that make me suspicious - this is that message about=
- SSL session expiration:
-[64] * SSL re-using session ID
-[65] * SSL connection using RC4-SHA
-[66] * old SSL session ID is stale, removing
+as long as o comes after n and e is shown before n or after o, which
+all three expected results satisify, it is in --topo-order, isn't it?
 
+The same comment applies to the other TODO that talks about eno/noe
+differences.
 
+> +test_expect_success "rebase -p re-creates merge from side branch" "
+> +     reset_rebase &&
+> +     git rebase -p z w &&
+> +     test_cmp_rev z HEAD^ &&
+> +     test_cmp_rev w^2 HEAD^2
+> +"
 
-So, I've spent last few hours playing with different settings/builds et=
-c. =20
-I was using sources of curl (7.30.0) and git (1.8.2.3)
+Hmm, turning the left one to the right one?
 
-curl & git bult with default os-x's openssl (0.9.8) - failed
-curl & git bult with '--with-darwin-ssl' + default openssl for git - fa=
-iled
++#       d-------e               d-------e    
++#        \       \               \       \   
++#         n---o---w     ===>      n---o   \
++#              \                       \   \ 
++#               z                       z---W
 
-curl & git both bult with newest openssl (1.0.1e):
-error: SSL certificate problem: self signed certificate in certificate =
-chain while accessing https://....
+If w were a merge of o into e (i.e. w^1 were e not o), what should
+happen?  Would we get the same topology?
 
-so it looks promising, I've set GIT_SSL_CAPATH (because bundle config i=
-s not supported in git - this is a good feature request)
+In other words, when asked to replay w on top of z, how would we
+decide which parent to keep (in this case, e is kept)?
 
-and.. t looks like it is working=E2=80=A6
-first and second attempt was to correct SNI host!
+> +test_expect_success "rebase -p can re-create two branches on onto" "
+> +     reset_rebase &&
+> +     git rebase -p --onto c d w &&
+> +     test_cmp_rev c HEAD~3 &&
+> +     test_cmp_rev c HEAD^2^ &&
+> +     test_revision_subjects 'n e o w' HEAD~2 HEAD^2 HEAD^ HEAD
+> +"
 
-So, the question is still why it is not working with openssl 0.9.8r - t=
-his version supports SNI by default.
-This looks like an error in openssl (maybe: Only allow one SGC handshak=
-e restart for SSL/TLS.)
-
-Now is the question, shall this be handled by curl or left alone?
-(handling older version of openssl, and force new ssl session?)
-
-
-kind regards,
-Janusz
-
-
-p.s.
-I've tested cur built with polarssl - works and gnutls - works too...
+Nice (so are all the rest).
