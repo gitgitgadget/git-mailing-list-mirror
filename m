@@ -1,125 +1,115 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 3/8] cherry-pick: add --skip-empty option
-Date: Tue, 4 Jun 2013 12:10:00 -0500
-Message-ID: <CAMP44s2DvtiT6hi-RoPt_bVdGr01S367usz=089E1Ht+Bvh-tA@mail.gmail.com>
-References: <1369799788-24803-1-git-send-email-felipe.contreras@gmail.com>
-	<1369799788-24803-4-git-send-email-felipe.contreras@gmail.com>
-	<7vr4gjdomk.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1GQ2iwwscx4Sx1cxK0U6yWWYvOJqDk_FO_GkFcNKREYw@mail.gmail.com>
-	<7vehcidg1i.fsf@alter.siamese.dyndns.org>
+From: Janusz Harkot <janusz.harkot@gmail.com>
+Subject: Re: SNI (SSL virtual hosts)
+Date: Tue, 4 Jun 2013 18:59:52 +0200
+Message-ID: <CEC3E2C7A86A477DAC658432461A60BC@gmail.com>
+References: <DC851F5EA18E478DACB62178624BF5B7@gmail.com>
+ <97F8F367D27D4B3E93439FF8D0F121FA@gmail.com>
+ <alpine.DEB.2.00.1306041142200.16303@tvnag.unkk.fr>
+ <8B7A2C3A8CC346D6B34D153F591F878F@gmail.com>
+ <alpine.DEB.2.00.1306041349290.32021@tvnag.unkk.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@inf.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 04 19:10:12 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Daniel Stenberg <daniel@haxx.se>
+X-From: git-owner@vger.kernel.org Tue Jun 04 19:12:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UjukN-0000gi-Su
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 19:10:12 +0200
+	id 1Ujumn-0002lg-Ih
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 19:12:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758231Ab3FDRKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 13:10:06 -0400
-Received: from mail-la0-f53.google.com ([209.85.215.53]:50076 "EHLO
-	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758286Ab3FDRKD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 13:10:03 -0400
-Received: by mail-la0-f53.google.com with SMTP id ea20so490994lab.40
-        for <git@vger.kernel.org>; Tue, 04 Jun 2013 10:10:00 -0700 (PDT)
+	id S1757660Ab3FDRMg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jun 2013 13:12:36 -0400
+Received: from mail-bk0-f54.google.com ([209.85.214.54]:63296 "EHLO
+	mail-bk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757485Ab3FDQ75 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jun 2013 12:59:57 -0400
+Received: by mail-bk0-f54.google.com with SMTP id it19so316298bkc.13
+        for <git@vger.kernel.org>; Tue, 04 Jun 2013 09:59:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=6+bMZvfwTwnZvp5bZJzHtukndrq4ZpWNN3U93M6YFOI=;
-        b=u4VYlgWN2PabQl1bGuYfFcvRmQER8MCGrQDO+DdgqASqK/8XVkvfmii6221vClAqBC
-         P86AQQSItnGeHvP7Ohhnc6h649bFaQOoaV2mlOOAJOdOqw807ELnOLbPdqZi+dS5Wu9T
-         JhYpIhNr9/PjnHpnkm4pzE7ZiOuvvK9k+6su4b9DcatKS+S3Ws4HPD++V91wvZAdXGDh
-         MvufL3lSvIrnyavgf8kTjG5KtDtcawdzWUvsDpS4PCHv17/TZSpacU63WUE2PXDAcfLM
-         TWiXqOZE176/2FmLX/W2yOcF4KbWiEDZR3y9hlsoZlhAQ+6QPO7k7fwWlSMOn2XRZogv
-         WkvQ==
-X-Received: by 10.152.26.137 with SMTP id l9mr13686596lag.2.1370365800667;
- Tue, 04 Jun 2013 10:10:00 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Tue, 4 Jun 2013 10:10:00 -0700 (PDT)
-In-Reply-To: <7vehcidg1i.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:message-id:in-reply-to:references:subject:x-mailer
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=rEeAuZvE+rJJ7vdzIpQGWF4Sm9nAy2rGpegwNIWHHyQ=;
+        b=G5Fp0bF0pEtVPnMSanWAU/3ygfgUc8gdog1+6aF/f6TYUkNIXbXwAn4h1Jz7OqinPd
+         zgX6fQWJlezrspZj2M41fDuvH1ccQkR6T/m6pN5rmGtB8yJWxXUVF8eJ0B1Q5iR3new+
+         eqsw9+KB5ANfm0uReULmlo3EgGGTADbtBz1gK2Lp+5yQ1jXPg9NvpdNEn3DcFvX4fXXS
+         fWL1BkWLMcC2fguMw4K6hEUD+P6BSS9ovnL6VQ0u1okpZa5ZsLihQCJPh3JioWSZzqC+
+         2H5boYLPGHEaRgtm36akJAchrMRoadBjtCeaNg9ctXdNXANHfJfkqTJMtCWUKUtChTbv
+         SbRA==
+X-Received: by 10.204.185.136 with SMTP id co8mr8361403bkb.23.1370365195827;
+        Tue, 04 Jun 2013 09:59:55 -0700 (PDT)
+Received: from [10.0.1.200] (77-252-124-82.ip.netia.com.pl. [77.252.124.82])
+        by mx.google.com with ESMTPSA id so13sm23769224bkb.15.2013.06.04.09.59.54
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 04 Jun 2013 09:59:54 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.00.1306041349290.32021@tvnag.unkk.fr>
+X-Mailer: sparrow 1.6.4 (build 1178)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226379>
 
-On Mon, Jun 3, 2013 at 4:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> On Mon, Jun 3, 2013 at 1:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>
->>>> Pretty much what it says on the tin.
->>>>
->>>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->>>> ---
->>>>  Documentation/git-cherry-pick.txt   |  3 +++
->>>>  builtin/revert.c                    |  2 ++
->>>>  sequencer.c                         |  6 ++++++
->>>>  sequencer.h                         |  1 +
->>>>  t/t3508-cherry-pick-many-commits.sh | 13 +++++++++++++
->>>>  5 files changed, 25 insertions(+)
->>>>
->>>> diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
->>>> index c205d23..fccd936 100644
->>>> --- a/Documentation/git-cherry-pick.txt
->>>> +++ b/Documentation/git-cherry-pick.txt
->>>> @@ -129,6 +129,9 @@ effect to your index in a row.
->>>>       redundant commits are ignored.  This option overrides that behavior and
->>>>       creates an empty commit object.  Implies `--allow-empty`.
->>>>
->>>> +--skip-empty::
->>>> +     Instead of failing, skip commits that are or become empty.
->>>
->>> Not quite sure.  Is this "instead of recording an empty commit,"
->>> (which may or may not fail depending on the allow-empty settings)?
->>
->> We are explaining --skip-empty, not --allow-empty.
->
-> Exactly.  That is why I found the "Instead of failing" questionable.
-> It is very easy to read the above as "commits that are or become
-> empty usually causes the command to fail, and this is a way to cause
-> it not to fail.".
->
-> It is true that
->
->     cherry-pick A
->
-> when A becomes empty, dies.  But
->
->     cherry-pick --allow-empty A
->
-> when A becomes empty, does not fail, but still does create an empty
-> commit.  A large difference with --skip-empty, which applies to use
-> scenario different from --allow-empty was meant to address, is that
->
->     cherry-pick --skip-empty A
->
-> when A becomes empty, does not fail and does not create an empty
-> commit, either.
+> What makes you suggest that's what's happening? Sure, if it would've =
+sent no =20
+> or the wrong host name it would probably have that effect.
 
-We are not explaining --allow-empty.
+line:
 
-What happens when you do --skip-empty --allow-empty? Somebody
-suggested a new option, so we could do --foo-empty=skip,allow to
-clarify that.
+[36] * Re-using existing connection! (#0) with host (nil) =20
+> Any chance you can snoop on the network and the SSL handshake to see =
+who's to =20
+> blame? I can't but to think that is is a very common use case!
 
-> I think just "Skip commits that are or become empty" without saying
-> "Instead of failing," is fine, too.
 
-I think "Instead of failing" makes perfect sense, because it's not our
-job to describe what other options do, simply explain what this option
-do. If the user is interested in other options, he can read them in
-the help for those.
+I was trying to verify this via command line curl, and GET/POST is work=
+ing fine.
 
--- 
-Felipe Contreras
+There is one thing that make me suspicious - this is that message about=
+ SSL session expiration:
+[64] * SSL re-using session ID
+[65] * SSL connection using RC4-SHA
+[66] * old SSL session ID is stale, removing
+
+
+
+So, I've spent last few hours playing with different settings/builds et=
+c. =20
+I was using sources of curl (7.30.0) and git (1.8.2.3)
+
+curl & git bult with default os-x's openssl (0.9.8) - failed
+curl & git bult with '--with-darwin-ssl' + default openssl for git - fa=
+iled
+
+curl & git both bult with newest openssl (1.0.1e):
+error: SSL certificate problem: self signed certificate in certificate =
+chain while accessing https://....
+
+so it looks promising, I've set GIT_SSL_CAPATH (because bundle config i=
+s not supported in git - this is a good feature request)
+
+and.. t looks like it is working=E2=80=A6
+first and second attempt was to correct SNI host!
+
+So, the question is still why it is not working with openssl 0.9.8r - t=
+his version supports SNI by default.
+This looks like an error in openssl (maybe: Only allow one SGC handshak=
+e restart for SSL/TLS.)
+
+Now is the question, shall this be handled by curl or left alone?
+(handling older version of openssl, and force new ssl session?)
+
+
+kind regards,
+Janusz
+
+
+p.s.
+I've tested cur built with polarssl - works and gnutls - works too...
