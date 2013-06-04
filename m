@@ -1,163 +1,70 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] rev-list: add --authorship-order alternative ordering
-Date: Tue, 04 Jun 2013 12:14:21 -0700
-Message-ID: <7vip1t7koi.fsf@alter.siamese.dyndns.org>
-References: <1370369299-20744-1-git-send-email-me@ell.io>
-	<1370369299-20744-2-git-send-email-me@ell.io>
+Subject: Re: git-daemon: needs /root/.config/git/config?
+Date: Tue, 04 Jun 2013 12:20:51 -0700
+Message-ID: <7vehch7kdo.fsf@alter.siamese.dyndns.org>
+References: <20130604141314.GD22308@pomac.netswarm.net>
+	<20130604160815.GB15953@sigill.intra.peff.net>
+	<51AE3A88.2080203@kdbg.org> <20130604191025.GG28153@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: git@vger.kernel.org
-To: elliottcable <me@ell.io>
-X-From: git-owner@vger.kernel.org Tue Jun 04 21:14:35 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+	Ian Kumlien <pomac@vapor.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 04 21:21:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ujwgg-0004md-GJ
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 21:14:31 +0200
+	id 1Ujwmx-0002Ei-EH
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Jun 2013 21:20:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750821Ab3FDTO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jun 2013 15:14:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54171 "EHLO
+	id S1750868Ab3FDTU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jun 2013 15:20:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64860 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750773Ab3FDTOZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jun 2013 15:14:25 -0400
+	id S1750791Ab3FDTUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jun 2013 15:20:55 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 464FE25024;
-	Tue,  4 Jun 2013 19:14:24 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7914B25584;
+	Tue,  4 Jun 2013 19:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HNwMp9BuDGsWMBv12IezX8qhbHw=; b=uVIVRr
-	K0CKFMub6rBfEDRSHATBkYtCkN0lEnVwUxwZE747bCgu9p0VFNq1Drhm7GgUjCH4
-	b+ICkt8oWVV6ZnQMrjN4Pf8M/JzU2BePygTNLid/hWQmHpWIQNtRUdDj6E9ZNnst
-	iPUYoLNIiu2Ki2cMEf97uq/ONwZeXTawpmhJo=
+	:content-type; s=sasl; bh=2uHKqMaI9obZVbPJtlXVd6wNFSY=; b=nVf64w
+	dbXsGAO6cYCX6t55LVLqY/7S7+zNzFANw27vFALX6ySY/0ubUjJp0zIEiAX0fbLe
+	ZPeiJfx2sMpNiKp8jqMEnjFeQyDj0D4/uvI83i5OoIFHyeqT2YH/2HD4URbdTw5E
+	HWs/awOp2sQjfz687Bcft2fKhnIulvN9jXp68=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CzD5HHo6d681UKQmKMBwHWYgrLhQIhjJ
-	iYvtmIUCezx2l7k3VZlnxCC1GVq7y+q4/WOQE+RyjBjAzprqvHNPg6hDWrH9icjN
-	Zx2Y2wo3uAnDEcDwPScxIHIEiuQAElwkd4BJCXzQMdpx0muqvTDa2WhdcPAyWAYy
-	nIShoYl3llk=
+	:content-type; q=dns; s=sasl; b=IBv3K3vABmyCDgp3tZ5osLFr4jDzwx6a
+	XnOGjaCLUunA/5zHMIn//WvpgSRaJTj607nmZTdNsbz9ZTGFlsolklAmU6ZRggLy
+	dIeoH/DG5qomV92za9s2CC4Tgb7/v5aMg9BGjCpC40p8qOSVT+ObyrGoWouQHvKg
+	lwxlTrJ0tWc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 24AB525023;
-	Tue,  4 Jun 2013 19:14:24 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 370C325583;
+	Tue,  4 Jun 2013 19:20:54 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B44325022;
-	Tue,  4 Jun 2013 19:14:23 +0000 (UTC)
-In-Reply-To: <1370369299-20744-2-git-send-email-me@ell.io> (elliottcable's
-	message of "Tue, 4 Jun 2013 14:08:18 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2F51C2557B;
+	Tue,  4 Jun 2013 19:20:53 +0000 (UTC)
+In-Reply-To: <20130604191025.GG28153@google.com> (Jonathan Nieder's message of
+	"Tue, 4 Jun 2013 12:10:25 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F73E0212-CD4A-11E2-AD0A-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DF996506-CD4B-11E2-98D6-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226397>
 
-elliottcable <me@ell.io> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> --date-order is an excellent alternative to --topo-order if you want a feel for
-> the *actual history*, chronologically, of your project. I use it often, with
-> --graph as well; it's a great way to get an overview of a project's recent
-> development history.
+> I could be remembering wrong, but I thought it was not so much "under
+> consideration" as "accepted for 1.8.4".  I haven't heard any
+> compelling reasons not to apply it.
 >
-> However, in a project that rebases various in-development topic-branches often,
-> it gets hard to demonstrate a *chronological history* of changes to the
-> codebase, as this always “resets” the COMMITTER_DATE (which --date-order uses)
-> to the time the rebase happened; which often means ‘last time all of the
-> topic-branches were rebased on the latest fixes in master.’
->
-> Thus, I've added an --authorship-order version of --date-order, which relies
-> upon the AUTHOR_DATE instead of the COMMITTER_DATE; this means that old commits
-> will continue to show up chronologically in-order despite rebasing.
-> ---
+> Would it would make sense against earlier releases as well?
 
-Missing sign-off.  Please see Documentation/SubmittingPatches.
-
->  builtin/log.c                          |  2 +-
->  builtin/rev-list.c                     |  1 +
->  builtin/rev-parse.c                    |  1 +
->  builtin/show-branch.c                  | 12 ++++-
->  commit.c                               | 83 ++++++++++++++++++++++++++++++----
->  commit.h                               |  3 +-
->  contrib/completion/git-completion.bash |  4 +-
->  po/de.po                               |  4 +-
->  po/git.pot                             |  2 +-
->  po/sv.po                               |  4 +-
->  po/vi.po                               |  4 +-
->  po/zh_CN.po                            |  4 +-
-
-Please drop all the changes to po/ area; it is managed by the i18n
-coordinator and generated by an automated tool that extracts these
-strings from the code.
-
-People who code should not (and do not have to) touch these files.
-
->  revision.c                             | 11 ++++-
->  revision.h                             |  1 +
->  14 files changed, 110 insertions(+), 26 deletions(-)
->
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 9e21232..54d4d7f 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -237,7 +237,7 @@ static void log_show_early(struct rev_info *revs, struct commit_list *list)
->  	int i = revs->early_output;
->  	int show_header = 1;
->  
-> -	sort_in_topological_order(&list, revs->lifo);
-> +	sort_in_topological_order(&list, revs->lifo, revs->use_author);
-
-The name "use-author" is a clear sign that the person who added this
-code were too narrowly focused to think "author" automatically would
-mean "author date" ;-).
-
-It probably makes sense to revamp sort_in_topological_order(), so
-that its second parameter is not a boolean 'lifo' that tells too
-much about its implementation without telling what it actually
-means.  Instead, we can make it an enum sort_order, that tells it to
-emit the commits in committer-date order, author-date order, or
-graph-traversal order.
-
-And update revs->lifo to use that same enum, without adding
-use_author_date bit to rev_info.
-
-> @@ -694,6 +697,11 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
->  			   show_branch_usage, PARSE_OPT_STOP_AT_NON_OPTION);
->  	if (all_heads)
->  		all_remotes = 1;
-> +	/* I'm having trouble figuring out exactly what `lifo` stores. Why do both 'date-order' and
-> +	 * 'topo-order' set the same variable!? Aren't they mutually exclusive? Since *both* set it, for
-> +	 * the moment, I'm going to set it for '--authorship-order'; but that seems counterintuitive. */
-
-Lines that are too wide.
-
-	/*
-         * Also please format multi-line comments
-         * like this, nothing other than slash-asterisk
-         * on the first and the last lines.
-         */
-
-> @@ -301,7 +328,8 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
->  			pptr = &commit_list_insert(new_parent, pptr)->next;
->  		}
->  	}
-> -	item->date = parse_commit_date(bufptr, tail);
-> +	item->date = parse_commit_committer_date(bufptr, tail);
-> +	item->author_date = parse_commit_author_date(bufptr, tail);
-> ...
-> diff --git a/commit.h b/commit.h
-> index 67bd509..de07525 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -17,6 +17,7 @@ struct commit {
->  	void *util;
->  	unsigned int indegree;
->  	unsigned long date;
-> +	unsigned long author_date;
-
-While walking we keep many of them in-core, and 8-byte each for each
-commit objects add up.  We do not want to make "struct commit" any
-larger than it already is.
+True; the patch is queued on a topic that forks from maint-1.8.2
+exactly for this reason.
