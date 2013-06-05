@@ -1,287 +1,283 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/4] clear parsed flag when we free tree buffers
-Date: Wed, 5 Jun 2013 18:37:39 -0400
-Message-ID: <20130605223739.GA15607@sigill.intra.peff.net>
+Subject: [PATCH 2/4] upload-archive: restrict remote objects with
+ reachability check
+Date: Wed, 5 Jun 2013 18:39:45 -0400
+Message-ID: <20130605223945.GB15607@sigill.intra.peff.net>
 References: <20130605223551.GF8664@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Ian Harvey <iharvey@good.com>
-X-From: git-owner@vger.kernel.org Thu Jun 06 00:37:47 2013
+X-From: git-owner@vger.kernel.org Thu Jun 06 00:39:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkMKw-0004Un-Sk
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 00:37:47 +0200
+	id 1UkMMz-0006GQ-OW
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 00:39:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758045Ab3FEWhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jun 2013 18:37:43 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54324 "EHLO peff.net"
+	id S1758054Ab3FEWjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jun 2013 18:39:49 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54341 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757840Ab3FEWhm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jun 2013 18:37:42 -0400
-Received: (qmail 16836 invoked by uid 102); 5 Jun 2013 22:38:28 -0000
+	id S1758036Ab3FEWjs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jun 2013 18:39:48 -0400
+Received: (qmail 16995 invoked by uid 102); 5 Jun 2013 22:40:34 -0000
 Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Jun 2013 17:38:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Jun 2013 18:37:39 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Jun 2013 17:40:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Jun 2013 18:39:45 -0400
 Content-Disposition: inline
 In-Reply-To: <20130605223551.GF8664@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226473>
 
-Many code paths will free a tree object's buffer and set it
-to NULL after finishing with it in order to keep memory
-usage down during a traversal. However, out of 8 sites that
-do this, only one actually unsets the "parsed" flag back.
-Those sites that don't are setting a trap for later users of
-the tree object; even after calling parse_tree, the buffer
-will remain NULL, causing potential segfaults.
+When serving a remote request, git-upload-archive tries to
+restrict access to unreachable objects, which matches the
+behavior of upload-pack. However, we did so by restricting
+the requested tree to "<ref>[:<path>]", because it is fast.
+That covers the common cases, but does not allow requesting
+items by a specific sha1 (either a tree or a commit sha1).
 
-It is not known whether this is triggerable in the current
-code. Most commands do not do an in-memory traversal
-followed by actually using the objects again. However, it
-does not hurt to be safe for future callers.
+Instead, let's do the correct-but-slower method of actually
+walking back from the tips to see if the requested object is
+reachable. The performance impact of this is roughly:
 
-In most cases, we can abstract this out to a
-"free_tree_buffer" helper. However, there are two
-exceptions:
+  1. For a recent commit, the speed is about the same (we
+     traverse in reverse chronological order, so we see it
+     almost immediately).
 
-  1. The fsck code relies on the parsed flag to know that we
-     were able to parse the object at one point. We can
-     switch this to using a flag in the "flags" field.
+  2. For an older commit, even one pointed at directly by a
+     ref (e.g., an old tag), we are slower, because we
+     traverse from the more recent tips. We are bounded in
+     this case by the time to look at all commits (i.e.,
+     "time git rev-list --all").
 
-  2. The index-pack code sets the buffer to NULL but does
-     not free it (it is freed by a caller). We should still
-     unset the parsed flag here, but we cannot use our
-     helper, as we do not want to free the buffer.
+  3. When we see "$ref:$path", we typically perform much
+     worse, because our traversal looks at all commits
+     first, followed by all trees.
+
+  4. The worst case (which we hit for an unreachable object)
+     is equivalent to "time rev-list --objects --all", which
+     is about the same amount of time pack-objects spends
+     preparing a full clone (which can be in the tens of
+     seconds for a large repository).
+
+The implementation is a fairly straightforward application
+of the traverse_commit_list function. Using the
+mark_objects_reachable function would seem more appropriate,
+but it has no mechanism for looking for a specific object,
+which lets us end the traversal early in common cases.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This shouldn't have any behavior change, but I'd worry a bit that I
-missed some case in builtin/fsck.c where the new HAS_OBJ flag would need
-set.
+The slowdown from points (2) and (3) makes me hesitate on this. We can
+address (2) by checking if the get_sha1 lookup used a refname
+explicitly, but I'm no sure about (3).
 
- builtin/fsck.c       | 17 ++++++++---------
- builtin/index-pack.c |  1 +
- builtin/reflog.c     |  3 +--
- http-push.c          |  3 +--
- list-objects.c       |  3 +--
- reachable.c          |  3 +--
- revision.c           |  3 +--
- tree.c               |  8 ++++++++
- tree.h               |  1 +
- walker.c             |  5 +----
- 10 files changed, 24 insertions(+), 23 deletions(-)
+ archive.c                     | 70 +++++++++++++++++++++++++++------
+ t/t5005-archive-resolution.sh | 91 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 150 insertions(+), 11 deletions(-)
+ create mode 100755 t/t5005-archive-resolution.sh
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index bb9a2cd..579fdcc 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -16,6 +16,7 @@
+diff --git a/archive.c b/archive.c
+index d254fa5..4d77624 100644
+--- a/archive.c
++++ b/archive.c
+@@ -5,6 +5,9 @@
+ #include "archive.h"
+ #include "parse-options.h"
+ #include "unpack-trees.h"
++#include "diff.h"
++#include "revision.h"
++#include "list-objects.h"
  
- #define REACHABLE 0x0001
- #define SEEN      0x0002
-+#define HAS_OBJ   0x0004
- 
- static int show_root;
- static int show_tags;
-@@ -101,7 +102,7 @@ static int mark_object(struct object *obj, int type, void *data)
- 	if (obj->flags & REACHABLE)
- 		return 0;
- 	obj->flags |= REACHABLE;
--	if (!obj->parsed) {
-+	if (!(obj->flags & HAS_OBJ)) {
- 		if (parent && !has_sha1_file(obj->sha1)) {
- 			printf("broken link from %7s %s\n",
- 				 typename(parent->type), sha1_to_hex(parent->sha1));
-@@ -127,16 +128,13 @@ static int traverse_one_object(struct object *obj)
- 	struct tree *tree = NULL;
- 
- 	if (obj->type == OBJ_TREE) {
--		obj->parsed = 0;
- 		tree = (struct tree *)obj;
- 		if (parse_tree(tree) < 0)
- 			return 1; /* error already displayed */
+ static char const * const archive_usage[] = {
+ 	N_("git archive [options] <tree-ish> [<path>...]"),
+@@ -241,6 +244,59 @@ static void parse_pathspec_arg(const char **pathspec,
  	}
- 	result = fsck_walk(obj, mark_object, obj);
--	if (tree) {
--		free(tree->buffer);
--		tree->buffer = NULL;
--	}
-+	if (tree)
-+		free_tree_buffer(tree);
- 	return result;
  }
  
-@@ -178,7 +176,7 @@ static void check_reachable_object(struct object *obj)
- 	 * except if it was in a pack-file and we didn't
- 	 * do a full fsck
- 	 */
--	if (!obj->parsed) {
-+	if (!(obj->flags & HAS_OBJ)) {
- 		if (has_sha1_pack(obj->sha1))
- 			return; /* it is in pack - forget about it */
- 		printf("missing %s %s\n", typename(obj->type), sha1_to_hex(obj->sha1));
-@@ -306,8 +304,7 @@ static int fsck_obj(struct object *obj)
- 	if (obj->type == OBJ_TREE) {
- 		struct tree *item = (struct tree *) obj;
- 
--		free(item->buffer);
--		item->buffer = NULL;
-+		free_tree_buffer(item);
- 	}
- 
- 	if (obj->type == OBJ_COMMIT) {
-@@ -340,6 +337,7 @@ static int fsck_sha1(const unsigned char *sha1)
- 		return error("%s: object corrupt or missing",
- 			     sha1_to_hex(sha1));
- 	}
-+	obj->flags |= HAS_OBJ;
- 	return fsck_obj(obj);
- }
- 
-@@ -352,6 +350,7 @@ static int fsck_obj_buffer(const unsigned char *sha1, enum object_type type,
- 		errors_found |= ERROR_OBJECT;
- 		return error("%s: object corrupt or missing", sha1_to_hex(sha1));
- 	}
-+	obj->flags = HAS_OBJ;
- 	return fsck_obj(obj);
- }
- 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 79dfe47..20cf284 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -765,6 +765,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 			if (obj->type == OBJ_TREE) {
- 				struct tree *item = (struct tree *) obj;
- 				item->buffer = NULL;
-+				obj->parsed = 0;
- 			}
- 			if (obj->type == OBJ_COMMIT) {
- 				struct commit *commit = (struct commit *) obj;
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 54184b3..ba27f7c 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -94,8 +94,7 @@ static int tree_is_complete(const unsigned char *sha1)
- 			complete = 0;
- 		}
- 	}
--	free(tree->buffer);
--	tree->buffer = NULL;
-+	free_tree_buffer(tree);
- 
- 	if (complete)
- 		tree->object.flags |= SEEN;
-diff --git a/http-push.c b/http-push.c
-index 395a8cf..c13b441 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1330,8 +1330,7 @@ static struct object_list **process_tree(struct tree *tree,
- 			break;
- 		}
- 
--	free(tree->buffer);
--	tree->buffer = NULL;
-+	free_tree_buffer(tree);
- 	return p;
- }
- 
-diff --git a/list-objects.c b/list-objects.c
-index 3dd4a96..c8c3463 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -123,8 +123,7 @@ static void process_tree(struct rev_info *revs,
- 				     cb_data);
- 	}
- 	strbuf_setlen(base, baselen);
--	free(tree->buffer);
--	tree->buffer = NULL;
-+	free_tree_buffer(tree);
- }
- 
- static void mark_edge_parents_uninteresting(struct commit *commit,
-diff --git a/reachable.c b/reachable.c
-index e7e6a1e..654a8c5 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -80,8 +80,7 @@ static void process_tree(struct tree *tree,
- 		else
- 			process_blob(lookup_blob(entry.sha1), p, &me, entry.path, cp);
- 	}
--	free(tree->buffer);
--	tree->buffer = NULL;
-+	free_tree_buffer(tree);
- }
- 
- static void process_tag(struct tag *tag, struct object_array *p,
-diff --git a/revision.c b/revision.c
-index 518cd08..eb988ee 100644
---- a/revision.c
-+++ b/revision.c
-@@ -135,8 +135,7 @@ void mark_tree_uninteresting(struct tree *tree)
- 	 * We don't care about the tree any more
- 	 * after it has been marked uninteresting.
- 	 */
--	free(tree->buffer);
--	tree->buffer = NULL;
-+	free_tree_buffer(tree);
- }
- 
- void mark_parents_uninteresting(struct commit *commit)
-diff --git a/tree.c b/tree.c
-index 62fed63..1cbf60e 100644
---- a/tree.c
-+++ b/tree.c
-@@ -225,6 +225,14 @@ int parse_tree(struct tree *item)
- 	return parse_tree_buffer(item, buffer, size);
- }
- 
-+void free_tree_buffer(struct tree *tree)
++struct reachable_object_data {
++	struct rev_info revs;
++	struct object *obj;
++};
++
++static void check_object(struct object *obj, const struct name_path *path,
++			 const char *name, void *vdata)
 +{
-+	free(tree->buffer);
-+	tree->buffer = NULL;
-+	tree->size = 0;
-+	tree->object.parsed = 0;
++	struct reachable_object_data *data = vdata;
++	/*
++	 * We found it; the caller will take care of marking it SEEN,
++	 * but we can end the traversal early.
++	 */
++	if (obj == data->obj) {
++		free_commit_list(data->revs.commits);
++		data->revs.commits = NULL;
++
++		free(data->revs.pending.objects);
++		data->revs.pending.nr = 0;
++		data->revs.pending.alloc = 0;
++		data->revs.pending.objects = NULL;
++	}
 +}
 +
- struct tree *parse_tree_indirect(const unsigned char *sha1)
- {
- 	struct object *obj = parse_object(sha1);
-diff --git a/tree.h b/tree.h
-index 69bcb5e..601ab9c 100644
---- a/tree.h
-+++ b/tree.h
-@@ -16,6 +16,7 @@ int parse_tree(struct tree *tree);
- int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size);
++static void check_commit(struct commit *commit, void *vdata)
++{
++	check_object(&commit->object, NULL, NULL, vdata);
++}
++
++static int object_is_reachable(const unsigned char *sha1)
++{
++	static const char *argv[] = {
++		"rev-list",
++		"--objects",
++		"--all",
++		NULL
++	};
++	struct reachable_object_data data;
++
++	data.obj = parse_object(sha1);
++	if (!data.obj)
++		return 0;
++
++	save_commit_buffer = 0;
++	init_revisions(&data.revs, NULL);
++	setup_revisions(ARRAY_SIZE(argv) - 1, argv, &data.revs, NULL);
++	if (prepare_revision_walk(&data.revs))
++		return 0;
++
++	traverse_commit_list(&data.revs, check_commit, check_object, &data);
++	return data.obj->flags & SEEN;
++}
++
+ static void parse_treeish_arg(const char **argv,
+ 		struct archiver_args *ar_args, const char *prefix,
+ 		int remote)
+@@ -252,20 +308,12 @@ static void parse_treeish_arg(const char **argv,
+ 	const struct commit *commit;
+ 	unsigned char sha1[20];
  
- int parse_tree(struct tree *tree);
-+void free_tree_buffer(struct tree *tree);
+-	/* Remotes are only allowed to fetch actual refs */
+-	if (remote) {
+-		char *ref = NULL;
+-		const char *colon = strchr(name, ':');
+-		int refnamelen = colon ? colon - name : strlen(name);
+-
+-		if (!dwim_ref(name, refnamelen, sha1, &ref))
+-			die("no such ref: %.*s", refnamelen, name);
+-		free(ref);
+-	}
+-
+ 	if (get_sha1(name, sha1))
+ 		die("Not a valid object name");
  
- /* Parses and returns the tree in the given ent, chasing tags and commits. */
- struct tree *parse_tree_indirect(const unsigned char *sha1);
-diff --git a/walker.c b/walker.c
-index be389dc..633596e 100644
---- a/walker.c
-+++ b/walker.c
-@@ -56,10 +56,7 @@ static int process_tree(struct walker *walker, struct tree *tree)
- 		if (!obj || process(walker, obj))
- 			return -1;
- 	}
--	free(tree->buffer);
--	tree->buffer = NULL;
--	tree->size = 0;
--	tree->object.parsed = 0;
-+	free_tree_buffer(tree);
- 	return 0;
- }
- 
++	if (remote && !object_is_reachable(sha1))
++		die("Not a valid object name");
++
+ 	commit = lookup_commit_reference_gently(sha1, 1);
+ 	if (commit) {
+ 		commit_sha1 = commit->object.sha1;
+diff --git a/t/t5005-archive-resolution.sh b/t/t5005-archive-resolution.sh
+new file mode 100755
+index 0000000..2e7ee1e
+--- /dev/null
++++ b/t/t5005-archive-resolution.sh
+@@ -0,0 +1,91 @@
++#!/bin/sh
++
++test_description='test object resolution methods for local and remote archive'
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo one >one && git add one && git commit -m one &&
++	sha1_referenced=`git rev-parse HEAD` &&
++	git tag tagged &&
++	echo two >two && git add two && git commit -m two &&
++	sha1_unreferenced=`git rev-parse HEAD` &&
++	git reset --hard HEAD^ &&
++	echo three >three && git add three && git commit -m three &&
++	git tag tagged-tree HEAD^{tree} &&
++	git reset --hard HEAD^ &&
++	mkdir subdir &&
++	echo four >subdir/four && git add subdir && git commit -m four &&
++	sha1_subtree=`git rev-parse HEAD:subdir`
++'
++
++# check that archiving $what from $where produces expected paths
++check() {
++	desc=$1; shift; # human-readable description
++	where=$1; shift; # local|remote
++	what=$1; shift; # the commit/tree id
++	expect="$*"; # expected paths or "deny"
++
++	cmd="git archive --format=tar -o result.tar"
++	test "$where" = "remote" && cmd="$cmd --remote=."
++	cmd="$cmd $what"
++
++	if test "$expect" = "deny"; then
++		test_expect_success "archive $desc ($where, should deny)" "
++			test_must_fail $cmd
++		"
++	else
++		test_expect_success "archive $desc ($where, should work)" '
++			'"$cmd"' &&
++			for i in '"$expect"'; do
++				echo "$i:`basename $i`"
++			done >expect &&
++			rm -rf result &&
++			mkdir result &&
++			(cd result &&
++			tar xf ../result.tar &&
++			for i in `find * -type f -print`; do
++				echo "$i:`cat $i`"
++			done >../actual
++			) &&
++			test_cmp expect actual
++		'
++	fi
++}
++
++check 'ref'  local master one subdir/four
++check 'ref' remote master one subdir/four
++
++check 'relative ref'  local master^ one
++check 'relative ref' remote master^ one
++
++check 'reachable sha1'  local $sha1_referenced one
++check 'reachable sha1' remote $sha1_referenced one
++
++check 'unreachable sha1'  local $sha1_unreferenced one two
++check 'unreachable sha1' remote $sha1_unreferenced deny
++
++check 'reachable reflog'  local master@{0} one subdir/four
++check 'reachable reflog' remote master@{0} one subdir/four
++
++check 'unreachable reflog'  local master@{4} one two
++check 'unreachable reflog' remote master@{4} deny
++
++check 'tree via ref^{tree}'  local master^{tree} one subdir/four
++check 'tree via ref^{tree}' remote master^{tree} one subdir/four
++
++check 'tree via ref:'  local master: one subdir/four
++check 'tree via ref:' remote master: one subdir/four
++
++check 'subtree via ref:sub'  local master:subdir four
++check 'subtree via ref:sub' remote master:subdir four
++
++check 'subtree via sha1'  local $sha1_subtree four
++check 'subtree via sha1' remote $sha1_subtree four
++
++check 'tagged commit'  local tagged one
++check 'tagged commit' remote tagged one
++
++check 'tagged tree'  local tagged-tree one three
++check 'tagged tree' remote tagged-tree one three
++
++test_done
 -- 
 1.8.3.rc2.14.g7eee6b3
