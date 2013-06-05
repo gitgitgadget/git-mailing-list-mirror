@@ -1,134 +1,70 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Re: Re: What's cooking in git.git (May 2013, #09; Wed, 29)
-Date: Wed, 5 Jun 2013 09:19:02 +0100
-Message-ID: <20130605081901.GQ1072@serenity.lan>
-References: <7va9ndqqyf.fsf@alter.siamese.dyndns.org>
- <51A7A73C.6070103@web.de>
- <20130531194051.GC1072@serenity.lan>
- <51AD0EEB.4020106@web.de>
- <20130603222341.GL1072@serenity.lan>
- <20130604052950.GA2943@book.hvoigt.net>
- <20130604081045.GM1072@serenity.lan>
- <20130604111717.GA306@book.hvoigt.net>
- <20130604124826.GN1072@serenity.lan>
- <CABURp0qPt8S4WWhjb22qEJwnUOoT7SFr9=cZBv3Syp-uEX-ycg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 10/15] for-each-ref: introduce format specifier %>(*) and %<(*)
+Date: Wed, 5 Jun 2013 17:15:30 +0700
+Message-ID: <CACsJy8Bm5tmyUO_e2Uus3RuyOUphyrJOT955T646BdFT060UBA@mail.gmail.com>
+References: <1370349337-20938-1-git-send-email-artagnon@gmail.com>
+ <1370349337-20938-11-git-send-email-artagnon@gmail.com> <CACsJy8A2h0pjZ759NpByrEJYzg3ETyDkUGTptC-FFkeZCpGSbQ@mail.gmail.com>
+ <CALkWK0=9X6QhCOPfV6Gq31VVccyDoO3ciPxG+2kqpgL2foiQSw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 05 10:19:27 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 05 12:16:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uk8wI-0004E2-8F
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 10:19:26 +0200
+	id 1UkAlE-0005aK-6h
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 12:16:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752233Ab3FEITV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Jun 2013 04:19:21 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:47876 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751690Ab3FEITS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jun 2013 04:19:18 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id D01B1CDA620;
-	Wed,  5 Jun 2013 09:19:17 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hrhllnoPWwQn; Wed,  5 Jun 2013 09:19:12 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 61104866011;
-	Wed,  5 Jun 2013 09:19:03 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CABURp0qPt8S4WWhjb22qEJwnUOoT7SFr9=cZBv3Syp-uEX-ycg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753292Ab3FEKQD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jun 2013 06:16:03 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:55170 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751904Ab3FEKQB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jun 2013 06:16:01 -0400
+Received: by mail-ob0-f172.google.com with SMTP id wo10so2269247obc.31
+        for <git@vger.kernel.org>; Wed, 05 Jun 2013 03:16:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=1QiKHB1dAg8ly1fgzKSK/L5KVbm9vnECux9DywRlTbA=;
+        b=tRJT5Q99amuMqpBut3u6uomiqdPuzajs9ZiFUMJrBCn3hrNSAQzf2VcBnooDl9zr8V
+         1QmhBWnlmhPm2UmCtrCAGO62COsOwmZVrNDaRl5Nc9lKY24EiAD0Y123MDa8XRnNDcZR
+         i1nBzPOGeJj0w17dwfe9bI4YKEcF98pUzi5uq3QuTFZF5Wa1VZccsVfPXdAQzZzLMm4y
+         NIrjAxJylskcSQDKEwbB/h5fjfTiHk0uT8qW5WXP3suOhKabhXd2rUkDfZ8jfCeYVwlf
+         JC3cw33IAdkWKkif3vfkapTQkJFGOEYwJqixaCIUe1tpnBIzVMmirPMWyXlZ1nuLCzxW
+         ElTg==
+X-Received: by 10.182.118.226 with SMTP id kp2mr14100141obb.48.1370427360745;
+ Wed, 05 Jun 2013 03:16:00 -0700 (PDT)
+Received: by 10.76.171.199 with HTTP; Wed, 5 Jun 2013 03:15:30 -0700 (PDT)
+In-Reply-To: <CALkWK0=9X6QhCOPfV6Gq31VVccyDoO3ciPxG+2kqpgL2foiQSw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226444>
 
-On Tue, Jun 04, 2013 at 06:57:34PM -0400, Phil Hord wrote:
-> On Tue, Jun 4, 2013 at 8:48 AM, John Keeping <john@keeping.me.uk> wro=
-te:
-> > The problem is that sometimes you do want to adjust the path and
-> > sometimes you don't.  Reading git-submodule(1), it says:
-> >
-> >      This may be either an absolute URL, or (if it begins with ./ o=
-r
-> >      ../), the location relative to the superproject=E2=80=99s orig=
-in
-> >      repository.
-> >      [snip]
-> >      If the superproject doesn=E2=80=99t have an origin configured =
-the
-> >      superproject is its own authoritative upstream and the current
-> >      working directory is used instead.
-> >
-> > So I think it's quite reasonable to have a server layout that looks=
- like
-> > this:
-> >
-> >     project
-> >     |- libs
-> >     |  |- libA
-> >     |  `- libB
-> >     |- core.git
-> >
-> > and with only core.git on your local system do:
-> >
-> >     cd core/libs
-> >     git submodule add ../libs/libB
-> >
-> > expecting that to point to libB.  But if we adjust the path then th=
-e
-> > user has to do:
-> >
-> >     git submodule add ../../libs/libB
-> >
-> > However, it is also perfectly reasonable to have no remote configur=
-ed
-> > and the library next to the repository itself.  In which case we do=
- want
-> > to specify the additional "../" so that shell completion works in t=
-he
-> > natural way.
->=20
-> In submodule add, the leading '../' prefix on the repository url has
-> always meant that the url is relative to the url of the current repo.
-> The given repo-url is precisely what ends up in .gitmodules'
-> submodule.$name.url.  It works this way whether there is a remote
-> configured or not.
->=20
-> It does seem like we need to be cautious around this change.
->=20
-> > The only way I can see to resolve the ambiguity is to die when we h=
-it
-> > this particular case.  This should be acceptable because people
-> > shouldn't be adding new submodules anywhere near as often as they
-> > perform other submodule operations and it doesn't affect absolute U=
-RLs.
->=20
-> I don't think I like that.  But I don't know if I like anything I
-> dreamed up, either.
+On Wed, Jun 5, 2013 at 3:14 PM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> Duy Nguyen wrote:
+>> I mentioned it before and I do it again. This is not optimal.
+>
+> Yeah, I'll attempt to fix this, but it's not urgent.
 
-I've decided that I will make it die (unless anyone comes up with an
-obviously correct solution before I get around to sending the reroll)
-because it's a lot easier to loosen that in the future than to change i=
-t
-if we get the behaviour wrong now.  I don't want to hold every other
-subcommand hostage to this one case.
+Agreed it's not urgent.
+
+>> But I guess it's ok in this
+>> shape unless you run this over hundreds of refs.
+>
+> Oh, you can run over a hundred refs just fine, for scripting purposes;
+> but why would you want to run over a hundred refs with a pretty that
+> includes %>(*) or %<(*)?
+
+Good point. "git for-each-ref|wc -l" on my git repo says I have 673
+refs. A naive use for-each-ref --pretty without any ref patterns could
+happen. But I guess people will quickly learn to limit the ref
+selection soon after doing that :-)
+--
+Duy
