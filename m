@@ -1,105 +1,84 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v4 0/7] git send-email suppress-cc=self fixes
-Date: Wed, 5 Jun 2013 23:14:23 +0300
-Message-ID: <20130605201423.GB31143@redhat.com>
-References: <1370455737-29986-1-git-send-email-mst@redhat.com>
- <7v8v2o1ho7.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 07/11] t2100: use test_ln_s_add to remove SYMLINKS prerequisite
+Date: Wed, 05 Jun 2013 22:23:02 +0200
+Message-ID: <51AF9E26.4050809@kdbg.org>
+References: <cover.1370076477.git.j6t@kdbg.org> <e232ae3efc6f7b282d4402e6e6976b34d34ab3e7.1370076477.git.j6t@kdbg.org> <7v8v2p5y7o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 05 22:14:00 2013
+X-From: git-owner@vger.kernel.org Wed Jun 05 22:23:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkK5j-0004kx-Iu
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 22:13:55 +0200
+	id 1UkKEg-0004uq-PD
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 22:23:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757461Ab3FEUNv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jun 2013 16:13:51 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:49917 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757240Ab3FEUNv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jun 2013 16:13:51 -0400
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r55KDn3I031186
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Wed, 5 Jun 2013 16:13:49 -0400
-Received: from redhat.com (vpn-203-36.tlv.redhat.com [10.35.203.36])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id r55KDle8024332;
-	Wed, 5 Jun 2013 16:13:48 -0400
-Content-Disposition: inline
-In-Reply-To: <7v8v2o1ho7.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+	id S1757338Ab3FEUXF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jun 2013 16:23:05 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:50698 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757234Ab3FEUXF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jun 2013 16:23:05 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id F129F130045;
+	Wed,  5 Jun 2013 22:23:02 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 798C219F5E4;
+	Wed,  5 Jun 2013 22:23:02 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <7v8v2p5y7o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226469>
 
-On Wed, Jun 05, 2013 at 12:28:08PM -0700, Junio C Hamano wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
+Am 05.06.2013 00:04, schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
 > 
-> > This includes bugfixes related to handling of --suppress-cc=self
-> > flag. Tests are also included.
-> >
-> > Changes from v3:
-> > 	- v3 submission was missing one patch (1/7). Re-add it.
-> > Changes from v2:
-> > 	- add a new test, split patches differently add code comments
-> > 		 to address comments by Junio
-> > 	- rename example addresses in tests from redhat.com to example.com
-> > Changes from v1:
-> >         - tweak coding style in tests to address comments by Junio
+>> @@ -62,12 +57,7 @@ test_expect_success 'git update-index to add conflicting file path2 should fail'
+>>  
+>>  test_expect_success 'git update-index to add conflicting symlink path3 should fail' '
+>>  
+>> -	if test_have_prereq SYMLINKS
+>> -	then
+>> -		ln -s xyzzy path3
+>> -	else
+>> -		date >path3
+>> -	fi &&
+>> +	test_ln_s xyzzy path3 &&
+>>  	test_must_fail git update-index --add -- path3
+>>  '
 > 
-> Nice.  This round cleanly applies and the interdiff since v2 looked
-> sensible.
+> This is also borderline questionable.  With path2, we are already
+> testing that adding a regular file (one variant of "non directory")
+> at a path that the index expects to see a directory (the index has
+> path2/file2 in it at this point) fails,...
+
+You are right, of course. But again, the issue is not new with this patch.
+
+> If we want to really test the equivalent on a filesystem without
+> symbolic links, it would be a more faithful test to attempt to add
+> it using "--add --cacheinfo" and see it fail, i.e.
 > 
-> Will replace and merge to 'next' shortly.
+>    test_must_fail_to_ln_s_add xyzzy path3
 > 
-> Thanks.
+> which would be a copy of test_ln_s_add but has test_must_fail before
+> two calls to git_update_index it makes.
 
-Wellcome.
+That's not necessary, IMO. We can just add an unconditional --cache-info
+test here and add SYMLINKS to the above test.
 
-With respect to this, and a bit off-topic, what's
-the best way to revise patch series?
+> I think all the test_ln_s_add conversion in the series make sense,
+> but many uses of test_ln_s are questionable, and I suspect it would
+> invite similar confusion down the road.
 
-What I did, given series in patchvN-1/:
+Incidentally, I've been running the test_ln_s_add conversions since,
+whoa!, two years now, but added test_ln_s only when I cleaned up the
+patch for submission. Perhaps it's better when I rip out test_ln_s again.
 
-	rm -fr patchvN #blow away old directory if there
-			# otherwise I get two copies of patches if I renamed any
-	git branch|fgrep '*'
-	# Figure out on which branch I am, manually specify the correct upstream I'm tracking,
-	# otherwise I get a ton of unrelated patches.
-	git format-patch --cover --subject-prefix='PATCH vN' -o patchvN origin/master..
-
-	vi patchvN/0000* patchvN-1/0000*
-
-	#manually copy subject, Cc list and text from vN-1 to vN cover letter,
-	#leave stats intact.
-
-	git log origin/master.. |grep -e Cc: -e Reviewed -e Acked
-	# manually Look who reviewed/acked all patches in previous versions -
-	# if so copy them on cover letter too.
-
-	git send-email --cc=junio patchvN/*
-
-lots of manual steps here.
-Any ways to automate?
-
-
-> >
-> > Michael S. Tsirkin (7):
-> >   t/send-email.sh: add test for suppress-cc=self
-> >   send-email: fix suppress-cc=self on cccmd
-> >   t/send-email: test suppress-cc=self on cccmd
-> >   send-email: make --suppress-cc=self sanitize input
-> >   t/send-email: add test with quoted sender
-> >   t/send-email: test suppress-cc=self with non-ascii
-> >   test-send-email: test for pre-sanitized self name
-> >
-> >  git-send-email.perl   | 23 ++++++++++------
-> >  t/t9001-send-email.sh | 75 +++++++++++++++++++++++++++++++++++++++++++++++++++
-> >  2 files changed, 90 insertions(+), 8 deletions(-)
+-- Hannes
