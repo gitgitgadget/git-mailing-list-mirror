@@ -1,70 +1,164 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 10/15] for-each-ref: introduce format specifier %>(*) and %<(*)
-Date: Wed, 5 Jun 2013 17:15:30 +0700
-Message-ID: <CACsJy8Bm5tmyUO_e2Uus3RuyOUphyrJOT955T646BdFT060UBA@mail.gmail.com>
-References: <1370349337-20938-1-git-send-email-artagnon@gmail.com>
- <1370349337-20938-11-git-send-email-artagnon@gmail.com> <CACsJy8A2h0pjZ759NpByrEJYzg3ETyDkUGTptC-FFkeZCpGSbQ@mail.gmail.com>
- <CALkWK0=9X6QhCOPfV6Gq31VVccyDoO3ciPxG+2kqpgL2foiQSw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 05 12:16:11 2013
+From: benoit.person@ensimag.fr
+Subject: [PATCH] git-remote-mediawiki: use Git.pm functions for credentials
+Date: Wed,  5 Jun 2013 12:58:00 +0200
+Message-ID: <1370429880-12696-1-git-send-email-benoit.person@ensimag.fr>
+References: <7vr4gh7m24.fsf@alter.siamese.dyndns.org>
+Cc: celestin.matte@ensimag.fr, gitster@pobox.com,
+	Benoit Person <benoit.person@ensimag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 05 12:58:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkAlE-0005aK-6h
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 12:16:08 +0200
+	id 1UkBQJ-0000ef-8I
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 12:58:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753292Ab3FEKQD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jun 2013 06:16:03 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:55170 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751904Ab3FEKQB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jun 2013 06:16:01 -0400
-Received: by mail-ob0-f172.google.com with SMTP id wo10so2269247obc.31
-        for <git@vger.kernel.org>; Wed, 05 Jun 2013 03:16:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=1QiKHB1dAg8ly1fgzKSK/L5KVbm9vnECux9DywRlTbA=;
-        b=tRJT5Q99amuMqpBut3u6uomiqdPuzajs9ZiFUMJrBCn3hrNSAQzf2VcBnooDl9zr8V
-         1QmhBWnlmhPm2UmCtrCAGO62COsOwmZVrNDaRl5Nc9lKY24EiAD0Y123MDa8XRnNDcZR
-         i1nBzPOGeJj0w17dwfe9bI4YKEcF98pUzi5uq3QuTFZF5Wa1VZccsVfPXdAQzZzLMm4y
-         NIrjAxJylskcSQDKEwbB/h5fjfTiHk0uT8qW5WXP3suOhKabhXd2rUkDfZ8jfCeYVwlf
-         JC3cw33IAdkWKkif3vfkapTQkJFGOEYwJqixaCIUe1tpnBIzVMmirPMWyXlZ1nuLCzxW
-         ElTg==
-X-Received: by 10.182.118.226 with SMTP id kp2mr14100141obb.48.1370427360745;
- Wed, 05 Jun 2013 03:16:00 -0700 (PDT)
-Received: by 10.76.171.199 with HTTP; Wed, 5 Jun 2013 03:15:30 -0700 (PDT)
-In-Reply-To: <CALkWK0=9X6QhCOPfV6Gq31VVccyDoO3ciPxG+2kqpgL2foiQSw@mail.gmail.com>
+	id S1752513Ab3FEK6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jun 2013 06:58:21 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38598 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751323Ab3FEK6U (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jun 2013 06:58:20 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r55Aw3DD024131
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 5 Jun 2013 12:58:03 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r55Aw4D6011692;
+	Wed, 5 Jun 2013 12:58:04 +0200
+Received: from localhost.localdomain (ensibm [195.221.228.8])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r55Aw3i8006055;
+	Wed, 5 Jun 2013 12:58:04 +0200
+X-Mailer: git-send-email 1.8.3.rc3.7.gc2f33ed.dirty
+In-Reply-To: <7vr4gh7m24.fsf@alter.siamese.dyndns.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 05 Jun 2013 12:58:04 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r55Aw3DD024131
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: benoit.person@ensimag.fr
+MailScanner-NULL-Check: 1371034687.34934@rtzo0fveyUKYlE6chyPksw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226445>
 
-On Wed, Jun 5, 2013 at 3:14 PM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
-> Duy Nguyen wrote:
->> I mentioned it before and I do it again. This is not optimal.
->
-> Yeah, I'll attempt to fix this, but it's not urgent.
+From: Benoit Person <benoit.person@ensimag.fr>
 
-Agreed it's not urgent.
+In 52dce6d, a new credential function was added to Git.pm, based on
+git-remote-mediawiki's functions. The logical follow-up is to use
+those functions in git-remote-mediawiki.
 
->> But I guess it's ok in this
->> shape unless you run this over hundreds of refs.
->
-> Oh, you can run over a hundred refs just fine, for scripting purposes;
-> but why would you want to run over a hundred refs with a pretty that
-> includes %>(*) or %<(*)?
+Signed-off-by: Benoit Person <benoit.person@ensimag.fr>
+Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+---
+ contrib/mw-to-git/git-remote-mediawiki.perl | 66 ++++-------------------------
+ 1 file changed, 9 insertions(+), 57 deletions(-)
 
-Good point. "git for-each-ref|wc -l" on my git repo says I have 673
-refs. A naive use for-each-ref --pretty without any ref patterns could
-happen. But I guess people will quickly learn to limit the ref
-selection soon after doing that :-)
---
-Duy
+diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
+index 9c14c1f..6672e4c 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki.perl
++++ b/contrib/mw-to-git/git-remote-mediawiki.perl
+@@ -13,6 +13,7 @@
+ 
+ use strict;
+ use MediaWiki::API;
++use Git;
+ use DateTime::Format::ISO8601;
+ 
+ # By default, use UTF-8 to communicate with Git and the user
+@@ -156,57 +157,6 @@ while (<STDIN>) {
+ 
+ ########################## Functions ##############################
+ 
+-## credential API management (generic functions)
+-
+-sub credential_read {
+-	my %credential;
+-	my $reader = shift;
+-	my $op = shift;
+-	while (<$reader>) {
+-		my ($key, $value) = /([^=]*)=(.*)/;
+-		if (not defined $key) {
+-			die "ERROR receiving response from git credential $op:\n$_\n";
+-		}
+-		$credential{$key} = $value;
+-	}
+-	return %credential;
+-}
+-
+-sub credential_write {
+-	my $credential = shift;
+-	my $writer = shift;
+-	# url overwrites other fields, so it must come first
+-	print $writer "url=$credential->{url}\n" if exists $credential->{url};
+-	while (my ($key, $value) = each(%$credential) ) {
+-		if (length $value && $key ne 'url') {
+-			print $writer "$key=$value\n";
+-		}
+-	}
+-}
+-
+-sub credential_run {
+-	my $op = shift;
+-	my $credential = shift;
+-	my $pid = open2(my $reader, my $writer, "git credential $op");
+-	credential_write($credential, $writer);
+-	print $writer "\n";
+-	close($writer);
+-
+-	if ($op eq "fill") {
+-		%$credential = credential_read($reader, $op);
+-	} else {
+-		if (<$reader>) {
+-			die "ERROR while running git credential $op:\n$_";
+-		}
+-	}
+-	close($reader);
+-	waitpid($pid, 0);
+-	my $child_exit_status = $? >> 8;
+-	if ($child_exit_status != 0) {
+-		die "'git credential $op' failed with code $child_exit_status.";
+-	}
+-}
+-
+ # MediaWiki API instance, created lazily.
+ my $mediawiki;
+ 
+@@ -217,22 +167,24 @@ sub mw_connect_maybe {
+ 	$mediawiki = MediaWiki::API->new;
+ 	$mediawiki->{config}->{api_url} = "$url/api.php";
+ 	if ($wiki_login) {
+-		my %credential = (url => $url);
+-		$credential{username} = $wiki_login;
+-		$credential{password} = $wiki_passwd;
+-		credential_run("fill", \%credential);
++		my %credential = (
++			'url' => $url,
++			'username' => $wiki_login,
++			'password' => $wiki_passwd
++		);
++		Git::credential(\%credential);
+ 		my $request = {lgname => $credential{username},
+ 			       lgpassword => $credential{password},
+ 			       lgdomain => $wiki_domain};
+ 		if ($mediawiki->login($request)) {
+-			credential_run("approve", \%credential);
++			Git::credential(\%credential, 'approve');
+ 			print STDERR "Logged in mediawiki user \"$credential{username}\".\n";
+ 		} else {
+ 			print STDERR "Failed to log in mediawiki user \"$credential{username}\" on $url\n";
+ 			print STDERR "  (error " .
+ 				$mediawiki->{error}->{code} . ': ' .
+ 				$mediawiki->{error}->{details} . ")\n";
+-			credential_run("reject", \%credential);
++			Git::credential(\%credential, 'reject');
+ 			exit 1;
+ 		}
+ 	}
+-- 
+1.8.3.rc3.7.gc2f33ed.dirty
