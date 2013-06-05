@@ -1,82 +1,120 @@
-From: Charles McGarvey <chazmcgarvey@brokenzipper.com>
-Subject: [PATCH] gitweb: fix problem causing erroneous project list
-Date: Tue, 4 Jun 2013 22:44:28 -0600
-Message-ID: <20130605043524.GA2453@compy.Home>
+From: ojab <ojab@ojab.ru>
+Subject: Re: [PATCH] Fix `git svn rebase` if top-level HEAD directory exist
+Date: Wed, 05 Jun 2013 09:32:50 +0400
+Message-ID: <51AECD82.4070908@ojab.ru>
+References: <51AD9828.7080508@ojab.ru> <20130604074956.GA13555@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 05 06:55:36 2013
+Content-Type: multipart/mixed;
+ boundary="------------070009020907050707010707"
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 05 07:40:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uk5l1-0003SM-2I
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 06:55:35 +0200
+	id 1Uk6Sg-0004oX-UV
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 07:40:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751268Ab3FEEz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jun 2013 00:55:26 -0400
-Received: from romulus.brokenzipper.com ([71.19.157.142]:65387 "EHLO
-	romulus.brokenzipper.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751116Ab3FEEzP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jun 2013 00:55:15 -0400
-X-Greylist: delayed 643 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Jun 2013 00:55:15 EDT
-Received: from vulcan.local (unknown [IPv6:2602:61:7edf:e300:0:ff:fe00:7701])
-	by romulus.brokenzipper.com (Postfix) with ESMTP id 70FA252D65;
-	Tue,  4 Jun 2013 22:44:31 -0600 (MDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=brokenzipper.com;
-	s=romulus; t=1370407471;
-	bh=KKofYgE91D6xw4jk5ZAMImv5Cry9smJJiSXsndUXpI4=;
-	h=Date:From:To:Cc:Subject;
-	b=bovKh1kzuCYfK7xy9Zib3oMjz3rrUvNcSP0wg1k8tZ9F7bzGnkvDosT99kxe27OZx
-	 EJXpwAFgV94hG1TP5l8Ml13qMgZw+q+UcOd43Oa+3uxZaGdQ5neaSTfA4+ltSh76aR
-	 bVs7aXQNyd/tud6IE7p6G1NKteP/R7Si6lVbq1CE=
-Received: from [2602:61:7edf:e300:0:ff:fe00:7700] (helo=compy)
-	by vulcan.local with smtp (Exim 4.80)
-	(envelope-from <chazmcgarvey@brokenzipper.com>)
-	id 1Uk5ad-0003tP-LN; Tue, 04 Jun 2013 22:44:52 -0600
-Received: by compy (sSMTP sendmail emulation); Tue, 04 Jun 2013 22:44:28 -0600
-Content-Disposition: inline
-OpenPGP: url=http://www.brokenzipper.com/chaz.asc
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751323Ab3FEFkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jun 2013 01:40:39 -0400
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:36383 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751025Ab3FEFki (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jun 2013 01:40:38 -0400
+Received: by mail-lb0-f176.google.com with SMTP id z5so1496725lbh.35
+        for <git@vger.kernel.org>; Tue, 04 Jun 2013 22:40:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:x-gm-message-state;
+        bh=kdR7m+p7BYaqIorLmMFuDWxFpQfuqbAgvGK3iVI+gCs=;
+        b=ZDXAoJmR4qfU38fRnyFwhJcBNbtV56ub2YmcdqTLv6R1c9wVACsC3O7aP7NT694FmG
+         nGy1eR+9snPxPfKkGLWzeyY1p4Em/wKcoU89gwUMtJ30tIWOTdEigBcNXsB2iLn9Zpkd
+         9AIHA6J4NqIr2MEebRA3HpOxqk4GRva2bleziWHj6gxjFTnVIjP/dozPOODeX0bpucJq
+         bhk44waWC+eeARw93z/czpTae8ErBu1lIfbh0be3cO+FEi8uFMQyRtk9Webq9rApPbiN
+         09qTdjCPGbiVlCEeKE5Rgab5ysyq9xD7vKuSevTEAn37bUlAlWUC4xUe4KkxKELeeeOE
+         Hl8g==
+X-Received: by 10.112.149.71 with SMTP id ty7mr14340581lbb.16.1370410375216;
+        Tue, 04 Jun 2013 22:32:55 -0700 (PDT)
+Received: from ojab.ru (cl-154.led-01.ru.sixxs.net. [2a02:578:5002:99::2])
+        by mx.google.com with ESMTPSA id x3sm27372969lag.6.2013.06.04.22.32.52
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 04 Jun 2013 22:32:54 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:23.0) Gecko/20100101 Thunderbird/23.0a1
+In-Reply-To: <20130604074956.GA13555@sigill.intra.peff.net>
+X-Gm-Message-State: ALoCoQmb49EKRQiBefMsYEULEJxIfEUkEfOgsjuAtcENBAduiPqUq2udJ+Eog/yggsKSoKgxgN29
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226431>
 
-The bug is manifest when running gitweb in a persistent process (e.g.
-FastCGI, PSGI), and it's easy to reproduce.  If a gitweb request
-includes the searchtext parameter (i.e. s), subsequent requests using
-the project_list action--which is the default action--and without
-a searchtext parameter will be filtered by the searchtext value of the
-first request.  This is because the value of the $search_regexp global
-(the value of which is based on the searchtext parameter) is currently
-being persisted between requests.
+This is a multi-part message in MIME format.
+--------------070009020907050707010707
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Instead, clear $search_regexp before dispatching each request.
+On 04.06.2013 11:49, Jeff King wrote:
 
-Signed-off-by: Charles McGarvey <chazmcgarvey@brokenzipper.com>
----
-I don't think there are currently any persistent-process gitweb tests to
-copy from, so writing a test for this seems to be non-trivial.
+> This rationale should probably go in the commit message.
 
- gitweb/gitweb.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Done
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 80950c0..8d69ada 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1086,7 +1086,7 @@ sub evaluate_and_validate_params {
- 	our $search_use_regexp = $input_params{'search_use_regexp'};
- 
- 	our $searchtext = $input_params{'searchtext'};
--	our $search_regexp;
-+	our $search_regexp = undef;
- 	if (defined $searchtext) {
- 		if (length($searchtext) < 2) {
- 			die_error(403, "At least two characters are required for search parameter");
--- 
-1.8.1.5
+>
+> We prefer patches to be inline in the email; these lines can be
+> dropped, as they are picked up from your email headers.
+
+AFAIK Thunderbird brakes spaces, so better safe, than sorry :)
+
+> Do you mind providing a real name? The point of Signed-off-by is for
+> licensing and attribution.
+
+Done (but i doubt that such a patch can be copyrighted).
+
+> Looks obviously correct to me. I did a quick grep, and there is one
+> other spot that probably should get the same treatment:
+
+Yep, already found it.
+
+//wbr ojab
+
+
+--------------070009020907050707010707
+Content-Type: text/plain; charset=UTF-8;
+ name="0001-Fix-git-svn-rebase-dcommit-if-top-level-HEAD-directo.patch"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename*0="0001-Fix-git-svn-rebase-dcommit-if-top-level-HEAD-directo.pa";
+ filename*1="tch"
+
+RnJvbSAwMjUxYjdmMjAzMmUyMDUwZDJiNmQyY2JjMDk2MDQ3MWM5OTZiMDU4IE1vbiBTZXAg
+MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBvamFiIDxvamFiQG9qYWIucnU+CkRhdGU6IFR1ZSwg
+NCBKdW4gMjAxMyAxMToyODoxNiArMDQwMApTdWJqZWN0OiBbUEFUQ0hdIEZpeCBgZ2l0IHN2
+bmAgYHJlYmFzZWAgJiBgZGNvbW1pdGAgaWYgdG9wLWxldmVsIEhFQUQKIGRpcmVjdG9yeSBl
+eGlzdAoKJCBnaXQgc3ZuIHJlYmFzZQpmYXRhbDogYW1iaWd1b3VzIGFyZ3VtZW50ICdIRUFE
+JzogYm90aCByZXZpc2lvbiBhbmQgZmlsZW5hbWUKVXNlICctLScgdG8gc2VwYXJhdGUgcGF0
+aHMgZnJvbSByZXZpc2lvbnMsIGxpa2UgdGhpczoKJ2dpdCA8Y29tbWFuZD4gWzxyZXZpc2lv
+bj4uLi5dIC0tIFs8ZmlsZT4uLi5dJwpyZXYtbGlzdCAtLWZpcnN0LXBhcmVudCAtLXByZXR0
+eT1tZWRpdW0gSEVBRDogY29tbWFuZCByZXR1cm5lZCBlcnJvcjogMTI4CgpTaWduZWQtb2Zm
+LWJ5OiBTbGF2YSBLYXJkYWtvdiA8b2phYkBvamFiLnJ1PgoKLS0tCiBnaXQtc3ZuLnBlcmwg
+fCA0ICsrLS0KIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25z
+KC0pCgpkaWZmIC0tZ2l0IGEvZ2l0LXN2bi5wZXJsIGIvZ2l0LXN2bi5wZXJsCmluZGV4IGQw
+NzBkZTAuLjM2MDgzYzEgMTAwNzU1Ci0tLSBhL2dpdC1zdm4ucGVybAorKysgYi9naXQtc3Zu
+LnBlcmwKQEAgLTgzMSw3ICs4MzEsNyBAQCBzdWIgZGNvbW1pdF9yZWJhc2Ugewogc3ViIGNt
+ZF9kY29tbWl0IHsKIAlteSAkaGVhZCA9IHNoaWZ0OwogCWNvbW1hbmRfbm9pc3kocXcvdXBk
+YXRlLWluZGV4IC0tcmVmcmVzaC8pOwotCWdpdF9jbWRfdHJ5IHsgY29tbWFuZF9vbmVsaW5l
+KHF3L2RpZmYtaW5kZXggLS1xdWlldCBIRUFELykgfQorCWdpdF9jbWRfdHJ5IHsgY29tbWFu
+ZF9vbmVsaW5lKHF3L2RpZmYtaW5kZXggLS1xdWlldCBIRUFEIC0tLykgfQogCQknQ2Fubm90
+IGRjb21taXQgd2l0aCBhIGRpcnR5IGluZGV4LiAgQ29tbWl0IHlvdXIgY2hhbmdlcyBmaXJz
+dCwgJwogCQkuICJvciBzdGFzaCB0aGVtIHdpdGggYGdpdCBzdGFzaCcuXG4iOwogCSRoZWFk
+IHx8PSAnSEVBRCc7CkBAIC0xOTMyLDcgKzE5MzIsNyBAQCBzdWIgY210X3NoYTJyZXZfYmF0
+Y2ggewogc3ViIHdvcmtpbmdfaGVhZF9pbmZvIHsKIAlteSAoJGhlYWQsICRyZWZzKSA9IEBf
+OwogCW15IEBhcmdzID0gcXcvcmV2LWxpc3QgLS1maXJzdC1wYXJlbnQgLS1wcmV0dHk9bWVk
+aXVtLzsKLQlteSAoJGZoLCAkY3R4KSA9IGNvbW1hbmRfb3V0cHV0X3BpcGUoQGFyZ3MsICRo
+ZWFkKTsKKwlteSAoJGZoLCAkY3R4KSA9IGNvbW1hbmRfb3V0cHV0X3BpcGUoQGFyZ3MsICRo
+ZWFkLCAiLS0iKTsKIAlteSAkaGFzaDsKIAlteSAlbWF4OwogCXdoaWxlICg8JGZoPikgewot
+LSAKMS44LjIKCg==
+--------------070009020907050707010707--
