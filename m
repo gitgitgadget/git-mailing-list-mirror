@@ -1,100 +1,72 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v5 5/7] add tests for rebasing merged history
-Date: Wed, 05 Jun 2013 08:12:08 +0200
-Message-ID: <51AED6B8.8080406@viscovery.net>
-References: <1369982987-18954-1-git-send-email-martinvonz@gmail.com> <1370292135-1236-1-git-send-email-martinvonz@gmail.com> <1370292135-1236-6-git-send-email-martinvonz@gmail.com> <7vk3m994mu.fsf@alter.siamese.dyndns.org>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: SNI (SSL virtual hosts)
+Date: Wed, 5 Jun 2013 08:58:07 +0200 (CEST)
+Message-ID: <alpine.DEB.2.00.1306050851210.4783@tvnag.unkk.fr>
+References: <DC851F5EA18E478DACB62178624BF5B7@gmail.com> <97F8F367D27D4B3E93439FF8D0F121FA@gmail.com> <alpine.DEB.2.00.1306041142200.16303@tvnag.unkk.fr> <8B7A2C3A8CC346D6B34D153F591F878F@gmail.com> <alpine.DEB.2.00.1306041349290.32021@tvnag.unkk.fr>
+ <CEC3E2C7A86A477DAC658432461A60BC@gmail.com> <alpine.DEB.2.00.1306042305300.2878@tvnag.unkk.fr> <630928524B6441DC907D7AFF34389010@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Martin von Zweigbergk <martinvonz@gmail.com>, git@vger.kernel.org,
-	Chris Webb <chris@arachsys.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 05 08:12:39 2013
+Content-Type: MULTIPART/MIXED; BOUNDARY="1129329158-242410352-1370415487=:4783"
+Cc: git@vger.kernel.org
+To: Janusz Harkot <janusz.harkot@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 05 08:58:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uk6xX-0005e8-99
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 08:12:35 +0200
+	id 1Uk7fk-0001uj-IC
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 08:58:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752375Ab3FEGMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jun 2013 02:12:18 -0400
-Received: from so.liwest.at ([212.33.55.13]:51309 "EHLO so.liwest.at"
+	id S1752412Ab3FEG6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jun 2013 02:58:11 -0400
+Received: from giant.haxx.se ([80.67.6.50]:50391 "EHLO giant.haxx.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752346Ab3FEGMO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jun 2013 02:12:14 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Uk6x6-0001oa-P5; Wed, 05 Jun 2013 08:12:08 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 533F21660F;
-	Wed,  5 Jun 2013 08:12:08 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <7vk3m994mu.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1752015Ab3FEG6L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jun 2013 02:58:11 -0400
+Received: from giant.haxx.se (localhost.localdomain [127.0.0.1])
+	by giant.haxx.se (8.14.4/8.14.4/Debian-2) with ESMTP id r556w7Gb014897
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 5 Jun 2013 08:58:07 +0200
+Received: from localhost (dast@localhost)
+	by giant.haxx.se (8.14.4/8.14.4/Submit) with ESMTP id r556w79r014894;
+	Wed, 5 Jun 2013 08:58:07 +0200
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+X-X-Sender: dast@giant.haxx.se
+In-Reply-To: <630928524B6441DC907D7AFF34389010@gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226434>
 
-Am 6/4/2013 19:18, schrieb Junio C Hamano:
-> Martin von Zweigbergk <martinvonz@gmail.com> writes:
-> 
->> ---
->> +#TODO: make all flavors of rebase use --topo-order
->> +test_run_rebase success 'e n o' ''
->> +test_run_rebase success 'e n o' -m
->> +test_run_rebase success 'n o e' -i
-> 
-> I do not quite follow this TODO.
-> 
-> While I think it would be nice to update "rebase" so that all
-> variants consider replaying the commits in the same order, in this
-> history you have:
-> 
-> +# a---b-----------c
-> +#      \           \
-> +#       d-------e   \
-> +#        \       \   \
-> +#         n---o---w---v
-> +#              \
-> +#               z
-> 
-> as long as o comes after n and e is shown before n or after o, which
-> all three expected results satisify, it is in --topo-order, isn't it?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The comment is really just about the inconsistency, not about a request to
-have a guaranteed order among the parents of a merge commit.
+--1129329158-242410352-1370415487=:4783
+Content-Type: TEXT/PLAIN; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Having said that, wouldn't it be useful (generally, not just in this
-context) to have a guarantee in which order --topo-order lists parents of
-a merge?
+On Tue, 4 Jun 2013, Janusz Harkot wrote:
 
->> +test_expect_success "rebase -p re-creates merge from side branch" "
->> +     reset_rebase &&
->> +     git rebase -p z w &&
->> +     test_cmp_rev z HEAD^ &&
->> +     test_cmp_rev w^2 HEAD^2
->> +"
-> 
-> Hmm, turning the left one to the right one?
-> 
-> +#       d-------e               d-------e    
-> +#        \       \               \       \   
-> +#         n---o---w     ===>      n---o   \
-> +#              \                       \   \ 
-> +#               z                       z---W
-> 
-> If w were a merge of o into e (i.e. w^1 were e not o), what should
-> happen?  Would we get the same topology?
+> valid point, but from what you can find on the web, the only solution 
+> provided everywhere was to disable certificate checking… so maybe that's not 
+> me, but this is first time someone spent some time to check whats going on 
+> :)
 
-'git rebase -p z w' is a nonsense request in this situation. (I.e., there
-is no requirement on the result.) At best, we could detect it and bail out
-or warn.
+I don't disagree with that. You may be right.
 
--- Hannes
+But I am the maintainer of libcurl and I have *never* gotten a report about 
+this before, and I rather base my actions and assumptions on true reports from 
+actual developers with whom I can discuss and delve into details with (like 
+you and me right now). Basing decisions on vague statements posted elsewhere 
+by unknown people is for sure a road into sadness.
+
+Anyway, now I'm off topic. I'm glad you could fix the problem. Thanks for 
+flying git + libcurl! =)
+
+-- 
+
+  / daniel.haxx.se
+--1129329158-242410352-1370415487=:4783--
