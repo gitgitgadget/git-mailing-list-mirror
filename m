@@ -1,105 +1,107 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 08/15] for-each-ref: get --pretty using format_commit_message
-Date: Wed, 05 Jun 2013 10:09:55 -0700
-Message-ID: <7v61xs32n0.fsf@alter.siamese.dyndns.org>
-References: <1370349337-20938-1-git-send-email-artagnon@gmail.com>
-	<1370349337-20938-9-git-send-email-artagnon@gmail.com>
-	<CAPig+cRmnc=poOZUxZms_OWdLpBM_q=h+MDYisu8WtuF11PYXA@mail.gmail.com>
-	<CACsJy8ABwroExpXQRX8OYAnDum9+sX1+JB9z+WNn+YcZoXi5KA@mail.gmail.com>
+Subject: Re: [Administrivia] On ruby and contrib/
+Date: Wed, 05 Jun 2013 10:41:43 -0700
+Message-ID: <7v1u8g3160.fsf@alter.siamese.dyndns.org>
+References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
+	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
+	<51AEBAEF.6090402@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 05 19:10:10 2013
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	=?utf-8?Q?Ren?= =?utf-8?Q?=C3=A9?= Scharfe 
+	<rene.scharfe@lsrfire.ath.cx>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jun 05 19:41:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkHDu-0001S5-0V
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 19:10:10 +0200
+	id 1UkHib-0003qy-9G
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 19:41:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756748Ab3FERKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jun 2013 13:10:01 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55562 "EHLO
+	id S1757022Ab3FERlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jun 2013 13:41:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55837 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755901Ab3FERJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jun 2013 13:09:59 -0400
+	id S1756997Ab3FERls (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jun 2013 13:41:48 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31E8623C50;
-	Wed,  5 Jun 2013 17:09:58 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77E31251E7;
+	Wed,  5 Jun 2013 17:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=c4tdz0ExJjQHJZotGN3WKeGpoio=; b=mDfZiB
-	4nBAxqW3ji6kGkQHTxvXKMzTDusarD6vurBPquY2uZrkfhxbunXIZPSFyjTh4ukl
-	9zlFFMNX+uH4fjVGMuPKzm9goyu2CBpmQ9v324u2oXdGLDoXdFhLhb2DjhPlbjAE
-	wqXxEiZHmTf1qPSJKvWJ96RfAIkfxWV8sopT0=
+	:content-type; s=sasl; bh=Cjy2zgFi13dGjkk6cuj8208ZxAY=; b=mTwCXO
+	SBM3Ca8v7JMMAJlLGwD9oNVFP23WXak1CEIBlXI66YGHnsyIAcaq0GtDOKIyfOfX
+	K41TaDfoVX60Ee80eUYWLh/elHUu7wu63928d7sKN6Oy9UPS9Zraw4t40mevnW3c
+	9ksCsIGwkUqVWXDaYeKKoycbqrqGG8G7+gON4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yQz45uXP8zERugElpW/OdRL7nDl2hq/8
-	AQUB4RVG18FyyeamTustJqjU+iii+QnRfyPuNpUmSTIY4SyiuYDGNNKwfNyI8EKu
-	auFvXR3rqm/XeuBgi8uOUPOsfaYbV+hdo0SLOb+vb7Y3tIQZUFzSjgqZTDqnF+01
-	dT8EAXzgWcM=
+	:content-type; q=dns; s=sasl; b=Nd3oGkMChSNjnlkyfpdrrrzQI/nN4CSP
+	Kl4cvSa1SYkl1I/cTrCLZZVVXMKDSvJbvEPgcy9wcqTN7jA7X8QIyaU0UJCllEDR
+	rQTS50Vf2TJGDHgam//+hqq1ZkXi094Qh1BSZZwv2qXO8UjRBoDA4EbN/bTfDiU+
+	GqprEXjoa4U=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2262A23C4F;
-	Wed,  5 Jun 2013 17:09:58 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B6E0251E5;
+	Wed,  5 Jun 2013 17:41:45 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5DCE023C4B;
-	Wed,  5 Jun 2013 17:09:57 +0000 (UTC)
-In-Reply-To: <CACsJy8ABwroExpXQRX8OYAnDum9+sX1+JB9z+WNn+YcZoXi5KA@mail.gmail.com>
-	(Duy Nguyen's message of "Wed, 5 Jun 2013 20:21:31 +0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A3784251E2;
+	Wed,  5 Jun 2013 17:41:44 +0000 (UTC)
+In-Reply-To: <51AEBAEF.6090402@alum.mit.edu> (Michael Haggerty's message of
+	"Wed, 05 Jun 2013 06:13:35 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BF9404F2-CE02-11E2-B67E-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 30787C62-CE07-11E2-A058-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226461>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> On Wed, Jun 5, 2013 at 4:12 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> +Caveats:
->>> +
->>> +1. Many of the placeholders in "PRETTY FORMATS" are designed to work
->>> +   specifically on commit objects: when non-commit objects are
->>> +   supplied, those placeholders won't work.
->>
->> Should "won't work" be expanded upon? It's not clear if this means
->> that git will outright crash, or if it will abort with an appropriate
->> error message, or if the directive will be displayed as-is or removed
->> from the output.
+> For completeness, let me point out two other small advantages of contrib:
 >
-> It will be displayed as-is but that's a bit inconsistent: %(unknown)
-> prints error and aborts while %unknown simply produces %unknown. The
-> latter is how "git log --format" does it. But I think we could make
-> for-each-ref --pretty to do the former for %unknown. It'll be
-> consistent with %(unknown) and we do not need to elaborate much (it's
-> pretty obvious when it does not work).
+> * a tool in contrib can assume that it is being bundled with the
+> corresponding version of Git, and therefore doesn't necessarily have to
+> go to the effort of supporting older versions of Git.
 
-The Caveat Eric is asking about talks about "what happens to a
-%(field) that only makes sense for a commit when showing a ref
-pointing at a non-commit?", but you are answering "what happend to a
-%(invalidfield) that is not defined", aren't you?
+It is true that in-tree stuff can go in-sync with the rest, but I
+think that is irrelevant, as we are discussing a tool in contrib/;
+if it is part of the core, it deserves that benefit over tools
+developed out-of-tree (that need to worry about utilizing new
+features after a version check).  After moving tools that we want to
+keep as a part of core out of contrib/, they will still be in-sync.
 
-IIRC, the reason we show literal from "log --format" is to make it
-easier for the person who misspelt %placeholder to spot it in the
-output, and also make it easier for the person who use %placeholder
-meant for newer versions of Git with an older one.  It would be a
-bit unnice to die for the latter, especially if the format string is
-in a script or something.
+For those that alternative third-party designs and implementations
+for solving the non-core problems they try to solve (e.g. ciabot,
+continuous, blameview) can exist, it would be better for the
+ecosystem of they compete with their alternatives on the same
+ground.
 
-To "log --format", all input objects are expected to be commits, so
-it does not have the "what does %(authordate) give when given a blob"
-issue.
+> But my main point is that I think it would be easier to phase out
+> contrib/ if there were a good alternate way of providing visibility to
+> "satellite" projects.  The relevant Git wiki page [1] is the most likely
+> candidate, but it is a bit overwhelming due to its size, it has fallen
+> into disuse because it was broken for such a long time, and it is not
+> prominently linked to from git-scm.com.  If it were curated a bit, it
+> would help users find the best ancillary tools quickly.  Perhaps ranking
+> the tools based on the results of the Git user surveys would help bring
+> the most popular to the top of each category.
 
-But for "for-each-ref --format", it is perfectly normal that you may
-feed a non-commit; it makes the mechanism unusable if you errored
-out %(authordate) when showing a ref that points at a tag, doesn't
-it?  Substituting an inapplicable placeholder with an empty string
-would be an easies way out, unless it learns a flexible/elaborate
-conditional formatting mechanism, I would think.
+That is a very good point.
+
+>
+> Michael
+>
+> [1] https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools
