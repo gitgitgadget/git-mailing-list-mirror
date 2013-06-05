@@ -1,107 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Administrivia] On ruby and contrib/
-Date: Wed, 05 Jun 2013 10:41:43 -0700
-Message-ID: <7v1u8g3160.fsf@alter.siamese.dyndns.org>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
-	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
-	<51AEBAEF.6090402@alum.mit.edu>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v4 0/7] git send-email suppress-cc=self fixes
+Date: Wed, 5 Jun 2013 21:10:49 +0300
+Message-ID: <1370455737-29986-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	=?utf-8?Q?Ren?= =?utf-8?Q?=C3=A9?= Scharfe 
-	<rene.scharfe@lsrfire.ath.cx>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jun 05 19:41:54 2013
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 05 20:10:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkHib-0003qy-9G
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 19:41:53 +0200
+	id 1UkIAC-0002Zl-6C
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 20:10:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757022Ab3FERlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jun 2013 13:41:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55837 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756997Ab3FERls (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jun 2013 13:41:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77E31251E7;
-	Wed,  5 Jun 2013 17:41:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Cjy2zgFi13dGjkk6cuj8208ZxAY=; b=mTwCXO
-	SBM3Ca8v7JMMAJlLGwD9oNVFP23WXak1CEIBlXI66YGHnsyIAcaq0GtDOKIyfOfX
-	K41TaDfoVX60Ee80eUYWLh/elHUu7wu63928d7sKN6Oy9UPS9Zraw4t40mevnW3c
-	9ksCsIGwkUqVWXDaYeKKoycbqrqGG8G7+gON4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Nd3oGkMChSNjnlkyfpdrrrzQI/nN4CSP
-	Kl4cvSa1SYkl1I/cTrCLZZVVXMKDSvJbvEPgcy9wcqTN7jA7X8QIyaU0UJCllEDR
-	rQTS50Vf2TJGDHgam//+hqq1ZkXi094Qh1BSZZwv2qXO8UjRBoDA4EbN/bTfDiU+
-	GqprEXjoa4U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B6E0251E5;
-	Wed,  5 Jun 2013 17:41:45 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A3784251E2;
-	Wed,  5 Jun 2013 17:41:44 +0000 (UTC)
-In-Reply-To: <51AEBAEF.6090402@alum.mit.edu> (Michael Haggerty's message of
-	"Wed, 05 Jun 2013 06:13:35 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 30787C62-CE07-11E2-A058-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756387Ab3FESKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jun 2013 14:10:18 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:10519 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755840Ab3FESKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jun 2013 14:10:17 -0400
+Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r55IAF3s017398
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Wed, 5 Jun 2013 14:10:15 -0400
+Received: from redhat.com (vpn-203-36.tlv.redhat.com [10.35.203.36])
+	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id r55IAD3q008493;
+	Wed, 5 Jun 2013 14:10:14 -0400
+Content-Disposition: inline
+X-Mutt-Fcc: =sent
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226462>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+This includes bugfixes related to handling of --suppress-cc=self
+flag. Tests are also included.
 
-> For completeness, let me point out two other small advantages of contrib:
->
-> * a tool in contrib can assume that it is being bundled with the
-> corresponding version of Git, and therefore doesn't necessarily have to
-> go to the effort of supporting older versions of Git.
+Changes from v3:
+	- v3 submission was missing one patch (1/7). Re-add it.
+Changes from v2:
+	- add a new test, split patches differently add code comments
+		 to address comments by Junio
+	- rename example addresses in tests from redhat.com to example.com
+Changes from v1:
+        - tweak coding style in tests to address comments by Junio
 
-It is true that in-tree stuff can go in-sync with the rest, but I
-think that is irrelevant, as we are discussing a tool in contrib/;
-if it is part of the core, it deserves that benefit over tools
-developed out-of-tree (that need to worry about utilizing new
-features after a version check).  After moving tools that we want to
-keep as a part of core out of contrib/, they will still be in-sync.
+Michael S. Tsirkin (7):
+  t/send-email.sh: add test for suppress-cc=self
+  send-email: fix suppress-cc=self on cccmd
+  t/send-email: test suppress-cc=self on cccmd
+  send-email: make --suppress-cc=self sanitize input
+  t/send-email: add test with quoted sender
+  t/send-email: test suppress-cc=self with non-ascii
+  test-send-email: test for pre-sanitized self name
 
-For those that alternative third-party designs and implementations
-for solving the non-core problems they try to solve (e.g. ciabot,
-continuous, blameview) can exist, it would be better for the
-ecosystem of they compete with their alternatives on the same
-ground.
+ git-send-email.perl   | 23 ++++++++++------
+ t/t9001-send-email.sh | 75 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 90 insertions(+), 8 deletions(-)
 
-> But my main point is that I think it would be easier to phase out
-> contrib/ if there were a good alternate way of providing visibility to
-> "satellite" projects.  The relevant Git wiki page [1] is the most likely
-> candidate, but it is a bit overwhelming due to its size, it has fallen
-> into disuse because it was broken for such a long time, and it is not
-> prominently linked to from git-scm.com.  If it were curated a bit, it
-> would help users find the best ancillary tools quickly.  Perhaps ranking
-> the tools based on the results of the Git user surveys would help bring
-> the most popular to the top of each category.
-
-That is a very good point.
-
->
-> Michael
->
-> [1] https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools
+-- 
+MST
