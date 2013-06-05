@@ -1,69 +1,88 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Git server, chroot, git gc --auto and "uname: not found"
-Date: Wed, 05 Jun 2013 18:37:28 +0200
-Message-ID: <vpqip1sfr93.fsf@anie.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] archive: loosen restrictions on remote object lookup
+Date: Wed, 5 Jun 2013 12:38:23 -0400
+Message-ID: <20130605163823.GE8664@sigill.intra.peff.net>
+References: <20120111193916.GA12333@sigill.intra.peff.net>
+ <20120111194232.GB12441@sigill.intra.peff.net>
+ <loom.20130529T133942-310@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 05 18:37:38 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Ian Harvey <iharvey@good.com>
+X-From: git-owner@vger.kernel.org Wed Jun 05 18:38:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkGiQ-000645-2m
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 18:37:38 +0200
+	id 1UkGjG-0006og-9D
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 18:38:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755901Ab3FEQhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jun 2013 12:37:34 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:37203 "EHLO shiva.imag.fr"
+	id S1756109Ab3FEQi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jun 2013 12:38:26 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51953 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755288Ab3FEQhd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jun 2013 12:37:33 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r55GbRoY014271
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 5 Jun 2013 18:37:27 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UkGiG-0002DT-SK; Wed, 05 Jun 2013 18:37:28 +0200
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 05 Jun 2013 18:37:27 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r55GbRoY014271
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1371055048.11826@WFGOD+sT/pj0UK88t9MSog
+	id S1755288Ab3FEQiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jun 2013 12:38:25 -0400
+Received: (qmail 31982 invoked by uid 102); 5 Jun 2013 16:39:12 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Jun 2013 11:39:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Jun 2013 12:38:23 -0400
+Content-Disposition: inline
+In-Reply-To: <loom.20130529T133942-310@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226459>
 
-Hi,
+On Wed, May 29, 2013 at 12:05:41PM +0000, Ian Harvey wrote:
 
-I'm having issues with a Git hosting in a chroot (based on fusion
-forge). The problem is that receive-pack triggers a "git gc --auto",
-which itself triggers a "git repack", which is a shell-script.
+> So, did this patch make it anywhere? We could really use it.
+> 
+> Here's the use case. The original ee27ca4 patch broke our build system when
+> the git server was upgraded to Debian Wheezy last night. The builder fetches
+> source from the repo in two pieces using git archive, and we need to make
+> sure both pieces are from the same commit. So we get a sha1 hash with git
+> ls-remote, and use it with git archive --remote. This, of course, breaks
+> with the 'no such ref' error.
 
-The shell script needs basic commands [1], which are not available within the
-chroot.
+The patch you are responding to[1] would not help there, either. It does
+not allow raw sha1s. The only way to do that would be:
 
-Is there a clean solution to this problem?
+  1. Add an option to the server to allow arbitrary sha1s, even if they
+     are not reachable from the ref tips. This is an easy fix, but
+     requires server admins to cooperate (and they may or may not want
+     to lose the "you can only access reachable things policy".
 
-I guess the right solution is "send a patch that ports git-repack.sh to
-C" (I thought we already had the server-side in C only, but just
-discovered it isn't the case), but I wont have time for that (not soon
-at least).
+  2. Actually do a reachability check. Doing a full object check to
+     allow fetching an arbitrary tree by sha1 is probably prohibitively
+     expensive[2], but we could allow the form "<commit>[:<path>]", check
+     that "<commit>" is reachable, and then allow arbitrary paths within
+     it.
 
-Thanks,
+> At the very least, the documentation is wrong when it talks about passing a
+> commit ID to git archive: maintainers must surely agree that the
+> documentation and the actual behavior ought to match.
 
-[1] uname, used in git-sh-setup, and then /bin/rm /usr/bin/find /bin/sed
-/usr/bin/tr /bin/mkdir /bin/chmod and /bin/mv according to strace.
+I am not sure which documentation you mean. The part about "commit ID"
+in the current manpage is drawing the distinction between something that
+resolves to a commit versus something that resolves to a tree. Either is
+available both locally and remotely. I think the use of the phrase
+"commit ID" is questionable there, as it really means "something that
+resolves to a commit", not "a sha1 commit ID". We used to use the phrase
+"commit-ish" to refer to that, but I think it has fallen out of favor as
+being too jargon-y.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+The documentation does not mention at all the restrictions placed on
+refs using "--remote", and it probably should.
+
+-Peff
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/188387
+
+[2] If we had a reachability bitmap cache, calculating arbitrary object
+    reachability would actually be pretty cheap. But the bitmap feature
+    for core git is not yet ready for prime-time, so I think we should
+    not depend on it yet.
