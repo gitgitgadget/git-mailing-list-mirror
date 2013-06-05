@@ -1,107 +1,125 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [Administrivia] On ruby and contrib/
-Date: Wed, 5 Jun 2013 09:30:55 -0500
-Message-ID: <CAMP44s2VToROGXTz57GgT1sLuZDRhx3wpQMwQDTi-c7migTgrA@mail.gmail.com>
+Date: Wed, 5 Jun 2013 09:45:52 -0500
+Message-ID: <CAMP44s012ccmaArrTbfy_xNrqbnOjVGTnY+po9cE8JGh_U72Gg@mail.gmail.com>
 References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
 	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
-	<alpine.DEB.2.02.1306041954360.2900@nftneq.ynat.uz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Thomas Rast <trast@inf.ethz.ch>,
 	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?UTF-8?B?Tmd1ecKtbiBUaMOhaSBOZ8O3YyBEdXk=?= <pclouds@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
 	Erik Faye-Lund <kusmabite@gmail.com>,
 	Johannes Sixt <j6t@kdbg.org>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: David Lang <david@lang.hm>
-X-From: git-owner@vger.kernel.org Wed Jun 05 16:31:05 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 05 16:45:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkEjv-0008JO-E0
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 16:31:03 +0200
+	id 1UkEyM-0005Pr-NF
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Jun 2013 16:45:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756122Ab3FEOa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jun 2013 10:30:59 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:38234 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755594Ab3FEOa6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jun 2013 10:30:58 -0400
-Received: by mail-la0-f48.google.com with SMTP id lx15so488170lab.21
-        for <git@vger.kernel.org>; Wed, 05 Jun 2013 07:30:56 -0700 (PDT)
+	id S1756154Ab3FEOpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jun 2013 10:45:54 -0400
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:38253 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756134Ab3FEOpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jun 2013 10:45:54 -0400
+Received: by mail-lb0-f176.google.com with SMTP id z5so1967442lbh.21
+        for <git@vger.kernel.org>; Wed, 05 Jun 2013 07:45:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=3H5zQIrTq5x5fSJNuYZF1msLjef9+AuwgQvPOga3Vv8=;
-        b=DrNVp2REAIsIRbHjrZF5giU2D8YqX4ojikDTQFuA6Ch7Q/CYDq0/eYlD1j1+OXrmt9
-         xV1baqXxd2oTsJtUqWVA2ckX27HRrRQ1Ns3xDl+/fksLr00L+TtMu0VAIKFveO764gzD
-         X5JH7O7DPos6tHbdW9f3ubJVO6dIZkEy1p9hoAIk0NsWd8HaO2DnfyvxsS/YAUe85+WF
-         oxyWhQx6dhaiBTowq09Hvy0JJknPWPpfMIHlBGZuk8+v/zqiZZYzJfr2R8KgH/MHexQk
-         vLVhdP97i7/HQ41O51nOqVEct/fwb7PYotWpjweVyeofWlrmk8kNRPiN7Q1FwkW8f+qi
-         klfw==
-X-Received: by 10.152.9.69 with SMTP id x5mr7216215laa.57.1370442656489; Wed,
- 05 Jun 2013 07:30:56 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Wed, 5 Jun 2013 07:30:55 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.02.1306041954360.2900@nftneq.ynat.uz>
+        bh=5JzYoErQ0tw3zmfb7XzZOGdWibQzClTZiRbPaMdRqfM=;
+        b=AlmxwLtH/p0LSoBWxsS8A8TStb+GRBK1DcKsedlcYYjd8kehWLlxsF/KTcHv4aQ7zg
+         CkWcuI1MkTWeuzrJwAGo/wUx5GxlAh3gN2DMVeDLrlzYg3J6tey83VSDQ9d20DlMxDMF
+         aPOdKWHJD0vbj3NGPmHKUsadifdvXKZg23B8ZFeDP+3rpjTSMv4BeD8yHixjv2eKwOKx
+         0+oZJeCL0p25gcZXPg1obYFn0ZK6QmLE0sRsGraJKSr4pq92tZ6azvwg8q+It5lhHmt9
+         5VATT45eycQ1UWxozM4qzoV4sfmxouvs55k1Q7G8yg9fVg32H6UOpDblvTudT8eIaC8P
+         Ghqw==
+X-Received: by 10.112.126.9 with SMTP id mu9mr15119217lbb.99.1370443552618;
+ Wed, 05 Jun 2013 07:45:52 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Wed, 5 Jun 2013 07:45:52 -0700 (PDT)
+In-Reply-To: <7va9n52zjc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226450>
 
-On Tue, Jun 4, 2013 at 10:02 PM, David Lang <david@lang.hm> wrote:
-> On Tue, 4 Jun 2013, Junio C Hamano wrote:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>
->> On Ruby:
->>
->> Assuming "related" is a good idea, to make it as the proper part of
->> the system out of contrib/ when its design review phase is finished,
->> one of these things has to happen:
->>
->> 1. Find a volunteer to rewrite it in one of the languages that we
->>    know the platforms our current users use already support, which
->>    means either C (not a good match), POSIX shell (not the best
->>    match), or Perl.
->>
->> 2. Promote Ruby to the first-class citizen status, which involves
->>    making sure people on platforms that matter do not have problem
->>    adding dependency on it (I am primarily worried about MinGW
->>    folks), and also making sure core developers do not mind
->>    reviewing code written in it.
->>
->> As long as we can get as high quality reviews on changes written in
->> Ruby as we do for the current codebase, it is OK to go route #2, and
->> that may hopefully happen in the longer term as and there will be
->> some people, among competent Ruby programmers, who have understood
->> how the pieces of entire Git are designed to fit together by the
->> time it happens.
->>
->> I however do not know how much extra burden it would place to add
->> dependencies to platform folks, so obviously the safer approach is 1
->> at least in the immediate future.  My understanding is that msysgit
->> folks are already having trouble with Python, and we do not want to
->> go route #2 at least for now.  Having to ship a variant of Git with
->> NO_PYTHON is already bad enough.  And that is why the option 1 above
->> does not list Python as a possible candidate.
->
->
-> As someone who builds minimalist builds (firewalls, openwrt, raspberry pi,
-> etc), having to pull in a full ruby install to get git installed would not
-> be something I'd like to see.
+On Tue, Jun 4, 2013 at 7:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 
-You wouldn't _have_ to, just like you don't _have_ to install Python right now.
+> I however do not know how much extra burden it would place to add
+> dependencies to platform folks, so obviously the safer approach is 1
+> at least in the immediate future.  My understanding is that msysgit
+> folks are already having trouble with Python, and we do not want to
+> go route #2 at least for now.  Having to ship a variant of Git with
+> NO_PYTHON is already bad enough.  And that is why the option 1 above
+> does not list Python as a possible candidate.
+
+This rests on the assumption that Ruby would be as difficult to
+distribute as Python, which might not be the case.
+
+> As the maintainer, I've been thinking about closing contrib/ area
+> for new stuff, and shrinking existing ones, either by moving stuff
+> that are only useful within the context of Git to main part of the
+> tree (e.g. "contrib/workdir" may move to a new directory "addons/",
+> some of remote-helpers in contrib/ may move to "remote-helpers/",
+> etc.), and removing others from contrib/, for this reason.  Of
+> course, interested folks can take the last version of the removed
+> ones and continue improving them as standalone projects.
+
+This does make sense, however, I do think some parts of Git might be
+more maintainable if they have their own Makefile (e.g. bash
+completion), where it's clear where they should be installed by
+default.
+
+Either way, the user might want to do 'install-all' or
+'install-addons', to install all these things, and I think a good rule
+of thumb is that if we don't want 'install-all' to install certain
+script (eventually), then that script probably doesn't belong in
+'contrib' (or anywhere in Git).
+
+> The rest is just a personal opinion.
+>
+> If we were looking at a compelling and sizeable web application that
+> depends on Rails, it is very likely that it would not make much
+> sense to rewrite it in other languages only to avoid a new language
+> dependency on Ruby.
+>
+> But "related" is "read and extract some info out of text files,
+> spawn a 'blame' (or two) based on that info, read to collect further
+> info and summarize", for which Ruby does not especially shine
+> compared to Perl, which is the language we already depend on.
+> Because of this, I am moderately reluctant to add Ruby dependency
+> only for this script.  Unless I know people who regularly give us
+> high quality reviews, and those who support various platforms, are
+> fine with it, that is.
+>
+> In the shorter term (read: up to 2.0), I am inclined to vote that we
+> should go route #1 (i.e. rewrite in Perl once the design settles).
+
+That might make sense for the shorter term, but in longer term I see
+Perl as declining in favor of other languages. It's only a matter of
+time before Ruby surpasses Perl in popularity, and soon enough new
+contributors to the Git project will have problems trying to improve
+Git because parts of it are written in a language they are not
+familiar with, and have trouble learning (isn't that already
+happening?).
+
+The Ruby vs. Python is another question altogether, I could go into
+detail about why I think Ruby is a better choice, but my point right
+now is that Perl is not a good choice for the future.
 
 -- 
 Felipe Contreras
