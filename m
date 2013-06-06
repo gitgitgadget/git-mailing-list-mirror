@@ -1,83 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-gui: bring Wish process to front on Mac
-Date: Thu, 06 Jun 2013 11:15:31 -0700
-Message-ID: <7vk3m7yukc.fsf@alter.siamese.dyndns.org>
-References: <1370506667-24576-1-git-send-email-stefan@haller-berlin.de>
-	<CABNJ2G+h3zh+=wLA0KHjUn8TsfhqUK1Kn-1_=6hnXVRJUPhuuA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [Administrivia] On ruby and contrib/
+Date: Thu, 6 Jun 2013 13:16:48 -0500
+Message-ID: <CAMP44s3JZh6sn77Tz9gaRZe2or-pbrCrHUhbxQysA1gQY0AzUw@mail.gmail.com>
+References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
+	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
+	<rmivc5rp9w2.fsf@fnord.ir.bbn.com>
+	<CAMP44s07p0vpS_2cjAjB=QWoZjjPSuAm09xwk4BjAAD+hsJrSw@mail.gmail.com>
+	<alpine.DEB.2.02.1306060904100.13204@nftneq.ynat.uz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Haller <stefan@haller-berlin.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Pat Thoyts <patthoyts@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 06 20:15:39 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Greg Troxel <gdt@ir.bbn.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	=?UTF-8?B?Tmd1ecKtbiBUaMOhaSBOZ8O3Yw==?= <pclouds@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: David Lang <david@lang.hm>
+X-From: git-owner@vger.kernel.org Thu Jun 06 20:17:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukeip-0000SN-0i
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 20:15:39 +0200
+	id 1UkekE-0001r4-7q
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 20:17:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751693Ab3FFSPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jun 2013 14:15:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45743 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751201Ab3FFSPe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 14:15:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB48D25D31;
-	Thu,  6 Jun 2013 18:15:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=APLHLfw5xN/qleMmChzh2mHJGCk=; b=Qcjg1+
-	gyIkfKYCg2AG0U+mxmNSjF3pXY7sZf0qMuGvJc+csj34wejxZau0wTPDWVzuo+OJ
-	Hfbz3nC18hHXx5Y3lxDMkhaUl9eNywUDu0je2K0jq5iakfFlBCtB5p27sQranRho
-	WGK/x9rNmvqFL1CkxuBADIo7KL6IteU8tgRSY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v+7F7tA6clRgQp/9y/PLHhNbBqo8nL8g
-	32lNYHDCXSlio9AZDpUVKSwNBNJlDpFRcqbr/7tWQK925zE8+a4+l0VsOXU33bgx
-	MNrM7ipN8k7hkqEap/8W/51/KLDWMyjdPnxGFdRYg6KVCzZ6aB9zNbO+59GZv3SH
-	2P45X9VirYI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A1AE425D30;
-	Thu,  6 Jun 2013 18:15:33 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1176725D2B;
-	Thu,  6 Jun 2013 18:15:32 +0000 (UTC)
-In-Reply-To: <CABNJ2G+h3zh+=wLA0KHjUn8TsfhqUK1Kn-1_=6hnXVRJUPhuuA@mail.gmail.com>
-	(Pat Thoyts's message of "Thu, 6 Jun 2013 15:09:32 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 13D7E222-CED5-11E2-A43F-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753117Ab3FFSQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 14:16:52 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:61537 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752789Ab3FFSQt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 14:16:49 -0400
+Received: by mail-lb0-f179.google.com with SMTP id w20so3331381lbh.24
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 11:16:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=VQ6Nt2nA8XvuD5A+yWQJwEMUb5TEyTEPotRuTUM7Vsc=;
+        b=XQXgNthvYJNHNKmmyYBVx3I+9Eu5wXJxV8vsEHpKb33LK0HmTuWPuYt1mIkU3zQzTs
+         ejHgGK2jwr2tNLcfqR4vVX12ar0fxoVkqOLv0Fa4pX7laP0QyExTSWxUlQtlbzYiol+j
+         jBk7MqJz8r3pmmIg+5NHx9D0zH2EVL5DgHx1CHTDJ2DFdD7o62OTX1GBoBNUnG+VejC5
+         wIRrCWdksuUsF0dpmOVFBHK2S2z22INxKR5TsPkImu8LC96D7+Vy6ROt7xw2kaBfRsX/
+         1QpTMVLm8wOSiIKVZ7XBnak6l82nn9xPeaeHD3ZEE+goPRTA4i7RHV1id6W31m62DTB+
+         9dRQ==
+X-Received: by 10.152.7.74 with SMTP id h10mr706887laa.83.1370542608226; Thu,
+ 06 Jun 2013 11:16:48 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Thu, 6 Jun 2013 11:16:48 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.02.1306060904100.13204@nftneq.ynat.uz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226521>
 
-Pat Thoyts <patthoyts@gmail.com> writes:
-
-> Seems fine to me. I can't test this as I have no access to this
-> platform. Possibly you should run this in a catch statement so it can
-> ignore any errors and I would tend to use the 'auto_execok' command to
-> ensure that osascript actually exists. Something like
+On Thu, Jun 6, 2013 at 11:09 AM, David Lang <david@lang.hm> wrote:
+> On Thu, 6 Jun 2013, Felipe Contreras wrote:
 >
->   set arg [format {tell application......}]
->   catch {exec {*}[auto_execok osascript] -e $arg [pid]}
+>> In the end my point remains unchanged; Perl is declining, so it would
+>> be wise for the future to use another scripting language instead.
 >
-> but possibly this is guaranteed to exist on all macs which would make
-> the above redundant. What I'm thinking is you dont want the app to
-> exit just because something goes wrong in this call.
+>
+> Perl use may or may not be declining (depending on how you measure it), but
+> are you really willing to take on the task of re-writing everything that's
+> in Perl into another language and force all developers of scripts to learn
+> that other language?
 
-Sounds like a sensible concern; gitk in v1.8.3 has it without catch
-so we may see failure reports from OSX users soonish, in which case
-both this patch and gitk need to be updated for it.
+But that's exactly what we are asking the newer generations of
+developers; to learn another language. Fewer and fewer new
+contributors will come with knowledge of Perl.
 
-Stefan (as your name appears in 76bf6ff93e, I am assuming that you
-were the OSX-osascript guru in that commit) could you keep an eye on
-the list traffic to see if users of latest gitk have issues with
-that change, please?
+> What are the odds that the 'newer' language that you pick is going to pull a
+> "python 3" on you?
 
-Thanks.
+Ruby 2 speaks volumes on that front.
+
+> There have been a very large number of scripting languages show up, make a
+> lot of press, and then fade in favor of other languages while Perl has
+> continued. It's not the sexy languange nowdays, but it's there, reliable,
+> and used so heavily that there's really no chance of it dissapearing in the
+> forseable future.
+
+Yet it's declining, more and more every year. And the more the time
+goes by, the more we hurt ourselves.
+
+-- 
+Felipe Contreras
