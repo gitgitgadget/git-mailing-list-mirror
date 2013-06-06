@@ -1,77 +1,73 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: Re: [PATCH] git-gui: bring Wish process to front on Mac
-Date: Thu, 6 Jun 2013 19:12:07 +0200
-Message-ID: <1l424u5.uk987q18u3oxfM%lists@haller-berlin.de>
-References: <CABNJ2G+h3zh+=wLA0KHjUn8TsfhqUK1Kn-1_=6hnXVRJUPhuuA@mail.gmail.com>
-Cc: paulus@samba.org (Paul Mackerras),
-	git@vger.kernel.org (Git Mailing List)
-To: patthoyts@gmail.com (Pat Thoyts)
-X-From: git-owner@vger.kernel.org Thu Jun 06 19:12:15 2013
+From: David Lang <david@lang.hm>
+Subject: Re: [Administrivia] On ruby and contrib/
+Date: Thu, 6 Jun 2013 09:09:20 -0700 (PDT)
+Message-ID: <alpine.DEB.2.02.1306060904100.13204@nftneq.ynat.uz>
+References: <7vtxld30f2.fsf@alter.siamese.dyndns.org> <7va9n52zjc.fsf@alter.siamese.dyndns.org> <rmivc5rp9w2.fsf@fnord.ir.bbn.com> <CAMP44s07p0vpS_2cjAjB=QWoZjjPSuAm09xwk4BjAAD+hsJrSw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Greg Troxel <gdt@ir.bbn.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	=?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c?= <pclouds@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 06 19:13:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkdjS-0005tM-Il
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 19:12:14 +0200
+	id 1UkdkX-0006qq-3J
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 19:13:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751818Ab3FFRMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jun 2013 13:12:09 -0400
-Received: from server90.greatnet.de ([83.133.96.186]:60436 "EHLO
-	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751147Ab3FFRMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 13:12:08 -0400
-Received: from [192.168.0.42] (nat1.ableton.net [217.110.199.117])
-	by server90.greatnet.de (Postfix) with ESMTPA id B58763B0F19;
-	Thu,  6 Jun 2013 19:12:06 +0200 (CEST)
-In-Reply-To: <CABNJ2G+h3zh+=wLA0KHjUn8TsfhqUK1Kn-1_=6hnXVRJUPhuuA@mail.gmail.com>
-User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.8.4 (x86))
+	id S1752755Ab3FFRNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 13:13:17 -0400
+Received: from mail.lang.hm ([64.81.33.126]:36420 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751264Ab3FFRNQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 13:13:16 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id r56HADRt032617;
+	Thu, 6 Jun 2013 10:10:13 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <CAMP44s07p0vpS_2cjAjB=QWoZjjPSuAm09xwk4BjAAD+hsJrSw@mail.gmail.com>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226513>
 
-Pat Thoyts <patthoyts@gmail.com> wrote:
+On Thu, 6 Jun 2013, Felipe Contreras wrote:
 
-> On 6 June 2013 09:17, Stefan Haller <stefan@haller-berlin.de> wrote:
-> > +## On Mac, bring the current Wish process window to front
-> > +
-> > +if {[tk windowingsystem] eq "aqua"} {
-> > +       exec osascript -e [format {
-> > +               tell application "System Events"
-> > +                       set frontmost of processes whose unix id is %d to true
-> > +               end tell
-> > +       } [pid] ]
-> > +}
-> 
-> Seems fine to me. I can't test this as I have no access to this
-> platform. Possibly you should run this in a catch statement so it can
-> ignore any errors and I would tend to use the 'auto_execok' command to
-> ensure that osascript actually exists. Something like
-> 
->   set arg [format {tell application......}]
->   catch {exec {*}[auto_execok osascript] -e $arg [pid]}
-> 
-> but possibly this is guaranteed to exist on all macs which would make
-> the above redundant. What I'm thinking is you dont want the app to
-> exit just because something goes wrong in this call.
+> In the end my point remains unchanged; Perl is declining, so it would
+> be wise for the future to use another scripting language instead.
 
-I don't think we need auto_execok here, as osascript is available on
-every Mac system. We might even specify the exact path, it's always
-/usr/bin/osascript. Is that preferable?
+Perl use may or may not be declining (depending on how you measure it), but are 
+you really willing to take on the task of re-writing everything that's in Perl 
+into another language and force all developers of scripts to learn that other 
+language? what's the ROI of this?
 
-I agree that "catch" might be a good idea though. It raises two
-questions though:
+Perl isn't going to disappear any time soon. What makes you think that whatever 
+language you pick to replace Perl is going to be more stable than Perl is?
 
-1) Should we make the same change in gitk then? It already has the same
-   code without the catch (released in 1.8.3 already, btw).
+and, like the parent poster, by 'stable' I mean from the compatibility point of 
+view.
 
-2) Should we think about some way of sharing code between gitk and
-   git gui, so that these kinds of changes don't have to be made twice?
+What are the odds that the 'newer' language that you pick is going to pull a 
+"python 3" on you?
 
+There have been a very large number of scripting languages show up, make a lot 
+of press, and then fade in favor of other languages while Perl has continued. 
+It's not the sexy languange nowdays, but it's there, reliable, and used so 
+heavily that there's really no chance of it dissapearing in the forseable 
+future.
 
--- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+David Lang
