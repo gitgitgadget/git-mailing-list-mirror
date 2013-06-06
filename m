@@ -1,67 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Ignoring pattern in un-ignored directory not working anymore
-Date: Thu, 06 Jun 2013 11:19:38 -0700
-Message-ID: <7vfvwvyudh.fsf@alter.siamese.dyndns.org>
-References: <CANPayMS19-bjgWRMYrRcGYzKgEo_0Az_8emeDrKwxx9RguDbwg@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [Administrivia] On ruby and contrib/
+Date: Thu, 6 Jun 2013 13:24:43 -0500
+Message-ID: <CAMP44s1QotO7yx7reiLdxd61VoZNOTUTWja7ed1G7E9mEJEdrA@mail.gmail.com>
+References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
+	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
+	<rmivc5rp9w2.fsf@fnord.ir.bbn.com>
+	<CAMP44s07p0vpS_2cjAjB=QWoZjjPSuAm09xwk4BjAAD+hsJrSw@mail.gmail.com>
+	<rmisj0vnorm.fsf@fnord.ir.bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Karsten Blees <karsten.blees@gmail.com>
-To: Moritz Bunkus <moritz@bunkus.org>
-X-From: git-owner@vger.kernel.org Thu Jun 06 20:19:47 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Greg Troxel <gdt@ir.bbn.com>
+X-From: git-owner@vger.kernel.org Thu Jun 06 20:24:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukemo-0004JD-1J
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 20:19:46 +0200
+	id 1Ukerh-0000NK-Ux
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 20:24:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751412Ab3FFSTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jun 2013 14:19:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44017 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750857Ab3FFSTl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 14:19:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EEA652203C;
-	Thu,  6 Jun 2013 18:19:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VcNmAEyLrjv5zTlRrxh19rMUYag=; b=c0oUi0
-	uH3l7y8aksWZ60i+67d2uE/ESYwNdk8tEUBMpvPrumGVgIPnmL7Eb+CocbL5+c+W
-	4eRqHLoTysbyTvDhp+JLW50/CEAVIv2I99W1LycDltBAN7JxRkuG/DF9i7yEkjZ5
-	iMPFApU+fG1aga67Hg5ndnm1TBn087g9QgkSA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HxyvQpEtMwZPJSmS323Pzcb9race3joy
-	UCHjujceRZJQh+gUX5yE5Scz7reOAy+NkB3wt44PP4RMqHsy3VabaNO8Kpe4/t1A
-	golPIJEHEwbTnKWbT2gekM3glBLwFCQQ+K+5e75lJpQxjUSMWajcMpSCXDZ8MpG4
-	/ssmAqD+8FU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2E292203B;
-	Thu,  6 Jun 2013 18:19:40 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 53C0F22039;
-	Thu,  6 Jun 2013 18:19:40 +0000 (UTC)
-In-Reply-To: <CANPayMS19-bjgWRMYrRcGYzKgEo_0Az_8emeDrKwxx9RguDbwg@mail.gmail.com>
-	(Moritz Bunkus's message of "Thu, 6 Jun 2013 10:29:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A73A9A6E-CED5-11E2-9CBB-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751201Ab3FFSYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 14:24:46 -0400
+Received: from mail-la0-f51.google.com ([209.85.215.51]:33086 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750971Ab3FFSYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 14:24:45 -0400
+Received: by mail-la0-f51.google.com with SMTP id fq12so2626450lab.24
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 11:24:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Dox1SttO9UEiywwGij4I1PFU1nBlTCcid01YAcjoGHY=;
+        b=vmv6ex90onKz4NWslZ+LBlpvBiIuEdnqmPGs3ukGa4QViRN6JjoMUzmpBx3osBIjKq
+         3z6UWAY528GiJswFJo7+Ylftf824/fduLcbA0r6JdKX8gEPTlpZ1yeqmgDoD8t0CIuLB
+         lqADQpj+FsI43Rn0v4/H/T5g3NXRL8KnwrmXapjlT0Pik/pnOnBho3JvDRWEtxBImHBF
+         wBKohqM9CQJ67Ef/vu/INlfaYex+t4Oe8jOsh+0pEkTfK1UTkcNBLRpuM8TZKwJECqXC
+         J4BpFArMeYE2a+PhconhPPlgbxVbVBxcRFLGOH1nqCvrsj1tWSjp+y9br/6KluVT9cRy
+         fWng==
+X-Received: by 10.112.16.163 with SMTP id h3mr426881lbd.85.1370543083745; Thu,
+ 06 Jun 2013 11:24:43 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Thu, 6 Jun 2013 11:24:43 -0700 (PDT)
+In-Reply-To: <rmisj0vnorm.fsf@fnord.ir.bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226523>
 
-Moritz Bunkus <moritz@bunkus.org> writes:
+On Thu, Jun 6, 2013 at 12:16 PM, Greg Troxel <gdt@ir.bbn.com> wrote:
+>
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> On Thu, Jun 6, 2013 at 9:54 AM, Greg Troxel <gdt@ir.bbn.com> wrote:
+>>>
+>>> git is a core tool that people use on almost the smallest of boxes,
+>>> perhaps even replacing rcs for managing local config files.  On such
+>>> machines, even perl may be large, but a second scripting language seems
+>>> excessive.
+>>
+>> You can compile Git without any of them.
+>
+> That ignores the 99% of people who use packaged versions.
 
-> This used to work until recently, though I'm not sure up to which
-> version excatly. I'm on Arch Linux and therefore usually pretty much
-> up to date. My current git version is 1.8.3.
+The 99% of people who use packaged versions wouldn't care about the
+additional dependency.
 
-Could you test if 'master' at 3684101a654d (Merge branch
-'kb/status-ignored-optim-2', 2013-06-03) or later fixes it?
+>>> On a NetBSD 6 i386 system, the size of the ruby193-base
+>>> binary package (as installed) is 25 MB (vs 15 MB for the git base
+>>> package, which lacks gitk and docs).  (Presently, the git base package
+>>> defaults to requiring python and installing the git_remote_helpers, but
+>>> I think that's a bug.)  perl is 54 MB.
+>>
+>> That's only the default, if the default doesn't suit you, don't use
+>> the default.
+>
+> It's not about what I want.
 
-Thanks.
+It is exactly about what you want.
+
+You use the argument that 99% of the people use packaged versions, yet
+you ignore the fact that 99% of the people don't care about a single
+extra dependency (specially one that would be transitory). It is all
+about 1% of the users, in fact, not even that, because of this 1% of
+users who dread extra dependencies, most of them would be happy that
+it's only temporary, and eventually a heavier dependency would be
+replaced with a lighter one. It is for all intents and purposes only
+you, the person you are speaking on behalf of.
+
+If the Git project considers a new dependency that would be needed in
+addition to Perl for a finite period of time, your argument does
+absolutely nothing to block this route.
+
+-- 
+Felipe Contreras
