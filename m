@@ -1,109 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] rev-list: add --authorship-order alternative ordering
-Date: Thu, 06 Jun 2013 12:40:38 -0700
-Message-ID: <7vobbjxc21.fsf@alter.siamese.dyndns.org>
-References: <1370369299-20744-1-git-send-email-me@ell.io>
-	<1370369299-20744-2-git-send-email-me@ell.io>
-	<7vip1t7koi.fsf@alter.siamese.dyndns.org>
-	<7vobbl60aj.fsf@alter.siamese.dyndns.org>
-	<CAPZ477OFM6D4n_Wz-OozN=aYn5-LmNA2ggL+9GNrbGrRQh9pRQ@mail.gmail.com>
+From: Thomas Ferris Nicolaisen <tfnico@gmail.com>
+Subject: Re: [Administrivia] On ruby and contrib/
+Date: Thu, 6 Jun 2013 21:48:39 +0200
+Message-ID: <CAEcj5uXHxvo90bP8GC5hDLBz4HZhg1JV4jHUSWnbSNhnjtCH=g@mail.gmail.com>
+References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
+	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
+	<51AEBAEF.6090402@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Elliott Cable <me@ell.io>
-X-From: git-owner@vger.kernel.org Thu Jun 06 21:40:55 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	=?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 06 21:48:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukg3I-00068Q-Qy
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 21:40:53 +0200
+	id 1UkgAw-0004LA-9S
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 21:48:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754169Ab3FFTks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jun 2013 15:40:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41788 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752829Ab3FFTkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 15:40:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A592A2586D;
-	Thu,  6 Jun 2013 19:40:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wPDOdy8FAzg01HEHBa39mpvq7ls=; b=RRZdJS
-	iC5+jNuFrqaYQ3wJlIlaB7uiq1X96aMm0HDKR0h/FnrjSie+CuqZzr4vAr8fHnnV
-	Rb23QU8VrFEUsppbXBWRIhJSOnwFJAG9HslicboYNADjSUUi6HYTH7ZqsGJ/Eqge
-	QOosF5qDpP2ggxVvwtYrta4ElvIVxUNiH0KzI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IqyAw+e3m6qw0X2CsruL3KMoGtMa2C9A
-	VaM6wk5PjqLN/bRC9D5+HkIl84P/fyW/F9upSrNGqEvfzeVWTuSl76kavNMdGLsr
-	FNRLSoqDZvdJRkzrByzFf2A7wHp0XHsIgdir85piF6maelPnpS5Mgs4o6Aws65sA
-	Qwk2WFNO36U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BB842586C;
-	Thu,  6 Jun 2013 19:40:46 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1DE4025866;
-	Thu,  6 Jun 2013 19:40:46 +0000 (UTC)
-In-Reply-To: <CAPZ477OFM6D4n_Wz-OozN=aYn5-LmNA2ggL+9GNrbGrRQh9pRQ@mail.gmail.com>
-	(Elliott Cable's message of "Thu, 6 Jun 2013 15:03:13 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FB75B3F6-CEE0-11E2-B0EA-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754255Ab3FFTsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 15:48:42 -0400
+Received: from mail-qa0-f47.google.com ([209.85.216.47]:40036 "EHLO
+	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753656Ab3FFTsk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 15:48:40 -0400
+Received: by mail-qa0-f47.google.com with SMTP id i13so413550qae.13
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 12:48:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=GAQiKSDMShqRWFQjVEFaK0aabof2tzR0S1FhAchx/AY=;
+        b=kJL0ciCb/eMU29Tjngy7A43Eh8Ark1eX9E9wBOL7FBGECshwOoVy7Cu2jJnXmHhuaw
+         czg7TG7cH9K2280t8+H9363ROs6T+/ekd1Scx2hXiH3593QOmJu0nxipF3SwclmErHRw
+         6TqF87+ldrmhqOJ2mMHyrin2She6ywl5KvvXU9aC+9Vfnku/Y4JSn/5Bmq0TVyIKlT5o
+         AzZTpjiKBqonR2F1jFyc+dyxPGOKRC3UOze0Aurk+1YlERMPIy4P4Woz79LqnerH+wRZ
+         Xi3jYluQHGgZFtvvbv1pKDQMSlFGeLlWgR8faBSteD/wQCRDvvyU5MvDTUOgAYvd80/k
+         xcYQ==
+X-Received: by 10.229.105.84 with SMTP id s20mr1961603qco.111.1370548119553;
+ Thu, 06 Jun 2013 12:48:39 -0700 (PDT)
+Received: by 10.49.95.233 with HTTP; Thu, 6 Jun 2013 12:48:39 -0700 (PDT)
+In-Reply-To: <51AEBAEF.6090402@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226553>
 
-Elliott Cable <me@ell.io> writes:
-
->> And update revs->lifo to use that same enum, without adding
->> use_author_date bit to rev_info.
+On Wed, Jun 5, 2013 at 6:13 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
 >
-> I'll look into replacing lifo with an enum as soon as I can sit back
-> down to update this patch. For the moment, nothing more than
-> committer_date_sort and author_date_sort, I suppose?
-
-> I'll try and make this a separate patch. First commit, to replace lifo
-> with an enum; second commit, to *actually implement* the code obeying
-> that enum when it is set to author_date_order.
-
-If you want to do this in a multi-step series (which may not be a
-bad idea), I would imagine that the enum starts as a choice between
-the two: traversal-order vs committer-date-order.  The first patch
-would change nothing else.
-
-And then you would add the third choice, author-date-order, and
-implement the logic to sort them using author instead of committer
-date in the same patch.
-
->> Elliott: you can see the relevant changes to the topo-sort in commit
->> 96c4f4a (commit: allow associating auxiliary info on-demand,
->> 2013-04-09).
->>
->> -Peff
+> But my main point is that I think it would be easier to phase out
+> contrib/ if there were a good alternate way of providing visibility to
+> "satellite" projects.  The relevant Git wiki page [1] is the most likely
+> candidate, but it is a bit overwhelming due to its size, it has fallen
+> into disuse because it was broken for such a long time, and it is not
+> prominently linked to from git-scm.com.  If it were curated a bit, it
+> would help users find the best ancillary tools quickly.  Perhaps ranking
+> the tools based on the results of the Git user surveys would help bring
+> the most popular to the top of each category.
 >
-> Again, might be a little over my head. If you really think it's best
-> that I look into that branch, I will try. :)
->
-> Meantime, is there any other, more-immediate approach you can think
-> of? I thought, for a moment, of only storing *either* the committer
-> *or* the author date in the commit-struct at a given time, and
-> flagging with a single bit ... but I'm not sure how widely-spread the
-> nead for committer-date currently is. Maybe I can go back and
-> parse-out the author date *when I need it*, instead, though that
-> sounds slow …
 
-You would parse all of them at the beginning of topo-sort function
-once and store these dates in the commit-info-slab (alongside with
-indegree).  Once you are done sorting, you can discard the slab.
+One idea here could be to mirror what the libgit2 project [1] (and many
+others) are doing on GitHub. Use the organization unit [2] as an umbrella
+for the contrib projects. If necessary, put a pretty web-page on top [3].
 
-This could be done as a follow-up patch, but the tons of helper
-functions you added to compare by author date to revision.c will
-have to be removed in such a transition, because the whole point of
-using commit-info-slab is not to have commit->author_date field,
-which these new helpers work on.
+Of course you don't have to tie it to GitHub, but they do have some nice
+mechanisms for showing off popularity (stars and forks).
+
+I heard that clojure/contrib [4] went through a big clean-up recently,
+although I'm not sure if there was an equivalent reasoning behind it. But
+their guide-lines on what should go into contrib may have some good
+ideas [5].
+
+[1] https://github.com/libgit2
+[2] https://github.com/git
+[3] http://libgit2.github.com/
+[4] http://dev.clojure.org/display/design/Where+Did+Clojure.Contrib+Go
+[5] http://dev.clojure.org/pages/viewpage.action?pageId=5767464
