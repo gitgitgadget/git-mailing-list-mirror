@@ -1,69 +1,104 @@
-From: =?UTF-8?B?Q8OpbGVzdGluIE1hdHRl?= <celestin.matte@ensimag.fr>
-Subject: Re: git diff bug?
-Date: Thu, 06 Jun 2013 23:42:14 +0200
-Message-ID: <51B10236.2030009@ensimag.fr>
-References: <CANd8icJ_1mqT9m-n3wPPdjzG1oNjwxfQeUA6YL6KVxbq0iEa1g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 17/18] Place the open() call inside the do{} struct and prevent failing close
+Date: Thu, 06 Jun 2013 14:58:41 -0700
+Message-ID: <7vbo7iyk8e.fsf@alter.siamese.dyndns.org>
+References: <1370547263-13558-1-git-send-email-celestin.matte@ensimag.fr>
+	<1370547263-13558-18-git-send-email-celestin.matte@ensimag.fr>
+	<7vhahbx7r7.fsf@alter.siamese.dyndns.org>
+	<51B0FF75.9070506@ensimag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Sarma Tangirala <vtangira@buffalo.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 06 23:42:29 2013
+Cc: git@vger.kernel.org, benoit.person@ensimag.fr,
+	matthieu.moy@grenoble-inp.fr
+To: =?utf-8?Q?C=C3=A9lestin?= Matte <celestin.matte@ensimag.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 06 23:58:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukhwt-0005R5-Pz
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 23:42:24 +0200
+	id 1UkiCn-0001IS-EA
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 23:58:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752442Ab3FFVmT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Jun 2013 17:42:19 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:41849 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751908Ab3FFVmT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 17:42:19 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r56LgAYA022951
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 6 Jun 2013 23:42:10 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r56LgCT8022616;
-	Thu, 6 Jun 2013 23:42:12 +0200
-Received: from [127.0.0.1] (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r56LgCSX010091;
-	Thu, 6 Jun 2013 23:42:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <CANd8icJ_1mqT9m-n3wPPdjzG1oNjwxfQeUA6YL6KVxbq0iEa1g@mail.gmail.com>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 06 Jun 2013 23:42:10 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r56LgAYA022951
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: celestin.matte@ensimag.fr
-MailScanner-NULL-Check: 1371159730.89439@AJzgd43+kb+yAovUJQfr9A
+	id S1752721Ab3FFV6p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Jun 2013 17:58:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65169 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752439Ab3FFV6o convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Jun 2013 17:58:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 148032587F;
+	Thu,  6 Jun 2013 21:58:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=R12g7z7EqtDz
+	sFHG2KesJdJkjTc=; b=xO/PpGL2xEnSvEfOlc9r/E+selIh7pKxpVr90Ok1uCJQ
+	frmtEEbjiL3FvwNhy4tJ7IScrjSbx/cqtryBJTJ7Dh/kZHjOv7dulogDFrLMzIMB
+	KMP61gdubFmc4MS+2bW0jFXfJhoVwLG0Y0DeVGhLL2aoTbmRIvqcvZRV8vCsUK4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xEcKnd
+	G1WHYmb8XdrWr4Q6H1SEzX7RrmCvL+qhMnjb+RsLBe5AYE7NnNus08KPxApR31uo
+	+Z6Syb5g5NOjRucCmsjTiQrwWcvsCk8HPk+K16TFkBVr6qcsV71i0m9XV0i3WDG/
+	+O5HNC1jsXdEB2PCMnvU3ZOwfkZNoem9l/TAs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C54A2587E;
+	Thu,  6 Jun 2013 21:58:44 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7001825877;
+	Thu,  6 Jun 2013 21:58:43 +0000 (UTC)
+In-Reply-To: <51B0FF75.9070506@ensimag.fr> (=?utf-8?Q?=22C=C3=A9lestin?=
+ Matte"'s message of
+	"Thu, 06 Jun 2013 23:30:29 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 41230DBE-CEF4-11E2-9546-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226566>
 
-Le 06/06/2013 23:26, Sarma Tangirala a =C3=A9crit :
-> Hello All,
->=20
-> If I did 'git diff HEAD^..HEAD -- file' should git not report some
-> kind of warning if it could not match the file? For example, if 'file=
-'
-> were infact 'dir/file' and 'file' were unique, would it not be a good
-> idea to report that in the present working directory 'file' were not
-> found but 'dir/file' were a match?
+C=C3=A9lestin Matte <celestin.matte@ensimag.fr> writes:
 
-I don't know any program doing such a thing, and I don't think it is th=
+> So using autodie may not be a good idea.
+> But the problem is that in the current state, open() return values ar=
 e
-role of the program to predict which file the user actually wanted to
-provide in the command line.
-That would imply looking for files with the same name or a close name i=
-n
-the current directory and its subdirectories - and maybe even in the
-superdirectory? It is hard to decide when you have to stop looking for
-the file.
+> checked, but print ones are not, although it should be.
+
+I tried "man autodie" and tried to spot 'print' in the categories
+list that shows things like ":all covers :default which in turn
+covers :io which in turn covers read, seek, ..." and didn't see any.
+
+Running the attached as
+
+	$ perl ad.perl >&-
+
+gave me "Hi" (i.e. no failure from print) but of course killed a
+failing syswrite().
+
+So I am not sure your "we must check print" matches well with use of
+autodie, either.
+
+-- >8 --
+#!/usr/bin/perl -w
+
+use warnings;
+use autodie;
+
+for (my $i =3D 0; $i < 256; $i++) {
+	print "Did this die?\n";
+}
+
+print STDERR "Hi\n";
+
+for (my $i =3D 0; $i < 256; $i++) {
+	syswrite(1, "Did this die?\n");
+}
+
+print STDERR "Lo\n";
+
+exit(0);
+--- 8< --
