@@ -1,103 +1,84 @@
-From: =?UTF-8?B?Q8OpbGVzdGluIE1hdHRl?= <celestin.matte@ensimag.fr>
-Subject: Re: [PATCH 17/18] Place the open() call inside the do{} struct and
- prevent failing close
-Date: Thu, 06 Jun 2013 23:30:29 +0200
-Message-ID: <51B0FF75.9070506@ensimag.fr>
-References: <1370547263-13558-1-git-send-email-celestin.matte@ensimag.fr> <1370547263-13558-18-git-send-email-celestin.matte@ensimag.fr> <7vhahbx7r7.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Dependencies and packaging (Re: [Administrivia] On ruby and contrib/)
+Date: Thu, 6 Jun 2013 14:31:24 -0700
+Message-ID: <20130606213124.GB12924@google.com>
+References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
+ <7va9n52zjc.fsf@alter.siamese.dyndns.org>
+ <rmivc5rp9w2.fsf@fnord.ir.bbn.com>
+ <CAMP44s07p0vpS_2cjAjB=QWoZjjPSuAm09xwk4BjAAD+hsJrSw@mail.gmail.com>
+ <rmisj0vnorm.fsf@fnord.ir.bbn.com>
+ <CALkWK0kQSuvv9owUYxatKTKW+GEpR0kL6XsyrOJD66yfodycUQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, benoit.person@ensimag.fr,
-	matthieu.moy@grenoble-inp.fr
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 06 23:30:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Greg Troxel <gdt@ir.bbn.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 06 23:32:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkhlZ-0004j0-Oj
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 23:30:42 +0200
+	id 1Ukhn0-0005rO-Mo
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 23:32:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752867Ab3FFVah convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Jun 2013 17:30:37 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:46631 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752630Ab3FFVag (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 17:30:36 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r56LUOmv031036
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 6 Jun 2013 23:30:24 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r56LUR2S022526;
-	Thu, 6 Jun 2013 23:30:27 +0200
-Received: from [127.0.0.1] (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r56LUQ0r027165;
-	Thu, 6 Jun 2013 23:30:26 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <7vhahbx7r7.fsf@alter.siamese.dyndns.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 06 Jun 2013 23:30:24 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r56LUOmv031036
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: celestin.matte@ensimag.fr
-MailScanner-NULL-Check: 1371159028.3144@zUALsCg+OGNDJ9QiQHJytw
+	id S1753403Ab3FFVcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 17:32:06 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:42288 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752908Ab3FFVcC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 17:32:02 -0400
+Received: by mail-ob0-f174.google.com with SMTP id wd20so5522385obb.33
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 14:32:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=V/NibahbGvBsZ5FvctvqlyMB/c7irL4nSLh0TMEz8gY=;
+        b=nMxgtFJsbcGuPaURGVTOQYtUd3RbbCRnwOgqE1y2FC1vJj4dnXg8JdeYVjG9Fq6gdK
+         4piIX9xZ+twi5G87BguWg7X/YoVO5SvxcJ0cm6I/tjIL3zPzMybvxBLQQKcC8QFw0PvG
+         +iSsAHuCCY5rUiMSoi1tAaGTgL+CBPZxFvY8lIL917dfvQPkjK3s71UTy9EHtOpE6Pa6
+         w1KCdd7XFucZVE7NXzr8gD45V7NmCtWInLxYx7pZaThOsw4sfr3od05L8/XSvsv2rN56
+         7+cZtnIoDNps6JggNAv/uUbCDikL6wg45hmUvkb76JfFP48lhdxjoghwztyWRGOm+lsx
+         IQZw==
+X-Received: by 10.182.171.9 with SMTP id aq9mr19615031obc.16.1370554322248;
+        Thu, 06 Jun 2013 14:32:02 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id oe10sm15961887oeb.6.2013.06.06.14.31.59
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 06 Jun 2013 14:32:01 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0kQSuvv9owUYxatKTKW+GEpR0kL6XsyrOJD66yfodycUQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226564>
 
-Le 06/06/2013 23:13, Junio C Hamano a =C3=A9crit :
-> Confused.  Which part of this patch moves open inside a do{} block?
-> This was last touched by [9/18] but it doesn't do any such thing,
-> either.
+Ramkumar Ramachandra wrote:
 
-I must have failed the rebase, as the first part of the commit moved to
-[14/18] because it modifies a part of it:
->@@ -344,10 +344,10 @@ sub get_mw_pages {
-> #        $out =3D run_git("command args", "raw"); # don't interpret
->output as UTF-8.
-> sub run_git {
-> 	my $args =3D shift;
->-	my $encoding =3D (shift || "encoding(UTF-8)");
->-	open(my $git, "-|:$encoding", "git " . $args)
->-	    or die "Unable to open: $!\n";
->-	my $res =3D do {
->+	my $encoding =3D (shift || 'encoding(UTF-8)');
->+	my $res =3D do {
->+		open(my $git, "-|:$encoding", "git ${args}")
->+		    or die "Unable to fork: $!\n";
-> 		local $/ =3D undef;
-> 		<$git>
-> 	};
-I'm not sure how I should correct this. I'll have a look if this commit
-actually is useful.
+>                                      Git is probably the _last_ thing
+> to be complaining about when it comes to packaging.
 
-> Upon leaving this subroutine, $git filehandle will go out of scope,
-> so in that sense, close may not be necessary, but that does not
-> match what the proposed log message claims what the patch does.
->=20
-> Also, this patch does not remove "or die" 9/18 added, even though
-> the proposed log message claims that with autodie it is no longer
-> necessary.
->=20
-> I am not convinced that using autodie globally, without vetting the
-> calls the original code make, is a good idea in the first place.
-> How does this change interact with existing calls to open, close,
-> etc. that check the return value from them, now these calls throw
-> exception and will not give a chance for the existing error handling
-> codepath to intervene?
+It would be nice if contrib/ files supported the usual "make; make
+install; make clean" targets.  That's missing functionality that does
+matter to at least one packager.
 
-So using autodie may not be a good idea.
-But the problem is that in the current state, open() return values are
-checked, but print ones are not, although it should be. So, either:
-- we use autodie and remove checking of existing return values, or
-- we don't use autodie and add checking of return value of print calls
-- or I'm missing some point :)
+It would be nice if the dependencies associated to each piece of
+functionality or makefile flag were documented more clearly.
+Currently when e.g. features of gitweb gain dependencies I don't
+notice until the testsuite fails.
 
-
---=20
-C=C3=A9lestin Matte
+Jonathan
