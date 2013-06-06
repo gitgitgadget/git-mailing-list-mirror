@@ -1,87 +1,76 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] t0005: skip signal death exit code test on Windows
-Date: Thu, 6 Jun 2013 13:32:08 -0500
-Message-ID: <CAMP44s0Qq2n5cJa9buaLgNDTp61cxA1G+XutTZasphkGmyguHg@mail.gmail.com>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
-	<51AEE1C3.9020507@viscovery.net>
-	<20130605071206.GC14427@sigill.intra.peff.net>
-	<51B02D81.3000700@viscovery.net>
-	<20130606063754.GA20050@sigill.intra.peff.net>
-	<CAMP44s2L4EOG7aEOR8gqXeaHm7SeuPg=GQAWX3PByKKbtTHnwQ@mail.gmail.com>
-	<20130606064409.GA20334@sigill.intra.peff.net>
-	<7vy5anyx1w.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v3 3/9] cherry-pick: add --skip-empty option
+Date: Thu, 6 Jun 2013 13:34:55 -0500
+Message-ID: <CAMP44s3b2K0nbfuhNqB6FNevdPjVByQCpAie5nzAjx8bw5Y+RQ@mail.gmail.com>
+References: <1370509144-31974-1-git-send-email-felipe.contreras@gmail.com>
+	<1370509144-31974-4-git-send-email-felipe.contreras@gmail.com>
+	<7vbo7jytv5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
-	git@vger.kernel.org
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 06 20:32:16 2013
+X-From: git-owner@vger.kernel.org Thu Jun 06 20:35:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukeyt-0006uZ-Gg
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 20:32:15 +0200
+	id 1Ukf1Z-0000iI-KP
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 20:35:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751818Ab3FFScL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jun 2013 14:32:11 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:63850 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751129Ab3FFScK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 14:32:10 -0400
-Received: by mail-la0-f45.google.com with SMTP id fr10so2908996lab.18
-        for <git@vger.kernel.org>; Thu, 06 Jun 2013 11:32:08 -0700 (PDT)
+	id S1751700Ab3FFSe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 14:34:57 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:42247 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751129Ab3FFSe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 14:34:56 -0400
+Received: by mail-lb0-f181.google.com with SMTP id w10so705189lbi.12
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 11:34:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=fGNbMX92YPHW3vkJZ1LKmbspB+BI0lY1IWfRpmaNo9s=;
-        b=Rxpbrs7QwGUVxH+QTnCDRblxVVECab/3U+X5VI16jm3Xd+0w6UORSg/PquYr8x4lDr
-         yMAwa3VXMMTjVTToCztSRpOBykPgDXlXZD44jAM1OdY53PgE1AIJ8dQqenNdLTbBOyVa
-         VM5ApwlgyV8dWNdz1ysgXg2ndPuMo897dv9ZobAx9j5ATEGnnLbzvynEOrF15yJdPsJy
-         9OKwTL7UJ2xWkkwy5jkRRGuWbe3GXtpAvKd9PGW2O7psiO6YL3/4OyFcPIabAEbdZnQ4
-         uJOjytEsZAYgoI7nXRXTsEznDERKOsyVJW1o4PHcYfuwzFwtKP0sdcPBhJCDfEXAUN9E
-         +Gfw==
-X-Received: by 10.152.22.73 with SMTP id b9mr5865885laf.36.1370543528072; Thu,
- 06 Jun 2013 11:32:08 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Thu, 6 Jun 2013 11:32:08 -0700 (PDT)
-In-Reply-To: <7vy5anyx1w.fsf@alter.siamese.dyndns.org>
+        bh=OO9vKtUAIeXP3bnx3Ipq+AUZpUuxk0WSCJufTi92tWI=;
+        b=nIcJ3P0VmqgCqO3Wj/uJUMlCubECP5CIPFpiyfPquaZaU/4BETG6TR59ckKG3bjWL8
+         N5K2hKC8VKPjcEdc5eBGTah2iw62h5w6JjfgSflk6IeyLiEGhWv4xTyU/1OtQCJv8pb1
+         KVv1BzO0006Arsccps71nPNFZ/YgUIY8mpxZqBvcTOkUptfMaHJLAPKZCBh/c4jj/rqT
+         iQc4IZUKMP1huMoxiPgvL2DiQ8DMDaYOtzV0YMVZzAZzrv2EKAl351xCwCYHXPtCKH8X
+         PowOnoWBfYD7KXFNEsz+9Y89l3I4mAOUPpJ4LxPHMPHFy2nf3QeC8G59L3UAo1uoJwBk
+         mj8A==
+X-Received: by 10.112.16.163 with SMTP id h3mr442918lbd.85.1370543695495; Thu,
+ 06 Jun 2013 11:34:55 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Thu, 6 Jun 2013 11:34:55 -0700 (PDT)
+In-Reply-To: <7vbo7jytv5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226526>
 
-On Thu, Jun 6, 2013 at 12:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
-
->> If somebody wants to write a note somewhere in the git
->> documentation, that's fine with me, but I'm not clear on exactly
->> what it would even say.
+On Thu, Jun 6, 2013 at 1:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> I agree with both points.  I can suggest to clarify the log message
-> a bit with "the implementation of raise() in msvcrt (Microsoft C
-> Runtime library) just calls exit(3)", but that does not address the
-> end-user documentation issue.
+>> Pretty much what it says on the tin.
 >
-> I tried to summarize the issue for end-user documentation and came
-> up with this:
+> And a bit more, isn't it?
 >
->     The Git implementation on MinGW
+> The --keep-redundant-commits option implies the --allow-empty option
+> and it was perfectly acceptable to give both.  By making sure that
+> only at most one of -k-r-d, -a-e or -s-e is given, this forbids that
+> usage.
+>
+> "It is implied so there is no *need* to give it redundantly" is
+> different from "It is implied so you shouldn't give it redundantly".
 
-That's not accurate at all. MinGW is essentially a compiler for
-Windows. It doesn't matter if you use MinGW, Visual C++, or any other
-compiler for Windows, the result would be the same.
+Remove that line then.
 
-> But when stated this way, it feels that it belongs to Msysgit
-> documentation, not ours, at least to me.
+> Like 7 and 8 that adds --quiet/--skip, don't we want this also for
+> revert?
 
-Are we saying then that Git doesn't support Windows? That wouldn't be
-wise considering it's one of the most widely used reasons to argue
-that Git is not a good choice of a SCM; lack of Windows support.
-
-The truth of the matter is that exit codes are platform-dependent. Period.
+If we don't want --allow-empty in revert, we don't want --skip-empty
+either. That is a separate patch.
 
 -- 
 Felipe Contreras
