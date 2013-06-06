@@ -1,97 +1,105 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 6/9] cherry-pick: add support to copy notes
-Date: Thu, 6 Jun 2013 07:17:56 -0500
-Message-ID: <CAMP44s2Jo9A-Dr3S-Pcj6WQ8W4Wg9dLn_f-WGyVZ2Bp4JysBCw@mail.gmail.com>
-References: <1370509144-31974-1-git-send-email-felipe.contreras@gmail.com>
-	<1370509144-31974-7-git-send-email-felipe.contreras@gmail.com>
+From: Barry Fishman <barry_fishman@acm.org>
+Subject: Re: [Administrivia] On ruby and contrib/
+Date: Thu, 06 Jun 2013 08:24:35 -0400
+Message-ID: <m3d2rz5svw.fsf@barry_fishman.acm.org>
+References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
+	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
+	<CAMP44s012ccmaArrTbfy_xNrqbnOjVGTnY+po9cE8JGh_U72Gg@mail.gmail.com>
+	<CANgJU+W1BLOB_TuMa_zRHtCW-8Ge8nu_kK=5qu2xDY=Km_kk4A@mail.gmail.com>
+	<CAMP44s3zuDPTApPvnaC0bzqmAUkRRwePZDRL4syB=tM3d6eiBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 06 14:23:15 2013
+X-From: git-owner@vger.kernel.org Thu Jun 06 14:24:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkZDm-0001cE-Td
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 14:23:15 +0200
+	id 1UkZFS-00038k-8E
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 14:24:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933442Ab3FFMSC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jun 2013 08:18:02 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:61997 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933433Ab3FFMR7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 08:17:59 -0400
-Received: by mail-lb0-f170.google.com with SMTP id t11so3004933lbd.15
-        for <git@vger.kernel.org>; Thu, 06 Jun 2013 05:17:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=qZ1JB5nfVUfp0lI0eUsOGv9XAhk+/Z1t9mD2OJtZoXk=;
-        b=qxLycAIO11DFI/8EsbAtHSZ9Q4qMM4aCf7oGg2pOUGb6OrNixXe++CY5a3OxIYoY5R
-         sCKPeZEU8ilmYbH9+Bc6wWcWHDP11Pw6iVBWa2h1aChb7NjBaOX9SEP8JrG3NJ02xw6y
-         +iwCywu1GalvVL4jjbaBCdIpS02F2RVeyn2V6FWVKJcMwfzHRZVk8Rf54OhExQLfjpg0
-         LaaXwC2Lx02sh53/NuVA/j05zXW/0RB05NmzNq0rkBowLazpIvtAhaqeQPg9uVcB9Yqp
-         MZ1gspiK/kimxuE0IWS1njX51zvCpl6zPTDVmZaB5kj2ol6+TaOWvfA2XW5VNfls42qH
-         zYpg==
-X-Received: by 10.112.132.66 with SMTP id os2mr11184561lbb.118.1370521076427;
- Thu, 06 Jun 2013 05:17:56 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Thu, 6 Jun 2013 05:17:56 -0700 (PDT)
-In-Reply-To: <1370509144-31974-7-git-send-email-felipe.contreras@gmail.com>
+	id S933411Ab3FFMYx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 08:24:53 -0400
+Received: from plane.gmane.org ([80.91.229.3]:44684 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932403Ab3FFMYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 08:24:52 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UkZFJ-00033l-UO
+	for git@vger.kernel.org; Thu, 06 Jun 2013 14:24:49 +0200
+Received: from fl-71-52-212-116.dhcp.embarqhsd.net ([71.52.212.116])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 14:24:49 +0200
+Received: from barry_fishman by fl-71-52-212-116.dhcp.embarqhsd.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 14:24:49 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: fl-71-52-212-116.dhcp.embarqhsd.net
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAALVBMVEXG87t8xXThBQWq85q9
+ 87AvUC6PUVH/BgamyajC87a/87P////r6+ud7oq49KsBy7dJAAACKUlEQVQ4jc3Sv2vbQBQH
+ 8CulwcEdeoOKwM1QD/bSzVktKDEdMpRqeMKQFNqAhEGbh3aVB5sDafAYL106xZMzuAiehnqI
+ EciLMR2viz0Vor+hdydZMa6z97sI9NH7cYdI9ZGQr4/kP4Fu1akehFqHDaoHoOviPLD3oVtz
+ 7PIErFCeeRdqOuvptwDMYSyfpKB7iYh3DOCTeOKzegGvk8hD1O22eD2B9tUWum9wbpXYy6NA
+ wAzMeQFu1AeT2VAW0Af4sYUvfmRbCWLciXq0B2ZYf4C+GL/AGBIcOP4O4MzFKbiTAGOPYg7V
+ mu1j5OIdfIgT7FtHGKoZIHKB6IuK9kDODpNsK0pPVnqCFbyFSyYWMMPnIA9CVsbm5l2HuRjZ
+ FVERBXFPs8QQMhIZvqUX8jJmiTzIRy5FwWhEdAmR4y1KnQbn1KrnMOrLj6PPDnW8bw2+1K7I
+ OINrecF9jwyJyBlfAvkzvlEy6DBHJ3m+8yU5HY9V0TWl+nALx+slMQTkRWKHQprEOJeST3qg
+ p8RoHZRjsmm1ctrrJ0HkX0mFvG+uTnf7qe3SNG2dcc4bm70iAemaHxAJ91zF2G2noMl/UVVk
+ bAoihgINlKwa6XkuhBsKGJgnPBuVEeG/5Wzqz3tZ0bYh4SsBS+qXZtTMRTWUcC/Bnybi7+R5
+ VoaAdZNz7ZU/RT8u2nEuQTw0VpmjH/7UChHQlFAGT1Rg8GS7Hcm+0F4EDgvYIohLAFS++wvs
+ R0Pau3fdJgAAAABJRU5ErkJggg==
+User-Agent: Gnus/5.130008 (Ma Gnus v0.8) Emacs/24.3.50 (gnu/linux)
+Cancel-Lock: sha1:eVTXq9AZ5iubsZmrYT8pAGU0Wk8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226501>
 
-On Thu, Jun 6, 2013 at 3:59 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  sequencer.c | 33 +++++++++++++++++++++++++++++----
->  1 file changed, 29 insertions(+), 4 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 74480d7..6d13e63 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -14,6 +14,7 @@
->  #include "merge-recursive.h"
->  #include "refs.h"
->  #include "argv-array.h"
-> +#include "builtin.h"
->
->  #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
->
-> @@ -158,6 +159,32 @@ static void run_rewrite_hook(const char *name)
->         finish_command(&proc);
->  }
->
-> +static void copy_notes(const char *name)
-> +{
-> +       struct notes_rewrite_cfg *cfg;
-> +       int i;
-> +
-> +       cfg = init_copy_notes_for_rewrite(name);
-> +       if (!cfg)
-> +               return;
-> +
-> +       for (i = 0; i < rewritten.nr; i++) {
-> +               struct rewritten_list_item *item = &rewritten.items[i];
-> +               copy_note_for_rewrite(cfg, item->from, item->to);
-> +       }
-> +
-> +       finish_copy_notes_for_rewrite(cfg);
-> +}
 
-Unfortunately this doesn't work, because all these functions are part
-of the builtins, not git lib.
+On 2013-06-06 03:46:59 EDT, Felipe Contreras wrote:
+> On Thu, Jun 6, 2013 at 2:26 AM, demerphq <demerphq@gmail.com> wrote:
+>> Good thing you are being objective and leaving out the Python 3.0
+>> mess, the long legacy of backwards compatibility in the Perl
+>> community, the active community behind it, its extensive portability
+>> support, and fail to mention the lack of an equivalent to CPAN. We
+>> wouldn't want facts to get in the way of a personal bias would we?
+>
+> None of that has anything to do with Perl's popularity.
+>
+>> Just thought I'd push back on the FUD. People have been saying Perl is
+>> going away for decades...
+>
+> Perl has been going away for the last decade [1], and will continue to
+> go away. Perl is going away, and that an undeniable fact, and if you
+> are not interested in discussing on the basis of reality, I'm not
+> interested in discussing with you.
+>
+> [1] http://www.tiobe.com/content/paperinfo/tpci/images/tpci_trends.png
 
--- 
-Felipe Contreras
+I don't think the usefulness of a language should be judged by hits on a
+web site.
+
+Personally I would like the Git client to be packaged with as few
+dependencies as possible.  Right now that seems to require Shell, Sed,
+Awk and Perl.  The documentation has other requirements, but a prebuild
+tar file is available.
+
+I would have the rest of the distribution be bundled as something
+like "git-utils" which could have a subdirectory for each support
+language.  Then one could even make available alternative
+implementations of higher level utilities and people could decide if
+support of a specific language was useful to them.
+
+Most such extension code is simple, although more complex than suitable
+for just Shell/Sed/Awk.  People in each language community could provide
+code which meets the needs of their community, and the Git project
+itself would not need to make (Solomon like) decisions about what
+extension languages to support.
+
+--
+Barry Fishman
