@@ -1,7 +1,7 @@
-From: Barry Fishman <barry_fishman@acm.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [Administrivia] On ruby and contrib/
-Date: Thu, 06 Jun 2013 10:41:21 -0400
-Message-ID: <m3txlbe1ym.fsf@barry_fishman.acm.org>
+Date: Thu, 6 Jun 2013 10:04:20 -0500
+Message-ID: <CAMP44s3RPSo5Uw2yLfGPmepbgFePD3bmj6wh7aQDuKdQL-eLuQ@mail.gmail.com>
 References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
 	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
 	<CAMP44s012ccmaArrTbfy_xNrqbnOjVGTnY+po9cE8JGh_U72Gg@mail.gmail.com>
@@ -11,74 +11,65 @@ References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
 	<CAMP44s0M5tsN+zYoa_HC+8SLqyvDUBi_wuiOGyQWo0XWbWXC-A@mail.gmail.com>
 	<m3ip1rnygk.fsf@barry_fishman.acm.org>
 	<CAMP44s0baW0muNzZb1yjDXiS=y3_R5LhzWcqEsPzNZizETwACQ@mail.gmail.com>
+	<m3txlbe1ym.fsf@barry_fishman.acm.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 06 16:41:40 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Barry Fishman <barry_fishman@acm.org>
+X-From: git-owner@vger.kernel.org Thu Jun 06 17:04:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkbNh-0006zD-JR
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 16:41:37 +0200
+	id 1Ukbjn-0003Th-1c
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 17:04:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752486Ab3FFOld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jun 2013 10:41:33 -0400
-Received: from plane.gmane.org ([80.91.229.3]:52098 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752141Ab3FFOlc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 10:41:32 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UkbNa-0006ta-RH
-	for git@vger.kernel.org; Thu, 06 Jun 2013 16:41:30 +0200
-Received: from fl-71-52-212-116.dhcp.embarqhsd.net ([71.52.212.116])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 06 Jun 2013 16:41:30 +0200
-Received: from barry_fishman by fl-71-52-212-116.dhcp.embarqhsd.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 06 Jun 2013 16:41:30 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: fl-71-52-212-116.dhcp.embarqhsd.net
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAALVBMVEXG87t8xXThBQWq85q9
- 87AvUC6PUVH/BgamyajC87a/87P////r6+ud7oq49KsBy7dJAAACKUlEQVQ4jc3Sv2vbQBQH
- 8CulwcEdeoOKwM1QD/bSzVktKDEdMpRqeMKQFNqAhEGbh3aVB5sDafAYL106xZMzuAiehnqI
- EciLMR2viz0Vor+hdydZMa6z97sI9NH7cYdI9ZGQr4/kP4Fu1akehFqHDaoHoOviPLD3oVtz
- 7PIErFCeeRdqOuvptwDMYSyfpKB7iYh3DOCTeOKzegGvk8hD1O22eD2B9tUWum9wbpXYy6NA
- wAzMeQFu1AeT2VAW0Af4sYUvfmRbCWLciXq0B2ZYf4C+GL/AGBIcOP4O4MzFKbiTAGOPYg7V
- mu1j5OIdfIgT7FtHGKoZIHKB6IuK9kDODpNsK0pPVnqCFbyFSyYWMMPnIA9CVsbm5l2HuRjZ
- FVERBXFPs8QQMhIZvqUX8jJmiTzIRy5FwWhEdAmR4y1KnQbn1KrnMOrLj6PPDnW8bw2+1K7I
- OINrecF9jwyJyBlfAvkzvlEy6DBHJ3m+8yU5HY9V0TWl+nALx+slMQTkRWKHQprEOJeST3qg
- p8RoHZRjsmm1ctrrJ0HkX0mFvG+uTnf7qe3SNG2dcc4bm70iAemaHxAJ91zF2G2noMl/UVVk
- bAoihgINlKwa6XkuhBsKGJgnPBuVEeG/5Wzqz3tZ0bYh4SsBS+qXZtTMRTWUcC/Bnybi7+R5
- VoaAdZNz7ZU/RT8u2nEuQTw0VpmjH/7UChHQlFAGT1Rg8GS7Hcm+0F4EDgvYIohLAFS++wvs
- R0Pau3fdJgAAAABJRU5ErkJggg==
-User-Agent: Gnus/5.130008 (Ma Gnus v0.8) Emacs/24.3.50 (gnu/linux)
-Cancel-Lock: sha1:Rq9Klu7Jxk60+bE9jhE9YbKcxg0=
+	id S1750870Ab3FFPEX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 11:04:23 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:46643 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750731Ab3FFPEW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 11:04:22 -0400
+Received: by mail-lb0-f181.google.com with SMTP id w10so466945lbi.26
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 08:04:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=6+pWIT3WFi4Vfi2iPoBIhnlTLDbR5yStsK9OEvlSIvE=;
+        b=DeLRan82gFSOEfpbYZLCehqIO43rvznv1KgTyZ2Mn/kjBaKjHIOmrgo/1VYFbVRIDr
+         RpIYgaTZ2Ku1PiL0b2h3hKuSVUegGeew8qdyRE2UeyinE8J9VLDhQFKhNY9lbTNDNrVf
+         LB5xFSDEjcUHtEOY1p/uQgw5I8tW73XKV37w8DpLdqFMtX4p/l20sZuTwqwuq5fAiPel
+         h8kfQqD5SXEdl8ZL5T86rmJgQA7RozIlIE9UNPENiuXLTfWawHZe7KqFmElA+GIZyU3s
+         s/eyP8Ilg553aUX18Cwgi2CXbsAKNidBCWlK/avR/dBbgJ/vGjAOHYHdaJhlDGJVrk+T
+         OS0Q==
+X-Received: by 10.152.22.73 with SMTP id b9mr5484526laf.36.1370531060962; Thu,
+ 06 Jun 2013 08:04:20 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Thu, 6 Jun 2013 08:04:20 -0700 (PDT)
+In-Reply-To: <m3txlbe1ym.fsf@barry_fishman.acm.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226508>
 
-On 2013-06-06 10:09:21 EDT, Felipe Contreras wrote:
-> I don't know what you are saying, but it clearly has nothing to do
-> with the point.
+On Thu, Jun 6, 2013 at 9:41 AM, Barry Fishman <barry_fishman@acm.org> wrote:
+> On 2013-06-06 10:09:21 EDT, Felipe Contreras wrote:
+>> I don't know what you are saying, but it clearly has nothing to do
+>> with the point.
+>>
+>> Perl is declining, and it would be wise to use another language
+>> instead of it.
 >
-> Perl is declining, and it would be wise to use another language
-> instead of it.
+> You want a simple statement.  I don't particulary like Perl, but it has
+> worked well for the project.
 
-You want a simple statement.  I don't particulary like Perl, but it has
-worked well for the project.
+It would serve it less and less as the years go by.
 
-If you have a better solution, then write all the code to replace it,
-and demonstrate with a significant number of active users that your
-solution works out better in practice.
+> If you have a better solution, then write all the code to replace it,
 
-Wasn't that how Git started?
+False dichotomy fallacy. I don't need to do that.
 
 -- 
-Barry Fishman
+Felipe Contreras
