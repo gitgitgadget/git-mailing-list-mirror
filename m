@@ -1,111 +1,129 @@
-From: Elliott Cable <me@ell.io>
-Subject: Re: [PATCH/RFC] rev-list: add --authorship-order alternative ordering
-Date: Thu, 6 Jun 2013 15:32:08 -0400
-Message-ID: <CAPZ477O4DyAcd-eZp2UQhta61e6AeGZiTxPuXOcuEP0X+8wRAA@mail.gmail.com>
-References: <1370369299-20744-1-git-send-email-me@ell.io>
-	<1370369299-20744-2-git-send-email-me@ell.io>
-	<7vip1t7koi.fsf@alter.siamese.dyndns.org>
-	<7vobbl60aj.fsf@alter.siamese.dyndns.org>
-	<CAPZ477OFM6D4n_Wz-OozN=aYn5-LmNA2ggL+9GNrbGrRQh9pRQ@mail.gmail.com>
-	<7vtxlbxcl7.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
+Subject: [PATCH 00/18] git-remote-mediawiki: Follow perlcritic's recommandations
+Date: Thu,  6 Jun 2013 21:34:05 +0200
+Message-ID: <1370547263-13558-1-git-send-email-celestin.matte@ensimag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 06 21:32:17 2013
+Cc: benoit.person@ensimag.fr, matthieu.moy@grenoble-inp.fr,
+	=?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 06 21:34:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukfuw-0006gD-Ql
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 21:32:15 +0200
+	id 1UkfxC-0008WM-SL
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 21:34:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752449Ab3FFTcK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Jun 2013 15:32:10 -0400
-Received: from mail-oa0-f49.google.com ([209.85.219.49]:52871 "EHLO
-	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752101Ab3FFTcJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Jun 2013 15:32:09 -0400
-Received: by mail-oa0-f49.google.com with SMTP id k14so2518906oag.8
-        for <git@vger.kernel.org>; Thu, 06 Jun 2013 12:32:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ell.io; s=google;
-        h=mime-version:x-originating-ip:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=7v/UfnQhbPPzU7w7v8TVIOUu/V3wmH8oNzVkEzGjCzE=;
-        b=Dxb1lLDqXw4V9s82vsQB11ACCfjMPzapR9W8TeooyolVKMGU+Lr3iI4vaibZK5JUbS
-         ciD7DMBvxZqp1nL61tdzq2NmLT33LXLcDPUmG0Om6UOxWfwL+LrDo9FIVWa9tNjlOaOc
-         WGPK+dL9yJG6IO0+MskAYkAgjMgFGk1ktmTYw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=7v/UfnQhbPPzU7w7v8TVIOUu/V3wmH8oNzVkEzGjCzE=;
-        b=egyLoY4k5sJxnDrPBrXNMnq9qDTF6if174kE7+0jjGDMzUGxTMoxSM68/OH26+WKzd
-         3jTlS1ZaaU9KLELd8YM4iXYd/iM0pGUgiHEe8kIyLDAzKuFccKtST0TGj0e22tJP0Gsu
-         L5Ghwo2lxfWhJ8mB2w/dI1nAgefEPfyBqMTYcVKnoLzfNZxKcFUPdKNRCbUPRVu/bedO
-         PU1gHGXeyHJssV6ASi/tXsFWqlnheoT5xs504NXy05W2OvF8QgB2sk/74E5aCzQ7ffZJ
-         0kRmHdXUj/uD027lDLsE0/4J0y6dQxN2oXVLJzSOEJWwI5esEncC4WSVU/CJW2JSmzjb
-         dPHw==
-X-Received: by 10.60.61.80 with SMTP id n16mr10391141oer.46.1370547128473;
- Thu, 06 Jun 2013 12:32:08 -0700 (PDT)
-Received: by 10.60.28.194 with HTTP; Thu, 6 Jun 2013 12:32:08 -0700 (PDT)
-X-Originating-IP: [70.197.160.229]
-In-Reply-To: <7vtxlbxcl7.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQml/wTRER1N1cPeXv/tL1mmX3/vcbCvme7GDbNPCgP5jiZ/UwzFvGP9OEESIIxQhITNnCnf
+	id S1753312Ab3FFTec convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Jun 2013 15:34:32 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:44512 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753244Ab3FFTeb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 15:34:31 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r56JYRh3031827
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 6 Jun 2013 21:34:27 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r56JYTV7021378;
+	Thu, 6 Jun 2013 21:34:29 +0200
+Received: from tohwi-K50IE.imag.fr (ensibm [195.221.228.8])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r56JYTon023108;
+	Thu, 6 Jun 2013 21:34:29 +0200
+X-Mailer: git-send-email 1.7.9.5
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 06 Jun 2013 21:34:27 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r56JYRh3031827
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: celestin.matte@ensimag.fr
+MailScanner-NULL-Check: 1371152067.61729@AKV5UNzLcl4/6tt6qk9aOA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226533>
 
-Wow. That's my bad entirely. I apparently hallucinated a section
-suggesting that you =E2=80=9Csign-off=E2=80=9D commits that you'd revie=
-wed, or
-something; and I'd completely skipped the section on certifying that
-you have legal rights to the work, because I'd *written* it, and
-didn't think it'd be relevant.
-
-I feel like an idiot. Forgive me. I'll --signoff my next version of
-the patch. o7
-
-On Thu, Jun 6, 2013 at 3:29 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Elliott Cable <me@ell.io> writes:
->
->> On Tue, Jun 4, 2013 at 3:14 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->>> elliottcable <me@ell.io> writes:
->>>> Thus, I've added an --authorship-order version of --date-order, wh=
-ich relies
->>>> upon the AUTHOR_DATE instead of the COMMITTER_DATE; this means tha=
-t old commits
->>>> will continue to show up chronologically in-order despite rebasing=
+Hi,
+This series of commits intends to follow most of perlcritic's recommand=
+ations
+in order to make the code more maintainable and readable.
+I followed most recommandations from level 5 (most critical ones )to 2,=
+ but=20
+left a great part of the level 1 ones, as they were more about personal=
+ choices
+of coding style and less about actually improving maintainability and p=
+reventing
+bugs. Among those I did *not* take into account were:
+- ValuesAndExpressions::ProhibitNoisyQuotes: use q(*) instead of '*' fo=
+r quoting
+  some characters
+- RegularExpressions::ProhibitEnumeratedClasses: e.g., use [0-9] instea=
+d of \d
+- CodeLayout::ProhibitParensWithBuiltins: don't use parentheses with bu=
+iltin
+  functions
+- RegularExpressions::RequireExtendedFormatting,=20
+  RegularExpressions::RequireDotMatchAnything and
+  RegularExpressions::RequireLineBoundaryMatching: use s, m and x flags=
+ for
+  *every* regexp
+- and some others. Run perlcritic -1 on patched file to so what is left=
 =2E
->>>> ---
->>>
->>> Missing sign-off.  Please see Documentation/SubmittingPatches.
->>
->> Will-do.
->>
->> I read that part, and was rather confused. At no point did I get the
->> idea that I should sign-off *my own initial commit*. Perhaps that pa=
-rt
->> of the documentation needs to be slightly re-written? Would that be =
-a
->> welcome change?
->
-> I fail to see what more needs to be clarified on top of what we
-> already have; please re-read "(5) Sign your work" section, paying
-> with special attention to:
->
->  - "YOU WROTE IT or otherwise have the right to pass it on".
->
->  - "the contribution was created in whole or in part BY ME and I
->    HAVE THE RIGHT TO SUBMIT".
->
-> But perhaps you meant something else by "*my own initial commit*"???
+Please tell me if you think some of them should be applied anyway.
+
+On the other hand, if quite not sure of the relevance of some commits:
+- Add newline in the end of die() error messages [3/18]: are die() mess=
+ages
+  correctly handled already?
+- Place the open() call inside the do{} struct and prevent failing clos=
+e
+  [17/18]: current code fails to close the filehandle (try adding a=20
+  "or warn(..)" after the close() to check this). However, perlcritic c=
+omplains
+  as well if you don't put an explicit close(), which fails when you pu=
+t it.
+  I'm not sure of what's happening and what's the best solution for thi=
+s.
+
+I checked Documentation/CodingGuidelines and none of these modification=
+s should
+contradict it.
+This is my first patch, so don't hesitate to point to me anything wrong=
+ with it.
+
+C=C3=A9lestin Matte (18):
+  Follow perlcritic's recommendations - level 5 and 4
+  Change style of some regular expressions to make them clearer
+  Add newline in the end of die() error messages
+  Prevent local variable $url to have the same name as a global
+    variable
+  Turn double-negated expressions into simple expressions
+  Remove unused variable
+  Rename a variable ($last) so that it does not have the name of a
+    keyword
+  Explicitely assign local variable as undef and make a proper
+    one-instruction-by-line indentation
+  Check return value of open and remove import of unused open2
+  Put long code into a submodule
+  Modify strings for a better coding-style
+  Brace file handles for print for more clarity
+  Remove "unless" statements and replace them by negated "if"
+    statements
+  Don't use quotes for empty strings
+  Put non-trivial numeric values (e.g., different from 0, 1 and 2) in
+    constants.
+  Fix a typo ("mediwiki" instead of "mediawiki")
+  Place the open() call inside the do{} struct and prevent failing
+    close
+  Clearly rewrite double dereference
+
+ contrib/mw-to-git/git-remote-mediawiki.perl |  558 ++++++++++++++-----=
+--------
+ 1 file changed, 298 insertions(+), 260 deletions(-)
+
+--=20
+1.7.9.5
