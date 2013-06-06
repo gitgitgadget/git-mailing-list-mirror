@@ -1,73 +1,129 @@
-From: David Lang <david@lang.hm>
+From: Greg Troxel <gdt@ir.bbn.com>
 Subject: Re: [Administrivia] On ruby and contrib/
-Date: Thu, 6 Jun 2013 09:09:20 -0700 (PDT)
-Message-ID: <alpine.DEB.2.02.1306060904100.13204@nftneq.ynat.uz>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org> <7va9n52zjc.fsf@alter.siamese.dyndns.org> <rmivc5rp9w2.fsf@fnord.ir.bbn.com> <CAMP44s07p0vpS_2cjAjB=QWoZjjPSuAm09xwk4BjAAD+hsJrSw@mail.gmail.com>
+Date: Thu, 06 Jun 2013 13:16:13 -0400
+Message-ID: <rmisj0vnorm.fsf@fnord.ir.bbn.com>
+References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
+	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
+	<rmivc5rp9w2.fsf@fnord.ir.bbn.com>
+	<CAMP44s07p0vpS_2cjAjB=QWoZjjPSuAm09xwk4BjAAD+hsJrSw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Greg Troxel <gdt@ir.bbn.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Thomas Rast <trast@inf.ethz.ch>,
-	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c?= <pclouds@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	=?utf-8?B?Tmd1eeG7hW4gVGg=?= =?utf-8?B?w6FpIE5n4buNYw==?= 
+	<pclouds@gmail.com>, Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
 	Erik Faye-Lund <kusmabite@gmail.com>,
 	Johannes Sixt <j6t@kdbg.org>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 06 19:13:25 2013
+X-From: git-owner@vger.kernel.org Thu Jun 06 19:16:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkdkX-0006qq-3J
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 19:13:21 +0200
+	id 1UkdnQ-0000rm-Ce
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 19:16:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752755Ab3FFRNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jun 2013 13:13:17 -0400
-Received: from mail.lang.hm ([64.81.33.126]:36420 "EHLO bifrost.lang.hm"
+	id S1751686Ab3FFRQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 13:16:16 -0400
+Received: from fnord.ir.bbn.com ([192.1.100.210]:54192 "EHLO fnord.ir.bbn.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751264Ab3FFRNQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 13:13:16 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id r56HADRt032617;
-	Thu, 6 Jun 2013 10:10:13 -0700
-X-X-Sender: dlang@asgard.lang.hm
+	id S1751147Ab3FFRQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 13:16:15 -0400
+Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
+	id CD1A3AC75; Thu,  6 Jun 2013 13:16:13 -0400 (EDT)
+OpenPGP: id=32611E25
+X-Hashcash: 1:20:130606:git@vger.kernel.org::TAbtFfmN0Jcwca4U:0000000000000000000000000000000000000000003G1j
+X-Hashcash: 1:20:130606:trast@inf.ethz.ch::nL6zHs0IEFPpH536:0000000000000000000000000000000000000000000070XR
+X-Hashcash: 1:20:130606:peff@peff.net::gsCNMCkfFmYw7L8Q:000029+A
+X-Hashcash: 1:20:130606:johannes.schindelin@gmx.de::wQnO7v43YAjG48kI:000000000000000000000000000000000003S4T
+X-Hashcash: 1:20:130606:rene.scharfe@lsrfire.ath.cx::1R6I7ThPOOkHshkp:00000000000000000000000000000000003IqA
+X-Hashcash: 1:20:130606:kusmabite@gmail.com::S8zaUTGNLJ8X6euY:0000000000000000000000000000000000000000002Llj
+X-Hashcash: 1:20:130606:jrnieder@gmail.com::uqpWqqs1VcHjft+a:00000000000000000000000000000000000000000001bIU
+X-Hashcash: 1:20:130606:mhagger@alum.mit.edu::fbR6fTfDAx3jTpmO:000000000000000000000000000000000000000001ugh
+X-Hashcash: 1:20:130606:pclouds@gmail.com::rhAAivpBKrBDCITy:000000000000000000000000000000000000000000005X2a
+X-Hashcash: 1:20:130606:j6t@kdbg.org::sgAZVy3/cB8yCPdH:000001jkw
+X-Hashcash: 1:20:130606:matthieu.moy@grenoble-inp.fr::FLQu8S3E1D4KGAJn:0000000000000000000000000000000001KeM
+X-Hashcash: 1:20:130606:ramsay@ramsay1.demon.co.uk::ShMHXHwRQGJUfm50:00000000000000000000000000000000000305z
+X-Hashcash: 1:20:130606:gitster@pobox.com::vBXw3QniNTJq7JkO:000000000000000000000000000000000000000000002fxk
+X-Hashcash: 1:20:130606:felipe.contreras@gmail.com::iIdCBEVr0ng6Hzw+:00000000000000000000000000000000000ZJ5P
 In-Reply-To: <CAMP44s07p0vpS_2cjAjB=QWoZjjPSuAm09xwk4BjAAD+hsJrSw@mail.gmail.com>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	(Felipe Contreras's message of "Thu, 6 Jun 2013 10:17:25 -0500")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/23.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226514>
 
-On Thu, 6 Jun 2013, Felipe Contreras wrote:
+--=-=-=
+Content-Type: text/plain
 
-> In the end my point remains unchanged; Perl is declining, so it would
-> be wise for the future to use another scripting language instead.
 
-Perl use may or may not be declining (depending on how you measure it), but are 
-you really willing to take on the task of re-writing everything that's in Perl 
-into another language and force all developers of scripts to learn that other 
-language? what's the ROI of this?
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Perl isn't going to disappear any time soon. What makes you think that whatever 
-language you pick to replace Perl is going to be more stable than Perl is?
+> On Thu, Jun 6, 2013 at 9:54 AM, Greg Troxel <gdt@ir.bbn.com> wrote:
+>>
+>> git is a core tool that people use on almost the smallest of boxes,
+>> perhaps even replacing rcs for managing local config files.  On such
+>> machines, even perl may be large, but a second scripting language seems
+>> excessive.
+>
+> You can compile Git without any of them.
 
-and, like the parent poster, by 'stable' I mean from the compatibility point of 
-view.
+That ignores the 99% of people who use packaged versions.  The question
+is really "Should the standared approach for building be to use or not
+use dependency X?".  Really this should be expressed in the README, and
+it creates expectations for someone who just installs the git package in
+terms of whether pieces of functionality are there.  Packagers generally
+should be reading the README and including required/recommended
+dependencies and not including optional dependencies (in the main
+package).  The information in INSTALL is pretty reasonable, but it
+doesn't really clearly say "if you hand someone git built without perl,
+it is { perfectly ok but missing a fringe optional feature | deficient
+because "git add -p" won't work }.   I'm leaning towards the "deficient"
+camp.
 
-What are the odds that the 'newer' language that you pick is going to pull a 
-"python 3" on you?
+So "you can compile git without X" should really translate into "when
+one runs the default build following the instructions, and does not take
+affirmative steps to use X, X should not be used or depended on".  If it
+doesn't mean that, it doesn't help the packaging/expectations discussion.
 
-There have been a very large number of scripting languages show up, make a lot 
-of press, and then fade in favor of other languages while Perl has continued. 
-It's not the sexy languange nowdays, but it's there, reliable, and used so 
-heavily that there's really no chance of it dissapearing in the forseable 
-future.
+It's of course fine that one can hand-compile a smaller than standard
+but still useful subset.  But that's entirely different from the
+definition of normal.
 
-David Lang
+>> On a NetBSD 6 i386 system, the size of the ruby193-base
+>> binary package (as installed) is 25 MB (vs 15 MB for the git base
+>> package, which lacks gitk and docs).  (Presently, the git base package
+>> defaults to requiring python and installing the git_remote_helpers, but
+>> I think that's a bug.)  perl is 54 MB.
+>
+> That's only the default, if the default doesn't suit you, don't use
+> the default.
+
+It's not about what I want.  It's about making choices that affect other
+people, and trying to find a plan that will be overall reasonable;
+that's the essence of stewardship in packaging.  Compiling for just
+myself is far easier.
+
+
+
+--=-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (NetBSD)
+
+iEYEARECAAYFAlGww90ACgkQ+vesoDJhHiUfgQCgnB1Tbyll+kU2VoZxjBPJimfA
+VekAoKGi26pPKu+A2w9/IC/agNtrxwa1
+=2ShC
+-----END PGP SIGNATURE-----
+--=-=-=--
