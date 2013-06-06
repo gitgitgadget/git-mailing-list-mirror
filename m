@@ -1,99 +1,84 @@
-From: Pat Thoyts <patthoyts@gmail.com>
-Subject: Re: [PATCH] git-gui: bring Wish process to front on Mac
-Date: Thu, 6 Jun 2013 15:09:32 +0100
-Message-ID: <CABNJ2G+h3zh+=wLA0KHjUn8TsfhqUK1Kn-1_=6hnXVRJUPhuuA@mail.gmail.com>
-References: <1370506667-24576-1-git-send-email-stefan@haller-berlin.de>
+From: Barry Fishman <barry_fishman@acm.org>
+Subject: Re: [Administrivia] On ruby and contrib/
+Date: Thu, 06 Jun 2013 10:41:21 -0400
+Message-ID: <m3txlbe1ym.fsf@barry_fishman.acm.org>
+References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
+	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
+	<CAMP44s012ccmaArrTbfy_xNrqbnOjVGTnY+po9cE8JGh_U72Gg@mail.gmail.com>
+	<CANgJU+W1BLOB_TuMa_zRHtCW-8Ge8nu_kK=5qu2xDY=Km_kk4A@mail.gmail.com>
+	<CAMP44s3zuDPTApPvnaC0bzqmAUkRRwePZDRL4syB=tM3d6eiBA@mail.gmail.com>
+	<m3d2rz5svw.fsf@barry_fishman.acm.org>
+	<CAMP44s0M5tsN+zYoa_HC+8SLqyvDUBi_wuiOGyQWo0XWbWXC-A@mail.gmail.com>
+	<m3ip1rnygk.fsf@barry_fishman.acm.org>
+	<CAMP44s0baW0muNzZb1yjDXiS=y3_R5LhzWcqEsPzNZizETwACQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Stefan Haller <stefan@haller-berlin.de>
-X-From: git-owner@vger.kernel.org Thu Jun 06 16:09:38 2013
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 06 16:41:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukasj-0004UH-Pu
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 16:09:38 +0200
+	id 1UkbNh-0006zD-JR
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 16:41:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751914Ab3FFOJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jun 2013 10:09:34 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:46267 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751120Ab3FFOJd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 10:09:33 -0400
-Received: by mail-pb0-f41.google.com with SMTP id rp2so3326656pbb.0
-        for <git@vger.kernel.org>; Thu, 06 Jun 2013 07:09:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=tUoxilHkXDWj856OzVQPVbtmTjH8LIVelhwSz7D3FOo=;
-        b=zoxsVKxC5BmtNm1w/bgQfohaT8L9RfLHBYvx5xmOqZlKbof4SUiQd+1Zf/l7NeIovy
-         AYp4jKpJ7R4SV9IMgnwZvCEw5ylrRg8CFGFAohM7/Py8KWHL2u4HMBTPZATCkQX6mH4I
-         u8SbFD4VcM6Y/fymAqB8/V0T3NMmR4RkKrCByRKcVp5YE7KZUbNBIPPWd6tCv4pGw0S7
-         oK0BkbV5HsEPOwOqGgnZfPJRqkNQlsl3ZXRPVTjgePGCg+mRUAwIapFpklGEOQzaSPAn
-         2p537A75+gbrhwMxjDYqC6Fh33ttFX6pFR/ri6NRFvjY+mNI7duMxy1rCa14oPRLgUeo
-         s+Mw==
-X-Received: by 10.68.27.9 with SMTP id p9mr37978147pbg.139.1370527772734; Thu,
- 06 Jun 2013 07:09:32 -0700 (PDT)
-Received: by 10.68.63.132 with HTTP; Thu, 6 Jun 2013 07:09:32 -0700 (PDT)
-In-Reply-To: <1370506667-24576-1-git-send-email-stefan@haller-berlin.de>
+	id S1752486Ab3FFOld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 10:41:33 -0400
+Received: from plane.gmane.org ([80.91.229.3]:52098 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752141Ab3FFOlc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 10:41:32 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UkbNa-0006ta-RH
+	for git@vger.kernel.org; Thu, 06 Jun 2013 16:41:30 +0200
+Received: from fl-71-52-212-116.dhcp.embarqhsd.net ([71.52.212.116])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 16:41:30 +0200
+Received: from barry_fishman by fl-71-52-212-116.dhcp.embarqhsd.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 16:41:30 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: fl-71-52-212-116.dhcp.embarqhsd.net
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAALVBMVEXG87t8xXThBQWq85q9
+ 87AvUC6PUVH/BgamyajC87a/87P////r6+ud7oq49KsBy7dJAAACKUlEQVQ4jc3Sv2vbQBQH
+ 8CulwcEdeoOKwM1QD/bSzVktKDEdMpRqeMKQFNqAhEGbh3aVB5sDafAYL106xZMzuAiehnqI
+ EciLMR2viz0Vor+hdydZMa6z97sI9NH7cYdI9ZGQr4/kP4Fu1akehFqHDaoHoOviPLD3oVtz
+ 7PIErFCeeRdqOuvptwDMYSyfpKB7iYh3DOCTeOKzegGvk8hD1O22eD2B9tUWum9wbpXYy6NA
+ wAzMeQFu1AeT2VAW0Af4sYUvfmRbCWLciXq0B2ZYf4C+GL/AGBIcOP4O4MzFKbiTAGOPYg7V
+ mu1j5OIdfIgT7FtHGKoZIHKB6IuK9kDODpNsK0pPVnqCFbyFSyYWMMPnIA9CVsbm5l2HuRjZ
+ FVERBXFPs8QQMhIZvqUX8jJmiTzIRy5FwWhEdAmR4y1KnQbn1KrnMOrLj6PPDnW8bw2+1K7I
+ OINrecF9jwyJyBlfAvkzvlEy6DBHJ3m+8yU5HY9V0TWl+nALx+slMQTkRWKHQprEOJeST3qg
+ p8RoHZRjsmm1ctrrJ0HkX0mFvG+uTnf7qe3SNG2dcc4bm70iAemaHxAJ91zF2G2noMl/UVVk
+ bAoihgINlKwa6XkuhBsKGJgnPBuVEeG/5Wzqz3tZ0bYh4SsBS+qXZtTMRTWUcC/Bnybi7+R5
+ VoaAdZNz7ZU/RT8u2nEuQTw0VpmjH/7UChHQlFAGT1Rg8GS7Hcm+0F4EDgvYIohLAFS++wvs
+ R0Pau3fdJgAAAABJRU5ErkJggg==
+User-Agent: Gnus/5.130008 (Ma Gnus v0.8) Emacs/24.3.50 (gnu/linux)
+Cancel-Lock: sha1:Rq9Klu7Jxk60+bE9jhE9YbKcxg0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226507>
 
-On 6 June 2013 09:17, Stefan Haller <stefan@haller-berlin.de> wrote:
-> On Mac OS X, any application that is started from the Terminal will open
-> behind all running applications; as a work-around, manually bring ourselves
-> to the front. (Stolen from gitk, commit 76bf6ff93e.)
+On 2013-06-06 10:09:21 EDT, Felipe Contreras wrote:
+> I don't know what you are saying, but it clearly has nothing to do
+> with the point.
 >
-> We do this as the very first thing, so that any message boxes that might pop
-> up during the rest of the startup sequence are actually seen by the user.
->
-> Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
-> ---
->  git-gui.sh | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
->
-> diff --git a/git-gui.sh b/git-gui.sh
-> index e133331..c464928 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -29,6 +29,19 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
->
->  ######################################################################
->  ##
-> +## On Mac, bring the current Wish process window to front
-> +
-> +if {[tk windowingsystem] eq "aqua"} {
-> +       exec osascript -e [format {
-> +               tell application "System Events"
-> +                       set frontmost of processes whose unix id is %d to true
-> +               end tell
-> +       } [pid] ]
-> +}
-> +
-> +
-> +######################################################################
-> +##
->  ## Tcl/Tk sanity check
->
->  if {[catch {package require Tcl 8.4} err]
-> --
-> 1.8.3.14.g33f718c
->
+> Perl is declining, and it would be wise to use another language
+> instead of it.
 
-Seems fine to me. I can't test this as I have no access to this
-platform. Possibly you should run this in a catch statement so it can
-ignore any errors and I would tend to use the 'auto_execok' command to
-ensure that osascript actually exists. Something like
+You want a simple statement.  I don't particulary like Perl, but it has
+worked well for the project.
 
-  set arg [format {tell application......}]
-  catch {exec {*}[auto_execok osascript] -e $arg [pid]}
+If you have a better solution, then write all the code to replace it,
+and demonstrate with a significant number of active users that your
+solution works out better in practice.
 
-but possibly this is guaranteed to exist on all macs which would make
-the above redundant. What I'm thinking is you dont want the app to
-exit just because something goes wrong in this call.
+Wasn't that how Git started?
+
+-- 
+Barry Fishman
