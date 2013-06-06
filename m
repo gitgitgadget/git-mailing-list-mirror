@@ -1,87 +1,83 @@
-From: Elliott Cable <me@ell.io>
-Subject: Re: [PATCH/RFC] add --authorship-order flag to git log / rev-list
-Date: Thu, 6 Jun 2013 14:06:39 -0400
-Message-ID: <CAPZ477O2mRCi3gUE+Qoa8Vig2Z2Q5cUzRS0+KEZK3zufmOceig@mail.gmail.com>
-References: <1370369299-20744-1-git-send-email-me@ell.io>
-	<7vmwr57lo1.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-gui: bring Wish process to front on Mac
+Date: Thu, 06 Jun 2013 11:15:31 -0700
+Message-ID: <7vk3m7yukc.fsf@alter.siamese.dyndns.org>
+References: <1370506667-24576-1-git-send-email-stefan@haller-berlin.de>
+	<CABNJ2G+h3zh+=wLA0KHjUn8TsfhqUK1Kn-1_=6hnXVRJUPhuuA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 06 20:06:45 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Haller <stefan@haller-berlin.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Pat Thoyts <patthoyts@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 06 20:15:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkeaD-00013z-1n
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 20:06:45 +0200
+	id 1Ukeip-0000SN-0i
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 20:15:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751144Ab3FFSGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jun 2013 14:06:41 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:51347 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751117Ab3FFSGj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 14:06:39 -0400
-Received: by mail-ob0-f177.google.com with SMTP id ta17so5265909obb.36
-        for <git@vger.kernel.org>; Thu, 06 Jun 2013 11:06:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ell.io; s=google;
-        h=mime-version:x-originating-ip:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=eTUbp0Z86eEbP8sZahO3e23LuY6o9NovuM7TfDoOr58=;
-        b=Fk+YqMPeYX8XbuRV77k8714uFZpK5jsf5GkvuCmOzEI8mXDIJ60I05m7ZN50FB9yCy
-         +Eqj7Uz9h4HcJ/H65lfLliiNf+Lx/dTb70iFvqh8UmpqauiZbVmiSBTWke/Cf/timQVz
-         iIAx4wrZXcbZ+AoFYBet34yZAJOlKcHoauA5M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type:x-gm-message-state;
-        bh=eTUbp0Z86eEbP8sZahO3e23LuY6o9NovuM7TfDoOr58=;
-        b=DmuXIMe6AmUir6j2GyoWs5IkbCsCwkh9eS9lYByfUow4lkAG4GGCPyMU2ilpjVhxeV
-         cPH5Y0TaG2b7nwUWdcqhhEKjzq60hd3bDIbsp1aWIakT535QvFclIorEB/BmEUHryFP6
-         4Q+R0agTuziPZKZUaqzNxMI05rUD2QiDq0Jqw9cbbC1LEjQBmBuerp3UEYTo1WUwkbL5
-         Up9jahkM6nuxMNcKizK/yEHubnWvSA4t/1yMppQxuvSCDrbkKG9ajrCDlzx4bp3HOwPM
-         H5At6dE7IqJmGq0i5tBFXggi3F55k2kEJzjgMl0D24BVlciKFUXiokerif/ESrAmhblK
-         aZGQ==
-X-Received: by 10.60.61.11 with SMTP id l11mr11200945oer.95.1370541999174;
- Thu, 06 Jun 2013 11:06:39 -0700 (PDT)
-Received: by 10.60.28.194 with HTTP; Thu, 6 Jun 2013 11:06:39 -0700 (PDT)
-X-Originating-IP: [70.197.160.229]
-In-Reply-To: <7vmwr57lo1.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQnSsruu/41SkvZl8tpJjEM1GxixpiFk8ZIGP0XmwfcAa9ez8zX4MEskfSw4PsRQvK1CIuLB
+	id S1751693Ab3FFSPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 14:15:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45743 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751201Ab3FFSPe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 14:15:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB48D25D31;
+	Thu,  6 Jun 2013 18:15:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=APLHLfw5xN/qleMmChzh2mHJGCk=; b=Qcjg1+
+	gyIkfKYCg2AG0U+mxmNSjF3pXY7sZf0qMuGvJc+csj34wejxZau0wTPDWVzuo+OJ
+	Hfbz3nC18hHXx5Y3lxDMkhaUl9eNywUDu0je2K0jq5iakfFlBCtB5p27sQranRho
+	WGK/x9rNmvqFL1CkxuBADIo7KL6IteU8tgRSY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=v+7F7tA6clRgQp/9y/PLHhNbBqo8nL8g
+	32lNYHDCXSlio9AZDpUVKSwNBNJlDpFRcqbr/7tWQK925zE8+a4+l0VsOXU33bgx
+	MNrM7ipN8k7hkqEap/8W/51/KLDWMyjdPnxGFdRYg6KVCzZ6aB9zNbO+59GZv3SH
+	2P45X9VirYI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A1AE425D30;
+	Thu,  6 Jun 2013 18:15:33 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1176725D2B;
+	Thu,  6 Jun 2013 18:15:32 +0000 (UTC)
+In-Reply-To: <CABNJ2G+h3zh+=wLA0KHjUn8TsfhqUK1Kn-1_=6hnXVRJUPhuuA@mail.gmail.com>
+	(Pat Thoyts's message of "Thu, 6 Jun 2013 15:09:32 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 13D7E222-CED5-11E2-A43F-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226520>
 
-On Tue, Jun 4, 2013 at 2:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> After reading the subject alone, my reaction was "is this sorting
-> commits by the name of the author"?
+Pat Thoyts <patthoyts@gmail.com> writes:
+
+> Seems fine to me. I can't test this as I have no access to this
+> platform. Possibly you should run this in a catch statement so it can
+> ignore any errors and I would tend to use the 'auto_execok' command to
+> ensure that osascript actually exists. Something like
 >
-> That is one of the expected natural reactions when people hear about
-> this option, which is not what you want.
+>   set arg [format {tell application......}]
+>   catch {exec {*}[auto_execok osascript] -e $arg [pid]}
 >
-> Perhaps naming it --authordate-order (or enhance the command line
-> parsing to allow --date-order=author|committer) would give us a
-> better UI.
+> but possibly this is guaranteed to exist on all macs which would make
+> the above redundant. What I'm thinking is you dont want the app to
+> exit just because something goes wrong in this call.
 
-The same comment was raised by someone in IRC when I submitted an RFC
-on this. The conclusion we'd arrived at, IIRC, was that the only
-remotely-not-ugly solutions were either --authorship-order or
---author-date-order.
+Sounds like a sensible concern; gitk in v1.8.3 has it without catch
+so we may see failure reports from OSX users soonish, in which case
+both this patch and gitk need to be updated for it.
 
-I really like the idea of [--date-order[=author|committer]], but
-that's getting beyond my knowledge of the code-base. Perhaps I should
-just implement the changes to the implementation in *my* revision of
-the patch, and leave it up to a future patcher with the requisite
-knowledge of the argumentation features to throw in the changes to
-that flag quickly? Either that, or implement it as --author-date-order
-right *now*, and change it later before it hits Master (so we don't
-end up with a no-longer-supported feature?)
+Stefan (as your name appears in 76bf6ff93e, I am assuming that you
+were the OSX-osascript guru in that commit) could you keep an eye on
+the list traffic to see if users of latest gitk have issues with
+that change, please?
 
-(It'd take me many hours to track down the details of how git's
-codebase goes around doing that, and then attempting to replicate it,
-whereas someone familiar could probably do it in fifteen minutes,
-hence the thought-process. Commentary welcome.)
+Thanks.
