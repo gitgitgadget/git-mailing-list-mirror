@@ -1,61 +1,103 @@
-From: Sarma Tangirala <vtangira@buffalo.edu>
-Subject: git diff bug?
-Date: Thu, 6 Jun 2013 17:26:41 -0400
-Message-ID: <CANd8icJ_1mqT9m-n3wPPdjzG1oNjwxfQeUA6YL6KVxbq0iEa1g@mail.gmail.com>
+From: =?UTF-8?B?Q8OpbGVzdGluIE1hdHRl?= <celestin.matte@ensimag.fr>
+Subject: Re: [PATCH 17/18] Place the open() call inside the do{} struct and
+ prevent failing close
+Date: Thu, 06 Jun 2013 23:30:29 +0200
+Message-ID: <51B0FF75.9070506@ensimag.fr>
+References: <1370547263-13558-1-git-send-email-celestin.matte@ensimag.fr> <1370547263-13558-18-git-send-email-celestin.matte@ensimag.fr> <7vhahbx7r7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 06 23:27:10 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, benoit.person@ensimag.fr,
+	matthieu.moy@grenoble-inp.fr
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 06 23:30:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkhiA-0001zX-2e
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 23:27:10 +0200
+	id 1UkhlZ-0004j0-Oj
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Jun 2013 23:30:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754266Ab3FFV1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jun 2013 17:27:05 -0400
-Received: from mail-ve0-f182.google.com ([209.85.128.182]:39619 "EHLO
-	mail-ve0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753286Ab3FFV1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 17:27:04 -0400
-Received: by mail-ve0-f182.google.com with SMTP id ox1so2587508veb.27
-        for <git@vger.kernel.org>; Thu, 06 Jun 2013 14:27:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :x-gm-message-state;
-        bh=fNthQqaBE8kyyfc/twAMS7we0aRnluDKFHKMDH6scTU=;
-        b=as5IW5A/O70wuJiQqN8SAYqTfYKrQv8Lo7ZG7VT86kmt2Jm+xwFAC+KLb8n57HU8+s
-         QGg9sOTztIJH3XdRfSiS/ldY7MDfarHiupHuPiCU1vE4XJPU3FGbMbqiGr5wNWTCXeya
-         DVbhbRHj03gONHlSktZ9+znjNaYyWqXg0Bt8ik3NVp+hhZNwEf20qdxED2s7nIzYhCWJ
-         6ZFHcNLLBxuFHxudqAoRmu7PyZ11YHwro8Xc0RvdpcY3c0EGwYQ2iT3RoRTzidd7MW3L
-         WM1JHaKTmqz++kTLY61i3/rwPq3ik6Qa4thqfWgCIbA5K8XC3MUAVtvgfffIYTbDPcok
-         fEew==
-X-Received: by 10.52.18.137 with SMTP id w9mr19306498vdd.50.1370554021691;
- Thu, 06 Jun 2013 14:27:01 -0700 (PDT)
-Received: by 10.52.23.143 with HTTP; Thu, 6 Jun 2013 14:26:41 -0700 (PDT)
-X-Gm-Message-State: ALoCoQkHE4N2e9YpijUvEwt3OvM2gK6+1jod/pbE0eX3uGTuN0tFAnVq52qn8srf+xGAmop39CdO
+	id S1752867Ab3FFVah convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Jun 2013 17:30:37 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:46631 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752630Ab3FFVag (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 17:30:36 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r56LUOmv031036
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 6 Jun 2013 23:30:24 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r56LUR2S022526;
+	Thu, 6 Jun 2013 23:30:27 +0200
+Received: from [127.0.0.1] (ensibm [195.221.228.8])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r56LUQ0r027165;
+	Thu, 6 Jun 2013 23:30:26 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <7vhahbx7r7.fsf@alter.siamese.dyndns.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 06 Jun 2013 23:30:24 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r56LUOmv031036
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: celestin.matte@ensimag.fr
+MailScanner-NULL-Check: 1371159028.3144@zUALsCg+OGNDJ9QiQHJytw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226563>
 
-Hello All,
+Le 06/06/2013 23:13, Junio C Hamano a =C3=A9crit :
+> Confused.  Which part of this patch moves open inside a do{} block?
+> This was last touched by [9/18] but it doesn't do any such thing,
+> either.
 
-If I did 'git diff HEAD^..HEAD -- file' should git not report some
-kind of warning if it could not match the file? For example, if 'file'
-were infact 'dir/file' and 'file' were unique, would it not be a good
-idea to report that in the present working directory 'file' were not
-found but 'dir/file' were a match?
+I must have failed the rebase, as the first part of the commit moved to
+[14/18] because it modifies a part of it:
+>@@ -344,10 +344,10 @@ sub get_mw_pages {
+> #        $out =3D run_git("command args", "raw"); # don't interpret
+>output as UTF-8.
+> sub run_git {
+> 	my $args =3D shift;
+>-	my $encoding =3D (shift || "encoding(UTF-8)");
+>-	open(my $git, "-|:$encoding", "git " . $args)
+>-	    or die "Unable to open: $!\n";
+>-	my $res =3D do {
+>+	my $encoding =3D (shift || 'encoding(UTF-8)');
+>+	my $res =3D do {
+>+		open(my $git, "-|:$encoding", "git ${args}")
+>+		    or die "Unable to fork: $!\n";
+> 		local $/ =3D undef;
+> 		<$git>
+> 	};
+I'm not sure how I should correct this. I'll have a look if this commit
+actually is useful.
 
-Apologies if I missed this in the man page.
+> Upon leaving this subroutine, $git filehandle will go out of scope,
+> so in that sense, close may not be necessary, but that does not
+> match what the proposed log message claims what the patch does.
+>=20
+> Also, this patch does not remove "or die" 9/18 added, even though
+> the proposed log message claims that with autodie it is no longer
+> necessary.
+>=20
+> I am not convinced that using autodie globally, without vetting the
+> calls the original code make, is a good idea in the first place.
+> How does this change interact with existing calls to open, close,
+> etc. that check the return value from them, now these calls throw
+> exception and will not give a chance for the existing error handling
+> codepath to intervene?
 
-Thanks
+So using autodie may not be a good idea.
+But the problem is that in the current state, open() return values are
+checked, but print ones are not, although it should be. So, either:
+- we use autodie and remove checking of existing return values, or
+- we don't use autodie and add checking of return value of print calls
+- or I'm missing some point :)
 
---
-010
-001
-111
+
+--=20
+C=C3=A9lestin Matte
