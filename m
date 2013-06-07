@@ -1,123 +1,83 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] t0005: skip signal death exit code test on Windows
-Date: Fri, 07 Jun 2013 08:22:53 +0200
-Message-ID: <51B17C3D.6000703@viscovery.net>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org> <51AEE1C3.9020507@viscovery.net> <20130605071206.GC14427@sigill.intra.peff.net> <51B02D81.3000700@viscovery.net> <20130606063754.GA20050@sigill.intra.peff.net> <CAMP44s2L4EOG7aEOR8gqXeaHm7SeuPg=GQAWX3PByKKbtTHnwQ@mail.gmail.com> <20130606064409.GA20334@sigill.intra.peff.net> <7vy5anyx1w.fsf@alter.siamese.dyndns.org> <20130606174032.GB32174@sigill.intra.peff.net>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: is there a fast web-interface to git for huge repos?
+Date: Fri, 7 Jun 2013 08:33:53 +0200
+Message-ID: <20130607063353.GB19771@paksenarrion.iveqy.com>
+References: <CAPKkNb4bYfBeqkBKqe-22iJsqjmvrYNSe4oWUnPo7QeghLK59Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 07 08:23:12 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Constantine A. Murenin" <mureninc@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 07 08:31:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukq4s-0003AO-IS
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 08:23:10 +0200
+	id 1UkqCz-0001Bx-8d
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 08:31:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752810Ab3FGGXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 02:23:04 -0400
-Received: from so.liwest.at ([212.33.55.13]:48631 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752312Ab3FGGXA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 02:23:00 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Ukq4b-0001t0-SS; Fri, 07 Jun 2013 08:22:54 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 847EB1660F;
-	Fri,  7 Jun 2013 08:22:53 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <20130606174032.GB32174@sigill.intra.peff.net>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1750908Ab3FGGb3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 02:31:29 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:49732 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750737Ab3FGGb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 02:31:28 -0400
+Received: by mail-la0-f52.google.com with SMTP id fo12so1463489lab.25
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 23:31:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=h2ixn2AwHAq0QToT+hcldqDN/Mocj9SPxPOpXbG/MEQ=;
+        b=xiJ+cW5BxsNkkiCWVWr5THJCiQogoZLoMnmL2eQdGXqWa1ubpVIFzWPvuB7OKaX0vE
+         Ej4Lyut/5j5/a2Ep3PU1vMvKEyzhUvyFBYMIOHe6duktAqrQDKqYwYhiLZYiihEwKn18
+         tcs8ZHw0aBmTwOUpc66HMUcqcvvuwyFXAeBMaycdDnGxERO250ROpRVFYN+CbUVjIM5x
+         FQZhuIEyXsYloS91cBtYY4EYGLeIa8f5lKiddCDi8B8OVb/bOmx3GdguI85+RN5xQ9qw
+         LV3gGTDe1pL9WWVP04cUjxJtwJppj6ytvU6s+tmue+JfrrJ2FgBFzh46iG0CztU/t1HC
+         nhVA==
+X-Received: by 10.112.144.69 with SMTP id sk5mr523265lbb.64.1370586686626;
+        Thu, 06 Jun 2013 23:31:26 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id f9sm415412lbf.4.2013.06.06.23.31.25
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 06 Jun 2013 23:31:26 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UkqFF-0005Gy-FP; Fri, 07 Jun 2013 08:33:53 +0200
+Content-Disposition: inline
+In-Reply-To: <CAPKkNb4bYfBeqkBKqe-22iJsqjmvrYNSe4oWUnPo7QeghLK59Q@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226608>
 
-Am 6/6/2013 19:40, schrieb Jeff King:
-> On Thu, Jun 06, 2013 at 10:21:47AM -0700, Junio C Hamano wrote:
-> 
->>> The particular deficiency is that when a signal is raise()d whose SIG_DFL
->>> action will cause process death (SIGTERM in this case), the
->>> implementation of raise() just calls exit(3).
->>
->> After a bit of web searching, it seems to me that this behaviour of
->> raise() is in msvcrt, and compat/mingw.c::mingw_raise() just calls
->> that.  In other words, "the implementation of raise()" is at an even
->> lower level than mingw/msys, and I would agree that it is a platform
->> issue.
-> 
-> Yeah, if it were mingw_raise responsible for this, I would suggest using
-> the POSIX shell "128+sig" instead. We could potentially check for
-> SIG_DFL[1] mingw_raise and intercept and exit there. I don't know if
-> that would create headaches or confusion for other msys programs,
-> though. I'd leave that up to the msysgit people to decide whether it is
-> worth the trouble.
+On Thu, Jun 06, 2013 at 06:35:43PM -0700, Constantine A. Murenin wrote:
+> I'm interested in running a web interface to this and other similar
+> git repositories (FreeBSD and NetBSD git repositories are even much,
+> much bigger).
+>=20
+> Software-wise, is there no way to make cold access for git-log and
+> git-blame to be orders of magnitude less than ~5s, and warm access
+> less than ~0.5s?
 
-Even if we move the signal emulation closer to POSIX in the way that you
-suggested (if that were possible, I haven't checked), the emulation is
-still not complete, because we would have addressed only raise().
-Therefore, personally I would like to delay the issue until there is a
-user (script) that depends on POSIXly exit codes.
+The obvious way would be to cache the results. You can even put an
+update cache hook the git repositories to make the cache always be up t=
+o
+date.
 
-As far as t0005.2 is concerned, its the best to just concede that Windows
-does not have POSIX-like behavior as far as signals are concerned, and
-skip the test.
+There's some dynamic web frontends like cgit and gitweb out there but
+there's also static ones like git-arr ( http://blitiri.com.ar/p/git-arr=
+/
+) that might be more of an option to you.
 
-We could also sweep the issue under the rug with the patch below, which
-works because SIGALRM does not exist in MSVCRT and is handled entirely by
-compat/mingw.c. But it goes into the wrong direction, IMO.
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
 
-diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
-index ad9e604..68b6c3b 100755
---- a/t/t0005-signals.sh
-+++ b/t/t0005-signals.sh
-@@ -12,9 +12,8 @@ EOF
- test_expect_success 'sigchain works' '
- 	test-sigchain >actual
- 	case "$?" in
--	143) true ;; # POSIX w/ SIGTERM=15
--	271) true ;; # ksh w/ SIGTERM=15
--	  3) true ;; # Windows
-+	142) true ;; # POSIX w/ SIGALRM=14
-+	270) true ;; # ksh w/ SIGTERM=14
- 	  *) false ;;
- 	esac &&
- 	test_cmp expect actual
-@@ -23,8 +22,8 @@ test_expect_success 'sigchain works' '
- test_expect_success 'signals are propagated using shell convention' '
- 	# we use exec here to avoid any sub-shell interpretation
- 	# of the exit code
--	git config alias.sigterm "!exec test-sigchain" &&
--	test_expect_code 143 git sigterm
-+	git config alias.sigalrm "!exec test-sigchain" &&
-+	test_expect_code 142 git sigalrm
- '
-
- test_done
-diff --git a/test-sigchain.c b/test-sigchain.c
-index 42db234..0233a39 100644
---- a/test-sigchain.c
-+++ b/test-sigchain.c
-@@ -14,9 +14,9 @@ X(three)
- #undef X
-
- int main(int argc, char **argv) {
--	sigchain_push(SIGTERM, one);
--	sigchain_push(SIGTERM, two);
--	sigchain_push(SIGTERM, three);
--	raise(SIGTERM);
-+	sigchain_push(SIGALRM, one);
-+	sigchain_push(SIGALRM, two);
-+	sigchain_push(SIGALRM, three);
-+	raise(SIGALRM);
- 	return 0;
- }
+tel: 0733-608274
+e-post: iveqy@iveqy.com
