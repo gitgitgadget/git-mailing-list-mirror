@@ -1,64 +1,68 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 09/18] Check return value of open and remove import of unused open2
-Date: Fri, 07 Jun 2013 10:21:54 +0200
-Message-ID: <vpqzjv249gd.fsf@anie.imag.fr>
-References: <1370547263-13558-1-git-send-email-celestin.matte@ensimag.fr>
-	<1370547263-13558-10-git-send-email-celestin.matte@ensimag.fr>
+From: Daniel Krikun <krikun.daniel@gmail.com>
+Subject: feature suggestion
+Date: Fri, 7 Jun 2013 11:59:48 +0300
+Message-ID: <CAMohcw0exP7pDnas4zceoKEADs58axEHYUd6y_MtSoV5=6rMDA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, benoit.person@ensimag.fr
-To: =?iso-8859-1?Q?C=E9lestin?= Matte <celestin.matte@ensimag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 07 10:22:15 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 07 10:59:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukrw5-0007re-V9
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 10:22:14 +0200
+	id 1UksWZ-00076E-6N
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 10:59:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752357Ab3FGIWI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 04:22:08 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57748 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751911Ab3FGIWF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 04:22:05 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r578LsNd020812
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 7 Jun 2013 10:21:54 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Ukrvn-0005VC-4y; Fri, 07 Jun 2013 10:21:55 +0200
-In-Reply-To: <1370547263-13558-10-git-send-email-celestin.matte@ensimag.fr>
-	(=?iso-8859-1?Q?=22C=E9lestin?= Matte"'s message of "Thu, 6 Jun 2013
- 21:34:14 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 07 Jun 2013 10:21:54 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r578LsNd020812
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1371198116.36321@AvAYF5dRbadVPxNm1jyWDw
+	id S1754574Ab3FGI7u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 04:59:50 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:47536 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753602Ab3FGI7s (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 04:59:48 -0400
+Received: by mail-pb0-f44.google.com with SMTP id wz12so4450701pbc.17
+        for <git@vger.kernel.org>; Fri, 07 Jun 2013 01:59:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=CDss51d8UMRX1LP7IeISQbObbGTAcwfCuYzN7qXPdqE=;
+        b=vkmx8nosQvIZUhx3UY7PA7d9tGiDPvIw9A6puUPlqW5Sg1hxolOEdFnwNVnPUWSLYd
+         34O3XcLhw+18S1uEfjQkx8n4O9IUn8dvJB3eaEpM02HoTppRIxlPvdqSmzHEMkJjDEJy
+         rFl2nPVLKVl7nplHjRhPX9r2SyRQl3wycLE1Bdiv/EMrrCXbuw2+5K8cN9YbYahVZAqs
+         9J5Tr/Sn4Wl5/AFm8SIbytZ74emrZlRmgeUAXuhqb0XUkan/af0yVy1DfrvkCv7Mshi5
+         NeD7zJG4D43D8aDrCcJvoPJA35nuUfmLkbh/gFyxkbdr7vMV3JoOe9/ey6MJqb3O9ACN
+         XMqA==
+X-Received: by 10.66.144.98 with SMTP id sl2mr1783915pab.92.1370595588107;
+ Fri, 07 Jun 2013 01:59:48 -0700 (PDT)
+Received: by 10.68.204.227 with HTTP; Fri, 7 Jun 2013 01:59:48 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226614>
 
-C=E9lestin Matte <celestin.matte@ensimag.fr> writes:
+Hi all,
 
->  use URI::Escape;
-> -use IPC::Open2;
->  use Readonly;
+Problem (scenario):
 
-This should have belonged to bp/mediawiki-credential, but it's already
-in next so it's OK to fix it here.
+1. A file `file.xyz` has been added and commited
+2. Some time after, let's say `*.xyz` is added to `.gitignore`
+(probably by another contributor)
+    Nobody notices that `file.xyz` is already tracked by git because
+the file is not modified.
+3. Another person accidentally changes `file.xyz` (may be it some
+local config etc.), but no problem it is ignored anyway,... wait, why
+does it shows up in `git status` as modified? Maybe it is not in
+.gitignore? ... no it is... you get the point.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+
+The suggestion is that when the .gitignore is updated, some kind of
+`git ls-files --others -i --exclude-standard` is rerun and if there
+are tracked files that are ignored due to the last update to
+.gitignore an appropriate warning is shown.
+This will eliminate the described surprise factor.
+
+Sincerely,
+
+--
+Daniel Krikun
