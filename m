@@ -1,85 +1,103 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [Administrivia] On ruby and contrib/
-Date: Fri, 7 Jun 2013 19:54:28 +0530
-Message-ID: <CALkWK0k8m16oy7u+a8bHK93pRxfomOZDne3k0voVHLGULO+uiw@mail.gmail.com>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org> <7va9n52zjc.fsf@alter.siamese.dyndns.org>
- <rmivc5rp9w2.fsf@fnord.ir.bbn.com> <CAMP44s07p0vpS_2cjAjB=QWoZjjPSuAm09xwk4BjAAD+hsJrSw@mail.gmail.com>
- <alpine.DEB.2.02.1306060904100.13204@nftneq.ynat.uz> <CALkWK0mwxfGJdZi6kSaAPr66o550RiT_p8_r_4mDvcd_VAFYQw@mail.gmail.com>
- <alpine.DEB.2.02.1306061308100.29361@nftneq.ynat.uz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: REQUEST-PULL: some msysgit build patches for upstream
+Date: Fri, 07 Jun 2013 07:39:51 -0700
+Message-ID: <7vtxlaugqw.fsf@alter.siamese.dyndns.org>
+References: <87sj0uwh20.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Greg Troxel <gdt@ir.bbn.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?UTF-8?B?Tmd1ecKtbiBUaMOhaSBOZ8O3Yw==?= <pclouds@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: David Lang <david@lang.hm>
-X-From: git-owner@vger.kernel.org Fri Jun 07 16:25:16 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>
+To: patthoyts@users.sourceforge.net
+X-From: git-owner@vger.kernel.org Fri Jun 07 16:40:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkxbQ-0007T4-DB
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 16:25:16 +0200
+	id 1Ukxpi-0003Xi-JJ
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 16:40:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754754Ab3FGOZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 10:25:09 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:39405 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753691Ab3FGOZI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 10:25:08 -0400
-Received: by mail-ie0-f180.google.com with SMTP id f4so5823454iea.11
-        for <git@vger.kernel.org>; Fri, 07 Jun 2013 07:25:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=a9v81To2iyGlU043L5hstWAVC2iMFqNX50mh12K3ssQ=;
-        b=e2ejlfqjr30IlIrRVbapVWkpeRi4+uunPPjWLMhuaaNNoyfzQI5lKzd0xbYDcLHdik
-         5iF1c1V1SY2UpB/xJ0Yl8PoJSfqRGAcrZyxumhAxDJBOsio9D0WZA4nVtTU8p0vvW3ly
-         XaHxUnlbaKzDghUVDqe+fwbH+mVGdsKQGgTuFgZgpHdDcsANfW6tkaY/TKLOcl8j8AdT
-         T+OkCyqJ2IvTCN0+09avOjLA6Xz+eMpDWxfNiSygGh9DN6QIF48fKyN7zGDXIuwFTLfo
-         kWX2PrsDKs/X8qcdXG/hf3kHRp43yNbPAapQ3/9Lw6L+Z0zjXXDM5MwwAQ68ge81IvTE
-         5N9A==
-X-Received: by 10.50.70.101 with SMTP id l5mr1269925igu.104.1370615108184;
- Fri, 07 Jun 2013 07:25:08 -0700 (PDT)
-Received: by 10.64.136.104 with HTTP; Fri, 7 Jun 2013 07:24:28 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.02.1306061308100.29361@nftneq.ynat.uz>
+	id S1753911Ab3FGOj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 10:39:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56549 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752432Ab3FGOj5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 10:39:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F305625890;
+	Fri,  7 Jun 2013 14:39:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+Yjx1BQjHclrrWywRBEYLMDdoF4=; b=SfV1TM
+	UTr3MTDRDpZEotgXURf10NGlXC7KXj+9Q/w66vM3pj1etQ+SlKlBJA/A6oU7LogD
+	Az4KhTw3eYkN8T6cPBH3iVCfmYr8MCzOJXwfOcOBC0R6DNoeTq3bvbeCtQS0SCOf
+	9QN2M7/Ib5Jl79+1dhWUp1MqswoddkGbVJAFY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dFAOGvy5T196vMAo4XdBLLAdDAAQYvxP
+	If3fpcoWIk5v9M9duur5niiy4oB/Sugsich0Fy7+haY2KmAXIByXGAS+rI4pfJWL
+	jEOeFbQXwjWABw7pUsUuwyjOJ8u3dY/Mf9ME3xde4ruHSZiiB3VKle77orNxWzfo
+	tNfx9LgY7UQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD44525888;
+	Fri,  7 Jun 2013 14:39:55 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA7D82587B;
+	Fri,  7 Jun 2013 14:39:53 +0000 (UTC)
+In-Reply-To: <87sj0uwh20.fsf@fox.patthoyts.tk> (Pat Thoyts's message of "Fri,
+	07 Jun 2013 07:50:15 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1E2B9678-CF80-11E2-93BC-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226633>
 
-David Lang wrote:
-> Well, Felipe is saying that Perl is dieing and we should re-write everything
-> that exists in Perl to Ruby.
+Pat Thoyts <patthoyts@users.sourceforge.net> writes:
 
-I don't agree with that opinion.  More generally, I think the entire
-discussion on what _should_ or _should not_ be done is rubbish.  What
-_will_ and _will not_ happen depends on the patches contributors send.
- If a contributor sends a patch rewriting git-svn in ruby, then we
-have a discussion: is anyone bored enough to pick up the task in the
-first place?
+> The following changes since commit b5c26758639cd934780620d4dd16854c8fdf8c34:
+>
+>   Sync with maint (2013-06-03 13:00:09 -0700)
+>
+> are available in the git repository at:
+>
+>
+>   http://github.com/msysgit/git tags/post183-for-junio
+>
+> for you to fetch changes up to 65db0443710f59a1c05a85688cdccc215ff48333:
+>
+>   Set the default help format to html for msys builds. (2013-06-04 10:12:32 +0100)
+>
+> ----------------------------------------------------------------
+> Collected msysgit build patches for upstream
+>
+> This set of patches collects a number of build fixes that have been
+> used on the msysgit port for a while and merging upstream should
+> simplify future maintenance.
+>
+> ----------------------------------------------------------------
+> Johannes Schindelin (2):
+>       Define NO_GETTEXT for Git for Windows
+>       Windows resource: handle dashes in the Git version gracefully
+>
+> Pat Thoyts (3):
+>       Provide a Windows version resource for the git executables.
+>       Ensure the resource file is rebuilt when the version changes.
+>       Set the default help format to html for msys builds.
+>
+> Pierre le Riche (1):
+>       msysgit: Add the --large-address-aware linker directive to the makefile.
+>
+> Sebastian Schuberth (1):
+>       Makefile: Do not use OLD_ICONV on MINGW anymore
+>
+>  .gitignore       |  1 +
+>  Makefile         |  8 +++++++-
+>  config.mak.uname |  6 +++++-
+>  git.rc           | 22 ++++++++++++++++++++++
+>  4 files changed, 35 insertions(+), 2 deletions(-)
+>  create mode 100644 git.rc
 
-> TIOBE index graph is "press coverage" as far as I'm concerned.
-
-Well, that's your definition of "press coverage" then.  TIOBE index is
-generated from scraping the web to figure out which languages are
-"living", based on discussions between programmers (and yes, "press"
-articles).  I do not have conclusive or "undeniable" proof that perl
-is dying, but the trends are indicative of a decline.
-
-I think Felipe is using the argument that perl is declining to answer
-the question "why didn't you write git-related in perl instead?";
-that's it.
+Thanks; pulled.
