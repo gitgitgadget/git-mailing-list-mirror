@@ -1,97 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jun 2013, #03; Thu, 6)
-Date: Fri, 07 Jun 2013 14:53:02 -0700
-Message-ID: <7vk3m5si4h.fsf@alter.siamese.dyndns.org>
-References: <7vzjv2x3p7.fsf@alter.siamese.dyndns.org>
-	<20130607000006.GA25731@goldbirke>
-	<CALkWK0=D7sHLgptWkFHma1FoS-zdifHqXnuuBKhkyuszgEJ0Xw@mail.gmail.com>
-	<7v8v2lu5ks.fsf@alter.siamese.dyndns.org>
-	<20130607191643.GA31625@goldbirke>
-	<7vwqq5snzi.fsf@alter.siamese.dyndns.org>
-	<20130607204430.GD31625@goldbirke>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Jun 07 23:53:12 2013
+From: Stefan Haller <stefan@haller-berlin.de>
+Subject: [PATCH v2] git-gui: bring Wish process to front on Mac
+Date: Fri,  7 Jun 2013 23:56:51 +0200
+Message-ID: <1370642211-34416-1-git-send-email-stefan@haller-berlin.de>
+References: <1l424u5.uk987q18u3oxfM%lists@haller-berlin.de>
+Cc: git@vger.kernel.org
+To: Pat Thoyts <patthoyts@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 07 23:57:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ul4at-00084v-MT
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 23:53:12 +0200
+	id 1Ul4f0-0003Ei-DU
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 23:57:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756423Ab3FGVxH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 17:53:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49373 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756046Ab3FGVxF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Jun 2013 17:53:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3389826D60;
-	Fri,  7 Jun 2013 21:53:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=mobM1YyEar+w
-	pZqC1HJxOd0b29Y=; b=fQ37Gnz3JtI7igbLJOgbSN5Kk6Rzp4wYrdoyytRLB0mS
-	GqYAey2fLoroUW+G1prd6dM5g0tlk/7tpBxv6YUB808G/xVII+DObYcukQM1AgRI
-	K2BJgLLQs2NG6rzaGKqEROMWCz0Iq5AYJHEeGqn+P54n4eg5k8XnhSh5goxFORI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ti1qU1
-	7+rZAp4L++Q60aXqCkvD3hO/6Jbv+tYCWGbfgrqVCU3bPh5+zXsvaQOb7PBK1RA0
-	wYYgvam1h9SoiRo7rrq252US32vyPfE4icEb/mLqZG9QMKQlQtbs4YuOXfneBXdJ
-	O+DU/rWOyE4Ir63C0PNCildzj6yI5IKKWt6mk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28E8A26D5F;
-	Fri,  7 Jun 2013 21:53:04 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B34226D5E;
-	Fri,  7 Jun 2013 21:53:03 +0000 (UTC)
-In-Reply-To: <20130607204430.GD31625@goldbirke> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-	"Fri, 7 Jun 2013 22:44:30 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A0F5846A-CFBC-11E2-ABD7-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756177Ab3FGV5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 17:57:22 -0400
+Received: from server90.greatnet.de ([83.133.96.186]:37963 "EHLO
+	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752999Ab3FGV5V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 17:57:21 -0400
+Received: from macbook-stk.fritz.box (dslb-094-223-125-109.pools.arcor-ip.net [94.223.125.109])
+	by server90.greatnet.de (Postfix) with ESMTPA id EE83C3B0EF9;
+	Fri,  7 Jun 2013 23:57:19 +0200 (CEST)
+X-Mailer: git-send-email 1.8.3.14.g33f718c
+In-Reply-To: <1l424u5.uk987q18u3oxfM%lists@haller-berlin.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226742>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+On Mac OS X, any application that is started from the Terminal will open
+behind all running applications; as a work-around, manually bring ourselves
+to the front. (Stolen from gitk, commit 76bf6ff93e.)
 
-> On Fri, Jun 07, 2013 at 12:46:25PM -0700, Junio C Hamano wrote:
->> Thanks for a pointer.  I think what I was suggesting was slightly
->> different in that I was hoping to see a single helper that knows to
->> complete to object names (possibly including trees/blobs with the
->> treeish:path notation), ranges, and pathnames (not treeish:path
->> notation) until it sees a "--" and then complete only to pathnames.
->
-> We already got that except the completion of pathnames before "--",
-> and I don't know how that could be done properly for commands taking
-> both refs and paths.
-> ...
->   git diff git.c
->   git diff master git.c
->   git diff master next git.c
+We do this as the very first thing, so that any message boxes that might pop
+up during the rest of the startup sequence are actually seen by the user.
 
-It is somewhat annoying that "git diff gi<TAB>" stops at expanding
-it to "git diff git" and then upon another "git diff git<TAB>"
-offers tags whose names begin with "git" (e.g. gitgui-0.10.0) but
-the pathname git.c is not included in the choices.  My wish was to
-take the union in such a fairly limited case.  I tend to agree with
-you that "git diff <TAB>" that expands to all refs and pathnames
-would be useless, but so is expansion to all pathnames (or refnames
-for that matter).
+Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
+---
+Changes since the first patch: 
+ - add catch
+ - specify full path to /usr/bin/osascript
 
-In any case, I wouldn't insist on AI perfection in the first place
-;-).  As long as it works reasonably well, I am happy (and I think
-the current completion code already works better than reasonably
-well, at least for me).
+ git-gui.sh | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-Thanks.
+diff --git a/git-gui.sh b/git-gui.sh
+index e133331..a792924 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -29,6 +29,21 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
+ 
+ ######################################################################
+ ##
++## On Mac, bring the current Wish process window to front
++
++if {[tk windowingsystem] eq "aqua"} {
++	catch {
++		exec /usr/bin/osascript -e [format {
++			tell application "System Events"
++				set frontmost of processes whose unix id is %d to true
++			end tell
++		} [pid] ]
++	}
++}
++
++
++######################################################################
++##
+ ## Tcl/Tk sanity check
+ 
+ if {[catch {package require Tcl 8.4} err]
+-- 
+1.8.3.14.g33f718c
