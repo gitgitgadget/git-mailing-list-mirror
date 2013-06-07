@@ -1,61 +1,70 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/3] sequencer: trivial fix
-Date: Fri, 7 Jun 2013 17:59:00 -0500
-Message-ID: <CAMP44s12BjNTeoei-+PZQcd0uBRCLPsfMyA79zuBwcxTpAnRFQ@mail.gmail.com>
-References: <1370637143-21336-1-git-send-email-felipe.contreras@gmail.com>
-	<1370637143-21336-2-git-send-email-felipe.contreras@gmail.com>
-	<7vsj0tr0y7.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] build: generate test scripts
+Date: Fri, 07 Jun 2013 16:12:17 -0700
+Message-ID: <7vobbhqzvy.fsf@alter.siamese.dyndns.org>
+References: <1370642587-32352-1-git-send-email-felipe.contreras@gmail.com>
+	<1370642587-32352-2-git-send-email-felipe.contreras@gmail.com>
+	<CAMP44s1t7aqOorQqhXekZ5+DSZc8vjw+pP_bjLxki9F3bo5q1Q@mail.gmail.com>
+	<7v1u8dsghd.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2N7AjpyK325FK5zWMnO4oausF3xiNmcfoqvNtxJ7DUEg@mail.gmail.com>
+	<7vtxl9r1df.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3doQe2PTGSbZ7Afi9DNDGstN4VJAompeLxUjn4Cg=g2Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 00:59:16 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 08 01:12:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ul5cp-0004rR-Cw
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 00:59:15 +0200
+	id 1Ul5pd-0007dK-Bj
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 01:12:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754898Ab3FGW7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 18:59:03 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:46093 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752956Ab3FGW7C (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 18:59:02 -0400
-Received: by mail-la0-f52.google.com with SMTP id fo12so2271038lab.25
-        for <git@vger.kernel.org>; Fri, 07 Jun 2013 15:59:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=n+WHIwyIXWESr7BGbFQPhaBBKOocNwoAFZCatYgaphw=;
-        b=bHcPUyynajjA22No4B1bL5YtQJDsGKWBMxlTWomLBQ8gICZJHBFlcSqxC0QiBxQBR3
-         EXvyiDqGlDILCiidYx4eYdwOUK6HDgYVuj0xpzPJy/xsQJiPlQ3WJrHIt2knd7oxk6l+
-         elVRLG1RBEXz5o6mxDkYHITnF4jGECQSmnD5oJ/UGsqoiQbCe2qyFAstB3aUQDz4zYxD
-         PgQ5PCHPsLeGWpxn7XnlDnjgvOjyhn89+PSf/2TZThc6w4A6h3hZ7v+bIoRsnvFVa5xQ
-         DeZVj35XnOSTLj58Hu56rCiViWxjipWNMG7Uod654Gr28lSNJ7KwoRUmfhY+Ue4Mc1zJ
-         vuBA==
-X-Received: by 10.112.52.97 with SMTP id s1mr2172360lbo.8.1370645940252; Fri,
- 07 Jun 2013 15:59:00 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Fri, 7 Jun 2013 15:59:00 -0700 (PDT)
-In-Reply-To: <7vsj0tr0y7.fsf@alter.siamese.dyndns.org>
+	id S932301Ab3FGXMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 19:12:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53138 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932197Ab3FGXMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 19:12:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA6AA26F47;
+	Fri,  7 Jun 2013 23:12:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YPnCb+7DnsQXVaeXWqxn5Twp398=; b=QjeNXN
+	pX7KNhPc5lzk/pnXbcvlXf9/CY4r2OSRaW8RmEBnR/vZ9hie5XXWFl/BrVEPzXJg
+	x74uUJCKAYDSsYKnyGbTLkqIjoCzCPMCeZQoelqa98oH+ZpEUWWxjbMDdg+MdWzM
+	YPLRxiP3GWeMJT3tnrhBoPmDd07HTj6A1H06c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pQ81+wy9ka1Kq0C9Duqn3qVamCgXSQLJ
+	U6Z13OP3VRqTuz4lxpdjkY+tuGhWdNBeEs7a/1UKtbsLQ6sDUOqP/Wa9sL2N+99t
+	Rlqry9o5LLAKG/kFivjQmozebK78IuRSOuP1QMoT7Xhr3M1PJucb1FY1vmPK3Yh2
+	n7CLtjyw5Fo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A23F926F46;
+	Fri,  7 Jun 2013 23:12:19 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2B4C626F45;
+	Fri,  7 Jun 2013 23:12:19 +0000 (UTC)
+In-Reply-To: <CAMP44s3doQe2PTGSbZ7Afi9DNDGstN4VJAompeLxUjn4Cg=g2Q@mail.gmail.com>
+	(Felipe Contreras's message of "Fri, 7 Jun 2013 17:43:43 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B38601D0-CFC7-11E2-88DC-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226764>
 
-On Fri, Jun 7, 2013 at 5:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I thought the conclusion was that combination of c8d1351 and 706728a
-> we already queued was the right change.  Is this meant to replace
-> them?
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Yes, those would do, but I'm not going to work on that series any more.
+> It is generated, in next. If it's not generated, there's no need to
+> add it to NO_INSTALL.
 
--- 
-Felipe Contreras
+OK, that makes sense.
+Thanks.
