@@ -1,122 +1,109 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] t0005: skip signal death exit code test on Windows
-Date: Fri, 07 Jun 2013 15:07:54 +0200
-Message-ID: <51B1DB2A.2060306@viscovery.net>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org> <51AEE1C3.9020507@viscovery.net> <20130605071206.GC14427@sigill.intra.peff.net> <51B02D81.3000700@viscovery.net> <20130606063754.GA20050@sigill.intra.peff.net> <CAMP44s2L4EOG7aEOR8gqXeaHm7SeuPg=GQAWX3PByKKbtTHnwQ@mail.gmail.com> <20130606064409.GA20334@sigill.intra.peff.net> <7vy5anyx1w.fsf@alter.siamese.dyndns.org> <20130606174032.GB32174@sigill.intra.peff.net> <CABPQNSYLmFWkdgph6W7MwaSTe+zrU0AaJpj_v9z=cmvWu64HNA@mail.gmail.com> <51B1B4DF.90705@viscovery.net> <CABPQNSYE=Mvrmc44dZmKnB14KLh4A=HxWo2-xgnJRyj1Q+BJLg@mail.gmail.com> <51B1CFD4.3030908@viscovery.net> <CABPQNSasTdkmpeGWb7_wZK2cQhiOyF7bX5ObcBg5kHm0KBGS5w@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: branch.<name>.pushremote not working with push.default simple or upstream
+Date: Fri, 7 Jun 2013 19:41:07 +0530
+Message-ID: <CALkWK0miONv_O67SHcfJoXq1x7xPvKu6uefg+TiPGbF-1WJ-bg@mail.gmail.com>
+References: <20130607124146.GF28668@sociomantic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Fri Jun 07 15:08:04 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Leandro Lucarella <leandro.lucarella@sociomantic.com>
+X-From: git-owner@vger.kernel.org Fri Jun 07 16:11:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UkwOh-0004ym-0U
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 15:08:03 +0200
+	id 1UkxOS-0003n3-7T
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 16:11:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754169Ab3FGNH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 09:07:59 -0400
-Received: from so.liwest.at ([212.33.55.13]:17385 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753807Ab3FGNH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 09:07:58 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UkwOY-0001H8-K3; Fri, 07 Jun 2013 15:07:54 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 505BF1660F;
-	Fri,  7 Jun 2013 15:07:54 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <CABPQNSasTdkmpeGWb7_wZK2cQhiOyF7bX5ObcBg5kHm0KBGS5w@mail.gmail.com>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1753691Ab3FGOLs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 10:11:48 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:52589 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752540Ab3FGOLr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 10:11:47 -0400
+Received: by mail-ie0-f179.google.com with SMTP id c10so2152925ieb.10
+        for <git@vger.kernel.org>; Fri, 07 Jun 2013 07:11:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qoZxNwu1pS20IqiqOPHPH+JZZYqmQAQf3T870832POE=;
+        b=jO7YXlSspo7Nct5FCpwp9hJIIOhnDINCu/gYpX2iphI1+613mU3BDunfxAil09iDWS
+         gY5DeVWU9zlA/WeNPtWihiSaNpA7NeZmD09ZjHbTbpDU3ynrvwd0+reEwxFaomc2lPuh
+         WVgnOU1M81dCZtd4jUQy7yfnbVxPlAnx1vDjcs19GmpsoVAflq+RzVxUvtsKdotw0MXZ
+         jU9Ojls7uRHVBl2lUlnFxXo4NFdcdNipeL4vgY1FY+/5POvJ85q06q0TCBeJ5CijPnUC
+         YBnSu6khyIl1m2JTfvKsyU1RBwWL+2gVB23z/dKlIuH0guJDYpUWF7WdRbB+22lECsTf
+         xYnA==
+X-Received: by 10.50.70.101 with SMTP id l5mr1236818igu.104.1370614307222;
+ Fri, 07 Jun 2013 07:11:47 -0700 (PDT)
+Received: by 10.64.136.104 with HTTP; Fri, 7 Jun 2013 07:11:07 -0700 (PDT)
+In-Reply-To: <20130607124146.GF28668@sociomantic.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226629>
 
-Am 6/7/2013 14:46, schrieb Erik Faye-Lund:
-> On Fri, Jun 7, 2013 at 2:19 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->> Am 6/7/2013 14:00, schrieb Erik Faye-Lund:
->>> On Fri, Jun 7, 2013 at 12:24 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->>>> Am 6/7/2013 12:12, schrieb Erik Faye-Lund:
->>>>> diff --git a/compat/mingw.c b/compat/mingw.c
->>>>> index b295e2f..8b3c1b4 100644
->>>>> --- a/compat/mingw.c
->>>>> +++ b/compat/mingw.c
->>>>> @@ -1573,7 +1573,8 @@ static HANDLE timer_event;
->>>>>  static HANDLE timer_thread;
->>>>>  static int timer_interval;
->>>>>  static int one_shot;
->>>>> -static sig_handler_t timer_fn = SIG_DFL, sigint_fn = SIG_DFL;
->>>>> +static sig_handler_t timer_fn = SIG_DFL, sigint_fn = SIG_DFL,
->>>>> +    sigterm_fn = SIG_DFL;
->>>>>
->>>>>  /* The timer works like this:
->>>>>   * The thread, ticktack(), is a trivial routine that most of the time
->>>>> @@ -1688,6 +1689,10 @@ sig_handler_t mingw_signal(int sig,
->>>>> sig_handler_t handler)
->>>>>               sigint_fn = handler;
->>>>>               break;
->>>>>
->>>>> +     case SIGTERM:
->>>>> +             sigterm_fn = handler;
->>>>> +             break;
->>>>> +
->>>>>       default:
->>>>>               return signal(sig, handler);
->>>>>       }
->>>>> @@ -1715,6 +1720,13 @@ int mingw_raise(int sig)
->>>>>                       sigint_fn(SIGINT);
->>>>>               return 0;
->>>>>
->>>>> +     case SIGTERM:
->>>>> +             if (sigterm_fn == SIG_DFL)
->>>>> +                     exit(128 + SIGTERM);
->>>>> +             else if (sigterm_fn != SIG_IGN)
->>>>> +                     sigterm_fn(SIGTERM);
->>>>> +             return 0;
->>>>> +
->>>>>       default:
->>>>>               return raise(sig);
->>>>>       }
->>>>
->>>> That's pointless and does not work. The handler would only be called when
->>>> raise() is called, but not when a SIGTERM is received, e.g., via Ctrl-C
->>>> from the command line, because that route ends up in MSVCRT, which does
->>>> not know about this handler.
->>>
->>> That's not entirely true. On Windows, there's only *one* way to
->>> generate SIGTERM; "signal(SIGTERM)". Ctrl+C does not generate SIGTERM.
->>> We generate SIGINT on Ctrl+C in mingw_fgetc, but the default Control+C
->>> handler routine calls ExitProcess():
->>> http://msdn.microsoft.com/en-us/library/windows/desktop/ms683242(v=vs.85).aspx
->>
->> But a call to signal(SIGTERM, my_handler) should divert Ctrl+C to
->> my_handler. The unpatched version does, because MSVCRT now knows about
->> my_handler and sets things up so that the event handler calls my_handler.
-> 
-> No, it does not:
-> Ctrl+C raises SIGINT, not SIGTERM.
+[+CC: jc, jk]
 
-<action type="slap" destination="forehead"/>
+Leandro Lucarella wrote:
+> I changed branch.master.remote to upstream and set
+> branch.master.pushremote to origin, but when I do I git push I get an
+> error:
+>
+> $ git push --dry-run --verbose
+> fatal: You are pushing to remote 'origin', which is not the upstream of
+> your current branch 'master', without telling me what to push
+> to update which remote branch.
 
-You are right. Your change would "fix" SIGTERM as it can be raised only
-via raise() on Windows nor can it be caught when a process is killed via
-mingw_kill(...,SIGTERM) by another process.
+Yes, this is a defect: both remote.pushdefault and
+branch.<name>.pushremote suffer from it.
 
-But then the current handling of SIGINT in compat/mingw.c is broken. The
-handler is not propagated to MSVCRT, and after a SIGINT handler is
-installed, Ctrl+C still terminates the process. No?
+Let me explain what's happening.  The error is triggered off in
+setup_push_upstream() in builtin/push.c (which both simple and
+upstream use).  It's exactly the same error that will be reported if
+you do the following without a branch.master.pushremote or
+remote.pushdefault configured:
 
-BTW, isn't mingw_signal() bogus in that it returns the SIGALRM handler
-even if a SIGINT handler is installed?
+  $ git push origin --dry-run --verbose
+  fatal: You are pushing to remote 'origin', which is not the upstream of
+  your current branch 'master', without telling me what to push
+  to update which remote branch.
 
--- Hannes
+You should therefore be able to infer that remote.pushdefault/
+branch.<name>.pushremote is simply saving you from remembering/ typing
+out that "origin" on the command-line.  The error precisely describes
+the problem.  To understand what this "upstream" the error is talking
+about, see:
+
+   $ git rev-parse --symbolic-full-name @{u}
+   refs/remotes/upstream/master
+
+So, if you are pushing to upstream, the push knows what to do: push to
+the refspec <branch>:<branch>@{u} (see builtin/push.c:148).  If you're
+pushing to origin, it has no idea _what_ to push, and hence errors
+out.  By design, upstream/ simple assume that you push to the same
+place that you pull from: the description clearly says that it is
+intended to make the push and pull symmetric.
+
+Finally, the reason remote.pushdefault/ branch.<name>.pushremote works
+in the other modes is simple: in matching and current, the push
+refspec is not dependent on the current branch's upstream.  In
+matching, the refspec it is the constant ":", and in current, it is
+the constant "HEAD" (will subtly change with rr/push-head).
+
+I think the correct fix is to change the semantics of upstream/simple
+to dictate a refspec independent of remote.  So, if:
+
+1. branch.master.merge is configured to refs/heads/rr/master
+2. branch.master.remote is configured to origin
+3. remote.pushdefault is configured to ram
+4. push.default is configured to upstream
+
+Then, the a push should push the refspec master:rr/master to the
+remote ram.  Let's see what the others have to say before proceeding.
+
+Thank you for reporting this problem.  It is indeed very serious,
+especially since simple is going to be default in Git 2.0.
