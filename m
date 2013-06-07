@@ -1,67 +1,70 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: What's cooking in git.git (Jun 2013, #03; Thu, 6)
-Date: Fri, 7 Jun 2013 02:00:06 +0200
-Message-ID: <20130607000006.GA25731@goldbirke>
-References: <7vzjv2x3p7.fsf@alter.siamese.dyndns.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 4/4] archive: ignore blob objects when checking reachability
+Date: Thu, 6 Jun 2013 20:50:27 -0400
+Message-ID: <CAPig+cRMGBjXO3Phmv=SX7FQwZ=uCUTT9YSKiEBb6PU0ts_1uw@mail.gmail.com>
+References: <20130605223551.GF8664@sigill.intra.peff.net>
+	<20130605224038.GD15607@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 07 02:00:26 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Ian Harvey <iharvey@good.com>, Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 07 02:50:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukk6T-00070p-9e
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 02:00:25 +0200
+	id 1Ukksz-0002Bc-Ns
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 02:50:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752882Ab3FGAAV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Jun 2013 20:00:21 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:52363 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751908Ab3FGAAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 20:00:20 -0400
-Received: from localhost6.localdomain6 (f052187059.adsl.alicedsl.de [78.52.187.59])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0ME88h-1Ub74C2QWd-00HMQu; Fri, 07 Jun 2013 02:00:07 +0200
-Content-Disposition: inline
-In-Reply-To: <7vzjv2x3p7.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:QNE6rRCBSf0EuuPybJcbw1oxboeuKqneMXCDHcr9025
- nfx2hUONo9n+PvfXD+Bc7n0ygckHOxr7spqjNhu+wuVlHo4/8+
- Jf6SVX+rvl3Asl0pnGMgGPgWUZfDMxUjFioMH4AMt2stQlFaAx
- tRKc0sOHFJS0MIK+EaZVDLdkRmK3FAN29twfVJGI89x3tJyHra
- 1ApCb29NFq7m9XKDHBImGJKT8AXD6MHIfoo/ZoYkSknoC3dluh
- u273vpJqSo4vhgYQKwK7spcOtrRi336yROUZF+4fUuzed5c1Vl
- MOOoIn2WRsDQp8KbWmwPms6UGIySq6DVoYI1XsnLP0Sk7dCBDr
- n5z8LG/VBIUb2cA4ERm8=
+	id S1752960Ab3FGAua (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 20:50:30 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:40019 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752414Ab3FGAu3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 20:50:29 -0400
+Received: by mail-lb0-f180.google.com with SMTP id o10so1350091lbi.39
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 17:50:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=TRey1IuFSdC847+oNDDq+lnUjq444fsAJSG52tTfXkU=;
+        b=mxXv5ywcy1DchyC4IxbpHpBC9m1maoM3Ys+Cv/y2HtYr82tStDvxcXN8hsa42dc+s9
+         +Tq81fG82lN/LIRHPsJeGcBtYAeoLuZKha8wtmEvOl+97cNsi+OIeDk2dzA+oagUtTi0
+         xzTxjIBad5l4yJW4Zd698bLq3Doq0EVgsYUqhvKqe238LpPa0q+NB1D1Z6FXECpMBoga
+         0ZaMmZoW6gLHWSxVG5eDxV1ZzKRKAaTEXfmSlRK6aHop2P1jAtEojo6B7WHu9hSGm68D
+         A5H26TQc+aLRFCH/iooAzBUmjBh9nNId8+JuGhIBVHfjrt4Cptk+nIjbjXRlbN+yss/g
+         9LZQ==
+X-Received: by 10.112.219.133 with SMTP id po5mr78842lbc.80.1370566227282;
+ Thu, 06 Jun 2013 17:50:27 -0700 (PDT)
+Received: by 10.114.161.4 with HTTP; Thu, 6 Jun 2013 17:50:27 -0700 (PDT)
+In-Reply-To: <20130605224038.GD15607@sigill.intra.peff.net>
+X-Google-Sender-Auth: ywn_tUaZbQGHuZyHSWxDlW4f7_Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226573>
 
-On Thu, Jun 06, 2013 at 03:41:08PM -0700, Junio C Hamano wrote:
-> * rr/complete-difftool (2013-06-03) 2 commits
->   (merged to 'next' on 2013-06-04 at 01c7611)
->  + completion: clarify ls-tree, archive, show completion
->  + completion: difftool takes both revs and files
->=20
->  Update command line completion (in contrib/) to use a better named
->  completion helper function for commands that take revisions and
->  paths.
->=20
->  Will merge to 'master'.
+On Wed, Jun 5, 2013 at 6:40 PM, Jeff King <peff@peff.net> wrote:
+> We cannot create an archive from a blob object, so we would
+> not expect anyone to provide one to us. And if they do, we
+> will fail anyway just after the reachability check.  We can
+> therefore optimize our reachability check to ignore blobs
+> completely, and not even create a "struct blob" for them.
+>
+> Depending on the repository size and the exact place we find
+> the reachable object in the traversal, this can save 20-25%,
+> a we can avoid many lookups in the object hash.
 
-This should not be merged to master as is; the one at the top because
-of the reasons given in $gmane/226272, the one at the bottom because
-of the misleading commit message (__git_complete_file() always
-completed refs first as part of the ref:file notation, so it worked
-just fine except for the ref1...ref2 notation; the real reason for
-calling __git_complete_revlist_file() for difftool is to make clear
-that difftool takes ref1...ref2:file, too).
+s/a/as/
 
-
-G=E1bor
+> The downside of this is that a blob provided to a remote
+> archive process will fail with "no such object" rather than
+> "object is not a tree" (we could organize the code to retain
+> the old message, but since we no longer know whether the
+> blob is reachable or not, we would potentially be leaking
+> information about the existence of unreachable objects).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
