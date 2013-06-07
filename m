@@ -1,117 +1,102 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/2] build: generate test scripts
-Date: Fri, 7 Jun 2013 17:33:10 -0500
-Message-ID: <CAMP44s2N7AjpyK325FK5zWMnO4oausF3xiNmcfoqvNtxJ7DUEg@mail.gmail.com>
+Date: Fri, 07 Jun 2013 15:40:12 -0700
+Message-ID: <7vtxl9r1df.fsf@alter.siamese.dyndns.org>
 References: <1370642587-32352-1-git-send-email-felipe.contreras@gmail.com>
 	<1370642587-32352-2-git-send-email-felipe.contreras@gmail.com>
 	<CAMP44s1t7aqOorQqhXekZ5+DSZc8vjw+pP_bjLxki9F3bo5q1Q@mail.gmail.com>
 	<7v1u8dsghd.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2N7AjpyK325FK5zWMnO4oausF3xiNmcfoqvNtxJ7DUEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 00:36:45 2013
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 08 00:40:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ul5H2-0002Xl-F9
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 00:36:44 +0200
+	id 1Ul5Kc-0005hi-KX
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 00:40:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757578Ab3FGWgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 18:36:40 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:64555 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756919Ab3FGWdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 18:33:12 -0400
-Received: by mail-la0-f45.google.com with SMTP id fr10so4166048lab.4
-        for <git@vger.kernel.org>; Fri, 07 Jun 2013 15:33:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=sivVOXQFJXXJujIs+HfYX99LCU+WZhLV19r2Yz0NYcM=;
-        b=LkjRt/zuKM0MxYcGEfGaVj9/VUgTKE6qjYVoSieVefClhkArx5Cq6/tKjsPjyrVSwo
-         LLJAmpsbuTUeorZ1LSNDG/RMxVqSbXNC9qUV9SNCzTbaIB08gVEu4/GeTZNqF0E3c0Ve
-         qsfS9trouvKHzwb6Ute/DqMFGEltX52qiFWkRmekQLHv/0QOSD7+UtjYskVOGkRGo0TP
-         UGsmPaqgABGbrghoyfp6GWnMFv2PO4Hh0cC2yI45UKI9NjZlbnqM1i9cANE+jenk6zy1
-         VXX7CMZQrCehaUJEl9ozfk2GknkeyTEQGoK9lJw3JB+IDMc9e6csIk13V5iiHIaVpFe3
-         AQKg==
-X-Received: by 10.112.16.163 with SMTP id h3mr2076765lbd.85.1370644390725;
- Fri, 07 Jun 2013 15:33:10 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Fri, 7 Jun 2013 15:33:10 -0700 (PDT)
-In-Reply-To: <7v1u8dsghd.fsf@alter.siamese.dyndns.org>
+	id S1756665Ab3FGWkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 18:40:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41666 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755822Ab3FGWkT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 18:40:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 66A1C2616A;
+	Fri,  7 Jun 2013 22:40:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8yDtIhZYpX36pEbjKFq70p4x+2I=; b=iFVnF+
+	/HxstohW/3O2Hcu9H5TCioGbgXQJXyI3oq5VUMg9ka7WSBxCo9h4+fH5jtmZQuHH
+	HvfKGI8mLphEn5KYdKEZ3Kedds2+TFCaVumj3jj9Y6aivxm4XuTwA9C+cvQvZolp
+	iKw/edg8OTWZ1KzF6Dca5nrrcdPok0C93MOoM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Y0QBtjcgYERm0eJHBuKMkrJuf6IVIi1U
+	SqTNyJi32U+6Am3/cDmLm0U6ssnCulybV6+8OI2fT3Ido3MZnmaqT8KemNycm2Uv
+	3rueDVXCmJsr7JYvJYAreTo8o3/hgPs5OTs2C+dEv26sRshKfuXGdf/vOkuvrt2v
+	mGsNrPeqtJ8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57AD126169;
+	Fri,  7 Jun 2013 22:40:19 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 00D9026160;
+	Fri,  7 Jun 2013 22:40:13 +0000 (UTC)
+In-Reply-To: <CAMP44s2N7AjpyK325FK5zWMnO4oausF3xiNmcfoqvNtxJ7DUEg@mail.gmail.com>
+	(Felipe Contreras's message of "Fri, 7 Jun 2013 17:33:10 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 38078460-CFC3-11E2-984C-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226760>
 
-On Fri, Jun 7, 2013 at 5:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> On Fri, Jun 7, 2013 at 5:03 PM, Felipe Contreras
->> <felipe.contreras@gmail.com> wrote:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+>> Perhaps like this?
 >>
->>> -all:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
->>> +all:: $(ALL_PROGRAMS) $(SCRIPTS_GEN) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
+>>  Makefile | 3 ++-
+>>  1 file changed, 2 insertions(+), 1 deletion(-)
 >>
->> Alternatively, we could add $(NO_INSTALL) here.
+>> diff --git a/Makefile b/Makefile
+>> index a748133..03fda50 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -2239,6 +2239,7 @@ endif
+>>
+>>  test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
+>>
+>> +all:: $(NO_INSTALL)
+>>  all:: $(TEST_PROGRAMS) $(test_bindir_programs)
+>>
+>>  bin-wrappers/%: wrap-for-bin.sh
+>> @@ -2489,7 +2490,7 @@ clean: profile-clean coverage-clean
+>>         $(RM) *.o *.res block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vcs-svn/*.o \
+>>                 builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
+>>         $(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
+>> -       $(RM) $(TEST_PROGRAMS)
+>> +       $(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
+>>         $(RM) -r bin-wrappers $(dep_dirs)
+>>         $(RM) -r po/build/
+>>         $(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h $(ETAGS_TARGET) tags cscope*
 >
-> As ALL_PROGRAMS overlap with most of SCRIPTS_GEN, the above looks
-> overly heavy-fisted.  I tend to agree that a separate
->
->         all:: $(NO_INSTALL)
->
-> would be much better, assuming that NO_INSTALL will mean "We always
-> want to build these, but we never do not want to install them"
-> forever (which I am OK to assume).
->
-> Also
->
->         make clean
->         make --test=5800 test
->
-> did not fail for me, and it turns out that "clean" somehow fails to
-> clean git-remote-testpy script.
->
-> As git-remote-testpy is only for testing, another possibility is to
-> do
->
->     -all:: $(TEST_PROGRAMS) $(test_bindir_programs)
->     +all:: $(TEST_PROGRAMS) $(test_bindir_programs) git-remote-testpy
->
-> but I think $(NO_INSTALL) is the cleanest.
->
-> Perhaps like this?
->
->  Makefile | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/Makefile b/Makefile
-> index a748133..03fda50 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2239,6 +2239,7 @@ endif
->
->  test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
->
-> +all:: $(NO_INSTALL)
->  all:: $(TEST_PROGRAMS) $(test_bindir_programs)
->
->  bin-wrappers/%: wrap-for-bin.sh
-> @@ -2489,7 +2490,7 @@ clean: profile-clean coverage-clean
->         $(RM) *.o *.res block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vcs-svn/*.o \
->                 builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
->         $(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
-> -       $(RM) $(TEST_PROGRAMS)
-> +       $(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
->         $(RM) -r bin-wrappers $(dep_dirs)
->         $(RM) -r po/build/
->         $(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h $(ETAGS_TARGET) tags cscope*
+> Looks good to me.
 
-Looks good to me.
+Actually the above would not work well.  This is because...
 
--- 
-Felipe Contreras
+>> ..., assuming that NO_INSTALL will mean "We always
+>> want to build these, but we never do not want to install them"
+>> forever (which I am OK to assume).
+
+... the assumption does *not* hold already with git-remote-testgit,
+which is (or will be with patch 2/2) NO_INSTALL and we do not want
+to install it, but it is not built, hence we do not want to remove
+it, either.
