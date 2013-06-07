@@ -1,119 +1,58 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] t0005: skip signal death exit code test on Windows
-Date: Fri, 07 Jun 2013 12:24:31 +0200
-Message-ID: <51B1B4DF.90705@viscovery.net>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org> <51AEE1C3.9020507@viscovery.net> <20130605071206.GC14427@sigill.intra.peff.net> <51B02D81.3000700@viscovery.net> <20130606063754.GA20050@sigill.intra.peff.net> <CAMP44s2L4EOG7aEOR8gqXeaHm7SeuPg=GQAWX3PByKKbtTHnwQ@mail.gmail.com> <20130606064409.GA20334@sigill.intra.peff.net> <7vy5anyx1w.fsf@alter.siamese.dyndns.org> <20130606174032.GB32174@sigill.intra.peff.net> <CABPQNSYLmFWkdgph6W7MwaSTe+zrU0AaJpj_v9z=cmvWu64HNA@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH 02/18] Change style of some regular expressions to make
+ them clearer
+Date: Fri, 7 Jun 2013 11:40:43 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1306071140080.9741@ds9.cixit.se>
+References: <1370547263-13558-1-git-send-email-celestin.matte@ensimag.fr> <1370547263-13558-3-git-send-email-celestin.matte@ensimag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Fri Jun 07 12:24:55 2013
+Content-Type: TEXT/PLAIN; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?C=E9lestin_Matte?= <celestin.matte@ensimag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 07 12:41:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uktqo-0005J7-E9
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 12:24:54 +0200
+	id 1Uku6M-0002wD-8Q
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 12:40:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755250Ab3FGKYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 06:24:44 -0400
-Received: from so.liwest.at ([212.33.55.13]:47564 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755243Ab3FGKYn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 06:24:43 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UktqS-0005Zt-3K; Fri, 07 Jun 2013 12:24:37 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id BE28C1660F;
-	Fri,  7 Jun 2013 12:24:31 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <CABPQNSYLmFWkdgph6W7MwaSTe+zrU0AaJpj_v9z=cmvWu64HNA@mail.gmail.com>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1753033Ab3FGKkx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 06:40:53 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:55007 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752152Ab3FGKkx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 06:40:53 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id r57Aeior014435
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 7 Jun 2013 12:40:44 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id r57AehcV014432;
+	Fri, 7 Jun 2013 12:40:44 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <1370547263-13558-3-git-send-email-celestin.matte@ensimag.fr>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Fri, 07 Jun 2013 12:40:44 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226619>
 
-Am 6/7/2013 12:12, schrieb Erik Faye-Lund:
-> On Thu, Jun 6, 2013 at 7:40 PM, Jeff King <peff@peff.net> wrote:
->> On Thu, Jun 06, 2013 at 10:21:47AM -0700, Junio C Hamano wrote:
->>
->>>> The particular deficiency is that when a signal is raise()d whose SIG_DFL
->>>> action will cause process death (SIGTERM in this case), the
->>>> implementation of raise() just calls exit(3).
->>>
->>> After a bit of web searching, it seems to me that this behaviour of
->>> raise() is in msvcrt, and compat/mingw.c::mingw_raise() just calls
->>> that.  In other words, "the implementation of raise()" is at an even
->>> lower level than mingw/msys, and I would agree that it is a platform
->>> issue.
->>
->> Yeah, if it were mingw_raise responsible for this, I would suggest using
->> the POSIX shell "128+sig" instead. We could potentially check for
->> SIG_DFL[1] mingw_raise and intercept and exit there. I don't know if
->> that would create headaches or confusion for other msys programs,
->> though. I'd leave that up to the msysgit people to decide whether it is
->> worth the trouble.
->>
-> 
-> ...and here's the code to do just that:
-> 
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index b295e2f..8b3c1b4 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -1573,7 +1573,8 @@ static HANDLE timer_event;
->  static HANDLE timer_thread;
->  static int timer_interval;
->  static int one_shot;
-> -static sig_handler_t timer_fn = SIG_DFL, sigint_fn = SIG_DFL;
-> +static sig_handler_t timer_fn = SIG_DFL, sigint_fn = SIG_DFL,
-> +    sigterm_fn = SIG_DFL;
-> 
->  /* The timer works like this:
->   * The thread, ticktack(), is a trivial routine that most of the time
-> @@ -1688,6 +1689,10 @@ sig_handler_t mingw_signal(int sig,
-> sig_handler_t handler)
->  		sigint_fn = handler;
->  		break;
-> 
-> +	case SIGTERM:
-> +		sigterm_fn = handler;
-> +		break;
-> +
->  	default:
->  		return signal(sig, handler);
->  	}
-> @@ -1715,6 +1720,13 @@ int mingw_raise(int sig)
->  			sigint_fn(SIGINT);
->  		return 0;
-> 
-> +	case SIGTERM:
-> +		if (sigterm_fn == SIG_DFL)
-> +			exit(128 + SIGTERM);
-> +		else if (sigterm_fn != SIG_IGN)
-> +			sigterm_fn(SIGTERM);
-> +		return 0;
-> +
->  	default:
->  		return raise(sig);
->  	}
+C=C3=A9lestin Matte:
 
-That's pointless and does not work. The handler would only be called when
-raise() is called, but not when a SIGTERM is received, e.g., via Ctrl-C
-from the command line, because that route ends up in MSVCRT, which does
-not know about this handler.
+> - Use {}{} instead of /// when slashes or used inside the regexp so a=
+s not to
+> escape it.
 
-If you want to follow this route, you must emulate everything that MSVCRT
-already does for us, and that's quite a lot, in particular, when some form
-of thread safety is required.
+I guess that should read "...when slashes *are* used inside..."?
 
--- Hannes
+--=20
+\\// Peter - http://www.softwolves.pp.se/
