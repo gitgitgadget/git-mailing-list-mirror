@@ -1,91 +1,72 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: REQUEST-PULL: some msysgit build patches for upstream
-Date: Fri, 07 Jun 2013 07:50:15 +0100
-Message-ID: <87sj0uwh20.fsf@fox.patthoyts.tk>
-Reply-To: patthoyts@users.sourceforge.net
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 01/18] Follow perlcritic's recommendations - level 5 and 4
+Date: Fri, 07 Jun 2013 10:10:24 +0200
+Message-ID: <vpqa9n25ojz.fsf@anie.imag.fr>
+References: <1370547263-13558-1-git-send-email-celestin.matte@ensimag.fr>
+	<1370547263-13558-2-git-send-email-celestin.matte@ensimag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 07 08:56:10 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, benoit.person@ensimag.fr
+To: =?iso-8859-1?Q?C=E9lestin?= Matte <celestin.matte@ensimag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 07 10:10:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukqak-0004CB-5w
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 08:56:06 +0200
+	id 1Ukrl0-0006XX-Sz
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 10:10:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462Ab3FGG4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 02:56:01 -0400
-Received: from know-smtprelay-omc-1.server.virginmedia.net ([80.0.253.65]:36081
-	"EHLO know-smtprelay-omc-1.server.virginmedia.net"
+	id S1752532Ab3FGIKi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 04:10:38 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:56856 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752042Ab3FGG4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 02:56:00 -0400
-X-Greylist: delayed 341 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Jun 2013 02:55:59 EDT
-Received: from fox.patthoyts.tk ([94.171.229.22])
-	by know-smtprelay-1-imp with bizsmtp
-	id lJqG1l0020VeUS601JqGEX; Fri, 07 Jun 2013 07:50:17 +0100
-X-Originating-IP: [94.171.229.22]
-X-Spam: 0
-X-Authority: v=2.0 cv=RN7rhPe+ c=1 sm=1 a=qXJDgLqI18Q8M6O+O33hhA==:17
- a=F0HhOJWMmYsA:10 a=9Yl5yNQ7HcsA:10 a=CtgcEeagiGAA:10 a=kj9zAlcOel0A:10
- a=FP58Ms26AAAA:8 a=mTsz9k-Ffh8A:10 a=NEAV23lmAAAA:8 a=kls9lMIUJHy9MCaZbnkA:9
- a=CjuIK1q_8ugA:10 a=XCGtuk3KgoEOCl3j:21 a=JQmBSrSta2HgJSZm:21
- a=qXJDgLqI18Q8M6O+O33hhA==:117
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id B663122ECD; Fri,  7 Jun 2013 07:50:15 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S1752043Ab3FGIKd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 04:10:33 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r578AO8I028888
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 7 Jun 2013 10:10:24 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Ukrkf-0005Ar-37; Fri, 07 Jun 2013 10:10:25 +0200
+In-Reply-To: <1370547263-13558-2-git-send-email-celestin.matte@ensimag.fr>
+	(=?iso-8859-1?Q?=22C=E9lestin?= Matte"'s message of "Thu, 6 Jun 2013
+ 21:34:06 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 07 Jun 2013 10:10:25 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r578AO8I028888
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1371197428.06534@oxUETNRLljpZBAo3zH/WQQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226611>
 
-The following changes since commit b5c26758639cd934780620d4dd16854c8fdf8c34:
+C=E9lestin Matte <celestin.matte@ensimag.fr> writes:
 
-  Sync with maint (2013-06-03 13:00:09 -0700)
+> Subject: [PATCH 01/18] Follow perlcritic's recommendations - level 5 =
+and 4
 
-are available in the git repository at:
+It would be better to prefix commit messages with "git-remote-mediawiki=
+: ".
 
+> Fix warnings from perlcritic's level 5 and 4.
 
-  http://github.com/msysgit/git tags/post183-for-junio
+It would be cool to have a "make perlcritic" target in the Makefile so
+that future developers can easily re-run it and avoid repeating the sam=
+e
+mistakes. As much as possible, "make perlcritic" should produce no
+output at the end of your patch series (either the warnings should be
+fixed, or they should be disabled).
 
-for you to fetch changes up to 65db0443710f59a1c05a85688cdccc215ff48333:
-
-  Set the default help format to html for msys builds. (2013-06-04 10:12:32 +0100)
-
-----------------------------------------------------------------
-Collected msysgit build patches for upstream
-
-This set of patches collects a number of build fixes that have been
-used on the msysgit port for a while and merging upstream should
-simplify future maintenance.
-
-----------------------------------------------------------------
-Johannes Schindelin (2):
-      Define NO_GETTEXT for Git for Windows
-      Windows resource: handle dashes in the Git version gracefully
-
-Pat Thoyts (3):
-      Provide a Windows version resource for the git executables.
-      Ensure the resource file is rebuilt when the version changes.
-      Set the default help format to html for msys builds.
-
-Pierre le Riche (1):
-      msysgit: Add the --large-address-aware linker directive to the makefile.
-
-Sebastian Schuberth (1):
-      Makefile: Do not use OLD_ICONV on MINGW anymore
-
- .gitignore       |  1 +
- Makefile         |  8 +++++++-
- config.mak.uname |  6 +++++-
- git.rc           | 22 ++++++++++++++++++++++
- 4 files changed, 35 insertions(+), 2 deletions(-)
- create mode 100644 git.rc
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
