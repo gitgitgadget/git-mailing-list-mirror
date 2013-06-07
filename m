@@ -1,96 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jun 2013, #03; Thu, 6)
-Date: Fri, 07 Jun 2013 08:57:11 -0700
-Message-ID: <7v1u8dvrqg.fsf@alter.siamese.dyndns.org>
-References: <7vzjv2x3p7.fsf@alter.siamese.dyndns.org>
-	<20130607000006.GA25731@goldbirke>
-	<7vli6mwx07.fsf@alter.siamese.dyndns.org>
+From: Sarma Tangirala <vtangira@buffalo.edu>
+Subject: Re: git diff bug?
+Date: Fri, 7 Jun 2013 12:01:07 -0400
+Message-ID: <CANd8ic+6AtWgbK3S7DMkaOz7K9WJYdq8ozP9mesc-vJRhxLjqg@mail.gmail.com>
+References: <CANd8icJ_1mqT9m-n3wPPdjzG1oNjwxfQeUA6YL6KVxbq0iEa1g@mail.gmail.com>
+ <51B10236.2030009@ensimag.fr> <7v4ndayjdt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 07 17:57:30 2013
+Cc: =?UTF-8?Q?C=C3=A9lestin_Matte?= <celestin.matte@ensimag.fr>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 07 18:01:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukz2d-00014x-0L
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 17:57:27 +0200
+	id 1Ukz6c-0004xl-FJ
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 18:01:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755934Ab3FGP5R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 11:57:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35536 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755893Ab3FGP5N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Jun 2013 11:57:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5493E2523D;
-	Fri,  7 Jun 2013 15:57:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=yT7uKVVl0GJq
-	9onxUhka5lbRGPM=; b=O0LLNvr0txCqzWpyAAnYnclPCfNHzKDpTYb6VzVLEPGe
-	fj6vwDCgw6I2dXII6kPdV681XVPa+R5HaCRh8d0X6DstW/VhInfH9oo9cWtSfqEg
-	gG2Vbf6/4knSbAFGHwPgqtAGxZ5UteRcKnj3BUSFR6ZCNEdHiJW9bLkKftaJYYk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Nhw3zg
-	/oBc870R1qbyOPcdmbsTT8ES1RdGmjbm5dwQiOAFxxDlPCMxpLi0+Upy8as0Aks9
-	Ult7O/eQW45V8fSnXXSoQwTcIMzWHkntZnppHchgk1myqIa5/nBgJr4NyUBdYxS8
-	kC0PdAF4TFZ7WeqiIJM+0oZBg/GrXgC+1x3Vo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 477062523B;
-	Fri,  7 Jun 2013 15:57:13 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA2C22523A;
-	Fri,  7 Jun 2013 15:57:12 +0000 (UTC)
-In-Reply-To: <7vli6mwx07.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 06 Jun 2013 18:05:44 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EAE31998-CF8A-11E2-BFA5-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756076Ab3FGQBa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 12:01:30 -0400
+Received: from mail-vb0-f47.google.com ([209.85.212.47]:65221 "EHLO
+	mail-vb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753982Ab3FGQB3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Jun 2013 12:01:29 -0400
+Received: by mail-vb0-f47.google.com with SMTP id x14so2782319vbb.6
+        for <git@vger.kernel.org>; Fri, 07 Jun 2013 09:01:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding:x-gm-message-state;
+        bh=+DqNE5L0vQuJOgs1EiHIvnqsPupXaEg2kwPp6yBWRBY=;
+        b=Yj/9BK2AMvmDn+EU/Z96/kPqJ4BSmuOR6R8024OesEvGbT0C/VLuCSJaMEEJ/kAlcF
+         iOib5W3vKblnFBY7cMDwuyQM4T/YNsiF2hIR4iZDWkzhqbb2kqfLpPbHE6bj+mJKyQQg
+         wdyyw7uBX9kWRCnV6W2rhBCwhkdJ+s0MdqZJduLwBTetv3zm1sGoVQWuIlx03klKY31Y
+         7uS6bBE1DAtNsRDn9aMNjy5hlDzSorYf/GeKm+apkanhOKbJTzYIu6xdqaExsApHMlyr
+         tMHDtuiqiS+6H0yEQw8N9Q89Pjz563pHwIPxCOqXyGQ2ZRCsO2PqnVCN9oURHla5wNES
+         WohQ==
+X-Received: by 10.52.19.67 with SMTP id c3mr20331074vde.19.1370620888655; Fri,
+ 07 Jun 2013 09:01:28 -0700 (PDT)
+Received: by 10.52.23.143 with HTTP; Fri, 7 Jun 2013 09:01:07 -0700 (PDT)
+In-Reply-To: <7v4ndayjdt.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQkTXkcbCe9d3bBtwDAKKYnjTbQz854XoLFQsJ3JO6lD0GQPCp//P3koYgZzNvLqEGPiuz0/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226643>
 
-=46orgot to cc; sorry about that.
+On Thu, Jun 6, 2013 at 6:17 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> C=C3=A9lestin Matte <celestin.matte@ensimag.fr> writes:
+>
 
-Junio C Hamano <gitster@pobox.com> writes:
+> But for a two-endpoint diff Porcelain (not the plumbing diff-files,
+> diff-index and diff-tree), I do not think it is particularly a bad
+> idea to add such a "typo-detection" feature.
 
-> SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
->
->> On Thu, Jun 06, 2013 at 03:41:08PM -0700, Junio C Hamano wrote:
->>> * rr/complete-difftool (2013-06-03) 2 commits
->>>   (merged to 'next' on 2013-06-04 at 01c7611)
->>>  + completion: clarify ls-tree, archive, show completion
->>>  + completion: difftool takes both revs and files
->>>=20
->>>  Update command line completion (in contrib/) to use a better named
->>>  completion helper function for commands that take revisions and
->>>  paths.
->>>=20
->>>  Will merge to 'master'.
->>
->> This should not be merged to master as is; the one at the top becaus=
-e
->> of the reasons given in $gmane/226272, the one at the bottom because
->> of the misleading commit message (__git_complete_file() always
->> completed refs first as part of the ref:file notation, so it worked
->> just fine except for the ref1...ref2 notation; the real reason for
->> calling __git_complete_revlist_file() for difftool is to make clear
->> that difftool takes ref1...ref2:file, too).
->
-> Oops.
->
-> It is too late to amend the log messages now, but at least a follow-u=
-p
-> patch can fix the breakage by adding __git_complete_file() back.  Wou=
-ld
-> you mind doing that?
->
-> Thanks.
+I was wondering if this feature is going to be added and if I could
+try implementing it.
+
+--
+010
+001
+111
