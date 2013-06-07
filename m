@@ -1,126 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] toposort: rename "lifo" field
-Date: Thu, 06 Jun 2013 18:25:30 -0700
-Message-ID: <7vfvwuww39.fsf@alter.siamese.dyndns.org>
-References: <1370369299-20744-1-git-send-email-me@ell.io>
-	<1370369299-20744-2-git-send-email-me@ell.io>
-	<7vip1t7koi.fsf@alter.siamese.dyndns.org>
-	<7vobbl60aj.fsf@alter.siamese.dyndns.org>
-	<CAPZ477OFM6D4n_Wz-OozN=aYn5-LmNA2ggL+9GNrbGrRQh9pRQ@mail.gmail.com>
-	<7vobbjxc21.fsf@alter.siamese.dyndns.org>
-	<7vvc5qx3cm.fsf@alter.siamese.dyndns.org>
-	<7vppvyx1mv.fsf_-_@alter.siamese.dyndns.org>
+From: "Constantine A. Murenin" <mureninc@gmail.com>
+Subject: is there a fast web-interface to git for huge repos?
+Date: Thu, 6 Jun 2013 18:35:43 -0700
+Message-ID: <CAPKkNb4bYfBeqkBKqe-22iJsqjmvrYNSe4oWUnPo7QeghLK59Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Elliott Cable <me@ell.io>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 07 03:26:02 2013
+X-From: git-owner@vger.kernel.org Fri Jun 07 03:35:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UklRA-0002Q7-6x
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 03:25:52 +0200
+	id 1Uklan-0001bE-SM
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 03:35:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755678Ab3FGBZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jun 2013 21:25:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51258 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755650Ab3FGBZm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jun 2013 21:25:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2376D18D08;
-	Fri,  7 Jun 2013 01:25:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JeRpmyqIcV75W0mvnE5icd3NXpU=; b=L/HHxI
-	tvlOU0qlFNxuNoYlQxfMj0+N90bilcm6WTqY03rp57sLRTrcoIg+JhJgIa6UyRmg
-	NXlce7KR2o2s2Skd+cSTp1GgTgDmWu765jC1nd+CI+X48pHsbTr/BDtwTWXFGsyn
-	swTOZ5y23cL5kql96hpy0xQIQpVvWMdBphG7U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bXjuxyjTnURMb1qqVh3onP+5lQ7B/CMw
-	g7aMKmd+SyFByUyNSOfkfyZ69jwUrCMV36VkKrIEqbc7ixFcUA7Yh8f7VPsoIj+G
-	zWjFm1/XWW1ropx/eSoZIvUL/4rjWRB+DrKyb3JRVWeqbzOr5oc2dgXZZxd/RWkv
-	0WeC+Wsef8M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0221E18D03;
-	Fri,  7 Jun 2013 01:25:42 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3856E18CF9;
-	Fri,  7 Jun 2013 01:25:41 +0000 (UTC)
-In-Reply-To: <7vppvyx1mv.fsf_-_@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 06 Jun 2013 16:25:44 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2AB4C87A-CF11-11E2-83B0-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755370Ab3FGBfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jun 2013 21:35:46 -0400
+Received: from mail-la0-f53.google.com ([209.85.215.53]:37387 "EHLO
+	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754574Ab3FGBfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jun 2013 21:35:45 -0400
+Received: by mail-la0-f53.google.com with SMTP id fs12so1723517lab.40
+        for <git@vger.kernel.org>; Thu, 06 Jun 2013 18:35:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=ZhboBU+60C7xkh7fEsuXPy7S8OPfyM4MHji0xWwHtIM=;
+        b=oi+wfEYKIpOOdyyzt0//VB5oQX2smeJ7RqXHz351GRMpeD5O+59BR4APB2wUmwD0yo
+         EiV1sLxIy+lt37AhvTKxAEQ+LpmpHgmOx/6NJ7+NJP6mz6eQLglX/f3w8GF1yw6APHKW
+         eXPR+DmochJKaSeLZ1tBdIq3Ag8SPSE0VIDaLBLjfPo6o37119v9MhGsDkimIulwlgye
+         GeoDUxy828hbL5i585QO0ZrKI4sPlf85rWDdgRAHA6zeCY6PAIUWXwDS6HQjCOvsJpk9
+         9nmosd5VBSkaz2PAcW+xI+FvmBb++QM2TLdlpbVB/freMI9euEpiaCkxaU2FlaBu27xm
+         QwKw==
+X-Received: by 10.152.6.228 with SMTP id e4mr1403577laa.61.1370568943721; Thu,
+ 06 Jun 2013 18:35:43 -0700 (PDT)
+Received: by 10.114.77.1 with HTTP; Thu, 6 Jun 2013 18:35:43 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226577>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> When sorting commits topologically, the primary invariant is to emit
-> all children before its parent is emitted.  When traversing a forked
+On a relatively-empty Intel Core i7 975 @ 3.33GHz (quad-core):
 
-s/its/their/;
+Cns# cd DragonFly/
 
->> As I needed to have an excuse to push jk/commit-info-slab topic
->> further (I have an unpublished show-branch rewrite on top of it),
->> I may take a look at doing this myself if/when I find some time.
->
->   So this is the first step, applies on top of jk/commit-info-slab.
+Cns# time git log sys/sys/sockbuf.h >/dev/null
+0.540u 0.140s 0:04.30 15.8%     0+0k 2754+55io 6484pf+0w
+Cns# time git log sys/sys/sockbuf.h > /dev/null
+0.000u 0.030s 0:00.52 5.7%      0+0k 0+0io 0pf+0w
+Cns# time git log sys/sys/sockbuf.h > /dev/null
+0.180u 0.020s 0:00.52 38.4%     0+0k 0+2io 0pf+0w
+Cns# time git log sys/sys/sockbuf.h > /dev/null
+0.420u 0.020s 0:00.52 84.6%     0+0k 0+0io 0pf+0w
 
-The next step will be to replace the use of commit_list in this
-function with a priority queue, whose API may look like what is at
-the end of this message.
+And, right away, a semi-cold git-blame:
 
-Then write a compare function that looks at commit->date field to
-compare committer timestamp, and set it to commit_queue->compare
-when REV_SORT_BY_COMMIT_DATE is asked for.  When doing the graph
-traversal order, set compare function to NULL when initializing the
-commit_queue and use it as a LIFO stack.
-
-And the step after that will be to add an author-date field to the
-commit-info-slab we currently use to keep track of indegree, grab
-author timestamp from commits as we encounter them, and write
-another comparison function to use that information (using the
-cb_data field of commit_queue to point at the info slab) to
-implement REV_SORT_BY_AUTHOR_DATE.  That step can also implement the
-command line option parsing for the new --author-date-order option
-(or alternatively, --date-order={author,committer}).
+Cns# time git blame sys/sys/sockbuf.h >/dev/null
+0.340u 0.040s 0:01.91 19.8%     0+0k 769+45io 2078pf+0w
+Cns# time git blame sys/sys/sockbuf.h > /dev/null
+0.340u 0.010s 0:00.36 97.2%     0+0k 0+2io 0pf+0w
+Cns# time git blame sys/sys/sockbuf.h > /dev/null
+0.310u 0.040s 0:00.36 97.2%     0+0k 0+0io 0pf+0w
+Cns# time git blame sys/sys/sockbuf.h > /dev/null
+0.310u 0.050s 0:00.36 100.0%    0+0k 0+0io 0pf+0w
 
 
-#ifndef COMMIT_QUEUE_H
-#define COMMIT_QUEUE_H
+I'm interested in running a web interface to this and other similar
+git repositories (FreeBSD and NetBSD git repositories are even much,
+much bigger).
 
-/*
- * Compare two commits; the third parameter is cb_data in the
- * commit_queue structure.
- */
-typedef int (*commit_compare_fn)(struct commit *, struct commit *, void *);
+Software-wise, is there no way to make cold access for git-log and
+git-blame to be orders of magnitude less than ~5s, and warm access
+less than ~0.5s?
 
-struct commit_queue {
-	commit_compare_fn compare;
-	void *cb_data;
-	int alloc, nr;
-	struct commit **array;
-};
-
-/*
- * Add the commit to the queue
- */
-struct commit *commit_queue_put(struct commit_queue *, struct commit *);
-
-/*
- * Extract the commit that compares the smallest out of the queue,
- * or NULL.  If compare function is NULL, the queue acts as a LIFO
- * stack.
- */
-struct commit *commit_queue_get(struct commit_queue *);
-
-#endif /* COMMIT_QUEUE_H */
+C.
