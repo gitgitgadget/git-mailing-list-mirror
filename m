@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 1/2] unpack-trees: plug a memory leak
-Date: Fri,  7 Jun 2013 17:29:27 -0500
-Message-ID: <1370644168-4745-2-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v3 2/2] read-cache: plug a few leaks
+Date: Fri,  7 Jun 2013 17:29:28 -0500
+Message-ID: <1370644168-4745-3-git-send-email-felipe.contreras@gmail.com>
 References: <1370644168-4745-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
@@ -10,71 +10,80 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 08 00:31:31 2013
+X-From: git-owner@vger.kernel.org Sat Jun 08 00:31:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ul5By-0006R0-KX
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 00:31:30 +0200
+	id 1Ul5Bz-0006R0-52
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 00:31:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756810Ab3FGWbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 18:31:22 -0400
-Received: from mail-oa0-f41.google.com ([209.85.219.41]:61898 "EHLO
-	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756762Ab3FGWbV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 18:31:21 -0400
-Received: by mail-oa0-f41.google.com with SMTP id n9so3921454oag.14
-        for <git@vger.kernel.org>; Fri, 07 Jun 2013 15:31:21 -0700 (PDT)
+	id S1756916Ab3FGWbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 18:31:25 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:42481 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756762Ab3FGWbY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 18:31:24 -0400
+Received: by mail-ob0-f179.google.com with SMTP id xk17so7249116obc.24
+        for <git@vger.kernel.org>; Fri, 07 Jun 2013 15:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=1Cb0JfJlFAmY+YA3pVltyBcamT4PzZ6kfREbtSsjqVM=;
-        b=fN6nC7tT09DgITLBGIzyrzaGI20nOhsB/j+dX1pjkJl7NuLW5/d0zGXQNxPDke3wad
-         hM2eOtM/yuuRNueX54w9qwsF17lVUOPR3mpdWBE8s7rnQSDhiYavxQcpFBhwetTI+NI5
-         mpitYaUQ6rACIB0HEE3TU8VO0rN1iMTgsvhLUZbU9SWuBPaGKkOlQMUzd+s0Cf/XK3ii
-         k2hC2gOR4u+/ScOMnYA8hz3/aqHTKKSjTDc/uAdborIiUYxf7Wvo2tenIotUzJtTBclQ
-         hJqAX1Ia0+EXDBUIDXmQIQw9RZ83Bb0U7zUWIbhVSnq4wQhLTXlG42yW/8l1acUoKhm0
-         Ew3Q==
-X-Received: by 10.182.65.100 with SMTP id w4mr492003obs.70.1370644281268;
-        Fri, 07 Jun 2013 15:31:21 -0700 (PDT)
+        bh=mU8l4QZgOMkEtrldLSjKHD0GDfjU/CrnwH8CJnxPpZE=;
+        b=c/rooRgLn+Zc6/93XQb+dANAhSdoj2xPmI9K4GzZjK4guJRobs1k+wUr2TIeYBzORp
+         fCiJcIjT1OZaz+RFGTuszv/2JjpxGoWYxrNs9mYBvd1dkKnXgFHfY6LflsDRzWPkt5XV
+         IQBit8AE9kSr1mt+vkhoV3c/I86UqUTVxTp/6+4Wlufi6f1ujfbX/6p0lSO9SoPdJe2/
+         2e2JvKJJ1lWHQhQ06iEauibza+/X4guPlSBbo8s/YFxCwdxZlCd5NVXEcfSZoFsJ3zWf
+         zTFOknVZ4JB8oc9mqPSehLHDZ9dpW/2GB8nfMM30gcOoASQ2SCf/iRjIS6N+42XDhk9S
+         SkBg==
+X-Received: by 10.60.93.6 with SMTP id cq6mr476752oeb.108.1370644284310;
+        Fri, 07 Jun 2013 15:31:24 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id b5sm965187oby.12.2013.06.07.15.31.19
+        by mx.google.com with ESMTPSA id l4sm1014385obh.7.2013.06.07.15.31.22
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 07 Jun 2013 15:31:20 -0700 (PDT)
+        Fri, 07 Jun 2013 15:31:23 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.698.g079b096
 In-Reply-To: <1370644168-4745-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226758>
 
-Before overwriting the destination index, first let's discard its
-contents.
+We are not freeing 'istate->cache' properly.
+
+We can't rely on 'initialized' to keep track of the 'istate->cache',
+because it doesn't really mean it's initialized. So assume it always has
+data, and free it before overwriting it.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- unpack-trees.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ read-cache.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 57b4074..abe2576 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1166,8 +1166,10 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+diff --git a/read-cache.c b/read-cache.c
+index 5e30746..a1dd04d 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1451,6 +1451,7 @@ int read_index_from(struct index_state *istate, const char *path)
+ 	istate->version = ntohl(hdr->hdr_version);
+ 	istate->cache_nr = ntohl(hdr->hdr_entries);
+ 	istate->cache_alloc = alloc_nr(istate->cache_nr);
++	free(istate->cache);
+ 	istate->cache = xcalloc(istate->cache_alloc, sizeof(*istate->cache));
+ 	istate->initialized = 1;
  
- 	o->src_index = NULL;
- 	ret = check_updates(o) ? (-2) : 0;
--	if (o->dst_index)
-+	if (o->dst_index) {
-+		discard_index(o->dst_index);
- 		*o->dst_index = o->result;
-+	}
+@@ -1512,6 +1513,9 @@ int discard_index(struct index_state *istate)
  
- done:
- 	clear_exclude_list(&el);
+ 	for (i = 0; i < istate->cache_nr; i++)
+ 		free(istate->cache[i]);
++	free(istate->cache);
++	istate->cache = NULL;
++	istate->cache_alloc = 0;
+ 	resolve_undo_clear_index(istate);
+ 	istate->cache_nr = 0;
+ 	istate->cache_changed = 0;
 -- 
 1.8.3.698.g079b096
