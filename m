@@ -1,74 +1,93 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@fira.uka.de>
-Subject: Re: What's cooking in git.git (Jun 2013, #03; Thu, 6)
-Date: Fri, 7 Jun 2013 20:55:37 +0200
-Message-ID: <20130607185537.GC25731@goldbirke>
-References: <7vzjv2x3p7.fsf@alter.siamese.dyndns.org>
- <20130607000006.GA25731@goldbirke>
- <CALkWK0=D7sHLgptWkFHma1FoS-zdifHqXnuuBKhkyuszgEJ0Xw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [Administrivia] On ruby and contrib/
+Date: Fri, 07 Jun 2013 21:00:58 +0200
+Message-ID: <vpq8v2lycd1.fsf@anie.imag.fr>
+References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
+	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
+	<rmivc5rp9w2.fsf@fnord.ir.bbn.com>
+	<alpine.DEB.1.00.1306061818191.28957@s15462909.onlinehome-server.info>
+	<CALkWK0n2VsEP31jMB2kZ4x=wa90o8QPkR=ZWETfm=H5RC1kKcg@mail.gmail.com>
+	<alpine.DEB.1.00.1306070518510.28957@s15462909.onlinehome-server.info>
+	<CALkWK0nUoF2VX6Ns09vQHYo11520_4r9ikYmkZW108aQm1RpoQ@mail.gmail.com>
+	<vpqhah9248u.fsf@anie.imag.fr>
+	<CALkWK0mLVxKGvvYmREFyEkp6CgWuOEmML5V4ajF8R0SK62D4Gg@mail.gmail.com>
+	<vpqip1pzs9d.fsf@anie.imag.fr>
+	<CALkWK0=mthyNQz9o6vG0b_yEMVL3GsB-dppNt6xgWTdUQQ5Zqw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Greg Troxel <gdt@ir.bbn.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	=?iso-8859-1?Q?R?= =?iso-8859-1?Q?en=E9?= Scharfe 
+	<rene.scharfe@lsrfire.ath.cx>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	=?iso-8859-1?Q?Nguy=ADn_Th=E1i_Ng=F7c?= <pclouds@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 07 20:55:46 2013
+X-From: git-owner@vger.kernel.org Fri Jun 07 21:01:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ul1pA-0002bu-IU
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 20:55:44 +0200
+	id 1Ul1uz-0007sJ-8q
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 21:01:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757035Ab3FGSzk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 14:55:40 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:53023 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756691Ab3FGSzj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 14:55:39 -0400
-Received: from localhost6.localdomain6 (g228010151.adsl.alicedsl.de [92.228.10.151])
-	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
-	id 0M8QOg-1UOhml20vK-00vxzv; Fri, 07 Jun 2013 20:55:37 +0200
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=D7sHLgptWkFHma1FoS-zdifHqXnuuBKhkyuszgEJ0Xw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:aJp0Gt9Iprlp2HOr9o4KfJo30SCC8UNlipmW4466+lC
- zajLhJptcwysdjS/pYofnRkB5VMYGIyBXPKg2Fuze/QYFq+Wh4
- rcsm/x7RRnOVR0HIdKR1RveXEorrJBdDDjAIPzDYMe3oEMfx7w
- xrwuOX9jPRtp83RjnZ9bqzMetxQRqpc1JBADkbpC2uo8wFfzUB
- 9k7dUU9P2aJWnZcjsn5NmuOnTOmH0Lb66jetMXMUv1vTykeIK4
- ptC8Q+Mks9RQr4YFbSYdYwRwf5vNyD+3T3/1eh6g99ea9/Cima
- XInWnq++6+IANTAk+nk7LqiMR2ausbX23B6QKO5U7N94Sjj9HB
- BSaZdVDIvBya/+FLsWYgM7RcexTkHSS5fDdmZZYpX
+	id S1757202Ab3FGTBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 15:01:41 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:47463 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757094Ab3FGTBk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 15:01:40 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r57J0uap010865
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 7 Jun 2013 21:00:56 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Ul1uE-0003Fq-Sj; Fri, 07 Jun 2013 21:00:58 +0200
+In-Reply-To: <CALkWK0=mthyNQz9o6vG0b_yEMVL3GsB-dppNt6xgWTdUQQ5Zqw@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Sat, 8 Jun 2013 00:18:18 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 07 Jun 2013 21:01:00 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r57J0uap010865
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1371236461.59126@RlNiSdMJGxNjQN3kkzE3nA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226671>
 
-On Fri, Jun 07, 2013 at 11:00:14PM +0530, Ramkumar Ramachandra wrote:
-> SZEDER G=E1bor wrote:
-> > the one at the top because
-> > of the reasons given in $gmane/226272
->=20
-> Sorry about the delay: I went to sleep for a couple of days :P
->=20
-> > the one at the bottom because
-> > of the misleading commit message (__git_complete_file() always
-> > completed refs first as part of the ref:file notation, so it worked
-> > just fine except for the ref1...ref2 notation; the real reason for
-> > calling __git_complete_revlist_file() for difftool is to make clear
-> > that difftool takes ref1...ref2:file, too).
->=20
-> How am I (or anyone else) supposed to know the "intended" meaning
-> __git_complete_file()?  The implementation is just an alias to
-> __git_complete_revlist_file(), so I looked at the name and guessed
-> that it was supposed to complete files; now you tell me that it was
-> intended to complete any revspec except revision ranges (what does
-> that have to do with "file" again?).  I suppose digging through the
-> history would've told me, but I really didn't bother for such a
-> trivial non-functional change.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Yeah, I suppose it's always wise to do a bit of history digging before
-you go on to remove a function you don't know what it is doing, even
-though a simple git log -Sfuncname perhaps doesn't even qualifies for
-"digging" ;)
+>> Whether it's based on POSIX is an implementation detail for the user.
+>> The real question is more command-line Vs GUI than POSIX/Win32. Some
+>> Linux users like GUI, some windows users use command-line. I tried IDE
+>> integration with EGIT, and quite frankly I ended-up doing all the Git
+>> stuff in a terminal next to Eclipse.
+>
+> I see.  But isn't it possible to implement a CLI in libgit2 too, no?
+
+Yes (there have actually been several attempts at this like
+https://github.com/Romain-Geissler/git2 and
+https://github.com/vfr-nl/git2/), but there are a *lot* of stuff that
+are in git.git and not in libgit2.
+
+I'd love to see Git re-implemented on top of libgit2, but that's not
+going to happen tomorrow :-\.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
