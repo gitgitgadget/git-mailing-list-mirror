@@ -1,162 +1,97 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] t0005: skip signal death exit code test on Windows
-Date: Fri, 7 Jun 2013 14:46:01 +0200
-Message-ID: <CABPQNSasTdkmpeGWb7_wZK2cQhiOyF7bX5ObcBg5kHm0KBGS5w@mail.gmail.com>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org> <51AEE1C3.9020507@viscovery.net>
- <20130605071206.GC14427@sigill.intra.peff.net> <51B02D81.3000700@viscovery.net>
- <20130606063754.GA20050@sigill.intra.peff.net> <CAMP44s2L4EOG7aEOR8gqXeaHm7SeuPg=GQAWX3PByKKbtTHnwQ@mail.gmail.com>
- <20130606064409.GA20334@sigill.intra.peff.net> <7vy5anyx1w.fsf@alter.siamese.dyndns.org>
- <20130606174032.GB32174@sigill.intra.peff.net> <CABPQNSYLmFWkdgph6W7MwaSTe+zrU0AaJpj_v9z=cmvWu64HNA@mail.gmail.com>
- <51B1B4DF.90705@viscovery.net> <CABPQNSYE=Mvrmc44dZmKnB14KLh4A=HxWo2-xgnJRyj1Q+BJLg@mail.gmail.com>
- <51B1CFD4.3030908@viscovery.net>
-Reply-To: kusmabite@gmail.com
+From: Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@google.com>
+Subject: Re: Is there a library for monitoring a git repository for any
+ changes?
+Date: Fri, 7 Jun 2013 09:00:46 -0400
+Message-ID: <20130607130042.GA28057@google.com>
+References: <CABaQ0JgJaCY-LXHjXMq_7NTgHf2GqN4Ond7rm61jfLAV-gEgRQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Jun 07 14:46:52 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Robert Martin <rdmartin3@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 07 15:00:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukw47-0002f3-UY
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 14:46:48 +0200
+	id 1UkwHo-0006ut-Te
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 15:00:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753350Ab3FGMqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 08:46:43 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:43605 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751671Ab3FGMqm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 08:46:42 -0400
-Received: by mail-ie0-f181.google.com with SMTP id x14so10263881ief.40
-        for <git@vger.kernel.org>; Fri, 07 Jun 2013 05:46:41 -0700 (PDT)
+	id S1754769Ab3FGNAt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 09:00:49 -0400
+Received: from mail-yh0-f74.google.com ([209.85.213.74]:34662 "EHLO
+	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754711Ab3FGNAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 09:00:47 -0400
+Received: by mail-yh0-f74.google.com with SMTP id i72so261560yha.5
+        for <git@vger.kernel.org>; Fri, 07 Jun 2013 06:00:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=iCc00bQSqeneBB3WLmd1VvfO8Gs8g6My7Np84PN2lJ8=;
-        b=TmCgzMTZX5PI57Nx4iVbtz0AZqT9B/Vzvkc1rzgBgmmJm/QGnCKcA8J9vo82s6uNw7
-         Ta3lugZtHjzANUIg2gEtMMLW2zu5wJIrrs+gNUuxsPJY3yMf1M9V+c+ZuvpeuCTbfWq+
-         eF9FkVck/luKDDrhKss2VRdBrPI9ZaxJrr5gWCATLW+Fl857c5Ofz05wGb0Se8c4JKYU
-         BSaPCKUCECfCe1HrnjNWpaiQw/Djv/BJCFwLVc4UIj3VBnJjT8NvFL4nkE25dR6tPfes
-         E2U/Us8zbNQgRxZ6kCNLBP+JDJQfPhpnkHdEhjRG9btmGxo5eo7fyTLlgILBAGbqdSi4
-         4i9w==
-X-Received: by 10.50.153.47 with SMTP id vd15mr1065467igb.92.1370609201826;
- Fri, 07 Jun 2013 05:46:41 -0700 (PDT)
-Received: by 10.64.23.199 with HTTP; Fri, 7 Jun 2013 05:46:01 -0700 (PDT)
-In-Reply-To: <51B1CFD4.3030908@viscovery.net>
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=vo4KTja5MLDIux3VDnEIeTgIal/OdxDmese7uUYfdMo=;
+        b=BEIbHPoMXZcipraYVIOeQA0Jvsg5G/oWkxRnPaFjls5DQuZOqN1p6lZGtKZgPP7084
+         3lwbFdF/6oRAsQ6VtFz9v7BRoRHBQ+h9I+sSLZl1F2B8Il4c4wUa+6+iqJ8F8JEyNHxQ
+         bcsPccsVApdEAEmPMgw/86K8kK21WWPeiq5t08NH1B9Yonexz0e7Jjz7Zj1UsRLC9m60
+         AA9wgHSgRUXtFW21nRs4kBJMP9xAJsR7xDrVEYEuP/Fad5R6XhP9nccCd7dpFuDl59Ag
+         jfvJCq8yMlDYny+Yxy09s9FyxHLHG/QMyabXfroRC6O1Dunkyl2gIkMLSXkYSER4NqUB
+         /Ekg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent:x-gm-message-state;
+        bh=vo4KTja5MLDIux3VDnEIeTgIal/OdxDmese7uUYfdMo=;
+        b=OQLaB/D+QbfbmNxbW6lGWFgPo6n7VE2je7Sj3Ll7QYvwJ89VRBeWJ+MJH8Ft7d+pVu
+         1Ei+DBTS+UWkXz6cvykKq4pDYiOwL2NTQHoL2UEZ9o+mmnV4Ig7DX8TmkVMAmuPprvIW
+         VPFOVpOoFH7ZWxiarltAnhUSRE+78NfUlyrWdnw+jT0H3y2WSdP5gh/DvS8UgiAVhEKH
+         Exygoyiz6XASG7appcMh6ko/0GcWr/ZVAZsTiG69LPehQNti5PGRz81LL9I95fHzcEq3
+         Cf11JIWRIi2XDuoBA3h6BFfyY8qDEeXvmng+rPXrAP5G2eJD+QZ1W4FZjk6g9u8FfH6D
+         fYug==
+X-Received: by 10.236.53.202 with SMTP id g50mr8120436yhc.1.1370610046803;
+        Fri, 07 Jun 2013 06:00:46 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id g80si584218yhj.7.2013.06.07.06.00.46
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=AES128-SHA bits=128/128);
+        Fri, 07 Jun 2013 06:00:46 -0700 (PDT)
+Received: from valle.nyc.corp.google.com (valle.nyc.corp.google.com [172.26.78.170])
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id AB62E5A4208;
+	Fri,  7 Jun 2013 06:00:46 -0700 (PDT)
+Received: by valle.nyc.corp.google.com (Postfix, from userid 159662)
+	id 1B04A40803; Fri,  7 Jun 2013 09:00:46 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CABaQ0JgJaCY-LXHjXMq_7NTgHf2GqN4Ond7rm61jfLAV-gEgRQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Gm-Message-State: ALoCoQnBwc5cRMPSJDbIDzbdubmvtB9Uhkz6eSVe3CWcFyREDqdI2SNd7naZ4wPmcnXc6TVw5uD7b+5XdjcQw1e8lCxnbWun5auzojJy1fR/WuM5FjX2nbR8gyPYNqpZx9+IHLEauXTDAlRGYrt1V//4cHP14efi0wy63aZZbdk4iuOL9vmcmXux8ya5FjLaW8Nf0bYnSUUh
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226626>
 
-On Fri, Jun 7, 2013 at 2:19 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 6/7/2013 14:00, schrieb Erik Faye-Lund:
->> On Fri, Jun 7, 2013 at 12:24 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->>> Am 6/7/2013 12:12, schrieb Erik Faye-Lund:
->>>> On Thu, Jun 6, 2013 at 7:40 PM, Jeff King <peff@peff.net> wrote:
->>>>> On Thu, Jun 06, 2013 at 10:21:47AM -0700, Junio C Hamano wrote:
->>>>>
->>>>>>> The particular deficiency is that when a signal is raise()d whose SIG_DFL
->>>>>>> action will cause process death (SIGTERM in this case), the
->>>>>>> implementation of raise() just calls exit(3).
->>>>>>
->>>>>> After a bit of web searching, it seems to me that this behaviour of
->>>>>> raise() is in msvcrt, and compat/mingw.c::mingw_raise() just calls
->>>>>> that.  In other words, "the implementation of raise()" is at an even
->>>>>> lower level than mingw/msys, and I would agree that it is a platform
->>>>>> issue.
->>>>>
->>>>> Yeah, if it were mingw_raise responsible for this, I would suggest using
->>>>> the POSIX shell "128+sig" instead. We could potentially check for
->>>>> SIG_DFL[1] mingw_raise and intercept and exit there. I don't know if
->>>>> that would create headaches or confusion for other msys programs,
->>>>> though. I'd leave that up to the msysgit people to decide whether it is
->>>>> worth the trouble.
->>>>>
->>>>
->>>> ...and here's the code to do just that:
->>>>
->>>> diff --git a/compat/mingw.c b/compat/mingw.c
->>>> index b295e2f..8b3c1b4 100644
->>>> --- a/compat/mingw.c
->>>> +++ b/compat/mingw.c
->>>> @@ -1573,7 +1573,8 @@ static HANDLE timer_event;
->>>>  static HANDLE timer_thread;
->>>>  static int timer_interval;
->>>>  static int one_shot;
->>>> -static sig_handler_t timer_fn = SIG_DFL, sigint_fn = SIG_DFL;
->>>> +static sig_handler_t timer_fn = SIG_DFL, sigint_fn = SIG_DFL,
->>>> +    sigterm_fn = SIG_DFL;
->>>>
->>>>  /* The timer works like this:
->>>>   * The thread, ticktack(), is a trivial routine that most of the time
->>>> @@ -1688,6 +1689,10 @@ sig_handler_t mingw_signal(int sig,
->>>> sig_handler_t handler)
->>>>               sigint_fn = handler;
->>>>               break;
->>>>
->>>> +     case SIGTERM:
->>>> +             sigterm_fn = handler;
->>>> +             break;
->>>> +
->>>>       default:
->>>>               return signal(sig, handler);
->>>>       }
->>>> @@ -1715,6 +1720,13 @@ int mingw_raise(int sig)
->>>>                       sigint_fn(SIGINT);
->>>>               return 0;
->>>>
->>>> +     case SIGTERM:
->>>> +             if (sigterm_fn == SIG_DFL)
->>>> +                     exit(128 + SIGTERM);
->>>> +             else if (sigterm_fn != SIG_IGN)
->>>> +                     sigterm_fn(SIGTERM);
->>>> +             return 0;
->>>> +
->>>>       default:
->>>>               return raise(sig);
->>>>       }
->>>
->>> That's pointless and does not work. The handler would only be called when
->>> raise() is called, but not when a SIGTERM is received, e.g., via Ctrl-C
->>> from the command line, because that route ends up in MSVCRT, which does
->>> not know about this handler.
->>
->> That's not entirely true. On Windows, there's only *one* way to
->> generate SIGTERM; "signal(SIGTERM)". Ctrl+C does not generate SIGTERM.
->> We generate SIGINT on Ctrl+C in mingw_fgetc, but the default Control+C
->> handler routine calls ExitProcess():
->> http://msdn.microsoft.com/en-us/library/windows/desktop/ms683242(v=vs.85).aspx
->
-> But a call to signal(SIGTERM, my_handler) should divert Ctrl+C to
-> my_handler. The unpatched version does, because MSVCRT now knows about
-> my_handler and sets things up so that the event handler calls my_handler.
+On Thursday, June 06, 2013 at 23:16 EDT,
+     Robert Martin <rdmartin3@gmail.com> wrote:
 
-No, it does not:
---->8---
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
+> I want to work on a visualization program for git. I was hoping there
+> was a library that would allow me to monitor a git repo for changes.
+> Consider it like inotify, but for a git repository (in fact, I think
+> it would probably have inotify under the hood).
+>=20
+> This hypothetical library would trigger an event any time the
+> repository was modified, i.e. any time the graph that represents
+> history was changed.
+>=20
+> Is there such a library? If not, is there a better way to monitor the
+> repository so that I wouldn't need to write it myself? Would anyone
+> else be interested if I wrote it myself?
 
-void my_handler(int signum)
-{
-        printf("signal: %d\n", signum);
-        exit(1);
-}
+'git ls-remote'? Either run periodically or, if the monitored git is
+local, triggered via inotify. If you have control over the git perhaps
+a post-receive hook would be useful too.
 
-int main()
-{
-        signal(SIGTERM, my_handler);
-        while (1);
-        return 0;
-}
---->8---
-
-This quietly kills the process on Windows with MSVCRT's
-signal-implementation. In fact SIGTERM isn't raised on Linux either.
-Ctrl+C raises SIGINT, not SIGTERM.
+--=20
+Magnus B=E4ck
+baeck@google.com
