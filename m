@@ -1,85 +1,97 @@
-From: Leandro Lucarella <leandro.lucarella@sociomantic.com>
-Subject: Re: branch.<name>.pushremote not working with push.default simple or
- upstream
-Date: Fri, 7 Jun 2013 19:07:52 +0200
-Message-ID: <20130607170752.GI28668@sociomantic.com>
-References: <20130607124146.GF28668@sociomantic.com>
- <CALkWK0miONv_O67SHcfJoXq1x7xPvKu6uefg+TiPGbF-1WJ-bg@mail.gmail.com>
- <7v8v2lvs5s.fsf@alter.siamese.dyndns.org>
- <20130607161402.GH28668@sociomantic.com>
- <CALkWK0=v2vF7oGG3yUAXfaGdodCrkbvmQA+z9hMcoeMUFGFgsg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 6/6] completion: clarify ls-tree, archive, show completion
+Date: Fri, 7 Jun 2013 22:51:53 +0530
+Message-ID: <CALkWK0mbVgJHRoNXNkc6n7==-H+caNqvzrzUwspS_Eq2sMfJbg@mail.gmail.com>
+References: <1370181822-23450-1-git-send-email-artagnon@gmail.com>
+ <1370181822-23450-7-git-send-email-artagnon@gmail.com> <20130603192555.GK2192@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 07 19:08:05 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Jun 07 19:22:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ul08w-0007Mn-V1
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 19:08:03 +0200
+	id 1Ul0N4-0003Xc-K1
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 19:22:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754902Ab3FGRH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 13:07:58 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:50887 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753453Ab3FGRH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 13:07:58 -0400
-Received: from labs09.localdomain (pD957613F.dip0.t-ipconnect.de [217.87.97.63])
-	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
-	id 0LpeUg-1U84pL0fOY-00fOfr; Fri, 07 Jun 2013 19:07:53 +0200
-Received: from luca by labs09.localdomain with local (Exim 4.76)
-	(envelope-from <leandro.lucarella@sociomantic.com>)
-	id 1Ul08m-0001ZE-8N; Fri, 07 Jun 2013 19:07:52 +0200
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=v2vF7oGG3yUAXfaGdodCrkbvmQA+z9hMcoeMUFGFgsg@mail.gmail.com>
-X-Paranoid: Just because you're paranoid, don't mean they're not after you.
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:oO3NbhfGUo2jWUcVXqKJT6m2Bum7MCrAbq2fLWxoCKf
- 7iAWJbtALlW7g8K4C8p5RKzOUmjJu1+PgEtethcQcwCCqfoVd4
- U9IiYC/OIOzMIGVdbELmBw1djSK0+7UYDNJqECTSikB6FIREDm
- vQlr0MtfO8EqHtCXRyt0B9jAS76grfO9CmjQK5URc2zzH6AsJk
- dYPFSEI2LO3+Xug1XeQOMipGvUAS83c6W5gsTGKx5zAeYuWhsK
- 6A/Thry38mTN9RS1ULClOLlktu2AKmbfiOWgN0nX8Pvoc0KnUg
- iYxq5BR0NmxFT9RNyS0ESF3k7o1udXab0PPDvZtxh/rsPiv4sy
- LYIeAVnIrSRbxopBOfLR3VSdFER9Mxs7EgPiNkRWe882QNtbG0
- XnyI4+kkbl/VQ==
+	id S1755603Ab3FGRWe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 13:22:34 -0400
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:56294 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754924Ab3FGRWd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Jun 2013 13:22:33 -0400
+Received: by mail-ie0-f171.google.com with SMTP id s9so11280361iec.2
+        for <git@vger.kernel.org>; Fri, 07 Jun 2013 10:22:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=nlgfHDqutQ4+wwnF3HijBEsKICWijXMGjSQGSCqAUKY=;
+        b=o7AwhLsemABPhJSp5Ll/77UiFL6LJaypBVzeyzYLdGphcoLreDRWHOPAv78P3iNG7/
+         2ybr88Ejyg4YZC0beTbPQwW4DJs2Ibin1beruCis7QPIGVI3DuXjtJvXr2NFQW0jFlfN
+         Mu0HJxZScz0FJc9XlTjrgcya2aR4jarCJ6N526q+LHiVVcRuYh5FdmHSiZ2crY+b8Frj
+         6WPTZvT4QQdIe0HpdXDj/aKEEV4ILxoxgeRuY1PqRHfJKFdVtWjQmckI8qx6gPXA10J7
+         ACB5C3OrBXx3Q7ii6ydRpt7jYVqIJFSi5VAZqIrP4Cf4ghcQMJcQYbC3uRd/HbgLYVfJ
+         X0oA==
+X-Received: by 10.50.141.230 with SMTP id rr6mr1674233igb.89.1370625753513;
+ Fri, 07 Jun 2013 10:22:33 -0700 (PDT)
+Received: by 10.64.136.104 with HTTP; Fri, 7 Jun 2013 10:21:53 -0700 (PDT)
+In-Reply-To: <20130603192555.GK2192@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226652>
 
-On Fri, Jun 07, 2013 at 10:27:58PM +0530, Ramkumar Ramachandra wrote:
-> Leandro Lucarella wrote:
-> > Thanks for the detailed explanations, I think this would cover my use
-> > case. Just for clarification, here are some more details on this use
-> > case, which I think is becoming very popular among github users.
-> > We have a "blessed" repository (upstream in my case) and only a few
-> > people is able to push to it (let's call them maintainers). Every
-> > developer, including the ones with push access, have to go through peer
-> > reviewing and are not allowed to push their own commits to upstream. For
-> > peer reviewing, each have it's own public fork, that other people can
-> > review and merge/push if is good.
-> 
-> Yes, and I wrote it precisely to address this itch.  git/git is
-> origin, and artagnon/git is ram.  I just set remote.pushdefault to ram
-> and continue working as usual.
-> 
-> I apologize for not having thought hard enough about other
-> push.default modes: I personally use current, and like it very much.
-> As an added bonus, even new branches created with git checkout -b
-> hot-branch will get push to go to the right place; no need to set
-> upstream before pushing.
+SZEDER G=C3=A1bor wrote:
+> Well, people out there might have completion scriplets for their
+> aliases or custom git commands which use __git_complete_file().
+> Removing this function would break those scripts.
 
-I might try to just switch to current, I feel more comfortable with
-simple because I feel is safer to explicitly set the upstream branch,
-but is true that most of the time is not necessary.
+What is the advantage of using __git_complete_file() over
+__git_complete_revlist_file()?  Isn't it just a misleading alias?
 
--- 
-Leandro Lucarella
-Senior R&D Developer
-sociomantic labs GmbH <http://www.sociomantic.com>
+> Arguably the name of __git_complete_file() could describe better what
+> the function does, or what it did, i.e. it used to provide completion
+> for the master:Doc<TAB> notation.  But that's only the name.  Since
+> both git ls-tree and git archive understand this notation, calling th=
+e
+> helper for master:Doc<TAB> in their completion functions is not
+> misleading at all.
+
+But __git_complete_revlist_file() provides all this and more, no?
+
+> Now, __git_complete_revlist_file() provides completion both for this
+> master:Doc<TAB> notation and for revision ranges, i.e. for
+> master..n<TAB> and master...n<TAB>.  However, since neither git
+> ls-tree nor git archive accept revision ranges, calling
+> __git_complete_revlist_file() in their completion function would be
+> misleading.
+
+Yeah, they accept tree-ish'es.  Isn't __git_complete_file() still a
+horrible name?
+
+  $ git ls-tree HEAD:Documentation
+
+What file?  There's already a __git_complete_index_file(), which is
+properly named and used by the ls-files family.  If anything, we
+should write a new __git_complete_treeish() function that does what
+__git_complete_revlist_file() does, except that it doesn't complete
+revision ranges, right?  Frankly, I don't know if it's worth the
+additional trouble: we do spurious completions all over the place, and
+we haven't clamped down on any of that.
+
+  $ git log HEAD:Doc<TAB>
+
+Note how log doesn't even error out.
+
+> git show is special, as it understands both the master:Doc<TAB>
+> notation and revision ranges, and even the combination of the two, so
+> calling __git_complete_revlist_file() there would indeed be better.
+
+It just accepts any revspec with pathspec filtering, like many many
+other commands.
