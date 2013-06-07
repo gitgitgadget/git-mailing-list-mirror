@@ -1,71 +1,67 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 01/18] Follow perlcritic's recommendations - level 5 and 4
-Date: Fri, 07 Jun 2013 10:10:24 +0200
-Message-ID: <vpqa9n25ojz.fsf@anie.imag.fr>
+Subject: Re: [PATCH 08/18] Explicitely assign local variable as undef and make a proper one-instruction-by- line indentation
+Date: Fri, 07 Jun 2013 10:18:23 +0200
+Message-ID: <vpq4nda5o6o.fsf@anie.imag.fr>
 References: <1370547263-13558-1-git-send-email-celestin.matte@ensimag.fr>
-	<1370547263-13558-2-git-send-email-celestin.matte@ensimag.fr>
+	<1370547263-13558-9-git-send-email-celestin.matte@ensimag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, benoit.person@ensimag.fr
 To: =?iso-8859-1?Q?C=E9lestin?= Matte <celestin.matte@ensimag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 07 10:10:48 2013
+X-From: git-owner@vger.kernel.org Fri Jun 07 10:18:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ukrl0-0006XX-Sz
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 10:10:47 +0200
+	id 1Ukrse-0004r2-Gv
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 10:18:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752532Ab3FGIKi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 04:10:38 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:56856 "EHLO shiva.imag.fr"
+	id S1752152Ab3FGISg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 04:18:36 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:34193 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752043Ab3FGIKd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 04:10:33 -0400
+	id S1751145Ab3FGISd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 04:18:33 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r578AO8I028888
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r578IO3q019706
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 7 Jun 2013 10:10:24 +0200
+	Fri, 7 Jun 2013 10:18:24 +0200
 Received: from anie.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
 	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Ukrkf-0005Ar-37; Fri, 07 Jun 2013 10:10:25 +0200
-In-Reply-To: <1370547263-13558-2-git-send-email-celestin.matte@ensimag.fr>
+	id 1UkrsO-0005PG-2F; Fri, 07 Jun 2013 10:18:25 +0200
+In-Reply-To: <1370547263-13558-9-git-send-email-celestin.matte@ensimag.fr>
 	(=?iso-8859-1?Q?=22C=E9lestin?= Matte"'s message of "Thu, 6 Jun 2013
- 21:34:06 +0200")
+ 21:34:13 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 07 Jun 2013 10:10:25 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 07 Jun 2013 10:18:24 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r578AO8I028888
+X-MailScanner-ID: r578IO3q019706
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1371197428.06534@oxUETNRLljpZBAo3zH/WQQ
+MailScanner-NULL-Check: 1371197909.465@8Sk2SwlIR6ijZRgejcNLDg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226612>
 
 C=E9lestin Matte <celestin.matte@ensimag.fr> writes:
 
-> Subject: [PATCH 01/18] Follow perlcritic's recommendations - level 5 =
-and 4
+> Subject: [PATCH 08/18] Explicitely assign local variable as undef and=
+ make a proper one-instruction-by- line indentation
 
-It would be better to prefix commit messages with "git-remote-mediawiki=
-: ".
+Try to keep short subject lines. We usually consider that 80 character
+is a strict maximum, and to have e.g. "git log --oneline"'s output fit
+on 80 column terminal, we try to stick to 50 chars (man git-commit
+documents that).
 
-> Fix warnings from perlcritic's level 5 and 4.
-
-It would be cool to have a "make perlcritic" target in the Makefile so
-that future developers can easily re-run it and avoid repeating the sam=
-e
-mistakes. As much as possible, "make perlcritic" should produce no
-output at the end of your patch series (either the warnings should be
-fixed, or they should be disabled).
+The subject line can say "what" the patch does, and the "why" can be
+deferred to the body (after the blank line in the commit message).
 
 --=20
 Matthieu Moy
