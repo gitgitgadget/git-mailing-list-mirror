@@ -1,31 +1,31 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v2 03/10] tests: introduce test_ln_s_add
-Date: Fri,  7 Jun 2013 22:53:27 +0200
-Message-ID: <6bbcf9909d76a466695a66e894bae8b98612ba15.1370636706.git.j6t@kdbg.org>
+Subject: [PATCH v2 01/10] test-chmtime: Fix exit code on Windows
+Date: Fri,  7 Jun 2013 22:53:25 +0200
+Message-ID: <ba3c59d26cfb23a8c71c66ef1d49c4dca55fc556.1370636706.git.j6t@kdbg.org>
 References: <cover.1370076477.git.j6t@kdbg.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 07 22:54:10 2013
+X-From: git-owner@vger.kernel.org Fri Jun 07 22:54:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ul3fl-00075o-Cm
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 22:54:09 +0200
+	id 1Ul3fi-00075o-10
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 22:54:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757275Ab3FGUyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 16:54:00 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:33332 "EHLO bsmtp.bon.at"
+	id S1756923Ab3FGUxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 16:53:37 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:33328 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756038Ab3FGUxh (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756102Ab3FGUxh (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 7 Jun 2013 16:53:37 -0400
 Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 5B82210012;
-	Fri,  7 Jun 2013 22:53:35 +0200 (CEST)
+	by bsmtp.bon.at (Postfix) with ESMTP id D55CB130049;
+	Fri,  7 Jun 2013 22:53:34 +0200 (CEST)
 Received: from dx.sixt.local (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id A50FB19F5EA;
+	by dx.sixt.local (Postfix) with ESMTP id 7EE3F19F5E7;
 	Fri,  7 Jun 2013 22:53:34 +0200 (CEST)
 X-Mailer: git-send-email 1.8.3.rc1.32.g8b61cbb
 In-Reply-To: <cover.1370076477.git.j6t@kdbg.org>
@@ -35,68 +35,54 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226714>
 
-Add a new function that creates a symbolic link and adds it to the index
-to be used in cases where a symbolic link is not required on the file
-system. We will use it to remove many SYMLINKS prerequisites from test
-cases.
+MinGW's bash does not recognize an exit code -1 as failure. See also
+47e3de0e (MinGW: truncate exit()'s argument to lowest 8 bits) and 2488df84
+(builtin run_command: do not exit with -1). Exit code 1 is good enough.
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- t/README                | 14 ++++++++++++++
- t/test-lib-functions.sh | 17 +++++++++++++++++
- 2 files changed, 31 insertions(+)
+ test-chmtime.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/README b/t/README
-index e669bb3..bbe25c3 100644
---- a/t/README
-+++ b/t/README
-@@ -592,6 +592,20 @@ library for your script to use.
- 		test_cmp expected actual
- 	'
+diff --git a/test-chmtime.c b/test-chmtime.c
+index 02b42ba..2e601a8 100644
+--- a/test-chmtime.c
++++ b/test-chmtime.c
+@@ -84,7 +84,7 @@ int main(int argc, const char *argv[])
+ 		if (stat(argv[i], &sb) < 0) {
+ 			fprintf(stderr, "Failed to stat %s: %s\n",
+ 			        argv[i], strerror(errno));
+-			return -1;
++			return 1;
+ 		}
  
-+ - test_ln_s_add <path1> <path2>
-+
-+   This function helps systems whose filesystem does not support symbolic
-+   links. Use it to add a symbolic link entry to the index when it is not
-+   important that the file system entry is a symbolic link, i.e., instead
-+   of the sequence
-+
-+	ln -s foo bar &&
-+	git add bar
-+
-+   Sometimes it is possible to split a test in a part that does not need
-+   the symbolic link in the file system and a part that does; then only
-+   the latter part need be protected by a SYMLINKS prerequisite (see below).
-+
- Prerequisites
- -------------
+ #ifdef WIN32
+@@ -92,7 +92,7 @@ int main(int argc, const char *argv[])
+ 				chmod(argv[i], sb.st_mode | S_IWUSR)) {
+ 			fprintf(stderr, "Could not make user-writable %s: %s",
+ 				argv[i], strerror(errno));
+-			return -1;
++			return 1;
+ 		}
+ #endif
  
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 5251009..fac9234 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -679,3 +679,20 @@ test_create_repo () {
- 		mv .git/hooks .git/hooks-disabled
- 	) || exit
+@@ -107,7 +107,7 @@ int main(int argc, const char *argv[])
+ 		if (utb.modtime != sb.st_mtime && utime(argv[i], &utb) < 0) {
+ 			fprintf(stderr, "Failed to modify time on %s: %s\n",
+ 			        argv[i], strerror(errno));
+-			return -1;
++			return 1;
+ 		}
+ 	}
+ 
+@@ -115,5 +115,5 @@ int main(int argc, const char *argv[])
+ 
+ usage:
+ 	fprintf(stderr, "usage: %s %s\n", argv[0], usage_str);
+-	return -1;
++	return 1;
  }
-+
-+# This function helps on symlink challenged file systems when it is not
-+# important that the file system entry is a symbolic link.
-+# Use test_ln_s_add instead of "ln -s x y && git add y" to add a
-+# symbolic link entry y to the index.
-+
-+test_ln_s_add () {
-+	if test_have_prereq SYMLINKS
-+	then
-+		ln -s "$1" "$2" &&
-+		git update-index --add "$2"
-+	else
-+		printf '%s' "$1" >"$2" &&
-+		ln_s_obj=$(git hash-object -w "$2") &&
-+		git update-index --add --cacheinfo 120000 $ln_s_obj "$2"
-+	fi
-+}
 -- 
 1.8.3.rc1.32.g8b61cbb
