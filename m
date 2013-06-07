@@ -1,78 +1,191 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: What's cooking in git.git (Jun 2013, #03; Thu, 6)
-Date: Fri, 7 Jun 2013 22:44:30 +0200
-Message-ID: <20130607204430.GD31625@goldbirke>
-References: <7vzjv2x3p7.fsf@alter.siamese.dyndns.org>
- <20130607000006.GA25731@goldbirke>
- <CALkWK0=D7sHLgptWkFHma1FoS-zdifHqXnuuBKhkyuszgEJ0Xw@mail.gmail.com>
- <7v8v2lu5ks.fsf@alter.siamese.dyndns.org>
- <20130607191643.GA31625@goldbirke>
- <7vwqq5snzi.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 07 22:44:37 2013
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH v2 02/10] t3010: modernize style
+Date: Fri,  7 Jun 2013 22:53:26 +0200
+Message-ID: <8d271c08f2d49aca17e7bec6d841ac72af7b15b1.1370636706.git.j6t@kdbg.org>
+References: <cover.1370076477.git.j6t@kdbg.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 07 22:53:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ul3WW-00072F-JX
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 22:44:36 +0200
+	id 1Ul3fK-0006mZ-Rd
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 22:53:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756276Ab3FGUoc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 16:44:32 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:51433 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756177Ab3FGUob (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 16:44:31 -0400
-Received: from localhost6.localdomain6 (g228010151.adsl.alicedsl.de [92.228.10.151])
-	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
-	id 0Lpzv9-1U8Qv320RT-00fODE; Fri, 07 Jun 2013 22:44:30 +0200
-Content-Disposition: inline
-In-Reply-To: <7vwqq5snzi.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:dsp0nu+1jLkN1XLZZNwkZ8Q6o7LOG00z4R1P0FTDewq
- IiYWZSM9RlWwXJj/p2+STaHdvyQ81HRN8WJKYmvT14dsIjDhwy
- lFDWegUT1jgzP2pSqhNCScwY9f0oPd4w72tHCpIdujGWnBvryA
- le4DZAIQf+pW+/OJKwtGLLP9/Fn1unlGiuSoYGrmOUeLIGfDlj
- F0WT74AO/OQf8ZvWr1gWGXNxCKcoRhDv3vF3a+W4EOx/aQwTIp
- cno+02mlKYR7p4U0NaMHVF4CKLWZ9Ix4zzp8+c8h04R4+eug2C
- maL+1sa/6tNKe4KMgPX+AlDbx9jueSQrZ8/8HFaAjg07Qkq5be
- ASqLcs02xLfOxXVTMOzRN0jk/uaVqwbLr6h9lzGps
+	id S1757017Ab3FGUxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 16:53:39 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:33327 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754898Ab3FGUxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 16:53:37 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 051B713004E;
+	Fri,  7 Jun 2013 22:53:35 +0200 (CEST)
+Received: from dx.sixt.local (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 9211719F5E8;
+	Fri,  7 Jun 2013 22:53:34 +0200 (CEST)
+X-Mailer: git-send-email 1.8.3.rc1.32.g8b61cbb
+In-Reply-To: <cover.1370076477.git.j6t@kdbg.org>
+In-Reply-To: <cover.1370636706.git.j6t@kdbg.org>
+References: <cover.1370636706.git.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226706>
 
-On Fri, Jun 07, 2013 at 12:46:25PM -0700, Junio C Hamano wrote:
-> Thanks for a pointer.  I think what I was suggesting was slightly
-> different in that I was hoping to see a single helper that knows to
-> complete to object names (possibly including trees/blobs with the
-> treeish:path notation), ranges, and pathnames (not treeish:path
-> notation) until it sees a "--" and then complete only to pathnames.
+In particular:
 
-We already got that except the completion of pathnames before "--",
-and I don't know how that could be done properly for commands taking
-both refs and paths.  Just consider
+- move test preparations inside test_expect_success
 
-  git diff git.c
-  git diff master git.c
-  git diff master next git.c
+- place test description on the test_expect_success line
 
-We can't guess whether the user wants refs or paths when he first hits
-tab after 'git diff ', not even after 'git diff master '.  I
-definitely don't want to see refs and paths all mixed up.
+- indent with a tab
 
-As for the _single_ helper: I think it has some value that we have
-different helper functions and we can indicate whether a certain git
-command can take a ref or ref:path or ref1...ref2 or even
-ref1..ref2:path by calling the appropriate helper function (however
-badly it might have been named), even if all these functions happen to
-boil down to a single implementation.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t3010-ls-files-killed-modified.sh | 123 ++++++++++++++++++------------------
+ 1 file changed, 61 insertions(+), 62 deletions(-)
 
-
-G=E1bor
+diff --git a/t/t3010-ls-files-killed-modified.sh b/t/t3010-ls-files-killed-modified.sh
+index 95671c2..2d0ff2d 100755
+--- a/t/t3010-ls-files-killed-modified.sh
++++ b/t/t3010-ls-files-killed-modified.sh
+@@ -37,71 +37,70 @@ modified without reporting path9 and path10.
+ '
+ . ./test-lib.sh
+ 
+-date >path0
+-if test_have_prereq SYMLINKS
+-then
+-	ln -s xyzzy path1
+-else
+-	date > path1
+-fi
+-mkdir path2 path3
+-date >path2/file2
+-date >path3/file3
+-: >path7
+-date >path8
+-: >path9
+-date >path10
+-test_expect_success \
+-    'git update-index --add to add various paths.' \
+-    "git update-index --add -- path0 path1 path?/file? path7 path8 path9 path10"
+-
+-rm -fr path? ;# leave path10 alone
+-date >path2
+-if test_have_prereq SYMLINKS
+-then
+-	ln -s frotz path3
+-	ln -s nitfol path5
+-else
+-	date > path3
+-	date > path5
+-fi
+-mkdir path0 path1 path6
+-date >path0/file0
+-date >path1/file1
+-date >path6/file6
+-date >path7
+-: >path8
+-: >path9
+-touch path10
++test_expect_success 'git update-index --add to add various paths.' '
++	date >path0 &&
++	if test_have_prereq SYMLINKS
++	then
++		ln -s xyzzy path1
++	else
++		date > path1
++	fi &&
++	mkdir path2 path3 &&
++	date >path2/file2 &&
++	date >path3/file3 &&
++	: >path7 &&
++	date >path8 &&
++	: >path9 &&
++	date >path10 &&
++	git update-index --add -- path0 path1 path?/file? path7 path8 path9 path10 &&
++	rm -fr path?	# leave path10 alone
++'
+ 
+-test_expect_success \
+-    'git ls-files -k to show killed files.' \
+-    'git ls-files -k >.output'
+-cat >.expected <<EOF
+-path0/file0
+-path1/file1
+-path2
+-path3
+-EOF
++test_expect_success 'git ls-files -k to show killed files.' '
++	date >path2 &&
++	if test_have_prereq SYMLINKS
++	then
++		ln -s frotz path3 &&
++		ln -s nitfol path5
++	else
++		date >path3 &&
++		date >path5
++	fi &&
++	mkdir path0 path1 path6 &&
++	date >path0/file0 &&
++	date >path1/file1 &&
++	date >path6/file6 &&
++	date >path7 &&
++	: >path8 &&
++	: >path9 &&
++	touch path10 &&
++	git ls-files -k >.output
++'
+ 
+-test_expect_success \
+-    'validate git ls-files -k output.' \
+-    'test_cmp .expected .output'
++test_expect_success 'validate git ls-files -k output.' '
++	cat >.expected <<-\EOF &&
++	path0/file0
++	path1/file1
++	path2
++	path3
++	EOF
++	test_cmp .expected .output
++'
+ 
+-test_expect_success \
+-    'git ls-files -m to show modified files.' \
+-    'git ls-files -m >.output'
+-cat >.expected <<EOF
+-path0
+-path1
+-path2/file2
+-path3/file3
+-path7
+-path8
+-EOF
++test_expect_success 'git ls-files -m to show modified files.' '
++	git ls-files -m >.output
++'
+ 
+-test_expect_success \
+-    'validate git ls-files -m output.' \
+-    'test_cmp .expected .output'
++test_expect_success 'validate git ls-files -m output.' '
++	cat >.expected <<-\EOF &&
++	path0
++	path1
++	path2/file2
++	path3/file3
++	path7
++	path8
++	EOF
++	test_cmp .expected .output
++'
+ 
+ test_done
+-- 
+1.8.3.rc1.32.g8b61cbb
