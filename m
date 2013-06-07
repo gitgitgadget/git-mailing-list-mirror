@@ -1,107 +1,89 @@
-From: =?ISO-8859-1?Q?C=E9lestin_Matte?= <celestin.matte@ensimag.fr>
-Subject: Re: [PATCH 05/18] Turn double-negated expressions into simple expressions
-Date: Fri, 07 Jun 2013 19:04:31 +0200
-Message-ID: <51B2129F.3040304@ensimag.fr>
-References: <1370547263-13558-1-git-send-email-celestin.matte@ensimag.fr> <1370547263-13558-6-git-send-email-celestin.matte@ensimag.fr> <CAPig+cSDxhT=WVMQz_88z0xEmPVENDSyp5mE7XWCf_99yQTkTA@mail.gmail.com>
+From: "Constantine A. Murenin" <mureninc@gmail.com>
+Subject: Re: is there a fast web-interface to git for huge repos?
+Date: Fri, 7 Jun 2013 10:05:37 -0700
+Message-ID: <CAPKkNb5PyurX1eNsCsckdfiwgM3dqb5KpN9OS0NpLZw1+VsSdg@mail.gmail.com>
+References: <CAPKkNb4bYfBeqkBKqe-22iJsqjmvrYNSe4oWUnPo7QeghLK59Q@mail.gmail.com>
+	<20130607063353.GB19771@paksenarrion.iveqy.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, benoit.person@ensimag.fr,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Jun 07 19:04:45 2013
+Cc: git@vger.kernel.org
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Fri Jun 07 19:05:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ul05j-0004Pf-Fb
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 19:04:43 +0200
+	id 1Ul06h-0005IW-Dm
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Jun 2013 19:05:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755908Ab3FGREj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 13:04:39 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:46674 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754733Ab3FGREi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 13:04:38 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r57H4TrQ028151
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 7 Jun 2013 19:04:29 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r57H4Uu3016737;
-	Fri, 7 Jun 2013 19:04:30 +0200
-Received: from [127.0.0.1] (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r57H4Uod020101;
-	Fri, 7 Jun 2013 19:04:30 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <CAPig+cSDxhT=WVMQz_88z0xEmPVENDSyp5mE7XWCf_99yQTkTA@mail.gmail.com>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 07 Jun 2013 19:04:29 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r57H4TrQ028151
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: celestin.matte@ensimag.fr
-MailScanner-NULL-Check: 1371229472.56345@sxrFnvwayoOPrrwaJfwZWQ
+	id S1756034Ab3FGRFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 13:05:39 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:39709 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754584Ab3FGRFi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 13:05:38 -0400
+Received: by mail-lb0-f175.google.com with SMTP id r10so312086lbi.20
+        for <git@vger.kernel.org>; Fri, 07 Jun 2013 10:05:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=WIDK04hgToh8+Si0FaDVVcvpbTxHKroGV9r0MjUF4SE=;
+        b=WaWIjs02U8IBvLrACJhNJ/+hk2H/6jSyZWzON9yWhK1zl/Z4a3exScPAWf7Mbj9FeX
+         dqq7Kvs3qGFFuh5Z8ymMWcSSCANgRvf5fwIK9+4494s4CT/dnvT84jKhptgdz7KDgXR4
+         rS4vFEFvFUZRihz5GI2lxKMFD5SZoDIPa3IwHWNTwiRB7/8sM/REYZIUz+iH6rSi19p8
+         Wa5JMs6CSTlCPr2N+9qHhmuWUp8UZ5B0HQL6pZzNJQEYxfrXZbCpwRmHfPdv2gvnbxZE
+         WhGhThotprPKo7FxQnXv1IJE3oeQHF/llTrKHXMIG0aSZu9SXM/GgNjLPgl3y1Y0RU/8
+         WhOw==
+X-Received: by 10.112.143.34 with SMTP id sb2mr1650467lbb.37.1370624737317;
+ Fri, 07 Jun 2013 10:05:37 -0700 (PDT)
+Received: by 10.114.77.1 with HTTP; Fri, 7 Jun 2013 10:05:37 -0700 (PDT)
+In-Reply-To: <20130607063353.GB19771@paksenarrion.iveqy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226650>
 
-Le 07/06/2013 06:12, Eric Sunshine a =E9crit :
-> On Thu, Jun 6, 2013 at 3:34 PM, C=E9lestin Matte
-> <celestin.matte@ensimag.fr> wrote:
->> Signed-off-by: C=E9lestin Matte <celestin.matte@ensimag.fr>
->> Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
->> ---
->>  contrib/mw-to-git/git-remote-mediawiki.perl |    8 ++++----
->>  1 file changed, 4 insertions(+), 4 deletions(-)
+On 6 June 2013 23:33, Fredrik Gustafsson <iveqy@iveqy.com> wrote:
+> On Thu, Jun 06, 2013 at 06:35:43PM -0700, Constantine A. Murenin wrote:
+>> I'm interested in running a web interface to this and other similar
+>> git repositories (FreeBSD and NetBSD git repositories are even much,
+>> much bigger).
 >>
->> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/m=
-w-to-git/git-remote-mediawiki.perl
->> index 68fd129..a6c7de2 100755
->> --- a/contrib/mw-to-git/git-remote-mediawiki.perl
->> +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
->> @@ -136,16 +136,16 @@ while (<STDIN>) {
->>         if (defined($cmd[0])) {
->>                 # Line not blank
->>                 if ($cmd[0] eq "capabilities") {
->> -                       die("Too many arguments for capabilities\n")=
- unless (!defined($cmd[1]));
->> +                       die("Too many arguments for capabilities\n")=
- if (defined($cmd[1]));
->>                         mw_capabilities();
->>                 } elsif ($cmd[0] eq "list") {
->> -                       die("Too many arguments for list\n") unless =
-(!defined($cmd[2]));
->> +                       die("Too many arguments for list\n") if (def=
-ined($cmd[2]));
->>                         mw_list($cmd[1]);
->>                 } elsif ($cmd[0] eq "import") {
->> -                       die("Invalid arguments for import\n") unless=
- ($cmd[1] ne "" && !defined($cmd[2]));
->> +                       die("Invalid arguments for import\n") if ($c=
-md[1] eq "" || defined($cmd[2]));
->>                         mw_import($cmd[1]);
->>                 } elsif ($cmd[0] eq "option") {
->> -                       die("Too many arguments for option\n") unles=
-s ($cmd[1] ne "" && $cmd[2] ne "" && !defined($cmd[3]));
->> +                       die("Too many arguments for option\n") if ($=
-cmd[1] eq "" || $cmd[2] eq "" || defined($cmd[3]));
->=20
-> Not new in this patch, but isn't this diagnostic misleading? It will
-> (falsely) claim "too many arguments" if $cmd[1] or $cmd[2] is an empt=
-y
-> string. Perhaps it should be reworded like the 'import' diagnostic an=
-d
-> say "Invalid arguments for option".
+>> Software-wise, is there no way to make cold access for git-log and
+>> git-blame to be orders of magnitude less than ~5s, and warm access
+>> less than ~0.5s?
+>
+> The obvious way would be to cache the results. You can even put an
 
-We could even be more precise and separate the cases, i.e., die("Too
-many arguments") when too many arguments are defined and die("Invalid
-arguments") when there are empty strings.
-Not sure if I should integrate it in this patch, though.
+That would do nothing to prevent slowness of the cold requests, which
+already run for 5s when completely cold.
 
+In fact, unless done right, it would actually slow things down, as
+lines would not necessarily show up as they're ready.
 
---=20
-C=E9lestin Matte
+> update cache hook the git repositories to make the cache always be up to
+> date.
+
+That's entirely inefficient.  It'll probably take hours or days to
+pre-cache all the html pages with a naive wget and the list of all the
+files.  Not a solution at all.
+
+(0.5s x 35k files = 5 hours for log/blame, plus another 5h of cpu time
+for blame/log)
+
+> There's some dynamic web frontends like cgit and gitweb out there but
+> there's also static ones like git-arr ( http://blitiri.com.ar/p/git-arr/
+> ) that might be more of an option to you.
+
+The concept for git-arr looks interesting, but it has neither blame
+nor log, so, it's kinda pointless, because the whole thing that's slow
+is exactly blame and log.
+
+There has to be some way to improve these matters.  Noone wants to
+wait 5 seconds until a page is generated, we're not running enterprise
+software here, latency is important!
+
+C.
