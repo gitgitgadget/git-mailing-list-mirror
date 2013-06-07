@@ -1,59 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/10] Increase test coverage on Windows by removing SYMLINKS from many tests
-Date: Fri, 07 Jun 2013 15:04:56 -0700
-Message-ID: <7v8v2lshkn.fsf@alter.siamese.dyndns.org>
-References: <cover.1370076477.git.j6t@kdbg.org>
-	<cover.1370636706.git.j6t@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Jun 08 00:05:05 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 1/2] build: generate test scripts
+Date: Fri,  7 Jun 2013 17:03:06 -0500
+Message-ID: <1370642587-32352-2-git-send-email-felipe.contreras@gmail.com>
+References: <1370642587-32352-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 08 00:05:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ul4mO-00017e-2h
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 00:05:04 +0200
+	id 1Ul4mX-0001I1-Mi
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 00:05:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756046Ab3FGWFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 18:05:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53113 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752999Ab3FGWE6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 18:04:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2ACF526238;
-	Fri,  7 Jun 2013 22:04:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=D0epKQqLPsaeGqYcdYLfqy7kXKk=; b=bEVSfy
-	miEV8ZRl4Nc4fld37ZfwOsORkF2lvhgvdShp9U2odpRUQ1uOFpp3VJM9IdPmzLlU
-	geQlBpG3TNeQBLdZeXhT9p+zyiNQF509dMM19c/+NdYF7JGLboCPbZdFi4v95IOE
-	6IB7WE5mlUsapZMtcn3Uf7bf+blEtkBidDtvc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YjRqK1kvDJPACrYrrrqSF/N6j0/Mx7nq
-	GM9TZZUTz/ZtCxpYVintVqVfQjnd48Ae0kdQHUs7zwWHRTEPynuReOdkeXcJl0S0
-	IkDqOS94VqjQNeLNu4D5Y/5kQcIkzlGtFZzhTMFQDM5jlXU7V5pDWekjPYMx0OYq
-	tLmDZzv1lDs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 206BE26237;
-	Fri,  7 Jun 2013 22:04:58 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99E9C26234;
-	Fri,  7 Jun 2013 22:04:57 +0000 (UTC)
-In-Reply-To: <cover.1370636706.git.j6t@kdbg.org> (Johannes Sixt's message of
-	"Fri, 7 Jun 2013 22:53:24 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4A92F556-CFBE-11E2-8168-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755813Ab3FGWFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 18:05:04 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:37665 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752999Ab3FGWFB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 18:05:01 -0400
+Received: by mail-ob0-f169.google.com with SMTP id up14so7244274obb.28
+        for <git@vger.kernel.org>; Fri, 07 Jun 2013 15:05:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=DTjSLc0bU8dqxZyCiYngjvmOgKmXQB9Ur8/w38LuHdI=;
+        b=UNZvuZES1OYDR+bNd6U0w49knD9b9vKLXhJRkVdzLD+x8j7yAP4fFoZ97nsFNRd3zd
+         ROpHE7DqDkwckCp1f8FkffUZX1oKMm84os2FsHT0/yPabo6YuAh9aPOGfKa475aMo1Qi
+         n1lGcZSZu1JUrA+XKYQqcTA3gswZMRqV0iLsq5QAW2zsVTyaYwxRZOcKzJLHfXNRhiHI
+         cD+cInyLAqKr8KGWBX9Racz3lAkOY8U+QdnB7O4VDiN9vhIqJHwoi8pneE5UV8xlEAq8
+         YZ1r/FMiY+M+LJjkaqkVzTjfnzlBp3hw1fWDRmf6WTlNsyP0eeA1PffPZgIfGIf4LtTF
+         3v7A==
+X-Received: by 10.60.149.167 with SMTP id ub7mr497365oeb.55.1370642700566;
+        Fri, 07 Jun 2013 15:05:00 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id l4sm880345obh.7.2013.06.07.15.04.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 07 Jun 2013 15:04:59 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.698.g079b096
+In-Reply-To: <1370642587-32352-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226747>
 
-Thanks; the interdiff looks sane.
+Commit 416fda6 (build: do not install git-remote-testpy) made it so
+git-remote-testpy is not only not installed, but also not generated by
+default, let's make sure all the scripts are generated.
+
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Makefile | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 03524d0..126be01 100644
+--- a/Makefile
++++ b/Makefile
+@@ -531,6 +531,11 @@ SCRIPTS = $(SCRIPT_SH_INS) \
+ 	  $(SCRIPT_PYTHON_INS) \
+ 	  git-instaweb
+ 
++SCRIPTS_GEN = $(SCRIPT_SH_GEN) \
++	  $(SCRIPT_PERL_GEN) \
++	  $(SCRIPT_PYTHON_GEN) \
++	  git-instaweb
++
+ ETAGS_TARGET = TAGS
+ 
+ # Empty...
+@@ -1647,7 +1652,7 @@ all:: profile-clean
+ endif
+ endif
+ 
+-all:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
++all:: $(ALL_PROGRAMS) $(SCRIPTS_GEN) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
+ ifneq (,$X)
+ 	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
+ endif
+-- 
+1.8.3.698.g079b096
