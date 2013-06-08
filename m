@@ -1,135 +1,170 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [Administrivia] On ruby and contrib/
-Date: Sat, 8 Jun 2013 06:56:12 -0500
-Message-ID: <CAMP44s0GUrQqXCj97Ay+0CsA1z=96BPYfyADbTaHH7fc7HL0sQ@mail.gmail.com>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
-	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
-	<rmivc5rp9w2.fsf@fnord.ir.bbn.com>
-	<alpine.DEB.1.00.1306061818191.28957@s15462909.onlinehome-server.info>
-	<CACsJy8BMrxLZFGQfUN1YCG+qkAj-91aYkc54R5O4iqgXUNeQOw@mail.gmail.com>
-	<CAMP44s08V1=nVbeo6r8UVT3Fd0=iSpRohinqf77Tmu4=xpDHeg@mail.gmail.com>
-	<CACsJy8DTKr5Fy3-+8ShUrWQrKC2_7EmLHwyVgQ9Aq5JDOFBAqA@mail.gmail.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: Bug: `gitsubmodule` does not list modules with unicode
+ characters
+Date: Sat, 8 Jun 2013 14:06:00 +0200
+Message-ID: <20130608120600.GA2159@paksenarrion.iveqy.com>
+References: <loom.20130323T171809-46@post.gmane.org>
+ <51500B34.30801@web.de>
+ <20130608010556.GA28819@paksenarrion.iveqy.com>
+ <20130608091836.GA2925@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Greg Troxel <gdt@ir.bbn.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 13:56:20 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Ilya Kulakov <kulakov.ilya@gmail.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 08 14:03:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlHkp-00019x-Hj
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 13:56:19 +0200
+	id 1UlHrq-0007Bc-3l
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 14:03:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752472Ab3FHL4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jun 2013 07:56:15 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:37349 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752367Ab3FHL4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 07:56:14 -0400
-Received: by mail-la0-f42.google.com with SMTP id eb20so4493408lab.1
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 04:56:12 -0700 (PDT)
+	id S1751780Ab3FHMD3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jun 2013 08:03:29 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:56295 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751628Ab3FHMD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 08:03:28 -0400
+Received: by mail-lb0-f172.google.com with SMTP id v20so562779lbc.17
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 05:03:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=if0lj5m4im6/u1T51t10GJ5qvnluMp4bpqxOzrAxGCg=;
-        b=U5MxvDjwc69vyH1zqxbcGvKqJt17czahwBULenQJZNyX/15E9SPGmgeiNlYV+qgfP9
-         sxs5683m3jI4/71dyMYASx31JBHYEDLEMsZ9sCuHniE7WQNDyZ47Lqi8qeWsI0aiIHS9
-         N1Ze7A+9mHZg61uMPUTH/NvjqdSkXzz7z8B/O+msvhhlBlYOpiymqm36DcaUUULAiapl
-         jA3dh8UrlypIFz1AUOfe8wlcmRA2qBRxWguNCDeLjzR4crXrUNjusZhEZYfH9S+ZDlF3
-         SNS5CP5pqFoIwojAob0ec+al2pC3aGzxfUiycyDCUFiJl6vm+0xD0m8ATSMBdv4k9stU
-         lpFQ==
-X-Received: by 10.112.156.5 with SMTP id wa5mr2965138lbb.63.1370692572534;
- Sat, 08 Jun 2013 04:56:12 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sat, 8 Jun 2013 04:56:12 -0700 (PDT)
-In-Reply-To: <CACsJy8DTKr5Fy3-+8ShUrWQrKC2_7EmLHwyVgQ9Aq5JDOFBAqA@mail.gmail.com>
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=5EbR6j4cGRut++ojHE4CjYLz6VQWJANQoW/vCZMuliI=;
+        b=k22rHbyqdoZckGdXfsbJaP9vetW1fy3nSWshnbLlkG2U5sggPL93re68yfdi+ZBRnM
+         QN+qIdig6JFVEXEn88dnH6JbsQtvi4zmirNN/TRuOk7WiOmTUkNHkviBy6t1s7fXuYhk
+         pclvU/TKMtaOVhfK104TQFiWMa2cco0UEtCUa8N9RqqdoSpYi0qR5szvlxCvd552aTOh
+         3zEWLy0BY1nYLqd2TiFlsP/i1ODqvsDYZhmaUrOXZsK7tD44LwmZL2IPymQxHzvnpU7D
+         95Gq9Et1xEUXq1RBshHGrBit/wG2zMw1YBbVZlZ0kSNxwyIiw67h4LGSy9XVsc/+UV7G
+         Ibfw==
+X-Received: by 10.152.42.171 with SMTP id p11mr1236812lal.79.1370693007130;
+        Sat, 08 Jun 2013 05:03:27 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id p16sm2454291lbi.13.2013.06.08.05.03.25
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 08 Jun 2013 05:03:26 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UlHuC-0000oA-Lf; Sat, 08 Jun 2013 14:06:00 +0200
+Content-Disposition: inline
+In-Reply-To: <20130608091836.GA2925@elie.Belkin>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226805>
 
-On Sat, Jun 8, 2013 at 6:28 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sat, Jun 8, 2013 at 5:02 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> On Fri, Jun 7, 2013 at 9:17 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->>> On Thu, Jun 6, 2013 at 11:22 PM, Johannes Schindelin
->>> <Johannes.Schindelin@gmx.de> wrote:
->>>> Hi Greg,
->>>>
->>>> On Thu, 6 Jun 2013, Greg Troxel wrote:
->>>>
->>>>> As one of the people who helps maintain git packages in pkgsrc, my
->>>>> initial reaction is negative to adding a ruby dependency.
->>>>
->>>> My initial reaction, too. It was hard enough to get Perl included with Git
->>>> for Windows (because of that pesky Subversion dependency).
->>>>
->>>> As you can see from the commit history, I was the primary force behind
->>>> trying to get everything "core" in Git away from requiring scripting
->>>> languages (I think it is an awesome thing to provide APIs for as many
->>>> languages as possible, but a not-so-cool thing to use more than one
->>>> language in the core code). It does not seem that anybody picked up that
->>>> task when I left, though.
->>>
->>> Nobody seems to mention it yet. There's another reason behind the C
->>> rewrite effort: fork is costly on Windows. The C rewrite allows us to
->>> run with one process (most of the time). This applies for shell, perl
->>> and even ruby scripts because libgit.a is never meant to be used
->>> outside git.c context (unlike libgit2). In this regard, ruby is just
->>> as bad as currently supported non-C languages.
->>
->> Are you sure?
->
-> I'm not saying you can't. I'm saying it's not meant to be used that
-> way. Which means there may be problems lurking around.
+On Sat, Jun 08, 2013 at 02:18:36AM -0700, Jonathan Nieder wrote:
+> The whole point of "-z" is that by using a terminator that is guarant=
+eed
+> not to appear in filenames, it avoids the need to quote filenames.
+> Otherwise at least \n would need to be quoted.
 
-Code is code. If something is not meant to be used in certain way, you fix it.
+Thanks, now I understand why.
 
-> You can write a ruby extension to access libgit.a, sure,
+>=20
+> How about something like this patch?
+>=20
+> -- >8 --
+> Subject: ls-files doc: clarify purpose of "-z" option
+>=20
+> The purpose of the "-z" option is to avoid quoting issues by using a
+> delimiter that implies a binary-clean parser and cannot appear in
+> filenames, and in that spirit, "-z" turns off C-style quoting.  But
+> without looking carefully through the entire manpage, it is too easy
+> to miss that.
+>=20
+> Reported-by: Fredrik Gustafsson <iveqy@iveqy.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+>  Documentation/git-ls-files.txt | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-fi=
+les.txt
+> index c0856a6e..753c223f 100644
+> --- a/Documentation/git-ls-files.txt
+> +++ b/Documentation/git-ls-files.txt
+> @@ -75,7 +75,9 @@ OPTIONS
+>  	succeed.
+> =20
+>  -z::
+> -	\0 line termination on output.
+> +	Terminate lines with NUL instead of LF.
+> +	This avoids the need to quote filenames; see the Output section
+> +	below for details.
+> =20
+>  -x <pattern>::
+>  --exclude=3D<pattern>::
+> --=20
+> 1.8.3
+>=20
 
-I'm not using libgit.a, I'm using the builtin commands. This is
-exactly the same code you run when you type 'git foo'.
+That would be very helpfull. I would suggest to add something about
+unicode also (and maybe about the quotes that's added?). I'm a bit
+unsure about the formulating but how about something like this:
 
-> but how many people on this
-> list understand git design and limits _and_ ruby's good enough to spot
-> the bugs?
 
-Now you are changing the subject. Does that mean that you accept that
-'fork' wouldn't be a problem when writing Ruby scripts?
+=46rom 114c34ea482873b39c02e63eeaf866c3e9ebfc14 Mon Sep 17 00:00:00 200=
+1
+=46rom: Jonathan Nieder <jrnieder@gmail.com>
+Date: Sat, 8 Jun 2013 02:18:36 -0700
+Subject: [PATCH] Subject: ls-files doc: clarify purpose of "-z" option
 
-As for the people that know Git and Ruby; they can learn. Didn't you
-just said that you didn't see any problem with the community learning
-a new language?
+The purpose of the "-z" option is to avoid quoting issues by using a
+delimiter that implies a binary-clean parser and cannot appear in
+filenames, and in that spirit, "-z" turns off C-style quoting.  But
+without looking carefully through the entire manpage, it is too easy
+to miss that.
 
-> If a bug is found and requires major restructuring in
-> libgit.a, how are you sure it's worth the effort and does not
-> destablize the rest of git?
+Reported-by: Fredrik Gustafsson <iveqy@iveqy.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Documentation/git-ls-files.txt | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-There is no need to destabilize anything. I just showed you 100 lines
-of code that are able to run git commands without forks, and without
-changing anything in libgit.a.
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-file=
+s.txt
+index c0856a6..ef785ba 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -75,7 +75,9 @@ OPTIONS
+ 	succeed.
+=20
+ -z::
+-	\0 line termination on output.
++	Terminate lines with NUL instead of LF.
++	This avoids the need to quote filenames; see the Output section
++	below for details.
+=20
+ -x <pattern>::
+ --exclude=3D<pattern>::
+@@ -172,7 +174,8 @@ path. (see linkgit:git-read-tree[1] for more inform=
+ation on state)
+=20
+ When `-z` option is not used, TAB, LF, and backslash characters
+ in pathnames are represented as `\t`, `\n`, and `\\`,
+-respectively.
++respectively. Multibyte characters are represented by they escaped
++equivalents.
+=20
+=20
+ Exclude Patterns
+--=20
+1.8.1.5
 
-> A better way to do it is linking against libgit2.
 
-I would rather use what the rest of Git uses. It doesn't make any
-sense fragment even more the code, and make Ruby scripts 2nd class
-citizens along the way. Plus, any script that tries to use libgit2,
-would certainly need more than 100 lines.
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
 
--- 
-Felipe Contreras
+tel: 0733-608274
+e-post: iveqy@iveqy.com
