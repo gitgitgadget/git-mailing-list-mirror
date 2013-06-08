@@ -1,7 +1,7 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
 Subject: Re: [PATCH] tests: fix autostash
-Date: Sat, 8 Jun 2013 09:13:10 -0500
-Message-ID: <CAMP44s0MZ34J=C0r_V8MN-nYrDbi7buy5vOKtHU_jKRFvyGbXw@mail.gmail.com>
+Date: Sat, 8 Jun 2013 16:13:59 +0200
+Message-ID: <CALWbr2x4xGjYXa30vpbK4Q2WAVfmzuz1jNWFyGKSPO0To4P-0w@mail.gmail.com>
 References: <1370648714-7872-1-git-send-email-felipe.contreras@gmail.com>
 	<CALkWK0=OdcLDCd9OonUS6kBZhA=oz3HYJT8Eiqnh1A++s5yWww@mail.gmail.com>
 	<CAMP44s3rYXOmGWR3JM8xy8ON4pqDRhYWVMQqOAyODVr5myq+yg@mail.gmail.com>
@@ -10,47 +10,48 @@ References: <1370648714-7872-1-git-send-email-felipe.contreras@gmail.com>
 	<CALkWK0mBnG7houMKHDorz3oSm=R7u4Va1s=AepSM0CPY6Gy4cw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 16:13:18 2013
+X-From: git-owner@vger.kernel.org Sat Jun 08 16:14:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlJtM-0003Oc-Oz
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 16:13:17 +0200
+	id 1UlJu9-0003p7-EK
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 16:14:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011Ab3FHONN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jun 2013 10:13:13 -0400
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:65251 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751680Ab3FHONM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 10:13:12 -0400
-Received: by mail-lb0-f172.google.com with SMTP id v20so619297lbc.17
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 07:13:11 -0700 (PDT)
+	id S1752033Ab3FHOOA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 10:14:00 -0400
+Received: from mail-qe0-f51.google.com ([209.85.128.51]:36573 "EHLO
+	mail-qe0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751585Ab3FHOOA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 10:14:00 -0400
+Received: by mail-qe0-f51.google.com with SMTP id a11so1297156qen.24
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 07:13:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=iGNpQN/s9UimBRayjb5X/YyfK8rckWzzUK5RyDDba+A=;
-        b=FzMvvPrfykpIBEXdwC+4YO4W2geNjugR0l1or9tauqPDac3tqVpB2QhnRb+lqEBBJu
-         Q7pmAbu9UcHWdOorIP4hUPglhUYU+iSaAN/7NCwl5AGYYs0u8YBUmP5inePO08YC6GR4
-         GzzguPs05mXacCedFeQMKq0cO8BJRjpDbx6KcLCLsxgpT62nRgSO1btn74aZ1JFjoYKb
-         R7PULmpHhCkKVLH18Ibv+Ar/j3KJaUW6tLQK8t2oXEYbtTSP0LomlC4LViMj0SLgh6Hm
-         dUTZeTFpfHe7MWLNPRldqQmKt0T2OFQOkhULJw0t6ZdYQ3xZ9wiPJEN6xTGfwoUpjAhr
-         Ukbw==
-X-Received: by 10.152.22.73 with SMTP id b9mr1460989laf.36.1370700791019; Sat,
- 08 Jun 2013 07:13:11 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sat, 8 Jun 2013 07:13:10 -0700 (PDT)
+        bh=mQnwcf2DLjzVNk5U8oWEoq2HeHNqm4+s4+2uxVcuTak=;
+        b=raUCfNtGR/2mwYsaRnu0JNRxX80Fe0e1ZyJcBCxJn/vDtySaHb8gC3gKy+V7J8iEgK
+         kaxvj3P+abB0MZf+LoexvB4N3cylQh+8wivUGmZCpOmDcnLpZTY6deU/EGHZjn6T4Rpw
+         EgLr2UmoiXeyYKV/L0Z+511NO9PpNLC1JIOoT4UdUR6TK9t1/p7QtAfCfZz4wWSZrrVq
+         2ISOxDgV5uFcNKreYFSOIfG3WiscSOst9SxHIxYAWxX9qL5cxaxtScIDPC7ZB8RuX41B
+         qBsE0v/WqiPcoD/J6htcTkmkW1gD/DGMJnvPEisXcSi2nCyZPfzNaoKm7pX3iP92Y6PU
+         rb1w==
+X-Received: by 10.229.170.199 with SMTP id e7mr1222261qcz.29.1370700839285;
+ Sat, 08 Jun 2013 07:13:59 -0700 (PDT)
+Received: by 10.49.108.105 with HTTP; Sat, 8 Jun 2013 07:13:59 -0700 (PDT)
 In-Reply-To: <CALkWK0mBnG7houMKHDorz3oSm=R7u4Va1s=AepSM0CPY6Gy4cw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226831>
 
-On Sat, Jun 8, 2013 at 9:04 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+On Sat, Jun 8, 2013 at 4:04 PM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
 > Felipe Contreras wrote:
 >>> Ofcourse they're implementation details.  Even in this very test, I
 >>> check $dotest/autostash plenty of times.
@@ -59,19 +60,7 @@ On Sat, Jun 8, 2013 at 9:04 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
 >
 > I'm not convinced about this.
 
-There's even a model called test-driven development, where you start
-developing the tests even before there's any implementation. There's
-also black-box testing.
-
-There's reasons for that.
-
->>> Then show me how to do it correctly.
->>
->> Something like this.
->
-> Yeah, this is definitely better.  Can you submit this patch?
-
-Maybe, I don't know when.
-
--- 
-Felipe Contreras
+My understanding of these tests is that they make sure new/better
+implementations don't break the user experience/defined behavior. If
+the test relies on the implementation, then they lose most of their
+interest.
