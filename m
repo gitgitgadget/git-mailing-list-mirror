@@ -1,56 +1,115 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 0/2] Move sequencer
-Date: Sat, 8 Jun 2013 09:05:01 +0530
-Message-ID: <CALkWK0nbC3jfapvJKuh=m3s1n+GWfTYbhb5DWEjNrFDimQF-KA@mail.gmail.com>
-References: <1370643409-3431-1-git-send-email-felipe.contreras@gmail.com>
+From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH] t0070: Use precondition CANNOTWRITE
+Date: Sat, 8 Jun 2013 08:51:15 +0200
+Message-ID: <201306080851.17044.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 05:35:47 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 08 08:51:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ul9wP-0008FU-Uc
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 05:35:46 +0200
+	id 1UlCzo-0007Kk-Vi
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 08:51:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751249Ab3FHDfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jun 2013 23:35:42 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:44133 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750927Ab3FHDfl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jun 2013 23:35:41 -0400
-Received: by mail-ie0-f170.google.com with SMTP id e14so12502307iej.15
-        for <git@vger.kernel.org>; Fri, 07 Jun 2013 20:35:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=4W4lPdMZCrKrzOxDR63FWfrRBSFrF0tffaNEXUDPw+E=;
-        b=0jbVAtvngC46MMTOD0xOzEWzkVZjU3vPmknWQGUQ0893CHqDvw6/7fLfubw/wfFpjt
-         kZJ254SH9cSJXpI/FzFicfyVbvId27bahPzobqXCpXfzLPtd2UwLZtubvE9Jl2rRbyuL
-         Q2Oj1lL43nAGcvJ/6PIlojIBdLDR7ysTFSvo18DmfL7XRiwmElz5cOR88KRY6c6SOFdQ
-         wUlWmfdvCEgT2NUJJld6XuioPhOnH/nraSuVy/8s2XZrXbK9pmqNsgh6IxIqd6i3GitF
-         yjpD0vcwUyk7ZOFUBzKbPFQaKkqoM7LLbrhj7s6cMqMFfDKYMAHMlFdkjNv9A1IHDhTz
-         3GGw==
-X-Received: by 10.50.107.6 with SMTP id gy6mr216880igb.57.1370662541212; Fri,
- 07 Jun 2013 20:35:41 -0700 (PDT)
-Received: by 10.64.136.104 with HTTP; Fri, 7 Jun 2013 20:35:01 -0700 (PDT)
-In-Reply-To: <1370643409-3431-1-git-send-email-felipe.contreras@gmail.com>
+	id S1751280Ab3FHGvZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jun 2013 02:51:25 -0400
+Received: from mout.web.de ([212.227.17.12]:56143 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751212Ab3FHGvY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Jun 2013 02:51:24 -0400
+Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb103) with
+ ESMTPA (Nemesis) id 0MKZy7-1Um24j1pPr-0016dC for <git@vger.kernel.org>; Sat,
+ 08 Jun 2013 08:51:22 +0200
+X-Provags-ID: V02:K0:8MZKRDcnAmcE/WgEHVzchrj5uDFos+3zrDbquMV1M/b
+ RPqNLJtHwbJ0myLE2Zx00GHZOA5Yg4p8q4fRpZaloparob2RYz
+ jdphvB0M/0n9NjedlLdrks+KOtg3VgPdXCr2d2oMW/YmbQOsYU
+ OXqm200OrYVP70350K+iIJfCGVFBGsL9f6mXEVjH5Zi2lQC4lt
+ MXNQN7MWMWcrCHp/IjIpA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226785>
 
-Felipe Contreras wrote:
->  sequencer.c => builtin/sequencer.c | 160 +-----------------------------------
->  sequencer.h => builtin/sequencer.h |   4 -
+POSIX like file systems allows to create a file when the user has
+write permissions to the directory.
 
-Why exactly?  The plan was to unify continuation semantics, and get
-all the continuation-commands to use the sequencer.  That clearly
-hasn't materialized, but I don't know what this move buys us.
+=46ilesystems like VFAT or NTFS allow to create files regardless of
+the write permissions of the directory.
+
+Therefore "mktemp to unwritable directory" in t0700 will always fail on
+Windows using NTFS.
+This TC has been disabled for MINGW, and needs to be disabled for CYGWI=
+N.
+
+Use the precondition CANNOTWRITE which is probing the file system and
+works for MINGW, CYGWIN and even for Linux using VFAT.
+
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ t/t0070-fundamental.sh | 19 ++++++++++++-------
+ t/test-lib.sh          | 12 ++++++++++++
+ 2 files changed, 24 insertions(+), 7 deletions(-)
+
+diff --git a/t/t0070-fundamental.sh b/t/t0070-fundamental.sh
+index da2c504..a907445 100755
+--- a/t/t0070-fundamental.sh
++++ b/t/t0070-fundamental.sh
+@@ -17,13 +17,18 @@ test_expect_success 'mktemp to nonexistent director=
+y prints filename' '
+ 	grep "doesnotexist/test" err
+ '
+=20
+-test_expect_success POSIXPERM 'mktemp to unwritable directory prints f=
+ilename' '
+-	mkdir cannotwrite &&
+-	chmod -w cannotwrite &&
+-	test_when_finished "chmod +w cannotwrite" &&
+-	test_must_fail test-mktemp cannotwrite/testXXXXXX 2>err &&
+-	grep "cannotwrite/test" err
+-'
++if test_have_prereq CANNOTWRITE
++then
++	test_expect_success 'mktemp to unwritable directory prints filename' =
+'
++		mkdir cannotwrite &&
++		chmod -w cannotwrite &&
++		test_when_finished "chmod +w cannotwrite" &&
++		test_must_fail test-mktemp cannotwrite/testXXXXXX 2>err &&
++		grep "cannotwrite/test" err
++	'
++else
++	say "Skipping mktemp to unwritable directory prints filename"
++fi
+=20
+ test_expect_success 'check for a bug in the regex routines' '
+ 	# if this test fails, re-build git with NO_REGEX=3D1
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index ca6bdef..1342630 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -770,6 +770,18 @@ test_lazy_prereq AUTOIDENT '
+ 	git var GIT_AUTHOR_IDENT
+ '
+=20
++test_lazy_prereq CANNOTWRITE '
++	chmod -w .
++	>e || :
++	chmod +w .
++	case "$(echo *)" in
++	e)
++		false ;;
++	*)
++		true ;;
++	esac
++'
++
+ # When the tests are run as root, permission tests will report that
+ # things are writable when they shouldn't be.
+ test -w / || test_set_prereq SANITY
+--=20
+1.8.2.411.g65a544e
