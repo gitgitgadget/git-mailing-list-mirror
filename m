@@ -1,88 +1,67 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 14/22] git-remote-mediawiki: Check return value of open
- + remove import of unused open2
-Date: Fri, 7 Jun 2013 20:14:42 -0400
-Message-ID: <CAPig+cQHPjjpt_JYHjua6VWzTjTFog9VzhpD0hOLKSPCrEnEdg@mail.gmail.com>
-References: <1370641344-4253-1-git-send-email-celestin.matte@ensimag.fr>
-	<1370641344-4253-15-git-send-email-celestin.matte@ensimag.fr>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] completion: add deprecated __git_complete_file ()
+Date: Sat, 8 Jun 2013 02:24:52 +0200
+Message-ID: <20130608002452.GE31625@goldbirke>
+References: <1370632168-25298-1-git-send-email-artagnon@gmail.com>
+ <7vobbhsll3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, benoit.person@ensimag.fr,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: =?ISO-8859-1?Q?C=E9lestin_Matte?= <celestin.matte@ensimag.fr>
-X-From: git-owner@vger.kernel.org Sat Jun 08 02:14:50 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 08 02:25:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ul6ny-00025X-47
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 02:14:50 +0200
+	id 1Ul6y5-0002XE-Je
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 02:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756929Ab3FHAOq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jun 2013 20:14:46 -0400
-Received: from mail-la0-f50.google.com ([209.85.215.50]:56860 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753726Ab3FHAOp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Jun 2013 20:14:45 -0400
-Received: by mail-la0-f50.google.com with SMTP id dy20so1994510lab.9
-        for <git@vger.kernel.org>; Fri, 07 Jun 2013 17:14:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2rb+FRmc4QX697gizhWKAO1b29RTKRtVD0zqBDW69SI=;
-        b=bohxTMqxArCPY43qwSDwrTRxGRV44Gtl+ufncfvGOJMoWlgJ0csnexdzE/u/U23E4r
-         NhEfCDaEsYCxrql0IcPded3eqgOatG2RDSmp/Z3oO+kYPE61Y8yAuH6txthGSPMNr6dX
-         +4PDF33jZ2KRjoYcfyQkoXTTQWRD4YQe8r5zOYg27yIjwts2SJQtBF4OS8H2N9EdVKI+
-         3MqJTEjhFkxuxMPS3fM2Zpno6/7FhyTjmtQl3p5ScguxDGhgN/ulHOL5tUdrYWKD+mU4
-         9ssg+DzCAU65iARL8atCqSICYTRQLwb/+c2U/+fKWVV/MmYeKBCjfCrTh6mpuqP3GFCI
-         SruQ==
-X-Received: by 10.112.19.162 with SMTP id g2mr2266840lbe.9.1370650482288; Fri,
- 07 Jun 2013 17:14:42 -0700 (PDT)
-Received: by 10.114.161.4 with HTTP; Fri, 7 Jun 2013 17:14:42 -0700 (PDT)
-In-Reply-To: <1370641344-4253-15-git-send-email-celestin.matte@ensimag.fr>
-X-Google-Sender-Auth: y4wMnvelZUxFaEoaC_Xcdm2jlWU
+	id S1756005Ab3FHAY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jun 2013 20:24:58 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:58695 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752956Ab3FHAY6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jun 2013 20:24:58 -0400
+Received: from localhost6.localdomain6 (g228010151.adsl.alicedsl.de [92.228.10.151])
+	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
+	id 0Lsfxh-1UNDCP1hgP-012Kd1; Sat, 08 Jun 2013 02:24:52 +0200
+Content-Disposition: inline
+In-Reply-To: <7vobbhsll3.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:FBdOeA3OtWG49KlmlwlPXlkRVRf4coVy37B0RZ5WfI5
+ +fLC3xKMU3Vcspot+nwWMzSVcUTmLm5r4/QcUcTl/TYbL+no7M
+ nb2ZGzwriwo/LI47fizmefnbsKWiwHsNABw94/b7bqBXATIENF
+ N/SWqvvME0GV/Ufof5eWgPZ2fCbtpQecbW+KmpAjMfk9jvBtmO
+ 208dGLuHlXOUdltUPzoaHKpQ6xClcIk/I9FHt1NJNmTjZVdz9y
+ j93A5M/RJhplsX8SYUWrGIYufz+lKtCrqo+qFhvMlUBwX50NI6
+ XcnL14MTshkkVnNNBOFGFlUsWnrQjXzIi1vX2N7Rndc9vILDKH
+ dCmUc6YavCdHEF4y3lN5i6WJKrh0FatNQahZS0GwP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226770>
 
-On Fri, Jun 7, 2013 at 5:42 PM, C=E9lestin Matte
-<celestin.matte@ensimag.fr> wrote:
-> Signed-off-by: C=E9lestin Matte <celestin.matte@ensimag.fr>
-> Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> ---
->  contrib/mw-to-git/git-remote-mediawiki.perl |    4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw=
--to-git/git-remote-mediawiki.perl
-> index ae6dd2e..1c34ada 100755
-> --- a/contrib/mw-to-git/git-remote-mediawiki.perl
-> +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-> @@ -22,7 +22,6 @@ binmode STDERR, ":encoding(UTF-8)";
->  binmode STDOUT, ":encoding(UTF-8)";
->
->  use URI::Escape;
-> -use IPC::Open2;
->  use Readonly;
->
->  # Mediawiki filenames can contain forward slashes. This variable dec=
-ides by which pattern they should be replaced
-> @@ -338,7 +337,8 @@ sub get_mw_pages {
->  sub run_git {
->         my $args =3D shift;
->         my $encoding =3D (shift || "encoding(UTF-8)");
-> -       open(my $git, "-|:$encoding", "git " . $args);
-> +       open(my $git, "-|:$encoding", "git " . $args)
-> +           or die "Unable to open: $!\n";
->         my $res =3D do {
->                 local $/ =3D undef;
->                 <$git>
+On Fri, Jun 07, 2013 at 01:38:16PM -0700, Junio C Hamano wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> 
+> > 77c130 (completion: clarify ls-tree, archive, show completion,
+> > 2013-06-02) removed __git_complete_file () because it had no callers
+> > left in the file.  However, to avoid breaking user scripts that may
+> > depend on this, add it back as a deprecated alias.
+> >
+> > Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> > ---
+> >  Based on pu.
+> 
+> Will queue; thanks.  With this, I think it will be safe to push the
+> series in question to 'master'.
 
-These two changes are unrelated and could be split into distinct
-patches (IMHO, though others may disagree).
+Safe?  Yes, at least scripts won't break because of the missing
+function.
+
+However, I still think it would be worth reverting at least the hunks
+modifying the completion functions of ls-tree and archive.  Or better
+yet, the whole series.
