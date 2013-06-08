@@ -1,73 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 02/22] git-remote-mediawiki: Use the Readonly module
- instead of the constant pragma
-Date: Sat, 8 Jun 2013 13:31:49 -0400
-Message-ID: <20130608173149.GC28029@sigill.intra.peff.net>
-References: <1370641344-4253-1-git-send-email-celestin.matte@ensimag.fr>
- <1370641344-4253-3-git-send-email-celestin.matte@ensimag.fr>
- <20130608032324.GA20226@sigill.intra.peff.net>
- <51B32B0F.1030400@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/2] Move sequencer to builtin
+Date: Sat, 8 Jun 2013 10:34:47 -0700
+Message-ID: <20130608173447.GA4381@elie.Belkin>
+References: <1370643409-3431-1-git-send-email-felipe.contreras@gmail.com>
+ <1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
+ <CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
+ <CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
+ <CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
+ <20130608164902.GA3109@elie.Belkin>
+ <CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Q8OpbGVzdGlu?= Matte <celestin.matte@ensimag.fr>,
-	git@vger.kernel.org, benoit.person@ensimag.fr,
-	matthieu.moy@grenoble-inp.fr
-To: =?utf-8?B?Q8OpbGVzdGlu?= Perdu <tohwiq@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 19:32:01 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 08 19:35:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlMzg-00038o-B9
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 19:32:00 +0200
+	id 1UlN2y-0005do-Qq
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 19:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752580Ab3FHRbx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jun 2013 13:31:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55506 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752453Ab3FHRbw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 13:31:52 -0400
-Received: (qmail 12330 invoked by uid 102); 8 Jun 2013 17:32:40 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 08 Jun 2013 12:32:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Jun 2013 13:31:49 -0400
+	id S1752515Ab3FHRfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 13:35:19 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:39719 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752494Ab3FHRfS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 13:35:18 -0400
+Received: by mail-pd0-f180.google.com with SMTP id 10so5944117pdi.25
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 10:35:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=s7svhsRBUAQCzVGDHm26RWdFbRegKwq2D4Up8G8Oz38=;
+        b=bQ/W15AdsdA8IzfggHjLRnoBS2B25jCiPJwaVg3XfL+VSvTl35bdRt3Hp++pB5P957
+         egdrJos+cGR4YfpRG38p5oaiEICf7v0/CujaSlLBMCenVJzJaqPoROZ3FIGU6i9G0P/Y
+         EzMMJxHl5t2MH1dxf020DCitI0ELAFvn5+s5ASbjruut3Kw7TAZUXm4CD6VZrU2ocZFA
+         WzR0uNmGhdXIeRw50yPKMCrXIP3QHk3kyyOJl8f6hudPysX9dPFACBNykTPYVPPCpSmd
+         6JNpiTKBRXkY1UqbmmmsDEOoI1NJ0gBXA65X01kZcpZD0xV86PwvdBw5UhAghRdfMpX+
+         MGyg==
+X-Received: by 10.68.244.73 with SMTP id xe9mr2565531pbc.119.1370712917594;
+        Sat, 08 Jun 2013 10:35:17 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id do4sm3748587pbc.8.2013.06.08.10.35.15
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 08 Jun 2013 10:35:16 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <51B32B0F.1030400@gmail.com>
+In-Reply-To: <CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226847>
 
-On Sat, Jun 08, 2013 at 03:01:03PM +0200, C=C3=A9lestin Perdu wrote:
+Felipe Contreras wrote:
 
-> Oh yes, part of this commit went into the previous one, which was not
-> formated as an email when I did my git-format-patch. I should check m=
-y
-> patches more carefully before sending them. Sorry for this.
+> This has nothing to do with better strategy, it has everything to do
+> with gut feelings and tradition. Not reasons.
 
-No problem. It is easy to make simple mistakes like that with our
-workflow, but it is also easy to fix them and repost. :)
+I try to help you, and you insult me.  I don't think this is worth it.
 
-> > What advantage does this have over "use constant"? I do not mind
-> > following guidelines from perlcritic if they are a matter of style,=
- but
-> > in this case there is a cost: we now depend on the "Readonly" modul=
-e,
-> > which is not part of the standard distribution. I.e., users now hav=
-e to
-> > deal with installing an extra dependency. Is it worth it?
->=20
-> Like Benoit said, the problem is that they sometimes don't interpolat=
-e.
-> I don't know if we should keep this commit or not.
+If I were managing this list, I would ban mails from you, since this
+discussion style does more harm than good.  If I were maintaining git,
+I'd still accept your contributions, waiting until times when I had
+more patience to read them and sending them to the list when
+appropriate to get more feedback.  Of course I am neither managing the
+list nor maintaining git, but I thought I should put that out there...
 
-Thanks both for the explanation.  I don't see us using that to our
-advantage anywhere in the patch. So I think this is purely a style
-issue, which to me indicates that the extra dependency is not worth it,
-and the patch should be dropped.
-
--Peff
+Annoyed,
+Jonathan
