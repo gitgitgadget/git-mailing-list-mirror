@@ -1,60 +1,89 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH v3 2/2] read-cache: plug a few leaks
-Date: Sat, 08 Jun 2013 17:56:04 +0200
-Message-ID: <51B35414.1090101@lsrfire.ath.cx>
-References: <1370644168-4745-1-git-send-email-felipe.contreras@gmail.com> <1370644168-4745-3-git-send-email-felipe.contreras@gmail.com> <51B31651.6020307@lsrfire.ath.cx> <CAMP44s2Bp5p1211e6Utdch4B+v3J83GCY0_ucG7duakswkb+pg@mail.gmail.com> <51B32FFD.5070302@lsrfire.ath.cx> <CAMP44s3K=VtkeCoKqnU9To9YbfO7vph9MsMWtgLWw0n=cYyq5g@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/2] Move sequencer to builtin
+Date: Sat, 8 Jun 2013 09:49:02 -0700
+Message-ID: <20130608164902.GA3109@elie.Belkin>
+References: <1370643409-3431-1-git-send-email-felipe.contreras@gmail.com>
+ <1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
+ <CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
+ <CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
+ <CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Adam Spiers <git@adamspiers.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 17:56:15 2013
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 08 18:49:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlLUz-0001iU-Lo
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 17:56:14 +0200
+	id 1UlMKN-0001Fb-I9
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 18:49:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751855Ab3FHP4J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jun 2013 11:56:09 -0400
-Received: from india601.server4you.de ([85.25.151.105]:58960 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751762Ab3FHP4I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 11:56:08 -0400
-Received: from [192.168.2.105] (p579BEA5D.dip0.t-ipconnect.de [87.155.234.93])
-	by india601.server4you.de (Postfix) with ESMTPSA id 75339239;
-	Sat,  8 Jun 2013 17:56:06 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <CAMP44s3K=VtkeCoKqnU9To9YbfO7vph9MsMWtgLWw0n=cYyq5g@mail.gmail.com>
+	id S1752394Ab3FHQtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 12:49:12 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:55811 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752286Ab3FHQtL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 12:49:11 -0400
+Received: by mail-pd0-f172.google.com with SMTP id z10so2394059pdj.17
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 09:49:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Xa65tbCkDHxC5TBqHh+VyNyBFBYswkdCrtUKlIzLQCY=;
+        b=JAYNN9DgLul2s9lmS/aBU0yooJSvwpBDKCCwgRQd1XK5yF8OyfKbabcae8PUvsBc4I
+         J5o1NCYnnUIXYQJ4Fi0IFmoOgzkH2nOWzMrleA2GDEukHyuaQSYMLlaP+RNPbiToJDRF
+         o+37/as5GilaUbv8lCVQynYRAHzY1cy9KAokUvyIQOyUAGuTfzt0lIzT97RWmnPTLQ9y
+         gUaio3D+b7fHSkgriP2hMY4YZk/2oMIyIr5J6RHetfW8ECjyzfbtj2A805NvGHsrCH9l
+         2ob5cQuGCRi6Flq/icAEXeOK3A3olU01KSr8t3Z0TBu/nKsPQwfW6LhpwBGuyvmU85sV
+         KrYg==
+X-Received: by 10.66.121.169 with SMTP id ll9mr7498988pab.126.1370710150179;
+        Sat, 08 Jun 2013 09:49:10 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id at1sm3637797pbc.10.2013.06.08.09.49.07
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 08 Jun 2013 09:49:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226838>
 
-Am 08.06.2013 16:04, schrieb Felipe Contreras:
-> On Sat, Jun 8, 2013 at 8:22 AM, Ren=C3=A9 Scharfe
-> <rene.scharfe@lsrfire.ath.cx> wrote:
->> Am 08.06.2013 14:15, schrieb Felipe Contreras:
->
->>> Why leave it out? If somebody makes the mistake of doing the above
->>> sequence, would you prefer that we leak?
->>
->> Leaking is better than silently cleaning up after a buggy caller bec=
-ause it
->> still allows the underlying bug to be found.
->
-> No, it doesn't. The pointer is replaced and forever lost. How is
-> leaking memory helping anyone to find the bug?
+Duy Nguyen wrote:
 
-Valgrind can tell you where leaked memory was allocated, but not if you=
-=20
-free it in the "wrong" place.
+> libgit.a is just a way of grouping a bunch of objects together, not a
+> real library and not meant to be. If you aim something more organized,
+> please show at least a roadmap what to move where.
 
-Ren=C3=A9
+Exactly.  There are some rough plans I would like to help with in the
+direction of a more organized source tree (so "ls" output can be less
+intimidating --- see Nico Pitre's mail on this a while ago for more
+hints), but randomly moving files one at a time to builtin/ destroys
+consistency and just makes things *worse*.  So if you'd like to work
+on this, you'll need to start with a description of the endpoint, to
+help people work with you to ensure it is something consistent and
+usable.
+
+Actually, Felipe, I doubt that would work well.  This project requires
+understanding how a variety of people use the git source code, which
+requires listening carefully to them and not alienating them so you
+can find out what they need.  Someone good at moderating a discussion
+could do that on-list, but based on my experience of how threads with
+you go, a better strategy might be to cultivate a wiki page somewhere
+with a plan and give it some time (a month, maybe) to collect input.
+
+NAK to changing the meaning of builtin/ to "built-in commands, plus
+sequencer", which seriously hurts consistency.
+
+Sincerely,
+Jonathan
