@@ -1,75 +1,78 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Sat, 8 Jun 2013 18:25:22 +0530
-Message-ID: <CALkWK0mLoeO5fKezE5S1LEC2LNH9qCwxHnNi_ZJpYzC7rVTqmg@mail.gmail.com>
-References: <1370643409-3431-1-git-send-email-felipe.contreras@gmail.com>
- <1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
- <CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
- <CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
- <CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
- <CAMP44s2fP4_=HtOsuwmxXG8qmp8CmpgEhz=BJFOFZxsTf_3gcQ@mail.gmail.com> <CACsJy8CQRWU0mFLVD6RrpzJiHBH=9zFwf5xDo7UhGW6A-OAzuw@mail.gmail.com>
+From: =?UTF-8?B?Q8OpbGVzdGluIFBlcmR1?= <tohwiq@gmail.com>
+Subject: Re: [PATCH v2 02/22] git-remote-mediawiki: Use the Readonly module
+ instead of the constant pragma
+Date: Sat, 08 Jun 2013 15:01:03 +0200
+Message-ID: <51B32B0F.1030400@gmail.com>
+References: <1370641344-4253-1-git-send-email-celestin.matte@ensimag.fr> <1370641344-4253-3-git-send-email-celestin.matte@ensimag.fr> <20130608032324.GA20226@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 14:56:10 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?Q8OpbGVzdGluIE1hdHRl?= <celestin.matte@ensimag.fr>,
+	git@vger.kernel.org, benoit.person@ensimag.fr,
+	matthieu.moy@grenoble-inp.fr
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jun 08 15:01:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlIgj-0001iE-T0
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 14:56:10 +0200
+	id 1UlIls-0005JE-SM
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 15:01:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751513Ab3FHM4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jun 2013 08:56:05 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:60051 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751107Ab3FHM4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 08:56:04 -0400
-Received: by mail-ie0-f179.google.com with SMTP id c10so4513077ieb.10
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 05:56:03 -0700 (PDT)
+	id S1751368Ab3FHNBU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jun 2013 09:01:20 -0400
+Received: from mail-we0-f180.google.com ([74.125.82.180]:53158 "EHLO
+	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751566Ab3FHNBH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 09:01:07 -0400
+Received: by mail-we0-f180.google.com with SMTP id w56so3668093wes.25
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 06:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=BFsi60kPp83lS0gCXFivQnRw6WgEj6p4LDdApq66n8g=;
-        b=gw5FI+fEGSZWYxk/FbTVF3gTXUoj1lbMvQxbJ+Pp3ZImP/h6cSGiaDEBWuDTUwLA8B
-         wTs6My+Y++dRHF4qc4MaxzDSgmH3Yy7LjNqLJG6RQS6UEevLky4cPsggARQuxMgk05rn
-         x4qshwwGVSAl2/6SDmN1XYJGpZlwjGccd/pmRZnWrP96EXGJSNwdz9E2jfX720vhF4ce
-         +DB0Fui+5DanPzgN9JXJl6Il1rUBq+SaQ4/dA4VJIYuJEq99emS6SmpHh3snMp1XcFsY
-         gaa8YCHnDHbDqlwSH/CUhWeS+wdy9V/d7a8iBCVmi+E5rE5rjHi+OzQ2NkMc+pxFZbPL
-         Iqjg==
-X-Received: by 10.50.98.104 with SMTP id eh8mr815101igb.111.1370696162953;
- Sat, 08 Jun 2013 05:56:02 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Sat, 8 Jun 2013 05:55:22 -0700 (PDT)
-In-Reply-To: <CACsJy8CQRWU0mFLVD6RrpzJiHBH=9zFwf5xDo7UhGW6A-OAzuw@mail.gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=VmcM9wOgCGyIueEwNwPfUkJ+fUgC2ZlivHTP2kJ1PN0=;
+        b=J/m0I+G3GVLOdF6FAcF/D/5shmxCE5a1PqgkhMKxOhzXovkGW9Jx7LvqDqgTy4mn3B
+         ZajNPx3PQuxnpLf1j1FwO9fHl53AdkmPXAaaMP2pVNs4vPB4ofUUEhkqUSt9d9xnO56p
+         I8pNWBnmpHh+8RyH/t0ExtPvGqkT28x2oyVcfLN4mPa7VF9JxUW88TI8zuzOdC+VcpSK
+         gPvENkJ/q57sbuuN/lzyNwM+e8/ChetleYicmO1ppzbJD9crtxa5QwCQFJDPxPP3aITS
+         rXNVOf9NIKgseWVSEhcd/+E02FRtQbgEpHX9DW01MMu16q0F7/yOvezo5r9H/HoP0R2F
+         Zmsg==
+X-Received: by 10.194.120.7 with SMTP id ky7mr1481175wjb.89.1370696466173;
+        Sat, 08 Jun 2013 06:01:06 -0700 (PDT)
+Received: from [192.168.1.2] (89-156-204-68.rev.numericable.fr. [89.156.204.68])
+        by mx.google.com with ESMTPSA id cw8sm2198251wib.7.2013.06.08.06.01.03
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 08 Jun 2013 06:01:04 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <20130608032324.GA20226@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226814>
 
-Duy Nguyen wrote:
->> until libgit.a == libgit2. Done.
->
-> Read up about the introduction of libgit2, why it was created in the
-> first place instead of moving a few files around renaming libgit.a to
-> libgit2.a. Unless you have a different definition of "==" than I do.
+Le 08/06/2013 05:23, Jeff King a =C3=A9crit :
+> What does this series apply on top of? The existing version in "maste=
+r"
+> does not have "use Readonly" in it at all. The first version of your
+> series introduced that line, but here it is shown as an existing line=
+=2E
+> Did you miss a commit when putting your patches together?
 
-As far as I know, there was never an extensive on-list discussion
-about why git.git cannot be lib'ified.  The first appearance of
-libgit2 is here [1].  I briefly read through the initial history of
-libgit2.git too, but I cannot find a single discussion detailing why
-lib'ifying git.git is fundamentally unworkable (there's some vague
-mention of "global state baggage" and "presence of die()", but that's
-about it).  Unless you can point to some detailed discussions, or
-write out a really good reason yourself, I don't think there's any
-harm in letting fc try.  Ofcourse, he still indicated any sort of plan
-yet, and I'm also waiting for that.
+Oh yes, part of this commit went into the previous one, which was not
+formated as an email when I did my git-format-patch. I should check my
+patches more carefully before sending them. Sorry for this.
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/99608
+> What advantage does this have over "use constant"? I do not mind
+> following guidelines from perlcritic if they are a matter of style, b=
+ut
+> in this case there is a cost: we now depend on the "Readonly" module,
+> which is not part of the standard distribution. I.e., users now have =
+to
+> deal with installing an extra dependency. Is it worth it?
+
+Like Benoit said, the problem is that they sometimes don't interpolate.
+I don't know if we should keep this commit or not.
