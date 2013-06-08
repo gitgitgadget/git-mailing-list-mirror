@@ -1,78 +1,73 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Sat, 8 Jun 2013 14:15:47 -0500
-Message-ID: <CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
-References: <1370643409-3431-1-git-send-email-felipe.contreras@gmail.com>
-	<1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
-	<CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
-	<CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
-	<20130608164902.GA3109@elie.Belkin>
-	<CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
-	<20130608173447.GA4381@elie.Belkin>
+From: =?ISO-8859-1?Q?C=E9lestin_Matte?= <celestin.matte@ensimag.fr>
+Subject: Re: [PATCH] git-remote-mediawiki: Fix a bug in a regexp
+Date: Sat, 08 Jun 2013 22:08:36 +0200
+Message-ID: <51B38F44.6080304@ensimag.fr>
+References: <1370698510-11649-1-git-send-email-celestin.matte@ensimag.fr> <vpqmwr0v45b.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 21:16:11 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?C=E9lestin_Matte?= <celestin.matte@ensimag.fr>,
+	git@vger.kernel.org, benoit.person@ensimag.fr
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sat Jun 08 22:08:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlOcP-0000Y1-Jr
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 21:16:05 +0200
+	id 1UlPRT-0005kH-Kh
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 22:08:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752614Ab3FHTPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jun 2013 15:15:50 -0400
-Received: from mail-la0-f44.google.com ([209.85.215.44]:37337 "EHLO
-	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752515Ab3FHTPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 15:15:49 -0400
-Received: by mail-la0-f44.google.com with SMTP id er20so4690208lab.17
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 12:15:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=kbcy5HfiPU8JIq3UEMMe8EiMumrEZr1/sN0ANwGQswA=;
-        b=PgF/Qum3tGHmnFgYjXVPjWXsxKTtFrIHibQhgLNXKOWQIdBDMDSfiqq/6w4S8mnfvb
-         h8hEAB2Uoy+3ZJ3CUa84qT/iS5nijBV8PYuORm3y0Yai6Yma/GI1dt1kDoz8NqaA91VV
-         Ar6+H/kJkjd/G2Qa+VEI+qTng9CDVrqXGA1XV8/37kcIEOd/cAGl9mEXcLZw50YHXHgl
-         gu/cy1yxpeMo/5p6v6YY9KPG1yY/LNOZyU0R1qAvycSHsHmxA8x6HrH/qCWSOYgZdMou
-         06ZvfvzjZJFUfaeEW/JlUx1/Qa95SrmtorcZ/Wmy6INrSHo/OZvBkh3zKXmAJhwzzjt1
-         iMSg==
-X-Received: by 10.152.22.73 with SMTP id b9mr1841017laf.36.1370718947797; Sat,
- 08 Jun 2013 12:15:47 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sat, 8 Jun 2013 12:15:47 -0700 (PDT)
-In-Reply-To: <20130608173447.GA4381@elie.Belkin>
+	id S1752609Ab3FHUIm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jun 2013 16:08:42 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45236 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752515Ab3FHUIl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 16:08:41 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r58K8XT7028456
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 8 Jun 2013 22:08:33 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r58K8Ztu018121;
+	Sat, 8 Jun 2013 22:08:35 +0200
+Received: from [127.0.0.1] (ensibm [195.221.228.8])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r58K8YAQ000517;
+	Sat, 8 Jun 2013 22:08:34 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <vpqmwr0v45b.fsf@anie.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 08 Jun 2013 22:08:34 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r58K8XT7028456
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: celestin.matte@ensimag.fr
+MailScanner-NULL-Check: 1371326917.67494@p0YoD2VsmQpQmp6ur1Cr0Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226860>
 
-On Sat, Jun 8, 2013 at 12:34 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+Le 08/06/2013 20:38, Matthieu Moy a =E9crit :> This is right, but the c=
+ode
+actually worked the way it was. I'm not
+> sure, but my understanding is that '\n' is the string "backslash
+> followed by n", but interpreted as a regexp, it is a newline.
+>
+> The new code looks better than the old one, but the log message may b=
+e
+> improved.
 
-> If I were managing this list, I would ban mails from you, since this
-> discussion style does more harm than good.
+Is this better?
 
-There is a nice motto around: "Talk is cheap. Show me the code."
+"
+In Perl, '\n' is not a newline, but instead the string composed of a
+backslash followed by an "n". To match newlines, one has to use the /\n=
+/
+regexp. As the output of "rev-list --first-parent" is line-oriented,
+what we want here is to match newlines, and not the "\n" string.
+"
 
-Just the past three months I've probably done more work than anybody
-else[1], and you would ban me because you don't like my words? At the
-end of the day the project has benefited from my patches, and a wise
-maintainer would do what is best for the project. If you don't like my
-words, ignore them.
-
-Taking things personal is more often than not the wrong thing to do.
-Specially when they were not even directed to you.
-
-[1] https://www.ohloh.net/p/git/contributors?query=&sort=commits_12_mo
-
--- 
-Felipe Contreras
+--=20
+C=E9lestin Matte
