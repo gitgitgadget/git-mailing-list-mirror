@@ -1,95 +1,135 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Sat, 8 Jun 2013 18:42:29 +0700
-Message-ID: <CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
-References: <1370643409-3431-1-git-send-email-felipe.contreras@gmail.com>
- <1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
- <CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com> <CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [Administrivia] On ruby and contrib/
+Date: Sat, 8 Jun 2013 06:56:12 -0500
+Message-ID: <CAMP44s0GUrQqXCj97Ay+0CsA1z=96BPYfyADbTaHH7fc7HL0sQ@mail.gmail.com>
+References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
+	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
+	<rmivc5rp9w2.fsf@fnord.ir.bbn.com>
+	<alpine.DEB.1.00.1306061818191.28957@s15462909.onlinehome-server.info>
+	<CACsJy8BMrxLZFGQfUN1YCG+qkAj-91aYkc54R5O4iqgXUNeQOw@mail.gmail.com>
+	<CAMP44s08V1=nVbeo6r8UVT3Fd0=iSpRohinqf77Tmu4=xpDHeg@mail.gmail.com>
+	<CACsJy8DTKr5Fy3-+8ShUrWQrKC2_7EmLHwyVgQ9Aq5JDOFBAqA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Greg Troxel <gdt@ir.bbn.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 13:43:15 2013
+	Thomas Rast <trast@inf.ethz.ch>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 08 13:56:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlHYB-0007r9-8o
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 13:43:15 +0200
+	id 1UlHkp-00019x-Hj
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 13:56:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752223Ab3FHLnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jun 2013 07:43:00 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:50752 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751868Ab3FHLnA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 07:43:00 -0400
-Received: by mail-ob0-f181.google.com with SMTP id 16so7909003obc.12
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 04:42:59 -0700 (PDT)
+	id S1752472Ab3FHL4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 07:56:15 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:37349 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752367Ab3FHL4O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 07:56:14 -0400
+Received: by mail-la0-f42.google.com with SMTP id eb20so4493408lab.1
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 04:56:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=l1RVrPqyehp/jpaD0PHeTLwmzQJJSJcr0tfLOjZ740M=;
-        b=v3jFj1nXAuU91zg2xALuo2BwLJGDcPvIVfO6f1cjs0xs5grqIh4FbZRSick6dhGq6Y
-         WuXDB/O+xkl9zLZqI/kGYeIIojbwC77kmh2+OZ30XAduL15cR2yet4f+WBKoSxuQphPX
-         ZQcJWox1tYdwl0WZUn7ov1ivHtI/UvQaZMbFxOEqVBZaqVXh2CfHndPbJZqjxaJKXc+z
-         K/DvLvJXugdZ950knWAxshsKq0vZW/CPH9Q19NbYu37LZwMGypeUUqgTlMNEwEDXrerl
-         ptU7srNnReUXkfWfV1PLonAy717GhCiIuJl30yhkCfojWgutzvDmSWRmEucykMiFYgej
-         n6hw==
-X-Received: by 10.60.125.101 with SMTP id mp5mr2036655oeb.18.1370691779648;
- Sat, 08 Jun 2013 04:42:59 -0700 (PDT)
-Received: by 10.76.76.69 with HTTP; Sat, 8 Jun 2013 04:42:29 -0700 (PDT)
-In-Reply-To: <CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
+        bh=if0lj5m4im6/u1T51t10GJ5qvnluMp4bpqxOzrAxGCg=;
+        b=U5MxvDjwc69vyH1zqxbcGvKqJt17czahwBULenQJZNyX/15E9SPGmgeiNlYV+qgfP9
+         sxs5683m3jI4/71dyMYASx31JBHYEDLEMsZ9sCuHniE7WQNDyZ47Lqi8qeWsI0aiIHS9
+         N1Ze7A+9mHZg61uMPUTH/NvjqdSkXzz7z8B/O+msvhhlBlYOpiymqm36DcaUUULAiapl
+         jA3dh8UrlypIFz1AUOfe8wlcmRA2qBRxWguNCDeLjzR4crXrUNjusZhEZYfH9S+ZDlF3
+         SNS5CP5pqFoIwojAob0ec+al2pC3aGzxfUiycyDCUFiJl6vm+0xD0m8ATSMBdv4k9stU
+         lpFQ==
+X-Received: by 10.112.156.5 with SMTP id wa5mr2965138lbb.63.1370692572534;
+ Sat, 08 Jun 2013 04:56:12 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Sat, 8 Jun 2013 04:56:12 -0700 (PDT)
+In-Reply-To: <CACsJy8DTKr5Fy3-+8ShUrWQrKC2_7EmLHwyVgQ9Aq5JDOFBAqA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226804>
 
-On Sat, Jun 8, 2013 at 5:14 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Fri, Jun 7, 2013 at 9:35 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Sat, Jun 8, 2013 at 5:16 AM, Felipe Contreras
->> <felipe.contreras@gmail.com> wrote:
->>> This code is only useful for cherry-pick and revert built-ins, nothing
->>> else, so let's make it a builtin object, but make sure 'git-sequencer'
->>> is not generated.
+On Sat, Jun 8, 2013 at 6:28 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sat, Jun 8, 2013 at 5:02 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> On Fri, Jun 7, 2013 at 9:17 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>>> On Thu, Jun 6, 2013 at 11:22 PM, Johannes Schindelin
+>>> <Johannes.Schindelin@gmx.de> wrote:
+>>>> Hi Greg,
+>>>>
+>>>> On Thu, 6 Jun 2013, Greg Troxel wrote:
+>>>>
+>>>>> As one of the people who helps maintain git packages in pkgsrc, my
+>>>>> initial reaction is negative to adding a ruby dependency.
+>>>>
+>>>> My initial reaction, too. It was hard enough to get Perl included with Git
+>>>> for Windows (because of that pesky Subversion dependency).
+>>>>
+>>>> As you can see from the commit history, I was the primary force behind
+>>>> trying to get everything "core" in Git away from requiring scripting
+>>>> languages (I think it is an awesome thing to provide APIs for as many
+>>>> languages as possible, but a not-so-cool thing to use more than one
+>>>> language in the core code). It does not seem that anybody picked up that
+>>>> task when I left, though.
+>>>
+>>> Nobody seems to mention it yet. There's another reason behind the C
+>>> rewrite effort: fork is costly on Windows. The C rewrite allows us to
+>>> run with one process (most of the time). This applies for shell, perl
+>>> and even ruby scripts because libgit.a is never meant to be used
+>>> outside git.c context (unlike libgit2). In this regard, ruby is just
+>>> as bad as currently supported non-C languages.
 >>
->> As you can see, the convention is builtin/foo.c corresponds to git-foo
->> (and maybe more). Why make an exception for sequencer?
+>> Are you sure?
 >
-> Why not?
+> I'm not saying you can't. I'm saying it's not meant to be used that
+> way. Which means there may be problems lurking around.
 
-And while we are at "why not", why don't you fork git?
+Code is code. If something is not meant to be used in certain way, you fix it.
 
->> I ask because I moved
->> fetch-pack from builtin out because of linking issues and I don't want
->> the same happen to sequencer.c.
->
-> I'm sure those linking issues can be solved.
+> You can write a ruby extension to access libgit.a, sure,
 
-Yeah, I scratched my head for hours and finally gave in. Maybe you are
-better at the toolchain than me.
+I'm not using libgit.a, I'm using the builtin commands. This is
+exactly the same code you run when you type 'git foo'.
 
-> I don't see why libgit.a couldn't eventually be the same as libgit2.
-> We need better organization tough (e.g. builtins/lib.a).
->
-> If you are arguing favor of a more messy setup, then we should link
-> all the builtin/*.o to libgit.a, because the current situation just
-> doesn't cut it.
->
-> For example, init_copy_notes_for_rewrite() cannot be accessed by
-> sequencer.c, and while it's possible to move that function (and
-> others) to libgit.a, it doesn't make sense, because it can only be
-> used by builtins.
+> but how many people on this
+> list understand git design and limits _and_ ruby's good enough to spot
+> the bugs?
 
-libgit.a is just a way of grouping a bunch of objects together, not a
-real library and not meant to be. If you aim something more organized,
-please show at least a roadmap what to move where.
---
-Duy
+Now you are changing the subject. Does that mean that you accept that
+'fork' wouldn't be a problem when writing Ruby scripts?
+
+As for the people that know Git and Ruby; they can learn. Didn't you
+just said that you didn't see any problem with the community learning
+a new language?
+
+> If a bug is found and requires major restructuring in
+> libgit.a, how are you sure it's worth the effort and does not
+> destablize the rest of git?
+
+There is no need to destabilize anything. I just showed you 100 lines
+of code that are able to run git commands without forks, and without
+changing anything in libgit.a.
+
+> A better way to do it is linking against libgit2.
+
+I would rather use what the rest of Git uses. It doesn't make any
+sense fragment even more the code, and make Ruby scripts 2nd class
+citizens along the way. Plus, any script that tries to use libgit2,
+would certainly need more than 100 lines.
+
+-- 
+Felipe Contreras
