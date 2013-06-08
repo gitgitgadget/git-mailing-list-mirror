@@ -1,69 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 14/22] git-remote-mediawiki: Check return value of open + remove import of unused open2
-Date: Sat, 08 Jun 2013 21:04:41 +0200
-Message-ID: <vpqtxl8tody.fsf@anie.imag.fr>
-References: <1370641344-4253-1-git-send-email-celestin.matte@ensimag.fr>
-	<1370641344-4253-15-git-send-email-celestin.matte@ensimag.fr>
-	<CAPig+cQHPjjpt_JYHjua6VWzTjTFog9VzhpD0hOLKSPCrEnEdg@mail.gmail.com>
-	<51B353A7.1090206@ensimag.fr> <vpqd2rwv40f.fsf@anie.imag.fr>
-	<51B37BB0.7000504@ensimag.fr>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/2] Move sequencer to builtin
+Date: Sat, 8 Jun 2013 14:15:47 -0500
+Message-ID: <CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
+References: <1370643409-3431-1-git-send-email-felipe.contreras@gmail.com>
+	<1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
+	<CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
+	<CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
+	<CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
+	<20130608164902.GA3109@elie.Belkin>
+	<CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
+	<20130608173447.GA4381@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>, benoit.person@ensimag.fr
-To: =?iso-8859-1?Q?C=E9lestin?= Matte <celestin.matte@ensimag.fr>
-X-From: git-owner@vger.kernel.org Sat Jun 08 21:04:52 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 08 21:16:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlORY-0002JW-HT
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 21:04:52 +0200
+	id 1UlOcP-0000Y1-Jr
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 21:16:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752555Ab3FHTEs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jun 2013 15:04:48 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57587 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752469Ab3FHTEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 15:04:47 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r58J4d6X023589
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 8 Jun 2013 21:04:39 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UlORN-0001ds-UO; Sat, 08 Jun 2013 21:04:41 +0200
-In-Reply-To: <51B37BB0.7000504@ensimag.fr> (=?iso-8859-1?Q?=22C=E9lestin?=
- Matte"'s message of
-	"Sat, 08 Jun 2013 20:45:04 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 08 Jun 2013 21:04:40 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r58J4d6X023589
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1371323080.5545@rXn/lcw2Ub8b2Jwn2YOBcg
+	id S1752614Ab3FHTPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 15:15:50 -0400
+Received: from mail-la0-f44.google.com ([209.85.215.44]:37337 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752515Ab3FHTPt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 15:15:49 -0400
+Received: by mail-la0-f44.google.com with SMTP id er20so4690208lab.17
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 12:15:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=kbcy5HfiPU8JIq3UEMMe8EiMumrEZr1/sN0ANwGQswA=;
+        b=PgF/Qum3tGHmnFgYjXVPjWXsxKTtFrIHibQhgLNXKOWQIdBDMDSfiqq/6w4S8mnfvb
+         h8hEAB2Uoy+3ZJ3CUa84qT/iS5nijBV8PYuORm3y0Yai6Yma/GI1dt1kDoz8NqaA91VV
+         Ar6+H/kJkjd/G2Qa+VEI+qTng9CDVrqXGA1XV8/37kcIEOd/cAGl9mEXcLZw50YHXHgl
+         gu/cy1yxpeMo/5p6v6YY9KPG1yY/LNOZyU0R1qAvycSHsHmxA8x6HrH/qCWSOYgZdMou
+         06ZvfvzjZJFUfaeEW/JlUx1/Qa95SrmtorcZ/Wmy6INrSHo/OZvBkh3zKXmAJhwzzjt1
+         iMSg==
+X-Received: by 10.152.22.73 with SMTP id b9mr1841017laf.36.1370718947797; Sat,
+ 08 Jun 2013 12:15:47 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Sat, 8 Jun 2013 12:15:47 -0700 (PDT)
+In-Reply-To: <20130608173447.GA4381@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226859>
 
-C=E9lestin Matte <celestin.matte@ensimag.fr> writes:
+On Sat, Jun 8, 2013 at 12:34 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-> Oh, I thought a part of a patch was called a commit.
+> If I were managing this list, I would ban mails from you, since this
+> discussion style does more harm than good.
 
-1 patch =3D 1 commit
-1 patch series =3D several commits sent together. Will normally end-up =
-in
-                 a branch in Junio's repo (named with <initials>/<topic=
->)
+There is a nice motto around: "Talk is cheap. Show me the code."
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Just the past three months I've probably done more work than anybody
+else[1], and you would ban me because you don't like my words? At the
+end of the day the project has benefited from my patches, and a wise
+maintainer would do what is best for the project. If you don't like my
+words, ignore them.
+
+Taking things personal is more often than not the wrong thing to do.
+Specially when they were not even directed to you.
+
+[1] https://www.ohloh.net/p/git/contributors?query=&sort=commits_12_mo
+
+-- 
+Felipe Contreras
