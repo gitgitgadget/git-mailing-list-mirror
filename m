@@ -1,108 +1,139 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Bug: `gitsubmodule` does not list modules with unicode characters
-Date: Sat, 8 Jun 2013 02:18:36 -0700
-Message-ID: <20130608091836.GA2925@elie.Belkin>
-References: <loom.20130323T171809-46@post.gmane.org>
- <51500B34.30801@web.de>
- <20130608010556.GA28819@paksenarrion.iveqy.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Ilya Kulakov <kulakov.ilya@gmail.com>, git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 11:18:50 2013
+From: Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+Subject: [PATCH 2/2] status: introduce status.branch to enable --branch by default
+Date: Sat,  8 Jun 2013 11:28:57 +0200
+Message-ID: <1370683737-28823-2-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+References: <1370683737-28823-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+Cc: gitster@pobox.com,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 08 11:29:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlFIQ-0000Ld-00
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 11:18:50 +0200
+	id 1UlFSp-0000QM-Qt
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 11:29:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751843Ab3FHJSq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jun 2013 05:18:46 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:64723 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751571Ab3FHJSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 05:18:44 -0400
-Received: by mail-pa0-f43.google.com with SMTP id hz11so2297777pad.2
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 02:18:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=+w4L0+WxOpBAVIK8MsCH5qaKDCHJscm55YmzL6XwPEQ=;
-        b=pjPauVbXM/PcFfiaGBKvm+vwO4RCMK8HoRlGVd0aWrZNA28ZgzrX9kbZY9FFJkXM4/
-         RNX6m0Iq1GuTRuXT+7q6NyWXhjV+ZqtxfYESRJ4oMxSs+PYhE86A+fi3INSOQ0SuoDZM
-         M7KYA8iNIfMBxen0PhX3pXV7wCAwLEBX+czv3+W3EbVVsB6313DFPyoyUE//P8bx8B8j
-         k0vsg5EkTUhYkF7qeZkVtcTJVwqGyQn6xkG2OhYESfWndcgVRUaufTxUd5sytZSHtjQU
-         TKdjywKTTmiQqvHEcRRrByMN3FqmN04ra+M+cjvbFtSX5zdQW6mudcbuigi/mnkqeE29
-         U+GA==
-X-Received: by 10.66.250.131 with SMTP id zc3mr6233859pac.157.1370683124422;
-        Sat, 08 Jun 2013 02:18:44 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPSA id xu10sm6907736pab.3.2013.06.08.02.18.42
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 08 Jun 2013 02:18:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20130608010556.GA28819@paksenarrion.iveqy.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1751783Ab3FHJ30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 05:29:26 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35826 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751571Ab3FHJ3Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 05:29:24 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r589TGF3000830
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 8 Jun 2013 11:29:16 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r589THUl009362;
+	Sat, 8 Jun 2013 11:29:17 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r589TH4E030380;
+	Sat, 8 Jun 2013 11:29:17 +0200
+Received: (from garciagj@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id r589THRf030366;
+	Sat, 8 Jun 2013 11:29:17 +0200
+X-Mailer: git-send-email 1.7.8
+In-Reply-To: <1370683737-28823-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 08 Jun 2013 11:29:16 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r589TGF3000830
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: jorge-juan.garcia-garcia@ensimag.imag.fr
+MailScanner-NULL-Check: 1371288560.24765@Vxg3A8toEYKX0sdGjPb1xQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226792>
 
-Fredrik Gustafsson wrote:
+Some people often run 'git status -b'.
+The config variable status.branch allows to set it by default.
 
-> I've looked into this a bit.
-
-Thanks for investigating.
-
-[...]
-> Why don't we always print names quoted? IMHO the choose of line
-> termination should not do anything else than alter the line termination.
->
-> However, an other solution would be to use git ls-files -z in
-> git-submodule.sh and then rewrite the perl-code to handle \0 instead
-> of \n.
-
-The whole point of "-z" is that by using a terminator that is guaranteed
-not to appear in filenames, it avoids the need to quote filenames.
-Otherwise at least \n would need to be quoted.
-
-How about something like this patch?
-
--- >8 --
-Subject: ls-files doc: clarify purpose of "-z" option
-
-The purpose of the "-z" option is to avoid quoting issues by using a
-delimiter that implies a binary-clean parser and cannot appear in
-filenames, and in that spirit, "-z" turns off C-style quoting.  But
-without looking carefully through the entire manpage, it is too easy
-to miss that.
-
-Reported-by: Fredrik Gustafsson <iveqy@iveqy.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+Signed-off-by: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 ---
- Documentation/git-ls-files.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/config.txt |    3 +++
+ builtin/commit.c         |    6 ++++++
+ t/t7508-status.sh        |   30 ++++++++++++++++++++++++++++++
+ 3 files changed, 39 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index c0856a6e..753c223f 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -75,7 +75,9 @@ OPTIONS
- 	succeed.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 80cdf75..21ba9c2 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2069,6 +2069,9 @@ status.relativePaths::
+ status.short::
+ 	Set to true to enable --short by default in linkgit:git-status[1].
  
- -z::
--	\0 line termination on output.
-+	Terminate lines with NUL instead of LF.
-+	This avoids the need to quote filenames; see the Output section
-+	below for details.
++status.branch::
++	Set to true to enable --branch by default in linkgit:git-status[1].
++
+ status.showUntrackedFiles::
+ 	By default, linkgit:git-status[1] and linkgit:git-commit[1] show
+ 	files which are not currently tracked by Git. Directories which
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 0f3429f..d447857 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1121,6 +1121,12 @@ static int git_status_config(const char *k, const char *v, void *cb)
+ 		}
+ 		return 0;
+ 	}
++	if (!strcmp(k, "status.branch")) {
++		if (!v)
++			return config_error_nonbool(k);
++		s->show_branch = git_config_bool(k,v);
++		return 0;
++	}
+ 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
+ 		s->use_color = git_config_colorbool(k, v);
+ 		return 0;
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index 4cb2b62..34cf30f 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -1369,4 +1369,34 @@ test_expect_success '"status.short=false" weaker than "-s"' '
+     test_cmp status1 status2
+ '
  
- -x <pattern>::
- --exclude=<pattern>::
++test_expect_success '"status.branch=true" same as "-b"' '
++    git -c status.branch=true status -s >status2 &&
++    git status -sb >status1 &&
++    test_cmp status1 status2
++'
++
++test_expect_success '"status.branch=true" different from "--no-branch"' '
++    git -c status.branch=true status -s >status2 &&
++    git status -s --no-branch  >status1 &&
++    test_must_fail test_cmp status1 status2
++'
++
++test_expect_success '"status.branch=true" weaker than "--no-branch"' '
++    git -c status.branch=true status -s --no-branch >status2 &&
++    git status -s --no-branch >status1 &&
++    test_cmp status1 status2
++'
++
++test_expect_success '"status.branch=false" same as "--no-branch"' '
++    git -c status.branch=false status -s >status2 &&
++    git status -s --no-branch >status1 &&
++    test_cmp status1 status2
++'
++
++test_expect_success '"status.branch=false" weaker than "-b"' '
++    git -c status.branch=false status -sb >status2 &&
++    git status -sb >status1 &&
++    test_cmp status1 status2
++'
++
+ test_done
 -- 
-1.8.3
+1.7.8
