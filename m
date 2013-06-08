@@ -1,63 +1,82 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] tests: fix autostash
-Date: Sat, 8 Jun 2013 19:34:51 +0530
-Message-ID: <CALkWK0mBnG7houMKHDorz3oSm=R7u4Va1s=AepSM0CPY6Gy4cw@mail.gmail.com>
-References: <1370648714-7872-1-git-send-email-felipe.contreras@gmail.com>
- <CALkWK0=OdcLDCd9OonUS6kBZhA=oz3HYJT8Eiqnh1A++s5yWww@mail.gmail.com>
- <CAMP44s3rYXOmGWR3JM8xy8ON4pqDRhYWVMQqOAyODVr5myq+yg@mail.gmail.com>
- <CALkWK0=qVXL=DtJzYRGFLQQh3_-cGC_t_zpaiTL9KVKN4--mVg@mail.gmail.com> <CAMP44s1p-VDMLNhoym5fH3XAn8CWqu2yqGq0mb+55qHOq-r_ww@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/2] Move sequencer to builtin
+Date: Sat, 8 Jun 2013 09:10:47 -0500
+Message-ID: <CAMP44s0gbddk+UQXqj8D1U4L8jBRciWkJT_g4CbzcTP1oQrzLQ@mail.gmail.com>
+References: <1370643409-3431-1-git-send-email-felipe.contreras@gmail.com>
+	<1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
+	<CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
+	<CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
+	<CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
+	<CAMP44s2fP4_=HtOsuwmxXG8qmp8CmpgEhz=BJFOFZxsTf_3gcQ@mail.gmail.com>
+	<CACsJy8CQRWU0mFLVD6RrpzJiHBH=9zFwf5xDo7UhGW6A-OAzuw@mail.gmail.com>
+	<CALkWK0mLoeO5fKezE5S1LEC2LNH9qCwxHnNi_ZJpYzC7rVTqmg@mail.gmail.com>
+	<CACsJy8B=m95mpRn1dAwQZAvHRUeJVjKy1hKXv43EKX08ZODsDw@mail.gmail.com>
+	<CALkWK0mw8=CMuyw5-E0fzh+c6Om_NCgHohqa_p=J_kw3UfJCJQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 16:05:37 2013
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Shawn Pearce <sop@google.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 08 16:10:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlJlw-00071b-J5
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 16:05:36 +0200
+	id 1UlJr3-0001tB-Os
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 16:10:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751813Ab3FHOFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jun 2013 10:05:32 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:45232 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751585Ab3FHOFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 10:05:32 -0400
-Received: by mail-ie0-f169.google.com with SMTP id 10so13403041ied.28
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 07:05:32 -0700 (PDT)
+	id S1752223Ab3FHOKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 10:10:50 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:36652 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751632Ab3FHOKt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 10:10:49 -0400
+Received: by mail-lb0-f179.google.com with SMTP id w20so4998277lbh.24
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 07:10:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=k4kB0d3fXhQSSkMRTsMLPRvaD7OslJNGbyopfR9hVsk=;
-        b=Xs5RxpEztwlyxy6u9zxiSSWLnKrg48EQA4eGxr+4RQiKwCMq0hbQl580cEQPxHQTqy
-         R6xxx+a34Iz9Zn+jqZG5eVDaMzQlRFR+zLIXtHsVh6KQRdNTty2H7V8B1EkvC9Mie897
-         i+CKLtaMc9poMKQ7+NRcHfPMEi3hzxjBXpwGZlyTVLGZHUuqEsDHTAc4EtnzS/ZO48pl
-         J/oyJGgaT9v0FArlA3xq1EulDOnTPy+lLJwkJ8/EYwUAYYlwtTh35B/ennHqkwJ0eY+U
-         UyrPrCAxuP+UKCObB1r0PEZ/GrIQISK3BAS81jjJ75Wvxyv7gtPQ88eHz7hk9agRxDFv
-         GKkQ==
-X-Received: by 10.50.25.194 with SMTP id e2mr910672igg.111.1370700332058; Sat,
- 08 Jun 2013 07:05:32 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Sat, 8 Jun 2013 07:04:51 -0700 (PDT)
-In-Reply-To: <CAMP44s1p-VDMLNhoym5fH3XAn8CWqu2yqGq0mb+55qHOq-r_ww@mail.gmail.com>
+        bh=d02RhF1JFMIqwJR/aZ7rJyMy3j/5fXd1ckI+N0akunw=;
+        b=fSrAMC44EK0aSCrnq7RyXx4i/vBfApUjUTXwQR7mqHD4fzcqqtRmAPEaPVi3p4JMDz
+         NmiJdVfkYyKS2uzBX15FUAPqFT/Ya2WsngUD39pFQB1wO5SHAlXiPWfJWIkrDZVVWAH0
+         aBeso2w3BDdR3QHLBiqlPuYgQiih1FQ0SWrlGIJCSW/Tab+6XEsFeDXNocm8rLlItJI3
+         /Jg1hiTCdEPVdJZq9xDZNgd0zVfyGj7eH52WbwsBFd11YMAt1foMRsasQv2sZvKlHTl4
+         JOsDV0hN1DPgBKDpQLvmUypYPULjLOiF/mUB17h/ukwk7naWEhCi3Hu3OM+PD3C959Wq
+         w4GA==
+X-Received: by 10.112.156.5 with SMTP id wa5mr3134174lbb.63.1370700647765;
+ Sat, 08 Jun 2013 07:10:47 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Sat, 8 Jun 2013 07:10:47 -0700 (PDT)
+In-Reply-To: <CALkWK0mw8=CMuyw5-E0fzh+c6Om_NCgHohqa_p=J_kw3UfJCJQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226828>
 
-Felipe Contreras wrote:
->> Ofcourse they're implementation details.  Even in this very test, I
->> check $dotest/autostash plenty of times.
+On Sat, Jun 8, 2013 at 8:34 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> Duy Nguyen wrote:
+>> I _think_ the reason is because git was never written as a reusable
+>> library in mind from the beginning.
 >
-> The more the test relies on implementation details, the worst.
+> We cannot reverse-engineer intents, but I tend to agree with this.  My
+> question is: so what?  Is it impossible to do now?
 
-I'm not convinced about this.
+Nothing is impossible.
 
->> Then show me how to do it correctly.
->
-> Something like this.
+My feeling is that no Git developers are interested in libgit2, so the
+idea of me contributing to libgit2 and leave libgit.a alone is more
+like a "we don't want no reorganization". Then wait until libgit2 is
+ready before considering using it in Git's core, but that's never
+going to happen if we don't first start to bring the two code-bases
+closer together.
 
-Yeah, this is definitely better.  Can you submit this patch?
+IOW; sweep the issue under the carpet.
+
+-- 
+Felipe Contreras
