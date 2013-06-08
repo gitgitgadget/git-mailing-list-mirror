@@ -1,79 +1,83 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Sat, 8 Jun 2013 09:20:54 -0500
-Message-ID: <CAMP44s2uV6CwdyadnJXSd+3mhOdApDxqdtjNyOPj3CbdsEyG0Q@mail.gmail.com>
-References: <1370643409-3431-1-git-send-email-felipe.contreras@gmail.com>
-	<1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
-	<CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
-	<CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
-	<CAMP44s2fP4_=HtOsuwmxXG8qmp8CmpgEhz=BJFOFZxsTf_3gcQ@mail.gmail.com>
-	<CACsJy8CQRWU0mFLVD6RrpzJiHBH=9zFwf5xDo7UhGW6A-OAzuw@mail.gmail.com>
-	<CALkWK0mLoeO5fKezE5S1LEC2LNH9qCwxHnNi_ZJpYzC7rVTqmg@mail.gmail.com>
-	<CACsJy8B=m95mpRn1dAwQZAvHRUeJVjKy1hKXv43EKX08ZODsDw@mail.gmail.com>
-	<CALkWK0mw8=CMuyw5-E0fzh+c6Om_NCgHohqa_p=J_kw3UfJCJQ@mail.gmail.com>
-	<CACsJy8AtH6PQ06_-UgumV0dRdq28qKn-Oj7EAy3g+eOTGhOyYw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/2] status: introduce status.short to enable --short by default
+Date: Sat, 8 Jun 2013 20:55:19 +0530
+Message-ID: <CALkWK0kvKzFoZmz313hR-3Z71y-MDPT37BfUi7Qrgy7hz_sErQ@mail.gmail.com>
+References: <1370683737-28823-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 16:21:14 2013
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Sat Jun 08 17:26:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlK13-0008FX-CO
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 16:21:13 +0200
+	id 1UlL1v-0007zM-8c
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 17:26:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751971Ab3FHOU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jun 2013 10:20:57 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:45344 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751673Ab3FHOU4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 10:20:56 -0400
-Received: by mail-lb0-f169.google.com with SMTP id d10so5108114lbj.14
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 07:20:54 -0700 (PDT)
+	id S1751815Ab3FHP0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 11:26:01 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:63759 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751652Ab3FHP0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 11:26:00 -0400
+Received: by mail-ie0-f180.google.com with SMTP id f4so8127452iea.39
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 08:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=R7nJC/g9J/vpQPcTPPsJdz/atUTB9XTOcd8k7n5OzcA=;
-        b=oHyl0UbFOZi0/fVHzPprrF5uvXIIGHDyM6zAT+XFyXjEE4Hn6tkdpEuMXsCjZ3VzSE
-         tILZ7kW6mNQQBRkHi8ToHkq1tGKgq1vstr7KJ5rsM8m7PXrNwno8weWQB0hrt1R6Rsfu
-         FvxUtfB65ARhP1RqI21ijSiB/st6zB3DcUKzLDccAXG33sBBKgOC1yem5q7rBFNl+0ec
-         bn8WA/dUvCZoHEX5Kk1tbHD4rIRxipP7NvvoD7MEx+Ge7+0fyYvN5qAm4bbBJ2dutxsL
-         WgBPfyEr5asOnxPHCHlfX14wXpo5Ic8O4AliaxiARJtiLFdPGOzWe60A5obFqq4lwWzh
-         NUqQ==
-X-Received: by 10.112.219.133 with SMTP id po5mr3084299lbc.80.1370701254855;
- Sat, 08 Jun 2013 07:20:54 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sat, 8 Jun 2013 07:20:54 -0700 (PDT)
-In-Reply-To: <CACsJy8AtH6PQ06_-UgumV0dRdq28qKn-Oj7EAy3g+eOTGhOyYw@mail.gmail.com>
+        bh=C6kljsDmlKdzb/ycN+E7nCmUBGZEFeXkk5XIhU1trsU=;
+        b=HmAnKOSKQX0eKTteBVbqv7Dy3+CdnotRUIvtmSjKi0BFcKbS7onU8K7hxSGmT9AKVE
+         202fmGeL3XzcsVLBwTgeEQ2EGoodS9UbG50Ly9OYyUOoOR9GE+nXmWp4PotndM6HAIEs
+         pf+GBinFoxlCeKtQ27DhXfffspoSA/eDT+qv0xBJ2dtW1qinGAhJuz8HqY70QFu2AArp
+         QKipM2bGlHmsall1axFWV7MznfLnhE9x6WOCSeAnGu5vW27oJZAMAx5P50Ik5akxYhG/
+         AL9cr3qtbR5da5t56bi9UMAD/YZe3t9SchD0rmF7AuorXq9lsPiZG0cAN8B+HeJ82oHi
+         uN1g==
+X-Received: by 10.50.55.99 with SMTP id r3mr1064587igp.0.1370705160403; Sat,
+ 08 Jun 2013 08:26:00 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Sat, 8 Jun 2013 08:25:19 -0700 (PDT)
+In-Reply-To: <1370683737-28823-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226833>
 
-On Sat, Jun 8, 2013 at 9:10 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+Jorge Juan Garcia Garcia wrote:
+> Some people always run 'git status -s'.
+> The configuration variable status.short allows to set it by default.
 
-> Do we want to
-> freeze libgit.a API so that scripts will not be audited and changed
-> unncessarily?
+Good feature.
 
-No. Until we ship libgit.so the API remains internal, and free to change.
+> @@ -1112,6 +1112,15 @@ static int git_status_config(const char *k, const char *v, void *cb)
+>                         s->submodule_summary = -1;
+>                 return 0;
+>         }
+> +       if (!strcmp(k, "status.short")) {
+> +               if (!v)
+> +                       return config_error_nonbool(k);
+> +               if (git_config_bool(k,v)) {
+> +                       status_format = STATUS_FORMAT_SHORT;
+> +                       wt_shortstatus_print(s);
+> +               }
+> +               return 0;
+> +       }
 
-> I still think that binding new languages to a clean library
-> like libgit2 is better than to libgit.a. Just thinking of what might
-> work and what might not is already a headache.
+Incorrect.  This is the wrong place to use config_error_nonbool():
+this is very much a bool, and a "[status] short" in ~/.gitconfig
+should not error out (all boolean variables behave in the same
+manner).  When in doubt, consult config_error_nonbool(); there's
+clearly a comment stating:
 
-Let the code speak. Show me a script in any language that does
-something useful using libgit2, doing the equivalent to at least a
-couple of 'git foo' commands.
+/*
+ * Call this to report error for your variable that should not
+ * get a boolean value (i.e. "[my] var" means "true").
+ */
 
--- 
-Felipe Contreras
+Also, why are you calling wt_shortstatus_print() here, instead of
+returning control to cmd_status(), which is going to do it anyway?
