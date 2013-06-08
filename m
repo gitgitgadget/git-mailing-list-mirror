@@ -1,178 +1,120 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [Administrivia] On ruby and contrib/
-Date: Sat, 8 Jun 2013 08:20:28 -0500
-Message-ID: <CAMP44s192hzh8AWU-Eg1VVVXjZ9qyNqHw99X6y48MXJn3DHw+Q@mail.gmail.com>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
-	<7va9n52zjc.fsf@alter.siamese.dyndns.org>
-	<rmivc5rp9w2.fsf@fnord.ir.bbn.com>
-	<alpine.DEB.1.00.1306061818191.28957@s15462909.onlinehome-server.info>
-	<CACsJy8BMrxLZFGQfUN1YCG+qkAj-91aYkc54R5O4iqgXUNeQOw@mail.gmail.com>
-	<CAMP44s08V1=nVbeo6r8UVT3Fd0=iSpRohinqf77Tmu4=xpDHeg@mail.gmail.com>
-	<CACsJy8DTKr5Fy3-+8ShUrWQrKC2_7EmLHwyVgQ9Aq5JDOFBAqA@mail.gmail.com>
-	<CAMP44s0GUrQqXCj97Ay+0CsA1z=96BPYfyADbTaHH7fc7HL0sQ@mail.gmail.com>
-	<CACsJy8D8xD3mdC2gsBpU74Faa+CUfEWEgh5fhwPoRjz46-hjcw@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH v3 2/2] read-cache: plug a few leaks
+Date: Sat, 08 Jun 2013 15:22:05 +0200
+Message-ID: <51B32FFD.5070302@lsrfire.ath.cx>
+References: <1370644168-4745-1-git-send-email-felipe.contreras@gmail.com> <1370644168-4745-3-git-send-email-felipe.contreras@gmail.com> <51B31651.6020307@lsrfire.ath.cx> <CAMP44s2Bp5p1211e6Utdch4B+v3J83GCY0_ucG7duakswkb+pg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Greg Troxel <gdt@ir.bbn.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 15:20:47 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Adam Spiers <git@adamspiers.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 08 15:22:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlJ4U-0001EA-A8
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 15:20:42 +0200
+	id 1UlJ5y-0002KY-Q5
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 15:22:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751680Ab3FHNUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jun 2013 09:20:37 -0400
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:40252 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751640Ab3FHNUg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 09:20:36 -0400
-Received: by mail-lb0-f181.google.com with SMTP id w10so2334346lbi.26
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 06:20:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=AkXrrj7vbaIFziX/+Ntdq/YayRsx7L5r4IuXcLeu+Qo=;
-        b=voIlO6tBXFl0m/ZGAx5xdOFwHX/N96KbfkibZNKftSIUbakPlKKDWbT0XnEsGnSF1d
-         mZ+FnfYyknSEMJdLoxMXutuz5xTsH1ZlyikjIY2ixwrBWUR0xNYRft2NapZVPrH/IQU2
-         ft6W/wfZOIRlTXQKZU/Xv5j9RUtreCS1ezcGXCUwenJwv7FdT3fwAUlqyj2BeKkMFz/d
-         wf8ifdT3RHeP7sITvKmQOLHgjJdTeMrgiYdtI5rqK+QPddmT+gwtOATfeDZWC1wyq66r
-         2BssNPJal0NuGhCmbYBak/p3U5zOISkkC5eUn12VfkuLt5o62wWva2vw8rTo71aB3/wU
-         0rFw==
-X-Received: by 10.112.219.133 with SMTP id po5mr3011646lbc.80.1370697628961;
- Sat, 08 Jun 2013 06:20:28 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sat, 8 Jun 2013 06:20:28 -0700 (PDT)
-In-Reply-To: <CACsJy8D8xD3mdC2gsBpU74Faa+CUfEWEgh5fhwPoRjz46-hjcw@mail.gmail.com>
+	id S1751762Ab3FHNWL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jun 2013 09:22:11 -0400
+Received: from india601.server4you.de ([85.25.151.105]:58948 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751566Ab3FHNWK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 09:22:10 -0400
+Received: from [192.168.2.105] (p579BEA5D.dip0.t-ipconnect.de [87.155.234.93])
+	by india601.server4you.de (Postfix) with ESMTPSA id 186F3239;
+	Sat,  8 Jun 2013 15:22:08 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <CAMP44s2Bp5p1211e6Utdch4B+v3J83GCY0_ucG7duakswkb+pg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226818>
 
-On Sat, Jun 8, 2013 at 7:07 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sat, Jun 8, 2013 at 6:56 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> On Sat, Jun 8, 2013 at 6:28 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-
->>> but how many people on this
->>> list understand git design and limits _and_ ruby's good enough to spot
->>> the bugs?
+Am 08.06.2013 14:15, schrieb Felipe Contreras:
+> On Sat, Jun 8, 2013 at 6:32 AM, Ren=C3=A9 Scharfe
+> <rene.scharfe@lsrfire.ath.cx> wrote:
+>>> diff --git a/read-cache.c b/read-cache.c
+>>> index 5e30746..a1dd04d 100644
+>>> --- a/read-cache.c
+>>> +++ b/read-cache.c
+>>> @@ -1451,6 +1451,7 @@ int read_index_from(struct index_state *istat=
+e,
+>>> const char *path)
+>>>          istate->version =3D ntohl(hdr->hdr_version);
+>>>          istate->cache_nr =3D ntohl(hdr->hdr_entries);
+>>>          istate->cache_alloc =3D alloc_nr(istate->cache_nr);
+>>> +       free(istate->cache);
+>>>          istate->cache =3D xcalloc(istate->cache_alloc,
+>>> sizeof(*istate->cache));
+>>>          istate->initialized =3D 1;
 >>
->> Now you are changing the subject. Does that mean that you accept that
->> 'fork' wouldn't be a problem when writing Ruby scripts?
->
-> There are a lot of static variables in builtin/ (and outside too),
-> which make it non-entrant, or at least not safe.
-
-So?
-
-> fork provides a process space isolation, some depend on that.
-
-Process space isolation from what?
-
-> And there are die() everywhere. Good luck controlling them.
-
-Done.
-
---- a/ruby/git.c
-+++ b/ruby/git.c
-@@ -1,6 +1,7 @@
- #include <builtin.h>
- #include <cache.h>
- #include <fcntl.h>
-+#include <ucontext.h>
-
- #undef NORETURN
- #undef PATH_SEP
-@@ -8,6 +9,8 @@
- #include <ruby.h>
-
- static VALUE shellwords;
-+static ucontext_t main_context;
-+static int status;
-
- struct cmd_struct {
- 	const char *cmd;
-@@ -73,7 +76,14 @@ static VALUE git_rb_backticks(int o_argc, VALUE
-*o_argv, VALUE ctx)
- 	if (cmd->option & RUN_SETUP)
- 		prefix = setup_git_directory();
-
--	i = cmd->fn(argc, argv, prefix);
-+	getcontext(&main_context);
-+	if (status == 0) {
-+		status += 1;
-+		i = cmd->fn(argc, argv, prefix);
-+	} else {
-+		i = 1;
-+	}
-+	status = 0;
- 	rb_last_status_set(i, getpid());
-
- 	fflush(stdout);
-@@ -87,9 +97,19 @@ static VALUE git_rb_backticks(int o_argc, VALUE
-*o_argv, VALUE ctx)
- 	return rb_str_new(buf, i);
- }
-
-+static void bye(void)
-+{
-+	if (status != 1)
-+		return;
-+	status += 1;
-+	setcontext(&main_context);
-+}
-+
- void Init_git(void)
- {
- 	rb_require("shellwords");
- 	shellwords = rb_define_module("Shellwords");
- 	rb_define_global_function("`", git_rb_backticks, -1);
-+
-+	atexit(bye);
- }
-
->> As for the people that know Git and Ruby; they can learn. Didn't you
->> just said that you didn't see any problem with the community learning
->> a new language?
->
-> I said nothing about the community being ready _now_, did I?
-
-If they can learn Ruby five years from now, then can learn it now.
-
-> When you have the support for Ruby in Git, sure go ahead.
-
-You are going in circles.
-
->>> If a bug is found and requires major restructuring in
->>> libgit.a, how are you sure it's worth the effort and does not
->>> destablize the rest of git?
 >>
->> There is no need to destabilize anything. I just showed you 100 lines
->> of code that are able to run git commands without forks, and without
->> changing anything in libgit.a.
+>> You wrote earlier that this change is safe with current callers and =
+that it
+>> prevents leaks with the following sequence:
+>>
+>> discard_cache();
+>> # add entries
+>> read_cache();
+>>
+>> Do we currently have such a call sequence somewhere?
 >
-> And how do you deal with, for example die(), or thread safety?
+> I don't know.
+>
+>> Wouldn't that be a
+>> bug, namely forgetting to call discard_cache before read_cache?
+>
+> Why would it be a bug? There's nothing in the API that hints there's =
+a
+> problem with that.
 
-See above for die(), and I don't see many perl or shell scripts with
-multiple threads, why should the Ruby scripts have more than one
-thread?
+A comment before read_index_from says "remember to discard_cache()=20
+before reading a different cache!".  That is probably a reminder that=20
+read_index_from does nothing if ->initialized is set.  Entries added=20
+before calling read_index_from make up a different cache, however, so I=
+=20
+think this comment applies for the call sequence above as well.
 
--- 
-Felipe Contreras
+Only read_index_from and add_index_entry allocate ->cache, and only=20
+discard_index frees it, so the two are a triple like malloc, realloc an=
+d=20
+free.
+
+Granted, these hints are not part of the API -- that looks like a=20
+documentation bug, however.
+
+Side note: I wonder why we need to guard against multiple=20
+read_index_from calls in a row with ->initialized.  Wouldn't it be=20
+easier to avoid the duplicate calls in the first place?  Finding them=20
+now might be not so easy, though.
+
+>> I've added a "assert(istate->cache_nr =3D=3D 0);" a few lines above =
+and the test
+>> suite still passed.  With the hunk below, ->cache is also always NUL=
+L and
+>> cache_alloc is always 0 at that point.  So we don't need that free c=
+all
+>> there in the cases covered by the test suite at least -- better leav=
+e it
+>> out.
+>
+> Why leave it out? If somebody makes the mistake of doing the above
+> sequence, would you prefer that we leak?
+
+Leaking is better than silently cleaning up after a buggy caller becaus=
+e=20
+it still allows the underlying bug to be found.  Even better would be a=
+n=20
+assert, but it's important to make sure it doesn't trigger for existing=
+=20
+use cases.
+
+Ren=C3=A9
