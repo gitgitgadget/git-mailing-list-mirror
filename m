@@ -1,66 +1,64 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2013, #03; Thu, 6)
-Date: Sat, 8 Jun 2013 21:00:27 +0530
-Message-ID: <CALkWK0km0C6q7-LoZBiAtzVh_Uv-bbEZuecv5uCsAk6E=uXxfg@mail.gmail.com>
-References: <7vzjv2x3p7.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] tests: fix autostash
+Date: Sat, 8 Jun 2013 21:05:11 +0530
+Message-ID: <CALkWK0k6Ut_uiV753cAQLNt7UsCuhMUViEBO5V-Fp7NoCY---A@mail.gmail.com>
+References: <1370648714-7872-1-git-send-email-felipe.contreras@gmail.com>
+ <CALkWK0=OdcLDCd9OonUS6kBZhA=oz3HYJT8Eiqnh1A++s5yWww@mail.gmail.com>
+ <CAMP44s3rYXOmGWR3JM8xy8ON4pqDRhYWVMQqOAyODVr5myq+yg@mail.gmail.com>
+ <CALkWK0=qVXL=DtJzYRGFLQQh3_-cGC_t_zpaiTL9KVKN4--mVg@mail.gmail.com>
+ <CAMP44s1p-VDMLNhoym5fH3XAn8CWqu2yqGq0mb+55qHOq-r_ww@mail.gmail.com>
+ <CALkWK0mBnG7houMKHDorz3oSm=R7u4Va1s=AepSM0CPY6Gy4cw@mail.gmail.com> <CALWbr2x4xGjYXa30vpbK4Q2WAVfmzuz1jNWFyGKSPO0To4P-0w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 17:31:19 2013
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 08 17:35:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlL6s-0002d6-MP
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 17:31:19 +0200
+	id 1UlLBM-0005XQ-RZ
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 17:35:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832Ab3FHPbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jun 2013 11:31:09 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:49112 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751652Ab3FHPbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 11:31:07 -0400
-Received: by mail-ie0-f173.google.com with SMTP id k5so6528986iea.4
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 08:31:07 -0700 (PDT)
+	id S1751801Ab3FHPfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 11:35:52 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:64383 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759Ab3FHPfw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 11:35:52 -0400
+Received: by mail-ie0-f178.google.com with SMTP id at1so9155434iec.37
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 08:35:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=P6J+uqFu/zVUKg2ZRdnm32/GUT1BfX1vTyJjue53gJ0=;
-        b=WzBr61mT41hDotsEWw8HNHGSWD+oEyzeSlPkW0qyMqbu07jzIv+LlEO7jCjSaRHSB1
-         hX7nVM0ub7aDkrO4gVCwUPqvA46yyR/z5dTemHTaTy2bNHqtoQIcuSPf36auEPRt0b5c
-         uMpC0N4zF5MErfxzXJX1pX0/rpGeZzSiW0rkJ6uEK6WvO4/eJt9ccVIw4yBVTA5ysnKL
-         1eHizT4AUS+pxBHp65dfbG5ZyARSe/O3YAafRnM3bmExG/0U1uk5FakB8csDOaaKMF4m
-         m3KzLbWOfwMSniJ3gRv+Wp1DedBv8RU6PaP3l65ovELijehW5LajVVJPGTR5z94XEgZG
-         1qmQ==
-X-Received: by 10.50.25.194 with SMTP id e2mr1014647igg.111.1370705467467;
- Sat, 08 Jun 2013 08:31:07 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Sat, 8 Jun 2013 08:30:27 -0700 (PDT)
-In-Reply-To: <7vzjv2x3p7.fsf@alter.siamese.dyndns.org>
+        bh=nXR8l2AUcPhoZRBlqJ/DhhBanB0WK1cEmyOhPtYim1E=;
+        b=wDqBU8fUBeiSwan9cpKt4U1Sui9N8JEpwqL8k5bOFQQlu5agC47RcBEiW8riVEch9q
+         2QGL+KcsYXxraPP4eW7md6qatVJp2IPHYGzOfBmeTrmrzIwco7yFE6PP8vNl/aNyhLxP
+         K3Ed9ArpbnICRByxiQQNQQ6Vs3H4MBpbYhKkCeok01V8QUk8pqb9hp52UYquUz8bhK3w
+         ZCUM65qANqeM41lY9yhYl1FXDdJ4M4jaMhcXj66D8Gv5InWoSjzm5KoZNp/3UPZMlcvR
+         kcFKUCzJzXkjp+fb5S3YAiQunGtUYAGUyNXP3eQwxurpYA9e56SqSqh8zhu4HNfrvqfe
+         Qmkw==
+X-Received: by 10.50.55.99 with SMTP id r3mr1075450igp.0.1370705751675; Sat,
+ 08 Jun 2013 08:35:51 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Sat, 8 Jun 2013 08:35:11 -0700 (PDT)
+In-Reply-To: <CALWbr2x4xGjYXa30vpbK4Q2WAVfmzuz1jNWFyGKSPO0To4P-0w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226835>
 
-Junio C Hamano wrote:
-> * mm/color-auto-default (2013-05-15) 2 commits
->  - make color.ui default to 'auto'
->  - config: refactor management of color.ui's default value
+Antoine Pelisse wrote:
+>>> The more the test relies on implementation details, the worst.
+>>
+>> I'm not convinced about this.
 >
->  Flip the default for color.ui to 'auto', which is what many
->  tutorials recommend new users to do.  The updated code claims the
->  switch happened at Git 2.0 in the past tense, but we might want to
->  expedite it, as this change is not all that important to deserve a
->  major version bump.
->
->  I'd vote for merging this without waiting for 2.0.  Comments?
+> My understanding of these tests is that they make sure new/better
+> implementations don't break the user experience/defined behavior. If
+> the test relies on the implementation, then they lose most of their
+> interest.
 
-Yes, please merge.  The commit message looks good as well: it doesn't
-say anything about waiting for 2.0.
-
->  Waiting for a reroll.
-
-The one in pu looks fine to me.  What am I missing?
+Makes sense, thanks.
