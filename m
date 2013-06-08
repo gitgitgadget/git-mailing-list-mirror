@@ -1,233 +1,75 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] tests: fix autostash
-Date: Sat, 8 Jun 2013 09:01:05 -0500
-Message-ID: <CAMP44s1p-VDMLNhoym5fH3XAn8CWqu2yqGq0mb+55qHOq-r_ww@mail.gmail.com>
-References: <1370648714-7872-1-git-send-email-felipe.contreras@gmail.com>
-	<CALkWK0=OdcLDCd9OonUS6kBZhA=oz3HYJT8Eiqnh1A++s5yWww@mail.gmail.com>
-	<CAMP44s3rYXOmGWR3JM8xy8ON4pqDRhYWVMQqOAyODVr5myq+yg@mail.gmail.com>
-	<CALkWK0=qVXL=DtJzYRGFLQQh3_-cGC_t_zpaiTL9KVKN4--mVg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/2] rm: introduce advice.rmHints to shorten messages
+Date: Sat, 8 Jun 2013 19:31:42 +0530
+Message-ID: <CALkWK0==9aN1wVoSXENvTJHOT8bd2SYrEFxrmTdhzMxB3mHPCQ@mail.gmail.com>
+References: <1370680434-2709-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+ <1370680434-2709-2-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 16:01:24 2013
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.garcia-Garcia@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Sat Jun 08 16:02:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlJhq-0004Lh-90
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 16:01:22 +0200
+	id 1UlJis-00054D-T1
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 16:02:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751673Ab3FHOBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jun 2013 10:01:08 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:62841 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751522Ab3FHOBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 10:01:07 -0400
-Received: by mail-lb0-f171.google.com with SMTP id 13so1822494lba.2
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 07:01:05 -0700 (PDT)
+	id S1751813Ab3FHOCX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 10:02:23 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:60998 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751734Ab3FHOCW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 10:02:22 -0400
+Received: by mail-ie0-f169.google.com with SMTP id 10so13399082ied.28
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 07:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=QbuOYdsw/m/vpPGn9G2HZKVgqtFoZNxVmWuPm4S+aUs=;
-        b=G9lsM6TaRgah/ZgkCAT0pBjHm/gZfa1P/5DxcepSwOZ0h3ziMdcoIjkgepLLQr/aeu
-         tw39lPmSWLc9plUcheXEWr5Tp5tRINHBWIbVuunHNIBcber1iFnv/Zx+yybdwyNv1BsX
-         NS12vl/Np60Xbk9NdZsNsRSPVIBcy295buPrdgaaUfYRlz00QR/CwWj2naKr0ZbtjT/U
-         rqzi0Chyv0iMRqQUzD8ExOIz1Lpx2vj6IrKn4UsD9+o+TViBAClnS94PTPg3BMSEeSzb
-         j+XQbmvrRgXsoafwSpdPB2k34bY+s/jSBLmo6WSH10o9AMmMQGjkixKGwF7rO7FQXAWX
-         V4SQ==
-X-Received: by 10.152.27.170 with SMTP id u10mr1422989lag.45.1370700065543;
- Sat, 08 Jun 2013 07:01:05 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sat, 8 Jun 2013 07:01:05 -0700 (PDT)
-In-Reply-To: <CALkWK0=qVXL=DtJzYRGFLQQh3_-cGC_t_zpaiTL9KVKN4--mVg@mail.gmail.com>
+        bh=3tB/uV1AH7jvvbu4f4dE7TbnM4I1K87olO5geu0J9XI=;
+        b=tg25t7zMKSTbqzGRQc3x+x70rBMPhGCKOR8dTS87kujqL+JNVE1xt+ydNlqlZUMBxP
+         rCEmJSek/cYDDOYGVxF6EZIQhRcPs9ELkGBhNWPdebai78ZS2wrh45e1HOzIj9tcNoJ8
+         F+fwJEDndWRY6AaiEy+R3wvdN+PnZn2iIiuNNLPHEsz5L1H4UYWdCpX5q/wJ7dDLDC9I
+         4Nf1eW2dtj/m+vi9rmBxq1Yc7FWI8Y5wTt7CNgiXSwEPUIjMshXFgykzMZ9clZEjqgmH
+         lgS+/V0CJW/EKQzcYHxvz6Xx9my9uOrnhYvdoRQ9wpIzXT9Rh/GqnSwdHMtDRqaEsci1
+         /qyQ==
+X-Received: by 10.50.79.231 with SMTP id m7mr923366igx.40.1370700142333; Sat,
+ 08 Jun 2013 07:02:22 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Sat, 8 Jun 2013 07:01:42 -0700 (PDT)
+In-Reply-To: <1370680434-2709-2-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226825>
 
-On Sat, Jun 8, 2013 at 8:19 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
-> Felipe Contreras wrote:
-
->> Doing 'rm -rf $dotest' is even worst than 'git rebase --abort',
->> because it relies on the implementation of 'git rebase', which might
->> need to remove more files than $dotest.
+Mathieu Lienard--Mayor wrote:
+> As an example, the message:
+>         error: 'foo.txt' has changes staged in the index
+>         (use --cached to keep the file, or -f to force removal)
 >
-> Huh?  Tests aren't allowed to rely on how a command is implemented?
->
->   $ git grep test_path t
->
-> Ofcourse they're implementation details.  Even in this very test, I
-> check $dotest/autostash plenty of times.
+> would look like, with advice.rmHints=true:
+>         error: 'foo.txt' has changes staged in the index
 
-The more the test relies on implementation details, the worst.
+Um, have you switched the true with false?  advice.* variables are
+true by default, and I turn off all of them.
 
-> Have you read rr/rebase-autostash?  The whole idea is to inject
-> $dotest/autostash and teach various scripts about how their
-> assumptions about $dotest have changed.
->
->> This wouldn't be a problem if the tests were implemented correctly,
->> but they are not, so 'git rebase --abort' is the only sane option.
->
-> Then show me how to do it correctly.
+Also, I think you can extend this to also remove add-advice.  Why
+would someone want to turn off advice from rm, but not add?  (Unsure
+about this)
 
-Something like this.
+> Similarly to advice.*, advice.rmHints has been added
+> to the config variables. By default, it is set to false, in order to
+> keep the messages the same as before. When set to true,  advice
+> are no longer included in the error messages.
 
-diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index 6ba449b..b96a56a 100755
---- a/t/t3420-rebase-autostash.sh
-+++ b/t/t3420-rebase-autostash.sh
-@@ -33,54 +33,56 @@ test_expect_success setup '
- 	git commit -m "related commit"
- '
+Ugh, why this roundabout-passive-past tone?  Use imperative tone like this:
 
-+setup_tmp () {
-+	git clone . tmp &&
-+	cd tmp &&
-+	git fetch -u origin "refs/heads/*:refs/heads/*" &&
-+	test_config rebase.autostash true &&
-+	git checkout -b rebased-feature-branch feature-branch
-+}
-+
- testrebase() {
- 	type=$1
- 	dotest=$2
-
- 	test_expect_success "rebase$type: dirty worktree, non-conflicting rebase" '
--		test_config rebase.autostash true &&
--		git reset --hard &&
--		git checkout -b rebased-feature-branch feature-branch &&
--		test_when_finished git branch -D rebased-feature-branch &&
-+		test_when_finished "rm -rf tmp" &&
-+		(
-+		setup_tmp &&
- 		echo dirty >>file3 &&
- 		git rebase$type unrelated-onto-branch &&
- 		grep unrelated file4 &&
--		grep dirty file3 &&
--		git checkout feature-branch
-+		grep dirty file3
-+		)
- 	'
-
- 	test_expect_success "rebase$type: dirty index, non-conflicting rebase" '
--		test_config rebase.autostash true &&
--		git reset --hard &&
--		git checkout -b rebased-feature-branch feature-branch &&
--		test_when_finished git branch -D rebased-feature-branch &&
-+		test_when_finished "rm -rf tmp" &&
-+		(
-+		setup_tmp &&
- 		echo dirty >>file3 &&
- 		git add file3 &&
- 		git rebase$type unrelated-onto-branch &&
- 		grep unrelated file4 &&
--		grep dirty file3 &&
--		git checkout feature-branch
-+		grep dirty file3
-+		)
- 	'
-
- 	test_expect_success "rebase$type: conflicting rebase" '
--		test_config rebase.autostash true &&
--		git reset --hard &&
--		git checkout -b rebased-feature-branch feature-branch &&
--		test_when_finished git branch -D rebased-feature-branch &&
-+		test_when_finished "rm -rf tmp" &&
-+		(
-+		setup_tmp &&
- 		echo dirty >>file3 &&
- 		test_must_fail git rebase$type related-onto-branch &&
- 		test_path_is_file $dotest/autostash &&
--		false ! grep dirty file3 &&
--		rm -rf $dotest &&
--		git reset --hard &&
--		git checkout feature-branch
-+		! grep dirty file3
-+		)
- 	'
-
- 	test_expect_success "rebase$type: --continue" '
--		test_config rebase.autostash true &&
--		git reset --hard &&
--		git checkout -b rebased-feature-branch feature-branch &&
--		test_when_finished git branch -D rebased-feature-branch &&
-+		test_when_finished "rm -rf tmp" &&
-+		(
-+		setup_tmp &&
- 		echo dirty >>file3 &&
- 		test_must_fail git rebase$type related-onto-branch &&
- 		test_path_is_file $dotest/autostash &&
-@@ -89,45 +91,43 @@ testrebase() {
- 		git add file2 &&
- 		git rebase --continue &&
- 		test_path_is_missing $dotest/autostash &&
--		grep dirty file3 &&
--		git checkout feature-branch
-+		grep dirty file3
-+		)
- 	'
-
- 	test_expect_success "rebase$type: --skip" '
--		test_config rebase.autostash true &&
-+		test_when_finished "rm -rf tmp" &&
-+		(
-+		setup_tmp &&
- 		git reset --hard &&
--		git checkout -b rebased-feature-branch feature-branch &&
--		test_when_finished git branch -D rebased-feature-branch &&
- 		echo dirty >>file3 &&
- 		test_must_fail git rebase$type related-onto-branch &&
- 		test_path_is_file $dotest/autostash &&
- 		! grep dirty file3 &&
- 		git rebase --skip &&
- 		test_path_is_missing $dotest/autostash &&
--		grep dirty file3 &&
--		git checkout feature-branch
-+		grep dirty file3
-+		)
- 	'
-
- 	test_expect_success "rebase$type: --abort" '
--		test_config rebase.autostash true &&
--		git reset --hard &&
--		git checkout -b rebased-feature-branch feature-branch &&
--		test_when_finished git branch -D rebased-feature-branch &&
-+		test_when_finished "rm -rf tmp" &&
-+		(
-+		setup_tmp &&
- 		echo dirty >>file3 &&
- 		test_must_fail git rebase$type related-onto-branch &&
- 		test_path_is_file $dotest/autostash &&
- 		! grep dirty file3 &&
- 		git rebase --abort &&
- 		test_path_is_missing $dotest/autostash &&
--		grep dirty file3 &&
--		git checkout feature-branch
-+		grep dirty file3
-+		)
- 	'
-
- 	test_expect_success "rebase$type: non-conflicting rebase, conflicting stash" '
--		test_config rebase.autostash true &&
--		git reset --hard &&
--		git checkout -b rebased-feature-branch feature-branch &&
--		test_when_finished git branch -D rebased-feature-branch &&
-+		test_when_finished "rm -rf tmp" &&
-+		(
-+		setup_tmp &&
- 		echo dirty >file4 &&
- 		git add file4 &&
- 		git rebase$type unrelated-onto-branch &&
-@@ -138,6 +138,7 @@ testrebase() {
- 		git checkout feature-branch &&
- 		git stash pop &&
- 		grep dirty file4
-+		)
- 	'
- }
-
--- 
-Felipe Contreras
+Introduce advice.rmHints to control the whether to display advice when
+using 'git rm'.  Defaults to true, preserving current behavior.
