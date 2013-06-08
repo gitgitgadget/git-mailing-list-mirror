@@ -1,99 +1,79 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Sat, 8 Jun 2013 20:15:56 +0700
-Message-ID: <CACsJy8B=m95mpRn1dAwQZAvHRUeJVjKy1hKXv43EKX08ZODsDw@mail.gmail.com>
-References: <1370643409-3431-1-git-send-email-felipe.contreras@gmail.com>
- <1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
- <CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
- <CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
- <CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
- <CAMP44s2fP4_=HtOsuwmxXG8qmp8CmpgEhz=BJFOFZxsTf_3gcQ@mail.gmail.com>
- <CACsJy8CQRWU0mFLVD6RrpzJiHBH=9zFwf5xDo7UhGW6A-OAzuw@mail.gmail.com> <CALkWK0mLoeO5fKezE5S1LEC2LNH9qCwxHnNi_ZJpYzC7rVTqmg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] tests: fix autostash
+Date: Sat, 8 Jun 2013 18:49:52 +0530
+Message-ID: <CALkWK0=qVXL=DtJzYRGFLQQh3_-cGC_t_zpaiTL9KVKN4--mVg@mail.gmail.com>
+References: <1370648714-7872-1-git-send-email-felipe.contreras@gmail.com>
+ <CALkWK0=OdcLDCd9OonUS6kBZhA=oz3HYJT8Eiqnh1A++s5yWww@mail.gmail.com> <CAMP44s3rYXOmGWR3JM8xy8ON4pqDRhYWVMQqOAyODVr5myq+yg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Shawn Pearce <sop@google.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 08 15:16:33 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 08 15:20:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlJ0R-0006rs-Pj
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 15:16:32 +0200
+	id 1UlJ4P-00019U-Sq
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Jun 2013 15:20:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460Ab3FHNQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jun 2013 09:16:28 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:55971 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751303Ab3FHNQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 09:16:27 -0400
-Received: by mail-ob0-f172.google.com with SMTP id wo10so8041609obc.31
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 06:16:26 -0700 (PDT)
+	id S1751632Ab3FHNUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 09:20:34 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:45373 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751541Ab3FHNUd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 09:20:33 -0400
+Received: by mail-ie0-f174.google.com with SMTP id aq17so12593859iec.5
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 06:20:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=Fv0ALk4bW4wAuKAAa1phFihBtubLitq7ZoQDF97V/yc=;
-        b=cxO0GjJxDD29jX/qTzbJpQe+UBNyuJyjhz0mycWhm2vxhV+pShkPGJGKb7pvzPq+AP
-         bmsIlyUZqfFJMOfpFQLeFLHyaBG80rdpktfSLltrDQ2H7RwEI5McmloYwRJUEQARtl7R
-         /LcF8YLe95b4xlrVXP134Wgw0y2/BYu9kJqLxjbPEqVot6aqXmY6udybcSU7wMigctZG
-         Kj2PgBA+jBjUeiJKF9GmAFNZ+loUb4AqUccTv89N5H5KtPkmNTOShHX3U6PatDIoLIcp
-         12iYuZaJO8qF83or1tyHFxmv1anTQo0cuUNTFZNKocnHsLpTK9BCNpMWB5CasMeKb7/8
-         lDwA==
-X-Received: by 10.60.125.101 with SMTP id mp5mr2257553oeb.18.1370697386885;
- Sat, 08 Jun 2013 06:16:26 -0700 (PDT)
-Received: by 10.76.76.69 with HTTP; Sat, 8 Jun 2013 06:15:56 -0700 (PDT)
-In-Reply-To: <CALkWK0mLoeO5fKezE5S1LEC2LNH9qCwxHnNi_ZJpYzC7rVTqmg@mail.gmail.com>
+        bh=ZZ1vLjubsx+p2pg41UjIp854Z8CqgUY5URwe9VyebqY=;
+        b=F/EnK/LrIrc+Fp2kFKsbgbowYjNA8Zsldlem2Z2Nyim/rlS6V+3S0yy+rCFBjQvWlL
+         UPAKxXhAqewG0ki0PMPLhCmOFByHdyve4gJ7ZabaAo3Z+X/8unOpwdIhm8ohr88AGOUw
+         j73w6vY5km+et7pLiJqF9V98TC2lTGzmH1Jc/CnTuEhncxkPwTawBFYyP/Zb+OHBeHdn
+         8qOv3455YoD1v9QPN+BNOO5rMXTuc5iVs1myMoqjY/7jqG502iS+dc2XM1PBPqdHDCBz
+         YO579fO0KUF114c5X1xQMlsx9soY+hcOM0LTsOI0LtnRYpzpvnuoQ7tPMQupFFyqOvTP
+         3pBg==
+X-Received: by 10.50.79.231 with SMTP id m7mr871026igx.40.1370697633116; Sat,
+ 08 Jun 2013 06:20:33 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Sat, 8 Jun 2013 06:19:52 -0700 (PDT)
+In-Reply-To: <CAMP44s3rYXOmGWR3JM8xy8ON4pqDRhYWVMQqOAyODVr5myq+yg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226816>
 
-On Sat, Jun 8, 2013 at 7:55 PM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
-> Duy Nguyen wrote:
->>> until libgit.a == libgit2. Done.
->>
->> Read up about the introduction of libgit2, why it was created in the
->> first place instead of moving a few files around renaming libgit.a to
->> libgit2.a. Unless you have a different definition of "==" than I do.
+Felipe Contreras wrote:
+> Yes you do. The rest of the tests expect that the previous rebase has
+> been aborted.
 >
-> As far as I know, there was never an extensive on-list discussion
-> about why git.git cannot be lib'ified.  The first appearance of
-> libgit2 is here [1].  I briefly read through the initial history of
-> libgit2.git too, but I cannot find a single discussion detailing why
-> lib'ifying git.git is fundamentally unworkable (there's some vague
-> mention of "global state baggage" and "presence of die()", but that's
-> about it).  Unless you can point to some detailed discussions, or
-> write out a really good reason yourself, I don't think there's any
-> harm in letting fc try.  Ofcourse, he still indicated any sort of plan
-> yet, and I'm also waiting for that.
->
-> [1]: http://thread.gmane.org/gmane.comp.version-control.git/99608
+> In fact, all the tests depend on the previous test finishing
+> correctly, which is not the way tests should be written.
 
-Hm.. I thought Shawn wrote a bit more in that mail. Apparently I was
-wrong. I think it's discuessed in the list from time to time
-(otherwise I wouldn't know) but I don't keep bookmarks.
+How else am I supposed to write them?  If there is a stale state from
+the previous test, there isn't too much I can do.  Or should I be
+cleaning up state at the beginning of each test, instead of at the
+end?
 
-I _think_ the reason is because git was never written as a reusable
-library in mind from the beginning.  So global states and die() exist.
-Worse, "run once and let the OS clean eveything up at process exit"
-leads to some deliberate memory leak if it's made a library. See
-alloc.c for example. The internal API is not really designed to be
-usuable/stable as a library. All of these made it very hard to convert
-the current code base into a true library. So the effort was put into
-creating a new library instead, copying code from git code base over
-when possible.
+> Doing 'rm -rf $dotest' is even worst than 'git rebase --abort',
+> because it relies on the implementation of 'git rebase', which might
+> need to remove more files than $dotest.
 
-So instead of redoing it again, I think it's better that you help
-libgit2 guys improve it to the extend that git commands can be easily
-reimplemented. Then bring up the discussion about using libgit2 in C
-Git again.
---
-Duy
+Huh?  Tests aren't allowed to rely on how a command is implemented?
+
+  $ git grep test_path t
+
+Ofcourse they're implementation details.  Even in this very test, I
+check $dotest/autostash plenty of times.
+
+Have you read rr/rebase-autostash?  The whole idea is to inject
+$dotest/autostash and teach various scripts about how their
+assumptions about $dotest have changed.
+
+> This wouldn't be a problem if the tests were implemented correctly,
+> but they are not, so 'git rebase --abort' is the only sane option.
+
+Then show me how to do it correctly.
