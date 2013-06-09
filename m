@@ -1,80 +1,101 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v4 10/45] sequencer: trivial fix
-Date: Sun, 9 Jun 2013 12:47:16 -0500
-Message-ID: <CAMP44s2YdG_pE7gnKfUJJP0SaO5pKu+kxPB=T74p14fuqXU9OQ@mail.gmail.com>
-References: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
-	<1370796057-25312-11-git-send-email-felipe.contreras@gmail.com>
-	<20130609171810.GA10858@goldbirke>
-	<CAMP44s3yhVbgkhtrSfHpk=VwcwMkb66ELA-xR0i6FCVGyRwHJw@mail.gmail.com>
-	<20130609173342.GB2091@goldbirke>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 2/2] Move sequencer to builtin
+Date: Sun, 9 Jun 2013 19:53:32 +0200
+Message-ID: <87wqq39nmr.fsf@hexa.v.cablecom.net>
+References: <1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
+	<CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
+	<CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
+	<CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
+	<20130608164902.GA3109@elie.Belkin>
+	<CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
+	<20130608173447.GA4381@elie.Belkin>
+	<CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
+	<20130609014049.GA10375@google.com>
+	<CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
+	<20130609052624.GB561@sigill.intra.peff.net>
+	<CAMP44s3NhNUuCvW37UaMo9KbHHxZqBE8S15h845vtRi89Bu6WA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sun Jun 09 19:47:24 2013
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	"Duy Nguyen" <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	"Ramkumar Ramachandra" <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 19:53:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ulji6-0008Oa-PC
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:47:23 +0200
+	id 1UljoO-0004LW-LW
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:53:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751315Ab3FIRrT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 13:47:19 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:36571 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751088Ab3FIRrS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jun 2013 13:47:18 -0400
-Received: by mail-lb0-f169.google.com with SMTP id d10so5675387lbj.28
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 10:47:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Rj+3rN7S2NojpXhY6Y+JLBWuqPNyzfGo5+pIRt32mEw=;
-        b=W+1TJMwzP8DGAFqbisAAiz1kYu+K1eN0gtUs4COCZ5x5fNtc39KVAxhVLXEY2Iyx/9
-         WRz0w2yxMUi4A6RZ9u98RBmBU9FEqkXdCQyOTniT83lt4sPIx+HBM5LjvwX3qk/D9GJO
-         JSm+vAyLzFVE6DZs9CsTZHrxuqCxbrAtVVtXARBRI9c0di/Lrz1n9EDIFCp0AJAB/P55
-         rIspJHnsMTX+5JRvD1KSf+dzSWfrUpgiU7RS1KVDJR123zzNKzSvTGD92V+dEmOklEGh
-         tIljVJTXnNK5xGWvMALR0qCXCtr8BbGFqKeg2CjYXffJ/Qt7B53/CXU0B04BvMYY02mF
-         t6MQ==
-X-Received: by 10.152.7.74 with SMTP id h10mr3292433laa.83.1370800036474; Sun,
- 09 Jun 2013 10:47:16 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 10:47:16 -0700 (PDT)
-In-Reply-To: <20130609173342.GB2091@goldbirke>
+	id S1751363Ab3FIRxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 13:53:36 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:7557 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751088Ab3FIRxf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 13:53:35 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 9 Jun
+ 2013 19:53:27 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 9 Jun
+ 2013 19:53:32 +0200
+In-Reply-To: <CAMP44s3NhNUuCvW37UaMo9KbHHxZqBE8S15h845vtRi89Bu6WA@mail.gmail.com>
+	(Felipe Contreras's message of "Sun, 9 Jun 2013 07:15:45 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227053>
 
-On Sun, Jun 9, 2013 at 12:33 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de> =
-wrote:
-> On Sun, Jun 09, 2013 at 12:23:01PM -0500, Felipe Contreras wrote:
->> On Sun, Jun 9, 2013 at 12:18 PM, SZEDER G=C3=A1bor <szeder@ira.uka.d=
-e> wrote:
->> > On Sun, Jun 09, 2013 at 11:40:22AM -0500, Felipe Contreras wrote:
->> >> We should free objects before leaving.
->> >>
->> >> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> >
->> > A shortlog-friendlier subject could be: "sequencer: free objects
->> > before leaving".
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> On Sun, Jun 9, 2013 at 12:26 AM, Jeff King <peff@peff.net> wrote:
+>> On Sat, Jun 08, 2013 at 09:17:56PM -0500, Felipe Contreras wrote:
 >>
->> I already defended my rationale for this succinct commit message:
+>>> > Definitely, yes.  Even if you look at the impact on code alone and
+>>> > don't care about the people, destroying a collegial work environment
+>>> > is harmful enough to the code to outweigh the (admittedly often
+>>> > useful) patches.
+>>>
+>>> A collegial work environment is overrated, and proof of that the Linux
+>>> kernel, where honest and straight talk is the bread and butter of the
+>>> mailing list. And the Linux kernel is the most successful software
+>>> project in history by far. It's code that speaks.
 >>
->> http://thread.gmane.org/gmane.comp.version-control.git/225609/focus=3D=
-225610
+>> Sorry, but I don't agree, and I want to publicly state my opinion so
+>> that Jonathan (and other bystanders on the list) knows that he is not
+>> alone in his opinions.
+
+FWIW, I'll add my voice here.
+
+In addition to what has been said by Jeff and Jonathan already (and with
+which I agree), I would like to point out one observation about your
+style of discussion that I find particularly unproductive.
+
+You have a tendency, when facing arguments by someone who does not agree
+with you, of picking out one (usually minor) point of their statement
+and attacking just *that* on grounds that are usually much harder to
+argue, without regard for the bigger issue.  In effect you are
+attempting to shift a significant burden of proof back to the other
+party.
+
+Case in point:
+
+>> I have consistently found your demeanor on the list to be very
+>> unfriendly and difficult to work with. It is one thing to have honest
+>> and straight talk, and another thing to be obstinate, unmindful of
+>> feedback (both with respect to technical details, as well as to
+>> communication styles), and disrespectful of other people.
 >
-> Your arguments were unconvincing.
+> Go back to my 261 commits, show me one that is "unmindful of technical details".
 
-That's your opinion. The commit message I write and send is my decision=
-=2E
-
---=20
-=46elipe Contreras
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
