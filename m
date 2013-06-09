@@ -1,88 +1,95 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [PATCH v4 31/45] rebase: trivial cleanup
-Date: Sun, 9 Jun 2013 21:15:18 +0200
-Message-ID: <20130609191518.GB12122@paksenarrion.iveqy.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v4 09/45] sequencer: remove useless indentation
+Date: Sun, 9 Jun 2013 14:16:29 -0500
+Message-ID: <CAMP44s0dNM2L7u=XPP82DnKFXmgC-kC6yeJYAgCPLeMEgJaH3A@mail.gmail.com>
 References: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
- <1370796057-25312-32-git-send-email-felipe.contreras@gmail.com>
+	<1370796057-25312-10-git-send-email-felipe.contreras@gmail.com>
+	<20130609181724.GA11516@paksenarrion.iveqy.com>
+	<CAMP44s3VL-uDPcsUyaYX3ESFbdj7h0XGuVZD+y8J_KewHcPC5g@mail.gmail.com>
+	<20130609190814.GA12122@paksenarrion.iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	iveqy@iveqy.com
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 09 21:12:46 2013
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 21:16:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ull2h-0003f7-PO
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 21:12:44 +0200
+	id 1Ull6R-0006OE-Fg
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 21:16:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751765Ab3FITMj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 15:12:39 -0400
-Received: from mail-la0-f41.google.com ([209.85.215.41]:37645 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751090Ab3FITMi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 15:12:38 -0400
-Received: by mail-la0-f41.google.com with SMTP id fn20so5141495lab.28
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 12:12:37 -0700 (PDT)
+	id S1751950Ab3FITQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 15:16:31 -0400
+Received: from mail-la0-f53.google.com ([209.85.215.53]:56548 "EHLO
+	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751770Ab3FITQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 15:16:30 -0400
+Received: by mail-la0-f53.google.com with SMTP id fs12so3573413lab.26
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 12:16:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=w6LbooNrWkBJjTOK//kBbDd5RAQl7WQcotlQe58KQUA=;
-        b=0ey9te2DmMDn894ELFvTraDyKdETFUP9lsJ9rp7eRuSNPGg90zVC2TECQoH7/2DucZ
-         6wS3QT2UQjN2K9c3P+FEbsOLRHeMaDlH007ztCeVvtEPhbIN/Ef9Fs/1OGw6DIYGLzdY
-         cdJvQLKBo3ZWLuz33H6QlgeCqdPH5XcD8cNZuVLHWGhmlCRyTrlpIOipEGpTnN5U8aH4
-         4N3p711I3TupFdzPd+r18kz/gDrdUFTstQhJ8VLgEWmNJZ7Q1y6jJy9GJ8EubWBu0/NG
-         jF+v01jSx67SUig/3K2/4zC/fpmXNZAHsmG83LitLUHdUOBSBZaz77OiVDS8oi357fku
-         WWTQ==
-X-Received: by 10.152.19.65 with SMTP id c1mr3561275lae.24.1370805157499;
-        Sun, 09 Jun 2013 12:12:37 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id zo6sm4451937lbb.9.2013.06.09.12.12.36
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 12:12:36 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1Ull5C-0003EF-Vs; Sun, 09 Jun 2013 21:15:19 +0200
-Content-Disposition: inline
-In-Reply-To: <1370796057-25312-32-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Wryly0bxRH+Hv2Dgya8auY5CAQp3e+uayIPh7mGFIoI=;
+        b=tX1oy2UFvzBzxQ07lgeEF6bu6iH9Tl92i/Pg7eADCOOoQpQsxPsTVEzYZGL7O5z9nd
+         eLHpiGKE2I2iWfbr0oBvntUvU0KxGV5etus+clyYbC87M6NGzYVSLZrbG5dtiIotfKD/
+         FwrKcWjJTnThKG+2HJgWZO7zUkAeXjR2clWXB48JtuY2njKQ00/++NQa5tzv2VA3dUzv
+         6ACAoGB6IxOy329CWc69OhwhZxNngn1v9GQoShotARdLV4S8jUeMqToQ0U1KaW8rFmDA
+         3wXOs4HxzlS5fkNljzF3hhC1klRCtXwGaQFgHEepvLQwtMmj/MUynahuUX4plVWwAbK+
+         of/w==
+X-Received: by 10.152.22.73 with SMTP id b9mr3478345laf.36.1370805389282; Sun,
+ 09 Jun 2013 12:16:29 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 12:16:29 -0700 (PDT)
+In-Reply-To: <20130609190814.GA12122@paksenarrion.iveqy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227104>
 
-On Sun, Jun 09, 2013 at 11:40:43AM -0500, Felipe Contreras wrote:
-> -		git_am_opt=3D"$git_am_opt -q"
+On Sun, Jun 9, 2013 at 2:08 PM, Fredrik Gustafsson <iveqy@iveqy.com> wrote:
+> On Sun, Jun 09, 2013 at 01:19:03PM -0500, Felipe Contreras wrote:
+>> The explains what the patch is doing, but not why. Why is more important.
+>
+> You're right. Why are the indentation useless? It doesn't seem to be
+> useless until you added goto. So why is your goto solution better than
+> the previous existing solution?
 
-This one makes me wonder a bit. I'm not sure about how this works in
-git, so I would appriciate if someone can explain. I might also have
-misunderstood something.
+Because it removes useless indentation :)
 
-Here we have two sh-scripts (git rebase
-and git am) interacting witch eachother. Both uses GIT_QUIET, so if
-GIT_QUIET already is set by the caller (git rebase) the callee doesn't
-have to set it to.
+This is what they do in the Linux kernel, you tell me which looks better:
 
-However GIT_QUIET is undocumented for git-am (in Git Manual). If we
-translate git am to C/ruby/python/perl/etc. will we catch this?
+a)
 
-This raises a few more generall questions:
-do we already pass information between processes(!) with enviroment
-variables? And is this documented the way it should be?
+	if (function1())
+		goto leave;
+	if (function2())
+		goto leave;
+	if (function3())
+		goto leave;
+	if (function4())
+		goto leave;
+	good_stuff();
+leave:
+	final_stuff();
 
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
+or b)
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+	if (!function1()) {
+		if (!function2()) {
+			if (!function3()) {
+				if (!function4()) {
+					good_stuff();
+				}
+			}
+		}
+	}
+	final_stuff();
+
+-- 
+Felipe Contreras
