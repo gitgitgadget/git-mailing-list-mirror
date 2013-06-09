@@ -1,242 +1,314 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 22/45] check-ignore: convert to use parse_pathspec
-Date: Sun,  9 Jun 2013 13:25:55 +0700
-Message-ID: <1370759178-1709-23-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 23/45] add: convert to use parse_pathspec
+Date: Sun,  9 Jun 2013 13:25:56 +0700
+Message-ID: <1370759178-1709-24-git-send-email-pclouds@gmail.com>
 References: <1370759178-1709-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Adam Spiers <git@adamspiers.org>
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 09 08:27:19 2013
+X-From: git-owner@vger.kernel.org Sun Jun 09 08:27:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlZ5y-0000nW-Q0
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 08:27:19 +0200
+	id 1UlZ64-0000qu-73
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 08:27:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752237Ab3FIG1O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 02:27:14 -0400
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:40779 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752165Ab3FIG1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 02:27:12 -0400
-Received: by mail-pd0-f173.google.com with SMTP id v14so2416512pde.18
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 23:27:12 -0700 (PDT)
+	id S1752271Ab3FIG1T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 02:27:19 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:51650 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752258Ab3FIG1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 02:27:18 -0400
+Received: by mail-pd0-f180.google.com with SMTP id 10so6297169pdi.11
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 23:27:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=xrTsKUfnPHAV509tw71lKBOlFltPh+LFnZ4WZyUXO9s=;
-        b=NWhIWQ1np0cIiVDGjL4Zaki7kKFveffd3l30oloJcqTfyJJ3ja1BkGWC6ctU1zPFf3
-         E8QUh5JeYenW4h491EQleYGyseXvOVyxkwl886iTO+PnXVVebC4P8L47Y9usPgq9WE5f
-         epEjoDIeIWSQxsa7N6CjZ5KxVoJ8vFDnyqV6XZRfB092Lnk+0CxNUzCKSh2J8thcoSKx
-         yeiFY3CwIpEYOTi/za4AhB63UVt/ldezYFetA/4d9+zj8/fnTjNUMtPuUhK5BNZyRMDh
-         DOIT3Nb2U37cx5ClggFBehj/bKN3VjLm1OpdviLc+0BHgVZoQqRQIQt0uNPO6W2f89BU
-         x+0A==
-X-Received: by 10.68.245.170 with SMTP id xp10mr5216808pbc.41.1370759232265;
-        Sat, 08 Jun 2013 23:27:12 -0700 (PDT)
+        bh=+Fmnx1nMfshYV98+vPqvFRxkWUTdLaClCAdLmNgys0Y=;
+        b=zKWWvA5FR5urZR4EgXD1tUpP138DPz82uRucj5guBhjP12wV0kArlzuJM2Xtt/fRsG
+         mnPdCbPBKnVhqkNs4ZN2Whu2Z97ydnJcIfuEQug8OlQoUwAK/+qQeVBfJXj7iGSqMzt2
+         HXipVCPOUqYv+EHxaXauzF+a3oVlVNDScLo6jLHwRJHBaVV7kxlqbOOc5VcI6MOHECFK
+         nMl2wxCHp4v/gyYNJkKYMmPe/BFOCUi0EhNeEl15hpWhO3oJAWVzzNSgFaIncQ9u4PgX
+         d1a+M9PQblZub4vjH+bGYuBky8GnEuNYBa8y84tOJLjAOXiQPIV21rhLqAL39a1BSFP6
+         omEw==
+X-Received: by 10.66.253.9 with SMTP id zw9mr9479147pac.35.1370759238449;
+        Sat, 08 Jun 2013 23:27:18 -0700 (PDT)
 Received: from lanh ([115.73.237.130])
-        by mx.google.com with ESMTPSA id eq5sm5541056pbc.15.2013.06.08.23.27.09
+        by mx.google.com with ESMTPSA id xz1sm10267032pab.5.2013.06.08.23.27.15
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 08 Jun 2013 23:27:11 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 09 Jun 2013 13:28:43 +0700
+        Sat, 08 Jun 2013 23:27:17 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 09 Jun 2013 13:28:49 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <1370759178-1709-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226915>
 
-check-ignore (at least the test suite) seems to rely on the pattern
-order. PATHSPEC_KEEP_ORDER is introduced to explictly express this.
-The lack of PATHSPEC_MAXDEPTH_VALID is sufficient because it's the
-only flag that reorders pathspecs, but it's less obvious that way.
 
-Cc: Adam Spiers <git@adamspiers.org>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/check-ignore.c | 35 ++++++++++++++++++++++-------------
- pathspec.c             |  6 +++++-
- pathspec.h             |  1 +
- t/t0008-ignores.sh     |  8 ++++----
- 4 files changed, 32 insertions(+), 18 deletions(-)
+ builtin/add.c | 103 +++++++++++++++++++++++++-------------------------=
+--------
+ pathspec.c    |  43 ------------------------
+ 2 files changed, 45 insertions(+), 101 deletions(-)
 
-diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-index 4a8fc70..d49c083 100644
---- a/builtin/check-ignore.c
-+++ b/builtin/check-ignore.c
-@@ -64,37 +64,45 @@ static void output_exclude(const char *path, struct=
- exclude *exclude)
+diff --git a/builtin/add.c b/builtin/add.c
+index f45d9d4..9a7235e 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -226,21 +226,6 @@ static char *prune_directory(struct dir_struct *di=
+r, const char **pathspec,
+ 	return seen;
  }
 =20
- static int check_ignore(struct dir_struct *dir,
--			const char *prefix, const char **pathspec)
-+			const char *prefix, int argc, const char **argv)
+-/*
+- * Checks the index to see whether any path in pathspec refers to
+- * something inside a submodule.  If so, dies with an error message.
+- */
+-static void treat_gitlinks(const char **pathspec)
+-{
+-	int i;
+-
+-	if (!pathspec || !*pathspec)
+-		return;
+-
+-	for (i =3D 0; pathspec[i]; i++)
+-		pathspec[i] =3D check_path_for_gitlink(pathspec[i]);
+-}
+-
+ static void refresh(int verbose, const char **pathspec)
  {
--	const char *path, *full_path;
-+	const char *full_path;
  	char *seen;
- 	int num_ignored =3D 0, dtype =3D DT_UNKNOWN, i;
- 	struct exclude *exclude;
+@@ -258,25 +243,6 @@ static void refresh(int verbose, const char **path=
+spec)
+         free(seen);
+ }
+=20
+-/*
+- * Normalizes argv relative to prefix, via get_pathspec(), and then
+- * runs die_if_path_beyond_symlink() on each path in the normalized
+- * list.
+- */
+-static const char **validate_pathspec(const char **argv, const char *p=
+refix)
+-{
+-	const char **pathspec =3D get_pathspec(prefix, argv);
+-
+-	if (pathspec) {
+-		const char **p;
+-		for (p =3D pathspec; *p; p++) {
+-			die_if_path_beyond_symlink(*p, prefix);
+-		}
+-	}
+-
+-	return pathspec;
+-}
+-
+ int run_add_interactive(const char *revision, const char *patch_mode,
+ 			const char **pathspec)
+ {
+@@ -308,17 +274,23 @@ int run_add_interactive(const char *revision, con=
+st char *patch_mode,
+=20
+ int interactive_add(int argc, const char **argv, const char *prefix, i=
+nt patch)
+ {
+-	const char **pathspec =3D NULL;
 +	struct pathspec pathspec;
 =20
--	if (!pathspec || !*pathspec) {
-+	if (!argc) {
- 		if (!quiet)
- 			fprintf(stderr, "no pathspec given.\n");
+-	if (argc) {
+-		pathspec =3D validate_pathspec(argv, prefix);
+-		if (!pathspec)
+-			return -1;
+-	}
++	/*
++	 * git-add--interactive itself does not parse pathspec. It
++	 * simply passes the pathspec to other builtin commands. Let's
++	 * hope all of them support all magic, or we'll need to limit
++	 * the magic here. There is still a problem with prefix. But
++	 * that'll be worked on later on.
++	 */
++	parse_pathspec(&pathspec, PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP,
++		       PATHSPEC_PREFER_FULL |
++		       PATHSPEC_SYMLINK_LEADING_PATH,
++		       prefix, argv);
+=20
+ 	return run_add_interactive(NULL,
+ 				   patch ? "--patch" : NULL,
+-				   pathspec);
++				   pathspec.raw);
+ }
+=20
+ static int edit_patch(int argc, const char **argv, const char *prefix)
+@@ -445,7 +417,7 @@ int cmd_add(int argc, const char **argv, const char=
+ *prefix)
+ {
+ 	int exit_status =3D 0;
+ 	int newfd;
+-	const char **pathspec;
++	struct pathspec pathspec;
+ 	struct dir_struct dir;
+ 	int flags;
+ 	int add_new_files;
+@@ -526,11 +498,19 @@ int cmd_add(int argc, const char **argv, const ch=
+ar *prefix)
+ 		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
  		return 0;
  	}
+-	pathspec =3D validate_pathspec(argv, prefix);
 =20
- 	/*
-+	 * check-ignore just needs paths. Magic beyond :/ is really
-+	 * irrelevant.
-+	 */
-+	parse_pathspec(&pathspec,
-+		       PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP,
-+		       PATHSPEC_SYMLINK_LEADING_PATH |
-+		       PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE |
-+		       PATHSPEC_KEEP_ORDER,
-+		       prefix, argv);
+ 	if (read_cache() < 0)
+ 		die(_("index file corrupt"));
+-	treat_gitlinks(pathspec);
 +
 +	/*
- 	 * look for pathspecs matching entries in the index, since these
- 	 * should not be ignored, in order to be consistent with
- 	 * 'git status', 'git add' etc.
- 	 */
--	seen =3D find_pathspecs_matching_against_index(pathspec);
--	for (i =3D 0; pathspec[i]; i++) {
--		path =3D pathspec[i];
--		full_path =3D prefix_path(prefix, prefix
--					? strlen(prefix) : 0, path);
--		full_path =3D check_path_for_gitlink(full_path);
--		die_if_path_beyond_symlink(full_path, prefix);
-+	seen =3D find_pathspecs_matching_against_index(pathspec.raw);
-+	for (i =3D 0; i < pathspec.nr; i++) {
-+		full_path =3D pathspec.raw[i];
- 		exclude =3D NULL;
- 		if (!seen[i]) {
- 			exclude =3D last_exclude_matching(dir, full_path, &dtype);
++	 * Check the "pathspec '%s' did not match any files" block
++	 * below before enabling new magic.
++	 */
++	parse_pathspec(&pathspec, 0,
++		       PATHSPEC_PREFER_FULL |
++		       PATHSPEC_SYMLINK_LEADING_PATH |
++		       PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE,
++		       prefix, argv);
+=20
+ 	if (add_new_files) {
+ 		int baselen;
+@@ -543,34 +523,40 @@ int cmd_add(int argc, const char **argv, const ch=
+ar *prefix)
  		}
- 		if (!quiet && (exclude || show_non_matching))
--			output_exclude(path, exclude);
-+			output_exclude(pathspec.items[i].original, exclude);
- 		if (exclude)
- 			num_ignored++;
- 	}
-@@ -120,7 +128,8 @@ static int check_ignore_stdin_paths(struct dir_stru=
-ct *dir, const char *prefix)
- 			strbuf_swap(&buf, &nbuf);
- 		}
- 		pathspec[0] =3D buf.buf;
--		num_ignored +=3D check_ignore(dir, prefix, (const char **)pathspec);
-+		num_ignored +=3D check_ignore(dir, prefix,
-+					    1, (const char **)pathspec);
- 		maybe_flush_or_die(stdout, "check-ignore to stdout");
- 	}
- 	strbuf_release(&buf);
-@@ -166,7 +175,7 @@ int cmd_check_ignore(int argc, const char **argv, c=
-onst char *prefix)
- 	if (stdin_paths) {
- 		num_ignored =3D check_ignore_stdin_paths(&dir, prefix);
- 	} else {
--		num_ignored =3D check_ignore(&dir, prefix, argv);
-+		num_ignored =3D check_ignore(&dir, prefix, argc, argv);
- 		maybe_flush_or_die(stdout, "ignore to stdout");
+=20
+ 		/* This picks up the paths that are not tracked */
+-		baselen =3D fill_directory(&dir, implicit_dot ? NULL : pathspec);
+-		if (pathspec)
+-			seen =3D prune_directory(&dir, pathspec, baselen,
++		baselen =3D fill_directory(&dir, implicit_dot ? NULL : pathspec.raw)=
+;
++		if (pathspec.nr)
++			seen =3D prune_directory(&dir, pathspec.raw, baselen,
+ 					implicit_dot ? WARN_IMPLICIT_DOT : 0);
  	}
 =20
+ 	if (refresh_only) {
+-		refresh(verbose, pathspec);
++		refresh(verbose, pathspec.raw);
+ 		goto finish;
+ 	}
+ 	if (implicit_dot && prefix)
+ 		refresh_cache(REFRESH_QUIET);
+=20
+-	if (pathspec) {
++	if (pathspec.nr) {
+ 		int i;
+=20
+ 		if (!seen)
+-			seen =3D find_pathspecs_matching_against_index(pathspec);
+-		for (i =3D 0; pathspec[i]; i++) {
+-			if (!seen[i] && pathspec[i][0]
+-			    && !file_exists(pathspec[i])) {
++			seen =3D find_pathspecs_matching_against_index(pathspec.raw);
++
++		/*
++		 * file_exists() assumes exact match
++		 */
++		GUARD_PATHSPEC(&pathspec, PATHSPEC_FROMTOP);
++
++		for (i =3D 0; pathspec.raw[i]; i++) {
++			if (!seen[i] && pathspec.raw[i][0]
++			    && !file_exists(pathspec.raw[i])) {
+ 				if (ignore_missing) {
+ 					int dtype =3D DT_UNKNOWN;
+-					if (is_excluded(&dir, pathspec[i], &dtype))
+-						dir_add_ignored(&dir, pathspec[i], strlen(pathspec[i]));
++					if (is_excluded(&dir, pathspec.raw[i], &dtype))
++						dir_add_ignored(&dir, pathspec.raw[i], strlen(pathspec.raw[i]));
+ 				} else
+ 					die(_("pathspec '%s' did not match any files"),
+-					    pathspec[i]);
++					    pathspec.raw[i]);
+ 			}
+ 		}
+ 		free(seen);
+@@ -586,10 +572,11 @@ int cmd_add(int argc, const char **argv, const ch=
+ar *prefix)
+ 		 */
+ 		update_data.implicit_dot =3D prefix;
+ 		update_data.implicit_dot_len =3D strlen(prefix);
+-		pathspec =3D NULL;
++		free_pathspec(&pathspec);
++		memset(&pathspec, 0, sizeof(pathspec));
+ 	}
+ 	update_data.flags =3D flags & ~ADD_CACHE_IMPLICIT_DOT;
+-	update_files_in_cache(prefix, pathspec, &update_data);
++	update_files_in_cache(prefix, pathspec.raw, &update_data);
+=20
+ 	exit_status |=3D !!update_data.add_errors;
+ 	if (add_new_files)
 diff --git a/pathspec.c b/pathspec.c
-index ba0a41d..152f9b5 100644
+index 152f9b5..ecd0f28 100644
 --- a/pathspec.c
 +++ b/pathspec.c
-@@ -370,9 +370,13 @@ void parse_pathspec(struct pathspec *pathspec,
- 		pathspec->magic |=3D item[i].magic;
- 	}
-=20
--	if (pathspec->magic & PATHSPEC_MAXDEPTH)
-+
-+	if (pathspec->magic & PATHSPEC_MAXDEPTH) {
-+		if (flags & PATHSPEC_KEEP_ORDER)
-+			die("BUG: PATHSPEC_MAXDEPTH_VALID and PATHSPEC_KEEP_ORDER are incom=
-patible");
- 		qsort(pathspec->items, pathspec->nr,
- 		      sizeof(struct pathspec_item), pathspec_item_cmp);
-+	}
+@@ -58,49 +58,6 @@ char *find_pathspecs_matching_against_index(const ch=
+ar **pathspec)
  }
 =20
  /*
-diff --git a/pathspec.h b/pathspec.h
-index 7068f7d..4f144fd 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -51,6 +51,7 @@ struct pathspec {
-  */
- #define PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE (1<<5)
- #define PATHSPEC_PREFIX_ORIGIN (1<<6)
-+#define PATHSPEC_KEEP_ORDER (1<<7)
-=20
- extern int init_pathspec(struct pathspec *, const char **);
- extern void parse_pathspec(struct pathspec *pathspec,
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index a56db80..2ced8e9 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -432,7 +432,7 @@ test_expect_success_multi SYMLINKS 'symlink' '::	a/=
-symlink' '
-=20
- test_expect_success_multi SYMLINKS 'beyond a symlink' '' '
- 	test_check_ignore "a/symlink/foo" 128 &&
--	test_stderr "fatal: '\''a/symlink/foo'\'' is beyond a symbolic link"
-+	test_stderr "fatal: pathspec '\''a/symlink/foo'\'' is beyond a symbol=
-ic link"
- '
-=20
- test_expect_success_multi SYMLINKS 'beyond a symlink from subdirectory=
-' '' '
-@@ -440,7 +440,7 @@ test_expect_success_multi SYMLINKS 'beyond a symlin=
-k from subdirectory' '' '
- 		cd a &&
- 		test_check_ignore "symlink/foo" 128
- 	) &&
--	test_stderr "fatal: '\''symlink/foo'\'' is beyond a symbolic link"
-+	test_stderr "fatal: pathspec '\''symlink/foo'\'' is beyond a symbolic=
- link"
- '
-=20
- ######################################################################=
-######
-@@ -449,7 +449,7 @@ test_expect_success_multi SYMLINKS 'beyond a symlin=
-k from subdirectory' '' '
-=20
- test_expect_success_multi 'submodule' '' '
- 	test_check_ignore "a/submodule/one" 128 &&
--	test_stderr "fatal: Path '\''a/submodule/one'\'' is in submodule '\''=
-a/submodule'\''"
-+	test_stderr "fatal: Pathspec '\''a/submodule/one'\'' is in submodule =
-'\''a/submodule'\''"
- '
-=20
- test_expect_success_multi 'submodule from subdirectory' '' '
-@@ -457,7 +457,7 @@ test_expect_success_multi 'submodule from subdirect=
-ory' '' '
- 		cd a &&
- 		test_check_ignore "submodule/one" 128
- 	) &&
--	test_stderr "fatal: Path '\''a/submodule/one'\'' is in submodule '\''=
-a/submodule'\''"
-+	test_stderr "fatal: Pathspec '\''submodule/one'\'' is in submodule '\=
-''a/submodule'\''"
- '
-=20
- ######################################################################=
-######
+- * Check the index to see whether path refers to a submodule, or
+- * something inside a submodule.  If the former, returns the path with
+- * any trailing slash stripped.  If the latter, dies with an error
+- * message.
+- */
+-const char *check_path_for_gitlink(const char *path)
+-{
+-	int i, path_len =3D strlen(path);
+-	for (i =3D 0; i < active_nr; i++) {
+-		struct cache_entry *ce =3D active_cache[i];
+-		if (S_ISGITLINK(ce->ce_mode)) {
+-			int ce_len =3D ce_namelen(ce);
+-			if (path_len <=3D ce_len || path[ce_len] !=3D '/' ||
+-			    memcmp(ce->name, path, ce_len))
+-				/* path does not refer to this
+-				 * submodule or anything inside it */
+-				continue;
+-			if (path_len =3D=3D ce_len + 1) {
+-				/* path refers to submodule;
+-				 * strip trailing slash */
+-				return xstrndup(ce->name, ce_len);
+-			} else {
+-				die (_("Path '%s' is in submodule '%.*s'"),
+-				     path, ce_len, ce->name);
+-			}
+-		}
+-	}
+-	return path;
+-}
+-
+-/*
+- * Dies if the given path refers to a file inside a symlinked
+- * directory in the index.
+- */
+-void die_if_path_beyond_symlink(const char *path, const char *prefix)
+-{
+-	if (has_symlink_leading_path(path, strlen(path))) {
+-		int len =3D prefix ? strlen(prefix) : 0;
+-		die(_("'%s' is beyond a symbolic link"), path + len);
+-	}
+-}
+-
+-/*
+  * Magic pathspec
+  *
+  * Possible future magic semantics include stuff like:
 --=20
 1.8.2.83.gc99314b
