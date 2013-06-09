@@ -1,104 +1,97 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 2/2] read-cache: plug a few leaks
-Date: Sun, 9 Jun 2013 13:27:00 -0500
-Message-ID: <CAMP44s0xQajOE=w-j4u=sQF71U9CyKj48ZqJ6s4O7zmUTFa__Q@mail.gmail.com>
-References: <1370644168-4745-1-git-send-email-felipe.contreras@gmail.com>
-	<1370644168-4745-3-git-send-email-felipe.contreras@gmail.com>
-	<51B31651.6020307@lsrfire.ath.cx>
-	<CAMP44s2Bp5p1211e6Utdch4B+v3J83GCY0_ucG7duakswkb+pg@mail.gmail.com>
-	<51B32FFD.5070302@lsrfire.ath.cx>
-	<CAMP44s3K=VtkeCoKqnU9To9YbfO7vph9MsMWtgLWw0n=cYyq5g@mail.gmail.com>
-	<51B35414.1090101@lsrfire.ath.cx>
-	<CAMP44s3UYCX+DzgnErB=0GdD3w5k2GkNKjv46ZA_NVHm1Z0YLQ@mail.gmail.com>
-	<51B36849.3030608@lsrfire.ath.cx>
-	<CAMP44s1ffOUd3DkphHAj8ZmovBazPFdMgtvEptR6kW9+ZMLLjA@mail.gmail.com>
-	<51B3E44C.4030304@lsrfire.ath.cx>
-	<CAMP44s0RqtoP8iHZ+rEqPDKSLxZLESS8qKFhb2vzSd7-mtKreQ@mail.gmail.com>
-	<51B4BD9F.6070107@lsrfire.ath.cx>
+Subject: Re: [PATCH 2/2] Move sequencer to builtin
+Date: Sun, 9 Jun 2013 13:29:50 -0500
+Message-ID: <CAMP44s21=gMH9wPXN9-dXxM6=jR68ctBXQZzi_G9PL-gMPGN+Q@mail.gmail.com>
+References: <CACsJy8CQRWU0mFLVD6RrpzJiHBH=9zFwf5xDo7UhGW6A-OAzuw@mail.gmail.com>
+	<CALkWK0mLoeO5fKezE5S1LEC2LNH9qCwxHnNi_ZJpYzC7rVTqmg@mail.gmail.com>
+	<CACsJy8B=m95mpRn1dAwQZAvHRUeJVjKy1hKXv43EKX08ZODsDw@mail.gmail.com>
+	<CALkWK0mw8=CMuyw5-E0fzh+c6Om_NCgHohqa_p=J_kw3UfJCJQ@mail.gmail.com>
+	<CACsJy8AtH6PQ06_-UgumV0dRdq28qKn-Oj7EAy3g+eOTGhOyYw@mail.gmail.com>
+	<CAMP44s2uV6CwdyadnJXSd+3mhOdApDxqdtjNyOPj3CbdsEyG0Q@mail.gmail.com>
+	<20130609043444.GA561@sigill.intra.peff.net>
+	<CALkWK0kkGO8zoLSpZkaYgVr5eBX6AovYFxQZkgJKugSw0CmdXQ@mail.gmail.com>
+	<20130609175554.GA810@sigill.intra.peff.net>
+	<CALkWK0n0kkNZo_Xt1oT5GL-TxZP0faDExxyH3vU-+hy4uEUEtQ@mail.gmail.com>
+	<20130609182246.GE810@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Adam Spiers <git@adamspiers.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Jun 09 20:27:15 2013
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jun 09 20:30:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlkKa-00030T-W7
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 20:27:09 +0200
+	id 1UlkNK-0004uc-Cc
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 20:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751647Ab3FIS1D convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 14:27:03 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:42965 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751627Ab3FIS1C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jun 2013 14:27:02 -0400
-Received: by mail-lb0-f170.google.com with SMTP id t13so706474lbd.15
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 11:27:00 -0700 (PDT)
+	id S1751814Ab3FIS3y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 14:29:54 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:60895 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751751Ab3FIS3x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 14:29:53 -0400
+Received: by mail-lb0-f181.google.com with SMTP id w10so2915453lbi.40
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 11:29:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=3VwG0vbebrVGzVDMZpsv33Ll9MLYjg7eDFZoWDHQ+mQ=;
-        b=p4wDRmPMkyQxU+2SdBu7nHHrK/BtodUndAGax3G8I74jCnNuueLE+UfvWuxr9TyKF1
-         fzLRYbp1R5iOwZmQjwk6i8mtyE3uqX2sa0DXHLMabCE8xhnYI9K0M/i3jk0KmSzQ25HI
-         bNp+8K67EXkUONZ2nrK9/wpekxkYg44WNKd0etKQgqcbx//HLI27vILVxoW8wwpQcP99
-         azUuOQBhhgbKp/Zf+S6aToHF+HPcXuBRq6bfozDE7i4YpDmzUKJA/bBtCq6AJ9eNv0G+
-         +oJ/TWYJ5WSQAzWXXDBJyefIPF1+gEJI2zzIRaYxv55Bd8Zqa/9i7KD8pr5McgZ7fDqm
-         il1w==
-X-Received: by 10.152.27.170 with SMTP id u10mr3376708lag.45.1370802420459;
- Sun, 09 Jun 2013 11:27:00 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 11:27:00 -0700 (PDT)
-In-Reply-To: <51B4BD9F.6070107@lsrfire.ath.cx>
+         :cc:content-type;
+        bh=hF4zUS861z0SXSly/11HNvUuTKC6J5rggGHrucIAue8=;
+        b=bmN4m8FDOyiuSz5IJZ84m16xNkFnaZsxjIBFWHpwzb5aEp/tLjNqbr07UTwSb5mOWf
+         ZcrHY6DDFoX7eO3L446PDJEnunsk2nR9tcBuiDZBAnfsPdZ+iSytgWdIBisswKr83mZk
+         a9HYJawPJqAyDaTdd/+wLc6NbGTJUmTxJVPXX+olxQrR6AN+9dGrylmelHjUlZp3STNg
+         c0+Dbxm/9tum18B7BsR4BhtEI3rJ9QgP+5jepT37qJzI3ZP9vpdD8lL1b6+q+F9Qwxzh
+         tlqgyRXkyrjhCdVoE133JMncEWNDqaZqGnE/Vqf9HVIkJoYEK9lrVcjNXDlp4eMIYdBM
+         ERkw==
+X-Received: by 10.152.27.170 with SMTP id u10mr3380160lag.45.1370802591000;
+ Sun, 09 Jun 2013 11:29:51 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 11:29:50 -0700 (PDT)
+In-Reply-To: <20130609182246.GE810@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227087>
 
-On Sun, Jun 9, 2013 at 12:38 PM, Ren=C3=A9 Scharfe
-<rene.scharfe@lsrfire.ath.cx> wrote:
-> Am 09.06.2013 04:25, schrieb Felipe Contreras:
-
->> It doesn't. I thought you already silently agreed that nobody would
->> ever find that leak, as they haven't found the hundreds of leaks tha=
-t
->> plague Git's code.
+On Sun, Jun 9, 2013 at 1:22 PM, Jeff King <peff@peff.net> wrote:
+> On Sun, Jun 09, 2013 at 11:36:42PM +0530, Ramkumar Ramachandra wrote:
 >
-> Nah, I explained non-silently that leakage was a design decision for
-> short-running commands that allocate memory, use it and exit.  Reusin=
-g such
-> code without freeing allocated memory between runs explicitly turns a=
- "good"
-> leak into a "bad" one, as we saw with cherry-pick --stdin.
-
-git cherry-pick for multiple commits is already there, such a leak
-would be a bad one, and nobody would find it. Valgrind doesn't know
-about your concept of "good" leaks, all that you see is tons of leaks.
-
-> Any more sequences that we need to guard against, or counterexamples?
-
-I don't know.
-
->> In the meantime, just in case, the only sane thing to do is free the
->> entries rather than leak.
+>> Jeff King wrote:
+>> > I already mentioned elsewhere that I think it would be fine to massage
+>> > libgit.a in that direction. I even joined the conversation pointing out
+>> > some cases where Felipe's ruby module would break. But I do not think
+>> > that moving code in and out of libgit.a is an important first step at
+>> > all. That is simply code that no library users would want to call, and
+>> > is easy to deal with: move it out. The hard part is code that users
+>> > _would_ want to call, and is totally broken. Patches dealing with that
+>> > are the hard obstacle that people working in this direction would need
+>> > to overcome. But I do not see any such patches under discussion.
+>>
+>> Forget the rest; this makes it clear.  Thanks, and sorry for all the confusion.
+>>
+>> So, reorganization is not the first step.  Can you please post an
+>> example patch illustrating what needs to be done, so we can follow?
 >
-> I consider not plugging a leak which we don't know how to trigger wit=
-h
-> existing code even more sane.  Yay, circles! ;-)
+> Sorry, I don't have patches. It is a hard problem for which I do not
+> have the solution, which is kind of my point.
 
-There's absolutely no benefits to leaving the potential leak.
+Wouldn't it make sense then to concentrate on the patches that we do have?
 
-> Let's take it step by step: Once the known leak is plugged we can wor=
-ry
-> about the unknown ones.  I'll send small patches.
+> For the record, I am not _against_ any code organization that might be
+> useful for lib-ification later. I just do not see it as an interesting
+> step to be discussing if you want to know whether such a lib-ification
+> effort is feasible.
 
-Go ahead. I'm not interested any more.
+If you don't find it interesting, don't do it. I already did this step
+(Move sequencer to builtin), the question is; does it go forward, or
+should it be rejected?
 
---=20
-=46elipe Contreras
+-- 
+Felipe Contreras
