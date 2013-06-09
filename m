@@ -1,108 +1,76 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/3] test: improve rebase -q test
-Date: Sun, 9 Jun 2013 15:41:54 -0500
-Message-ID: <CAMP44s0Qr54+8hbkZ+jmXB628SCPwg1zZo80UBhFe2PCrgQP4Q@mail.gmail.com>
-References: <1370637143-21336-1-git-send-email-felipe.contreras@gmail.com>
-	<1370637143-21336-3-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8DHeqOz=WbxurCvPiDq73k4eftwrEEZzWBbifS51PDbLQ@mail.gmail.com>
-	<7vd2rvqgra.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3Pny7JkyHbLZ3kUemNK70JhdYWdpELTjNLz0y3Z2V3+A@mail.gmail.com>
-	<7vy5ajozuj.fsf@alter.siamese.dyndns.org>
-	<CAMP44s38T9EUOe8EBKy1kxa-rEu7g0jb7+HB019AgCub+2SVnw@mail.gmail.com>
-	<7vfvwrowd0.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/6] completion: clarify ls-tree, archive, show completion
+Date: Sun, 09 Jun 2013 13:56:20 -0700
+Message-ID: <7vbo7fovez.fsf@alter.siamese.dyndns.org>
+References: <1370181822-23450-1-git-send-email-artagnon@gmail.com>
+	<1370181822-23450-7-git-send-email-artagnon@gmail.com>
+	<20130603192555.GK2192@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 09 22:42:15 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sun Jun 09 22:56:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlmRL-00063c-Ay
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 22:42:15 +0200
+	id 1UlmfK-0004FD-8T
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 22:56:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751362Ab3FIUl5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 16:41:57 -0400
-Received: from mail-la0-f50.google.com ([209.85.215.50]:42799 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750991Ab3FIUl4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 16:41:56 -0400
-Received: by mail-la0-f50.google.com with SMTP id dy20so2892942lab.37
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 13:41:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=h0DWBS4xyoTEShVXQZndhPzHCIRHxNC7V517dATSUmA=;
-        b=tvmoNtf2H2nHTWx69UeYk+VR9OoqnmIdS89H8bCO8iccPyXGxPTUzEI1m9ZII5RfhJ
-         V6QEeOSKiWGY+Bhz+9h729dpHkynQtco+R4rnZV4YprF2cQx7yhdrQYbqDLA6h44JOYQ
-         VbaUpjX5wCWskoz/xDJ8Hmw66U5Vr7hnQd+vGUkP/5RhW0VaGmw/FjjVIvCwW7Kunius
-         xCZIntMGqgRAWFrTG40+NXgoU6cfGHfOlCG/hx2vzIMZVcjWCBC6tfHmkEBUxTUdmXtR
-         ooca5HZtYq/qdKxM0dupKEPF5Z/BvN07sgiLcIQu6eOLWlQ1tNAPZqXbzUTk8vRvC5NL
-         WNXg==
-X-Received: by 10.152.5.7 with SMTP id o7mr115621lao.43.1370810514268; Sun, 09
- Jun 2013 13:41:54 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 13:41:54 -0700 (PDT)
-In-Reply-To: <7vfvwrowd0.fsf@alter.siamese.dyndns.org>
+	id S1751162Ab3FIU40 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 16:56:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45610 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751120Ab3FIU4Z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jun 2013 16:56:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8C5525023;
+	Sun,  9 Jun 2013 20:56:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=GiyGIvvMVx/5
+	S/BVQGXV48uf+Q0=; b=HSIet1ZR/m6eZy8CM00Cr6ELHlVo1MfVZ1dSvDLtc7RO
+	DK7wvIylTijVz8J8f5vYHXs7BDf8b4rPB0xlHC1ArQ2uxNNFMcnrwbvQVu32FJko
+	VNAURIOZfHMhxjOwfUUuqjQ5bsH11E5WYeh/8VP888eZ8Nmm/IkaSEusXDHIfJ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=V/P53m
+	aKkPXOzZXLCIS8Wis42asA22nDem335CXORUUb734XUkC3HadGQSOQSsNy54ccO/
+	RCi4aM7sIQMxfHQouO5A29QRL+qjkdSc3nazV0mA3dtFl9v1zaBwLsXjFLUcTdgH
+	5nA0aDUjp/rmrPvseP4QayVhDiogfE4T0erXQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC95325021;
+	Sun,  9 Jun 2013 20:56:22 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3DD3B25020;
+	Sun,  9 Jun 2013 20:56:22 +0000 (UTC)
+In-Reply-To: <20130603192555.GK2192@goldbirke> ("SZEDER =?utf-8?Q?G=C3=A1b?=
+ =?utf-8?Q?or=22's?= message of
+	"Mon, 3 Jun 2013 21:25:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0A718124-D147-11E2-81AC-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227167>
 
-On Sun, Jun 9, 2013 at 3:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> On Sun, Jun 9, 2013 at 2:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>
->>>> On Sun, Jun 9, 2013 at 1:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>>
->>>>> --- a/t/test-lib-functions.sh
->>>>> +++ b/t/test-lib-functions.sh
->>>>> @@ -606,6 +606,18 @@ test_cmp() {
->>>>>         $GIT_TEST_CMP "$@"
->>>>>  }
->>>>>
->>>>> +# Check if the file expected to be empty is indeed empty, and barfs
->>>>> +# otherwise.
->>>>> +
->>>>> +test_output_must_be_empty () {
->>>>
->>>> Why such a big name? test_empty() does the trick.
->>>
->>> Primarily in order to avoid that exact name "test_empty" that others
->>> may want to use for a helper to check that the contents of a string
->>> variable is empty.
->>
->> Which is never going to happen.
->
-> For anything, a failure from
->
->         test -z "$mustbeemptystring"
->
-> in the test suite is much harder to diagnose because there is
-> nothing left in the trash directory to inspect, as opposed to
->
->         test ! -s "$mustbeemptyfile"
->
-> where you can just go there and inspect yourself.
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-Except that it's usually gone. And I challenge you to find a instance
-where there's a test -z "$mustbeemptystring" that throws a test
-failure. It will take you time to find it (if there's any).
+> Now, __git_complete_revlist_file() provides completion both for this
+> master:Doc<TAB> notation and for revision ranges, i.e. for
+> master..n<TAB> and master...n<TAB>.  However, since neither git
+> ls-tree nor git archive accept revision ranges, calling
+> __git_complete_revlist_file() in their completion function would be
+> misleading.
 
-Moreover, by that rationale, we should call test_cmp, test_file_cmp,
-but there's no need, because that's rarely needed (if at all). There
-will not be a need for test_string_must_be_empty() just like there's
-no need for test_string_cmp().
+ohh, I missed this part, and you are right.
 
--- 
-Felipe Contreras
+> git show is special, as it understands both the master:Doc<TAB>
+> notation and revision ranges, and even the combination of the two, so
+> calling __git_complete_revlist_file() there would indeed be better.
