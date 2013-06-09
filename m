@@ -1,7 +1,8 @@
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 1/2] read-cache: add simple performance test
-Date: Sun,  9 Jun 2013 19:39:17 +0200
-Message-ID: <1370799558-18188-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 2/2] read-cache: free cache in discard_index
+Date: Sun,  9 Jun 2013 19:39:18 +0200
+Message-ID: <1370799558-18188-2-git-send-email-rene.scharfe@lsrfire.ath.cx>
+References: <1370799558-18188-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -9,107 +10,78 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
 	Stephen Boyd <sboyd@codeaurora.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 09 19:39:31 2013
+X-From: git-owner@vger.kernel.org Sun Jun 09 19:39:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UljaU-0002hH-Ue
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:39:31 +0200
+	id 1UljaU-0002hH-Dt
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:39:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751512Ab3FIRj0 convert rfc822-to-quoted-printable (ORCPT
+	id S1751515Ab3FIRj0 convert rfc822-to-quoted-printable (ORCPT
 	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 13:39:26 -0400
-Received: from india601.server4you.de ([85.25.151.105]:59095 "EHLO
+Received: from india601.server4you.de ([85.25.151.105]:59096 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750987Ab3FIRjZ (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751030Ab3FIRjZ (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 9 Jun 2013 13:39:25 -0400
 Received: from debian.Speedport_W_504V_Typ_A (p4FFD9DEC.dip0.t-ipconnect.de [79.253.157.236])
-	by india601.server4you.de (Postfix) with ESMTPSA id C82A71DA;
-	Sun,  9 Jun 2013 19:39:23 +0200 (CEST)
+	by india601.server4you.de (Postfix) with ESMTPSA id 2E8D435F;
+	Sun,  9 Jun 2013 19:39:24 +0200 (CEST)
 X-Mailer: git-send-email 1.8.3
+In-Reply-To: <1370799558-18188-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227047>
 
-Add the helper test-read-cache, which can be used to call read_cache an=
-d
-discard_cache in a loop as well as a performance check based on it.
+discard_cache doesn't have to free the array of cache entries, because
+the next call of read_cache can simply reuse it, as they all operate on
+the global variable the_index.
 
+discard_index on the other hand does have to free it, because it can be
+used e.g. with index_state variables on the stack, in which case a
+missing free would cause an unrecoverable leak.  This patch releases th=
+e
+memory and removes a comment that was relevant for discard_cache but ha=
+s
+become outdated.
+
+Since discard_cache is just a wrapper around discard_index nowadays, we
+lose the optimization that avoids reallocation of that array within
+loops of read_cache and discard_cache.  That doesn't cause a performanc=
+e
+regression for me, however (HEAD =3D this patch, HEAD^ =3D master + p00=
+02):
+
+  Test           //              HEAD^             HEAD
+  ---------------\\----------------------------------------------------=
+-
+  0002.1: read_ca// 1000 times   0.62(0.58+0.04)   0.61(0.58+0.02) -1.6=
+%
+
+Suggested-by: Felipe Contreras <felipe.contreras@gmail.com>
 Signed-off-by: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
- .gitignore                 |  1 +
- Makefile                   |  1 +
- t/perf/p0002-read-cache.sh | 14 ++++++++++++++
- test-read-cache.c          | 13 +++++++++++++
- 4 files changed, 29 insertions(+)
- create mode 100755 t/perf/p0002-read-cache.sh
- create mode 100644 test-read-cache.c
+ read-cache.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 1640c3a..c0e00eb 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -191,6 +191,7 @@
- /test-mktemp
- /test-parse-options
- /test-path-utils
-+/test-read-cache
- /test-regex
- /test-revision-walking
- /test-run-command
-diff --git a/Makefile b/Makefile
-index a748133..2e3b4ee 100644
---- a/Makefile
-+++ b/Makefile
-@@ -572,6 +572,7 @@ TEST_PROGRAMS_NEED_X +=3D test-mergesort
- TEST_PROGRAMS_NEED_X +=3D test-mktemp
- TEST_PROGRAMS_NEED_X +=3D test-parse-options
- TEST_PROGRAMS_NEED_X +=3D test-path-utils
-+TEST_PROGRAMS_NEED_X +=3D test-read-cache
- TEST_PROGRAMS_NEED_X +=3D test-regex
- TEST_PROGRAMS_NEED_X +=3D test-revision-walking
- TEST_PROGRAMS_NEED_X +=3D test-run-command
-diff --git a/t/perf/p0002-read-cache.sh b/t/perf/p0002-read-cache.sh
-new file mode 100755
-index 0000000..9180ae9
---- /dev/null
-+++ b/t/perf/p0002-read-cache.sh
-@@ -0,0 +1,14 @@
-+#!/bin/sh
-+
-+test_description=3D"Tests performance of reading the index"
-+
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+
-+count=3D1000
-+test_perf "read_cache/discard_cache $count times" "
-+	test-read-cache $count
-+"
-+
-+test_done
-diff --git a/test-read-cache.c b/test-read-cache.c
-new file mode 100644
-index 0000000..b25bcf1
---- /dev/null
-+++ b/test-read-cache.c
-@@ -0,0 +1,13 @@
-+#include "cache.h"
-+
-+int main (int argc, char **argv)
-+{
-+	int i, cnt =3D 1;
-+	if (argc =3D=3D 2)
-+		cnt =3D strtol(argv[1], NULL, 0);
-+	for (i =3D 0; i < cnt; i++) {
-+		read_cache();
-+		discard_cache();
-+	}
-+	return 0;
-+}
+diff --git a/read-cache.c b/read-cache.c
+index 04ed561..4245f8e 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1518,8 +1518,9 @@ int discard_index(struct index_state *istate)
+ 	free_name_hash(istate);
+ 	cache_tree_free(&(istate->cache_tree));
+ 	istate->initialized =3D 0;
+-
+-	/* no need to throw away allocated active_cache */
++	free(istate->cache);
++	istate->cache =3D NULL;
++	istate->cache_alloc =3D 0;
+ 	return 0;
+ }
+=20
 --=20
 1.8.3
