@@ -1,578 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] test: improve rebase -q test
-Date: Sun, 09 Jun 2013 11:30:01 -0700
-Message-ID: <7vd2rvqgra.fsf@alter.siamese.dyndns.org>
-References: <1370637143-21336-1-git-send-email-felipe.contreras@gmail.com>
-	<1370637143-21336-3-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8DHeqOz=WbxurCvPiDq73k4eftwrEEZzWBbifS51PDbLQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] git-remote-mediawiki: new tool to preview local
+ changes without pushing
+Date: Sun, 9 Jun 2013 14:32:47 -0400
+Message-ID: <20130609183247.GF810@sigill.intra.peff.net>
+References: <1370641831-9115-1-git-send-email-benoit.person@ensimag.fr>
+ <20130609060807.GA8906@sigill.intra.peff.net>
+ <CAETqRCh9frekD8yiR0bE+WQ7b_et1th8p_LsqrL8NhPnC8yaow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 09 20:30:16 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Q8OpbGVzdGlu?= Matte <celestin.matte@ensimag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: =?utf-8?Q?Beno=C3=AEt?= Person <benoit.person@ensimag.fr>
+X-From: git-owner@vger.kernel.org Sun Jun 09 20:32:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlkNZ-00055F-NZ
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 20:30:14 +0200
+	id 1UlkQB-0006oT-Rb
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 20:32:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751872Ab3FISaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 14:30:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33002 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751751Ab3FISaF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 14:30:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BE7124DC4;
-	Sun,  9 Jun 2013 18:30:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=B3lSq6YLSQJ+ZVuY0ojlAy5w7K8=; b=GM2qPP
-	kcgwugGJLYbtXa+m5OjniwNWIZKqR4P6QDSMvu+CpVTNsNzY0lrxOvnIXw1HJ1Zm
-	dcjXG2JozlkZp24ueHfWAsjUmK90ZpoiyjAHilMTzudaOrVzW0XEXsdKhk8feV39
-	hYdxmXz8nXOFFgchS3t1EEPN8PsXhL5WaN9IU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lpvYMxCNqjUMMGfKfPe54e1fzJkyCJRh
-	3ZnBKrarIgFSKUBU86RQ9w2/Xvs+k3ognt+RZJzezc+EmCVAjXNGRZS9jHw5FZfQ
-	cxrkKM+GDXTn8GLirLeb1vP2GqlKe3EB//6RJ3W9VudSJ/f0vFBotAH8sR7JWbVi
-	JUyjkekqeqI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60DFE24DC2;
-	Sun,  9 Jun 2013 18:30:04 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6543C24DBF;
-	Sun,  9 Jun 2013 18:30:03 +0000 (UTC)
-In-Reply-To: <CACsJy8DHeqOz=WbxurCvPiDq73k4eftwrEEZzWBbifS51PDbLQ@mail.gmail.com>
-	(Duy Nguyen's message of "Sat, 8 Jun 2013 09:44:45 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 99E511F0-D132-11E2-A6E6-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751903Ab3FIScv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 14:32:51 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37408 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751706Ab3FIScu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 14:32:50 -0400
+Received: (qmail 19857 invoked by uid 102); 9 Jun 2013 18:33:40 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 09 Jun 2013 13:33:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Jun 2013 14:32:47 -0400
+Content-Disposition: inline
+In-Reply-To: <CAETqRCh9frekD8yiR0bE+WQ7b_et1th8p_LsqrL8NhPnC8yaow@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227089>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Sun, Jun 09, 2013 at 02:35:45PM +0200, Beno=C3=AEt Person wrote:
 
-> On Sat, Jun 8, 2013 at 3:32 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> Let's show the output so it's clear why it failed.
->
-> I think you can always look into trash-directory.t3400 and figure why.
-> But if you show this, I think you should use test_cmp to make it clear
-> what is not wanted. Something like
->
-> : >expected &&
-> test_cmp expected output.out
+> On 9 June 2013 08:08, Jeff King <peff@peff.net> wrote:
+> > I also wonder if it would be useful to be able to specify not only =
+files
+> > in the filesystem, but also arbitrary blobs. So in 4b above, you co=
+uld
+> > "git mw preview origin:page.mw" to see the rendered version of what
+> > upstream has done.
+>=20
+> Hum, so `git mw preview origin:page.mw` would just do the get
+> request to the remote mediawiki, save it locally and - maybe - load i=
+t
+> in the browser ? Is it really better than just opening the browser an=
+d
+> typing the right URL ?
 
-There are quite many places that do this "output must be empty" in
-the test suite, so it may deserve a special case perhaps like this
-one.
+Not really, but when you start doing "origin^:page.mw", it may make mor=
+e
+of a difference.
 
--- >8 --
-Subject: [PATCH] test: test_output_must_be_empty helper
+> > If you just care about the remote name and not the name of the loca=
+l
+> > branch, you can just ask for
+> >
+> >   my $curr_branch =3D `git symbolic-ref HEAD`;
+> >   my $remote =3D `git config "branch.$curr_branch.remote"`;
+> >   my $url =3D `git config "remote.$remote.url"`;
+> >
+> > Of course you would want some error checks and probably some chomp(=
+)s in
+> > there, too.
+>=20
+> The fact is, `git symbolic-ref HEAD` result would have to be parsed i=
+n order
+> to extract the current branch name like I currently extract the remot=
+e name.
+> So, is it really better than `git rev-parse --symbolic-full-name @{up=
+stream}` ?
 
-There are quite a lot places where an output file is expected to be
-empty, and we fail the test when it is not.  The output from running
-the test script with -i -v can be helped if we showed the unexpected
-contents at that point.
+It is, because it is not strictly true that an upstream of
+"refs/remotes/foo/*" is for the remote "foo" (though in 99% of cases, i=
+t
+is). To find the upstream, git looks at branch.$curr_branch.remote, the=
+n
+calculates the upstream based on the fetch refspecs. Then you try to
+undo that by converting it back from the right-hand side of the fetch
+refspec into a remote name. It would be much easier to just look at the
+config. :)
 
-We could of course do
+And yes, you do need the short name of the branch from HEAD, not the
+full refname. You can use "git symbolic-ref --short" for that. You also
+should check that it returns something useful (i.e., that we are not on
+a detached HEAD).
 
-    >expected.empty && test_cmp expected.empty actual
+> > That is probably OK as long as there is only one such remote, and i=
+t
+> > would help the case where you have branched off of a local branch (=
+so
+> > your upstream remote is ".").  If there are two mediawiki remotes,
+> > though, it would make sense to simply fail, as you don't know which=
+ to
+> > use. But I'd expect the common case by far to be that you simply ha=
+ve
+> > one such remote.
+>=20
+> Well, I thought that `git mw preview` could provide an interactive mo=
+de
+> where, if the first search fails, it would find all the mediawiki rem=
+otes, and
+> offers to the user a way to choose the remote ?
 
-but this is commmon enough to be done with a dedicated helper.
+That's fine; just as long as we do not silently produce output from an
+unknown source when there is ambiguity.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t0040-parse-options.sh      | 46 +++++++++++++++++++++----------------------
- t/t3400-rebase.sh             |  2 +-
- t/t3903-stash.sh              | 10 +++++-----
- t/t5521-pull-options.sh       | 26 ++++++++++++------------
- t/t5702-clone-options.sh      |  2 +-
- t/t7102-reset.sh              |  2 +-
- t/t7400-submodule-basic.sh    |  6 +++---
- t/t9402-git-cvsserver-refs.sh | 12 +++++------
- t/test-lib-functions.sh       | 12 +++++++++++
- 9 files changed, 65 insertions(+), 53 deletions(-)
+You can do an interactive selection, or even just say something like:
 
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 244a43c..e2f5be0 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -50,7 +50,7 @@ EOF
- 
- test_expect_success 'test help' '
- 	test_must_fail test-parse-options -h > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_i18ncmp expect output
- '
- 
-@@ -75,7 +75,7 @@ check() {
- 	shift &&
- 	sed "s/^$what .*/$what $expect/" <expect.template >expect &&
- 	test-parse-options $* >output 2>output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- }
- 
-@@ -86,7 +86,7 @@ check_i18n() {
- 	shift &&
- 	sed "s/^$what .*/$what $expect/" <expect.template >expect &&
- 	test-parse-options $* >output 2>output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_i18ncmp expect output
- }
- 
-@@ -99,7 +99,7 @@ check_unknown() {
- 	esac &&
- 	cat expect.err >>expect &&
- 	test_must_fail test-parse-options $* >output 2>output.err &&
--	test ! -s output &&
-+	test_output_must_be_empty output &&
- 	test_cmp expect output.err
- }
- 
-@@ -112,7 +112,7 @@ check_unknown_i18n() {
- 	esac &&
- 	cat expect.err >>expect &&
- 	test_must_fail test-parse-options $* >output 2>output.err &&
--	test ! -s output &&
-+	test_output_must_be_empty output &&
- 	test_i18ncmp expect output.err
- }
- 
-@@ -149,7 +149,7 @@ test_expect_success 'short options' '
- 	test-parse-options -s123 -b -i 1729 -b -vv -n -F my.file \
- 	> output 2> output.err &&
- 	test_cmp expect output &&
--	test ! -s output.err
-+	test_output_must_be_empty output.err
- '
- 
- cat > expect << EOF
-@@ -168,7 +168,7 @@ test_expect_success 'long options' '
- 	test-parse-options --boolean --integer 1729 --boolean --string2=321 \
- 		--verbose --verbose --no-dry-run --abbrev=10 --file fi.le\
- 		--obsolete > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
-@@ -199,7 +199,7 @@ EOF
- test_expect_success 'intermingled arguments' '
- 	test-parse-options a1 --string 123 b1 --boolean -j 13 -- --boolean \
- 		> output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
-@@ -217,13 +217,13 @@ EOF
- 
- test_expect_success 'unambiguously abbreviated option' '
- 	test-parse-options --int 2 --boolean --no-bo > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
- test_expect_success 'unambiguously abbreviated option with "="' '
- 	test-parse-options --int=2 > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
-@@ -246,7 +246,7 @@ EOF
- 
- test_expect_success 'non ambiguous option (after two options it abbreviates)' '
- 	test-parse-options --st 123 > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
-@@ -256,7 +256,7 @@ EOF
- 
- test_expect_success 'detect possible typos' '
- 	test_must_fail test-parse-options -boolean > output 2> output.err &&
--	test ! -s output &&
-+	test_output_must_be_empty output &&
- 	test_cmp typo.err output.err
- '
- 
-@@ -266,7 +266,7 @@ EOF
- 
- test_expect_success 'detect possible typos' '
- 	test_must_fail test-parse-options -ambiguous > output 2> output.err &&
--	test ! -s output &&
-+	test_output_must_be_empty output &&
- 	test_cmp typo.err output.err
- '
- 
-@@ -285,7 +285,7 @@ EOF
- 
- test_expect_success 'keep some options as arguments' '
- 	test-parse-options --quux > output 2> output.err &&
--        test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
-         test_cmp expect output
- '
- 
-@@ -305,7 +305,7 @@ EOF
- test_expect_success 'OPT_DATE() and OPT_SET_PTR() work' '
- 	test-parse-options -t "1970-01-01 00:00:01 +0000" --default-string \
- 		foo -q > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
-@@ -324,7 +324,7 @@ EOF
- 
- test_expect_success 'OPT_CALLBACK() and OPT_BIT() work' '
- 	test-parse-options --length=four -b -4 > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
-@@ -352,13 +352,13 @@ EOF
- 
- test_expect_success 'OPT_BIT() and OPT_SET_INT() work' '
- 	test-parse-options --set23 -bbbbb --no-or4 > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
- test_expect_success 'OPT_NEGBIT() and OPT_SET_INT() work' '
- 	test-parse-options --set23 -bbbbb --neg-or4 > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
-@@ -376,19 +376,19 @@ EOF
- 
- test_expect_success 'OPT_BIT() works' '
- 	test-parse-options -bb --or4 > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
- test_expect_success 'OPT_NEGBIT() works' '
- 	test-parse-options -bb --no-neg-or4 > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
- test_expect_success 'OPT_COUNTUP() with PARSE_OPT_NODASH works' '
- 	test-parse-options + + + + + + > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
-@@ -406,7 +406,7 @@ EOF
- 
- test_expect_success 'OPT_NUMBER_CALLBACK() works' '
- 	test-parse-options -12345 > output 2> output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
-@@ -424,7 +424,7 @@ EOF
- 
- test_expect_success 'negation of OPT_NONEG flags is not ambiguous' '
- 	test-parse-options --no-ambig >output 2>output.err &&
--	test ! -s output.err &&
-+	test_output_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 1de0ebd..e198419 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -179,7 +179,7 @@ test_expect_success 'default to @{upstream} when upstream arg is missing' '
- test_expect_success 'rebase -q is quiet' '
- 	git checkout -b quiet topic &&
- 	git rebase -q master >output.out 2>&1 &&
--	test ! -s output.out
-+	test_output_must_be_empty output.out
- '
- 
- test_expect_success 'Rebase a commit that sprinkles CRs in' '
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 5dfbda7..ebd838a 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -200,17 +200,17 @@ test_expect_success 'apply -q is quiet' '
- 	echo foo > file &&
- 	git stash &&
- 	git stash apply -q > output.out 2>&1 &&
--	test ! -s output.out
-+	test_output_must_be_empty output.out
- '
- 
- test_expect_success 'save -q is quiet' '
- 	git stash save --quiet > output.out 2>&1 &&
--	test ! -s output.out
-+	test_output_must_be_empty output.out
- '
- 
- test_expect_success 'pop -q is quiet' '
- 	git stash pop -q > output.out 2>&1 &&
--	test ! -s output.out
-+	test_output_must_be_empty output.out
- '
- 
- test_expect_success 'pop -q --index works and is quiet' '
-@@ -219,13 +219,13 @@ test_expect_success 'pop -q --index works and is quiet' '
- 	git stash save --quiet &&
- 	git stash pop -q --index > output.out 2>&1 &&
- 	test foo = "$(git show :file)" &&
--	test ! -s output.out
-+	test_output_must_be_empty output.out
- '
- 
- test_expect_success 'drop -q is quiet' '
- 	git stash &&
- 	git stash drop -q > output.out 2>&1 &&
--	test ! -s output.out
-+	test_output_must_be_empty output.out
- '
- 
- test_expect_success 'stash -k' '
-diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-index aa31abe..f913166 100755
---- a/t/t5521-pull-options.sh
-+++ b/t/t5521-pull-options.sh
-@@ -15,19 +15,19 @@ test_expect_success 'git pull -q' '
- 	mkdir clonedq &&
- 	(cd clonedq && git init &&
- 	git pull -q "../parent" >out 2>err &&
--	test ! -s err &&
--	test ! -s out)
-+	test_output_must_be_empty err &&
-+	test_output_must_be_empty out)
- '
- 
- test_expect_success 'git pull -q --rebase' '
- 	mkdir clonedqrb &&
- 	(cd clonedqrb && git init &&
- 	git pull -q --rebase "../parent" >out 2>err &&
--	test ! -s err &&
--	test ! -s out &&
-+	test_output_must_be_empty err &&
-+	test_output_must_be_empty out &&
- 	git pull -q --rebase "../parent" >out 2>err &&
--	test ! -s err &&
--	test ! -s out)
-+	test_output_must_be_empty err &&
-+	test_output_must_be_empty out)
- '
- 
- test_expect_success 'git pull' '
-@@ -35,7 +35,7 @@ test_expect_success 'git pull' '
- 	(cd cloned && git init &&
- 	git pull "../parent" >out 2>err &&
- 	test -s err &&
--	test ! -s out)
-+	test_output_must_be_empty out)
- '
- 
- test_expect_success 'git pull --rebase' '
-@@ -43,7 +43,7 @@ test_expect_success 'git pull --rebase' '
- 	(cd clonedrb && git init &&
- 	git pull --rebase "../parent" >out 2>err &&
- 	test -s err &&
--	test ! -s out)
-+	test_output_must_be_empty out)
- '
- 
- test_expect_success 'git pull -v' '
-@@ -51,7 +51,7 @@ test_expect_success 'git pull -v' '
- 	(cd clonedv && git init &&
- 	git pull -v "../parent" >out 2>err &&
- 	test -s err &&
--	test ! -s out)
-+	test_output_must_be_empty out)
- '
- 
- test_expect_success 'git pull -v --rebase' '
-@@ -59,22 +59,22 @@ test_expect_success 'git pull -v --rebase' '
- 	(cd clonedvrb && git init &&
- 	git pull -v --rebase "../parent" >out 2>err &&
- 	test -s err &&
--	test ! -s out)
-+	test_output_must_be_empty out)
- '
- 
- test_expect_success 'git pull -v -q' '
- 	mkdir clonedvq &&
- 	(cd clonedvq && git init &&
- 	git pull -v -q "../parent" >out 2>err &&
--	test ! -s out &&
--	test ! -s err)
-+	test_output_must_be_empty out &&
-+	test_output_must_be_empty err)
- '
- 
- test_expect_success 'git pull -q -v' '
- 	mkdir clonedqv &&
- 	(cd clonedqv && git init &&
- 	git pull -q -v "../parent" >out 2>err &&
--	test ! -s out &&
-+	test_output_must_be_empty out &&
- 	test -s err)
- '
- 
-diff --git a/t/t5702-clone-options.sh b/t/t5702-clone-options.sh
-index 02cb024..d486c9b 100755
---- a/t/t5702-clone-options.sh
-+++ b/t/t5702-clone-options.sh
-@@ -22,7 +22,7 @@ test_expect_success 'clone -o' '
- test_expect_success 'redirected clone' '
- 
- 	git clone "file://$(pwd)/parent" clone-redirected >out 2>err &&
--	test ! -s err
-+	test_output_must_be_empty err
- 
- '
- test_expect_success 'redirected clone -v' '
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index df82ec9..622feff 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -457,7 +457,7 @@ test_expect_success 'disambiguation (1)' '
- 	test_must_fail git diff --quiet -- secondfile &&
- 	test -z "$(git diff --cached --name-only)" &&
- 	test -f secondfile &&
--	test ! -s secondfile
-+	test_output_must_be_empty secondfile
- 
- '
- 
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 2683cba..2779b7e 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -78,7 +78,7 @@ test_expect_success 'submodule add' '
- 	(
- 		cd addtest &&
- 		git submodule add -q "$submodurl" submod >actual &&
--		test ! -s actual &&
-+		test_output_must_be_empty actual &&
- 		echo "gitdir: ../.git/modules/submod" >expect &&
- 		test_cmp expect submod/.git &&
- 		(
-@@ -308,7 +308,7 @@ test_expect_success 'update should work when path is an empty dir' '
- 
- 	mkdir init &&
- 	git submodule update -q >update.out &&
--	test ! -s update.out &&
-+	test_output_must_be_empty update.out &&
- 
- 	inspect init &&
- 	test_cmp expect head-sha1
-@@ -696,7 +696,7 @@ test_expect_success 'submodule add --name allows to replace a submodule with ano
- 		rm -rf repo &&
- 		git rm repo &&
- 		git submodule add -q --name repo_new "$submodurl/bare.git" repo >actual &&
--		test ! -s actual &&
-+		test_output_must_be_empty actual &&
- 		echo "gitdir: ../.git/modules/submod" >expect &&
- 		test_cmp expect submod/.git &&
- 		(
-diff --git a/t/t9402-git-cvsserver-refs.sh b/t/t9402-git-cvsserver-refs.sh
-index 735a018..84a4309 100755
---- a/t/t9402-git-cvsserver-refs.sh
-+++ b/t/t9402-git-cvsserver-refs.sh
-@@ -330,7 +330,7 @@ test_expect_success 'validate result of edits [cvswork2]' '
- 
- test_expect_success 'validate basic diffs saved during above cvswork2 edits' '
- 	test $(grep Index: cvsEdit1.diff | wc -l) = 1 &&
--	test ! -s cvsEdit2-empty.diff &&
-+	test_output_must_be_empty cvsEdit2-empty.diff &&
- 	test $(grep Index: cvsEdit2-N.diff | wc -l) = 1 &&
- 	test $(grep Index: cvsEdit3.diff | wc -l) = 3 &&
- 	rm -rf diffSandbox &&
-@@ -456,20 +456,20 @@ test_expect_success 'cvs up -r $(git rev-parse v1)' '
- 
- test_expect_success 'cvs diff -r v1 -u' '
- 	( cd cvswork && cvs -f diff -r v1 -u ) >cvsDiff.out 2>cvs.log &&
--	test ! -s cvsDiff.out &&
--	test ! -s cvs.log
-+	test_output_must_be_empty cvsDiff.out &&
-+	test_output_must_be_empty cvs.log
- '
- 
- test_expect_success 'cvs diff -N -r v2 -u' '
- 	( cd cvswork && ! cvs -f diff -N -r v2 -u ) >cvsDiff.out 2>cvs.log &&
--	test ! -s cvs.log &&
-+	test_output_must_be_empty cvs.log &&
- 	test -s cvsDiff.out &&
- 	check_diff cvsDiff.out v2 v1 >check_diff.out 2>&1
- '
- 
- test_expect_success 'cvs diff -N -r v2 -r v1.2' '
- 	( cd cvswork && ! cvs -f diff -N -r v2 -r v1.2 -u ) >cvsDiff.out 2>cvs.log &&
--	test ! -s cvs.log &&
-+	test_output_must_be_empty cvs.log &&
- 	test -s cvsDiff.out &&
- 	check_diff cvsDiff.out v2 v1.2 >check_diff.out 2>&1
- '
-@@ -488,7 +488,7 @@ test_expect_success 'apply early [cvswork3] diff to b3' '
- 
- test_expect_success 'check [cvswork3] diff' '
- 	( cd cvswork3 && ! cvs -f diff -N -u ) >"$WORKDIR/cvsDiff.out" 2>cvs.log &&
--	test ! -s cvs.log &&
-+	test_output_must_be_empty cvs.log &&
- 	test -s cvsDiff.out &&
- 	test $(grep Index: cvsDiff.out | wc -l) = 3 &&
- 	test_cmp cvsDiff.out cvswork3edit.diff &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 3fc9cc9..a88e652 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -606,6 +606,18 @@ test_cmp() {
- 	$GIT_TEST_CMP "$@"
- }
- 
-+# Check if the file expected to be empty is indeed empty, and barfs
-+# otherwise.
-+
-+test_output_must_be_empty () {
-+	if test -s "$1"
-+	then
-+		echo "Bad: test_output_must_be_empty '$1', but has the following."
-+		cat "$1"
-+		return 1
-+	fi
-+}
-+
- # Tests that its two parameters refer to the same revision
- test_cmp_rev () {
- 	git rev-parse --verify "$1" >expect.rev &&
--- 
-1.8.3-477-gc2fede3
+  There are multiple mediawiki remotes, and I do not know which one you
+  want to use for your preview. Which of:
+
+    remote1
+    remote2
+
+  did you mean? Try using the "-r" option to specify the remote.
+
+and then let the user repeat their command with the "-r" option using
+shell history. That saves you from having to write an interactive
+component, and teaches the user how to script it.
+
+-Peff
