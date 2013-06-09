@@ -1,93 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
 Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Sun, 09 Jun 2013 14:39:55 -0700
-Message-ID: <7vppvvnetw.fsf@alter.siamese.dyndns.org>
-References: <20130608164902.GA3109@elie.Belkin>
-	<CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
-	<20130608173447.GA4381@elie.Belkin>
-	<CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
-	<20130609014049.GA10375@google.com>
-	<CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
-	<20130609052624.GB561@sigill.intra.peff.net>
-	<CALkWK0mu2_9M5aTczcEkv37eLaAg5_mGDZ_W9nqQFoesB4wc3g@mail.gmail.com>
-	<20130609180437.GB810@sigill.intra.peff.net>
-	<CALkWK0kkhDOSSdF=E4PvO24hg++_FpP3YFaGRD3yq80XG0TRJA@mail.gmail.com>
-	<20130609184553.GG810@sigill.intra.peff.net>
+Date: Sun, 09 Jun 2013 23:42:34 +0200
+Message-ID: <51B4F6CA.8020807@alum.mit.edu>
+References: <20130608164902.GA3109@elie.Belkin> <CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com> <20130608173447.GA4381@elie.Belkin> <CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com> <20130609014049.GA10375@google.com> <CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com> <20130609052624.GB561@sigill.intra.peff.net> <CAMP44s3NhNUuCvW37UaMo9KbHHxZqBE8S15h845vtRi89Bu6WA@mail.gmail.com> <20130609174049.GA1039@sigill.intra.peff.net> <CAMP44s35w_ysvd5c8oANF8YpWvsquY50bUjSfjOxtujdpgBCPQ@mail.gmail.com> <20130609181002.GC810@sigill.intra.peff.net> <CAMP44s0ky7ad3cGBQs0DNht4Uo4MR08VrNx+PigcNraDP76CLA@mail.gmail.com> <CALKQrgc5K0U2qCHjjzgxw1=70FbmHdokU3H0tfB_=+7gDVNzsA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Duy Nguyen <pclouds@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
-	Brandon Casey <drafnel@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jun 09 23:40:03 2013
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sun Jun 09 23:42:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlnLG-0006xL-Da
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 23:40:02 +0200
+	id 1UlnNs-00088E-K1
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 23:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751494Ab3FIVj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 17:39:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34062 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751485Ab3FIVj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 17:39:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33AA12640D;
-	Sun,  9 Jun 2013 21:39:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=q0PJq3nbFFDkQZS5yHHu5KCFR6E=; b=pHBunF
-	MCaao11KzrYpjDM9SavOaxeIgToYYIykdRwbor5ecAaTe4DEvfE43B/Nzk3b6SG4
-	fCIaxZaYczIexebkPTVyOjzxPDamMDna23jOJy2wAgC103tUyyBXWzQERqFk7Os/
-	s/9PGlP/NtmoeunygEaeT/kOjPDyjaRJ04DTU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MDfeeYZTjQuevKKplIN2Sx493E7e5ALQ
-	2/hNkkAvCupDpfhy4jLRWtZFXEJVEBlg4ZM5NPCTaOkpuSohDvCR4Uz+hv0v2558
-	mCUBY6qKLfMahZKOLbXTaKOjUrxbmctu4RBm4jYcdFfut8fVAgSUXNQEXszglT4b
-	KvHgBxio3U0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26AF52640C;
-	Sun,  9 Jun 2013 21:39:57 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 87F9226408;
-	Sun,  9 Jun 2013 21:39:56 +0000 (UTC)
-In-Reply-To: <20130609184553.GG810@sigill.intra.peff.net> (Jeff King's message
-	of "Sun, 9 Jun 2013 14:45:54 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 20BD093E-D14D-11E2-BEDE-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751633Ab3FIVmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 17:42:40 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:51265 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750993Ab3FIVmj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jun 2013 17:42:39 -0400
+X-AuditID: 12074412-b7f656d00000102f-4f-51b4f6ce465b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 53.C8.04143.EC6F4B15; Sun,  9 Jun 2013 17:42:38 -0400 (EDT)
+Received: from [192.168.69.140] (p57A24CDE.dip0.t-ipconnect.de [87.162.76.222])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r59LgYIK023367
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 9 Jun 2013 17:42:36 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <CALKQrgc5K0U2qCHjjzgxw1=70FbmHdokU3H0tfB_=+7gDVNzsA@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrIKsWRmVeSWpSXmKPExsUixO6iqHvu25ZAg/tfrSxWzXzMbtF48Sqr
+	xcHHeRZdV7qZLBp6rzBbzLu7i8ni7c0ljBbdU94yWvxo6WF24PTYOesuu8ell9/ZPJ717mH0
+	uHhJ2ePzJrkA1ihum6TEkrLgzPQ8fbsE7oyXD7UK2kUqPs96xtrAuEegi5GTQ0LAROJY8092
+	CFtM4sK99WxdjFwcQgKXGSVufH7NBOGcY5K40dLJBFLFK6AtcebnfZYuRg4OFgFVidPLOUDC
+	bAK6Eot6msFKRAXCJN4vm8oKUS4ocXLmExYQWwSofMfjX2wgNrPABSaJCw/BbGEBI4nvS68w
+	Q+x6xCpx9nAPI0iCUyBQ4t3mTlaQXcwC6hLr5wlB9MpLbH87h3kCo8AsJCtmIVTNQlK1gJF5
+	FaNcYk5prm5uYmZOcWqybnFyYl5eapGumV5uZoleakrpJkZIFAjtYFx/Uu4QowAHoxIPr8C6
+	zYFCrIllxZW5hxglOZiURHn/vtgSKMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEt6AJKMebklhZ
+	lVqUD5OS5mBREuf9uVjdT0ggPbEkNTs1tSC1CCYrw8GhJMFr/xWoUbAoNT21Ii0zpwQhzcTB
+	CTKcS0qkODUvJbUosbQkIx4UpfHFwDgFSfEA7Z0F0s5bXJCYCxSFaD3FqMsx48fkd4xCLHn5
+	ealS4rwtIEUCIEUZpXlwK2Ap7xWjONDHwrzxIFU8wHQJN+kV0BImoCVT1MGWlCQipKQaGA9/
+	VNxxViHqRPMMwwlRz/weZ+2IFLXLSGq8GCEjtW9u8O6i7/7ab6zqhCZaZyj4C7O/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227172>
 
-Jeff King <peff@peff.net> writes:
+On 06/09/2013 09:11 PM, Johan Herland wrote:
+> [...]
+> FWIW, I'd like to express my support for the opinions expressed by
+> Jonathan, Jeff and Thomas. They accurately describe my impression of
+> these discussion threads.
 
-> ... We do not have an explicit code of
-> conduct on the list, but it is not as if behavior is without
-> consequences. If you are not easy to work with, people will get tired of
-> dealing with you eventually[1].
+I also agree.  In my opinion, Felipe, your abrasiveness, your disregard
+of project standards, and your eternal argumentativeness outweigh the
+benefit of your contributions, large though they may be.
 
-FWIW, I have already reached that point and learned to kill certain
-types of threads in my MUA.  There is no point wasting time arguing,
-rather than tending to patches from other people.
+Writing code is only a small part of keeping the Git project going.
 
-One example of killing the entire thread is when I see "This patch
-will not be applied" by Felipe in a thread started with his patch.
-I understand that it is his way to say "this patch is retracted"
-without having to explicitly say that he now understands that
-reviews showed why the patch was wrong or that he thanks the
-reviewer for enlightening him.
+* Reviewing code is an essential, more thankless, and therefore more
+precious, contribution.  Therefore the Git project has standards to make
+code review less unpleasant and more effective; for example: (1) patches
+shouldn't cause regressions; (2) commit messages have to be written to
+very high standards; (3) reviewers' comments should be accepted
+gratefully and taken very seriously.  Almost everybody in the Git
+community accepts these standards.  Felipe, you do not seem to.  The
+result is that reviewers' time and goodwill are wasted, and they
+justifiably feel unvalued.  We can't afford to misuse reviewers; they
+are the bedrock (and the bottleneck) of the project.
 
-The patch will come back, with corrections as necessary, if it has
-merit, so we do not lose anything of value anyway by discarding the
-thread.
+* Gaining and keeping contributors is important to maintaining the
+success of the project.  The mailing list is the main forum for the
+development community; therefore, it is important that the mailing list
+be a place where people display a high degree of technical excellence,
+but also respect for one another, friendliness (or at least a lack of
+hostility), and discussions that do turn into flame wars.  It is
+possible to have a profound technical disagreement without losing
+respect for the other side; contrariwise it is NOT acceptable to twist a
+technical disagreement into a personal attack, even by the slightest
+insinuation.  Felipe, in my opinion your participation in the mailing
+list lowers the tone dramatically, and will result in loss of other
+contributors and the failure to attract new contributors.
+
+Felipe, I wish that you would devote a small fraction of your prodigious
+energy to the very difficult challenge of feeling empathy,
+understanding, and respect for the other members of the community.  But
+if things continue the way they have, I personally would, with sadness
+in my heart, prefer to forgo your patches in exchange for the more
+important benefit of a more collegial (and therefore overall more
+productive and sustainable) community.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
