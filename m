@@ -1,87 +1,67 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 01/45] build: generate and clean test scripts
-Date: Sun,  9 Jun 2013 11:40:13 -0500
-Message-ID: <1370796057-25312-2-git-send-email-felipe.contreras@gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH v4 06/45] Move sequencer to builtin
+Date: Sun, 9 Jun 2013 19:02:23 +0200
+Message-ID: <CALWbr2z_VArUi_4iKgdUgmUTA0hQ0EDF9ZuMs4RdEEZfnFOxMw@mail.gmail.com>
 References: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
+	<1370796057-25312-7-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 09 18:45:49 2013
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 19:02:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlikX-0008Bj-18
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 18:45:49 +0200
+	id 1Ulj0e-00020v-OC
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:02:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750984Ab3FIQnB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 12:43:01 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:61702 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695Ab3FIQmy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 12:42:54 -0400
-Received: by mail-ob0-f169.google.com with SMTP id up14so9071166obb.14
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 09:42:53 -0700 (PDT)
+	id S1751143Ab3FIRCY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 13:02:24 -0400
+Received: from mail-qe0-f46.google.com ([209.85.128.46]:37873 "EHLO
+	mail-qe0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751043Ab3FIRCX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 13:02:23 -0400
+Received: by mail-qe0-f46.google.com with SMTP id nd7so1114490qeb.19
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 10:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=aGbM4a02Wfq8ZqzzBi3abudgT4BRLqQgKW6t36Dnbp0=;
-        b=e/levQVy4P0Jw5kPSca7B1byfytgOIi11YwaDyQWgU2qBqUc4j2RlZqJFhTPwRYdfP
-         /7sSMv97YA0ZVUT07qKwmHXgwvuJn8cLtCiyEiGwS/d8wVKP8RPIPNlPuagbSHK0fFt9
-         i75gVa7ADn51qEYvfN4GdjttNpq6pslyMQphVSiAAiPDY6GlAUv1HZlWRtRO6hiG5fZg
-         McPIp27WPf3HXWRrjj0tylECeJWyPw6osH1wnns2Az/akCnbmGKei+aGKZCRt14YyL1W
-         rgfExtXwQWOFWlO4kiqg7YC3PvD5WRKyJ1LV9ySBXnkB1ftBTlJWsiSAMMnTzELPcJeW
-         zUFQ==
-X-Received: by 10.182.47.129 with SMTP id d1mr5324405obn.42.1370796173278;
-        Sun, 09 Jun 2013 09:42:53 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id c20sm15168421oez.4.2013.06.09.09.42.51
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 09:42:52 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.698.g079b096
-In-Reply-To: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ERmoiPJjv/GZWHFhLMFTvnIG5J2g+sXHxLPDDvKN5ek=;
+        b=rO1DOG9AUX5U/SKJnjJy+2BJUCUSeaOWrKKrfB81JBKpx79eWrTmPWfs2dLwYws4WS
+         M1f42mAD7xqVH6xER02ooUfGsqk2Gj2KzMD+AZuPV26oyccZD9juTxAj+QcRGuBJWSlj
+         dZful5zSuDwdmfiuP4hPd+2jPGFui4rDbEQcYXFerqTZQ45TjJM6w/TKaIKwJchFY0mK
+         QrpvnsEfCPEYInwaxW94vMA5Tp13CxiEx8uq2fTY2JW2e+HTAsw9MhNjkr//GzffKEAP
+         aW71F/G/dt8oH6WVZtYjrKC2v8CX+RXWdbvGy4ItfQEwQFsLwXqczpsNGjq08VMWV+6i
+         OMTw==
+X-Received: by 10.49.24.52 with SMTP id r20mr7337267qef.54.1370797343264; Sun,
+ 09 Jun 2013 10:02:23 -0700 (PDT)
+Received: by 10.49.108.105 with HTTP; Sun, 9 Jun 2013 10:02:23 -0700 (PDT)
+In-Reply-To: <1370796057-25312-7-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227020>
 
-Commit 416fda6 (build: do not install git-remote-testpy) made it so
-git-remote-testpy is not only not installed, but also not generated by
-default, let's make sure tests scripts (NO_INSTALL) are generated as
-ell.
+On Sun, Jun 9, 2013 at 6:40 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+>
+> This code is only useful for cherry-pick and revert built-ins, nothing
+> else, so let's make it a builtin object.
+>
+> The first source file that doesn't generate a git-foo builtin, but does
+> go into the builtin library. Hopefully the first of many to clean
+> libgit.a.
 
-Comments-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Hey Felipe,
+I don't understand why the code doesn't belong to libgit.a, and how
+it's gonna make it more "clean". I can see that it is needed only by
+revert and cherry-pick, but is that the only reason ?
 
-diff --git a/Makefile b/Makefile
-index 03524d0..51c812d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2232,6 +2232,7 @@ endif
- 
- test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
- 
-+all:: $(NO_INSTALL)
- all:: $(TEST_PROGRAMS) $(test_bindir_programs)
- 
- bin-wrappers/%: wrap-for-bin.sh
-@@ -2482,7 +2483,7 @@ clean: profile-clean coverage-clean
- 	$(RM) *.o *.res block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vcs-svn/*.o \
- 		builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
--	$(RM) $(TEST_PROGRAMS)
-+	$(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
- 	$(RM) -r bin-wrappers $(dep_dirs)
- 	$(RM) -r po/build/
- 	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h $(ETAGS_TARGET) tags cscope*
--- 
-1.8.3.698.g079b096
+Thanks for taking the time to enlighten me :)
