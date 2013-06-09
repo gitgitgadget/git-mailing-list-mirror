@@ -1,100 +1,116 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v4 10/45] sequencer: trivial fix
-Date: Sun, 9 Jun 2013 18:37:39 +0100
-Message-ID: <20130609173739.GF22905@serenity.lan>
-References: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
- <1370796057-25312-11-git-send-email-felipe.contreras@gmail.com>
- <20130609171810.GA10858@goldbirke>
- <CAMP44s3yhVbgkhtrSfHpk=VwcwMkb66ELA-xR0i6FCVGyRwHJw@mail.gmail.com>
- <20130609173342.GB2091@goldbirke>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH v3 2/2] read-cache: plug a few leaks
+Date: Sun, 09 Jun 2013 19:38:39 +0200
+Message-ID: <51B4BD9F.6070107@lsrfire.ath.cx>
+References: <1370644168-4745-1-git-send-email-felipe.contreras@gmail.com> <1370644168-4745-3-git-send-email-felipe.contreras@gmail.com> <51B31651.6020307@lsrfire.ath.cx> <CAMP44s2Bp5p1211e6Utdch4B+v3J83GCY0_ucG7duakswkb+pg@mail.gmail.com> <51B32FFD.5070302@lsrfire.ath.cx> <CAMP44s3K=VtkeCoKqnU9To9YbfO7vph9MsMWtgLWw0n=cYyq5g@mail.gmail.com> <51B35414.1090101@lsrfire.ath.cx> <CAMP44s3UYCX+DzgnErB=0GdD3w5k2GkNKjv46ZA_NVHm1Z0YLQ@mail.gmail.com> <51B36849.3030608@lsrfire.ath.cx> <CAMP44s1ffOUd3DkphHAj8ZmovBazPFdMgtvEptR6kW9+ZMLLjA@mail.gmail.com> <51B3E44C.4030304@lsrfire.ath.cx> <CAMP44s0RqtoP8iHZ+rEqPDKSLxZLESS8qKFhb2vzSd7-mtKreQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sun Jun 09 19:38:06 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Adam Spiers <git@adamspiers.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 19:38:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UljZ1-0001dp-Ot
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:38:00 +0200
+	id 1UljZr-0002Cv-My
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:38:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476Ab3FIRhz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 13:37:55 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:60456 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751429Ab3FIRhy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 13:37:54 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 4DF02CDA5B8;
-	Sun,  9 Jun 2013 18:37:54 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5gDQQtue2cLH; Sun,  9 Jun 2013 18:37:53 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id 24CE8CDA5E7;
-	Sun,  9 Jun 2013 18:37:53 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 13CB7161E454;
-	Sun,  9 Jun 2013 18:37:53 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9GQ3PSCUbq2O; Sun,  9 Jun 2013 18:37:52 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id D97EF161E418;
-	Sun,  9 Jun 2013 18:37:41 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20130609173342.GB2091@goldbirke>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751485Ab3FIRis convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 13:38:48 -0400
+Received: from india601.server4you.de ([85.25.151.105]:59090 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750987Ab3FIRir (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 13:38:47 -0400
+Received: from [192.168.2.105] (p4FFD9DEC.dip0.t-ipconnect.de [79.253.157.236])
+	by india601.server4you.de (Postfix) with ESMTPSA id 858961DA;
+	Sun,  9 Jun 2013 19:38:45 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <CAMP44s0RqtoP8iHZ+rEqPDKSLxZLESS8qKFhb2vzSd7-mtKreQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227045>
 
-On Sun, Jun 09, 2013 at 07:33:42PM +0200, SZEDER G=E1bor wrote:
-> On Sun, Jun 09, 2013 at 12:23:01PM -0500, Felipe Contreras wrote:
-> > On Sun, Jun 9, 2013 at 12:18 PM, SZEDER G=E1bor <szeder@ira.uka.de>=
- wrote:
-> > > On Sun, Jun 09, 2013 at 11:40:22AM -0500, Felipe Contreras wrote:
-> > >> We should free objects before leaving.
-> > >>
-> > >> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> > >
-> > > A shortlog-friendlier subject could be: "sequencer: free objects
-> > > before leaving".
-> >=20
-> > I already defended my rationale for this succinct commit message:
-> >=20
-> > http://thread.gmane.org/gmane.comp.version-control.git/225609/focus=
-=3D225610
->=20
-> Your arguments were unconvincing.  The mere fact that I raised this
-> issue unbeknownst to the earlier posting clearly shows that there's
-> demand for descriptive subjects.
+Am 09.06.2013 04:25, schrieb Felipe Contreras:
+> On Sat, Jun 8, 2013 at 9:11 PM, Ren=C3=A9 Scharfe
+> <rene.scharfe@lsrfire.ath.cx> wrote:
+>> Am 08.06.2013 19:27, schrieb Felipe Contreras:
+>>
+>>> On Sat, Jun 8, 2013 at 12:22 PM, Ren=C3=A9 Scharfe
+>>> <rene.scharfe@lsrfire.ath.cx> wrote:
+>>>
+>>>> Let's find and fix those leaks by freeing memory in the right plac=
+es.
+>>>> Freeing memory just in case in places where we can show that no le=
+ak is
+>>>> triggered by our test suite doesn't help.
+>>>
+>>>
+>>> It helps; it prevents leaks. The real culprit is the bogus API, but=
+ I
+>>> don't see that changing anytime soon, so there are two options when
+>>> somebody makes a mistake the API allows; leak or don't leak. And yo=
+u
+>>> seem to prefer the leak, even though it provides absolutely no
+>>> advantage.
+>>
+>> It covers up bugs,
+>
+> It doesn't. I thought you already silently agreed that nobody would
+> ever find that leak, as they haven't found the hundreds of leaks that
+> plague Git's code.
 
-Not to mention that with your subject no body is needed, making the
-overall message more succinct.
+Nah, I explained non-silently that leakage was a design decision for=20
+short-running commands that allocate memory, use it and exit.  Reusing=20
+such code without freeing allocated memory between runs explicitly turn=
+s=20
+a "good" leak into a "bad" one, as we saw with cherry-pick --stdin.
 
-When reading a log, as soon as I see "trivial" I become suspicious that
-someone is trying to cover something up, much like "left as an exercise
-for the reader".  If the subject says "fix memory leak" then it's
-obvious what the patch is meant to do, and when there is no subtlety to
-be explained (as there isn't in this patch) there is no need for a body=
-=2E
+>> What would be a better API?  Making discard_index free the array is =
+a good
+>> first step; what else is bogus?
+>
+> 'initialized' for starters; it should be renamed to 'loaded' or
+> removed, but removing it would require many more changes to make sure
+> we don't load twice. Also, when loading cache entries, it might make
+> sense to check if there's already entries that have not been
+> previously discarded properly.
+
+Adding diagnostics that help find leaks is a good idea.
+
+So, from reading the code, this sequence is OK:
+
+	discard_cache()		// defined starting point
+	read_cache()		// reads the cache
+	read_cache()		// does nothing
+
+And I guess this one is not OK:
+
+	discard_cache()		// defined starting point
+	add_index_entry()	// add single entry
+	read_cache()		// currently leaks, should warn/die
+
+Any more sequences that we need to guard against, or counterexamples?
+
+> In the meantime, just in case, the only sane thing to do is free the
+> entries rather than leak.
+
+I consider not plugging a leak which we don't know how to trigger with=20
+existing code even more sane.  Yay, circles! ;-)
+
+> That being said I'm not interested in this patch any more. The patch
+> is good yet after three tries and countless arguments it's still not
+> applied, nor is there any sign of getting there.
+
+Let's take it step by step: Once the known leak is plugged we can worry=
+=20
+about the unknown ones.  I'll send small patches.
+
+Ren=C3=A9
