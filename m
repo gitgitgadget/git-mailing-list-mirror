@@ -1,88 +1,99 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v5 08/36] read-cache: plug a few leaks
-Date: Sun,  9 Jun 2013 14:24:22 -0500
-Message-ID: <1370805890-3453-9-git-send-email-felipe.contreras@gmail.com>
-References: <1370805890-3453-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 09 21:29:11 2013
+Subject: Re: [PATCH 2/2] Move sequencer to builtin
+Date: Sun, 9 Jun 2013 14:29:51 -0500
+Message-ID: <CAMP44s3pAUi9G4BU39bMo5nJ+YyrJ0FS+UY1c5yJsu5+x0k7Gw@mail.gmail.com>
+References: <20130608164902.GA3109@elie.Belkin>
+	<CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
+	<20130608173447.GA4381@elie.Belkin>
+	<CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
+	<20130609014049.GA10375@google.com>
+	<CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
+	<20130609052624.GB561@sigill.intra.peff.net>
+	<CAMP44s3NhNUuCvW37UaMo9KbHHxZqBE8S15h845vtRi89Bu6WA@mail.gmail.com>
+	<20130609174049.GA1039@sigill.intra.peff.net>
+	<CAMP44s35w_ysvd5c8oANF8YpWvsquY50bUjSfjOxtujdpgBCPQ@mail.gmail.com>
+	<20130609181002.GC810@sigill.intra.peff.net>
+	<CAMP44s0ky7ad3cGBQs0DNht4Uo4MR08VrNx+PigcNraDP76CLA@mail.gmail.com>
+	<CALKQrgc5K0U2qCHjjzgxw1=70FbmHdokU3H0tfB_=+7gDVNzsA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sun Jun 09 21:29:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UllIZ-0004R2-KF
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 21:29:08 +0200
+	id 1UllJN-0004pq-Oq
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 21:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752199Ab3FIT1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 15:27:11 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:35235 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752166Ab3FIT1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 15:27:07 -0400
-Received: by mail-oa0-f43.google.com with SMTP id i7so3548154oag.16
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 12:27:06 -0700 (PDT)
+	id S1752197Ab3FIT3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 15:29:53 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:43552 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752166Ab3FIT3w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 15:29:52 -0400
+Received: by mail-lb0-f173.google.com with SMTP id v1so834600lbd.18
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 12:29:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=mU8l4QZgOMkEtrldLSjKHD0GDfjU/CrnwH8CJnxPpZE=;
-        b=YUPXSeO8FjKugEujyT20q4YA/iI+TbIBDYMhrnBvfqvSuRpw5hGUnd8oHDIiakWQug
-         12zgyTfPrdqbmuXvkRV/fg4IGkL0KPaH7EwFC5Uv0xim4AVz1kXBNEOjfuIXVO8xFh9i
-         2ZelCCbkbuqwAwaYQ6XOTx1o+pzcv9fjo3MH7bxTFqnnJ1OGUSX33seV9n1LY+eJZ8Mp
-         tsckV41A9uyF63CqKfVgniTtIY9awSpmrgve5j+r4eu/gQ6MCwwJm87m0Id4zx/HtXFB
-         VcMDQ2KdMUf78UWjkYHUh6mEnM4d7l5mR77acOvrstKulPTdPYPl7alloOg5XwqDWJiv
-         G1Fw==
-X-Received: by 10.182.108.194 with SMTP id hm2mr5674199obb.71.1370806026528;
-        Sun, 09 Jun 2013 12:27:06 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id jt9sm16051712obc.0.2013.06.09.12.27.04
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 12:27:05 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.698.g079b096
-In-Reply-To: <1370805890-3453-1-git-send-email-felipe.contreras@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8uDAYoNTfOBC9nvCB280BpxS+glsT2tTrOGDhojE7sc=;
+        b=mf42U+vUPi6KypPOZXwkNaK5sfaarlEKq3Q1UCMIsj+x4V5LNFMTLstecEON18QuW5
+         DhVEnJBQU+8nOGyidaFhL/d0ZAJ8jUukM0VpbcqPdz1L+mmOmqgfdmCAb+ZPf7Qt2XHk
+         /Y8KSpc11m9MwkbynKgUuHVpO8wfdbbOCQAtWM5XkGYwhmPrY2BLdzVO4kl7Hcn48jcp
+         vRwwb7KQvf2uBssGoviLOk6e0ekZalBb1N6IwNVyo1F8t1HCW/lb8aM2eJvLY85qKF2d
+         Dcsb5SCpUxCWpekSseVYA708zNs7bvlkUoAtcYAjRKAGipkMRaf10YrJK7Yi6PfXRDtu
+         GBLw==
+X-Received: by 10.112.16.163 with SMTP id h3mr5051679lbd.85.1370806191262;
+ Sun, 09 Jun 2013 12:29:51 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 12:29:51 -0700 (PDT)
+In-Reply-To: <CALKQrgc5K0U2qCHjjzgxw1=70FbmHdokU3H0tfB_=+7gDVNzsA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227147>
 
-We are not freeing 'istate->cache' properly.
+On Sun, Jun 9, 2013 at 2:11 PM, Johan Herland <johan@herland.net> wrote:
+> On Sun, Jun 9, 2013 at 8:16 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> On Sun, Jun 9, 2013 at 1:10 PM, Jeff King <peff@peff.net> wrote:
+>>> Go back to my 261 commits, show me one that is "unmindful of technical details".
+>>
+>> And you say this thread is an excellent example of your point that I'm
+>> unmindful of technical details?
+>>
+>> It's not. There are no technical details I was unmindful of in this thread.
+>
+> Ok, I'll bite (against my better judgment). From a related thread, a
+> few minutes ago:
+>
+> On Sun, Jun 9, 2013 at 7:46 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> On Sun, Jun 9, 2013 at 12:32 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
+>>> So you would deliberately break a bisection on this test file?
+>> No, this patch series won't be applied.
+>
+> Thomas points out a technical detail with the patch series, and the
+> answer given is 100% non-constructive.
 
-We can't rely on 'initialized' to keep track of the 'istate->cache',
-because it doesn't really mean it's initialized. So assume it always has
-data, and free it before overwriting it.
+Geezus!
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- read-cache.c | 4 ++++
- 1 file changed, 4 insertions(+)
+http://thread.gmane.org/gmane.comp.version-control.git/227109
 
-diff --git a/read-cache.c b/read-cache.c
-index 5e30746..a1dd04d 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1451,6 +1451,7 @@ int read_index_from(struct index_state *istate, const char *path)
- 	istate->version = ntohl(hdr->hdr_version);
- 	istate->cache_nr = ntohl(hdr->hdr_entries);
- 	istate->cache_alloc = alloc_nr(istate->cache_nr);
-+	free(istate->cache);
- 	istate->cache = xcalloc(istate->cache_alloc, sizeof(*istate->cache));
- 	istate->initialized = 1;
- 
-@@ -1512,6 +1513,9 @@ int discard_index(struct index_state *istate)
- 
- 	for (i = 0; i < istate->cache_nr; i++)
- 		free(istate->cache[i]);
-+	free(istate->cache);
-+	istate->cache = NULL;
-+	istate->cache_alloc = 0;
- 	resolve_undo_clear_index(istate);
- 	istate->cache_nr = 0;
- 	istate->cache_changed = 0;
+There. Are you happy?
+
+I dropped the patches that are not part of the series.
+
+Who benefits from this? NOBODY. Certainly not the users.
+
 -- 
-1.8.3.698.g079b096
+Felipe Contreras
