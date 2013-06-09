@@ -1,93 +1,83 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v4 11/45] cherry-pick: don't barf when there's nothing to do
-Date: Sun, 9 Jun 2013 14:32:53 -0500
-Message-ID: <CAMP44s1we+wVc6pwNFr+CxusEKp+yLswZKCL8RCiw4PVbA1ahw@mail.gmail.com>
-References: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
-	<1370796057-25312-12-git-send-email-felipe.contreras@gmail.com>
-	<20130609192143.GC12122@paksenarrion.iveqy.com>
+Subject: Re: [PATCH 2/3] test: improve rebase -q test
+Date: Sun, 9 Jun 2013 14:33:45 -0500
+Message-ID: <CAMP44s38T9EUOe8EBKy1kxa-rEu7g0jb7+HB019AgCub+2SVnw@mail.gmail.com>
+References: <1370637143-21336-1-git-send-email-felipe.contreras@gmail.com>
+	<1370637143-21336-3-git-send-email-felipe.contreras@gmail.com>
+	<CACsJy8DHeqOz=WbxurCvPiDq73k4eftwrEEZzWBbifS51PDbLQ@mail.gmail.com>
+	<7vd2rvqgra.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3Pny7JkyHbLZ3kUemNK70JhdYWdpELTjNLz0y3Z2V3+A@mail.gmail.com>
+	<7vy5ajozuj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Sun Jun 09 21:33:02 2013
+	Stephen Boyd <bebarino@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 21:33:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UllMK-0006Kp-Ly
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 21:33:01 +0200
+	id 1UllNA-0006jJ-7d
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 21:33:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751008Ab3FITc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 15:32:56 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:53193 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750792Ab3FITcz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 15:32:55 -0400
-Received: by mail-lb0-f179.google.com with SMTP id w20so5685139lbh.10
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 12:32:54 -0700 (PDT)
+	id S1751228Ab3FITds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 15:33:48 -0400
+Received: from mail-la0-f47.google.com ([209.85.215.47]:35994 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751126Ab3FITdr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 15:33:47 -0400
+Received: by mail-la0-f47.google.com with SMTP id fe20so5018026lab.6
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 12:33:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=c25DDsy54W0430DYI9eW9JEIvWUcTEbMOpG5dy9JPOA=;
-        b=RdF4hLa6gvwDs3Len0NXGKq4/eRFHwINLHQ+jfdX5W3HrpYI4oFj3Kx5iYk6WwExOz
-         lCs4pnNCooI+G8bE58MkkZ1mwRZNYpO7IQ6W4F3W7ptMCFWpWL66u6p2L5oCHa4PpsLE
-         VyNtTA2/NYFLHCTIE82k1n1dbqB/aPHy3/ZTBRFPnBWj+qFqBya247Ot6nnLj4p5kVy6
-         KvLnxsNI4EEgwVZ7XRkiiJy5O0RLUDeyRmnCb+ZVUfJ6e+lJC3lHTyx1F/6EsqGmFHbS
-         rMy1F+XlgD5jd57lbaY3DX6VYW+GPHMcWS4RoVmrBgmFZiMPLmN7BsFJ+VJDVOiNo3Cr
-         hXnQ==
-X-Received: by 10.112.166.67 with SMTP id ze3mr5160721lbb.25.1370806373934;
- Sun, 09 Jun 2013 12:32:53 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 12:32:53 -0700 (PDT)
-In-Reply-To: <20130609192143.GC12122@paksenarrion.iveqy.com>
+        bh=sbW0GmFAmE97KJ1ehhe/jkRJZCTx8zmijV0NDhgFmIY=;
+        b=SuEctQqsE3JNrQVGIRLvQ/EuzRbLwUs428JZRpr88qeyOvta66iwPMIdY3ZhLeIx2l
+         92c2kSfgF8KzglE1LLxIvxniK7oSy8sKjwPEuIG8qsZU+/1xZvGILOhgUF6dUKtEBUd3
+         ZfFY3xPvqCoieQnH8lolRg4fkqb0MagfyPk8Ym9vFepu/pvqQWyCgtm4ms90dg2ZDSZ1
+         HDXsx6OCT6z+nw8ffW1gjZqt/TTOXCKzmfzQuR7CCbWrHiyDBZj0dABa06mIl5kfOaop
+         egqohxWyiR90jn5Wi7HTGM0fxF64QktVUuoTto0oofaInW1p+tXTlMoyGV+46WWdeTqj
+         f32w==
+X-Received: by 10.152.22.130 with SMTP id d2mr2961228laf.33.1370806426015;
+ Sun, 09 Jun 2013 12:33:46 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 12:33:45 -0700 (PDT)
+In-Reply-To: <7vy5ajozuj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227149>
 
-On Sun, Jun 9, 2013 at 2:21 PM, Fredrik Gustafsson <iveqy@iveqy.com> wrote:
-> On Sun, Jun 09, 2013 at 11:40:23AM -0500, Felipe Contreras wrote:
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> ---
->>  builtin/sequencer.c             | 4 ++--
->>  t/t3510-cherry-pick-sequence.sh | 2 +-
->>  2 files changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/builtin/sequencer.c b/builtin/sequencer.c
->> index 23b01b7..4d7dc8b 100644
->> --- a/builtin/sequencer.c
->> +++ b/builtin/sequencer.c
->> @@ -565,8 +565,8 @@ static void prepare_revs(struct replay_opts *opts)
->>       if (prepare_revision_walk(opts->revs))
->>               die(_("revision walk setup failed"));
->>
->> -     if (!opts->revs->commits)
->> -             die(_("empty commit set passed"));
->> +     if (!opts->revs->commits && !opts->quiet)
->> +             error(_("empty commit set passed"));
->>  }
->>
->>  static void read_and_refresh_cache(struct replay_opts *opts)
->> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
->> index 7b7a89d..33c5512 100755
->> --- a/t/t3510-cherry-pick-sequence.sh
->> +++ b/t/t3510-cherry-pick-sequence.sh
->> @@ -472,7 +472,7 @@ test_expect_success 'malformed instruction sheet 2' '
->>
->>  test_expect_success 'empty commit set' '
->>       pristine_detach initial &&
->> -     test_expect_code 128 git cherry-pick base..base
->> +     git cherry-pick base..base
+On Sun, Jun 9, 2013 at 2:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> Shouldn't this result in the error "empty commit set passed"? If so,
-> shouldn't that be checked to actually print that error?
+>> On Sun, Jun 9, 2013 at 1:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>>> --- a/t/test-lib-functions.sh
+>>> +++ b/t/test-lib-functions.sh
+>>> @@ -606,6 +606,18 @@ test_cmp() {
+>>>         $GIT_TEST_CMP "$@"
+>>>  }
+>>>
+>>> +# Check if the file expected to be empty is indeed empty, and barfs
+>>> +# otherwise.
+>>> +
+>>> +test_output_must_be_empty () {
+>>
+>> Why such a big name? test_empty() does the trick.
+>
+> Primarily in order to avoid that exact name "test_empty" that others
+> may want to use for a helper to check that the contents of a string
+> variable is empty.
 
-Probably, yeah.
+Which is never going to happen.
 
 -- 
 Felipe Contreras
