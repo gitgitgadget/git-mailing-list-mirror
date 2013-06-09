@@ -1,134 +1,96 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Sun, 9 Jun 2013 13:48:39 -0500
-Message-ID: <CAMP44s3HaV-V3FZFrsX3rR1FWy-Tzxqibr138bBUizNfhJM9UQ@mail.gmail.com>
-References: <CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
-	<CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
-	<20130608164902.GA3109@elie.Belkin>
-	<CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
-	<20130608173447.GA4381@elie.Belkin>
-	<CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
-	<20130609014049.GA10375@google.com>
-	<CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
-	<20130609052624.GB561@sigill.intra.peff.net>
-	<CALkWK0mu2_9M5aTczcEkv37eLaAg5_mGDZ_W9nqQFoesB4wc3g@mail.gmail.com>
-	<20130609180437.GB810@sigill.intra.peff.net>
-	<CALkWK0kkhDOSSdF=E4PvO24hg++_FpP3YFaGRD3yq80XG0TRJA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/2] read-cache: plug a few leaks
+Date: Sun, 09 Jun 2013 11:49:44 -0700
+Message-ID: <7v8v2jqfuf.fsf@alter.siamese.dyndns.org>
+References: <1370644168-4745-1-git-send-email-felipe.contreras@gmail.com>
+	<1370644168-4745-3-git-send-email-felipe.contreras@gmail.com>
+	<51B31651.6020307@lsrfire.ath.cx>
+	<CAMP44s2Bp5p1211e6Utdch4B+v3J83GCY0_ucG7duakswkb+pg@mail.gmail.com>
+	<51B32FFD.5070302@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 09 20:48:49 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Adam Spiers <git@adamspiers.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Jun 09 20:49:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlkfX-0007w7-Tt
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 20:48:48 +0200
+	id 1UlkgZ-00006L-G1
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 20:49:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752027Ab3FISsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 14:48:43 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:55814 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750887Ab3FISsm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 14:48:42 -0400
-Received: by mail-la0-f46.google.com with SMTP id eg20so5022561lab.5
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 11:48:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=S6rc4p09+Q/TE3Y98CWcQ98Cx2Tph4dNrYuoYQtHEAA=;
-        b=KUgDU29hDs9iFVLqmRM2jwaDS0cdbKjQX2HFvEDqeg28NzaGrQ11J4iIzWtE9m0aIk
-         dfratOiZ9z9sQyvy3ii/FGkDtZZYkQrlSvOnXPUOQE/c8AoN35FMbPkjjedE66cKC/15
-         E15s3RiG4cRSUa04W7ci1WYiuJ9j7f9WY7qoXgouhZcF4rCMUFoBY+6NCbzgNWFwFfpH
-         YwFkeRN7Cq8uSCEYSDazwew4Ry/uJI2xhsFFqcnJcegYCrTLTsddA5Z6UyX3tlGhW44Q
-         lHJoQfg3fidpErzRE5pD1kmOcw0Tzh2bjg5z2fNo/TxqCP+kTN9pV9jIeqzjlTp0hEhf
-         ptQg==
-X-Received: by 10.152.27.102 with SMTP id s6mr3451316lag.47.1370803720000;
- Sun, 09 Jun 2013 11:48:40 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 11:48:39 -0700 (PDT)
-In-Reply-To: <CALkWK0kkhDOSSdF=E4PvO24hg++_FpP3YFaGRD3yq80XG0TRJA@mail.gmail.com>
+	id S1752057Ab3FISts convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 14:49:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46541 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752035Ab3FIStq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jun 2013 14:49:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 24F6C257E6;
+	Sun,  9 Jun 2013 18:49:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=MhsePdupjLiE
+	UO9du6f/CbV/49Y=; b=bhsWGjvTpKDFwkKiLLmwTT1nFTSHxp9On6bOddZB53Qh
+	rEgen7mc4/UDF3Gz/ktrzKQxzxjRIas46fLPiknITYxu1pegpYEX/L6dkPZ3kfy/
+	vVg0uWub0dG94KNTCgJIJ2c6Yl3VLdf+Mf6Lt9iwr/u7v2mrR6F60K/YxtyhauE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=rcdYn1
+	iXkXIeKJoKOe4E3QcKc8U3nyVdynlvioVpjW04HC6vVA94xOExKfCKgSwlEXf3z0
+	YNFXnmKfNS04a8jCDFMdRH7AW+GfphBtM+e43hmDO3N7b0OE9eOC8UB6JgzIH+rk
+	MyHfXE3e0uvsNp4UrzlDbe3HwMxOozrO/vqHs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AD90257E4;
+	Sun,  9 Jun 2013 18:49:46 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 79DDF257E3;
+	Sun,  9 Jun 2013 18:49:45 +0000 (UTC)
+In-Reply-To: <51B32FFD.5070302@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of
+	"Sat, 08 Jun 2013 15:22:05 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5A6D0016-D135-11E2-AA2B-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227095>
 
-On Sun, Jun 9, 2013 at 1:32 PM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
-> Jeff King wrote:
->> I actually think word choice and politeness is only a small part of it,
->> and one that I live without.  It is not just _how_ something is said,
->> but _what_ is said. And sometimes what is said does not lead in a
->> productive direction. I found Thomas's comment here:
->>
->>   http://article.gmane.org/gmane.comp.version-control.git/227053
->>
->> sums up the core of many of the conflicts I've seen on the list.
->
-> This is all very good, Jeff.  Various people have expressed what's
-> wrong with fc's "demeanour", "tone", and "style of discussion" in
-> various different ways at various different points in time.  This goes
-> on and on and on with no end in sight. WHAT do we do?
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-What really puzzles me is that I think discussion and disagreement are
-healthy, not only in open source projects, but in any organization; If
-everyone always agrees, you know something is really wrong. But if
-others think disagreement is not helpful, why do they bother replying
-at all? Arguing. And they think their time is better spent not
-discussing, but writing code (or something else), why don't they spend
-their time that way. Why blame me for their choices?
+> A comment before read_index_from says "remember to discard_cache()
+> before reading a different cache!".  That is probably a reminder that
+> read_index_from does nothing if ->initialized is set.  Entries added
+> before calling read_index_from make up a different cache, however, so
+> I think this comment applies for the call sequence above as well.
 
-We disagree, that's fine, move on.
+Yes, you can lose the probably from there.  Back when he comment was
+added at 8fd2cb406917 (Extract helper bits from c-merge-recursive
+work, 2006-07-25), there was only one in-core index, and checking
+active_cache or cache_mmap is not NULL was a way to say "Have we
+loaded from $GIT_DIR/index already?  If so, there is nothing more to
+do".
 
-> I'll be frank: I'm a pragmatic person, and I want to see work.
-> Despite all this mess, who has shown me the most number of patches
-> with some direction?  Felipe.  Who gets the most number of patches
-> into git.git, by far?  Felipe.  And who is wasting time theorizing
-> about what's wrong with Felipe in various ways?  Everyone else.
+Later unpack_trees() added a way to populate the index not by
+reading from $GIT_DIR/index and the original "Has file, hence is
+loaded, so ignore read_cache()" caused issues.  A discussion was in=20
 
-Thanks! "Talk is cheap, show me the code."
+    http://thread.gmane.org/gmane.comp.version-control.git/93260/focus=3D=
+93469
 
->> I am less interested in people's feelings than I am in discussions
->> trying to reach a productive position of agreement, rather than turning
->> it into a point by point debate that may no longer have any use for the
->> project (sometimes individual points need to be refuted or discussed, of
->> course, but it is easy to lose sight of the purpose of an email).
->
-> Felipe has discussed the {sequencer.c -> builtin/sequencer.c} move
-> with a bunch of us (and sent a patch), discussed how to write tests
-> properly with me (with a patch), and discussed how ruby can be used to
-> call into libgit.a (with code that I'm currently playing with).
+which brought the "initialized" bit in, which lead to 913e0e99b6a6
+(unpack_trees(): protect the handcrafted in-core index from
+read_cache(), 2008-08-23).
 
-Interesting. In case it might help you, this is the extconf.rb I used:
-
----
-ruby/extconf.rb:
-#!/usr/bin/env ruby
-
-require 'mkmf'
-
-$INCFLAGS = "-I.. #{$INCFLAGS}"
-$CFLAGS += " -DSHA1_HEADER='<openssl/sha.h>'"
-
-# libs
-$LOCAL_LIBS += ' ../builtin/lib.a ../libgit.a ../xdiff/lib.a'
-$LIBS += ' -lssl -lcrypto -lz'
-
-# make sure there are no undefined symbols
-$LDFLAGS += ' -Wl,--no-undefined'
-
-# Create Makefile
-dir_config('git')
-create_makefile('git')
---
-
-I have to build all the objects with -fPIC though.
-
--- 
-Felipe Contreras
+> Side note: I wonder why we need to guard against multiple
+> read_index_from calls in a row with ->initialized.  Wouldn't it be
+> easier to avoid the duplicate calls in the first place?  Finding them
+> now might be not so easy, though.
