@@ -1,87 +1,75 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v5 01/36] build: generate and clean test scripts
-Date: Sun,  9 Jun 2013 14:24:15 -0500
-Message-ID: <1370805890-3453-2-git-send-email-felipe.contreras@gmail.com>
-References: <1370805890-3453-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 09 21:26:52 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] status: introduce status.short to enable --short by default
+Date: Sun, 09 Jun 2013 21:26:39 +0200
+Message-ID: <vpqbo7frspc.fsf@anie.imag.fr>
+References: <1370683737-28823-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+	<CALkWK0kvKzFoZmz313hR-3Z71y-MDPT37BfUi7Qrgy7hz_sErQ@mail.gmail.com>
+	<7v4nd7qflu.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>, git@vger.kernel.org,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 21:27:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UllGN-00037A-EO
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 21:26:51 +0200
+	id 1UllGa-0003FB-JA
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 21:27:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752109Ab3FIT0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 15:26:47 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:46361 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751562Ab3FIT0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 15:26:46 -0400
-Received: by mail-ob0-f173.google.com with SMTP id wc20so8924358obb.4
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 12:26:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=aGbM4a02Wfq8ZqzzBi3abudgT4BRLqQgKW6t36Dnbp0=;
-        b=rVZ4amDbTtvjAGBp8Y1IGE3uJsMfGD+dcTOfGkhafaunJAFw531lZczZDNfy2cBRKR
-         ZKOag5Y3QeX7G/R+IU1WGrClK6oOBkiTqjvgWrYTKkEkwAZRpcPXAE61OfIZSP0Y5jhz
-         dmcZ5ytOoV7YL0Hh0RhmLojKFlTMCtFi+ctD4i9NSJhsJSbuUbCgPJMuUitky5pZA2mS
-         fu+DfMGiMaaWCSRaj/sRJAqUkUetQP4vLl3qGRB80zkUFDkFDebwhYaDTrfyCuoJ20Li
-         5bZnob8hCoql9Mgr8qCJUBAqnAHwP9TUJW73a39rNe6ZOQ4dQ0OkSmmpO1sgVX5YHTgk
-         FWTA==
-X-Received: by 10.60.149.137 with SMTP id ua9mr5745135oeb.83.1370806006088;
-        Sun, 09 Jun 2013 12:26:46 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id d5sm16301711oex.0.2013.06.09.12.26.44
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 12:26:45 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.698.g079b096
-In-Reply-To: <1370805890-3453-1-git-send-email-felipe.contreras@gmail.com>
+	id S1752141Ab3FIT0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 15:26:50 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:54954 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751562Ab3FIT0t (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 15:26:49 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r59JQbrX031918
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 9 Jun 2013 21:26:37 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UllGC-0007EE-0K; Sun, 09 Jun 2013 21:26:40 +0200
+In-Reply-To: <7v4nd7qflu.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 09 Jun 2013 11:54:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 09 Jun 2013 21:26:38 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r59JQbrX031918
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1371410800.10893@uHUnQDJtaEeexaHfYdR/dQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227111>
 
-Commit 416fda6 (build: do not install git-remote-testpy) made it so
-git-remote-testpy is not only not installed, but also not generated by
-default, let's make sure tests scripts (NO_INSTALL) are generated as
-ell.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Comments-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>
+>> Jorge Juan Garcia Garcia wrote:
+>>> Some people always run 'git status -s'.
+>>> The configuration variable status.short allows to set it by default.
+>>
+>> Good feature.
+>
+> Is there a corresponding command line override added to help people
+> who need to defeat such a configured-in default?
 
-diff --git a/Makefile b/Makefile
-index 03524d0..51c812d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2232,6 +2232,7 @@ endif
- 
- test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
- 
-+all:: $(NO_INSTALL)
- all:: $(TEST_PROGRAMS) $(test_bindir_programs)
- 
- bin-wrappers/%: wrap-for-bin.sh
-@@ -2482,7 +2483,7 @@ clean: profile-clean coverage-clean
- 	$(RM) *.o *.res block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vcs-svn/*.o \
- 		builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
--	$(RM) $(TEST_PROGRAMS)
-+	$(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
- 	$(RM) -r bin-wrappers $(dep_dirs)
- 	$(RM) -r po/build/
- 	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h $(ETAGS_TARGET) tags cscope*
+Yes: "git status --no-short".
+
+Perhaps the doc for status.short should explicitely mention that
+--no-short takes precedence over it.
+
 -- 
-1.8.3.698.g079b096
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
