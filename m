@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v5 06/36] Move sequencer to builtin
-Date: Sun,  9 Jun 2013 14:24:20 -0500
-Message-ID: <1370805890-3453-7-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v5 07/36] unpack-trees: plug a memory leak
+Date: Sun,  9 Jun 2013 14:24:21 -0500
+Message-ID: <1370805890-3453-8-git-send-email-felipe.contreras@gmail.com>
 References: <1370805890-3453-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
@@ -15,114 +15,65 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UllGq-0003Pb-9L
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 21:27:20 +0200
+	id 1UllGq-0003Pb-QN
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 21:27:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752174Ab3FIT1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 15:27:05 -0400
-Received: from mail-oa0-f51.google.com ([209.85.219.51]:45191 "EHLO
-	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752166Ab3FIT1B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 15:27:01 -0400
-Received: by mail-oa0-f51.google.com with SMTP id i4so948113oah.38
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 12:27:00 -0700 (PDT)
+	id S1752224Ab3FIT1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 15:27:11 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:54340 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752170Ab3FIT1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 15:27:04 -0400
+Received: by mail-ob0-f179.google.com with SMTP id xk17so8941302obc.24
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 12:27:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=AVhU+ISAqn3PQXTYAe1Evhzovv6N2pW3JT0An7pezPM=;
-        b=BYiIjlrU8uHuAaNEbOoXrIEX/StSmBtwK2ulXv0GrNvJHF4yqO3HnhIWybqSMcI42W
-         48xhDtJ4dCOCSOnOEwxpagqjgrH4JpHaYo7Rib8CEULXgXKlMRu9R7zvAt2GgsaWwfPi
-         dl4f4J2ME+7tPmyU+4kwDtFFZ92+97RJkqYRAm8tpkBnMZCVMEtIxB+yfJIwzv4+zfo/
-         8uRVawQJIzTJ5nyG7hTOt3aBHcLXZvZmgOzWzfXuSfTZZ/Ynvp8LzOyh0h0p414cRgCU
-         LmKIH0gO82B2/VL79aAuJEN6ywNAoQTOytu6HF9tSJm4mL/sv8WXPJFtGxoQsi38kdDp
-         oQrA==
-X-Received: by 10.182.108.230 with SMTP id hn6mr5644987obb.25.1370806020931;
-        Sun, 09 Jun 2013 12:27:00 -0700 (PDT)
+        bh=1Cb0JfJlFAmY+YA3pVltyBcamT4PzZ6kfREbtSsjqVM=;
+        b=rUz+3s/mx1hhw2AKGo14r9vliHsG+ilhO01Th7D+0q4Zgf/Sh1xMVpO5sucip8Ta5o
+         u75uWq/aXdxI4wzxjPLFVSWtpbsR3rqfVP/8BPbx64fsx1BqwJwBliBm4Bi0EZPn7Xjt
+         VhKTRpTQTQwhtULuXgviOjMmDukIELNrBkwmWRvdVBkABLRyBaorSphKGk17LRz7D3Ox
+         TBmMmhYCGFuXZPa2nVdVWgM8OJ/8yfiWQV1Bl890KCjZ4Sg/iYjE/LK/YO92E5yVe7IJ
+         k0Uan39CkbJV9E7/gDBRuwGO1qdYTE1VLCwss+Bs5FC0XJt8Jia/J7erM0bSX50K8+AQ
+         daLw==
+X-Received: by 10.182.129.129 with SMTP id nw1mr5581922obb.100.1370806023680;
+        Sun, 09 Jun 2013 12:27:03 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id i2sm15950057obz.11.2013.06.09.12.26.58
+        by mx.google.com with ESMTPSA id ei16sm16240770oeb.7.2013.06.09.12.27.02
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 12:27:00 -0700 (PDT)
+        Sun, 09 Jun 2013 12:27:02 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.698.g079b096
 In-Reply-To: <1370805890-3453-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227117>
 
-This code is only useful for cherry-pick and revert built-ins, nothing
-else, so let's make it a builtin object.
-
-The first source file that doesn't generate a git-foo builtin, but does
-go into the builtin library. Hopefully the first of many to clean
-libgit.a.
+Before overwriting the destination index, first let's discard its
+contents.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Makefile                           | 10 ++++++----
- sequencer.c => builtin/sequencer.c |  0
- sequencer.h => builtin/sequencer.h |  0
- 3 files changed, 6 insertions(+), 4 deletions(-)
- rename sequencer.c => builtin/sequencer.c (100%)
- rename sequencer.h => builtin/sequencer.h (100%)
+ unpack-trees.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index d2af207..4c7bb88 100644
---- a/Makefile
-+++ b/Makefile
-@@ -716,7 +716,6 @@ LIB_H += resolve-undo.h
- LIB_H += revision.h
- LIB_H += run-command.h
- LIB_H += send-pack.h
--LIB_H += sequencer.h
- LIB_H += sha1-array.h
- LIB_H += sha1-lookup.h
- LIB_H += shortlog.h
-@@ -858,7 +857,6 @@ LIB_OBJS += resolve-undo.o
- LIB_OBJS += revision.o
- LIB_OBJS += run-command.o
- LIB_OBJS += send-pack.o
--LIB_OBJS += sequencer.o
- LIB_OBJS += server-info.o
- LIB_OBJS += setup.o
- LIB_OBJS += sha1-array.o
-@@ -992,6 +990,9 @@ BUILTIN_OBJS += builtin/verify-pack.o
- BUILTIN_OBJS += builtin/verify-tag.o
- BUILTIN_OBJS += builtin/write-tree.o
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 57b4074..abe2576 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1166,8 +1166,10 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
  
-+BUILTIN_LIB_OBJS += builtin/sequencer.o
-+BUILTIN_LIB_OBJS += $(BUILTIN_OBJS)
-+
- GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
- EXTLIBS =
+ 	o->src_index = NULL;
+ 	ret = check_updates(o) ? (-2) : 0;
+-	if (o->dst_index)
++	if (o->dst_index) {
++		discard_index(o->dst_index);
+ 		*o->dst_index = o->result;
++	}
  
-@@ -1894,7 +1895,8 @@ VCSSVN_OBJS += vcs-svn/svndiff.o
- VCSSVN_OBJS += vcs-svn/svndump.o
- 
- TEST_OBJS := $(patsubst test-%$X,test-%.o,$(TEST_PROGRAMS))
--OBJECTS := $(LIB_OBJS) $(BUILTIN_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) \
-+OBJECTS := $(LIB_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) \
-+	$(BUILTIN_LIB_OBJS) \
- 	$(XDIFF_OBJS) \
- 	$(VCSSVN_OBJS) \
- 	git.o
-@@ -2071,7 +2073,7 @@ $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS $(GITLIBS
- $(LIB_FILE): $(LIB_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $^
- 
--$(BUILTIN_LIB): $(BUILTIN_OBJS)
-+$(BUILTIN_LIB): $(BUILTIN_LIB_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $^
- 
- $(XDIFF_LIB): $(XDIFF_OBJS)
-diff --git a/sequencer.c b/builtin/sequencer.c
-similarity index 100%
-rename from sequencer.c
-rename to builtin/sequencer.c
-diff --git a/sequencer.h b/builtin/sequencer.h
-similarity index 100%
-rename from sequencer.h
-rename to builtin/sequencer.h
+ done:
+ 	clear_exclude_list(&el);
 -- 
 1.8.3.698.g079b096
