@@ -1,86 +1,88 @@
-From: =?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
-Subject: [PATCH v3 03/28] git-remote-mediawiki: Replace :utf8 by :encoding(UTF-8)
-Date: Mon, 10 Jun 2013 00:22:28 +0200
-Message-ID: <1370816573-3808-4-git-send-email-celestin.matte@ensimag.fr>
-References: <1370816573-3808-1-git-send-email-celestin.matte@ensimag.fr>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 2/3] test: improve rebase -q test
+Date: Sun, 9 Jun 2013 23:44:11 +0100
+Organization: OPDS
+Message-ID: <C30D5684C80641EFAC0F89F00B48A74F@PhilipOakley>
+References: <1370637143-21336-1-git-send-email-felipe.contreras@gmail.com><1370637143-21336-3-git-send-email-felipe.contreras@gmail.com><CACsJy8DHeqOz=WbxurCvPiDq73k4eftwrEEZzWBbifS51PDbLQ@mail.gmail.com><7vd2rvqgra.fsf@alter.siamese.dyndns.org><CAMP44s3Pny7JkyHbLZ3kUemNK70JhdYWdpELTjNLz0y3Z2V3+A@mail.gmail.com><7vy5ajozuj.fsf@alter.siamese.dyndns.org> <CAMP44s38T9EUOe8EBKy1kxa-rEu7g0jb7+HB019AgCub+2SVnw@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: benoit.person@ensimag.fr, matthieu.moy@grenoble-inp.fr,
-	=?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 10 00:25:52 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="utf-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Duy Nguyen" <pclouds@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Ramkumar Ramachandra" <artagnon@gmail.com>,
+	"Jonathan Nieder" <jrnieder@gmail.com>,
+	"Stephen Boyd" <bebarino@gmail.com>,
+	"Jens Lehmann" <Jens.Lehmann@web.de>
+To: "Felipe Contreras" <felipe.contreras@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 10 00:43:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ulo3b-0001nF-O1
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 00:25:52 +0200
+	id 1UloKl-000264-6U
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 00:43:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752383Ab3FIWZg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 18:25:36 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:41258 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751371Ab3FIWXl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 18:23:41 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r59MNXU9021483
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 10 Jun 2013 00:23:33 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r59MNaIM019425;
-	Mon, 10 Jun 2013 00:23:36 +0200
-Received: from tohwi-K50IE.imag.fr (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r59MNSHQ008599;
-	Mon, 10 Jun 2013 00:23:36 +0200
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1370816573-3808-1-git-send-email-celestin.matte@ensimag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 10 Jun 2013 00:23:34 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r59MNXU9021483
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: celestin.matte@ensimag.fr
-MailScanner-NULL-Check: 1371421416.59646@zfV8O2tBFB7Xi+D7NmzQNA
+	id S1751886Ab3FIWnb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 18:43:31 -0400
+Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:19215 "EHLO
+	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750910Ab3FIWna (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jun 2013 18:43:30 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AjcOABwEtVFOl3so/2dsb2JhbABZgwkwgz2FP7YCBAEDAXkXdIIeBQEBBQgBARkVHgEBIQsCAwUCAQMVAQICAgUhAgIUAQQIEgYHFwYBEggCAQIDAYdqAxOoH4dqDYhSgSaLNYFzaoJTM2EDjm6FAIFrjgWFJIMQOw
+X-IronPort-AV: E=Sophos;i="4.87,833,1363132800"; 
+   d="scan'208";a="74943323"
+Received: from host-78-151-123-40.as13285.net (HELO PhilipOakley) ([78.151.123.40])
+  by out1.ip07ir2.opaltelecom.net with SMTP; 09 Jun 2013 23:43:28 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227203>
 
-=46ollow perlcritic's InputOutput::RequireEncodingWithUTF8Layer policy
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Sent: Sunday, June 09, 2013 8:33 PM
+> On Sun, Jun 9, 2013 at 2:20 PM, Junio C Hamano <gitster@pobox.com> 
+> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>
+>>> On Sun, Jun 9, 2013 at 1:30 PM, Junio C Hamano <gitster@pobox.com> 
+>>> wrote:
+>>>
+>>>> --- a/t/test-lib-functions.sh
+>>>> +++ b/t/test-lib-functions.sh
+>>>> @@ -606,6 +606,18 @@ test_cmp() {
+>>>>         $GIT_TEST_CMP "$@"
+>>>>  }
+>>>>
+>>>> +# Check if the file expected to be empty is indeed empty, and 
+>>>> barfs
+>>>> +# otherwise.
+>>>> +
+>>>> +test_output_must_be_empty () {
+>>>
+>>> Why such a big name? test_empty() does the trick.
+>>
+>> Primarily in order to avoid that exact name "test_empty" that others
+>> may want to use for a helper to check that the contents of a string
+>> variable is empty.
+>
+> Which is never going to happen.
+>
 
-Signed-off-by: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
----
- contrib/mw-to-git/git-remote-mediawiki.perl |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+While folks do use such simplistic names, given that the patch had many 
+call sites, I do think Filipe's short name would quickly become the 
+accepted test name and not cause any great difficulties.
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-t=
-o-git/git-remote-mediawiki.perl
-index 863ecc9..5e198e0 100755
---- a/contrib/mw-to-git/git-remote-mediawiki.perl
-+++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -18,8 +18,8 @@ use DateTime::Format::ISO8601;
- use warnings;
-=20
- # By default, use UTF-8 to communicate with Git and the user
--binmode STDERR, ":utf8";
--binmode STDOUT, ":utf8";
-+binmode STDERR, ":encoding(UTF-8)";
-+binmode STDOUT, ":encoding(UTF-8)";
-=20
- use URI::Escape;
- use IPC::Open2;
-@@ -587,7 +587,7 @@ sub literal_data_raw {
- 	utf8::downgrade($content);
- 	binmode STDOUT, ":raw";
- 	print STDOUT "data ", bytes::length($content), "\n", $content;
--	binmode STDOUT, ":utf8";
-+	binmode STDOUT, ":encoding(UTF-8)";
- }
-=20
- sub mw_capabilities {
---=20
-1.7.9.5
+regards
+Philip 
