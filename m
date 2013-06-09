@@ -1,101 +1,100 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] diff: add --ignore-blank-lines option
-Date: Sun, 9 Jun 2013 22:32:39 +0200
-Message-ID: <CALWbr2xijB+UD9gwc+HmMdHM9OT+2Lzr9w3h22=CegKHK-Ocng@mail.gmail.com>
-References: <7v61xt7gej.fsf@alter.siamese.dyndns.org>
-	<1370724291-30088-1-git-send-email-apelisse@gmail.com>
-	<7vsj0roxnr.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/2] Move sequencer to builtin
+Date: Mon, 10 Jun 2013 02:04:36 +0530
+Message-ID: <CALkWK0kMdQEXMTAwFLdz=FXEFiJfemM-+80SCALqS8q9yyr2Qw@mail.gmail.com>
+References: <CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
+ <20130608173447.GA4381@elie.Belkin> <CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
+ <20130609014049.GA10375@google.com> <CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
+ <20130609052624.GB561@sigill.intra.peff.net> <CALkWK0mu2_9M5aTczcEkv37eLaAg5_mGDZ_W9nqQFoesB4wc3g@mail.gmail.com>
+ <20130609180437.GB810@sigill.intra.peff.net> <CALkWK0kkhDOSSdF=E4PvO24hg++_FpP3YFaGRD3yq80XG0TRJA@mail.gmail.com>
+ <20130609184553.GG810@sigill.intra.peff.net> <20130609195706.GA2919@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 09 22:32:50 2013
+Cc: Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 22:35:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlmI9-0001hE-MY
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 22:32:46 +0200
+	id 1UlmKg-0002qO-ML
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 22:35:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751339Ab3FIUcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 16:32:42 -0400
-Received: from mail-la0-f43.google.com ([209.85.215.43]:49779 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750991Ab3FIUcl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 16:32:41 -0400
-Received: by mail-la0-f43.google.com with SMTP id gw10so5166913lab.30
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 13:32:39 -0700 (PDT)
+	id S1751405Ab3FIUfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 16:35:19 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:55165 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750991Ab3FIUfR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 16:35:17 -0400
+Received: by mail-ie0-f177.google.com with SMTP id u16so14772786iet.22
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 13:35:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=/L06FC+Q5PczHBa7i4JM/4jgAUrcSkADwGzIDPeGFq8=;
-        b=nJ+m1TVydNPwnMFwXP5w2lQlUpDL+i5uqIeWjdDx0x1cA2Z2nH/JoKt6ajvdMFZJrK
-         3NWoguG7ARBNheVyqE7ISXpLsOK85BPk6SWjwcptM9iyyqSsnVoyxXGvVAbqpwfOIBdq
-         URXXEbTQ5lVJbenTE7epuYjlgcvrs2183WiIATOkpa1ddcP3xO033d9Rf2eXwB4jQVdG
-         YzAItbM+OMHoIvyFYjVbQMSXHbX6tsGo+nc+vnGzogM7ZQi4DV5rLrpm6/9p5pNY3Jqg
-         uS8fIsjm5cDYeRXTdwZhLl04Df9CECWg3tGeqCKmesqBL1JsVWcLp/whiWYq2i/B5wZa
-         FHuA==
-X-Received: by 10.152.6.36 with SMTP id x4mr3522984lax.40.1370809959767; Sun,
- 09 Jun 2013 13:32:39 -0700 (PDT)
-Received: by 10.112.61.8 with HTTP; Sun, 9 Jun 2013 13:32:39 -0700 (PDT)
-In-Reply-To: <7vsj0roxnr.fsf@alter.siamese.dyndns.org>
+        bh=OtnB2HzuCsnd3Uqv57GTZVmAioyjeO1RhvvsodbT9vA=;
+        b=oWpZ9e4LQlLT1iJ231ENRmOpUpkvYGXakxfgyIkk5KX125zzmjFohotNp0a9GeQYha
+         WnQP7YhzEFdXDa92hSruVZxUI9Dhr/Jid9w2tmG396qqlE4sD11FxkjDa4QvPVYkAEEu
+         uDlMELqiT5lqQsJOCO/ySSg77wVDEiAlKBUBrPqKELGWeGzTj90vN8tdFbJEqcpb/VHb
+         bgLFMsAmkbKOAvTd9Ah+uYGjMO4Wy7iQaV1/2ubzplROFjYxkB2Mg7MoNIjk47nnqJz7
+         2aPxoN1CLQQ3twveLPSeUV6sMme3ERS/3xAQ3WtHsUZLLveTDgEZbmCDm4OBxORNp+1W
+         UOMw==
+X-Received: by 10.50.56.20 with SMTP id w20mr2756421igp.40.1370810117314; Sun,
+ 09 Jun 2013 13:35:17 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Sun, 9 Jun 2013 13:34:36 -0700 (PDT)
+In-Reply-To: <20130609195706.GA2919@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227164>
 
-On Sun, Jun 9, 2013 at 10:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> by
-> the way, do we also handle deletions and do your new tests check
-> them?
+Jonathan Nieder wrote:
+> Of course the git development community is not organized enough for an
+> intervention, but as context I thought I'd mention that that's what
+> works.
 
-As stated in the commit message, yes we should, but we don't have
-tests for that.
-I will need to add some as I think I found a bug when removing blank lines.
+Atleast this is more interesting that the canned
+Felipe-demeanour-complaint people constantly bring up boring everyone
+to death.
 
->> +     git diff --inter-hunk-context=100 --ignore-blank-lines >out.tmp &&
->> +     cat <<-\EOF >expected &&
->> +     diff --git a/x b/x
->> +     --- a/x
->> +     +++ b/x
->> +     @@ -1,7 +1,10 @@
->> +     +change
->> +      1
->> +      2
->> +     +
->> +      3
->> +      4
->> +     +
->> +      5
->> +      6
->> +      7
->> +     EOF
->> +     compare_diff_patch expected out.tmp
->> +'
+> In that case, I can see a simple solution.  Felipe, who provides the
+> most patches in git.git, by far (I don't know what that means, but
+> I'll take it as an assumption), can put up a fork of git that you run.
+> He can solicit whatever level of review he is comfortable with before
+> pushing out changes, and then the result is available, without the
+> pesky middle-man of those theorizers that were trying to develop git a
+> different way and then got annoyed.
 >
-> And from that point of view, this expected output may be excessively
-> noisy.
->
-> So I dunno.
+> No harm done, right?  It doesn't have to involve the list, because
+> what's relevant in this worldview is code, not the people.
 
-It might be kind of noisy, but I think trying to improve the solution
-might lead to over-engineering.
-How would we compute the "minimal distance between interesting and
-blank" so that the blank becomes interesting ?
-Using the context size for that is quite convenient, while creating
-another variable would probably become overkill..
+I'm still scratching my head over what you interpreted.  People are
+not unimportant!  Code is result of everyone in the community
+scratching their itches.  I value each and every community member, and
+git.git wouldn't be what it is today without everyone.  How did you
+interpret that as "I am only interested in Felipe's work, and everyone
+else is a theorizing buffoon"?  I specifically said theorizing about
+Felipe's behavior over and over and over again is not changing
+anything.  Stay on topic, and discuss how to improve libgit.a.
 
-The original goal is to remove hunks created solely for
-addition/suppression, and I think it's what it should do for the
-moment.
-But of course, I have no strong opinion about that.
+To me, it is important that everyone stays productive, so we can
+maximize output.  I want more review, more discussions, more code.  I
+get bored out of my mind when Junio does feature freezes and nothing
+goes in.  Obviously, people getting offended and writing long
+emotional rants on the list is unproductive and undesirable.
 
-And by the way, I have also another bug, so you can expect another
-re-roll (sorry about that, it's more complex than I initially
-thought).
+> So why aren't I privately ignoring his messages and letting the list
+> become what it may?  It would seem that I'm making the problem much
+> worse, by starting discussions that focus of how to stop pushing other
+> contributors away instead of (what's important) code!
 
-Thanks a lot,
-Antoine
+It is imperative that you express your opinion and discuss it, if
+something is troubling you.  What is this dichotomy between
+contributors and code?  When did I discuss pushing contributors away?
