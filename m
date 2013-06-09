@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v2 04/15] quote: remove sq_quote_print()
-Date: Sun,  9 Jun 2013 23:24:23 +0530
-Message-ID: <1370800474-8940-5-git-send-email-artagnon@gmail.com>
+Subject: [PATCH v2 02/15] for-each-ref: don't print out elements directly
+Date: Sun,  9 Jun 2013 23:24:21 +0530
+Message-ID: <1370800474-8940-3-git-send-email-artagnon@gmail.com>
 References: <1370800474-8940-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,104 +15,196 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UljrG-0006QU-7p
+	id 1UljrF-0006QU-NA
 	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:56:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884Ab3FIR4r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 13:56:47 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:52410 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751864Ab3FIR4q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 13:56:46 -0400
-Received: by mail-pd0-f172.google.com with SMTP id z10so3057104pdj.3
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 10:56:45 -0700 (PDT)
+	id S1751862Ab3FIR4n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 13:56:43 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:47918 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751836Ab3FIR4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 13:56:41 -0400
+Received: by mail-pa0-f50.google.com with SMTP id fb1so3817939pad.37
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 10:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=dQ/+yxItDcREcESZmL2fy59s7nIA1FdLqP73H5UjcUs=;
-        b=Dl1EyKUCIJMjg4A3teIMdHFO2IlxfmKthnXuZ+GimBbwH8sTwVr6VQoBiSmJq+3ce1
-         UiuMcLBhY2DMzX4z5Rsfe5ZeDh/FRIdOUtCmE1triRCRMJGJd2/xRzHrqSkePkJ0KyUS
-         oj1ZiZDkuZbAr1AtC+yiZeup7NugJDdTkeKivBVOUT8DOV5aXIPx6vacWkDmxHzcD3aj
-         bYf4u+WqTU9a+qscZl6NMLtYZS9LLpt0wO0kshJUvtpqY36f4c9UGV/6dzXmNS6YpsYc
-         LNMJM1aVFJD6iBnJvEt7XevHDy9JbGz36TyVfbJq3unLn2ZVJ4pEsCPtVPorRygxz9G9
-         IwTQ==
-X-Received: by 10.68.247.69 with SMTP id yc5mr3039120pbc.66.1370800605572;
-        Sun, 09 Jun 2013 10:56:45 -0700 (PDT)
+        bh=3Nsq+ExbGSLVHCh2yoc4vcuTED3Hm3n5CzvHllmiUq8=;
+        b=OidrhdwIH9t3aSkR5Jy57biuF9hz6i08Mslq9HW+7LpuAoNf41L9GGoJBb7TLw5P3N
+         p9JMtz6WMCXym+5W3NLqOpC1npXBJG1jr85zlSTuSJXbVKvg14YZG+H7GWZpcWZgLj3O
+         ADqDD9AYWymhz618HBfX/edHXmYhPmtyw4x4IjKjAtJmspnnTnxoMujNXpV28YeJx4RM
+         N+ZGTo8IPHmo7sgQ0/9XiL//E8XjFFYgh46g6RcUrvQHcufM8gv4TgE4oDNMf6tmCD9D
+         lpyDRD5oF9ACBXo8U6yxSlIZ8nHijxcKUOO3dChxYgtOfGF9+Jozn8+wSAQzJUPu8O6a
+         NuSg==
+X-Received: by 10.68.164.196 with SMTP id ys4mr6798923pbb.170.1370800600684;
+        Sun, 09 Jun 2013 10:56:40 -0700 (PDT)
 Received: from localhost.localdomain ([122.164.213.38])
-        by mx.google.com with ESMTPSA id qp4sm7275815pbc.41.2013.06.09.10.56.43
+        by mx.google.com with ESMTPSA id qp4sm7275815pbc.41.2013.06.09.10.56.38
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 10:56:44 -0700 (PDT)
+        Sun, 09 Jun 2013 10:56:40 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.247.g485169c
 In-Reply-To: <1370800474-8940-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227060>
 
-Remove sq_quote_print() since it has no callers.  A nicer alternative
-sq_quote_buf() exists: its callers aren't forced to print immediately.
+=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-=46or historical context, sq_quote_print() was first introduced in
-575ba9d6 (GIT_TRACE: show which built-in/external commands are executed=
-,
-2006-06-25) for the purpose of printing argv for $GIT_TRACE.  Today, we
-achieve this using trace_argv_printf() -> sq_quote_argv() ->
-sq_quote_buf(), which ultimately fills in a strbuf.
+Currently, the entire callchain starting from show_ref() parses and
+prints immediately.  This inflexibility limits our ability to extend th=
+e
+parser.  So, convert the entire callchain to accept a strbuf argument t=
+o
+write to.  Also introduce a show_refs() helper that calls show_ref() in
+a loop to avoid cluttering up cmd_for_each_ref() with the task of
+initializing/freeing the strbuf.
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+[rr: commit message]
+
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- quote.c | 17 -----------------
- quote.h |  2 --
- 2 files changed, 19 deletions(-)
+ builtin/for-each-ref.c | 55 ++++++++++++++++++++++++++++++++----------=
+--------
+ 1 file changed, 35 insertions(+), 20 deletions(-)
 
-diff --git a/quote.c b/quote.c
-index 8c294df..778b39a 100644
---- a/quote.c
-+++ b/quote.c
-@@ -42,23 +42,6 @@ void sq_quote_buf(struct strbuf *dst, const char *sr=
-c)
- 	free(to_free);
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 1d4083c..e2d6c5a 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -864,31 +864,31 @@ static void sort_refs(struct ref_sort *sort, stru=
+ct refinfo **refs, int num_refs
+ 	qsort(refs, num_refs, sizeof(struct refinfo *), compare_refs);
  }
 =20
--void sq_quote_print(FILE *stream, const char *src)
--{
--	char c;
--
--	fputc('\'', stream);
--	while ((c =3D *src++)) {
--		if (need_bs_quote(c)) {
--			fputs("'\\", stream);
--			fputc(c, stream);
--			fputc('\'', stream);
--		} else {
--			fputc(c, stream);
--		}
--	}
--	fputc('\'', stream);
--}
--
- void sq_quote_argv(struct strbuf *dst, const char** argv, size_t maxle=
-n)
+-static void print_value(struct refinfo *ref, int atom, int quote_style=
+)
++static void print_value(struct strbuf *sb, struct refinfo *ref,
++			int atom, int quote_style)
  {
- 	int i;
-diff --git a/quote.h b/quote.h
-index ed06df5..251f3cc 100644
---- a/quote.h
-+++ b/quote.h
-@@ -27,8 +27,6 @@ struct strbuf;
-  * excluding the final null regardless of the buffer size.
-  */
+ 	struct atom_value *v;
+-	struct strbuf sb =3D STRBUF_INIT;
+ 	get_value(ref, atom, &v);
+ 	switch (quote_style) {
+ 	case QUOTE_NONE:
+-		fputs(v->s, stdout);
++		strbuf_addstr(sb, v->s);
+ 		break;
+ 	case QUOTE_SHELL:
+-		sq_quote_buf(&sb, v->s);
++		sq_quote_buf(sb, v->s);
+ 		break;
+ 	case QUOTE_PERL:
+-		perl_quote_buf(&sb, v->s);
++		perl_quote_buf(sb, v->s);
+ 		break;
+ 	case QUOTE_PYTHON:
+-		python_quote_buf(&sb, v->s);
++		python_quote_buf(sb, v->s);
+ 		break;
+ 	case QUOTE_TCL:
+-		tcl_quote_buf(&sb, v->s);
++		tcl_quote_buf(sb, v->s);
+ 		break;
+ 	}
+ 	if (quote_style !=3D QUOTE_NONE) {
+-		fputs(sb.buf, stdout);
+-		strbuf_release(&sb);
++		fputs(sb->buf, stdout);
++		strbuf_release(sb);
+ 	}
+ }
 =20
--extern void sq_quote_print(FILE *stream, const char *src);
--
- extern void sq_quote_buf(struct strbuf *, const char *src);
- extern void sq_quote_argv(struct strbuf *, const char **argv, size_t m=
-axlen);
+@@ -910,7 +910,7 @@ static int hex2(const char *cp)
+ 		return -1;
+ }
 =20
+-static void emit(const char *cp, const char *ep)
++static void emit(struct strbuf *sb, const char *cp, const char *ep)
+ {
+ 	while (*cp && (!ep || cp < ep)) {
+ 		if (*cp =3D=3D '%') {
+@@ -919,32 +919,47 @@ static void emit(const char *cp, const char *ep)
+ 			else {
+ 				int ch =3D hex2(cp + 1);
+ 				if (0 <=3D ch) {
+-					putchar(ch);
++					strbuf_addch(sb, ch);
+ 					cp +=3D 3;
+ 					continue;
+ 				}
+ 			}
+ 		}
+-		putchar(*cp);
++		strbuf_addch(sb, *cp);
+ 		cp++;
+ 	}
+ }
+=20
+-static void show_ref(struct refinfo *info, const char *format, int quo=
+te_style)
++static void show_ref(struct strbuf *sb, struct refinfo *info,
++		     const char *format, int quote_style)
+ {
+ 	const char *cp, *sp, *ep;
+=20
+ 	for (cp =3D format; *cp && (sp =3D find_next(cp)); cp =3D ep + 1) {
+ 		ep =3D strchr(sp, ')');
+ 		if (cp < sp)
+-			emit(cp, sp);
+-		print_value(info, parse_atom(sp + 2, ep), quote_style);
++			emit(sb, cp, sp);
++		print_value(sb, info, parse_atom(sp + 2, ep), quote_style);
+ 	}
+ 	if (*cp) {
+ 		sp =3D cp + strlen(cp);
+-		emit(cp, sp);
++		emit(sb, cp, sp);
+ 	}
+-	putchar('\n');
++	strbuf_addch(sb, '\n');
++}
++
++static void show_refs(struct refinfo **refs, int maxcount,
++		      const char *format, int quote_style)
++{
++	struct strbuf sb =3D STRBUF_INIT;
++	int i;
++
++	for (i =3D 0; i < maxcount; i++) {
++		strbuf_reset(&sb);
++		show_ref(&sb, refs[i], format, quote_style);
++		fputs(sb.buf, stdout);
++	}
++	strbuf_release(&sb);
+ }
+=20
+ static struct ref_sort *default_sort(void)
+@@ -987,7 +1002,7 @@ static char const * const for_each_ref_usage[] =3D=
+ {
+=20
+ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ {
+-	int i, num_refs;
++	int num_refs;
+ 	const char *format =3D "%(objectname) %(objecttype)\t%(refname)";
+ 	struct ref_sort *sort =3D NULL, **sort_tail =3D &sort;
+ 	int maxcount =3D 0, quote_style =3D 0;
+@@ -1041,7 +1056,7 @@ int cmd_for_each_ref(int argc, const char **argv,=
+ const char *prefix)
+=20
+ 	if (!maxcount || num_refs < maxcount)
+ 		maxcount =3D num_refs;
+-	for (i =3D 0; i < maxcount; i++)
+-		show_ref(refs[i], format, quote_style);
++
++	show_refs(refs, maxcount, format, quote_style);
+ 	return 0;
+ }
 --=20
 1.8.3.247.g485169c
