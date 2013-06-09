@@ -1,145 +1,168 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jun 2013, #03; Thu, 6)
-Date: Sun, 09 Jun 2013 14:20:33 -0700
-Message-ID: <7v1u8bouam.fsf@alter.siamese.dyndns.org>
-References: <7vzjv2x3p7.fsf@alter.siamese.dyndns.org>
-	<20130607000006.GA25731@goldbirke>
-	<CALkWK0=D7sHLgptWkFHma1FoS-zdifHqXnuuBKhkyuszgEJ0Xw@mail.gmail.com>
-	<7v8v2lu5ks.fsf@alter.siamese.dyndns.org>
-	<20130607191643.GA31625@goldbirke>
-	<7vwqq5snzi.fsf@alter.siamese.dyndns.org>
-	<20130607204430.GD31625@goldbirke>
-	<7vk3m5si4h.fsf@alter.siamese.dyndns.org>
-	<20130608001147.GA32350@goldbirke>
+Subject: Re: [PATCH] diff: add --ignore-blank-lines option
+Date: Sun, 09 Jun 2013 14:28:50 -0700
+Message-ID: <7vtxl7nfcd.fsf@alter.siamese.dyndns.org>
+References: <7v61xt7gej.fsf@alter.siamese.dyndns.org>
+	<1370724291-30088-1-git-send-email-apelisse@gmail.com>
+	<7vsj0roxnr.fsf@alter.siamese.dyndns.org>
+	<CALWbr2xijB+UD9gwc+HmMdHM9OT+2Lzr9w3h22=CegKHK-Ocng@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sun Jun 09 23:20:48 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 23:29:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uln2e-0006sW-2v
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 23:20:48 +0200
+	id 1UlnAh-000296-6p
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 23:29:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751226Ab3FIVUg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 17:20:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33320 "EHLO
+	id S1751268Ab3FIV2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 17:28:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63215 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751089Ab3FIVUg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jun 2013 17:20:36 -0400
+	id S1751089Ab3FIV2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 17:28:54 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85B1325BAB;
-	Sun,  9 Jun 2013 21:20:35 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5921426003;
+	Sun,  9 Jun 2013 21:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=Tn71JyBX8Jsf/i+XbW6c88RNc
-	eE=; b=wx7js6SuXH/4PPXmu2jp8v3+/xTEA20sMLpkW6iyGq0jnKlUzsw2V3+qZ
-	EIoQzMHsiAMOSDv1SsS4IKZILR97fAzHQEsGvBsndUSBntp8Z5SmW4lNhxY6HpIl
-	dD3SlvDUXQ+/1aQ8AnPiepodUfRkKXMOeOTYG+YvdlbFGrDPd4=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CoJcp94UBJI7ze7QiWttfqzBzU8=; b=NTRsSk
+	iRO6JKXdszWht5sDzLb/My+UYoZgZDegIQYZudWK0fj5q1bOyAd2ipw5xpuEDVhd
+	HcMdd4MIgy0KNGOzMg9y6ln/as87CV0aLV0/bkape0nuyNLztLdx55UFb5/IIR2S
+	Orf9BarAU4OYzQufmXGnndiOnNDMeO1JEDLuk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=oLRJV+P3ZRylQF3wEE1
-	oxBg63jWS1bZMWV2ICkV9U0TFjcXht1Po+vjCBcXz9EiNikShW8AyVHxTObJScdq
-	WXHCGyeddfNFhN1le1Z7CGQybQfJ/I6gobXNA0dyP7/tRsYBohPcw4+DiitJjopS
-	OAhdvl1hlpSuzRNVDHXd2uqg=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=etX1XIXISTT8lmH9ygq/rGHN0pxTarYD
+	WaIeKYBi6W1L5HYKQAHLqiyUHMqyK38Te0bG5v5WT6XsmLoRdTWf3nLBIGfIRvNv
+	tL0qrJ5t3NZ5F7TL8DKKsUciwFhCpnR7ZCJPFHyt8X4X3Wf7Q6GURgvnVi3TpB0u
+	P9dT0FAZjvM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BAA225BAA;
-	Sun,  9 Jun 2013 21:20:35 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F61D26002;
+	Sun,  9 Jun 2013 21:28:53 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B2F5325BA9;
-	Sun,  9 Jun 2013 21:20:34 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8FE5C25FFD;
+	Sun,  9 Jun 2013 21:28:52 +0000 (UTC)
+In-Reply-To: <CALWbr2xijB+UD9gwc+HmMdHM9OT+2Lzr9w3h22=CegKHK-Ocng@mail.gmail.com>
+	(Antoine Pelisse's message of "Sun, 9 Jun 2013 22:32:39 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6C301B70-D14A-11E2-BD6B-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 94EF1D4E-D14B-11E2-841C-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227170>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+Antoine Pelisse <apelisse@gmail.com> writes:
 
->> It is somewhat annoying that "git diff gi<TAB>" stops at expanding
->> it to "git diff git" and then upon another "git diff git<TAB>"
->> offers tags whose names begin with "git" (e.g. gitgui-0.10.0) but
->> the pathname git.c is not included in the choices.  My wish was to
->> take the union in such a fairly limited case.  I tend to agree with
->> you that "git diff <TAB>" that expands to all refs and pathnames
->> would be useless, but so is expansion to all pathnames (or refnames
->> for that matter).
+> It might be kind of noisy, but I think trying to improve the solution
+> might lead to over-engineering.
+> How would we compute the "minimal distance between interesting and
+> blank" so that the blank becomes interesting ?
+> Using the context size for that is quite convenient, while creating
+> another variable would probably become overkill..
 >
-> ... or trying to complete a branch name starting with a 'v', and then
-> getting all the vx.y.z tags.
->
-> If you know you want git.c, then you can force filename completion
-> either by entering "--" before hitting tab...
+> The original goal is to remove hunks created solely for
+> addition/suppression, and I think it's what it should do for the
+> moment.
 
-Yes, that is exactly why I said "the current completion code already
-works better than reasonably well, at least for me" in the
-concluding part of my message.
+Something like this on top of your original one is what I had in
+mind as a starting point.
 
-Regarding that rr/complete-difftool topic, let's revert the tip 2
-commits (the "ls-tree, archive and show" one, and the follow-up
-resurrection of __git_complete_file) with this:
+ t/t4015-diff-whitespace.sh |  5 +----
+ xdiff/xemit.c              | 45 ++++++++++++++++++++++++++-------------------
+ 2 files changed, 27 insertions(+), 23 deletions(-)
 
-    Revert 77c1305 and 3c3b46b
-   =20
-    As explained by SZEDER G=C3=A1bor in $gmane/226272, git_complete_fi=
-le
-    helper is about completing <tree-ish>, taking <commit> at the tips
-    of refs and also understanding <tree-ish>:<path> notation, and
-    changing "archive" and "ls-tree" to use git_complete_revlist_file
-    that in addition is meant to expand A..B range notation was a
-    mistake.
-   =20
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-and then queue this on top of d8517cc6670d (completion: difftool
-takes both revs and files, 2013-06-02), so that the attached and
-d8517cc6670d will be the only two commits that graduate to 'master'
-from this topic.
-
--- >8 --
-=46rom: Ramkumar Ramachandra <artagnon@gmail.com>
-Date: Sun, 2 Jun 2013 19:33:42 +0530
-Subject: [PATCH] completion: show can take both revlist and paths
-
-The 'git show' completion uses __git_complete_file (aliased to
-__git_complete_revlist_file), because accepts <tree-ish>:<path> as
-well as <commit-ish>.  But the command also accepts range of commits
-in A..B notation, so using __git_complete_revlist_file is more
-appropriate.
-
-There still remain two users of __git_complete_file, completions for
-"archive" and "ls-tree".  As these commands do not take range
-notation, and "git show" no longer uses __git_complete_file, the
-implementation of can be updated not to complete ranges, but that is
-a separate topic.
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 1b4b0f9..b9dfc3b 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2360,7 +2360,7 @@ _git_show ()
- 		return
- 		;;
- 	esac
--	__git_complete_file
-+	__git_complete_revlist_file
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index b3c4fcc..acc2159 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -185,7 +185,7 @@ test_expect_success 'ignore-blank-lines: with changes' '
+ 	git diff --ignore-blank-lines >out.tmp &&
+ 	sed -e "1,/^+++ b\/x/d" <out.tmp >out &&
+ 	cat <<-\EOF >expect &&
+-	@@ -1,6 +2,7 @@
++	@@ -1,11 +2,14 @@
+ 	 1
+ 	 2
+ 	 3
+@@ -193,9 +193,6 @@ test_expect_success 'ignore-blank-lines: with changes' '
+ 	 4
+ 	 5
+ 	 6
+-	@@ -5,7 +7,9 @@
+-	 5
+-	 6
+ 	 7
+ 	+
+ 	 8
+diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+index 52dfef8..27e1105 100644
+--- a/xdiff/xemit.c
++++ b/xdiff/xemit.c
+@@ -59,32 +59,39 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *
+  * Also advance xscr if the first changes must be discareded.
+  */
+ xdchange_t *xdl_get_hunk(xdchange_t **xscr, xdemitconf_t const *xecfg) {
+-	xdchange_t *xch, *xchp;
++	xdchange_t *xch, *xchp = NULL, *xch_start = NULL;
+ 	long max_common = 2 * xecfg->ctxlen + xecfg->interhunkctxlen;
+-	long ignorable_context = max_common / 2 - 1;
+-	int interesting = 0;
+ 
+-	for (xchp = *xscr, xch = (*xscr)->next; xch; xchp = xch, xch = xch->next) {
+-		long thresh;
+-		if (xchp->ignore || xch->ignore)
+-			thresh = ignorable_context;
+-		else
+-			thresh = max_common;
+-
+-		if (!xchp->ignore)
+-			interesting = 1;
++	/* Skip the ones that can be ignored from the beginning */
++	for (xch = *xscr; xch; xch = xch->next) {
++		if (xch->ignore)
++			continue;
++		xch_start = xch;
++		break;
++	}
+ 
+-		if (xch->i1 - (xchp->i1 + xchp->chg1) > thresh) {
+-			if (interesting)
++	for (xchp = xch_start; xchp; ) {
++		/* Find the next one that is not ignored */
++		for (xch = xchp->next; xch; xch = xch->next)
++			if (!xch->ignore)
+ 				break;
+-			else
+-				*xscr = xch;
++		if (!xch)
++			break; /* show xch_start thru xchp */
++
++		/* are these hunks close enough? */
++		if ((xchp->i1 + xchp->chg1) - xch->i1 < max_common) {
++			xchp = xch;
++			continue;
+ 		}
+-	}
+ 
+-	if (!interesting && xchp->ignore)
+-		*xscr = NULL;
++		/*
++		 * otherwise, xchp is the last one (inclusive) we want
++		 * to coalesce into a single output hunk.
++		 */
++		break;
++	}
+ 
++	*xscr = xch_start;
+ 	return xchp;
  }
-=20
- _git_show_branch ()
---=20
+ 
+-- 
 1.8.3-477-gc2fede3
