@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 14/45] revert/cherry-pick: add --skip option
-Date: Sun,  9 Jun 2013 11:40:26 -0500
-Message-ID: <1370796057-25312-15-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v4 15/45] builtin: add rewrite helper
+Date: Sun,  9 Jun 2013 11:40:27 -0500
+Message-ID: <1370796057-25312-16-git-send-email-felipe.contreras@gmail.com>
 References: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
@@ -9,211 +9,175 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 09 18:43:40 2013
+X-From: git-owner@vger.kernel.org Sun Jun 09 18:43:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UliiR-0006ex-HW
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 18:43:39 +0200
+	id 1UliiS-0006ex-2P
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 18:43:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751625Ab3FIQnd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 12:43:33 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:48626 "EHLO
+	id S1751686Ab3FIQng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 12:43:36 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:53278 "EHLO
 	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751485Ab3FIQnb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 12:43:31 -0400
-Received: by mail-ob0-f179.google.com with SMTP id xk17so8834442obc.24
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 09:43:30 -0700 (PDT)
+	with ESMTP id S1751485Ab3FIQnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 12:43:33 -0400
+Received: by mail-ob0-f179.google.com with SMTP id xk17so8939730obc.10
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 09:43:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=S8zYBgvU3XWNLpGVcc5CjouNIuKVCMWBifkJRLEoobA=;
-        b=tmemvA+Lb+z0k7RtNZwQppnq+ZMpbAdjzqv0zNt92Z9AHjiTg5EJ1hgfa+8+vNAIYk
-         TokFw0xM2kh/M6U9EvVMB8rCI3nIDvDYkkU/UCCXesP/zE6mX+PQDAw4EixI0nwUOh4j
-         xTzmer8BMfPERGbZxOPW4OPxFiY/qLzZok3tQDMtqoujzLZNan/NRlCtJWl82zY7T/4O
-         0r5sCmJMKKI5wT/bN5ngvmlzqHW0SqKzam2tFR+RfO9vAXQ3NJ7LE+CgIzMrrmF13zE0
-         J8Dd/0+aZ6/te2o9uMjwQSJbzIyV1Z0hctKoLjb5YDVAKrGrd6HITuMjalweGHhYMsnP
-         J8tA==
-X-Received: by 10.60.141.164 with SMTP id rp4mr5466541oeb.38.1370796210690;
-        Sun, 09 Jun 2013 09:43:30 -0700 (PDT)
+        bh=iLdsMCnnpajp8jLkXlZEta4o0bZnGI+78HlM4a4AcXA=;
+        b=T/2HFHoQFSZljOC7twnp1rXvuZT8jjBwdEhClvp2NEfVGilMAEq9FfrmiSlGbieQOv
+         rJdRM6kSUjagkn8o73MBfRGfse5NLiVcZ8a0ntwManhpVLMli033AsACRYV/ygEnTnh8
+         SdIOKSnctWaIbIG9KwDu9I9OD9UIZ3lCFi/n8MRzsLkaR4G/SdEMEK9yOZGrWADtDbUX
+         nByItAIGDgNiU+/UuMte0F3Cnat0IlW26se01fCzTyUpXcdmjSVqq7BOZpFw62bsabLi
+         JUUal+jIMa+Ewitrc7afxVXgPpxctJd7TQ9G2hdMEiaRyLO5dC+dg9rexCQH0X8E1JtR
+         HGwQ==
+X-Received: by 10.182.233.227 with SMTP id tz3mr5341890obc.23.1370796213355;
+        Sun, 09 Jun 2013 09:43:33 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id oe10sm15154418oeb.6.2013.06.09.09.43.29
+        by mx.google.com with ESMTPSA id h4sm215762oed.5.2013.06.09.09.43.31
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 09:43:29 -0700 (PDT)
+        Sun, 09 Jun 2013 09:43:32 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.698.g079b096
 In-Reply-To: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226984>
 
-Akin to 'am --skip' and 'rebase --skip'.
+So that we can load and store rewrites, as well as other operations on a
+list of rewritten commits.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-cherry-pick.txt |  1 +
- Documentation/git-revert.txt      |  1 +
- Documentation/sequencer.txt       |  3 +++
- builtin/revert.c                  |  6 ++++++
- builtin/sequencer.c               | 24 ++++++++++++++++++++++++
- builtin/sequencer.h               |  3 ++-
- t/t3510-cherry-pick-sequence.sh   | 12 ++++++++++++
- 7 files changed, 49 insertions(+), 1 deletion(-)
+ Makefile          |  1 +
+ builtin/rewrite.c | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ builtin/rewrite.h | 18 ++++++++++++++
+ 3 files changed, 93 insertions(+)
+ create mode 100644 builtin/rewrite.c
+ create mode 100644 builtin/rewrite.h
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index da0bd81..d95c63c 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git cherry-pick' [-q] [--edit] [-n] [-m parent-number] [-s] [-x] [--ff] <commit>...
- 'git cherry-pick' --continue
-+'git cherry-pick' --skip
- 'git cherry-pick' --quit
- 'git cherry-pick' --abort
+diff --git a/Makefile b/Makefile
+index 4c7bb88..a167e68 100644
+--- a/Makefile
++++ b/Makefile
+@@ -991,6 +991,7 @@ BUILTIN_OBJS += builtin/verify-tag.o
+ BUILTIN_OBJS += builtin/write-tree.o
  
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index 98a8e7a..52e146e 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git revert' [-q] [--[no-]edit] [-n] [-m parent-number] [-s] <commit>...
- 'git revert' --continue
-+'git revert' --skip
- 'git revert' --quit
- 'git revert' --abort
+ BUILTIN_LIB_OBJS += builtin/sequencer.o
++BUILTIN_LIB_OBJS += builtin/rewrite.o
+ BUILTIN_LIB_OBJS += $(BUILTIN_OBJS)
  
-diff --git a/Documentation/sequencer.txt b/Documentation/sequencer.txt
-index 5747f44..df2d355 100644
---- a/Documentation/sequencer.txt
-+++ b/Documentation/sequencer.txt
-@@ -3,6 +3,9 @@
- 	'.git/sequencer'.  Can be used to continue after resolving
- 	conflicts in a failed cherry-pick or revert.
- 
-+--skip::
-+	Skip the current commit, and then continue.
+ GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
+diff --git a/builtin/rewrite.c b/builtin/rewrite.c
+new file mode 100644
+index 0000000..2519352
+--- /dev/null
++++ b/builtin/rewrite.c
+@@ -0,0 +1,74 @@
++#include "cache.h"
++#include "rewrite.h"
 +
- --quit::
- 	Forget about the current operation in progress.  Can be used
- 	to clear the sequencer state after a failed cherry-pick or
-diff --git a/builtin/revert.c b/builtin/revert.c
-index ec83748..d3d5600 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -99,11 +99,13 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 	int remove_state = 0;
- 	int contin = 0;
- 	int rollback = 0;
-+	int skip = 0;
- 	struct option options[] = {
- 		OPT__QUIET(&opts->quiet, N_("suppress progress reporting")),
- 		OPT_BOOLEAN(0, "quit", &remove_state, N_("end revert or cherry-pick sequence")),
- 		OPT_BOOLEAN(0, "continue", &contin, N_("resume revert or cherry-pick sequence")),
- 		OPT_BOOLEAN(0, "abort", &rollback, N_("cancel revert or cherry-pick sequence")),
-+		OPT_BOOLEAN(0, "skip", &skip, N_("skip current commit in the sequence")),
- 		OPT_BOOLEAN('n', "no-commit", &opts->no_commit, N_("don't automatically commit")),
- 		OPT_BOOLEAN('e', "edit", &opts->edit, N_("edit the commit message")),
- 		OPT_NOOP_NOARG('r', NULL),
-@@ -164,6 +166,8 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 		opts->subcommand = REPLAY_CONTINUE;
- 	else if (rollback)
- 		opts->subcommand = REPLAY_ROLLBACK;
-+	else if (skip)
-+		opts->subcommand = REPLAY_SKIP;
- 	else
- 		opts->subcommand = REPLAY_NONE;
- 
-@@ -174,6 +178,8 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 			this_operation = "--quit";
- 		else if (opts->subcommand == REPLAY_CONTINUE)
- 			this_operation = "--continue";
-+		else if (opts->subcommand == REPLAY_SKIP)
-+			this_operation = "--skip";
- 		else {
- 			assert(opts->subcommand == REPLAY_ROLLBACK);
- 			this_operation = "--abort";
-diff --git a/builtin/sequencer.c b/builtin/sequencer.c
-index 0f50942..2b1b30a 100644
---- a/builtin/sequencer.c
-+++ b/builtin/sequencer.c
-@@ -961,6 +961,28 @@ static int sequencer_continue(struct replay_opts *opts)
- 	return pick_commits(todo_list, opts);
- }
- 
-+static int sequencer_skip(struct replay_opts *opts)
++void add_rewritten(struct rewritten *list, unsigned char *from, unsigned char *to)
 +{
-+	const char *argv[4]; /* reset --hard HEAD + NULL */
-+	struct string_list merge_rr = STRING_LIST_INIT_DUP;
-+	int ret;
-+
-+	if (setup_rerere(&merge_rr, 0) >= 0) {
-+		rerere_clear(&merge_rr);
-+		string_list_clear(&merge_rr, 1);
++	struct rewritten_item *item;
++	if (list->nr + 1 >= list->alloc) {
++		list->alloc += 32;
++		list->items = xrealloc(list->items, list->alloc * sizeof(*list->items));
 +	}
-+
-+	argv[0] = "reset";
-+	argv[1] = "--hard";
-+	argv[2] = "HEAD";
-+	argv[3] = NULL;
-+	ret = run_command_v_opt(argv, RUN_GIT_CMD);
-+	if (ret)
-+		return ret;
-+
-+	return sequencer_continue(opts);
++	item = &list->items[list->nr];
++	hashcpy(item->from, from);
++	hashcpy(item->to, to);
++	list->nr++;
 +}
 +
- static int single_pick(struct commit *cmit, struct replay_opts *opts)
- {
- 	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
-@@ -991,6 +1013,8 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 		return sequencer_rollback(opts);
- 	if (opts->subcommand == REPLAY_CONTINUE)
- 		return sequencer_continue(opts);
-+	if (opts->subcommand == REPLAY_SKIP)
-+		return sequencer_skip(opts);
- 
- 	for (i = 0; i < opts->revs->pending.nr; i++) {
- 		unsigned char sha1[20];
-diff --git a/builtin/sequencer.h b/builtin/sequencer.h
-index e45411c..e69495a 100644
---- a/builtin/sequencer.h
-+++ b/builtin/sequencer.h
-@@ -15,7 +15,8 @@ enum replay_subcommand {
- 	REPLAY_NONE,
- 	REPLAY_REMOVE_STATE,
- 	REPLAY_CONTINUE,
--	REPLAY_ROLLBACK
-+	REPLAY_ROLLBACK,
-+	REPLAY_SKIP
- };
- 
- struct replay_opts {
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 33c5512..c43c327 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -511,4 +511,16 @@ test_expect_success 'commit descriptions in insn sheet are optional' '
- 	test_line_count = 4 commits
- '
- 
-+test_expect_success 'skip' '
-+	pristine_detach conflicting &&
-+	test_must_fail git cherry-pick initial..picked &&
++int store_rewritten(struct rewritten *list, const char *file)
++{
++	static struct lock_file lock;
++	struct strbuf buf = STRBUF_INIT;
++	int fd, i, ret = 0;
 +
-+	git checkout HEAD -- unrelated &&
-+	test_must_fail git cherry-pick --continue &&
-+	git cherry-pick --skip &&
++	fd = hold_lock_file_for_update(&lock, file, LOCK_DIE_ON_ERROR);
++	for (i = 0; i < list->nr; i++) {
++		struct rewritten_item *item = &list->items[i];
++		strbuf_addf(&buf, "%s %s\n", sha1_to_hex(item->from), sha1_to_hex(item->to));
++	}
++	if (write_in_full(fd, buf.buf, buf.len) < 0) {
++		error(_("Could not write to %s"), file);
++		ret = 1;
++		goto leave;
++	}
++	if (commit_lock_file(&lock) < 0) {
++		error(_("Error wrapping up %s."), file);
++		ret = 1;
++		goto leave;
++	}
++leave:
++	strbuf_release(&buf);
++	return ret;
++}
 +
-+	git rev-list initial..HEAD >commits &&
-+	test_line_count = 3 commits
-+'
++void load_rewritten(struct rewritten *list, const char *file)
++{
++	struct strbuf buf = STRBUF_INIT;
++	char *p;
++	int fd;
 +
- test_done
++	fd = open(file, O_RDONLY);
++	if (fd < 0)
++		return;
++	if (strbuf_read(&buf, fd, 0) < 0) {
++		close(fd);
++		strbuf_release(&buf);
++		return;
++	}
++	close(fd);
++
++	for (p = buf.buf; *p;) {
++		unsigned char from[20];
++		unsigned char to[20];
++		char *eol = strchrnul(p, '\n');
++		if (eol - p != 81)
++			/* wrong size */
++			break;
++		if (get_sha1_hex(p, from))
++			break;
++		if (get_sha1_hex(p + 41, to))
++			break;
++		add_rewritten(list, from, to);
++		p = *eol ? eol + 1 : eol;
++	}
++	strbuf_release(&buf);
++}
+diff --git a/builtin/rewrite.h b/builtin/rewrite.h
+new file mode 100644
+index 0000000..09e7222
+--- /dev/null
++++ b/builtin/rewrite.h
+@@ -0,0 +1,18 @@
++#ifndef REWRITE_H
++#define REWRITE_H
++
++struct rewritten_item {
++	unsigned char from[20];
++	unsigned char to[20];
++};
++
++struct rewritten {
++	struct rewritten_item *items;
++	unsigned int nr, alloc;
++};
++
++void add_rewritten(struct rewritten *list, unsigned char *from, unsigned char *to);
++int store_rewritten(struct rewritten *list, const char *file);
++void load_rewritten(struct rewritten *list, const char *file);
++
++#endif
 -- 
 1.8.3.698.g079b096
