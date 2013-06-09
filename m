@@ -1,84 +1,92 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 2/2] git.txt: document GIT_TRACE_PACKET
-Date: Sun,  9 Jun 2013 12:22:49 +0700
-Message-ID: <1370755369-30868-2-git-send-email-pclouds@gmail.com>
-References: <1370755369-30868-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] Move sequencer to builtin
+Date: Sun, 9 Jun 2013 01:26:24 -0400
+Message-ID: <20130609052624.GB561@sigill.intra.peff.net>
+References: <1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
+ <CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
+ <CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
+ <CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
+ <20130608164902.GA3109@elie.Belkin>
+ <CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
+ <20130608173447.GA4381@elie.Belkin>
+ <CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
+ <20130609014049.GA10375@google.com>
+ <CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 09 07:21:58 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 07:26:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlY4i-00087z-BE
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 07:21:56 +0200
+	id 1UlY9M-0002G7-6C
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 07:26:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751220Ab3FIFVu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 01:21:50 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:42459 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751007Ab3FIFVq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 01:21:46 -0400
-Received: by mail-pd0-f181.google.com with SMTP id 14so3607063pdj.40
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 22:21:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=uXg1RtrxtpKeTtvAPs3xKv2k2cY7bVFJyp7N3PpF6CI=;
-        b=Q9N86IsARTsbOlcbxr6eMBWQT+GxY5VP58UQigXV3pKmzp2rxK8Xdkcowc02qlV1fZ
-         TA/bHYkwJWUqpMVnj2gEQohUy9Zik2jkgIPWXZ810wYA1So4SoMAZAYxcwDelljz+fp7
-         tZPuxYAZqEY7N4rn/H3wxIAl4vDVZHH2Ei9W9FWrW2n3G23dTX6icfcSx82wteIuUAAM
-         7djgZjVIMGIGc8hA+RsLHqIlY6QzqzehHJe31kh8kPtuclHoBCl7HheRAlCOcT4FtKYD
-         1HZ0moxqmEWkH+BuYbDwXrC+D3CHIrTKn2Ew+sG+Unbap/wlVDFDFWNzEkbS+KlaC49F
-         i6iA==
-X-Received: by 10.68.107.225 with SMTP id hf1mr4942197pbb.130.1370755306123;
-        Sat, 08 Jun 2013 22:21:46 -0700 (PDT)
-Received: from lanh ([115.73.237.130])
-        by mx.google.com with ESMTPSA id xe9sm5334026pbc.21.2013.06.08.22.21.43
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 08 Jun 2013 22:21:45 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 09 Jun 2013 12:23:17 +0700
-X-Mailer: git-send-email 1.8.2.83.gc99314b
-In-Reply-To: <1370755369-30868-1-git-send-email-pclouds@gmail.com>
+	id S1751000Ab3FIF02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 01:26:28 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60225 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750817Ab3FIF01 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 01:26:27 -0400
+Received: (qmail 13266 invoked by uid 102); 9 Jun 2013 05:27:16 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 09 Jun 2013 00:27:16 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Jun 2013 01:26:24 -0400
+Content-Disposition: inline
+In-Reply-To: <CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226886>
 
-"This can help with debugging object negotiation or other protocol
-issues."
+On Sat, Jun 08, 2013 at 09:17:56PM -0500, Felipe Contreras wrote:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/git.txt | 5 +++++
- 1 file changed, 5 insertions(+)
+> > Definitely, yes.  Even if you look at the impact on code alone and
+> > don't care about the people, destroying a collegial work environment
+> > is harmful enough to the code to outweigh the (admittedly often
+> > useful) patches.
+> 
+> A collegial work environment is overrated, and proof of that the Linux
+> kernel, where honest and straight talk is the bread and butter of the
+> mailing list. And the Linux kernel is the most successful software
+> project in history by far. It's code that speaks.
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index c760918..72e9045 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -845,6 +845,11 @@ for further details.
- 	recorded. This may be helpful for troubleshooting some
- 	pack-related performance problems.
-=20
-+'GIT_TRACE_PACKET'::
-+	If this variable is set, it shows a trace of all packets
-+	coming in or out of a given program. This can help with
-+	debugging object negotiation or other protocol issues.
-+
- GIT_LITERAL_PATHSPECS::
- 	Setting this variable to `1` will cause Git to treat all
- 	pathspecs literally, rather than as glob patterns. For example,
---=20
-1.8.2.83.gc99314b
+Sorry, but I don't agree, and I want to publicly state my opinion so
+that Jonathan (and other bystanders on the list) knows that he is not
+alone in his opinions.
+
+I have consistently found your demeanor on the list to be very
+unfriendly and difficult to work with. It is one thing to have honest
+and straight talk, and another thing to be obstinate, unmindful of
+feedback (both with respect to technical details, as well as to
+communication styles), and disrespectful of other people.
+
+You have accused others of assuming you make comments in bad faith.
+Perhaps it is true that you are very pleasant and easy to work with in
+person, but in my opinion that is not the case, at least by email. I may
+be wrong, of course, and I certainly do not claim to be perfect myself.
+But I find it telling that many of the list participants seem to have
+had conflicts with you, and not with anyone else. So perhaps you may
+want to reconsider your style of communication.
+
+Unlike Jonathan, I would not ban you from the list. I do not believe in
+censoring anybody who is not a direct and constant nuisance (like a
+spammer). But personally I have a limited capacity for discussion with
+you, as it seems to have a knack for going back and forth, consuming a
+lot of time, and ending nowhere productive.
+
+It is certainly your choice about how you will communicate. But likewise
+it is the choice of readers and reviewers to choose how much of their
+time to give to your writings.
+
+-Peff
