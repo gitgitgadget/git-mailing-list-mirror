@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v2 10/15] for-each-ref: introduce format specifier %>(*) and %<(*)
-Date: Sun,  9 Jun 2013 23:24:29 +0530
-Message-ID: <1370800474-8940-11-git-send-email-artagnon@gmail.com>
+Subject: [PATCH v2 12/15] for-each-ref: introduce %(upstream:track[short])
+Date: Sun,  9 Jun 2013 23:24:31 +0530
+Message-ID: <1370800474-8940-13-git-send-email-artagnon@gmail.com>
 References: <1370800474-8940-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,209 +15,174 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uljrj-0006hW-J7
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:57:19 +0200
+	id 1Uljrk-0006hW-Ka
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:57:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751964Ab3FIR5F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 13:57:05 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:60307 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751934Ab3FIR5A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 13:57:00 -0400
-Received: by mail-pa0-f52.google.com with SMTP id kq13so790749pab.11
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 10:56:59 -0700 (PDT)
+	id S1751989Ab3FIR5K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 13:57:10 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:55176 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922Ab3FIR5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 13:57:04 -0400
+Received: by mail-pb0-f52.google.com with SMTP id xa12so6443350pbc.25
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 10:57:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=DT9mEksQG9BFNhaL/ywpK6SVXFc7NJ6EMvSoPzzZwVA=;
-        b=hbyjujyCINdxIfGbSPfLgLDhKTeLWFaoHKN/ChGoJk1fwV9sxR8k7dYnSU/0eUnRiI
-         0pbBxYIJvZk1NJ/LnLGEpwgamL+C6Rp7qkbvpkgTfOS3ekwicsqxnLkJkO8YdZL3iMm1
-         x7aTElTkxFTEUOm5KOm+lMX4/SCzeVZnDzWVA7IgnMfXf/RfaZ/5UlQlPtn7H8PiWPiF
-         1M4BX/cre3AgmuToclr5LUmmt9Lww9H4i9G7gY+dtY+GOuAjw6bkaEjXE4+6PLg0Izyn
-         Kz8z5XFsJtUJrqd8o5t8z9w6maZ2EsTsqXTtPngWltGZqv9w945KSwqr17lWXE4E/ZAt
-         QleA==
-X-Received: by 10.68.247.69 with SMTP id yc5mr3039654pbc.66.1370800619701;
-        Sun, 09 Jun 2013 10:56:59 -0700 (PDT)
+        bh=Ig8xAegVUm1EaWSXwCER7MbOH8uOqxt3pDTCUU+VqwQ=;
+        b=SPd4xCYKfZzqy7Qa1YhYWptHui1+sHpT+6Wi2qid3BCDbhvsAR8kINtgXMY6l6Hb+f
+         OtZn5Je0N8dnBsn5l8Zm36eB3PAKwz6s2ExkDLrU5FEsIBIQ1sVBvdgZ8wfOJRxkif82
+         Q6+tpYrScA1Dtiap2eVrm3bZ5/ukqoR8U9a+WqDaoFzar79PILbySuEJQGFU81IrxN0X
+         VtJHiIU8g8/1NzhLIhyek1pnQmOiZb3kKD8QJUInrK1uHtxkJ6GPJzBFG6KL/D1+Tlds
+         4tHGk5ecA82quYXiqmL6ORpe5VAzkZURnzWVAB5FQljeqrbddxkkec4SpIWU2Xc5y21x
+         c9Dg==
+X-Received: by 10.68.254.225 with SMTP id al1mr7002158pbd.69.1370800624247;
+        Sun, 09 Jun 2013 10:57:04 -0700 (PDT)
 Received: from localhost.localdomain ([122.164.213.38])
-        by mx.google.com with ESMTPSA id qp4sm7275815pbc.41.2013.06.09.10.56.57
+        by mx.google.com with ESMTPSA id qp4sm7275815pbc.41.2013.06.09.10.57.02
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 10:56:59 -0700 (PDT)
+        Sun, 09 Jun 2013 10:57:03 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.247.g485169c
 In-Reply-To: <1370800474-8940-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227070>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+Introduce %(upstream:track) to display "[ahead M, behind N]" and
+%(upstream:trackshort) to display "=3D", ">", "<", or "<>"
+appropriately (inspired by the contrib/completion/git-prompt.sh).
 
-Pretty placeholders %>(N) and %<(N) require a user provided width N,
-which makes sense because the commit chain could be really long and the
-user only needs to look at a few at the top, going to the end just to
-calculate the best width wastes CPU cycles.
+Now you can use the following format in for-each-ref:
 
-for-each-ref is different; the display set is small, and we display the=
-m
-all at once. We even support sorting, which goes through all display
-items anyway.  This patch introduces new %>(*) and %<(*), which are
-supposed to be followed immediately by %(fieldname) (i.e. original
-for-each-ref specifiers, not ones coming from pretty.c). They calculate
-the best width for the %(fieldname), ignoring ansi escape sequences if
-any.
+  %C(green)%(refname:short)%C(reset)%(upstream:trackshort)
 
-[rr: documentation]
+to display refs with terse tracking information.
 
+Note that :track and :trackshort only work with upstream, and error out
+when used with anything else.
+
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  7 +++++++
- builtin/for-each-ref.c             | 38 ++++++++++++++++++++++++++++++=
-++++++++
- t/t6300-for-each-ref.sh            | 20 ++++++++++++++++++++
- 3 files changed, 65 insertions(+)
+ Documentation/git-for-each-ref.txt |  6 +++++-
+ builtin/for-each-ref.c             | 42 ++++++++++++++++++++++++++++++=
+++++++--
+ 2 files changed, 45 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for=
 -each-ref.txt
-index d8ad758..8cbc08c 100644
+index 8d982e3..d666ebd 100644
 --- a/Documentation/git-for-each-ref.txt
 +++ b/Documentation/git-for-each-ref.txt
-@@ -47,6 +47,10 @@ OPTIONS
- 	are hex digits interpolates to character with hex code
- 	`xx`; for example `%00` interpolates to `\0` (NUL),
- 	`%09` to `\t` (TAB) and `%0a` to `\n` (LF).
-++
-+Placeholders `%<(*)` and `%>(*)` work like `%<(<N>)` and `%>(<N>)`
-+respectively, except that the width of the next placeholder is
-+calculated.
+@@ -119,7 +119,11 @@ objectname::
+ upstream::
+ 	The name of a local ref which can be considered ``upstream''
+ 	from the displayed ref. Respects `:short` in the same way as
+-	`refname` above.
++	`refname` above.  Additionally respects `:track` to show
++	"[ahead N, behind M]" and `:trackshort` to show the terse
++	version (like the prompt) ">", "<", "<>", or "=3D".  Has no
++	effect if the ref does not have tracking information
++	associated with it.
 =20
- <pretty>::
- 	A format string with supporting placeholders described in the
-@@ -68,6 +72,9 @@ Caveats:
- 3. Only the placeholders inherited from `<format>` will respect
-    quoting settings.
-=20
-+3. Only the placeholders inherited from `<format>` will work with the
-+   alignment placeholders `%<(*)` and '%>(*)`.
-+
- <pattern>...::
- 	If one or more patterns are given, only refs are shown that
- 	match against at least one pattern, either using fnmatch(3) or
+ HEAD::
+ 	Useful to indicate the currently checked out branch.  Is '*'
 diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 39454fb..da479d1 100644
+index 3d357a9..72b33ee 100644
 --- a/builtin/for-each-ref.c
 +++ b/builtin/for-each-ref.c
-@@ -9,6 +9,7 @@
- #include "quote.h"
- #include "parse-options.h"
- #include "remote.h"
-+#include "utf8.h"
+@@ -628,6 +628,7 @@ static void populate_value(struct refinfo *ref)
+ 	int eaten, i;
+ 	unsigned long size;
+ 	const unsigned char *tagged;
++	int upstream_present =3D 0;
 =20
- /* Quoting styles */
- #define QUOTE_NONE 0
-@@ -966,10 +967,30 @@ static void show_refs(struct refinfo **refs, int =
-maxcount,
- }
+ 	ref->value =3D xcalloc(sizeof(struct atom_value), used_atom_cnt);
 =20
- struct format_one_atom_context {
-+	struct refinfo **refs;
-+	int maxcount;
+@@ -645,6 +646,7 @@ static void populate_value(struct refinfo *ref)
+ 		int deref =3D 0;
+ 		const char *refname;
+ 		const char *formatp;
++		struct branch *branch;
+=20
+ 		if (*name =3D=3D '*') {
+ 			deref =3D 1;
+@@ -656,7 +658,6 @@ static void populate_value(struct refinfo *ref)
+ 		else if (!prefixcmp(name, "symref"))
+ 			refname =3D ref->symref ? ref->symref : "";
+ 		else if (!prefixcmp(name, "upstream")) {
+-			struct branch *branch;
+ 			/* only local branches may have an upstream */
+ 			if (prefixcmp(ref->refname, "refs/heads/"))
+ 				continue;
+@@ -666,6 +667,7 @@ static void populate_value(struct refinfo *ref)
+ 			    !branch->merge[0]->dst)
+ 				continue;
+ 			refname =3D branch->merge[0]->dst;
++			upstream_present =3D 1;
+ 		}
+ 		else if (!strcmp(name, "flag")) {
+ 			char buf[256], *cp =3D buf;
+@@ -683,6 +685,7 @@ static void populate_value(struct refinfo *ref)
+ 		} else if (!strcmp(name, "HEAD")) {
+ 			const char *head;
+ 			unsigned char sha1[20];
 +
- 	struct refinfo *info;
- 	int quote_style;
- };
-=20
-+static unsigned int get_atom_width(struct format_one_atom_context *ctx=
-,
-+				   const char *start, const char *end)
-+{
-+	struct strbuf sb =3D STRBUF_INIT;
-+	int i, atom =3D parse_atom(start, end);
-+	unsigned int len =3D 0, sb_len;
-+	for (i =3D 0; i < ctx->maxcount; i++) {
-+		print_value(&sb, ctx->refs[i], atom, ctx->quote_style);
-+		sb_len =3D utf8_strnwidth(sb.buf, sb.len, 1);
-+		if (sb_len > len)
-+			len =3D sb_len;
-+		strbuf_reset(&sb);
-+	}
-+	strbuf_release(&sb);
-+	return len;
-+}
+ 			head =3D resolve_ref_unsafe("HEAD", sha1, 1, NULL);
+ 			if (!strcmp(ref->refname, head))
+ 				v->s =3D "*";
+@@ -695,11 +698,46 @@ static void populate_value(struct refinfo *ref)
+ 		formatp =3D strchr(name, ':');
+ 		/* look for "short" refname format */
+ 		if (formatp) {
++			int num_ours, num_theirs;
 +
- static size_t format_one_atom(struct strbuf *sb, const char *placehold=
-er,
- 			      void *format_context, void *user_data,
- 			      struct strbuf *subst)
-@@ -982,6 +1003,21 @@ static size_t format_one_atom(struct strbuf *sb, =
-const char *placeholder,
- 		return 1;
- 	}
-=20
-+	/*
-+	 * Substitute %>(*)%(atom) and friends with real width.
-+	 */
-+	if (*placeholder =3D=3D '>' || *placeholder =3D=3D '<') {
-+		const char *star =3D placeholder + 1;
-+		if (!prefixcmp(star, "(*)%(") &&
-+		    ((ep =3D strchr(star + strlen("(*)%("), ')')) !=3D NULL)) {
-+			star++;
-+			strbuf_addf(subst, "%c(%u)",
-+				    *placeholder,
-+				    get_atom_width(ctx, star + strlen("*)%("), ep));
-+			return 1 + strlen("(*)");
-+		}
-+	}
+ 			formatp++;
+ 			if (!strcmp(formatp, "short"))
+ 				refname =3D shorten_unambiguous_ref(refname,
+ 						      warn_ambiguous_refs);
+-			else
++			else if (!strcmp(formatp, "track") &&
++				!prefixcmp(name, "upstream")) {
++				char buf[40];
 +
- 	if (*placeholder !=3D '(')
- 		return 0;
-=20
-@@ -1008,6 +1044,8 @@ static void show_pretty_refs(struct refinfo **ref=
-s, int maxcount,
- 	ctx.abbrev =3D DEFAULT_ABBREV;
- 	ctx.format =3D format_one_atom;
- 	ctx.user_data =3D &fctx;
-+	fctx.refs =3D refs;
-+	fctx.maxcount =3D maxcount;
- 	fctx.quote_style =3D quote_style;
- 	for (i =3D 0; i < maxcount; i++) {
- 		struct commit *commit =3D NULL;
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index d39e0b4..160018c 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -196,6 +196,26 @@ test_pretty head '%<(20)%(committername) end' 'C O=
- Mitter           end'
- test_pretty head '%>(20)%(committername) end' '          C O Mitter en=
-d'
- test_pretty head '%><(20)%(committername) end' '     C O Mitter      e=
-nd'
-=20
-+test_expect_success '%<(*)%(refname) A' '
-+	git for-each-ref --pretty=3D"%<(*)%(refname) A" >actual &&
-+	cat >expected <<EOF &&
-+refs/heads/master          A
-+refs/remotes/origin/master A
-+refs/tags/testtag          A
-+EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success '%>(*)%(refname) A' '
-+	git for-each-ref --pretty=3D"%>(*)%(refname) A" >actual &&
-+	qz_to_tab_space >expected <<EOF &&
-+Z        refs/heads/master A
-+refs/remotes/origin/master A
-+Z        refs/tags/testtag A
-+EOF
-+	test_cmp expected actual
-+'
-+
- test_pretty tag '%(refname)' refs/tags/testtag
- test_pretty tag '%(upstream)' ''
- test_pretty tag '%(objecttype)' tag
++				if (!upstream_present)
++					continue;
++				if (!stat_tracking_info(branch, &num_ours, &num_theirs))
++					v->s =3D "";
++				else if (!num_ours) {
++					sprintf(buf, "[behind %d]", num_theirs);
++					v->s =3D xstrdup(buf);
++				} else if (!num_theirs) {
++					sprintf(buf, "[ahead %d]", num_ours);
++					v->s =3D xstrdup(buf);
++				} else {
++					sprintf(buf, "[ahead %d, behind %d]",
++						num_ours, num_theirs);
++					v->s =3D xstrdup(buf);
++				}
++				continue;
++			} else if (!strcmp(formatp, "trackshort") &&
++				!prefixcmp(name, "upstream")) {
++				if (!upstream_present)
++					continue;
++				if (!stat_tracking_info(branch, &num_ours, &num_theirs))
++					v->s =3D "=3D";
++				else if (!num_ours)
++					v->s =3D "<";
++				else if (!num_theirs)
++					v->s =3D ">";
++				else
++					v->s =3D "<>";
++				continue;
++			} else
+ 				die("unknown %.*s format %s",
+ 				    (int)(formatp - name), name, formatp);
+ 		}
 --=20
 1.8.3.247.g485169c
