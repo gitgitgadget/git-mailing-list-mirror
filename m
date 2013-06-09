@@ -1,112 +1,102 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v4 20/45] cherry-pick: copy notes and run hooks
-Date: Sun, 9 Jun 2013 12:29:31 -0500
-Message-ID: <CAMP44s0c-MCHSQSrx7qJaTSMTArv-Sfpi9nZSvPjmrLfVgMpQQ@mail.gmail.com>
-References: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
-	<1370796057-25312-21-git-send-email-felipe.contreras@gmail.com>
-	<871u8bdwrb.fsf@hexa.v.cablecom.net>
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: Re: [PATCH] build: get rid of the notion of a git library
+Date: Sun, 09 Jun 2013 19:30:31 +0200
+Message-ID: <51B4BBB7.8060807@lyx.org>
+References: <1370712574-27688-1-git-send-email-felipe.contreras@gmail.com> <CALkWK0mA7MXQv1k5bFpZLARDOHxU5kzKFXzcyUfb6NLZZY-=FA@mail.gmail.com> <CAMP44s0cozMsTo7KQAjnqkqmvMwMw9D3SZrVxg48MOXkH9UQJQ@mail.gmail.com> <CALkWK0=7PRndNc7XQ-PCPbVCp9vck909bA561JhQG6uXXj1n4g@mail.gmail.com> <20130609151235.GA22905@serenity.lan> <CAMP44s0L9nQxp5OeK8uT4Ls5WUerCjVpR9uONUcOwvTD6k7Jfg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: John Keeping <john@keeping.me.uk>,
+	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Jun 09 19:29:43 2013
+	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 19:30:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UljQv-0003m3-RW
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:29:38 +0200
+	id 1UljRv-0004Sz-Su
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:30:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751228Ab3FIR3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 13:29:34 -0400
-Received: from mail-la0-f41.google.com ([209.85.215.41]:47226 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750987Ab3FIR3d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 13:29:33 -0400
-Received: by mail-la0-f41.google.com with SMTP id fn20so5078440lab.14
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 10:29:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=O5iLKop9TV/txGpy2w3NeWXG1kQP6OL49fQCYpA03XQ=;
-        b=L+wMD69wXLTRbl/GA+9roB3ctIO6pzg6XIu9ITQI/Cpc1EpMuZgrBlfltRDVDLRvsI
-         h6rB7sgKafxbloHkpxkw2Hw4cqus3NiPKO3dEdcE7pFy2XaU6Epppf1GwCW8ym30uxdA
-         AfwQzIg1Fv6qcF8hxHW2Z+E8j+x3CNYMV0/X/IJC4Io+RojtgoX1W+MWAx7UjUg3ICRF
-         1eTXUXAxfY8j/HatJ61CTW4Xs7YJ5YRsmAzBJIp4XI8ot6vy8tVAUqwFnloGgTv5DEJ3
-         JU5R7sEUD7Z3EGFIKkXZ0gIkQjQhYyc+aRohQmIZu3ug2sFEgwjsmnj73dVSwkFgiNjN
-         Fe9A==
-X-Received: by 10.112.156.5 with SMTP id wa5mr4903749lbb.63.1370798971860;
- Sun, 09 Jun 2013 10:29:31 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 10:29:31 -0700 (PDT)
-In-Reply-To: <871u8bdwrb.fsf@hexa.v.cablecom.net>
+	id S1751459Ab3FIRaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 13:30:35 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:54431 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002Ab3FIRae (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 13:30:34 -0400
+Received: by mail-wi0-f182.google.com with SMTP id m6so314955wiv.15
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 10:30:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=hTywISl5HXT56ETCb0hWdjl9wKDMfzCfQS4W57opPsg=;
+        b=gtjUVeUOnEgZ8T3DQ6YXStrVyIRulS+mpzxz8NDub8xjhxl73DvDW1HrEzO/u2r50m
+         J3uG/waQMcadDpPbvHsobl4kwc4QwyG1IK61zwctZUnpkU3nV2JspZxLGSvp5qv0858S
+         FiDCBbbwF6FS4fq5wSJ7v6TOEdGYUiKWe87SthOH2OVDtAMt/EkrKcbQcRBvPpbcYO1w
+         kSKlrV5mM1yI5q5KzFkJwsC3IWNUJnqj3jlF97ThAqhRzRH6Qz9dPPGQ9ZMvgjxc1pZl
+         2TNpj2FL4fwVFwaaY0VU+O0czGyyrIK6sRzN4k2eAFz6XQN3Bdv7fFANHo6aOjArBoi/
+         BCvA==
+X-Received: by 10.180.13.5 with SMTP id d5mr1476153wic.56.1370799032925;
+        Sun, 09 Jun 2013 10:30:32 -0700 (PDT)
+Received: from [192.168.1.5] (g245184.upc-g.chello.nl. [80.57.245.184])
+        by mx.google.com with ESMTPSA id en3sm7099436wid.1.2013.06.09.10.30.31
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 09 Jun 2013 10:30:32 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <CAMP44s0L9nQxp5OeK8uT4Ls5WUerCjVpR9uONUcOwvTD6k7Jfg@mail.gmail.com>
+X-Gm-Message-State: ALoCoQl9dMhMZdj5SQ1h5F+MBWQ37A1dU+pAGgFjuSxxlVqWqiHBJMwwnb/PLZU+vEIDF9nP61C1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227038>
 
-On Sun, Jun 9, 2013 at 12:22 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Op 9-6-2013 17:40, Felipe Contreras schreef:
+> On Sun, Jun 9, 2013 at 10:12 AM, John Keeping <john@keeping.me.uk> wrote:
+>> On Sun, Jun 09, 2013 at 08:26:32PM +0530, Ramkumar Ramachandra wrote:
+>>> Felipe Contreras wrote:
+>>>> The plan is simple; make libgit.a a proper library, starting by
+>>>> clarifying what goes into libgit.a, and what doesn't. If there's any
+>>>> hopes of ever having a public library, it's clear what code doesn't
+>>>> belong in libgit.a; code that is meant for builtins, that code belongs
+>>>> in builtins/lib.a, or similar.
+>>>>
+>>>> Give this a try:
+>>>>
+>>>> --- a/sequencer.c
+>>>> +++ b/sequencer.c
+>>>>
+>>>> libgit.a(sequencer.o): In function `copy_notes':
+>>>> /home/felipec/dev/git/sequencer.c:110: undefined reference to
+>>>> `init_copy_notes_for_rewrite'
+>>>> /home/felipec/dev/git/sequencer.c:114: undefined reference to
+>>>> `finish_copy_notes_for_rewrite'
+>>> This is a good example: yes, I'm convinced that the code does need to
+>>> be reorganized.  Please resend your {sequencer.c ->
+>>> builtin/sequencer.c} patch with this example as the rationale, and
+>>> let's work towards improving libgit.a.
+>> Why should sequencer.c move into builtin/ to solve this?  Why not pull
+>> init_copy_notes_for_rewrite and finish_copy_notes_for_rewrite up into
+>> notes.c?
+> Because finish_copy_notes_for_rewrite is only useful for builtin
+> commands, so it belongs in builtin/. If there's any meaning to the
+> ./*.o vs. builtin/*.o divide, it's for that. Otherwise we should just
+> squash all objects into libgit.a and be done with it.
 >
->> +static void finish(struct replay_opts *opts)
->> +{
->> +     if (opts->action != REPLAY_PICK)
->> +             return;
->> +
->> +     run_rewrite_hook(&rewritten, "cherry-pick");
->> +     copy_rewrite_notes(&rewritten, "cherry-pick");
->> +}
->> +
->
-> Ok, so I see that with the previous two commits, you automatically get
-> handling of the notes.rewrite.cherry-pick variable and friends.  This is
-> good.
->
-> However, there are some open points:
->
-> * The docs in git-config(1) "notes.rewrite.cherry-pick" and githooks(5)
->   "post-rewrite" and are now stale in so far as they contain a list of
->   commands doing rewriting.
+I think that libgit.a should contain all code to be able to carry out 
+all functions of git. The stuff in builtin/ is just a command-line user 
+interface. Whether or not sequencer should be in builtin depends on 
+whether the sequencer is only part of this command-line user interface.
 
-Fine.
+I think that the sequencer code is at the moment unusable if you do not 
+use the code in builtin/ so that would advocate to move it into 
+builtin/. If sequencer is in libgit, and I write my own (graphical) user 
+interface, I expect to be able to use it.
 
---- a/builtin/sequencer.c
-+++ b/builtin/sequencer.c
-@@ -28,9 +28,9 @@ static void finish(struct replay_opts *opts)
-        if (opts->action != REPLAY_PICK)
-                return;
-
--       name = opts->action_name ? opts->action_name : "cherry-pick";
-+       name = opts->action_name
-
--       if (!*name)
-+       if (!name || !*name)
-                return;
-
-        run_rewrite_hook(&rewritten, name);
-
-Now, we won't run when 'git cherry-pick' is called, only when an
-action-name is specified; when called from 'git rebase'.
-
-> * This pretends to be cherry-pick even when the hook is called from
->   rebase.
-
-No.
-
-http://mid.gmane.org/1370796057-25312-31-git-send-email-felipe.contreras@gmail.com
-
-> * githooks(5) documents explicitly that by the time post-rewrite is
->   called, the notes have been rewritten.  Your change does it in the
->   opposite order.
-
-OK.
-
-But it doesn't matter, because the patch won't be applied.
-
--- 
-Felipe Contreras
+Vincent
