@@ -1,74 +1,59 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: [PATCH] Document .git/modules
-Date: Sun,  9 Jun 2013 12:37:49 +0200
-Message-ID: <1370774269-3258-1-git-send-email-iveqy@iveqy.com>
-Cc: iveqy@iveqy.com, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 09 12:35:47 2013
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] Document .git/modules
+Date: Sun, 9 Jun 2013 06:59:17 -0400
+Message-ID: <CAPig+cTHFcvWyoQMConxRTgEz4pq4_3Y-abFp8xAPjsdHniQ8Q@mail.gmail.com>
+References: <1370774269-3258-1-git-send-email-iveqy@iveqy.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 12:59:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlcyP-0008WS-SW
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 12:35:46 +0200
+	id 1UldLU-00055X-Lw
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 12:59:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769Ab3FIKfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 06:35:41 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:59708 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750853Ab3FIKfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 06:35:40 -0400
-Received: by mail-la0-f42.google.com with SMTP id eb20so4895797lab.29
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 03:35:38 -0700 (PDT)
+	id S1752222Ab3FIK7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 06:59:19 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:53534 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751785Ab3FIK7S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 06:59:18 -0400
+Received: by mail-la0-f50.google.com with SMTP id dy20so2675051lab.37
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 03:59:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=SiR79TMh3/g1KgJEi3cm2g+DZfDev+UFBXLuLw7Puug=;
-        b=L+YLgnkbK+/aAtx595OaCn46M+Wu6eMcRSwDfE12yxQyWIrvEaBoWF7egOMM0l4Tda
-         CL4yGVApleGxf3fwj+mA/qT7aO1Ayetem47YZgmUyLemNWs/0u0AyxG1dCeCWVonVho+
-         OKb/+pzHDGsIlzr7SFkVH28pCuzXCZPU3Gy8nGgsEK4ifzALw/Zi/HsdfSvrVChv/fdE
-         Oe7KG38C8uCJFaePYXMmq9nd5WYZRSqpOf5QJaOkbdcOLARBLK/6I/NO5lUjN7QIo/5b
-         6+aMtIyf+ig4ZRuxJhQTvoQXEvD5+avJcCRj1dQQzBziu8U3rpVLiiFxqQkWpoOWgstv
-         kG6w==
-X-Received: by 10.152.18.162 with SMTP id x2mr2824652lad.26.1370774138451;
-        Sun, 09 Jun 2013 03:35:38 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id oi3sm3815217lbb.6.2013.06.09.03.35.37
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 03:35:37 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1Uld0r-0000rC-GN; Sun, 09 Jun 2013 12:38:17 +0200
-X-Mailer: git-send-email 1.8.1.5
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=0jwjgBENKgSz9OQKbYd8AUmQu4gKuJqqwra5u3kARvA=;
+        b=OUeJwP6f0PebcXcL6CLqz4J8WaRPRugMHW4+lgUNReVH8Yf5H4t1/5GBU7q6KVdPyq
+         aLdrJXIQ/shODsUKlJ0gS61+efkPVwjGefiO332T5oDsROTBYghAqdGjw4+uu4wuALMo
+         88mGlKtQ7bTFSwMdSgcRcDU5h+W0tZ+syOyH/TM75r6FdlBnr+HoSLitU1RE/OHbZA3O
+         RQq3mkZaT4PbVVNDdJv7/cifYfXSOq9k53VAcM04ech95K30gsvd2iQ8FJ+oLx4EukPN
+         U1yHRprtKouzmgi8sTC/fgs26TCFehYGfgW1C+uh/ghTOumgwOfOw126oiYP+44eHVbS
+         FCQA==
+X-Received: by 10.112.219.133 with SMTP id po5mr4351925lbc.80.1370775557232;
+ Sun, 09 Jun 2013 03:59:17 -0700 (PDT)
+Received: by 10.114.161.4 with HTTP; Sun, 9 Jun 2013 03:59:17 -0700 (PDT)
+In-Reply-To: <1370774269-3258-1-git-send-email-iveqy@iveqy.com>
+X-Google-Sender-Auth: Uwkl01A1E4dHXJVGVGtaIZgoFxw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226951>
 
-A note in the begging of this document describe the behavior already.
-This patch just add where to find the repositories.
+On Sun, Jun 9, 2013 at 6:37 AM, Fredrik Gustafsson <iveqy@iveqy.com> wrote:
+> A note in the begging of this document describe the behavior already.
 
-Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
----
- Documentation/gitrepository-layout.txt | 3 +++
- 1 file changed, 3 insertions(+)
+s/begging/beginning/
+s/describe/describes/
 
-diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
-index d6f3393..aa03882 100644
---- a/Documentation/gitrepository-layout.txt
-+++ b/Documentation/gitrepository-layout.txt
-@@ -211,6 +211,9 @@ shallow::
- 	and maintained by shallow clone mechanism.  See `--depth`
- 	option to linkgit:git-clone[1] and linkgit:git-fetch[1].
- 
-+modules::
-+	Contains the git-repositories of the submodules.
-+
- SEE ALSO
- --------
- linkgit:git-init[1],
--- 
-1.8.1.5
+> This patch just add where to find the repositories.
+
+s/add/adds/
+
+> Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
