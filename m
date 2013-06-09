@@ -1,102 +1,76 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: Re: [PATCH] build: get rid of the notion of a git library
-Date: Sun, 09 Jun 2013 19:30:31 +0200
-Message-ID: <51B4BBB7.8060807@lyx.org>
-References: <1370712574-27688-1-git-send-email-felipe.contreras@gmail.com> <CALkWK0mA7MXQv1k5bFpZLARDOHxU5kzKFXzcyUfb6NLZZY-=FA@mail.gmail.com> <CAMP44s0cozMsTo7KQAjnqkqmvMwMw9D3SZrVxg48MOXkH9UQJQ@mail.gmail.com> <CALkWK0=7PRndNc7XQ-PCPbVCp9vck909bA561JhQG6uXXj1n4g@mail.gmail.com> <20130609151235.GA22905@serenity.lan> <CAMP44s0L9nQxp5OeK8uT4Ls5WUerCjVpR9uONUcOwvTD6k7Jfg@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v4 42/45] add tests for rebasing merged history
+Date: Sun, 9 Jun 2013 12:31:45 -0500
+Message-ID: <CAMP44s30YkE5i7B==pyB8zkNxu=YoGvP1=V_2LqOe_frXV+cfQ@mail.gmail.com>
+References: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
+	<1370796057-25312-43-git-send-email-felipe.contreras@gmail.com>
+	<87wqq3ci1n.fsf@hexa.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: John Keeping <john@keeping.me.uk>,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 09 19:30:44 2013
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Martin von Zweigbergk <martinvonz@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Jun 09 19:31:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UljRv-0004Sz-Su
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:30:40 +0200
+	id 1UljT5-0005KO-4V
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:31:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459Ab3FIRaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 13:30:35 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:54431 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751002Ab3FIRae (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 13:30:34 -0400
-Received: by mail-wi0-f182.google.com with SMTP id m6so314955wiv.15
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 10:30:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=hTywISl5HXT56ETCb0hWdjl9wKDMfzCfQS4W57opPsg=;
-        b=gtjUVeUOnEgZ8T3DQ6YXStrVyIRulS+mpzxz8NDub8xjhxl73DvDW1HrEzO/u2r50m
-         J3uG/waQMcadDpPbvHsobl4kwc4QwyG1IK61zwctZUnpkU3nV2JspZxLGSvp5qv0858S
-         FiDCBbbwF6FS4fq5wSJ7v6TOEdGYUiKWe87SthOH2OVDtAMt/EkrKcbQcRBvPpbcYO1w
-         kSKlrV5mM1yI5q5KzFkJwsC3IWNUJnqj3jlF97ThAqhRzRH6Qz9dPPGQ9ZMvgjxc1pZl
-         2TNpj2FL4fwVFwaaY0VU+O0czGyyrIK6sRzN4k2eAFz6XQN3Bdv7fFANHo6aOjArBoi/
-         BCvA==
-X-Received: by 10.180.13.5 with SMTP id d5mr1476153wic.56.1370799032925;
-        Sun, 09 Jun 2013 10:30:32 -0700 (PDT)
-Received: from [192.168.1.5] (g245184.upc-g.chello.nl. [80.57.245.184])
-        by mx.google.com with ESMTPSA id en3sm7099436wid.1.2013.06.09.10.30.31
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 10:30:32 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <CAMP44s0L9nQxp5OeK8uT4Ls5WUerCjVpR9uONUcOwvTD6k7Jfg@mail.gmail.com>
-X-Gm-Message-State: ALoCoQl9dMhMZdj5SQ1h5F+MBWQ37A1dU+pAGgFjuSxxlVqWqiHBJMwwnb/PLZU+vEIDF9nP61C1
+	id S1751392Ab3FIRbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 13:31:47 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:61396 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002Ab3FIRbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 13:31:46 -0400
+Received: by mail-lb0-f180.google.com with SMTP id o10so3270952lbi.11
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 10:31:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5nxO3T5Cxd3z2QaKlkI83gvQL/GXaomfddUkU7NwCJ0=;
+        b=sYPEJK/0wiHpBPhC6TI2iZGfMPmYWYUnnXWG2jka+vWdCYq/Bo+TnvxtxKO3KoQFso
+         Nw8w+TQNIz4h+gcRpqSHms8jzMNy9eyHrL/7cHGnaIT8Q4xSion90hfkZ9oGef06YKzs
+         6rpaNJ+8FYddwbFO0mb/+qzPi1p38gNG7kcGHl56KIm8QpP9rZQ3lIneonOm+IoPurJJ
+         V4E7CMLEJ2+DoxdtTQfc6xRWFYQ164fQPNZJ9PMdy3hqfGXQgu5evlIdKQIM95kcDGaF
+         hrMt5rK7YIjprj+/q0dfBV5fvhe1I27cRiORCEE4xjAZUnvby0NEFv8/T5xblxioWSzp
+         rFqw==
+X-Received: by 10.112.166.67 with SMTP id ze3mr5009577lbb.25.1370799105194;
+ Sun, 09 Jun 2013 10:31:45 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 10:31:45 -0700 (PDT)
+In-Reply-To: <87wqq3ci1n.fsf@hexa.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227039>
 
-Op 9-6-2013 17:40, Felipe Contreras schreef:
-> On Sun, Jun 9, 2013 at 10:12 AM, John Keeping <john@keeping.me.uk> wrote:
->> On Sun, Jun 09, 2013 at 08:26:32PM +0530, Ramkumar Ramachandra wrote:
->>> Felipe Contreras wrote:
->>>> The plan is simple; make libgit.a a proper library, starting by
->>>> clarifying what goes into libgit.a, and what doesn't. If there's any
->>>> hopes of ever having a public library, it's clear what code doesn't
->>>> belong in libgit.a; code that is meant for builtins, that code belongs
->>>> in builtins/lib.a, or similar.
->>>>
->>>> Give this a try:
->>>>
->>>> --- a/sequencer.c
->>>> +++ b/sequencer.c
->>>>
->>>> libgit.a(sequencer.o): In function `copy_notes':
->>>> /home/felipec/dev/git/sequencer.c:110: undefined reference to
->>>> `init_copy_notes_for_rewrite'
->>>> /home/felipec/dev/git/sequencer.c:114: undefined reference to
->>>> `finish_copy_notes_for_rewrite'
->>> This is a good example: yes, I'm convinced that the code does need to
->>> be reorganized.  Please resend your {sequencer.c ->
->>> builtin/sequencer.c} patch with this example as the rationale, and
->>> let's work towards improving libgit.a.
->> Why should sequencer.c move into builtin/ to solve this?  Why not pull
->> init_copy_notes_for_rewrite and finish_copy_notes_for_rewrite up into
->> notes.c?
-> Because finish_copy_notes_for_rewrite is only useful for builtin
-> commands, so it belongs in builtin/. If there's any meaning to the
-> ./*.o vs. builtin/*.o divide, it's for that. Otherwise we should just
-> squash all objects into libgit.a and be done with it.
+On Sun, Jun 9, 2013 at 12:25 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-I think that libgit.a should contain all code to be able to carry out 
-all functions of git. The stuff in builtin/ is just a command-line user 
-interface. Whether or not sequencer should be in builtin depends on 
-whether the sequencer is only part of this command-line user interface.
+>> +#TODO: make order consistent across all flavors of rebase
+>> +test_run_rebase success 'd e n o' ''
+>> +test_run_rebase success 'd e n o' -m
+>> +test_run_rebase success 'd n o e' -i
+>
+> [45/45] would seem to imply that these tests fail as of this patch.  Is
+> that correct?
+>
+> If so, please either squash that change or move the test further up
+> marked as 'failure'.
 
-I think that the sequencer code is at the moment unusable if you do not 
-use the code in builtin/ so that would advocate to move it into 
-builtin/. If sequencer is in libgit, and I write my own (graphical) user 
-interface, I expect to be able to use it.
+I won't. The whole purpose of the last patch is to show these tests are fixed.
 
-Vincent
+Martin von Zweigbergk's patch series is independent of this one, I
+merely added it to show the above.
+
+Eventually Martin's patch series will be merged, while mine probably won't.
+
+-- 
+Felipe Contreras
