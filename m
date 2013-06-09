@@ -1,87 +1,81 @@
-From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 2/2] read-cache: free cache in discard_index
-Date: Sun,  9 Jun 2013 19:39:18 +0200
-Message-ID: <1370799558-18188-2-git-send-email-rene.scharfe@lsrfire.ath.cx>
-References: <1370799558-18188-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] Move sequencer to builtin
+Date: Sun, 9 Jun 2013 13:40:49 -0400
+Message-ID: <20130609174049.GA1039@sigill.intra.peff.net>
+References: <CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
+ <CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
+ <20130608164902.GA3109@elie.Belkin>
+ <CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
+ <20130608173447.GA4381@elie.Belkin>
+ <CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
+ <20130609014049.GA10375@google.com>
+ <CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
+ <20130609052624.GB561@sigill.intra.peff.net>
+ <CAMP44s3NhNUuCvW37UaMo9KbHHxZqBE8S15h845vtRi89Bu6WA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Stephen Boyd <sboyd@codeaurora.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 09 19:39:33 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 19:41:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UljaU-0002hH-Dt
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:39:30 +0200
+	id 1Uljbt-0003ml-Rg
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:40:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515Ab3FIRj0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 13:39:26 -0400
-Received: from india601.server4you.de ([85.25.151.105]:59096 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751030Ab3FIRjZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 13:39:25 -0400
-Received: from debian.Speedport_W_504V_Typ_A (p4FFD9DEC.dip0.t-ipconnect.de [79.253.157.236])
-	by india601.server4you.de (Postfix) with ESMTPSA id 2E8D435F;
-	Sun,  9 Jun 2013 19:39:24 +0200 (CEST)
-X-Mailer: git-send-email 1.8.3
-In-Reply-To: <1370799558-18188-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
+	id S1751635Ab3FIRky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 13:40:54 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36985 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751493Ab3FIRkx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 13:40:53 -0400
+Received: (qmail 16713 invoked by uid 102); 9 Jun 2013 17:41:42 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 09 Jun 2013 12:41:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Jun 2013 13:40:49 -0400
+Content-Disposition: inline
+In-Reply-To: <CAMP44s3NhNUuCvW37UaMo9KbHHxZqBE8S15h845vtRi89Bu6WA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227048>
 
-discard_cache doesn't have to free the array of cache entries, because
-the next call of read_cache can simply reuse it, as they all operate on
-the global variable the_index.
+On Sun, Jun 09, 2013 at 07:15:45AM -0500, Felipe Contreras wrote:
 
-discard_index on the other hand does have to free it, because it can be
-used e.g. with index_state variables on the stack, in which case a
-missing free would cause an unrecoverable leak.  This patch releases th=
-e
-memory and removes a comment that was relevant for discard_cache but ha=
-s
-become outdated.
+> > Sorry, but I don't agree, and I want to publicly state my opinion so
+> > that Jonathan (and other bystanders on the list) knows that he is not
+> > alone in his opinions.
+> 
+> You don't agree that 1) a collegial work environment is overrated, 2)
+> that the Linux kernel doesn't put an emphasis on being collegial, or
+> 3) that it's the most successful software project in history?
 
-Since discard_cache is just a wrapper around discard_index nowadays, we
-lose the optimization that avoids reallocation of that array within
-loops of read_cache and discard_cache.  That doesn't cause a performanc=
-e
-regression for me, however (HEAD =3D this patch, HEAD^ =3D master + p00=
-02):
+Point 1.
 
-  Test           //              HEAD^             HEAD
-  ---------------\\----------------------------------------------------=
--
-  0002.1: read_ca// 1000 times   0.62(0.58+0.04)   0.61(0.58+0.02) -1.6=
-%
+> Go back to my 261 commits, show me one that is "unmindful of technical details".
 
-Suggested-by: Felipe Contreras <felipe.contreras@gmail.com>
-Signed-off-by: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- read-cache.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+I do not have an interest in cataloguing past conflicts I and others
+have had with you; the list archive has done so. I have already made my
+comments there, and I see no point in starting a new argument.
 
-diff --git a/read-cache.c b/read-cache.c
-index 04ed561..4245f8e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1518,8 +1518,9 @@ int discard_index(struct index_state *istate)
- 	free_name_hash(istate);
- 	cache_tree_free(&(istate->cache_tree));
- 	istate->initialized =3D 0;
--
--	/* no need to throw away allocated active_cache */
-+	free(istate->cache);
-+	istate->cache =3D NULL;
-+	istate->cache_alloc =3D 0;
- 	return 0;
- }
-=20
---=20
-1.8.3
+> Exactly. Nobody is forcing you to read my emails. But somehow you
+> already know that ignoring them is not in the best interest of the
+> project. And by that I mean it's in the best interest of our users,
+> without which our project is nothing.
+
+I never claimed that you contribute nothing. But every minute spent
+arguing with you is a minute that could be spent on something more
+productive. It is certainly possible that community members reading your
+emails could be a net negative for the users, if it leaves them no time
+for other code.
+
+-Peff
