@@ -1,106 +1,195 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Sun, 9 Jun 2013 15:07:17 -0500
-Message-ID: <CAMP44s3w0JuV1rryZP_UDzTseX3KjUnHtqPNbw3Qj4EbjqSdYQ@mail.gmail.com>
-References: <CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
-	<20130608173447.GA4381@elie.Belkin>
-	<CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
-	<20130609014049.GA10375@google.com>
-	<CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
-	<20130609052624.GB561@sigill.intra.peff.net>
-	<CALkWK0mu2_9M5aTczcEkv37eLaAg5_mGDZ_W9nqQFoesB4wc3g@mail.gmail.com>
-	<20130609180437.GB810@sigill.intra.peff.net>
-	<CALkWK0kkhDOSSdF=E4PvO24hg++_FpP3YFaGRD3yq80XG0TRJA@mail.gmail.com>
-	<20130609184553.GG810@sigill.intra.peff.net>
-	<20130609195706.GA2919@elie.Belkin>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: add --ignore-blank-lines option
+Date: Sun, 09 Jun 2013 13:07:52 -0700
+Message-ID: <7vsj0roxnr.fsf@alter.siamese.dyndns.org>
+References: <7v61xt7gej.fsf@alter.siamese.dyndns.org>
+	<1370724291-30088-1-git-send-email-apelisse@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 09 22:07:29 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 22:08:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ulltc-0006Mx-FS
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 22:07:24 +0200
+	id 1UlluC-0006e7-Ua
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 22:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750976Ab3FIUHU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 16:07:20 -0400
-Received: from mail-la0-f49.google.com ([209.85.215.49]:38208 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750752Ab3FIUHT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jun 2013 16:07:19 -0400
-Received: by mail-la0-f49.google.com with SMTP id ea20so1555115lab.8
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 13:07:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=IPcbCibFaGuqUHZznmmTfjSm1+H7RozRY2czi/kfgrE=;
-        b=l/7bXsAu8T56vc6C9LTOhfrBtzy8TL+6FvgRd9fLVAeQAC2rej2f+swMa7eayPPfy3
-         uPaPgUMl5b89GeOuv/joMheLsOAq0pxR1v72KD5Ye2FQonZg2DfnPdjBgjp02EX/YQBS
-         BpYsNaoJK3XWr9lndAm623lJcG3gRsemRt5Ot/r4aVmabE/nf2BOwN6lwG0pZRypkQCW
-         Grrsbt4Y2jLdzs76m3PYcPx6pGx4ZjoZfVGdJT4NR3/o1ZO1af8ssXGC81lLm0LpyvBl
-         I9qEgAkXDzphcrp1n/6z1D4q6LysI+Z5ievIR5/UCs2yrZu1mTKhuS5Wy/FW+wxSTbgU
-         uzgQ==
-X-Received: by 10.112.166.67 with SMTP id ze3mr5202669lbb.25.1370808437608;
- Sun, 09 Jun 2013 13:07:17 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 13:07:17 -0700 (PDT)
-In-Reply-To: <20130609195706.GA2919@elie.Belkin>
+	id S1751036Ab3FIUH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 16:07:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48528 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750822Ab3FIUH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 16:07:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5783925AD2;
+	Sun,  9 Jun 2013 20:07:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=32RRzmFGZmO5p6+KNSIIeNpRUm4=; b=oTHPLP
+	dEjdrBAUJnrxI7QgitndGYh7cr6niHIVh3QlMwd1u2mQysO45Iz8kqHyJXq5vkzf
+	3kDmRicILI/vmgIhu0gI1hiJft24gROKyF8WV5uCyc7zCgQ4FfxNukC6U+gH4zHK
+	3ZlzHUBxzUK0SLy8wU/1ZDkHjB3ENPC63t2/8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aPcL7ty/qXb9VT1j01jRaTOzkbZJPZ8R
+	RNc8mFn/le4zUUB8OOqmfwsPtE0F+ASd4fziMX6AOGLo6Z/mpTg09uYOqLp0uEnC
+	dvPrURcdIaMuwFRQGwQ4nXbWajS/q4+Nzf0WXsVPpzthFZoSRvXaamBSaOkZDvHj
+	a9tYJoU6nO8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C12425AD1;
+	Sun,  9 Jun 2013 20:07:55 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 80F7C25ACE;
+	Sun,  9 Jun 2013 20:07:54 +0000 (UTC)
+In-Reply-To: <1370724291-30088-1-git-send-email-apelisse@gmail.com> (Antoine
+	Pelisse's message of "Sat, 8 Jun 2013 22:44:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 454D8998-D140-11E2-902F-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227161>
 
-On Sun, Jun 9, 2013 at 2:57 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-> Jeff King wrote:
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-> Of course that's not the intent: the intent of ignoring someone is to
-> hope they'll go away. :)
+> The goal of the patch is to introduce the GNU diff
+> -B/--ignore-blank-lines as closely as possible. The short option is not
+> available because it's already used for "break-rewrites".
 >
-> In the context of other unhealthy behaviors (like alcoholism) there i=
-s
-> a concept of enabling behavior.
-
-The only one that can enable me is Junio. If he stops merging my
-patches I would stop sending them.
-
-It appears Junio is a good maintainer though, as he puts the needs of
-the project, and thus our users, above your personal issues.
-
->> I'll be frank: I'm a pragmatic person, and I want to see work.
->> Despite all this mess, who has shown me the most number of patches
->> with some direction?  Felipe.  Who gets the most number of patches
->> into git.git, by far?  Felipe.  And who is wasting time theorizing
->> about what's wrong with Felipe in various ways?  Everyone else.
+> When this option is used, git-diff will not create hunks that simply
+> adds or removes empty lines, but will still show empty lines
+> addition/suppression if they are close enough to "valuable" changes.
 >
-> In that case, I can see a simple solution.  Felipe, who provides the
-> most patches in git.git, by far (I don't know what that means, but
-> I'll take it as an assumption),
+> There are two differences between this option and GNU diff -B option:
+> - GNU diff doesn't have "--inter-hunk-context", so this must be handled
+> - The following sequence looks like a bug (context is displayed twice):
+>
+>     $ seq 5 >file1
+>     $ cat <<EOF >file2
+>     change
+>     1
+>     2
+>
+>     3
+>     4
+>     5
+>     change
+>     EOF
+>     $ diff -u -B file1 file2
+>     --- file1	2013-06-08 22:13:04.471517834 +0200
+>     +++ file2	2013-06-08 22:13:23.275517855 +0200
+>     @@ -1,5 +1,7 @@
+>     +change
+>      1
+>      2
+>     +
+>      3
+>      4
+>      5
+>     @@ -3,3 +5,4 @@
+>      3
+>      4
+>      5
+>     +change
 
-Maybe this will help understand the meaning of that:
+Yes, this is a bug in the previous round, and the approach I
+outlined in the previous message was also designed to address it by
+coalescing adjacent hunks by measuring the distance correctly.
 
-% git shortlog -n -s --no-merges --since '3 months ago'
-   221	Felipe Contreras
-    83	Junio C Hamano
-    71	Jeff King
-    62	Michael Haggerty
-    48	Ramkumar Ramachandra
-    35	Thomas Rast
-    33	Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
-    32	John Keeping
-    30	Ren=C3=A9 Scharfe
-    23	Kevin Bracey
+> Actually it doesn't quite work like that because we don't totally ignore
+> "blank lines". We want to keep them if they are close enough to other
+> changes.
 
---=20
-=46elipe Contreras
+A new test vector in your patch is a good illustration of this.
+
+> +test_expect_success 'ignore-blank-lines: after change' '
+> +	test_seq 7 >x &&
+> +	git update-index x &&
+> +	cat <<-\EOF >x &&
+> +	change
+> +	1
+> +	2
+> +
+> +	3
+> +	4
+> +
+> +	5
+> +	6
+> +	7
+> +
+> +	EOF
+
+The test makes the original with 1 thru 7 to the above shape.  The
+argument for the behaviour in this patch is that additions of these
+new blank lines are close enough to the real change of inserting the
+first line with "change".  
+
+If you are not interested in changes in additions of blank lines (by
+the way, do we also handle deletions and do your new tests check
+them?), one could however argue that the user would want not to see
+the addition of the blank between 4 and 5 or after 7.
+
+At first glance, it seems impossible to express that if we need to
+show three lines of context, in other words, this output
+
+	@@ -1,2 +1,3 @@
+	+change
+         1
+         2
+
+cannot be a correct patch output --ignore-blank-lines-change output
+because it does not show enough context lines after the real change
+(we want 3 lines).
+ 
+However, let's step back and think what other ignore blank options do.
+
+When any ignore blank option is used, there will be lines that
+actually has changes (hence should be shown with +/-) but we
+deliberately ignore their changes (hence, if they ever appear in the
+hunk, they do so as context lines prefixed with SP not +/-).  When
+we do so, we show the lines from the postimage in the context.
+
+So in that sense, showing this would actually be acceptable (the
+last postcontext line in this hunk is a blank line).
+
+	@@ -1,3 +1,4 @@
+	+change
+         1
+         2
+	  
+
+We are showing the new blank line the change added after 2 as a
+shared context, following the same principle to show from the
+postimage when we turned a line with a real change into a
+non-change.
+
+> +	git diff --inter-hunk-context=100 --ignore-blank-lines >out.tmp &&
+> +	cat <<-\EOF >expected &&
+> +	diff --git a/x b/x
+> +	--- a/x
+> +	+++ b/x
+> +	@@ -1,7 +1,10 @@
+> +	+change
+> +	 1
+> +	 2
+> +	+
+> +	 3
+> +	 4
+> +	+
+> +	 5
+> +	 6
+> +	 7
+> +	EOF
+> +	compare_diff_patch expected out.tmp
+> +'
+
+And from that point of view, this expected output may be excessively
+noisy.
+
+So I dunno.
