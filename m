@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v5 33/36] rebase: cherry-pick: fix for shell prompt
-Date: Sun,  9 Jun 2013 14:24:47 -0500
-Message-ID: <1370805890-3453-34-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v5 09/36] sequencer: remove useless indentation
+Date: Sun,  9 Jun 2013 14:24:23 -0500
+Message-ID: <1370805890-3453-10-git-send-email-felipe.contreras@gmail.com>
 References: <1370805890-3453-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
@@ -9,99 +9,87 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 09 21:28:39 2013
+X-From: git-owner@vger.kernel.org Sun Jun 09 21:29:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UllI3-00048m-RD
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 21:28:36 +0200
+	id 1UllIa-0004R2-68
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 21:29:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752509Ab3FIT20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 15:28:26 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:59811 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752464Ab3FIT2T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 15:28:19 -0400
-Received: by mail-ob0-f175.google.com with SMTP id xn12so9145596obc.34
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 12:28:18 -0700 (PDT)
+	id S1752549Ab3FIT24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 15:28:56 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:62378 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752178Ab3FIT1K (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 15:27:10 -0400
+Received: by mail-ob0-f182.google.com with SMTP id va7so9129899obc.13
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 12:27:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=UNCNBZdL4IqrnGzPjNVpJV5otdB6t+qIDSSrcikMYF8=;
-        b=fP9VZR+wm9n8fzrWCjoqZxeCfbv4xsYX8yatUd7yu2u3bgqQGcbkz1doMiejleKO48
-         EAIO6cIhGv5MQb2NR/bt7+7zk65xeF79fYWNK/e7RoIUj7w89VtdnrqZQ5GN79sd0ZvK
-         7MTgVeWsCBWyqgGlHQq4rYS1e2wGhPpSYJ9iw8st7wE+qp8SeAWYRVT31P2Xz3FV3xCI
-         2mNuWzsEFgofkyPTbe/L7kyVnCiKF0msfhY69kQ6N74uvnluNtE3RY9KJRLuF7+9XHbv
-         S/SDL0ugzPzBe0BWId2Wt4rkoQ91A9SdoOqnzvrNutHZePZKtNRx9ZSLVA4dXJeKm3p2
-         Rq5Q==
-X-Received: by 10.182.200.129 with SMTP id js1mr5653658obc.5.1370806098577;
-        Sun, 09 Jun 2013 12:28:18 -0700 (PDT)
+        bh=orpjeyluJL/HODCto6qZkWlJbzrvN1KOtAopIdWYTbI=;
+        b=vCsvrx1FFKNvPcV0QUBxo/zQCkUR4f10k8+P2sXjSdXYLZnx9djWWV7P3YrBo+a3Jz
+         1O01xHXzUsOcm1TQJlk4Ry6wo5wlqEbGCo/oszsEjh9cXVgTMLBCtQQ7CWACD43N+lp6
+         LT178euvpE+M+CkelkugDtCxs0PZmzKBb5u1VNq59I9482iWrNuUyA6qtt+MUd7la6dZ
+         HxinCA3KXlueMwoQUmvhpjTsBywcBzrYjGfnyz476osyaSNgG9HZs0OK6c0StL0YgDVo
+         IxfSWDr3MGUe8s05JD1IwiNSeSFbgj7YeAOi2hfw8GLp4PyignS+KWBadaVIGalhYfoR
+         jf/w==
+X-Received: by 10.60.116.202 with SMTP id jy10mr5482890oeb.82.1370806029462;
+        Sun, 09 Jun 2013 12:27:09 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id b1sm16240429oeo.8.2013.06.09.12.28.17
+        by mx.google.com with ESMTPSA id z5sm16014175obw.4.2013.06.09.12.27.07
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 12:28:17 -0700 (PDT)
+        Sun, 09 Jun 2013 12:27:08 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.698.g079b096
 In-Reply-To: <1370805890-3453-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227145>
+
+By using good ol' goto.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-prompt.sh |  2 ++
- git-rebase--cherrypick.sh        | 11 +++++++++--
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ builtin/sequencer.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 3a14665..3d10f21 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -354,6 +354,8 @@ __git_ps1 ()
- 				r="|REBASE-i"
- 			elif [ -f "$g/rebase-merge/cherrypick" ]; then
- 				r="|REBASE"
-+				step=$(cat "$g/sequencer/rewritten" | wc -l)
-+				let step+=1
- 			else
- 				r="|REBASE-m"
- 			fi
-diff --git a/git-rebase--cherrypick.sh b/git-rebase--cherrypick.sh
-index d36b0dc..6f63618 100644
---- a/git-rebase--cherrypick.sh
-+++ b/git-rebase--cherrypick.sh
-@@ -37,19 +37,26 @@ else
- 	revisions="$upstream...$orig_head"
- fi
+diff --git a/builtin/sequencer.c b/builtin/sequencer.c
+index e92e039..b2c8c94 100644
+--- a/builtin/sequencer.c
++++ b/builtin/sequencer.c
+@@ -390,7 +390,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 	struct commit_message msg = { NULL, NULL, NULL, NULL, NULL };
+ 	char *defmsg = NULL;
+ 	struct strbuf msgbuf = STRBUF_INIT;
+-	int res, unborn = 0;
++	int res, unborn = 0, allow;
  
-+rev_args="--no-merges --right-only --topo-order --do-walk "$revisions""
+ 	if (opts->no_commit) {
+ 		/*
+@@ -535,14 +535,16 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 		      msg.subject);
+ 		print_advice(res == 1, opts);
+ 		rerere(opts->allow_rerere_auto);
+-	} else {
+-		int allow = allow_empty(opts, commit);
++		goto leave;
++	}
 +
- if test -n "$keep_empty"
- then
- 	extra="--allow-empty"
- else
--	extra="--skip-empty --cherry-pick"
-+	extra="--skip-empty"
-+	rev_args="--cherry-pick $rev_args"
- fi
- test -n "$GIT_QUIET" && extra="$extra -q"
- test -z "$force_rebase" && extra="$extra --ff"
--git cherry-pick --no-merges --right-only --topo-order --do-walk --action-name rebase $extra "$revisions"
-+
-+git rev-list $rev_args > "$state_dir"/list
-+git cherry-pick --action-name rebase $extra $rev_args
- ret=$?
++	allow = allow_empty(opts, commit);
+ 	if (allow < 0)
+ 		return allow;
+ 	if (!opts->no_commit)
+ 		res = run_git_commit(defmsg, opts, allow);
+-	}
  
- if test 0 != $ret
- then
-+	# for shell prompt
-+	cat "$state_dir"/list | wc -l > "$state_dir"/end
- 	write_basic_state
- 	return $ret
- fi
++leave:
+ 	free_message(&msg);
+ 	free(defmsg);
+ 
 -- 
 1.8.3.698.g079b096
