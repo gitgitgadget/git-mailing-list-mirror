@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v2 15/15] for-each-ref: use get_pretty_userformat in --pretty
-Date: Sun,  9 Jun 2013 23:24:34 +0530
-Message-ID: <1370800474-8940-16-git-send-email-artagnon@gmail.com>
+Subject: [PATCH v2 11/15] for-each-ref: introduce %(HEAD) marker
+Date: Sun,  9 Jun 2013 23:24:30 +0530
+Message-ID: <1370800474-8940-12-git-send-email-artagnon@gmail.com>
 References: <1370800474-8940-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -9,148 +9,113 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 09 19:57:24 2013
+X-From: git-owner@vger.kernel.org Sun Jun 09 19:57:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uljrm-0006hW-7K
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:57:22 +0200
+	id 1Uljrk-0006hW-3h
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 19:57:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751996Ab3FIR5P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 13:57:15 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:64548 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751922Ab3FIR5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 13:57:12 -0400
-Received: by mail-pd0-f179.google.com with SMTP id q10so718087pdj.10
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 10:57:11 -0700 (PDT)
+	id S1751951Ab3FIR5E convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 13:57:04 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:47919 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922Ab3FIR5C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 13:57:02 -0400
+Received: by mail-pd0-f172.google.com with SMTP id z10so3057222pdj.3
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 10:57:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=5kiOiGFNS35O0VBr6yXpS67V/Q54uEbG+yZdkOyJ3co=;
-        b=hmlb6UmL/WsnEMx6UVkjE8b93DstFGs5aVyt8Y0ATL9ilPXqhhgnRb5PtzWi27K4UJ
-         Xat/iIsPlN+pqjbAVn9CdlIboHGHjoczwSyZitETt4p4vPvETtEXNmkNm9naYTKchdeu
-         hdoFKwMAd+fC/t7UjmBKhsMAan02MV68RgAzzdSym21Q/Su/XbaZRxqL9xCfby5KkoUn
-         v1GhIVbw5EiRz/ftRogCYgDvkTTdRDHSJdLSyGep50i8ybCcMiifVE6btn0eFBHK9+9V
-         5Dr0mreokHSDkKnV4IgNmMZsmSwF+iT9dFWfxUOwR/3H4G/OpPTJjaGAO4LNj9aizLa7
-         xjpQ==
-X-Received: by 10.68.59.98 with SMTP id y2mr6855455pbq.135.1370800631680;
-        Sun, 09 Jun 2013 10:57:11 -0700 (PDT)
+        bh=wkEcoa1IcmdO3XpwKwsuYUn1v3RMaGwEYxWJX0cb/5A=;
+        b=kkrL/oXlwJDi9GZNlGq9t4pSzYJur37w0pSyA0ypia9ge+P0fm9eIDDujW+FA2pP92
+         +n0tAvILENKHHb3xT884wzZbv4gopdBxAcobtCQQw0wL9XYMGK71lKmZyGQ6ML0qbGP3
+         KxsoQ1o05DEuOV3STnLgPn5QvfVc8UPicssyAmgiEYmvfWSFspJQjWDTGQvAfqmgKS6w
+         x/LCuOXbHBs4RHi4RHgBahA1PMgAMdlx5Xa+84jPgPB108+uXf50nzPGugIDMvosGDbV
+         ZRE912ZVHr1VKPySFdSioU/IRRpe4hth+QU+dFJXPgmrjs4NQh3KaGcIaRKsIVirJQjS
+         BCWQ==
+X-Received: by 10.66.2.103 with SMTP id 7mr10765714pat.211.1370800621935;
+        Sun, 09 Jun 2013 10:57:01 -0700 (PDT)
 Received: from localhost.localdomain ([122.164.213.38])
-        by mx.google.com with ESMTPSA id qp4sm7275815pbc.41.2013.06.09.10.57.09
+        by mx.google.com with ESMTPSA id qp4sm7275815pbc.41.2013.06.09.10.56.59
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 10:57:11 -0700 (PDT)
+        Sun, 09 Jun 2013 10:57:01 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.247.g485169c
 In-Reply-To: <1370800474-8940-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227067>
 
-Use get_pretty_userformat() to interpret the --pretty string.  This
-means that you can now reference a format specified in a pretty.*
-configuration variable as an argument to 'git for-each-ref --pretty=3D'=
-=2E
-There are two caveats:
+'git branch' shows which branch you are currently on with an '*', but
+'git for-each-ref' misses this feature.  So, extend the format with
+%(HEAD) to do exactly the same thing.
 
-1. A leading "format:" or "tformat:" is automatically stripped and
-   ignored.  Separator semantics are not configurable (yet).
+Now you can use the following format in for-each-ref:
 
-2. No built-in formats are available.  The ones specified in
-   pretty-formats (oneline, short etc) don't make sense when displaying
-   refs anyway.
+  %C(red)%(HEAD)%C(reset) %C(green)%(refname:short)%C(reset)
+
+to display a red asterisk next to the current ref.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/git-for-each-ref.txt |  3 +++
- builtin/for-each-ref.c             | 16 +++++++++-------
- 2 files changed, 12 insertions(+), 7 deletions(-)
+ Documentation/git-for-each-ref.txt |  4 ++++
+ builtin/for-each-ref.c             | 13 +++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for=
 -each-ref.txt
-index d666ebd..ef39f2a 100644
+index 8cbc08c..8d982e3 100644
 --- a/Documentation/git-for-each-ref.txt
 +++ b/Documentation/git-for-each-ref.txt
-@@ -60,6 +60,9 @@ calculated.
- +
- Caveats:
+@@ -121,6 +121,10 @@ upstream::
+ 	from the displayed ref. Respects `:short` in the same way as
+ 	`refname` above.
 =20
-+0. No built-in formats from PRETTY FORMATS (like oneline, short) are
-+   available.
++HEAD::
++	Useful to indicate the currently checked out branch.  Is '*'
++	if HEAD points to the current ref, and ' ' otherwise.
 +
- 1. Many of the placeholders in "PRETTY FORMATS" are designed to work
-    specifically on commit objects: when non-commit objects are
-    supplied, those placeholders won't work (i.e. they will be emitted
+ In addition to the above, for commit and tag objects, the header
+ field names (`tree`, `parent`, `object`, `type`, and `tag`) can
+ be used to specify the value in the header field.
 diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 25764aa..ed7bd7d 100644
+index da479d1..3d357a9 100644
 --- a/builtin/for-each-ref.c
 +++ b/builtin/for-each-ref.c
-@@ -1151,7 +1151,7 @@ int cmd_for_each_ref(int argc, const char **argv,=
- const char *prefix)
- 	int num_refs;
- 	const char *default_format =3D "%(objectname) %(objecttype)\t%(refnam=
-e)";
- 	const char *format =3D default_format;
--	const char *pretty =3D NULL;
-+	const char *pretty_raw =3D NULL, *pretty_userformat =3D NULL;
- 	struct ref_sort *sort =3D NULL, **sort_tail =3D &sort;
- 	int maxcount =3D 0, quote_style =3D 0;
- 	struct refinfo **refs;
-@@ -1170,13 +1170,15 @@ int cmd_for_each_ref(int argc, const char **arg=
-v, const char *prefix)
- 		OPT_GROUP(""),
- 		OPT_INTEGER( 0 , "count", &maxcount, N_("show only <n> matched refs"=
-)),
- 		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use =
-for the output")),
--		OPT_STRING(  0 , "pretty", &pretty, N_("format"), N_("alternative fo=
-rmat to use for the output")),
-+		OPT_STRING(  0 , "pretty", &pretty_raw, N_("format"), N_("alternativ=
-e format to use for the output")),
- 		OPT_CALLBACK(0 , "sort", sort_tail, N_("key"),
- 			    N_("field name to sort on"), &opt_parse_sort),
- 		OPT_END(),
- 	};
+@@ -76,6 +76,7 @@ static struct {
+ 	{ "upstream" },
+ 	{ "symref" },
+ 	{ "flag" },
++	{ "HEAD" },
+ };
 =20
- 	parse_options(argc, argv, prefix, opts, for_each_ref_usage, 0);
-+	if (pretty_raw)
-+		pretty_userformat =3D get_pretty_userformat(pretty_raw);
- 	if (maxcount < 0) {
- 		error("invalid --count argument: `%d'", maxcount);
- 		usage_with_options(for_each_ref_usage, opts);
-@@ -1185,10 +1187,10 @@ int cmd_for_each_ref(int argc, const char **arg=
-v, const char *prefix)
- 		error("more than one quoting style?");
- 		usage_with_options(for_each_ref_usage, opts);
- 	}
--	if (format !=3D default_format && pretty)
-+	if (format !=3D default_format && pretty_userformat)
- 		die("--format and --pretty cannot be used together");
--	if ((pretty && verify_format(pretty, 1)) ||
--	    (!pretty && verify_format(format, 0)))
-+	if ((pretty_userformat && verify_format(pretty_userformat, 1)) ||
-+	    (!pretty_userformat && verify_format(format, 0)))
- 		usage_with_options(for_each_ref_usage, opts);
+ /*
+@@ -679,8 +680,16 @@ static void populate_value(struct refinfo *ref)
+ 				v->s =3D xstrdup(buf + 1);
+ 			}
+ 			continue;
+-		}
+-		else
++		} else if (!strcmp(name, "HEAD")) {
++			const char *head;
++			unsigned char sha1[20];
++			head =3D resolve_ref_unsafe("HEAD", sha1, 1, NULL);
++			if (!strcmp(ref->refname, head))
++				v->s =3D "*";
++			else
++				v->s =3D " ";
++			continue;
++		} else
+ 			continue;
 =20
- 	if (!sort)
-@@ -1209,8 +1211,8 @@ int cmd_for_each_ref(int argc, const char **argv,=
- const char *prefix)
- 	if (!maxcount || num_refs < maxcount)
- 		maxcount =3D num_refs;
-=20
--	if (pretty)
--		show_pretty_refs(refs, maxcount, pretty, quote_style);
-+	if (pretty_userformat)
-+		show_pretty_refs(refs, maxcount, pretty_userformat, quote_style);
- 	else
- 		show_refs(refs, maxcount, format, quote_style);
- 	return 0;
+ 		formatp =3D strchr(name, ':');
 --=20
 1.8.3.247.g485169c
