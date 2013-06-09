@@ -1,102 +1,94 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Sun, 9 Jun 2013 07:15:45 -0500
-Message-ID: <CAMP44s3NhNUuCvW37UaMo9KbHHxZqBE8S15h845vtRi89Bu6WA@mail.gmail.com>
-References: <1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
-	<CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
-	<CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
-	<20130608164902.GA3109@elie.Belkin>
-	<CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
-	<20130608173447.GA4381@elie.Belkin>
-	<CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
-	<20130609014049.GA10375@google.com>
-	<CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
-	<20130609052624.GB561@sigill.intra.peff.net>
+From: =?UTF-8?Q?Beno=C3=AEt_Person?= <benoit.person@ensimag.fr>
+Subject: Re: [PATCH/RFC] git-remote-mediawiki: new tool to preview local
+ changes without pushing
+Date: Sun, 9 Jun 2013 14:18:58 +0200
+Message-ID: <CAETqRCjO1Md1PFmFO46KQ6eaEHbHW+RA7+Fh8ku6s7UwfhrPvQ@mail.gmail.com>
+References: <1370641831-9115-1-git-send-email-benoit.person@ensimag.fr>
+	<20130609060807.GA8906@sigill.intra.peff.net>
+	<vpq38srtun7.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jun 09 14:15:53 2013
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	=?UTF-8?Q?C=C3=A9lestin_Matte?= <celestin.matte@ensimag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sun Jun 09 14:19:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UleXI-0006BF-7M
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 14:15:52 +0200
+	id 1UleaN-0007x8-AS
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 14:19:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753823Ab3FIMPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 08:15:48 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:40530 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753710Ab3FIMPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 08:15:47 -0400
-Received: by mail-lb0-f175.google.com with SMTP id r10so1308082lbi.6
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 05:15:45 -0700 (PDT)
+	id S1753811Ab3FIMS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 08:18:59 -0400
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:49194 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753370Ab3FIMS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 08:18:59 -0400
+Received: by mail-ie0-f173.google.com with SMTP id k5so7662863iea.4
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 05:18:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=wn6d/TX0qj9rhGPbJHs/AswovhLJoFPr7JxBHLGKWnY=;
-        b=T4LXAFCB3K4L3GF3K0cM1B9MVozGCqSB3HXR2OgLsOX4esnJ/dtkyctO9sTVYbAcGx
-         fOEuS2P9kY3SUyMj/Dr7Z0trDFsw1LeDYozx4V6u3+NMxeVwVKfMTQuNMwEIyLiTeNRX
-         eqFeYyLNcWipVHtkcJSz/d8wTpEABsKOKBWiNay7ebooBeo3nDOiKYAL96xr79C6NrJC
-         mwY5gOUmK/8uOhwOxKDDbZksHaeFC9BZkT4u3ls0LNLmL0u9micnEuiwsxzSWJxGn2ib
-         P3455ii0zoRugsS17ENrCVgfao/734shEgOF5iJDqD0usfuNhDebje9qv8eSSYKYnjW7
-         chPQ==
-X-Received: by 10.152.27.170 with SMTP id u10mr2901999lag.45.1370780145669;
- Sun, 09 Jun 2013 05:15:45 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 05:15:45 -0700 (PDT)
-In-Reply-To: <20130609052624.GB561@sigill.intra.peff.net>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=RUAtC6DGrgxZMeE4pdhJq9rpia6dX942zqHPe/MBZ+U=;
+        b=dOORBJD+W4GskQvcjqsHCGB0bRJdDrxm9exFQCKpJhgoeOoKRlPrNqHlwU0qxnLkHC
+         03dSgsOpkX8iQjOV9wLDh9KyFKCK8VnaWAxKXOJ7PoccDJSZvWMR1PZ2+u9hzmidEchR
+         xwwib58SDuKVa0DGCwN6WzqKN8KLK4IiVPj2g0yXZuWI5ceSA2EIRmFbnqbZCMCZCkxz
+         E5Ku41bAJBWE/rtQYJ5RGmzgziJ8toSvfBBuT9NJbVleJWntxf49plomsJhWb8Pw/bEP
+         dIRz/+8PUF8uqhLiJ4B3GDQRCCwYnFwZTbtstK5dfZxVBFLAuPsiinp/eYnx5mcU0o+e
+         N3kQ==
+X-Received: by 10.50.107.6 with SMTP id gy6mr2208705igb.57.1370780338511; Sun,
+ 09 Jun 2013 05:18:58 -0700 (PDT)
+Received: by 10.42.22.141 with HTTP; Sun, 9 Jun 2013 05:18:58 -0700 (PDT)
+In-Reply-To: <vpq38srtun7.fsf@anie.imag.fr>
+X-Google-Sender-Auth: Zxroz6O-f6Tp8fqL_9LbT-Pdjs4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226957>
 
-On Sun, Jun 9, 2013 at 12:26 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, Jun 08, 2013 at 09:17:56PM -0500, Felipe Contreras wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> Same question here. I'd expect "git mw preview" in a mediawiki workflow
+> to do what "pdflatex foo && evince foo.pdf" do in a latex workflow: see
+> in rendered form what I've been doing.
 >
->> > Definitely, yes.  Even if you look at the impact on code alone and
->> > don't care about the people, destroying a collegial work environment
->> > is harmful enough to the code to outweigh the (admittedly often
->> > useful) patches.
->>
->> A collegial work environment is overrated, and proof of that the Linux
->> kernel, where honest and straight talk is the bread and butter of the
->> mailing list. And the Linux kernel is the most successful software
->> project in history by far. It's code that speaks.
->
-> Sorry, but I don't agree, and I want to publicly state my opinion so
-> that Jonathan (and other bystanders on the list) knows that he is not
-> alone in his opinions.
+> In a latex flow, if I want to see how my local changes merge with the
+> remote ones, I do "git merge && pdflatex", and I'd do the same with "git
+> mw".
 
-You don't agree that 1) a collegial work environment is overrated, 2)
-that the Linux kernel doesn't put an emphasis on being collegial, or
-3) that it's the most successful software project in history?
+In fact, I should not have used "merge" to describe how the two contents
+(page template + new parsed content) are combined together. For
+now, the code simply replaces the template page's text content (the one
+retrieved from the remote) with the new one. It does not really care if
+the remote has changes or not. (And, to be honest, I did not thought
+about that issue ;) ).
 
-> I have consistently found your demeanor on the list to be very
-> unfriendly and difficult to work with. It is one thing to have honest
-> and straight talk, and another thing to be obstinate, unmindful of
-> feedback (both with respect to technical details, as well as to
-> communication styles), and disrespectful of other people.
+But, like both of you said : in a typical workflow, the merging would be
+left to the user so the current behavior is fine I think ?
 
-Go back to my 261 commits, show me one that is "unmindful of technical details".
+>> I also wonder if it would be useful to be able to specify not only files
+>> in the filesystem, but also arbitrary blobs. So in 4b above, you could
+>> "git mw preview origin:page.mw" to see the rendered version of what
+>> upstream has done.
+> Next step could even be "git mw diff $from $to", using the wiki to
+> render the diff. Not a priority, but could be funny.
 
-> It is certainly your choice about how you will communicate. But likewise
-> it is the choice of readers and reviewers to choose how much of their
-> time to give to your writings.
+I searched in the Mediawiki API if there was a way to diff from a stored
+revision and raw text content but I've found nothing :/ . We could make
+a little "hack" to do that by saving as a new revision the local content,
+and use the "DeleteRevision"-thingy from Mediawiki [1] to hide this
+useless revision but it would floods the remote DB and usually users
+to not have the permission to use that tool. So, for now I would say
+it's a no-go :/ .
 
-Exactly. Nobody is forcing you to read my emails. But somehow you
-already know that ignoring them is not in the best interest of the
-project. And by that I mean it's in the best interest of our users,
-without which our project is nothing.
+[1] http://www.mediawiki.org/wiki/Manual:RevisionDelete
 
--- 
-Felipe Contreras
+Benoit Person
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
