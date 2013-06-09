@@ -1,86 +1,106 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [Administrivia] On ruby and contrib/
-Date: Sun, 9 Jun 2013 14:46:16 +0530
-Message-ID: <CALkWK0nCe-fDVdYjD=0XrW-MXBrP1aMrcwdmxfZ_bnM+_esuhQ@mail.gmail.com>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org> <7va9n52zjc.fsf@alter.siamese.dyndns.org>
- <rmivc5rp9w2.fsf@fnord.ir.bbn.com> <CAMP44s07p0vpS_2cjAjB=QWoZjjPSuAm09xwk4BjAAD+hsJrSw@mail.gmail.com>
- <alpine.DEB.2.02.1306060904100.13204@nftneq.ynat.uz> <CALkWK0mwxfGJdZi6kSaAPr66o550RiT_p8_r_4mDvcd_VAFYQw@mail.gmail.com>
- <alpine.DEB.2.02.1306061308100.29361@nftneq.ynat.uz> <CALkWK0k8m16oy7u+a8bHK93pRxfomOZDne3k0voVHLGULO+uiw@mail.gmail.com>
- <7vd2ryueuu.fsf@alter.siamese.dyndns.org> <CAMP44s2f2RBGd0VwJaSB1FkHBXRGhrTs_sA80kcinmpzJX8UDg@mail.gmail.com>
- <CALkWK0m4V4KYyKW8KJMRsCgOxqcLi0XDYZvS4w++6BKVVvioyw@mail.gmail.com> <alpine.DEB.1.00.1306090456160.28957@s15462909.onlinehome-server.info>
+Subject: Re: [PATCH 2/2] Move sequencer to builtin
+Date: Sun, 9 Jun 2013 15:28:48 +0530
+Message-ID: <CALkWK0kkGO8zoLSpZkaYgVr5eBX6AovYFxQZkgJKugSw0CmdXQ@mail.gmail.com>
+References: <CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
+ <CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
+ <CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
+ <CAMP44s2fP4_=HtOsuwmxXG8qmp8CmpgEhz=BJFOFZxsTf_3gcQ@mail.gmail.com>
+ <CACsJy8CQRWU0mFLVD6RrpzJiHBH=9zFwf5xDo7UhGW6A-OAzuw@mail.gmail.com>
+ <CALkWK0mLoeO5fKezE5S1LEC2LNH9qCwxHnNi_ZJpYzC7rVTqmg@mail.gmail.com>
+ <CACsJy8B=m95mpRn1dAwQZAvHRUeJVjKy1hKXv43EKX08ZODsDw@mail.gmail.com>
+ <CALkWK0mw8=CMuyw5-E0fzh+c6Om_NCgHohqa_p=J_kw3UfJCJQ@mail.gmail.com>
+ <CACsJy8AtH6PQ06_-UgumV0dRdq28qKn-Oj7EAy3g+eOTGhOyYw@mail.gmail.com>
+ <CAMP44s2uV6CwdyadnJXSd+3mhOdApDxqdtjNyOPj3CbdsEyG0Q@mail.gmail.com> <20130609043444.GA561@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
-	David Lang <david@lang.hm>, Greg Troxel <gdt@ir.bbn.com>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?UTF-8?B?Tmd1ecKtbiBUaMOhaSBOZ8O3Yw==?= <pclouds@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jun 09 11:17:05 2013
+	Brandon Casey <drafnel@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jun 09 11:59:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlbkH-0007Vr-8G
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 11:17:05 +0200
+	id 1UlcPb-000600-H3
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 11:59:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753573Ab3FIJQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 05:16:59 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:39871 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753507Ab3FIJQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 05:16:58 -0400
-Received: by mail-ie0-f179.google.com with SMTP id c10so5560773ieb.38
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 02:16:58 -0700 (PDT)
+	id S1751614Ab3FIJ7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 05:59:30 -0400
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:49959 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750892Ab3FIJ73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 05:59:29 -0400
+Received: by mail-ie0-f171.google.com with SMTP id s9so14258343iec.30
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 02:59:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=xAFHIHpuqBPv0AOKHe5Q90OaO5ivkkLlES2qnJUOgdI=;
-        b=aU1ShOgAJggaPH5e4QlYvJaCOIfEfcC8lbwzK2bK/t2hYk0z1bKG4FwWdMjav/VC0Y
-         4rem8xl0/Mij1+ASpjFq5NJCtTaQhuTbpwLAHo6g4zbY+jlvpwfwcWP3fejI0CopaKhb
-         c9Ur588YHlimFFbbY+rl5FAeNTi5ZwE4gW1rsQiiimaO3Hs9tPUXycTtNm3X2ce96H5D
-         SA35jGgfBnuPBYKWZi2EczS6usD1SrS/1smZlDeoc4PV7C8CYq0hoRE7l+ifXojDiSVH
-         7qlCLcCxiIQjW+8W1PbO5Xigg1ivN2Q61TsgeB8FvONtI1HrdJi+SghJqzCzK+9VwrJj
-         vd4w==
-X-Received: by 10.50.79.231 with SMTP id m7mr1997635igx.40.1370769418041; Sun,
- 09 Jun 2013 02:16:58 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Sun, 9 Jun 2013 02:16:16 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1306090456160.28957@s15462909.onlinehome-server.info>
+        bh=MYrCbRz9UTH4jv5FRFH14fxzLOswfGN+tmzPYJZiMEA=;
+        b=I5UPEtHTZ+0HbU1CtACO71xhWkEJGdbXNgxsg4/askvWoIfuhzDvmNRCRQ084Ej9Vn
+         uH6D7y07++JzRSaWnM4ebWIuu++3JiTxFiq43GLL+fSfoXE/K8cp9WhWmKWpKoh0B1MR
+         91n6lX5LBpBv16/qj0AMB2BpwRLfejxnvY1mhprkT9Kx6nouUOunS9yqsbECoegyxVYF
+         ZBF3XOf++03/Gj9sTggjRifDQlL8QlR0X0IdMcd7pXdEN01l6O7q8AV8w6Sf/qeXOUai
+         0107digvZxOLQnVQY4LtXzhuGDiS+zsuLsFKlw6cMxrF2hXU6tT47CF9rOzUt4du0TPe
+         lujg==
+X-Received: by 10.43.88.70 with SMTP id az6mr2176838icc.10.1370771968645; Sun,
+ 09 Jun 2013 02:59:28 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Sun, 9 Jun 2013 02:58:48 -0700 (PDT)
+In-Reply-To: <20130609043444.GA561@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226949>
 
-Johannes Schindelin wrote:
->> Correct.  The opinions of inactive community members and
->> non-contributors are less useful.
->
-> I humbly suggest to treat other people's contribution with the same
-> respect you want yours' to be treated.
+Jeff King wrote:
+> Sorry that I cannot show you the source code, but you may interested to
+> know that libgit2 powers:
 
-What?!  When did I disrespect other people's contributions?  git.git
-is what it is today because of everyone's contributions: if I
-disrespected them, why would I work on improving git?
+Yes, I'm well aware of these: libgit2 is LGPL, because of which these
+three proprietary applications have been made possible.  Isn't it
+completely orthogonal to the discussion about how best to lib'ify
+git.git though?  From what I understand, fc is not interested in
+building another application leveraging libgit.a or libgit2; he's
+interested in improving libgit.a and getting more users.
 
-My opinion has nothing to do with me, or my contributions.  I have
-already stated multiple times on the list that I take no pride in my
-contributions whatsoever*: I have no ego to speak of.  I said "the
-opinions of inactive community members and non-contributors are less
-useful [than those of active contributors]", and I'm still scratching
-my head over what you inferred.  Do you think that the opinions of
-inactive community members and non-contributors are _more_ valuable
-than those of active contributors, or am I missing something?
+> It is definitely not feature-complete when compared with git.git. But I
+> do think it is in a state that is usable for quite a few tasks.
 
-* You'd know that if you read emails on the list.  But you don't, for
-some mysterious unstated reason.
+What is this task you are discussing?  fc is talking about improving
+libgit.a and getting an official git library with many users.  Answer
+the question: what should we do now?
+
+1. Start moving irrelevant code out of libgit.a, and use inspiration
+from libgit2 to improve it (this might or might not involve taking
+code from libgit2).  Get _users_ of libgit.a via ruby bindings (or
+something) asap, so it puts pressure on fixing it.
+
+2. Wait indefinitely until libgit2.git magically becomes ready to be
+usable by git.git as-is.  Then throw libgit.a out the window, and
+rewrite git.git to call into libgit2.a instead [*1*].
+
+What you seem to be saying is "3. Work on libgit2 (and abandon
+git.git?)" [*2*], or worse: 2.  fc is in favor of 1.  Unless you are
+in favor of _not_ improving libgit.a, don't stand in his way: you
+might personally think that it is a difficult (or impossible) task,
+but that's no reason to stop fc from trying.  I personally think his
+goal is admirable, and I'm nobody to say that it cannot be done:
+therefore, I will review his patches and help him in whatever little
+way I can.
+
+[Footnote]
+
+*1* You have dismissed 1 as being unworkable, but do you realize how
+unrealistic this sounds?
+
+*2* git.git has _far_ more users and a _lot_ more contributors.  Don't
+be unwelcoming to contributors by asking them to go away and work on
+something else.  The three proprietary applications you have given as
+counter-examples (?) is not helping anyone.
