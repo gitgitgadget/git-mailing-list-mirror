@@ -1,95 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-remote-mediawiki: Fix a bug in a regexp
-Date: Sat, 8 Jun 2013 22:57:09 -0400
-Message-ID: <20130609025708.GB30393@sigill.intra.peff.net>
-References: <1370698510-11649-1-git-send-email-celestin.matte@ensimag.fr>
- <vpqmwr0v45b.fsf@anie.imag.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [Administrivia] On ruby and contrib/
+Date: Sun, 9 Jun 2013 04:57:18 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1306090456160.28957@s15462909.onlinehome-server.info>
+References: <7vtxld30f2.fsf@alter.siamese.dyndns.org> <7va9n52zjc.fsf@alter.siamese.dyndns.org> <rmivc5rp9w2.fsf@fnord.ir.bbn.com> <CAMP44s07p0vpS_2cjAjB=QWoZjjPSuAm09xwk4BjAAD+hsJrSw@mail.gmail.com> <alpine.DEB.2.02.1306060904100.13204@nftneq.ynat.uz>
+ <CALkWK0mwxfGJdZi6kSaAPr66o550RiT_p8_r_4mDvcd_VAFYQw@mail.gmail.com> <alpine.DEB.2.02.1306061308100.29361@nftneq.ynat.uz> <CALkWK0k8m16oy7u+a8bHK93pRxfomOZDne3k0voVHLGULO+uiw@mail.gmail.com> <7vd2ryueuu.fsf@alter.siamese.dyndns.org>
+ <CAMP44s2f2RBGd0VwJaSB1FkHBXRGhrTs_sA80kcinmpzJX8UDg@mail.gmail.com> <CALkWK0m4V4KYyKW8KJMRsCgOxqcLi0XDYZvS4w++6BKVVvioyw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Q8OpbGVzdGlu?= Matte <celestin.matte@ensimag.fr>,
-	git@vger.kernel.org, benoit.person@ensimag.fr
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Lang <david@lang.hm>, Greg Troxel <gdt@ir.bbn.com>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	=?ISO-8859-15?Q?Nguy=ADn_Th=E1i_Ng=F7c?= <pclouds@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
 X-From: git-owner@vger.kernel.org Sun Jun 09 04:57:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlVov-0002do-F8
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 04:57:29 +0200
+	id 1UlVow-0002do-4x
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 04:57:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751488Ab3FIC5M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jun 2013 22:57:12 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59233 "EHLO peff.net"
+	id S1751636Ab3FIC51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 22:57:27 -0400
+Received: from mout.gmx.net ([212.227.17.20]:52874 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751383Ab3FIC5L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 22:57:11 -0400
-Received: (qmail 5631 invoked by uid 102); 9 Jun 2013 02:58:00 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 08 Jun 2013 21:58:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Jun 2013 22:57:09 -0400
-Content-Disposition: inline
-In-Reply-To: <vpqmwr0v45b.fsf@anie.imag.fr>
+	id S1751383Ab3FIC5Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 22:57:24 -0400
+Received: from mailout-de.gmx.net ([10.1.76.4]) by mrigmx.server.lan
+ (mrigmx002) with ESMTP (Nemesis) id 0MKwSE-1UlVop0Shc-00012g for
+ <git@vger.kernel.org>; Sun, 09 Jun 2013 04:57:23 +0200
+Received: (qmail invoked by alias); 09 Jun 2013 02:57:22 -0000
+Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
+  by mail.gmx.net (mp004) with SMTP; 09 Jun 2013 04:57:22 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+XdgdmmWeXSijsO1JP7V2dEQW2m/qVZhFmXTUV88
+	IrcWIkgpfN5oB9
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CALkWK0m4V4KYyKW8KJMRsCgOxqcLi0XDYZvS4w++6BKVVvioyw@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226874>
 
-On Sat, Jun 08, 2013 at 08:38:56PM +0200, Matthieu Moy wrote:
+Hi Ram,
 
-> C=C3=A9lestin Matte <celestin.matte@ensimag.fr> writes:
->=20
-> > In Perl, '\n' is not a newline, but instead a literal backslash fol=
-lowed by an
-> > "n". As the output of "rev-list --first-parent" is line-oriented, w=
-hat we want
-> > here is a newline.
->=20
-> This is right, but the code actually worked the way it was. I'm not
-> sure, but my understanding is that '\n' is the string "backslash
-> followed by n", but interpreted as a regexp, it is a newline.
+On Sat, 8 Jun 2013, Ramkumar Ramachandra wrote:
 
-Yes, the relevant doc (from "perldoc -f split") is:
+> Felipe Contreras wrote:
+> >> Also we heard from no regular/high-value reviewers that they feel
+> >> comfortable reviewing additions in Ruby.
+> >
+> > Correction; *current* regular/high-value reviewers.
+> 
+> Correct.  The opinions of inactive community members and
+> non-contributors are less useful.
 
-  The pattern "/PATTERN/" may be replaced with an expression to specify
-  patterns that vary at runtime.  (To do runtime compilation only once,
-  use "/$variable/o".)
+I humbly suggest to treat other people's contribution with the same
+respect you want yours' to be treated.
 
-So it is treating "\n" as an expression and compiling the regex each
-time through (though I think modern perl may be smart enough to realize
-it is a constant expression and compile the regex only once). You would
-get the same behavior with this:
-
-  split $arg, $data;
-
-if $arg contained '\n'. Of course, you _also_ get the same thing if you
-use a literal newline (either "\n" or if $arg contained a literal
-newline), because they function the same in a regex. In other words, it
-does not matter which you use because perl's interpolation of "\n" and
-the regex expansion of "\n" are identical: t hey both mean a newline.
-
-A more subtle example that shows what is going on is this:
-
-  split '.', $data;
-
-If you feed that "foo.bar.baz", it does not split it into three words;
-each character is a delimiter, because the dot is compiled to a regex.
-
-> The new code looks better than the old one, but the log message may b=
-e
-> improved.
-
-Agreed. I think the best explanation is something like:
-
-  Perl's split function takes a regex pattern argument. You can also
-  feed it an expression, which is then compiled into a regex at runtime=
-=2E
-  It therefore works to pass your pattern via single quotes, but it is
-  much less obvious to a reader that the argument is meant to be a
-  regex, not a static string. Using the traditional slash-delimiters
-  makes this easier to read.
-
--Peff
+Just a suggestion,
+J
