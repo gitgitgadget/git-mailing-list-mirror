@@ -1,80 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Mon, 10 Jun 2013 00:14:36 +0530
-Message-ID: <CALkWK0nsJ5ds5v7auoqN7_vXhOoasJ3y99njZt5btPVqRCF2zA@mail.gmail.com>
-References: <CACsJy8CQRWU0mFLVD6RrpzJiHBH=9zFwf5xDo7UhGW6A-OAzuw@mail.gmail.com>
- <CALkWK0mLoeO5fKezE5S1LEC2LNH9qCwxHnNi_ZJpYzC7rVTqmg@mail.gmail.com>
- <CACsJy8B=m95mpRn1dAwQZAvHRUeJVjKy1hKXv43EKX08ZODsDw@mail.gmail.com>
- <CALkWK0mw8=CMuyw5-E0fzh+c6Om_NCgHohqa_p=J_kw3UfJCJQ@mail.gmail.com>
- <CACsJy8AtH6PQ06_-UgumV0dRdq28qKn-Oj7EAy3g+eOTGhOyYw@mail.gmail.com>
- <CAMP44s2uV6CwdyadnJXSd+3mhOdApDxqdtjNyOPj3CbdsEyG0Q@mail.gmail.com>
- <20130609043444.GA561@sigill.intra.peff.net> <CALkWK0kkGO8zoLSpZkaYgVr5eBX6AovYFxQZkgJKugSw0CmdXQ@mail.gmail.com>
- <20130609175554.GA810@sigill.intra.peff.net> <CALkWK0n0kkNZo_Xt1oT5GL-TxZP0faDExxyH3vU-+hy4uEUEtQ@mail.gmail.com>
- <20130609182246.GE810@sigill.intra.peff.net>
+Date: Sun, 9 Jun 2013 14:45:54 -0400
+Message-ID: <20130609184553.GG810@sigill.intra.peff.net>
+References: <20130608164902.GA3109@elie.Belkin>
+ <CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
+ <20130608173447.GA4381@elie.Belkin>
+ <CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
+ <20130609014049.GA10375@google.com>
+ <CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
+ <20130609052624.GB561@sigill.intra.peff.net>
+ <CALkWK0mu2_9M5aTczcEkv37eLaAg5_mGDZ_W9nqQFoesB4wc3g@mail.gmail.com>
+ <20130609180437.GB810@sigill.intra.peff.net>
+ <CALkWK0kkhDOSSdF=E4PvO24hg++_FpP3YFaGRD3yq80XG0TRJA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Duy Nguyen <pclouds@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jun 09 20:45:28 2013
+	Brandon Casey <drafnel@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 20:46:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlkcG-0005y7-AG
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 20:45:24 +0200
+	id 1Ulkcs-0006Me-0o
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 20:46:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751630Ab3FISpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 14:45:18 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:57361 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751067Ab3FISpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 14:45:17 -0400
-Received: by mail-ie0-f176.google.com with SMTP id ar20so12091918iec.21
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 11:45:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=FEZcqv2Zd1eGiJQGXjxI7dSqlxieDEuWs4Z1PDJPJhs=;
-        b=qdZBcmXZxcxxLwZA4HvCezmOp7B5vsvhuALK1N94T2yr01uo+J3FgUJkBCf6wePgig
-         nnNlNFyJwGQrpljV2h8DERm2ei23Yx6+tZZL/Yirg6XWaxFlK4IhCBBFP2y4ahCq6ZXc
-         1PSUUjEFYu0u1EC12a7FT2LQ8bxda82cjWAkEYFVQ/dZz57FC5NeJxRK448SrYyYBE68
-         YFNFyzue8F+fsEGnmUXzRihGJ9r+cAkVJvX8j8pCFfoZUM+jQDvuxs8Yc4XLVD7YOlX6
-         1SHbT2e6ENE2iykM6uD0Ln+Ww7ffgEVqj4IlSHHjI6BmygVTgH4HJKFucurqfTew7t/I
-         JB2Q==
-X-Received: by 10.43.53.211 with SMTP id vr19mr2730327icb.33.1370803516897;
- Sun, 09 Jun 2013 11:45:16 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Sun, 9 Jun 2013 11:44:36 -0700 (PDT)
-In-Reply-To: <20130609182246.GE810@sigill.intra.peff.net>
+	id S1751983Ab3FISp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 14:45:58 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37501 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750868Ab3FISp5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 14:45:57 -0400
+Received: (qmail 20575 invoked by uid 102); 9 Jun 2013 18:46:47 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 09 Jun 2013 13:46:47 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Jun 2013 14:45:54 -0400
+Content-Disposition: inline
+In-Reply-To: <CALkWK0kkhDOSSdF=E4PvO24hg++_FpP3YFaGRD3yq80XG0TRJA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227093>
 
-Jeff King wrote:
-> Sorry, I don't have patches. It is a hard problem for which I do not
-> have the solution, which is kind of my point.
+On Mon, Jun 10, 2013 at 12:02:11AM +0530, Ramkumar Ramachandra wrote:
 
-So, what is the problem?  We are moving towards what we think is the
-way forward.  Nobody said that it is the theoretical best, but it's
-_much_ better than doing nothing, no?
+> This is all very good, Jeff.  Various people have expressed what's
+> wrong with fc's "demeanour", "tone", and "style of discussion" in
+> various different ways at various different points in time.  This goes
+> on and on and on with no end in sight. WHAT do we do?
 
-> For the record, I am not _against_ any code organization that might be
-> useful for lib-ification later. I just do not see it as an interesting
-> step to be discussing if you want to know whether such a lib-ification
-> effort is feasible.
+My advice would be to ignore him when the discussion proceeds in an
+unproductive direction.
 
-Then whom are we to ask about this feasibility?  All the core
-contributors (including Junio) are in the CC.  Nobody has said
-anything.  So, are you proposing that we sit and ponder over our
-theoretically-indeterminate-feasibility problem?  There is no magic
-bullet, Jeff.  We write code, and we fix bugs as and when they crop
-up; there's really not much else anyone can do.  Help by writing code,
-or reviewing someone else's code.
+But I never wanted to tell other people what to do with respect to
+Felipe. My point was to express public agreement with Jonathan, and show
+that individual members of the community may be less interested in
+helping you if you behave in certain ways. At this point, I do not have
+any hope of impacting Felipe's behavior, but I thought it might be
+demonstrative to other list members.  We do not have an explicit code of
+conduct on the list, but it is not as if behavior is without
+consequences. If you are not easy to work with, people will get tired of
+dealing with you eventually[1].
+
+-Peff
+
+[1] Or maybe not. Maybe there are enough people interested in what
+    Felipe has to say that he will continue to get review. I even try to
+    review his patches myself when there is something factually and
+    obviously wrong to point out, and it won't suck me into a
+    time-wasting argument that goes nowhere.
+
+    But the point is that each individual can make the choice
+    themselves, and then the problem is solved for them.
