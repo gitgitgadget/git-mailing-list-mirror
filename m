@@ -1,63 +1,81 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH v3 2/2] read-cache: plug a few leaks
-Date: Sun, 09 Jun 2013 04:11:24 +0200
-Message-ID: <51B3E44C.4030304@lsrfire.ath.cx>
-References: <1370644168-4745-1-git-send-email-felipe.contreras@gmail.com> <1370644168-4745-3-git-send-email-felipe.contreras@gmail.com> <51B31651.6020307@lsrfire.ath.cx> <CAMP44s2Bp5p1211e6Utdch4B+v3J83GCY0_ucG7duakswkb+pg@mail.gmail.com> <51B32FFD.5070302@lsrfire.ath.cx> <CAMP44s3K=VtkeCoKqnU9To9YbfO7vph9MsMWtgLWw0n=cYyq5g@mail.gmail.com> <51B35414.1090101@lsrfire.ath.cx> <CAMP44s3UYCX+DzgnErB=0GdD3w5k2GkNKjv46ZA_NVHm1Z0YLQ@mail.gmail.com> <51B36849.3030608@lsrfire.ath.cx> <CAMP44s1ffOUd3DkphHAj8ZmovBazPFdMgtvEptR6kW9+ZMLLjA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/2] Move sequencer to builtin
+Date: Sat, 8 Jun 2013 21:17:56 -0500
+Message-ID: <CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
+References: <1370643409-3431-1-git-send-email-felipe.contreras@gmail.com>
+	<1370643409-3431-3-git-send-email-felipe.contreras@gmail.com>
+	<CACsJy8AMMCWSFC6EUHAgZdDA7E1kSPE3ZO6qGvS+WGji-di=Rw@mail.gmail.com>
+	<CAMP44s29GiGJq3wyXAzJNo0FJY+Vbgd18bpBJMYQ47h-3M6sWA@mail.gmail.com>
+	<CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
+	<20130608164902.GA3109@elie.Belkin>
+	<CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
+	<20130608173447.GA4381@elie.Belkin>
+	<CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
+	<20130609014049.GA10375@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Adam Spiers <git@adamspiers.org>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 09 04:11:45 2013
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 09 04:18:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlV6e-0003QP-GJ
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 04:11:44 +0200
+	id 1UlVCm-0007W3-KM
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 04:18:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751349Ab3FICL3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jun 2013 22:11:29 -0400
-Received: from india601.server4you.de ([85.25.151.105]:59006 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751281Ab3FICL3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jun 2013 22:11:29 -0400
-Received: from [192.168.2.105] (p579BE82C.dip0.t-ipconnect.de [87.155.232.44])
-	by india601.server4you.de (Postfix) with ESMTPSA id 00427239;
-	Sun,  9 Jun 2013 04:11:26 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <CAMP44s1ffOUd3DkphHAj8ZmovBazPFdMgtvEptR6kW9+ZMLLjA@mail.gmail.com>
+	id S1751349Ab3FICR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jun 2013 22:17:59 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:33015 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751173Ab3FICR6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jun 2013 22:17:58 -0400
+Received: by mail-lb0-f175.google.com with SMTP id r10so1135019lbi.6
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 19:17:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=h/YVPJUIu/LzpIm5wJf1szOGImOmtGdGXxUV5Q7CnQI=;
+        b=amzWyXXCY5Qu2SzZ72AfdBwqyB/ddOeKS/XohGshzw/mrWUrRpwLgUj+YFleB9tXRe
+         fKTf24ORLnbkd0xD9evNIYxmYbsZTPOC524CLLXw0Q+P3Yd86V0sviMtNUfKPfNP49qV
+         2c0OOwLdGocxzPptRf5WXUycd+fd7UrCKHR54ldNBuil3TXrt0e0w5wLj+iHh5LazLTU
+         KW8ON+sFoYzflfLj0Wdsaaz3JGl/gk0zpP+qjDYtnNxdlOPbSvdopByUP1kFH9OTIQH/
+         w5QfGizZ0fNGx3z+Q7tMx9iETzN5fu6KxwPvOx+1fZJqURy3RakMQqnpUJHKDSGz34ve
+         iWTA==
+X-Received: by 10.152.22.130 with SMTP id d2mr1724226laf.33.1370744276571;
+ Sat, 08 Jun 2013 19:17:56 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Sat, 8 Jun 2013 19:17:56 -0700 (PDT)
+In-Reply-To: <20130609014049.GA10375@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226869>
 
-Am 08.06.2013 19:27, schrieb Felipe Contreras:
-> On Sat, Jun 8, 2013 at 12:22 PM, Ren=C3=A9 Scharfe
-> <rene.scharfe@lsrfire.ath.cx> wrote:
+On Sat, Jun 8, 2013 at 8:40 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Felipe Contreras wrote:
 >
->> Let's find and fix those leaks by freeing memory in the right places=
-=2E
->> Freeing memory just in case in places where we can show that no leak=
- is
->> triggered by our test suite doesn't help.
+>> Just the past three months I've probably done more work than anybody
+>> else[1], and you would ban me because you don't like my words?
 >
-> It helps; it prevents leaks. The real culprit is the bogus API, but I
-> don't see that changing anytime soon, so there are two options when
-> somebody makes a mistake the API allows; leak or don't leak. And you
-> seem to prefer the leak, even though it provides absolutely no
-> advantage.
+> Definitely, yes.  Even if you look at the impact on code alone and
+> don't care about the people, destroying a collegial work environment
+> is harmful enough to the code to outweigh the (admittedly often
+> useful) patches.
 
-It covers up bugs, which may seem helpful, but isn't, because it's=20
-better to fix the actual mistake.
+A collegial work environment is overrated, and proof of that the Linux
+kernel, where honest and straight talk is the bread and butter of the
+mailing list. And the Linux kernel is the most successful software
+project in history by far. It's code that speaks.
 
-What would be a better API?  Making discard_index free the array is a=20
-good first step; what else is bogus?
+And I have not destroyed anything, except maybe your sense of fairness
+and balance when reviewing my patches, but that is not my fault.
 
-Ren=C3=A9
+-- 
+Felipe Contreras
