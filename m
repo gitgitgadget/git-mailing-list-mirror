@@ -1,90 +1,61 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Sun, 9 Jun 2013 13:11:16 -0500
-Message-ID: <CAMP44s33wC0p_K8zhovWrgMua9qzZ3064BFxJ+m00Lt39ZPPQQ@mail.gmail.com>
-References: <CACsJy8A-qc0tHcsp5=syxv_7FjixahU7fGcZuUV=cGn_-qyWwg@mail.gmail.com>
-	<CAMP44s2fP4_=HtOsuwmxXG8qmp8CmpgEhz=BJFOFZxsTf_3gcQ@mail.gmail.com>
-	<CACsJy8CQRWU0mFLVD6RrpzJiHBH=9zFwf5xDo7UhGW6A-OAzuw@mail.gmail.com>
-	<CALkWK0mLoeO5fKezE5S1LEC2LNH9qCwxHnNi_ZJpYzC7rVTqmg@mail.gmail.com>
-	<CACsJy8B=m95mpRn1dAwQZAvHRUeJVjKy1hKXv43EKX08ZODsDw@mail.gmail.com>
-	<CALkWK0mw8=CMuyw5-E0fzh+c6Om_NCgHohqa_p=J_kw3UfJCJQ@mail.gmail.com>
-	<CACsJy8AtH6PQ06_-UgumV0dRdq28qKn-Oj7EAy3g+eOTGhOyYw@mail.gmail.com>
-	<CAMP44s2uV6CwdyadnJXSd+3mhOdApDxqdtjNyOPj3CbdsEyG0Q@mail.gmail.com>
-	<20130609043444.GA561@sigill.intra.peff.net>
-	<CALkWK0kkGO8zoLSpZkaYgVr5eBX6AovYFxQZkgJKugSw0CmdXQ@mail.gmail.com>
-	<20130609175554.GA810@sigill.intra.peff.net>
-	<CALkWK0n0kkNZo_Xt1oT5GL-TxZP0faDExxyH3vU-+hy4uEUEtQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] git-remote-mediawiki: new tool to preview local
+ changes without pushing
+Date: Sun, 9 Jun 2013 14:13:02 -0400
+Message-ID: <20130609181302.GD810@sigill.intra.peff.net>
+References: <1370641831-9115-1-git-send-email-benoit.person@ensimag.fr>
+ <20130609060807.GA8906@sigill.intra.peff.net>
+ <vpq38srtun7.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 09 20:11:28 2013
+Content-Type: text/plain; charset=utf-8
+Cc: benoit.person@ensimag.fr, git@vger.kernel.org,
+	celestin.matte@ensimag.fr
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sun Jun 09 20:13:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ulk5K-0000iJ-T9
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 20:11:23 +0200
+	id 1Ulk75-00025V-O8
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 20:13:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752000Ab3FISLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 14:11:19 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:38674 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751667Ab3FISLS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 14:11:18 -0400
-Received: by mail-lb0-f179.google.com with SMTP id w20so5639472lbh.38
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 11:11:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=IP5oxk4NzUSBZkSmBPzaJ7tBxnrRLML2uSJWiUTp8lQ=;
-        b=WnUHngym1FArx7TopCrj27cs2X94Ub7XH2HvNHytPYZjlLz/PdGw50uPMGGX7QQvGk
-         iWPp+QaZTGjQGQmjSyhd/C4o9E92b0xm6MSBS9OvIiqZO4h5kxcn7qDIv26hEiRC3Uzr
-         n9W3a71Cnb8unkum9oC2AF/rqzmPSW4M6GeAPyAscu44Z3ZRnlntdX+5t9w2NVXStpUs
-         RE9jwbgruNq8ST8o+lwqBtLOe4pPb98FBKF8Vi6y0ZPpKVwqwNm/P0n0zTKyaep5l7a8
-         I+F4hRdwTpd7zCCJfBHMWgF7Y4IiZEA87OkzsvPQHcPciVoOw27VLCst1CWWBIRDWpJ+
-         ZIXg==
-X-Received: by 10.152.22.130 with SMTP id d2mr2852333laf.33.1370801476989;
- Sun, 09 Jun 2013 11:11:16 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Sun, 9 Jun 2013 11:11:16 -0700 (PDT)
-In-Reply-To: <CALkWK0n0kkNZo_Xt1oT5GL-TxZP0faDExxyH3vU-+hy4uEUEtQ@mail.gmail.com>
+	id S1752032Ab3FISNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 14:13:07 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37259 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751692Ab3FISNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 14:13:06 -0400
+Received: (qmail 18755 invoked by uid 102); 9 Jun 2013 18:13:55 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 09 Jun 2013 13:13:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Jun 2013 14:13:02 -0400
+Content-Disposition: inline
+In-Reply-To: <vpq38srtun7.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227080>
 
-On Sun, Jun 9, 2013 at 1:06 PM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
-> Jeff King wrote:
->> I already mentioned elsewhere that I think it would be fine to massage
->> libgit.a in that direction. I even joined the conversation pointing out
->> some cases where Felipe's ruby module would break. But I do not think
->> that moving code in and out of libgit.a is an important first step at
->> all. That is simply code that no library users would want to call, and
->> is easy to deal with: move it out. The hard part is code that users
->> _would_ want to call, and is totally broken. Patches dealing with that
->> are the hard obstacle that people working in this direction would need
->> to overcome. But I do not see any such patches under discussion.
->
-> Forget the rest; this makes it clear.  Thanks, and sorry for all the confusion.
->
-> So, reorganization is not the first step.  Can you please post an
-> example patch illustrating what needs to be done, so we can follow?
+On Sun, Jun 09, 2013 at 01:01:48PM +0200, Matthieu Moy wrote:
 
-If you have a code-base with 100 functions, 10 of which make sense in
-a public library, instead of going ahead to fix those 10 functions, it
-makes sense to *first* separate those 10 functions, and *then* clean
-them up for public usage.
+> > I also wonder if it would be useful to be able to specify not only files
+> > in the filesystem, but also arbitrary blobs. So in 4b above, you could
+> > "git mw preview origin:page.mw" to see the rendered version of what
+> > upstream has done.
+> 
+> Next step could even be "git mw diff $from $to", using the wiki to
+> render the diff. Not a priority, but could be funny.
 
-But let's assume that Jeff is right and this is not the first step. It
-doesn't matter; I already started that step and created builtin/lib.a.
-Are you going to throw away that because it's not "the first step"?
+I was actually thinking along the same lines. I often do something
+similar with Git's documentation. When you are tweaking the formatting
+or an asciidoc knob, it is useful to diff the rendered output to check
+that the changes had the effect you wanted.
 
--- 
-Felipe Contreras
+I usually have done so by hand, but I actually wonder if "git difftool"
+could be used as a wrapper for this (I suspect not, because you have to
+deal with the whole build tree, not just individual blobs).
+
+-Peff
