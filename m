@@ -1,349 +1,174 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 35/45] rebase: remove merge mode
-Date: Sun,  9 Jun 2013 11:40:47 -0500
-Message-ID: <1370796057-25312-36-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v4 38/45] add simple tests of consistency across rebase types
+Date: Sun,  9 Jun 2013 11:40:50 -0500
+Message-ID: <1370796057-25312-39-git-send-email-felipe.contreras@gmail.com>
 References: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+	Martin von Zweigbergk <martinvonz@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 09 18:44:45 2013
+X-From: git-owner@vger.kernel.org Sun Jun 09 18:44:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlijP-0007Pg-UT
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 18:44:40 +0200
+	id 1UlijV-0007SX-HM
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 18:44:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752490Ab3FIQod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 12:44:33 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:52138 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752473Ab3FIQoa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 12:44:30 -0400
-Received: by mail-ob0-f173.google.com with SMTP id wc20so8818961obb.4
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 09:44:30 -0700 (PDT)
+	id S1752528Ab3FIQom (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 12:44:42 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:64031 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752508Ab3FIQoi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 12:44:38 -0400
+Received: by mail-oa0-f49.google.com with SMTP id k14so4923976oag.22
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 09:44:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=YO9/SZRla8w1SZvvwYWIgApw3YGXZRZq9ZXkhxL+dRg=;
-        b=rXVrF4MhpkHWfnPHQ0I0bVwTXCb3i+edU9d+lpJxtlUw5MzpPlVqPMJ+YN6y95XbfV
-         4t6mU02Vg5F5zq/GVxQievbpI4BIb2qt6NadUvPKv4lyB9BLj832zL0KuyUYWdmFYAGW
-         pa2GOEBQdYYB8O6PgmU9OXxg4WqSys5ebTLXlIKQ9HK6BjQkqbrlM+GNWi9SvnzaNCbj
-         nWDPNxUy1Antt6c2OzbZT9ogGoAlXKAC+QT2eyeXogY0JGuVdrVMzAu11kGRX5VkNWcU
-         JhgRbjR6hB97RnBrpwMAwt+PCUrOBv2OjHkURV0fzqeGY9u7b0QlvUObaZQ6mJxQLfb2
-         ytFg==
-X-Received: by 10.182.242.45 with SMTP id wn13mr853758obc.30.1370796270027;
-        Sun, 09 Jun 2013 09:44:30 -0700 (PDT)
+        bh=2TQHSBr/bCD2LIGXGRobpoEU9mcNPZGQ1pZ+ulMCWYI=;
+        b=JIHtiJP9I7BuEe3Sf1ZVm5aPNTGUvlRVqBDr+F7NgGC7H5dwwoPCWvYXAF8Lmo4iEI
+         FVXAWQRG6ZBlkgIhvZeBpyGrd2hyXXpf9DuCVfg3BEC+e7Kgg5Fc3vHqpaXW8H0JeuL/
+         6cOE9GoiKHQqJGHRZQqOXFl+iMqaYxLaEJlC8npTOtKh7x+bLDzN/xmSbK5L/1ZtB5hT
+         tQvOs+CXdUxF9At5emUvfAFYDqTN6+TkTZqJ7ST7i8o7WJBu7Ji5OoQlYwKWq9ozf1Az
+         bn1RWLCvtfVYEYauXR7ycmTshuAYGpnfjv5t3rIPxIyevrctHg7tEqDeGOb9QJ9fGvGl
+         8JAA==
+X-Received: by 10.60.44.209 with SMTP id g17mr5274477oem.23.1370796277996;
+        Sun, 09 Jun 2013 09:44:37 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id r4sm15188604oem.3.2013.06.09.09.44.28
+        by mx.google.com with ESMTPSA id h4sm15199762oel.2.2013.06.09.09.44.36
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 09 Jun 2013 09:44:29 -0700 (PDT)
+        Sun, 09 Jun 2013 09:44:37 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.698.g079b096
 In-Reply-To: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227004>
 
-The cherrypick mode does the job.
+From: Martin von Zweigbergk <martinvonz@gmail.com>
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+Helped-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Martin von Zweigbergk <martinvonz@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Makefile                         |   1 -
- contrib/completion/git-prompt.sh |   4 +-
- git-rebase--merge.sh             | 151 ---------------------------------------
- git-rebase.sh                    |  13 +---
- t/t3406-rebase-message.sh        |  15 ----
- t/t9903-bash-prompt.sh           |   2 +-
- 6 files changed, 3 insertions(+), 183 deletions(-)
- delete mode 100644 git-rebase--merge.sh
+ t/lib-rebase.sh                   | 16 ++++++++
+ t/t3421-rebase-topology-linear.sh | 78 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 94 insertions(+)
+ create mode 100755 t/t3421-rebase-topology-linear.sh
 
-diff --git a/Makefile b/Makefile
-index 4719979..609fa9e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -475,7 +475,6 @@ SCRIPT_LIB += git-parse-remote
- SCRIPT_LIB += git-rebase--am
- SCRIPT_LIB += git-rebase--cherrypick
- SCRIPT_LIB += git-rebase--interactive
--SCRIPT_LIB += git-rebase--merge
- SCRIPT_LIB += git-sh-setup
- SCRIPT_LIB += git-sh-i18n
- 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 3d10f21..5036795 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -352,12 +352,10 @@ __git_ps1 ()
- 			total=$(cat "$g/rebase-merge/end")
- 			if [ -f "$g/rebase-merge/interactive" ]; then
- 				r="|REBASE-i"
--			elif [ -f "$g/rebase-merge/cherrypick" ]; then
-+			else
- 				r="|REBASE"
- 				step=$(cat "$g/sequencer/rewritten" | wc -l)
- 				let step+=1
--			else
--				r="|REBASE-m"
- 			fi
- 		else
- 			if [ -d "$g/rebase-apply" ]; then
-diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
-deleted file mode 100644
-index 16d1817..0000000
---- a/git-rebase--merge.sh
-+++ /dev/null
-@@ -1,151 +0,0 @@
--#!/bin/sh
--#
--# Copyright (c) 2010 Junio C Hamano.
--#
--
--prec=4
--
--read_state () {
--	onto_name=$(cat "$state_dir"/onto_name) &&
--	end=$(cat "$state_dir"/end) &&
--	msgnum=$(cat "$state_dir"/msgnum)
--}
--
--continue_merge () {
--	test -d "$state_dir" || die "$state_dir directory does not exist"
--
--	unmerged=$(git ls-files -u)
--	if test -n "$unmerged"
--	then
--		echo "You still have unmerged paths in your index"
--		echo "did you forget to use git add?"
--		die "$resolvemsg"
--	fi
--
--	cmt=`cat "$state_dir/current"`
--	if ! git diff-index --quiet --ignore-submodules HEAD --
--	then
--		if ! git commit --no-verify -C "$cmt"
--		then
--			echo "Commit failed, please do not call \"git commit\""
--			echo "directly, but instead do one of the following: "
--			die "$resolvemsg"
--		fi
--		if test -z "$GIT_QUIET"
--		then
--			printf "Committed: %0${prec}d " $msgnum
--		fi
--		echo "$cmt $(git rev-parse HEAD^0)" >> "$state_dir/rewritten"
--	else
--		if test -z "$GIT_QUIET"
--		then
--			printf "Already applied: %0${prec}d " $msgnum
--		fi
--	fi
--	test -z "$GIT_QUIET" &&
--	GIT_PAGER='' git log --format=%s -1 "$cmt"
--
--	# onto the next patch:
--	msgnum=$(($msgnum + 1))
--	echo "$msgnum" >"$state_dir/msgnum"
--}
--
--call_merge () {
--	cmt="$(cat "$state_dir/cmt.$1")"
--	echo "$cmt" > "$state_dir/current"
--	hd=$(git rev-parse --verify HEAD)
--	cmt_name=$(git symbolic-ref HEAD 2> /dev/null || echo HEAD)
--	msgnum=$(cat "$state_dir/msgnum")
--	eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end - $msgnum))"'
--	eval GITHEAD_$hd='$onto_name'
--	export GITHEAD_$cmt GITHEAD_$hd
--	if test -n "$GIT_QUIET"
--	then
--		GIT_MERGE_VERBOSITY=1 && export GIT_MERGE_VERBOSITY
--	fi
--	test -z "$strategy" && strategy=recursive
--	eval 'git-merge-$strategy' $strategy_opts '"$cmt^" -- "$hd" "$cmt"'
--	rv=$?
--	case "$rv" in
--	0)
--		unset GITHEAD_$cmt GITHEAD_$hd
--		return
--		;;
--	1)
--		git rerere $allow_rerere_autoupdate
--		die "$resolvemsg"
--		;;
--	2)
--		echo "Strategy: $strategy failed, try another" 1>&2
--		die "$resolvemsg"
--		;;
--	*)
--		die "Unknown exit code ($rv) from command:" \
--			"git-merge-$strategy $cmt^ -- HEAD $cmt"
--		;;
--	esac
--}
--
--finish_rb_merge () {
--	move_to_original_branch
--	if test -s "$state_dir"/rewritten
--	then
--		git notes copy --for-rewrite=rebase <"$state_dir"/rewritten
--		if test -x "$GIT_DIR"/hooks/post-rewrite
--		then
--			"$GIT_DIR"/hooks/post-rewrite rebase <"$state_dir"/rewritten
--		fi
--	fi
--	say All done.
--}
--
--case "$action" in
--continue)
--	read_state
--	continue_merge
--	while test "$msgnum" -le "$end"
--	do
--		call_merge "$msgnum"
--		continue_merge
--	done
--	finish_rb_merge
--	return
--	;;
--skip)
--	read_state
--	git rerere clear
--	msgnum=$(($msgnum + 1))
--	while test "$msgnum" -le "$end"
--	do
--		call_merge "$msgnum"
--		continue_merge
--	done
--	finish_rb_merge
--	return
--	;;
--esac
--
--mkdir -p "$state_dir"
--echo "$onto_name" > "$state_dir/onto_name"
--write_basic_state
--
--msgnum=0
--for cmt in `git rev-list --reverse --no-merges "$revisions"`
--do
--	msgnum=$(($msgnum + 1))
--	echo "$cmt" > "$state_dir/cmt.$msgnum"
--done
--
--echo 1 >"$state_dir/msgnum"
--echo $msgnum >"$state_dir/end"
--
--end=$msgnum
--msgnum=1
--
--while test "$msgnum" -le "$end"
--do
--	call_merge "$msgnum"
--	continue_merge
--done
--
--finish_rb_merge
-diff --git a/git-rebase.sh b/git-rebase.sh
-index f2efff9..8ddf270 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -59,7 +59,6 @@ unset onto
- cmd=
- strategy=
- strategy_opts=
--do_merge=
- merge_dir="$GIT_DIR"/rebase-merge
- apply_dir="$GIT_DIR"/rebase-apply
- verbose=
-@@ -205,11 +204,8 @@ then
- 	then
- 		type=interactive
- 		interactive_rebase=explicit
--	elif test -f "$merge_dir"/cherrypick
--	then
--		type=cherrypick
- 	else
--		type=merge
-+		type=cherrypick
- 	fi
- 	state_dir="$merge_dir"
- fi
-@@ -256,18 +252,15 @@ do
- 		autosquash=
- 		;;
- 	-M|-m)
--		do_merge=t
- 		;;
- 	-X)
- 		shift
- 		strategy_opts="$strategy_opts $(git rev-parse --sq-quote "--$1")"
--		do_merge=t
- 		test -z "$strategy" && strategy=recursive
- 		;;
- 	-s)
- 		shift
- 		strategy="$1"
--		do_merge=t
- 		;;
- 	-n)
- 		diffstat=
-@@ -412,10 +405,6 @@ if test -n "$interactive_rebase"
- then
- 	type=interactive
- 	state_dir="$merge_dir"
--elif test -n "$do_merge"
--then
--	type=merge
--	state_dir="$merge_dir"
- elif test -n "$git_am_opt"
- then
- 	type=am
-diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
-index e6a9a0d..37d19c5 100755
---- a/t/t3406-rebase-message.sh
-+++ b/t/t3406-rebase-message.sh
-@@ -27,21 +27,6 @@ test_expect_success setup '
- 
- '
- 
--cat >expect <<\EOF
--Already applied: 0001 A
--Already applied: 0002 B
--Committed: 0003 Z
--EOF
--
--test_expect_success 'rebase -m' '
--
--	git rebase -m master >report &&
--	sed -n -e "/^Already applied: /p" \
--		-e "/^Committed: /p" report >actual &&
--	test_cmp expect actual
--
--'
--
- test_expect_success 'rebase --stat' '
- 	git reset --hard start &&
-         git rebase --stat master >diffstat.txt &&
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 15521cc..2e46f93 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -266,7 +266,7 @@ EOF
- '
- 
- test_expect_success 'prompt - rebase merge' '
--	printf " (b2|REBASE-m 1/3)" > expected &&
-+	printf " (b2|REBASE 1/3)" > expected &&
- 	git checkout b2 &&
- 	test_when_finished "git checkout master" &&
- 	test_must_fail git rebase --merge b1 b2 &&
+diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+index 6ccf797..1e0ff28 100644
+--- a/t/lib-rebase.sh
++++ b/t/lib-rebase.sh
+@@ -65,3 +65,19 @@ EOF
+ 	test_set_editor "$(pwd)/fake-editor.sh"
+ 	chmod a+x fake-editor.sh
+ }
++
++# checks that the revisions in "$2" represent a linear range with the
++# subjects in "$1"
++test_linear_range () {
++	revlist_merges=$(git rev-list --merges "$2") &&
++	test -z "$revlist_merges" &&
++	expected=$1
++	set -- $(git log --reverse --format=%s "$2")
++	test "$expected" = "$*"
++}
++
++reset_rebase () {
++	test_might_fail git rebase --abort &&
++	git reset --hard &&
++	git clean -f
++}
+diff --git a/t/t3421-rebase-topology-linear.sh b/t/t3421-rebase-topology-linear.sh
+new file mode 100755
+index 0000000..60365d1
+--- /dev/null
++++ b/t/t3421-rebase-topology-linear.sh
+@@ -0,0 +1,78 @@
++#!/bin/sh
++
++test_description='basic rebase topology tests'
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-rebase.sh
++
++# a---b---c
++#      \
++#       d---e
++test_expect_success 'setup' '
++	test_commit a &&
++	test_commit b &&
++	test_commit c &&
++	git checkout b &&
++	test_commit d &&
++	test_commit e
++'
++
++test_run_rebase () {
++	result=$1
++	shift
++	test_expect_$result "simple rebase $*" "
++		reset_rebase &&
++		git rebase $* c e &&
++		test_cmp_rev c HEAD~2 &&
++		test_linear_range 'd e' c..
++	"
++}
++test_run_rebase success ''
++test_run_rebase success -m
++test_run_rebase success -i
++test_run_rebase success -p
++
++test_run_rebase () {
++	result=$1
++	shift
++	test_expect_$result "rebase $* is no-op if upstream is an ancestor" "
++		reset_rebase &&
++		git rebase $* b e &&
++		test_cmp_rev e HEAD
++	"
++}
++test_run_rebase success ''
++test_run_rebase success -m
++test_run_rebase success -i
++test_run_rebase success -p
++
++test_run_rebase () {
++	result=$1
++	shift
++	test_expect_$result "rebase $* -f rewrites even if upstream is an ancestor" "
++		reset_rebase &&
++		git rebase $* -f b e &&
++		! test_cmp_rev e HEAD &&
++		test_cmp_rev b HEAD~2 &&
++		test_linear_range 'd e' b..
++	"
++}
++test_run_rebase success ''
++test_run_rebase success -m
++test_run_rebase success -i
++test_run_rebase failure -p
++
++test_run_rebase () {
++	result=$1
++	shift
++	test_expect_$result "rebase $* fast-forwards from ancestor of upstream" "
++		reset_rebase &&
++		git rebase $* e b &&
++		test_cmp_rev e HEAD
++	"
++}
++test_run_rebase success ''
++test_run_rebase success -m
++test_run_rebase success -i
++test_run_rebase success -p
++
++test_done
 -- 
 1.8.3.698.g079b096
