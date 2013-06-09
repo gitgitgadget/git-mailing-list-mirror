@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 14/45] clean: convert to use parse_pathspec
-Date: Sun,  9 Jun 2013 13:25:47 +0700
-Message-ID: <1370759178-1709-15-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 15/45] commit: convert to use parse_pathspec
+Date: Sun,  9 Jun 2013 13:25:48 +0700
+Message-ID: <1370759178-1709-16-git-send-email-pclouds@gmail.com>
 References: <1370759178-1709-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,117 +11,119 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 09 08:26:28 2013
+X-From: git-owner@vger.kernel.org Sun Jun 09 08:26:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlZ59-0000H8-QX
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 08:26:28 +0200
+	id 1UlZ5F-0000MQ-RS
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Jun 2013 08:26:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752052Ab3FIG0Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 02:26:24 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:40957 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751897Ab3FIG0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 02:26:23 -0400
-Received: by mail-pb0-f44.google.com with SMTP id uo1so1416756pbc.3
-        for <git@vger.kernel.org>; Sat, 08 Jun 2013 23:26:22 -0700 (PDT)
+	id S1752070Ab3FIG0a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 02:26:30 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:35170 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751913Ab3FIG03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 02:26:29 -0400
+Received: by mail-pd0-f178.google.com with SMTP id w11so1896009pde.37
+        for <git@vger.kernel.org>; Sat, 08 Jun 2013 23:26:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=eNviGZBN4zJu73Cwmpu1ALI+YZB5MP8Q9zPq6BVSh9Y=;
-        b=sny54roBrlP+rg7iI+bM7ac7I06g2n6Nly7y6fs+xQOaFaP40ysiZQv9ZYv9d8qW+c
-         JA9JyJXhiII+p67vivGaiIkJZ3AhQLF6+HheuKXD0obZFB10eRYIALtDO/ok0Nmij3x7
-         tCwW5gRBctfR2+AZ5ZPKuiPaiNurzVy0FmS081mkzHZDxyPsZJqJna1jyXTAz7Jg7eYX
-         Gd35oT47E4lQRmwWCtacYmVNl8msFYqt4KvjxRIlzCVFakyegn8Jw5ye30IKRqBUgCQQ
-         Oa46rxji8HAJS0LxI/+oIEPf60DUrruxiDcA6k99D44GMFHqc0GqKJpMlKr5D6kcn6pG
-         7XFw==
-X-Received: by 10.68.52.10 with SMTP id p10mr5188241pbo.92.1370759182878;
-        Sat, 08 Jun 2013 23:26:22 -0700 (PDT)
+        bh=r7O1ONGuYdUGPhCShPMyX7li6vhaX6XPea2YquffUJM=;
+        b=lgGtVYkN/OouKOxsQdBogbpXEYy4VTx8V5r4nqrHsZyrI8t/i16n4ll1zzqPP96GPd
+         PIrUnZkZBAvAs5kv+DggL1u0mE2drGto7WtLDbOjqm+0DLQqimwPuIecjJt0jrll4KPX
+         5hY+HcpSSOHUpEOpDpw07wQSHGnlO27gN1jHz2ZbX2UWbUy7lQfzZ2hNnlnzF0ehsVNb
+         Y4RwvjqXpTWTwd9o8KulthbYf29Ubnmk3s9xMWQ+DeCnunwYuarKLOdmN1XAlzyGRtB4
+         folnYIO4PRHsTg9zxlJX29xfXB+mm5vNtX8hVP//3WGxSyUQa814bBQHMOpWEwlEzWyF
+         C2Iw==
+X-Received: by 10.68.27.9 with SMTP id p9mr4986165pbg.139.1370759189016;
+        Sat, 08 Jun 2013 23:26:29 -0700 (PDT)
 Received: from lanh ([115.73.237.130])
-        by mx.google.com with ESMTPSA id dc3sm5549108pbc.9.2013.06.08.23.26.19
+        by mx.google.com with ESMTPSA id de14sm10241552pac.10.2013.06.08.23.26.25
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 08 Jun 2013 23:26:22 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 09 Jun 2013 13:27:53 +0700
+        Sat, 08 Jun 2013 23:26:28 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 09 Jun 2013 13:28:00 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <1370759178-1709-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/226907>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/clean.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ builtin/commit.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/clean.c b/builtin/clean.c
-index f955a40..fdd4980 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -13,6 +13,7 @@
- #include "refs.h"
- #include "string-list.h"
- #include "quote.h"
-+#include "pathspec.h"
-=20
- static int force =3D -1; /* unset */
-=20
-@@ -150,7 +151,7 @@ int cmd_clean(int argc, const char **argv, const ch=
-ar *prefix)
- 	int rm_flags =3D REMOVE_DIR_KEEP_NESTED_GIT;
- 	struct strbuf directory =3D STRBUF_INIT;
- 	struct dir_struct dir;
--	static const char **pathspec;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index d2f30d9..0efe269 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -279,17 +279,17 @@ static char *prepare_index(int argc, const char *=
+*argv, const char *prefix,
+ {
+ 	int fd;
+ 	struct string_list partial;
+-	const char **pathspec =3D NULL;
 +	struct pathspec pathspec;
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct string_list exclude_list =3D STRING_LIST_INIT_NODUP;
- 	struct exclude_list *el;
-@@ -209,9 +210,11 @@ int cmd_clean(int argc, const char **argv, const c=
-har *prefix)
- 	for (i =3D 0; i < exclude_list.nr; i++)
- 		add_exclude(exclude_list.items[i].string, "", 0, el, -(i+1));
+ 	char *old_index_env =3D NULL;
+ 	int refresh_flags =3D REFRESH_QUIET;
 =20
--	pathspec =3D get_pathspec(prefix, argv);
+ 	if (is_status)
+ 		refresh_flags |=3D REFRESH_UNMERGED;
 +	parse_pathspec(&pathspec, 0,
-+		       PATHSPEC_PREFER_CWD,
++		       PATHSPEC_PREFER_FULL,
 +		       prefix, argv);
 =20
--	fill_directory(&dir, pathspec);
-+	fill_directory(&dir, pathspec.raw);
+-	if (*argv)
+-		pathspec =3D get_pathspec(prefix, argv);
+-
+-	if (read_cache_preload(pathspec) < 0)
++	if (read_cache_preload(pathspec.raw) < 0)
+ 		die(_("index file corrupt"));
 =20
- 	for (i =3D 0; i < dir.nr; i++) {
- 		struct dir_entry *ent =3D dir.entries[i];
-@@ -246,9 +249,9 @@ int cmd_clean(int argc, const char **argv, const ch=
-ar *prefix)
- 		if (lstat(ent->name, &st))
- 			continue;
+ 	if (interactive) {
+@@ -331,9 +331,9 @@ static char *prepare_index(int argc, const char **a=
+rgv, const char *prefix,
+ 	 * (A) if all goes well, commit the real index;
+ 	 * (B) on failure, rollback the real index.
+ 	 */
+-	if (all || (also && pathspec && *pathspec)) {
++	if (all || (also && pathspec.nr)) {
+ 		fd =3D hold_locked_index(&index_lock, 1);
+-		add_files_to_cache(also ? prefix : NULL, pathspec, 0);
++		add_files_to_cache(also ? prefix : NULL, pathspec.raw, 0);
+ 		refresh_cache_or_die(refresh_flags);
+ 		update_main_cache_tree(WRITE_TREE_SILENT);
+ 		if (write_cache(fd, active_cache, active_nr) ||
+@@ -352,7 +352,7 @@ static char *prepare_index(int argc, const char **a=
+rgv, const char *prefix,
+ 	 * and create commit from the_index.
+ 	 * We still need to refresh the index here.
+ 	 */
+-	if (!only && (!pathspec || !*pathspec)) {
++	if (!only && !pathspec.nr) {
+ 		fd =3D hold_locked_index(&index_lock, 1);
+ 		refresh_cache_or_die(refresh_flags);
+ 		if (active_cache_changed) {
+@@ -397,7 +397,7 @@ static char *prepare_index(int argc, const char **a=
+rgv, const char *prefix,
 =20
--		if (pathspec)
--			matches =3D match_pathspec(pathspec, ent->name, len,
--						 0, NULL);
-+		if (pathspec.nr)
-+			matches =3D match_pathspec_depth(&pathspec, ent->name,
-+						       len, 0, NULL);
+ 	memset(&partial, 0, sizeof(partial));
+ 	partial.strdup_strings =3D 1;
+-	if (list_paths(&partial, !current_head ? NULL : "HEAD", prefix, paths=
+pec))
++	if (list_paths(&partial, !current_head ? NULL : "HEAD", prefix, paths=
+pec.raw))
+ 		exit(1);
 =20
- 		if (S_ISDIR(st.st_mode)) {
- 			strbuf_addstr(&directory, ent->name);
-@@ -262,7 +265,7 @@ int cmd_clean(int argc, const char **argv, const ch=
-ar *prefix)
- 			}
- 			strbuf_reset(&directory);
- 		} else {
--			if (pathspec && !matches)
-+			if (pathspec.nr && !matches)
- 				continue;
- 			res =3D dry_run ? 0 : unlink(ent->name);
- 			if (res) {
+ 	discard_cache();
 --=20
 1.8.2.83.gc99314b
