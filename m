@@ -1,103 +1,79 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] completion: remove ancient "ensure colon in COMP_WORDBREAKS"
- workaround
-Date: Mon, 10 Jun 2013 01:59:21 +0200
-Message-ID: <1370822361-15637-1-git-send-email-szeder@ira.uka.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] completion: remove ancient "ensure colon in
+ COMP_WORDBREAKS" workaround
+Date: Sun, 9 Jun 2013 17:09:54 -0700
+Message-ID: <20130610000954.GA6464@elie.Belkin>
+References: <1370822361-15637-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 10 01:59:39 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Jun 10 02:10:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlpWM-0003PP-Jm
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 01:59:38 +0200
+	id 1UlpgZ-0008Gq-3V
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 02:10:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752584Ab3FIX7e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 19:59:34 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:51560 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752415Ab3FIX7d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 19:59:33 -0400
-Received: from localhost6.localdomain6 (f051160074.adsl.alicedsl.de [78.51.160.74])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0MTJZq-1UuAxG1tIs-00RWbU; Mon, 10 Jun 2013 01:59:32 +0200
-X-Mailer: git-send-email 1.8.0.269.g97125f4
-X-Provags-ID: V02:K0:yzz1LiTHXiyC/wqDUCeWS3X8T+L6OA21Y7Q0VAjRao6
- F9vcVRidUuuw+b8fZyYfUYUKAZQGbt8veYaSZIZ48USii+J4Vx
- Xjko5qYqGPX6WuM4e2gJRg0FtBmTjkBYv5m4g7zjl6AJRd56lo
- LrhEU6bq5DCVQx7wfSdk6aFDw2VIPdutdMcGVAnm9ADhGbhmc0
- rDhBc1nFVy9u+d3GaKVqNgZPwmHVNIjqjz9KhdFj9Bgb95euY6
- GMhTAtWKg0Boi+4s5kAv61xs5HTIdaSaAo3PyJmW4ToJXpiPip
- 7VYgjcGdm5SFbcD2HjKajHZX2N3ixz6GfRylAAf1wUKdOhJu1s
- oOVHaBpjUMjQCVhFJDhFOJMYf2SqswujfcVAI/5UzqxhnK4W2h
- iDClHeew8lPJQ==
+	id S1752599Ab3FJAKE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 20:10:04 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:63828 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752452Ab3FJAKD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jun 2013 20:10:03 -0400
+Received: by mail-pa0-f44.google.com with SMTP id lj1so798750pab.31
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 17:10:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=LXShhtJyyCvWu/t7ZBGs9m+u8AFobETpMTqfae2uud8=;
+        b=tCl3tu9NxGL8YP49xsmmbp1FsaYA+ufPn0YaQMD4TZFV9UgFhBF9ho+24SutTsT2J9
+         suN7jJjC7NodRcf17OXkUEOMP6+aXhH5xDBw+OVa9Tjy5hPMij2pC9nfnx08jSRIELp5
+         k0kUttWlQ8yTj2MBbEfzRVmEX0pHm3Qo348my+05s57NDYQcSyjzwjuttDtsFczEYvdK
+         JWLd+4wVXDd5p/fy5C0EqfFgmowb5a9dNXIOHPzoVdSHAcaXsZBfo3MumNoTy0o+yhwt
+         ULxvuOoe/B3O96rksBbuJ37zKISUi+WRagRkAYJ6v1QTcB/PLOGytii+iqOTllAVfnoZ
+         svGw==
+X-Received: by 10.68.190.196 with SMTP id gs4mr7605504pbc.189.1370823002420;
+        Sun, 09 Jun 2013 17:10:02 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id ig4sm8117809pbc.18.2013.06.09.17.10.00
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 09 Jun 2013 17:10:01 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1370822361-15637-1-git-send-email-szeder@ira.uka.de>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227219>
 
-=46edore 9 shipped the gvfs package with a buggy Bash completion script=
+SZEDER G=C3=A1bor wrote:
+
+> Fedore 9 shipped the gvfs package with a buggy Bash completion script=
 :
-it removed the ':' character from COMP_WORDBREAKS, thereby breaking
-certain features of git's completion script.  We worked this around in
-db8a9ff0 (bash completion: Resolve git show ref:path<tab> losing ref:
-portion, 2008-07-15).
+> it removed the ':' character from COMP_WORDBREAKS, thereby breaking
+> certain features of git's completion script.  We worked this around i=
+n
+> db8a9ff0 (bash completion: Resolve git show ref:path<tab> losing ref:
+> portion, 2008-07-15).
+>
+> The bug was fixed in Fedora 10 and Fedora 9 reached its EOL on
+> 2009-07-10, almost four years ago.  It's about time to remove our
+> workaround.
 
-The bug was fixed in Fedora 10 and Fedora 9 reached its EOL on
-2009-07-10, almost four years ago.  It's about time to remove our
-workaround.
+Nice!  I had wondered what that workaround was about but never
+ended up digging into it.
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- contrib/completion/git-completion.bash | 14 --------------
- 1 file changed, 14 deletions(-)
+Searching for COMP_WORDBREAKS in /etc/bash_completion.d/* finds
+similar breakage (removal of '=3D' and '@') in the npm completion
+script, but nothing involving colon.  So this looks like a good
+change.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 91234d47..2f78dcfa 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -24,11 +24,6 @@
- #    3) Consider changing your PS1 to also show the current branch,
- #       see git-prompt.sh for details.
-=20
--case "$COMP_WORDBREAKS" in
--*:*) : great ;;
--*)   COMP_WORDBREAKS=3D"$COMP_WORDBREAKS:"
--esac
--
- # __gitdir accepts 0 or 1 arguments (i.e., location)
- # returns location of .git repo
- __gitdir ()
-@@ -458,11 +453,6 @@ __git_complete_revlist_file ()
- 			;;
- 		esac
-=20
--		case "$COMP_WORDBREAKS" in
--		*:*) : great ;;
--		*)   pfx=3D"$ref:$pfx" ;;
--		esac
--
- 		__gitcomp_nl "$(git --git-dir=3D"$(__gitdir)" ls-tree "$ls" 2>/dev/n=
-ull \
- 				| sed '/^100... blob /{
- 				           s,^.*	,,
-@@ -560,10 +550,6 @@ __git_complete_remote_or_refspec ()
- 	[ "$remote" =3D "." ] && remote=3D
- 	case "$cur_" in
- 	*:*)
--		case "$COMP_WORDBREAKS" in
--		*:*) : great ;;
--		*)   pfx=3D"${cur_%%:*}:" ;;
--		esac
- 		cur_=3D"${cur_#*:}"
- 		lhs=3D0
- 		;;
---=20
-1.8.0.269.g97125f4
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
