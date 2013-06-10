@@ -1,71 +1,66 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 05/45] Add parse_pathspec() that converts cmdline args to
- struct pathspec
-Date: Sun, 9 Jun 2013 21:24:01 -0400
-Message-ID: <CAPig+cQ=cmCgXhgumrN75b42GZiborTyyhTnGuR-7MnPo8cR2Q@mail.gmail.com>
-References: <1370759178-1709-1-git-send-email-pclouds@gmail.com>
-	<1370759178-1709-6-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 00/15] Towards a more awesome git branch
+Date: Mon, 10 Jun 2013 08:25:25 +0700
+Message-ID: <CACsJy8D8FoiVFT5cNbXyxeAngAUJ1X3AdQOGK41FVWyZyEaSKw@mail.gmail.com>
+References: <1370800474-8940-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 03:24:26 2013
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 10 03:26:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlqqP-0000nY-IE
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 03:24:25 +0200
+	id 1Ulqrw-0001ae-JO
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 03:26:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750908Ab3FJBYE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jun 2013 21:24:04 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:36259 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750800Ab3FJBYD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jun 2013 21:24:03 -0400
-Received: by mail-lb0-f174.google.com with SMTP id x10so3694302lbi.5
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 18:24:01 -0700 (PDT)
+	id S1751151Ab3FJBZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 21:25:57 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:52865 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751008Ab3FJBZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 21:25:56 -0400
+Received: by mail-ob0-f172.google.com with SMTP id wo10so9342491obc.3
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 18:25:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dbo0Pfm0FUlvWU5xdcjVxHurwbV1I7dSsimpx/490s8=;
-        b=s/MayhAB3J8A9E+dK+KJWO5EocJ/4uL5fM//QKHs66Z3FMbV+hlyZ7wehMmThmmL8I
-         2kTUyeHJWv0sBSBlkWau2b8VBbRykuN4jnZIqc9KN7+T1/7w0clkH9i9k1Tdk+MCXYnh
-         aUkl8tn3Jr9GHlOgnkWIaG/JipYGywfgk8nDKI4tPoNE2q36hXLgDJYuMGkfAtt+UW5z
-         FA0VhgyLq0MA6b6PNkwaoC8UbmZ7qdt/KzxAKrm9i2KTS7xFZMkQUqiAm83Pq9ao53G+
-         s6IFZ7BUN7mwE584D+g/8Y2qFVbn6Nl5DeMRuf+UCCbkA9jXoGMrW69KNs0G7G0SQ/cV
-         ZVqw==
-X-Received: by 10.112.159.202 with SMTP id xe10mr5379478lbb.52.1370827441256;
- Sun, 09 Jun 2013 18:24:01 -0700 (PDT)
-Received: by 10.114.161.4 with HTTP; Sun, 9 Jun 2013 18:24:01 -0700 (PDT)
-In-Reply-To: <1370759178-1709-6-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: F0jKGYTH76Zo04942_tMS1B08Y0
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=IXND6PZedAjvYnDtN68dHTGq/pYzcS4PyJ3fuTtuhvo=;
+        b=rCnTcWEb1sYT6yXkrZPK1rf9AcMtAZx/VknIg1NEspvRBZfVRvEUVKZkYqr9BV5BOA
+         aVbFTDYKQcG+e71H9a9ZjhpETZ4WXcwbStnhV7syef97oOCPjA21pd+4G7DV7aiLG8Da
+         h3nLYjsZ+WIJY8wpdpmRpSecK7zgyLI1H75csMx+AV1ziJ6955aKTvnbyq0tmpg3nLMw
+         TK2LJu9355f0J4A/MZ16/KTHtfY2iQWVeeZm//4vgG0v/HEB8TIWCbUWi8EX91qNONQZ
+         Pz1f0PmxTBdHon1UutR9q2Ke29hJD0SZVttxxGZCNS7xpSjKB3v1wAqzFZkouLzLC6Jf
+         LJGw==
+X-Received: by 10.60.131.143 with SMTP id om15mr6163352oeb.19.1370827555906;
+ Sun, 09 Jun 2013 18:25:55 -0700 (PDT)
+Received: by 10.76.76.69 with HTTP; Sun, 9 Jun 2013 18:25:25 -0700 (PDT)
+In-Reply-To: <1370800474-8940-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227223>
 
-On Sun, Jun 9, 2013 at 2:25 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
-> diff --git a/pathspec.c b/pathspec.c
-> index 8fe56cd..b49bd51 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -195,15 +195,128 @@ static const char *prefix_pathspec(const char =
-*prefix, int prefixlen, const char
-> +/*
-> + * Given command line arguments and a prefix, convert the input to
-> + * pathspec. die() any magic in magic_mask is used.
+On Mon, Jun 10, 2013 at 12:54 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Hi,
+>
+> This iteration contains some minor fixups (courtesy reviews by Eric
+> Sunshine and Junio), and some tests from Duy squashed in.
 
-Did you mean s/any/if any/ ?
-
-> + */
-> +void parse_pathspec(struct pathspec *pathspec,
-> +                   unsigned magic_mask, unsigned flags,
-> +                   const char *prefix, const char **argv)
+I'm starting to think this is a half-baked solution. It hides
+problems, for example commit placeholders should produce empty string,
+not the literal placeholders. Doing that from a callback is really
+ugly. There's also the problem with sorting and quoting (both only
+work with for-each-ref atoms only). A better solution may be improving
+pretty.c to the point where it can more or less replace f-e-r's
+--format. Even more, I think pretty engine should be easily added to
+cat-file (especially --batch), as a generic way to extract
+information. But for the reason I will send shortly, I will not work
+not work on this series or any others.
+--
+Duy
