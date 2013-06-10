@@ -1,134 +1,243 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 2/2] make color.ui default to 'auto'
-Date: Mon, 10 Jun 2013 16:26:09 +0200
-Message-ID: <1370874369-30248-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <1370874369-30248-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jun 10 16:26:25 2013
+From: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Subject: [PATCH v2 1/2] rm: better error message on failure for multiple files
+Date: Mon, 10 Jun 2013 16:28:09 +0200
+Message-ID: <1370874490-14163-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Cc: gitster@pobox.com,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 10 16:28:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um33B-0005pg-G1
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 16:26:25 +0200
+	id 1Um354-0007Fv-Ac
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 16:28:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753077Ab3FJO0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 10:26:18 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:59536 "EHLO shiva.imag.fr"
+	id S1753223Ab3FJO2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 10:28:17 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:59595 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753081Ab3FJO0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 10:26:17 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5AEQCFg022569
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 10 Jun 2013 16:26:12 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Um32z-0001zq-Tj; Mon, 10 Jun 2013 16:26:13 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1Um32z-0007tK-JG; Mon, 10 Jun 2013 16:26:13 +0200
-X-Mailer: git-send-email 1.8.3.rc3.8.g5e49f30
-In-Reply-To: <1370874369-30248-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 10 Jun 2013 16:26:12 +0200 (CEST)
+	id S1752169Ab3FJO2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 10:28:16 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5AESCab023643
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 10 Jun 2013 16:28:12 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5AESD90015670;
+	Mon, 10 Jun 2013 16:28:13 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5AESD9W020668;
+	Mon, 10 Jun 2013 16:28:13 +0200
+Received: (from lienardm@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id r5AESDDQ020664;
+	Mon, 10 Jun 2013 16:28:13 +0200
+X-Mailer: git-send-email 1.7.8
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 10 Jun 2013 16:28:12 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227289>
 
-Most users seem to like having colors enabled, and colors can help
-beginners to understand the output of some commands (e.g. notice
-immediately the boundary between commits in the output of "git log").
+When 'git rm' fails, it now displays a single message
+with the list of files involved, instead of displaying
+a list of messages with one file each.
 
-Many tutorials tell the users to set color.ui=auto as a very first step,
-which tend to indicate that color.ui=none is not the recommanded value,
-hence should not be the default.
+As an example, the old message:
+	error: 'foo.txt' has changes staged in the index
+	(use --cached to keep the file, or -f to force removal)
+	error: 'bar.txt' has changes staged in the index
+	(use --cached to keep the file, or -f to force removal)
 
-These tutorials would benefit from skipping this step and starting the
-real Git manipulations earlier. Other beginners do not know about
-color.ui=auto, and may not discover it by themselves, hence live with
-black&white outputs while they may have preferred colors.
+would now be displayed as:
+	error: the following files have changes staged in the index:
+	    foo.txt
+	    bar.txt
+	(use --cached to keep the file, or -f to force removal)
 
-A few people (e.g. color-blind) prefer having no colors, but they can
-easily set color.ui=never for this (and googling "disable colors in git"
-already tells them how to do so), but this needs not occupy space in
-beginner-oriented documentations.
-
-A transition period with Git emitting a warning when color.ui is unset
-would be possible, but the discomfort of having the warning seems
-superior to the benefit: users may be surprised by the change, but not
-harmed by it.
-
-The default value is changed, and the documentation is reworded to
-mention "color.ui=false" first, since the primary use of color.ui after
-this change is to disable colors, not to enable it.
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Signed-off-by: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 ---
-I just changed "Git 2.0" with "Git 1.8.4". I think a default change
-deserves a mention of the version in which it changed (I think it's
-common for someone to use an old Git version and to read a more recent
-documentation online, so this may avoid bad surprises). I'm fine with
-dropping "since Git 1.8.4" completely if people think it's better.
 
- Documentation/config.txt | 11 ++++++-----
- builtin/config.c         |  2 +-
- color.c                  |  2 +-
- 3 files changed, 8 insertions(+), 7 deletions(-)
+Changes since v1:
+ -introduction of print_error_files() to avoid repetitions
+ -implementation with string_list instead of strbuf 
+ -typo "fileand" switched to "file and"
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e97facc..6570aee 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -905,11 +905,12 @@ color.ui::
- 	as `color.diff` and `color.grep` that control the use of color
- 	per command family. Its scope will expand as more commands learn
- 	configuration to set a default for the `--color` option.  Set it
--	to `always` if you want all output not intended for machine
--	consumption to use color, to `true` or `auto` if you want such
--	output to use color when written to the terminal, or to `false` or
--	`never` if you prefer Git commands not to use color unless enabled
--	explicitly with some other configuration or the `--color` option.
-+	to `false` or `never` if you prefer Git commands not to use
-+	color unless enabled explicitly with some other configuration
-+	or the `--color` option. Set it to `always` if you want all
-+	output not intended for machine consumption to use color, to
-+	`true` or `auto` (this is the default since Git 1.8.4) if you
-+	want such output to use color when written to the terminal.
+ builtin/rm.c  |   74 ++++++++++++++++++++++++++++++++++++++++++++++----------
+ t/t3600-rm.sh |   48 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 108 insertions(+), 14 deletions(-)
+
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 7b91d52..76dfc5b 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -70,6 +70,27 @@ static int check_submodules_use_gitfiles(void)
+ 	return errs;
+ }
  
- column.ui::
- 	Specify whether supported commands should output in columns.
-diff --git a/builtin/config.c b/builtin/config.c
-index 057bb61..753449f 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -342,7 +342,7 @@ static int get_colorbool(int print)
++/*
++ * PRECONDITION: files_list is a non-empty string_list
++ */
++static int print_error_files(struct string_list *files_list,
++			     const char *main_msg,
++			     const char *hints_msg)
++{
++	int errs = 0;
++	struct strbuf err_msg = STRBUF_INIT;
++	int i;
++	strbuf_addstr(&err_msg, main_msg);
++	for (i = 0; i < files_list->nr; i++)
++		strbuf_addf(&err_msg,
++			    "\n    %s",
++			    files_list->items[i].string);
++	strbuf_addstr(&err_msg, hints_msg);
++	errs = error("%s", err_msg.buf);
++
++	return errs;
++}
++
+ static int check_local_mod(unsigned char *head, int index_only)
+ {
+ 	/*
+@@ -82,6 +103,11 @@ static int check_local_mod(unsigned char *head, int index_only)
+ 	int i, no_head;
+ 	int errs = 0;
  
- 	if (get_colorbool_found < 0)
- 		/* default value if none found in config */
--		get_colorbool_found = 0;
-+		get_colorbool_found = GIT_COLOR_AUTO;
++	struct string_list files_staged = STRING_LIST_INIT_NODUP;
++	struct string_list files_cached = STRING_LIST_INIT_NODUP;
++	struct string_list files_submodule = STRING_LIST_INIT_NODUP;
++	struct string_list files_local = STRING_LIST_INIT_NODUP;
++
+ 	no_head = is_null_sha1(head);
+ 	for (i = 0; i < list.nr; i++) {
+ 		struct stat st;
+@@ -171,29 +197,49 @@ static int check_local_mod(unsigned char *head, int index_only)
+ 		 */
+ 		if (local_changes && staged_changes) {
+ 			if (!index_only || !(ce->ce_flags & CE_INTENT_TO_ADD))
+-				errs = error(_("'%s' has staged content different "
+-					     "from both the file and the HEAD\n"
+-					     "(use -f to force removal)"), name);
++				string_list_append(&files_staged, name);
+ 		}
+ 		else if (!index_only) {
+ 			if (staged_changes)
+-				errs = error(_("'%s' has changes staged in the index\n"
+-					     "(use --cached to keep the file, "
+-					     "or -f to force removal)"), name);
++				string_list_append(&files_cached, name);
+ 			if (local_changes) {
+ 				if (S_ISGITLINK(ce->ce_mode) &&
+ 				    !submodule_uses_gitfile(name)) {
+-					errs = error(_("submodule '%s' (or one of its nested "
+-						     "submodules) uses a .git directory\n"
+-						     "(use 'rm -rf' if you really want to remove "
+-						     "it including all of its history)"), name);
+-				} else
+-					errs = error(_("'%s' has local modifications\n"
+-						     "(use --cached to keep the file, "
+-						     "or -f to force removal)"), name);
++					string_list_append(&files_submodule,
++							   name);
++				} else {
++					string_list_append(&files_local, name);
++				}
+ 			}
+ 		}
+ 	}
++	if (files_staged.nr)
++		errs = print_error_files(&files_staged,
++					 _("the following files have staged "
++					   "content different from both the"
++					   "\nfile and the HEAD:"),
++					 _("\n(use -f to force removal)"));
++	if (files_cached.nr)
++		errs = print_error_files(&files_cached,
++					 _("the following files have changes "
++					   "staged in the index:"),
++					 _("\n(use --cached to keep the file, "
++					   "or -f to force removal)"));
++	if (files_submodule.nr)
++		errs = print_error_files(&files_submodule,
++					 _("the following submodules (or one "
++					   "of its nested submodule) use a "
++					   ".git directory:"),
++					 _("\n(use 'rm -rf' if you really "
++					   "want to remove i including all "
++					   "of its history)"));
++	if (files_local.nr)
++		errs = print_error_files(&files_local,
++					 _("the following files have "
++					   "local modifications:"),
++					 _("\n(use --cached to keep the file, "
++					   "or -f to force removal)"));
++
+ 	return errs;
+ }
  
- 	get_colorbool_found = want_color(get_colorbool_found);
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index 0c44e9f..08bc9bb 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -687,4 +687,52 @@ test_expect_failure SYMLINKS 'rm across a symlinked leading path (w/ index)' '
+ 	test_path_is_file e/f
+ '
  
-diff --git a/color.c b/color.c
-index e8e2681..f672885 100644
---- a/color.c
-+++ b/color.c
-@@ -1,7 +1,7 @@
- #include "cache.h"
- #include "color.h"
- 
--static int git_use_color_default = 0;
-+static int git_use_color_default = GIT_COLOR_AUTO;
- int color_stdout_is_tty = -1;
- 
- /*
++test_expect_success 'setup for testing rm messages' '
++	>bar.txt &&
++	>foo.txt &&
++	git add bar.txt foo.txt
++'
++
++test_expect_success 'rm files with different staged content' '
++	cat >expect << EOF &&
++error: the following files have staged content different from both the
++file and the HEAD:
++    bar.txt
++    foo.txt
++(use -f to force removal)
++EOF
++	echo content1 >foo.txt &&
++	echo content1 >bar.txt &&
++	test_must_fail git rm foo.txt bar.txt 2>actual &&
++	test_cmp expect actual
++'
++
++
++test_expect_success 'rm file with local modification' '
++	cat >expect << EOF &&
++error: the following files have local modifications:
++    foo.txt
++(use --cached to keep the file, or -f to force removal)
++EOF
++	git commit -m "testing rm 3" &&
++	echo content3 >foo.txt &&
++	test_must_fail git rm foo.txt 2>actual &&
++	test_cmp expect actual
++'
++
++
++test_expect_success 'rm file with changes in the index' '
++    cat >expect << EOF &&
++error: the following files have changes staged in the index:
++    foo.txt
++(use --cached to keep the file, or -f to force removal)
++EOF
++	git reset --hard &&
++	echo content5 >foo.txt &&
++	git add foo.txt &&
++	test_must_fail git rm foo.txt 2>actual &&
++	test_cmp expect actual
++'
++
++
+ test_done
 -- 
-1.8.3.rc3.8.g5e49f30
+1.7.8
