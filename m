@@ -1,105 +1,107 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jun 2013, #03; Thu, 6)
-Date: Mon, 10 Jun 2013 00:00:30 -0700
-Message-ID: <7v1u8amovl.fsf@alter.siamese.dyndns.org>
-References: <7vzjv2x3p7.fsf@alter.siamese.dyndns.org>
-	<20130607000006.GA25731@goldbirke>
-	<CALkWK0=D7sHLgptWkFHma1FoS-zdifHqXnuuBKhkyuszgEJ0Xw@mail.gmail.com>
-	<7v8v2lu5ks.fsf@alter.siamese.dyndns.org>
-	<20130607191643.GA31625@goldbirke>
-	<7vwqq5snzi.fsf@alter.siamese.dyndns.org>
-	<20130607204430.GD31625@goldbirke>
-	<7vk3m5si4h.fsf@alter.siamese.dyndns.org>
-	<20130608001147.GA32350@goldbirke>
-	<7v1u8bouam.fsf@alter.siamese.dyndns.org>
-	<CALkWK0kvSvK=bFJo13=yw+2EZmGyv46_DUEZaniYGCe7D_V2wg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] commit-queue: LIFO or priority queue of commits
+Date: Mon, 10 Jun 2013 00:21:00 -0700
+Message-ID: <7vwqq2l9cz.fsf@alter.siamese.dyndns.org>
+References: <1370581872-31580-1-git-send-email-gitster@pobox.com>
+	<1370820277-30158-1-git-send-email-gitster@pobox.com>
+	<1370820277-30158-3-git-send-email-gitster@pobox.com>
+	<20130610052500.GD3621@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 09:00:39 2013
+Cc: git@vger.kernel.org, Elliott Cable <me@ell.io>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 10 09:21:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ulw5m-000292-LG
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 09:00:38 +0200
+	id 1UlwPc-00060H-NW
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 09:21:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751499Ab3FJHAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 03:00:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63405 "EHLO
+	id S1751450Ab3FJHVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 03:21:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38680 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751305Ab3FJHAd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 03:00:33 -0400
+	id S1751318Ab3FJHVC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 03:21:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E9F126B6C;
-	Mon, 10 Jun 2013 07:00:32 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D377243DF;
+	Mon, 10 Jun 2013 07:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZuDSVYtdAIi9mG7JKVcylqzpTg4=; b=EUnPVV
-	28YTFTj1pdKqpIV1JK8COPIWEzDnjCyhAEG9iGgw+GxzZ6cmhcXwKQG6zfLeYj1Z
-	9fFuYGtmkgQe9Hq7PyH97RK3DGJWqXk6KamzdOngSMwn1uNi1yxmdw24OLXj6w97
-	cEvMJoGgZxj3QyOG+yVVITQO+RghwrWJmhJ3g=
+	:content-type; s=sasl; bh=U3pi6H94zosjZsMan0m/yELSvYU=; b=QRo5Ss
+	hQMvWDA+PY1u/vbA33OcWFczUJ8yaku7XmR2qdGz0+lPGgrKXaS8A09u/oZCziOC
+	7dfiQD5Jk8VVVaJpYjZXvnq1FQklzm2K52QehALSBZlx4V59Zc/AcBZcbeUUUd42
+	Q0aLkr0Zv8ViyvbhkadblyW0FTVEMo5cvBEes=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GnQA9PMvcL3q0Y9QVhqUWWNl4KBL6jnV
-	J6D05IcCVVMxjkB6w/zM70i6F0GPLyGMB8tVuN4m/ZMxb6Sv4Q8rcfEyPalhsvJc
-	2SudYhL5rnPyRD28vPu4m0VWGjuHoB51+LTOSCM0ZM6kYYvnTrf4+nnJY+ZDSEKj
-	rUD9CrMra2M=
+	:content-type; q=dns; s=sasl; b=wAUxrkJJU1JtSaINqmuqXVbVGjHdPZNn
+	AcBEaZzxUXo9VQfwSr6CTEMWBosdQhyoD8KbLPmUfiwhBBBZAwd5dTvx0Ieetxqc
+	mT9qMrf2a2IxCKt5tJxpSb1h6ggHAeDQRXe/FJIQKAaFZWOet3Lt5aukxBuvekLj
+	RkHQJxBwNWc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8592626B6A;
-	Mon, 10 Jun 2013 07:00:32 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01458243DE;
+	Mon, 10 Jun 2013 07:21:02 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E6D4A26B67;
-	Mon, 10 Jun 2013 07:00:31 +0000 (UTC)
-In-Reply-To: <CALkWK0kvSvK=bFJo13=yw+2EZmGyv46_DUEZaniYGCe7D_V2wg@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Mon, 10 Jun 2013 11:55:58 +0530")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A8A7243DC;
+	Mon, 10 Jun 2013 07:21:01 +0000 (UTC)
+In-Reply-To: <20130610052500.GD3621@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 10 Jun 2013 01:25:00 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 70F1506A-D19B-11E2-8E05-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4DD0EBCE-D19E-11E2-AD0A-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227246>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Junio C Hamano wrote:
->>     Revert 77c1305 and 3c3b46b
+> It may be worth looking again for other places to use this over
+> commit_list, but even the caller you are introducing here justifies its
+> presence.
+
+The next candidate is paint-down-to-common, probably.
+
+> Also, I wrote some basic tests to cover the priority queue as a unit. I
+> can rebase them on your commit if you are interested.
+
+It would be great.
+
+> A few comments on the code itself:
 >
-> The core of the argument seems to be that
-> __git_complete_revlist_file() is a misleading name for the completion
-> done by archive and ls-tree, but __git_complete_file() is somehow a
-> less misleading name?  Irrespective of what the valid completions of
-> the various commands are, I want to know which completion function
-> will be _used_ when I'm reading the script.  And that is
-> __git_complete_revlist_file().
+>> +void commit_queue_put(struct commit_queue *queue, struct commit *commit)
 >
-> To me, it looks like mega-bikeshedding; a huge amount of time and
-> effort going behind a non-functional variable rename (and the best
-> part? the rename isn't getting us a "better" name; just a "historical"
-> name).  But whatever.
+> Is it worth making this "struct commit *" a void pointer, and handling
+> arbitrary items in our priority queue? The compare function should be
+> the only thing that dereferences them.
+>  
+> I do not have any non-commit priority queue use in mind, but I do not
+> think it adds any complexity in this case.
 
-To me the most important part is that we have two separate functions
-that are used consistently by how the completion is to be done for
-their users.  The complete-file variant can then lose the A..B range
-completion, and then be given a better name than FILE to express
-what it does if somebody can find one.  When it happens, the same
-better name should be used to rename complete-revlist-FILE by
-replacing the "FILE" part.
+I didn't either (and still I don't think of one), but I agree that
+the implementation can be reused for pq of any type, as long as it
+is a pointer to struct.
 
-I initially thought that FILE referred to the pathspecs (i.e. the
-last part in "log <rev> <file>"), and felt it was strange to call it
-FILE.  Perhaps that (i.e. it not being pathspec) is what you find it
-misnamed).
+>> +	/* Bubble up the new one */
+>> +	for (ix = queue->nr - 1; ix; ix = parent) {
+>> +		parent = (ix - 1) / 2;
+>> +		if (compare(queue->array[parent], queue->array[ix],
+>> +			    queue->cb_data) < 0)
+>> +			break;
+>
+> In my implementation, I stopped on "compare() <= 0". It is late and my
+> mind is fuzzy, but I recall that heaps are never stable with respect to
+> insertion order, so I don't think it would matter.
 
-But it turns out that in the context of these functions it refers to
-"what users consider paths in objects stored in the object database"
-(as opposed to working tree paths).  That is what ls-tree would take
-(i.e. <tree-ish> and <tree-ish>:<path>).  And I do not offhand think
-of a better name myself to strongly oppose to using the word FILE to
-refer to what it does.
+It would matter in the sense that we cannot replace linked-list, if
+the caller wants stability.  It is more like "we cannot do anything
+about it" than "it would not matter".
+
+We can make each queue element a pair of <pointer to payload,
+insertion counter>, and tiebreak using the insertion order, if the
+callers want the same stability as linked-list implementation, but
+I tend to think it really matters.
