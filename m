@@ -1,97 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v1.8.3.1
-Date: Mon, 10 Jun 2013 14:03:49 -0700
-Message-ID: <7vy5ahekzu.fsf@alter.siamese.dyndns.org>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH] Documentation/CommunityGuidelines
+Date: Mon, 10 Jun 2013 17:09:04 -0400
+Message-ID: <51B64070.2080209@gmail.com>
+References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com> <51B5D9A1.1080900@ensimag.fr> <vpqhah6hxjm.fsf@anie.imag.fr> <robbat2-20130610T162316-152176477Z@orbis-terrarum.net> <7vzjuxj21b.fsf@alter.siamese.dyndns.org> <20130610190102.GF12924@google.com> <CALkWK0neo-OF7P__T5u5oHrJgseJ-H5Zk=qbpDDYttdaaRu6gQ@mail.gmail.com> <51B639FC.7030007@gmail.com> <CALkWK0n5fVZ7t-5aAO6AXM5DpxqYfL_QLxkD48edK65rGsrX_g@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Mon Jun 10 23:04:03 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 10 23:09:15 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Um9Fy-0005BM-9T
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 10 Jun 2013 23:04:02 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Um9Kz-0000C7-9M
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 23:09:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753485Ab3FJVDy (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 10 Jun 2013 17:03:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36148 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753185Ab3FJVDw (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 10 Jun 2013 17:03:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CF5A27528;
-	Mon, 10 Jun 2013 21:03:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=p
-	VgJmqfIebx5QfTTl9kb6s9h5sg=; b=OCQPTjonnpa99hQOkGO0A2l584hDgAzzI
-	s93PnLFqcDhZhki2yqwbDLtYrKnb7x95cY6YE7efA/jLJBD7eklS84XQHCo0fGR/
-	aizrxcm7yQtGt2pwdV2epzGrqObfu7qLlVXOI45qDOTS6E0GVHN3sxGEyDEisJzg
-	0iTLga9DT4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=p5aOioz+r/Lbkqg6bLrTsdVOw4dvhsZUT4QUcvCF+r02QZT2028pvEHk
-	p00ak8CaWGE1TvJdMyot3Dch3rh8rQPpmwfdlytZfOJW8XNxtrsIZLHuzbIvQj6G
-	G++u6BxjLMaMgUzAmwUiWm+nIWnlM3HcmaOsSNC0vhBwhcsm524=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 121EA27527;
-	Mon, 10 Jun 2013 21:03:52 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A6D027524;
-	Mon, 10 Jun 2013 21:03:51 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 408D77CA-D211-11E2-9334-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1753138Ab3FJVJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 17:09:08 -0400
+Received: from mail-qc0-f170.google.com ([209.85.216.170]:52093 "EHLO
+	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752419Ab3FJVJH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 17:09:07 -0400
+Received: by mail-qc0-f170.google.com with SMTP id s1so1211016qcw.15
+        for <git@vger.kernel.org>; Mon, 10 Jun 2013 14:09:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=P5lG+VXOQ/pIVRAguUN0XOCWAFRIXe3yV1JaNGyy35I=;
+        b=LMWjcOVO6XpQ6ME+IBsBOf+/cTz5Us4y/8dVtEXmR3eJiQ4wyX/906wb61fgUEB5sy
+         IkYVps4fsT/8gxMLRc3YAnzVay2FnmqYToDxTpttXxzqF/F4ZRvOO5P/sTWPApAr+Vtx
+         +JUcmkLQ2BpwIJLP4+sJMOw2a05E9Rn8m0qSqciT/BNM9OYqz5Cm0vgw2pLfxJvtK6sm
+         7rHgpjleOyFcrPGdxObZTtOEQRHemQy85p13DojqFqFgOECx7AbG9fWY5xtZjLjU595Y
+         B9qY5gylsKoa9JGc69/azAjJNC1jfTSPeGHo7+dOu3LNG5eOBn+akX5ktO5nsKWQrsMr
+         589w==
+X-Received: by 10.224.179.148 with SMTP id bq20mr15418225qab.30.1370898546233;
+        Mon, 10 Jun 2013 14:09:06 -0700 (PDT)
+Received: from [10.0.1.131] (50-88-155-14.res.bhn.net. [50.88.155.14])
+        by mx.google.com with ESMTPSA id j9sm15886125qas.3.2013.06.10.14.09.04
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 10 Jun 2013 14:09:05 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
+In-Reply-To: <CALkWK0n5fVZ7t-5aAO6AXM5DpxqYfL_QLxkD48edK65rGsrX_g@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227381>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227382>
 
-The latest maintenance release Git v1.8.3.1 is now available at the
-usual places.
+On 06/10/2013 04:56 PM, Ramkumar Ramachandra wrote:
+> A Large Angry SCM wrote:
+>>> It is absolutely imperative to keep all our contributors productive,
+>>> and maximize output.
+>>
+>>
+>> Why?
+>>
+>> A useful "product" with a maintainable code base are what seems to be more
+>> important to a successful open source effort.
+>
+> Doesn't a successful open source effort (with a good review process,
+> which we already have) imply a maintainable product with lots of
+> users?  What am I missing, and what change do you propose?
+>
 
-This is primarily to push out fixes to two regressions that seem to
-affect many people, namely, the ".gitignore !directory" bug and the
-"daemon cannot read from $HOME owned by root" bug.
-
-The release tarballs are found at:
-
-    http://code.google.com/p/git-core/downloads/list
-
-and their SHA-1 checksums are:
-
-32562a231fe4422bc033bf872fffa61f41ee2669  git-1.8.3.1.tar.gz
-94d48f6f8684aec851124e7d0b835b338a9187ad  git-htmldocs-1.8.3.1.tar.gz
-0cd759579d4bd75f1cf1ba073b1ab96c49390426  git-manpages-1.8.3.1.tar.gz
-
-The following public repositories all have a copy of the v1.8.3.1
-tag and the maint branch that the tag points at:
-
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://code.google.com/p/git-core/
-  url = git://git.sourceforge.jp/gitroot/git-core/git.git
-  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url = https://github.com/gitster/git
-
-Also, http://www.kernel.org/pub/software/scm/git/ has copies of the
-release tarballs.
-
-Git v1.8.3.1 Release Notes
-========================
-
-Fixes since v1.8.3
-------------------
-
- * When $HOME is misconfigured to point at an unreadable directory, we
-   used to complain and die. The check has been loosened.
-
- * Handling of negative exclude pattern for directories "!dir" was
-   broken in the update to v1.8.3.
-
-Also contains a handful of trivial code clean-ups, documentation
-updates, updates to the test suite, etc.
+It's not about keeping all of the contributers productive or maximizing 
+output. It's about the result being useful.
