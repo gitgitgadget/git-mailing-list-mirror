@@ -1,75 +1,107 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] t0005: skip signal death exit code test on Windows
-Date: Mon, 10 Jun 2013 13:38:16 +0200
-Message-ID: <CABPQNSbcAZZ_s7ow4HJ5HenSGSrHLUojqVygokgkQOgjLeDQEQ@mail.gmail.com>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org> <51AEE1C3.9020507@viscovery.net>
- <20130605071206.GC14427@sigill.intra.peff.net> <51B02D81.3000700@viscovery.net>
- <20130606063754.GA20050@sigill.intra.peff.net> <CAMP44s2L4EOG7aEOR8gqXeaHm7SeuPg=GQAWX3PByKKbtTHnwQ@mail.gmail.com>
- <20130606064409.GA20334@sigill.intra.peff.net> <7vy5anyx1w.fsf@alter.siamese.dyndns.org>
- <20130606174032.GB32174@sigill.intra.peff.net> <CABPQNSYLmFWkdgph6W7MwaSTe+zrU0AaJpj_v9z=cmvWu64HNA@mail.gmail.com>
- <20130609001845.GC29964@sigill.intra.peff.net> <7vk3m3owk2.fsf@alter.siamese.dyndns.org>
- <51B5648B.7020703@viscovery.net>
-Reply-To: kusmabite@gmail.com
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/4] push: make upstream, simple work with pushdefault
+Date: Mon, 10 Jun 2013 17:18:31 +0530
+Message-ID: <CALkWK0mY5=H6FoUZCOXTYykEV1f=3wrP21WPXj1v4VBCeOxocg@mail.gmail.com>
+References: <1370798000-2358-1-git-send-email-artagnon@gmail.com>
+ <1370798000-2358-3-git-send-email-artagnon@gmail.com> <7vip1moq3k.fsf@alter.siamese.dyndns.org>
+ <CALkWK0mesZay8Cpi6yTvhUG=136=9JLyFUZXm8t_fMOrY0F62Q@mail.gmail.com> <7v4nd6l31d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Jun 10 13:39:02 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Leandro Lucarella <leandro.lucarella@sociomantic.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 10 13:49:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um0RB-0002Y2-2Y
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 13:39:01 +0200
+	id 1Um0b9-0001LH-Uk
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 13:49:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753367Ab3FJLi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 07:38:57 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:36131 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753305Ab3FJLi4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 07:38:56 -0400
-Received: by mail-ie0-f178.google.com with SMTP id at1so11806762iec.23
-        for <git@vger.kernel.org>; Mon, 10 Jun 2013 04:38:56 -0700 (PDT)
+	id S1752222Ab3FJLtN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 07:49:13 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:41025 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751843Ab3FJLtM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 07:49:12 -0400
+Received: by mail-ie0-f169.google.com with SMTP id 10so2383934ied.28
+        for <git@vger.kernel.org>; Mon, 10 Jun 2013 04:49:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=+njbTPP+mQRCj+voa8+H834Z/90u2wl2v/ochYDPDSs=;
-        b=FCxygyXMD7S25MHMZpOoCMqvhX+IZjo3iD7kD92JSDojvmygr7HWbsyOCr6anWdsH6
-         dXsaBb3dHih1ObdOI9hCYGPWrzzKiL7qDfovmhBvgXs91PvRRDZMhAWousRZ3W7R/BzL
-         XYRM11p93tdte2to0GIF5Vi8fTuY4CQuNPC7V1zPBYZJchWvnp18cZdLBFz4B/8//Xcj
-         q5jIN2l7qCve6+OSs0G1GxAmQxvmJbbwK1uG22brHCHAbm74UUOcxE5U8P53v7WHQ31P
-         LfQHsPtaLp3IdTUmrAjyjPRA0ZWNVP/N1Y5EOyx4FTF6DLCXz6nZcruBN39hJEun/cOn
-         WRPQ==
-X-Received: by 10.42.27.146 with SMTP id j18mr3639622icc.54.1370864336498;
- Mon, 10 Jun 2013 04:38:56 -0700 (PDT)
-Received: by 10.64.23.199 with HTTP; Mon, 10 Jun 2013 04:38:16 -0700 (PDT)
-In-Reply-To: <51B5648B.7020703@viscovery.net>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=8kef4Xv2Ru72gJ2yFqVHZGYF0drlY0CLpwFJH5+GWsM=;
+        b=cqWDWuWIM29azdn5FwsWHoiKC4z02GhvaJK1ytUWhDMgdvejv+aUkRhtbK1BoF5uE8
+         A0bpIjzyFR8K14Spu9iPaTWJCxOp+PFmvBpvWrWxCKpaoFesVNbZupM+XJBAZEazv5Js
+         wEJ99UTay7N97XjpSnqq07NbgPj0qKg6Yj1dxEtsvujvUhPjDkixEQEN1dl90W/u4+I+
+         A1HG4OP9zEZmak7QTkc+MgMwiNjr6TwQY/YsrJnbHXc3w/DdUKjDJX7v5EqkddwFOGXI
+         6w+sUKEC7NbH/XUb9Rka0RWZoEmg56mFUZXBBUaOYKdeHAo59dduwe59sHWG77Z7uney
+         ZE4w==
+X-Received: by 10.43.88.70 with SMTP id az6mr3631644icc.10.1370864951960; Mon,
+ 10 Jun 2013 04:49:11 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Mon, 10 Jun 2013 04:48:31 -0700 (PDT)
+In-Reply-To: <7v4nd6l31d.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227275>
 
-On Mon, Jun 10, 2013 at 7:30 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 6/9/2013 22:31, schrieb Junio C Hamano:
->> Jeff King <peff@peff.net> writes:
->>
->>> I'm a little negative on handling just SIGTERM. That would make the test
->>> pass, but does it really address the overall issue? To me, the
->>> usefulness is having exit values with consistent meanings.
->>
->> Yes.  Unless the goal is to give Windows port pratically the same
->> signal semantics as ports on other platforms, I do not think special
->> casing SIGTERM (unless it is a very common signal on Windows and
->> others are unlikely to be useful) buys us much.
->
-> I'm thinking the same. And, no, SIGTERM is not very common on Windows.
->
+Junio C Hamano wrote:
+> The name under which the local branch is published needs a sensible
+> default (when branch.$name.push is not specified), and I agree that
+> you would get the name of the branch my work was forked from if you
+> reuse the "upstream" code.  I am saying that it does not necessarily
+> give us a good default.
 
-I have no strong feelings on SIGTERM, but my knee-jerk reaction is the
-same. AFAIK, the only issue we've seen with it has been this one,
-which is synthetic.
+See, that's the problem: push.default is simply a default refspec to
+push to for all branches, that can be _overridden_ by
+branch.<name>.push.  Getting an override is not going to solve the
+problem we are facing: what to do when branch.<name>.push is
+unspecified?  Fall back to push.default, right?
+
+> Now think _why_ I renamed the branch on my end, i.e. not calling
+> that branch in question "triangle" that is the blanket name for the
+> collective effort but calling it with a more specific name
+> "pushbranch", in the first place.
+
+Look, it's very simple.  upstream was built to support the case when
+the local branch name is different from the remote branch name, but it
+was too specialized for central workflows.  How do we extend it for
+triangular workflows?
+
+Just like we introduced branch.<name>.pushremote to override
+branch.<name>.remote, we get branch.<name>.push to override
+branch.<name>.merge.  If branch.<name>.pushremote is unset, where do
+the pushes go?  branch.<name>.remote.  If branch.<name>.push is
+unspecified, what is the refspec to be pushed?  branch.<name>.merge
+(when push.default = upstream) [*1*].
+
+What does this mean?  I publish the branch "triangle" on ram (what my
+local branch is called or what push.default I use is irrelevant).  You
+have a branch called pushremote with branch.pushremote.remote set to
+ram, remote.pushdefault set to junio, branch.pushremote.merge set to
+refs/heads/triangle, and push.default set to upstream.
+
+  # on jc's machine; on branch pushremote
+  $ git pull
+  # integrates changes from ram's triangle just fine
+  $ git push
+  # publishes the branch as triangle on remote junio
+
+I rewrite my branch, and you have 4 commits based on my branch:
+
+  $ git rebase --onto @{u} @~4
+
+Perfect.
+
+The only limitation is that you don't choose the branch name on junio.
+ When we get branch.pushremote.push, you'll be able to set it to
+refs/heads/pushremote, making push.default inconsequential.  Done.
+
+[Footnotes]
+
+*1* remote.pushdefault overrides branch.<name>.remote, while
+push.default will be overridden by a future branch.<name>.push.  Not
+exactly elegant, is it?
