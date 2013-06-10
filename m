@@ -1,61 +1,103 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [IGNORE] Implement 'git rebase' in ruby
-Date: Tue, 11 Jun 2013 01:37:57 +0530
-Message-ID: <CALkWK0ndiaAFaLxKd5=a_E-Cb0UebmxiBx3SryPGeT2U2nWKxg@mail.gmail.com>
-References: <1370841722-8059-1-git-send-email-felipe.contreras@gmail.com>
- <CALkWK0=am0kDZWKuvdx9ph+zwtXdjRAbwu3e=GfEYUp+o8oy0g@mail.gmail.com> <CAMP44s2CqhxjzmZc7CiYER=F9BK1bxyCGBwCpLeq+yjDHwSj-w@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 2/3] test: improve rebase -q test
+Date: Mon, 10 Jun 2013 22:19:33 +0200
+Message-ID: <20130610201933.GI2091@goldbirke>
+References: <7vd2rvqgra.fsf@alter.siamese.dyndns.org>
+ <CAMP44s3Pny7JkyHbLZ3kUemNK70JhdYWdpELTjNLz0y3Z2V3+A@mail.gmail.com>
+ <7vy5ajozuj.fsf@alter.siamese.dyndns.org>
+ <CAMP44s38T9EUOe8EBKy1kxa-rEu7g0jb7+HB019AgCub+2SVnw@mail.gmail.com>
+ <7vfvwrowd0.fsf@alter.siamese.dyndns.org>
+ <CAMP44s0Qr54+8hbkZ+jmXB628SCPwg1zZo80UBhFe2PCrgQP4Q@mail.gmail.com>
+ <20130610093904.GG2091@goldbirke>
+ <7vppvuj6wl.fsf@alter.siamese.dyndns.org>
+ <20130610172708.GH2091@goldbirke> <51B623DA.4050802@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 22:08:48 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Jun 10 22:19:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um8OR-0001Qm-1a
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 22:08:43 +0200
+	id 1Um8ZA-0000a5-T6
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 22:19:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751826Ab3FJUIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 16:08:38 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:60844 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751034Ab3FJUIi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 16:08:38 -0400
-Received: by mail-ie0-f179.google.com with SMTP id c10so8925507ieb.24
-        for <git@vger.kernel.org>; Mon, 10 Jun 2013 13:08:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=vVZ0pD7ivUV/Xg66MOl79Ubs508thdyabkv0e4r03pc=;
-        b=anaZ1clGrKhkqzKMOpXj04NprVl/blj5tEZzYIku0B4qi7oSxRgg5Ngi+m2rmOeRDj
-         P/7oz7CZFSdoSJxVuGOc6tlxY1OJZHuhkuHj+/OBgjXfXCSaTMHw7OV9QCQxRS4D3bv9
-         Jtlkz2BwVbhtC6Swcqdhi9mn/O/mxXrIbWiQE9bBFVTD27xD5PNIm11FudG6zmUZREX8
-         qQwOQnqKupeSr4V2RK/GV9krY9tTAFAtqXor+Baff4hOLdsl06CodJw9A/EkZHzMHsTz
-         VENLyusjnD7XVbKmp9XGj29baRepdRb5NHG7m/Ka8hnq+M7bhlI+TGifQrm56WLApfLf
-         OiIg==
-X-Received: by 10.50.3.37 with SMTP id 5mr4738366igz.0.1370894917664; Mon, 10
- Jun 2013 13:08:37 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Mon, 10 Jun 2013 13:07:57 -0700 (PDT)
-In-Reply-To: <CAMP44s2CqhxjzmZc7CiYER=F9BK1bxyCGBwCpLeq+yjDHwSj-w@mail.gmail.com>
+	id S1751991Ab3FJUTp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jun 2013 16:19:45 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:52509 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751034Ab3FJUTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 16:19:44 -0400
+Received: from localhost6.localdomain6 (g227025092.adsl.alicedsl.de [92.227.25.92])
+	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
+	id 0M9z92-1UfVni1Pia-00B3ON; Mon, 10 Jun 2013 22:19:34 +0200
+Content-Disposition: inline
+In-Reply-To: <51B623DA.4050802@kdbg.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:wRgsY2iXuNqNeUC0VBmBgivXne79RFKw7I2Vayh9gFS
+ sDa/wJIu/tAMv3ZLEaUx8MPas6PbcyXHclm+pTy58QIFwIuPb1
+ HbGD24pqTDhhho89sB49rJQ2HPHz5aThilD087CouijD6EtMEt
+ hHsHXtT4LdbbVgUkOorNWj81HWiUn9NcS7JsdgPtmfQw2+uJS+
+ //apEvoPPCkw5sKJOI1CGecuzoShVJQ5eEm+ZdpZa/I0jD+/wU
+ 4VmpjAQRGZE1NDkGd3LBZRFczrfPCpkUu5V+Yb2+Wn9HcI4XCT
+ 6wca4HmFObZ90exgYhY2Mp5DI4aWJNUp9TjmrO6U7LxI8az3Lg
+ yyb7EQi8v0cQiPwWNHRg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227371>
 
-Felipe Contreras wrote:
-> I think that's the only way forward, since the Git project doesn't
-> wish to be improved.
->
-> Perhaps it's time for me to create a pseudonym, and when you have to
-> do that to land clearly good patches, you know something is *REALLY*
-> wrong with the project.
+On Mon, Jun 10, 2013 at 09:07:06PM +0200, Johannes Sixt wrote:
+> Am 10.06.2013 19:27, schrieb SZEDER G=E1bor:
+> > My main motivation is that, like in your example, in the bash promp=
+t
+> > tests I only have to check a single line of output, but because of
+> > debuggability I always did:
+> >=20
+> >   echo "(master)" >expected
+> >   __git_ps1 >actual
+> >   test_cmp expected actual
+>=20
+> Chained by &&, I presume.
 
-I ask only for your patience, Felipe.
+Sure.
 
-Let's give it a few days to calm down, and discuss things rationally
-with people.  The project does have some mental blocks, but it is not
-an insurmountable problem.
+> > With such a helper function this could be reduced to a single line:
+> >=20
+> >   test_string_equal "(master)" "$(__git_ps1)"
+> >=20
+> > without loss of functionality
+>=20
+> Not quite: A non-zero exit code of the $(__git_ps1) is lost. (It
+> probably doesn't matter here, but it certainly does if the command is
+> $(git rev-parse foo) or similar.)
+
+Ouch, indeed.  Yeah, the exit code doesn't matter for the prompt tests
+(I mean for __git_ps1() tests, but maybe it does matter for some
+__gitdir() tests), but I suppose it does matter everywhere else where
+the same construct is used.  We could still do
+
+  actual=3D"$(git foo)" &&
+  test_string_equal "good" "$actual"
+
+to preserve and check the exit code, and this is still one line
+shorter, but overall not that appealing anymore.
+
+However.  The git command's exit code is lost the same way in 'test
+good =3D $(git foo)' constructs, too, and plenty of such constructs are
+all over the test suite.  Shouldn't we avoid using such constucts
+then?
+
+
+G=E1bor
