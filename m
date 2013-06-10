@@ -1,124 +1,152 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] completion: remove ancient "ensure colon in
- COMP_WORDBREAKS" workaround
-Date: Mon, 10 Jun 2013 11:14:19 +0200
-Message-ID: <20130610091419.GF2091@goldbirke>
-References: <1370822361-15637-1-git-send-email-szeder@ira.uka.de>
- <20130610000954.GA6464@elie.Belkin>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] push: make upstream, simple work with pushdefault
+Date: Mon, 10 Jun 2013 02:37:34 -0700
+Message-ID: <7v4nd6l31d.fsf@alter.siamese.dyndns.org>
+References: <1370798000-2358-1-git-send-email-artagnon@gmail.com>
+	<1370798000-2358-3-git-send-email-artagnon@gmail.com>
+	<7vip1moq3k.fsf@alter.siamese.dyndns.org>
+	<CALkWK0mesZay8Cpi6yTvhUG=136=9JLyFUZXm8t_fMOrY0F62Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 11:15:06 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Leandro Lucarella <leandro.lucarella@sociomantic.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 10 11:37:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlyBr-0001XR-6B
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 11:15:03 +0200
+	id 1UlyXm-0000fP-1Z
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 11:37:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753079Ab3FJJOX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jun 2013 05:14:23 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:65477 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752284Ab3FJJOW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 05:14:22 -0400
-Received: from localhost6.localdomain6 (g227025092.adsl.alicedsl.de [92.227.25.92])
-	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
-	id 0LrbZ7-1UMMEw3ggn-013q8m; Mon, 10 Jun 2013 11:14:20 +0200
-Content-Disposition: inline
-In-Reply-To: <20130610000954.GA6464@elie.Belkin>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:yxafpkVo353jj8cdOR/gA+T6raFv8htlAu/Gjs/ci7h
- 13FBuLtI72grhXfy/FEy4lgkQhY2VtNvIdc1GILOGwsLvXjoDf
- w+cR5PatJO0aEFmYkqFcjK7pSH3NeAq0z+zxHYByKJiPf1SYU4
- 8b59wrk2Obezd1V83+CAIMHNSpW51wkT1y7O8OSs4S0YGb5+lp
- HBNjX68cuWf67tE1q+6JAB7iLNi4HlYph9QDd0NitYCwfVtwta
- 7Tj/qeY+DBzNRRvEEQdeDK3qr1/a1l4JAN+qLiHK1yFKsLYm05
- INVVZS+3F7HS0nmJu2/JMokiqRbKmW05wWR+3KkThAcDtha2rD
- zyfD9++mCW0cQP7F0Duc=
+	id S1752979Ab3FJJhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 05:37:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55567 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752284Ab3FJJhh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 05:37:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E56E268E2;
+	Mon, 10 Jun 2013 09:37:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6xAFtozwe6HVK5HUkylvd5v39e8=; b=iTyVNo
+	wHLVrMJCAFy5KLPJBaeRDPLu9gw16oYZy7Ss8aDUCHVvjVoXi5DMEjpwglRJLAbP
+	3MgAK7xgF3DdHZCZCugl+vPfbh0lFUheXO7ilt1VhduYr9TWjWxC6HQ/3/mauBvw
+	r1jkw/6LvXoaWQjdmQNto1bQzTWseF55gjUo8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=R3j4S3kx9KKn425ipFYevTXC2X2RPGbo
+	V0K3zmjqK/ihkG2zi+VL7GQ+zUs5J1FDb28xVnBU9fFWHmoN0HtpAbAv82KK+5T4
+	2nHTbRWvlc5AGDLNk5hIYh7nH/jF344vwLW6s4sPYJSTaEyEwebHBIbt4r8/1hJk
+	Apmf5yL0NX4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62DF8268E1;
+	Mon, 10 Jun 2013 09:37:36 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ACF7E268DE;
+	Mon, 10 Jun 2013 09:37:35 +0000 (UTC)
+In-Reply-To: <CALkWK0mesZay8Cpi6yTvhUG=136=9JLyFUZXm8t_fMOrY0F62Q@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 10 Jun 2013 14:13:45 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 61F181BE-D1B1-11E2-82EA-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227268>
 
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-=46irst things first: Junio, please don't pick up this patch.
+> I don't understand why upstream/ simple should _not_ push to a
+> different destination from the one being merged from.  I'll repeat:
+> push source/ destination is orthogonal to push refspec, and
+> push.default modes dictate the refspec.
 
-On Sun, Jun 09, 2013 at 05:09:54PM -0700, Jonathan Nieder wrote:
-> SZEDER G=E1bor wrote:
->=20
-> > Fedore 9 shipped the gvfs package with a buggy Bash completion scri=
-pt:
-> > it removed the ':' character from COMP_WORDBREAKS, thereby breaking
-> > certain features of git's completion script.  We worked this around=
- in
-> > db8a9ff0 (bash completion: Resolve git show ref:path<tab> losing re=
-f:
-> > portion, 2008-07-15).
-> >
-> > The bug was fixed in Fedora 10 and Fedora 9 reached its EOL on
-> > 2009-07-10, almost four years ago.  It's about time to remove our
-> > workaround.
->=20
-> Nice!  I had wondered what that workaround was about but never
-> ended up digging into it.
+That is where we differ.  You keep repeating that without justifying
+why reusing the branch upstream would have chosen in a non-triangular
+workflow is a good idea in the first place.
 
-Meh, not nice at all.
+Let's step back a bit and think.  In a workflow where we both agree
+that "upstream" mode makes sense, i.e. central repository workflow,
+we may have a "triangle" topic in our shared repository, and I may
+have my own topic forked from it (i.e. set to fetch that "triangle"
+and integrate my work with it).  The topic is to work on one aspect
+of triangular workflow, e.g. "pushbranch" (i.e. I am not worried
+about how we choose which remote to push to, but interested in what
+branch at that remote is updated).
 
-> Searching for COMP_WORDBREAKS in /etc/bash_completion.d/* finds
-> similar breakage (removal of '=3D' and '@') in the npm completion
-> script, but nothing involving colon.  So this looks like a good
-> change.
+It makes sense for me to push the result back to the upstream,
+i.e. "triangle" branch at the shared remote where I forked from, to
+collaborate with other people (e.g. you) whose shared purpose is to
+improve the triangular workflow.  You may be doing the same, and
+your local branch may be called "triangle" (bag of various
+triangular workflow improvements), or "pushremote" (a specific
+subtopic).  In either case, you push to "upstream" to update
+"triangle".
 
-And apparently I have a completion script called axi-cache (from
-package apt-xapian-index) which removes ':' [1].  However, it doesn't
-remove the ':' upon loading the script but the removal is done in the
-completion function, i.e. it takes effect only when the user actually
-attempts to complete its options.  I never use axi-cache, whatever the
-hell it might be, so I didn't notice.
+What should happen in a triangular workflow, where I may be fetching
+and integrating from your repository to work on triangular workflow
+in general (let's say that you are the owner of that topic) to
+advance the support for that workflow.  The topic in your repository
+may be called "triangle" to improve triangular workflow in general,
+and again my branch would be "pushbranch" to improve one specific
+aspect of it.
 
-Unfortunately, with my above patch applied I get this in a new shell:
+As we are using triangular workflow, the place *I* push to is under
+my control, not the shared maintainer one or your repository, and
+I'll be requesting you to pull that topic from me.
 
-$ git show master:q<TAB>
-$ git show master:quote.<TAB>
-master:quote.c   master:quote.h  =20
+Now think _why_ I renamed the branch on my end, i.e. not calling
+that branch in question "triangle" that is the blanket name for the
+collective effort but calling it with a more specific name
+"pushbranch", in the first place.
 
-$ axi-cache <TAB>
-again     depends   help      madison   more      policy    rdepends
-search    show      showpkg   showsrc  =20
+It is to clarify that my part of the effort is that particular
+subarea of the topic.  Wouldn't it be a lot more sensible to use
+that more specific name when publishing, rather than "triangle"
+name, and ask you to pull that branch that describes what I
+concentrated on?
 
-$ git show master:q<TAB>
-$ git show quote.<TAB>
-quote.c  quote.h  quote.o
+Push destination and fetch source, when they are different, refer to
+different repositories by definition, and they are in different
+administration domains.  Why should the name used to publish my work
+which is a specialization of what I built on (i.e. your "triangle")
+lose the specialization from its name when I push it out?  We can
+afford not to lose information in the branch name.
 
-Not good.
+The difference between the shared repository case and triangular
+workflow primarily comes from the fact that the final integration
+happens at a different place.  In the shared repository case, the
+integration happens in each participant's local repository and push
+updates the shared history at the known name.  If my "pushbranch"
+specialization diverted from the overall "triangle" effort, I would
+first integrate others work and then update the remote, and at that
+point, what I am pushing is no longer an isolated specialized effort,
+but the result of its integration into a larger topic.
 
-I don't have the npm package, but manually removing '=3D' from
-COMP_WORDBREAKS leads to similar breakage with e.g. 'git log
---pretty=3D'.
+And once the more specialized topic is integrated into a more
+generic branch it was forked from, it makes sense to update that
+more generic branch at the shared repository.
 
-Neither this axi-cache not npm completion script comes from the
-bash-completion project.  Apparently some developers providing
-completion scripts for their projects lack the necessary expertise to
-consider the effects their script might have on other completion
-scripts.  Perhaps distributions should adopt a policy not to allow
-completion scripts messing with COMP_WORDBREAKS, dunno.
+In the triangular case, however, you as the "triangle" topic owner
+has the choice to fetch and integrate from me or not to do so.  And
+the integration happens when you decide to fetch and integrate.
+There is no reason whatsoever to lose the more specific name until
+that integration happens into your (meaning: the owner of the more
+general "triangle" topic) "bag of various triangular improvements"
+topic.
 
-Anyway.  Although the completion script in Fedora's gvfs package might
-be fixed, there are other completion scripts making the same mistake,
-so I'm afraid we should keep the workaround and drop this patch.
-Moreover, we should even consider extending our workaround by adding
-back '=3D' to COMP_WORDBREAKS, too.  Oh, well.
+Imagine the case I forked two branches from your "triangle" topic
+and pushing them to my publishing repository using the triangular
+workflow.  Why should I attempt to update a single "triangle" branch
+with both of these topics?
 
-
-[1] - This might not be accurate nowadays, as my system is a bit
-oldish...
-
-
-Best,
-G=E1bor
+The name under which the local branch is published needs a sensible
+default (when branch.$name.push is not specified), and I agree that
+you would get the name of the branch my work was forked from if you
+reuse the "upstream" code.  I am saying that it does not necessarily
+give us a good default.
