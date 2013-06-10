@@ -1,89 +1,57 @@
-From: =?UTF-8?Q?Mathieu_Li=C3=A9nard--Mayor?= 
-	<mathieu.lienard--mayor@ensimag.fr>
-Subject: Re: [PATCH 1/2] rm: better error message on failure for multiple  files
-Date: Mon, 10 Jun 2013 09:43:44 +0200
-Message-ID: <f3f6cb36e56ea8fdf7ebe22230c2aff7@ensibm.imag.fr>
-References: <1370680434-2709-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
- <CALkWK0mqVCfrPgSLi1dnDv26YAyRrJJD_S179VYfEApmGkd4Uw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [IGNORE] Implement 'git rebase' in ruby
+Date: Mon, 10 Jun 2013 13:18:38 +0530
+Message-ID: <CALkWK0=am0kDZWKuvdx9ph+zwtXdjRAbwu3e=GfEYUp+o8oy0g@mail.gmail.com>
+References: <1370841722-8059-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-	<git@vger.kernel.org>, <gitster@pobox.com>,
-	Jorge Juan Garcia Garcia 
-	<Jorge-Juan.garcia-Garcia@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 09:43:56 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 10 09:49:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ulwlf-0003ZN-9V
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 09:43:55 +0200
+	id 1Ulwqx-0007Km-JX
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 09:49:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751872Ab3FJHnv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jun 2013 03:43:51 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:45322 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751528Ab3FJHnu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 03:43:50 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5A7hh4x005140
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 10 Jun 2013 09:43:45 +0200
-Received: from web-ensimag.imag.fr (web-ensimag.imag.fr [195.221.228.24])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5A7hilK009128;
-	Mon, 10 Jun 2013 09:43:44 +0200
-Received: from web-ensimag.imag.fr (localhost [127.0.0.1])
-	by web-ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id r5A7hiQo019054;
-	Mon, 10 Jun 2013 09:43:44 +0200
-Received: (from apache@localhost)
-	by web-ensimag.imag.fr (8.13.8/8.13.8/Submit) id r5A7hiNG019053;
-	Mon, 10 Jun 2013 09:43:44 +0200
-X-Authentication-Warning: web-ensimag.imag.fr: apache set sender to mathieu.lienard--mayor@ensimag.fr using -f
-In-Reply-To: <CALkWK0mqVCfrPgSLi1dnDv26YAyRrJJD_S179VYfEApmGkd4Uw@mail.gmail.com>
-X-Sender: mathieu.lienard--mayor@ensimag.fr
-User-Agent: Roundcube Webmail/0.8.1
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 10 Jun 2013 09:43:46 +0200 (CEST)
+	id S1751951Ab3FJHtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 03:49:20 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:37823 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752000Ab3FJHtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 03:49:19 -0400
+Received: by mail-ie0-f169.google.com with SMTP id 10so1850632ied.14
+        for <git@vger.kernel.org>; Mon, 10 Jun 2013 00:49:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=e9O/0DTsH9Adg2I4tdp26qu7yuGJaVrA7M9RenRhL7k=;
+        b=kZe5Nh4owkLmYdVU7WZGtF2hJF2KkPHoBtt2t305pKORLecWy2NYJ0cyREvAObHUSb
+         9MFnwtgd+ZQd33p8JzLBxOFoCgVAJ0piI5F6B8Hc6vv73sFuqAzvOJa5Bv89jJf7Xqlt
+         eDvqbF1PPcVcSrToDcBOd5fgGmug6BQTu1n95I9k9Qe6E13dYFaWRIlFlYazzqLFK2JE
+         /kwf0qntV/gquo0DJ1JjbgUqJUMWgNzWR5erDajsBTheV3crCfkKRd9FOZzQ44GEnAHe
+         EuzydjRr7eWzt/374lCKC0gekjTJvHGAdtwfkNiP8tmO6jm1eaU8QaZXYKp5EbOAGvm0
+         y/EA==
+X-Received: by 10.50.56.20 with SMTP id w20mr3402667igp.40.1370850558669; Mon,
+ 10 Jun 2013 00:49:18 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Mon, 10 Jun 2013 00:48:38 -0700 (PDT)
+In-Reply-To: <1370841722-8059-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227252>
 
-Once again, thanks a lot your feedback, we appreciate it a lot!
-Le 2013-06-08 15:51, Ramkumar Ramachandra a =C3=A9crit=C2=A0:
-> Mathieu Lienard--Mayor wrote:
->> @@ -170,30 +175,47 @@ static int check_local_mod(unsigned char=20
->> *head, int index_only)
->>                  * "intent to add" entry.
->>                  */
->>                 if (local_changes && staged_changes) {
->> -                       if (!index_only || !(ce->ce_flags &=20
->> CE_INTENT_TO_ADD))
->> -                               errs =3D error(_("'%s' has staged=20
->> content different "
->> -                                            "from both the file and=
-=20
->> the HEAD\n"
->> -                                            "(use -f to force=20
->> removal)"), name);
->> +                       if (!index_only || !(ce->ce_flags &=20
->> CE_INTENT_TO_ADD)) {
->> +                               strbuf_addstr(&files_staged, "\n    =
-=20
->>   ");
->
-> Ouch.  Wouldn't a string-list be more appropriate for this kind of=20
-> thing?
-Matthieu Moy told me string-list would be better aswell, so we're gonna=
-=20
-change it.
+Felipe Contreras wrote:
+>  git-rebase.rb | 2056 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 2056 insertions(+)
+>  create mode 100755 git-rebase.rb
 
---=20
-Mathieu Li=C3=A9nard--Mayor,
-2nd year at Grenoble INP - ENSIMAG
-(+33)6 80 56 30 02
+I suggest putting this in contrib/ and cooking it.  As usual, my
+mantra is: let the patches decide what to do.  I'll help review and
+improve this soon.
+
+Thanks.
