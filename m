@@ -1,67 +1,95 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2013, #03; Thu, 6)
-Date: Mon, 10 Jun 2013 11:55:58 +0530
-Message-ID: <CALkWK0kvSvK=bFJo13=yw+2EZmGyv46_DUEZaniYGCe7D_V2wg@mail.gmail.com>
-References: <7vzjv2x3p7.fsf@alter.siamese.dyndns.org> <20130607000006.GA25731@goldbirke>
- <CALkWK0=D7sHLgptWkFHma1FoS-zdifHqXnuuBKhkyuszgEJ0Xw@mail.gmail.com>
- <7v8v2lu5ks.fsf@alter.siamese.dyndns.org> <20130607191643.GA31625@goldbirke>
- <7vwqq5snzi.fsf@alter.siamese.dyndns.org> <20130607204430.GD31625@goldbirke>
- <7vk3m5si4h.fsf@alter.siamese.dyndns.org> <20130608001147.GA32350@goldbirke> <7v1u8bouam.fsf@alter.siamese.dyndns.org>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v4 0/7] git send-email suppress-cc=self fixes
+Date: Mon, 10 Jun 2013 09:53:24 +0300
+Message-ID: <20130610065324.GA26501@redhat.com>
+References: <1370455737-29986-1-git-send-email-mst@redhat.com>
+ <7v8v2o1ho7.fsf@alter.siamese.dyndns.org>
+ <20130605201423.GB31143@redhat.com>
+ <7vy5ain9yg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 08:26:55 2013
+X-From: git-owner@vger.kernel.org Mon Jun 10 08:53:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlvZ8-0008Da-UT
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 08:26:55 +0200
+	id 1UlvyW-00063y-IK
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 08:53:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751372Ab3FJG0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 02:26:41 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:48680 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751329Ab3FJG0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 02:26:39 -0400
-Received: by mail-ie0-f178.google.com with SMTP id at1so11524099iec.37
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 23:26:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=s/Yaqki7qqx0uur6wJeFEt2jQRfZBGgIsUy4w4xcuxQ=;
-        b=bsd4ChwZnERNPkDwMOBItTG1YowH/7p3PHLzdyWx8mnyec1qKYS0z4z+U2snXNvrMY
-         O8xoKVczs7V+dZNxTEWFYYFl9Q6H/WiN1DsckP4XLDGpTsINFQQSEXwEnyw1KW6GxAle
-         YusD5ZkbhvOgpGurOj+7WYEYjB0VySWstPkA67mtb6yET0yFl6PksOzbtfawXbo/BSoX
-         Fb7cBwn9hIe2Xikhbgitw0hV+WBgwXnSjjWblWBJmTfy6zho4Cs5CM9jOqg/pd8mAMBG
-         dae7QbLb1ypGIUzzrNpcUX6chN1qfIIMAB+Kx37W7fMvBt7q9q0wqiTwP+TjE7P6+1Dq
-         vR9Q==
-X-Received: by 10.50.154.106 with SMTP id vn10mr1306423igb.0.1370845599373;
- Sun, 09 Jun 2013 23:26:39 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Sun, 9 Jun 2013 23:25:58 -0700 (PDT)
-In-Reply-To: <7v1u8bouam.fsf@alter.siamese.dyndns.org>
+	id S1751411Ab3FJGwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 02:52:49 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:12368 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751372Ab3FJGwt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 02:52:49 -0400
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r5A6qlJx021208
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Mon, 10 Jun 2013 02:52:47 -0400
+Received: from redhat.com (vpn1-6-65.ams2.redhat.com [10.36.6.65])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id r5A6qjmS013224;
+	Mon, 10 Jun 2013 02:52:46 -0400
+Content-Disposition: inline
+In-Reply-To: <7vy5ain9yg.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227244>
 
-Junio C Hamano wrote:
->     Revert 77c1305 and 3c3b46b
+On Sun, Jun 09, 2013 at 04:25:11PM -0700, Junio C Hamano wrote:
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
+> 
+> > With respect to this, and a bit off-topic, what's
+> > the best way to revise patch series?
+> >
+> > What I did, given series in patchvN-1/:
+> >
+> > 	rm -fr patchvN #blow away old directory if there
+> > 			# otherwise I get two copies of patches if I renamed any
+> 
+> Not needed with recent "git format-patch -v4" option.
 
-The core of the argument seems to be that
-__git_complete_revlist_file() is a misleading name for the completion
-done by archive and ls-tree, but __git_complete_file() is somehow a
-less misleading name?  Irrespective of what the valid completions of
-the various commands are, I want to know which completion function
-will be _used_ when I'm reading the script.  And that is
-__git_complete_revlist_file().
+Unless I rerun with same vX :(
+Would it make sense for it to check for vX existance and fail?
+Same without -vX, when 000X exists ...
+Could be an option.
 
-To me, it looks like mega-bikeshedding; a huge amount of time and
-effort going behind a non-functional variable rename (and the best
-part? the rename isn't getting us a "better" name; just a "historical"
-name).  But whatever.
+> > 	git branch|fgrep '*'
+> > 	# Figure out on which branch I am, manually specify the correct upstream I'm tracking,
+> > 	# otherwise I get a ton of unrelated patches.
+> 
+> git-prompt with PS1 you do not need this either.
+
+grep serves just as well but
+I still need to copy it to the next line manually...
+
+I vaguely remember there was some way to say
+"head of the remote I am tracking" - but I could not find it.
+Where are all the tricks like foo^{} documented?
+I tried fgrep '{}' Documentation/*txt and it only returned
+git-show-ref.txt which isn't really informative ...
+
+Additionally, or alternatively, would it make sense for git format-patch
+to format the diff against the tracking branch by default?
+
+> > 	git format-patch --cover --subject-prefix='PATCH vN' -o patchvN origin/master..
+> 
+> Again, "git format-patch -v4 -o mt-send-email" will deposit the new
+> ones alongside the older round.
+> 
+> > 	vi patchvN/0000* patchvN-1/0000*
+> 
+> Same (i.e. "vi mt-send-email/v*-0000-*.txt).
+
+I still need to copy subject, Cc list and blurb to the next line manually.
+Now that there's a concept of revisions,
+maybe git format-patch -v4 could copy the text
+and subject from v3?
+
+-- 
+MST
