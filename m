@@ -1,85 +1,86 @@
 From: Richard Hartmann <richih.mailinglist@gmail.com>
-Subject: [PATCH 3/6] templates: Fix spelling in pre-commit hook
-Date: Mon, 10 Jun 2013 20:36:02 +0200
-Message-ID: <1370889365-6239-4-git-send-email-richih.mailinglist@gmail.com>
+Subject: [PATCH 5/6] templates: Fix ASCII art in pre-rebase hook
+Date: Mon, 10 Jun 2013 20:36:04 +0200
+Message-ID: <1370889365-6239-6-git-send-email-richih.mailinglist@gmail.com>
 References: <1370889365-6239-1-git-send-email-richih.mailinglist@gmail.com>
 Cc: Richard Hartmann <richih.mailinglist@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 10 20:36:27 2013
+X-From: git-owner@vger.kernel.org Mon Jun 10 20:36:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um6x8-00059Y-TR
+	id 1Um6x9-00059Y-L6
 	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 20:36:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754173Ab3FJSgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754190Ab3FJSgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 14:36:21 -0400
+Received: from mail-ee0-f52.google.com ([74.125.83.52]:58659 "EHLO
+	mail-ee0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754010Ab3FJSgT (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 10 Jun 2013 14:36:19 -0400
-Received: from mail-ee0-f49.google.com ([74.125.83.49]:44692 "EHLO
-	mail-ee0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754098Ab3FJSgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 14:36:16 -0400
-Received: by mail-ee0-f49.google.com with SMTP id b57so3187736eek.22
-        for <git@vger.kernel.org>; Mon, 10 Jun 2013 11:36:15 -0700 (PDT)
+Received: by mail-ee0-f52.google.com with SMTP id c50so3211488eek.25
+        for <git@vger.kernel.org>; Mon, 10 Jun 2013 11:36:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=v41HMtrjrygm4FibI2n7Nhdu9kAUH3DVYrack4d0rmY=;
-        b=LbXmBroft/+t6NBKfmo3G1GqEkBf0/ZAIUXCX45n4UpZu1plnGBqQ/LOTSN5AmhyWk
-         Hkug0N33GEvPo5jSdmbiRxaSiPohl4oevPefvxDUZYasZ/9kFkt6FJe4/aKwR6FZ+9bd
-         Z+EDnzVMGEqjG5rAVmzIC9XcX7KAgoyGxz4I73WOss+LfiY/DxXCcySgJksvMDZcefFp
-         gnIFhfnlMdPv2Q8XCgeKltQDiU0iRA4kwCHcWKjT/1A8X5fbLW/ZSscKTP+CffnnLjc+
-         OVUoj8QU158mBboLb4zBzFtH7+ezWEhVcWjHiK24DxE/YP49UoRUIKJNPdZJUvhZgbBH
-         e9ug==
-X-Received: by 10.14.172.194 with SMTP id t42mr2866753eel.78.1370889375749;
-        Mon, 10 Jun 2013 11:36:15 -0700 (PDT)
+        bh=FABy3hTS4h1IRB93AeDWPAn7D7iaM5fBDiZYOFDFLmE=;
+        b=ugHChSOl747T0mi3UPumsHhBCBjNSRmKHLwA7igxyLOves6YfY7Z0CBtT/fb/I/09W
+         9MRHrcdVk4FVDNi6OuHWPB35f5yhhp/cQuL5L01IHM4ass4t0HT6w6orMTuYBGEZhYB8
+         90tt6Bo4A9aaS3VGffDz2icGJFNom/0jxS8T9hpeBdzjerQkw/LYJH4kzKGIejJr9ZV0
+         9n9e0PblCOgb+Y3zAhG+WyoSezs6Y8lPhX+AwkOrYVOilrdgPEKuzHwERh4s8gpFQFhI
+         +1Tflbr76nWfPCaG+cWrQbqonlhuIU2ExDjBcTQCHf2kL8JLix0O9owRBzgxsGnuSqMy
+         9bZA==
+X-Received: by 10.15.98.203 with SMTP id bj51mr12835471eeb.22.1370889378398;
+        Mon, 10 Jun 2013 11:36:18 -0700 (PDT)
 Received: from rockhopper.fritz.box (p54998111.dip0.t-ipconnect.de. [84.153.129.17])
-        by mx.google.com with ESMTPSA id ba7sm24960845eeb.0.2013.06.10.11.36.14
+        by mx.google.com with ESMTPSA id ba7sm24960845eeb.0.2013.06.10.11.36.17
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 10 Jun 2013 11:36:15 -0700 (PDT)
+        Mon, 10 Jun 2013 11:36:17 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1370889365-6239-1-git-send-email-richih.mailinglist@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227350>
+
+The example assumes 8-char wide tabs and breaks for people with
+4-char wide tabs.
 
 Signed-off-by: Richard Hartmann <richih.mailinglist@gmail.com>
 ---
- templates/hooks--pre-commit.sample |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ templates/hooks--pre-rebase.sample |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/templates/hooks--pre-commit.sample b/templates/hooks--pre-commit.sample
-index 7676c6e..a982d99 100755
---- a/templates/hooks--pre-commit.sample
-+++ b/templates/hooks--pre-commit.sample
-@@ -15,13 +15,13 @@ else
- 	against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
- fi
+diff --git a/templates/hooks--pre-rebase.sample b/templates/hooks--pre-rebase.sample
+index 053f111..b74cd1d 100755
+--- a/templates/hooks--pre-rebase.sample
++++ b/templates/hooks--pre-rebase.sample
+@@ -132,14 +132,14 @@ With this workflow, you would want to know:
  
--# If you want to allow non-ascii filenames set this variable to true.
-+# If you want to allow non-ASCII filenames set this variable to true.
- allownonascii=$(git config hooks.allownonascii)
+ Let's look at this example:
  
- # Redirect output to stderr.
- exec 1>&2
+-		   o---o---o---o---o---o---o---o---o---o "next"
+-		  /       /           /           /
+-		 /   a---a---b A     /           /
+-		/   /               /           /
+-	       /   /   c---c---c---c B         /
+-	      /   /   /             \         /
+-	     /   /   /   b---b C     \       /
+-	    /   /   /   /             \     /
++                   o---o---o---o---o---o---o---o---o---o "next"
++                  /       /           /           /
++                 /   a---a---b A     /           /
++                /   /               /           /
++               /   /   c---c---c---c B         /
++              /   /   /             \         /
++             /   /   /   b---b C     \       /
++            /   /   /   /             \     /
+     ---o---o---o---o---o---o---o---o---o---o---o "master"
  
--# Cross platform projects tend to avoid non-ascii filenames; prevent
-+# Cross platform projects tend to avoid non-ASCII filenames; prevent
- # them from being added to the repository. We exploit the fact that the
- # printable range starts at the space character and ends with tilde.
- if [ "$allownonascii" != "true" ] &&
-@@ -31,7 +31,7 @@ if [ "$allownonascii" != "true" ] &&
- 	test $(git diff --cached --name-only --diff-filter=A -z $against |
- 	  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
- then
--	echo 'Error: Attempt to add a non-ascii file name.
-+	echo 'Error: Attempt to add a non-ASCII file name.
- 
- This can cause problems if you want to work with people on other platforms.
  
 -- 
 1.7.10.4
