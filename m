@@ -1,69 +1,135 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: v3 [PATCH 1/2] status: introduce status.short to enable --short by default
-Date: Mon, 10 Jun 2013 17:20:04 +0200
-Message-ID: <vpqehcaf0wr.fsf@anie.imag.fr>
-References: <1370877184-19409-1-git-send-email-y>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
-To: Jorge Juan Garcia Garcia 
+From: Jorge Juan Garcia Garcia 
 	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 10 17:20:18 2013
+Subject: [PATCH v3 2/2] status:introduce status.branch to enable --branch by default
+Date: Mon, 10 Jun 2013 17:27:48 +0200
+Message-ID: <1370878068-7643-2-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+References: <1370878068-7643-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+Cc: gitster@pobox.com,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 10 17:28:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um3tJ-0002vo-OX
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 17:20:18 +0200
+	id 1Um40q-0000Je-PQ
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 17:28:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752354Ab3FJPUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 11:20:11 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:32976 "EHLO shiva.imag.fr"
+	id S1753255Ab3FJP2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 11:28:00 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:33238 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752127Ab3FJPUK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 11:20:10 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5AFK2v7011292
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 10 Jun 2013 17:20:02 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Um3t6-0003V7-9N; Mon, 10 Jun 2013 17:20:04 +0200
-References: 
-In-Reply-To: <1370877184-19409-1-git-send-email-y> (y.'s message of "Mon, 10
-	Jun 2013 17:13:03 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 10 Jun 2013 17:20:03 +0200 (CEST)
+	id S1752473Ab3FJP17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 11:27:59 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5AFRrGN016477
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 10 Jun 2013 17:27:53 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5AFRsxZ016199;
+	Mon, 10 Jun 2013 17:27:54 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5AFRsxP012398;
+	Mon, 10 Jun 2013 17:27:54 +0200
+Received: (from garciagj@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id r5AFRs59012397;
+	Mon, 10 Jun 2013 17:27:54 +0200
+X-Mailer: git-send-email 1.7.8
+In-Reply-To: <1370878068-7643-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 10 Jun 2013 17:27:53 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227303>
 
-y@ensimag.imag.fr writes:
+Some people often run 'git status -b'.
+The config variable status.branch allows to set it by default.
 
-> To: y@ensimag.imag.fr
+Signed-off-by: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+Signed-off-by: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+---
 
-Common mistake, but you're not supposed to answer "y" when you're
-prompted for an email ;-).
+Changes since v2:
+ -removal of double quotes in test
 
-set sendemail.from to avoid this.
+ Documentation/config.txt |    4 ++++
+ builtin/commit.c         |    4 ++++
+ t/t7508-status.sh        |   27 +++++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 0 deletions(-)
 
-> +test_expect_success '"Setup of environment of test"' '
-
-Same problem as v2.
-
-> +test_expect_success '"Back to environment of test by default"' '
-> +	git config status.showUntrackedFiles yes
-
-Same.
-
-Probably something went wrong during your rebase.
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1983bf7..ecdcd6d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2070,6 +2070,10 @@ status.short::
+ 	Set to true to enable --short by default in linkgit:git-status[1].
+ 	The option --no-short takes precedence over this variable.
+ 
++status.branch::
++	Set to true to enable --branch by default in linkgit:git-status[1].
++	The option --no-branch takes precedence over this variable.
++
+ status.showUntrackedFiles::
+ 	By default, linkgit:git-status[1] and linkgit:git-commit[1] show
+ 	files which are not currently tracked by Git. Directories which
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 287f1cb..f2b5d44 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1117,6 +1117,10 @@ static int git_status_config(const char *k, const char *v, void *cb)
+ 			status_format = STATUS_FORMAT_SHORT;
+ 		return 0;
+ 	}
++	if (!strcmp(k, "status.branch")) {
++		s->show_branch = git_config_bool(k, v);
++		return 0;
++	}
+ 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
+ 		s->use_color = git_config_colorbool(k, v);
+ 		return 0;
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index d99ca9f..5e6df95 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -1366,6 +1366,33 @@ test_expect_success '"status.short=false" weaker than "-s"' '
+ 	test_cmp actual expected_short
+ '
+ 
++test_expect_success '"status.branch=true" same as "-b"' '
++	git -c status.branch=true status -s >actual &&
++	git status -sb >expected_branch &&
++	test_cmp actual expected_branch
++'
++
++test_expect_success '"status.branch=true" different from "--no-branch"' '
++	git -c status.branch=true status -s >actual &&
++	git status -s --no-branch  >expected_nobranch &&
++	test_must_fail test_cmp actual expected_nobranch
++'
++
++test_expect_success '"status.branch=true" weaker than "--no-branch"' '
++	git -c status.branch=true status -s --no-branch >actual &&
++	test_cmp actual expected_nobranch
++'
++
++test_expect_success '"status.branch=false" same as "--no-branch"' '
++	git -c status.branch=false status -s >actual &&
++	test_cmp actual expected_nobranch
++'
++
++test_expect_success '"status.branch=false" weaker than "-b"' '
++	git -c status.branch=false status -sb >actual &&
++	test_cmp actual expected_branch
++'
++
+ test_expect_success 'Restore default test environment' '
+ 	git config --unset status.showUntrackedFiles
+ '
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.8
