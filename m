@@ -1,62 +1,142 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 1/2] rm: better error message on failure for multiple  files
-Date: Mon, 10 Jun 2013 17:08:22 +0200
-Message-ID: <vpqobbef1g9.fsf@anie.imag.fr>
-References: <1370874127-4326-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
-	<vpqtxl6ghf5.fsf@anie.imag.fr>
-	<580989b4b95a7302a42c7f25024c3375@ensibm.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-	<git@vger.kernel.org>, <gitster@pobox.com>,
+From: y@ensimag.imag.fr
+Subject: v3 [PATCH 1/2] status: introduce status.short to enable --short by default
+Date: Mon, 10 Jun 2013 17:13:03 +0200
+Message-ID: <36606.9748219617$1370877207@news.gmane.org>
+References: <y>
+Cc: gitster@pobox.com,
 	Jorge Juan Garcia Garcia 
-	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
-To: Mathieu =?iso-8859-1?Q?Li=E9nard--Mayor?= 
-	<mathieu.lienard--mayor@ensimag.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 10 17:08:49 2013
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 10 17:13:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um3iC-0003Nn-BP
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 17:08:48 +0200
+	id 1Um3mZ-0006EC-M1
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 17:13:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753009Ab3FJPIi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jun 2013 11:08:38 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:51398 "EHLO rominette.imag.fr"
+	id S1752084Ab3FJPNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 11:13:16 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:47743 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751899Ab3FJPIh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 11:08:37 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5AF8LvK024706
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 10 Jun 2013 17:08:21 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Um3hn-0003De-1v; Mon, 10 Jun 2013 17:08:23 +0200
-In-Reply-To: <580989b4b95a7302a42c7f25024c3375@ensibm.imag.fr> ("Mathieu
-	\=\?iso-8859-1\?Q\?Li\=E9nard--Mayor\=22's\?\= message of "Mon, 10 Jun 2013
- 16:57:00 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 10 Jun 2013 17:08:24 +0200 (CEST)
+	id S1751308Ab3FJPNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 11:13:15 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5AFD40c025918
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 10 Jun 2013 17:13:04 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5AFD6K2016062;
+	Mon, 10 Jun 2013 17:13:06 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5AFD6a6007079;
+	Mon, 10 Jun 2013 17:13:06 +0200
+Received: (from garciagj@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id r5AFD6Vs007078;
+	Mon, 10 Jun 2013 17:13:06 +0200
+X-Mailer: git-send-email 1.7.8
+In-Reply-To: <y>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 10 Jun 2013 17:13:04 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227300>
 
-Mathieu Li=E9nard--Mayor <mathieu.lienard--mayor@ensimag.fr> writes:
+From: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
 
-> Well the current code is only using errs=3Derror(...), using the same
-> variable errs over and over, no matter how many times it loops.
-> That's why i implemented it similarly.
+Some people always run 'git status -s'.
+The configuration variable status.short allows to set it by default.
 
-OK, consistency is a good argument then.
+Signed-off-by: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+Signed-off-by: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+---
+ Changes to be commented:
+- Cleaning test
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+ Documentation/config.txt |    4 ++++
+ builtin/commit.c         |    5 +++++
+ t/t7508-status.sh        |   35 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 44 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 6e53fc5..1983bf7 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2066,6 +2066,10 @@ status.relativePaths::
+ 	relative to the repository root (this was the default for Git
+ 	prior to v1.5.4).
+ 
++status.short::
++	Set to true to enable --short by default in linkgit:git-status[1].
++	The option --no-short takes precedence over this variable.
++
+ status.showUntrackedFiles::
+ 	By default, linkgit:git-status[1] and linkgit:git-commit[1] show
+ 	files which are not currently tracked by Git. Directories which
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 1621dfc..287f1cb 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1112,6 +1112,11 @@ static int git_status_config(const char *k, const char *v, void *cb)
+ 			s->submodule_summary = -1;
+ 		return 0;
+ 	}
++	if (!strcmp(k, "status.short")) {
++		if (git_config_bool(k, v))
++			status_format = STATUS_FORMAT_SHORT;
++		return 0;
++	}
+ 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
+ 		s->use_color = git_config_colorbool(k, v);
+ 		return 0;
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index e2ffdac..9a07f15 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -1335,4 +1335,39 @@ test_expect_failure '.git/config ignore=all suppresses submodule summary' '
+ 	git config -f .gitmodules  --remove-section submodule.subname
+ '
+ 
++test_expect_success '"Setup of environment of test"' '
++	git config status.showUntrackedFiles no
++'
++
++test_expect_success '"status.short=true" same as "-s"' '
++	git -c status.short=true status >actual &&
++	git status -s >expected_short &&
++	test_cmp actual expected_short
++'
++
++test_expect_success '"status.short=true" different from "--no-short"' '
++	git status --no-short >expected_noshort &&
++	test_must_fail test_cmp actual expected_noshort
++'
++
++test_expect_success '"status.short=true" weaker than "--no-short"' '
++	git -c status.short=true status --no-short >actual &&
++	test_cmp actual expected_noshort
++'
++
++test_expect_success '"status.short=false" same as "--no-short"' '
++	git -c status.short=false status >actual &&
++	git status -s >expected_short &&
++	test_cmp actual expected_noshort
++'
++
++test_expect_success '"status.short=false" weaker than "-s"' '
++	git -c status.short=false status -s >actual &&
++	test_cmp actual expected_short
++'
++
++test_expect_success '"Back to environment of test by default"' '
++	git config status.showUntrackedFiles yes
++'
++
+ test_done
+-- 
+1.7.8
