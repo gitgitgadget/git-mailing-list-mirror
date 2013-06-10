@@ -1,73 +1,98 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 22/28] git-remote-mediawiki: Modify strings for a better coding-style
-Date: Mon, 10 Jun 2013 10:37:48 +0200
-Message-ID: <vpqk3m2qs2r.fsf@anie.imag.fr>
-References: <1370816573-3808-1-git-send-email-celestin.matte@ensimag.fr>
-	<1370816573-3808-23-git-send-email-celestin.matte@ensimag.fr>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/4] push: make upstream, simple work with pushdefault
+Date: Mon, 10 Jun 2013 14:13:45 +0530
+Message-ID: <CALkWK0mesZay8Cpi6yTvhUG=136=9JLyFUZXm8t_fMOrY0F62Q@mail.gmail.com>
+References: <1370798000-2358-1-git-send-email-artagnon@gmail.com>
+ <1370798000-2358-3-git-send-email-artagnon@gmail.com> <7vip1moq3k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, benoit.person@ensimag.fr
-To: =?iso-8859-1?Q?C=E9lestin?= Matte <celestin.matte@ensimag.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 10 10:37:58 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Leandro Lucarella <leandro.lucarella@sociomantic.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 10 10:44:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ulxby-00006D-H5
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 10:37:58 +0200
+	id 1UlxiK-0005D5-Je
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 10:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752641Ab3FJIhy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jun 2013 04:37:54 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:47122 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751971Ab3FJIhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 04:37:53 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5A8blHf018394
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 10 Jun 2013 10:37:49 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Ulxbo-0008I4-J5; Mon, 10 Jun 2013 10:37:48 +0200
-In-Reply-To: <1370816573-3808-23-git-send-email-celestin.matte@ensimag.fr>
-	(=?iso-8859-1?Q?=22C=E9lestin?= Matte"'s message of "Mon, 10 Jun 2013
- 00:22:47 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 10 Jun 2013 10:37:50 +0200 (CEST)
+	id S1752588Ab3FJIo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 04:44:28 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:36298 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752577Ab3FJIo1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 04:44:27 -0400
+Received: by mail-ie0-f175.google.com with SMTP id a13so2716535iee.20
+        for <git@vger.kernel.org>; Mon, 10 Jun 2013 01:44:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=J6T8j9Tf257iJCdi3DXPet47LBMdIFMH/WLBIPhfAnY=;
+        b=UaTB8SH9qmMkiUJns0trYAx1e8J+t2j1wef13FP9QPYX3UE7vJyGPrmxOk6nXh/DgR
+         hZYON45pjdJaFINoudE3TZWPzZzt0ukN+iS2L8BKGCbC4tCqjK1JXlaMER2TgNtd3TAb
+         11GwYZxA72gnyrK2jNggoN/L6oPhzfCSVZ2oJ1WRTd5kLmJRDEkO6ZbytRmT22i6Fnd5
+         Oy5OXSXb5K2I6XA0OBHZsX6/kGf1FLZx87oSO3R9e/Kgr9CNan2dJFcrejQKTr2YfYrN
+         GsvsjdtlsNnqCAxfn1mgAV8+YMcXdFZ/5j/4jPeZDg+Q/vhr4phaWgw+UHauAwjok2ij
+         Cz6A==
+X-Received: by 10.50.25.194 with SMTP id e2mr3515035igg.111.1370853867160;
+ Mon, 10 Jun 2013 01:44:27 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Mon, 10 Jun 2013 01:43:45 -0700 (PDT)
+In-Reply-To: <7vip1moq3k.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227263>
 
-C=E9lestin Matte <celestin.matte@ensimag.fr> writes:
+Junio C Hamano wrote:
+> I am not sure what you mean by artificial.
 
-> @@ -1285,8 +1285,7 @@ sub get_mw_namespace_id {
->  		# Look at configuration file, if the record for that namespace is
->  		# already cached. Namespaces are stored in form:
->  		# "Name_of_namespace:Id_namespace", ex.: "File:6".
-> -		my @temp =3D split(/\n/, run_git("config --get-all remote."
-> -						. $remotename .".namespaceCache"));
-> +		my @temp =3D split(/\n/, run_git("config --get-all remote.${remote=
-name}.namespaceCache"));
+By artificial, I mean that the precondition is absolutely unnecessary
+for the code following it to work.  The precondition was introduced in
+a separate commit, specifically denying one usecase because the author
+(you) thought that made sense.
 
-I tend to prefer the former, as it avoids long lines (> 80 columns)
+> If you have push.default set upstream or simple, then a push run
+> while on the branch 'foo' will figure out what happens when you do a
+> fetch by looking at 'branch.foo.merge' to find the branch we are set
+> to integrate from 'branch.foo.remote' remote.  The simple further
+> says that branch name must be the same as 'foo'.
 
-> @@ -1339,8 +1338,7 @@ sub get_mw_namespace_id {
-> =20
->  	# Store explicitely requested namespaces on disk
->  	if (!exists $cached_mw_namespace_id{$name}) {
-> -		run_git("config --add remote.". $remotename
-> -			.".namespaceCache \"". $name .":". $store_id ."\"");
-> +		run_git(qq(config --add remote.${remotename}.namespaceCache "${nam=
-e}:${store_id}"));
+I understand this perfectly well, as evidenced by the tests I've
+written out in 4/4.
 
-Same.
+> And that is what setup_push_UPSTREAM() is designed to do.  Rejecting
+> a call that breaks the precondition is perfectly the right thing to
+> do: if you set to push to "upstream" and if you are trying to push
+> to a different remote, for example.
+>
+> The triangle topic changed the precondition without updating the
+> logic to check it, which was the bug, not the original check.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Did I claim otherwise?  :)
+The topic is about fixing a bug introduced by rr/triangle.
+
+> I actually am OK with 'upstream' that rejects triangular, while
+> making 'simple' do something different [*1*].
+
+Okay, so you haven't outlined a solution either.  Like I said in the
+cover-letter, I've spent hours breaking my head and can't figure out a
+better solution.  The bigger problem is that upstream/ simple were
+designed with only central workflows in mind.  How do we deal with it
+now?
+
+Yes, upstream/ simple work only when @{u} resolves, and I haven't
+changed this (because we don't have a well-defined meaning for what
+branch.<name>.merge without a branch.<name>.remote means).  My
+argument is very simple: no push.default mode should not dictate the
+push destination; only the push refspec.  What makes sense to the user
+is an upstream/ simple that works as expected with pushdefault: do the
+tests I've outlined in 4/4 not make sense?  *scratches head*
+
+I don't understand why upstream/ simple should _not_ push to a
+different destination from the one being merged from.  I'll repeat:
+push source/ destination is orthogonal to push refspec, and
+push.default modes dictate the refspec.
