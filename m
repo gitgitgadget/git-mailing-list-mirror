@@ -1,81 +1,63 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 00/28] Follow perlcritic's recommandations
-Date: Mon, 10 Jun 2013 10:46:40 +0200
-Message-ID: <vpq7gi2qrnz.fsf@anie.imag.fr>
-References: <1370816573-3808-1-git-send-email-celestin.matte@ensimag.fr>
-	<CAPig+cR1=32TwatmTdVBDnkpkhwtUNyKL_Z9f=V_FPtt_Y-xiA@mail.gmail.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v4 0/7] git send-email suppress-cc=self fixes
+Date: Mon, 10 Jun 2013 11:59:33 +0300
+Message-ID: <20130610085933.GA2233@redhat.com>
+References: <1370455737-29986-1-git-send-email-mst@redhat.com>
+ <7v8v2o1ho7.fsf@alter.siamese.dyndns.org>
+ <20130605201423.GB31143@redhat.com>
+ <7vy5ain9yg.fsf@alter.siamese.dyndns.org>
+ <20130610065324.GA26501@redhat.com>
+ <20130610072931.GH22905@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?C=E9lestin?= Matte <celestin.matte@ensimag.fr>,
-	Git List <git@vger.kernel.org>, benoit.person@ensimag.fr
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 10:46:51 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Mon Jun 10 10:59:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlxkY-00071D-TZ
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 10:46:51 +0200
+	id 1UlxwR-0007Ay-QQ
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 10:59:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752616Ab3FJIqr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jun 2013 04:46:47 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:47377 "EHLO shiva.imag.fr"
+	id S1752656Ab3FJI7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 04:59:03 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:13974 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752128Ab3FJIqq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 04:46:46 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5A8kdkD020472
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 10 Jun 2013 10:46:40 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UlxkO-0008Ur-Q5; Mon, 10 Jun 2013 10:46:40 +0200
-In-Reply-To: <CAPig+cR1=32TwatmTdVBDnkpkhwtUNyKL_Z9f=V_FPtt_Y-xiA@mail.gmail.com>
-	(Eric Sunshine's message of "Sun, 9 Jun 2013 21:09:52 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 10 Jun 2013 10:46:41 +0200 (CEST)
+	id S1752480Ab3FJI7B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 04:59:01 -0400
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r5A8wvIM002810
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Mon, 10 Jun 2013 04:58:57 -0400
+Received: from redhat.com (vpn1-6-65.ams2.redhat.com [10.36.6.65])
+	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id r5A8wsoT010356;
+	Mon, 10 Jun 2013 04:58:55 -0400
+Content-Disposition: inline
+In-Reply-To: <20130610072931.GH22905@serenity.lan>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227265>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Mon, Jun 10, 2013 at 08:29:31AM +0100, John Keeping wrote:
+> On Mon, Jun 10, 2013 at 09:53:24AM +0300, Michael S. Tsirkin wrote:
+> > I vaguely remember there was some way to say
+> > "head of the remote I am tracking" - but I could not find it.
+> > Where are all the tricks like foo^{} documented?
+> 
+> gitrevisions(7) is what you're looking for here.
 
-> On Sun, Jun 9, 2013 at 6:22 PM, C=E9lestin Matte
-> <celestin.matte@ensimag.fr> wrote:
->> Changes with v2:
->> - Remove patch [02/22] about using the Readonly module
->> - Split commit [07/22] into 5 different ones
->
-> This was easier to review after being split. Thanks.
->
->> - Split commit [14/22] into 2 different ones
->> - Patch [17/22] was *not* split: tell me if it is necessary
->
-> [now patch 22/28]
->
-> You, Matthieu, and Junio should decide, but I again found it
-> time-consuming and onerous to review with all the changes mashed
-> together.
+I see. And git(1) actually points to it.
+Thanks!
 
-I agree that it would have been better to split the patches in v1, but
-now that we've already spent time reviewing it, it seems unecessary to
-spend more time splitting and re-reviewing.
-
-I went through the series once more, all my remarks are minor. I'm OK
-with the series as it is (i.e. perhaps it's time to say "stop the
-bikeshedding and start coding real stuff" ;-) ). As a reminder: Celesti=
-n
-is in a school project that ends in a week. The goal is both to be
-productive and to learn stuff.
-
-In any case, thanks a lot for your review, Eric.
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> In this case I think you want '@{upstream}' or its short form '@{u}'.
+> 
+> > I tried fgrep '{}' Documentation/*txt and it only returned
+> > git-show-ref.txt which isn't really informative ...
+> 
+> '{' and '}' need to be escaped in AsciiDoc so you have to grep for
+> '\\{\\}'.
