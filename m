@@ -1,48 +1,48 @@
 From: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
 Subject: [PATCH v3 1/2]  rm: better error message on failure for multiple files
-Date: Mon, 10 Jun 2013 17:59:40 +0200
-Message-ID: <1370879981-18937-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Date: Mon, 10 Jun 2013 18:05:13 +0200
+Message-ID: <1370880314-4825-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
 Cc: gitster@pobox.com,
 	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
 	Jorge Juan Garcia Garcia 
 	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 10 18:05:23 2013
+X-From: git-owner@vger.kernel.org Mon Jun 10 18:06:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um4ax-0002Li-Bk
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 18:05:23 +0200
+	id 1Um4bp-0002yj-Hu
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 18:06:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752587Ab3FJQFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 12:05:17 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:34232 "EHLO shiva.imag.fr"
+	id S1752922Ab3FJQGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 12:06:13 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:50874 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752525Ab3FJQFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 12:05:16 -0400
+	id S1752600Ab3FJQGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 12:06:13 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5AFxhW1001783
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5AG5EOC002780
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 10 Jun 2013 17:59:43 +0200
+	Mon, 10 Jun 2013 18:05:14 +0200
 Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5AFxitk016479;
-	Mon, 10 Jun 2013 17:59:44 +0200
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5AG5GHK016570;
+	Mon, 10 Jun 2013 18:05:16 +0200
 Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5AFxiPq028611;
-	Mon, 10 Jun 2013 17:59:44 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5AG5G8s006668;
+	Mon, 10 Jun 2013 18:05:16 +0200
 Received: (from lienardm@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id r5AFxi5T028609;
-	Mon, 10 Jun 2013 17:59:44 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id r5AG5GhT006667;
+	Mon, 10 Jun 2013 18:05:16 +0200
 X-Mailer: git-send-email 1.7.8
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 10 Jun 2013 17:59:43 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 10 Jun 2013 18:05:14 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227310>
 
 When 'git rm' fails, it now displays a single message
 with the list of files involved, instead of displaying
@@ -68,7 +68,7 @@ Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Changes since v2:
  -couple typo in commit message and in code
  -rename and redefinition of the intermediate function
- -move the 4 "if(....nr)" inside the function
+ -move if(....nr) inside the function
 
  builtin/rm.c  |   71 +++++++++++++++++++++++++++++++++++++++++++++-----------
  t/t3600-rm.sh |   67 +++++++++++++++++++++++++++++++++++++++++++++++++++++
