@@ -1,91 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Mon, 10 Jun 2013 12:01:02 -0700
-Message-ID: <20130610190102.GF12924@google.com>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
- <51B5D9A1.1080900@ensimag.fr>
- <vpqhah6hxjm.fsf@anie.imag.fr>
- <robbat2-20130610T162316-152176477Z@orbis-terrarum.net>
- <7vzjuxj21b.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 22/28] git-remote-mediawiki: Modify strings for a better coding-style
+Date: Mon, 10 Jun 2013 12:01:11 -0700
+Message-ID: <7vsj0phjt4.fsf@alter.siamese.dyndns.org>
+References: <1370816573-3808-1-git-send-email-celestin.matte@ensimag.fr>
+	<1370816573-3808-23-git-send-email-celestin.matte@ensimag.fr>
+	<vpqk3m2qs2r.fsf@anie.imag.fr>
+	<7vhah5kje8.fsf@alter.siamese.dyndns.org>
+	<CAETqRCh2OLq=gj-fEGrO1vyQQfTJNAFp_z_Bf0sirbBgRKPrdw@mail.gmail.com>
+	<vpqa9mxeuvf.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 21:01:19 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?Q?Beno=C3=AEt?= Person <benoit.person@ensimag.fr>,
+	=?utf-8?Q?C=C3=A9lestin?= Matte <celestin.matte@ensimag.fr>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 10 21:01:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um7L8-0005cE-26
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 21:01:14 +0200
+	id 1Um7LO-0005oD-FU
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 21:01:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754480Ab3FJTBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 15:01:09 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:34303 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754471Ab3FJTBG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 15:01:06 -0400
-Received: by mail-pa0-f53.google.com with SMTP id tj12so2925460pac.12
-        for <git@vger.kernel.org>; Mon, 10 Jun 2013 12:01:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=nZP37iJearurgkrMGvfM5W4O3a7EW+lrK5CpWZdj47A=;
-        b=m7HpONwmWhdbvi9GSsBhVOwflbI54aWaRMOww+DnMfeoNGJW14kJdJk9BpFBuDyKWm
-         8UeWl3alIozhMeN1YlpqwlgZkcx1Z6m1xWKIzYopOpBuOH/OjUPCntsCFapyI3PGl9i8
-         b7FPg8AQfpKTlET56qjeVAAnLMu4E5E9E8DjYx5Ew5+i6kL4IgI1voG8be/69X5pOeeZ
-         2FfsdWWApwAv1auH5++pA7QBGvy9gq5YkSSGGJrG5adbgvw358/+t/SkYagxLJkHil73
-         mo+So2Cd21PdsMz14E73NXtU9+rMxCjAq8MwL2JI0+4rOIaD18whvVZasY56o0+fuVLq
-         OBpA==
-X-Received: by 10.68.245.170 with SMTP id xp10mr11309294pbc.41.1370890866343;
-        Mon, 10 Jun 2013 12:01:06 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id eq5sm11354068pbc.15.2013.06.10.12.01.04
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 10 Jun 2013 12:01:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vzjuxj21b.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754495Ab3FJTBS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jun 2013 15:01:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55012 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754487Ab3FJTBO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jun 2013 15:01:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 636C0271A6;
+	Mon, 10 Jun 2013 19:01:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=XkMFsPmBaDlW
+	hRDJoGu+60m7aV4=; b=OoeiU7jwrLBAiEBICHeTm7BQy/5m+lBMF1f1yhNL9n6t
+	l/u1qA8IEXB8bIrNwQNZ0ypEo74Wl/vlHegtxdtwEUU66QWOSin422aNF6Xd2WCa
+	Ex4U6cE3lUEtsGPUTR/PGidaXORsfmZESe+f69gAyro6LYg/tQRdrSIBrRKKgjc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Wolt1s
+	Iu8OruaxPE0LsHFYm199lKEFAj4sWkN5V/cC+V/28P0E3J3jcNLvvqKLxYpQTwfk
+	V30bcxTXWPHgbMAObpbvxk+desTI/hI+aEGd1rKqwZe3+8yNU+qHGQIqTQPZOuTJ
+	8eH51XQJ5eQTHj1cfhC0UsV0MaztVmu/3UihY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59040271A5;
+	Mon, 10 Jun 2013 19:01:14 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C55FA271A2;
+	Mon, 10 Jun 2013 19:01:12 +0000 (UTC)
+In-Reply-To: <vpqa9mxeuvf.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	10 Jun 2013 19:30:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1E819F3C-D200-11E2-AD99-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227360>
 
-Junio C Hamano wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
->     0. You do not take offense, no matter what.  If someone attacks
->     you irrationally, you do not respond.  This is a public mailing
->     list, and we are all rational people: the attacker has already
->     humiliated herself in public, and everyone can see that.
-[...]
-> I suspect it mostly has to do with the desire to make sure that
-> bystanders do not get an impression that the one who speaks last
-> gives the conclusion to the discussion, so stating "The attacker
-> being the one who speaks last in the discussion does not mean the
-> conclusion is his." explicitly might be one way to make it more
-> practically useful by alleviating the urge to respond, instead of
-> saying "no matter what".
+> Please, don't top-post. Quote the part of the message you're replying
+> to, and reply below.
 >
-> I dunno.
+> Beno=C3=AEt Person <benoit.person@ensimag.fr> writes:
+>
+>> Well, I think next step would be to replace all those calls with
+>> Git.pm `command`, `command_oneline` and `config``which take an array
+>> of arguments after the "command". In the preview tool we use those b=
+ut
+>> I don't know if we will find the time to clean that up too in
+>> git-remote-mediawiki :) .
+>
+> Agreed. run_git was written to avoid having to depend on Git.pm, but =
+now
+> that we do, we should do it the Git.pm way (although this is not a
+> high priority for now).
+>
+>> Don't know though if it's better to mix that with this serie which i=
+s
+>> mainly based on what perlcritic returns.
+>
+> If you go this way, I'd rather have it on top (i.e. a separate patch
+> series).
 
-Actually my motivation is worse than that in at least one of the cases
-I am assuming Ram is referring to.
-
-I don't think most bystanders would misunderstand if I let a certain
-person alone instead of responding and saying "You are being
-unproductive.  Please stop."  But that certain person seems to
-misunderstand, whether I say that or not.  So when I lose patience I
-say so, knowing that it will spark a discussion with others, knowing
-that that discussion needs to happen and that if the problem is not
-addressed I will continue to lose motivation for regular work on-list.
-
-Is that an instance of taking offense and letting emotion overtake
-reason?  Is that against the rules?
-
-Jonathan
+Or not worry too much about it in the 3-week long school project.
+=46inish one that you started and then build on top.
