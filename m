@@ -1,94 +1,75 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] mingw: make mingw_signal return the correct handler
-Date: Mon, 10 Jun 2013 13:37:21 +0200
-Message-ID: <CABPQNSZYuXWCOXYD=v_0axsj95bPQdVznUcC9usnT=FU2-j6tQ@mail.gmail.com>
+Subject: Re: [PATCH] t0005: skip signal death exit code test on Windows
+Date: Mon, 10 Jun 2013 13:38:16 +0200
+Message-ID: <CABPQNSbcAZZ_s7ow4HJ5HenSGSrHLUojqVygokgkQOgjLeDQEQ@mail.gmail.com>
 References: <7vtxld30f2.fsf@alter.siamese.dyndns.org> <51AEE1C3.9020507@viscovery.net>
  <20130605071206.GC14427@sigill.intra.peff.net> <51B02D81.3000700@viscovery.net>
  <20130606063754.GA20050@sigill.intra.peff.net> <CAMP44s2L4EOG7aEOR8gqXeaHm7SeuPg=GQAWX3PByKKbtTHnwQ@mail.gmail.com>
  <20130606064409.GA20334@sigill.intra.peff.net> <7vy5anyx1w.fsf@alter.siamese.dyndns.org>
  <20130606174032.GB32174@sigill.intra.peff.net> <CABPQNSYLmFWkdgph6W7MwaSTe+zrU0AaJpj_v9z=cmvWu64HNA@mail.gmail.com>
- <51B1B4DF.90705@viscovery.net> <CABPQNSYE=Mvrmc44dZmKnB14KLh4A=HxWo2-xgnJRyj1Q+BJLg@mail.gmail.com>
- <51B1CFD4.3030908@viscovery.net> <CABPQNSasTdkmpeGWb7_wZK2cQhiOyF7bX5ObcBg5kHm0KBGS5w@mail.gmail.com>
- <51B1DB2A.2060306@viscovery.net> <CABPQNSa1-dna_b+q-U6jgYy7p6zeiT7dAwu1Mw47QAezSNYKqA@mail.gmail.com>
- <51B568A1.9090409@viscovery.net>
+ <20130609001845.GC29964@sigill.intra.peff.net> <7vk3m3owk2.fsf@alter.siamese.dyndns.org>
+ <51B5648B.7020703@viscovery.net>
 Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
 	git@vger.kernel.org
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Jun 10 13:38:08 2013
+X-From: git-owner@vger.kernel.org Mon Jun 10 13:39:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um0QK-0001ri-1v
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 13:38:08 +0200
+	id 1Um0RB-0002Y2-2Y
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 13:39:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753257Ab3FJLiE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 07:38:04 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:36431 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751843Ab3FJLiC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 07:38:02 -0400
-Received: by mail-ie0-f181.google.com with SMTP id x14so15497534ief.26
-        for <git@vger.kernel.org>; Mon, 10 Jun 2013 04:38:01 -0700 (PDT)
+	id S1753367Ab3FJLi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 07:38:57 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:36131 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753305Ab3FJLi4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 07:38:56 -0400
+Received: by mail-ie0-f178.google.com with SMTP id at1so11806762iec.23
+        for <git@vger.kernel.org>; Mon, 10 Jun 2013 04:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:reply-to:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=SMSXN50l9dP6up8KYAkFQFCdZiI1Do3bPAICs6Uqm1Q=;
-        b=LysEu5J/qb/ygdyyOmDvcNOkrCotUrVTzBOuqNXMnDtAz1VSpJr5vEE2LIVAouvKcp
-         DUGqkkaxU/CxlZEs5WdM5VO567O8EwThc+nhZDn76tlnCcuH3Bbyei7Gu/b/XWn9H0lk
-         rH5P/6+LipjInpCazL3EZr5ObXrQLy2lA+j4v6qnfFBMA+yQolaZIthqRJpMRmxqIp+A
-         E2tIahZ/43w5PraNKCdXxdUZaw1nIbheLDEOURbt3B8pzZEpZwvvGL8k+RBASLeju1Bg
-         WdYwkP6TbFm/KJwYYRTi5DqgqHt59MEMhtCy00/8bB9MGpSvcxpfQUkKX5xXn4vmReBL
-         aAQA==
-X-Received: by 10.42.148.5 with SMTP id p5mr460130icv.19.1370864281784; Mon,
- 10 Jun 2013 04:38:01 -0700 (PDT)
-Received: by 10.64.23.199 with HTTP; Mon, 10 Jun 2013 04:37:21 -0700 (PDT)
-In-Reply-To: <51B568A1.9090409@viscovery.net>
+        bh=+njbTPP+mQRCj+voa8+H834Z/90u2wl2v/ochYDPDSs=;
+        b=FCxygyXMD7S25MHMZpOoCMqvhX+IZjo3iD7kD92JSDojvmygr7HWbsyOCr6anWdsH6
+         dXsaBb3dHih1ObdOI9hCYGPWrzzKiL7qDfovmhBvgXs91PvRRDZMhAWousRZ3W7R/BzL
+         XYRM11p93tdte2to0GIF5Vi8fTuY4CQuNPC7V1zPBYZJchWvnp18cZdLBFz4B/8//Xcj
+         q5jIN2l7qCve6+OSs0G1GxAmQxvmJbbwK1uG22brHCHAbm74UUOcxE5U8P53v7WHQ31P
+         LfQHsPtaLp3IdTUmrAjyjPRA0ZWNVP/N1Y5EOyx4FTF6DLCXz6nZcruBN39hJEun/cOn
+         WRPQ==
+X-Received: by 10.42.27.146 with SMTP id j18mr3639622icc.54.1370864336498;
+ Mon, 10 Jun 2013 04:38:56 -0700 (PDT)
+Received: by 10.64.23.199 with HTTP; Mon, 10 Jun 2013 04:38:16 -0700 (PDT)
+In-Reply-To: <51B5648B.7020703@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227274>
 
-On Mon, Jun 10, 2013 at 7:48 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> From: Erik Faye-Lund <kusmabite@gmail.com>
->
-> Returning the SIGALRM handler for SIGINT is not very useful.
->
-> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
-> Am 6/7/2013 16:20, schrieb Erik Faye-Lund:
->> On Fri, Jun 7, 2013 at 3:07 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->>> BTW, isn't mingw_signal() bogus in that it returns the SIGALRM handler
->>> even if a SIGINT handler is installed?
+On Mon, Jun 10, 2013 at 7:30 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Am 6/9/2013 22:31, schrieb Junio C Hamano:
+>> Jeff King <peff@peff.net> writes:
 >>
->> Yep, that's a bug. Thanks for noticing.
->
-> This is your patch to address it.
->
->> I've pushed out a branch here that tries to address these issues, but
->> I haven't had time to test them. I'll post the series when I have. In
->> the mean time:
+>>> I'm a little negative on handling just SIGTERM. That would make the test
+>>> pass, but does it really address the overall issue? To me, the
+>>> usefulness is having exit values with consistent meanings.
 >>
->> https://github.com/kusma/git/tree/win32-signal-raise
+>> Yes.  Unless the goal is to give Windows port pratically the same
+>> signal semantics as ports on other platforms, I do not think special
+>> casing SIGTERM (unless it is a very common signal on Windows and
+>> others are unlikely to be useful) buys us much.
 >
-> Concerning the other two patches:
+> I'm thinking the same. And, no, SIGTERM is not very common on Windows.
 >
-> * SIGINT: perhaps handle only the SIG_DFL case (for the exit code) and
-> forward all other cases to MSVCRT?
 
-Perhaps. I'll have to think a bit about it, but it might very well be
-the sanest approach, as long as it doesn't break git_terminal_prompt
-(which was the reason for the change in the first place). I can't of
-the top of my head understand why it should, though.
-
-> * SIGTERM: it papers only over a general issue and should be dropped.
-
-Fair enough.
+I have no strong feelings on SIGTERM, but my knee-jerk reaction is the
+same. AFAIK, the only issue we've seen with it has been this one,
+which is synthetic.
