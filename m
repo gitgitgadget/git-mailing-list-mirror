@@ -1,107 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 0/7] git send-email suppress-cc=self fixes
-Date: Mon, 10 Jun 2013 00:52:44 -0700
-Message-ID: <7vk3m2l7w3.fsf@alter.siamese.dyndns.org>
-References: <1370455737-29986-1-git-send-email-mst@redhat.com>
-	<7v8v2o1ho7.fsf@alter.siamese.dyndns.org>
-	<20130605201423.GB31143@redhat.com>
-	<7vy5ain9yg.fsf@alter.siamese.dyndns.org>
-	<20130610065324.GA26501@redhat.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/2] rm: introduce advice.rmHints to shorten messages
+Date: Mon, 10 Jun 2013 13:25:21 +0530
+Message-ID: <CALkWK0n+yF-kRahgsQQuT-+QiT5gy=J_Bdati=uooiW0djQrgw@mail.gmail.com>
+References: <1370680434-2709-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+ <1370680434-2709-2-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+ <CALkWK0==9aN1wVoSXENvTJHOT8bd2SYrEFxrmTdhzMxB3mHPCQ@mail.gmail.com> <19969d9996306bf0e7ac6351d4ad435d@ensibm.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 09:52:54 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	git@vger.kernel.org, gitster@pobox.com,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.garcia-Garcia@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: =?UTF-8?Q?Mathieu_Li=C3=A9nard=2D=2DMayor?= 
+	<mathieu.lienard--mayor@ensimag.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 10 09:56:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UlwuJ-00019I-Ma
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 09:52:52 +0200
+	id 1UlwxU-0003LL-GV
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 09:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751708Ab3FJHws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 03:52:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54348 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751318Ab3FJHwr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 03:52:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9F1026084;
-	Mon, 10 Jun 2013 07:52:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3KTfkU04P9yMYipK4d1B/dzCOac=; b=MfXHUL
-	mRS3NP6Qas/T5Hdf37OHubhwvfFfdTikBmx3zmjNtCHH06NJYbyucGKjiyIU23Px
-	h13cAFj9lJjwXMMSYPhWRoGBSjBS5AvoSehQBq05xYOiAcrlX7o6D9kPWChv2JQR
-	LeiUcJQ9AEpqGq0s2FjdBA7ReCMkfKSAMedKg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DqWuY0xsbasaXgW3gqoE96FVeC8y+W6W
-	/qsv0hvR8NlNo0rYYM22oWZvaVgHCikuUvGIGO3WqOq/UnxrNAETQ52MDHODe8Sq
-	f7HR24TdZsFmE0Yq5iGQblf/mDZZgwqbaHnausk6w4+p7dqVXamw3J4NQmOr/7CV
-	N0hM20iogEI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9957326083;
-	Mon, 10 Jun 2013 07:52:46 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A794226081;
-	Mon, 10 Jun 2013 07:52:45 +0000 (UTC)
-In-Reply-To: <20130610065324.GA26501@redhat.com> (Michael S. Tsirkin's message
-	of "Mon, 10 Jun 2013 09:53:24 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BCCC6824-D1A2-11E2-B246-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751950Ab3FJH4D convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jun 2013 03:56:03 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:61240 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751910Ab3FJH4B convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jun 2013 03:56:01 -0400
+Received: by mail-ie0-f182.google.com with SMTP id s9so954582iec.27
+        for <git@vger.kernel.org>; Mon, 10 Jun 2013 00:56:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=NnzTOdIVWsvTVqZOTDVYRdNmamPytRpCD5n1PcPFNr8=;
+        b=A45kyhhImzNAMBU7KpcAxeS2k0u2Ufi0NCffxut8uOFHdcVgqFjei4BVu8mfRp2Seo
+         h8wp1nZ9gX2+8vDHfU/599bbsOpg9MjOmINuNN7kcyqFzIGoRYPRWD+L83qZaiK6xMKI
+         zJpsCTnXJpyk+f68T5Fn37vKw28DLafyrk00X+wsYHrUVe3V2cQjy+uAe9vZP8L5eK/4
+         untrIbC6XAxgJlyYHElQM9/24VFHaMF9Kpq7Bv1uxGcuMaBhlB8G6uDbWY9NUwV4uD6X
+         5JwRaKMZ4B/Zrw7ans2geE30NJg2Z+8u+1fvTAW2PHyz6AERUfiMBwpfmBs4zZNcsC6g
+         OHlg==
+X-Received: by 10.50.25.194 with SMTP id e2mr3453621igg.111.1370850961516;
+ Mon, 10 Jun 2013 00:56:01 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Mon, 10 Jun 2013 00:55:21 -0700 (PDT)
+In-Reply-To: <19969d9996306bf0e7ac6351d4ad435d@ensibm.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227255>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Mathieu Li=C3=A9nard--Mayor wrote:
+> I'm not so sure i understand. Do you mean rmHints should deactivate a=
+ddHints
+> aswell, or do you mean that since we're introducing rmHints it would =
+be
+> natural to introduce addHints ?
 
->> Not needed with recent "git format-patch -v4" option.
->
-> Unless I rerun with same vX :(
-> Would it make sense for it to check for vX existance and fail?
-> Same without -vX, when 000X exists ...
-> Could be an option.
+More the latter, but I'm tilting towards addRmHints (or something)
+which affects both add and rm hints.
 
-Oh, instead of exact -v$N, trigger it with "-v auto" or something?
-Sounds like a good addition.
+> Sorry about that, we'll work on it.
 
-And instead of ***BLURBHERE*** placeholder, text from old round
-could be copied as a new placeholder.  I do not offhand think that
-needs much thought about compatibility but maybe there are people
-who trained their editors or scripts to find the known placeholder
-string and edit it?  I dunno.  It certainly sounds like a sensible
-thing to do to carry as much information forward from the older
-round if/when we know which one corresponds to which.
-
-Discussions and patches welcome.
-
->> > 	git branch|fgrep '*'
->> > 	# Figure out on which branch I am, manually specify the correct upstream I'm tracking,
->> > 	# otherwise I get a ton of unrelated patches.
->> 
->> git-prompt with PS1 you do not need this either.
->
-> grep serves just as well but
-> I still need to copy it to the next line manually...
->
-> I vaguely remember there was some way to say
-> "head of the remote I am tracking" - but I could not find it.
-
-Do you mean @{upstream}?
-
-> Where are all the tricks like foo^{} documented?
-
-Documentation/revisions.txt?
-
-> Additionally, or alternatively, would it make sense for git format-patch
-> to format the diff against the tracking branch by default?
-
-Meaning "git format-patch @{u}" without saying anything about @{u}?
-I am not sure if we want to go that far, but it certainly is worth a
-thought.
+Nothing to be sorry about.  You're doing good work, and we're helping
+you make it even better :)
