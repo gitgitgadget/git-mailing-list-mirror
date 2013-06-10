@@ -1,66 +1,50 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 00/15] Towards a more awesome git branch
-Date: Mon, 10 Jun 2013 08:25:25 +0700
-Message-ID: <CACsJy8D8FoiVFT5cNbXyxeAngAUJ1X3AdQOGK41FVWyZyEaSKw@mail.gmail.com>
-References: <1370800474-8940-1-git-send-email-artagnon@gmail.com>
+Subject: I'm out
+Date: Mon, 10 Jun 2013 08:27:53 +0700
+Message-ID: <CACsJy8Bhik_GyK9ZCaqdkwS12axk72V5Ui_gdBiPgnaTbwb4Hw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 03:26:03 2013
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 10 03:28:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ulqrw-0001ae-JO
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 03:26:00 +0200
+	id 1UlquL-0002lQ-Ct
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 03:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751151Ab3FJBZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jun 2013 21:25:57 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:52865 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751008Ab3FJBZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jun 2013 21:25:56 -0400
-Received: by mail-ob0-f172.google.com with SMTP id wo10so9342491obc.3
-        for <git@vger.kernel.org>; Sun, 09 Jun 2013 18:25:56 -0700 (PDT)
+	id S1751228Ab3FJB2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jun 2013 21:28:25 -0400
+Received: from mail-oa0-f45.google.com ([209.85.219.45]:63490 "EHLO
+	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751012Ab3FJB2Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jun 2013 21:28:25 -0400
+Received: by mail-oa0-f45.google.com with SMTP id j6so5306266oag.18
+        for <git@vger.kernel.org>; Sun, 09 Jun 2013 18:28:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=IXND6PZedAjvYnDtN68dHTGq/pYzcS4PyJ3fuTtuhvo=;
-        b=rCnTcWEb1sYT6yXkrZPK1rf9AcMtAZx/VknIg1NEspvRBZfVRvEUVKZkYqr9BV5BOA
-         aVbFTDYKQcG+e71H9a9ZjhpETZ4WXcwbStnhV7syef97oOCPjA21pd+4G7DV7aiLG8Da
-         h3nLYjsZ+WIJY8wpdpmRpSecK7zgyLI1H75csMx+AV1ziJ6955aKTvnbyq0tmpg3nLMw
-         TK2LJu9355f0J4A/MZ16/KTHtfY2iQWVeeZm//4vgG0v/HEB8TIWCbUWi8EX91qNONQZ
-         Pz1f0PmxTBdHon1UutR9q2Ke29hJD0SZVttxxGZCNS7xpSjKB3v1wAqzFZkouLzLC6Jf
-         LJGw==
-X-Received: by 10.60.131.143 with SMTP id om15mr6163352oeb.19.1370827555906;
- Sun, 09 Jun 2013 18:25:55 -0700 (PDT)
-Received: by 10.76.76.69 with HTTP; Sun, 9 Jun 2013 18:25:25 -0700 (PDT)
-In-Reply-To: <1370800474-8940-1-git-send-email-artagnon@gmail.com>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=fivwQSjlVVlCEbui6lCTqz+bwz0FgtztReCkJNYlr5Q=;
+        b=h6e2ZqjeF466Jtekfb/P9OEqEchxYeUWe641rbNHwQLu44Cvn3o/Im7oLan2pqb0Jw
+         JL7TxlOQbI2lTjnR7UT5OfPe08S1gHoGN2vrvgMU1cmmleqBnU56GAslpH7EpOHCZmQ6
+         AXN9/5yEYfo7VPlYg2v9DAynGMCcO/mNYYx0p88uKPIXgOHW0X28jrI/D92FFihW/6oM
+         KNCgaCq4eT3Eq794yuG6TjO2SokxrdhXmTaC6GiEGGTGqdGvcvaYMUCFzgtoRS/1Vm4m
+         VWkQGTykUnf2791bQdp62dmwgWbSlG0i6+Jh/xLzGhvRY8YPzWQuJ2o3SJq5sbU7URbA
+         AhfQ==
+X-Received: by 10.182.79.106 with SMTP id i10mr6289395obx.59.1370827703807;
+ Sun, 09 Jun 2013 18:28:23 -0700 (PDT)
+Received: by 10.76.76.69 with HTTP; Sun, 9 Jun 2013 18:27:53 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227224>
 
-On Mon, Jun 10, 2013 at 12:54 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Hi,
->
-> This iteration contains some minor fixups (courtesy reviews by Eric
-> Sunshine and Junio), and some tests from Duy squashed in.
-
-I'm starting to think this is a half-baked solution. It hides
-problems, for example commit placeholders should produce empty string,
-not the literal placeholders. Doing that from a callback is really
-ugly. There's also the problem with sorting and quoting (both only
-work with for-each-ref atoms only). A better solution may be improving
-pretty.c to the point where it can more or less replace f-e-r's
---format. Even more, I think pretty engine should be easily added to
-cat-file (especially --batch), as a generic way to extract
-information. But for the reason I will send shortly, I will not work
-not work on this series or any others.
+I find the new atmosphere in the list uncomfortable to work with. I do
+this for fun and it does not seem fun these days any more so I will
+take a break from Git development. Consider all my ongoing work
+abandoned. All of my public patches are signed off. If you want to
+continue improve them, go ahead. And have fun.
 --
 Duy
