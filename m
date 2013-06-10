@@ -1,63 +1,113 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/3] rebase -i: write better reflog messages for start
-Date: Tue, 11 Jun 2013 00:06:14 +0530
-Message-ID: <CALkWK0mmSKDH2vrz4a8Qb8=++NSAp2x5mCUEuLpPo9HLfmgFLw@mail.gmail.com>
-References: <1370881332-9231-1-git-send-email-artagnon@gmail.com>
- <1370881332-9231-4-git-send-email-artagnon@gmail.com> <7v8v2hizpc.fsf@alter.siamese.dyndns.org>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: Bad attitudes and problems in the Git community (was: Re: [PATCH
+ 2/2] Move sequencer to builtin)
+Date: Mon, 10 Jun 2013 11:40:15 -0700
+Message-ID: <CANiSa6h+YAj0MBZtFHurU5JKHUB7X0SQDtqXLCuKjWVro43n1Q@mail.gmail.com>
+References: <20130608164902.GA3109@elie.Belkin>
+	<CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
+	<20130608173447.GA4381@elie.Belkin>
+	<CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
+	<20130609014049.GA10375@google.com>
+	<CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
+	<20130609052624.GB561@sigill.intra.peff.net>
+	<CAMP44s3NhNUuCvW37UaMo9KbHHxZqBE8S15h845vtRi89Bu6WA@mail.gmail.com>
+	<20130609174049.GA1039@sigill.intra.peff.net>
+	<CAMP44s35w_ysvd5c8oANF8YpWvsquY50bUjSfjOxtujdpgBCPQ@mail.gmail.com>
+	<20130609181002.GC810@sigill.intra.peff.net>
+	<CAMP44s0ky7ad3cGBQs0DNht4Uo4MR08VrNx+PigcNraDP76CLA@mail.gmail.com>
+	<CALKQrgc5K0U2qCHjjzgxw1=70FbmHdokU3H0tfB_=+7gDVNzsA@mail.gmail.com>
+	<51B4F6CA.8020807@alum.mit.edu>
+	<51B51256.5060602@gmail.com>
+	<CAMP44s3qn2vTQ1oDnAe6m5AzZ_tAK0fe1=-nN=_=fv7TXGnMbw@mail.gmail.com>
+	<51B596E9.9080307@gmail.com>
+	<CAMP44s3LXrp5_6eHvsFp-4oyoX5FQY0TF_w+ZfQXNS89YzaXaQ@mail.gmail.com>
+	<CANiSa6iTJuXnKTL50GOv7b=pLLUqA4vc-EsSLi3trh4Ehh3xTg@mail.gmail.com>
+	<CACPiFCKJCfw3UDz0jUvE_E-qTvgN_Y3ut_mi_ZubEpxqFdTJYA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 20:36:59 2013
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Stefano Lattarini <stefano.lattarini@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 10 20:40:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um6xe-0005aS-FV
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 20:36:58 +0200
+	id 1Um70x-00080g-LH
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 20:40:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754345Ab3FJSg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 14:36:56 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:51848 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754266Ab3FJSgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 14:36:55 -0400
-Received: by mail-ie0-f170.google.com with SMTP id e11so1463741iej.15
-        for <git@vger.kernel.org>; Mon, 10 Jun 2013 11:36:54 -0700 (PDT)
+	id S1753777Ab3FJSkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 14:40:18 -0400
+Received: from mail-wg0-f46.google.com ([74.125.82.46]:37873 "EHLO
+	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752639Ab3FJSkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 14:40:17 -0400
+Received: by mail-wg0-f46.google.com with SMTP id c11so1685452wgh.1
+        for <git@vger.kernel.org>; Mon, 10 Jun 2013 11:40:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=mKDZjjpClbr5/VEkENyo3fG46tsUZgWHdtrg3ZpaYcA=;
-        b=VpEXWN5KLMtAsdJL8cVqr2s2sPkSnHcleIRVubthMu300RtWbKQNkTv3F5S5KjQOGY
-         79Qno87Nx9ahY+v3FXSCAcYJS/Q0zfLZC5qC4TeArN9HBpZYhthnkG+zue0TgtZWWX0A
-         GBx6I9XvZh6j6Fzv1nSsGIVE/n4lSvyPkdA7kka1T61Aio5qFIz3x0Sv1m07xWKbkFUx
-         7QTW7+L/tnl+LAOmU3SLyaKawKzEt+k5Tvjq9AyOlEOIRM9lS4DhKhUGzwevAAnunrnn
-         g+Naeks1fxL7Yh90EoTIgVQ77VaWvyJr/ubgLig5okyc3FSOP+l7XMrR+UT/n7TbGVni
-         aVDQ==
-X-Received: by 10.50.98.104 with SMTP id eh8mr4553690igb.111.1370889414866;
- Mon, 10 Jun 2013 11:36:54 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Mon, 10 Jun 2013 11:36:14 -0700 (PDT)
-In-Reply-To: <7v8v2hizpc.fsf@alter.siamese.dyndns.org>
+        bh=rrURMIdJhg1sqplsiKS7qbx8nKSDZvdvyt5S3TbGNPM=;
+        b=i+EvJD7SQFNzXDYnDw1Yvf4y/9ORMdL67xK0GKWRTpuglk97z+QYvWyUz9SZN4ky/A
+         wBLjfKcsGJoJ9748sMRY8dg5J0nInxYXU56RbHYQfmKTj/O9BIx420q+q2RXCtCiULQ8
+         Rr7JUyySgYU59JUMAI6P+ZLXoj6N7Ey6CaN1vwbA8tdx217lA6R2rPndaP5sbXlNgCGj
+         IUvy4lZLTbJ1SzW+T+5p2Sk9H746jzhZi6Yx0ghEb9fVeJCYZ3Xo2e6ukjpyCLYBUZ1w
+         vgw413yH8J6aDpChp67cYuMEqdouwdZ7z9TbbuKG9KkROCVJnt3MZEWI72X3UYE727jP
+         0rBw==
+X-Received: by 10.180.36.147 with SMTP id q19mr5328107wij.64.1370889615902;
+ Mon, 10 Jun 2013 11:40:15 -0700 (PDT)
+Received: by 10.180.7.99 with HTTP; Mon, 10 Jun 2013 11:40:15 -0700 (PDT)
+In-Reply-To: <CACPiFCKJCfw3UDz0jUvE_E-qTvgN_Y3ut_mi_ZubEpxqFdTJYA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227355>
 
-Junio C Hamano wrote:
-> I am curious what breaks, though.
+Yes, sorry. I find this whole story quite amusing (albeit distracting
+and unnecessary), but sorry for adding to the spam. I'll be quiet now.
 
-t/status-help.  Looks seriously unrelated, and I'm breaking my head
-over it.  Any clues?
-
---- expected    2013-06-10 17:16:42.276356867 +0000
-+++ actual      2013-06-10 17:16:42.279690201 +0000
-@@ -1,4 +1,4 @@
--# HEAD detached at 000106f
-+# HEAD detached from 88a81b6
- # You are currently rebasing branch 'rebase_conflicts' on '000106f'.
- #   (fix conflicts and then run "git rebase --continue")
- #   (use "git rebase --skip" to skip this patch)
-not ok 5 - status when rebase in progress before resolving conflicts
+On Mon, Jun 10, 2013 at 11:33 AM, Martin Langhoff
+<martin.langhoff@gmail.com> wrote:
+> On Mon, Jun 10, 2013 at 2:11 PM, Martin von Zweigbergk
+> <martinvonz@gmail.com> wrote:
+>> On Mon, Jun 10, 2013 at 9:58 AM, Felipe Contreras
+>> <felipe.contreras@gmail.com> wrote:
+>>> On Mon, Jun 10, 2013 at 4:05 AM, Stefano Lattarini
+>>> <stefano.lattarini@gmail.com> wrote:
+>>>
+>>>>> You need two sides to have an argument.
+>>>
+>>>> I disagree.  Unless you mean than, whenever a part behaves in a
+>>>> hostile and aggressive way, the other part should just silently
+>>>> knuckle under.
+>>>
+>>> You are wrong. If a bum in the street starts talking about you about
+>>> why you are going to hell, and you reply to him and argue. Who has the
+>>> fault of starting an argument?
+>>
+>> I'm not sure I follow the analogy. Are you the bum or the passer-by?
+>
+> http://xkcd.com/386/
+>
+> Someone is wrong on the Internet!
+>
+> Let it be.
+>
+>
+> m
+> --
+>  martin.langhoff@gmail.com
+>  -  ask interesting questions
+>  - don't get distracted with shiny stuff  - working code first
+>  ~ http://docs.moodle.org/en/User:Martin_Langhoff
