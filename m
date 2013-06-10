@@ -1,318 +1,228 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/4] commit-queue: LIFO or priority queue of commits
-Date: Mon, 10 Jun 2013 14:15:57 -0400
-Message-ID: <20130610181557.GA2084@sigill.intra.peff.net>
-References: <1370581872-31580-1-git-send-email-gitster@pobox.com>
- <1370820277-30158-1-git-send-email-gitster@pobox.com>
- <1370820277-30158-3-git-send-email-gitster@pobox.com>
- <20130610052500.GD3621@sigill.intra.peff.net>
- <7vwqq2l9cz.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/2] status: introduce status.short to enable --short by default
+Date: Mon, 10 Jun 2013 11:16:14 -0700
+Message-ID: <7vr4g9j0gh.fsf@alter.siamese.dyndns.org>
+References: <1370878068-7643-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Elliott Cable <me@ell.io>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 20:16:12 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 10 20:16:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um6dW-0007vx-Hm
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 20:16:11 +0200
+	id 1Um6dj-00086W-9D
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 20:16:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754493Ab3FJSQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 14:16:05 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47024 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754494Ab3FJSQC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 14:16:02 -0400
-Received: (qmail 23597 invoked by uid 102); 10 Jun 2013 18:16:52 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Jun 2013 13:16:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Jun 2013 14:15:57 -0400
-Content-Disposition: inline
-In-Reply-To: <7vwqq2l9cz.fsf@alter.siamese.dyndns.org>
+	id S1753599Ab3FJSQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 14:16:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43425 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753386Ab3FJSQR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 14:16:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1FF14277EA;
+	Mon, 10 Jun 2013 18:16:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JMESDfmCpasS6CW2qH3vGeGjRqE=; b=ovC7ld
+	JHuuPKCrmXQXQseixVhU7lrITtFu3DycMJpu5DP5/LlOHAaBVf5SYZckb1djiD8Y
+	9hB1Gf7h0E+FqKOLkAVmKbyKKZL+j1OPOmiHj+DgtvgWLqXMYSiNtAlyThyB0SKj
+	pjybI1D471p+zzvhXPWeu4cTv+ckoNsyNDFn4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cIqVy9i0Y/x9RH0vymMokyYIEANeMW5B
+	7Y3KcTb+kDWzH5XJX94jLj2xHxeVXwEBP+vwCfDIVMyUmf9Hic85NMIrd9QWft4h
+	Z+fKc7p+GaSz6nc9B6IZP0Heu0WLB9enSFsBjE78c25kGO90WrNNbANr9W4qnvs9
+	MskdGXBJRXQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 130FA277E9;
+	Mon, 10 Jun 2013 18:16:17 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B565277E8;
+	Mon, 10 Jun 2013 18:16:15 +0000 (UTC)
+In-Reply-To: <1370878068-7643-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+	(Jorge Juan Garcia Garcia's message of "Mon, 10 Jun 2013 17:27:47
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D71C8720-D1F9-11E2-BAC0-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227339>
 
-On Mon, Jun 10, 2013 at 12:21:00AM -0700, Junio C Hamano wrote:
+Jorge Juan Garcia Garcia  <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+writes:
 
-> > It may be worth looking again for other places to use this over
-> > commit_list, but even the caller you are introducing here justifies its
-> > presence.
-> 
-> The next candidate is paint-down-to-common, probably.
+> Some people always run 'git status -s'.
+> The configuration variable status.short allows to set it by default.
+>
+> Signed-off-by: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+> Signed-off-by: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+> ---
+>
+> Changes since v2:
+>  -removal of double quotes in test
+>  -use of git config --unset to clean up test environment
+>
+>  Documentation/config.txt |    4 ++++
+>  builtin/commit.c         |    5 +++++
+>  t/t7508-status.sh        |   35 +++++++++++++++++++++++++++++++++++
+>  3 files changed, 44 insertions(+), 0 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 6e53fc5..1983bf7 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2066,6 +2066,10 @@ status.relativePaths::
+>  	relative to the repository root (this was the default for Git
+>  	prior to v1.5.4).
+>  
+> +status.short::
+> +	Set to true to enable --short by default in linkgit:git-status[1].
+> +	The option --no-short takes precedence over this variable.
+> +
+>  status.showUntrackedFiles::
+>  	By default, linkgit:git-status[1] and linkgit:git-commit[1] show
+>  	files which are not currently tracked by Git. Directories which
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 1621dfc..287f1cb 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1112,6 +1112,11 @@ static int git_status_config(const char *k, const char *v, void *cb)
+>  			s->submodule_summary = -1;
+>  		return 0;
+>  	}
+> +	if (!strcmp(k, "status.short")) {
+> +		if (git_config_bool(k, v))
+> +			status_format = STATUS_FORMAT_SHORT;
 
-Yeah, I don't think I looked at that at all last time (mostly because it
-only large as the graph gets wide, which is typically acceptable for
-us). But it should be easy to do.
+And if the user has
 
-> > Also, I wrote some basic tests to cover the priority queue as a unit. I
-> > can rebase them on your commit if you are interested.
-> 
-> It would be great.
+	[status]
+        	short = no
 
-Squashable patch is below.
+in $GIT_DIR/config for this particular project, perhaps in order to
+override a blanket setting
 
-> > Is it worth making this "struct commit *" a void pointer, and handling
-> > arbitrary items in our priority queue? The compare function should be
-> > the only thing that dereferences them.
-> >  
-> > I do not have any non-commit priority queue use in mind, but I do not
-> > think it adds any complexity in this case.
-> 
-> I didn't either (and still I don't think of one), but I agree that
-> the implementation can be reused for pq of any type, as long as it
-> is a pointer to struct.
+	[status]
+		short
 
-I converted this to a void pointer in my patch below, simply because it
-makes it easier to write a test-queue that operates on ints. Due to
-implicit casting, it should work for the most part without changing the
-calling code unless you have a caller that does something like:
+that is in $HOME/.gitconfig, what should happen?
 
-  commit_queue_get(&q)->date
+Perhaps you need
 
-or similar. I didn't change the name, either. It may be silly to call it
-"commit_queue" still since it is now more general. I simply called mine
-"queue" (I wanted "pqueue", but that conflicted with globals defined by
-OpenSSL; yours is a more general queue anyway, so maybe that is a good
-name).
+	if (git_config_bool(...))
+        	status_format = STATUS_FORMAT_SHORT;
+	else        	
+        	status_format = STATUS_FORMAT_NONE; /* default */
 
-> >> +	/* Bubble up the new one */
-> >> +	for (ix = queue->nr - 1; ix; ix = parent) {
-> >> +		parent = (ix - 1) / 2;
-> >> +		if (compare(queue->array[parent], queue->array[ix],
-> >> +			    queue->cb_data) < 0)
-> >> +			break;
-> >
-> > In my implementation, I stopped on "compare() <= 0". It is late and my
-> > mind is fuzzy, but I recall that heaps are never stable with respect to
-> > insertion order, so I don't think it would matter.
-> 
-> It would matter in the sense that we cannot replace linked-list, if
-> the caller wants stability.  It is more like "we cannot do anything
-> about it" than "it would not matter".
+or something here?
 
-Right. I meant "I do not think it matters if you do <= or < here, as we
-are not stable anyway". Doing "<= 0" stops the heapify operation sooner,
-though I doubt it matters in practice (it is not an algorithmic
-complexity change, but just that you can sometimes quit early).
+> +		return 0;
+> +	}
+>  	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
+>  		s->use_color = git_config_colorbool(k, v);
+>  		return 0;
+> diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+> index e2ffdac..d99ca9f 100755
+> --- a/t/t7508-status.sh
+> +++ b/t/t7508-status.sh
+> @@ -1335,4 +1335,39 @@ test_expect_failure '.git/config ignore=all suppresses submodule summary' '
+>  	git config -f .gitmodules  --remove-section submodule.subname
+>  '
+>  
+> +test_expect_success 'Setup of test environment' '
+> +	git config status.showUntrackedFiles no
+> +'
+> +
+> +test_expect_success '"status.short=true" same as "-s"' '
+> +	git -c status.short=true status >actual &&
+> +	git status -s >expected_short &&
+> +	test_cmp actual expected_short
+> +'
+> +
+> +test_expect_success '"status.short=true" different from "--no-short"' '
+> +	git status --no-short >expected_noshort &&
+> +	test_must_fail test_cmp actual expected_noshort
+> +'
+> +
+> +test_expect_success '"status.short=true" weaker than "--no-short"' '
+> +	git -c status.short=true status --no-short >actual &&
+> +	test_cmp actual expected_noshort
+> +'
+> +
+> +test_expect_success '"status.short=false" same as "--no-short"' '
+> +	git -c status.short=false status >actual &&
+> +	git status -s >expected_short &&
+> +	test_cmp actual expected_noshort
+> +'
+> +
+> +test_expect_success '"status.short=false" weaker than "-s"' '
+> +	git -c status.short=false status -s >actual &&
+> +	test_cmp actual expected_short
+> +'
+> +
+> +test_expect_success 'Restore default test environment' '
+> +	git config --unset status.showUntrackedFiles
+> +'
 
-I think it is the same situation in your "push down", too, where you can
-quit when the parent is equal to the largest child.
+A few observations.
 
-> We can make each queue element a pair of <pointer to payload,
-> insertion counter>, and tiebreak using the insertion order, if the
-> callers want the same stability as linked-list implementation, but
-> I tend to think it really matters.
+ * It is very good that you check not just positive cases that show
+   off how well this new feature works (i.e. status.short set
+   without command line override gives a short output) but also
+   negative cases that make sure the new feature does not kick in
+   when it should not.  You test all four combinations, which is
+   good.
 
-Yes, I think that is the usual solution.
+ * If any of the first three fails, you may not have the correct
+   string in expected_short or expected_noshort when running later
+   tests that depend on them.
 
-Here's the patch with the tests, meant to be squashed into your 2/4. As
-I mentioned above, you may want to further tweak the name, which would
-require fixing up the rebase patches on top.
+ * Similarly, if the first one to set showUntrackedFiles fails, the
+   last one to --unset would also fail.
 
-If you don't want to do the "s/struct commit/void/" change now, we can
-probably just have test-queue stuff the ints into commit pointers.
+Perhaps limiting the number of tests that must pass (otherwise the
+remainder becomes useless) by doing something like this is a better
+alternative:
 
-The tests themselves are not extremely extensive, but at least let you
-check that you implemented the heap correctly. :)
 
----
- .gitignore       |  1 +
- Makefile         |  1 +
- commit-queue.c   |  6 ++---
- commit-queue.h   |  8 +++---
- t/t0009-queue.sh | 50 +++++++++++++++++++++++++++++++++++
- test-queue.c     | 39 +++++++++++++++++++++++++++
- 6 files changed, 98 insertions(+), 7 deletions(-)
+	test_expect_success 'setup for status.short' '
+		git status --short >expected_short &&
+                git status --no-short >expected_noshort
+	'
 
-diff --git a/.gitignore b/.gitignore
-index 6669bf0..8670e6d 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -193,6 +193,7 @@
- /test-regex
- /test-revision-walking
- /test-run-command
-+/test-queue
- /test-sha1
- /test-sigchain
- /test-string-list
-diff --git a/Makefile b/Makefile
-index 3cf55e9..c957637 100644
---- a/Makefile
-+++ b/Makefile
-@@ -552,6 +552,7 @@ TEST_PROGRAMS_NEED_X += test-path-utils
- TEST_PROGRAMS_NEED_X += test-mktemp
- TEST_PROGRAMS_NEED_X += test-parse-options
- TEST_PROGRAMS_NEED_X += test-path-utils
-+TEST_PROGRAMS_NEED_X += test-queue
- TEST_PROGRAMS_NEED_X += test-regex
- TEST_PROGRAMS_NEED_X += test-revision-walking
- TEST_PROGRAMS_NEED_X += test-run-command
-diff --git a/commit-queue.c b/commit-queue.c
-index 77d4b02..04acf23 100644
---- a/commit-queue.c
-+++ b/commit-queue.c
-@@ -10,7 +10,7 @@ void clear_commit_queue(struct commit_queue *queue)
- 	queue->array = NULL;
- }
- 
--void commit_queue_put(struct commit_queue *queue, struct commit *commit)
-+void commit_queue_put(struct commit_queue *queue, void *commit)
- {
- 	commit_compare_fn compare = queue->compare;
- 	int ix, parent;
-@@ -34,9 +34,9 @@ struct commit *commit_queue_get(struct commit_queue *queue)
- 	}
- }
- 
--struct commit *commit_queue_get(struct commit_queue *queue)
-+void *commit_queue_get(struct commit_queue *queue)
- {
--	struct commit *result, *swap;
-+	void *result, *swap;
- 	int ix, child;
- 	commit_compare_fn compare = queue->compare;
- 
-diff --git a/commit-queue.h b/commit-queue.h
-index 7c5dc4c..ef8fb87 100644
---- a/commit-queue.h
-+++ b/commit-queue.h
-@@ -5,26 +5,26 @@ extern void commit_queue_put(struct commit_queue *, struct commit *);
-  * Compare two commits; the third parameter is cb_data in the
-  * commit_queue structure.
-  */
--typedef int (*commit_compare_fn)(struct commit *, struct commit *, void *);
-+typedef int (*commit_compare_fn)(void *, void *, void *);
- 
- struct commit_queue {
- 	commit_compare_fn compare;
- 	void *cb_data;
- 	int alloc, nr;
--	struct commit **array;
-+	void **array;
- };
- 
- /*
-  * Add the commit to the queue
-  */
--extern void commit_queue_put(struct commit_queue *, struct commit *);
-+extern void commit_queue_put(struct commit_queue *, void *);
- 
- /*
-  * Extract the commit that compares the smallest out of the queue,
-  * or NULL.  If compare function is NULL, the queue acts as a LIFO
-  * stack.
-  */
--extern struct commit *commit_queue_get(struct commit_queue *);
-+extern void *commit_queue_get(struct commit_queue *);
- 
- extern void clear_commit_queue(struct commit_queue *);
- 
-diff --git a/t/t0009-queue.sh b/t/t0009-queue.sh
-new file mode 100755
-index 0000000..186df01
---- /dev/null
-+++ b/t/t0009-queue.sh
-@@ -0,0 +1,50 @@
-+#!/bin/sh
-+
-+test_description='basic tests for priority queue implementation'
-+. ./test-lib.sh
-+
-+cat >expect <<'EOF'
-+1
-+2
-+3
-+4
-+5
-+5
-+6
-+7
-+8
-+9
-+10
-+EOF
-+test_expect_success 'basic ordering' '
-+	test-queue 2 6 3 10 9 5 7 4 5 8 1 dump >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<'EOF'
-+2
-+3
-+4
-+1
-+5
-+6
-+EOF
-+test_expect_success 'mixed put and get' '
-+	test-queue 6 2 4 get 5 3 get get 1 dump >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<'EOF'
-+1
-+2
-+NULL
-+1
-+2
-+NULL
-+EOF
-+test_expect_success 'notice empty queue' '
-+	test-queue 1 2 get get get 1 2 get get get >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
-diff --git a/test-queue.c b/test-queue.c
-new file mode 100644
-index 0000000..7743775
---- /dev/null
-+++ b/test-queue.c
-@@ -0,0 +1,39 @@
-+#include "cache.h"
-+#include "commit-queue.h"
-+
-+static int intcmp(void *va, void *vb, void *data)
-+{
-+	const int *a = va, *b = vb;
-+	return *a - *b;
-+}
-+
-+static void show(int *v)
-+{
-+	if (!v)
-+		printf("NULL\n");
-+	else
-+		printf("%d\n", *v);
-+	free(v);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+	struct commit_queue pq = { intcmp };
-+
-+	while (*++argv) {
-+		if (!strcmp(*argv, "get"))
-+			show(commit_queue_get(&pq));
-+		else if (!strcmp(*argv, "dump")) {
-+			int *v;
-+			while ((v = commit_queue_get(&pq)))
-+			       show(v);
-+		}
-+		else {
-+			int *v = malloc(sizeof(*v));
-+			*v = atoi(*argv);
-+			commit_queue_put(&pq, v);
-+		}
-+	}
-+
-+	return 0;
-+}
+	test_expect_success '-c status.short=true == status -s' '
+        	test_config status.showUntrackedFile no &&
+        	test_config status.short yes &&
+                git status >actual &&
+                test_cmp expected_short actual
+	'
+
+	test_expect_success 'status --no-short defeats status.short=true' '
+        	test_config status.showUntrackedFile no &&
+        	test_config status.short yes &&
+                git status --no-short >actual &&
+                test_cmp expected_noshort actual
+	'
+
+	... other two combinations here ...
+
+Points to note:
+
+ * test_config takes care of setting configuration variables and
+   then unsetting them when the test is done.
+
+ * test_cmp should compare expected with actual, not the other way,
+   so that "./t7508-status.sh -v" shows the diff between the two 
+   shows how the actual output differs from what is expected.
