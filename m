@@ -1,73 +1,302 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/3] test: improve rebase -q test
-Date: Mon, 10 Jun 2013 12:01:06 -0500
-Message-ID: <CAMP44s33khUaAWV+UrkS2CVRy2aCCk8kv3h5HXROySoocKrL8w@mail.gmail.com>
-References: <1370637143-21336-1-git-send-email-felipe.contreras@gmail.com>
-	<1370637143-21336-3-git-send-email-felipe.contreras@gmail.com>
-	<CACsJy8DHeqOz=WbxurCvPiDq73k4eftwrEEZzWBbifS51PDbLQ@mail.gmail.com>
-	<7vd2rvqgra.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3Pny7JkyHbLZ3kUemNK70JhdYWdpELTjNLz0y3Z2V3+A@mail.gmail.com>
-	<7vy5ajozuj.fsf@alter.siamese.dyndns.org>
-	<CAMP44s38T9EUOe8EBKy1kxa-rEu7g0jb7+HB019AgCub+2SVnw@mail.gmail.com>
-	<7vfvwrowd0.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0Qr54+8hbkZ+jmXB628SCPwg1zZo80UBhFe2PCrgQP4Q@mail.gmail.com>
-	<20130610093904.GG2091@goldbirke>
-	<7vppvuj6wl.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/2]  rm: better error message on failure for multiple files
+Date: Mon, 10 Jun 2013 10:17:47 -0700
+Message-ID: <7v8v2hkhqc.fsf@alter.siamese.dyndns.org>
+References: <1370879981-18937-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 19:01:22 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 10 19:18:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um5T0-0003Px-F2
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 19:01:14 +0200
+	id 1Um5jK-0007qt-Gw
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 19:18:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752406Ab3FJRBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 13:01:09 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:34888 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751260Ab3FJRBI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 13:01:08 -0400
-Received: by mail-lb0-f169.google.com with SMTP id d10so6575557lbj.0
-        for <git@vger.kernel.org>; Mon, 10 Jun 2013 10:01:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=GNzGe4133j07dmxjXa0Sczga5EgO4FIqJ8TO32zbNOA=;
-        b=yHZGf8EOMOY699d8OJVcifvpmkmkE01UgI0GeeV99Uv8cuOJDboI83a7DXje/u/q9D
-         LycmYs92Gn1gvXgCabx9IaTmpryh0TFPv/RTpRw4wPHyF/TgwCYiUWFenoa0+F6a9SDQ
-         u9J5NDnCVoBuP/pIlwU98vwB28aP44tl44A9jOA9XFf7JmK0DLNb555r30oopUYl245f
-         AH2EtuuqR8gonzx0GsGAyWVkSGsc1W9q51nCbBybsD3pzPGzb/D0IO751fGDeeBHeR6t
-         XBG1Klx5uI94OAjLS8DwDF5FD+SZahaW+kuuJd5UeLC9s72O+zpJ122uAWCVIeW9rZD7
-         mQJQ==
-X-Received: by 10.112.140.231 with SMTP id rj7mr7104963lbb.16.1370883667056;
- Mon, 10 Jun 2013 10:01:07 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Mon, 10 Jun 2013 10:01:06 -0700 (PDT)
-In-Reply-To: <7vppvuj6wl.fsf@alter.siamese.dyndns.org>
+	id S1754168Ab3FJRRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 13:17:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52708 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753941Ab3FJRRw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 13:17:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 475AA27619;
+	Mon, 10 Jun 2013 17:17:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JUmBSX7ise+1Ox/gmeapuIH3SJ8=; b=gxUKfp
+	C29JztpjxoIFm4EcN8Qh1SeyxuDec2pRDLFL1HUlGbkKlV3/M2yHmuh21B0QV0vf
+	uRymGf9LGedEqMyOiKyveeW4c+fZi0nlSFqeL9WzXqo/vOlRygCGYJhQPKLobkgV
+	gviROjP/fP9K3HOjd3NL1RyUeX2X7dN0p3FCw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PCRgAbxYegunb6xn1K+LT33vT4xf8dRW
+	lZyGyHRfZuJV7Bq+Ai4o6YaxAi/7IJA2eCa8INyedMb1GwVpDv69tgXE15jEW1Sw
+	p0PK65WoGu9iKcLE3MuAGaAmRhBlXLCOOL5GHwYk8/f5u9ZQu0RfWgM+J0xTOYlf
+	v+Hm9xB6nPM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B16C27618;
+	Mon, 10 Jun 2013 17:17:51 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5662427614;
+	Mon, 10 Jun 2013 17:17:49 +0000 (UTC)
+In-Reply-To: <1370879981-18937-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+	(Mathieu Lienard--Mayor's message of "Mon, 10 Jun 2013 17:59:40
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: ACF5B71C-D1F1-11E2-87CB-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227325>
 
-On Mon, Jun 10, 2013 at 10:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+writes:
 
-> By the way, test_cmp() is a replacement for the "cmp" command and
-> that is why it does not have "file" in its name.
+> When 'git rm' fails, it now displays a single message
+> with the list of files involved, instead of displaying
+> a list of messages with one file each.
+>
+> As an example, the old message:
+> 	error: 'foo.txt' has changes staged in the index
+> 	(use --cached to keep the file, or -f to force removal)
+> 	error: 'bar.txt' has changes staged in the index
+> 	(use --cached to keep the file, or -f to force removal)
+>
+> would now be displayed as:
+> 	error: the following files have changes staged in the index:
+> 	    foo.txt
+> 	    bar.txt
+> 	(use --cached to keep the file, or -f to force removal)
+>
+> Signed-off-by: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+> Signed-off-by: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+> ---
+>
+> Changes since v2:
+>  -couple typo in commit message and in code
+>  -rename and redefinition of the intermediate function
+>  -move the 4 "if(....nr)" inside the function
+>
+>  builtin/rm.c  |   71 +++++++++++++++++++++++++++++++++++++++++++++-----------
+>  t/t3600-rm.sh |   67 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 124 insertions(+), 14 deletions(-)
+>
+> diff --git a/builtin/rm.c b/builtin/rm.c
+> index 7b91d52..07306eb 100644
+> --- a/builtin/rm.c
+> +++ b/builtin/rm.c
+> @@ -70,6 +70,24 @@ static int check_submodules_use_gitfiles(void)
+>  	return errs;
+>  }
+>  
+> +static void print_eventual_error_files(struct string_list *files_list,
+> +				       const char *main_msg,
+> +				       const char *hints_msg,
+> +				       int *errs)
 
-That's an irrelevant implementation detail. But if you want to be
-driven the the implementation, call it test_zero().
+Hrm, I do not see the point of "eventual" there, by the way.  Are
+there other kinds of error files?
 
--- 
-Felipe Contreras
+> +{
+> +	if (files_list->nr) {
+> +		struct strbuf err_msg = STRBUF_INIT;
+> +		int i;
+> +		strbuf_addstr(&err_msg, main_msg);
+> +		for (i = 0; i < files_list->nr; i++)
+> +			strbuf_addf(&err_msg,
+> +				    "\n    %s",
+
+Is there an implication of having always 4 spaces here to l10n/i18n
+here?  I am wondering if it should be _("\n    %s").
+
+> +				    files_list->items[i].string);
+> +		strbuf_addstr(&err_msg, hints_msg);
+> +		*errs = error("%s", err_msg.buf);
+
+There needs a strbuf_release(&err_msg) somewhere before leaving this
+scope to avoid leaking its buffer, no?
+
+> +	}
+> +}
+> +
+>  static int check_local_mod(unsigned char *head, int index_only)
+>  {
+>  	/*
+> @@ -82,6 +100,11 @@ static int check_local_mod(unsigned char *head, int index_only)
+>  	int i, no_head;
+>  	int errs = 0;
+>  
+> +	struct string_list files_staged = STRING_LIST_INIT_NODUP;
+> +	struct string_list files_cached = STRING_LIST_INIT_NODUP;
+> +	struct string_list files_submodule = STRING_LIST_INIT_NODUP;
+> +	struct string_list files_local = STRING_LIST_INIT_NODUP;
+> +
+>  	no_head = is_null_sha1(head);
+>  	for (i = 0; i < list.nr; i++) {
+>  		struct stat st;
+> @@ -171,29 +194,49 @@ static int check_local_mod(unsigned char *head, int index_only)
+>  		 */
+>  		if (local_changes && staged_changes) {
+>  			if (!index_only || !(ce->ce_flags & CE_INTENT_TO_ADD))
+> +				string_list_append(&files_staged, name);
+>  		}
+>  		else if (!index_only) {
+>  			if (staged_changes)
+> -				errs = error(_("'%s' has changes staged in the index\n"
+> -					     "(use --cached to keep the file, "
+> -					     "or -f to force removal)"), name);
+> +				string_list_append(&files_cached, name);
+>  			if (local_changes) {
+>  				if (S_ISGITLINK(ce->ce_mode) &&
+>  				    !submodule_uses_gitfile(name)) {
+> +					string_list_append(&files_submodule,
+> +							   name);
+> +				} else {
+> +					string_list_append(&files_local, name);
+> +				}
+
+The innermost if/else no longer needs braces.  Also even though it
+may push it slightly over 80-column, I think the files_submodule
+side of string_list_append() is easier to read if it were on a
+single line.
+
+> +	print_eventual_error_files(&files_staged,
+> +				   _("the following files have staged "
+> +				     "content different from both the"
+> +				     "\nfile and the HEAD:"),
+> +				   _("\n(use -f to force removal)"),
+> +				   &errs);
+
+Hmph.  I wonder if we want to properly i18n plurals, depending on
+the number of files, e.g.
+
+        print_error_files(&files_staged,
+                          Q_("the following file has staged "
+                             "content different from both the\n"
+                             "file and the HEAD:",
+                             "the following files have staged "
+                             "content different from both the\n"
+                             "file and the HEAD:", files_staged.nr),
+                           _("\n(use -f to force removal)"), &errs);
+
+This was not a problem back when we showed one error message per one
+path, but with this patch, it starts to matter.
+
+> diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+> index 0c44e9f..10dd380 100755
+> --- a/t/t3600-rm.sh
+> +++ b/t/t3600-rm.sh
+> @@ -687,4 +687,71 @@ test_expect_failure SYMLINKS 'rm across a symlinked leading path (w/ index)' '
+>  	test_path_is_file e/f
+>  '
+>  
+> +test_expect_success 'setup for testing rm messages' '
+> +	>bar.txt &&
+> +	>foo.txt &&
+> +	git add bar.txt foo.txt
+> +'
+> +
+> +test_expect_success 'rm files with different staged content' '
+> +	cat >expect << EOF &&
+> +error: the following files have staged content different from both the
+> +file and the HEAD:
+> +    bar.txt
+> +    foo.txt
+> +(use -f to force removal)
+> +EOF
+> +	echo content1 >foo.txt &&
+
+It is easier to read if it is done this way:
+
+        test_expect_success 'rm files with different staged content' '
+                cat >expect <<\-EOF &&
+                error: the following files have staged content different from both the
+                file and the HEAD:
+                    bar.txt
+                    foo.txt
+                (use -f to force removal)
+                EOF
+                echo content1 >foo.txt &&
+
+Two and half points to note:
+
+ (0) no whitespace between redirection << and its source
+     (the end-of-here-text marker in this case).
+
+ (1) by quoting the end-of-here-text marker with a backslash '\',
+     you tell the readers that there is no variable substitution in
+     it, which reduces the mental burden on them.
+
+ (2) by using a dash '-' before the end-of-here-text marker, you can
+     align the body of here text with a leading tab (HT).
+
+> +	echo content1 >bar.txt &&
+> +	test_must_fail git rm foo.txt bar.txt 2>actual &&
+> +	test_cmp expect actual
+
+This should be test_i18ncmp as the error messages are marked for
+l10n.
+
+Other than that, looks nicely done.
+
+> +'
+> +
+> +
+> +test_expect_success 'rm file with local modification' '
+> +	cat >expect << EOF &&
+> +error: the following files have local modifications:
+> +    foo.txt
+> +(use --cached to keep the file, or -f to force removal)
+> +EOF
+> +	git commit -m "testing rm 3" &&
+> +	echo content3 >foo.txt &&
+> +	test_must_fail git rm foo.txt 2>actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +
+> +test_expect_success 'rm file with changes in the index' '
+> +    cat >expect << EOF &&
+> +error: the following files have changes staged in the index:
+> +    foo.txt
+> +(use --cached to keep the file, or -f to force removal)
+> +EOF
+> +	git reset --hard &&
+> +	echo content5 >foo.txt &&
+> +	git add foo.txt &&
+> +	test_must_fail git rm foo.txt 2>actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +
+> +test_expect_success 'rm files with two different errors' '
+> +	cat >expect << EOF &&
+> +error: the following files have staged content different from both the
+> +file and the HEAD:
+> +    foo1.txt
+> +(use -f to force removal)
+> +error: the following files have changes staged in the index:
+> +    bar1.txt
+> +(use --cached to keep the file, or -f to force removal)
+> +EOF
+> +	echo content >foo1.txt &&
+> +	git add foo1.txt &&
+> +	echo content6 >foo1.txt &&
+> +	echo content6 >bar1.txt &&
+> +	git add bar1.txt &&
+> +	test_must_fail git rm bar1.txt foo1.txt 2>actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
