@@ -1,78 +1,84 @@
-From: garciagj <garciagj@ensibm.imag.fr>
-Subject: Re: [PATCH 1/2] status: introduce status.short to enable --short by  default
-Date: Mon, 10 Jun 2013 10:02:39 +0200
-Message-ID: <9646ae430a3789ab2a7a968b337f0a8c@ensibm.imag.fr>
-References: <1370683737-28823-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
- <CALkWK0kvKzFoZmz313hR-3Z71y-MDPT37BfUi7Qrgy7hz_sErQ@mail.gmail.com>
- <7v4nd7qflu.fsf@alter.siamese.dyndns.org> <vpqbo7frspc.fsf@anie.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/2] rm: introduce advice.rmHints to shorten messages
+Date: Mon, 10 Jun 2013 10:24:04 +0200
+Message-ID: <vpqvc5mqspn.fsf@anie.imag.fr>
+References: <1370680434-2709-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+	<1370680434-2709-2-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+	<CALkWK0==9aN1wVoSXENvTJHOT8bd2SYrEFxrmTdhzMxB3mHPCQ@mail.gmail.com>
+	<19969d9996306bf0e7ac6351d4ad435d@ensibm.imag.fr>
+	<CALkWK0n+yF-kRahgsQQuT-+QiT5gy=J_Bdati=uooiW0djQrgw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
+Cc: Mathieu =?iso-8859-1?Q?Li=E9nard--Mayor?= 
+	<mathieu.lienard--mayor@ensimag.fr>,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	git@vger.kernel.org, gitster@pobox.com,
 	Jorge Juan Garcia Garcia 
-	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>, <git@vger.kernel.org>,
-	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 10 10:02:52 2013
+	<Jorge-Juan.garcia-Garcia@ensimag.imag.fr>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 10 10:24:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ulx3z-0007ur-JK
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 10:02:51 +0200
+	id 1UlxOh-0006qQ-If
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 10:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751552Ab3FJICq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jun 2013 04:02:46 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57221 "EHLO rominette.imag.fr"
+	id S1752450Ab3FJIYL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jun 2013 04:24:11 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:46736 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751117Ab3FJICo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 04:02:44 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5A82cCO031104
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 10 Jun 2013 10:02:39 +0200
-Received: from web-ensimag.imag.fr (web-ensimag.imag.fr [195.221.228.24])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5A82dRU010262;
-	Mon, 10 Jun 2013 10:02:39 +0200
-Received: from web-ensimag.imag.fr (localhost [127.0.0.1])
-	by web-ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id r5A82dcM026723;
-	Mon, 10 Jun 2013 10:02:39 +0200
-Received: (from apache@localhost)
-	by web-ensimag.imag.fr (8.13.8/8.13.8/Submit) id r5A82dMJ026722;
-	Mon, 10 Jun 2013 10:02:39 +0200
-X-Authentication-Warning: web-ensimag.imag.fr: apache set sender to garciagj@ensibm.imag.fr using -f
-In-Reply-To: <vpqbo7frspc.fsf@anie.imag.fr>
-X-Sender: garciagj@ensibm.imag.fr
-User-Agent: Roundcube Webmail/0.8.1
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 10 Jun 2013 10:02:39 +0200 (CEST)
+	id S1752128Ab3FJIYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 04:24:09 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5A8O3YL015325
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 10 Jun 2013 10:24:03 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UlxOW-0007tR-ES; Mon, 10 Jun 2013 10:24:04 +0200
+In-Reply-To: <CALkWK0n+yF-kRahgsQQuT-+QiT5gy=J_Bdati=uooiW0djQrgw@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 10 Jun 2013 13:25:21 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 10 Jun 2013 10:24:05 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227258>
 
-El 2013-06-09 21:26, Matthieu Moy escribi=C3=B3:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->>
->>> Jorge Juan Garcia Garcia wrote:
->>>> Some people always run 'git status -s'.
->>>> The configuration variable status.short allows to set it by=20
->>>> default.
->>>
->>> Good feature.
->>
->> Is there a corresponding command line override added to help people
->> who need to defeat such a configured-in default?
->
-> Yes: "git status --no-short".
->
-> Perhaps the doc for status.short should explicitely mention that
-> --no-short takes precedence over it.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
+> Mathieu Li=E9nard--Mayor wrote:
+>> I'm not so sure i understand. Do you mean rmHints should deactivate =
+addHints
+>> aswell, or do you mean that since we're introducing rmHints it would=
+ be
+>> natural to introduce addHints ?
+>
+> More the latter, but I'm tilting towards addRmHints (or something)
+> which affects both add and rm hints.
 
-Yes, I will include that in the Documentation.
+I don't see why add and rm hints should be correlated, or I don't have
+the same advice as you in mind.
+
+$ git add foo.txt
+The following paths are ignored by one of your .gitignore files:
+foo.txt
+Use -f if you really want to add them.
+fatal: no files added
+
+$ git rm foo.txt=20
+error: 'foo.txt' has changes staged in the index
+(use --cached to keep the file, or -f to force removal)
+
+Both have completely different meanings: the first is about .gitignore,
+and the second about not loosing data.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
