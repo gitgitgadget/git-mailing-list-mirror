@@ -1,121 +1,90 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Mon, 10 Jun 2013 16:43:11 -0500
-Message-ID: <CAMP44s2mu4Q4Gb0f+hsifaDP8CnT2VNHZO7e6dYvYhiyH30PQQ@mail.gmail.com>
-References: <20130608164902.GA3109@elie.Belkin>
-	<CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
-	<20130608173447.GA4381@elie.Belkin>
-	<CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
-	<20130609014049.GA10375@google.com>
-	<CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
-	<20130609052624.GB561@sigill.intra.peff.net>
-	<CALkWK0mu2_9M5aTczcEkv37eLaAg5_mGDZ_W9nqQFoesB4wc3g@mail.gmail.com>
-	<20130609180437.GB810@sigill.intra.peff.net>
-	<CALkWK0kkhDOSSdF=E4PvO24hg++_FpP3YFaGRD3yq80XG0TRJA@mail.gmail.com>
-	<20130609184553.GG810@sigill.intra.peff.net>
-	<7vppvvnetw.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3p1atFz52-mKaKpZkLGp+Uoehc1ovTUQAN-raxWzWd8Q@mail.gmail.com>
-	<7v8v2il62c.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1x4Dm2KwyuN=oisSFdoCPxYzu+ZjZjHN45_=i7b=z0_Q@mail.gmail.com>
-	<vpq7gi1eupf.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: add --ignore-blank-lines option
+Date: Mon, 10 Jun 2013 14:43:27 -0700
+Message-ID: <7vsj0pej5s.fsf@alter.siamese.dyndns.org>
+References: <7v61xt7gej.fsf@alter.siamese.dyndns.org>
+	<1370724291-30088-1-git-send-email-apelisse@gmail.com>
+	<7vsj0roxnr.fsf@alter.siamese.dyndns.org>
+	<CALWbr2zLTUYRnaYxbjyU80zpa3Q6WGcquTPAHqWCJnbEZ7RNPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Brandon Casey <drafnel@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 10 23:43:31 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 10 23:43:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um9sA-0005bU-Ec
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 23:43:30 +0200
+	id 1Um9sO-0005ii-P9
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 23:43:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752814Ab3FJVnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 17:43:14 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:54768 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751997Ab3FJVnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 17:43:13 -0400
-Received: by mail-lb0-f179.google.com with SMTP id w20so6690452lbh.24
-        for <git@vger.kernel.org>; Mon, 10 Jun 2013 14:43:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DM5bsQf79XZbm4bBuzEdGFtCGnOas+Sx/ZNZ8QMJjQA=;
-        b=L7iMdi0anNC6+f9SqNUROIT8yg2rc3ab5B2pKakMDoR6cNh7IvP79dU/5acjQ/rrMY
-         TCjJ6Fe53PEURYcwRmnYoWUxjyr4l9uIexcV/XtSAfAYXJbBAakvI0pqBG7PRhZ2icDN
-         Xk/Vl07SAhEGveanT9ztjPaNu75lCX71DiaTtlSYjm0V3+go5EtoUt/kNxYrC/+ftSxd
-         8UsRnlAUcYithn/5ymwAQwOnfG/EYxc1uFa9QRK+epvc3ei7SJ5cfenNSNs6z7TZHjZ7
-         rfPOEncgwDRAnwdXjw64kh+XJw8L5Eh6y6s3pIO6mFLHootudpg7k8BSlgvFS7kKLfGg
-         pWNg==
-X-Received: by 10.152.22.130 with SMTP id d2mr5427130laf.33.1370900592083;
- Mon, 10 Jun 2013 14:43:12 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Mon, 10 Jun 2013 14:43:11 -0700 (PDT)
-In-Reply-To: <vpq7gi1eupf.fsf@anie.imag.fr>
+	id S1753815Ab3FJVnc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 17:43:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61624 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753726Ab3FJVna (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 17:43:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC4AA1FDD3;
+	Mon, 10 Jun 2013 21:43:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Q3FwBHP69WN0YhHl9PpcUbvOVio=; b=Guafcn
+	lnJNoWYOmS9kzenHaCI3Yrp41qXRnxz7g6JfR+/V2BXZSevHn8f3Omxz6FXKxooB
+	O6kkYLVu6ri693EAXLxE2qT2cwZCP12x8UcPqdJ97tRULkrVi5bg7RLfSrUNlIgg
+	JJZ7qRzKS4V1xz4XeQ9Qt34qvyRT1r8AjOIdM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wglcHVCzcP2XG4jQ6XbJ0daIPGJiro5h
+	NjSAoYeA1ie7pf8//hOE53ORlw7HkWWgH/TIyMhF6vUCbFxg/jOjJngQGz448ers
+	fUODumziDjqlbP9IkO2FmchbE+1qWI74E3LH43H8GPekLPzJXGOSgh7fmJVtU2MJ
+	6ZBzTOCXuOo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A0E771FDD1;
+	Mon, 10 Jun 2013 21:43:29 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0C1BF1FDCC;
+	Mon, 10 Jun 2013 21:43:28 +0000 (UTC)
+In-Reply-To: <CALWbr2zLTUYRnaYxbjyU80zpa3Q6WGcquTPAHqWCJnbEZ7RNPQ@mail.gmail.com>
+	(Antoine Pelisse's message of "Mon, 10 Jun 2013 23:03:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C9C20A2E-D216-11E2-BB12-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227388>
 
-On Mon, Jun 10, 2013 at 12:34 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Antoine Pelisse <apelisse@gmail.com> writes:
+
+> On Sun, Jun 9, 2013 at 10:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> When any ignore blank option is used, there will be lines that
+>> actually has changes (hence should be shown with +/-) but we
+>> deliberately ignore their changes (hence, if they ever appear in the
+>> hunk, they do so as context lines prefixed with SP not +/-).  When
+>> we do so, we show the lines from the postimage in the context.
 >
->> It is not bad behavior. It is bad behavior *in your opinion*,
->
-> And in essentially everyone else on this list, it seems.
+> Don't we actually use preimage (see below) ? I think using pre-image
+> allows the patch to be applicable to another tree (but ignoring the
+> space changes).
 
-So? An opinion shared by a billion people is still an opinion, not a
-fact. To think otherwise is to fall in the argumentum ad populum
-fallacy.
+But the result of such patch application is not usually what you
+want to use.  If we use postimage (which by the way was a deliberate
+design decision we made earlier), at least the review of the patch
+is easier because you would see the end result more clearly.
 
->> an opinion that wouldn't be shared by other projects, like the Linux
->> kernel.
->
-> Googling your name and LKML gives me this in the first page (addressed
-> to you):
->
-> https://lkml.org/lkml/2012/4/12/434
-> "I'm stupider for just reading your email. Go away."
->
-> https://lkml.org/lkml/2012/4/15/112
-> "I'll make one more try at explaining to you, but then I'll just set my
-> mail reader to ignore you, because judging by past performance (not
-> just in this thread) you will just continue to argue."
->
-> I don't follow the lkml so maybe I've just been unlucky and Google
-> didn't show me an accurate sample, but arguing that your behavior is
-> welcome on the LKML seems weird.
+> If we actually hide new blank lines that are in the context, it means
+> that we won't be able to apply a patch with 2 new blank lines in the 3
+> line context.
 
-Now you are committing two fallacies at the same time; argument from
-authority and hasty generalization.
+Yes, but I do not think the point of --ignore-blank-lines is to
+produce a patch that can be applied in the first place.  It is to
+allow easier eyeballing.
 
-Yes, Linus Torvalds lost his temper with me, he has done so with so
-many people that's hardly surprising. I still think he is wrong, but
-to prove it I need information that is not readily available, and it's
-not that important anyway.
+> Anyway, I'm starting to think that "show blank lines changes near
+> other changes" makes sense more and more sense.
 
-That doesn't mean that Linus' opinion is shared by the list (or any
-other Linux mailing list); if you think so you are committing the
-hasty generalization fallacy.
-
-And if you think Linus' opinion means something is a fact you commit
-the argument from authority fallacy.
-
-None of this mean that my patches are not welcome in LKML, or any
-other Linux mailing list.
-
-I repeat what Linus said:
-
-Talk is cheap, show me the code.
-
--- 
-Felipe Contreras
+Probably.
