@@ -1,71 +1,74 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Mon, 10 Jun 2013 16:41:32 -0400
-Message-ID: <51B639FC.7030007@gmail.com>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com> <51B5D9A1.1080900@ensimag.fr> <vpqhah6hxjm.fsf@anie.imag.fr> <robbat2-20130610T162316-152176477Z@orbis-terrarum.net> <7vzjuxj21b.fsf@alter.siamese.dyndns.org> <20130610190102.GF12924@google.com> <CALkWK0neo-OF7P__T5u5oHrJgseJ-H5Zk=qbpDDYttdaaRu6gQ@mail.gmail.com>
-Reply-To: gitzilla@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] completion: remove ancient "ensure colon in COMP_WORDBREAKS" workaround
+Date: Mon, 10 Jun 2013 13:48:52 -0700
+Message-ID: <7vhah5g097.fsf@alter.siamese.dyndns.org>
+References: <1370822361-15637-1-git-send-email-szeder@ira.uka.de>
+	<20130610000954.GA6464@elie.Belkin> <20130610091419.GF2091@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 22:41:48 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Jun 10 22:49:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um8uQ-0006re-0l
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 22:41:46 +0200
+	id 1Um91P-0003Ul-Ed
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 22:48:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285Ab3FJUlg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 16:41:36 -0400
-Received: from mail-qe0-f53.google.com ([209.85.128.53]:52269 "EHLO
-	mail-qe0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752688Ab3FJUlf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 16:41:35 -0400
-Received: by mail-qe0-f53.google.com with SMTP id 1so4299818qee.26
-        for <git@vger.kernel.org>; Mon, 10 Jun 2013 13:41:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=3esruyr8PEmTqfF16/Ma0G9+StPZZ9nA0zB1aSE8hug=;
-        b=cs4cGJp5BVbO1ZWMr9emCoaCIWCcdr4tNfyuG1PoQ7/bmSViroEpykfie/1NY6v7bX
-         +sdOn+CsOMqYilqsfCiZ+BCP/2Y/HPG9iuc5kJEd3T0ya3/2Qw16LR6e3HeXP0ni0DMD
-         EXR5ByFNl6bYdnELmd+uY71PE7MwGZB1e+AiOjhSY8O7nzlHS9moaQ0/ak0kyUV0wlOO
-         A9zTfYPVhTqgucXzdR3dXHe2D6L9mH2DNfshfaFA841qh9ObB0Pq/QGb94ARYPlPyGAQ
-         ffM9cBfWQ3q6yr3296jsYfAe8g4K2yHiyYsr1AD+QolchTyp4s+Lqtz8011OYDwI/Ty3
-         Vwqw==
-X-Received: by 10.224.16.5 with SMTP id m5mr15372119qaa.90.1370896894189;
-        Mon, 10 Jun 2013 13:41:34 -0700 (PDT)
-Received: from [10.0.1.131] (50-88-155-14.res.bhn.net. [50.88.155.14])
-        by mx.google.com with ESMTPSA id y14sm15813752qac.0.2013.06.10.13.41.33
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 10 Jun 2013 13:41:33 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
-In-Reply-To: <CALkWK0neo-OF7P__T5u5oHrJgseJ-H5Zk=qbpDDYttdaaRu6gQ@mail.gmail.com>
+	id S1752095Ab3FJUsz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jun 2013 16:48:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59617 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750812Ab3FJUsz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jun 2013 16:48:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52D9526CA3;
+	Mon, 10 Jun 2013 20:48:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=xfZVsRW0iexz
+	e8jnF6a+H1RBNIM=; b=P+OkKmlCeeVmwyIG/T+IL4/ZB8WtemWb/7168Oe/AxgI
+	PSJsklMw+5hTm1OtUY1K1pibuHLJNsnLJWQtHfrejvq7poq6JSgRKyjm+EItrn3N
+	V0LJxwO4oIamAINujAwT3KUi/NrBhpgFGOtBTkTAwNXS7pBml+zpExD0zuWYEyU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=I4dYwX
+	CFn5rfsEj2qtu6JgigI/9zZecDDDsbo9cJWJJhlrpuLXzAgEKQdjfhdmcQUFRjmm
+	lNLkqpQiShR4xhaE+oj2FyfEhsdcS6Wv/BgkgTBJFETf1j32msaVQJnWxAV3tzgt
+	Ogx+ZLAPbLB5RQiAoDEw/1bKLzIJOsmxZrJ88=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47CE226C9F;
+	Mon, 10 Jun 2013 20:48:54 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B58E426C9E;
+	Mon, 10 Jun 2013 20:48:53 +0000 (UTC)
+In-Reply-To: <20130610091419.GF2091@goldbirke> ("SZEDER =?utf-8?Q?G=C3=A1b?=
+ =?utf-8?Q?or=22's?= message of
+	"Mon, 10 Jun 2013 11:14:19 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 29862E7A-D20F-11E2-B678-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227375>
 
-On 06/10/2013 03:45 PM, Ramkumar Ramachandra wrote:
-[...]
->
-> It is absolutely imperative to keep all our contributors productive,
-> and maximize output.
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-Why?
+> Anyway.  Although the completion script in Fedora's gvfs package migh=
+t
+> be fixed, there are other completion scripts making the same mistake,
+> so I'm afraid we should keep the workaround and drop this patch.
+> Moreover, we should even consider extending our workaround by adding
+> back '=3D' to COMP_WORDBREAKS, too.  Oh, well.
 
-A useful "product" with a maintainable code base are what seems to be 
-more important to a successful open source effort.
+Thanks.
 
-
-A Large Angry SCM
+Perhaps the summary of your problem analysis deserves to be added as
+a in-code comment to make sure others won't later try to remove it
+only by checking how old Fedora 9 is?
