@@ -1,76 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mingw: make mingw_signal return the correct handler
-Date: Mon, 10 Jun 2013 13:50:31 -0700
-Message-ID: <7v8v2hg06g.fsf@alter.siamese.dyndns.org>
-References: <7vtxld30f2.fsf@alter.siamese.dyndns.org>
-	<51AEE1C3.9020507@viscovery.net>
-	<20130605071206.GC14427@sigill.intra.peff.net>
-	<51B02D81.3000700@viscovery.net>
-	<20130606063754.GA20050@sigill.intra.peff.net>
-	<CAMP44s2L4EOG7aEOR8gqXeaHm7SeuPg=GQAWX3PByKKbtTHnwQ@mail.gmail.com>
-	<20130606064409.GA20334@sigill.intra.peff.net>
-	<7vy5anyx1w.fsf@alter.siamese.dyndns.org>
-	<20130606174032.GB32174@sigill.intra.peff.net>
-	<CABPQNSYLmFWkdgph6W7MwaSTe+zrU0AaJpj_v9z=cmvWu64HNA@mail.gmail.com>
-	<51B1B4DF.90705@viscovery.net>
-	<CABPQNSYE=Mvrmc44dZmKnB14KLh4A=HxWo2-xgnJRyj1Q+BJLg@mail.gmail.com>
-	<51B1CFD4.3030908@viscovery.net>
-	<CABPQNSasTdkmpeGWb7_wZK2cQhiOyF7bX5ObcBg5kHm0KBGS5w@mail.gmail.com>
-	<51B1DB2A.2060306@viscovery.net>
-	<CABPQNSa1-dna_b+q-U6jgYy7p6zeiT7dAwu1Mw47QAezSNYKqA@mail.gmail.com>
-	<51B568A1.9090409@viscovery.net>
+Subject: Re: [PATCH v3 1/2]  rm: better error message on failure for multiple files
+Date: Mon, 10 Jun 2013 13:55:48 -0700
+Message-ID: <7v4nd5fzxn.fsf@alter.siamese.dyndns.org>
+References: <1370879981-18937-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+	<7v8v2hkhqc.fsf@alter.siamese.dyndns.org>
+	<vpqtxl5dfrf.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: kusmabite@gmail.com, Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Jun 10 22:50:41 2013
+Cc: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	git@vger.kernel.org,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 10 22:55:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um92z-0004af-V8
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 22:50:38 +0200
+	id 1Um987-0008AQ-Mo
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 22:55:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752657Ab3FJUue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 16:50:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33741 "EHLO
+	id S1752370Ab3FJUzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 16:55:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55024 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752419Ab3FJUud (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 16:50:33 -0400
+	id S1751999Ab3FJUzv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 16:55:51 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AF5726DFE;
-	Mon, 10 Jun 2013 20:50:33 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B1C44271A7;
+	Mon, 10 Jun 2013 20:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=BU+OBv
-	TDfaboB5O7ZJ+6rLQ3wA/ZFMsfaVDpw2luDB84XBTMc4kdPufw3F4heJ30QVleIl
-	sPyRMQxjxfoy0i4ycB2fV9CIoW9XNiWTTAzDRRNMK4TgrbZve0uqGFfyjAUKYpfu
-	ECUT12pzBxRnnF+uzGV9t2B6KTmmwAQ7C8a7I=
+	:content-type; s=sasl; bh=uLaNBe/mrCW4RXQk+0LEVAPTGMw=; b=Z9q6kT
+	2MhaahHEB9BdQY5R6loseUqrGKPTMf5BfIi4Fsx08GkcEIXoWmz0gtarw/TTtVse
+	RmLiLPKiN2ecPK8QIbNlnez7OtCLFSSm0w6u8rwaUtYqsI0qyg1oRU0nQXGhclmH
+	tqGo4nimhEZVnpbKfoOI8cLpiJ6Z0rmdhr8/Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u0ZrOHZq5cGI52YN5q9NhCzZOxaBw3MW
-	Qp6JMYAX281gDIaNYzKF1B3NS4P7uhDdnh2c4Se0vslc+joRJUjzAGVdjcThQJCZ
-	+YZWVmZhdBg2B1pQnfceI4gswVMQ79604OApgy9+i5+cwtqC+C6/YsWDYLjbJo0l
-	Z10yUqSdozU=
+	:content-type; q=dns; s=sasl; b=qwV1IBMJWH4K0yop1QH2HJkjNsXWognP
+	yldg+tKrgsd7KEVdbuWusS2gqt+E56j42JCSAWZXZ2BuIKxIk/sCpddoeEgvl1oa
+	2re3x0bTir3Z3J92DNqisr4/DQq4z/H0j1mUOAed81c0EyLhm4r/sAf16DF07n5b
+	GW/dbqAgvOM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 012C326DFC;
-	Mon, 10 Jun 2013 20:50:33 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A77E1271A6;
+	Mon, 10 Jun 2013 20:55:50 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 766A226DFB;
-	Mon, 10 Jun 2013 20:50:32 +0000 (UTC)
-In-Reply-To: <51B568A1.9090409@viscovery.net> (Johannes Sixt's message of
-	"Mon, 10 Jun 2013 07:48:17 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1180E271A4;
+	Mon, 10 Jun 2013 20:55:49 +0000 (UTC)
+In-Reply-To: <vpqtxl5dfrf.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	10 Jun 2013 19:42:12 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6460BB64-D20F-11E2-B019-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 21AD02FE-D210-11E2-903D-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227378>
 
-Thanks.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>>> +{
+>>> +	if (files_list->nr) {
+>>> +		struct strbuf err_msg = STRBUF_INIT;
+>>> +		int i;
+>>> +		strbuf_addstr(&err_msg, main_msg);
+>>> +		for (i = 0; i < files_list->nr; i++)
+>>> +			strbuf_addf(&err_msg,
+>>> +				    "\n    %s",
+>>
+>> Is there an implication of having always 4 spaces here to l10n/i18n
+>> here?  I am wondering if it should be _("\n    %s").
+>
+> I'd say this is just formatting and should be the same in every
+> languages, but I'm far from an expert in the domain.
+
+After looking at the patch again I do not think 4-SP matters.  I was
+primarily worried if this was to align with some column of the first
+line of output, e.g.
+
+	error: lorem ipsum dolor sit amet, consectetur adipisicing
+               elit, sed do eiusmod tempor incididunt ut labore et
+               dolore magna aliqua.
+
+but that is not what this 4-SP indent is about, so it is OK.
+
+>>         test_expect_success 'rm files with different staged content' '
+>>                 cat >expect <<\-EOF &&
+>
+> (that should be -\EOF, not \-EOF I think)
+
+Sorry, my bad.  You are of course right.
+
+>>  (2) by using a dash '-' before the end-of-here-text marker, you can
+>>      align the body of here text with a leading tab (HT).
+>
+> This works because the list of files is aligned with spaces, but is
+> seems a bit fragile to me to use this -EOF on a text which uses
+> indentation. Anyway, I'm fine with both.
+
+True.
