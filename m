@@ -1,80 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 1/2]  rm: better error message on failure for multiple files
-Date: Mon, 10 Jun 2013 19:42:12 +0200
-Message-ID: <vpqtxl5dfrf.fsf@anie.imag.fr>
-References: <1370879981-18937-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
-	<7v8v2hkhqc.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: v3 [PATCH 1/2] status: introduce status.short to enable --short by default
+Date: Mon, 10 Jun 2013 11:02:24 -0700
+Message-ID: <7vvc5lj13j.fsf@alter.siamese.dyndns.org>
+References: <vpqehcaf0wr.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-	git@vger.kernel.org,
-	Jorge Juan Garcia Garcia 
-	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 10 19:43:04 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>, git@vger.kernel.org,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 10 20:02:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um67S-0000xM-Gq
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 19:43:02 +0200
+	id 1Um6QS-0006mG-8o
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 20:02:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754351Ab3FJRm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 13:42:58 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43810 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754342Ab3FJRm6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 13:42:58 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5AHgACF020355
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 10 Jun 2013 19:42:10 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Um66e-0006FK-LK; Mon, 10 Jun 2013 19:42:12 +0200
-In-Reply-To: <7v8v2hkhqc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 10 Jun 2013 10:17:47 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 10 Jun 2013 19:42:10 +0200 (CEST)
+	id S1754023Ab3FJSCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 14:02:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38239 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752436Ab3FJSC2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 14:02:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F526270DE;
+	Mon, 10 Jun 2013 18:02:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5t9PG+0C3aUcVvwOdTH2yNxIr1I=; b=IfDZkn
+	9cBxcpAt1LlT5vjNZfzgYZjZguGwTawaXcqr4kCDEmRCJfRZtGEhqo0QIKrPvl3Q
+	e5H+SNsRPt6rBGjqQvarohx8j46kHE8GH88ZCdxlBUJ1RoVIHr9/QzYxqPveQzGb
+	hPCVVInyhr7iNiRiTLi6ROkqkTQOdGbVaiRhY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=i7NpTZDz+tyk4UlIzynG9VnKMBYDfdO3
+	nSEDKBDLGjq8OcqVWtSPOnjseYBSRAQLBZKAkahh6RDzEvHdaRM5jV4oRa2EtAps
+	A4e8OFMVjsKKor7p3wmmigi/f6YOlB2LK8k2PeO7Ff/8oJ7br66duaAWul7QErNZ
+	7keolsjNCsg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 725BF270DD;
+	Mon, 10 Jun 2013 18:02:27 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D7FB8270DC;
+	Mon, 10 Jun 2013 18:02:26 +0000 (UTC)
+In-Reply-To: <vpqehcaf0wr.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	10 Jun 2013 17:20:04 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E8E4A106-D1F7-11E2-BE33-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227335>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
->> +{
->> +	if (files_list->nr) {
->> +		struct strbuf err_msg = STRBUF_INIT;
->> +		int i;
->> +		strbuf_addstr(&err_msg, main_msg);
->> +		for (i = 0; i < files_list->nr; i++)
->> +			strbuf_addf(&err_msg,
->> +				    "\n    %s",
+> y@ensimag.imag.fr writes:
 >
-> Is there an implication of having always 4 spaces here to l10n/i18n
-> here?  I am wondering if it should be _("\n    %s").
+>> To: y@ensimag.imag.fr
+>
+> Common mistake, but you're not supposed to answer "y" when you're
+> prompted for an email ;-).
 
-I'd say this is just formatting and should be the same in every
-languages, but I'm far from an expert in the domain. Maybe some
-right-to-left languages would need this.
-
->         test_expect_success 'rm files with different staged content' '
->                 cat >expect <<\-EOF &&
-
-(that should be -\EOF, not \-EOF I think)
-
->  (2) by using a dash '-' before the end-of-here-text marker, you can
->      align the body of here text with a leading tab (HT).
-
-This works because the list of files is aligned with spaces, but is
-seems a bit fragile to me to use this -EOF on a text which uses
-indentation. Anyway, I'm fine with both.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Didn't we introduce safety against this in v1.7.12.1 and later?  Is
+the new release taking more than 9 months to percolate, or are there
+still other codepaths that allow this to happen that we need to add
+further safety?
