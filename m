@@ -1,145 +1,63 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Different diff strategies in add --interactive
-Date: Mon, 10 Jun 2013 22:46:38 +0100
-Message-ID: <20130610214638.GK22905@serenity.lan>
-References: <20130610142825.GI22905@serenity.lan>
- <7v38sphiiw.fsf@alter.siamese.dyndns.org>
- <20130610211140.GD13333@sigill.intra.peff.net>
+From: Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Re: [PATCH 6/6] template: Fix comment indentation in pre-rebase hook
+Date: Mon, 10 Jun 2013 23:46:45 +0200
+Message-ID: <CAD77+gTv-x7ZKAR3PycDWNhqeWcnEFEhK290ndxeyqqkBfWfeQ@mail.gmail.com>
+References: <1370889365-6239-1-git-send-email-richih.mailinglist@gmail.com>
+ <1370889365-6239-7-git-send-email-richih.mailinglist@gmail.com> <7vli6hg2ut.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 10 23:46:51 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 10 23:47:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Um9vO-0007nu-Lq
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 23:46:51 +0200
+	id 1Um9vk-000866-Qc
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Jun 2013 23:47:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753492Ab3FJVqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 17:46:47 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:39099 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752814Ab3FJVqq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 17:46:46 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id B401660650E;
-	Mon, 10 Jun 2013 22:46:45 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jvMGE8aJtG4z; Mon, 10 Jun 2013 22:46:45 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id D6C356064B8;
-	Mon, 10 Jun 2013 22:46:40 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20130610211140.GD13333@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753824Ab3FJVrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 17:47:08 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:43187 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753575Ab3FJVrH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 17:47:07 -0400
+Received: by mail-wi0-f179.google.com with SMTP id hj3so1144124wib.0
+        for <git@vger.kernel.org>; Mon, 10 Jun 2013 14:47:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=dFurDIi0y1+VtCfWZaISDB9bGW9ws4bR3QMvsvgCe38=;
+        b=k10/3t3qhcJNMn71IEi/WfWrMOr77Rcs9adKyq6YTTiXphT0pqMOiMmHNvRJz/UUgv
+         VEBwT6oF332zgKO5dFsrb/RiBjrpODzeLkrYgJQTvL3awa9f3l7ES0WdI5YVTAx81M4C
+         swF/EcHsyw+5XUp+TCjhcstobQP4rwHNp6aXsdD4aGgmq7Uc0yix+POVpYgIjqIhBnpr
+         43U3a+Yb+hZbF5tVFKw7BRWvlgslaJyOsKW1/T+tpbx0Waxmun2LS1iUd7JCg7aoY0Rr
+         PZhf3kfKi70CsnnWPAOibfG1/c5e1BCVIhQ+3VJ1MGY9kixRipgYrBA4AAzJ90wTQ6bS
+         8cDg==
+X-Received: by 10.194.216.39 with SMTP id on7mr6560356wjc.4.1370900825353;
+ Mon, 10 Jun 2013 14:47:05 -0700 (PDT)
+Received: by 10.194.17.9 with HTTP; Mon, 10 Jun 2013 14:46:45 -0700 (PDT)
+In-Reply-To: <7vli6hg2ut.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227391>
 
-On Mon, Jun 10, 2013 at 05:11:41PM -0400, Jeff King wrote:
-> On Mon, Jun 10, 2013 at 12:28:55PM -0700, Junio C Hamano wrote:
-> > John Keeping <john@keeping.me.uk> writes:
-> > 
-> > > I think the first thing to do is read the "diff.algorithm" setting in
-> > > git-add--interactive and pass its value to the underlying diff-index and
-> > > diff-files commands, but should we also have a command line parameter to
-> > > git-add to specify the diff algorithm in interactive mode?  And if so,
-> > > can we simply add "--diff-algorithm" to git-add, or is that too
-> > > confusing?
-> > 
-> > Making "git add--interactive" read from diff.algorithm is probably a
-> > good idea, because the command itself definitely is a Porcelain.  We
-> > would probably need a way to defeat the configured default for
-> > completeness, either:
-> > 
-> >     git add -p --diff-algorithm=default
-> >     git -c diff.algorithm=default add -p
-> > 
-> > but I suspect that a new option to "git add" that only takes effect
-> > together with "-p" is probably an overkill, only in order to support
-> > the former and not having to say the latter, but I can be persuaded
-> > either way.
-> 
-> Worse than that, you would need to add such an option to "checkout -p",
-> "reset -p", "stash -p", etc. I think the latter form you suggest is
-> probably acceptable in this case.
+On Mon, Jun 10, 2013 at 9:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-That's what I'm planning to do at the moment, if anyone wants to extend
-it further in the future then that can be built on top.
 
-> Overall, I think respecting diff.algorithm in add--interactive is a very
-> sane thing to do. I would even be tempted to say we should allow a few
-> other select diff options (e.g., fewer or more context lines). If you
-> allowed diff options like this:
-> 
->   git add --patch="--patience -U5"
-> 
-> that is very flexible, but I would not want to think about what the code
-> does when you pass --patch="--raw" or equal nonsense.
+> I think offsetting the actual commands to the right is correct, but
+> "if these match" and "if this is empty" should be flushed to left as
+> this patch shows.
 
-An alternative would be to permit them to be set from within the
-interactive UI.  I'd find it quite useful to experiment with various
-diff options when I encounter a hunk that isn't as easy to pick as I'd
-like.  I expect it would be very hard to do that on a per-hunk basis,
-although per-file doesn't seem like it would be too hard.
+I actually considered this and decided against it as it seemed to be
+deliberate. Should I re-roll and re-send?
 
-I don't intend to investigate that though - respecting diff.algorithm is
-good enough for my usage.
+I will gladly re-send the whole, or part of the, series once I know
+which patches are OK and which need more work.
 
-> But I cannot off the top of my head think of other options besides -U
-> that would be helpful. I have never particularly wanted it for "add -p",
-> either, though I sometimes generate patches to the list with a greater
-> number of context lines when I think it makes the changes to a short
-> function more readable.
 
---function-context might also be useful, but that's in the same category
-as -U.
-
-The patch I'm using is below.  I'm not sure how we can test this though;
-it seems fragile to invent a patch that appears different with different
-diff algorithms.  Any suggestions?
-
--- >8 --
- git-add--interactive.perl | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index d2c4ce6..0b0fac2 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -44,6 +44,8 @@ my ($diff_new_color) =
- 
- my $normal_color = $repo->get_color("", "reset");
- 
-+my $diff_algorithm = ($repo->config('diff.algorithm') or 'default');
-+
- my $use_readkey = 0;
- my $use_termcap = 0;
- my %term_escapes;
-@@ -731,6 +733,9 @@ sub run_git_apply {
- sub parse_diff {
- 	my ($path) = @_;
- 	my @diff_cmd = split(" ", $patch_mode_flavour{DIFF});
-+	if ($diff_algorithm ne "default") {
-+		push @diff_cmd, "--diff-algorithm=${diff_algorithm}";
-+	}
- 	if (defined $patch_mode_revision) {
- 		push @diff_cmd, $patch_mode_revision;
- 	}
--- 
-1.8.3.779.g691e267
+Richard
