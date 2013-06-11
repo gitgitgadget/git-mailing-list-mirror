@@ -1,97 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Tue, 11 Jun 2013 12:06:41 -0700
-Message-ID: <7vsj0oa2m6.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
-	<51B6AA7F.1060505@alum.mit.edu>
-	<CALkWK0nNn8Rcu4JpV4r+0ct+_cuW3aUHXKV4bcB-Hn6Xg8Y+bA@mail.gmail.com>
-	<87li6g969j.fsf@linux-k42r.v.cablecom.net>
-	<CALkWK0kMvac7Sp3QwvEm+J_-Hj7JAn-AY-juDDw1HR3oQ+hamA@mail.gmail.com>
-	<51B736FA.5010407@alum.mit.edu>
-	<CALkWK0n=gbfeG87GCR0A=fZY5osjndLo9TPv1BH1uAf37eQ8=g@mail.gmail.com>
-	<51B76FD6.7070304@alum.mit.edu>
-	<CALkWK0kAhB8mimKMrW9i8JJkz+L7-jMDaes_U8bzjWyNq88fEQ@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] build: get rid of the notion of a git library
+Date: Tue, 11 Jun 2013 14:15:12 -0500
+Message-ID: <CAMP44s3QUjs_uOEF++NfSQbNSHae8y1Nxt48CWtHi8YdEiq_zA@mail.gmail.com>
+References: <1370712574-27688-1-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0mA7MXQv1k5bFpZLARDOHxU5kzKFXzcyUfb6NLZZY-=FA@mail.gmail.com>
+	<CAMP44s0cozMsTo7KQAjnqkqmvMwMw9D3SZrVxg48MOXkH9UQJQ@mail.gmail.com>
+	<CALkWK0=7PRndNc7XQ-PCPbVCp9vck909bA561JhQG6uXXj1n4g@mail.gmail.com>
+	<20130609151235.GA22905@serenity.lan>
+	<CAMP44s0L9nQxp5OeK8uT4Ls5WUerCjVpR9uONUcOwvTD6k7Jfg@mail.gmail.com>
+	<51B4BBB7.8060807@lyx.org>
+	<20130610214504.GG13333@sigill.intra.peff.net>
+	<CAMP44s2-94LTu54oX1_m14tnE3KfwK+N=pPxgUSqGCgd51EA5A@mail.gmail.com>
+	<20130610220627.GB28345@sigill.intra.peff.net>
+	<7vk3m1efda.fsf@alter.siamese.dyndns.org>
+	<7v8v2hedou.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1HM0zFvkGmaHrX2Wq2JSzDNk8uwNSz3bNo12eWxDcL8A@mail.gmail.com>
+	<7v4nd5ecmy.fsf@alter.siamese.dyndns.org>
+	<7vwqq1ct0g.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0r96ByEs3+N1Qo+O18rOmT72rHk4zAEFAyFdU_DsQ8wA@mail.gmail.com>
+	<7vtxl4blht.fsf@alter.siamese.dyndns.org>
+	<CAMP44s02PqGFNmrGEcJVT6xcQHx8k4NYqJ_TtOTUEY8XHPj0BA@mail.gmail.com>
+	<7vppvsbkc3.fsf@alter.siamese.dyndns.org>
+	<CAMP44s02KaMaMUz4618n5RqVqVSXzr_D9rPS1uesy2XEdqnq5A@mail.gmail.com>
+	<CA+55aFwYAFuz5p0=8QiAFDy4e66f1pF3v=D5nnL6+3um7Z3L2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Git List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Vincent van Ravesteijn <vfr@lyx.org>,
+	John Keeping <john@keeping.me.uk>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 21:06:49 2013
+	Duy Nguyen <pclouds@gmail.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jun 11 21:15:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmTu4-0001od-JT
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 21:06:48 +0200
+	id 1UmU2M-00008i-R0
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 21:15:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753450Ab3FKTGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 15:06:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36867 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752574Ab3FKTGn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 15:06:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E62F245A2;
-	Tue, 11 Jun 2013 19:06:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MBe2xMG0Tr2XXw/pyzWN/ZQ/IR4=; b=GzpHrw
-	gwDIVPoyfBGHtzimaaH6lT0wtK6kK9zNkF3jw6ircuIpaLvl8nNXjohkovR/TXtS
-	kE16N+afISqvT6eW7VE64oYDM7YA7kmAULJ/eeyCH+ivi0psTI8sT9wsqmg2tBUH
-	oEda19Snx9lnfI3jecMXeVe1vboTj9WVgw6w0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bGuQmdfEIriNw6o70uFVrRWj5hdEHasE
-	1LbAz8M46DSabdIviqp+/BleknsZXQwysX4j09Qsecm4Z5XzHTUx2GidFsqSTP67
-	qZbNuwTN+LzQRxYrpU5xszYlOZFPPiub94BYD9AyLxoHH55Npv49wjFibElJbMjP
-	rOjzkGqAplM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42281245A0;
-	Tue, 11 Jun 2013 19:06:43 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9DB202459C;
-	Tue, 11 Jun 2013 19:06:42 +0000 (UTC)
-In-Reply-To: <CALkWK0kAhB8mimKMrW9i8JJkz+L7-jMDaes_U8bzjWyNq88fEQ@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Wed, 12 Jun 2013 00:25:52 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0D859B6E-D2CA-11E2-BE1C-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754631Ab3FKTPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 15:15:17 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:64216 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751991Ab3FKTPP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 15:15:15 -0400
+Received: by mail-lb0-f174.google.com with SMTP id x10so5810880lbi.19
+        for <git@vger.kernel.org>; Tue, 11 Jun 2013 12:15:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Y785j9N5JabPQkb/Ly88sSZYXRXRB4I5lADw9ifz4j8=;
+        b=PyVTYRg5IEdvg+osw4JAWM3FB87MU4HeEPjNhRWbVqjkg8D0pN1deCHHNU8XYfd4D2
+         7766AeXYpIsTNAVeBfiE0CnKAEZx2SbNPCrpcBmNMkJeys6a1kC+RCpT7jpz18cHBTlj
+         ydiPmpUaJ00icrNPXMylaWo3vg8vyFAumT84C/9uMXLbOvzanC0Fi1GM7UVLckuSpn1i
+         lINIQCzO+oE5vgHf6TRBk+yfv/0GUuQGdU6zmgcQQwlIAfxX3hF9VZEen+mu0n9V+mhg
+         pz9/Tk2gD5ivZ6NLPgPT7RkAjAMpqV+4RW4qXSN93/8ejghOEWcewYodW9WNZI+Jw+UE
+         zNJQ==
+X-Received: by 10.112.219.133 with SMTP id po5mr9221376lbc.80.1370978113028;
+ Tue, 11 Jun 2013 12:15:13 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Tue, 11 Jun 2013 12:15:12 -0700 (PDT)
+In-Reply-To: <CA+55aFwYAFuz5p0=8QiAFDy4e66f1pF3v=D5nnL6+3um7Z3L2g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227500>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-
-> Michael Haggerty wrote:
->> I stopped reading your email here.  I've read enough tactless emails
->> over the last few days, but to be asked to read an email that was
->> *intentionally* written tactlessly is too detrimental to my quality of life.
+On Tue, Jun 11, 2013 at 1:14 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+> On Tue, Jun 11, 2013 at 11:06 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>>
+>> Moreover, if you are going to argue that we shouldn't be closing the
+>> door [...]
 >
-> I'm sorry, but the problem has no solution then.
->
-> The "problem" we are dealing with is irrational and/or out-of-tone
-> emails.  Unless you possess some mind-control mechanism that will get
-> all contributors to write emails that conform to your standards, there
-> is no solution.
+> Felipe, you saying "if you are going to argue ..." to anybody else is
+> kind of ironic.
 
-Actually there is.  Just ignore the troll.
+Supposing the other side's argument is correct is a standard
+discussing technique.
 
-In the past few days, I've learned to mostly skim mails from you and
-Felipe on this topic (and perhaps some other topics) just enough to
-see if there is anything worth reading and/or responding to in them,
-and have ignored most of them.
+> Why is it every thread I see you in, you're being a dick and arguing
+> for some theoretical thing that nobody else cares about?
 
-That gave me some time back to do the real work.
+I don't know. I've sent 800 patches in the last three months (patches,
+not email comments), and you pick this one to reply to. Maybe because
+you enjoy insulting people?
 
-If you argue that we should not punish "people" but "bad behaviour",
-that is fine.  The "From:" field, combined with the "Subject: "
-field, is often a pretty good indication to tell if a message is
-worth reading and/or responding to, so ignoring such messages and
-ignoring troll senders practically amount to the same thing.
+> This whole thread has been one long argument about totally pointless
+> things that wouldn't improve anything one way or the other. It's
+> bikeshedding of the worst kind. Just let it go.
+
+Why don't you ask Junio to let it go? If it's irrelevant, than it
+doesn't matter if this patch is applied or not. You say it's
+bike-shedding, that implies that Junio likes red, and I like blue, and
+both are equally useless. So let's go for blue then.
+
+Presumably Junio doesn't agree with you, he does truly think it should
+be red, in fact, he doesn't think it's just a color, it's something
+important, and I agree, and apparently other people in the mailing
+list also agree, as most of them have voiced their opinion that red is
+the color.
+
+Now, do you have something of value to say which of the two options
+should be, or are you just going to engage in double standards and
+personal attacks?
+
+If you truly think this is bikeshedding, at least be fair and complain
+about that to the people that argue for red, not just the ones that
+argue for blue.
+
+-- 
+Felipe Contreras
