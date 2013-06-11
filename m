@@ -1,77 +1,126 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Tue, 11 Jun 2013 12:55:20 -0700
-Message-ID: <CA+sFfMeN+kzjWx1BZW1jvgZr2GaXDLQkzxTrWx8f5=8LPjMb1g@mail.gmail.com>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
-	<51B6AA7F.1060505@alum.mit.edu>
-	<CALkWK0nNn8Rcu4JpV4r+0ct+_cuW3aUHXKV4bcB-Hn6Xg8Y+bA@mail.gmail.com>
-	<87li6g969j.fsf@linux-k42r.v.cablecom.net>
-	<CALkWK0kMvac7Sp3QwvEm+J_-Hj7JAn-AY-juDDw1HR3oQ+hamA@mail.gmail.com>
-	<51B736FA.5010407@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] build: get rid of the notion of a git library
+Date: Tue, 11 Jun 2013 12:59:48 -0700
+Message-ID: <7vehc8a05n.fsf@alter.siamese.dyndns.org>
+References: <1370712574-27688-1-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0mA7MXQv1k5bFpZLARDOHxU5kzKFXzcyUfb6NLZZY-=FA@mail.gmail.com>
+	<CAMP44s0cozMsTo7KQAjnqkqmvMwMw9D3SZrVxg48MOXkH9UQJQ@mail.gmail.com>
+	<CALkWK0=7PRndNc7XQ-PCPbVCp9vck909bA561JhQG6uXXj1n4g@mail.gmail.com>
+	<20130609151235.GA22905@serenity.lan>
+	<CAMP44s0L9nQxp5OeK8uT4Ls5WUerCjVpR9uONUcOwvTD6k7Jfg@mail.gmail.com>
+	<51B4BBB7.8060807@lyx.org>
+	<20130610214504.GG13333@sigill.intra.peff.net>
+	<CAMP44s2-94LTu54oX1_m14tnE3KfwK+N=pPxgUSqGCgd51EA5A@mail.gmail.com>
+	<20130610220627.GB28345@sigill.intra.peff.net>
+	<7vk3m1efda.fsf@alter.siamese.dyndns.org>
+	<7v8v2hedou.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1HM0zFvkGmaHrX2Wq2JSzDNk8uwNSz3bNo12eWxDcL8A@mail.gmail.com>
+	<7v4nd5ecmy.fsf@alter.siamese.dyndns.org>
+	<7vwqq1ct0g.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0r96ByEs3+N1Qo+O18rOmT72rHk4zAEFAyFdU_DsQ8wA@mail.gmail.com>
+	<7vtxl4blht.fsf@alter.siamese.dyndns.org>
+	<CAMP44s02PqGFNmrGEcJVT6xcQHx8k4NYqJ_TtOTUEY8XHPj0BA@mail.gmail.com>
+	<7vppvsbkc3.fsf@alter.siamese.dyndns.org>
+	<CAMP44s02KaMaMUz4618n5RqVqVSXzr_D9rPS1uesy2XEdqnq5A@mail.gmail.com>
+	<CA+55aFwYAFuz5p0=8QiAFDy4e66f1pF3v=D5nnL6+3um7Z3L2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Vincent van Ravesteijn <vfr@lyx.org>,
+	John Keeping <john@keeping.me.uk>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 21:55:28 2013
+	Duy Nguyen <pclouds@gmail.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jun 11 22:00:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmUf9-00065e-AN
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 21:55:27 +0200
+	id 1UmUjV-00014U-PT
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 21:59:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755889Ab3FKTzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 15:55:22 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:60900 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755248Ab3FKTzV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 15:55:21 -0400
-Received: by mail-wi0-f171.google.com with SMTP id hj3so2079982wib.10
-        for <git@vger.kernel.org>; Tue, 11 Jun 2013 12:55:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=morV030FQbZf9cneJgGjCy+XCewF+dO0dlPW8/gD0+8=;
-        b=qxof1eQBwGaZvGiGP7C7IIPFQtDj3+zxGJMv9+ah8fMURUMJpYdZDbnzuq+smOHASG
-         Swl0246H+Ny9IUir/4166byBO25wj8qXeeebyj/4jHTajTEIRvj9Y9m9UbPdOecg4Ugl
-         pREnSwpHgQS0Z2WYgTj7zyQT4G5OFVWM4/pyZC//JCg/bGliUu2dCtYyE8C5Qslb3rTm
-         50jCaHqNzdqrJMLVfSUYb7bIrcXiWU5wmv01cpP6rqKMOknXPjglyNOHOmLbBuM4scT5
-         WR9KRHzlHYBW6FoNBoq4KpalrEbBgu2mQx5XxKW3FpFm76gd/Soq30eaDcetxqG1FeGw
-         Lvpw==
-X-Received: by 10.180.39.236 with SMTP id s12mr2405586wik.14.1370980520222;
- Tue, 11 Jun 2013 12:55:20 -0700 (PDT)
-Received: by 10.194.71.170 with HTTP; Tue, 11 Jun 2013 12:55:20 -0700 (PDT)
-In-Reply-To: <51B736FA.5010407@alum.mit.edu>
+	id S1755994Ab3FKT7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 15:59:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57708 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755964Ab3FKT7w (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 15:59:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25C632487A;
+	Tue, 11 Jun 2013 19:59:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7Rixeyq5zR7NHy/9uIxWXRsyl7Y=; b=PZb3PW
+	sFNVIiEa02sFb9hdcaWpmE0ergXC94GSAqX3WBL1cli9fuzLy7oERXxhbQg8OhyC
+	Rh57k0kD6Y4ewwlgVuolKy0JiBFABf1DVeYSCjmzOCyjJURgehLPkA1//V57l58Z
+	KEgHL2fiOH9EmYa4uc7+Iqx+sZjhanMMgpaXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MI8xiaNEObdt9wmHKnmyaGaKr0bNOoRF
+	BvGW7uYCzoDN8ZNduTbHQZIdCecTcp5SNUbJ9p2h7XBbuOfhZeSnValaLZNRutkw
+	WQuSQRj7y7WkKsWvXoPFMMDqohqj/fBdgJdbxf7W3NX9GblBZ4rNKCaLyhuQGNTA
+	tSPw3Yh49+c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1909024879;
+	Tue, 11 Jun 2013 19:59:51 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A1F324878;
+	Tue, 11 Jun 2013 19:59:50 +0000 (UTC)
+In-Reply-To: <CA+55aFwYAFuz5p0=8QiAFDy4e66f1pF3v=D5nnL6+3um7Z3L2g@mail.gmail.com>
+	(Linus Torvalds's message of "Tue, 11 Jun 2013 11:14:54 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 79911DF4-D2D1-11E2-8FD6-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227509>
 
-On Tue, Jun 11, 2013 at 7:40 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> At the risk of being
-> presumptuous myself, I suggest that you show a copy of your email to
-> somebody whom you know and respect in the real world, somebody who is
-> not immersed in the Git community meltdown.  For example, somebody like
-> your mother or father, or a teacher whom you respect, or a member of
-> clergy if you are so inclined.  Ask that person's opinion about your email.
->
-> It is so easy to lose perspective in the Internet.
+> This whole thread has been one long argument about totally pointless
+> things that wouldn't improve anything one way or the other. It's
+> bikeshedding of the worst kind. Just let it go.
 
-Such excellent advice.  Even if the advice is not taken literally, it
-is probably enough to just imagine how that person whom you respect
-would respond to the words in your emails.  I am sure I do not do this
-enough in my own communications.
+The proposal to move sequencer.c to builtins/sequencer.c and then
+adding a filter in Makefile to exclude so that "git-sequencer" is
+not built is "it wouldn't improve anything one way or the other".
+It is to throw in something into a set to which it does not belong,
+and then working around that mistake with another kludge.
 
-I just wanted to draw attention to this wonderful suggestion again.
-Sometimes it is necessary to take a step back when discussions get
-heated, to regain perspective.
+The problem that triggered the wrong solution actually is real,
+however.
 
--Brandon
+A function that sequencer.c (in libgit.a so that it could be used by
+standalone) may want to use in the future currently lives in
+builtin/notes.c.  If you add a call to that function to sequencer.c
+without doing anything else, standalones like git-upload-pack will
+stop linking correctly.  The git-upload-pack wants the revision
+traversal machinery in revision.o, which in turn wants to be able to
+see log-tree.o, which in turn wants to link with sequencer.o to see
+one global variable (there may be other dependencies).  All of these
+objects are currently in libgit.a so that both builtins and standalones
+can use them.
+
+Moving sequencer.c to builtin/ is not even a solution.  Linking
+git-upload-pack will still pull in builtin/notes.o along with
+cmd_notes(), which is not called from main(); as you remember,
+cmd_foo() in all builtin/*.o are designed to be called from
+git.c::main().
+
+There is only one right solution.  If a useful function is buried in
+builtin/*.o as a historical accident (i.e. it started its life as a
+helper for that particular command, and nobody else used it from
+outside so far) and that makes it impossible to use the function
+from outside builtin/*.o, refactor the function and its callers and
+move it to libgit.a.
+
+So I do not think this is not even a bikeshedding.  Just one side
+being right, and the other side continuing to repeat nonsense
+without listening.
