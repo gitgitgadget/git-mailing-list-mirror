@@ -1,137 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] build: get rid of the notion of a git library
-Date: Mon, 10 Jun 2013 18:53:35 -0700
-Message-ID: <7vwqq1ct0g.fsf@alter.siamese.dyndns.org>
-References: <1370712574-27688-1-git-send-email-felipe.contreras@gmail.com>
-	<CALkWK0mA7MXQv1k5bFpZLARDOHxU5kzKFXzcyUfb6NLZZY-=FA@mail.gmail.com>
-	<CAMP44s0cozMsTo7KQAjnqkqmvMwMw9D3SZrVxg48MOXkH9UQJQ@mail.gmail.com>
-	<CALkWK0=7PRndNc7XQ-PCPbVCp9vck909bA561JhQG6uXXj1n4g@mail.gmail.com>
-	<20130609151235.GA22905@serenity.lan>
-	<CAMP44s0L9nQxp5OeK8uT4Ls5WUerCjVpR9uONUcOwvTD6k7Jfg@mail.gmail.com>
-	<51B4BBB7.8060807@lyx.org>
-	<20130610214504.GG13333@sigill.intra.peff.net>
-	<CAMP44s2-94LTu54oX1_m14tnE3KfwK+N=pPxgUSqGCgd51EA5A@mail.gmail.com>
-	<20130610220627.GB28345@sigill.intra.peff.net>
-	<7vk3m1efda.fsf@alter.siamese.dyndns.org>
-	<7v8v2hedou.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1HM0zFvkGmaHrX2Wq2JSzDNk8uwNSz3bNo12eWxDcL8A@mail.gmail.com>
-	<7v4nd5ecmy.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v5 00/36] Massive improvents to rebase and cherry-pick
+Date: Mon, 10 Jun 2013 22:52:21 -0500
+Message-ID: <CAMP44s0+Qz5urzUtv-ZQr-4r-jzYMcnXD4=8f51sQbXdEyQvKg@mail.gmail.com>
+References: <1370805890-3453-1-git-send-email-felipe.contreras@gmail.com>
+	<CAMP44s2nbo97qFenwm3RaHYQ4K14knZpSvpLPPM3uPiFSRinuQ@mail.gmail.com>
+	<CABURp0p7axsFHRLpXBCAZaMpeE1Ae5N1wNugEe3vsHCtX6_7EQ@mail.gmail.com>
+	<CAMP44s10T55_OBQrzXg6jwPrtJh_J9dJnTfDKJhkUc_oCm_cOA@mail.gmail.com>
+	<CABURp0qG6AqR-y1YLB0FdX-=kniHoZBfwUs0d7gPnfDfh9Pajw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Vincent van Ravesteijn <vfr@lyx.org>,
-	John Keeping <john@keeping.me.uk>,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 03:53:45 2013
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 11 05:52:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmDmK-0005ZN-5o
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 03:53:44 +0200
+	id 1UmFdF-0001jX-Ko
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 05:52:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754348Ab3FKBxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 21:53:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64242 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753996Ab3FKBxi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 21:53:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39E1F14AA8;
-	Tue, 11 Jun 2013 01:53:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eTcqmk6jneXER1B8+LNMHgEOGbg=; b=H/Yald
-	gPJinxHWzNoPU7yZcVmZotc9Hj1Y/m7NhHoNl8BwhKTARVMZnlyjXuFiOd4DOigY
-	qVhi0mrmbDsSmzuBKz43CwqoEyFvvR0gJUb1hWvnsloO/oPJBxM5aSRwwWpdxEdf
-	NsTfTyBg35Vq6QQUyUzlUUL4kv/PnZtW5lZso=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wBr7AuNBYkBttFdTizXShgp+RX9PQzpH
-	78vcaEfS2sHsZ3qZBQ3k+/SffBVBkMRdIHAVNlWkzjgzl4KDmPuo4ZmZVnqJMm2/
-	xgh4Vm4bo13vk+ckcn5acLsD/DOyPz4/frLKn4xtvvSrcuBSY8iWtbjBHO3WwtM+
-	SLzPUaFxBas=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 307AB14AA7;
-	Tue, 11 Jun 2013 01:53:38 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5E4D014AA6;
-	Tue, 11 Jun 2013 01:53:37 +0000 (UTC)
-In-Reply-To: <7v4nd5ecmy.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 10 Jun 2013 17:04:21 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BB7B52AE-D239-11E2-AA0E-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753658Ab3FKDwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 23:52:25 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:41524 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751737Ab3FKDwY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 23:52:24 -0400
+Received: by mail-lb0-f173.google.com with SMTP id v1so2184226lbd.4
+        for <git@vger.kernel.org>; Mon, 10 Jun 2013 20:52:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5TdIOHWeQMQSjudKP4/6CUg/L10in/MdwGItw6L/DLg=;
+        b=Y5RHbKpIV89ygByoLzXii9n/My4v/477OwdI9SrcgpSmYLTa+VHX/rx0V0p9yGnjoc
+         FP+um+7qSrESgUdO/506wYTWCfmODM64Mb4pP1xbYv03IHzR7xBSKlSuRABHZqQusJuK
+         ZlduAkTFtyPIw9GntwNcIYHBlorHQEN31CjU0tGIEzXSyoMMl/eX0ttEj6p2ndNQgQEd
+         kvHh8AfY4YBbwETNCUZVXUc1YvaIg3WQXoi/LMNS44F+LGbsC1Ka5H4RYhmft3QKHhMW
+         G070Q78zHQcL7+R+nLM6va9Slvvxla8WV4KwIhZou5vhslThYnvVCskH4gKioqynkv3l
+         9dpA==
+X-Received: by 10.112.219.133 with SMTP id po5mr7649856lbc.80.1370922741639;
+ Mon, 10 Jun 2013 20:52:21 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Mon, 10 Jun 2013 20:52:21 -0700 (PDT)
+In-Reply-To: <CABURp0qG6AqR-y1YLB0FdX-=kniHoZBfwUs0d7gPnfDfh9Pajw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227411>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> And I do not see the reason why builtin/*.o should not depend on
-> each other.  It is not messed up at all.  They are meant to be
-> linked into a single binary---that is what being "built-in" is.
+On Mon, Jun 10, 2013 at 8:09 PM, Phil Hord <phil.hord@gmail.com> wrote:
+> On Mon, Jun 10, 2013 at 7:43 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> On Mon, Jun 10, 2013 at 5:55 PM, Phil Hord <phil.hord@gmail.com> wrote:
+>>> On Sun, Jun 9, 2013 at 3:37 PM, Felipe Contreras
+>>> <felipe.contreras@gmail.com> wrote:
+>>>>
+>>>> On Sun, Jun 9, 2013 at 2:24 PM, Felipe Contreras
+>>>> <felipe.contreras@gmail.com> wrote:
+>>>> > Same as before, but:
+>>>>
+>>>> Also, remove the patches from Martin von Zweigbergk, because
+>>>> apparently some people have trouble understanding that they were not
+>>>> part of this series.
+>>>
+>>> Please try not to sound disgruntled. This attitude is toxic. You have
+>>> turned this change into a complaint: that "some people have trouble
+>>> understanding" which shows a genuine lack of understanding and
+>>> compassion on your part.  Instead you can phrase your change notes
+>>> more helpfully if you make changes only when you yourself actually
+>>> believe the change should be made.  If you cannot do this, perhaps you
+>>> can pretend.
+>>
+>> That would be dishonest. Moreover, there wasn't a good reason to
+>> remove these patches, I made it clear I added those patches only to
+>> make sure the real patches of this series worked correctly. Also, I
+>> clarified that to Thomas Rast[1], only to receive a totally
+>> unconstructive comment[2].
+>>
+>> Why don't you ask Thomas Rast to be more constructive[2]?
+>>
+>> Then Johan Herland uses that as an example of a constructive
+>> comment[3]. Why don't you correct Johan Herland?
 >
-> A good way forward, the way it *SHOULD* be, is to slim the builtin/*.o
-> by moving parts that do not have to be in the single "git" binary
-> but are also usable in standalone binaries out of them.
+> I do not see what their comments have to do with your attitude.
 
-Actually, as long as these pieces are currently used by builtins,
-moving them (e.g. init_copy_notes_for_rewrite()) out of builtin/*.o 
-will not make these parts not to be in the single "git" binary at
-all, so the above is grossly misstated.
+My attitude is fine. I sent a lot of patches, and I made clear that
+some of them were meant only to test the rest. And I clarified that
+twice.
 
- - There may be pieces of usefully reusable code buried in
-   builtin/*.o;
+There's nothing wrong with that.
 
- - By definition, any code (piece of data or function definition) in
-   builtin/*.o cannot be used in standalone binaries, because all of
-   builtin/*.o expect to link with git.o and expect their cmd_foo()
-   getting called from main in it;
+> Aren't your own man with cogent self-will and personal responsibility?
+>  Why should I also have to consider these other emails which I have
+> not bothered to read yet?
 
- - By moving the useful reusable pieces ont of builtin/*.o and
-   adding them to libgit.a, these pieces become usable from
-   standalone binaries as well.
+Don't be that girlfriend that brings the times you haven't picked up
+the towel properly when talking about something completely and totally
+different.
 
-And that is the reason why slimming builtin/*.o is the way it
-*SHOULD* be.
+When talking about the attitude in *this* patch series, limit yourself
+to *this* patch series.
 
-Another thing to think about is looking at pieces of data and
-functions defined in each *.o files and moving things around within
-them.  For example, looking at the dependency chain I quoted earlier
-for sequencer.o to build upload-pack, which is about responding to
-"git fetch" on the sending side:
+>> No, you pick the easy target: me.
+>
+> You seem to have mistaken me for someone else.  Moreover, you seem to
+> have mistaken you for someone else.  You are the least easy target I
+> know of on this list.
 
-        upload-pack.c   wants handle_revision_opt etc.
-        revision.c      provides handle_revision_opt
-                        wants name_decoration etc.
-        log-tree.c      provides name_decoration
-                        wants append_signoff
-        sequencer.c     provides append_signoff
+> Everyone else seems open to community standards.
 
-It is already crazy. There is no reason for the pack sender to be
-linking with the sequencer interpreter machinery. If the function
-definition (and possibly other ones) are split into separate source
-files (still in libgit.a), git-upload-pack binary does not have to
-pull in the whole sequencer.c at all.
+And yet you try to correct me, who did nothing wrong. And ignore the
+transgressions of the other people, whom I already demonstrated
+actually *did* do something wrong. How convenient of you to not
+mention my arguments *at all*.
 
-Coming back to the categorization Peff earlier made in the thread, I
-think I am OK with adding new two subdirectories to the root level,
-i.e.
+>> I already dd more than my fair share by carrying these 36 patches
+>> through several iterations, yet you ask *more* of me. Why don't you
+>> ask more of the people that just hit reply on their MUA?
+>>
+>> Thomas' task was easy; he simply had to say "Oh, these aren't meant to
+>> be applied, got it."
+>>
+>> [1] http://article.gmane.org/gmane.comp.version-control.git/227039
+>> [2] http://article.gmane.org/gmane.comp.version-control.git/227040
+>> [3] http://article.gmane.org/gmane.comp.version-control.git/227102
+>
+> I did not comment on their posts because they did not catch my eye.
+> Rebase and cherry-pick improvements are interesting to me, so I read
+> your post.  I will try not to make this mistake again.
 
-    builtin/	- the ones that define cmd_foo()
-    commands/   - the ones that has main() for standalone commands
-    libsrc/     - the ones that go in libgit.a
+Yes, because my patches are so obviously wrong.
 
-We may also want to add another subdirectory to hold scripted
-Porcelains, but the primary topic of this thread is what to do about
-the C library, so it is orthogonal in that sense, but if we were to
-go in the "group things in subdirectories to slim the root level"
-direction, it may be worth considering doing so at the same time.
+If you were a truly productive member of this community, you would
+ignore all the bullshit, take the patches, fix whatever is technically
+wrong with them (nothing), and resend them.
+
+But no, that would be way too productive.
+
+-- 
+Felipe Contreras
