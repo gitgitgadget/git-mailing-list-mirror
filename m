@@ -1,105 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 07/28] git-remote-mediawiki: Rewrite unclear line of instructions
-Date: Tue, 11 Jun 2013 08:04:14 -0700
-Message-ID: <7vsj0od6z5.fsf@alter.siamese.dyndns.org>
-References: <1370816573-3808-1-git-send-email-celestin.matte@ensimag.fr>
-	<1370816573-3808-8-git-send-email-celestin.matte@ensimag.fr>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] Documentation/CommunityGuidelines
+Date: Tue, 11 Jun 2013 10:06:07 -0500
+Message-ID: <CAMP44s2fZemrqrBQGwFduE3dYs6S_dBO1fwpbfyDPn+jovze-Q@mail.gmail.com>
+References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
+	<51B6AA7F.1060505@alum.mit.edu>
+	<CALkWK0nNn8Rcu4JpV4r+0ct+_cuW3aUHXKV4bcB-Hn6Xg8Y+bA@mail.gmail.com>
+	<87li6g969j.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, benoit.person@ensimag.fr,
-	matthieu.moy@grenoble-inp.fr
-To: =?utf-8?Q?C=C3=A9lestin?= Matte <celestin.matte@ensimag.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 11 17:04:23 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	A Large Angry SCM <gitzilla@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jun 11 17:06:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmQ7S-0000Ao-RY
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 17:04:23 +0200
+	id 1UmQ9G-0001Z9-IM
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 17:06:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753803Ab3FKPES convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 11:04:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42161 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752063Ab3FKPER convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jun 2013 11:04:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D29AF2557C;
-	Tue, 11 Jun 2013 15:04:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=QBOb9AlBoI3Q
-	bMp//rk1VCxR/mM=; b=GaVPaGY+ybW4IfPz2PZpvXSySHuiYcIDKSWOGXdQQQyc
-	3OUrAFJUCtX+w5D0/UTzBEXbmkuywuBawGjRhHIYtc0E8Az3wmzKJ6sPUIkkF1Wk
-	uTDewO9371pPNA5rKiIJJl5MrlO10r2tNFozRTKLD0E4oZJCrIZRcSzfjSp0Jz4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WZ85Rm
-	jfKD4w5D829vkDyjAq/YqvRXvU29B4En+2NRG3skO1quDOp11RiOETH7T2zc8toQ
-	BRdje+wM0767Rc09h5s1TE4Tl2/ha0BW9TSl+qIeryzl0h3W640OdKkZniawXDsx
-	TsxcEZ/lh8lXsuoPdNmNoCCmTsp13rCrv8n6A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C07E325579;
-	Tue, 11 Jun 2013 15:04:16 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 323FF25577;
-	Tue, 11 Jun 2013 15:04:16 +0000 (UTC)
-In-Reply-To: <1370816573-3808-8-git-send-email-celestin.matte@ensimag.fr>
-	(=?utf-8?Q?=22C=C3=A9lestin?= Matte"'s message of "Mon, 10 Jun 2013
- 00:22:32 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2F2A12BC-D2A8-11E2-B865-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753649Ab3FKPGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 11:06:09 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:62852 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751890Ab3FKPGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 11:06:08 -0400
+Received: by mail-la0-f45.google.com with SMTP id fr10so6995176lab.32
+        for <git@vger.kernel.org>; Tue, 11 Jun 2013 08:06:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=eKYq9hgT5ec7LpwVy/4Wb6WkFqCqeiPNwKgIYX7DclY=;
+        b=k0jSo2leV/ce/2/jFTaARAqiXAh3psCHI6KPXB84w1MQxSo0n762DiDyPfVvKPL/E6
+         wGFUnAGseMRiALoDIw/wos8yCdruCuWbHkv4bmLjnIuRU5HypcC3GySL/oF19yEY8bNW
+         lUErephovze+y3/hpGT8WRYIRvZTRQ6CpvK/jBoYeaOmR6qYmc5GBMaO5c/zXk7f1Pln
+         I9Uy9R5DYAGdfhB+bGdy2lKuLAphenqIWPlQln2mHJbKMFnhWSQ4SGOc+++whCHQCtYc
+         3LT0WsoTxQlfMvcSz9GZ3eQhSvFlj3UHu7bkaqcUUjstcyoomoHyLQ5bkAc885QajoIf
+         LK2Q==
+X-Received: by 10.152.22.73 with SMTP id b9mr7646260laf.36.1370963167158; Tue,
+ 11 Jun 2013 08:06:07 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Tue, 11 Jun 2013 08:06:07 -0700 (PDT)
+In-Reply-To: <87li6g969j.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227452>
 
-C=C3=A9lestin Matte <celestin.matte@ensimag.fr> writes:
+On Tue, Jun 11, 2013 at 7:33 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
 
-> Subroutines' parameters should be affected to variable before doing a=
-nything
-> else
-> Besides, existing instruction affected a variable inside a "if", whic=
-h break
-> Git's coding style
+> My approach -- and in my perception also that preferred by most of the
+> regulars who have spoken in this whole mess -- is that since there is a
+> fire hazard, it would be more effective firefighting to just remove the
+> hazard, thus preventing future fires.
 
-I think s/affect/assign/g is what you meant.
+You would make an excellent evil dictator.
 
-By the way, I often see two styles of the "let's take arguments into
-parameters before doing anything else" at the beginning of subs:
+A benevolent dictator like Linus Torvalds knows better, in the LKML
+"fire hazards" are not removed, they are ignored before any flames go
+up. This achieves the best of both worlds; if the person is truly
+vicious, nothing happens, but if there's something to it, a person
+that doesn't offend so easily might have a fruitful discussion, while
+the rest ignore the thread.
 
-        my ($namespace) =3D @_;
-	my $namespace =3D shift;
+In a flamewar everyone is guilty. Apparently you never learned that
+"but he started it!" is not a defense worthy of an adult, hell, even
+most children know that.
 
-My impression has been that both are equally common, but the latter
-is done more often when picking out small and fixed number of
-mandatory parameters upfront (and later, optional parameters are
-used by directly reading what remains in @_).  Does Perlcritique say
-anything about this issue?
-
-> Signed-off-by: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
-> Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> ---
->  contrib/mw-to-git/git-remote-mediawiki.perl |    3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw=
--to-git/git-remote-mediawiki.perl
-> index 431e063..2db6467 100755
-> --- a/contrib/mw-to-git/git-remote-mediawiki.perl
-> +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-> @@ -1333,7 +1333,8 @@ sub get_mw_namespace_id {
->  }
-> =20
->  sub get_mw_namespace_id_for_page {
-> -	if (my ($namespace) =3D $_[0] =3D~ /^([^:]*):/) {
-> +	my $namespace =3D shift;
-> +	if ($namespace =3D~ /^([^:]*):/) {
->  		return get_mw_namespace_id($namespace);
->  	} else {
->  		return;
+-- 
+Felipe Contreras
