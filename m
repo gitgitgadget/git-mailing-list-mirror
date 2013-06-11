@@ -1,95 +1,107 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Tue, 11 Jun 2013 17:41:00 +0200
-Message-ID: <87obbc4pv7.fsf@linux-k42r.v.cablecom.net>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
-	<51B6AA7F.1060505@alum.mit.edu>
-	<CALkWK0nNn8Rcu4JpV4r+0ct+_cuW3aUHXKV4bcB-Hn6Xg8Y+bA@mail.gmail.com>
-	<87li6g969j.fsf@linux-k42r.v.cablecom.net>
-	<CAMP44s2fZemrqrBQGwFduE3dYs6S_dBO1fwpbfyDPn+jovze-Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 21/28] git-remote-mediawiki: Put long code into a subroutine
+Date: Tue, 11 Jun 2013 08:42:05 -0700
+Message-ID: <7vli6gd582.fsf@alter.siamese.dyndns.org>
+References: <1370816573-3808-1-git-send-email-celestin.matte@ensimag.fr>
+	<1370816573-3808-22-git-send-email-celestin.matte@ensimag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 17:41:10 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, benoit.person@ensimag.fr,
+	matthieu.moy@grenoble-inp.fr
+To: =?utf-8?Q?C=C3=A9lestin?= Matte <celestin.matte@ensimag.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 11 17:42:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmQh3-00020C-Up
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 17:41:10 +0200
+	id 1UmQiC-0002sf-JT
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 17:42:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752025Ab3FKPlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 11:41:05 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:12654 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750792Ab3FKPlE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 11:41:04 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 11 Jun
- 2013 17:40:57 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS21.d.ethz.ch (172.31.51.111) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Tue, 11 Jun 2013 17:40:59 +0200
-In-Reply-To: <CAMP44s2fZemrqrBQGwFduE3dYs6S_dBO1fwpbfyDPn+jovze-Q@mail.gmail.com>
-	(Felipe Contreras's message of "Tue, 11 Jun 2013 10:06:07 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1752892Ab3FKPmL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 11:42:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56995 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752801Ab3FKPmJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jun 2013 11:42:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A8AD24E32;
+	Tue, 11 Jun 2013 15:42:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=8GYPAu9HOdRD
+	t3PVk0R1fXUD2zU=; b=JpKmaYXnCaDzimVbVQpWyhBwQYSwbUzMaM2aHVX+Pfv1
+	CJdlExbFqw5/nld0pan+KsvfWQzY8i97xWmVoTjOXamZYTMorZphohvVu2+ymLbr
+	yc9cTolJKAcJuHj0NNHtQGwzNHqrpcNbll+coXJRS/PLcIhwD2ZptYAoKdmeeqM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MuJOpW
+	Kui9YcuwEU//D/YguV/1Ky/WEXWz2NYxg+KREw9RArt3CxoLQ4oU+z7xLh8EK+6R
+	9volwQQH88gVTfi6RBZ16/Ql6ySkbEyWBd7eqT1KV3KENegmVId0ZObQ4SRVbe7a
+	WXOtjioAOKwOzMf+zk2kq3MztGY2b3nMVfKUA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5106124E31;
+	Tue, 11 Jun 2013 15:42:08 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E01AB24E2E;
+	Tue, 11 Jun 2013 15:42:06 +0000 (UTC)
+In-Reply-To: <1370816573-3808-22-git-send-email-celestin.matte@ensimag.fr>
+	(=?utf-8?Q?=22C=C3=A9lestin?= Matte"'s message of "Mon, 10 Jun 2013
+ 00:22:46 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 789CD5D8-D2AD-11E2-970E-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227455>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+C=C3=A9lestin Matte <celestin.matte@ensimag.fr> writes:
 
-> On Tue, Jun 11, 2013 at 7:33 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> Signed-off-by: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
+> Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+> ---
+>  contrib/mw-to-git/git-remote-mediawiki.perl |   50 +++++++++++++++++=
+----------
+>  1 file changed, 31 insertions(+), 19 deletions(-)
 >
->> My approach -- and in my perception also that preferred by most of the
->> regulars who have spoken in this whole mess -- is that since there is a
->> fire hazard, it would be more effective firefighting to just remove the
->> hazard, thus preventing future fires.
->
-> You would make an excellent evil dictator.
->
-> A benevolent dictator like Linus Torvalds knows better, in the LKML
-> "fire hazards" are not removed, they are ignored before any flames go
-> up. This achieves the best of both worlds; if the person is truly
-> vicious, nothing happens, but if there's something to it, a person
-> that doesn't offend so easily might have a fruitful discussion, while
-> the rest ignore the thread.
->
-> In a flamewar everyone is guilty. Apparently you never learned that
-> "but he started it!" is not a defense worthy of an adult, hell, even
-> most children know that.
+> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw=
+-to-git/git-remote-mediawiki.perl
+> index c404e7b..a66cef4 100755
+> --- a/contrib/mw-to-git/git-remote-mediawiki.perl
+> +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
+> @@ -126,28 +126,13 @@ $wiki_name =3D~ s{[^/]*://}{};
+>  $wiki_name =3D~ s/^.*@//;
+> =20
+>  # Commands parser
+> -my @cmd;
+> +my @cmds;
 
-[Yes, I should let this thread die, but you are offering me too good a
-chance to pass up.]
+I am guessing that the new sub, parse_command, uses a local @cmd and
+this is an attempt to avoid using the same name, but this renaming
+of the variable is not explained.
 
-It's funny that you would mention Linus, considering there's at least
-one instance on record where he broke almost every rule that Ram
-attempted to set out in the thread starter, calling you among other
-things a "fucking moron" and telling you to "go away".
+I also wonder if you need this global @cmd/@cmds.  Instead of
+passing cmdref, wouldn't it be simpler to have the helper split the
+line, i.e. something like...
 
-  https://lkml.org/lkml/2012/4/12/434
+	sub parse_command {
+		my ($line) =3D @_;
+                my @cmd =3D split(/ /, $line);
+		unless (defined @cmd) {
+	                return 0;
+		}
+                ... check capabilities, list, etc....
+		return 1;
+	}
 
-In case our readers wonder why the flame war suddenly died out at a
-depth of about 19 replies, fear not, for the story continued:
-
-  https://plus.google.com/108736516888538655285/posts/7QSVy8taWgC
-
-
-And before you try to shoot that down, please make sure your argument
-also applies to the recurring situation of your repeatedly ignoring
-SubmittingPatches as far as commit messages go against explicit requests
-to stop that.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+        while (<STDIN>) {
+        	chomp;
+                if (!parse_command($_)) {
+			unknown command, aborting
+                        last;
+		}
+	}
