@@ -1,76 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Exact format of tree objets
-Date: Tue, 11 Jun 2013 11:38:56 -0700
-Message-ID: <7v4nd4bigv.fsf@alter.siamese.dyndns.org>
-References: <CABx5MBRAYmO39BnMqnHZhUOwQf-7yeRuD=m7-P2xXdhkp6aWpA@mail.gmail.com>
+From: Andrew Pimlott <andrew@pimlott.net>
+Subject: rebase --autosquash does not handle fixup! of fixup!
+Date: Tue, 11 Jun 2013 11:05:30 -0700
+Message-ID: <20130611180530.GA18488@oinkpad.pimlott.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Chico Sokol <chico.sokol@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 20:39:11 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 11 20:42:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmTTF-0005zC-KB
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 20:39:05 +0200
+	id 1UmTW2-00089v-T4
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 20:41:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756072Ab3FKSjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 14:39:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45146 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753181Ab3FKSi7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 14:38:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D08B02728E;
-	Tue, 11 Jun 2013 18:38:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1oHUou8MW3c0XT1TN1408LaJZrI=; b=M9Ap+e
-	BqngL6bFLRMMuXtsPk/TlcsSqN3FT4Y/izOro/XdY/LmuYwcvwQDb8WyVS+ke9bX
-	7+iJqVZDyhFjxCfhyK7eI9P97v5ncH0lrza1sqxytvuHg67Xg8bbfm52XJkRMcnt
-	lDepd06PCywbtgZY+vwj4sydyDmbhx0nyiyso=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hwjG2VFup65NFyatWxvsxmmwJsFfK9s/
-	SFe7GTFzkjY6hIHxWM7xmDAMC4MIuGDbQ2NUsI2EoKhHWWAmdsY4pCRwEVDAl/Is
-	N7Al1rocN4sL+ZcsghEOjotAX55j5Bq5nurVKokNL9DeLPW1ZSPBKsJThG7eamEE
-	RFiIoRYJGvM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4F4E2728D;
-	Tue, 11 Jun 2013 18:38:58 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 41C122728B;
-	Tue, 11 Jun 2013 18:38:58 +0000 (UTC)
-In-Reply-To: <CABx5MBRAYmO39BnMqnHZhUOwQf-7yeRuD=m7-P2xXdhkp6aWpA@mail.gmail.com>
-	(Chico Sokol's message of "Tue, 11 Jun 2013 13:25:14 -0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2D78CB3E-D2C6-11E2-8FA0-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752371Ab3FKSlz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 14:41:55 -0400
+Received: from pimlott.net ([72.249.23.100]:41189 "EHLO fugue.pimlott.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750996Ab3FKSly (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 14:41:54 -0400
+X-Greylist: delayed 2173 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Jun 2013 14:41:54 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=pimlott.net; s=default;
+	h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date; bh=/YW1sgfueFeplYl4qmwoPkmyE8q/zpwMF9xjtoIN/iQ=;
+	b=BD1aXAxMv5nM2nrdUDO0eXeN8i/KnEx13mSYoGFIlMVIRk0XGs5raXQaKagaNOgsT5WZDnq6poEQJ+KYrV4cFKceNOgXfkUuRlinML/tcs+L/hFbUubwGmPJEDGCLp3rbVZrhI2p8rhSyLecSDK0pbE3hpjaNxA32Jwhd45NM2o=;
+Received: from c-71-198-212-229.hsd1.ca.comcast.net ([71.198.212.229] helo=oinkpad.pimlott.net)
+	by fugue.pimlott.net with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <andrew@pimlott.net>)
+	id 1UmSwr-0004NY-MJ; Tue, 11 Jun 2013 11:05:37 -0700
+Received: from andrew by oinkpad.pimlott.net with local (Exim 4.80)
+	(envelope-from <andrew@pimlott.net>)
+	id 1UmSwk-0005A1-E8; Tue, 11 Jun 2013 18:05:30 +0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227491>
 
-Chico Sokol <chico.sokol@gmail.com> writes:
+git rebase -i --autosquash does not handle a fixup! of a fixup!, such as
+the history:
 
-> Is there any official documentation of tree objets format? Are tree
-> objects encoded specially in some way? How can I parse the inflated
-> contents of a tree object?
->
-> We're suspecting that there is some kind of special format or
-> encoding, because the command "git cat-file -p <sha>" show me ...
-> While "git cat-file tree <sha>" generate ...
+    aaaaaaa fix nasty bug
+    ...
+    bbbbbbb fixup! fix nasty bug
+    ...
+    ccccccc fixup! fixup! fix nasty bug
 
-"cat-file -p" is meant to be human-readable form.  The latter gives
-the exact byte contents read_sha1_file() sees, which is a binary
-format.  Essentially, it is a sequence of:
+--autosquash produces:
 
- - mode of the entry encoded in octal, without any leading '0' pad;
- - pathname component of the entry, terminated with NUL;
- - 20-byte SHA-1 object name.
+    pick aaaaaaa fix nasty bug
+    fixup bbbbbbb fixup! fix nasty bug
+    ...
+    pick ccccccc fixup! fixup! fix nasty bug
 
-sorted in a particular order.
+This defeats the workflow I was hoping to use:
+
+    git commit -m 'fix nasty bug'
+    ...
+    git commit --fixup :/nasty
+    ...
+    git commit --fixup :/nasty
+
+The second :/nasty resolves to the previous fixup, not the initial
+commit.  I could have made the regular expression more precise, but this
+would be a hassle.
+
+Would a change to support fixup! fixup! be considered?
+
+Andrew
+
+(Please Cc: me on replies.)
