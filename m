@@ -1,7 +1,7 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH] build: get rid of the notion of a git library
-Date: Tue, 11 Jun 2013 12:59:48 -0700
-Message-ID: <7vehc8a05n.fsf@alter.siamese.dyndns.org>
+Date: Tue, 11 Jun 2013 15:12:58 -0500
+Message-ID: <CAMP44s0ytu39thUo4Jfpy_rEdMKyTu6AtXW+4SBWHoRj+G-TwA@mail.gmail.com>
 References: <1370712574-27688-1-git-send-email-felipe.contreras@gmail.com>
 	<CALkWK0mA7MXQv1k5bFpZLARDOHxU5kzKFXzcyUfb6NLZZY-=FA@mail.gmail.com>
 	<CAMP44s0cozMsTo7KQAjnqkqmvMwMw9D3SZrVxg48MOXkH9UQJQ@mail.gmail.com>
@@ -23,9 +23,10 @@ References: <1370712574-27688-1-git-send-email-felipe.contreras@gmail.com>
 	<7vppvsbkc3.fsf@alter.siamese.dyndns.org>
 	<CAMP44s02KaMaMUz4618n5RqVqVSXzr_D9rPS1uesy2XEdqnq5A@mail.gmail.com>
 	<CA+55aFwYAFuz5p0=8QiAFDy4e66f1pF3v=D5nnL6+3um7Z3L2g@mail.gmail.com>
+	<7vehc8a05n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Jeff King <peff@peff.net>,
 	Vincent van Ravesteijn <vfr@lyx.org>,
 	John Keeping <john@keeping.me.uk>,
@@ -33,94 +34,77 @@ Cc: Felipe Contreras <felipe.contreras@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Duy Nguyen <pclouds@gmail.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jun 11 22:00:00 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 11 22:13:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmUjV-00014U-PT
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 21:59:58 +0200
+	id 1UmUwJ-0002cm-Oe
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 22:13:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755994Ab3FKT7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 15:59:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57708 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755964Ab3FKT7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 15:59:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25C632487A;
-	Tue, 11 Jun 2013 19:59:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7Rixeyq5zR7NHy/9uIxWXRsyl7Y=; b=PZb3PW
-	sFNVIiEa02sFb9hdcaWpmE0ergXC94GSAqX3WBL1cli9fuzLy7oERXxhbQg8OhyC
-	Rh57k0kD6Y4ewwlgVuolKy0JiBFABf1DVeYSCjmzOCyjJURgehLPkA1//V57l58Z
-	KEgHL2fiOH9EmYa4uc7+Iqx+sZjhanMMgpaXU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MI8xiaNEObdt9wmHKnmyaGaKr0bNOoRF
-	BvGW7uYCzoDN8ZNduTbHQZIdCecTcp5SNUbJ9p2h7XBbuOfhZeSnValaLZNRutkw
-	WQuSQRj7y7WkKsWvXoPFMMDqohqj/fBdgJdbxf7W3NX9GblBZ4rNKCaLyhuQGNTA
-	tSPw3Yh49+c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1909024879;
-	Tue, 11 Jun 2013 19:59:51 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A1F324878;
-	Tue, 11 Jun 2013 19:59:50 +0000 (UTC)
-In-Reply-To: <CA+55aFwYAFuz5p0=8QiAFDy4e66f1pF3v=D5nnL6+3um7Z3L2g@mail.gmail.com>
-	(Linus Torvalds's message of "Tue, 11 Jun 2013 11:14:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 79911DF4-D2D1-11E2-8FD6-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757094Ab3FKUND (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 16:13:03 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:52481 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757085Ab3FKUNA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 16:13:00 -0400
+Received: by mail-lb0-f172.google.com with SMTP id v20so3428401lbc.3
+        for <git@vger.kernel.org>; Tue, 11 Jun 2013 13:12:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jlX0mKewgIn6XTF2XIO0xC1GULOn5VZkqE6UVOxzSjs=;
+        b=erJPNeUNDt81E+5+o9gK4E4i3Ku12+xYnOqNgCICjzSrg/Ll5A+owJC4WfsZ8o2108
+         QLU0H8yNwylOv7lNlAUNYXF6JZUc2ZmiPsUA3WosV/k+1hkwwp8gq6XKY5xGUGpsZnSw
+         BEMZKOeuldTfB802x7KEoN8DIq8a9BRck8En6fLIqwBb6F2kGxT4nL5kJX2E1XQLe9O2
+         TQAx+yH7uztpEgeYbMe9SnmG0TaHxthYNPivdR7Ag7I2/QIFbX0ZqhWChmg9sGtu9oum
+         CABYkswmflRSz2GCqDbv/xakcgE5xl2BvV8dCQ9jntbpgDEPeZc0Ahh2gtLQBm5TELtV
+         aX0w==
+X-Received: by 10.112.166.67 with SMTP id ze3mr9638529lbb.25.1370981579108;
+ Tue, 11 Jun 2013 13:12:59 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Tue, 11 Jun 2013 13:12:58 -0700 (PDT)
+In-Reply-To: <7vehc8a05n.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227510>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Tue, Jun 11, 2013 at 2:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>
+>> This whole thread has been one long argument about totally pointless
+>> things that wouldn't improve anything one way or the other. It's
+>> bikeshedding of the worst kind. Just let it go.
+>
+> The proposal to move sequencer.c to builtins/sequencer.c and then
+> adding a filter in Makefile to exclude so that "git-sequencer" is
+> not built is "it wouldn't improve anything one way or the other".
+> It is to throw in something into a set to which it does not belong,
 
-> This whole thread has been one long argument about totally pointless
-> things that wouldn't improve anything one way or the other. It's
-> bikeshedding of the worst kind. Just let it go.
+In your opinion.
 
-The proposal to move sequencer.c to builtins/sequencer.c and then
-adding a filter in Makefile to exclude so that "git-sequencer" is
-not built is "it wouldn't improve anything one way or the other".
-It is to throw in something into a set to which it does not belong,
-and then working around that mistake with another kludge.
+> and then working around that mistake with another kludge.
 
-The problem that triggered the wrong solution actually is real,
-however.
+In your opinion.
 
-A function that sequencer.c (in libgit.a so that it could be used by
-standalone) may want to use in the future currently lives in
-builtin/notes.c.  If you add a call to that function to sequencer.c
-without doing anything else, standalones like git-upload-pack will
-stop linking correctly.  The git-upload-pack wants the revision
-traversal machinery in revision.o, which in turn wants to be able to
-see log-tree.o, which in turn wants to link with sequencer.o to see
-one global variable (there may be other dependencies).  All of these
-objects are currently in libgit.a so that both builtins and standalones
-can use them.
+You continually use absolutist rhetoric to try to convince yourself
+and others that what you say is absolute 100% fact. But it's not, it's
+your opinion.
 
-Moving sequencer.c to builtin/ is not even a solution.  Linking
-git-upload-pack will still pull in builtin/notes.o along with
-cmd_notes(), which is not called from main(); as you remember,
-cmd_foo() in all builtin/*.o are designed to be called from
-git.c::main().
+> So I do not think this is not even a bikeshedding.  Just one side
+> being right, and the other side continuing to repeat nonsense
+> without listening.
 
-There is only one right solution.  If a useful function is buried in
-builtin/*.o as a historical accident (i.e. it started its life as a
-helper for that particular command, and nobody else used it from
-outside so far) and that makes it impossible to use the function
-from outside builtin/*.o, refactor the function and its callers and
-move it to libgit.a.
+George W. Bush said history would prove him right, but saying so
+doesn't make it so. At least he had the decency to acknowledge that
+other people had different valid opinions.
 
-So I do not think this is not even a bikeshedding.  Just one side
-being right, and the other side continuing to repeat nonsense
-without listening.
+builtin/lib.a makes perfect sense, and it's the first logical step in
+moving libgit.a towards libgit2.
+
+-- 
+Felipe Contreras
