@@ -1,79 +1,60 @@
-From: Chico Sokol <chico.sokol@gmail.com>
-Subject: Exact format of tree objets
-Date: Tue, 11 Jun 2013 13:25:14 -0300
-Message-ID: <CABx5MBRAYmO39BnMqnHZhUOwQf-7yeRuD=m7-P2xXdhkp6aWpA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v4 2/2] rm: introduce advice.rmHints to shorten messages
+Date: Tue, 11 Jun 2013 18:35:01 +0200
+Message-ID: <vpq38so38sq.fsf@anie.imag.fr>
+References: <1370962561-12519-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+	<1370962561-12519-2-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 11 18:25:46 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+To: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 11 18:35:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmROA-0001KC-5t
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 18:25:42 +0200
+	id 1UmRXT-00006I-D5
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 18:35:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755224Ab3FKQZh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 12:25:37 -0400
-Received: from mail-ve0-f176.google.com ([209.85.128.176]:51899 "EHLO
-	mail-ve0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755196Ab3FKQZf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jun 2013 12:25:35 -0400
-Received: by mail-ve0-f176.google.com with SMTP id c13so5853739vea.21
-        for <git@vger.kernel.org>; Tue, 11 Jun 2013 09:25:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=QUdnLjgpo/GFvRlyUVtcQKD9iwYYY3VoWzY9E/QwUUw=;
-        b=BAR1FpjnrJobMzDnrvQp53SK7ngEsmQM8Q/Mys0ZjEnJLQsXQrsWVE5A4lwJwc0knv
-         BrQJWAzKGoyo3cf1MwlQceYB6sIKfS0MnC8AexkS7ohFmmOSvCvlxc5EzU1FNz02gG5p
-         +hxnwXmqDgK3MV7DYOT32P13SQjq5gP4uQ9s8yz7fBeKlnP9b6FJIDWXmWT/6J6VBYgg
-         UXmkGSW08l4hP6PgpVNsNzQn8z2D6xrp9HXaxRjbUfGHRnNO0f30zrT/N5sYDhtu45k4
-         uwxnfYooCPdYo55kTpyMXiTOzQHPrMbo3thOag2Roy4Aj5mEeBNgc8m6map35ZCO9CEY
-         AYjA==
-X-Received: by 10.220.76.137 with SMTP id c9mr8204470vck.48.1370967934615;
- Tue, 11 Jun 2013 09:25:34 -0700 (PDT)
-Received: by 10.221.2.134 with HTTP; Tue, 11 Jun 2013 09:25:14 -0700 (PDT)
+	id S1752763Ab3FKQfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 12:35:13 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41143 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752168Ab3FKQfM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 12:35:12 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5BGYxjn030184
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 11 Jun 2013 18:35:00 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UmRXB-0006jT-NH; Tue, 11 Jun 2013 18:35:01 +0200
+In-Reply-To: <1370962561-12519-2-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+	(Mathieu Lienard--Mayor's message of "Tue, 11 Jun 2013 16:56:01
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 11 Jun 2013 18:35:00 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227461>
 
-Is there any official documentation of tree objets format? Are tree
-objects encoded specially in some way? How can I parse the inflated
-contents of a tree object?
+Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr> writes:
 
-We're suspecting that there is some kind of special format or
-encoding, because the command "git cat-file -p <sha>" show me the
-expected output, something like:
+> Introduce advice.rmHints to choose whether to display advice or not
+> when git rm fails. Defaults to true, in order to preserve current behavior.
 
-100644 blob 2beae51a0e14b3167fd7e81119972caef95779f4    .gitignore
-100644 blob 7c817960e954f0278a6eee8d58611f61445167e8    LICENSE.txt
-100644 blob 30e849cba985d74bfd29696f6dee5a40abaacb03    README
-=2E..
+I went through the serie, and it seems OK to me.
 
+I like the way this patch 2/2 became an obvious 4-lines patch (+ tests)
+after 1/2 is refactored properly :-).
 
-While "git cat-file tree <sha>" generate an strange output, which
-indicate some kink of encoding problem. Something like:
-
-100644 .gitignore+=EF=BF=BD=EF=BF=BD=E2=96=92=EF=BF=BD=EF=BF=BD=EF=BF=BD=
-=EF=BF=BD,=EF=BF=BD=EF=BF=BDWy=EF=BF=BD100644
-LICENSE.txt|=EF=BF=BDy`=EF=BF=BDT=EF=BF=BD'=EF=BF=BDn=EF=BF=BD=EF=BF=BD=
-XaaDQg=EF=BF=BD100644 README0=EF=BF=BDI=CB=A9=EF=BF=BD=EF=BF=BDK=EF=BF=BD=
-)
-
-
-Thanks,
-
-
-
-
-
-
-
---
-Chico Sokol
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
