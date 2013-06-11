@@ -1,7 +1,7 @@
 From: =?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
-Subject: [PATCH v4 12/31] git-remote-mediawiki: Change style in a regexp
-Date: Wed, 12 Jun 2013 00:18:03 +0200
-Message-ID: <1370989102-24942-13-git-send-email-celestin.matte@ensimag.fr>
+Subject: [PATCH v4 26/31] git-remote-mediawiki: Put non-trivial numeric values in constants.
+Date: Wed, 12 Jun 2013 00:18:17 +0200
+Message-ID: <1370989102-24942-27-git-send-email-celestin.matte@ensimag.fr>
 References: <1370989102-24942-1-git-send-email-celestin.matte@ensimag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -9,61 +9,111 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: benoit.person@ensimag.fr, matthieu.moy@grenoble-inp.fr,
 	=?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 12 00:19:00 2013
+X-From: git-owner@vger.kernel.org Wed Jun 12 00:19:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmWu0-00073u-R2
+	id 1UmWu1-00073u-Cu
 	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 00:18:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756834Ab3FKWSq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 18:18:46 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:46233 "EHLO rominette.imag.fr"
+	id S1756875Ab3FKWSw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 18:18:52 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:48171 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756769Ab3FKWSn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 18:18:43 -0400
+	id S1756846Ab3FKWSt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 18:18:49 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5BMIcWq026037
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5BMIjka012653
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 12 Jun 2013 00:18:38 +0200
+	Wed, 12 Jun 2013 00:18:45 +0200
 Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5BMIfB7024031;
-	Wed, 12 Jun 2013 00:18:41 +0200
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5BMIlA0024106;
+	Wed, 12 Jun 2013 00:18:47 +0200
 Received: from tohwi-K50IE.imag.fr (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5BMIb2W018360;
-	Wed, 12 Jun 2013 00:18:41 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5BMIb2k018360;
+	Wed, 12 Jun 2013 00:18:47 +0200
 X-Mailer: git-send-email 1.7.9.5
 In-Reply-To: <1370989102-24942-1-git-send-email-celestin.matte@ensimag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 12 Jun 2013 00:18:38 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 12 Jun 2013 00:18:45 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227539>
 
-Change '[\n]' to '\n': brackets are useless here.
+Non-trivial numeric values (e.g., different from 0, 1 and 2) are placed=
+ in
+constants at the top of the code to be easily modifiable and to make mo=
+re sense
 
 Signed-off-by: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
 Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 ---
- contrib/mw-to-git/git-remote-mediawiki.perl |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/mw-to-git/git-remote-mediawiki.perl |   20 ++++++++++++++-----=
+-
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-t=
 o-git/git-remote-mediawiki.perl
-index 267c164..86229a1 100755
+index 0bf9a0d..89b2120 100755
 --- a/contrib/mw-to-git/git-remote-mediawiki.perl
 +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -1271,7 +1271,7 @@ sub get_mw_namespace_id {
- 		# Look at configuration file, if the record for that namespace is
- 		# already cached. Namespaces are stored in form:
- 		# "Name_of_namespace:Id_namespace", ex.: "File:6".
--		my @temp =3D split(/[\n]/, run_git("config --get-all remote."
-+		my @temp =3D split(/\n/, run_git("config --get-all remote."
- 						. $remotename .".namespaceCache"));
- 		chomp(@temp);
- 		foreach my $ns (@temp) {
+@@ -42,6 +42,16 @@ use constant EMPTY_MESSAGE =3D> '*Empty MediaWiki Me=
+ssage*';
+=20
+ use constant EMPTY =3D> q{};
+=20
++# Number of pages taken into account at once in submodule get_mw_page_=
+list
++use constant SLICE_SIZE =3D> 50;
++
++# Number of linked mediafile to get at once in get_linked_mediafiles
++# The query is split in small batches because of the MW API limit of
++# the number of links to be returned (500 links max).
++use constant BATCH_SIZE =3D> 10;
++
++use constant HTTP_CODE_OK =3D> 200;
++
+ if (@ARGV !=3D 2) {
+ 	exit_error_usage();
+ }
+@@ -227,13 +237,13 @@ sub get_mw_page_list {
+ 	my $pages =3D shift;
+ 	my @some_pages =3D @$page_list;
+ 	while (@some_pages) {
+-		my $last_page =3D 50;
++		my $last_page =3D SLICE_SIZE;
+ 		if ($#some_pages < $last_page) {
+ 			$last_page =3D $#some_pages;
+ 		}
+ 		my @slice =3D @some_pages[0..$last_page];
+ 		get_mw_first_pages(\@slice, $pages);
+-		@some_pages =3D @some_pages[51..$#some_pages];
++		@some_pages =3D @some_pages[(SLICE_SIZE + 1)..$#some_pages];
+ 	}
+ 	return;
+ }
+@@ -389,9 +399,7 @@ sub get_linked_mediafiles {
+ 	my $pages =3D shift;
+ 	my @titles =3D map { $_->{title} } values(%{$pages});
+=20
+-	# The query is split in small batches because of the MW API limit of
+-	# the number of links to be returned (500 links max).
+-	my $batch =3D 10;
++	my $batch =3D BATCH_SIZE;
+ 	while (@titles) {
+ 		if ($#titles < $batch) {
+ 			$batch =3D $#titles;
+@@ -473,7 +481,7 @@ sub download_mw_mediafile {
+ 	my $download_url =3D shift;
+=20
+ 	my $response =3D $mediawiki->{ua}->get($download_url);
+-	if ($response->code =3D=3D 200) {
++	if ($response->code =3D=3D HTTP_CODE_OK) {
+ 		return $response->decoded_content;
+ 	} else {
+ 		print {*STDERR} "Error downloading mediafile from :\n";
 --=20
 1.7.9.5
