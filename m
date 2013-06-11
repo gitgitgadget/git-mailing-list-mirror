@@ -1,82 +1,75 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [PATCH v4 31/45] rebase: trivial cleanup
-Date: Tue, 11 Jun 2013 19:24:16 +0200
-Message-ID: <20130611172416.GB20009@paksenarrion.iveqy.com>
-References: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
- <1370796057-25312-32-git-send-email-felipe.contreras@gmail.com>
- <20130609191518.GB12122@paksenarrion.iveqy.com>
- <7vhah4d3sk.fsf@alter.siamese.dyndns.org>
- <20130611170815.GA20009@paksenarrion.iveqy.com>
- <CAMP44s0VksnZmi21u6T79AvMebWA3gXmWbQ6pp=FAHL=D4q6+Q@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: New feature discussion: git rebase --status
+Date: Tue, 11 Jun 2013 10:23:25 -0700
+Message-ID: <CA+55aFwtBm2RPwgXNa48zQM7ONCgzOEN2XdA_MeHsGu4=BDq5w@mail.gmail.com>
+References: <fb379a75c6c1af6dcff2e65bef1f1836@ensibm.imag.fr>
+	<20130611125521.GL22905@serenity.lan>
+	<vpqbo7c4wen.fsf@anie.imag.fr>
+	<CAE1pOi0azF1pFqhU1Dq3qeXXF+n9xBcAnHOHapTDjbNXop0d2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 19:21:31 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>, John Keeping <john@keeping.me.uk>,
+	=?UTF-8?Q?Mathieu_Li=C3=A9nard=2D=2DMayor?= 
+	<mathieu.lienard--mayor@ensimag.fr>,
+	Jorge-Juan.Garcia-Garcia@ensimag.imag.fr,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 11 19:23:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmSGA-0005FQ-Ec
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 19:21:30 +0200
+	id 1UmSI7-0006la-9H
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 19:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753053Ab3FKRV0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 13:21:26 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:57743 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752039Ab3FKRVZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 13:21:25 -0400
-Received: by mail-la0-f46.google.com with SMTP id eg20so7174463lab.33
-        for <git@vger.kernel.org>; Tue, 11 Jun 2013 10:21:23 -0700 (PDT)
+	id S1754571Ab3FKRX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 13:23:27 -0400
+Received: from mail-ve0-f180.google.com ([209.85.128.180]:51729 "EHLO
+	mail-ve0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753450Ab3FKRX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 13:23:26 -0400
+Received: by mail-ve0-f180.google.com with SMTP id pa12so5903333veb.39
+        for <git@vger.kernel.org>; Tue, 11 Jun 2013 10:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ejkdDuQG5H/zHdPBGW1qM9d3Nn/fLDLmfLRY87Eo6RY=;
-        b=AXN6BoPJoXHnIcYk9+MZCnTDeRxGJn+k+eXdpILj9sETzM/s/dVtLzkKNx0T3ooEvq
-         4RT+1NXWgWoHn+r/f1udwLAM3203oZ6yvJvJAniXJU/dB14/gWXkcz7DpBoST6Wl+589
-         r0aYxYckDyUJ4RrViBNeOVVpiIFTaVgDNMQUszD/OkyOYOC7R43FvQiab/EmHZ7gPZqe
-         N+fTcRXZVeFh6MZ1IYKYuONNmXVFaLUc91FaUQW1DM24UZeUKqwRSOn+AO+bJMTwp5s9
-         YAjtTIiWbDU6Rm0PVg7ZHKOqsUMyHItm5f8uD1+bsRnNDhgJHiWL86jBLtyJvF2BIxPV
-         yqVA==
-X-Received: by 10.112.142.228 with SMTP id rz4mr9186806lbb.62.1370971283696;
-        Tue, 11 Jun 2013 10:21:23 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id uo8sm7801114lbb.5.2013.06.11.10.21.22
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 11 Jun 2013 10:21:23 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UmSIq-0005ls-81; Tue, 11 Jun 2013 19:24:16 +0200
-Content-Disposition: inline
-In-Reply-To: <CAMP44s0VksnZmi21u6T79AvMebWA3gXmWbQ6pp=FAHL=D4q6+Q@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=Sh2LkB6Q1xmKypnrmfl1P7o84Hw2B3MWDyeXT81aoVE=;
+        b=dT9kzxF1tClfLL8dnAJNahsGp6LAfk2WKLZi3aq459eiPQJKKWPiaFk19Ltl5f6C4M
+         X36aPAxEx0kFcXGypSzj+kZ/J3LkQOHEh2IxnOTP69LASJLXbMeNJoZfId4kx96d6phb
+         lzL+G1LgbLI7gEABycOFD28Wgd65BtagYgd4Ry7mJ2d7e+t3uiIRT41BUj0BgaEQ+fdf
+         6iewteL5yRijkvksrHstWRTLinYuVTBlh6IuZG041BfXncMRkh6TjzW1bR2kA0k5pBMZ
+         4EG2nzD0ViHNS5ZQcx/xnCgK1AtbEMdYdi9nrsGJqqqczhQSnXbZeQp1VN/lAtk7liM+
+         rUZQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=Sh2LkB6Q1xmKypnrmfl1P7o84Hw2B3MWDyeXT81aoVE=;
+        b=HE8C7J/oa77q1KgMtrUNjKb7T8XLZhqgLhTwGFXc3nsOfc9vQQxCYoArEnHl9IRyt2
+         r7YzGmYhzatIR4Zmq1B9o4VtSft4zwCM/fAuXlWUnlMc0BUKCYKMSsYirylCN9Jr5ZTc
+         PDJbKLaYS2t+xK/+M8pVtTQagBPBEhh0rEcho=
+X-Received: by 10.58.236.42 with SMTP id ur10mr5201862vec.48.1370971405852;
+ Tue, 11 Jun 2013 10:23:25 -0700 (PDT)
+Received: by 10.220.8.71 with HTTP; Tue, 11 Jun 2013 10:23:25 -0700 (PDT)
+In-Reply-To: <CAE1pOi0azF1pFqhU1Dq3qeXXF+n9xBcAnHOHapTDjbNXop0d2g@mail.gmail.com>
+X-Google-Sender-Auth: rkq407mr2HiWSGhvzVA4v5vDjgc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227471>
 
-On Tue, Jun 11, 2013 at 12:09:32PM -0500, Felipe Contreras wrote:
-> It's not removed. It's simply moved.
+On Tue, Jun 11, 2013 at 10:18 AM, Hilco Wijbenga
+<hilco.wijbenga@gmail.com> wrote:
+>
+> Having "git status" display (even more) "context sensitive"
+> information during "git rebase" or "git merge" would be very welcome.
+> Please, if at all possible, don't make that a separate command.
 
-Sorry about that, I wasn't paying enough attention. But why are you
-moving it?
+I agree. The rebase state etc is something that would be much better
+in "git status" output, and would avoid having people learn about
+another new flag to random commands.
 
-All other arguments to git am is set in git-rebase.sh, why just set
--q just before the invokation in git-rebase--am.sh?
-
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
-
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+                Linus
