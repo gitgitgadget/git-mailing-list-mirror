@@ -1,112 +1,136 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Tue, 11 Jun 2013 19:10:11 +0530
-Message-ID: <CALkWK0kMvac7Sp3QwvEm+J_-Hj7JAn-AY-juDDw1HR3oQ+hamA@mail.gmail.com>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
- <51B6AA7F.1060505@alum.mit.edu> <CALkWK0nNn8Rcu4JpV4r+0ct+_cuW3aUHXKV4bcB-Hn6Xg8Y+bA@mail.gmail.com>
- <87li6g969j.fsf@linux-k42r.v.cablecom.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jun 11 15:41:04 2013
+From: Jorge-Juan.Garcia-Garcia@ensimag.imag.fr
+Subject: [PATCH v4 2/2] status:introduce status.branch to enable --branch by default
+Date: Tue, 11 Jun 2013 15:34:05 +0200
+Message-ID: <1370957645-17905-2-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+References: <1370957645-17905-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+Cc: gitster@pobox.com,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 11 15:41:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmOok-0005Yk-Jr
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 15:40:58 +0200
+	id 1UmOp9-0005qG-4l
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 15:41:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752288Ab3FKNky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 09:40:54 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:35148 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751476Ab3FKNkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 09:40:53 -0400
-Received: by mail-ie0-f181.google.com with SMTP id x12so1415860ief.40
-        for <git@vger.kernel.org>; Tue, 11 Jun 2013 06:40:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=4pQ8L5dRvtldJhCcgCA2keX+TZjpzcVvtatesyU109Y=;
-        b=GBYHbBR1COiylpeiy02//lNyAv/bYwUMw6Ftz41gBGEwrxrIS6PMuIkVjsfKYNLyOK
-         AoueAHi96udaB7YMRRD0F1PKBiF72TJe63fS7B7VoZfl01uhLnRK4rbiv676QmcJ8ebk
-         6SIutIxZr8XTyRs6JLG3WXF9RqpH0spL35XZMOPimDHP3YDh3Ie5UGgLMTftMrCGT5cd
-         gdgOhJpjyY+aPITbb4C0nIxdUksSUjssvM9tzv4747WPFcgTSq4oU6fY6o9Yvemk9kVA
-         xd5bhRfQKAef9kHBffg2vA1ytsLEZM8171XFKPTBo9yIg2b7laFtsMFB1q2p1vCCxxyo
-         s53A==
-X-Received: by 10.50.3.37 with SMTP id 5mr968708igz.0.1370958052917; Tue, 11
- Jun 2013 06:40:52 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Tue, 11 Jun 2013 06:40:11 -0700 (PDT)
-In-Reply-To: <87li6g969j.fsf@linux-k42r.v.cablecom.net>
+	id S1752549Ab3FKNlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 09:41:19 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:36013 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751899Ab3FKNlS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 09:41:18 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5BDYcud017179
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 11 Jun 2013 15:34:38 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5BDYdLe015153;
+	Tue, 11 Jun 2013 15:34:39 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5BDYdei021023;
+	Tue, 11 Jun 2013 15:34:39 +0200
+Received: (from garciagj@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id r5BDYdIT021021;
+	Tue, 11 Jun 2013 15:34:39 +0200
+X-Mailer: git-send-email 1.7.8
+In-Reply-To: <1370957645-17905-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 11 Jun 2013 15:34:38 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227440>
 
-Thomas Rast wrote:
-> It has become clear, also in discussion on IRC, that your preferred
-> approach is to fight the fires, attempting to extinguish flames as they
-> happen.
+From: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
 
-Incorrect.  I am interested in minimizing occurrences, which is why I
-started this thread: to calmly and rationally discuss how to achieve
-that.  I have listed many concrete proposals, and justified them with
-reason.
+Some people often run 'git status -b'.
+The config variable status.branch allows to set it by default.
 
-> My approach -- and in my perception also that preferred by most of the
-> regulars who have spoken in this whole mess -- is that since there is a
-> fire hazard, it would be more effective firefighting to just remove the
-> hazard, thus preventing future fires.
+Signed-off-by: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+Signed-off-by: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+---
+Changes since v3:
+- Changes in the order in test between expected and actual.
+- The number of test is the same (all posibilities that I wanted tested).
+---
+ Documentation/config.txt |    4 ++++
+ builtin/commit.c         |    4 ++++
+ t/t7508-status.sh        |   27 +++++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 0 deletions(-)
 
-Presumably, Felipe is the "fire hazard" that we are talking about, and
-nobody else is to blame.  He must be "removed" to prevent future
-fires.  This is the "perception of the regulars", correct?
-
-Then why haven't you removed him yet?  What are you waiting for?  You
-don't need my "approval".
-
-Is it because you have realized deep down that you have absolutely no
-rational argument, and are arguing with an ill-formed "majority
-opinion"?  I have words, you have words.  Why are you incapable of
-using your words to counter my arguments rationally?Are you so blind
-that you cannot see the consequences of acting without reason?
-Tomorrow the majority opinion will dictate that I am a fire hazard and
-must be removed.  Soon, anybody who disagrees with the majority
-opinion will be removed, and the community will be reduced to a
-handful of circlejerking yes-men.  The git project will die a sad
-death.  And the blood will be on your hands.
-
-> I infer that in your view, there is an inalienable right for the fire
-> hazard to remain part of the community that you are not willing to give
-> up.  I for one no longer have such qualms in this instance.
-
-Incorrect.  There is no "transcendental inalienable right" that
-dictates that "fire hazards" must remain part of the community.  I
-never made such an irrational argument.  I already gave you the
-example of the survivors on the boat with limited food/water on IRC:
-it is you who stupidly refused to throw anyone overboard, killing all
-the survivors; I am the one who said that I would get them to draw
-sticks to "fairly choose" who to throw overboard, maximizing the
-chances of survival of the others.  I am making a pragmatic argument,
-based on what is best for the community; not some stuck-up idealistic
-bullshit.  Further, I tried to help you think through the justice
-problem, by recommending an accessible course.  You have either not
-gone through it, or have gone through it and learnt nothing.
-
-What should I "give up"?  My rationality?
-
-Man up, and stop hiding being the veils of "majority opinion".  _Your_
-opinion is that Felipe must be removed from the list without reason.
-Don't talk for the others.  I'm sick of you "supporting" another
-person's opinion.  Stand up and speak for yourself; leave Haggerty out
-of it.
-
-You have embarrassed yourself and the entire git community today.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1983bf7..ecdcd6d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2070,6 +2070,10 @@ status.short::
+ 	Set to true to enable --short by default in linkgit:git-status[1].
+ 	The option --no-short takes precedence over this variable.
+ 
++status.branch::
++	Set to true to enable --branch by default in linkgit:git-status[1].
++	The option --no-branch takes precedence over this variable.
++
+ status.showUntrackedFiles::
+ 	By default, linkgit:git-status[1] and linkgit:git-commit[1] show
+ 	files which are not currently tracked by Git. Directories which
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 075a91c..b589ce0 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1119,6 +1119,10 @@ static int git_status_config(const char *k, const char *v, void *cb)
+ 			status_format = STATUS_FORMAT_NONE;
+ 		return 0;
+ 	}
++	if (!strcmp(k, "status.branch")) {
++		s->show_branch = git_config_bool(k, v);
++		return 0;
++	}
+ 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
+ 		s->use_color = git_config_colorbool(k, v);
+ 		return 0;
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index 3c0818b..d627f9b 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -1366,6 +1366,33 @@ test_expect_success '"status.short=false" weaker than "-s"' '
+ 	test_cmp expected_short actual
+ '
+ 
++test_expect_success '"status.branch=true" same as "-b"' '
++	git -c status.branch=true status -s >actual &&
++	git status -sb >expected_branch &&
++	test_cmp expected_branch actual
++'
++
++test_expect_success '"status.branch=true" different from "--no-branch"' '
++	git -c status.branch=true status -s >actual &&
++	git status -s --no-branch  >expected_nobranch &&
++	test_must_fail test_cmp expected_nobranch actual
++'
++
++test_expect_success '"status.branch=true" weaker than "--no-branch"' '
++	git -c status.branch=true status -s --no-branch >actual &&
++	test_cmp expected_nobranch actual
++'
++
++test_expect_success '"status.branch=false" same as "--no-branch"' '
++	git -c status.branch=false status -s >actual &&
++	test_cmp expected_nobranch actual
++'
++
++test_expect_success '"status.branch=false" weaker than "-b"' '
++	git -c status.branch=false status -sb >actual &&
++	test_cmp expected_branch actual
++'
++
+ test_expect_success 'Restore default test environment' '
+ 	git config --unset status.showUntrackedFiles
+ '
+-- 
+1.7.8
