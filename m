@@ -1,108 +1,124 @@
 From: =?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
-Subject: [PATCH v4 06/31] git-remote-mediawiki: Change syntax of map calls
-Date: Wed, 12 Jun 2013 00:17:57 +0200
-Message-ID: <1370989102-24942-7-git-send-email-celestin.matte@ensimag.fr>
-References: <1370989102-24942-1-git-send-email-celestin.matte@ensimag.fr>
+Subject: [PATCH v4 00/31] git-remote-mediawiki: Follow perlcritic's recommandations
+Date: Wed, 12 Jun 2013 00:17:51 +0200
+Message-ID: <1370989102-24942-1-git-send-email-celestin.matte@ensimag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: benoit.person@ensimag.fr, matthieu.moy@grenoble-inp.fr,
 	=?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 12 00:18:47 2013
+X-From: git-owner@vger.kernel.org Wed Jun 12 00:18:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmWtp-0006vv-VI
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 00:18:46 +0200
+	id 1UmWtp-0006vv-EO
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 00:18:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756786Ab3FKWSn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 18:18:43 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:48126 "EHLO shiva.imag.fr"
+	id S1756478Ab3FKWSk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 18:18:40 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:48117 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752892Ab3FKWSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 18:18:41 -0400
+	id S1752892Ab3FKWSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 18:18:39 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5BMIb8n012510
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5BMIZC2012482
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 12 Jun 2013 00:18:37 +0200
+	Wed, 12 Jun 2013 00:18:35 +0200
 Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5BMIdqe024002;
-	Wed, 12 Jun 2013 00:18:39 +0200
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5BMIbTq023972;
+	Wed, 12 Jun 2013 00:18:37 +0200
 Received: from tohwi-K50IE.imag.fr (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5BMIb2Q018360;
-	Wed, 12 Jun 2013 00:18:39 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5BMIb2K018360;
+	Wed, 12 Jun 2013 00:18:37 +0200
 X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1370989102-24942-1-git-send-email-celestin.matte@ensimag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 12 Jun 2013 00:18:37 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 12 Jun 2013 00:18:35 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227534>
 
-Put first parameter of map inside a block, for better readability.
-=46ollow BuiltinFunctions::RequireBlockMap
+New (and hopefully last version) of my series of patches to follow perl=
+critic's
+recommandations
 
-Signed-off-by: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
----
- contrib/mw-to-git/git-remote-mediawiki.perl |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+Changes with v3:
+- Remove whitespace in [18/28]
+- Typo in [09/28]
+- Better line split in [22/28]
+- A part of the file @@ -610,9 +610,9 @@ had escaped patches [22/31] an=
+d=20
+[23/31] for some reason. This is fixed.
+- patch [29/31] and [30/31] are new: they add a .perlcriticrc file to i=
+gnore
+some rules and add a rule in the Makefile for perlcritic
+- patch [31/31] is also a new one, which intends to make some error mes=
+sages=20
+more precise. It comes from an advice from es in the reviewing of v1, t=
+hat I=20
+had forgotten to add in earlier versions. It is not related to perlcrit=
+ic, but I
+hope it can be included into this series of patches anyway.
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-t=
-o-git/git-remote-mediawiki.perl
-index fe1343d..431e063 100755
---- a/contrib/mw-to-git/git-remote-mediawiki.perl
-+++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -371,7 +371,7 @@ sub get_all_mediafiles {
-=20
- sub get_linked_mediafiles {
- 	my $pages =3D shift;
--	my @titles =3D map $_->{title}, values(%{$pages});
-+	my @titles =3D map { $_->{title} } values(%{$pages});
-=20
- 	# The query is split in small batches because of the MW API limit of
- 	# the number of links to be returned (500 links max).
-@@ -399,11 +399,13 @@ sub get_linked_mediafiles {
- 		while (my ($id, $page) =3D each(%{$result->{query}->{pages}})) {
- 			my @media_titles;
- 			if (defined($page->{links})) {
--				my @link_titles =3D map $_->{title}, @{$page->{links}};
-+				my @link_titles
-+				    =3D map { $_->{title} } @{$page->{links}};
- 				push(@media_titles, @link_titles);
- 			}
- 			if (defined($page->{images})) {
--				my @image_titles =3D map $_->{title}, @{$page->{images}};
-+				my @image_titles
-+				    =3D map { $_->{title} } @{$page->{images}};
- 				push(@media_titles, @image_titles);
- 			}
- 			if (@media_titles) {
-@@ -833,7 +835,7 @@ sub mw_import_ref_by_pages {
- 	my ($n, @revisions) =3D fetch_mw_revisions(\@pages, $fetch_from);
-=20
- 	@revisions =3D sort {$a->{revid} <=3D> $b->{revid}} @revisions;
--	my @revision_ids =3D map $_->{revid}, @revisions;
-+	my @revision_ids =3D map { $_->{revid} } @revisions;
-=20
- 	return mw_import_revids($fetch_from, \@revision_ids, \%pages_hash);
- }
-@@ -1246,8 +1248,8 @@ sub get_allowed_file_extensions {
- 		siprop =3D> 'fileextensions'
- 		};
- 	my $result =3D $mediawiki->api($query);
--	my @file_extensions=3D map $_->{ext},@{$result->{query}->{fileextensi=
-ons}};
--	my %hashFile =3D map {$_ =3D> 1}@file_extensions;
-+	my @file_extensions =3D map { $_->{ext}} @{$result->{query}->{fileext=
-ensions}};
-+	my %hashFile =3D map { $_ =3D> 1 } @file_extensions;
-=20
- 	return %hashFile;
- }
+Changes with v2:
+- Remove patch [02/22] about using the Readonly module
+- Split commit [07/22] into 5 different ones
+- Split commit [14/22] into 2 different ones
+- Patch [17/22] was *not* split: tell me if it is necessary
+- Remove wrong change in patch [22/22]
+
+Changes with v1:
+- split first commit into 6 different commits
+- remove commit [17/18] about moving open() call
+- took every other comment into account
+
+C=C3=A9lestin Matte (31):
+  git-remote-mediawiki: Make a regexp clearer
+  git-remote-mediawiki: Move "use warnings;" before any instruction
+  git-remote-mediawiki: Replace :utf8 by :encoding(UTF-8)
+  git-remote-mediawiki: Always end a subroutine with a return
+  git-remote-mediawiki: Move a variable declaration at the top of the
+    code
+  git-remote-mediawiki: Change syntax of map calls
+  git-remote-mediawiki: Rewrite unclear line of instructions
+  git-remote-mediawiki: Remove useless regexp modifier (m)
+  git-remote-mediawiki: Change the behaviour of a split
+  git-remote-mediawiki: Change separator of some regexps
+  git-remote-mediawiki: Change style in a regexp
+  git-remote-mediawiki: Change style in a regexp
+  git-remote-mediawiki: Add newline in the end of die() error messages
+  git-remote-mediawiki: Change the name of a variable
+  git-remote-mediawiki: Turn double-negated expressions into simple
+    expressions
+  git-remote-mediawiki: Remove unused variable $entry
+  git-remote-mediawiki: Rename a variable ($last) which has the name of
+    a keyword
+  git-remote-mediawiki: Assign a variable as undef and make proper
+    indentation
+  git-remote-mediawiki: Check return value of open
+  git-remote-mediawiki: remove import of unused open2
+  git-remote-mediawiki: Put long code into a subroutine
+  git-remote-mediawiki: Modify strings for a better coding-style
+  git-remote-mediawiki: Brace file handles for print for more clarity
+  git-remote-mediawiki: Replace "unless" statements with negated "if"
+    statements
+  git-remote-mediawiki: Don't use quotes for empty strings
+  git-remote-mediawiki: Put non-trivial numeric values in constants.
+  git-remote-mediawiki: Fix a typo ("mediwiki" instead of "mediawiki")
+  git-remote-mediawiki: Clearly rewrite double dereference
+  git-remote-mediawiki: Add a .perlcriticrc file
+  git-remote-mediawiki: add a perlcritic rule in Makefile
+  git-remote-mediawiki: Make error message more precise
+
+ contrib/mw-to-git/.perlcriticrc             |   28 ++
+ contrib/mw-to-git/Makefile                  |    5 +-
+ contrib/mw-to-git/git-remote-mediawiki.perl |  543 +++++++++++++++----=
+--------
+ 3 files changed, 327 insertions(+), 249 deletions(-)
+ create mode 100644 contrib/mw-to-git/.perlcriticrc
+
 --=20
 1.7.9.5
