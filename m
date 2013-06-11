@@ -1,82 +1,89 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Tue, 11 Jun 2013 14:33:12 +0200
-Message-ID: <87li6g969j.fsf@linux-k42r.v.cablecom.net>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
-	<51B6AA7F.1060505@alum.mit.edu>
-	<CALkWK0nNn8Rcu4JpV4r+0ct+_cuW3aUHXKV4bcB-Hn6Xg8Y+bA@mail.gmail.com>
+From: =?UTF-8?Q?Mathieu_Li=C3=A9nard--Mayor?= 
+	<mathieu.lienard--mayor@ensimag.fr>
+Subject: New feature discussion: git rebase --status
+Date: Tue, 11 Jun 2013 14:35:29 +0200
+Message-ID: <fb379a75c6c1af6dcff2e65bef1f1836@ensibm.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"A Large Angry SCM" <gitzilla@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 14:33:21 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	<Matthieu.Moy@grenoble-inp.fr>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 11 14:35:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmNlH-0005LT-RN
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 14:33:20 +0200
+	id 1UmNnT-000705-Ho
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 14:35:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753090Ab3FKMdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 08:33:16 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:55479 "EHLO edge10.ethz.ch"
+	id S1751252Ab3FKMfb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 08:35:31 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:33224 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752504Ab3FKMdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 08:33:15 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 11 Jun
- 2013 14:33:11 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Tue, 11 Jun 2013 14:33:12 +0200
-In-Reply-To: <CALkWK0nNn8Rcu4JpV4r+0ct+_cuW3aUHXKV4bcB-Hn6Xg8Y+bA@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Tue, 11 Jun 2013 16:15:12 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1751108Ab3FKMfb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 08:35:31 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5BCZSfb006836
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 11 Jun 2013 14:35:28 +0200
+Received: from web-ensimag.imag.fr (web-ensimag.imag.fr [195.221.228.24])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5BCZT1S014510;
+	Tue, 11 Jun 2013 14:35:29 +0200
+Received: from web-ensimag.imag.fr (localhost [127.0.0.1])
+	by web-ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id r5BCZTSh026593;
+	Tue, 11 Jun 2013 14:35:29 +0200
+Received: (from apache@localhost)
+	by web-ensimag.imag.fr (8.13.8/8.13.8/Submit) id r5BCZT2o026592;
+	Tue, 11 Jun 2013 14:35:29 +0200
+X-Authentication-Warning: web-ensimag.imag.fr: apache set sender to mathieu.lienard--mayor@ensimag.fr using -f
+X-Sender: mathieu.lienard--mayor@ensimag.fr
+User-Agent: Roundcube Webmail/0.8.1
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 11 Jun 2013 14:35:28 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227432>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+(Got the idea from:
+https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#git_rebase_--s=
+tatus)
 
-> Michael Haggerty wrote:
->> Thank you for drafting a proposed CommunityGuidelines document; I think
->> such a document would be helpful.  But I don't like the overall flavor
->> of your proposal; frankly, it sounds to me more like
->>
->> Documentation/GuidelinesForCommunityToBendOverBackwardsToLiveWithFCsProvocations
->
-> It has nothing to do with Felipe.  I've merely documented repeating
-> patterns in fire threads as violations, in an attempt to avoid fires.
-> I have not worked forward from axioms to derive "transcendentally
-> desirable behavior", but rather backwards from a disaster to derive
-> "patterns that have been shown to lead to large fires".  Why?  Because
-> it's easier to derive unambiguous statements using my approach; as I
-> will show shortly, there are various problems with your arguments.
->
-> What gives you the impression that I documented everyone else's
-> violations, but not Felipe's? ;)
+When in the middle of a rebase, users can be easily confused about
+what to do, or where they are in the rebase process.
 
-It has become clear, also in discussion on IRC, that your preferred
-approach is to fight the fires, attempting to extinguish flames as they
-happen.
+All the information is available in .git/rebase-merge/, but I believe
+it would be helpful to have a command (for example 'git rebase
+--status') which would explicitely indicate the state of the process.
 
-My approach -- and in my perception also that preferred by most of the
-regulars who have spoken in this whole mess -- is that since there is a
-fire hazard, it would be more effective firefighting to just remove the
-hazard, thus preventing future fires.
+=46or instance, the output could look like:
 
-I infer that in your view, there is an inalienable right for the fire
-hazard to remain part of the community that you are not willing to give
-up.  I for one no longer have such qualms in this instance.
+$ git rebase --status
+Rebasing my_last_commit onto base_commit
+Already applied 2 patches:
+	b170635... my_commit_message
+	b170635... my_commit_message
+Currently applying b170635... my_commit_message
+2 patches left to apply:
+	b170635... my_commit_message
+	b170635... my_commit_message
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+
+Another nice thing could be to improve the output of 'git status' by
+saying the number of patches left to apply.
+As an example, it could say:
+	You are currently rebasing (patch 3/5).
+
+What do you think?
+Does the name rebase --status seem appropriate?
+Should the output be providing more/less information?
+
+Thanks =3D]
+--=20
+Mathieu Li=C3=A9nard--Mayor,
+2nd year at Grenoble INP - ENSIMAG
+(+33)6 80 56 30 02
