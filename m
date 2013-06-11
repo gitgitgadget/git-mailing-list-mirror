@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 2/4] prio-queue: priority queue of pointers to structs
-Date: Tue, 11 Jun 2013 15:19:07 -0700
-Message-ID: <1370989149-28538-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 1/4] toposort: rename "lifo" field
+Date: Tue, 11 Jun 2013 15:19:06 -0700
+Message-ID: <1370989149-28538-2-git-send-email-gitster@pobox.com>
 References: <20130611063648.GB23650@sigill.intra.peff.net>
  <1370989149-28538-1-git-send-email-gitster@pobox.com>
 Cc: Elliott Cable <me@ell.io>, Jeff King <peff@peff.net>
@@ -12,343 +12,307 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmWud-0007YZ-R5
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 00:19:36 +0200
+	id 1UmWue-0007YZ-HB
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 00:19:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757038Ab3FKWTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 18:19:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50392 "EHLO
+	id S1757066Ab3FKWTU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 18:19:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55930 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756997Ab3FKWTP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 18:19:15 -0400
+	id S1756855Ab3FKWTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 18:19:13 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C62E2794B;
-	Tue, 11 Jun 2013 22:19:15 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2308227948;
+	Tue, 11 Jun 2013 22:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=HIV9
-	g4OBsXONhFYNQAd1fe99UKM=; b=tzUXcwQLQpMNpTGC59wPddyX7AuQvJ6Efk6o
-	kdnbDuajy789hmRnV4GCfLta5oiRHn0drY2GR2ZYlgFdiM4zknoMIbH+UTDQCZCA
-	hibWBu5UeQ7k9Z4ycpH4eA9kpPKUrcyLj/LYTH5jsH31O8bS8RdNc9gJpOj8YT/U
-	boE7opw=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=xroG
+	4Hb/H9gHtUl07AYjAQatlm4=; b=JfTGF/gTiBWJPa7ZaMJSKCt8yCYeErloVjNX
+	ZUBWN6zdk/pOrYIGHmQiAO28dhsTrLbqbewH4UQyutovXxYFGVd1WqPl2HtAm2z+
+	hgGegedyJNTa7C2fzYxxaUvcHbuKGEcpT9SAiYgHdI2IboxOsiWjiDex5zgQw2RF
+	IyH2Tzo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	ryYZgkKOT40C290QwADk5/lcjM/J4MQVx7zVSHHX6dalZRMZvmp/C908M6yEHPAI
-	IKHPsR5BVXnRK2XLnAwTctcOGr402qgOb9onXfgHBwS/316TfZDIYtdIy/9MZPDI
-	ZtB3hl+6G+/NlkTZl8g2XXud1jAArAQcA+MzzydEfHQ=
+	SE+MEJbVzTpcwx8xTzfbT+oNn2kZzRyrOWBZ+bSZhxvGVVOV2HdS7h1s78ZaK89C
+	jxJWyU8fsBgjXj6LryaP81Y/C+W1tJkm6IAqPelOq+7TSWJik/2dZhKYYmkplVnZ
+	IwRDlCKTG52030YomNrxMFTHxBW2/xym+b5OOsb3IXA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 738332794A;
-	Tue, 11 Jun 2013 22:19:15 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AA4727947;
+	Tue, 11 Jun 2013 22:19:13 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D7C727949;
-	Tue, 11 Jun 2013 22:19:14 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2B2F027946;
+	Tue, 11 Jun 2013 22:19:12 +0000 (UTC)
 X-Mailer: git-send-email 1.8.3.1-494-g51b8af5
 In-Reply-To: <1370989149-28538-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: F2F74E26-D2E4-11E2-B7AF-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F192F896-D2E4-11E2-A8DF-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227547>
 
-Traditionally we used a singly linked list of commits to hold a set
-of in-flight commits while traversing history.  The most typical use
-of the list is to add commits that are newly discovered to it, keep
-the list sorted by commit timestamp, pick up the newest one from the
-list, and keep digging.  The cost of keeping the singly linked list
-sorted is nontrivial, and this typical use pattern better matches a
-priority queue.
+The primary invariant of sort_in_topological_order() is that a
+parent commit is not emitted until all children of it are.  When
+traversing a forked history like this with "git log C E":
 
-Introduce a prio-queue structure, that can be used either as a LIFO
-stack, or a priority queue.  This will be used in the next patch to
-hold in-flight commits during sort-in-topological-order.
+    A----B----C
+     \
+      D----E
 
-Tests and the idea to make it usable for any "void *" pointers to
-"things" are by Jeff King.  Bugs are mine.
+we ensure that A is emitted after all of B, C, D, and E are done, B
+has to wait until C is done, and D has to wait until E is done.
+
+In some applications, however, we would further want to control how
+these child commits B, C, D and E on two parallel ancestry chains
+are shown.
+
+Most of the time, we would want to see C and B emitted together, and
+then E and D, and finally A (i.e. the --topo-order output).  The
+"lifo" parameter of the sort_in_topological_order() function is used
+to control this behaviour.  We start the traversal by knowing two
+commits, C and E.  While keeping in mind that we also need to
+inspect E later, we pick C first to inspect, and we notice and
+record that B needs to be inspected.  By structuring the "work to be
+done" set as a LIFO stack, we ensure that B is inspected next,
+before other in-flight commits we had known that we will need to
+inspect, e.g. E.
+
+When showing in --date-order, we would want to see commits ordered
+by timestamps, i.e. show C, E, B and D in this order before showing
+A, possibly mixing commits from two parallel histories together.
+When "lifo" parameter is set to false, the function keeps the "work
+to be done" set sorted in the date order to realize this semantics.
+After inspecting C, we add B to the "work to be done" set, but the
+next commit we inspect from the set is E which is newer than B.
+
+The name "lifo", however, is too strongly tied to the way how the
+function implements its behaviour, and does not describe what the
+behaviour _means_.
+
+Replace this field with an enum rev_sort_order, with two possible
+values: REV_SORT_IN_GRAPH_ORDER and REV_SORT_BY_COMMIT_DATE, and
+update the existing code.  The mechanical replacement rule is:
+
+  "lifo == 0" is equivalent to "sort_order == REV_SORT_BY_COMMIT_DATE"
+  "lifo == 1" is equivalent to "sort_order == REV_SORT_IN_GRAPH_ORDER"
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- .gitignore            |  1 +
- Makefile              |  3 +++
- prio-queue.c          | 71 +++++++++++++++++++++++++++++++++++++++++++++++++++
- prio-queue.h          | 45 ++++++++++++++++++++++++++++++++
- t/t0009-prio-queue.sh | 50 ++++++++++++++++++++++++++++++++++++
- test-prio-queue.c     | 39 ++++++++++++++++++++++++++++
- 6 files changed, 209 insertions(+)
- create mode 100644 prio-queue.c
- create mode 100644 prio-queue.h
- create mode 100755 t/t0009-prio-queue.sh
- create mode 100644 test-prio-queue.c
+ builtin/log.c         |  2 +-
+ builtin/show-branch.c | 14 ++++++++------
+ commit.c              | 12 ++++++++----
+ commit.h              | 14 +++++++++++---
+ revision.c            | 10 +++++-----
+ revision.h            |  6 +++++-
+ 6 files changed, 38 insertions(+), 20 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 6669bf0..b753817 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -190,6 +190,7 @@
- /test-mktemp
- /test-parse-options
- /test-path-utils
-+/test-prio-queue
- /test-regex
- /test-revision-walking
- /test-run-command
-diff --git a/Makefile b/Makefile
-index 598d631..0246194 100644
---- a/Makefile
-+++ b/Makefile
-@@ -552,6 +552,7 @@ TEST_PROGRAMS_NEED_X += test-mergesort
- TEST_PROGRAMS_NEED_X += test-mktemp
- TEST_PROGRAMS_NEED_X += test-parse-options
- TEST_PROGRAMS_NEED_X += test-path-utils
-+TEST_PROGRAMS_NEED_X += test-prio-queue
- TEST_PROGRAMS_NEED_X += test-regex
- TEST_PROGRAMS_NEED_X += test-revision-walking
- TEST_PROGRAMS_NEED_X += test-run-command
-@@ -685,6 +686,7 @@ LIB_H += parse-options.h
- LIB_H += patch-ids.h
- LIB_H += pathspec.h
- LIB_H += pkt-line.h
-+LIB_H += prio-queue.h
- LIB_H += progress.h
- LIB_H += prompt.h
- LIB_H += quote.h
-@@ -824,6 +826,7 @@ LIB_OBJS += pathspec.o
- LIB_OBJS += pkt-line.o
- LIB_OBJS += preload-index.o
- LIB_OBJS += pretty.o
-+LIB_OBJS += prio-queue.o
- LIB_OBJS += progress.o
- LIB_OBJS += prompt.o
- LIB_OBJS += quote.o
-diff --git a/prio-queue.c b/prio-queue.c
-new file mode 100644
-index 0000000..f2a4973
---- /dev/null
-+++ b/prio-queue.c
-@@ -0,0 +1,71 @@
-+#include "cache.h"
-+#include "commit.h"
-+#include "prio-queue.h"
+diff --git a/builtin/log.c b/builtin/log.c
+index 8f0b2e8..8d26042 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -205,7 +205,7 @@ static void log_show_early(struct rev_info *revs, struct commit_list *list)
+ 	int i = revs->early_output;
+ 	int show_header = 1;
+ 
+-	sort_in_topological_order(&list, revs->lifo);
++	sort_in_topological_order(&list, revs->sort_order);
+ 	while (list && i) {
+ 		struct commit *commit = list->item;
+ 		switch (simplify_commit(revs, commit)) {
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index d208fd6..7c57985 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -631,7 +631,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 	int num_rev, i, extra = 0;
+ 	int all_heads = 0, all_remotes = 0;
+ 	int all_mask, all_revs;
+-	int lifo = 1;
++	enum rev_sort_order sort_order = REV_SORT_IN_GRAPH_ORDER;
+ 	char head[128];
+ 	const char *head_p;
+ 	int head_len;
+@@ -666,15 +666,17 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 			    N_("show possible merge bases")),
+ 		OPT_BOOLEAN(0, "independent", &independent,
+ 			    N_("show refs unreachable from any other ref")),
+-		OPT_BOOLEAN(0, "topo-order", &lifo,
+-			    N_("show commits in topological order")),
++		OPT_SET_INT(0, "topo-order", &sort_order,
++			    N_("show commits in topological order"),
++			    REV_SORT_IN_GRAPH_ORDER),
+ 		OPT_BOOLEAN(0, "topics", &topics,
+ 			    N_("show only commits not on the first branch")),
+ 		OPT_SET_INT(0, "sparse", &dense,
+ 			    N_("show merges reachable from only one tip"), 0),
+-		OPT_SET_INT(0, "date-order", &lifo,
++		OPT_SET_INT(0, "date-order", &sort_order,
+ 			    N_("show commits where no parent comes before its "
+-			       "children"), 0),
++			       "children"),
++			    REV_SORT_BY_COMMIT_DATE),
+ 		{ OPTION_CALLBACK, 'g', "reflog", &reflog_base, N_("<n>[,<base>]"),
+ 			    N_("show <n> most recent ref-log entries starting at "
+ 			       "base"),
+@@ -901,7 +903,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 		exit(0);
+ 
+ 	/* Sort topologically */
+-	sort_in_topological_order(&seen, lifo);
++	sort_in_topological_order(&seen, sort_order);
+ 
+ 	/* Give names to commits */
+ 	if (!sha1_name && !no_name)
+diff --git a/commit.c b/commit.c
+index f97456d..11b9635 100644
+--- a/commit.c
++++ b/commit.c
+@@ -512,7 +512,7 @@ define_commit_slab(indegree_slab, int);
+ /*
+  * Performs an in-place topological sort on the list supplied.
+  */
+-void sort_in_topological_order(struct commit_list ** list, int lifo)
++void sort_in_topological_order(struct commit_list ** list, enum rev_sort_order sort_order)
+ {
+ 	struct commit_list *next, *orig = *list;
+ 	struct commit_list *work, **insert;
+@@ -561,7 +561,7 @@ void sort_in_topological_order(struct commit_list ** list, int lifo)
+ 	}
+ 
+ 	/* process the list in topological order */
+-	if (!lifo)
++	if (sort_order != REV_SORT_IN_GRAPH_ORDER)
+ 		commit_list_sort_by_date(&work);
+ 
+ 	pptr = list;
+@@ -588,10 +588,14 @@ void sort_in_topological_order(struct commit_list ** list, int lifo)
+ 			 * guaranteeing topological order.
+ 			 */
+ 			if (--(*pi) == 1) {
+-				if (!lifo)
++				switch (sort_order) {
++				case REV_SORT_BY_COMMIT_DATE:
+ 					commit_list_insert_by_date(parent, &work);
+-				else
++					break;
++				default: /* REV_SORT_IN_GRAPH_ORDER */
+ 					commit_list_insert(parent, &work);
++					break;
++				}
+ 			}
+ 		}
+ 		/*
+diff --git a/commit.h b/commit.h
+index 70e749d..247e474 100644
+--- a/commit.h
++++ b/commit.h
+@@ -139,15 +139,23 @@ struct commit *pop_commit(struct commit_list **stack);
+ void clear_commit_marks(struct commit *commit, unsigned int mark);
+ void clear_commit_marks_for_object_array(struct object_array *a, unsigned mark);
+ 
 +
-+void clear_prio_queue(struct prio_queue *queue)
-+{
-+	free(queue->array);
-+	queue->nr = 0;
-+	queue->alloc = 0;
-+	queue->array = NULL;
-+}
-+
-+void prio_queue_put(struct prio_queue *queue, void *thing)
-+{
-+	prio_queue_compare_fn compare = queue->compare;
-+	int ix, parent;
-+
-+	/* Append at the end */
-+	ALLOC_GROW(queue->array, queue->nr + 1, queue->alloc);
-+	queue->array[queue->nr++] = thing;
-+	if (!compare)
-+		return; /* LIFO */
-+
-+	/* Bubble up the new one */
-+	for (ix = queue->nr - 1; ix; ix = parent) {
-+		parent = (ix - 1) / 2;
-+		if (compare(queue->array[parent], queue->array[ix],
-+			    queue->cb_data) <= 0)
-+			break;
-+
-+		thing = queue->array[parent];
-+		queue->array[parent] = queue->array[ix];
-+		queue->array[ix] = thing;
-+	}
-+}
-+
-+void *prio_queue_get(struct prio_queue *queue)
-+{
-+	void *result, *swap;
-+	int ix, child;
-+	prio_queue_compare_fn compare = queue->compare;
-+
-+	if (!queue->nr)
-+		return NULL;
-+	if (!compare)
-+		return queue->array[--queue->nr]; /* LIFO */
-+
-+	result = queue->array[0];
-+	if (!--queue->nr)
-+		return result;
-+
-+	queue->array[0] = queue->array[queue->nr];
-+
-+	/* Push down the one at the root */
-+	for (ix = 0; ix * 2 + 1 < queue->nr; ix = child) {
-+		child = ix * 2 + 1; /* left */
-+		if ((child + 1 < queue->nr) &&
-+		    (compare(queue->array[child], queue->array[child + 1],
-+			     queue->cb_data) >= 0))
-+			child++; /* use right child */
-+
-+		if (compare(queue->array[ix], queue->array[child],
-+			    queue->cb_data) <= 0)
-+			break;
-+
-+		swap = queue->array[child];
-+		queue->array[child] = queue->array[ix];
-+		queue->array[ix] = swap;
-+	}
-+	return result;
-+}
-diff --git a/prio-queue.h b/prio-queue.h
-new file mode 100644
-index 0000000..ed354a5
---- /dev/null
-+++ b/prio-queue.h
-@@ -0,0 +1,45 @@
-+#ifndef PRIO_QUEUE_H
-+#define PRIO_QUEUE_H
-+
-+/*
-+ * A priority queue implementation, primarily for keeping track of
-+ * commits in the 'date-order' so that we process them from new to old
-+ * as they are discovered, but can be used to hold any pointer to
-+ * struct.  The caller is responsible for supplying a function to
-+ * compare two "things".
-+ *
-+ * Alternatively, this data structure can also be used as a LIFO stack
-+ * by specifying NULL as the comparison function.
-+ */
-+
-+/*
-+ * Compare two "things", one and two; the third parameter is cb_data
-+ * in the prio_queue structure.  The result is returned as a sign of
-+ * the return value, being the same as the sign of the result of
-+ * subtracting "two" from "one" (i.e. negative if "one" sorts earlier
-+ * than "two").
-+ */
-+typedef int (*prio_queue_compare_fn)(const void *one, const void *two, void *cb_data);
-+
-+struct prio_queue {
-+	prio_queue_compare_fn compare;
-+	void *cb_data;
-+	int alloc, nr;
-+	void **array;
++enum rev_sort_order {
++	REV_SORT_IN_GRAPH_ORDER = 0,
++	REV_SORT_BY_COMMIT_DATE
 +};
 +
-+/*
-+ * Add the "thing" to the queue.
-+ */
-+extern void prio_queue_put(struct prio_queue *, void *thing);
+ /*
+  * Performs an in-place topological sort of list supplied.
+  *
+  *   invariant of resulting list is:
+  *      a reachable from b => ord(b) < ord(a)
+- *   in addition, when lifo == 0, commits on parallel tracks are
+- *   sorted in the dates order.
++ *   sort_order further specifies:
++ *   REV_SORT_IN_GRAPH_ORDER: try to show a commit on a single-parent
++ *                            chain together.
++ *   REV_SORT_BY_COMMIT_DATE: show eligible commits in committer-date order.
+  */
+-void sort_in_topological_order(struct commit_list ** list, int lifo);
++void sort_in_topological_order(struct commit_list **, enum rev_sort_order);
+ 
+ struct commit_graft {
+ 	unsigned char sha1[20];
+diff --git a/revision.c b/revision.c
+index cf620c6..966ebbc 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1038,7 +1038,7 @@ void init_revisions(struct rev_info *revs, const char *prefix)
+ 	DIFF_OPT_SET(&revs->pruning, QUICK);
+ 	revs->pruning.add_remove = file_add_remove;
+ 	revs->pruning.change = file_change;
+-	revs->lifo = 1;
++	revs->sort_order = REV_SORT_IN_GRAPH_ORDER;
+ 	revs->dense = 1;
+ 	revs->prefix = prefix;
+ 	revs->max_age = -1;
+@@ -1373,7 +1373,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!strcmp(arg, "--merge")) {
+ 		revs->show_merge = 1;
+ 	} else if (!strcmp(arg, "--topo-order")) {
+-		revs->lifo = 1;
++		revs->sort_order = REV_SORT_IN_GRAPH_ORDER;
+ 		revs->topo_order = 1;
+ 	} else if (!strcmp(arg, "--simplify-merges")) {
+ 		revs->simplify_merges = 1;
+@@ -1391,7 +1391,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->prune = 1;
+ 		load_ref_decorations(DECORATE_SHORT_REFS);
+ 	} else if (!strcmp(arg, "--date-order")) {
+-		revs->lifo = 0;
++		revs->sort_order = REV_SORT_BY_COMMIT_DATE;
+ 		revs->topo_order = 1;
+ 	} else if (!prefixcmp(arg, "--early-output")) {
+ 		int count = 100;
+@@ -2165,7 +2165,7 @@ int prepare_revision_walk(struct rev_info *revs)
+ 		if (limit_list(revs) < 0)
+ 			return -1;
+ 	if (revs->topo_order)
+-		sort_in_topological_order(&revs->commits, revs->lifo);
++		sort_in_topological_order(&revs->commits, revs->sort_order);
+ 	if (revs->simplify_merges)
+ 		simplify_merges(revs);
+ 	if (revs->children.name)
+@@ -2480,7 +2480,7 @@ static void create_boundary_commit_list(struct rev_info *revs)
+ 	 * If revs->topo_order is set, sort the boundary commits
+ 	 * in topological order
+ 	 */
+-	sort_in_topological_order(&revs->commits, revs->lifo);
++	sort_in_topological_order(&revs->commits, revs->sort_order);
+ }
+ 
+ static struct commit *get_revision_internal(struct rev_info *revs)
+diff --git a/revision.h b/revision.h
+index 5da09ee..2a5e325 100644
+--- a/revision.h
++++ b/revision.h
+@@ -4,6 +4,7 @@
+ #include "parse-options.h"
+ #include "grep.h"
+ #include "notes.h"
++#include "commit.h"
+ 
+ #define SEEN		(1u<<0)
+ #define UNINTERESTING   (1u<<1)
+@@ -60,6 +61,10 @@ struct rev_info {
+ 	const char *prefix;
+ 	const char *def;
+ 	struct pathspec prune_data;
 +
-+/*
-+ * Extract the "thing" that compares the smallest out of the queue,
-+ * or NULL.  If compare function is NULL, the queue acts as a LIFO
-+ * stack.
-+ */
-+extern void *prio_queue_get(struct prio_queue *);
++	/* topo-sort */
++	enum rev_sort_order sort_order;
 +
-+extern void clear_prio_queue(struct prio_queue *);
-+
-+#endif /* PRIO_QUEUE_H */
-diff --git a/t/t0009-prio-queue.sh b/t/t0009-prio-queue.sh
-new file mode 100755
-index 0000000..94045c3
---- /dev/null
-+++ b/t/t0009-prio-queue.sh
-@@ -0,0 +1,50 @@
-+#!/bin/sh
-+
-+test_description='basic tests for priority queue implementation'
-+. ./test-lib.sh
-+
-+cat >expect <<'EOF'
-+1
-+2
-+3
-+4
-+5
-+5
-+6
-+7
-+8
-+9
-+10
-+EOF
-+test_expect_success 'basic ordering' '
-+	test-prio-queue 2 6 3 10 9 5 7 4 5 8 1 dump >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<'EOF'
-+2
-+3
-+4
-+1
-+5
-+6
-+EOF
-+test_expect_success 'mixed put and get' '
-+	test-prio-queue 6 2 4 get 5 3 get get 1 dump >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<'EOF'
-+1
-+2
-+NULL
-+1
-+2
-+NULL
-+EOF
-+test_expect_success 'notice empty queue' '
-+	test-prio-queue 1 2 get get get 1 2 get get get >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
-diff --git a/test-prio-queue.c b/test-prio-queue.c
-new file mode 100644
-index 0000000..7be72f0
---- /dev/null
-+++ b/test-prio-queue.c
-@@ -0,0 +1,39 @@
-+#include "cache.h"
-+#include "prio-queue.h"
-+
-+static int intcmp(const void *va, const void *vb, void *data)
-+{
-+	const int *a = va, *b = vb;
-+	return *a - *b;
-+}
-+
-+static void show(int *v)
-+{
-+	if (!v)
-+		printf("NULL\n");
-+	else
-+		printf("%d\n", *v);
-+	free(v);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+	struct prio_queue pq = { intcmp };
-+
-+	while (*++argv) {
-+		if (!strcmp(*argv, "get"))
-+			show(prio_queue_get(&pq));
-+		else if (!strcmp(*argv, "dump")) {
-+			int *v;
-+			while ((v = prio_queue_get(&pq)))
-+			       show(v);
-+		}
-+		else {
-+			int *v = malloc(sizeof(*v));
-+			*v = atoi(*argv);
-+			prio_queue_put(&pq, v);
-+		}
-+	}
-+
-+	return 0;
-+}
+ 	unsigned int	early_output:1,
+ 			ignore_missing:1;
+ 
+@@ -70,7 +75,6 @@ struct rev_info {
+ 			show_all:1,
+ 			remove_empty_trees:1,
+ 			simplify_history:1,
+-			lifo:1,
+ 			topo_order:1,
+ 			simplify_merges:1,
+ 			simplify_by_decoration:1,
 -- 
 1.8.3.1-494-g51b8af5
