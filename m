@@ -1,123 +1,299 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Tue, 11 Jun 2013 16:40:58 +0200
-Message-ID: <51B736FA.5010407@alum.mit.edu>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com> <51B6AA7F.1060505@alum.mit.edu> <CALkWK0nNn8Rcu4JpV4r+0ct+_cuW3aUHXKV4bcB-Hn6Xg8Y+bA@mail.gmail.com> <87li6g969j.fsf@linux-k42r.v.cablecom.net> <CALkWK0kMvac7Sp3QwvEm+J_-Hj7JAn-AY-juDDw1HR3oQ+hamA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 16:41:17 2013
+From: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Subject: [PATCH v4 1/2] rm: better error message on failure for multiple files
+Date: Tue, 11 Jun 2013 16:56:00 +0200
+Message-ID: <1370962561-12519-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Cc: gitster@pobox.com,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 11 16:56:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmPl2-0007yQ-FK
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 16:41:12 +0200
+	id 1UmPzc-0002QW-J4
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 16:56:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752573Ab3FKOlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 10:41:07 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:50780 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752421Ab3FKOlG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jun 2013 10:41:06 -0400
-X-AuditID: 12074411-b7f296d000001209-f6-51b73700c84e
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id AE.F6.04617.00737B15; Tue, 11 Jun 2013 10:41:04 -0400 (EDT)
-Received: from [192.168.69.140] (p57A251F0.dip0.t-ipconnect.de [87.162.81.240])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r5BEewJv027164
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 11 Jun 2013 10:40:59 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <CALkWK0kMvac7Sp3QwvEm+J_-Hj7JAn-AY-juDDw1HR3oQ+hamA@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrKKsWRmVeSWpSXmKPExsUixO6iqMtgvj3QYMFxY4tVMx+zW3Rd6Way
-	aOi9wmwx7ecuVou3N5cwWty9vIrdgc1j56y77B63X89n9rh4Sdnj8ya5AJYobpukxJKy4Mz0
-	PH27BO6MGW8iCzZLVPTsvsDWwHhCuIuRk0NCwESip2s1O4QtJnHh3nq2LkYuDiGBy4wS+2/e
-	ZYFwzjNJTPu4kxWkildAW2J1wxQwm0VAVWJq/w6wbjYBXYlFPc1MILaoQJjE+2VToeoFJU7O
-	fAI0iINDBKjm2SpvkJnMAhcYJU5O2sQIUiMsYCZx7MVMqGVLmSSuH2tgA0lwCgRKtJ+cxQ7S
-	zCygLrF+nhBImFlAXmL72znMExgFZiFZMQuhahaSqgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz
-	8lKLdE31cjNL9FJTSjcxQgJccAfjjJNyhxgFOBiVeHgTGLcFCrEmlhVX5h5ilORgUhLl1TDe
-	HijEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhLdRDijHm5JYWZValA+TkuZgURLn5Vui7ickkJ5Y
-	kpqdmlqQWgSTleHgUJLgdTUDahQsSk1PrUjLzClBSDNxcIIM55ISKU7NS0ktSiwtyYgHxWl8
-	MTBSQVI8QHttQdp5iwsSc4GiEK2nGI05Np+f/I6RY8YPICnEkpeflyolzqsJUioAUppRmge3
-	CJbaXjGKA/0tzOsIUsUDTItw814BrWICWjVFfQvIqpJEhJRUA2NCgY1tO3fWheusP32ZZ3Ad
-	YgwN7LqnJrHroUv7hCN6aR5JvZNb+H1b05Kkgh/IrdSX3vn46GxGycPlChLGwQb7 
+	id S1753700Ab3FKO4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 10:56:12 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38434 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753529Ab3FKO4J (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 10:56:09 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5BEu3xg022076
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 11 Jun 2013 16:56:03 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5BEu4Kk015928;
+	Tue, 11 Jun 2013 16:56:04 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5BEu4tg006382;
+	Tue, 11 Jun 2013 16:56:04 +0200
+Received: (from lienardm@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id r5BEu4nh006381;
+	Tue, 11 Jun 2013 16:56:04 +0200
+X-Mailer: git-send-email 1.7.8
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 11 Jun 2013 16:56:03 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227449>
 
-On 06/11/2013 03:40 PM, Ramkumar Ramachandra wrote:
-> Is it because you have realized deep down that you have absolutely no
-> rational argument...Why are you incapable of
-> using your words to counter my arguments rationally?Are you so blind
-> that you cannot see the consequences of acting without reason?
+When 'git rm' fails, it now displays a single message
+with the list of files involved, instead of displaying
+a list of messages with one file each.
 
-Ram, you are insulting Thomas the human being rather than addressing his
-points.  Please stop.
+As an example, the old message:
+	error: 'foo.txt' has changes staged in the index
+	(use --cached to keep the file, or -f to force removal)
+	error: 'bar.txt' has changes staged in the index
+	(use --cached to keep the file, or -f to force removal)
 
-> Tomorrow the majority opinion will dictate that I am a fire hazard and
-> must be removed.  Soon, anybody who disagrees with the majority
-> opinion will be removed, and the community will be reduced to a
-> handful of circlejerking yes-men.  The git project will die a sad
-> death.  And the blood will be on your hands.
+would now be displayed as:
+	error: the following files have changes staged in the index:
+	    foo.txt
+	    bar.txt
+	(use --cached to keep the file, or -f to force removal)
 
-It is not disagreement that is causing problems; it is the inflammatory
-tone of the discussion.  Civil and constructive disagreement is
-completely welcome here.  But hurtful and offensive discussion is not,
-even if it is in support of the "party line" (haha as if there were such
-a thing).
+Signed-off-by: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Signed-off-by: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+---
 
-And yes, I know that the word "offensive" is subjective, but for the
-sake of this discussion let's take it to mean "offensive to the vast
-majority of a community".  Not "controversial", not "contrarian", not
-even "stupid"; I don't think anybody is proposing to prohibit dissent or
-stupidity.  But there is no reason for discussion that is gratuitously
-aggressive, insulting, or derogatory; such discussion is what I mean by
-"offensive".
+Changes since v3:
+ - rename function print_error_files()
+ - use of strbuf_release to avoid leaking
+ - change of a forgotten message, now using print_error_files() aswell
+ - removal of useless braces
+ - use of Q_() to deal with plurals correctly
+ - removal of spaces after redirection <<
+ - use of -\EOF to indent tests better
 
-> [...]  I already gave you the
-> example of the survivors on the boat with limited food/water on IRC:
-> it is you who stupidly refused to throw anyone overboard, killing all
-> the survivors; I am the one who said that I would get them to draw
-> sticks to "fairly choose" who to throw overboard, maximizing the
-> chances of survival of the others.  I am making a pragmatic argument,
-> based on what is best for the community; not some stuck-up idealistic
-> bullshit.  Further, I tried to help you think through the justice
-> problem, by recommending an accessible course.  You have either not
-> gone through it, or have gone through it and learnt nothing.
+ builtin/rm.c  |   95 +++++++++++++++++++++++++++++++++++++++++++++-----------
+ t/t3600-rm.sh |   67 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 143 insertions(+), 19 deletions(-)
 
-Your idea that you can assign Thomas "homework" in ethics and call him
-stupid for coming to a different conclusion than you is presumptuous in
-the extreme.
-
-> [...]
-> You have embarrassed yourself and the entire git community today.
-
-This is also presumptuous, not to mention extremely ironic.  In my
-opinion Thomas's email was calm and reasonable while yours is beyond the
-pale.
-
-Ram, don't just take my opinion on this matter.  At the risk of being
-presumptuous myself, I suggest that you show a copy of your email to
-somebody whom you know and respect in the real world, somebody who is
-not immersed in the Git community meltdown.  For example, somebody like
-your mother or father, or a teacher whom you respect, or a member of
-clergy if you are so inclined.  Ask that person's opinion about your email.
-
-It is so easy to lose perspective in the Internet.
-
-Michael
-
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 7b91d52..e284db3 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -36,11 +36,32 @@ static int get_ours_cache_pos(const char *path, int pos)
+ 	return -1;
+ }
+ 
++static void print_error_files(struct string_list *files_list,
++			      const char *main_msg,
++			      const char *hints_msg,
++			      int *errs)
++{
++	if (files_list->nr) {
++		struct strbuf err_msg = STRBUF_INIT;
++		int i;
++		strbuf_addstr(&err_msg, main_msg);
++		for (i = 0; i < files_list->nr; i++)
++			strbuf_addf(&err_msg,
++				    "\n    %s",
++				    files_list->items[i].string);
++		strbuf_addstr(&err_msg, hints_msg);
++		*errs = error("%s", err_msg.buf);
++		strbuf_release(&err_msg);
++	}
++}
++
+ static int check_submodules_use_gitfiles(void)
+ {
+ 	int i;
+ 	int errs = 0;
+ 
++	struct string_list files = STRING_LIST_INIT_NODUP;
++
+ 	for (i = 0; i < list.nr; i++) {
+ 		const char *name = list.entry[i].name;
+ 		int pos;
+@@ -61,11 +82,17 @@ static int check_submodules_use_gitfiles(void)
+ 			continue;
+ 
+ 		if (!submodule_uses_gitfile(name))
+-			errs = error(_("submodule '%s' (or one of its nested "
+-				     "submodules) uses a .git directory\n"
+-				     "(use 'rm -rf' if you really want to remove "
+-				     "it including all of its history)"), name);
++			string_list_append(&files, name);
+ 	}
++	print_error_files(&files,
++			  Q_("the following submodule (or one of its nested "
++			     "submodules)\n uses a .git directory:",
++			     "the following submodules (or one of its nested "
++			     "submodules)\n use a .git directory:",
++			     files.nr),
++			  _("\n(use 'rm -rf' if you really want to remove "
++			    "it including all of its history)"),
++			  &errs);
+ 
+ 	return errs;
+ }
+@@ -82,6 +109,11 @@ static int check_local_mod(unsigned char *head, int index_only)
+ 	int i, no_head;
+ 	int errs = 0;
+ 
++	struct string_list files_staged = STRING_LIST_INIT_NODUP;
++	struct string_list files_cached = STRING_LIST_INIT_NODUP;
++	struct string_list files_submodule = STRING_LIST_INIT_NODUP;
++	struct string_list files_local = STRING_LIST_INIT_NODUP;
++
+ 	no_head = is_null_sha1(head);
+ 	for (i = 0; i < list.nr; i++) {
+ 		struct stat st;
+@@ -171,29 +203,54 @@ static int check_local_mod(unsigned char *head, int index_only)
+ 		 */
+ 		if (local_changes && staged_changes) {
+ 			if (!index_only || !(ce->ce_flags & CE_INTENT_TO_ADD))
+-				errs = error(_("'%s' has staged content different "
+-					     "from both the file and the HEAD\n"
+-					     "(use -f to force removal)"), name);
++				string_list_append(&files_staged, name);
+ 		}
+ 		else if (!index_only) {
+ 			if (staged_changes)
+-				errs = error(_("'%s' has changes staged in the index\n"
+-					     "(use --cached to keep the file, "
+-					     "or -f to force removal)"), name);
++				string_list_append(&files_cached, name);
+ 			if (local_changes) {
+ 				if (S_ISGITLINK(ce->ce_mode) &&
+-				    !submodule_uses_gitfile(name)) {
+-					errs = error(_("submodule '%s' (or one of its nested "
+-						     "submodules) uses a .git directory\n"
+-						     "(use 'rm -rf' if you really want to remove "
+-						     "it including all of its history)"), name);
+-				} else
+-					errs = error(_("'%s' has local modifications\n"
+-						     "(use --cached to keep the file, "
+-						     "or -f to force removal)"), name);
++				    !submodule_uses_gitfile(name))
++					string_list_append(&files_submodule, name);
++				else
++					string_list_append(&files_local, name);
+ 			}
+ 		}
+ 	}
++	print_error_files(&files_staged,
++			  Q_("the following file has staged content different "
++			     "from both the\nfile and the HEAD:",
++			     "the following files have staged content different"
++			     " from both the\nfile and the HEAD:",
++			     files_staged.nr),
++			  _("\n(use -f to force removal)"),
++			  &errs);
++	print_error_files(&files_cached,
++			  Q_("the following file has changes "
++			     "staged in the index:",
++			     "the following files have changes "
++			     "staged in the index:", files_cached.nr),
++			  _("\n(use --cached to keep the file,"
++			    " or -f to force removal)"),
++			  &errs);
++	print_error_files(&files_submodule,
++			  Q_("the following submodule (or one of its nested "
++			     "submodule)\nuses a .git directory:",
++			     "the following submodules (or one of its nested "
++			     "submodule)\nuse a .git directory:",
++			     files_submodule.nr),
++			  _("\n(use 'rm -rf' if you really "
++			    "want to remove it including all "
++			    "of its history)"),
++			  &errs);
++	print_error_files(&files_local,
++			  Q_("the following file has local modifications:",
++			     "the following files have local modifications:",
++			     files_local.nr),
++			  _("\n(use --cached to keep the file,"
++			    " or -f to force removal)"),
++			  &errs);
++
+ 	return errs;
+ }
+ 
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index 0c44e9f..902993b 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -687,4 +687,71 @@ test_expect_failure SYMLINKS 'rm across a symlinked leading path (w/ index)' '
+ 	test_path_is_file e/f
+ '
+ 
++test_expect_success 'setup for testing rm messages' '
++	>bar.txt &&
++	>foo.txt &&
++	git add bar.txt foo.txt
++'
++
++test_expect_success 'rm files with different staged content' '
++	cat >expect <<-\EOF &&
++	error: the following files have staged content different from both the
++	file and the HEAD:
++	    bar.txt
++	    foo.txt
++	(use -f to force removal)
++	EOF
++	echo content1 >foo.txt &&
++	echo content1 >bar.txt &&
++	test_must_fail git rm foo.txt bar.txt 2>actual &&
++	test_i18ncmp expect actual
++'
++
++
++test_expect_success 'rm file with local modification' '
++	cat >expect <<-\EOF &&
++	error: the following file has local modifications:
++	    foo.txt
++	(use --cached to keep the file, or -f to force removal)
++	EOF
++	git commit -m "testing rm 3" &&
++	echo content3 >foo.txt &&
++	test_must_fail git rm foo.txt 2>actual &&
++	test_i18ncmp expect actual
++'
++
++
++test_expect_success 'rm file with changes in the index' '
++	cat >expect <<-\EOF &&
++	error: the following file has changes staged in the index:
++	    foo.txt
++	(use --cached to keep the file, or -f to force removal)
++	EOF
++	git reset --hard &&
++	echo content5 >foo.txt &&
++	git add foo.txt &&
++	test_must_fail git rm foo.txt 2>actual &&
++	test_i18ncmp expect actual
++'
++
++
++test_expect_success 'rm files with two different errors' '
++	cat >expect <<-\EOF &&
++	error: the following file has staged content different from both the
++	file and the HEAD:
++	    foo1.txt
++	(use -f to force removal)
++	error: the following file has changes staged in the index:
++	    bar1.txt
++	(use --cached to keep the file, or -f to force removal)
++	EOF
++	echo content >foo1.txt &&
++	git add foo1.txt &&
++	echo content6 >foo1.txt &&
++	echo content6 >bar1.txt &&
++	git add bar1.txt &&
++	test_must_fail git rm bar1.txt foo1.txt 2>actual &&
++	test_i18ncmp expect actual
++'
++
+ test_done
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.8
