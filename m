@@ -1,368 +1,173 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 08/12] Extract a struct stat_data from cache_entry
-Date: Tue, 11 Jun 2013 23:48:28 +0200
-Message-ID: <1370987312-6761-9-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 11/12] for_each_ref: load all loose refs before packed refs
+Date: Tue, 11 Jun 2013 23:48:31 +0200
+Message-ID: <1370987312-6761-12-git-send-email-mhagger@alum.mit.edu>
 References: <1370987312-6761-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 23:49:24 2013
+X-From: git-owner@vger.kernel.org Tue Jun 11 23:49:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmWRM-0003wo-N5
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 23:49:21 +0200
+	id 1UmWRW-00043f-5k
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 23:49:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756561Ab3FKVtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 17:49:09 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:52120 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756474Ab3FKVtF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jun 2013 17:49:05 -0400
-X-AuditID: 1207440c-b7f016d000005997-2b-51b79b509d30
+	id S1756601Ab3FKVtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 17:49:20 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:51521 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755370Ab3FKVtK (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jun 2013 17:49:10 -0400
+X-AuditID: 12074412-b7f656d00000102f-32-51b79b55f2c4
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 1F.D6.22935.05B97B15; Tue, 11 Jun 2013 17:49:04 -0400 (EDT)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 66.83.04143.55B97B15; Tue, 11 Jun 2013 17:49:09 -0400 (EDT)
 Received: from michael.fritz.box (p57A251F0.dip0.t-ipconnect.de [87.162.81.240])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r5BLmbiw015717
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r5BLmbj1015717
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 11 Jun 2013 17:49:03 -0400
+	Tue, 11 Jun 2013 17:49:08 -0400
 X-Mailer: git-send-email 1.8.3
 In-Reply-To: <1370987312-6761-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKIsWRmVeSWpSXmKPExsUixO6iqBswe3ugwf6NxhZdV7qZLBp6rzBb
-	zLu7i8ni9or5zBY/WnqYHVg9/r7/wORx6eV3No9nvXsYPS5eUvb4vEkugDWK2yYpsaQsODM9
-	T98ugTtj9ex1jAW7Iitu3Z/F2sB4x7OLkZ1DQsBEYoVEFyMnkCUmceHeerYuRi4OIYHLjBJb
-	d91ngnAuMEnceXSHHaSKTUBXYlFPMxOILSKgJjGx7RALSBGzQDujxLvmfcxdjBwcwgJOErvX
-	yIDUsAioSlz7+4YVxOYVcJaY82YzO8Q2OYn3d3axgNicAi4SGzdvZgaxhYBqvvc0MU5g5F3A
-	yLCKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdQLzezRC81pXQTIySgeHYwflsnc4hRgINRiYf3
-	gNn2QCHWxLLiytxDjJIcTEqivGzTgEJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeHVzgXK8KYmV
-	ValF+TApaQ4WJXFe1SXqfkIC6YklqdmpqQWpRTBZGQ4OJQneuzOBGgWLUtNTK9Iyc0oQ0kwc
-	nCCCC2QDD9AGvlkgG4oLEnOLM9Mhik4xKkqJ8z4CmSAAksgozYMbAIv9V4ziQP8I814EqeIB
-	pg247ldAg5mABhdlgA0uSURISTUw6sUYHur8avlrKTO3W8POj8yz7ndG2VVNNNXQfmyU5Gnn
-	vKPCch2LdfYkpcydDptvup88bJbFeOJstTWvcbfQ5PrDC/e/nyokGSL++eY/z8Ost82uynKH
-	1ztHMlxV26Fr9GN+k6JkvfmHbXNyWAv2LmbvVHl026lWKd2q6vgu/oaJQkdX8r1W 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsUixO6iqBs6e3ugwddGPYuuK91MFg29V5gt
+	5t3dxWRxe8V8ZosfLT3MDqwef99/YPK49PI7m8ez3j2MHhcvKXt83iQXwBrFbZOUWFIWnJme
+	p2+XwJ3RvCe1YIVqxd9105gaGO/IdjFyckgImEg8XH6SHcIWk7hwbz1bFyMXh5DAZUaJP639
+	LCAJIYELTBK7ZzGC2GwCuhKLepqZQGwRATWJiW2HWEAamAXaGSXeNe9jBkkIC3hLnGq4BDaV
+	RUBV4traE2CDeAVcJC7fOcMCsU1O4v2dXWA2J1B84+bNzBDLnCW+9zQxTmDkXcDIsIpRLjGn
+	NFc3NzEzpzg1Wbc4OTEvL7VI10wvN7NELzWldBMjJKSEdjCuPyl3iFGAg1GJh/eA2fZAIdbE
+	suLK3EOMkhxMSqK8bNOAQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4dXOBcrwpiZVVqUX5MClp
+	DhYlcd6fi9X9hATSE0tSs1NTC1KLYLIyHBxKErx3ZwI1ChalpqdWpGXmlCCkmTg4QQQXyAYe
+	oA18s0A2FBck5hZnpkMUnWJUlBLnfQQyQQAkkVGaBzcAFv2vGMWB/hHmvQhSxQNMHHDdr4AG
+	MwENLsoAG1ySiJCSamB0/mVYuGq2VOms9B+1HwqiEu9nK81y269xWqBr9a0VOVcOrstVPJnL
+	enSmNovQbjnul/725qGWiZMOOX09XtY7u/fXllDtB6b3G9Kab4oXVb9KOWZ7nbvkaNwMLvuI
+	e7JG5kvyctNlsqaXmWkYHgjI/bboYI+EZtuNayc9Dn5sWB+1rzWUW1yJpTgj0VCL 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227528>
 
-Add public functions fill_stat_data() and match_stat_data() to work
-with it.  This infrastructure will later be used to check the validity
-of other types of file.
+From: Jeff King <peff@peff.net>
+
+If we are iterating through the refs using for_each_ref (or
+any of its sister functions), we can get into a race
+condition with a simultaneous "pack-refs --prune" that looks
+like this:
+
+  0. We have a large number of loose refs, and a few packed
+     refs. refs/heads/z/foo is loose, with no matching entry
+     in the packed-refs file.
+
+  1. Process A starts iterating through the refs. It loads
+     the packed-refs file from disk, then starts lazily
+     traversing through the loose ref directories.
+
+  2. Process B, running "pack-refs --prune", writes out the
+     new packed-refs file. It then deletes the newly packed
+     refs, including refs/heads/z/foo.
+
+  3. Meanwhile, process A has finally gotten to
+     refs/heads/z (it traverses alphabetically). It
+     descends, but finds nothing there.  It checks its
+     cached view of the packed-refs file, but it does not
+     mention anything in "refs/heads/z/" at all (it predates
+     the new file written by B in step 2).
+
+The traversal completes successfully without mentioning
+refs/heads/z/foo at all (the name, of course, isn't
+important; but the more refs you have and the farther down
+the alphabetical list a ref is, the more likely it is to hit
+the race). If refs/heads/z/foo did exist in the packed refs
+file at state 0, we would see an entry for it, but it would
+show whatever sha1 the ref had the last time it was packed
+(which could be an arbitrarily long time ago).
+
+This can be especially dangerous when process A is "git
+prune", as it means our set of reachable tips will be
+incomplete, and we may erroneously prune objects reachable
+from that tip (the same thing can happen if "repack -ad" is
+used, as it simply drops unreachable objects that are
+packed).
+
+This patch solves it by loading all of the loose refs for
+our traversal into our in-memory cache, and then refreshing
+the packed-refs cache. Because a pack-refs writer will
+always put the new packed-refs file into place before
+starting the prune, we know that any loose refs we fail to
+see will either truly be missing, or will have already been
+put in the packed-refs file by the time we refresh.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
-I'm not too familiar with this part of the code, so please make sure
-that I've put the dividing line at the right place.
+Ditto.
 
- builtin/ls-files.c |  12 +++--
- cache.h            |  33 +++++++++---
- read-cache.c       | 151 +++++++++++++++++++++++++++++------------------------
- 3 files changed, 116 insertions(+), 80 deletions(-)
+ refs.c | 39 +++++++++++++++++++++++++++++++++++----
+ 1 file changed, 35 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 2202072..6a0730f 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -165,11 +165,13 @@ static void show_ce_entry(const char *tag, struct cache_entry *ce)
- 	}
- 	write_name(ce->name, ce_namelen(ce));
- 	if (debug_mode) {
--		printf("  ctime: %d:%d\n", ce->ce_ctime.sec, ce->ce_ctime.nsec);
--		printf("  mtime: %d:%d\n", ce->ce_mtime.sec, ce->ce_mtime.nsec);
--		printf("  dev: %d\tino: %d\n", ce->ce_dev, ce->ce_ino);
--		printf("  uid: %d\tgid: %d\n", ce->ce_uid, ce->ce_gid);
--		printf("  size: %d\tflags: %x\n", ce->ce_size, ce->ce_flags);
-+		struct stat_data *sd = &ce->ce_stat_data;
-+
-+		printf("  ctime: %d:%d\n", sd->sd_ctime.sec, sd->sd_ctime.nsec);
-+		printf("  mtime: %d:%d\n", sd->sd_mtime.sec, sd->sd_mtime.nsec);
-+		printf("  dev: %d\tino: %d\n", sd->sd_dev, sd->sd_ino);
-+		printf("  uid: %d\tgid: %d\n", sd->sd_uid, sd->sd_gid);
-+		printf("  size: %d\tflags: %x\n", sd->sd_size, ce->ce_flags);
- 	}
+diff --git a/refs.c b/refs.c
+index 64f72ab..aa4641b 100644
+--- a/refs.c
++++ b/refs.c
+@@ -746,6 +746,21 @@ static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
  }
  
-diff --git a/cache.h b/cache.h
-index df532f8..207f849 100644
---- a/cache.h
-+++ b/cache.h
-@@ -119,15 +119,19 @@ struct cache_time {
- 	unsigned int nsec;
- };
- 
-+struct stat_data {
-+	struct cache_time sd_ctime;
-+	struct cache_time sd_mtime;
-+	unsigned int sd_dev;
-+	unsigned int sd_ino;
-+	unsigned int sd_uid;
-+	unsigned int sd_gid;
-+	unsigned int sd_size;
-+};
-+
- struct cache_entry {
--	struct cache_time ce_ctime;
--	struct cache_time ce_mtime;
--	unsigned int ce_dev;
--	unsigned int ce_ino;
-+	struct stat_data ce_stat_data;
- 	unsigned int ce_mode;
--	unsigned int ce_uid;
--	unsigned int ce_gid;
--	unsigned int ce_size;
- 	unsigned int ce_flags;
- 	unsigned int ce_namelen;
- 	unsigned char sha1[20];
-@@ -509,6 +513,21 @@ extern int limit_pathspec_to_literal(void);
- #define HASH_FORMAT_CHECK 2
- extern int index_fd(unsigned char *sha1, int fd, struct stat *st, enum object_type type, const char *path, unsigned flags);
- extern int index_path(unsigned char *sha1, const char *path, struct stat *st, unsigned flags);
-+
-+/*
-+ * Record to sd the data from st that we use to check whether a file
-+ * might have changed.
-+ */
-+extern void fill_stat_data(struct stat_data *sd, struct stat *st);
-+
-+/*
-+ * Return 0 if st is consistent with a file not having been changed
-+ * since sd was filled.  If there are differences, return a
-+ * combination of MTIME_CHANGED, CTIME_CHANGED, OWNER_CHANGED,
-+ * INODE_CHANGED, and DATA_CHANGED.
-+ */
-+extern int match_stat_data(struct stat_data *sd, struct stat *st);
-+
- extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
- 
- #define REFRESH_REALLY		0x0001	/* ignore_valid */
-diff --git a/read-cache.c b/read-cache.c
-index 04ed561..4c4328e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -67,6 +67,61 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
- 	add_index_entry(istate, new, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
- }
- 
-+void fill_stat_data(struct stat_data *sd, struct stat *st)
-+{
-+	sd->sd_ctime.sec = (unsigned int)st->st_ctime;
-+	sd->sd_mtime.sec = (unsigned int)st->st_mtime;
-+	sd->sd_ctime.nsec = ST_CTIME_NSEC(*st);
-+	sd->sd_mtime.nsec = ST_MTIME_NSEC(*st);
-+	sd->sd_dev = st->st_dev;
-+	sd->sd_ino = st->st_ino;
-+	sd->sd_uid = st->st_uid;
-+	sd->sd_gid = st->st_gid;
-+	sd->sd_size = st->st_size;
-+}
-+
-+int match_stat_data(struct stat_data *sd, struct stat *st)
-+{
-+	int changed = 0;
-+
-+	if (sd->sd_mtime.sec != (unsigned int)st->st_mtime)
-+		changed |= MTIME_CHANGED;
-+	if (trust_ctime && check_stat &&
-+	    sd->sd_ctime.sec != (unsigned int)st->st_ctime)
-+		changed |= CTIME_CHANGED;
-+
-+#ifdef USE_NSEC
-+	if (check_stat && sd->sd_mtime.nsec != ST_MTIME_NSEC(*st))
-+		changed |= MTIME_CHANGED;
-+	if (trust_ctime && check_stat &&
-+	    sd->sd_ctime.nsec != ST_CTIME_NSEC(*st))
-+		changed |= CTIME_CHANGED;
-+#endif
-+
-+	if (check_stat) {
-+		if (sd->sd_uid != (unsigned int) st->st_uid ||
-+			sd->sd_gid != (unsigned int) st->st_gid)
-+			changed |= OWNER_CHANGED;
-+		if (sd->sd_ino != (unsigned int) st->st_ino)
-+			changed |= INODE_CHANGED;
-+	}
-+
-+#ifdef USE_STDEV
-+	/*
-+	 * st_dev breaks on network filesystems where different
-+	 * clients will have different views of what "device"
-+	 * the filesystem is on
-+	 */
-+	if (check_stat && sd->sd_dev != (unsigned int) st->st_dev)
-+			changed |= INODE_CHANGED;
-+#endif
-+
-+	if (sd->sd_size != (unsigned int) st->st_size)
-+		changed |= DATA_CHANGED;
-+
-+	return changed;
-+}
-+
  /*
-  * This only updates the "non-critical" parts of the directory
-  * cache, ie the parts that aren't tracked by GIT, and only used
-@@ -74,15 +129,7 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
-  */
- void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
++ * Load all of the refs from the dir into our in-memory cache. The hard work
++ * of loading loose refs is done by get_ref_dir(), so we just need to recurse
++ * through all of the sub-directories. We do not even need to care about
++ * sorting, as traversal order does not matter to us.
++ */
++static void prime_ref_dir(struct ref_dir *dir)
++{
++	int i;
++	for (i = 0; i < dir->nr; i++) {
++		struct ref_entry *entry = dir->entries[i];
++		if (entry->flag & REF_DIR)
++			prime_ref_dir(get_ref_dir(entry));
++	}
++}
++/*
+  * Return true iff refname1 and refname2 conflict with each other.
+  * Two reference names conflict if one of them exactly matches the
+  * leading components of the other; e.g., "foo/bar" conflicts with
+@@ -1600,15 +1615,31 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
+ static int do_for_each_entry(struct ref_cache *refs, const char *base,
+ 			     each_ref_entry_fn fn, void *cb_data)
  {
--	ce->ce_ctime.sec = (unsigned int)st->st_ctime;
--	ce->ce_mtime.sec = (unsigned int)st->st_mtime;
--	ce->ce_ctime.nsec = ST_CTIME_NSEC(*st);
--	ce->ce_mtime.nsec = ST_MTIME_NSEC(*st);
--	ce->ce_dev = st->st_dev;
--	ce->ce_ino = st->st_ino;
--	ce->ce_uid = st->st_uid;
--	ce->ce_gid = st->st_gid;
--	ce->ce_size = st->st_size;
-+	fill_stat_data(&ce->ce_stat_data, st);
+-	struct packed_ref_cache *packed_ref_cache = get_packed_ref_cache(refs);
+-	struct ref_dir *packed_dir = get_packed_ref_dir(packed_ref_cache);
+-	struct ref_dir *loose_dir = get_loose_refs(refs);
++	struct packed_ref_cache *packed_ref_cache;
++	struct ref_dir *loose_dir;
++	struct ref_dir *packed_dir;
+ 	int retval = 0;
  
- 	if (assume_unchanged)
- 		ce->ce_flags |= CE_VALID;
-@@ -195,43 +242,11 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
- 	default:
- 		die("internal error: ce_mode is %o", ce->ce_mode);
++	/*
++	 * We must make sure that all loose refs are read before accessing the
++	 * packed-refs file; this avoids a race condition in which loose refs
++	 * are migrated to the packed-refs file by a simultaneous process, but
++	 * our in-memory view is from before the migration. get_packed_ref_cache()
++	 * takes care of making sure our view is up to date with what is on
++	 * disk.
++	 */
++	loose_dir = get_loose_refs(refs);
++	if (base && *base) {
++		loose_dir = find_containing_dir(loose_dir, base, 0);
++	}
++	if (loose_dir)
++		prime_ref_dir(loose_dir);
++
++	packed_ref_cache = get_packed_ref_cache(refs);
+ 	acquire_packed_ref_cache(packed_ref_cache);
++	packed_dir = get_packed_ref_dir(packed_ref_cache);
+ 	if (base && *base) {
+ 		packed_dir = find_containing_dir(packed_dir, base, 0);
+-		loose_dir = find_containing_dir(loose_dir, base, 0);
  	}
--	if (ce->ce_mtime.sec != (unsigned int)st->st_mtime)
--		changed |= MTIME_CHANGED;
--	if (trust_ctime && check_stat &&
--	    ce->ce_ctime.sec != (unsigned int)st->st_ctime)
--		changed |= CTIME_CHANGED;
  
--#ifdef USE_NSEC
--	if (check_stat && ce->ce_mtime.nsec != ST_MTIME_NSEC(*st))
--		changed |= MTIME_CHANGED;
--	if (trust_ctime && check_stat &&
--	    ce->ce_ctime.nsec != ST_CTIME_NSEC(*st))
--		changed |= CTIME_CHANGED;
--#endif
--
--	if (check_stat) {
--		if (ce->ce_uid != (unsigned int) st->st_uid ||
--			ce->ce_gid != (unsigned int) st->st_gid)
--			changed |= OWNER_CHANGED;
--		if (ce->ce_ino != (unsigned int) st->st_ino)
--			changed |= INODE_CHANGED;
--	}
--
--#ifdef USE_STDEV
--	/*
--	 * st_dev breaks on network filesystems where different
--	 * clients will have different views of what "device"
--	 * the filesystem is on
--	 */
--	if (check_stat && ce->ce_dev != (unsigned int) st->st_dev)
--			changed |= INODE_CHANGED;
--#endif
--
--	if (ce->ce_size != (unsigned int) st->st_size)
--		changed |= DATA_CHANGED;
-+	changed |= match_stat_data(&ce->ce_stat_data, st);
- 
- 	/* Racily smudged entry? */
--	if (!ce->ce_size) {
-+	if (!ce->ce_stat_data.sd_size) {
- 		if (!is_empty_blob_sha1(ce->sha1))
- 			changed |= DATA_CHANGED;
- 	}
-@@ -245,11 +260,11 @@ static int is_racy_timestamp(const struct index_state *istate, struct cache_entr
- 		istate->timestamp.sec &&
- #ifdef USE_NSEC
- 		 /* nanosecond timestamped files can also be racy! */
--		(istate->timestamp.sec < ce->ce_mtime.sec ||
--		 (istate->timestamp.sec == ce->ce_mtime.sec &&
--		  istate->timestamp.nsec <= ce->ce_mtime.nsec))
-+		(istate->timestamp.sec < ce->ce_stat_data.sd_mtime.sec ||
-+		 (istate->timestamp.sec == ce->ce_stat_data.sd_mtime.sec &&
-+		  istate->timestamp.nsec <= ce->ce_stat_data.sd_mtime.nsec))
- #else
--		istate->timestamp.sec <= ce->ce_mtime.sec
-+		istate->timestamp.sec <= ce->ce_stat_data.sd_mtime.sec
- #endif
- 		 );
- }
-@@ -340,7 +355,7 @@ int ie_modified(const struct index_state *istate,
- 	 * then we know it is.
- 	 */
- 	if ((changed & DATA_CHANGED) &&
--	    (S_ISGITLINK(ce->ce_mode) || ce->ce_size != 0))
-+	    (S_ISGITLINK(ce->ce_mode) || ce->ce_stat_data.sd_size != 0))
- 		return changed;
- 
- 	changed_fs = ce_modified_check_fs(ce, st);
-@@ -1322,16 +1337,16 @@ static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *on
- {
- 	struct cache_entry *ce = xmalloc(cache_entry_size(len));
- 
--	ce->ce_ctime.sec = ntoh_l(ondisk->ctime.sec);
--	ce->ce_mtime.sec = ntoh_l(ondisk->mtime.sec);
--	ce->ce_ctime.nsec = ntoh_l(ondisk->ctime.nsec);
--	ce->ce_mtime.nsec = ntoh_l(ondisk->mtime.nsec);
--	ce->ce_dev   = ntoh_l(ondisk->dev);
--	ce->ce_ino   = ntoh_l(ondisk->ino);
-+	ce->ce_stat_data.sd_ctime.sec = ntoh_l(ondisk->ctime.sec);
-+	ce->ce_stat_data.sd_mtime.sec = ntoh_l(ondisk->mtime.sec);
-+	ce->ce_stat_data.sd_ctime.nsec = ntoh_l(ondisk->ctime.nsec);
-+	ce->ce_stat_data.sd_mtime.nsec = ntoh_l(ondisk->mtime.nsec);
-+	ce->ce_stat_data.sd_dev   = ntoh_l(ondisk->dev);
-+	ce->ce_stat_data.sd_ino   = ntoh_l(ondisk->ino);
- 	ce->ce_mode  = ntoh_l(ondisk->mode);
--	ce->ce_uid   = ntoh_l(ondisk->uid);
--	ce->ce_gid   = ntoh_l(ondisk->gid);
--	ce->ce_size  = ntoh_l(ondisk->size);
-+	ce->ce_stat_data.sd_uid   = ntoh_l(ondisk->uid);
-+	ce->ce_stat_data.sd_gid   = ntoh_l(ondisk->gid);
-+	ce->ce_stat_data.sd_size  = ntoh_l(ondisk->size);
- 	ce->ce_flags = flags & ~CE_NAMEMASK;
- 	ce->ce_namelen = len;
- 	hashcpy(ce->sha1, ondisk->sha1);
-@@ -1608,7 +1623,7 @@ static void ce_smudge_racily_clean_entry(struct cache_entry *ce)
- 	 * The only thing we care about in this function is to smudge the
- 	 * falsely clean entry due to touch-update-touch race, so we leave
- 	 * everything else as they are.  We are called for entries whose
--	 * ce_mtime match the index file mtime.
-+	 * ce_stat_data.sd_mtime match the index file mtime.
- 	 *
- 	 * Note that this actually does not do much for gitlinks, for
- 	 * which ce_match_stat_basic() always goes to the actual
-@@ -1647,7 +1662,7 @@ static void ce_smudge_racily_clean_entry(struct cache_entry *ce)
- 		 * file, and never calls us, so the cached size information
- 		 * for "frotz" stays 6 which does not match the filesystem.
- 		 */
--		ce->ce_size = 0;
-+		ce->ce_stat_data.sd_size = 0;
- 	}
- }
- 
-@@ -1657,16 +1672,16 @@ static char *copy_cache_entry_to_ondisk(struct ondisk_cache_entry *ondisk,
- {
- 	short flags;
- 
--	ondisk->ctime.sec = htonl(ce->ce_ctime.sec);
--	ondisk->mtime.sec = htonl(ce->ce_mtime.sec);
--	ondisk->ctime.nsec = htonl(ce->ce_ctime.nsec);
--	ondisk->mtime.nsec = htonl(ce->ce_mtime.nsec);
--	ondisk->dev  = htonl(ce->ce_dev);
--	ondisk->ino  = htonl(ce->ce_ino);
-+	ondisk->ctime.sec = htonl(ce->ce_stat_data.sd_ctime.sec);
-+	ondisk->mtime.sec = htonl(ce->ce_stat_data.sd_mtime.sec);
-+	ondisk->ctime.nsec = htonl(ce->ce_stat_data.sd_ctime.nsec);
-+	ondisk->mtime.nsec = htonl(ce->ce_stat_data.sd_mtime.nsec);
-+	ondisk->dev  = htonl(ce->ce_stat_data.sd_dev);
-+	ondisk->ino  = htonl(ce->ce_stat_data.sd_ino);
- 	ondisk->mode = htonl(ce->ce_mode);
--	ondisk->uid  = htonl(ce->ce_uid);
--	ondisk->gid  = htonl(ce->ce_gid);
--	ondisk->size = htonl(ce->ce_size);
-+	ondisk->uid  = htonl(ce->ce_stat_data.sd_uid);
-+	ondisk->gid  = htonl(ce->ce_stat_data.sd_gid);
-+	ondisk->size = htonl(ce->ce_stat_data.sd_size);
- 	hashcpy(ondisk->sha1, ce->sha1);
- 
- 	flags = ce->ce_flags;
+ 	if (packed_dir && loose_dir) {
 -- 
 1.8.3
