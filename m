@@ -1,76 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 07/28] git-remote-mediawiki: Rewrite unclear line of instructions
-Date: Tue, 11 Jun 2013 11:09:48 -0700
-Message-ID: <7vhah4bjtf.fsf@alter.siamese.dyndns.org>
-References: <1370816573-3808-1-git-send-email-celestin.matte@ensimag.fr>
-	<1370816573-3808-8-git-send-email-celestin.matte@ensimag.fr>
-	<7vsj0od6z5.fsf@alter.siamese.dyndns.org>
-	<vpq1u8838rv.fsf@anie.imag.fr>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] build: get rid of the notion of a git library
+Date: Tue, 11 Jun 2013 11:14:54 -0700
+Message-ID: <CA+55aFwYAFuz5p0=8QiAFDy4e66f1pF3v=D5nnL6+3um7Z3L2g@mail.gmail.com>
+References: <1370712574-27688-1-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0mA7MXQv1k5bFpZLARDOHxU5kzKFXzcyUfb6NLZZY-=FA@mail.gmail.com>
+	<CAMP44s0cozMsTo7KQAjnqkqmvMwMw9D3SZrVxg48MOXkH9UQJQ@mail.gmail.com>
+	<CALkWK0=7PRndNc7XQ-PCPbVCp9vck909bA561JhQG6uXXj1n4g@mail.gmail.com>
+	<20130609151235.GA22905@serenity.lan>
+	<CAMP44s0L9nQxp5OeK8uT4Ls5WUerCjVpR9uONUcOwvTD6k7Jfg@mail.gmail.com>
+	<51B4BBB7.8060807@lyx.org>
+	<20130610214504.GG13333@sigill.intra.peff.net>
+	<CAMP44s2-94LTu54oX1_m14tnE3KfwK+N=pPxgUSqGCgd51EA5A@mail.gmail.com>
+	<20130610220627.GB28345@sigill.intra.peff.net>
+	<7vk3m1efda.fsf@alter.siamese.dyndns.org>
+	<7v8v2hedou.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1HM0zFvkGmaHrX2Wq2JSzDNk8uwNSz3bNo12eWxDcL8A@mail.gmail.com>
+	<7v4nd5ecmy.fsf@alter.siamese.dyndns.org>
+	<7vwqq1ct0g.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0r96ByEs3+N1Qo+O18rOmT72rHk4zAEFAyFdU_DsQ8wA@mail.gmail.com>
+	<7vtxl4blht.fsf@alter.siamese.dyndns.org>
+	<CAMP44s02PqGFNmrGEcJVT6xcQHx8k4NYqJ_TtOTUEY8XHPj0BA@mail.gmail.com>
+	<7vppvsbkc3.fsf@alter.siamese.dyndns.org>
+	<CAMP44s02KaMaMUz4618n5RqVqVSXzr_D9rPS1uesy2XEdqnq5A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?C=C3=A9lestin?= Matte <celestin.matte@ensimag.fr>,
-	git@vger.kernel.org, benoit.person@ensimag.fr
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 11 20:09:55 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Vincent van Ravesteijn <vfr@lyx.org>,
+	John Keeping <john@keeping.me.uk>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 11 20:15:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmT11-0007hx-GN
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 20:09:55 +0200
+	id 1UmT5w-0003LS-Ab
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 20:15:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755932Ab3FKSJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 14:09:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41622 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755600Ab3FKSJv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 14:09:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7343C26DB5;
-	Tue, 11 Jun 2013 18:09:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Rtko7WgNx1z6VOpWChRizugDVu4=; b=cHBhmn
-	XqOm0Md8fswKbEKHwDGZu3LH8DWAz7wlH8ZyNOZ+XGvILe2jQJfQcMJYwG71aQYo
-	cO6ID06rwC2pD/UM7atkUDmBF7loreBpv2HXDiAFV2RtxcxJvsl4BeJ0wkh7tPBU
-	Qvet7AnGjpSV0XmlXYnFCV7HbQoEdzchFRAbw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Gn87WHS5CZjx2dqWNgcSJiT+S63lFQSK
-	LQi+U37MLgAMaYqrc/DiXjioS6S1DlHZzxupbakiUDR4qJcmLZXs/lAcdZqt9TVo
-	eTrYcL8qN62AY/5VXhnkUJDZE5rIlyh5RIf7N8txkgn1CHMVs9QsPj4PN5ggeuPD
-	1c8+Tw4fPjA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A58626DB4;
-	Tue, 11 Jun 2013 18:09:50 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E7C5D26DAE;
-	Tue, 11 Jun 2013 18:09:49 +0000 (UTC)
-In-Reply-To: <vpq1u8838rv.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
-	11 Jun 2013 18:35:32 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1B643356-D2C2-11E2-BAE9-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756013Ab3FKSO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 14:14:56 -0400
+Received: from mail-ve0-f174.google.com ([209.85.128.174]:44120 "EHLO
+	mail-ve0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755963Ab3FKSOz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 14:14:55 -0400
+Received: by mail-ve0-f174.google.com with SMTP id oz10so5957614veb.5
+        for <git@vger.kernel.org>; Tue, 11 Jun 2013 11:14:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=10pNOz72grO8Jsh87BVbbh/8Ilieu4Sy6WzUYgytvvo=;
+        b=Zp/ojpWmmnlb1/EwkoEmu8WXJixm/dRDeLF/iRlv3R3vL3UC45kff9+xBfritZMQ0p
+         HnlfeK1XUc53Ug7YOxcj74XC3HHTwuRFRbKH3dZem1TSJc6t17BmkORbR69DUidWdPfs
+         sQ2lEd+DCdHhY5f93U/1R4rTH9ntUPrITfrwDy1roeA2M0u4+SD0/RcgqcDc968zr7K6
+         Yr5QDA3XDPr2X6t9gOI/VICSbhMbN1vMjHkgAklYgXOLXLr/oNMYJA5QDL0UaKHuVfWF
+         b/e2mjJeb2Vy79OF9401uhiuvGiJg/crWLiI+exNa4E/bmGGA3Eb2YYhyp3TtGuayunR
+         6Q9Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=10pNOz72grO8Jsh87BVbbh/8Ilieu4Sy6WzUYgytvvo=;
+        b=F1UyA1Q/52vbZwlp6yY8pvd2PhWv11AT6tjVywEZ0ghqskA3I+7aKe7iyUd4f6zJWm
+         EHXx5Ypa+g6l4tBKeLKsg2u6Xol8WqWL1cswCy6uvHPNpQo8svCkU7Sg5Vb+N+KZ+W/K
+         lm+sEzL2tggqcOCEdc8N0FuWbvwYUrjDWBAU4=
+X-Received: by 10.52.0.232 with SMTP id 8mr7243377vdh.12.1370974494593; Tue,
+ 11 Jun 2013 11:14:54 -0700 (PDT)
+Received: by 10.220.8.71 with HTTP; Tue, 11 Jun 2013 11:14:54 -0700 (PDT)
+In-Reply-To: <CAMP44s02KaMaMUz4618n5RqVqVSXzr_D9rPS1uesy2XEdqnq5A@mail.gmail.com>
+X-Google-Sender-Auth: h_nd79Fpt0iluJae8EKaC0S_big
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227482>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
->>       my ($namespace) = @_;
->> 	my $namespace = shift;
->>
->> My impression has been that both are equally common,
+On Tue, Jun 11, 2013 at 11:06 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
 >
-> The second is the most common in git-remote-mediawiki (but I don't have
-> any preference nor know what is recommended elsewhere).
+> Moreover, if you are going to argue that we shouldn't be closing the
+> door [...]
 
-I wasn't implying I prefer the former.  I was just being curious,
-and if the latter is more prevalent in the code _and_ Perlcritique
-does not have any issue with it, it is perfectly fine.
+Felipe, you saying "if you are going to argue ..." to anybody else is
+kind of ironic.
 
-Thanks.
+Why is it every thread I see you in, you're being a dick and arguing
+for some theoretical thing that nobody else cares about?
+
+This whole thread has been one long argument about totally pointless
+things that wouldn't improve anything one way or the other. It's
+bikeshedding of the worst kind. Just let it go.
+
+              Linus
