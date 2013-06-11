@@ -1,101 +1,110 @@
-From: Charles McGarvey <chazmcgarvey@brokenzipper.com>
-Subject: [PATCH] instaweb: make the perl path configurable
-Date: Tue, 11 Jun 2013 14:14:05 -0600
-Message-ID: <20130611201400.GA28010@compy.Home>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Documentation/CommunityGuidelines
+Date: Tue, 11 Jun 2013 16:33:03 -0400
+Message-ID: <20130611203303.GA14907@sigill.intra.peff.net>
+References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
+ <51B6AA7F.1060505@alum.mit.edu>
+ <7v38sod1kn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 11 22:14:24 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	A Large Angry SCM <gitzilla@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 11 22:33:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmUxT-0003Qo-I7
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 22:14:23 +0200
+	id 1UmVFl-0000wm-9O
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 22:33:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757040Ab3FKUOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 16:14:10 -0400
-Received: from romulus.brokenzipper.com ([71.19.157.142]:64809 "EHLO
-	romulus.brokenzipper.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756802Ab3FKUOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 16:14:08 -0400
-Received: from vulcan.local (unknown [IPv6:2602:61:7edf:e300:0:ff:fe00:7701])
-	by romulus.brokenzipper.com (Postfix) with ESMTP id F074752D2A
-	for <git@vger.kernel.org>; Tue, 11 Jun 2013 14:14:07 -0600 (MDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=brokenzipper.com;
-	s=romulus; t=1370981648;
-	bh=TIjd1jDoIHRw3kZGIYts6vC1em/0PUwz8GUFWHsWD9g=;
-	h=Date:From:To:Subject;
-	b=Ri0Vpfegf/n5Wa7d39IVAoYP1s5MyCmi9rWynSdq9NXuwVOzVJSkrk3G/RzGOseeb
-	 11u12jKtJxpNKN4RhxrkW3Lx1svqBxiBmXdN4PMSraJsgvnRcS2T0OQTu4PdqPeT8R
-	 3J0crMcYzz2ZW4lMIaU01k3aUavsOxfyAymfm3eQ=
-Received: from [2602:61:7edf:e300:0:ff:fe00:7700] (helo=compy)
-	by vulcan.local with smtp (Exim 4.80)
-	(envelope-from <chazmcgarvey@brokenzipper.com>)
-	id 1UmUxs-0006Wz-Dy
-	for git@vger.kernel.org; Tue, 11 Jun 2013 14:14:49 -0600
-Received: by compy (sSMTP sendmail emulation); Tue, 11 Jun 2013 14:14:05 -0600
+	id S1757290Ab3FKUdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 16:33:09 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58282 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757446Ab3FKUdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 16:33:08 -0400
+Received: (qmail 6306 invoked by uid 102); 11 Jun 2013 20:33:59 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 11 Jun 2013 15:33:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jun 2013 16:33:03 -0400
 Content-Disposition: inline
-OpenPGP: url=http://www.brokenzipper.com/chaz.asc
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <7v38sod1kn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227513>
 
-It is convenient for the user to be able to customize the path to perl if they
-do not want to use the system perl.  This may be the case, for example, if the
-user wants to use the plackup httpd but its extra dependencies are not
-installed in the system perl; they can set the perl path to a perl that they
-install and have control over in their own home directory.
+On Tue, Jun 11, 2013 at 10:00:56AM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Charles McGarvey <chazmcgarvey@brokenzipper.com>
----
- Documentation/config.txt | 4 ++++
- git-instaweb.sh          | 4 +++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+> > * Accept reviewers' comments gratefully and take them very seriously.
+> > Show that you appreciate the help by giving the reviewer the benefit of
+> > the doubt.  If, after careful consideration, you find that you cannot
+> > agree with a reviewer's suggestion, explain your reasoning carefully
+> > without taking or giving offense, and seek compromise.
+> 
+> In short, the only acceptable response to review comments are "You
+> are right. Here is a reroll", or "I think your suggestion will miss
+> these cases which I wanted to cover and that is why I did it this
+> way". There may be other small variants of the above two, but I
+> think I can agree with the general principle.
+> 
+> In cases, there are two or more equally valid approaches to solving
+> a problem.  I do not think I had to accept (or reject) many "it can
+> be done better in different ways and this perhaps is not the best
+> one" (or "it could be argued that it is correct") borderline topics
+> in the recent past, but I suspect that "a disagreement is healthy"
+> has to be accompanied by how disagreements that do not resolve
+> themselves are resolved (I think I've heard somewhere that some
+> communities break ties in favor of reviewers, for example).
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6e53fc5..e103594 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1549,6 +1549,10 @@ instaweb.modulepath::
- 	instead of /usr/lib/apache2/modules.  Only used if httpd
- 	is Apache.
- 
-+instaweb.perlpath::
-+	The path to the perl executable used by linkgit:git-instaweb[1] to
-+	run gitweb and/or verify that the HTTP daemon is running.
-+
- instaweb.port::
- 	The port number to bind the gitweb httpd to. See
- 	linkgit:git-instaweb[1].
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 01a1b05..8cfbdf2 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -3,7 +3,6 @@
- # Copyright (c) 2006 Eric Wong
- #
- 
--PERL='@@PERL@@'
- OPTIONS_KEEPDASHDASH=
- OPTIONS_SPEC="\
- git instaweb [options] (--start | --stop | --restart)
-@@ -26,9 +25,12 @@ local="$(git config --bool --get instaweb.local)"
- httpd="$(git config --get instaweb.httpd)"
- root="$(git config --get instaweb.gitwebdir)"
- port=$(git config --get instaweb.port)
-+perl_path="$(git config --get instaweb.perlpath)"
- module_path="$(git config --get instaweb.modulepath)"
- action="browse"
- 
-+PERL=${perl_path:-@@PERL@@}
-+
- conf="$GIT_DIR/gitweb/httpd.conf"
- 
- # Defaults:
--- 
-1.8.1.5
+I more or less agree with what both of you have said above. The "ties
+goes to reviewers" thing I would be very wary of, at least as a hard
+rule. We do not (and do not want to) put any restrictions on who is
+allowed to do review. That sometimes results in unhelpful or even wrong
+reviews by new people, but those reviews are a stepping stone to being a
+more experienced and capable reviewer.
+
+Most of the time such reviews are resolved by other community members
+joining the discussion and coming to some agreement, but not always.
+And that is not even getting into the cases where long-time experienced
+reviewers are simply wrong or misguided, or the issue is legitimately a
+difficult tradeoff to consider, and the discussion ends in a stalemate.
+
+And I think that is where the benevolent dictator role comes in. They
+weigh not just the points made in the discussion (or a summary of it),
+but also use their judgement on who is making comments (how many people,
+the utility of their past comments) and other factors (other things
+happening in the project, being conservative because of recent mistakes
+made, etc). They may break such a tie by applying or rejecting, even by
+putting off a decision to revisit later (which is a de facto reject, of
+course).
+
+So there are no hard rules, and this is not a democracy[1]. For the most
+part the community runs itself in an open and collective fashion, and
+the dictator's job is easy; but ultimately, he or she is in charge of
+what gets applied and what doesn't. Rules like "break ties in favor of
+reviewers" are just a guideline for the dictator to use in making
+decisions.
+
+I do not think any of that is news to you, but I think the point needs
+to be made, as it applies to any concrete rules.
+
+-Peff
+
+[1] Note that I think a benevolent dictator is a _terrible_ way to run a
+    real government, but it works in an open source project. I think the
+    difference is that dictatorship is open to abuse of power. In the
+    real world, there is a lot of power to abuse, and it is hard for
+    people to opt out of it. In the open source world, there is not that
+    much power, and if there is a bad dictator everyone can go somewhere
+    else (another project, or even a fork). So while a dictator _can_
+    play favorites, or start deciding which patches to take based on
+    what they had for breakfast, there is a real incentive to remain
+    fair and reasonable.
