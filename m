@@ -1,180 +1,145 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
 Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Tue, 11 Jun 2013 23:46:59 +0530
-Message-ID: <CALkWK0n=gbfeG87GCR0A=fZY5osjndLo9TPv1BH1uAf37eQ8=g@mail.gmail.com>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
- <51B6AA7F.1060505@alum.mit.edu> <CALkWK0nNn8Rcu4JpV4r+0ct+_cuW3aUHXKV4bcB-Hn6Xg8Y+bA@mail.gmail.com>
- <87li6g969j.fsf@linux-k42r.v.cablecom.net> <CALkWK0kMvac7Sp3QwvEm+J_-Hj7JAn-AY-juDDw1HR3oQ+hamA@mail.gmail.com>
- <51B736FA.5010407@alum.mit.edu>
+Date: Tue, 11 Jun 2013 20:24:15 +0200
+Message-ID: <51B76B4F.4030504@alum.mit.edu>
+References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com> <51B6AA7F.1060505@alum.mit.edu> <7v38sod1kn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	A Large Angry SCM <gitzilla@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jun 11 20:17:47 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 11 20:24:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmT8b-0005fT-JH
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 20:17:46 +0200
+	id 1UmTF1-0002fC-FN
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 20:24:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755675Ab3FKSRl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 14:17:41 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:52976 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750887Ab3FKSRk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 14:17:40 -0400
-Received: by mail-ie0-f175.google.com with SMTP id a13so7453924iee.6
-        for <git@vger.kernel.org>; Tue, 11 Jun 2013 11:17:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=nDqmojIQxyCuxLztb+kpruypNrHE84xPembtFLBJf2I=;
-        b=by4pRpJjZp3rBoNSw3ueqhKuqBrJGplDNcdAXAlHHdm5wnigMykLs0kfyOOPmDUklC
-         q6MwiHVVT5nUxH65leaItbvyjjE01tg5MH4Blo220QAf3ko4SDWlGOvC4hVjfB6tRxRu
-         WDtAjaX/7oIpzRd2GaGTHeXEF0+EUUb5bGHzPaUsUkiM8YR0hfy4dyp4AkX1GOHG4Wmi
-         Ial2+HLdfuX/GaL98MyBwZsissckEloFlsvhSGd1AQH/InZxhTwEbzAQ6zeY9Pb3lqAF
-         HLnoaJvXxw8WVXHFnuxS5jw+14iJi2i/JWCXTUgTToWQE5qOgg1kkXrjKRQ2djEpOyYY
-         slRw==
-X-Received: by 10.50.79.231 with SMTP id m7mr1526309igx.40.1370974659930; Tue,
- 11 Jun 2013 11:17:39 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Tue, 11 Jun 2013 11:16:59 -0700 (PDT)
-In-Reply-To: <51B736FA.5010407@alum.mit.edu>
+	id S1756001Ab3FKSYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 14:24:19 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:49568 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755957Ab3FKSYS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jun 2013 14:24:18 -0400
+X-AuditID: 12074414-b7f626d0000001f1-7c-51b76b51fed7
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 27.40.00497.15B67B15; Tue, 11 Jun 2013 14:24:17 -0400 (EDT)
+Received: from [192.168.69.140] (p57A251F0.dip0.t-ipconnect.de [87.162.81.240])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r5BIOFed006275
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 11 Jun 2013 14:24:16 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <7v38sod1kn.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMKsWRmVeSWpSXmKPExsUixO6iqBuYvT3QYOsVG4tVMx+zW3Rd6Way
+	aOi9wmwx7ecuVou3N5cwOrB67Jx1l93j4iVlj8+b5AKYo7htkhJLyoIz0/P07RK4M7o+7GYt
+	mKlYcfU3TwPjFakuRk4OCQETiYY181khbDGJC/fWs3UxcnEICVxmlGj+MpcZJCEkcJ5J4vh6
+	fxCbV0BbYsPXD+wgNouAqsTHvn4mEJtNQFdiUU8zmC0qECbxftlUVoh6QYmTM5+wgNgiAmoS
+	E9sOsYAsYBZYyyhxtv8HI0hCWMBM4tiLmSwQm2cxSuzduhgswQmUuL1pB1g3s4COxLu+B8wQ
+	trzE9rdzmCcwAlUjLJmFpGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3Qt9HIzS/RS
+	U0o3MUICWmQH45GTcocYBTgYlXh4D5ptDxRiTSwrrsw9xCjJwaQkyrsoEyjEl5SfUpmRWJwR
+	X1Sak1p8iFGCg1lJhFcvESjHm5JYWZValA+TkuZgURLn/bZY3U9IID2xJDU7NbUgtQgmK8PB
+	oSTBm5UF1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPitX4YmC0gqR4QPaCtPMW
+	FyTmAkUhWk8xWnJsPj/5HSPHjB8g8tfDKe8YhVjy8vNSpcR5o0AaBEAaMkrz4NbB0torRnGg
+	74UhruIBpkS4qa+AFjIBLSzKAFtYkoiQkmpgrA+3D1/+o4HfQHum2bJa6S8Hm/YwMuzMT7F2
+	d27hecR6UbrhUx7nuupEjlPPVgS8evlNqF/VZ57PhqZrfxY/PVTs/FnHkkXjXf2y 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227485>
 
-This is an exercise.  I can easily be more tactful (as evidenced by
-other threads), but I'm choosing not to be.  I want you to focus on
-the argument, and not the tone.
+On 06/11/2013 07:00 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> [...]
+>> * When reviewing other peoples' code, be tactful and constructive.  Set
+>> high expectations, but do what you can to help the submitter achieve
+>> them.  Don't demand changes based only on your personal preferences.
+>> Don't let the perfect be the enemy of the good.
+> 
+> I think this is 30% aimed at me (as I think I do about that much of
+> the reviews around here).  I fully agree with most of them, but the
+> last sentence is a bit too fuzzy to be a practically useful
+> guideline.  Somebody's bare minimum is somebody else's perfection.
+> An unqualified "perfect is the enemy of good" is often incorrectly
+> used to justify "It works for me." and "There already are other
+> codepaths that do it in the same wrong way.", both of which make
+> things _worse_ for the long term project health.
 
-Michael Haggerty wrote:
-> Ram, you are insulting Thomas the human being rather than addressing his
-> points.  Please stop.
+I agree that the last line is fuzzy.  And I don't think that I've
+observed any cases where I thought that reviewers were being too strict,
+so in a way it's just trying to head off hypothetical future problems
+and to make sure that the balance between submitter and reviewer is not
+*entirely* one-sided.  Given our (proper, I think) strong deference to
+reviewers, one could imagine a reviewer abusing his/her authority to
+obstruct reasonable changes by (for example) making demands that the
+submitter also fix tangentially-related things that are beyond the scope
+of the patch.
 
-He doesn't have a point!  He makes the assumption that the "perception
-of the regulars" is that a "fire hazard" must be "removed" from the
-community.  There are absolutely no rational arguments in his email,
-he violated virtually every rule that we were working towards, and he
-made an inflammatory comment by calling Felipe a "fire hazard".  Yes I
-was particularly harsh, because Rast was particularly irrational.  I
-did not "insult" him as a human being; I "criticized" his email which
-was completely devoid of reason.
+In my own projects I have a rough policy of "not worse than before",
+meaning that as long as a patch makes progress in at least one
+dimension, and doesn't make things worse in any other dimension, then it
+is acceptable.  (Of course "worse" can include internal quality issues
+like copy-pasting code or even an increase in the amount of code
+disproportionate to its benefit.)  A failure to make improvements in one
+area should not be a reason to block an improvement in another area, as
+long as nothing is made worse.
 
-In case you're wondering, this is what an ad hominem looks like:
+But I can't right now think of a succinct way to express what I have in
+mind.
 
-You are studying a subject that requires extensive application of
-logic: combinatorial structures and algorithms at ETH Zurich.  You
-live in a well-to-do progressive society.  I live in this poor country
-called India, am much younger than you, and have studied nothing.
-Yet, you make the irrational argument, while I make the rational
-argument.
+>> * It is not OK to use these guidelines as a stick with which to beat
+>> supposed violators.  However, if you genuinely feel that another
+>> community member is routinely behaving in ways that are detrimental to
+>> the community, it might help to calmly express your concerns to that
+>> person, preferably in a private email, and naming concrete and specific
+>> incidents rather than broad generalizations.
+> 
+> I would think it is perfectly OK to say "The way you are refusing to
+> listen to constructive comments is not how things work around here"
+> by pointing at a set of guidelines.
 
-As you can clearly see, I focused on his argument; not on him.
+I agree.
 
-> It is not disagreement that is causing problems; it is the inflammatory
-> tone of the discussion.  Civil and constructive disagreement is
-> completely welcome here.  But hurtful and offensive discussion is not,
-> even if it is in support of the "party line" (haha as if there were such
-> a thing).
+> Why do you think is it not OK?  The "beating" part?
 
-Incorrect.  The problem is that Rast is made an irrational argument,
-and that you are "supporting" him now.  If you were "fair" you would
-have criticized Rast's inflammatory comment about classifying Felipe
-as a "fire hazard", without justification.  But you didn't.  _You_ are
-making my "tone" the subject of discussion now, and claim that I have
-been hurtful and offensive.  My email was very much "constructive
-disagreement", in that I have laid out why one should not perform
-actions without reason; I even assigned him homework, because I _want_
-him to understand justice and argue rationally.  How could I have been
-more constructive?
+I think it would be counterproductive for people to start saying things
+like "that is a violation of rule 3, section 2" *in everyday
+discussions*.  This shouldn't be taken as a list of black-and-white
+laws, with allegations of small "infractions" used to shut down
+discussions.  And on the other hand, if somebody shows a long history of
+acting contrary to the guidelines, and persists despite repeated
+requests to stop, I don't want the discussion to turn into a lawyerly
+analysis of the guidelines with point-by-point rebuttals and
+counter-rebuttals of whether this or that guideline was violated.
 
-I do not "support" Felipe, or "defend" him.  I do not share his exact
-opinions, and often criticize him.  I am fair in that I praise
-rational arguments, and criticize irrational arguments.  I don't want
-to speak for him, but I believe that he gives me the same treatment,
-and I thank him for that.
+The guidelines should just describe the expected tone of the community
+in a way that the vast majority of participants can agree on, and any
+kind of actions to enforce the guidelines should only be taken when an
+overwhelming majority of the community
 
-I do not appreciate this ganging-up one bit.  I'm one person arguing
-against an opaque "majority opinion" veil.  For the last time, stop
-taking sides, and make a goddamn rational argument!
+I think the CommunityGuidelines should have three main uses:
 
-> And yes, I know that the word "offensive" is subjective, but for the
-> sake of this discussion let's take it to mean "offensive to the vast
-> majority of a community".  Not "controversial", not "contrarian", not
-> even "stupid"; I don't think anybody is proposing to prohibit dissent or
-> stupidity.  But there is no reason for discussion that is gratuitously
-> aggressive, insulting, or derogatory; such discussion is what I mean by
-> "offensive".
+1. An artifact documenting the community consensus about what kinds of
+behaviors are encouraged and what kinds are considered unacceptable.  It
+should only be accepted, and it only has value, if there is a strong
+consensus in favor of it.
 
-You have made the same argument that I criticized over and over again:
-"majority opinion".  If you agree that tone is subjective, why are you
-trying to objectively criticize it by using majority opinion as the
-basis?  You might not like a piece of artwork personally, and the
-majority of the git list might "agree" with you, but that does not
-mean you can authoritatively claim that the piece of art is junk.  You
-have every right to dislike it personally, but that is an entirely
-different matter.
+2. A resource to help new community members get up to speed on our
+practices and expectations.
 
->> [...]  I already gave you the
->> example of the survivors on the boat with limited food/water on IRC:
->> it is you who stupidly refused to throw anyone overboard, killing all
->> the survivors; I am the one who said that I would get them to draw
->> sticks to "fairly choose" who to throw overboard, maximizing the
->> chances of survival of the others.  I am making a pragmatic argument,
->> based on what is best for the community; not some stuck-up idealistic
->> bullshit.  Further, I tried to help you think through the justice
->> problem, by recommending an accessible course.  You have either not
->> gone through it, or have gone through it and learnt nothing.
->
-> Your idea that you can assign Thomas "homework" in ethics and call him
-> stupid for coming to a different conclusion than you is presumptuous in
-> the extreme.
+3. As a point of reference in the direst meltdowns, such as IMO we are
+having right now.
 
-Incorrect.  I used "stupid" to describe his solution to the
-survivors-in-the-boat problem.  I gave him homework (and this is
-Harvard Justice, by the way), in an attempt to get him to think
-clearly and come up with less "stupid" solutions to similar problems.
-If you are defending throwing modern justice theories out the window,
-and replacing it with a crude irrational argument, I have nothing more
-to say.
+Michael
 
->> [...]
->> You have embarrassed yourself and the entire git community today.
->
-> This is also presumptuous, not to mention extremely ironic.  In my
-> opinion Thomas's email was calm and reasonable while yours is beyond the
-> pale.
-
-Yes, I did exercise my freedom of expression.  And yes, I was
-perfectly calm.  Please do not suffocate me to death.
-
-Let us get two simple things straightened out first:
-1. Was Thomas being irrational or not?
-2. Are you being fair or not?
-
-They're yes-or-no questions.  Hint: My "tone" has nothing to do with
-the answers.
-
-> Ram, don't just take my opinion on this matter.  At the risk of being
-> presumptuous myself, I suggest that you show a copy of your email to
-> somebody whom you know and respect in the real world, somebody who is
-> not immersed in the Git community meltdown.  For example, somebody like
-> your mother or father, or a teacher whom you respect, or a member of
-> clergy if you are so inclined.  Ask that person's opinion about your email.
-
-I respect all of you on the Git list.  And yes, I have done what you
-asked: I showed it to several friends of mine on IRC and in real life.
- They were not at all surprised: they know me to be a very polite,
-gentle, and reasonable person.  My stern rational disagreement has
-nothing to do with any of those things.
-
-And yes, as Felipe pointed out: you entire email has complained about
-my "tone" and _completely_ ignored content.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
