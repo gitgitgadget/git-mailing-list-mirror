@@ -1,144 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] build: get rid of the notion of a git library
-Date: Tue, 11 Jun 2013 10:33:34 -0700
-Message-ID: <7vtxl4blht.fsf@alter.siamese.dyndns.org>
-References: <1370712574-27688-1-git-send-email-felipe.contreras@gmail.com>
-	<CALkWK0mA7MXQv1k5bFpZLARDOHxU5kzKFXzcyUfb6NLZZY-=FA@mail.gmail.com>
-	<CAMP44s0cozMsTo7KQAjnqkqmvMwMw9D3SZrVxg48MOXkH9UQJQ@mail.gmail.com>
-	<CALkWK0=7PRndNc7XQ-PCPbVCp9vck909bA561JhQG6uXXj1n4g@mail.gmail.com>
-	<20130609151235.GA22905@serenity.lan>
-	<CAMP44s0L9nQxp5OeK8uT4Ls5WUerCjVpR9uONUcOwvTD6k7Jfg@mail.gmail.com>
-	<51B4BBB7.8060807@lyx.org>
-	<20130610214504.GG13333@sigill.intra.peff.net>
-	<CAMP44s2-94LTu54oX1_m14tnE3KfwK+N=pPxgUSqGCgd51EA5A@mail.gmail.com>
-	<20130610220627.GB28345@sigill.intra.peff.net>
-	<7vk3m1efda.fsf@alter.siamese.dyndns.org>
-	<7v8v2hedou.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1HM0zFvkGmaHrX2Wq2JSzDNk8uwNSz3bNo12eWxDcL8A@mail.gmail.com>
-	<7v4nd5ecmy.fsf@alter.siamese.dyndns.org>
-	<7vwqq1ct0g.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0r96ByEs3+N1Qo+O18rOmT72rHk4zAEFAyFdU_DsQ8wA@mail.gmail.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: [PATCH v4 31/45] rebase: trivial cleanup
+Date: Tue, 11 Jun 2013 19:41:11 +0200
+Message-ID: <20130611174111.GA22235@paksenarrion.iveqy.com>
+References: <1370796057-25312-1-git-send-email-felipe.contreras@gmail.com>
+ <1370796057-25312-32-git-send-email-felipe.contreras@gmail.com>
+ <20130609191518.GB12122@paksenarrion.iveqy.com>
+ <7vhah4d3sk.fsf@alter.siamese.dyndns.org>
+ <20130611170815.GA20009@paksenarrion.iveqy.com>
+ <CAMP44s0VksnZmi21u6T79AvMebWA3gXmWbQ6pp=FAHL=D4q6+Q@mail.gmail.com>
+ <20130611172416.GB20009@paksenarrion.iveqy.com>
+ <CAMP44s3OG2MSO=zwAvzTnTLYOJmhsmbjrVJOxP-0ZSaxgMuUXA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Vincent van Ravesteijn <vfr@lyx.org>,
-	John Keeping <john@keeping.me.uk>,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 19:33:43 2013
+X-From: git-owner@vger.kernel.org Tue Jun 11 19:38:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmSRy-00060h-TL
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 19:33:43 +0200
+	id 1UmSWW-0001Ib-Oz
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 19:38:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754270Ab3FKRdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 13:33:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44020 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753450Ab3FKRdh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 13:33:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 728B42424A;
-	Tue, 11 Jun 2013 17:33:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XTsYAdPj9z1xY/PFgCAt4kAxaKc=; b=CXtbdc
-	Jd5ktZU4KMgog/jN9VeT5gfMmogNHSBlcsPJHvWE5NR9h99wmC1oM6CQNeaksicF
-	XMUrGGngWLwlrIklZHrTzD0jRs87vrRGlTRr+NITHvpz6QhT3w8b0d94y2uN7vzg
-	nIp8cS2J/8zrRvgz1rfQJ4CSuHNpaoFk0Ejsg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jsbxYh+Df1bihPDLoFyADVDbawARTyYa
-	vJnIH2f+wm6q+Mklfn8oJP9248K13LzjzEBLcODSLSjU7mubUTLhaLBxaJ/a1++c
-	NvULMkMGWYiFFXZ/hSuVGN//w6W9OXP2UwPnDTtl3WjIPwmjPbr2RBO7xZ7m5yHO
-	Qdp7iRLLgUg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6703224249;
-	Tue, 11 Jun 2013 17:33:36 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF09C24248;
-	Tue, 11 Jun 2013 17:33:35 +0000 (UTC)
-In-Reply-To: <CAMP44s0r96ByEs3+N1Qo+O18rOmT72rHk4zAEFAyFdU_DsQ8wA@mail.gmail.com>
-	(Felipe Contreras's message of "Mon, 10 Jun 2013 23:15:14 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0B7F3648-D2BD-11E2-AEFE-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755829Ab3FKRiU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 13:38:20 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:35956 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754083Ab3FKRiT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 13:38:19 -0400
+Received: by mail-lb0-f173.google.com with SMTP id v1so2929903lbd.18
+        for <git@vger.kernel.org>; Tue, 11 Jun 2013 10:38:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=74TlE7VutuJrSt4tFO0AyuMqL643OxmreR/P6ddNRog=;
+        b=YBVzGPTWo/ZK32B0E8E73HQWJsLgxUS0ehNKVhHwLPjF3EtydpZDVoAp+i3JYm89SI
+         X0yZ141TquUW9lR49N/ti/GdBsS9kQ36/tMFpZlo/7Thm/NcL55UflmXtc5/mMNOjmRd
+         EB08PqDEEV/SeVwbdTKK0Gzm3iOZoi2Aats7xa6r1S0RlsejDSIpZJXDROFwOi4+zV7+
+         rL6blTfLIxcebGjLSRXiPdQ6q6j6oMZ10d+SRChjWANSToJ1RWo95bexkBegOKG6Y7Zc
+         Gehl8SThH6bLe3DM35SLR9q4ZCKr/lrlZ45O+NqkDt8uCAs3yY96SQG41Lf+aweYj1jY
+         OyFg==
+X-Received: by 10.112.12.137 with SMTP id y9mr9211541lbb.91.1370972298555;
+        Tue, 11 Jun 2013 10:38:18 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id w9sm6054534lbk.7.2013.06.11.10.38.17
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 11 Jun 2013 10:38:17 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UmSZD-0005pH-6M; Tue, 11 Jun 2013 19:41:11 +0200
+Content-Disposition: inline
+In-Reply-To: <CAMP44s3OG2MSO=zwAvzTnTLYOJmhsmbjrVJOxP-0ZSaxgMuUXA@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227475>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Tue, Jun 11, 2013 at 12:26:42PM -0500, Felipe Contreras wrote:
+> On Tue, Jun 11, 2013 at 12:24 PM, Fredrik Gustafsson <iveqy@iveqy.com=
+> wrote:
+> > On Tue, Jun 11, 2013 at 12:09:32PM -0500, Felipe Contreras wrote:
+> >> It's not removed. It's simply moved.
+> >
+> > Sorry about that, I wasn't paying enough attention. But why are you
+> > moving it?
+> >
+> > All other arguments to git am is set in git-rebase.sh, why just set
+> > -q just before the invokation in git-rebase--am.sh?
+>=20
+> Because the next patch checks if there's any arguments meant for 'git
+> am' to switch to am rebase mode. We shouldn't switch to that mode if
+> the only argument to 'git am' is going to be -q.
 
->>  - There may be pieces of usefully reusable code buried in
->>    builtin/*.o;
->>
->>  - By definition, any code (piece of data or function definition) in
->>    builtin/*.o cannot be used in standalone binaries, because all of
->>    builtin/*.o expect to link with git.o and expect their cmd_foo()
->>    getting called from main in it;
->>
->>  - By moving the useful reusable pieces ont of builtin/*.o and
->>    adding them to libgit.a, these pieces become usable from
->>    standalone binaries as well.
->
-> What if these reusable pieces should not be used by standalone binaries?
+Okay, that make sense. How about rephrase the commit message and add
+this explanation. It's really not a cleanup but a preparation for the
+next patch.
 
-I am not sure what you mean.  A piece is either reusable or not.
-When would one piece _be_ reusable and should *not* be used in one
-context but not in another?
+If I was a maintainer and only got this patch I would reject it. Every
+patch in a patch serie should be justified to be applied as a single
+patch, yes?
 
-There are distinctions between being "useful" and "usable", but I
-think the zeroth order of approximation when thinking about this is
-to think builtin/*.o as set of subroutines called by git.c::main().
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
 
-These set of subroutines may call out to more generic helper
-functions that are usable from anywhere both within builtins and
-also from standalone.  They may also call to their own helper
-functions that were originally designed to support only their use
-by the original caller from somewhere in builtin/*.o (most commonly
-in the same file, marked as static).
-
-The general direction, if we want to have an improve libgit.a,
-should be to see if the functions and their data that are private
-to builtin/*.o can be used from standalone, either as they are or
-with more generalization, and turn them from helpers specific to one
-cmd_foo() into more generally useful library-ish functions.
-
-There may be pieces in the callchain from that entry point to
-cmd_foo() that are implementation details of git.c::main(); for
-example the loop that does command dispatching to check with
-builtins, external commands that begin with git-, and aliases, is
-one of them, and would not be usable (nor it is useful) outside the
-context of "git" aggregate binary.  But there are things that ought
-to be usable that are currently in builtin/*.o, which prevents them
-from being used by standalone binaries.  If a remote helper binary
-that is standalone wants to call "create_note()", it is not
-sufficient to make it non-static in builtin/notes.o, for example.
-
-But if it is moved outside builtin/notes.o, it becomes usable.
-
-I think the "git notes", being one of the most recent additions,
-haven't gone through enough round of refactoring to come to the best
-separation between library-ish part (i.e. could be in notes.o, even
-though it is mostly about the underlying data structure manipulation
-and contains no higher-level operations like actually creating and
-copying, which might want to be in a separate source notes-lib.o)
-and its CLI implementation "builtin/notes.o".
-
-> But this doesn't answer the question; what about code that is shared
-> between builtins, but cannot be used by standalone programs?
-
-Again, I do not know what you mean by "cannot" here.  My tentative
-answer to that question is "the eventual goal should be not to have
-any code in that class, and that is a reasonable goal we can achieve
-once we refactor what ought to be reusable out of builtin/*.o".
-
-What are the examples you have in mind, code that we want to forbid
-standalone from using?
+tel: 0733-608274
+e-post: iveqy@iveqy.com
