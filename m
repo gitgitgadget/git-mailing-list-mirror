@@ -1,77 +1,105 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Wed, 12 Jun 2013 00:16:28 +0530
-Message-ID: <CALkWK0n9Ws6DRbKPRHcQPhFTFx533PZH6dg1=w-O1hQ06V66-A@mail.gmail.com>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
- <51B6AA7F.1060505@alum.mit.edu> <7v38sod1kn.fsf@alter.siamese.dyndns.org> <20130611182936.GM22905@serenity.lan>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: rebase --autosquash does not handle fixup! of fixup!
+Date: Tue, 11 Jun 2013 20:50:07 +0200
+Message-ID: <87obbc8otc.fsf@hexa.v.cablecom.net>
+References: <20130611180530.GA18488@oinkpad.pimlott.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Jun 11 20:47:27 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>
+To: Andrew Pimlott <andrew@pimlott.net>
+X-From: git-owner@vger.kernel.org Tue Jun 11 20:50:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmTbJ-000461-7T
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 20:47:25 +0200
+	id 1UmTe5-0006FO-7c
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 20:50:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755278Ab3FKSrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 14:47:12 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:64993 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754794Ab3FKSrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 14:47:09 -0400
-Received: by mail-ie0-f177.google.com with SMTP id aq17so2979748iec.8
-        for <git@vger.kernel.org>; Tue, 11 Jun 2013 11:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=WTtEELdd4waPJ6s+QIi+hFtfQ7wcflcW231gUTMuSxg=;
-        b=KSPXhZRh2hE/RR+MwmTGJcogwfmMZIHvEQAoLIvjBsvYu23hsqR93bKhZJkun9GSH5
-         XCcccsQmxVV39E4FArMBJTdxjnpDLbwKdq0ctAlXBNqF2IYuw5BqISN3s5FnzyZ7nQgg
-         vQ01hZ1wQgN2xvxLzF7xFk2iJu/PT4/I75bMwTzGaIHlyumFDhocA+WW5lJBs3BbwENc
-         P+kdUtFbgn/DpIToz3kJ8HdyIpuT7jjNWvLtwF2sf55AbPqPejoRmVXjaOBUgVdmM6q/
-         oMIWxLC/KkUOkvmKVyCsvLDeMtoQiFPMl/I5SDwsiqXebb3OdHsrcghYyhXt23a9l8Yr
-         bfaQ==
-X-Received: by 10.50.56.20 with SMTP id w20mr1581446igp.40.1370976428850; Tue,
- 11 Jun 2013 11:47:08 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Tue, 11 Jun 2013 11:46:28 -0700 (PDT)
-In-Reply-To: <20130611182936.GM22905@serenity.lan>
+	id S1754840Ab3FKSuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 14:50:10 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:23484 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750792Ab3FKSuJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 14:50:09 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 11 Jun
+ 2013 20:50:04 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 11 Jun
+ 2013 20:50:07 +0200
+In-Reply-To: <20130611180530.GA18488@oinkpad.pimlott.net> (Andrew Pimlott's
+	message of "Tue, 11 Jun 2013 11:05:30 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227495>
 
-John Keeping wrote:
->     Ugh, why this roundabout-passive-past tone?  Use imperative tone
->     like this:
->
->         ...
->
-> vs.
->
->     We normally use the imperative in commit messages, perhaps like
->     this?
->
->         ...
->
-> As my mother would say, "politeness costs nothing" ;-)
+Andrew Pimlott <andrew@pimlott.net> writes:
 
-The review is being honest about her feelings in the first one, and
-being artificially diplomatic in the second one.  Both of them are
-constructive and friendly, in that they provide an example for the
-submitter to follow.
+> git rebase -i --autosquash does not handle a fixup! of a fixup!, such as
+> the history:
+>
+>     aaaaaaa fix nasty bug
+>     ...
+>     bbbbbbb fixup! fix nasty bug
+>     ...
+>     ccccccc fixup! fixup! fix nasty bug
+>
+> --autosquash produces:
+>
+>     pick aaaaaaa fix nasty bug
+>     fixup bbbbbbb fixup! fix nasty bug
+>     ...
+>     pick ccccccc fixup! fixup! fix nasty bug
+>
+> This defeats the workflow I was hoping to use:
+>
+>     git commit -m 'fix nasty bug'
+>     ...
+>     git commit --fixup :/nasty
+>     ...
+>     git commit --fixup :/nasty
+>
+> The second :/nasty resolves to the previous fixup, not the initial
+> commit.  I could have made the regular expression more precise, but this
+> would be a hassle.
+>
+> Would a change to support fixup! fixup! be considered?
 
-Either way, I'm not interested in problems that have no solutions.
-The only "solution" I see here is to suffocate every contributor until
-they are "tactful enough" for the majority's liking, and "remove" the
-ones that don't conform.  If you do have an alternate solution, please
-share it with us.
+Sure, why not.  You could start with something like the patch below
+(untested).  If that happens to work, just add a test and a good commit
+message.
+
+
+diff --git i/git-rebase--interactive.sh w/git-rebase--interactive.sh
+index f953d8d..798ae81 100644
+--- i/git-rebase--interactive.sh
++++ w/git-rebase--interactive.sh
+@@ -689,7 +689,17 @@ rearrange_squash () {
+ 		case "$message" in
+ 		"squash! "*|"fixup! "*)
+ 			action="${message%%!*}"
+-			rest="${message#*! }"
++			rest=$message
++			while : ; do
++				case "$rest" in
++				"squash! "*|"fixup! "*)
++					rest="${rest#*! }"
++					;;
++				*)
++					break
++					;;
++				esac
++			done
+ 			echo "$sha1 $action $rest"
+ 			# if it's a single word, try to resolve to a full sha1 and
+ 			# emit a second copy. This allows us to match on both message
+
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
