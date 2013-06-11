@@ -1,7 +1,7 @@
 From: =?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
-Subject: [PATCH v4 29/31] git-remote-mediawiki: Add a .perlcriticrc file
-Date: Wed, 12 Jun 2013 00:18:20 +0200
-Message-ID: <1370989102-24942-30-git-send-email-celestin.matte@ensimag.fr>
+Subject: [PATCH v4 25/31] git-remote-mediawiki: Don't use quotes for empty strings
+Date: Wed, 12 Jun 2013 00:18:16 +0200
+Message-ID: <1370989102-24942-26-git-send-email-celestin.matte@ensimag.fr>
 References: <1370989102-24942-1-git-send-email-celestin.matte@ensimag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,87 +15,130 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmWuE-0007GU-Vd
+	id 1UmWuF-0007GU-HG
 	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 00:19:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756871Ab3FKWSw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 18:18:52 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:48177 "EHLO shiva.imag.fr"
+	id S1756890Ab3FKWSx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 18:18:53 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:48168 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756850Ab3FKWSu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 18:18:50 -0400
+	id S1756844Ab3FKWSs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 18:18:48 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5BMIk59012673
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5BMIij0012638
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 12 Jun 2013 00:18:46 +0200
+	Wed, 12 Jun 2013 00:18:44 +0200
 Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5BMImwI024121;
-	Wed, 12 Jun 2013 00:18:48 +0200
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5BMIltM024101;
+	Wed, 12 Jun 2013 00:18:47 +0200
 Received: from tohwi-K50IE.imag.fr (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5BMIb2n018360;
-	Wed, 12 Jun 2013 00:18:48 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5BMIb2j018360;
+	Wed, 12 Jun 2013 00:18:47 +0200
 X-Mailer: git-send-email 1.7.9.5
 In-Reply-To: <1370989102-24942-1-git-send-email-celestin.matte@ensimag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 12 Jun 2013 00:18:46 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 12 Jun 2013 00:18:45 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227543>
 
-Such a file allows to configure perlcritic.
-Here, it is used to prevent to remove many unwanted rules and configure=
- one to
-remove unwanted warnings.
+Empty strings are replaced by an $EMPTY constant.
 
 Signed-off-by: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
 Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 ---
- contrib/mw-to-git/.perlcriticrc |   28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
- create mode 100644 contrib/mw-to-git/.perlcriticrc
+ contrib/mw-to-git/git-remote-mediawiki.perl |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/contrib/mw-to-git/.perlcriticrc b/contrib/mw-to-git/.perlc=
-riticrc
-new file mode 100644
-index 0000000..a1f8451
---- /dev/null
-+++ b/contrib/mw-to-git/.perlcriticrc
-@@ -0,0 +1,28 @@
-+# These 3 rules demand to add the s, m and x flag to *every* regexp. T=
-his is
-+# overkill and would be harmful for readability.
-+[-RegularExpressions::RequireExtendedFormatting]
-+[-RegularExpressions::RequireDotMatchAnything]
-+[-RegularExpressions::RequireLineBoundaryMatching]
+diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-t=
+o-git/git-remote-mediawiki.perl
+index 4764be5..0bf9a0d 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki.perl
++++ b/contrib/mw-to-git/git-remote-mediawiki.perl
+@@ -40,6 +40,8 @@ use constant NULL_SHA1 =3D> '000000000000000000000000=
+0000000000000000';
+ # Used on Git's side to reflect empty edit messages on the wiki
+ use constant EMPTY_MESSAGE =3D> '*Empty MediaWiki Message*';
+=20
++use constant EMPTY =3D> q{};
 +
-+# This rules says that builtin functions should not be called with par=
-enthesis
-+# e.g.: (taken from CPAN's documentation)
-+# open($handle, '>', $filename); #not ok
-+# open $handle, '>', $filename;  #ok
-+# Applying such a rule would mean modifying a huge number of lines for=
- a
-+# question of style.
-+[-CodeLayout::ProhibitParensWithBuiltins]
-+
-+# This rule states that each system call should have its return value =
-checked
-+# The problem is that it includes the print call. Checking every print=
- call's
-+# return value would be harmful to the code readabilty.
-+# This configuration keeps all default function but print.
-+[InputOutput::RequireCheckedSyscalls]
-+functions =3D open say close
-+
-+# This rules demands to add a dependancy for the Readonly module. This=
- is not
-+# wished.
-+[-ValuesAndExpressions::ProhibitConstantPragma]
-+
-+# This rule is not really useful (rather a question of style) and prod=
-uces many
-+# warnings among the code.
-+[-ValuesAndExpressions::ProhibitNoisyQuotes]
+ if (@ARGV !=3D 2) {
+ 	exit_error_usage();
+ }
+@@ -164,11 +166,11 @@ sub parse_command {
+ 		mw_list($cmd[1]);
+ 	} elsif ($cmd[0] eq 'import') {
+ 		die("Invalid arguments for import\n")
+-		    if ($cmd[1] eq "" || defined($cmd[2]));
++		    if ($cmd[1] eq EMPTY || defined($cmd[2]));
+ 		mw_import($cmd[1]);
+ 	} elsif ($cmd[0] eq 'option') {
+ 		die("Too many arguments for option\n")
+-		    if ($cmd[1] eq "" || $cmd[2] eq "" || defined($cmd[3]));
++		    if ($cmd[1] eq EMPTY || $cmd[2] eq EMPTY || defined($cmd[3]));
+ 		mw_option($cmd[1],$cmd[2]);
+ 	} elsif ($cmd[0] eq 'push') {
+ 		mw_push($cmd[1]);
+@@ -559,7 +561,7 @@ sub mediawiki_clean {
+ 	# Mediawiki does not allow blank space at the end of a page and ends =
+with a single \n.
+ 	# This function right trims a string and adds a \n at the end to foll=
+ow this rule
+ 	$string =3D~ s/\s+$//;
+-	if ($string eq "" && $page_created) {
++	if ($string eq EMPTY && $page_created) {
+ 		# Creating empty pages is forbidden.
+ 		$string =3D EMPTY_CONTENT;
+ 	}
+@@ -570,7 +572,7 @@ sub mediawiki_clean {
+ sub mediawiki_smudge {
+ 	my $string =3D shift;
+ 	if ($string eq EMPTY_CONTENT) {
+-		$string =3D "";
++		$string =3D EMPTY;
+ 	}
+ 	# This \n is important. This is due to mediawiki's way to handle end =
+of files.
+ 	return "${string}\n";
+@@ -996,7 +998,7 @@ sub mw_upload_file {
+ 	} else {
+ 		# Don't let perl try to interpret file content as UTF-8 =3D> use "ra=
+w"
+ 		my $content =3D run_git("cat-file blob ${new_sha1}", 'raw');
+-		if ($content ne "") {
++		if ($content ne EMPTY) {
+ 			mw_connect_maybe();
+ 			$mediawiki->{config}->{upload_url} =3D
+ 				"${url}/index.php/Special:Upload";
+@@ -1038,7 +1040,7 @@ sub mw_push_file {
+ 	my $newrevid;
+=20
+ 	if ($summary eq EMPTY_MESSAGE) {
+-		$summary =3D '';
++		$summary =3D EMPTY;
+ 	}
+=20
+ 	my $new_sha1 =3D $diff_info_split[3];
+@@ -1049,7 +1051,7 @@ sub mw_push_file {
+=20
+ 	my ($title, $extension) =3D $complete_file_name =3D~ /^(.*)\.([^\.]*)=
+$/;
+ 	if (!defined($extension)) {
+-		$extension =3D "";
++		$extension =3D EMPTY;
+ 	}
+ 	if ($extension eq 'mw') {
+ 		my $ns =3D get_mw_namespace_id_for_page($complete_file_name);
+@@ -1117,7 +1119,7 @@ sub mw_push {
+ 		if ($force) {
+ 			print {*STDERR} "Warning: forced push not allowed on a MediaWiki.\n=
+";
+ 		}
+-		if ($local eq "") {
++		if ($local eq EMPTY) {
+ 			print {*STDERR} "Cannot delete remote branch on a MediaWiki\n";
+ 			print {*STDOUT} "error ${remote} cannot delete\n";
+ 			next;
 --=20
 1.7.9.5
