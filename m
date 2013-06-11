@@ -1,95 +1,112 @@
-From: =?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
-Subject: [PATCH] git-remote-mediawiki: display message when launched directly
-Date: Tue, 11 Jun 2013 15:38:48 +0200
-Message-ID: <1370957928-19303-1-git-send-email-celestin.matte@ensimag.fr>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] Documentation/CommunityGuidelines
+Date: Tue, 11 Jun 2013 19:10:11 +0530
+Message-ID: <CALkWK0kMvac7Sp3QwvEm+J_-Hj7JAn-AY-juDDw1HR3oQ+hamA@mail.gmail.com>
+References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
+ <51B6AA7F.1060505@alum.mit.edu> <CALkWK0nNn8Rcu4JpV4r+0ct+_cuW3aUHXKV4bcB-Hn6Xg8Y+bA@mail.gmail.com>
+ <87li6g969j.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: benoit.person@ensimag.fr, matthieu.moy@grenoble-inp.fr,
-	=?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 11 15:39:20 2013
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	A Large Angry SCM <gitzilla@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jun 11 15:41:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmOn5-0003tn-9m
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 15:39:16 +0200
+	id 1UmOok-0005Yk-Jr
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 15:40:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753318Ab3FKNjJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jun 2013 09:39:09 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35927 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752170Ab3FKNjD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 09:39:03 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5BDd0qv019181
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 11 Jun 2013 15:39:00 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5BDd2Ug015213;
-	Tue, 11 Jun 2013 15:39:02 +0200
-Received: from tohwi-K50IE.imag.fr (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5BDd1V5029651;
-	Tue, 11 Jun 2013 15:39:01 +0200
-X-Mailer: git-send-email 1.7.9.5
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 11 Jun 2013 15:39:00 +0200 (CEST)
+	id S1752288Ab3FKNky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 09:40:54 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:35148 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751476Ab3FKNkx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 09:40:53 -0400
+Received: by mail-ie0-f181.google.com with SMTP id x12so1415860ief.40
+        for <git@vger.kernel.org>; Tue, 11 Jun 2013 06:40:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=4pQ8L5dRvtldJhCcgCA2keX+TZjpzcVvtatesyU109Y=;
+        b=GBYHbBR1COiylpeiy02//lNyAv/bYwUMw6Ftz41gBGEwrxrIS6PMuIkVjsfKYNLyOK
+         AoueAHi96udaB7YMRRD0F1PKBiF72TJe63fS7B7VoZfl01uhLnRK4rbiv676QmcJ8ebk
+         6SIutIxZr8XTyRs6JLG3WXF9RqpH0spL35XZMOPimDHP3YDh3Ie5UGgLMTftMrCGT5cd
+         gdgOhJpjyY+aPITbb4C0nIxdUksSUjssvM9tzv4747WPFcgTSq4oU6fY6o9Yvemk9kVA
+         xd5bhRfQKAef9kHBffg2vA1ytsLEZM8171XFKPTBo9yIg2b7laFtsMFB1q2p1vCCxxyo
+         s53A==
+X-Received: by 10.50.3.37 with SMTP id 5mr968708igz.0.1370958052917; Tue, 11
+ Jun 2013 06:40:52 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Tue, 11 Jun 2013 06:40:11 -0700 (PDT)
+In-Reply-To: <87li6g969j.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227439>
 
-Users may be confused when they run the perl script directly.
-A good way to detect this is to check the number of parameters used to =
-call the
-script, which is never different from 2 in a normal use.
-Display a proper error message to avoid any confusion.
+Thomas Rast wrote:
+> It has become clear, also in discussion on IRC, that your preferred
+> approach is to fight the fires, attempting to extinguish flames as they
+> happen.
 
-Signed-off-by: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
----
- contrib/mw-to-git/git-remote-mediawiki.perl |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Incorrect.  I am interested in minimizing occurrences, which is why I
+started this thread: to calmly and rationally discuss how to achieve
+that.  I have listed many concrete proposals, and justified them with
+reason.
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-t=
-o-git/git-remote-mediawiki.perl
-index 9c14c1f..9b71972 100755
---- a/contrib/mw-to-git/git-remote-mediawiki.perl
-+++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -41,6 +41,10 @@ use constant NULL_SHA1 =3D> "00000000000000000000000=
-00000000000000000";
- # Used on Git's side to reflect empty edit messages on the wiki
- use constant EMPTY_MESSAGE =3D> '*Empty MediaWiki Message*';
-=20
-+if (@ARGV !=3D 2) {
-+	exit_error_usage();
-+}
-+
- my $remotename =3D $ARGV[0];
- my $url =3D $ARGV[1];
-=20
-@@ -156,6 +160,17 @@ while (<STDIN>) {
-=20
- ########################## Functions ##############################
-=20
-+## error handling
-+sub exit_error_usage {
-+	die "ERROR: git-remote-mediawiki module was not called with a correct=
- number of\n" .
-+	    "parameters\n" .
-+	    "You may obtain this error because you attempted to run the git-r=
-emote-mediawiki\n" .
-+            "module directly.\n" .
-+	    "This module can be used the following way:\n" .
-+	    "\tgit clone mediawiki://<address of a mediawiki>\n" .
-+	    "Then, use git commit, push and pull as with every normal git rep=
-ository.\n";
-+}
-+
- ## credential API management (generic functions)
-=20
- sub credential_read {
---=20
-1.7.9.5
+> My approach -- and in my perception also that preferred by most of the
+> regulars who have spoken in this whole mess -- is that since there is a
+> fire hazard, it would be more effective firefighting to just remove the
+> hazard, thus preventing future fires.
+
+Presumably, Felipe is the "fire hazard" that we are talking about, and
+nobody else is to blame.  He must be "removed" to prevent future
+fires.  This is the "perception of the regulars", correct?
+
+Then why haven't you removed him yet?  What are you waiting for?  You
+don't need my "approval".
+
+Is it because you have realized deep down that you have absolutely no
+rational argument, and are arguing with an ill-formed "majority
+opinion"?  I have words, you have words.  Why are you incapable of
+using your words to counter my arguments rationally?Are you so blind
+that you cannot see the consequences of acting without reason?
+Tomorrow the majority opinion will dictate that I am a fire hazard and
+must be removed.  Soon, anybody who disagrees with the majority
+opinion will be removed, and the community will be reduced to a
+handful of circlejerking yes-men.  The git project will die a sad
+death.  And the blood will be on your hands.
+
+> I infer that in your view, there is an inalienable right for the fire
+> hazard to remain part of the community that you are not willing to give
+> up.  I for one no longer have such qualms in this instance.
+
+Incorrect.  There is no "transcendental inalienable right" that
+dictates that "fire hazards" must remain part of the community.  I
+never made such an irrational argument.  I already gave you the
+example of the survivors on the boat with limited food/water on IRC:
+it is you who stupidly refused to throw anyone overboard, killing all
+the survivors; I am the one who said that I would get them to draw
+sticks to "fairly choose" who to throw overboard, maximizing the
+chances of survival of the others.  I am making a pragmatic argument,
+based on what is best for the community; not some stuck-up idealistic
+bullshit.  Further, I tried to help you think through the justice
+problem, by recommending an accessible course.  You have either not
+gone through it, or have gone through it and learnt nothing.
+
+What should I "give up"?  My rationality?
+
+Man up, and stop hiding being the veils of "majority opinion".  _Your_
+opinion is that Felipe must be removed from the list without reason.
+Don't talk for the others.  I'm sick of you "supporting" another
+person's opinion.  Stand up and speak for yourself; leave Haggerty out
+of it.
+
+You have embarrassed yourself and the entire git community today.
