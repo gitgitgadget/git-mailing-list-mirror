@@ -1,99 +1,157 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] Move sequencer to builtin
-Date: Tue, 11 Jun 2013 04:29:11 -0500
-Message-ID: <CAMP44s2eUiZx6MaZ52Z0Ns40YapiEtzzZK6NJP8pNLiT5Z-pAg@mail.gmail.com>
-References: <20130608164902.GA3109@elie.Belkin>
-	<CAMP44s06DaV2G0rbhzJRMujEJnqeGYYv2G-a90pLL6AOS0gp+w@mail.gmail.com>
-	<20130608173447.GA4381@elie.Belkin>
-	<CAMP44s0n0qEk+1HhpAm-fMn+BWFwOeZCp7pgq9==09COVoNNEw@mail.gmail.com>
-	<20130609014049.GA10375@google.com>
-	<CAMP44s3CGHVLnkUxo=PR_b+_dTuaz5rwems_pd9GE1_vcEaYRA@mail.gmail.com>
-	<20130609052624.GB561@sigill.intra.peff.net>
-	<CAMP44s3NhNUuCvW37UaMo9KbHHxZqBE8S15h845vtRi89Bu6WA@mail.gmail.com>
-	<20130609174049.GA1039@sigill.intra.peff.net>
-	<CAMP44s35w_ysvd5c8oANF8YpWvsquY50bUjSfjOxtujdpgBCPQ@mail.gmail.com>
-	<20130611091807.GA11361@alap2.anarazel.de>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] Documentation/CommunityGuidelines
+Date: Tue, 11 Jun 2013 16:15:12 +0530
+Message-ID: <CALkWK0nNn8Rcu4JpV4r+0ct+_cuW3aUHXKV4bcB-Hn6Xg8Y+bA@mail.gmail.com>
+References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
+ <51B6AA7F.1060505@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Andres Freund <andres@anarazel.de>
-X-From: git-owner@vger.kernel.org Tue Jun 11 11:29:19 2013
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	A Large Angry SCM <gitzilla@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jun 11 12:45:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmKtD-0005Qv-6Q
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 11:29:19 +0200
+	id 1UmM5N-0002tY-Tp
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 12:45:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753091Ab3FKJ3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 05:29:15 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:61525 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752447Ab3FKJ3O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 05:29:14 -0400
-Received: by mail-la0-f45.google.com with SMTP id fr10so6633984lab.4
-        for <git@vger.kernel.org>; Tue, 11 Jun 2013 02:29:11 -0700 (PDT)
+	id S1754149Ab3FKKpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 06:45:53 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:60517 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754124Ab3FKKpw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 06:45:52 -0400
+Received: by mail-ie0-f169.google.com with SMTP id 10so5558718ied.14
+        for <git@vger.kernel.org>; Tue, 11 Jun 2013 03:45:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=BV9XS5/y5srAl2jORCP1PVTRjsJmInmt6gG0nKuPPHo=;
-        b=lj0lpFblNHTFLtlliEAE53ubB3k/Q/oqsMmV0FVfshnxtCO1aiQyjPic2diJMqxMaR
-         oVwBzzPuT6D7xgD/6pN+sonOChCo7PoeAHct0UhvSHYoLmamcdXzo/ONDAvDDTFcsjNT
-         ZxLcZqXyGfrjXZ9O/3aNQAJPLgyKhESdImljh+1RaufceX4EJDJBzo84tK7/luKp8pmT
-         xJZe06/3grBwBNEt0rmPtFg6FGYvsa85wzg6Bd0cZQE1l4a0bcTvR1j2wcrUSEziRW2M
-         B4JBFwzAEeNINx7kYIb2ezyPxEI+NsY5XSDfDnl++kBT2Kg44PBTAQ0pMwERAbVulCQl
-         McLQ==
-X-Received: by 10.152.27.102 with SMTP id s6mr6988102lag.47.1370942951499;
- Tue, 11 Jun 2013 02:29:11 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Tue, 11 Jun 2013 02:29:11 -0700 (PDT)
-In-Reply-To: <20130611091807.GA11361@alap2.anarazel.de>
+        bh=KCt3ztikBBCL4TbRY7Yo/M/aRr7eZVAsOzu24mHcedY=;
+        b=kZ87tjCUP2kZqiyVP+Y/h0ChFriLOZm9/ViuGapV4zqFMtgSO/3Qiq3eAqFim0ydfH
+         zyuk9GyrnrmRqqSc3v57OQjdXeil38RJfSIByzKi+JunixN9DjMW7vZt06fftKqJXOWf
+         s3H8qzBbk5N5NrklTP8FnOnPNrAWwRjRVnZThOrTRashxsujmc6zJt/mHlxJWNmKF+7A
+         a5iFU3lCndc7RCzRBZEGiGLR5pG4yN4+hKDnDMWmQpg2XKnp/UpeWBJG5QTZwHeD/tUf
+         Hm0pfjO+2MP/2y39MGVoZnh4/qSnxHsZEx0gO/G/YWMQHt3QBDjhno9CLL2RldqodKDA
+         A7kw==
+X-Received: by 10.42.135.5 with SMTP id n5mr5376121ict.14.1370947552149; Tue,
+ 11 Jun 2013 03:45:52 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Tue, 11 Jun 2013 03:45:12 -0700 (PDT)
+In-Reply-To: <51B6AA7F.1060505@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227427>
 
-On Tue, Jun 11, 2013 at 4:18 AM, Andres Freund <andres@anarazel.de> wrote:
-> On 2013-06-09 13:01:30 -0500, Felipe Contreras wrote:
->> >> You don't agree that 1) a collegial work environment is overrated, 2)
->> >> that the Linux kernel doesn't put an emphasis on being collegial, or
->> >> 3) that it's the most successful software project in history?
->> >
->> > Point 1.
->>
->> Good, so we agree that a project doesn't need a collegial work
->> environment to be extremely and amazingly successful. In fact, any
->> rational person would keep an open mind to the fact that perhaps it
->> actually _helps_ to not have such environment, based on the evidence.
+Michael Haggerty wrote:
+> Thank you for drafting a proposed CommunityGuidelines document; I think
+> such a document would be helpful.  But I don't like the overall flavor
+> of your proposal; frankly, it sounds to me more like
 >
-> Just from skimming both lists, most of the time I find lkml to be nicer
-> (and more collegial) to read because it has a better atmosphere than
-> git@ had in the last year or two.
+> Documentation/GuidelinesForCommunityToBendOverBackwardsToLiveWithFCsProvocations
 
-A better atmosphere, yes, because they know how to avoid flamewars,
-and concentrate on technical issues, not because they have a collegial
-work environment.
+It has nothing to do with Felipe.  I've merely documented repeating
+patterns in fire threads as violations, in an attempt to avoid fires.
+I have not worked forward from axioms to derive "transcendentally
+desirable behavior", but rather backwards from a disaster to derive
+"patterns that have been shown to lead to large fires".  Why?  Because
+it's easier to derive unambiguous statements using my approach; as I
+will show shortly, there are various problems with your arguments.
 
-Unless you think this reply[1] is collegial. Even though I haven't
-been following Linux mailing lists that closely lately, I still manage
-to see a lot of these kinds of replies.
+What gives you the impression that I documented everyone else's
+violations, but not Felipe's? ;)
 
-> And yes, a good atmosphere plays an important role. One of the reasons
-> is that it makes it easier to discern arguments based on personality
-> disputes - which certainly exist on lk - from actual technical
-> disagreements that need to be resolved.
+>> 0. You do not take offense, no matter what.  If someone attacks you
+>> irrationally, you do not respond.  This is a public mailing list, and
+>> we are all rational people: the attacker has already humiliated
+>> herself in public, and everyone can see that.
+>
+> This is secondary to the more important rule, "do not attack other
+> people on the mailing list".  Not taking offense is at best a(n
+> important) fallback position for those regrettable occasions when
+> somebody else has already violated the primary guideline.
 
-That's right, but that's not because everyone is collegial in LKML,
-which they most certainly are not. Linus being one of many examples.
+The problem with your guideline is that you now need to define some
+sort of objective basis to determine whether or not someone attacks.
+What is this transcendental notion of "attack"?  I say something, and
+you take offense, while someone else does not.  Have I or have I not
+attacked you?  One possible solution to this dilemma is to use
+"majority opinion" as a basis.  This is a very dangerous road to go
+down, as fringe behaviors will keep getting eliminated until we're
+left with a bunch of yes-men on the list.  In other words, an
+extremely suffocating atmosphere.
 
-[1] http://article.gmane.org/gmane.linux.usb.general/85952
+My guideline does not suffer from this problem.  It only requires you
+to believe that you were personally offended, and act accordingly.
+Whether or not you were justified in being offended is nobody's
+business.
 
--- 
-Felipe Contreras
+>> 2. You stop pointing fingers.  Every heated discussion requires more
+>> than one participant, and a flamewar requires many participants.  If
+>> you participate, you have implicitly agreed to share the blame for
+>> whatever happens on the thread.  People can judge for themselves who
+>> is to blame.
+>
+> Here your wording "every heated discussion requires more than one
+> participant" seems to put more of the blame for heated discussions on
+> participants 2..N and give a pass to participant number one.
+
+I'm not going to comment on the issue of wording, since I've already
+made it clear that this "patch" is not for inclusion.
+
+It is unclear who "Participant #1" is, but I'm not giving anyone a
+pass; everyone must share the blame.
+
+>> 3. Thou shalt not commit logical fallacies.  The ones that are most
+>> common on this list: strawman, ad hominem, burden of proof, false
+>> cause, the texas sharpshooter, and appeal to authority.
+>
+> I think putting a rule like this in CommunityGuidelines puts too much
+> weight on it.  In my recollection, pointing out other people's supposed
+> logical fallacies is far more often used on this list as a nitpicking
+> diversionary tactic that usually leads a conversation *further* away
+> from the real issues.  I think it would be a mistake to encourage such
+> formal and stylized argument on the ML.
+
+The guidelines serve as a means of educating people on the list about
+how they can avoid fuelling fires, not for literally quoting and
+beating up violators.  As I have already stated in the final
+paragraph, there needs to be no consensus on whether or not a rule has
+been violated: everyone can judge that for themselves.
+
+>> 4. Lead by example.  If you do not like how someone presents
+>> themselves on the list, you counter it by presenting yourself nicely
+>> on the list.  Others will follow your example, making that person's
+>> behavior the minority.  It is far more powerful than explicitly
+>> stating what is "acceptable" behavior and what is not.
+>
+> Leading by example is a great approach, and has the effect that you
+> describe on the majority of people.  But I also think it would be
+> helpful for the community to agree on a few very minimum standards of
+> behavior that we insist on, and to call people out (preferably in a
+> private email) if they fall short of these standards.
+
+Let's see what your guidelines look like.
+
+>> 5. We are a community of programmers, and we are here to collaborate
+>> on code.  The argument that leads to higher efficiency and better code
+>> has an automatic advantage over the argument that doesn't.
+>>
+>> If someone breaks one of these rules, there's a very simple way to
+>> communicate this to them: you don't respond to their email.
+>> Optionally, respond to their email off-list calmly explaining what
+>> went wrong.
+>
+> I would prefer a community standards document that looks more like this:
+> [...]
+
+Summary: be a "nice" person, said in a very gentle way.  How is it
+better than the documents various internet communities have spent
+years writing and perfecting? [1]
+
+[1]: http://www.ubuntu.com/about/about-ubuntu/conduct
