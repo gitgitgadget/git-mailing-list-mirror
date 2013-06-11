@@ -1,76 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/4] commit-queue: LIFO or priority queue of commits
-Date: Tue, 11 Jun 2013 02:36:48 -0400
-Message-ID: <20130611063648.GB23650@sigill.intra.peff.net>
-References: <1370581872-31580-1-git-send-email-gitster@pobox.com>
- <1370820277-30158-1-git-send-email-gitster@pobox.com>
- <1370820277-30158-3-git-send-email-gitster@pobox.com>
- <20130610052500.GD3621@sigill.intra.peff.net>
- <7vwqq2l9cz.fsf@alter.siamese.dyndns.org>
- <20130610181557.GA2084@sigill.intra.peff.net>
- <7v1u89iyla.fsf@alter.siamese.dyndns.org>
- <20130610185907.GD2084@sigill.intra.peff.net>
- <7vd2rteej0.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: v3 [PATCH 2/2] status:introduce status.branch to enable --branch
+ by default
+Date: Tue, 11 Jun 2013 13:00:45 +0530
+Message-ID: <CALkWK0mQ9e1nR1jBgZKB6hgV+ptEXr225MchsVoM6514-KdqPg@mail.gmail.com>
+References: <51b5ede3.41a42a0a.02a1.3464SMTPIN_ADDED_BROKEN@mx.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Elliott Cable <me@ell.io>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 08:37:00 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: y@ensimag.imag.fr
+X-From: git-owner@vger.kernel.org Tue Jun 11 09:31:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmICP-0004eP-J4
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 08:36:57 +0200
+	id 1UmJ3C-0001aT-1M
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 09:31:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752879Ab3FKGgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 02:36:54 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52022 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752104Ab3FKGgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 02:36:53 -0400
-Received: (qmail 27712 invoked by uid 102); 11 Jun 2013 06:37:44 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 11 Jun 2013 01:37:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jun 2013 02:36:48 -0400
-Content-Disposition: inline
-In-Reply-To: <7vd2rteej0.fsf@alter.siamese.dyndns.org>
+	id S1753079Ab3FKHb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 03:31:26 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:35882 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751877Ab3FKHbZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 03:31:25 -0400
+Received: by mail-ie0-f179.google.com with SMTP id c10so10595459ieb.10
+        for <git@vger.kernel.org>; Tue, 11 Jun 2013 00:31:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=dnX6fJg0HX86N3JmAJ5Vc/doOwjodb0j0SpE/xwTpV4=;
+        b=Z6Aq2oFBYVDZgEM64C3kfA5AnD31Ah5T2rgee+TaGP0UcEZXy4OqvimvO3nvf+0frG
+         8pRPilp3rytzo/blktQUTqM4YEkx08JcRoctaGWMcXIDRhOPqd56S20qxCSD7nUl9ikx
+         Wv/4aJfmzXHW+QjkBzRQ5zTxoHwdDjgHiQ+J1O6MZn+yTbCLOwaVufe2fczkLpIK+R+y
+         5DnK9Raz9lii0ZuqFvEeZiUQY3MDtw6PBXY9q6J1B4BduVZYno2iyb95zNu8upSOhrPr
+         nw1OgeyYfW28grFGfIN8LXuEuK/BnV85iR6A0G8/gI2zHJcfyqhomCew3kI9tqGseZl4
+         8Vow==
+X-Received: by 10.43.53.211 with SMTP id vr19mr5227653icb.33.1370935885234;
+ Tue, 11 Jun 2013 00:31:25 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Tue, 11 Jun 2013 00:30:45 -0700 (PDT)
+In-Reply-To: <51b5ede3.41a42a0a.02a1.3464SMTPIN_ADDED_BROKEN@mx.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227421>
 
-On Mon, Jun 10, 2013 at 04:23:31PM -0700, Junio C Hamano wrote:
+<y@ensimag.imag.fr> wrote:
+> [...]
 
-> OK, I pushed out a result of some renaming and rebasing.  Notable
-> changes are:
-> 
->  - The data and API is called prio-queue and they live in prio-queue.[ch];
-> 
->  - The test script is also named test-prio-queue.c, to leave the
->    door open for other kinds of queue;
+Good change.
 
-Sounds reasonable, though you may want to update the commit message of
-jc/topo-author-date-sort~2.
+> diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+> index 9a07f15..958617a 100755
+> --- a/t/t7508-status.sh
+> +++ b/t/t7508-status.sh
 
->  - For now, record_author_date() does the obvious read-sha1-file and
->    free; and
-
-I think that is a good place to leave it in this series. It does not
-hurt performance in any existing cases, and any parsing refactoring can
-come later if somebody wants to work on it.
-
->  - The comparison callback's function signature had three "void *",
->    so they are named in the header file now.  Also two "thing"
->    pointers are marked as "const void *".
-
-Yeah, I noticed both when porting my tests, but didn't want to add too
-many distracting details. Thanks for fixing.
-
-Overall, it looks good for me except for the commit message tweaks I
-mentioned above.
-
--Peff
+I expected one test.  Two, at most.  This is a bit overzealous.  I
+don't mind leaving it as it is, but as a note for the future: this
+kind of overkill is not necessarily a good thing; it makes it hard to
+add/remove tests, multiple tests fail when one tiny feature doesn't
+work as expected, and the testsuite takes longer to run.
