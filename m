@@ -1,98 +1,114 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Tracking vendor release with Git
-Date: Tue, 11 Jun 2013 20:27:32 +0200
-Message-ID: <51B76C14.3060907@kdbg.org>
-References: <1370970410-7935-1-git-send-email-ydroneaud@opteya.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] Documentation/CommunityGuidelines
+Date: Tue, 11 Jun 2013 19:29:36 +0100
+Message-ID: <20130611182936.GM22905@serenity.lan>
+References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
+ <51B6AA7F.1060505@alum.mit.edu>
+ <7v38sod1kn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Yann Droneaud <ydroneaud@opteya.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 20:27:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	A Large Angry SCM <gitzilla@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 11 20:29:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmTIC-0005LI-IN
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 20:27:40 +0200
+	id 1UmTKP-0007FF-7A
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 20:29:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756010Ab3FKS1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jun 2013 14:27:36 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:59075 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752430Ab3FKS1f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jun 2013 14:27:35 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 64BF2A7EDA;
-	Tue, 11 Jun 2013 20:27:33 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 7342130AE20;
-	Tue, 11 Jun 2013 20:27:32 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <1370970410-7935-1-git-send-email-ydroneaud@opteya.com>
+	id S1756037Ab3FKS3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jun 2013 14:29:53 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:41021 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752430Ab3FKS3w (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jun 2013 14:29:52 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id A5D8DCDA585;
+	Tue, 11 Jun 2013 19:29:51 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RRKeiOcAobTU; Tue, 11 Jun 2013 19:29:49 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by jackal.aluminati.org (Postfix) with ESMTP id 66444CDA583;
+	Tue, 11 Jun 2013 19:29:48 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 496C7161E388;
+	Tue, 11 Jun 2013 19:29:48 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id wt+8eYyNongL; Tue, 11 Jun 2013 19:29:47 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id C9DCD161E0B3;
+	Tue, 11 Jun 2013 19:29:38 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7v38sod1kn.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227487>
 
-Am 11.06.2013 19:06, schrieb Yann Droneaud:
-> Hi,
+On Tue, Jun 11, 2013 at 10:00:56AM -0700, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> > * When reviewing other peoples' code, be tactful and constructive.  Set
+> > high expectations, but do what you can to help the submitter achieve
+> > them.  Don't demand changes based only on your personal preferences.
+> > Don't let the perfect be the enemy of the good.
 > 
-> I'm trying to setup a workflow to track vendor releases (upstream).
-> Each new release are provided as an archive of source code, data,
-> documentation, etc.
-> 
-> For each vendor releases, fixes need to be applied before making them
-> available to users (downstream).
-> 
-> Seems to be a rather common use case, applied by most Linux distribution
-> for decades.
-> 
-> In my case, on top of each releases, a common set of patches will be applied,
-> the biggest, the most intrusive one, being converting CRLF to LF using dos2unix,
-> the others being small portability fixes. In this case, fixes are not going to
-> be applied by upstream.
-> 
-> I'm trying to "design" (copy ;) a workflow with following properties,
-> in order of importance:
-> 
-> 1- I wish to keep a branch with each new vendor release as a commit.
->    This branch's history is only about vendor releases,
->    so it's easy to read the "changelog" of the vendor releases
->    with command such as git log <vendor-release-branch>
-> 
-> 2- I'd like to ease the process of applying our patches on top
->    of each new vendor release, eg. reduces the likeliness of conflicts.
-> 
-> 3- I wish to keep a branch with each new fixed vendor release as a commit.
->    Just like the upstream <vendor-release-branch>, only one commit
->    per release, so it's easy to read the "changelog" of the vendor releases
->    with command such as git log <patched-release-branch>
+> I think this is 30% aimed at me (as I think I do about that much of
+> the reviews around here).  I fully agree with most of them, but the
+> last sentence is a bit too fuzzy to be a practically useful
+> guideline.  Somebody's bare minimum is somebody else's perfection.
+> An unqualified "perfect is the enemy of good" is often incorrectly
+> used to justify "It works for me." and "There already are other
+> codepaths that do it in the same wrong way.", both of which make
+> things _worse_ for the long term project health.
 
-I suggest you aim for the following history (time flows from left to right):
+One thing that I think is missing from these proposals so far is some
+clear indication that a review should not be confrontational.  Consider
+the following two review comments (taken from a recent example that
+happened to stick in my mind, but I don't want to single out any one
+individual here):
 
-  U---V-----W          <-- upstream branch
-   \   \     \
-    C---D-----E        <-- CRLF conversion branch
-     \   \     \
-      K---L--M--N--O   <-- downstream branch
+    Ugh, why this roundabout-passive-past tone?  Use imperative tone
+    like this:
 
-U, V, W are the upstream releases.
+        ...
 
-C is the initial CRLF->LF conversion. D merges the second upstream
-release into the CRLF branch, E the third upstream release. These merges
-very likely create tons of conflicts. But that does not matter, because
-you know that the only change in "our" side is CRLF conversion. The
-commits on this branch can easily be automated. That's the primary
-motivation for this scheme.
+vs.
 
-K is your first small bugfix and also your first downstream release.
+    We normally use the imperative in commit messages, perhaps like
+    this?
 
-After merging L, the second, CRLF-converted, upstream release, you make
-your second small change, M, which is also your second downstream release.
+        ...
 
-Rinse and repeat with N and O for the third release.
+Both say the same thing but the first immediately puts the submitter on
+the defensive.  If I see something like that on one of my patches I have
+to consciously resist the urge to reply immediately and instead review
+what I'm about to send once I've calmed down.
 
--- Hannes
+I realise that we shouldn't take offence to review comments, but we are
+all human and it is sometimes hard not to take things personally.
+
+In the examples above, the first makes it feel like the submitter is
+fighting to get a patch included, but the second feels like we're
+collaborating to get to the best result for the project.
+
+As my mother would say, "politeness costs nothing" ;-)
