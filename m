@@ -1,7 +1,7 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] build: get rid of the notion of a git library
-Date: Mon, 10 Jun 2013 18:51:42 -0500
-Message-ID: <CAMP44s1HM0zFvkGmaHrX2Wq2JSzDNk8uwNSz3bNo12eWxDcL8A@mail.gmail.com>
+Date: Mon, 10 Jun 2013 17:04:21 -0700
+Message-ID: <7v4nd5ecmy.fsf@alter.siamese.dyndns.org>
 References: <1370712574-27688-1-git-send-email-felipe.contreras@gmail.com>
 	<CALkWK0mA7MXQv1k5bFpZLARDOHxU5kzKFXzcyUfb6NLZZY-=FA@mail.gmail.com>
 	<CAMP44s0cozMsTo7KQAjnqkqmvMwMw9D3SZrVxg48MOXkH9UQJQ@mail.gmail.com>
@@ -14,90 +14,83 @@ References: <1370712574-27688-1-git-send-email-felipe.contreras@gmail.com>
 	<20130610220627.GB28345@sigill.intra.peff.net>
 	<7vk3m1efda.fsf@alter.siamese.dyndns.org>
 	<7v8v2hedou.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1HM0zFvkGmaHrX2Wq2JSzDNk8uwNSz3bNo12eWxDcL8A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Jeff King <peff@peff.net>, Vincent van Ravesteijn <vfr@lyx.org>,
 	John Keeping <john@keeping.me.uk>,
 	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 11 01:51:50 2013
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 11 02:04:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmBsL-0000wR-6l
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 01:51:49 +0200
+	id 1UmC4a-0008Ue-KN
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Jun 2013 02:04:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437Ab3FJXvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jun 2013 19:51:44 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:61511 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752626Ab3FJXvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 19:51:44 -0400
-Received: by mail-lb0-f170.google.com with SMTP id t13so1969008lbd.15
-        for <git@vger.kernel.org>; Mon, 10 Jun 2013 16:51:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Bk2vwVrcK4VWFPArjuCuBJlmDmHeP4/gIud4Ytu9RSQ=;
-        b=AExcZk2YMvSULva88gFCjucAXgRaj0ZfcO70YNxSIFkQTScauDOImObO+88vXWdm0x
-         84X4hLEXTo2yxHnmSazbpog3eIp4wKyxFshIWSf5jaAQ+o3g95Tb4xeMgl9+ZSOflSNo
-         PMt8IZFTEbVWlcL5RHOldUgWNb0wy+GpjSfVaIHrgTXHSDJZyXlJZ3BrXUjfp9qHNt4i
-         4T4YcwPWoJtW1kPCRsdxYBDNr1kdTd+4nC6lR9RuQudUqz5iz4T9bsZzYoYT9O5IOGBq
-         tfh4kRuGAZ6p8eONDs+KKzpUVVAPdw4Jtqu7eZOF5rDdL6BlGmHvwcWHnNQudKHo4nSx
-         w8Ow==
-X-Received: by 10.152.27.102 with SMTP id s6mr6131760lag.47.1370908302684;
- Mon, 10 Jun 2013 16:51:42 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Mon, 10 Jun 2013 16:51:42 -0700 (PDT)
-In-Reply-To: <7v8v2hedou.fsf@alter.siamese.dyndns.org>
+	id S1753472Ab3FKAEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jun 2013 20:04:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36217 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752172Ab3FKAEX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jun 2013 20:04:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 434DB272FE;
+	Tue, 11 Jun 2013 00:04:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wtb8BpakErtWNf4sKjkrMlYxU4I=; b=uGBpS3
+	JH+wWwKfQaUJHcCwWHRm4qx99fkr3y/X09UXGB5dNdJckQqLuNJ5fyudc4Y+aJZN
+	mO9V2IzbfRb47fMtewHGhz5wZGQ8GwnL1AUj26/JBQTKdjuuYpKuEK6K9esl6rjS
+	U61DjwCxrkBDRr/tJcCxlaivnLZidlTngtEXA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Id6HCqtt/g8Fg1wR7wno9wB66IqDyVUS
+	yn3ePLG4BC4KkNHdjC3Xod2L0Mj+AOhYkZTnBebvXC2QbMs9U2L37+PeEfj8ZcDV
+	0/3HqMVVEeh+G+0YinDrv31gn3cGa9I/ZGti/CMQyvXRN5l9lTepeAwCjr7fNqLg
+	rSqX1ILkcR8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39A6D272FC;
+	Tue, 11 Jun 2013 00:04:23 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7875D272FB;
+	Tue, 11 Jun 2013 00:04:22 +0000 (UTC)
+In-Reply-To: <CAMP44s1HM0zFvkGmaHrX2Wq2JSzDNk8uwNSz3bNo12eWxDcL8A@mail.gmail.com>
+	(Felipe Contreras's message of "Mon, 10 Jun 2013 18:51:42 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 78753E8E-D22A-11E2-A3A6-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227406>
 
-On Mon, Jun 10, 2013 at 6:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> For the particular case of trying to make sequencer.o, which does
-> not currently have dependencies on builtin/*.o, depend on something
-> that is in builtin/notes.o, the link phase of standalone that wants
-> anything from revision.o (which is pretty much everything ;-) goes
-> like this:
+>> *1* ... which is a very reasonable thing to do.  But moving
+>>     sequencer.o to builtin/sequencer.o is *not* the way to do this.
 >
->         upload-pack.c   wants handle_revision_opt etc.
->         revision.c      provides handle_revision_opt
->                         wants name_decoration etc.
->         log-tree.c      provides name_decoration
->                         wants append_signoff
->         sequencer.c     provides append_signoff
->
-> So sequencer.o _is_ meant to be usable from standalone and belongs
-> to libgit.a
+> By now we all know what is the *CURRENT* way to do this; in other
+> words, the status quo, which is BTW all messed up, because builtin/*.o
+> objects depend on each other already.
 
-Not after my patch. It moves append_signoff *out* of sequencer, which
-in fact has nothing to do with the sequencer in the first place.
+builtin/*.o are allowed to depend on each other.  They are by
+definition builtins, meant to be linked into a single binary.
 
-> If sequencer.o wants to call init_copy_notes_for_rewrite() and its
-> friends [*1*] that are currently in builtin/notes.o, first the
-> called function(s) should be moved outside builtin/notes.o to
-> notes.o or somewhere more library-ish place to be included in
-> libgit.a, which is meant to be usable from standalone.
->
->
-> [Footnote]
->
-> *1* ... which is a very reasonable thing to do.  But moving
->     sequencer.o to builtin/sequencer.o is *not* the way to do this.
+> We are discussing the way it *SHOULD* be. Why aren't you leaning on that?
 
-By now we all know what is the *CURRENT* way to do this; in other
-words, the status quo, which is BTW all messed up, because builtin/*.o
-objects depend on each other already.
+And I do not see the reason why builtin/*.o should not depend on
+each other.  It is not messed up at all.  They are meant to be
+linked into a single binary---that is what being "built-in" is.
 
-We are discussing the way it *SHOULD* be. Why aren't you leaning on that?
+A good way forward, the way it *SHOULD* be, is to slim the builtin/*.o
+by moving parts that do not have to be in the single "git" binary
+but are also usable in standalone binaries out of them.
 
--- 
-Felipe Contreras
+And that is what I just suggested.
