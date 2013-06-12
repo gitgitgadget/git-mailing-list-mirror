@@ -1,170 +1,140 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] add--interactive: respect diff.algorithm
-Date: Wed, 12 Jun 2013 19:44:10 +0100
-Message-ID: <20130612184410.GB23890@serenity.lan>
-References: <20130610142825.GI22905@serenity.lan>
- <7v38sphiiw.fsf@alter.siamese.dyndns.org>
- <20130610211140.GD13333@sigill.intra.peff.net>
- <20130610214638.GK22905@serenity.lan>
- <20130610215656.GA28345@sigill.intra.peff.net>
+From: Charles McGarvey <chazmcgarvey@brokenzipper.com>
+Subject: Re: [PATCH] instaweb: make the perl path configurable
+Date: Wed, 12 Jun 2013 12:48:17 -0600
+Organization: Sevenology
+Message-ID: <51B8C271.9030105@brokenzipper.com>
+References: <20130611201400.GA28010@compy.Home> <loom.20130612T155755-338@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 12 20:44:25 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="----enig2HJTFNRXWCWGMHLUNFJLU"
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 12 20:48:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Umq1v-0005rW-7i
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 20:44:23 +0200
+	id 1Umq5p-0000Cz-El
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 20:48:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757372Ab3FLSoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 14:44:19 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:55135 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757315Ab3FLSoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 14:44:18 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id D4E83606502;
-	Wed, 12 Jun 2013 19:44:17 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eiMf99PvQj02; Wed, 12 Jun 2013 19:44:17 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id C6EB66064EF;
-	Wed, 12 Jun 2013 19:44:12 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20130610215656.GA28345@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757451Ab3FLSsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 14:48:21 -0400
+Received: from romulus.brokenzipper.com ([71.19.157.142]:64631 "EHLO
+	romulus.brokenzipper.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757393Ab3FLSsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 14:48:20 -0400
+Received: from vulcan.local (unknown [IPv6:2602:61:7edf:e300:0:ff:fe00:7701])
+	by romulus.brokenzipper.com (Postfix) with ESMTP id 2C01A52CE4;
+	Wed, 12 Jun 2013 12:48:20 -0600 (MDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=brokenzipper.com;
+	s=romulus; t=1371062900;
+	bh=4ND+7TMtVAn6dZcb8A/5Ish4QPa7XEjC+XFXXPUHUeY=;
+	h=Date:From:To:CC:Subject:References:In-Reply-To;
+	b=Co3MpGktFLDnZb2bDGMH9fFnxUQHk9XfzsmARYae1tcyYU0qPbvgcTsVCzgdm0bXP
+	 25A/TqV0WJjURPRFJmf/nZct7qHvyzjnde0NpDKXGc/XERySNJJc4PQvU66RjMP75b
+	 Aov43UdL8JdTALfcsIqV6T1AKDPmQNYaGM89Vl14=
+Received: from [2602:61:7edf:e300:0:ff:fe00:7700]
+	by vulcan.local with esmtpsa (TLS1.0:DHE_RSA_CAMELLIA_256_CBC_SHA1:256)
+	(Exim 4.80)
+	(envelope-from <chazmcgarvey@brokenzipper.com>)
+	id 1Umq6S-0007sA-5V; Wed, 12 Jun 2013 12:49:04 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130523 Thunderbird/17.0.6
+In-Reply-To: <loom.20130612T155755-338@post.gmane.org>
+X-Enigmail-Version: 1.6a1pre
+OpenPGP: url=https://www.brokenzipper.com/chaz.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227664>
 
-When staging hunks interactively it is sometimes useful to use an
-alternative diff algorithm which splits the changes into hunks in a more
-logical manner.  This is not possible because the plumbing commands
-called by add--interactive ignore the "diff.algorithm" configuration
-option (as they should).
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+------enig2HJTFNRXWCWGMHLUNFJLU
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Since add--interactive is a porcelain command it should respect this
-configuration variable.  To do this, make it read diff.algorithm and
-pass its value to the underlying diff-index and diff-files invocations.
+On 06/12/2013 08:00 AM, Jakub Narebski wrote:
+> Charles McGarvey <chazmcgarvey <at> brokenzipper.com> writes:
+>=20
+>> It is convenient for the user to be able to customize the path to perl=
+ if they
+>> do not want to use the system perl.  This may be the case, for example=
+, if the
+>> user wants to use the plackup httpd but its extra dependencies are not=
 
-At this point, do not add options to "git add", "git reset" or "git
-checkout" (all of which can call git-add--interactive).  If a user want
-to override the value on the command line they can use:
+>> installed in the system perl; they can set the perl path to a perl tha=
+t they
+>> install and have control over in their own home directory.
+>=20
+> Is it really necessary?  There is always PERL5LIB if one wants to use P=
+erl
+> modules installed in one's own home directory.  If one is using local::=
+lib
+> one has it "for free".
 
-	git -c diff.algorithm=$ALGO ...
+Yes, that's right.  Using PERL5LIB would solve the example problem in the=
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
-On Mon, Jun 10, 2013 at 05:56:56PM -0400, Jeff King wrote:
-> On Mon, Jun 10, 2013 at 10:46:38PM +0100, John Keeping wrote:
-> 
-> > > Overall, I think respecting diff.algorithm in add--interactive is a very
-> > > sane thing to do. I would even be tempted to say we should allow a few
-> > > other select diff options (e.g., fewer or more context lines). If you
-> > > allowed diff options like this:
-> > > 
-> > >   git add --patch="--patience -U5"
-> > > 
-> > > that is very flexible, but I would not want to think about what the code
-> > > does when you pass --patch="--raw" or equal nonsense.
-> > 
-> > An alternative would be to permit them to be set from within the
-> > interactive UI.  I'd find it quite useful to experiment with various
-> > diff options when I encounter a hunk that isn't as easy to pick as I'd
-> > like.  I expect it would be very hard to do that on a per-hunk basis,
-> > although per-file doesn't seem like it would be too hard.
-> 
-> That's an interesting idea, for a subset of options (e.g., "increase
-> context for this hunk"). I suspect implementing it would be painful,
-> though, as you would have to re-run diff, and you have no guarantee of
-> getting the same set of hunks (e.g., the hunk might end up coalesced
-> with another).
+commit message, and it would even be pretty simple to set up using local:=
+:lib.
+ So, no, this isn't strictly necessary.
 
-I think you'd need to re-run the diff over the whole file and then skip
-hunks until you reach one that overlaps with the original hunk.  But I
-suspect it would end up being quite a lot more complicated than that.
+> If they do not want to use system perl there is always perlbrew.
 
-> > diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> > index d2c4ce6..0b0fac2 100755
-> > --- a/git-add--interactive.perl
-> > +++ b/git-add--interactive.perl
-> > @@ -44,6 +44,8 @@ my ($diff_new_color) =
-> >  
-> >  my $normal_color = $repo->get_color("", "reset");
-> >  
-> > +my $diff_algorithm = ($repo->config('diff.algorithm') or 'default');
-> > +
-> >  my $use_readkey = 0;
-> >  my $use_termcap = 0;
-> >  my %term_escapes;
-> > @@ -731,6 +733,9 @@ sub run_git_apply {
-> >  sub parse_diff {
-> >  	my ($path) = @_;
-> >  	my @diff_cmd = split(" ", $patch_mode_flavour{DIFF});
-> > +	if ($diff_algorithm ne "default") {
-> > +		push @diff_cmd, "--diff-algorithm=${diff_algorithm}";
-> > +	}
-> >  	if (defined $patch_mode_revision) {
-> >  		push @diff_cmd, $patch_mode_revision;
-> 
-> Yeah, that looks like the sane way to do it to me. As a perl style
-> thing, I think the usual way of spelling 'default' is 'undef'. I.e.:
-> 
->   my $diff_algorithm = $repo->config('diff.algorithm');
->   ...
->   if (defined $diff_algorithm) {
->           push @diff_cmd, "--diff-algorithm=$diff_algorithm";
->   }
+Well, perlbrew is actually what I had in mind for this patch.  Without it=
+, it
+seems like the perl path -- which is configured while building git.git so=
+ is
+not easily changed by the user -- is "hard-coded" in the shebang line of =
+the
+plackup script file which is then made executable and exec'd, to start th=
+e
+httpd.  Given that process, I don't see how that code allows the user to =
+use
+any other perl, or am I missing something?
 
-OK.  The "default" is actually "the value that is equivalent to 'myers'
-for diff.algorithm" and I was originally going to add --diff-algorithm
-to the command line unconditionally.
+If adding a new config variable seems too heavy-handed for such a trivial=
 
-But I think it's better to add it only when it has been specified so
-I've changed it as you suggest.
+problem, another approach would be to use the first perl in PATH and fall=
+ back
+on the git.git build system-configured perl if there is no perl in PATH.
+However, considering the nature of perlbrew, the user may have many diffe=
+rent
+perls installed and multiple terminals open with shells configured for
+different perls.  To make the instaweb command search the PATH for perl w=
+ould
+introduce some unpredictability; the command would succeed or fail depend=
+ing
+on whether or not the perl being "used" in the current shell has the plac=
+kup
+httpd dependencies installed.  So I think I prefer the ability to configu=
+re
+which perl to have git always use for instaweb over this approach.
+
+In short summary, this patch isn't necessary because everyone could use
+local::lib to manage dependencies not installed at the system level, but =
+I
+think this patch is desirable for those of us who use perlbrew and not
+local::lib.  Of course, I'm open to alternatives and other suggestions.
+
+Thanks Jakub,
+
+--=20
+Charles McGarvey
 
 
- git-add--interactive.perl | 5 +++++
- 1 file changed, 5 insertions(+)
+------enig2HJTFNRXWCWGMHLUNFJLU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index d2c4ce6..5310959 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -44,6 +44,8 @@ my ($diff_new_color) =
- 
- my $normal_color = $repo->get_color("", "reset");
- 
-+my $diff_algorithm = $repo->config('diff.algorithm');
-+
- my $use_readkey = 0;
- my $use_termcap = 0;
- my %term_escapes;
-@@ -731,6 +733,9 @@ sub run_git_apply {
- sub parse_diff {
- 	my ($path) = @_;
- 	my @diff_cmd = split(" ", $patch_mode_flavour{DIFF});
-+	if (defined $diff_algorithm) {
-+		push @diff_cmd, "--diff-algorithm=${diff_algorithm}";
-+	}
- 	if (defined $patch_mode_revision) {
- 		push @diff_cmd, $patch_mode_revision;
- 	}
--- 
-1.8.3.779.g691e267
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iEYEARECAAYFAlG4wnEACgkQNi05PrCndfvhdgCgitk4s7yMBnrrtg76R0ncGqHn
+Sx0AnjoH64OtLkSfDWc+/zmmjeZbrVL6
+=+rId
+-----END PGP SIGNATURE-----
+
+------enig2HJTFNRXWCWGMHLUNFJLU--
