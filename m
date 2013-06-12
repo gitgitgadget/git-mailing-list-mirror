@@ -1,95 +1,80 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 2/3] Move copy_note_for_rewrite + friends from
- builtin/notes.c to notes-utils.c
-Date: Wed, 12 Jun 2013 09:10:58 +0200
-Message-ID: <CALKQrgfxrKz5bB=AAmL1ZtBFRK2Bx6TrRd1AsMEVv8bTAH0KCg@mail.gmail.com>
-References: <7vehc8a05n.fsf@alter.siamese.dyndns.org>
-	<1370995981-1553-1-git-send-email-johan@herland.net>
-	<1370995981-1553-3-git-send-email-johan@herland.net>
-	<CAMP44s2pUW_+w6B_R-A=vxOg1Ay6iLmc4MQsA_sfDF+GP-XsWw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] resolve_ref_unsafe(): close race condition reading
+ loose refs
+Date: Wed, 12 Jun 2013 04:04:49 -0400
+Message-ID: <20130612080449.GA537@sigill.intra.peff.net>
+References: <20130507023802.GA22940@sigill.intra.peff.net>
+ <1370960780-1055-1-git-send-email-mhagger@alum.mit.edu>
+ <1370960780-1055-5-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: gitster@pobox.com, git@vger.kernel.org, jrnieder@gmail.com,
-	pclouds@gmail.com, artagnon@gmail.com, john@keeping.me.uk,
-	vfr@lyx.org, peff@peff.net, torvalds@linux-foundation.org,
-	Thomas Rast <trast@inf.ethz.ch>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 12 09:11:17 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jun 12 10:05:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmfD8-0001nm-VT
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 09:11:15 +0200
+	id 1Umg3D-0007A9-4J
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 10:05:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754756Ab3FLHLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 03:11:10 -0400
-Received: from mail12.copyleft.no ([188.94.218.224]:57872 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750851Ab3FLHLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 03:11:08 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1UmfCz-0002tK-UU
-	for git@vger.kernel.org; Wed, 12 Jun 2013 09:11:06 +0200
-Received: from mail-ob0-f174.google.com ([209.85.214.174])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UmeYh-000JGr-Cz
-	for git@vger.kernel.org; Wed, 12 Jun 2013 08:29:27 +0200
-Received: by mail-ob0-f174.google.com with SMTP id wd20so12862573obb.19
-        for <git@vger.kernel.org>; Wed, 12 Jun 2013 00:10:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=GnXmBrxTeN3ggfQmHxmlhoAonkXVx08ftKKpHlXnUEI=;
-        b=Str3g4V+eQ2Amm7modcRj1obM4zXF4ghf9JJmhShooLK9GUE/MGlnQohZuPYJrN4wc
-         VyuRe8gdPBShSCulbNOd/dG2Hc9fgKs1LDajADq1oLhd0Q4YToo6Eea+ATCvxaokfUD6
-         WYVqVO5+epBm8FJKJJ7us2jmpdw/d8V2yardpUonjjwl2P6i0opPHD4/kZ8jspsUvoJo
-         zpT9s+E9o7wDXsnVzXS1gTvMmvj119M7498B6IcF0qVbA+NGLJu0TSZI5LYzo4cTvcvN
-         DkWTuy8Dq210vvPcOnZpDiKMmBQbxrUtK/BIpjKk88PFKx+pSWE5gyfW64lK8lA7CRol
-         yARQ==
-X-Received: by 10.60.143.41 with SMTP id sb9mr7212415oeb.102.1371021058797;
- Wed, 12 Jun 2013 00:10:58 -0700 (PDT)
-Received: by 10.182.102.5 with HTTP; Wed, 12 Jun 2013 00:10:58 -0700 (PDT)
-In-Reply-To: <CAMP44s2pUW_+w6B_R-A=vxOg1Ay6iLmc4MQsA_sfDF+GP-XsWw@mail.gmail.com>
+	id S1754790Ab3FLIE4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 04:04:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34692 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754620Ab3FLIEw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 04:04:52 -0400
+Received: (qmail 8091 invoked by uid 102); 12 Jun 2013 08:05:44 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Jun 2013 03:05:44 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Jun 2013 04:04:49 -0400
+Content-Disposition: inline
+In-Reply-To: <1370960780-1055-5-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227590>
 
-On Wed, Jun 12, 2013 at 2:32 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Tue, Jun 11, 2013 at 7:13 PM, Johan Herland <johan@herland.net> wrote:
->> This is a pure code movement of the machinery for copying notes to
->> rewritten objects. This code was located in builtin/notes.c for
->> historical reasons. In order to make it available to builtin/commit.c
->> it was declared in builtin.h. This was more of an accident of history
->> than a concious design, and we now want to make this machinery more
->> widely available.
->>
->> Hence, this patch moves the code into the new notes-utils.[hc] files
->> which are included into libgit.a. Except for adjusting #includes
->> accordingly, this patch merely moves the relevant functions verbatim
->> into the new files.
->>
->> Cc: Thomas Rast <trast@inf.ethz.ch>
->> Signed-off-by: Johan Herland <johan@herland.net>
->
-> I wonder where you got that idea from. Did you come up with that out thin air?
+On Tue, Jun 11, 2013 at 04:26:20PM +0200, Michael Haggerty wrote:
 
-Obviously not. I should add
+> Please note that if there is some bizarre filesystem somewhere for
+> which, for a single, static file
+> 
+>     lstat() reports S_ISLNK and readlink() fails with ENOENT or EINVAL
+> [...]
+> then the inner loop would never terminate.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
+Yeah, I had the exact same thought while reading your description above.
+I think we can call that "too crazy to worry about", and deal with it if
+it ever actually comes up.
 
+Overall your series looks correct to me. The use of the extra "for(;;)"
+and its control flow feels a little tortured to me.  Would it be
+simpler to just do:
 
-...Johan
+  stat_ref:
+          if (lstat(...) < 0)
+            ...
+          if (readlink(...) < 0)
+                  if (errno == ENOENT || errno == EINVAL)
+                          /* inconsistent with lstat; retry */
+                          goto stat_ref;
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+          if (open(...) < 0)
+                  if (errno == ENOENT)
+                          /* inconsistent with lstat; retry */
+                          goto stat_ref;
+
+It is really the same thing, but somehow the goto makes it more obvious
+to me that it is the exceptional case to loop at all (and I think your
+patch 3/4 could just go away entirely).  But I don't mind that much if
+it stays with the for loop.
+
+Thanks for a pleasant read; the split made the refactoring easy to
+follow.
+
+-Peff
