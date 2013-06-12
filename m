@@ -1,77 +1,114 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 00/31] Follow perlcritic's recommandations
-Date: Wed, 12 Jun 2013 17:23:57 -0400
-Message-ID: <CAPig+cRg4so7W+ddgGg7_ZnKNkoc0T8CqNQOO5a7xnjN1LYvzw@mail.gmail.com>
-References: <1371051828-12866-1-git-send-email-celestin.matte@ensimag.fr>
-	<vpqd2rrqeqg.fsf@anie.imag.fr>
-	<51B8DB5E.8030707@ensimag.fr>
-	<51B8DE57.9040205@ensimag.fr>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 1/2] submodule: handle multibyte characters in name
+Date: Wed, 12 Jun 2013 23:38:47 +0200
+Message-ID: <51B8EA67.7040801@web.de>
+References: <1370991854-1414-1-git-send-email-iveqy@iveqy.com> <1370991854-1414-2-git-send-email-iveqy@iveqy.com> <7vppvr11kg.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>, benoit.person@ensimag.fr
-To: =?ISO-8859-1?Q?C=E9lestin_Matte?= <celestin.matte@ensimag.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 12 23:24:09 2013
+Content-Transfer-Encoding: 7bit
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
+	hvoigt@hvoigt.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 12 23:39:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmsWT-0000Og-PA
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 23:24:06 +0200
+	id 1Umskz-0000W7-4z
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 23:39:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758079Ab3FLVYA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 17:24:00 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:50531 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755695Ab3FLVX7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Jun 2013 17:23:59 -0400
-Received: by mail-lb0-f171.google.com with SMTP id 13so5755555lba.2
-        for <git@vger.kernel.org>; Wed, 12 Jun 2013 14:23:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lDQFhIuA6G7V4KrgusOgLa+MGAjBNg01LT0INOqjKrU=;
-        b=xA7OGBsT6Z3AdgJ5ZA0GRcyzgvbFlwbvRB3TKhmMyYziaDnAYUkzXdjYuYCGCgI7Q3
-         dKXNEyASCrmrgqJxCy9LZjT0LRWyLIa3vacTuVhxxyl1/ArksWjEh18eZzZ+C9RnmZ4e
-         sQ5zTwlXtPf8ogvppzX+uLQpe+6o/zWV/AgvO71UsJc7+bAov3V2MI6ml5Ufmp63quqI
-         MdLKfOehFqZUgUs6FRO9WHUrMBSgJ57woCSZV8XDpY09AljghOk3Wm/tcNb7cN1Ws9N5
-         hnVr9IkQ509rb2PiPqBfMOzBz6HhANnIfCcUcg7WE7SM2G6B76QmXxZXesFsMyuOHyXo
-         Ku7Q==
-X-Received: by 10.152.6.228 with SMTP id e4mr10487285laa.61.1371072237836;
- Wed, 12 Jun 2013 14:23:57 -0700 (PDT)
-Received: by 10.114.161.4 with HTTP; Wed, 12 Jun 2013 14:23:57 -0700 (PDT)
-In-Reply-To: <51B8DE57.9040205@ensimag.fr>
-X-Google-Sender-Auth: _FtDn9tPK6FGPn3nNYunHCa2gr4
+	id S1757865Ab3FLVix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 17:38:53 -0400
+Received: from mout.web.de ([212.227.15.3]:63436 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755908Ab3FLVix (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 17:38:53 -0400
+Received: from [192.168.178.41] ([91.3.174.164]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0MIvFp-1Ukwwg3bEf-002VSc; Wed, 12 Jun 2013 23:38:48
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <7vppvr11kg.fsf_-_@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V03:K0:RF1x+x/po5fieHIAGachB1aQRi68YpF8tJ7ED5+//liW5s/u4q4
+ BKhpiywGR/vEPxWFmrbZX82B4SmM2J2KFz+wnoPqGiydIJNwSjbWRBVe5kkeuX/ZCMucWRa
+ NDEWwKzB7Aj5U/95WAZmgWGttzv9TKroyzE6eIeK5qB+dQEhQi5frSj31RsDGlY2UXZYJo+
+ SKmuK1AHBaPqcc9A44CfQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227684>
 
-On Wed, Jun 12, 2013 at 4:47 PM, C=E9lestin Matte
-<celestin.matte@ensimag.fr> wrote:
-> Le 12/06/2013 22:34, C=E9lestin Matte a =E9crit :
->>> C=E9lestin Matte <celestin.matte@ensimag.fr> writes:
->> Actually, there still is a problem: the "defined(@array)" (introduce=
-d
->> with the change in [21/31]) produces a warning.
->> Benoit also seems to have problems with this patch... I'm waiting fo=
-r
->> his feedback.
->>
-> There is indeed a bug. In patch [21/31], at line 163, it should be
-> if (!defined $cmd[0]) {
-> instead of
-> if (!defined @cmd) {
->
-> Should I send yet another version of this series of patch?
+Am 12.06.2013 23:06, schrieb Junio C Hamano:
+> Fredrik Gustafsson <iveqy@iveqy.com> writes:
+> 
+>> Bugg reported here:
+>> http://thread.gmane.org/gmane.comp.version-control.git/218922/focus=226791
+> 
+> The URL is nice supplemental info as footnote, but please write log
+> message in a way that a reader can understand without going there.
+> In this case, it wouldn't be so hard, I think, perhaps like:
+> 
+> 	Many "git submodule" operations do not work on a submodule
+> 	at a path whose name is not in ASCII.
+> 
+> 	This is because "git ls-files" is used to find which paths
+> 	are bound to submodules to the current working tree, and the
+> 	output is C-quoted by default for non ASCII pathnames.
+> 
+> 	Read from "git ls-files -z" instead, which is easier than
+> 	unwrapping C-quote ourselves.
+> 
+> or something.
+> 
+>>  module_list()
+>>  {
+>>  	(
+>> -		git ls-files --error-unmatch --stage -- "$@" ||
+>> +		git ls-files --error-unmatch --stage -z -- "$@" ||
+>>  		echo "unmatched pathspec exists"
+>>  	) |
+>> +	sed -e 's/\x00/\n/g' |
+> 
+> It is strange to preprosess input to be read by a Perl script with
+> sed ;-)
+> 
+> How about doing it this way instead?  Does the result pass your
+> test?
 
-Assuming you don't discover more problems, for such a small change in
-a lengthy patch series, it might make sense to send a simple "fixup!"
-[*1*] patch and ask if Junio would be willing to squash it into v5.
+Hmm, I just came around to test that patch, and for me the new
+test even succeeds without the changes to module_list(). So I'm
+not convinced yet what we are fixing here ;-)
 
-[*1*]: see fixup! in git/Documentation/git-rebase.txt
+The original poster reported that the submodule just added locally
+is not showing up in a subsequent `git submodule`. And it doesn't
+for me either, no matter if the path contains umlauts or not. Will
+take a deeper look when I find some more time to do that, maybe
+recent changes to "git add" play a role here too.
+
+>  git-submodule.sh | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 79bfaac..19faf58 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -113,7 +113,7 @@ resolve_relative_url ()
+>  module_list()
+>  {
+>  	(
+> -		git ls-files --error-unmatch --stage -- "$@" ||
+> +		git ls-files --error-unmatch --stage -z -- "$@" ||
+>  		echo "unmatched pathspec exists"
+>  	) |
+>  	perl -e '
+> @@ -121,6 +121,7 @@ module_list()
+>  	my ($null_sha1) = ("0" x 40);
+>  	my @out = ();
+>  	my $unmatched = 0;
+> +	$/ = "\0";
+>  	while (<STDIN>) {
+>  		if (/^unmatched pathspec/) {
+>  			$unmatched = 1;
+> 
