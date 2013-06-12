@@ -1,103 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Wed, 12 Jun 2013 13:02:01 -0700
-Message-ID: <7vehc72j46.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
-	<51B6AA7F.1060505@alum.mit.edu>
+Subject: Re: [PATCH 2/3] Move copy_note_for_rewrite + friends from builtin/notes.c to notes-utils.c
+Date: Wed, 12 Jun 2013 13:02:15 -0700
+Message-ID: <7v7ghz2j3s.fsf@alter.siamese.dyndns.org>
+References: <7vehc8a05n.fsf@alter.siamese.dyndns.org>
+	<1370995981-1553-1-git-send-email-johan@herland.net>
+	<1370995981-1553-3-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jun 12 22:02:12 2013
+Cc: git@vger.kernel.org, jrnieder@gmail.com, pclouds@gmail.com,
+	artagnon@gmail.com, john@keeping.me.uk, vfr@lyx.org, peff@peff.net,
+	felipe.contreras@gmail.com, torvalds@linux-foundation.org,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Jun 12 22:02:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmrFD-0005zF-HN
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 22:02:11 +0200
+	id 1UmrFQ-00068O-CG
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 22:02:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524Ab3FLUCG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 16:02:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62264 "EHLO
+	id S1756285Ab3FLUCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 16:02:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33340 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751237Ab3FLUCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 16:02:05 -0400
+	id S1756138Ab3FLUCR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 16:02:17 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77E19278F8;
-	Wed, 12 Jun 2013 20:02:03 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DF5C2791D;
+	Wed, 12 Jun 2013 20:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=eIDt7tNNEa3yl9bRTFKUPkPwOVA=; b=UNSuvcQUnAQRo7LooHII
-	qd3F4wxJkea+7ZMOwfMAzXE3UXtDSIk4/eBuAZfyzjxKDF9+Z29O/q4oQ1i6iZma
-	RwPUiAnXI0KqFxIuLr4fpl6uFKaK+ummqoBDxGAPpZSNpfXcIQvaHF1n9RkoEyIS
-	e4OPdsQFQlGuOiVRr4MZ+Vc=
+	 s=sasl; bh=0+WzgjtMRgrpJP0F8DNa4dMuR1M=; b=ZHwIF3zwkJlP2HDOoLdr
+	My0Mb9nH0L9V5mj53aKYvx8j9uhiOHwcsmrWyK+zqAbuUqUxEcZ8WuBwSH4T3jUI
+	PrGXwQ9HoSiTV/rqBQyyMjrLEnrsGjHIxyipOwwaYnkjj4tqgA0T1LuMwd8jZBsF
+	0zq51IKkiXq23SufFaTgXEA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=RPOI9RlcG9JYyOyHetgPDN049G2R/xEuBCKUelZlik9/Sd
-	zApJazYGPp6Ard+AoNyEItLSjW6MnfcDUKcmNrJrJreRKC2bdz1YO/xDlopkJxdM
-	fWU8BM4TnMuxcekkxVnZIYqiNltUMogobHG/YZ7zZWtktTJG83WfYVedNbvyQ=
+	 q=dns; s=sasl; b=fj4yOYuXT+blowexJVhEs6MJrLm/0iyObWS2bKrleT3lb3
+	7wRo8gPuRJIrFsB+fy+Wmq6fHAXcPtj0ADhgggn8p7bGf39gqrtl9XlVHU3NMqIq
+	9q2l31FjbaRdeG771XClGKw/tSNQsRMIvQZXzaP8Z7VApg0Q8lmHYqfpq/7WA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C715278F7;
-	Wed, 12 Jun 2013 20:02:03 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FF022791B;
+	Wed, 12 Jun 2013 20:02:17 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C5738278F4;
-	Wed, 12 Jun 2013 20:02:02 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E6BF27917;
+	Wed, 12 Jun 2013 20:02:16 +0000 (UTC)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F2F35198-D39A-11E2-8475-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FB337586-D39A-11E2-8C60-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227671>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Johan Herland <johan@herland.net> writes:
 
-> I would prefer a community standards document that looks more like this:
-> ...
+> This is a pure code movement of the machinery for copying notes to
+> rewritten objects. This code was located in builtin/notes.c for
+> historical reasons. In order to make it available to builtin/commit.c
+> it was declared in builtin.h. This was more of an accident of history
+> than a concious design, and we now want to make this machinery more
+> widely available.
 >
-> * Be welcoming to new community participants.  Help them get oriented,
-> and be patient with their questions.  Gently introduce them to our
-> community standards, above all by setting a good example yourself.
+> Hence, this patch moves the code into the new notes-utils.[hc] files
+> which are included into libgit.a. Except for adjusting #includes
+> accordingly, this patch merely moves the relevant functions verbatim
+> into the new files.
+>
+> Cc: Thomas Rast <trast@inf.ethz.ch>
+> Signed-off-by: Johan Herland <johan@herland.net>
+> ---
+>  Makefile         |   2 +
+>  builtin.h        |  16 -------
+>  builtin/commit.c |   1 +
+>  builtin/notes.c  | 131 +-----------------------------------------------------
+>  notes-utils.c    | 132 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  notes-utils.h    |  23 ++++++++++
+>  6 files changed, 159 insertions(+), 146 deletions(-)
+>  create mode 100644 notes-utils.c
+>  create mode 100644 notes-utils.h
 
-I agree that on-boarding is an important process.
+Output from "git show -C1 --stat" after applying this patch shows
+mostly removals (i.e. builtin/notes.c loses what was lifted from it,
+notes-utils.c starts its life as a copy of the former and the patch
+shows removal of what should not move to notes-utils.c).  After
+inspecting "added" lines to these two files, I did not spot anything
+suspicious, except for one C++/C99 comment (will locally touch-up).
 
-In addition to the reviews I'd give to regulars, I personally try
-to do some of these things:
-
- - Even in a negative review, end the message with "Thanks".  More
-   important is to express that the particular patch is rejected but
-   contributor's future contribution (either a reroll or a separate
-   topic) is welcome.
-
-   This is free, and there is no reason not to be nice.
-
- - Point out problems in a milder way than usual.  Instead of saying
-   "Why is this done like so?", risking to be misinterpreted that I
-   am saying the patch did something wrong and the contributor was a
-   horrible programmer, rephrase it to "Hmph, this may work in such
-   and such cases, but I wonder how well it would in this case?",
-   followed by "How about going this route instead, which would
-   cover all these cases?"
-
-   Doing so is more time consuming at reviewers' end; once you know
-   the current design well enough, you can immediately smell a wrong
-   approach a lot faster by just looking at code and design in a
-   patch, without having to come up with a concrete example.
-
- - Instead of just pointing out minor nits and have the new
-   contributor reroll, point them out, and then show how the patch
-   should have looked like, often after "-- >8 --" and the "From:"
-   line that keeps attribution.
-
-   Again this is more work at reviewers' end.
-
-Coaching new contributors, like mentoring GSoC students, is often
-more time consuming than scratching the same itch yourself for any
-reviewer, but it is an investment, which hopefully yields dividend
-in the longer term.
+Thanks.
