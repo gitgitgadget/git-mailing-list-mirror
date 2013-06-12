@@ -1,65 +1,77 @@
-From: =?ISO-8859-1?Q?C=E9lestin_Matte?= <celestin.matte@ensimag.fr>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH v5 00/31] Follow perlcritic's recommandations
-Date: Wed, 12 Jun 2013 23:15:58 +0200
-Message-ID: <51B8E50E.9070202@ensimag.fr>
-References: <1371051828-12866-1-git-send-email-celestin.matte@ensimag.fr> <vpqr4g7owyi.fsf@anie.imag.fr>
+Date: Wed, 12 Jun 2013 17:23:57 -0400
+Message-ID: <CAPig+cRg4so7W+ddgGg7_ZnKNkoc0T8CqNQOO5a7xnjN1LYvzw@mail.gmail.com>
+References: <1371051828-12866-1-git-send-email-celestin.matte@ensimag.fr>
+	<vpqd2rrqeqg.fsf@anie.imag.fr>
+	<51B8DB5E.8030707@ensimag.fr>
+	<51B8DE57.9040205@ensimag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, benoit.person@ensimag.fr
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 12 23:16:03 2013
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>, benoit.person@ensimag.fr
+To: =?ISO-8859-1?Q?C=E9lestin_Matte?= <celestin.matte@ensimag.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 12 23:24:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmsOg-0003O2-Ol
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 23:16:03 +0200
+	id 1UmsWT-0000Og-PA
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 23:24:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757580Ab3FLVP6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 17:15:58 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57468 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755908Ab3FLVP6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 17:15:58 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5CLFrRR012854
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 12 Jun 2013 23:15:53 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5CLFuPf029884;
-	Wed, 12 Jun 2013 23:15:56 +0200
-Received: from [127.0.0.1] (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5CLFtZN022266;
-	Wed, 12 Jun 2013 23:15:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <vpqr4g7owyi.fsf@anie.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 12 Jun 2013 23:15:53 +0200 (CEST)
+	id S1758079Ab3FLVYA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 17:24:00 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:50531 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755695Ab3FLVX7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Jun 2013 17:23:59 -0400
+Received: by mail-lb0-f171.google.com with SMTP id 13so5755555lba.2
+        for <git@vger.kernel.org>; Wed, 12 Jun 2013 14:23:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lDQFhIuA6G7V4KrgusOgLa+MGAjBNg01LT0INOqjKrU=;
+        b=xA7OGBsT6Z3AdgJ5ZA0GRcyzgvbFlwbvRB3TKhmMyYziaDnAYUkzXdjYuYCGCgI7Q3
+         dKXNEyASCrmrgqJxCy9LZjT0LRWyLIa3vacTuVhxxyl1/ArksWjEh18eZzZ+C9RnmZ4e
+         sQ5zTwlXtPf8ogvppzX+uLQpe+6o/zWV/AgvO71UsJc7+bAov3V2MI6ml5Ufmp63quqI
+         MdLKfOehFqZUgUs6FRO9WHUrMBSgJ57woCSZV8XDpY09AljghOk3Wm/tcNb7cN1Ws9N5
+         hnVr9IkQ509rb2PiPqBfMOzBz6HhANnIfCcUcg7WE7SM2G6B76QmXxZXesFsMyuOHyXo
+         Ku7Q==
+X-Received: by 10.152.6.228 with SMTP id e4mr10487285laa.61.1371072237836;
+ Wed, 12 Jun 2013 14:23:57 -0700 (PDT)
+Received: by 10.114.161.4 with HTTP; Wed, 12 Jun 2013 14:23:57 -0700 (PDT)
+In-Reply-To: <51B8DE57.9040205@ensimag.fr>
+X-Google-Sender-Auth: _FtDn9tPK6FGPn3nNYunHCa2gr4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227683>
 
-Le 12/06/2013 23:12, Matthieu Moy a =E9crit :
-> Which commit is this based on?
->=20
-> "git am" fails, whether I try from Junio's master, next or pu. My bes=
-t
-> try was from da608b124c76f8f7dba8a9d8f0bc8174b9744176. It seems you'r=
-e
-> based on a local commit which doesn't exist on Junio's end.
+On Wed, Jun 12, 2013 at 4:47 PM, C=E9lestin Matte
+<celestin.matte@ensimag.fr> wrote:
+> Le 12/06/2013 22:34, C=E9lestin Matte a =E9crit :
+>>> C=E9lestin Matte <celestin.matte@ensimag.fr> writes:
+>> Actually, there still is a problem: the "defined(@array)" (introduce=
+d
+>> with the change in [21/31]) produces a warning.
+>> Benoit also seems to have problems with this patch... I'm waiting fo=
+r
+>> his feedback.
+>>
+> There is indeed a bug. In patch [21/31], at line 163, it should be
+> if (!defined $cmd[0]) {
+> instead of
+> if (!defined @cmd) {
+>
+> Should I send yet another version of this series of patch?
 
-Indeed, we worked on branch master of a common repository before
-starting doing things properly. :/
+Assuming you don't discover more problems, for such a small change in
+a lengthy patch series, it might make sense to send a simple "fixup!"
+[*1*] patch and ask if Junio would be willing to squash it into v5.
 
-> Most commit in-flight are in next, so I guess rebasing the series on
-> next would make it easier for Junio (we normally send patches against
-> master as much as possible, see SubmittingPatches for more details).
-
-I will try to do this.
-
-
---=20
-C=E9lestin Matte
+[*1*]: see fixup! in git/Documentation/git-rebase.txt
