@@ -1,114 +1,83 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 1/2] submodule: handle multibyte characters in name
-Date: Wed, 12 Jun 2013 23:38:47 +0200
-Message-ID: <51B8EA67.7040801@web.de>
-References: <1370991854-1414-1-git-send-email-iveqy@iveqy.com> <1370991854-1414-2-git-send-email-iveqy@iveqy.com> <7vppvr11kg.fsf_-_@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jun 2013, #04; Tue, 11)
+Date: Wed, 12 Jun 2013 15:02:43 -0700
+Message-ID: <7v8v2f0yyk.fsf@alter.siamese.dyndns.org>
+References: <7vwqq05laf.fsf@alter.siamese.dyndns.org>
+	<loom.20130612T154959-145@post.gmane.org>
+	<20130612194956.GC4898@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
-	hvoigt@hvoigt.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 12 23:39:06 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 13 00:02:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Umskz-0000W7-4z
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 23:39:05 +0200
+	id 1Umt7z-0005fh-46
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 00:02:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757865Ab3FLVix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 17:38:53 -0400
-Received: from mout.web.de ([212.227.15.3]:63436 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755908Ab3FLVix (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 17:38:53 -0400
-Received: from [192.168.178.41] ([91.3.174.164]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0MIvFp-1Ukwwg3bEf-002VSc; Wed, 12 Jun 2013 23:38:48
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <7vppvr11kg.fsf_-_@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5.1
-X-Provags-ID: V03:K0:RF1x+x/po5fieHIAGachB1aQRi68YpF8tJ7ED5+//liW5s/u4q4
- BKhpiywGR/vEPxWFmrbZX82B4SmM2J2KFz+wnoPqGiydIJNwSjbWRBVe5kkeuX/ZCMucWRa
- NDEWwKzB7Aj5U/95WAZmgWGttzv9TKroyzE6eIeK5qB+dQEhQi5frSj31RsDGlY2UXZYJo+
- SKmuK1AHBaPqcc9A44CfQ==
+	id S1757935Ab3FLWCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 18:02:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63703 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756779Ab3FLWCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 18:02:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D50C527BBA;
+	Wed, 12 Jun 2013 22:02:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1xLsurtTNgLZF+Z4FH/ekpCftmU=; b=VZlV3O
+	huMndL8LuoCQfB4VVpzkfx8e8tqPxnpeBZaExIyqfw+oOtmFVGR/tedg2uuS35+8
+	Vs3AOipVZp6pYypYP73vDZQXFHUhkSuofMs+c8Ck4fgBS6fzkXuMh2gN8rnt96FK
+	Qq42U/gkUTmVIbHSzCuNyuoZKMoxf40d4vOL8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HigqGYSJ2/BTFnAaIGBEerAoFQihTQVN
+	Rurh9tExhLWnWLpn6t7AYHNiwp6bnL3xzNJhe10KPgKV6Xp6XJmjzUlTfQBwxFmS
+	sl7UCjuFbd9NIuM85hN7XzwQvtGAFrTQKnW2tL6V0K7MX5YblVOssRFsDXnjbZJU
+	p9daP5GS9tQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA17F27BB8;
+	Wed, 12 Jun 2013 22:02:45 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4CB9E27BB7;
+	Wed, 12 Jun 2013 22:02:45 +0000 (UTC)
+In-Reply-To: <20130612194956.GC4898@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 12 Jun 2013 15:49:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CFC59788-D3AB-11E2-A655-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227685>
 
-Am 12.06.2013 23:06, schrieb Junio C Hamano:
-> Fredrik Gustafsson <iveqy@iveqy.com> writes:
-> 
->> Bugg reported here:
->> http://thread.gmane.org/gmane.comp.version-control.git/218922/focus=226791
-> 
-> The URL is nice supplemental info as footnote, but please write log
-> message in a way that a reader can understand without going there.
-> In this case, it wouldn't be so hard, I think, perhaps like:
-> 
-> 	Many "git submodule" operations do not work on a submodule
-> 	at a path whose name is not in ASCII.
-> 
-> 	This is because "git ls-files" is used to find which paths
-> 	are bound to submodules to the current working tree, and the
-> 	output is C-quoted by default for non ASCII pathnames.
-> 
-> 	Read from "git ls-files -z" instead, which is easier than
-> 	unwrapping C-quote ourselves.
-> 
-> or something.
-> 
->>  module_list()
->>  {
->>  	(
->> -		git ls-files --error-unmatch --stage -- "$@" ||
->> +		git ls-files --error-unmatch --stage -z -- "$@" ||
->>  		echo "unmatched pathspec exists"
->>  	) |
->> +	sed -e 's/\x00/\n/g' |
-> 
-> It is strange to preprosess input to be read by a Perl script with
-> sed ;-)
-> 
-> How about doing it this way instead?  Does the result pass your
-> test?
+Jeff King <peff@peff.net> writes:
 
-Hmm, I just came around to test that patch, and for me the new
-test even succeeds without the changes to module_list(). So I'm
-not convinced yet what we are fixing here ;-)
+> On Wed, Jun 12, 2013 at 01:56:20PM +0000, Jakub Narebski wrote:
+>
+>> Junio C Hamano <gitster <at> pobox.com> writes:
+>> 
+>> > * rr/remove-contrib-some (2013-06-02) 1 commit
+>> >   (merged to 'next' on 2013-06-05 at fc15705)
+>> >  + contrib: remove continuous/ and patches/
+>> > 
+>> >  Remove stale contrib/ material.
+>> > 
+>> >  Will merge to 'master'.
+>> 
+>> What about contrib/blameview by Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+>> and Jeff King <peff@peff.net>?
+>
+> Yeah, I mentioned it earlier in the thread as something that I consider
+> clutter at this point (but somehow the thread drifted away from contrib/
+> and into other topics, and I forgot).
+>
+> Here is a patch.
 
-The original poster reported that the submodule just added locally
-is not showing up in a subsequent `git submodule`. And it doesn't
-for me either, no matter if the path contains umlauts or not. Will
-take a deeper look when I find some more time to do that, maybe
-recent changes to "git add" play a role here too.
-
->  git-submodule.sh | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 79bfaac..19faf58 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -113,7 +113,7 @@ resolve_relative_url ()
->  module_list()
->  {
->  	(
-> -		git ls-files --error-unmatch --stage -- "$@" ||
-> +		git ls-files --error-unmatch --stage -z -- "$@" ||
->  		echo "unmatched pathspec exists"
->  	) |
->  	perl -e '
-> @@ -121,6 +121,7 @@ module_list()
->  	my ($null_sha1) = ("0" x 40);
->  	my @out = ();
->  	my $unmatched = 0;
-> +	$/ = "\0";
->  	while (<STDIN>) {
->  		if (/^unmatched pathspec/) {
->  			$unmatched = 1;
-> 
+Thanks.
