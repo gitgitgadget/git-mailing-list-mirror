@@ -1,133 +1,67 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Wed, 12 Jun 2013 16:56:27 +0530
-Message-ID: <CALkWK0==egyiSsndy-JC9a-N2pw4j5Q7sg2mm1gUFq6hqxjWvg@mail.gmail.com>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
- <51B6AA7F.1060505@alum.mit.edu> <7v38sod1kn.fsf@alter.siamese.dyndns.org>
- <20130611182936.GM22905@serenity.lan> <CALkWK0n9Ws6DRbKPRHcQPhFTFx533PZH6dg1=w-O1hQ06V66-A@mail.gmail.com>
- <20130611195452.GO22905@serenity.lan>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 01/12] repack_without_ref(): split list curation and
+ entry writing
+Date: Wed, 12 Jun 2013 07:38:24 -0400
+Message-ID: <20130612113823.GA20461@sigill.intra.peff.net>
+References: <1370987312-6761-1-git-send-email-mhagger@alum.mit.edu>
+ <1370987312-6761-2-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Jun 12 13:27:17 2013
+	Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jun 12 13:38:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmjCs-0004jq-T0
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 13:27:15 +0200
+	id 1UmjNq-0004YW-Aw
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 13:38:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755797Ab3FLL1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 07:27:10 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:64135 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752343Ab3FLL1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 07:27:08 -0400
-Received: by mail-ie0-f177.google.com with SMTP id aq17so5171902iec.22
-        for <git@vger.kernel.org>; Wed, 12 Jun 2013 04:27:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=XMV/JbW/LM1dbyVuPNt7ZmGykNySM6Z74XlK6u2wbUg=;
-        b=ZQjVqPv0VxZ6u4JbfcoZd+wRGlCg8bpYkzA+tTvO2uxaOc1D43SBQ6JuvJl27Y+b36
-         nsnEnQNBICQ7ta3ZDb/Hy5z+jO1VcH9e6WK4I2H7x1duZDaY6e4qr2rZg2q7yQyLYeQr
-         wHJV7JDWDqSAO/38u7S60knMH4kBmxQs6jrD7ziiKHBsOhEcF/8GPCppIrBJpwK1Np++
-         bU9KkQjrWCbsmtCo8Qi3+7KmbXi4TDbXyCnCbsmcfV6x27I5vSuff5NUB8MCv3zEWCMM
-         Vg2PV1YkIoeABvY0hnfk5xER+cPlIJF8cQobBlkTtnBIgAH+ahPRDymZnOgmJf11ah56
-         H5Vw==
-X-Received: by 10.50.98.104 with SMTP id eh8mr3008562igb.111.1371036427778;
- Wed, 12 Jun 2013 04:27:07 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Wed, 12 Jun 2013 04:26:27 -0700 (PDT)
-In-Reply-To: <20130611195452.GO22905@serenity.lan>
+	id S1756595Ab3FLLia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 07:38:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36113 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755883Ab3FLLi3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 07:38:29 -0400
+Received: (qmail 18090 invoked by uid 102); 12 Jun 2013 11:39:21 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Jun 2013 06:39:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Jun 2013 07:38:24 -0400
+Content-Disposition: inline
+In-Reply-To: <1370987312-6761-2-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227600>
 
-John Keeping wrote:
-> On Wed, Jun 12, 2013 at 12:16:28AM +0530, Ramkumar Ramachandra wrote:
->> John Keeping wrote:
->> >     Ugh, why this roundabout-passive-past tone?  Use imperative tone
->> >     like this:
->> >
->> >         ...
->> >
->> > vs.
->> >
->> >     We normally use the imperative in commit messages, perhaps like
->> >     this?
->> >
->> >         ...
->> >
->> > As my mother would say, "politeness costs nothing" ;-)
->>
->> The review is being honest about her feelings in the first one, and
->> being artificially diplomatic in the second one.
->
-> I don't think it is artificially diplomatic, it's an attempt to convey a
-> helpful tone in an email.
+On Tue, Jun 11, 2013 at 11:48:21PM +0200, Michael Haggerty wrote:
 
-Okay, so answer this: Why did the reviewer deliberately use the
-"unhelpful" tone?  Was she trying to attack the new contributor, and
-intend to harm the community?  Or did she just say what came to her
-mind?
+> Split repack_without_ref() into multiple passes:
+> 
+> * collect the list of refnames that should be deleted from packed_refs
+> 
+> * delete those refnames from the cache
+> 
+> * write the remainder to the packed-refs file
+> 
+> The purpose of this change is to make the "write the remainder" part
+> reusable.
 
-> As has been said elsewhere, it is easy to
-> read an email in the wrong tone (there is an oft-cited statistic about
-> the percentage of communication that is non-verbal, and which cannot be
-> inferred from written text).
+It took me several reads to figure out what was going on here, because I
+did not see the deleted ref passed to the list of items to delete from
+packed_refs. The part I was missing is something like:
 
-Yes, it is.
+  The repack_without_ref() function first removes the deleted ref from
+  the internal packed-refs list, then writes the packed-refs list to
+  disk, omitting any broken or stale entries. This patch splits that
+  second step into multiple passes:
 
-> For this reason I think it is important
-> for reviewers to make an effort to minimise the risk that what they
-> write can be interpreted as being aggressive.
+     ...
 
-Correct.
+Is that accurate?
 
->> Either way, I'm not interested in problems that have no solutions.
->> The only "solution" I see here is to suffocate every contributor until
->> they are "tactful enough" for the majority's liking, and "remove" the
->> ones that don't conform.  If you do have an alternate solution, please
->> share it with us.
->
-> I don't have a solution, only a hope that regular contributors will
-> learn from others how they can phrase review comments less aggressively.
-
-The reviewer is not a thick-skinned bull that wants to harm the project.
-
-4. Lead by example.  If you do not like how someone presents
-themselves on the list, you counter it by presenting yourself nicely
-on the list.  Others will follow your example, making that person's
-behavior the minority.  It is far more powerful than explicitly
-stating what is "acceptable" behavior and what is not.
-
-> I expect different people will read the same statement differently;
-> people are from different cultures and what is considered acceptable in
-> one culture can be considered rude in another.  We should aim to
-> cultivate our own culture where we try to minimise the risk that what we
-> write will be misinterpreted by someone with a different cultural
-> background.
-
-So you have agreed that "tone" is subjective, and that attempting to
-objectively state the "right tone" is a lost cause.
-
-The solution to the problem, as I have already explained several times is to:
-- Define an objective basis for people to react.
-- Lead by example, and influence other contributors to follow your style.
-
-What everyone is doing differently:
-- Taking offense at every possible juncture.
-- Taking sides and voting.  Ganging up and playing politics.
-- Making bad irrational arguments in the "right tone".
-- Invalidating entire arguments, on the basis of tone.
-- Making tone the entire subject of discussion, ignoring content.
-- Bringing "majority opinion" to a rational argument.
+-Peff
