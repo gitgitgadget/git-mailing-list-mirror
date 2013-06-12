@@ -1,57 +1,70 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v5 00/31] Follow perlcritic's recommandations
-Date: Wed, 12 Jun 2013 22:02:47 +0200
-Message-ID: <vpqd2rrqeqg.fsf@anie.imag.fr>
-References: <1371051828-12866-1-git-send-email-celestin.matte@ensimag.fr>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 0/3] Refactor useful notes functions into notes-utils.[ch]
+Date: Wed, 12 Jun 2013 15:11:59 -0500
+Message-ID: <CAMP44s3jnyds45UGfbig1=evbqP-rztcn7GTZ8puVa2zzA7HGg@mail.gmail.com>
+References: <7vehc8a05n.fsf@alter.siamese.dyndns.org>
+	<1370995981-1553-1-git-send-email-johan@herland.net>
+	<7vzjuv14ir.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, benoit.person@ensimag.fr
-To: =?iso-8859-1?Q?C=E9lestin?= Matte <celestin.matte@ensimag.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 12 22:02:58 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	jrnieder@gmail.com, pclouds@gmail.com, artagnon@gmail.com,
+	john@keeping.me.uk, vfr@lyx.org, peff@peff.net,
+	torvalds@linux-foundation.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 12 22:12:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmrFx-0006UC-Ja
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 22:02:57 +0200
+	id 1UmrOo-0004CR-RL
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 22:12:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753747Ab3FLUCx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 16:02:53 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:60090 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751346Ab3FLUCx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 16:02:53 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5CK2jIY031192
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 12 Jun 2013 22:02:45 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UmrFo-0000eO-4X; Wed, 12 Jun 2013 22:02:48 +0200
-In-Reply-To: <1371051828-12866-1-git-send-email-celestin.matte@ensimag.fr>
-	(=?iso-8859-1?Q?=22C=E9lestin?= Matte"'s message of "Wed, 12 Jun 2013
- 17:43:17 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 12 Jun 2013 22:02:45 +0200 (CEST)
+	id S1753764Ab3FLUMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 16:12:01 -0400
+Received: from mail-la0-f43.google.com ([209.85.215.43]:50343 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751999Ab3FLUMA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 16:12:00 -0400
+Received: by mail-la0-f43.google.com with SMTP id gw10so8235752lab.2
+        for <git@vger.kernel.org>; Wed, 12 Jun 2013 13:11:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=AkQgHQr0Wtiy++s2HGxrbC36k3A7GNvLymuM9W+wSy0=;
+        b=icqgM2VEV4lOltpjyhSfEw/8dmMrB7BvriYxDfpea0Kq9RQsqAw+nBWLfuSxjMYmkg
+         +P4rJv1ELuXZkJRJFaOOOR4kyB/H/QqOc4HCBBzVwpGKIN/WtMppX/16JKFeS2BzRjOy
+         MdLSHxBDUKG0GCI9+54/t9E2xElN5SFmQdDAf1q6u2CR8fhXHFws6v6eXGnq/ZdFv70R
+         PWziynNyS5F5nQLc23OmltEfLcD1yrmq08gaIY7cf6IfOG5sMjYy6g0OpSD4zb0629EO
+         aMR0/gUEwl/LOFOASRTsJJQ9agQ0Ev6OHVPRoFXBh9nRINmwQygAqGfZSmHEHuwRa9uc
+         x6mQ==
+X-Received: by 10.112.166.67 with SMTP id ze3mr11765135lbb.25.1371067919360;
+ Wed, 12 Jun 2013 13:11:59 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Wed, 12 Jun 2013 13:11:59 -0700 (PDT)
+In-Reply-To: <7vzjuv14ir.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227674>
 
-C=E9lestin Matte <celestin.matte@ensimag.fr> writes:
+On Wed, Jun 12, 2013 at 3:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Not many changes since v3. This version is only for fixing last typos=
- and
-> applying Junio's recommandations for [21/31], which I forgot in v4.
-> At this point, the only patch worth reviewing is [21/31].
+>> ... Alas, this
+>> simple solution reject on the basis that we shouldn't organize the
+>> code, because the code is not meant to be organized.
+>
+> The proposed patch was rejected on the basis that it was organized
+> the code in a wrong way.  And your patch shows how it should be
+> done.
 
-Thanks. I went through the series again and it all looks good.
+In your opinion.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+The fact that nobody outside of 'git' will ever use
+init_copy_notes_for_rewrite() still remains. Therefore this
+"organization" is wrong.
+
+-- 
+Felipe Contreras
