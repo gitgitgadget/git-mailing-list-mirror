@@ -1,68 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 12/12] refs: do not invalidate the packed-refs cache
- unnecessarily
-Date: Wed, 12 Jun 2013 08:39:31 -0400
-Message-ID: <20130612123931.GD20461@sigill.intra.peff.net>
-References: <1370987312-6761-1-git-send-email-mhagger@alum.mit.edu>
- <1370987312-6761-13-git-send-email-mhagger@alum.mit.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: New feature discussion: git rebase --status
+Date: Wed, 12 Jun 2013 14:41:25 +0200
+Message-ID: <vpqehc7y00a.fsf@anie.imag.fr>
+References: <fb379a75c6c1af6dcff2e65bef1f1836@ensibm.imag.fr>
+	<20130611125521.GL22905@serenity.lan> <vpqbo7c4wen.fsf@anie.imag.fr>
+	<CAE1pOi0azF1pFqhU1Dq3qeXXF+n9xBcAnHOHapTDjbNXop0d2g@mail.gmail.com>
+	<CA+55aFwtBm2RPwgXNa48zQM7ONCgzOEN2XdA_MeHsGu4=BDq5w@mail.gmail.com>
+	<fa9c12a81ef2e92ba75dd1271d9e0b2d@ensibm.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jun 12 14:39:49 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Users <git@vger.kernel.org>,
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+To: Mathieu =?iso-8859-1?Q?Li=E9nard--Mayor?= 
+	<mathieu.lienard--mayor@ensimag.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 12 14:41:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmkL3-0007Fv-9U
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 14:39:45 +0200
+	id 1UmkMn-0000Kf-Ox
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 14:41:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756282Ab3FLMjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 08:39:36 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36525 "EHLO peff.net"
+	id S1753485Ab3FLMl3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 08:41:29 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53414 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755886Ab3FLMjf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 08:39:35 -0400
-Received: (qmail 20932 invoked by uid 102); 12 Jun 2013 12:40:27 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Jun 2013 07:40:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Jun 2013 08:39:31 -0400
-Content-Disposition: inline
-In-Reply-To: <1370987312-6761-13-git-send-email-mhagger@alum.mit.edu>
+	id S1751438Ab3FLMl3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 08:41:29 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5CCfOsw003771
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 12 Jun 2013 14:41:24 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UmkMf-0000AY-Pe; Wed, 12 Jun 2013 14:41:25 +0200
+In-Reply-To: <fa9c12a81ef2e92ba75dd1271d9e0b2d@ensibm.imag.fr> ("Mathieu
+	\=\?iso-8859-1\?Q\?Li\=E9nard--Mayor\=22's\?\= message of "Wed, 12 Jun 2013
+ 12:17:23 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 12 Jun 2013 14:41:24 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227609>
 
-On Tue, Jun 11, 2013 at 11:48:32PM +0200, Michael Haggerty wrote:
+Mathieu Li=E9nard--Mayor <mathieu.lienard--mayor@ensimag.fr> writes:
 
-> Now that we keep track of the packed-refs file metadata, we can detect
-> when the packed-refs file has been modified since we last read it, and
-> we do so automatically every time that get_packed_ref_cache() is
-> called.  So there is no need to invalidate the cache automatically
-> when lock_packed_refs() is called; usually the old copy will still be
-> valid.
-> 
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
-> This patch is optional.  It makes the assumption that the metadata
-> stored in stat_validity are adequate to reliably detect when the
-> packed-refs file has changed.  Given that we are about to rewrite the
-> file, it is perhaps even more crucial not to make a mistake in this
-> codepath than in others.  So if the stat_validity check is not
-> considered safe enough, it might be prudent to omit this patch and
-> continue to reload the packed-refs data here unconditionally.
+> $ git status
+> # HEAD detached from ecb9f3e
+> # You are currently editing a832578... my_commit_message [3/5] while
+> rebasing.
 
-I doubt that the risk is very high, but I'd also doubt that this
-provides any useful performance improvement, because it is mostly
-happening during a `git pack-refs` call. The exception is packing for a
-ref deletion, and it could potentially speed up a receive-pack that was
-deleting many refs.
+Showing the commit message here is too much IMHO. With a typical
+50-characters message, it already gives
 
-I don't have a strong opinion either way.
+# You are currently editing a832578 ___________________________________=
+_______________ [3/5] while rebasing
 
--Peff
+and we usually try to fit everything on a 80-columns terminal.
+
+My vote would go for just showing the short sha1. The user can run "git
+show $sha1" to get more information if needed, it's just a copy-paste
+away. If we want to show the commit message, it should be on its own
+line.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
