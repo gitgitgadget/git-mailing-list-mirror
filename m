@@ -1,77 +1,106 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] git-remote-mediawiki: new tool to preview local
- changes without pushing
-Date: Wed, 12 Jun 2013 04:55:02 -0400
-Message-ID: <20130612085502.GA1935@sigill.intra.peff.net>
-References: <1370641831-9115-1-git-send-email-benoit.person@ensimag.fr>
- <20130609060807.GA8906@sigill.intra.peff.net>
- <CAETqRCiJmnz_1yjwvyWx+=kPkt3M+vKk--CnS=rnQcDA4wMSmg@mail.gmail.com>
- <20130611213722.GA21203@sigill.intra.peff.net>
- <vpqli6f24z3.fsf@anie.imag.fr>
+From: =?UTF-8?Q?Mathieu_Li=C3=A9nard--Mayor?= 
+	<mathieu.lienard--mayor@ensimag.fr>
+Subject: Re: New feature discussion: git rebase --status
+Date: Wed, 12 Jun 2013 12:17:23 +0200
+Message-ID: <fa9c12a81ef2e92ba75dd1271d9e0b2d@ensibm.imag.fr>
+References: <fb379a75c6c1af6dcff2e65bef1f1836@ensibm.imag.fr>
+ <20130611125521.GL22905@serenity.lan> <vpqbo7c4wen.fsf@anie.imag.fr>
+ <CAE1pOi0azF1pFqhU1Dq3qeXXF+n9xBcAnHOHapTDjbNXop0d2g@mail.gmail.com>
+ <CA+55aFwtBm2RPwgXNa48zQM7ONCgzOEN2XdA_MeHsGu4=BDq5w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?Q?Beno=C3=AEt?= Person <benoit.person@ensimag.fr>,
-	git@vger.kernel.org,
-	=?utf-8?B?Q8OpbGVzdGlu?= Matte <celestin.matte@ensimag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 12 10:55:14 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>,
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jun 12 12:17:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Umgpm-0001PC-7L
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 10:55:14 +0200
+	id 1Umi7P-0007QO-RH
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 12:17:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754130Ab3FLIzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 04:55:08 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35039 "EHLO peff.net"
+	id S1754002Ab3FLKR2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 06:17:28 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:33529 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753506Ab3FLIzG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 04:55:06 -0400
-Received: (qmail 10625 invoked by uid 102); 12 Jun 2013 08:55:57 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Jun 2013 03:55:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Jun 2013 04:55:02 -0400
-Content-Disposition: inline
-In-Reply-To: <vpqli6f24z3.fsf@anie.imag.fr>
+	id S1752150Ab3FLKR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 06:17:27 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5CAHNVd026397
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 12 Jun 2013 12:17:23 +0200
+Received: from web-ensimag.imag.fr (web-ensimag.imag.fr [195.221.228.24])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5CAHOcS011473;
+	Wed, 12 Jun 2013 12:17:24 +0200
+Received: from web-ensimag.imag.fr (localhost [127.0.0.1])
+	by web-ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id r5CAHOVH030728;
+	Wed, 12 Jun 2013 12:17:24 +0200
+Received: (from apache@localhost)
+	by web-ensimag.imag.fr (8.13.8/8.13.8/Submit) id r5CAHNEW030727;
+	Wed, 12 Jun 2013 12:17:23 +0200
+X-Authentication-Warning: web-ensimag.imag.fr: apache set sender to mathieu.lienard--mayor@ensimag.fr using -f
+In-Reply-To: <CA+55aFwtBm2RPwgXNa48zQM7ONCgzOEN2XdA_MeHsGu4=BDq5w@mail.gmail.com>
+X-Sender: mathieu.lienard--mayor@ensimag.fr
+User-Agent: Roundcube Webmail/0.8.1
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 12 Jun 2013 12:17:23 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227596>
 
-On Wed, Jun 12, 2013 at 08:55:12AM +0200, Matthieu Moy wrote:
+After a few hours, here's a quick summary of your opinions:
 
-> > But I think we have already crossed that bridge somewhat with Git.pm.
-> > And if you add your module as perl/Git/MediaWiki.pm and use the existing
-> > perl build system, then it is not any extra effort from the build
-> > system.
-> 
-> I'm not sure having perl/Git/MediaWiki.pm would be a good idea: this
-> MediaWiki.pm would be really a mediawiki thing more than a Git thing, so
-> the Git main tree probably want to stay away from it and keep it in
-> contrib.
+-'git status' should be the command to display the information instead=20
+of a --status flag
+-the SHA1 of the patch being applied currently is a very important=20
+information
+-displaying how we got to this state would be nice
 
-Yes, it's ugly. It means that the mediawiki stuff creeps out of contrib
-and into the main tree; and worse, as part of a public API that gets
-installed. We'd have to be a lot more picky about the interface and the
-code quality.
+I had in mind a slight change in the current status message, just to=20
+include the SHA1 and where we're at in the rebasing. It would look like=
+=20
+this:
 
-> But you should be able to use contrib/mw-to-git/perl/GitMediawiki.pm or
-> something like that and chain to ../../perl/Makefile in
-> contrib/mw-to-git/Makefile.
+$ git status
+# HEAD detached from ecb9f3e
+# You are currently editing a832578... my_commit_message [3/5] while=20
+rebasing.
+#   (use "git commit --amend" to amend the current commit)
+#   (use "git rebase --continue" once you are satisfied with your=20
+changes)
+# ......
+# ......
 
-That might work. Most of the magic in perl/Makefile happens in the
-perl-generated MakeMaker bits, though, so it may not be that easy. I
-haven't looked.
+Now, I'm not sure if we should always display the list of commits=20
+already applied and those left to apply. What I mean is that maybe it=20
+would be better to make status require a flag to display the two lists.
+Something like (not sure about the flag's name):
 
-> Also, for now, git-remote-mediawiki works only after you run "make
-> install" in Git's toplevel. I think that's ok, but it would be weird to
-> be able to use/test git-remote-mediawiki only after doing a "make
-> install" to deploy the new mediawiki Perl module.
+$ git status --rebase-state
+# HEAD detached from ecb9f3e
+# Already applied 2 patches:
+# 	b170635... my_commit_message
+# 	b170635... my_commit_message
+# You are currently editing a832578... my_commit_message [3/5] while=20
+rebasing.
+# 2 patches left to apply:
+#	b170635... my_commit_message
+#	b170635... my_commit_message
+#   (use "git commit --amend" to amend the current commit)
+#   (use "git rebase --continue" once you are satisfied with your=20
+changes)
+# ......
+# ......
 
-Good point.
+What do you guys think ?
 
--Peff
+--=20
+Mathieu Li=C3=A9nard--Mayor,
+2nd year at Grenoble INP - ENSIMAG
+(+33)6 80 56 30 02
