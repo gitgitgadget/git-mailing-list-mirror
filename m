@@ -1,7 +1,7 @@
 From: =?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
-Subject: [PATCH v5 20/31] git-remote-mediawiki: remove import of unused open2
-Date: Wed, 12 Jun 2013 17:43:37 +0200
-Message-ID: <1371051828-12866-21-git-send-email-celestin.matte@ensimag.fr>
+Subject: [PATCH v5 17/31] git-remote-mediawiki: Rename a variable ($last) which has the name of a keyword
+Date: Wed, 12 Jun 2013 17:43:34 +0200
+Message-ID: <1371051828-12866-18-git-send-email-celestin.matte@ensimag.fr>
 References: <1371051828-12866-1-git-send-email-celestin.matte@ensimag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -9,59 +9,66 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: benoit.person@ensimag.fr, matthieu.moy@grenoble-inp.fr,
 	=?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 12 17:45:26 2013
+X-From: git-owner@vger.kernel.org Wed Jun 12 17:45:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmnEi-0007nZ-Ck
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 17:45:24 +0200
+	id 1UmnEi-0007nZ-VK
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 17:45:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757126Ab3FLPo6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 11:44:58 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47547 "EHLO rominette.imag.fr"
+	id S1757144Ab3FLPpJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 11:45:09 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43443 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756912Ab3FLPoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 11:44:18 -0400
+	id S1756893Ab3FLPoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 11:44:17 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5CFiEkr015686
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5CFiE8M028736
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
 	Wed, 12 Jun 2013 17:44:14 +0200
 Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5CFiGoZ015068;
-	Wed, 12 Jun 2013 17:44:16 +0200
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5CFiFF1015054;
+	Wed, 12 Jun 2013 17:44:15 +0200
 Received: from tohwi-K50IE.imag.fr (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5CFhu65014096;
-	Wed, 12 Jun 2013 17:44:16 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5CFhu62014096;
+	Wed, 12 Jun 2013 17:44:15 +0200
 X-Mailer: git-send-email 1.8.3.rc3.18.g21a7b2c
 In-Reply-To: <1371051828-12866-1-git-send-email-celestin.matte@ensimag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 12 Jun 2013 17:44:14 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 12 Jun 2013 17:44:14 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227641>
 
 Signed-off-by: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
 Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 ---
- contrib/mw-to-git/git-remote-mediawiki.perl | 1 -
- 1 file changed, 1 deletion(-)
+ contrib/mw-to-git/git-remote-mediawiki.perl | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-t=
 o-git/git-remote-mediawiki.perl
-index d95119f..7acbec8 100755
+index ef9e60a..0610daa 100755
 --- a/contrib/mw-to-git/git-remote-mediawiki.perl
 +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -22,7 +22,6 @@ binmode STDERR, ":encoding(UTF-8)";
- binmode STDOUT, ":encoding(UTF-8)";
-=20
- use URI::Escape;
--use IPC::Open2;
-=20
- # Mediawiki filenames can contain forward slashes. This variable decid=
-es by which pattern they should be replaced
- use constant SLASH_REPLACEMENT =3D> "%2F";
+@@ -214,11 +214,11 @@ sub get_mw_page_list {
+ 	my $pages =3D shift;
+ 	my @some_pages =3D @$page_list;
+ 	while (@some_pages) {
+-		my $last =3D 50;
+-		if ($#some_pages < $last) {
+-			$last =3D $#some_pages;
++		my $last_page =3D 50;
++		if ($#some_pages < $last_page) {
++			$last_page =3D $#some_pages;
+ 		}
+-		my @slice =3D @some_pages[0..$last];
++		my @slice =3D @some_pages[0..$last_page];
+ 		get_mw_first_pages(\@slice, $pages);
+ 		@some_pages =3D @some_pages[51..$#some_pages];
+ 	}
 --=20
 1.8.3.rc3.18.g21a7b2c
