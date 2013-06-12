@@ -1,188 +1,102 @@
-From: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
-Subject: [PATCH 2/2] rm: introduce advice.rmHints to shorten messages
-Date: Wed, 12 Jun 2013 10:06:44 +0200
-Message-ID: <1371024404-22468-2-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
-References: <1371024404-22468-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
-Cc: gitster@pobox.com,
-	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-	Jorge Juan Garcia Garcia 
-	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 12 10:07:07 2013
+From: Carsten Fuchs <carsten.fuchs@cafu.de>
+Subject: Re: Tracking vendor release with Git
+Date: Wed, 12 Jun 2013 10:17:18 +0200
+Message-ID: <51B82E8E.8010402@cafu.de>
+References: <1370970410-7935-1-git-send-email-ydroneaud@opteya.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Yann Droneaud <ydroneaud@opteya.com>
+X-From: git-owner@vger.kernel.org Wed Jun 12 10:17:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Umg5C-0000Ea-S8
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 10:07:07 +0200
+	id 1UmgFG-0007y2-Mo
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 10:17:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751545Ab3FLIG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 04:06:58 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:54341 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752567Ab3FLIGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 04:06:50 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5C86lZZ013064
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 12 Jun 2013 10:06:47 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5C86m3h009465;
-	Wed, 12 Jun 2013 10:06:48 +0200
-Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5C86m4Q028141;
-	Wed, 12 Jun 2013 10:06:48 +0200
-Received: (from lienardm@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id r5C86mN6028138;
-	Wed, 12 Jun 2013 10:06:48 +0200
-X-Mailer: git-send-email 1.7.8
-In-Reply-To: <1371024404-22468-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 12 Jun 2013 10:06:47 +0200 (CEST)
+	id S1752836Ab3FLIRZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 04:17:25 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:52655 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751531Ab3FLIRW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 04:17:22 -0400
+Received: from [192.168.1.74] (dslb-094-219-006-046.pools.arcor-ip.net [94.219.6.46])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0Mefy0-1Uxl0a22US-00OlsM; Wed, 12 Jun 2013 10:17:20 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <1370970410-7935-1-git-send-email-ydroneaud@opteya.com>
+X-Provags-ID: V02:K0:Tnwowp94/ErROEexlX0ynFBsWDYQhG0jZ17UX+5U3QQ
+ 9KNjGTd5l4TdFz+5ECkwTtN6qzVO13cJ0Z2/u2MJceASY0lOzc
+ 8bQdU/FbkQCYm5SCpN5DgPsx0b2lVOV30QmI8+UtGDCi1sujk3
+ qKrsWpfnVjg6KJ3ZVc+a7l+jiUtrscG+S8+tziz6K+p5IRjckw
+ kuZ0pe+2nvuRqlwEwZKX+PwIC9ZNFWRcf1rULcMIl8DakU58sJ
+ V5rHb78t9tZKgBjnI1QxrUyZjjI4Y8/MLK+rvFUvT/TZdSbZIt
+ HQ6c7DXrxDegnbqSg1eWYy0q1WwHqeS2m+4K6fp2ZkNwJFXJij
+ WcUrROZrYKC5+nbFiFkU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227593>
 
-Introduce advice.rmHints to choose whether to display advice or not
-when git rm fails. Defaults to true, in order to preserve current behavior.
+Hi Yann,
 
-As an example, the message:
-	error: 'foo.txt' has changes staged in the index
-	(use --cached to keep the file, or -f to force removal)
+Am 2013-06-11 19:06, schrieb Yann Droneaud:
+> I'm trying to setup a workflow to track vendor releases (upstream).
+> Each new release are provided as an archive of source code, data,
+> documentation, etc.
+>
+> For each vendor releases, fixes need to be applied before making them
+> available to users (downstream).
+>
+> Seems to be a rather common use case, applied by most Linux distribut=
+ion
+> for decades.
+>
+> In my case, on top of each releases, a common set of patches will be =
+applied,
+> the biggest, the most intrusive one, being converting CRLF to LF usin=
+g dos2unix,
+> the others being small portability fixes. In this case, fixes are not=
+ going to
+> be applied by upstream.
 
-would look like, with advice.rmHints=false:
-	error: 'foo.txt' has changes staged in the index
 
-Signed-off-by: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
-Signed-off-by: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
----
+If you did the end-of-line conversion via .gitattributes rather than ex=
+plicitly as a=20
+patch, maybe the strategy described at=20
+http://happygiraffe.net/blog/2008/02/07/vendor-branches-in-git/ is what=
+ you're looking for?
 
-No changes since v4
+If besides the <pristine-vendor> branch you need another <patched-vendo=
+r> branch, this=20
+should be extensible, inserting another "layer" into the middle.
+Copying and modifying Johannes' graph:
 
- Documentation/config.txt |    3 +++
- advice.c                 |    2 ++
- advice.h                 |    1 +
- builtin/rm.c             |    3 ++-
- t/t3600-rm.sh            |   29 +++++++++++++++++++++++++++++
- 5 files changed, 37 insertions(+), 1 deletions(-)
+   U---V-----W          <-- upstream branch (pristine vendor)
+    \   \     \
+     C---D-----E        <-- patched vendor
+      \   \     \
+       K---L--M--N--O   <-- downstream branch ("master" in above linked=
+ text)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6e53fc5..eb04479 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -199,6 +199,9 @@ advice.*::
- 	amWorkDir::
- 		Advice that shows the location of the patch file when
- 		linkgit:git-am[1] fails to apply it.
-+	rmHints::
-+		In case of failure in the output of linkgit:git-rm[1],
-+		show directions on how to proceed from the current state.
- --
- 
- core.fileMode::
-diff --git a/advice.c b/advice.c
-index a8deee6..a4c169c 100644
---- a/advice.c
-+++ b/advice.c
-@@ -14,6 +14,7 @@ int advice_resolve_conflict = 1;
- int advice_implicit_identity = 1;
- int advice_detached_head = 1;
- int advice_set_upstream_failure = 1;
-+int advice_rm_hints = 1;
- 
- static struct {
- 	const char *name;
-@@ -33,6 +34,7 @@ static struct {
- 	{ "implicitidentity", &advice_implicit_identity },
- 	{ "detachedhead", &advice_detached_head },
- 	{ "setupstreamfailure", &advice_set_upstream_failure },
-+	{ "rmhints", &advice_rm_hints },
- 
- 	/* make this an alias for backward compatibility */
- 	{ "pushnonfastforward", &advice_push_update_rejected }
-diff --git a/advice.h b/advice.h
-index 94caa32..36104c4 100644
---- a/advice.h
-+++ b/advice.h
-@@ -17,6 +17,7 @@ extern int advice_resolve_conflict;
- extern int advice_implicit_identity;
- extern int advice_detached_head;
- extern int advice_set_upstream_failure;
-+extern int advice_rm_hints;
- 
- int git_default_advice_config(const char *var, const char *value);
- void advise(const char *advice, ...);
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 18df253..11ad53a 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -50,7 +50,8 @@ static void print_error_files(struct string_list *files_list,
- 			strbuf_addf(&err_msg,
- 				    "\n    %s",
- 				    files_list->items[i].string);
--		strbuf_addstr(&err_msg, hints_msg);
-+		if (advice_rm_hints)
-+			strbuf_addstr(&err_msg, hints_msg);
- 		*errs = error("%s", err_msg.buf);
- 		strbuf_release(&err_msg);
- 	}
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 902993b..5c87b55 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -707,6 +707,18 @@ test_expect_success 'rm files with different staged content' '
- 	test_i18ncmp expect actual
- '
- 
-+test_expect_success 'rm files with different staged content without hints' '
-+	cat >expect <<-\EOF &&
-+	error: the following files have staged content different from both the
-+	file and the HEAD:
-+	    bar.txt
-+	    foo.txt
-+	EOF
-+	echo content2 >foo.txt &&
-+	echo content2 >bar.txt &&
-+	test_must_fail git -c advice.rmhints=false rm foo.txt bar.txt 2>actual &&
-+	test_i18ncmp expect actual
-+'
- 
- test_expect_success 'rm file with local modification' '
- 	cat >expect <<-\EOF &&
-@@ -720,6 +732,15 @@ test_expect_success 'rm file with local modification' '
- 	test_i18ncmp expect actual
- '
- 
-+test_expect_success 'rm file with local modification without hints' '
-+	cat >expect <<-\EOF &&
-+	error: the following file has local modifications:
-+	    bar.txt
-+	EOF
-+	echo content4 >bar.txt &&
-+	test_must_fail git -c advice.rmhints=false rm bar.txt 2>actual &&
-+	test_i18ncmp expect actual
-+'
- 
- test_expect_success 'rm file with changes in the index' '
- 	cat >expect <<-\EOF &&
-@@ -734,6 +755,14 @@ test_expect_success 'rm file with changes in the index' '
- 	test_i18ncmp expect actual
- '
- 
-+test_expect_success 'rm file with changes in the index without hints' '
-+	cat >expect <<-\EOF &&
-+	error: the following file has changes staged in the index:
-+	    foo.txt
-+	EOF
-+	test_must_fail git -c advice.rmhints=false rm foo.txt 2>actual &&
-+	test_i18ncmp expect actual
-+'
- 
- test_expect_success 'rm files with two different errors' '
- 	cat >expect <<-\EOF &&
--- 
-1.7.8
+
+Best regards,
+Carsten
+
+
+
+--=20
+Dipl.-Inf. Carsten Fuchs
+
+Carsten Fuchs Software
+Industriegebiet 3, c/o Rofu, 55768 Hoppst=E4dten-Weiersbach, Germany
+Internet: http://www.cafu.de | E-Mail: info@cafu.de
+
+Cafu - the open-source game and graphics engine for multiplayer 3D acti=
+on
