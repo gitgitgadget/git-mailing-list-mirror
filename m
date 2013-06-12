@@ -1,110 +1,110 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] Documentation/CommunityGuidelines
-Date: Wed, 12 Jun 2013 14:14:18 +0100
-Message-ID: <20130612131418.GA23890@serenity.lan>
-References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
- <51B6AA7F.1060505@alum.mit.edu>
- <7v38sod1kn.fsf@alter.siamese.dyndns.org>
- <20130611182936.GM22905@serenity.lan>
- <CALkWK0n9Ws6DRbKPRHcQPhFTFx533PZH6dg1=w-O1hQ06V66-A@mail.gmail.com>
- <20130611195452.GO22905@serenity.lan>
- <CALkWK0==egyiSsndy-JC9a-N2pw4j5Q7sg2mm1gUFq6hqxjWvg@mail.gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] diff: add --ignore-blank-lines option
+Date: Wed, 12 Jun 2013 15:21:44 +0200
+Message-ID: <CALWbr2zOkoX9NKuZGOWDHyG12xE8ASz+gCK8qwgM1Xqr+uqN7A@mail.gmail.com>
+References: <7v61xt7gej.fsf@alter.siamese.dyndns.org>
+	<1370724291-30088-1-git-send-email-apelisse@gmail.com>
+	<7vsj0roxnr.fsf@alter.siamese.dyndns.org>
+	<CALWbr2zLTUYRnaYxbjyU80zpa3Q6WGcquTPAHqWCJnbEZ7RNPQ@mail.gmail.com>
+	<7vsj0pej5s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 12 15:14:41 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 12 15:21:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Umksp-0001fj-3z
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 15:14:39 +0200
+	id 1Umkzm-0007HM-8D
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 15:21:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170Ab3FLNOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 09:14:35 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:49041 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751402Ab3FLNOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 09:14:34 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id DDF286064C8;
-	Wed, 12 Jun 2013 14:14:33 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IvJ2qzv1UIJU; Wed, 12 Jun 2013 14:14:33 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id AE7AB606506;
-	Wed, 12 Jun 2013 14:14:24 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0==egyiSsndy-JC9a-N2pw4j5Q7sg2mm1gUFq6hqxjWvg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754782Ab3FLNVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 09:21:46 -0400
+Received: from mail-qa0-f45.google.com ([209.85.216.45]:50206 "EHLO
+	mail-qa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751379Ab3FLNVp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 09:21:45 -0400
+Received: by mail-qa0-f45.google.com with SMTP id ci6so313746qab.11
+        for <git@vger.kernel.org>; Wed, 12 Jun 2013 06:21:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jHGW7OcN1P3EE7Y1fffO8T/BV+hxk8ImG+ii0arD9HE=;
+        b=CRSlBrrgIg2U6N0cpS+RaIcoj43RJoufsWdO+ZAq7kKcBKIgAkcopk48Ce3ytAhymT
+         sDNEANMMDEhaIrUPBUlh8EOf8BMBKgrb3bsuq6e1oeDXpW9meqecNUDZcOcbb2DhCHRz
+         ubcfMJU4/Rd2tzm+alAIqhzZ1RvOj1bxL4GF9nUtOr2Muxe3u6uE1V0TEH+/gctKSJOl
+         YhNR75oMrx8IM2szLJ+eFU44jZoDgsDT5f5WSmcL7vx1KX8eyV1nNiNxmeHH/5ro52Ps
+         E+V7wya+lwup4p9UEVwKYl5JFJWUix9Mk88vaKt8SnxTITtThOr0dDfrhwLZZhJcvYbw
+         egjA==
+X-Received: by 10.224.69.66 with SMTP id y2mr15169541qai.61.1371043304713;
+ Wed, 12 Jun 2013 06:21:44 -0700 (PDT)
+Received: by 10.49.108.105 with HTTP; Wed, 12 Jun 2013 06:21:44 -0700 (PDT)
+In-Reply-To: <7vsj0pej5s.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227614>
 
-On Wed, Jun 12, 2013 at 04:56:27PM +0530, Ramkumar Ramachandra wrote:
-> John Keeping wrote:
-> >> Either way, I'm not interested in problems that have no solutions.
-> >> The only "solution" I see here is to suffocate every contributor until
-> >> they are "tactful enough" for the majority's liking, and "remove" the
-> >> ones that don't conform.  If you do have an alternate solution, please
-> >> share it with us.
-> >
-> > I don't have a solution, only a hope that regular contributors will
-> > learn from others how they can phrase review comments less aggressively.
-> 
-> The reviewer is not a thick-skinned bull that wants to harm the project.
-> 
-> 4. Lead by example.  If you do not like how someone presents
-> themselves on the list, you counter it by presenting yourself nicely
-> on the list.  Others will follow your example, making that person's
-> behavior the minority.
+On Mon, Jun 10, 2013 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Antoine Pelisse <apelisse@gmail.com> writes:
+>
+>> On Sun, Jun 9, 2013 at 10:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> When any ignore blank option is used, there will be lines that
+>>> actually has changes (hence should be shown with +/-) but we
+>>> deliberately ignore their changes (hence, if they ever appear in the
+>>> hunk, they do so as context lines prefixed with SP not +/-).  When
+>>> we do so, we show the lines from the postimage in the context.
+>>
+>> Don't we actually use preimage (see below) ? I think using pre-image
+>> allows the patch to be applicable to another tree (but ignoring the
+>> space changes).
 
-I think that's what everyone is trying to do, the problem is when the
-axiom "others will follow your example" fails.  In that case it is
-important to address the issue.
+Answering to myself: OK, my package version of git is 1.7.9.5 while
+the post-image is used since 1.7.10 or something. That explains my
+confusion.
 
-It is equally important to do this in a way that does not assume malice
-on the part of the reviewer. It is quite possible that when English is
-not someone's first language then they may not realise how their words
-are being interpreted by some people.  In this case a friendly message
-sent off the mailing list may be appropriate.
+> But the result of such patch application is not usually what you
+> want to use.  If we use postimage (which by the way was a deliberate
+> design decision we made earlier), at least the review of the patch
+> is easier because you would see the end result more clearly.
 
->                         It is far more powerful than explicitly
-> stating what is "acceptable" behavior and what is not.
-> 
-> > I expect different people will read the same statement differently;
-> > people are from different cultures and what is considered acceptable in
-> > one culture can be considered rude in another.  We should aim to
-> > cultivate our own culture where we try to minimise the risk that what we
-> > write will be misinterpreted by someone with a different cultural
-> > background.
-> 
-> So you have agreed that "tone" is subjective, and that attempting to
-> objectively state the "right tone" is a lost cause.
+I've found the patch and discussion [1] about that switch from
+pre-image to post-image, so I can understand the motives (and see that
+you actually considered problems for applying such a patch). I always
+felt confident that running "git send-email -w" would send a patch
+(that can be applied) without the potential space errors/changes I
+would have added.
 
-It is subjective *to some degree*.  If a reviewer takes care, then it is
-possible to write a message that minimises the risk that the words can
-be interpreted in a way that is not what was intended.
+I think it's unfortunate that Git does generate patches with git-diff
+that can't be applied if any space option is used. I'm still not
+really convinced by the pre-image to post-image change, and maybe I
+would have made it a non-default option. What is done is done, but I'd
+rather like not do the same here, if possible.
 
-If we do end up having community guidelines, then I think that point is
-very important.  It is equally important that readers do not assume that
-the tone in which they read an email is that in which it was intended
-but I think that human nature makes that half harder.
+>> If we actually hide new blank lines that are in the context, it means
+>> that we won't be able to apply a patch with 2 new blank lines in the 3
+>> line context.
+>
+> Yes, but I do not think the point of --ignore-blank-lines is to
+> produce a patch that can be applied in the first place.  It is to
+> allow easier eyeballing.
+
+I think it can not be applied because it's *hard* for a computer to
+actually find the correct location, and it may be equally hard for the
+reader to evaluate the change with removed/different context.
+
+>> Anyway, I'm starting to think that "show blank lines changes near
+>> other changes" makes sense more and more sense.
+>
+> Probably.
+
+I'm glad to see how convinced you are ;)
+
+I will send my patch and see what makes more sense.
+
+[1]: $gmane/188305
