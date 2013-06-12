@@ -1,73 +1,99 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2013, #04; Tue, 11)
-Date: Wed, 12 Jun 2013 13:56:20 +0000 (UTC)
-Message-ID: <loom.20130612T154959-145@post.gmane.org>
-References: <7vwqq05laf.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] Documentation/CommunityGuidelines
+Date: Wed, 12 Jun 2013 08:58:06 -0500
+Message-ID: <CAMP44s2uR5dtRkgwWNJzCgGzbDVNHF_vZCbqCuYNVcRpg=UNgQ@mail.gmail.com>
+References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
+	<51B6AA7F.1060505@alum.mit.edu>
+	<CALkWK0nNn8Rcu4JpV4r+0ct+_cuW3aUHXKV4bcB-Hn6Xg8Y+bA@mail.gmail.com>
+	<87li6g969j.fsf@linux-k42r.v.cablecom.net>
+	<CALkWK0kMvac7Sp3QwvEm+J_-Hj7JAn-AY-juDDw1HR3oQ+hamA@mail.gmail.com>
+	<20130612115641.GA8427@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 12 15:56:49 2013
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	A Large Angry SCM <gitzilla@gmail.com>
+To: "Theodore Ts'o" <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jun 12 15:58:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmlXa-0008JU-1U
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 15:56:46 +0200
+	id 1UmlYz-000140-TX
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 15:58:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756032Ab3FLN4k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 09:56:40 -0400
-Received: from plane.gmane.org ([80.91.229.3]:58246 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753181Ab3FLN4i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 09:56:38 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UmlXQ-0008CK-8b
-	for git@vger.kernel.org; Wed, 12 Jun 2013 15:56:36 +0200
-Received: from epo198.neoplus.adsl.tpnet.pl ([83.20.56.198])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 12 Jun 2013 15:56:36 +0200
-Received: from jnareb by epo198.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 12 Jun 2013 15:56:36 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 83.20.56.198 (Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.22 (KHTML, like Gecko) Ubuntu Chromium/25.0.1364.160 Chrome/25.0.1364.160 Safari/537.22)
+	id S1755319Ab3FLN6J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 09:58:09 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:42613 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753181Ab3FLN6I convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Jun 2013 09:58:08 -0400
+Received: by mail-la0-f54.google.com with SMTP id ec20so7781096lab.41
+        for <git@vger.kernel.org>; Wed, 12 Jun 2013 06:58:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=qsEGKUZGUGRknRZEKHyOAZPq2GXjLbLw2AnwBZ1ooz8=;
+        b=NgeN4z4xaVNljW2GzjD9Smohfneipe9W6fRx1PkEU+8AaJ1muqT2cOQ9evgb+YM8gU
+         +pRXsIWui/lXBmxttjkDE8UuOZfcpHmGbotWVpo9J4ed5Qly6f3zYpP7olyBUt5ZF3Me
+         apCq5dER0kIm8oSv28EZrmgYJhI4Vg4G6/w/iDBHFrJZS1z0dw76LieL+IUNJgn/yKl+
+         tJy5iV+mecNM7qRwD0rW0PQbLAMPqyNZJWPHepV/PDvLpZiUXrW+4YN2HnNP9babpW7/
+         w1qPRZECaUCS++WgD3TLJ+XMMPUqhPGprftAQgXflvZUP85gUqktzr6QoQ2Iroh/5tBg
+         Hefg==
+X-Received: by 10.112.156.5 with SMTP id wa5mr10961532lbb.63.1371045486751;
+ Wed, 12 Jun 2013 06:58:06 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Wed, 12 Jun 2013 06:58:06 -0700 (PDT)
+In-Reply-To: <20130612115641.GA8427@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227616>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+On Wed, Jun 12, 2013 at 6:56 AM, Theodore Ts'o <tytso@mit.edu> wrote:
+> On Tue, Jun 11, 2013 at 07:10:11PM +0530, Ramkumar Ramachandra wrote:
+>>
+>> Presumably, Felipe is the "fire hazard" that we are talking about, a=
+nd
+>> nobody else is to blame.  He must be "removed" to prevent future
+>> fires.  This is the "perception of the regulars", correct?
+>>
+>> Then why haven't you removed him yet?  What are you waiting for?  Yo=
+u
+>> don't need my "approval".
+>
+> He (and you) get "removed" when individuals who have decided the vast
+> majority of their e-mails shed more heat than light, and so people
+> decide that it's not worth reading their e-mails.  I have persionally
+> made this determination for both you and for Felipe;
 
-> * rr/remove-contrib-some (2013-06-02) 1 commit
->   (merged to 'next' on 2013-06-05 at fc15705)
->  + contrib: remove continuous/ and patches/
->=20
->  Remove stale contrib/ material.
->=20
->  Will merge to 'master'.
+On what basis have you made that determination? Have you made that
+determination based on my contributions?
 
-What about contrib/blameview by Aneesh Kumar K.V <aneesh.kumar@gmail.co=
-m>
-and Jeff King <peff@peff.net>?
+% git shortlog -n -s --no-merges --since '3 months ago'
+   221	Felipe Contreras
+    83	Junio C Hamano
+    69	Jeff King
+    62	Michael Haggerty
+    48	Ramkumar Ramachandra
+    35	Thomas Rast
+    33	Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
+    32	John Keeping
+    30	Ren=C3=A9 Scharfe
+    21	Kevin Bracey
 
-It is also 6 years old, uses GTK 2.x (via Gtk2 Perl bindings), "git gui=
-=20
-blame" also uses incremental mode moreover comparing blame with and wit=
-hout=20
-code movement detection.
+Have you read each and every one of my 800 patches in the last three
+months? Plus all my replies?
 
-Though this was intended more as a demo of using incremental blame... (=
-c.f.=20
-contrib/examples).
+Or have you made that determination based on the tiny subset of those
+that are controversial?
 
 --=20
-Jakub Nar=C4=99bski
-(via GMane)
+=46elipe Contreras
