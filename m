@@ -1,259 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Jun 2013, #04; Tue, 11)
-Date: Wed, 12 Jun 2013 15:49:56 -0400
-Message-ID: <20130612194956.GC4898@sigill.intra.peff.net>
-References: <7vwqq05laf.fsf@alter.siamese.dyndns.org>
- <loom.20130612T154959-145@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/CommunityGuidelines
+Date: Wed, 12 Jun 2013 13:02:01 -0700
+Message-ID: <7vehc72j46.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0mqk5sRPV8PHz8RqZH-Ln7TUtkHPVbvsJPKuVSXiUOiww@mail.gmail.com>
+	<51B6AA7F.1060505@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 12 21:50:08 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	A Large Angry SCM <gitzilla@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jun 12 22:02:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Umr3X-0006id-Jg
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 21:50:08 +0200
+	id 1UmrFD-0005zF-HN
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 22:02:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756261Ab3FLTuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 15:50:00 -0400
-Received: from cloud.peff.net ([50.56.180.127]:39446 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755924Ab3FLTuA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 15:50:00 -0400
-Received: (qmail 9077 invoked by uid 102); 12 Jun 2013 19:50:52 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Jun 2013 14:50:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Jun 2013 15:49:56 -0400
-Content-Disposition: inline
-In-Reply-To: <loom.20130612T154959-145@post.gmane.org>
+	id S1751524Ab3FLUCG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 16:02:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62264 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751237Ab3FLUCF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 16:02:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77E19278F8;
+	Wed, 12 Jun 2013 20:02:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=eIDt7tNNEa3yl9bRTFKUPkPwOVA=; b=UNSuvcQUnAQRo7LooHII
+	qd3F4wxJkea+7ZMOwfMAzXE3UXtDSIk4/eBuAZfyzjxKDF9+Z29O/q4oQ1i6iZma
+	RwPUiAnXI0KqFxIuLr4fpl6uFKaK+ummqoBDxGAPpZSNpfXcIQvaHF1n9RkoEyIS
+	e4OPdsQFQlGuOiVRr4MZ+Vc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=RPOI9RlcG9JYyOyHetgPDN049G2R/xEuBCKUelZlik9/Sd
+	zApJazYGPp6Ard+AoNyEItLSjW6MnfcDUKcmNrJrJreRKC2bdz1YO/xDlopkJxdM
+	fWU8BM4TnMuxcekkxVnZIYqiNltUMogobHG/YZ7zZWtktTJG83WfYVedNbvyQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C715278F7;
+	Wed, 12 Jun 2013 20:02:03 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C5738278F4;
+	Wed, 12 Jun 2013 20:02:02 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F2F35198-D39A-11E2-8475-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227670>
 
-On Wed, Jun 12, 2013 at 01:56:20PM +0000, Jakub Narebski wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Junio C Hamano <gitster <at> pobox.com> writes:
-> 
-> > * rr/remove-contrib-some (2013-06-02) 1 commit
-> >   (merged to 'next' on 2013-06-05 at fc15705)
-> >  + contrib: remove continuous/ and patches/
-> > 
-> >  Remove stale contrib/ material.
-> > 
-> >  Will merge to 'master'.
-> 
-> What about contrib/blameview by Aneesh Kumar K.V <aneesh.kumar@gmail.com>
-> and Jeff King <peff@peff.net>?
+> I would prefer a community standards document that looks more like this:
+> ...
+>
+> * Be welcoming to new community participants.  Help them get oriented,
+> and be patient with their questions.  Gently introduce them to our
+> community standards, above all by setting a good example yourself.
 
-Yeah, I mentioned it earlier in the thread as something that I consider
-clutter at this point (but somehow the thread drifted away from contrib/
-and into other topics, and I forgot).
+I agree that on-boarding is an important process.
 
-Here is a patch.
+In addition to the reviews I'd give to regulars, I personally try
+to do some of these things:
 
--- >8 --
-Subject: [PATCH] contrib: drop blameview/ directory
+ - Even in a negative review, end the message with "Thanks".  More
+   important is to express that the particular patch is rejected but
+   contributor's future contribution (either a reroll or a separate
+   topic) is welcome.
 
-Blameview was a quick-and-dirty demonstration of how blame's
-incremental output could be used in an interface. These days
-one can find much better (and less ugly!) demonstrations in
-"git gui blame" and "tig blame".
+   This is free, and there is no reason not to be nice.
 
-The only advantage blameview has is that its code is perhaps
-simpler to read. However, that is balanced by the fact that
-it probably has bugs, as nobody uses it nor has touched the
-code in 6 years. An implementor is probably better off just
-reading the "incremental output" section of "man git-blame".
+ - Point out problems in a milder way than usual.  Instead of saying
+   "Why is this done like so?", risking to be misinterpreted that I
+   am saying the patch did something wrong and the contributor was a
+   horrible programmer, rephrase it to "Hmph, this may work in such
+   and such cases, but I wonder how well it would in this case?",
+   followed by "How about going this route instead, which would
+   cover all these cases?"
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- contrib/blameview/README         |   9 ---
- contrib/blameview/blameview.perl | 155 ---------------------------------------
- 2 files changed, 164 deletions(-)
- delete mode 100644 contrib/blameview/README
- delete mode 100755 contrib/blameview/blameview.perl
+   Doing so is more time consuming at reviewers' end; once you know
+   the current design well enough, you can immediately smell a wrong
+   approach a lot faster by just looking at code and design in a
+   patch, without having to come up with a concrete example.
 
-diff --git a/contrib/blameview/README b/contrib/blameview/README
-deleted file mode 100644
-index fada5ce..0000000
---- a/contrib/blameview/README
-+++ /dev/null
-@@ -1,9 +0,0 @@
--This is a sample program to use 'git-blame --incremental', based
--on this message.
--
--From: Jeff King <peff@peff.net>
--Subject: Re: More precise tag following
--To: Linus Torvalds <torvalds@linux-foundation.org>
--Cc: git@vger.kernel.org
--Date: Sat, 27 Jan 2007 18:52:38 -0500
--Message-ID: <20070127235238.GA28706@coredump.intra.peff.net>
-diff --git a/contrib/blameview/blameview.perl b/contrib/blameview/blameview.perl
-deleted file mode 100755
-index 1dec001..0000000
---- a/contrib/blameview/blameview.perl
-+++ /dev/null
-@@ -1,155 +0,0 @@
--#!/usr/bin/perl
--
--use Gtk2 -init;
--use Gtk2::SimpleList;
--
--my $hash;
--my $fn;
--if ( @ARGV == 1 ) {
--	$hash = "HEAD";
--	$fn = shift;
--} elsif ( @ARGV == 2 ) {
--	$hash = shift;
--	$fn = shift;
--} else {
--	die "Usage blameview [<rev>] <filename>";
--}
--
--Gtk2::Rc->parse_string(<<'EOS');
--style "treeview_style"
--{
--  GtkTreeView::vertical-separator = 0
--}
--class "GtkTreeView" style "treeview_style"
--EOS
--
--my $window = Gtk2::Window->new('toplevel');
--$window->signal_connect(destroy => sub { Gtk2->main_quit });
--my $vpan = Gtk2::VPaned->new();
--$window->add($vpan);
--my $scrolled_window = Gtk2::ScrolledWindow->new;
--$vpan->pack1($scrolled_window, 1, 1);
--my $fileview = Gtk2::SimpleList->new(
--    'Commit' => 'text',
--    'FileLine' => 'text',
--    'Data' => 'text'
--);
--$scrolled_window->add($fileview);
--$fileview->get_column(0)->set_spacing(0);
--$fileview->set_size_request(1024, 768);
--$fileview->set_rules_hint(1);
--$fileview->signal_connect (row_activated => sub {
--		my ($sl, $path, $column) = @_;
--		my $row_ref = $sl->get_row_data_from_path ($path);
--		system("blameview @$row_ref[0]~1 $fn &");
--		});
--
--my $commitwindow = Gtk2::ScrolledWindow->new();
--$commitwindow->set_policy ('GTK_POLICY_AUTOMATIC','GTK_POLICY_AUTOMATIC');
--$vpan->pack2($commitwindow, 1, 1);
--my $commit_text = Gtk2::TextView->new();
--my $commit_buffer = Gtk2::TextBuffer->new();
--$commit_text->set_buffer($commit_buffer);
--$commitwindow->add($commit_text);
--
--$fileview->signal_connect (cursor_changed => sub {
--		my ($sl) = @_;
--		my ($path, $focus_column) = $sl->get_cursor();
--		my $row_ref = $sl->get_row_data_from_path ($path);
--		my $c_fh;
--		open($c_fh,  '-|', "git cat-file commit @$row_ref[0]")
--					or die "unable to find commit @$row_ref[0]";
--		my @buffer = <$c_fh>;
--		$commit_buffer->set_text("@buffer");
--		close($c_fh);
--		});
--
--my $fh;
--open($fh, '-|', "git cat-file blob $hash:$fn")
--  or die "unable to open $fn: $!";
--
--while(<$fh>) {
--  chomp;
--  $fileview->{data}->[$.] = ['HEAD', "$fn:$.", $_];
--}
--
--my $blame;
--open($blame, '-|', qw(git blame --incremental --), $fn, $hash)
--    or die "cannot start git-blame $fn";
--
--Glib::IO->add_watch(fileno($blame), 'in', \&read_blame_line);
--
--$window->show_all;
--Gtk2->main;
--exit 0;
--
--my %commitinfo = ();
--
--sub flush_blame_line {
--	my ($attr) = @_;
--
--	return unless defined $attr;
--
--	my ($commit, $s_lno, $lno, $cnt) =
--	    @{$attr}{qw(COMMIT S_LNO LNO CNT)};
--
--	my ($filename, $author, $author_time, $author_tz) =
--	    @{$commitinfo{$commit}}{qw(FILENAME AUTHOR AUTHOR-TIME AUTHOR-TZ)};
--	my $info = $author . ' ' . format_time($author_time, $author_tz);
--
--	for(my $i = 0; $i < $cnt; $i++) {
--		@{$fileview->{data}->[$lno+$i-1]}[0,1,2] =
--		(substr($commit, 0, 8), $filename . ':' . ($s_lno+$i));
--	}
--}
--
--my $buf;
--my $current;
--sub read_blame_line {
--
--	my $r = sysread($blame, $buf, 1024, length($buf));
--	die "I/O error" unless defined $r;
--
--	if ($r == 0) {
--		flush_blame_line($current);
--		$current = undef;
--		return 0;
--	}
--
--	while ($buf =~ s/([^\n]*)\n//) {
--		my $line = $1;
--
--		if (($commit, $s_lno, $lno, $cnt) =
--		    ($line =~ /^([0-9a-f]{40}) (\d+) (\d+) (\d+)$/)) {
--			flush_blame_line($current);
--			$current = +{
--				COMMIT => $1,
--				S_LNO => $2,
--				LNO => $3,
--				CNT => $4,
--			};
--			next;
--		}
--
--		# extended attribute values
--		if ($line =~ /^(author|author-mail|author-time|author-tz|committer|committer-mail|committer-time|committer-tz|summary|filename) (.*)$/) {
--			my $commit = $current->{COMMIT};
--			$commitinfo{$commit}{uc($1)} = $2;
--			next;
--		}
--	}
--	return 1;
--}
--
--sub format_time {
--  my $time = shift;
--  my $tz = shift;
--
--  my $minutes = $tz < 0 ? 0-$tz : $tz;
--  $minutes = ($minutes / 100)*60 + ($minutes % 100);
--  $minutes = $tz < 0 ? 0-$minutes : $minutes;
--  $time += $minutes * 60;
--  my @t = gmtime($time);
--  return sprintf('%04d-%02d-%02d %02d:%02d:%02d %s',
--		 $t[5] + 1900, @t[4,3,2,1,0], $tz);
--}
--- 
-1.8.3.rc2.14.g7eee6b3
+ - Instead of just pointing out minor nits and have the new
+   contributor reroll, point them out, and then show how the patch
+   should have looked like, often after "-- >8 --" and the "From:"
+   line that keeps attribution.
+
+   Again this is more work at reviewers' end.
+
+Coaching new contributors, like mentoring GSoC students, is often
+more time consuming than scratching the same itch yourself for any
+reviewer, but it is an investment, which hopefully yields dividend
+in the longer term.
