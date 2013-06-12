@@ -1,7 +1,7 @@
 From: =?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
-Subject: [PATCH v5 25/31] git-remote-mediawiki: Don't use quotes for empty strings
-Date: Wed, 12 Jun 2013 17:43:42 +0200
-Message-ID: <1371051828-12866-26-git-send-email-celestin.matte@ensimag.fr>
+Subject: [PATCH v5 26/31] git-remote-mediawiki: Put non-trivial numeric values in constants.
+Date: Wed, 12 Jun 2013 17:43:43 +0200
+Message-ID: <1371051828-12866-27-git-send-email-celestin.matte@ensimag.fr>
 References: <1371051828-12866-1-git-send-email-celestin.matte@ensimag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -9,136 +9,110 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: benoit.person@ensimag.fr, matthieu.moy@grenoble-inp.fr,
 	=?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 12 17:44:39 2013
+X-From: git-owner@vger.kernel.org Wed Jun 12 17:44:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmnDw-0007CJ-8b
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 17:44:36 +0200
+	id 1UmnDy-0007CJ-GB
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 17:44:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757025Ab3FLPo1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 11:44:27 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47567 "EHLO rominette.imag.fr"
+	id S1757039Ab3FLPo2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 11:44:28 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43477 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756983Ab3FLPoX (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756974Ab3FLPoX (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 12 Jun 2013 11:44:23 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5CFiH7O015739
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5CFiI9H028860
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 12 Jun 2013 17:44:19 +0200
+	Wed, 12 Jun 2013 17:44:20 +0200
 Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5CFiJFY015094;
-	Wed, 12 Jun 2013 17:44:19 +0200
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5CFiKSW015097;
+	Wed, 12 Jun 2013 17:44:20 +0200
 Received: from tohwi-K50IE.imag.fr (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5CFhu6A014096;
-	Wed, 12 Jun 2013 17:44:19 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5CFhu6B014096;
+	Wed, 12 Jun 2013 17:44:20 +0200
 X-Mailer: git-send-email 1.8.3.rc3.18.g21a7b2c
 In-Reply-To: <1371051828-12866-1-git-send-email-celestin.matte@ensimag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 12 Jun 2013 17:44:19 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 12 Jun 2013 17:44:20 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227628>
 
-Empty strings are replaced by an $EMPTY constant.
+Non-trivial numeric values (e.g., different from 0, 1 and 2) are placed=
+ in
+constants at the top of the code to be easily modifiable and to make mo=
+re sense
 
 Signed-off-by: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
 Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 ---
- contrib/mw-to-git/git-remote-mediawiki.perl | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ contrib/mw-to-git/git-remote-mediawiki.perl | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-t=
 o-git/git-remote-mediawiki.perl
-index 3f04d14..209dbe1 100755
+index 209dbe1..f4a63fb 100755
 --- a/contrib/mw-to-git/git-remote-mediawiki.perl
 +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -40,6 +40,8 @@ use constant NULL_SHA1 =3D> '000000000000000000000000=
-0000000000000000';
- # Used on Git's side to reflect empty edit messages on the wiki
- use constant EMPTY_MESSAGE =3D> '*Empty MediaWiki Message*';
+@@ -42,6 +42,16 @@ use constant EMPTY_MESSAGE =3D> '*Empty MediaWiki Me=
+ssage*';
 =20
-+use constant EMPTY =3D> q{};
+ use constant EMPTY =3D> q{};
+=20
++# Number of pages taken into account at once in submodule get_mw_page_=
+list
++use constant SLICE_SIZE =3D> 50;
++
++# Number of linked mediafile to get at once in get_linked_mediafiles
++# The query is split in small batches because of the MW API limit of
++# the number of links to be returned (500 links max).
++use constant BATCH_SIZE =3D> 10;
++
++use constant HTTP_CODE_OK =3D> 200;
 +
  if (@ARGV !=3D 2) {
  	exit_error_usage();
  }
-@@ -160,11 +162,11 @@ sub parse_command {
- 		mw_list($cmd[1]);
- 	} elsif ($cmd[0] eq 'import') {
- 		die("Invalid arguments for import\n")
--		    if ($cmd[1] eq "" || defined($cmd[2]));
-+		    if ($cmd[1] eq EMPTY || defined($cmd[2]));
- 		mw_import($cmd[1]);
- 	} elsif ($cmd[0] eq 'option') {
- 		die("Too many arguments for option\n")
--		    if ($cmd[1] eq "" || $cmd[2] eq "" || defined($cmd[3]));
-+		    if ($cmd[1] eq EMPTY || $cmd[2] eq EMPTY || defined($cmd[3]));
- 		mw_option($cmd[1],$cmd[2]);
- 	} elsif ($cmd[0] eq 'push') {
- 		mw_push($cmd[1]);
-@@ -555,7 +557,7 @@ sub mediawiki_clean {
- 	# Mediawiki does not allow blank space at the end of a page and ends =
-with a single \n.
- 	# This function right trims a string and adds a \n at the end to foll=
-ow this rule
- 	$string =3D~ s/\s+$//;
--	if ($string eq "" && $page_created) {
-+	if ($string eq EMPTY && $page_created) {
- 		# Creating empty pages is forbidden.
- 		$string =3D EMPTY_CONTENT;
- 	}
-@@ -566,7 +568,7 @@ sub mediawiki_clean {
- sub mediawiki_smudge {
- 	my $string =3D shift;
- 	if ($string eq EMPTY_CONTENT) {
--		$string =3D "";
-+		$string =3D EMPTY;
- 	}
- 	# This \n is important. This is due to mediawiki's way to handle end =
-of files.
- 	return "${string}\n";
-@@ -992,7 +994,7 @@ sub mw_upload_file {
- 	} else {
- 		# Don't let perl try to interpret file content as UTF-8 =3D> use "ra=
-w"
- 		my $content =3D run_git("cat-file blob ${new_sha1}", 'raw');
--		if ($content ne "") {
-+		if ($content ne EMPTY) {
- 			mw_connect_maybe();
- 			$mediawiki->{config}->{upload_url} =3D
- 				"${url}/index.php/Special:Upload";
-@@ -1034,7 +1036,7 @@ sub mw_push_file {
- 	my $newrevid;
-=20
- 	if ($summary eq EMPTY_MESSAGE) {
--		$summary =3D '';
-+		$summary =3D EMPTY;
- 	}
-=20
- 	my $new_sha1 =3D $diff_info_split[3];
-@@ -1045,7 +1047,7 @@ sub mw_push_file {
-=20
- 	my ($title, $extension) =3D $complete_file_name =3D~ /^(.*)\.([^\.]*)=
-$/;
- 	if (!defined($extension)) {
--		$extension =3D "";
-+		$extension =3D EMPTY;
- 	}
- 	if ($extension eq 'mw') {
- 		my $ns =3D get_mw_namespace_id_for_page($complete_file_name);
-@@ -1113,7 +1115,7 @@ sub mw_push {
- 		if ($force) {
- 			print {*STDERR} "Warning: forced push not allowed on a MediaWiki.\n=
-";
+@@ -223,13 +233,13 @@ sub get_mw_page_list {
+ 	my $pages =3D shift;
+ 	my @some_pages =3D @$page_list;
+ 	while (@some_pages) {
+-		my $last_page =3D 50;
++		my $last_page =3D SLICE_SIZE;
+ 		if ($#some_pages < $last_page) {
+ 			$last_page =3D $#some_pages;
  		}
--		if ($local eq "") {
-+		if ($local eq EMPTY) {
- 			print {*STDERR} "Cannot delete remote branch on a MediaWiki\n";
- 			print {*STDOUT} "error ${remote} cannot delete\n";
- 			next;
+ 		my @slice =3D @some_pages[0..$last_page];
+ 		get_mw_first_pages(\@slice, $pages);
+-		@some_pages =3D @some_pages[51..$#some_pages];
++		@some_pages =3D @some_pages[(SLICE_SIZE + 1)..$#some_pages];
+ 	}
+ 	return;
+ }
+@@ -385,9 +395,7 @@ sub get_linked_mediafiles {
+ 	my $pages =3D shift;
+ 	my @titles =3D map { $_->{title} } values(%{$pages});
+=20
+-	# The query is split in small batches because of the MW API limit of
+-	# the number of links to be returned (500 links max).
+-	my $batch =3D 10;
++	my $batch =3D BATCH_SIZE;
+ 	while (@titles) {
+ 		if ($#titles < $batch) {
+ 			$batch =3D $#titles;
+@@ -469,7 +477,7 @@ sub download_mw_mediafile {
+ 	my $download_url =3D shift;
+=20
+ 	my $response =3D $mediawiki->{ua}->get($download_url);
+-	if ($response->code =3D=3D 200) {
++	if ($response->code =3D=3D HTTP_CODE_OK) {
+ 		return $response->decoded_content;
+ 	} else {
+ 		print {*STDERR} "Error downloading mediafile from :\n";
 --=20
 1.8.3.rc3.18.g21a7b2c
