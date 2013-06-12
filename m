@@ -1,140 +1,132 @@
-From: Charles McGarvey <chazmcgarvey@brokenzipper.com>
-Subject: Re: [PATCH] instaweb: make the perl path configurable
-Date: Wed, 12 Jun 2013 12:48:17 -0600
-Organization: Sevenology
-Message-ID: <51B8C271.9030105@brokenzipper.com>
-References: <20130611201400.GA28010@compy.Home> <loom.20130612T155755-338@post.gmane.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 2/3] Move copy_note_for_rewrite + friends from
+ builtin/notes.c to notes-utils.c
+Date: Wed, 12 Jun 2013 21:14:43 +0200
+Message-ID: <CALKQrgfPktWOcUKnWecQcE-wMVwTqMES112nHcqnCrZzLLqOeg@mail.gmail.com>
+References: <7vehc8a05n.fsf@alter.siamese.dyndns.org>
+	<1370995981-1553-1-git-send-email-johan@herland.net>
+	<1370995981-1553-3-git-send-email-johan@herland.net>
+	<CAMP44s2pUW_+w6B_R-A=vxOg1Ay6iLmc4MQsA_sfDF+GP-XsWw@mail.gmail.com>
+	<CALKQrgfxrKz5bB=AAmL1ZtBFRK2Bx6TrRd1AsMEVv8bTAH0KCg@mail.gmail.com>
+	<CAMP44s3KAeDPo1Cw8eFsU=A6H7oUGmf+eLAMvGV+R2_hPXHLbw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="----enig2HJTFNRXWCWGMHLUNFJLU"
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 12 20:48:29 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: gitster@pobox.com, git@vger.kernel.org, jrnieder@gmail.com,
+	pclouds@gmail.com, artagnon@gmail.com, john@keeping.me.uk,
+	vfr@lyx.org, peff@peff.net, torvalds@linux-foundation.org,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 12 21:14:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Umq5p-0000Cz-El
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 20:48:25 +0200
+	id 1UmqVT-0000UP-4k
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 21:14:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757451Ab3FLSsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 14:48:21 -0400
-Received: from romulus.brokenzipper.com ([71.19.157.142]:64631 "EHLO
-	romulus.brokenzipper.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757393Ab3FLSsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 14:48:20 -0400
-Received: from vulcan.local (unknown [IPv6:2602:61:7edf:e300:0:ff:fe00:7701])
-	by romulus.brokenzipper.com (Postfix) with ESMTP id 2C01A52CE4;
-	Wed, 12 Jun 2013 12:48:20 -0600 (MDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=brokenzipper.com;
-	s=romulus; t=1371062900;
-	bh=4ND+7TMtVAn6dZcb8A/5Ish4QPa7XEjC+XFXXPUHUeY=;
-	h=Date:From:To:CC:Subject:References:In-Reply-To;
-	b=Co3MpGktFLDnZb2bDGMH9fFnxUQHk9XfzsmARYae1tcyYU0qPbvgcTsVCzgdm0bXP
-	 25A/TqV0WJjURPRFJmf/nZct7qHvyzjnde0NpDKXGc/XERySNJJc4PQvU66RjMP75b
-	 Aov43UdL8JdTALfcsIqV6T1AKDPmQNYaGM89Vl14=
-Received: from [2602:61:7edf:e300:0:ff:fe00:7700]
-	by vulcan.local with esmtpsa (TLS1.0:DHE_RSA_CAMELLIA_256_CBC_SHA1:256)
-	(Exim 4.80)
-	(envelope-from <chazmcgarvey@brokenzipper.com>)
-	id 1Umq6S-0007sA-5V; Wed, 12 Jun 2013 12:49:04 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130523 Thunderbird/17.0.6
-In-Reply-To: <loom.20130612T155755-338@post.gmane.org>
-X-Enigmail-Version: 1.6a1pre
-OpenPGP: url=https://www.brokenzipper.com/chaz.asc
+	id S1756085Ab3FLTOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 15:14:50 -0400
+Received: from mail12.copyleft.no ([188.94.218.224]:59308 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755220Ab3FLTOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 15:14:49 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1UmqVL-0006Ho-59
+	for git@vger.kernel.org; Wed, 12 Jun 2013 21:14:47 +0200
+Received: from mail-oa0-f41.google.com ([209.85.219.41])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1Umpr5-000EdE-23
+	for git@vger.kernel.org; Wed, 12 Jun 2013 20:33:11 +0200
+Received: by mail-oa0-f41.google.com with SMTP id n10so3142826oag.28
+        for <git@vger.kernel.org>; Wed, 12 Jun 2013 12:14:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=FXhe/t4P449EWp2sAOzQHmESBUg6EmF2cUPFWK2xgO0=;
+        b=hha8ALFc6codBPOC4IeafHhwZDpXOEdTBopI6jPFsAbma9zvf2cWes98jUJnyQm/lb
+         0Fnh1F0+AaYU0ZSObWsnQLJqzhOsK1NEMEn71tD1zyOYq2ZCuSGI4P3c5PWPjDqoJGoI
+         hPi7s2aaSdRu1A2wW/bFNeXl9UXH3UDZdYYhGtEhRi3GHX4iSioGDZyq7vgW2pMjl3Pr
+         ufFFtxMuJIqDN3l5Y6oBmFX/8ZWYCobd/DjPGO8dg+XHkJGT2y4TLoS7IGsvuYQxedxY
+         umSL2KevrVlOYwYbJscW41Ods2gIBIKvA15F3NfFE+BziGiF6eyS9M0fDfrlrntcF3zb
+         qSOw==
+X-Received: by 10.182.16.137 with SMTP id g9mr14449464obd.17.1371064483272;
+ Wed, 12 Jun 2013 12:14:43 -0700 (PDT)
+Received: by 10.182.102.5 with HTTP; Wed, 12 Jun 2013 12:14:43 -0700 (PDT)
+In-Reply-To: <CAMP44s3KAeDPo1Cw8eFsU=A6H7oUGmf+eLAMvGV+R2_hPXHLbw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227665>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
-------enig2HJTFNRXWCWGMHLUNFJLU
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, Jun 12, 2013 at 8:28 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Wed, Jun 12, 2013 at 2:10 AM, Johan Herland <johan@herland.net> wrote:
+>> On Wed, Jun 12, 2013 at 2:32 AM, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+>>> On Tue, Jun 11, 2013 at 7:13 PM, Johan Herland <johan@herland.net> wrote:
+>>>> This is a pure code movement of the machinery for copying notes to
+>>>> rewritten objects. This code was located in builtin/notes.c for
+>>>> historical reasons. In order to make it available to builtin/commit.c
+>>>> it was declared in builtin.h. This was more of an accident of history
+>>>> than a concious design, and we now want to make this machinery more
+>>>> widely available.
+>>>>
+>>>> Hence, this patch moves the code into the new notes-utils.[hc] files
+>>>> which are included into libgit.a. Except for adjusting #includes
+>>>> accordingly, this patch merely moves the relevant functions verbatim
+>>>> into the new files.
+>>>>
+>>>> Cc: Thomas Rast <trast@inf.ethz.ch>
+>>>> Signed-off-by: Johan Herland <johan@herland.net>
+>>>
+>>> I wonder where you got that idea from. Did you come up with that out thin air?
+>>
+>> Obviously not. I should add
+>>
+>> Suggested-by: Junio C Hamano <gitster@pobox.com>
+>
+> You are still not explaining where the idea came from. And you are
+> doing that with the express purpose of annoying.
 
-On 06/12/2013 08:00 AM, Jakub Narebski wrote:
-> Charles McGarvey <chazmcgarvey <at> brokenzipper.com> writes:
->=20
->> It is convenient for the user to be able to customize the path to perl=
- if they
->> do not want to use the system perl.  This may be the case, for example=
-, if the
->> user wants to use the plackup httpd but its extra dependencies are not=
+Truly, I am not trying to annoy anyone. I have not followed the
+preceding discussion closely, and I wrote the patch based solely on
+one paragraph from Junio's email[1].
 
->> installed in the system perl; they can set the perl path to a perl tha=
-t they
->> install and have control over in their own home directory.
->=20
-> Is it really necessary?  There is always PERL5LIB if one wants to use P=
-erl
-> modules installed in one's own home directory.  If one is using local::=
-lib
-> one has it "for free".
+> Where did the idea come from?
 
-Yes, that's right.  Using PERL5LIB would solve the example problem in the=
+I got it from Junio. I do not know if I might have accidentally
+plagiarized something you already submitted to the mailing list,
+although I would be surprised if that was the case, since - as far as
+I understand - you are opposed to this solution. Furthermore, I
+thought you might not like having your name mentioned in a patch you
+do not agree with, but if you think differently I have no problem
+adding your name. I don't know what kind of attribution you would
+prefer though:
 
-commit message, and it would even be pretty simple to set up using local:=
-:lib.
- So, no, this isn't strictly necessary.
-
-> If they do not want to use system perl there is always perlbrew.
-
-Well, perlbrew is actually what I had in mind for this patch.  Without it=
-, it
-seems like the perl path -- which is configured while building git.git so=
- is
-not easily changed by the user -- is "hard-coded" in the shebang line of =
-the
-plackup script file which is then made executable and exec'd, to start th=
-e
-httpd.  Given that process, I don't see how that code allows the user to =
-use
-any other perl, or am I missing something?
-
-If adding a new config variable seems too heavy-handed for such a trivial=
-
-problem, another approach would be to use the first perl in PATH and fall=
- back
-on the git.git build system-configured perl if there is no perl in PATH.
-However, considering the nature of perlbrew, the user may have many diffe=
-rent
-perls installed and multiple terminals open with shells configured for
-different perls.  To make the instaweb command search the PATH for perl w=
-ould
-introduce some unpredictability; the command would succeed or fail depend=
-ing
-on whether or not the perl being "used" in the current shell has the plac=
-kup
-httpd dependencies installed.  So I think I prefer the ability to configu=
-re
-which perl to have git always use for instaweb over this approach.
-
-In short summary, this patch isn't necessary because everyone could use
-local::lib to manage dependencies not installed at the system level, but =
-I
-think this patch is desirable for those of us who use perlbrew and not
-local::lib.  Of course, I'm open to alternatives and other suggestions.
-
-Thanks Jakub,
-
---=20
-Charles McGarvey
+Originally-envisioned-by: Felipe Contreras <felipe.contreras@gmail.com>?
+NAKed-by: Felipe Contreras <felipe.contreras@gmail.com>?
+Something else?
 
 
-------enig2HJTFNRXWCWGMHLUNFJLU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+...Johan
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
 
-iEYEARECAAYFAlG4wnEACgkQNi05PrCndfvhdgCgitk4s7yMBnrrtg76R0ncGqHn
-Sx0AnjoH64OtLkSfDWc+/zmmjeZbrVL6
-=+rId
------END PGP SIGNATURE-----
+[1]: Quoted from <7vehc8a05n.fsf@alter.siamese.dyndns.org>:
+On Tue, Jun 11, 2013 at 9:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> There is only one right solution.  If a useful function is buried in
+> builtin/*.o as a historical accident (i.e. it started its life as a
+> helper for that particular command, and nobody else used it from
+> outside so far) and that makes it impossible to use the function
+> from outside builtin/*.o, refactor the function and its callers and
+> move it to libgit.a.
 
-------enig2HJTFNRXWCWGMHLUNFJLU--
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
