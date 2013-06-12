@@ -1,90 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 1/2] rm: better error message on failure for multiple files
-Date: Wed, 12 Jun 2013 15:13:41 -0700
-Message-ID: <7v4nd30yga.fsf@alter.siamese.dyndns.org>
-References: <1371024404-22468-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Subject: Re: New feature discussion: git rebase --status
+Date: Wed, 12 Jun 2013 15:19:39 -0700
+Message-ID: <7vzjuvynt0.fsf@alter.siamese.dyndns.org>
+References: <fb379a75c6c1af6dcff2e65bef1f1836@ensibm.imag.fr>
+	<20130611125521.GL22905@serenity.lan> <vpqbo7c4wen.fsf@anie.imag.fr>
+	<CAE1pOi0azF1pFqhU1Dq3qeXXF+n9xBcAnHOHapTDjbNXop0d2g@mail.gmail.com>
+	<CA+55aFwtBm2RPwgXNa48zQM7ONCgzOEN2XdA_MeHsGu4=BDq5w@mail.gmail.com>
+	<fa9c12a81ef2e92ba75dd1271d9e0b2d@ensibm.imag.fr>
+	<51B857B0.5030603@ensimag.fr>
+	<3cafe99fe3b868e6fc025110d324b9c8@ensibm.imag.fr>
+	<CALWbr2xhhUNTo54u7K5iFr+wSMSiX6JrgTX=QJsDQ6E30uwDzQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Jorge Juan Garcia Garcia 
-	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+Cc: Mathieu =?utf-8?Q?Li=C3=A9nard--Mayor?= 
+	<mathieu.lienard--mayor@ensimag.fr>,
+	=?utf-8?Q?C=C3=A9lestin?= Matte <celestin.matte@ensimag.fr>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Users <git@vger.kernel.org>,
+	Jorge-Juan.Garcia-Garcia@ensimag.imag.fr,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 13 00:13:50 2013
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 13 00:19:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmtIc-0003Xa-9Y
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 00:13:50 +0200
+	id 1UmtON-0006qY-Qe
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 00:19:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757289Ab3FLWNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 18:13:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37674 "EHLO
+	id S1756840Ab3FLWTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 18:19:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55518 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756876Ab3FLWNp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 18:13:45 -0400
+	id S1755220Ab3FLWTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 18:19:42 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25D9627F74;
-	Wed, 12 Jun 2013 22:13:45 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F720271FD;
+	Wed, 12 Jun 2013 22:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=A4tcrTQ8lVYW1okxHtrzfdUmo9o=; b=ktF1gQ
-	iiYZsT6Yp009/rTOy6Pgh7qWP8z8JqzzFcmuJ+LaBy7SZDSiEfiXoogPfRtlRthx
-	F6WSoU6TSk/CoHeCcErK6/c98tb4lHSfwOD7+yn2+pbNshB8lHSRB36OnrkWKCjv
-	+Dj6qT13wWPutt4Qq/iOqJtK5+U+KYr6qon5M=
+	:content-type; s=sasl; bh=nfSuTgb6XWUpFX8mcaFMgo49DC0=; b=LMLcbo
+	mB00+gsWMWmWFu3LYCkRw9CGGTV54WINJeBUFjUTTsJvNWJ2UAIqIOX2zUBgWeVG
+	/z8MPU57NQrWuFuCydASIRvmlz0LXIIaBWe7xc0Q6LUVRp+XJtttzVPxo4A+ziRA
+	QkJHgcHumENL3immrwmZkuOyjDqcmXDFuZtc8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=C3KmEdr3cIjTAeZFFsk1OVUlg0IvP6+t
-	/Ich2ohhrW67SHblwKYqnuCShb5xLR2hzmhZhFvZ8jX63Dc3zRNLghh3yVdhSmF/
-	v3b9x0Z3iYt2tm1+kaADTytlj7+J/01wHCuwloxZKzz6My3+iq6Wn9vaqVKpVRzO
-	/FsvSar0sjo=
+	:content-type; q=dns; s=sasl; b=NduUkWMDsdEaQuggqMUG2sQHgihg1q/2
+	6qybNHYvF0FG72PHPgrQj6Ekaw2Z3SGcFhZN6hT7Zu84shz7w/iM13hbyleVQtJm
+	d3movHpZJujPMtS13pxztv88MApCYEnjI4b1UmX/KgoSvl/yYnduskaCpZ6+BYhF
+	Pm4NScKevfs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17D7D27F73;
-	Wed, 12 Jun 2013 22:13:45 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01B6A271FC;
+	Wed, 12 Jun 2013 22:19:42 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5EAB727F70;
-	Wed, 12 Jun 2013 22:13:43 +0000 (UTC)
-In-Reply-To: <1371024404-22468-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
-	(Mathieu Lienard--Mayor's message of "Wed, 12 Jun 2013 10:06:43
-	+0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5622F271F9;
+	Wed, 12 Jun 2013 22:19:41 +0000 (UTC)
+In-Reply-To: <CALWbr2xhhUNTo54u7K5iFr+wSMSiX6JrgTX=QJsDQ6E30uwDzQ@mail.gmail.com>
+	(Antoine Pelisse's message of "Wed, 12 Jun 2013 14:28:51 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5803EA40-D3AD-11E2-A6CD-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2D6E04A4-D3AE-11E2-9EF6-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227687>
 
-Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
-writes:
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-> When 'git rm' fails, it now displays a single message
-> with the list of files involved, instead of displaying
-> a list of messages with one file each.
+> Maybe we can display previous and next commits to provide some
+> context. Like we do for diff.
+> For example:
 >
-> As an example, the old message:
-> 	error: 'foo.txt' has changes staged in the index
-> 	(use --cached to keep the file, or -f to force removal)
-> 	error: 'bar.txt' has changes staged in the index
-> 	(use --cached to keep the file, or -f to force removal)
->
-> would now be displayed as:
-> 	error: the following files have changes staged in the index:
-> 	    foo.txt
-> 	    bar.txt
-> 	(use --cached to keep the file, or -f to force removal)
->
-> Signed-off-by: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
-> Signed-off-by: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-> ---
->
-> Changes since v4:
->  -removal of useless blanks after variable declarations
->  -use of string_list_clear
+> $ git status
+> # HEAD detached from ecb9f3e
+> # Already applied 330 patches (displaying next 3):
+> #     b170635... my_commit_message
+> #     b170635... my_commit_message
+> #     b170635... my_commit_message
+> # Already applied 119 (displaying last 3)
+> #     b170635... my_commit_message
+> #     b170635... my_commit_message
+> #     b170635... my_commit_message
 
-Thanks.  Will queue.
+I think you meant one of them to be
+
+    # Still to be applied 119 (showing the first 3)
+
+instead.  I am not sure if it is worth 8 lines, especially given
+that "git log --oneline -$n" would give you "Already applied" part
+that is beyond what will be shown in this message easily if you
+wanted to.  So it might be enough to show "The one that has last
+been replayed" (aka "HEAD") and "The one you are in the middle of
+replaying".
