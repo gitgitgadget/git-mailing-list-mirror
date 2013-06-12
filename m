@@ -1,102 +1,77 @@
-From: Carsten Fuchs <carsten.fuchs@cafu.de>
-Subject: Re: Tracking vendor release with Git
-Date: Wed, 12 Jun 2013 10:17:18 +0200
-Message-ID: <51B82E8E.8010402@cafu.de>
-References: <1370970410-7935-1-git-send-email-ydroneaud@opteya.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] git-remote-mediawiki: new tool to preview local
+ changes without pushing
+Date: Wed, 12 Jun 2013 04:55:02 -0400
+Message-ID: <20130612085502.GA1935@sigill.intra.peff.net>
+References: <1370641831-9115-1-git-send-email-benoit.person@ensimag.fr>
+ <20130609060807.GA8906@sigill.intra.peff.net>
+ <CAETqRCiJmnz_1yjwvyWx+=kPkt3M+vKk--CnS=rnQcDA4wMSmg@mail.gmail.com>
+ <20130611213722.GA21203@sigill.intra.peff.net>
+ <vpqli6f24z3.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Yann Droneaud <ydroneaud@opteya.com>
-X-From: git-owner@vger.kernel.org Wed Jun 12 10:17:32 2013
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?Q?Beno=C3=AEt?= Person <benoit.person@ensimag.fr>,
+	git@vger.kernel.org,
+	=?utf-8?B?Q8OpbGVzdGlu?= Matte <celestin.matte@ensimag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 12 10:55:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UmgFG-0007y2-Mo
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 10:17:31 +0200
+	id 1Umgpm-0001PC-7L
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 10:55:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752836Ab3FLIRZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jun 2013 04:17:25 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:52655 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751531Ab3FLIRW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 04:17:22 -0400
-Received: from [192.168.1.74] (dslb-094-219-006-046.pools.arcor-ip.net [94.219.6.46])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0Mefy0-1Uxl0a22US-00OlsM; Wed, 12 Jun 2013 10:17:20 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <1370970410-7935-1-git-send-email-ydroneaud@opteya.com>
-X-Provags-ID: V02:K0:Tnwowp94/ErROEexlX0ynFBsWDYQhG0jZ17UX+5U3QQ
- 9KNjGTd5l4TdFz+5ECkwTtN6qzVO13cJ0Z2/u2MJceASY0lOzc
- 8bQdU/FbkQCYm5SCpN5DgPsx0b2lVOV30QmI8+UtGDCi1sujk3
- qKrsWpfnVjg6KJ3ZVc+a7l+jiUtrscG+S8+tziz6K+p5IRjckw
- kuZ0pe+2nvuRqlwEwZKX+PwIC9ZNFWRcf1rULcMIl8DakU58sJ
- V5rHb78t9tZKgBjnI1QxrUyZjjI4Y8/MLK+rvFUvT/TZdSbZIt
- HQ6c7DXrxDegnbqSg1eWYy0q1WwHqeS2m+4K6fp2ZkNwJFXJij
- WcUrROZrYKC5+nbFiFkU=
+	id S1754130Ab3FLIzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 04:55:08 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35039 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753506Ab3FLIzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 04:55:06 -0400
+Received: (qmail 10625 invoked by uid 102); 12 Jun 2013 08:55:57 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Jun 2013 03:55:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Jun 2013 04:55:02 -0400
+Content-Disposition: inline
+In-Reply-To: <vpqli6f24z3.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227594>
 
-Hi Yann,
+On Wed, Jun 12, 2013 at 08:55:12AM +0200, Matthieu Moy wrote:
 
-Am 2013-06-11 19:06, schrieb Yann Droneaud:
-> I'm trying to setup a workflow to track vendor releases (upstream).
-> Each new release are provided as an archive of source code, data,
-> documentation, etc.
->
-> For each vendor releases, fixes need to be applied before making them
-> available to users (downstream).
->
-> Seems to be a rather common use case, applied by most Linux distribut=
-ion
-> for decades.
->
-> In my case, on top of each releases, a common set of patches will be =
-applied,
-> the biggest, the most intrusive one, being converting CRLF to LF usin=
-g dos2unix,
-> the others being small portability fixes. In this case, fixes are not=
- going to
-> be applied by upstream.
+> > But I think we have already crossed that bridge somewhat with Git.pm.
+> > And if you add your module as perl/Git/MediaWiki.pm and use the existing
+> > perl build system, then it is not any extra effort from the build
+> > system.
+> 
+> I'm not sure having perl/Git/MediaWiki.pm would be a good idea: this
+> MediaWiki.pm would be really a mediawiki thing more than a Git thing, so
+> the Git main tree probably want to stay away from it and keep it in
+> contrib.
 
+Yes, it's ugly. It means that the mediawiki stuff creeps out of contrib
+and into the main tree; and worse, as part of a public API that gets
+installed. We'd have to be a lot more picky about the interface and the
+code quality.
 
-If you did the end-of-line conversion via .gitattributes rather than ex=
-plicitly as a=20
-patch, maybe the strategy described at=20
-http://happygiraffe.net/blog/2008/02/07/vendor-branches-in-git/ is what=
- you're looking for?
+> But you should be able to use contrib/mw-to-git/perl/GitMediawiki.pm or
+> something like that and chain to ../../perl/Makefile in
+> contrib/mw-to-git/Makefile.
 
-If besides the <pristine-vendor> branch you need another <patched-vendo=
-r> branch, this=20
-should be extensible, inserting another "layer" into the middle.
-Copying and modifying Johannes' graph:
+That might work. Most of the magic in perl/Makefile happens in the
+perl-generated MakeMaker bits, though, so it may not be that easy. I
+haven't looked.
 
-   U---V-----W          <-- upstream branch (pristine vendor)
-    \   \     \
-     C---D-----E        <-- patched vendor
-      \   \     \
-       K---L--M--N--O   <-- downstream branch ("master" in above linked=
- text)
+> Also, for now, git-remote-mediawiki works only after you run "make
+> install" in Git's toplevel. I think that's ok, but it would be weird to
+> be able to use/test git-remote-mediawiki only after doing a "make
+> install" to deploy the new mediawiki Perl module.
 
+Good point.
 
-Best regards,
-Carsten
-
-
-
---=20
-Dipl.-Inf. Carsten Fuchs
-
-Carsten Fuchs Software
-Industriegebiet 3, c/o Rofu, 55768 Hoppst=E4dten-Weiersbach, Germany
-Internet: http://www.cafu.de | E-Mail: info@cafu.de
-
-Cafu - the open-source game and graphics engine for multiplayer 3D acti=
-on
+-Peff
