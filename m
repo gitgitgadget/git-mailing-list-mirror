@@ -1,139 +1,259 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/3] Move copy_note_for_rewrite + friends from
- builtin/notes.c to notes-utils.c
-Date: Wed, 12 Jun 2013 14:18:25 -0500
-Message-ID: <51b8c9816155a_501d1297e8483820@nysa.mail>
-References: <7vehc8a05n.fsf@alter.siamese.dyndns.org>
- <1370995981-1553-1-git-send-email-johan@herland.net>
- <1370995981-1553-3-git-send-email-johan@herland.net>
- <CAMP44s2pUW_+w6B_R-A=vxOg1Ay6iLmc4MQsA_sfDF+GP-XsWw@mail.gmail.com>
- <CALKQrgfxrKz5bB=AAmL1ZtBFRK2Bx6TrRd1AsMEVv8bTAH0KCg@mail.gmail.com>
- <CAMP44s3KAeDPo1Cw8eFsU=A6H7oUGmf+eLAMvGV+R2_hPXHLbw@mail.gmail.com>
- <CALKQrgfPktWOcUKnWecQcE-wMVwTqMES112nHcqnCrZzLLqOeg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Jun 2013, #04; Tue, 11)
+Date: Wed, 12 Jun 2013 15:49:56 -0400
+Message-ID: <20130612194956.GC4898@sigill.intra.peff.net>
+References: <7vwqq05laf.fsf@alter.siamese.dyndns.org>
+ <loom.20130612T154959-145@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, jrnieder@gmail.com,
-	pclouds@gmail.com, artagnon@gmail.com, john@keeping.me.uk,
-	vfr@lyx.org, peff@peff.net, torvalds@linux-foundation.org,
-	Thomas Rast <trast@inf.ethz.ch>
-To: Johan Herland <johan@herland.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 12 21:39:52 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 12 21:50:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Umqtb-000083-H5
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 21:39:51 +0200
+	id 1Umr3X-0006id-Jg
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 21:50:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755221Ab3FLTjr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 15:39:47 -0400
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:60526 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753747Ab3FLTjq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 15:39:46 -0400
-Received: by mail-ob0-f180.google.com with SMTP id eh20so13966628obb.11
-        for <git@vger.kernel.org>; Wed, 12 Jun 2013 12:39:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=8ZKu5Fzb+Rlli4raBbnxHK+NJ1VH9H5pK8+aoW+Px9o=;
-        b=NZQrbXxGCUann/oUXfL9jVL/wbqgCo7DH/f6MctfYoNojikIF/4h2kFJbRW8sQG0or
-         UuhvNWdKstTXigSjJhB8300gZfDktN4CaRmeaXg8E1trYVzyKnCfETKeRNeC4JvYtyMB
-         lDwVmU6tspYItQvCa+YsiVU3FRo8zdcoBTuTvBXeR36+MZElvyJDu0jK9U4w4TDTHxic
-         yfyyMRxQq0T2tI64dpR7HlUyy9bw4ADuD3KskZHIeC9eO3/htXuTxQOamygyWUqBdz10
-         Hw8MJsi1ki5et9mn1IX7lHcGGxbWrKTfkpFqyzEx6zLFHgJs6+p/UIv+7/e7qgn8Tn+C
-         WygA==
-X-Received: by 10.182.219.166 with SMTP id pp6mr16131964obc.66.1371065986279;
-        Wed, 12 Jun 2013 12:39:46 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPSA id dz4sm34776499obb.14.2013.06.12.12.39.44
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 12 Jun 2013 12:39:45 -0700 (PDT)
-In-Reply-To: <CALKQrgfPktWOcUKnWecQcE-wMVwTqMES112nHcqnCrZzLLqOeg@mail.gmail.com>
+	id S1756261Ab3FLTuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 15:50:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:39446 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755924Ab3FLTuA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 15:50:00 -0400
+Received: (qmail 9077 invoked by uid 102); 12 Jun 2013 19:50:52 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Jun 2013 14:50:52 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Jun 2013 15:49:56 -0400
+Content-Disposition: inline
+In-Reply-To: <loom.20130612T154959-145@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227669>
 
-Johan Herland wrote:
-> On Wed, Jun 12, 2013 at 8:28 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> > On Wed, Jun 12, 2013 at 2:10 AM, Johan Herland <johan@herland.net> wrote:
-> >> On Wed, Jun 12, 2013 at 2:32 AM, Felipe Contreras <felipe.contreras@gmail.com> wrote:
-> >>> On Tue, Jun 11, 2013 at 7:13 PM, Johan Herland <johan@herland.net> wrote:
-> >>>> This is a pure code movement of the machinery for copying notes to
-> >>>> rewritten objects. This code was located in builtin/notes.c for
-> >>>> historical reasons. In order to make it available to builtin/commit.c
-> >>>> it was declared in builtin.h. This was more of an accident of history
-> >>>> than a concious design, and we now want to make this machinery more
-> >>>> widely available.
-> >>>>
-> >>>> Hence, this patch moves the code into the new notes-utils.[hc] files
-> >>>> which are included into libgit.a. Except for adjusting #includes
-> >>>> accordingly, this patch merely moves the relevant functions verbatim
-> >>>> into the new files.
-> >>>>
-> >>>> Cc: Thomas Rast <trast@inf.ethz.ch>
-> >>>> Signed-off-by: Johan Herland <johan@herland.net>
-> >>>
-> >>> I wonder where you got that idea from. Did you come up with that out thin air?
-> >>
-> >> Obviously not. I should add
-> >>
-> >> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> >
-> > You are still not explaining where the idea came from. And you are
-> > doing that with the express purpose of annoying.
+On Wed, Jun 12, 2013 at 01:56:20PM +0000, Jakub Narebski wrote:
+
+> Junio C Hamano <gitster <at> pobox.com> writes:
 > 
-> Truly, I am not trying to annoy anyone. I have not followed the
-> preceding discussion closely, and I wrote the patch based solely on
-> one paragraph from Junio's email[1].
-
-Here is another pagraph:
-
-> Moving sequencer.c to builtin/ is not even a solution.  Linking
-> git-upload-pack will still pull in builtin/notes.o along with cmd_notes(),
-> which is not called from main(); as you remember, cmd_foo() in all
-> builtin/*.o are designed to be called from git.c::main().
-
-Which clearly refers to:
-http://article.gmane.org/gmane.comp.version-control.git/226752
-
-> > Where did the idea come from?
+> > * rr/remove-contrib-some (2013-06-02) 1 commit
+> >   (merged to 'next' on 2013-06-05 at fc15705)
+> >  + contrib: remove continuous/ and patches/
+> > 
+> >  Remove stale contrib/ material.
+> > 
+> >  Will merge to 'master'.
 > 
-> I got it from Junio. I do not know if I might have accidentally
-> plagiarized something you already submitted to the mailing list,
-> although I would be surprised if that was the case, since - as far as
-> I understand - you are opposed to this solution.
+> What about contrib/blameview by Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+> and Jeff King <peff@peff.net>?
 
-You are aware I opposed this *solution*, yet were not aware that I sent the
-first patch in this thread, which clearly states the *problem*?
+Yeah, I mentioned it earlier in the thread as something that I consider
+clutter at this point (but somehow the thread drifted away from contrib/
+and into other topics, and I forgot).
 
-> This way there will not be linking issues when top-level objects try to
-> access functions of builtin objects.
+Here is a patch.
 
-http://article.gmane.org/gmane.comp.version-control.git/226845
+-- >8 --
+Subject: [PATCH] contrib: drop blameview/ directory
 
-> Originally-envisioned-by: Felipe Contreras <felipe.contreras@gmail.com>?
+Blameview was a quick-and-dirty demonstration of how blame's
+incremental output could be used in an interface. These days
+one can find much better (and less ugly!) demonstrations in
+"git gui blame" and "tig blame".
 
-Do I have to do it for you? Your commit message is all wrong, because nowhere
-are you pointing out *why* you are making the change.
+The only advantage blameview has is that its code is perhaps
+simpler to read. However, that is balanced by the fact that
+it probably has bugs, as nobody uses it nor has touched the
+code in 6 years. An implementor is probably better off just
+reading the "incremental output" section of "man git-blame".
 
+Signed-off-by: Jeff King <peff@peff.net>
 ---
-Move copy_note_for_rewrite + friends to notes-utils.c
+ contrib/blameview/README         |   9 ---
+ contrib/blameview/blameview.perl | 155 ---------------------------------------
+ 2 files changed, 164 deletions(-)
+ delete mode 100644 contrib/blameview/README
+ delete mode 100755 contrib/blameview/blameview.perl
 
-In order to make these functionas available to top-level objects (e.g.
-sequencer.o), we need to move them out of the builtin/ subdirectory.
-
-Reported-by: Felipe Contreras <felipe.contreras@gmail.com>
----
-
+diff --git a/contrib/blameview/README b/contrib/blameview/README
+deleted file mode 100644
+index fada5ce..0000000
+--- a/contrib/blameview/README
++++ /dev/null
+@@ -1,9 +0,0 @@
+-This is a sample program to use 'git-blame --incremental', based
+-on this message.
+-
+-From: Jeff King <peff@peff.net>
+-Subject: Re: More precise tag following
+-To: Linus Torvalds <torvalds@linux-foundation.org>
+-Cc: git@vger.kernel.org
+-Date: Sat, 27 Jan 2007 18:52:38 -0500
+-Message-ID: <20070127235238.GA28706@coredump.intra.peff.net>
+diff --git a/contrib/blameview/blameview.perl b/contrib/blameview/blameview.perl
+deleted file mode 100755
+index 1dec001..0000000
+--- a/contrib/blameview/blameview.perl
++++ /dev/null
+@@ -1,155 +0,0 @@
+-#!/usr/bin/perl
+-
+-use Gtk2 -init;
+-use Gtk2::SimpleList;
+-
+-my $hash;
+-my $fn;
+-if ( @ARGV == 1 ) {
+-	$hash = "HEAD";
+-	$fn = shift;
+-} elsif ( @ARGV == 2 ) {
+-	$hash = shift;
+-	$fn = shift;
+-} else {
+-	die "Usage blameview [<rev>] <filename>";
+-}
+-
+-Gtk2::Rc->parse_string(<<'EOS');
+-style "treeview_style"
+-{
+-  GtkTreeView::vertical-separator = 0
+-}
+-class "GtkTreeView" style "treeview_style"
+-EOS
+-
+-my $window = Gtk2::Window->new('toplevel');
+-$window->signal_connect(destroy => sub { Gtk2->main_quit });
+-my $vpan = Gtk2::VPaned->new();
+-$window->add($vpan);
+-my $scrolled_window = Gtk2::ScrolledWindow->new;
+-$vpan->pack1($scrolled_window, 1, 1);
+-my $fileview = Gtk2::SimpleList->new(
+-    'Commit' => 'text',
+-    'FileLine' => 'text',
+-    'Data' => 'text'
+-);
+-$scrolled_window->add($fileview);
+-$fileview->get_column(0)->set_spacing(0);
+-$fileview->set_size_request(1024, 768);
+-$fileview->set_rules_hint(1);
+-$fileview->signal_connect (row_activated => sub {
+-		my ($sl, $path, $column) = @_;
+-		my $row_ref = $sl->get_row_data_from_path ($path);
+-		system("blameview @$row_ref[0]~1 $fn &");
+-		});
+-
+-my $commitwindow = Gtk2::ScrolledWindow->new();
+-$commitwindow->set_policy ('GTK_POLICY_AUTOMATIC','GTK_POLICY_AUTOMATIC');
+-$vpan->pack2($commitwindow, 1, 1);
+-my $commit_text = Gtk2::TextView->new();
+-my $commit_buffer = Gtk2::TextBuffer->new();
+-$commit_text->set_buffer($commit_buffer);
+-$commitwindow->add($commit_text);
+-
+-$fileview->signal_connect (cursor_changed => sub {
+-		my ($sl) = @_;
+-		my ($path, $focus_column) = $sl->get_cursor();
+-		my $row_ref = $sl->get_row_data_from_path ($path);
+-		my $c_fh;
+-		open($c_fh,  '-|', "git cat-file commit @$row_ref[0]")
+-					or die "unable to find commit @$row_ref[0]";
+-		my @buffer = <$c_fh>;
+-		$commit_buffer->set_text("@buffer");
+-		close($c_fh);
+-		});
+-
+-my $fh;
+-open($fh, '-|', "git cat-file blob $hash:$fn")
+-  or die "unable to open $fn: $!";
+-
+-while(<$fh>) {
+-  chomp;
+-  $fileview->{data}->[$.] = ['HEAD', "$fn:$.", $_];
+-}
+-
+-my $blame;
+-open($blame, '-|', qw(git blame --incremental --), $fn, $hash)
+-    or die "cannot start git-blame $fn";
+-
+-Glib::IO->add_watch(fileno($blame), 'in', \&read_blame_line);
+-
+-$window->show_all;
+-Gtk2->main;
+-exit 0;
+-
+-my %commitinfo = ();
+-
+-sub flush_blame_line {
+-	my ($attr) = @_;
+-
+-	return unless defined $attr;
+-
+-	my ($commit, $s_lno, $lno, $cnt) =
+-	    @{$attr}{qw(COMMIT S_LNO LNO CNT)};
+-
+-	my ($filename, $author, $author_time, $author_tz) =
+-	    @{$commitinfo{$commit}}{qw(FILENAME AUTHOR AUTHOR-TIME AUTHOR-TZ)};
+-	my $info = $author . ' ' . format_time($author_time, $author_tz);
+-
+-	for(my $i = 0; $i < $cnt; $i++) {
+-		@{$fileview->{data}->[$lno+$i-1]}[0,1,2] =
+-		(substr($commit, 0, 8), $filename . ':' . ($s_lno+$i));
+-	}
+-}
+-
+-my $buf;
+-my $current;
+-sub read_blame_line {
+-
+-	my $r = sysread($blame, $buf, 1024, length($buf));
+-	die "I/O error" unless defined $r;
+-
+-	if ($r == 0) {
+-		flush_blame_line($current);
+-		$current = undef;
+-		return 0;
+-	}
+-
+-	while ($buf =~ s/([^\n]*)\n//) {
+-		my $line = $1;
+-
+-		if (($commit, $s_lno, $lno, $cnt) =
+-		    ($line =~ /^([0-9a-f]{40}) (\d+) (\d+) (\d+)$/)) {
+-			flush_blame_line($current);
+-			$current = +{
+-				COMMIT => $1,
+-				S_LNO => $2,
+-				LNO => $3,
+-				CNT => $4,
+-			};
+-			next;
+-		}
+-
+-		# extended attribute values
+-		if ($line =~ /^(author|author-mail|author-time|author-tz|committer|committer-mail|committer-time|committer-tz|summary|filename) (.*)$/) {
+-			my $commit = $current->{COMMIT};
+-			$commitinfo{$commit}{uc($1)} = $2;
+-			next;
+-		}
+-	}
+-	return 1;
+-}
+-
+-sub format_time {
+-  my $time = shift;
+-  my $tz = shift;
+-
+-  my $minutes = $tz < 0 ? 0-$tz : $tz;
+-  $minutes = ($minutes / 100)*60 + ($minutes % 100);
+-  $minutes = $tz < 0 ? 0-$minutes : $minutes;
+-  $time += $minutes * 60;
+-  my @t = gmtime($time);
+-  return sprintf('%04d-%02d-%02d %02d:%02d:%02d %s',
+-		 $t[5] + 1900, @t[4,3,2,1,0], $tz);
+-}
 -- 
-Felipe Contreras
+1.8.3.rc2.14.g7eee6b3
