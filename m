@@ -1,57 +1,95 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4 1/2] status: introduce status.short to enable --short by default
-Date: Wed, 12 Jun 2013 08:57:55 +0200
-Message-ID: <vpqfvwn24uk.fsf@anie.imag.fr>
-References: <1370957645-17905-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
-	<7v1u889vkj.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 2/3] Move copy_note_for_rewrite + friends from
+ builtin/notes.c to notes-utils.c
+Date: Wed, 12 Jun 2013 09:10:58 +0200
+Message-ID: <CALKQrgfxrKz5bB=AAmL1ZtBFRK2Bx6TrRd1AsMEVv8bTAH0KCg@mail.gmail.com>
+References: <7vehc8a05n.fsf@alter.siamese.dyndns.org>
+	<1370995981-1553-1-git-send-email-johan@herland.net>
+	<1370995981-1553-3-git-send-email-johan@herland.net>
+	<CAMP44s2pUW_+w6B_R-A=vxOg1Ay6iLmc4MQsA_sfDF+GP-XsWw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jorge-Juan.Garcia-Garcia@ensimag.imag.fr, git@vger.kernel.org,
-	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 12 08:58:09 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: gitster@pobox.com, git@vger.kernel.org, jrnieder@gmail.com,
+	pclouds@gmail.com, artagnon@gmail.com, john@keeping.me.uk,
+	vfr@lyx.org, peff@peff.net, torvalds@linux-foundation.org,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 12 09:11:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Umf0R-0001VT-L5
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 08:58:07 +0200
+	id 1UmfD8-0001nm-VT
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Jun 2013 09:11:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755368Ab3FLG6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jun 2013 02:58:03 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:37587 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755190Ab3FLG6B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jun 2013 02:58:01 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5C6vtJM029193
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 12 Jun 2013 08:57:55 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Umf0F-0000Nv-TV; Wed, 12 Jun 2013 08:57:55 +0200
-In-Reply-To: <7v1u889vkj.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 11 Jun 2013 14:38:52 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 12 Jun 2013 08:57:57 +0200 (CEST)
+	id S1754756Ab3FLHLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jun 2013 03:11:10 -0400
+Received: from mail12.copyleft.no ([188.94.218.224]:57872 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750851Ab3FLHLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jun 2013 03:11:08 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1UmfCz-0002tK-UU
+	for git@vger.kernel.org; Wed, 12 Jun 2013 09:11:06 +0200
+Received: from mail-ob0-f174.google.com ([209.85.214.174])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UmeYh-000JGr-Cz
+	for git@vger.kernel.org; Wed, 12 Jun 2013 08:29:27 +0200
+Received: by mail-ob0-f174.google.com with SMTP id wd20so12862573obb.19
+        for <git@vger.kernel.org>; Wed, 12 Jun 2013 00:10:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=GnXmBrxTeN3ggfQmHxmlhoAonkXVx08ftKKpHlXnUEI=;
+        b=Str3g4V+eQ2Amm7modcRj1obM4zXF4ghf9JJmhShooLK9GUE/MGlnQohZuPYJrN4wc
+         VyuRe8gdPBShSCulbNOd/dG2Hc9fgKs1LDajADq1oLhd0Q4YToo6Eea+ATCvxaokfUD6
+         WYVqVO5+epBm8FJKJJ7us2jmpdw/d8V2yardpUonjjwl2P6i0opPHD4/kZ8jspsUvoJo
+         zpT9s+E9o7wDXsnVzXS1gTvMmvj119M7498B6IcF0qVbA+NGLJu0TSZI5LYzo4cTvcvN
+         DkWTuy8Dq210vvPcOnZpDiKMmBQbxrUtK/BIpjKk88PFKx+pSWE5gyfW64lK8lA7CRol
+         yARQ==
+X-Received: by 10.60.143.41 with SMTP id sb9mr7212415oeb.102.1371021058797;
+ Wed, 12 Jun 2013 00:10:58 -0700 (PDT)
+Received: by 10.182.102.5 with HTTP; Wed, 12 Jun 2013 00:10:58 -0700 (PDT)
+In-Reply-To: <CAMP44s2pUW_+w6B_R-A=vxOg1Ay6iLmc4MQsA_sfDF+GP-XsWw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227589>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Jun 12, 2013 at 2:32 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Tue, Jun 11, 2013 at 7:13 PM, Johan Herland <johan@herland.net> wrote:
+>> This is a pure code movement of the machinery for copying notes to
+>> rewritten objects. This code was located in builtin/notes.c for
+>> historical reasons. In order to make it available to builtin/commit.c
+>> it was declared in builtin.h. This was more of an accident of history
+>> than a concious design, and we now want to make this machinery more
+>> widely available.
+>>
+>> Hence, this patch moves the code into the new notes-utils.[hc] files
+>> which are included into libgit.a. Except for adjusting #includes
+>> accordingly, this patch merely moves the relevant functions verbatim
+>> into the new files.
+>>
+>> Cc: Thomas Rast <trast@inf.ethz.ch>
+>> Signed-off-by: Johan Herland <johan@herland.net>
+>
+> I wonder where you got that idea from. Did you come up with that out thin air?
 
-> I'll queue this patch after tweaking the test part like this.
+Obviously not. I should add
 
-I agree your version is better, thanks.
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 
-Jorge: this means if you have to edit the patch further, you'll have to
-start with the version in Junio's pu. But hopefully you won't have to.
+
+...Johan
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Johan Herland, <johan@herland.net>
+www.herland.net
