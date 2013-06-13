@@ -1,107 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFC 3/4] git-mw: Adding git-mw.perl script
-Date: Thu, 13 Jun 2013 15:01:10 +0200
-Message-ID: <vpq4nd2rwq1.fsf@anie.imag.fr>
-References: <1371118039-18925-1-git-send-email-benoit.person@ensimag.fr>
-	<1371118039-18925-4-git-send-email-benoit.person@ensimag.fr>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/3] Move copy_note_for_rewrite + friends from
+ builtin/notes.c to notes-utils.c
+Date: Thu, 13 Jun 2013 08:13:03 -0500
+Message-ID: <CAMP44s0Ng=d_h2dewZzSDk3LcXHNmz_8mGRXL43LE=iWOigN_w@mail.gmail.com>
+References: <7vehc8a05n.fsf@alter.siamese.dyndns.org>
+	<1370995981-1553-1-git-send-email-johan@herland.net>
+	<1370995981-1553-3-git-send-email-johan@herland.net>
+	<CAMP44s2pUW_+w6B_R-A=vxOg1Ay6iLmc4MQsA_sfDF+GP-XsWw@mail.gmail.com>
+	<CALKQrgfxrKz5bB=AAmL1ZtBFRK2Bx6TrRd1AsMEVv8bTAH0KCg@mail.gmail.com>
+	<CAMP44s3KAeDPo1Cw8eFsU=A6H7oUGmf+eLAMvGV+R2_hPXHLbw@mail.gmail.com>
+	<20130613064521.GA21707@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>,
-	Jeff King <peff@peff.net>
-To: benoit.person@ensimag.fr
-X-From: git-owner@vger.kernel.org Thu Jun 13 15:01:34 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Johan Herland <johan@herland.net>, gitster@pobox.com,
+	git@vger.kernel.org, jrnieder@gmail.com, pclouds@gmail.com,
+	artagnon@gmail.com, john@keeping.me.uk, vfr@lyx.org, peff@peff.net,
+	torvalds@linux-foundation.org, Thomas Rast <trast@inf.ethz.ch>
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 13 15:13:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Un79c-0004U6-FN
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 15:01:28 +0200
+	id 1Un7Kx-0005lF-Q0
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 15:13:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755577Ab3FMNBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jun 2013 09:01:23 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:39042 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754183Ab3FMNBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 09:01:22 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5DD19pC022355
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 13 Jun 2013 15:01:09 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Un79K-0004zI-Ra; Thu, 13 Jun 2013 15:01:10 +0200
-In-Reply-To: <1371118039-18925-4-git-send-email-benoit.person@ensimag.fr>
-	(benoit person's message of "Thu, 13 Jun 2013 12:07:18 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 13 Jun 2013 15:01:10 +0200 (CEST)
+	id S1755567Ab3FMNNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 09:13:07 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:53793 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753529Ab3FMNNF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jun 2013 09:13:05 -0400
+Received: by mail-lb0-f169.google.com with SMTP id d10so9721671lbj.0
+        for <git@vger.kernel.org>; Thu, 13 Jun 2013 06:13:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=zFa6rQmBK+GEyn/amgYyg+rB7GxIE9sfC7y9AwMb86k=;
+        b=sjMYXNrTycSESLJkBKzKzw6JezGNTP5WmbTz1RZUSkoEqDonbw8MHMjdBQIFFTPWKl
+         C8fDIZpidCH9JwJdsnSyZr9JRaTczuPtD+dNvOSuc0dP/ovWaaLpezEM2zcbrp9LsGvi
+         uojqnAM78Ml/NCjhQl3g4GqKm3+zs0MuE6LJ2kJPPxNajKTQY+qoerp6tf1uIrmjgdlV
+         XDr4OUnymCfCDQvMSpTxxD2C1nbyeThOVgEeoCPHrRJjt5Qawe8CGzFSRojzlEPqlfqf
+         FbHqKHYJguM8buviEXxW6H5OydBb2P56GJ7RtErbMbsUaESptD/P2WySBSy+rTU1YG/D
+         yDag==
+X-Received: by 10.112.157.226 with SMTP id wp2mr1274905lbb.65.1371129183347;
+ Thu, 13 Jun 2013 06:13:03 -0700 (PDT)
+Received: by 10.114.59.202 with HTTP; Thu, 13 Jun 2013 06:13:03 -0700 (PDT)
+In-Reply-To: <20130613064521.GA21707@inner.h.apk.li>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227726>
 
-benoit.person@ensimag.fr writes:
-
-> From: Benoit Person <benoit.person@ensimag.fr>
+On Thu, Jun 13, 2013 at 1:45 AM, Andreas Krey <a.krey@gmx.de> wrote:
+> On Wed, 12 Jun 2013 13:28:05 +0000, Felipe Contreras wrote:
+> ...
+>> And you are
+>> doing that with the express purpose of annoying.
 >
-> This script will be used for all tools and command related to a mediawiki
-> remote. In this commit we introduce the tool, the way it parses argument
-> and subcommands and an example of subcommand: "help". It also updates
-> the Makefile so that the new tool is installed properly.
+> Where did 'assume good faith' go to today?
 
-How does the "make" Vs "make install" work? How does a developer run the
-tool without installing?
+Did you read the last part?
 
-I first tried:
+"This does not mean that one should continue to assume good faith when
+there's evidence to the contrary."
 
-$ ../../bin-wrappers/git mw
-git: 'mw' is not a git command. See 'git --help'.
+That being said, my evidence was not solid, and while there is still
+the possibility that he was indeed acting in good faith, I've received
+no response from him, and Junio has committed the change without any
+mentioning of where the idea come from.
 
-Then, this first seem OK:
-
-$ ./git-mw 
-usage: git mw <command> <args>
-
-git mw commands are:
-    Help        Display help information about git mw
-    Preview     Parse and render local file into HTML
-
-BUT, this will take the installed GitMediawiki.pm if it is available,
-and we don't want this (if one hacks GitMediawiki.pm locally, one wants
-the new hacked to be taken into account without "make install"ing it).
-
-To understand better how it works, try adding this in git-mw.perl:
-
-  print "$_\n" for @INC;
-
-I get this:
-
-/home/moy/local/usr-squeeze/share/perl/5.14.2
-/home/moy/local/usr-squeeze/src/MediaWiki-API-0.39/blib/lib
-/etc/perl
-/usr/local/lib/perl/5.14.2
-/usr/local/share/perl/5.14.2
-/usr/lib/perl5
-/usr/share/perl5
-/usr/lib/perl/5.14
-/usr/share/perl/5.14
-/usr/local/lib/site_perl
-.
-
-The '.' is there, but it comes after the hardcoded
-/home/moy/local/usr-squeeze/share/perl/5.14.2 (which has to comes first,
-to let the install version be robust to whatever comes after).
-
-I think you need an equivalent of Git's toplevel bin-wrappers/git, or
-perhaps use the same bin-wrapper/git but let "make install" in
-contrib/mw-to-git/ install GitMediawiki.pm in perl/blib/lib
-
-BTW, I just noticed we had a Git::SVN, so perhaps GitMediawiki should be
-Git::MediaWiki.
+Either way, I bet you my good faith suggestion will *not* end up in
+the official guidelines, nor will any suggestion of mine.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Felipe Contreras
