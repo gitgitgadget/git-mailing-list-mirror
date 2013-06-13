@@ -1,75 +1,69 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [Bug?] "am --abort" broken?
-Date: Thu, 13 Jun 2013 09:30:31 +0530
-Message-ID: <CALkWK0ksCupC183X-XDwCcscHkQXq9whxxYeWLjR2FpH50ycHA@mail.gmail.com>
+Date: Wed, 12 Jun 2013 21:17:10 -0700
+Message-ID: <7v7ghyy795.fsf@alter.siamese.dyndns.org>
 References: <7vsj0nymyd.fsf@alter.siamese.dyndns.org>
+	<CALkWK0ksCupC183X-XDwCcscHkQXq9whxxYeWLjR2FpH50ycHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 13 06:01:19 2013
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 13 06:17:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Umyiq-0000tx-OW
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 06:01:17 +0200
+	id 1UmyyM-0001Vs-RM
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 06:17:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751604Ab3FMEBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jun 2013 00:01:12 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:46771 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751517Ab3FMEBM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 00:01:12 -0400
-Received: by mail-ie0-f171.google.com with SMTP id qd12so11004694ieb.2
-        for <git@vger.kernel.org>; Wed, 12 Jun 2013 21:01:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=C2LfFVTc6TMCYfW20IXTxI0j2DvY3gPLt891xx1NTSQ=;
-        b=Ifccr3vFfUVLi2vf2jAZ85hsTCqYu87Ve0wo5Jb8/BbFyG3Kn92IPt5jZWToeC2gmO
-         heeoyPOfGP7K1s6dhX2akr4fnInszsk1hUSz1QZ3bbsiOFIPYvJV0+k6paTF5zsKen6i
-         5DePd3D8GsX7gVkx9n417SaUTUBsgenOM3eKTe5dqQQS4RwRVZWV2082avZr+VXR9rex
-         VkHPpuFS6NqxYAP/bFv0Ms9T1H2TlmNsFmV8Ho02evJFmEHohT6YhmmwncV8Zp91fgkW
-         /XJJYbWroxs8SWyruKQ1Nfz9loL3nKZqmKUMoLmbdRFJ4vwLYKRpfEIt0qu1iyT9vfla
-         Nw3A==
-X-Received: by 10.42.73.138 with SMTP id s10mr4678861icj.10.1371096071653;
- Wed, 12 Jun 2013 21:01:11 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Wed, 12 Jun 2013 21:00:31 -0700 (PDT)
-In-Reply-To: <7vsj0nymyd.fsf@alter.siamese.dyndns.org>
+	id S1751288Ab3FMERO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 00:17:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57923 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750782Ab3FMERO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jun 2013 00:17:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAACF1F9C7;
+	Thu, 13 Jun 2013 04:17:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3yFXgV8jH9fWJRmw+phM1pY1Ujw=; b=Fsrgen
+	gx+m1PGowlexVApPc3g9oPeodKeeP3cf7xUQEyq1QgCdhUjM03/qRI9iKtEuyfou
+	BRtBpe+o9ptiSybFs8VYRWxjSuqgEEQcZ4nc29MiAnxtrbiCmtTLRGeO1tearTIj
+	IqTwfh+s4pRZig9f09DrzZSF5qobPWcd5l54I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ci7eQwvbMak/NHXCRAJMalXq+uDXig1c
+	B5eTrheAu8giK0VCVy6cUYRHivpg7Ec7h2XrQuFSayR6//aTJZmTgzSKP1lx9lp+
+	VOyRVSHOZ8OF2Y7NuQSb6cpPqul7GoM+hvVVw7aLsXegZSZz2wFrpEUucwL2zcoF
+	rhmcF8bvLuw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE3FF1F9C6;
+	Thu, 13 Jun 2013 04:17:12 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 490851F9C3;
+	Thu, 13 Jun 2013 04:17:12 +0000 (UTC)
+In-Reply-To: <CALkWK0ksCupC183X-XDwCcscHkQXq9whxxYeWLjR2FpH50ycHA@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Thu, 13 Jun 2013 09:30:31 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1F239C2E-D3E0-11E2-A631-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227696>
 
-Junio C Hamano wrote:
->     $ git am ;# no input file
->     ^C
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+
+>> I think this is a recent breakage after merging the topic to add
+>> "rebase --autostash", but I haven't looked into it yet.
 >
->     $ git am --abort
->     Resolve operation not in progress, we are not resuming.
+> Yes, I can confirm that my topic introduced this bug, and I apologize
+> for not having caught it.  I'm looking into the problem.
 
-I tried it on git 1.8.3, and this only incidentally "seems" to half-work (?)
+No need to apologize; nobody caught it during the review.
 
-% git am
-^C
-% git am --abort
-cat: /home/artagnon/src/git/.git/rebase-apply/next: No such file or directory
-% git status
-# On branch master
-# Your branch is behind 'origin/master' by 1 commit, and can be fast-forwarded.
-#
-nothing to commit, working directory clean
-
-In the process of aborting, it blew away one commit!
-
-> I think this is a recent breakage after merging the topic to add
-> "rebase --autostash", but I haven't looked into it yet.
-
-Yes, I can confirm that my topic introduced this bug, and I apologize
-for not having caught it.  I'm looking into the problem.
-
-Thanks.
+And thanks for volunteering.
