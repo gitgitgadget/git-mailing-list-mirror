@@ -1,58 +1,58 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/3] rebase: finish_rebase() in fast-forward rebase
-Date: Thu, 13 Jun 2013 21:36:12 +0530
-Message-ID: <1371139573-28047-3-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 3/3] rebase: finish_rebase() in noop rebase
+Date: Thu, 13 Jun 2013 21:36:13 +0530
+Message-ID: <1371139573-28047-4-git-send-email-artagnon@gmail.com>
 References: <1371139573-28047-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 13 18:08:29 2013
+X-From: git-owner@vger.kernel.org Thu Jun 13 18:08:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnA4a-0005m0-TN
+	id 1UnA4b-0005m0-EZ
 	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 18:08:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756354Ab3FMQIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755782Ab3FMQIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 12:08:18 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:45031 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755428Ab3FMQIQ (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 13 Jun 2013 12:08:16 -0400
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:47312 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751454Ab3FMQIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 12:08:14 -0400
-Received: by mail-pd0-f173.google.com with SMTP id v14so7587146pde.18
-        for <git@vger.kernel.org>; Thu, 13 Jun 2013 09:08:13 -0700 (PDT)
+Received: by mail-pb0-f49.google.com with SMTP id jt11so10452696pbb.22
+        for <git@vger.kernel.org>; Thu, 13 Jun 2013 09:08:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=uZtC0eu9+xE4cYJ+EuYDE8/yTgADDx82FnkVLX2cNxw=;
-        b=kn8iC+pAIg4IeYcoSb8UEjZK32S7FkV6hUHbNBI09YHCawkK5W5ys0lYFTs2LbGMrm
-         m5WsbC7BXn+gVjn3d5NgP0SkxFknMMkA0QnK7/SBXRO+uUWc9dQ5WxxfakQwSFyKeqvh
-         DJ6VimcDOVxVIIfzF5uHpnw8A/TBBnMGrsLot9UvRG/4VkLBA2ekq/u/hhpMcQDh/7b4
-         LpjHHsTeD7frUsc3cEzKyNQ+cJBvTd8raUhP9Q2/hosejHl7E4h5XwDfvVe67Ky0uwG1
-         zyvQ3GtBYnUY/5I7vcnz7KIQN7AZDZ9mjBHzdqUJ6cGweAmqdSgEF+ZWJbgbE66K1vhn
-         Mb2w==
-X-Received: by 10.66.150.226 with SMTP id ul2mr3545748pab.17.1371139693386;
-        Thu, 13 Jun 2013 09:08:13 -0700 (PDT)
+        bh=l15bf5/Mc7ZrQYviOavU2LmOgXQj/GXdENl/zX2WFwY=;
+        b=f+fU3Zy/VBRjq4pFqiTGPxjcukfn+TiChojod7Hk0PFfh96VyL0cHjx0hreUggCpCW
+         3w+GyRdHL4PBwghh1L9fW/yY4OQHFELe70hgFt/70ByK3zlFQ70C/lCOu09ecYRaezcf
+         pbv6unhIEeVWH0c/p7rKWTM+g69+Q20A7mdshqRpVyHHfcBXCECEAa3jCu1hTBvCh3pY
+         SJGmx2pMvWaRcvW/6/oCAp24KZ5Yi5j21pLJH0KQo8MqlNwj1CfCPBXQZ1+2cX6fZfep
+         CLPkGlnN0XT0P09LeXBIx2uNBuLX4g+ssVbc0M/gN+MIn+XyxVqOlgD8WM/1emxkvHcJ
+         0L3Q==
+X-Received: by 10.66.255.72 with SMTP id ao8mr3531540pad.3.1371139695574;
+        Thu, 13 Jun 2013 09:08:15 -0700 (PDT)
 Received: from localhost.localdomain ([122.164.213.38])
-        by mx.google.com with ESMTPSA id rn7sm23911564pbc.12.2013.06.13.09.08.11
+        by mx.google.com with ESMTPSA id rn7sm23911564pbc.12.2013.06.13.09.08.13
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 13 Jun 2013 09:08:12 -0700 (PDT)
+        Thu, 13 Jun 2013 09:08:14 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1.381.gf08dd97.dirty
 In-Reply-To: <1371139573-28047-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227745>
 
 In the following case
 
   $ git rebase master
-  Fast-forwarded autostash-fix to master.
+  Current branch autostash-fix is up to date.
 
-The autostash is not applied automatically, because this codepath
+the autostash is not applied automatically, because this codepath
 forgets to call finish_rebase().  Fix this.  Also add a test to guard
 against regressions.
 
@@ -63,30 +63,30 @@ Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
  2 files changed, 12 insertions(+)
 
 diff --git a/git-rebase.sh b/git-rebase.sh
-index 2122fe0..154d4be 100755
+index 154d4be..2d5c2bd 100755
 --- a/git-rebase.sh
 +++ b/git-rebase.sh
-@@ -579,6 +579,7 @@ if test "$mb" = "$orig_head"
- then
- 	say "$(eval_gettext "Fast-forwarded \$branch_name to \$onto_name.")"
- 	move_to_original_branch
-+	finish_rebase
- 	exit 0
- fi
- 
+@@ -547,6 +547,7 @@ then
+ 		# Lazily switch to the target branch if needed...
+ 		test -z "$switch_to" || git checkout "$switch_to" --
+ 		say "$(eval_gettext "Current branch \$branch_name is up to date.")"
++		finish_rebase
+ 		exit 0
+ 	else
+ 		say "$(eval_gettext "Current branch \$branch_name is up to date, rebase forced.")"
 diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index 479cbb2..1bde007 100755
+index 1bde007..90eb264 100755
 --- a/t/t3420-rebase-autostash.sh
 +++ b/t/t3420-rebase-autostash.sh
-@@ -141,6 +141,17 @@ testrebase() {
- 	'
- }
+@@ -152,6 +152,17 @@ test_expect_success "rebase: fast-forward rebase" '
+ 	git checkout feature-branch
+ '
  
-+test_expect_success "rebase: fast-forward rebase" '
++test_expect_success "rebase: noop rebase" '
 +	test_config rebase.autostash true &&
 +	git reset --hard &&
-+	git checkout -b behind-feature-branch feature-branch~1 &&
-+	test_when_finished git branch -D behind-feature-branch &&
++	git checkout -b same-feature-branch feature-branch &&
++	test_when_finished git branch -D same-feature-branch &&
 +	echo dirty >>file1 &&
 +	git rebase feature-branch &&
 +	grep dirty file1 &&
