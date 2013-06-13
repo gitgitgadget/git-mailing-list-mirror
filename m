@@ -1,88 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] unpack_entry: do not die when we fail to apply a delta
-Date: Thu, 13 Jun 2013 19:26:08 -0400
-Message-ID: <20130613232608.GA9844@sigill.intra.peff.net>
+From: Scott McPeak <smcpeak@coverity.com>
+Subject: Re: git stash while pending merge should not be allowed
+Date: Thu, 13 Jun 2013 16:59:21 -0700
+Message-ID: <51BA5CD9.7060007@coverity.com>
+References: <51B18331.6060302@coverity.com> <7v1u8du5as.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nicolas Pitre <nico@fluxnic.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 14 01:26:23 2013
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 14 01:59:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnGuL-0000CB-Hr
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 01:26:21 +0200
+	id 1UnHQc-0006Kg-Or
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 01:59:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758911Ab3FMX0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jun 2013 19:26:14 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50493 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758877Ab3FMX0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 19:26:12 -0400
-Received: (qmail 25218 invoked by uid 102); 13 Jun 2013 23:27:05 -0000
-Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Jun 2013 18:27:05 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jun 2013 19:26:08 -0400
-Content-Disposition: inline
+	id S1759236Ab3FMX7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 19:59:39 -0400
+Received: from mail-db8lp0185.outbound.messaging.microsoft.com ([213.199.154.185]:44914
+	"EHLO db8outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759227Ab3FMX7i (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Jun 2013 19:59:38 -0400
+Received: from mail17-db8-R.bigfish.com (10.174.8.244) by
+ DB8EHSOBE005.bigfish.com (10.174.4.68) with Microsoft SMTP Server id
+ 14.1.225.23; Thu, 13 Jun 2013 23:59:36 +0000
+Received: from mail17-db8 (localhost [127.0.0.1])	by mail17-db8-R.bigfish.com
+ (Postfix) with ESMTP id 378C1B40173;	Thu, 13 Jun 2013 23:59:36 +0000 (UTC)
+X-Forefront-Antispam-Report: CIP:157.56.242.197;KIP:(null);UIP:(null);IPV:NLI;H:BL2PRD0512HT001.namprd05.prod.outlook.com;RD:none;EFVD:NLI
+X-SpamScore: -3
+X-BigFish: PS-3(zzbb2dI98dI1432Izz1f42h1ee6h1de0h1fdah1202h1e76h1d1ah1d2ah1fc6hzz8275bhz2fh2a8h668h839h947hd25he5bhf0ah1288h12a5h12a9h12bdh137ah13b6h1441h1504h1537h153bh162dh1631h1758h1765h18e1h190ch1946h19b4h19c3h19ceh1ad9h1b0ah1d0ch1d2eh1d3fh1dfeh1dffh1e1dh1155h)
+Received-SPF: pass (mail17-db8: domain of coverity.com designates 157.56.242.197 as permitted sender) client-ip=157.56.242.197; envelope-from=smcpeak@coverity.com; helo=BL2PRD0512HT001.namprd05.prod.outlook.com ;.outlook.com ;
+Received: from mail17-db8 (localhost.localdomain [127.0.0.1]) by mail17-db8
+ (MessageSwitch) id 1371167973607003_20868; Thu, 13 Jun 2013 23:59:33 +0000
+ (UTC)
+Received: from DB8EHSMHS032.bigfish.com (unknown [10.174.8.235])	by
+ mail17-db8.bigfish.com (Postfix) with ESMTP id 9008F240048;	Thu, 13 Jun 2013
+ 23:59:33 +0000 (UTC)
+Received: from BL2PRD0512HT001.namprd05.prod.outlook.com (157.56.242.197) by
+ DB8EHSMHS032.bigfish.com (10.174.4.42) with Microsoft SMTP Server (TLS) id
+ 14.16.227.3; Thu, 13 Jun 2013 23:59:33 +0000
+Received: from BY2PRD0310HT001.namprd03.prod.outlook.com (157.56.236.5) by
+ pod51010.outlook.com (10.255.233.34) with Microsoft SMTP Server (TLS) id
+ 14.16.324.0; Thu, 13 Jun 2013 23:59:24 +0000
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <7v1u8du5as.fsf@alter.siamese.dyndns.org>
+X-Originating-IP: [157.56.236.5]
+X-OriginatorOrg: coverity.com
+X-FOPE-CONNECTOR: Id%0$Dn%*$RO%0$TLS%0$FQDN%$TlsDn%
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227784>
 
-When we try to load an object from disk and fail, our
-general strategy is to see if we can get it from somewhere
-else (e.g., a loose object). That lets users fix corruption
-problems by copying known-good versions of objects into the
-object database.
+On 06/07/13 11:47, Junio C Hamano wrote:
+> Scott McPeak <smcpeak@coverity.com> writes:
+>
+>> I suggest that this problem could easily have been avoided if "git
+>> stash" refused to run with a pending merge (present MERGE_HEAD file),
+>> since this is crucial repository state that it does not save.  This
+>> seems similar to what "git cherry-pick" does.
+>
+> Sounds senslbe.  What do we want to see happen in other states, in
+> which Git gives control back to the user asking for help before
+> moving forward (e.g. am, rebase, cherry-pick, revert)?
 
-We already handle the case where we were not able to read
-the delta from disk. However, when we find that the delta we
-read does not apply, we simply die.  This case is harder to
-trigger, as corruption in the delta data itself would
-trigger a crc error from zlib.  However, a corruption that
-pointed us at the wrong delta base might cause it.
+If you're asking me, I don't know.  My first thought is if there is any 
+pending state that "stash" doesn't save, stash should refuse to run. 
+But I don't know know very much about some of those commands.
 
-We can do the same "fail and try to find the object
-elsewhere" trick instead of dying. This not only gives us a
-chance to recover, but also puts us on code paths that will
-alert the user to the problem (with the current message,
-they do not even know which sha1 caused the problem).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I needed this earlier today to recover from a corrupted packfile (I
-fortunately had an older version of the repo in backups). Still tracking
-down the exact nature of the corruption.
-
- sha1_file.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 5c08701..d458708 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2135,8 +2135,17 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
- 		data = patch_delta(base, base_size,
- 				   delta_data, delta_size,
- 				   &size);
-+
-+		/*
-+		 * We could not apply the delta; warn the user, but keep going.
-+		 * Our failure will be noticed either in the next iteration of
-+		 * the loop, or if this is the final delta, in the caller when
-+		 * we return NULL. Those code paths will take care of making
-+		 * a more explicit warning and retrying with another copy of
-+		 * the object.
-+		 */
- 		if (!data)
--			die("failed to apply delta");
-+			error("failed to apply delta");
- 
- 		free(delta_data);
- 	}
--- 
-1.8.3.rc2.14.g7eee6b3
+-Scott
