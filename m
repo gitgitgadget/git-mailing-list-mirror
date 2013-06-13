@@ -1,88 +1,101 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] am: handle stray $dotest directory case
-Date: Thu, 13 Jun 2013 19:47:11 +0530
-Message-ID: <1371133031-28049-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 13 16:15:28 2013
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: slow process of post-receive script on a remote (samba) share
+Date: Thu, 13 Jun 2013 16:29:15 +0200
+Message-ID: <87txl2jd8k.fsf@linux-k42r.v.cablecom.net>
+References: <CAH+Cn14TLpR1KT+3GND2Zmb8tDmFBP7AWpyrT7nVeMFw6V7FGA@mail.gmail.com>
+	<87li6eqk2a.fsf@linux-k42r.v.cablecom.net>
+	<CAH+Cn14neoV9eXqBAj6_MPXTXK00S=-MnBYs20gaBLZ7YjL00Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>
+To: Tamas Csabina <tcsabina@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 13 16:29:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Un8J9-0006AG-A8
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 16:15:23 +0200
+	id 1Un8Wg-0000yp-3B
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 16:29:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752960Ab3FMOPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jun 2013 10:15:19 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:44401 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751640Ab3FMOPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 10:15:17 -0400
-Received: by mail-pb0-f49.google.com with SMTP id jt11so10460069pbb.36
-        for <git@vger.kernel.org>; Thu, 13 Jun 2013 07:15:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=S4IKY7HITEjY3Uky0s3JmXgyvcZt3n2V9Tz9Rr8Ds98=;
-        b=ELJ07SIWgTEomUKHBMr1bI8rb3xO+pLLDgdsqKNRyDEVz33srPnxMrz/jDhMknStYK
-         dZQecaXkBHAYeFgyrbIcbG165zfKed0Qf737WEMiu15We/P9IlRnkiOYvIUmVgWJgUwb
-         VVEzdlYzhAYwhgPNgfEyq+LfXvHMWroxLq4u4khjwBfep7E+UXsLfF3KsttqHRl787Cs
-         5Bkpkur4prYVbBMuC+BxPIGRnQ9hduEB0mlrtRCv5zZ/2FcVP1qhsdws9GRCLIR9aY3r
-         n3x6VEuuanEJ6QwmFbwJzwd7vGHanrPGTgeHNKkAWsmiCHGUh3DqBhSGm2c5uhtgmp40
-         MJZw==
-X-Received: by 10.66.250.225 with SMTP id zf1mr3034185pac.39.1371132916784;
-        Thu, 13 Jun 2013 07:15:16 -0700 (PDT)
-Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPSA id kv2sm23536776pbc.28.2013.06.13.07.15.14
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 13 Jun 2013 07:15:16 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1.379.ged35616
+	id S1755868Ab3FMO3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 10:29:18 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:13494 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753358Ab3FMO3R (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jun 2013 10:29:17 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 13 Jun
+ 2013 16:29:08 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 13 Jun 2013 16:29:15 +0200
+In-Reply-To: <CAH+Cn14neoV9eXqBAj6_MPXTXK00S=-MnBYs20gaBLZ7YjL00Q@mail.gmail.com>
+	(Tamas Csabina's message of "Thu, 13 Jun 2013 15:47:32 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227739>
 
-The following bug has been observed since rr/rebase-autostash:
+Tamas Csabina <tcsabina@gmail.com> writes:
 
-  $ git am  # no input file
-  ^C
-  $ git am --abort
-  Resolve operation not in progress, we are not resuming.
+> Meanwhile I`ve figured it out that the sluggish post-receive execution
+> was due to a (mis)-configuration in the samba share where the remote
+> repository is hosted. These are:
+> oplocks = No
+> level2 oplocks = No
+[...]
+> Now, do I have to worry about allowing oplocks on the remote
+> repository from the git point of view? Thinking about concurrent push
+> operations from different developers?
 
-This happens because the following test fails:
+>From a brief glance at the relevant docs [1], it would seem that oplocks
+are actually just an implementation detail for safe (in the context of
+parallel access) client caching.  So they should be fully transparent to
+any application usage.  However, the docs do mention that you may be in
+trouble if the connection to the server times out.
 
-  test -d "$dotest" && test -f "$dotest/last" && test -f "$dotest/next"
+That being said, some FSes see more usage and thus have been tested more
+in this context, and git does tend to show some pretty weird issues on
+broken network FSes (one such case: Lustre[2]).
 
-and am precludes the possibility of a stray $dotest directory
-existing (when $dotest/{last,next} are not present).
+In addition, there are some known races w.r.t. the handling of refs, and
+of pruning, if you run git-gc while concurrent pushes are going on.
+Jeff King and Michael Haggerty are currently working on getting them
+fixed, see e.g. [3].  To see these, you'll have to hit the repo much
+harder than a small team can.
 
-Fix the bug by checking for a stray $dotest directory explicitly and
-removing it on --abort.
+So it *should* work, at least if you disable gc.auto and run git-gc
+manually at some safe time.  But I wouldn't be surprised if there are
+bugs lurking in the context of Windows usage on a Samba-hosted repo,
+which sounds like a very rare combination.
 
-Reported-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- git-am.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+And in any case, don't take my word for it; if your life or company
+depends on this, you'll need to do your own testing to ensure that it
+holds up.
 
-diff --git a/git-am.sh b/git-am.sh
-index 1cf3d1d..f46a123 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -506,6 +506,11 @@ then
- 	esac
- 	rm -f "$dotest/dirtyindex"
- else
-+	# Possible stray $dotest directory
-+	if test -d "$dotest" && test t = "$abort"; then
-+		clean_abort
-+	fi
-+
- 	# Make sure we are not given --skip, --resolved, nor --abort
- 	test "$skip$resolved$abort" = "" ||
- 		die "$(gettext "Resolve operation not in progress, we are not resuming.")"
+
+Oh, and why do it that way?  You would most likely get much better
+performance out of it if you hosted the repo over ssh (e.g. with
+gitolite[4]) or a smart-http server, since the expensive operations (and
+they are *expensive*) would be completely local to the server.  The
+tradeoff there is that it also shifts a lot of CPU work to the server,
+but if you can afford it, you should see a great speedup especially when
+fetching large amounts of data (e.g. at cloen time).
+
+
+
+[1]  http://www.samba.org/samba/docs/man/Samba-HOWTO-Collection/locking.html#id2615667
+
+[2]  http://thread.gmane.org/gmane.comp.version-control.git/212109
+
+[3]  http://thread.gmane.org/gmane.comp.version-control.git/223299
+
+[4]  http://gitolite.com/gitolite/
+
 -- 
-1.8.3.1.379.ged35616
+Thomas Rast
+trast@{inf,student}.ethz.ch
