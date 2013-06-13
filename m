@@ -1,80 +1,85 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/3] Move copy_note_for_rewrite + friends from
- builtin/notes.c to notes-utils.c
-Date: Thu, 13 Jun 2013 08:13:03 -0500
-Message-ID: <CAMP44s0Ng=d_h2dewZzSDk3LcXHNmz_8mGRXL43LE=iWOigN_w@mail.gmail.com>
-References: <7vehc8a05n.fsf@alter.siamese.dyndns.org>
-	<1370995981-1553-1-git-send-email-johan@herland.net>
-	<1370995981-1553-3-git-send-email-johan@herland.net>
-	<CAMP44s2pUW_+w6B_R-A=vxOg1Ay6iLmc4MQsA_sfDF+GP-XsWw@mail.gmail.com>
-	<CALKQrgfxrKz5bB=AAmL1ZtBFRK2Bx6TrRd1AsMEVv8bTAH0KCg@mail.gmail.com>
-	<CAMP44s3KAeDPo1Cw8eFsU=A6H7oUGmf+eLAMvGV+R2_hPXHLbw@mail.gmail.com>
-	<20130613064521.GA21707@inner.h.apk.li>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johan Herland <johan@herland.net>, gitster@pobox.com,
-	git@vger.kernel.org, jrnieder@gmail.com, pclouds@gmail.com,
-	artagnon@gmail.com, john@keeping.me.uk, vfr@lyx.org, peff@peff.net,
-	torvalds@linux-foundation.org, Thomas Rast <trast@inf.ethz.ch>
-To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 13 15:13:12 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 2/6] rebase: prepare to write reflog message for checkout
+Date: Thu, 13 Jun 2013 19:02:25 +0530
+Message-ID: <1371130349-30651-3-git-send-email-artagnon@gmail.com>
+References: <1371130349-30651-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 13 15:30:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Un7Kx-0005lF-Q0
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 15:13:12 +0200
+	id 1Un7c9-0003x5-PI
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 15:30:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755567Ab3FMNNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jun 2013 09:13:07 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:53793 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753529Ab3FMNNF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 09:13:05 -0400
-Received: by mail-lb0-f169.google.com with SMTP id d10so9721671lbj.0
-        for <git@vger.kernel.org>; Thu, 13 Jun 2013 06:13:03 -0700 (PDT)
+	id S1758568Ab3FMNan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 09:30:43 -0400
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:65302 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758178Ab3FMNak (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jun 2013 09:30:40 -0400
+Received: by mail-pb0-f41.google.com with SMTP id rp16so6837436pbb.0
+        for <git@vger.kernel.org>; Thu, 13 Jun 2013 06:30:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=zFa6rQmBK+GEyn/amgYyg+rB7GxIE9sfC7y9AwMb86k=;
-        b=sjMYXNrTycSESLJkBKzKzw6JezGNTP5WmbTz1RZUSkoEqDonbw8MHMjdBQIFFTPWKl
-         C8fDIZpidCH9JwJdsnSyZr9JRaTczuPtD+dNvOSuc0dP/ovWaaLpezEM2zcbrp9LsGvi
-         uojqnAM78Ml/NCjhQl3g4GqKm3+zs0MuE6LJ2kJPPxNajKTQY+qoerp6tf1uIrmjgdlV
-         XDr4OUnymCfCDQvMSpTxxD2C1nbyeThOVgEeoCPHrRJjt5Qawe8CGzFSRojzlEPqlfqf
-         FbHqKHYJguM8buviEXxW6H5OydBb2P56GJ7RtErbMbsUaESptD/P2WySBSy+rTU1YG/D
-         yDag==
-X-Received: by 10.112.157.226 with SMTP id wp2mr1274905lbb.65.1371129183347;
- Thu, 13 Jun 2013 06:13:03 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Thu, 13 Jun 2013 06:13:03 -0700 (PDT)
-In-Reply-To: <20130613064521.GA21707@inner.h.apk.li>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=r0CmykdiMDQ+GM6QTl4MPAQHuSt9DDqDQ/sOeR/7oWA=;
+        b=DBcG1oj3fwJ6l/qV/7Aqpq6q+dieni3g/RXqZ11LCOPVFylVR0fu41oRRQMxxfVy0X
+         qC7oYaHLQoIswWSFO/Q2M68FuLlgMjCCpRqokYUsi/7F6AZgooVDSFwsTCNvACAS2aTg
+         2LcGJD90nMZXCrXfZ/enbw2Gqrxqsx+EIK8b/gxhZIalM6mCMIqANwJ4kKi8rTkik1A2
+         DRtSCICQYDYwsBhoq+T1gTpFVxLPc3n5BsDKIr5SmS1lg8RWvuH0eRP7xuUucJeRtiNa
+         V1+qCTi/INI4lPrH2tQMHwlcd26vn2udOqnOb7tkKL1cU1FC+hwKfzwW8QoRZaT2IhHg
+         Iodg==
+X-Received: by 10.68.241.228 with SMTP id wl4mr806378pbc.145.1371130240329;
+        Thu, 13 Jun 2013 06:30:40 -0700 (PDT)
+Received: from luneth.maa.corp.collab.net ([182.71.239.158])
+        by mx.google.com with ESMTPSA id re16sm4581222pac.16.2013.06.13.06.30.38
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 13 Jun 2013 06:30:39 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.384.g7cec0b4
+In-Reply-To: <1371130349-30651-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227728>
 
-On Thu, Jun 13, 2013 at 1:45 AM, Andreas Krey <a.krey@gmx.de> wrote:
-> On Wed, 12 Jun 2013 13:28:05 +0000, Felipe Contreras wrote:
-> ...
->> And you are
->> doing that with the express purpose of annoying.
->
-> Where did 'assume good faith' go to today?
+rebase should never write "checkout: " messages to the reflog, since it
+is highly confusing to the end user, and breaks
+grab_nth_branch_checkout(), as demonstrated by failing tests
+in t/checkout-last.  Set a sensible GIT_REFLOG_ACTION: checkout does not
+respect GIT_REFLOG_ACTION yet, but this defect will be addressed in a
+future patch.
 
-Did you read the last part?
+When the defect is addressed, rebase will write the following line to
+the reflog when started:
 
-"This does not mean that one should continue to assume good faith when
-there's evidence to the contrary."
+  rebase: checkout master
 
-That being said, my evidence was not solid, and while there is still
-the possibility that he was indeed acting in good faith, I've received
-no response from him, and Junio has committed the change without any
-mentioning of where the idea come from.
+This is much better than the confusing message it currently writes:
 
-Either way, I bet you my good faith suggestion will *not* end up in
-the official guidelines, nor will any suggestion of mine.
+  checkout: moving from master to 1462b67
 
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ git-rebase.sh | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/git-rebase.sh b/git-rebase.sh
+index d0c11a9..6587019 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -568,6 +568,8 @@ test "$type" = interactive && run_specific_rebase
+ 
+ # Detach HEAD and reset the tree
+ say "$(gettext "First, rewinding head to replay your work on top of it...")"
++
++GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
+ git checkout -q "$onto^0" || die "could not detach HEAD"
+ git update-ref ORIG_HEAD $orig_head
+ 
 -- 
-Felipe Contreras
+1.8.3.1.384.g7cec0b4
