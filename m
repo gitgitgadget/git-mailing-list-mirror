@@ -1,88 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC] show-branch: use pager
-Date: Thu, 13 Jun 2013 10:33:40 -0700
-Message-ID: <7vobb9vrt7.fsf@alter.siamese.dyndns.org>
-References: <1371105811-3112-1-git-send-email-oystwa@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] am: handle stray $dotest directory case
+Date: Thu, 13 Jun 2013 23:03:56 +0530
+Message-ID: <CALkWK0mUnNTfJQuGQAoMtnsOXvXU+z+W6D_MMuio1sq4vkucjA@mail.gmail.com>
+References: <1371133031-28049-1-git-send-email-artagnon@gmail.com> <7v61xivsxh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, peff@peff.net,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 13 19:33:52 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 13 19:34:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnBPA-0006a6-7S
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 19:33:48 +0200
+	id 1UnBQ4-0007Ns-MR
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 19:34:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756159Ab3FMRdo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Jun 2013 13:33:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48089 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752653Ab3FMRdn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Jun 2013 13:33:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39F4B27170;
-	Thu, 13 Jun 2013 17:33:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=smNRrqpjnCVU
-	j4md0aGAWRQmvK8=; b=fMr8AgOr17J4EUe3HXbUPv6rmGNyiIOQj++XuhcqMfvl
-	yRjlVh1Cn1yGBy8n7BJhHPlikUdETf9P/qAWthFIfVIdcKOl+Do09AeB7R5fUhyX
-	KrrOgGilEwMZ3Ct8+f1kak0DyAR9Ph3KfUA/zdUG/uxdO6mmNVxLbICFlFFbotw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=tOsIcv
-	AIxB6FqODL6vKIWmkqaVc7X7nFjdNFnFXsCpnYHroyCgrbBsXGd4sQwJgPwX1qtR
-	miz1oE9Ks65xvSiQbu1aLyF+h9zCh4iPkQyAhswnkroSHHVz93yZ7akkMB4Kc5VV
-	yt7IrRsKs9Ur1ejbbe/vXjSAICKInDdXk4zp0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CC432716F;
-	Thu, 13 Jun 2013 17:33:43 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A2CC62715E;
-	Thu, 13 Jun 2013 17:33:41 +0000 (UTC)
-In-Reply-To: <1371105811-3112-1-git-send-email-oystwa@gmail.com>
- (=?utf-8?Q?=22=C3=98ystein?=
-	Walle"'s message of "Thu, 13 Jun 2013 08:43:31 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 63D25918-D44F-11E2-B3F8-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758676Ab3FMRej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 13:34:39 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:54208 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756046Ab3FMReh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jun 2013 13:34:37 -0400
+Received: by mail-ie0-f182.google.com with SMTP id s9so12326035iec.13
+        for <git@vger.kernel.org>; Thu, 13 Jun 2013 10:34:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=S9VzDhADi6EvK72p1FTw0S/RN+t1UIDIeAdNgh+zyEQ=;
+        b=Sk2ztAF75S2WX3zHbCebfU+1iaJJMu5tdl4KUVvmMnEazu31VUYhfXpAi/VR4FSbKY
+         eH/fp/ZfY6PPg92kLexulYA5Pip2POz1/oyhZUzsJSu1yW0s8J2p6Y3KoFjcnJK4eVvv
+         Z5YOnFjdTahfxJL0y2xM/qh9LrAgE+gBuoq4Nr4ey9tXDQhk5Hq8baUbV9Pu0+OfMypO
+         wRhMyyBSyCEUIaI/SbQVh6tjC+edrPGIi3UH0pxtfwmYOjQHIoAl2LomjybbHE3D47EO
+         9xBnEYNBCuobsYebch9pVotLd+YZQqk2L9rMn3Qhwodze0XtE1Vg2jGoW80ZIJhpvXST
+         kttw==
+X-Received: by 10.50.98.104 with SMTP id eh8mr6028699igb.111.1371144876740;
+ Thu, 13 Jun 2013 10:34:36 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Thu, 13 Jun 2013 10:33:56 -0700 (PDT)
+In-Reply-To: <7v61xivsxh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227752>
 
-=C3=98ystein Walle <oystwa@gmail.com> writes:
-
-> This is for consistency with other porcelain commands such as 'log'.
+Junio C Hamano wrote:
+> Perhaps _that_ guarding condition is what needs
+> to be fixed, by reverting it back to just "does $dotest exist?"
 >
-> Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
-> ---
-> The rationale for this patch I hope is consicely explained in the com=
-mit
-> message. I was rather surprised it didn't use a pager as I've gotten =
-used to it
-> for most commands.
->
-> I marked this as an RFC because of Jeff King's comments in
-> daa0c3d97 where I got the impression this this might not be a good id=
-ea.
-> However I haven't found any bugs and all the tests pass.
+> Adding a single case workaround smells like a band-aid to me.
 
-The tests are run largely without tty to allow them to run
-unattended, aren't they?
+Like I pointed out earlier, the original codepath is not equipped to
+handle this case.  A "normal" git am --abort runs:
 
-I think it makes a lot of sense to use pager by default for the
-normal show-branch output.  I however do not think pager should
-apply to other modes (e.g. --independent, --merge-base).
+  git read-tree --reset -u HEAD ORIG_HEAD
+  git reset ORIG_HEAD
 
-But the use of these other modes are meant to be on the upstream
-side of a pipe or to be written out to a file, so a blanket call to
-setup_pager() before you even discover what mode we are in would not
-hurt in practice.
+blowing away the top commit in the scenario you outlined.
+
+This happens because that codepath incorrectly believes that an am is
+"in progress".  What this means is that it believes that some of the
+am code actually got executed in the previous run, setting ORIG_HEAD
+etc.  In your scenario
+
+  % git am
+  ^C
+
+nothing is executed, and a stray directory is left behind.
+
+If anything, I think the check for $dotest/{next,last} has made the
+code more robust by correctly verifying that some code did get
+executed, and that an am is indeed in progress.  The bug you have
+outlined is equivalent to:
+
+  % mkdir .git/rebase-apply
+  % git am --abort
+
+Therefore, the fix is to treat it as exactly that: a stray directory
+that needs to be cleaned up in the codepath that treats it as a "fresh
+run"; not going through the "normal" am --abort logic and blowing away
+the top commit.
+
+Makes sense?
