@@ -1,100 +1,133 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 3/3] rebase: finish_rebase() in noop rebase
-Date: Thu, 13 Jun 2013 21:36:13 +0530
-Message-ID: <1371139573-28047-4-git-send-email-artagnon@gmail.com>
-References: <1371139573-28047-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 13 18:08:43 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] push: make upstream, simple work with pushdefault
+Date: Thu, 13 Jun 2013 09:48:54 -0700
+Message-ID: <7vehc6vtvt.fsf@alter.siamese.dyndns.org>
+References: <1370798000-2358-1-git-send-email-artagnon@gmail.com>
+	<1370798000-2358-3-git-send-email-artagnon@gmail.com>
+	<7vip1moq3k.fsf@alter.siamese.dyndns.org>
+	<CALkWK0mesZay8Cpi6yTvhUG=136=9JLyFUZXm8t_fMOrY0F62Q@mail.gmail.com>
+	<7v4nd6l31d.fsf@alter.siamese.dyndns.org>
+	<CALkWK0mY5=H6FoUZCOXTYykEV1f=3wrP21WPXj1v4VBCeOxocg@mail.gmail.com>
+	<7vwqq2j7c9.fsf@alter.siamese.dyndns.org>
+	<CALkWK0mfWs3LBocvn=QMcX0_ZCROx4Nw=+xjpCbKLQU0JzSdXg@mail.gmail.com>
+	<7vobbdhjeg.fsf@alter.siamese.dyndns.org>
+	<CALkWK0mDDKETE1O=g7X5s5MJvU7UA_NQiMNESor_8=phW0WR-A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Leandro Lucarella <leandro.lucarella@sociomantic.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 13 18:49:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnA4b-0005m0-EZ
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 18:08:29 +0200
+	id 1UnAhu-0005Rq-W2
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 18:49:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755782Ab3FMQIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jun 2013 12:08:18 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:45031 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755428Ab3FMQIQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 12:08:16 -0400
-Received: by mail-pb0-f49.google.com with SMTP id jt11so10452696pbb.22
-        for <git@vger.kernel.org>; Thu, 13 Jun 2013 09:08:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=l15bf5/Mc7ZrQYviOavU2LmOgXQj/GXdENl/zX2WFwY=;
-        b=f+fU3Zy/VBRjq4pFqiTGPxjcukfn+TiChojod7Hk0PFfh96VyL0cHjx0hreUggCpCW
-         3w+GyRdHL4PBwghh1L9fW/yY4OQHFELe70hgFt/70ByK3zlFQ70C/lCOu09ecYRaezcf
-         pbv6unhIEeVWH0c/p7rKWTM+g69+Q20A7mdshqRpVyHHfcBXCECEAa3jCu1hTBvCh3pY
-         SJGmx2pMvWaRcvW/6/oCAp24KZ5Yi5j21pLJH0KQo8MqlNwj1CfCPBXQZ1+2cX6fZfep
-         CLPkGlnN0XT0P09LeXBIx2uNBuLX4g+ssVbc0M/gN+MIn+XyxVqOlgD8WM/1emxkvHcJ
-         0L3Q==
-X-Received: by 10.66.255.72 with SMTP id ao8mr3531540pad.3.1371139695574;
-        Thu, 13 Jun 2013 09:08:15 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.213.38])
-        by mx.google.com with ESMTPSA id rn7sm23911564pbc.12.2013.06.13.09.08.13
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 13 Jun 2013 09:08:14 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1.381.gf08dd97.dirty
-In-Reply-To: <1371139573-28047-1-git-send-email-artagnon@gmail.com>
+	id S1757366Ab3FMQtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 12:49:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65488 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756653Ab3FMQtA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jun 2013 12:49:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C04326162;
+	Thu, 13 Jun 2013 16:48:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=P4yckFGZcmwHbUO3+8fibcjTUcQ=; b=Py+Ytg
+	Mv1SbTktD5RqH0rkLem486SbF8oiTDjyOGC+3SLQYnKz+hucpn572xDVbQPKOV3y
+	7eGMR+pNDvZTxWGS50lJVGn+qeDDjGugkCxRHmCERmfwUCWVPoRnQm1FE4heQF8T
+	kRjqksctrOvE863ra7KfSjK/IdRldsmNZ1ecs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xDsmVBY2vAFgPtrhXYwn8VvrAcnvt42L
+	EPMHeuOfMv/ezoJJa4e0ctZrXvKF8YlGot7/+dIcP+raAboY91ZbZ0rYUoB1EQk5
+	ZeNoBSa5cpDpckfnqU4EjYj7SCZ8r3XgKeGZbIJenoUZMwJWVgeWsAABncZuj0LP
+	N4g+kN4nUKc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 719F32615F;
+	Thu, 13 Jun 2013 16:48:57 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94FB12615A;
+	Thu, 13 Jun 2013 16:48:56 +0000 (UTC)
+In-Reply-To: <CALkWK0mDDKETE1O=g7X5s5MJvU7UA_NQiMNESor_8=phW0WR-A@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Thu, 13 Jun 2013 14:40:44 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 23672134-D449-11E2-8DCF-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227746>
 
-In the following case
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-  $ git rebase master
-  Current branch autostash-fix is up to date.
+> Junio C Hamano wrote:
+>
+>> [...]
+>
+> Okay, so what you're saying makes sense.
 
-the autostash is not applied automatically, because this codepath
-forgets to call finish_rebase().  Fix this.  Also add a test to guard
-against regressions.
+That is not a very useful style of quoting; what did you just agree to?
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- git-rebase.sh               |  1 +
- t/t3420-rebase-autostash.sh | 11 +++++++++++
- 2 files changed, 12 insertions(+)
+I think we should step back and clarify the "to which repository the
+push goes" and "what branch(es) in that chosen repository is
+updated".  The former is determined by your original "triangular"
+topic in the recent world order.
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 154d4be..2d5c2bd 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -547,6 +547,7 @@ then
- 		# Lazily switch to the target branch if needed...
- 		test -z "$switch_to" || git checkout "$switch_to" --
- 		say "$(eval_gettext "Current branch \$branch_name is up to date.")"
-+		finish_rebase
- 		exit 0
- 	else
- 		say "$(eval_gettext "Current branch \$branch_name is up to date, rebase forced.")"
-diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index 1bde007..90eb264 100755
---- a/t/t3420-rebase-autostash.sh
-+++ b/t/t3420-rebase-autostash.sh
-@@ -152,6 +152,17 @@ test_expect_success "rebase: fast-forward rebase" '
- 	git checkout feature-branch
- '
- 
-+test_expect_success "rebase: noop rebase" '
-+	test_config rebase.autostash true &&
-+	git reset --hard &&
-+	git checkout -b same-feature-branch feature-branch &&
-+	test_when_finished git branch -D same-feature-branch &&
-+	echo dirty >>file1 &&
-+	git rebase feature-branch &&
-+	grep dirty file1 &&
-+	git checkout feature-branch
-+'
-+
- testrebase "" .git/rebase-apply
- testrebase " --merge" .git/rebase-merge
- testrebase " --interactive" .git/rebase-merge
--- 
-1.8.3.1.381.gf08dd97.dirty
+The push.default specifies the logic/algorithm to decide the latter,
+when there is no stronger configuration is given (e.g. the push
+refspecs in remote.*.push, and branch.*.push).
+
+> - current: push "$(HEAD)".  No restrictions on destination.
+
+This updates the branch with the same name the current branch on the
+pushing side.
+
+> - matching: push ":" to the destination specified by the current
+> branch.
+
+This updates the branches in the destination repository, for which
+branches with the same name exists on the pushing side.
+
+> - upstream: In the special case when fetch source is equal to push
+> destination, push "$(HEAD):$(branch.$(HEAD).merge)".  Otherwise,
+> fallback to current.  Useful in central workflows.
+
+That looks to me as an inconsistent description.  If you are not
+pushing to where you fetched from, that is not even central.
+
+This is mean to update the branch that is fetched from and is
+integrated with the current branch with the tip of the current
+branch, so the branch at the destination repository that gets
+updated is branch.$current.merge.  It further means that the
+repository being pushed to must be the same as the repository we
+fetch from; otherwise it is an error.
+
+> - simple: [still haven't thought about what to do with this; I'm
+> generally not in favor of artificially crippling functionality by
+> erroring out]
+
+In a central workflow (i.e. repository we fetch from to update the
+current branch is the same as the repository we push the tip of this
+branch to), this works the same as upstream, but the configured
+branch.$current.merge has to be the same as the name of the current
+branch in the local repository; otherwise it is an error.
+
+In a triangular workflow TBD, but I think doing the same as current
+may be a good starting point.
+
+> Just like upstream respects branch.<name>.merge, current respects
+> branch.<name>.push, making branch-level ref mapping in triangular
+> workflows possible.
+
+I do not know we want to make branch.*.push linked to current.  If
+it is set, shouldn't that apply when push.default is "matching" and
+other values?  That is why I threw it in the same category as the
+traditional push refspecs in remote.*.push in the early part of this
+message.
