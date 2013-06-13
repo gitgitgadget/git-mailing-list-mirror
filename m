@@ -1,92 +1,118 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] prompt: squelch error output from cat
-Date: Thu, 13 Jun 2013 19:16:49 +0530
-Message-ID: <1371131209-32479-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 13 15:45:16 2013
+From: Tamas Csabina <tcsabina@gmail.com>
+Subject: Re: slow process of post-receive script on a remote (samba) share
+Date: Thu, 13 Jun 2013 15:47:32 +0200
+Message-ID: <CAH+Cn14neoV9eXqBAj6_MPXTXK00S=-MnBYs20gaBLZ7YjL00Q@mail.gmail.com>
+References: <CAH+Cn14TLpR1KT+3GND2Zmb8tDmFBP7AWpyrT7nVeMFw6V7FGA@mail.gmail.com>
+	<87li6eqk2a.fsf@linux-k42r.v.cablecom.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Jun 13 15:47:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Un7pz-0007GZ-1h
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 15:45:15 +0200
+	id 1Un7sI-0000mL-7H
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 15:47:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757076Ab3FMNo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jun 2013 09:44:58 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:59072 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756867Ab3FMNoz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 09:44:55 -0400
-Received: by mail-pd0-f178.google.com with SMTP id w11so6866020pde.9
-        for <git@vger.kernel.org>; Thu, 13 Jun 2013 06:44:55 -0700 (PDT)
+	id S1756323Ab3FMNrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 09:47:33 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:54769 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754688Ab3FMNrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jun 2013 09:47:33 -0400
+Received: by mail-ob0-f174.google.com with SMTP id wd20so15000990obb.33
+        for <git@vger.kernel.org>; Thu, 13 Jun 2013 06:47:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=UI20Ou7Txg0dVxjsbGGuE/sVD4J0EZSTz/3RFqTWX6Y=;
-        b=FDo4qTXbzlej76Il8oU8Ygsg3hwzJtzS82HJQER/3kF1PC6CFdqQ3QX2AoUmkMqVei
-         YSjWMaAr7fKwbgoI0RluyMqfo6wR/XNp+CjXEYavyryfkkI/7/z6PR41YJglwi4SK48j
-         CwXz+aiMe4Uz+WmcvEBMAAg+RAJItyyVJOkh6gXJn9dcTICF4xLxKipjQnR2qLdGfjFK
-         rNS2FuRP9hibnNl0cYSMlblwClnHNxMgTY1dyn/x0RdhnqvHZox9iRQB4M30PlAbROoX
-         EMGtN+hwyPy7HRj/y8lr43fywTK3hxjingMcW1Sv2AyE4F+PsHTIxX4YjqXE7xgp9M/o
-         aN5A==
-X-Received: by 10.68.170.193 with SMTP id ao1mr998689pbc.18.1371131095187;
-        Thu, 13 Jun 2013 06:44:55 -0700 (PDT)
-Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPSA id xz1sm29481103pab.5.2013.06.13.06.44.53
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 13 Jun 2013 06:44:54 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1.384.g7cec0b4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=y+9NuPp40Z75RY+44Rjfv2vBoebYmMs1xKReif0zmG8=;
+        b=FGYgbL6h2SiB6tJHgQWfZupY55lnknDVVVCpqpy6cER/PlZaUUQI0M3B6BDFYYXYJ4
+         cKxFs4M1/5R5Acxc/D6O0U5TeThR1hgnC9B5sk8etxpiwIt3q9ArJUt7/Jj8+TKpHnbG
+         DpRZxp2grN5qFytsY2PgGGVuqkXNEk39CfERSTlf43IIlvv2wYUXTYFgTp3SrfnMcwaw
+         oGpnhXNnEHLgStg7XOUm4jDL5pfnL2OvzOhDDtgNgcd5u3XGcJwDt8fEzPoElGkpMcmN
+         Ntm28O8LP1mGhAV+a7YaAa+DuBDenb8KOoimMaukd9Q4FjwTstF9E1ulAeK9UGlUsTa8
+         pocQ==
+X-Received: by 10.60.135.134 with SMTP id ps6mr705761oeb.114.1371131252594;
+ Thu, 13 Jun 2013 06:47:32 -0700 (PDT)
+Received: by 10.76.110.71 with HTTP; Thu, 13 Jun 2013 06:47:32 -0700 (PDT)
+In-Reply-To: <87li6eqk2a.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227737>
 
-The files $g/rebase-{merge,apply}/{head-name,msgnum,end} are not
-guaranteed to exist.  When attempting to cat them, squelch the error
-output to get rid of messages like these:
+Hi Thomas,
 
-  cat: .git/rebase-merge/msgnum: No such file or directory
-  cat: .git/rebase-merge/end: No such file or directory
+Thanks for the reply.
+The script is a bash script, just to mention.
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- contrib/completion/git-prompt.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Meanwhile I`ve figured it out that the sluggish post-receive execution
+was due to a (mis)-configuration in the samba share where the remote
+repository is hosted. These are:
+oplocks = No
+level2 oplocks = No
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 86a4f3f..07a6218 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -347,9 +347,9 @@ __git_ps1 ()
- 		local step=""
- 		local total=""
- 		if [ -d "$g/rebase-merge" ]; then
--			b="$(cat "$g/rebase-merge/head-name")"
--			step=$(cat "$g/rebase-merge/msgnum")
--			total=$(cat "$g/rebase-merge/end")
-+			b="$(cat "$g/rebase-merge/head-name" 2>/dev/null)"
-+			step=$(cat "$g/rebase-merge/msgnum" 2>/dev/null)
-+			total=$(cat "$g/rebase-merge/end" 2>/dev/null)
- 			if [ -f "$g/rebase-merge/interactive" ]; then
- 				r="|REBASE-i"
- 			else
-@@ -357,10 +357,10 @@ __git_ps1 ()
- 			fi
- 		else
- 			if [ -d "$g/rebase-apply" ]; then
--				step=$(cat "$g/rebase-apply/next")
--				total=$(cat "$g/rebase-apply/last")
-+				step=$(cat "$g/rebase-apply/next" 2>/dev/null)
-+				total=$(cat "$g/rebase-apply/last" 2>/dev/null)
- 				if [ -f "$g/rebase-apply/rebasing" ]; then
--					b="$(cat "$g/rebase-apply/head-name")"
-+					b="$(cat "$g/rebase-apply/head-name" 2>/dev/null)"
- 					r="|REBASE"
- 				elif [ -f "$g/rebase-apply/applying" ]; then
- 					r="|AM"
--- 
-1.8.3.1.384.g7cec0b4
+Removing these from the share`s section in the smb.conf solved the
+issue, and the push process is taking up around 4 seconds, which I
+think is reliable.
+
+
+Now, do I have to worry about allowing oplocks on the remote
+repository from the git point of view? Thinking about concurrent push
+operations from different developers?
+
+
+Tamas
+
+
+On 13 June 2013 14:19, Thomas Rast <trast@inf.ethz.ch> wrote:
+> Tamas Csabina <tcsabina@gmail.com> writes:
+>
+>> I am using Git bash from version 1.8.3.msysgit.0, on a Windows 7x64 PC.
+>> I have an issue with executing git push if I have a post-receive
+>> script configured.
+>> The content of the script is not really important, as if I have a
+>> script that contains only commented out lines (around 70 lines), my
+>> git push command is delayed with around 5 seconds.
+>>
+>>
+>> I`ve tested the script on another PC and it is working fine. No delay
+>> at all. So there are some issues on my PC regarding how git processes
+>> remote scripts.
+>>
+>> I took a wireshark trace with 2 scenarios on my PC:
+>>
+>>  1. just execute `cat <path_to_the_script>\post-receive` command in the git bash
+>>  2. did a `real` git push
+>>
+>> Results of the wireshark traces shows:
+>>
+>>  1. Read AndX Request, FID: 0x228f, 1024 bytes at offset 0 (1024 bytes
+>> at time, always)
+>>  2. Read AndX Request, FID: 0x21c9, 1 byte at offset 0 (1 byte, always)
+>>
+>> Conclusion:
+>> git push command reads the post-receive script in 1 byte chunks, which
+>> dramatically slows down the execution process.
+>
+> git doesn't read the script; the interpreter does.  In the case of a
+> script, the interpreter is specified in the #! line at the top; in the
+> case of a binary executable, it is specified within the executable (and
+> for linux, is usually /lib/ld-linux.so.2).
+>
+> Exactly the same should happen if you run the hook manually, so you can
+> try that to debug it.
+>
+> Note also that Weird Things(tm) relating to SIGPIPE may happen if you
+> don't read your input.  Even if you are only fooling around for testing,
+> a post-receive hook must consume its input, e.g., by discarding it with
+> 'cat >/dev/null'.
+>
+> --
+> Thomas Rast
+> trast@{inf,student}.ethz.ch
