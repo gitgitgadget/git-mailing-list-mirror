@@ -1,102 +1,87 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH jx/clean-interactive] t0060: skip a few relative_path
- tests on Windows
-Date: Thu, 13 Jun 2013 17:40:21 +0800
-Message-ID: <CANYiYbHQ307TroSd6Lk=5zg68jdKxGeA4N=hWGfaz1W29NhNVw@mail.gmail.com>
-References: <51B98186.2020100@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jun 13 11:40:28 2013
+From: benoit.person@ensimag.fr
+Subject: [PATCH/RFC V2 0/4] git-remote-mediawiki: new tool to preview local changes without pushing
+Date: Thu, 13 Jun 2013 12:07:15 +0200
+Message-ID: <1371118039-18925-1-git-send-email-benoit.person@ensimag.fr>
+Cc: Celestin Matte <celestin.matte@ensimag.fr>,
+	Jeff King <peff@peff.net>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Benoit Person <benoit.person@ensimag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 13 12:07:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Un415-0005VG-RB
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 11:40:28 +0200
+	id 1Un4RV-0007rX-JZ
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 12:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758254Ab3FMJkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jun 2013 05:40:24 -0400
-Received: from mail-we0-f169.google.com ([74.125.82.169]:44696 "EHLO
-	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755464Ab3FMJkX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 05:40:23 -0400
-Received: by mail-we0-f169.google.com with SMTP id n57so7880783wev.28
-        for <git@vger.kernel.org>; Thu, 13 Jun 2013 02:40:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=2Wwzpwdxd29BS0Eu50OdsVjqR6KGveDUfMKhSqeuTL8=;
-        b=eSa1m0PtxOPx2846jKGx5KVWAl7LuNWRNPBwWf+n2boFQlreAd5DFQ4aDnSNzIaBAD
-         pvtxcYphDC6UT4OtHx2JKpbpTkdtuP/tb2nZuMgTVAwUF/EO+QQPWsTa+4IYOi95SpNH
-         YxkiwIgrt21SmYQe1aIsayvMcE0sj2/TteJtA8xSRgDCw6EHxByMgnX7dIaVKrWBpdWR
-         4FbeKptKDu/8a901lhjgFWR+smMzwzaX7fd28trC1B8R+O4bin7EDNtPUN3GWsPKYrFb
-         e/s8sahomT3kjBLK06qLy2jSwpNCi46eL3X6QeFRzxnSp3oCAu6jIpRILKZQwYIJj0HF
-         oAPw==
-X-Received: by 10.180.87.162 with SMTP id az2mr7061447wib.10.1371116421553;
- Thu, 13 Jun 2013 02:40:21 -0700 (PDT)
-Received: by 10.194.176.129 with HTTP; Thu, 13 Jun 2013 02:40:21 -0700 (PDT)
-In-Reply-To: <51B98186.2020100@viscovery.net>
+	id S1758388Ab3FMKHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 06:07:41 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:36227 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756060Ab3FMKHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jun 2013 06:07:41 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5DA7WCN025732
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 13 Jun 2013 12:07:32 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5DA7Xpd011000;
+	Thu, 13 Jun 2013 12:07:33 +0200
+Received: from localhost.localdomain (ensibm [195.221.228.8])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5DA7Waa026514;
+	Thu, 13 Jun 2013 12:07:33 +0200
+X-Mailer: git-send-email 1.8.3.GIT
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 13 Jun 2013 12:07:32 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227711>
 
-2013/6/13 Johannes Sixt <j.sixt@viscovery.net>:
-> From: Johannes Sixt <j6t@kdbg.org>
->
-> The bash on Windows rewrites paths that look like absolute POSIX paths
-> when they are a command-line argument of a regular Windows program, such
-> as git and the test helpers. As a consequence, the actual tests performed
-> are not what the tests scripts expect.
->
-> The tests that need *not* be skipped are those where the two paths passed
-> to 'test-path-utils relative_path' have the same prefix and the result is
-> expected to be a relative path. This is because the rewriting changes
-> "/a/b" to "D:/Src/MSysGit/a/b", and when both inputs are extended the same
-> way, this just cancels out in the relative path computation.
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  t/t0060-path-utils.sh | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
+From: Benoit Person <benoit.person@ensimag.fr>
 
-Thank you for pointing out this cross-platform issue.
-I test your patch on Mac OS X, but not test it on msys yet.
-Since this issue is from the very first commit of this series
-and this series are still in pu, so I move your patch as
-patch 02/16 of this series.
+The #7 issue on git-mediawiki's issue tracker [1] states that the ability to
+preview content without pushing would be a nice thing to have.
 
-You can get the update series in my clone on GitHub:
+This serie is a second attempt to achieve it:
+  - It adds a new GitMediawiki.pm package to share code between the new tool and 
+    `git-remote-mediawiki.perl`. (PATCH 1 & 2)
+  - It creates a new "meta"-command `git mw` with subcommand handling (PATCH 3)
+  - It adds a new subcommand named `preview` to `git mw` (PATCH 4)
 
-    $ git remote add jiangxin git://github.com/jiangxin/git.git
-    $ git fetch jiangxin jx/clean-interactive
-    $ git log --oneline -16 jiangxin/jx/clean-interactive
+changes from the V0:
+  - add new package GitMediawiki
+    - move some of git-remote-mediawiki functions into the package
+    - update git-remote-mediawiki to use those "moved" functions
+    - add a hacky-way to install it in the Makefile
+    - use it in the new git mw tool
+  - add a way to give to the preview tool blobs as argument
+  - add a fallback when the upstream's branch remote is not a mediawiki remote
+  - update the `autoload` option to use `git web--browse` and not `xdg-open`
+  - update the way we find the upstream's branch remote name
 
-    c646c test: add t7301 for git-clean--interactive
-    92d4a git-clean: add documentation for interactive git-clean
-    22e3d git-clean: add ask each interactive action
-    5fcb8 git-clean: add select by numbers interactive action
-    77ef8e git-clean: add filter by pattern interactive action
-    02327 git-clean: use a git-add-interactive compatible UI
-    2322 git-clean: add colors to interactive git-clean
-    06fad git-clean: show items of del_list in columns
-    6ae8b git-clean: add support for -i/--interactive
-    1eeb5 git-clean: refactor git-clean into two phases
-    3f903 Refactor write_name_quoted_relative, remove unused params
-    8ccdf Refactor quote_path_relative, remove unused params
-    13da5e quote.c: remove path_relative, use relative_path instead
-    1208ee path.c: refactor relative_path(), not only strip prefix
-    95b06 t0060: skip a few relative_path tests on Windows
-    22247 test: add test cases for relative_path
+For now, this PATCH/RFC is based on the 'next' branch merged with the 
+bp/mediawiki-credential patch. For the final version, I will try 
+to rebase it on celestin's work with perlcritic.
 
-And commit 95b06 may squash to previous commit 22247.
+[1] https://github.com/moy/Git-Mediawiki/issues/7
+
+Benoit Person (4):
+  git-mw: Introduction of GitMediawiki.pm
+  git-mw: Moving some functions from git-remote-mediawiki.perl to
+    GitMediawiki.pm
+  git-mw: Adding git-mw.perl script
+  git-mw: Adding preview tool in git-mw.perl
+
+ contrib/mw-to-git/GitMediawiki.pm           |  94 +++++++++++
+ contrib/mw-to-git/Makefile                  |  22 ++-
+ contrib/mw-to-git/git-mw.perl               | 247 ++++++++++++++++++++++++++++
+ contrib/mw-to-git/git-remote-mediawiki.perl |  80 ++-------
+ 4 files changed, 373 insertions(+), 70 deletions(-)
+ create mode 100644 contrib/mw-to-git/GitMediawiki.pm
+ create mode 100644 contrib/mw-to-git/git-mw.perl
 
 -- 
-Jiang Xin
+1.8.3.GIT
