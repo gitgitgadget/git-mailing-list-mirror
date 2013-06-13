@@ -1,63 +1,101 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 5/6] status: do not depend on flaky reflog messages
-Date: Thu, 13 Jun 2013 23:45:41 +0530
-Message-ID: <CALkWK0=FLerEwaLzSbiT0fuBApgJFcH1eLfnLHQTCHFYvDm=DA@mail.gmail.com>
-References: <1371130349-30651-1-git-send-email-artagnon@gmail.com>
- <1371130349-30651-6-git-send-email-artagnon@gmail.com> <7vvc5hubox.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 13 20:16:27 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] reset: trivial refactoring
+Date: Thu, 13 Jun 2013 13:15:05 -0500
+Message-ID: <1371147305-20771-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 13 20:17:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnC4Q-0006fW-E7
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 20:16:26 +0200
+	id 1UnC58-0007Jz-Ji
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 20:17:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758262Ab3FMSQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jun 2013 14:16:22 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:43082 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754414Ab3FMSQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 14:16:21 -0400
-Received: by mail-ie0-f170.google.com with SMTP id e11so11545038iej.29
-        for <git@vger.kernel.org>; Thu, 13 Jun 2013 11:16:21 -0700 (PDT)
+	id S1758872Ab3FMSRE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 14:17:04 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:45245 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758869Ab3FMSRB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jun 2013 14:17:01 -0400
+Received: by mail-ob0-f178.google.com with SMTP id fb19so15286728obc.37
+        for <git@vger.kernel.org>; Thu, 13 Jun 2013 11:17:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=EnE5hiI9ARsxpAm08+e8YV6qF+/i5Zq9GofGh+uEkaQ=;
-        b=Twxy3Ka3tknYt3wJLvUh+NhUVvVwXPHgZLDm26pgpwEeVDBqT20EVCjBlpv3EqYNEC
-         MVk8owheeD1xTZa39nLHBBAbFX0DL0fOrsDZEm1c5g0LbRPLBxzVyFdCh2+VhYoh+Y73
-         3RW8s9TQzrUaRBBICD2XkJsMTgtSF0kzBk0N+dWoVE2qgeGdNtMigbnRG0hOXUc8wZEy
-         HrE3nVVxjdaGTDxrHcZZ3NJvIerA6XcVh+uRlPk2hRiu1YdYOeF21gGYSFWHu5TQDo5I
-         4z1TMgCORiZJnuMAfaCf6ofvBafTlNA8aT+37MP/mWOhWml9ZqevQKATOUgiixiTPQ7A
-         gXnQ==
-X-Received: by 10.50.3.37 with SMTP id 5mr941206igz.0.1371147381506; Thu, 13
- Jun 2013 11:16:21 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Thu, 13 Jun 2013 11:15:41 -0700 (PDT)
-In-Reply-To: <7vvc5hubox.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=NqOaiIM85JX9bWeN1Eep4X7N+lj4IYp5Z5hoC8qtP1k=;
+        b=OWGcSlbxJYBo1oj4xG0N12wh4wbcKEumLFGDIct9Cxv/WBmG9muWd+9Mr4a/7MypPR
+         uE0H9fpNmkHlUgDIIwDLOPSFWzJ3zcxwNk6hnM1DKFwlUulcmr61yiK8M2m2mYQk5yIt
+         ztX3FmFIssXrhFP0m3JUJaeHIdQ6raQhUTQP/8P6y8eb81jn5ss4EDAJZvSyieURBm2b
+         PIUHIDpWmVKeXHcZ+qecx+WvED73VT9soDlsByGnrlcNsZ9xdoWUIolKlz6P3YKOgJue
+         IUzYL1WKXPkOPm4sn3sS52DtDwx5St/l509s7hzI0OHMEKDmU6n8+az46Qmx+unTN4sr
+         +MuQ==
+X-Received: by 10.182.74.131 with SMTP id t3mr1593298obv.87.1371147421317;
+        Thu, 13 Jun 2013 11:17:01 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPSA id r4sm40585321oem.3.2013.06.13.11.16.59
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 13 Jun 2013 11:17:00 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.698.g079b096
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227762>
 
-Junio C Hamano wrote:
-> [...]
+After commit 3fde386 (reset [--mixed]: use diff-based reset whether or
+not pathspec was given), some code can't be reached, and other code can
+be moved to the 'reset_type == MIXED' check.
 
-I'd just like to point out quickly that I first attempted to write 6/6
-without this patch.  It is absolutely impossible, because the
-"detached HEAD from/to" messages no longer make any sense when
-checkout starts respecting GIT_REFLOG_ACTION.  At that point, I'm was
-just monkeying around the trash-directory running describes to somehow
-try and make the expected output equal to the actual output.  There
-was no method to the madness, and I was literally losing my mind.
+Let's remove the check that can't be reached, and move the code is
+specific to MIXED.
 
-This is _the_ patch that makes this series possible.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ builtin/reset.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-If you want to be convinced, please attempt to drop this patch and fix
-the tests in 6/6.  You will see what I mean.
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 6032131..68739ba 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -82,7 +82,7 @@ static int reset_index(const unsigned char *sha1, int reset_type, int quiet)
+ 	if (unpack_trees(nr, desc, &opts))
+ 		return -1;
+ 
+-	if (reset_type == MIXED || reset_type == HARD) {
++	if (reset_type == HARD) {
+ 		tree = parse_tree_indirect(sha1);
+ 		prime_cache_tree(&active_cache_tree, tree);
+ 	}
+@@ -323,8 +323,11 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
+ 		int newfd = hold_locked_index(lock, 1);
+ 		if (reset_type == MIXED) {
++			int flags = quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN;
+ 			if (read_from_tree(pathspec, sha1))
+ 				return 1;
++			refresh_index(&the_index, flags, NULL, NULL,
++				      _("Unstaged changes after reset:"));
+ 		} else {
+ 			int err = reset_index(sha1, reset_type, quiet);
+ 			if (reset_type == KEEP && !err)
+@@ -333,12 +336,6 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 				die(_("Could not reset index file to revision '%s'."), rev);
+ 		}
+ 
+-		if (reset_type == MIXED) { /* Report what has not been updated. */
+-			int flags = quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN;
+-			refresh_index(&the_index, flags, NULL, NULL,
+-				      _("Unstaged changes after reset:"));
+-		}
+-
+ 		if (write_cache(newfd, active_cache, active_nr) ||
+ 		    commit_locked_index(lock))
+ 			die(_("Could not write new index file."));
+-- 
+1.8.3.698.g079b096
