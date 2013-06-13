@@ -1,85 +1,91 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH jx/clean-interactive] t0060: skip a few relative_path tests
- on Windows
-Date: Thu, 13 Jun 2013 10:23:34 +0200
-Message-ID: <51B98186.2020100@viscovery.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/4] push: make upstream, simple work with pushdefault
+Date: Thu, 13 Jun 2013 14:40:44 +0530
+Message-ID: <CALkWK0mDDKETE1O=g7X5s5MJvU7UA_NQiMNESor_8=phW0WR-A@mail.gmail.com>
+References: <1370798000-2358-1-git-send-email-artagnon@gmail.com>
+ <1370798000-2358-3-git-send-email-artagnon@gmail.com> <7vip1moq3k.fsf@alter.siamese.dyndns.org>
+ <CALkWK0mesZay8Cpi6yTvhUG=136=9JLyFUZXm8t_fMOrY0F62Q@mail.gmail.com>
+ <7v4nd6l31d.fsf@alter.siamese.dyndns.org> <CALkWK0mY5=H6FoUZCOXTYykEV1f=3wrP21WPXj1v4VBCeOxocg@mail.gmail.com>
+ <7vwqq2j7c9.fsf@alter.siamese.dyndns.org> <CALkWK0mfWs3LBocvn=QMcX0_ZCROx4Nw=+xjpCbKLQU0JzSdXg@mail.gmail.com>
+ <7vobbdhjeg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 13 10:23:59 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Leandro Lucarella <leandro.lucarella@sociomantic.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 13 11:11:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Un2p3-0006Nk-VJ
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 10:23:58 +0200
+	id 1Un3Z7-00010L-0l
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 11:11:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758360Ab3FMIXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jun 2013 04:23:43 -0400
-Received: from so.liwest.at ([212.33.55.13]:35882 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758340Ab3FMIXk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 04:23:40 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Un2oh-0003iW-CT; Thu, 13 Jun 2013 10:23:35 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 223501660F;
-	Thu, 13 Jun 2013 10:23:35 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1757500Ab3FMJL2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 05:11:28 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:53298 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758254Ab3FMJL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jun 2013 05:11:26 -0400
+Received: by mail-ie0-f177.google.com with SMTP id aq17so7737751iec.8
+        for <git@vger.kernel.org>; Thu, 13 Jun 2013 02:11:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Pv6M/xoClMYGK21tw+r2v9uZKfMF3cSm/fVSq5McvtM=;
+        b=tK/6onp9KiJTtJk8WoV7pVsbDU7ONIryjWlMQSeBDJlVb8PnOQu1L6LzExEVraumgE
+         hcS0ygcMbspMBAJJB2augAR2QLhcDKK/wWXg6QubycuhjV2K3OrUbhjwsTeNnobL5kej
+         pvklAa/JdJf4Gc5vfs6GV3naV63pODzbuKC1VkZtqbNypFomLKFO1ZuylR+W3EUwhOvM
+         dCbx787DjqSud3bs1zAFg7/nU6B0BBOwKEXtxNrhO7VDt37pglVR4D6H5vHyEGCSB/Ai
+         xiRP3ddDcA11oRZxrWLlMcXn2J0eGzrRc/heeOOcQeJT21eKFSzVxQTpiGeXuInWDTXK
+         fw0w==
+X-Received: by 10.50.56.20 with SMTP id w20mr5116840igp.40.1371114686207; Thu,
+ 13 Jun 2013 02:11:26 -0700 (PDT)
+Received: by 10.204.186.77 with HTTP; Thu, 13 Jun 2013 02:10:44 -0700 (PDT)
+In-Reply-To: <7vobbdhjeg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227707>
 
-From: Johannes Sixt <j6t@kdbg.org>
+Junio C Hamano wrote:
+> If you recall the earlier discussion on "@{publish} which is
+> different from @{upstream}", one idea to allow mapping on the push
+> end was to introduce "push.default = single" that would act as
+> "upstream" when in "branch I fetch and integrate with is the same
+> branch at the same repository the one I want to update with my
+> result" workflow, and in a triangular workflow maps the branch being
+> pushed using remote.$name.push refspecs (if exists).
 
-The bash on Windows rewrites paths that look like absolute POSIX paths
-when they are a command-line argument of a regular Windows program, such
-as git and the test helpers. As a consequence, the actual tests performed
-are not what the tests scripts expect.
+I'm still resisting this idea, because I don't like these special-case
+push.default modes.  If possible, I want to avoid introducing another
+one to the existing mess.
 
-The tests that need *not* be skipped are those where the two paths passed
-to 'test-path-utils relative_path' have the same prefix and the result is
-expected to be a relative path. This is because the rewriting changes
-"/a/b" to "D:/Src/MSysGit/a/b", and when both inputs are extended the same
-way, this just cancels out in the relative path computation.
+> [...]
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- t/t0060-path-utils.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Okay, so what you're saying makes sense.  I'm cooking the following idea:
 
-diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index dfe4747..4deec52 100755
---- a/t/t0060-path-utils.sh
-+++ b/t/t0060-path-utils.sh
-@@ -190,15 +190,15 @@ test_expect_success SYMLINKS 'real path works on
-symlinks' '
+- current: push "$(HEAD)".  No restrictions on destination.  The most
+generic, sensible, and extensible one, in my opinion.
 
- relative_path /a/b/c/	/a/b/		c/
- relative_path /a/b/c/	/a/b		c/
--relative_path /a//b//c/	//a/b//		c/
-+relative_path /a//b//c/	//a/b//		c/	POSIX
- relative_path /a/b	/a/b		./
- relative_path /a/b/	/a/b		./
- relative_path /a	/a/b		../
- relative_path /		/a/b/		../../
- relative_path /a/c	/a/b/		../c
- relative_path /a/c	/a/b		../c
--relative_path /a/b	"<empty>"	/a/b
--relative_path /a/b 	"<null>"	/a/b
-+relative_path /a/b	"<empty>"	/a/b	POSIX
-+relative_path /a/b 	"<null>"	/a/b	POSIX
- relative_path "<empty>"	/a/b		./
- relative_path "<empty>"	"<empty>"	./
- relative_path "<empty>"	"<null>"	./
--- 
-1.8.3.1.1670.g1dbc49e
+- matching: push ":" to the destination specified by the current
+branch. [since I cannot know what I'm pushing in advance, I think this
+is generally ugly]
+
+- upstream: In the special case when fetch source is equal to push
+destination, push "$(HEAD):$(branch.$(HEAD).merge)".  Otherwise,
+fallback to current.  Useful in central workflows.
+
+- simple: [still haven't thought about what to do with this; I'm
+generally not in favor of artificially crippling functionality by
+erroring out]
+
+Just like upstream respects branch.<name>.merge, current respects
+branch.<name>.push, making branch-level ref mapping in triangular
+workflows possible.  Finally, remote.<name>.push is entirely
+orthogonal to all this, and is respected no matter what.
+
+Am I making any sense?
