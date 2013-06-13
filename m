@@ -1,53 +1,83 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Re: [PATCH 2/3] Move copy_note_for_rewrite + friends from builtin/notes.c to notes-utils.c
-Date: Thu, 13 Jun 2013 08:45:21 +0200
-Message-ID: <20130613064521.GA21707@inner.h.apk.li>
-References: <7vehc8a05n.fsf@alter.siamese.dyndns.org> <1370995981-1553-1-git-send-email-johan@herland.net> <1370995981-1553-3-git-send-email-johan@herland.net> <CAMP44s2pUW_+w6B_R-A=vxOg1Ay6iLmc4MQsA_sfDF+GP-XsWw@mail.gmail.com> <CALKQrgfxrKz5bB=AAmL1ZtBFRK2Bx6TrRd1AsMEVv8bTAH0KCg@mail.gmail.com> <CAMP44s3KAeDPo1Cw8eFsU=A6H7oUGmf+eLAMvGV+R2_hPXHLbw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH RFC] show-branch: use pager
+Date: Thu, 13 Jun 2013 03:01:19 -0400
+Message-ID: <20130613070118.GA23235@sigill.intra.peff.net>
+References: <1371105811-3112-1-git-send-email-oystwa@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>, gitster@pobox.com,
-	git@vger.kernel.org, jrnieder@gmail.com, pclouds@gmail.com,
-	artagnon@gmail.com, john@keeping.me.uk, vfr@lyx.org, peff@peff.net,
-	torvalds@linux-foundation.org, Thomas Rast <trast@inf.ethz.ch>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 13 08:45:44 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 13 09:01:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Un1Hu-0002cC-QI
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 08:45:39 +0200
+	id 1Un1XC-0004lq-0T
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 09:01:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752495Ab3FMGpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jun 2013 02:45:34 -0400
-Received: from continuum.iocl.org ([217.140.74.2]:59302 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750762Ab3FMGpe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 02:45:34 -0400
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id r5D6jLR22016;
-	Thu, 13 Jun 2013 08:45:21 +0200
+	id S932513Ab3FMHBW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Jun 2013 03:01:22 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43904 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757314Ab3FMHBV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jun 2013 03:01:21 -0400
+Received: (qmail 8877 invoked by uid 102); 13 Jun 2013 07:02:14 -0000
+Received: from c-71-62-74-146.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.62.74.146)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Jun 2013 02:02:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jun 2013 03:01:19 -0400
 Content-Disposition: inline
-In-Reply-To: <CAMP44s3KAeDPo1Cw8eFsU=A6H7oUGmf+eLAMvGV+R2_hPXHLbw@mail.gmail.com>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+In-Reply-To: <1371105811-3112-1-git-send-email-oystwa@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227701>
 
-On Wed, 12 Jun 2013 13:28:05 +0000, Felipe Contreras wrote:
-...
-> And you are
-> doing that with the express purpose of annoying.
+On Thu, Jun 13, 2013 at 08:43:31AM +0200, =C3=98ystein Walle wrote:
 
-Where did 'assume good faith' go to today?
+> This is for consistency with other porcelain commands such as 'log'.
 
-Andreas
+I do not use show-branch myself, but being consistent with the other
+porcelain commands makes sense to me.
 
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+> I marked this as an RFC because of Jeff King's comments in
+> daa0c3d97 where I got the impression this this might not be a good id=
+ea.
+> However I haven't found any bugs and all the tests pass. It is more a=
+ huble
+> suggestion than anything but I thought I might as well send it as a p=
+atch.
+
+I don't think the problems described in daa0c3d97 should be an issue fo=
+r
+us, as the purpose of that commit was to delay the color decision until
+the last minute. That helps commands which load color config before
+having decided on whether to use a pager. In other words, it covers the
+exact situation you introduce here:
+
+> diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+> index 90fc6b1..bd3e10c 100644
+> --- a/builtin/show-branch.c
+> +++ b/builtin/show-branch.c
+> @@ -683,6 +683,7 @@ int cmd_show_branch(int ac, const char **av, cons=
+t char *prefix)
+>  	};
+> =20
+>  	git_config(git_show_branch_config, NULL);
+> +	setup_pager();
+
+So I think your patch is fine with respect to those problems.
+
+However, I do not see any need for show_branch to delay its pager setup
+at all. Commands like "git diff" and "git log" must do so, because they
+do not know whether they want a pager or not until after parsing
+command-line arguments. But in this case we are always starting the
+pager.
+
+Would it make more sense to just set the USE_PAGER flag in the
+"show-branch" entry in git.c (see the "shortlog" entry for an example)?
+
+-Peff
