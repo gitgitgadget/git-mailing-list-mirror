@@ -1,84 +1,88 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] reset: trivial refactoring
-Date: Thu, 13 Jun 2013 16:20:22 -0500
-Message-ID: <CAMP44s17nRzh157hyLMjKWi3ZOLqUui=uMVMwyffcGFFrucd_w@mail.gmail.com>
+Date: Thu, 13 Jun 2013 14:34:13 -0700
+Message-ID: <7v38slu23u.fsf@alter.siamese.dyndns.org>
 References: <1371147305-20771-1-git-send-email-felipe.contreras@gmail.com>
 	<CANiSa6i5xL-V+W46zWXGzLc+dSO6a+V0BLPt7hFgGZGXpp03BQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	git <git@vger.kernel.org>
 To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 13 23:20:30 2013
+X-From: git-owner@vger.kernel.org Thu Jun 13 23:34:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnEwW-0002kd-Dx
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 23:20:28 +0200
+	id 1UnF9x-0004Oh-TI
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Jun 2013 23:34:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758193Ab3FMVUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jun 2013 17:20:24 -0400
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:52614 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756931Ab3FMVUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 17:20:23 -0400
-Received: by mail-lb0-f180.google.com with SMTP id o10so7687188lbi.25
-        for <git@vger.kernel.org>; Thu, 13 Jun 2013 14:20:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=pNLLNhecqlkjmDdB5t9CRFV7KlE23zQidkqMOVPDu0U=;
-        b=IybNqiMnqXCFq1vlrvkd0BV0UOg13//RxxGBdAYQ4NxBTCc5hZN+u3InIUlBUM54Oy
-         ETwfin/Yis5a7m77+fBoPEOKjJ+0SnX9Vkx6pwEB/vMddu+U0IFuI5XCfI2GBLjxwmz/
-         Qp2sHNJNoWaQAM7BXnjdzVeyjQQdZBrHFWUOa5vA0/jpi/m5KW5S8wFMDRYZmaHxzRPN
-         R/cRz+/ctk8vuaRgoLnWYlArKiSqrPZ7SQ84yNKVCJwJkU81cf5P2LNHbkug7w9JessQ
-         zfhNSYt9IRfI182Y8HVTRs0qY9dWAcKzG5bVZDtzeTMuup9KrmQHRzEtLvyKOp080ay4
-         NbSw==
-X-Received: by 10.112.52.97 with SMTP id s1mr2220441lbo.8.1371158422255; Thu,
- 13 Jun 2013 14:20:22 -0700 (PDT)
-Received: by 10.114.59.202 with HTTP; Thu, 13 Jun 2013 14:20:22 -0700 (PDT)
+	id S1758909Ab3FMVeR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jun 2013 17:34:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59402 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757807Ab3FMVeQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jun 2013 17:34:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B572927C32;
+	Thu, 13 Jun 2013 21:34:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xqUeXXGTL+z/25VIlsWmab/uWHQ=; b=lH70R7
+	EGgmE/FK9kVdh36az47leg4UKEPO6+ewaFJzsET1PgOwa4yWZXgQZbDQDJtGSfAW
+	mLsgnogMs9Z3ADVO6xoI54SaL9Dn5JmC+Ncraer4PlVcB4p+6a+II6Ilw3YNBGEQ
+	ENQ2M7mmKmLhJx6KmjnSLtjoa0JLcWUAri5fw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wlfZzXSGGps3J1c+zayvUuoZVPK3OYM9
+	g/jwj+FycAyd9L+swyEALRWw/4T9+ORfozpsw9SPfjnlbYnUVjCKWKBS6PvnsFhD
+	kc0NT8C/ABdXQpKYkimLvFgcFL9G2eaLJN1uCX5qSqrX3lJQ9CGyk46fHW/5WyV8
+	5pnsoK8FBnQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA27727C31;
+	Thu, 13 Jun 2013 21:34:15 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1655627C2D;
+	Thu, 13 Jun 2013 21:34:15 +0000 (UTC)
 In-Reply-To: <CANiSa6i5xL-V+W46zWXGzLc+dSO6a+V0BLPt7hFgGZGXpp03BQ@mail.gmail.com>
+	(Martin von Zweigbergk's message of "Thu, 13 Jun 2013 14:13:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FED04BA2-D470-11E2-A5E8-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227780>
 
-On Thu, Jun 13, 2013 at 4:13 PM, Martin von Zweigbergk
-<martinvonz@gmail.com> wrote:
-> On Thu, Jun 13, 2013 at 11:15 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> @@ -82,7 +82,7 @@ static int reset_index(const unsigned char *sha1, int reset_type, int quiet)
->>         if (unpack_trees(nr, desc, &opts))
->>                 return -1;
->>
->> -       if (reset_type == MIXED || reset_type == HARD) {
->> +       if (reset_type == HARD) {
->
-> Are you sure that this can not be reached given that...
->
->> @@ -323,8 +323,11 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
->>                 struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
->>                 int newfd = hold_locked_index(lock, 1);
->>                 if (reset_type == MIXED) {
->> +                       int flags = quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN;
->>                         if (read_from_tree(pathspec, sha1))
->>                                 return 1;
->> +                       refresh_index(&the_index, flags, NULL, NULL,
->> +                                     _("Unstaged changes after reset:"));
->>                 } else {
->>                         int err = reset_index(sha1, reset_type, quiet);
->>                         if (reset_type == KEEP && !err)
->
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
+
 > ...the line after this one reads
 >
 >    err = reset_index(sha1, MIXED, quiet);
+>
+> ? I don't know what the consequence of not calling prime_cache_tree()
+> would be, though.
 
-That's true. Only the rest of the patch makes sense then. It seems
-there should be a way to have a single call reset_index(KEEP), so we
-don't have to call again with MIXED, but perhaps that's for later.
+It does not affect correctness, but makes the subsequent "git
+status", the part that internally computes "diff-cache --index" to
+see what changes have been added to the index, more costly.
 
--- 
-Felipe Contreras
+After doing "reset --hard $commit" or just "reset $commit", we know
+that the contents of the index must match $commit^{tree}, and
+writing out any subpart of the index that corresponds to a directory
+(including the top-level one, i.e. the whole index) must match the
+corresponding subtree of $commit^{tree}.  And that is why we prime
+the cache-tree that was discarded by unpack_trees() at the very end.
+Then incremental "git add" to the resulting index after that can
+invalidate only the parts of the index and cache-tree while
+relieving the next "write-tree" (most often done by the next "git
+commit") from having to compute the tree objects for parts of the
+index that have not been touched since the "reset" operation.
+
+I do not use "reset --keep $commit" very often myself, but IIRC, it
+is like "checkout $commit" (and not "checkout -m $commit") in that
+the resulting index matches $commit^{tree}, so I think priming the
+cache-tree just like --hard/--mixed is the right thing to do.
