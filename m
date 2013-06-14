@@ -1,115 +1,146 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: =?UTF-8?q?=5BPATCH=20v2=201/2=5D=20=5Bsubmodule=5D=20handle=20multibyte=20characters=20in=20name?=
-Date: Fri, 14 Jun 2013 02:26:02 +0200
-Message-ID: <1371169563-10267-2-git-send-email-iveqy@iveqy.com>
-References: <1371169563-10267-1-git-send-email-iveqy@iveqy.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 5/6] status: do not depend on flaky reflog messages
+Date: Fri, 14 Jun 2013 11:57:14 +0530
+Message-ID: <CALkWK0=NAiGDVWbwHXMmEffPF9wKXd23BdwOntfdvNCpVe8fiA@mail.gmail.com>
+References: <1371130349-30651-1-git-send-email-artagnon@gmail.com>
+ <1371130349-30651-6-git-send-email-artagnon@gmail.com> <7vvc5hubox.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kjxKFkrLArL1mLZYCMN1=sgnDSa3vaoJm6eSUp2E4Pyw@mail.gmail.com> <7vd2rpu3kf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: iveqy@iveqy.com
-X-From: git-owner@vger.kernel.org Fri Jun 14 02:23:15 2013
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 14 08:28:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnHnP-0001EQ-6D
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 02:23:15 +0200
+	id 1UnNUY-0005a0-7T
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 08:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759537Ab3FNAXE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Jun 2013 20:23:04 -0400
-Received: from mail-la0-f49.google.com ([209.85.215.49]:48217 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759471Ab3FNAXA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jun 2013 20:23:00 -0400
-Received: by mail-la0-f49.google.com with SMTP id ea20so5847858lab.22
-        for <git@vger.kernel.org>; Thu, 13 Jun 2013 17:22:58 -0700 (PDT)
+	id S1751401Ab3FNG15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 02:27:57 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:44519 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751344Ab3FNG14 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 02:27:56 -0400
+Received: by mail-bk0-f46.google.com with SMTP id na10so72279bkb.19
+        for <git@vger.kernel.org>; Thu, 13 Jun 2013 23:27:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=Uzv1nET3tuWdO+GR9llz+x6FR8oDsZ4AAgVxKn3Izn4=;
-        b=j5PwsBLuU6UyWh0F8kxxJXMcPTm6jbYPvSnXKmp8J/I5uELLFPRXPOmzhSpvbVNZg5
-         dvWRVhHMW/1utKwVM72LapD4JbxhOdK8TtCZuK1NFMX1gZB8OtlT/WYT6WjMbLYKrIl4
-         YFHABApkHgvK6aNL3GHRaaszoQFSK0rANR0+GaWs4CHomao1LwTrGkoRZP2rajAttqVO
-         S5q1m+dK4wNGxa/7OhS0zRO3Ku/v5VdZJe3UbxDmUFMMgdTZ3e74HUABT6U1aEz1fhrF
-         qAkhH0KUch6Kh3l5qKoWzJxIkeO/VXNMa4pUeTRP+PFADZjnKCnl87cJVUGkeliYiWjg
-         tIWQ==
-X-Received: by 10.112.63.2 with SMTP id c2mr2406333lbs.6.1371169378814;
-        Thu, 13 Jun 2013 17:22:58 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id u1sm1263282lag.5.2013.06.13.17.22.57
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 13 Jun 2013 17:22:58 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UnHq8-0002gD-U0; Fri, 14 Jun 2013 02:26:04 +0200
-X-Mailer: git-send-email 1.8.0
-In-Reply-To: <1371169563-10267-1-git-send-email-iveqy@iveqy.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=2u7YUM/ARxabKCIIJA7GvuytZBlr0QMbPB8fqk8y9MY=;
+        b=hG5T7Z7Q3l4tlLdCw9C8N8/AFTDd60hK3xvj5/XvZydy3uptPDqz2z9PnIEDqzJ+Wg
+         FjVL2Su2AR1vdufzpUYqmOnOJuyoOjhoHK+lRQoR+r5fmgPYJqsa0lxL75qtdpx2/9jr
+         D/SeEClHTbfMUeHCZEuqobRLkRXeMrbqyI7E8i+2x310Ih1Ybh9ZJeoEjg+lm51ycAZA
+         q5a1lhgFr+05xTKF18gvrzYxd1zlpEkjms5yJPNDTtl6SWr7+4ED8ytMwVbtT+jt0h0/
+         E2Nqoo0nWsVX53eDXVQNhv35V+fKrdh1twjWEwmnooW/8wJeKrfctho/pnkjzsutIeTR
+         HjBQ==
+X-Received: by 10.204.69.12 with SMTP id x12mr96007bki.14.1371191274797; Thu,
+ 13 Jun 2013 23:27:54 -0700 (PDT)
+Received: by 10.204.186.77 with HTTP; Thu, 13 Jun 2013 23:27:14 -0700 (PDT)
+In-Reply-To: <7vd2rpu3kf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227789>
 
-Many "git submodule" operations do not work on a submodule at a path wh=
-ose
-name is not in ASCII.
+Junio C Hamano wrote:
+>> What is wrong with git describe?  Is this cheaper, or am I missing something?
+>
+> I think what you are missing is that the "detached from" is not
+> about your current HEAD after you flipped it around with many resets
+> and commits.  It is about what tag or what specific commit you
+> detached your HEAD at originally.
 
-This is because "git ls-files" is used to find which paths are bound to
-submodules to the current working tree, and the output is C-quoted by d=
-efault
-for non ASCII pathnames.
+No, it is about what tag of specific commit you detached your HEAD
+from, *without using checkout*.  If you used checkout, you'd get the
+"detached at" message, and I haven't changed that.
 
-Tell "git ls-files" to not C-quote its output, which is easier than unw=
-rapping
-C-quote ourselves.
+> "You can ask the same to describe" is wrong and is not a valid
+> argument.  Once you replace the HEAD^ with a distant commit
+> (e.g. HEAD~400) in the third step in the example, "describe" will
+> not talk about v1.8.2 at all.
 
-Solution-suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
----
- git-submodule.sh           |  2 +-
- t/t7400-submodule-basic.sh | 12 ++++++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+You're missing the point: how do I, as the end-user, detach my HEAD
+*without using checkout*?  The hypothetical example you have given is:
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 79bfaac..bad051e 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -113,7 +113,7 @@ resolve_relative_url ()
- module_list()
- {
- 	(
--		git ls-files --error-unmatch --stage -- "$@" ||
-+		git -c core.quotepath=3Dfalse ls-files --error-unmatch --stage -- "$=
-@" ||
- 		echo "unmatched pathspec exists"
- 	) |
- 	perl -e '
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index ff26535..d5743ee 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -868,4 +868,16 @@ test_expect_success 'submodule deinit fails when s=
-ubmodule has a .git directory
- 	test -n "$(git config --get-regexp "submodule\.example\.")"
- '
-=20
-+test_expect_success 'submodule with strange name works "=C3=A5 =C3=A4=C3=
-=B6"' '
-+	mkdir "=C3=A5 =C3=A4=C3=B6" &&
-+	(
-+		cd "=C3=A5 =C3=A4=C3=B6" &&
-+		git init &&
-+		touch sub
-+		git add sub
-+		git commit -m "init sub"
-+	)
-+	git submodule add "/=C3=A5 =C3=A4=C3=B6" &&
-+	test -n "$(git submodule | grep "=C3=A5 =C3=A4=C3=B6")"
-+'
- test_done
---=20
-1.8.3.1.381.g2ab719e.dirty
+  $ git checkout HEAD^
+  $ git update-ref HEAD $(git rev-parse HEAD~400)
+
+Which end-user executes that?
+
+> Your argument can be that it is not a useful piece of information,
+> and as you can probably guess from my "I wouldn't be surprised"
+> above, I am not sure how useful it would be and in what situation
+> [*1*].
+
+Precisely.  It is a poorly thought-out feature that locks things up
+too tightly, and makes life hell for contributors.  It must therefore
+be removed.
+
+> But the original commit thought it was necessary and that was done
+> for a reason; we need to be careful here.  With a good justification
+> why it is not necessary (or misleading to the user), I do not think
+> we cannot change it.
+
+We cannot reverse-engineer intents.  All we can do is look at the
+evidence in front of us.  Read the commit message, and look at the
+newly added test.  There is absolutely no indication about why this
+"detached from" is useful, and where.
+
+>         $ git rebase master
+>         ... replays some but stops
+>         $ git status
+>
+> currently uses that "HEAD detached from" codepath, but I think that
+> is a mistake.  We could not just tell the HEAD is detached, but the
+> reason _why_ the HEAD is detached (i.e. we are in the middle of a
+> rebase).  The prompt script can do it, "status" should be able to do
+> the same, and do a lot more sensible thing than unconditionally
+> showing that "HEAD detached from" and then say "You are currently
+> rebasing" on a separate line.  Most likely we do not want to even
+> say "Not currently on any branch" but just say "You are currently
+> rebasing branch X on top of Y" (and perhaps "N commits remaining to
+> be replayed").
+
+That information is available in .git/{rebase-apply,rebase-merge}, and
+your suggestion pertains to improving show_rebase_in_progress().  The
+first line is about the state of HEAD, and is completely orthogonal to
+the issue at hand.
+
+  artagnon|rebase-rev-failure|REBASE-i 2/3:~/src/git$ git status
+  # HEAD detached from a7e9fd4
+  # You are currently editing a commit while rebasing branch
+'rebase-rev-failure' on '9926f66'.
+  #
+  nothing to commit, working directory clean
+
+That first line about "HEAD detached from ..." is completely useless.
+And yes, my prompt is more useful.  No prizes for guessing how often I
+use the long form of git status.
+
+> *1* One thing I could think of is to start sightseeing or (more
+>     realistically) manually bisecting at a given release point,
+>     reset the detached HEAD around several times, and then want to
+>     be reminded where the session started from.  I do not think it
+>     is particularly a very good example, though.
+
+The example you have given now is:
+
+  $ git checkout @^
+  # or whatever bisect command to detach HEAD
+  $ git reset @~3
+  ...
+  $ git reset @^
+  ...
+  $ git reset @~5
+  ....
+  # when was HEAD originally detached?
+
+Yes, it is a contrived example where this feature arguably has some
+utility.  Is it worth putting the information in the status for such
+an esoteric example?  If one really wants this information, they can
+open up the reflog and grep for "checkout: ".
