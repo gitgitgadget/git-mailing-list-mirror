@@ -1,111 +1,78 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 3/3] rebase: use peel_committish() where appropriate
-Date: Fri, 14 Jun 2013 18:47:52 +0530
-Message-ID: <1371215872-9796-4-git-send-email-artagnon@gmail.com>
-References: <1371215872-9796-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 14 15:20:02 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] format-patch: remove existing output-directory
+Date: Fri, 14 Jun 2013 14:21:02 +0100
+Message-ID: <20130614132102.GG23890@serenity.lan>
+References: <1371213813-7925-1-git-send-email-artagnon@gmail.com>
+ <20130614130910.GF23890@serenity.lan>
+ <CALkWK0=dN4oqgvu9FL+EpqyekoQ385tTGbd3Gnf4mee-eTBeOA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 14 15:21:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnTv7-0004tR-Ey
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 15:20:01 +0200
+	id 1UnTwT-0005v7-0n
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 15:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752818Ab3FNNT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 09:19:56 -0400
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:46491 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752660Ab3FNNTz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 09:19:55 -0400
-Received: by mail-pb0-f47.google.com with SMTP id rr13so564002pbb.6
-        for <git@vger.kernel.org>; Fri, 14 Jun 2013 06:19:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=35cD748f552BHHWOWKbJWzuAppnNA+u2uNA03tVt5c0=;
-        b=yOjHEW5mISsH3TUMs5WPFv4b8CwDhlPrgnnY8Orgv9NRuu1NC2vEwGtsk6JLlUkT6i
-         WBdtYr/DOL8U7Zfw2R1dgHH20QOsjg+7M2bcSNJmsxruE2lSIT0dQ4Ao/SWuxHakTi16
-         EtZFqiqgoUNi2gjvehLyS2VI/90P4nLus9V7i96XRwV5JyxF27ZkgzDA0S/Ej0fnU0K/
-         9qCcR3h4I6xmPq40JHllZUXhZCz9bk0MBX1xi9okiRNVFu28V4mSlvpqHMrJI8+G+gPS
-         7eqymPXbMpl61TTC6NmvTG8RP+E0SrwRHF5DxZ+qFFtwwkNtgQcWw6YYsoKFUiKphQB4
-         hioA==
-X-Received: by 10.66.161.41 with SMTP id xp9mr1888015pab.166.1371215993772;
-        Fri, 14 Jun 2013 06:19:53 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.213.38])
-        by mx.google.com with ESMTPSA id i16sm2422081pag.18.2013.06.14.06.19.51
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 14 Jun 2013 06:19:52 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1.381.g12ca056.dirty
-In-Reply-To: <1371215872-9796-1-git-send-email-artagnon@gmail.com>
+	id S1752837Ab3FNNVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 09:21:20 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:47700 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752643Ab3FNNVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 09:21:19 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id DC3BBCDA5E8;
+	Fri, 14 Jun 2013 14:21:18 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zH27k2dE4GCI; Fri, 14 Jun 2013 14:21:18 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by jackal.aluminati.org (Postfix) with ESMTP id 3D6B7CDA5A9;
+	Fri, 14 Jun 2013 14:21:17 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 319D1161E418;
+	Fri, 14 Jun 2013 14:21:17 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id isBuX+NtmDDy; Fri, 14 Jun 2013 14:21:16 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id A10C3161E477;
+	Fri, 14 Jun 2013 14:21:09 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=dN4oqgvu9FL+EpqyekoQ385tTGbd3Gnf4mee-eTBeOA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227830>
 
-The revisions specified on the command-line as <onto> and <upstream>
-arguments could be of the form :/quuxery; so, use peel_committish() to
-resolve them.  The failing tests in t/rebase and t/rebase-interactive
-now pass.
+On Fri, Jun 14, 2013 at 06:45:19PM +0530, Ramkumar Ramachandra wrote:
+> John Keeping wrote:
+> > I don't think this is the correct behaviour.  I can think of cases where
+> > I would want to output multiple things into the same directory.
+> 
+> format.cleanOutputDirectory = true|false?
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- git-rebase.sh                 | 4 ++--
- t/t3400-rebase.sh             | 2 +-
- t/t3404-rebase-interactive.sh | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+Maybe, but I was thinking of something more like:
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index d0c11a9..6987b9b 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -434,7 +434,7 @@ then
- 		shift
- 		;;
- 	esac
--	upstream=`git rev-parse --verify "${upstream_name}^0"` ||
-+	upstream=$(peel_committish "${upstream_name}") ||
- 	die "$(eval_gettext "invalid upstream \$upstream_name")"
- 	upstream_arg="$upstream_name"
- else
-@@ -470,7 +470,7 @@ case "$onto_name" in
- 	fi
- 	;;
- *)
--	onto=$(git rev-parse --verify "${onto_name}^0") ||
-+	onto=$(peel_committish "$onto_name") ||
- 	die "$(eval_gettext "Does not point to a valid commit: \$onto_name")"
- 	;;
- esac
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 81ec517..cbca71e 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -88,7 +88,7 @@ test_expect_success 'rebase fast-forward to master' '
- 	test_i18ngrep "Fast-forwarded HEAD to my-topic-branch" out
- '
- 
--test_expect_failure 'rebase, with <onto> and <upstream> specified as :/quuxery' '
-+test_expect_success 'rebase, with <onto> and <upstream> specified as :/quuxery' '
- 	test_when_finished "git branch -D torebase" &&
- 	git checkout -b torebase my-topic-branch^ &&
- 	upstream=$(git rev-parse ":/Add B") &&
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index eb241f5..86917d1 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -947,7 +947,7 @@ test_expect_success 'rebase -i respects core.commentchar' '
- 	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
- '
- 
--test_expect_failure 'rebase -i, with <onto> and <upstream> specified as :/quuxery' '
-+test_expect_success 'rebase -i, with <onto> and <upstream> specified as :/quuxery' '
- 	test_when_finished "git branch -D torebase" &&
- 	git checkout -b torebase branch1 &&
- 	upstream=$(git rev-parse ":/J") &&
--- 
-1.8.3.1.381.g12ca056.dirty
+    Output directory is not empty, use "--allow-non-empty-dir" if you
+    really want to proceed.
+
+Using that configuration variable lets someone shoot themselves in the
+foot quite badly if they forget that they have set it and set the output
+directory to somewhere containing important data.
