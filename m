@@ -1,70 +1,98 @@
-From: =?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
-Subject: [PATCH v6 19/31] git-remote-mediawiki: Check return value of open
-Date: Fri, 14 Jun 2013 15:50:27 +0200
-Message-ID: <1371217839-23017-20-git-send-email-celestin.matte@ensimag.fr>
-References: <1371217839-23017-1-git-send-email-celestin.matte@ensimag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] status: do not depend on flaky reflog messages
+Date: Fri, 14 Jun 2013 06:52:22 -0700
+Message-ID: <7vppvosstl.fsf@alter.siamese.dyndns.org>
+References: <1371130349-30651-1-git-send-email-artagnon@gmail.com>
+	<1371130349-30651-6-git-send-email-artagnon@gmail.com>
+	<7vvc5hubox.fsf@alter.siamese.dyndns.org>
+	<CALkWK0kjxKFkrLArL1mLZYCMN1=sgnDSa3vaoJm6eSUp2E4Pyw@mail.gmail.com>
+	<7vd2rpu3kf.fsf@alter.siamese.dyndns.org>
+	<CALkWK0=NAiGDVWbwHXMmEffPF9wKXd23BdwOntfdvNCpVe8fiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: benoit.person@ensimag.fr, matthieu.moy@grenoble-inp.fr,
-	=?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 14 15:52:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 14 15:52:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnUQh-0002Bg-OI
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 15:52:40 +0200
+	id 1UnUQj-0002Bg-Vp
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 15:52:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753167Ab3FNNwL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jun 2013 09:52:11 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:33273 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752903Ab3FNNvA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 09:51:00 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5EDovvY011207
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 14 Jun 2013 15:50:57 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5EDoxxi013402;
-	Fri, 14 Jun 2013 15:50:59 +0200
-Received: from tohwi-K50IE.imag.fr (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5EDoqgB016142;
-	Fri, 14 Jun 2013 15:50:59 +0200
-X-Mailer: git-send-email 1.8.3.1.491.g8a51f1c
-In-Reply-To: <1371217839-23017-1-git-send-email-celestin.matte@ensimag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 14 Jun 2013 15:50:57 +0200 (CEST)
+	id S1753200Ab3FNNw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 09:52:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42025 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753116Ab3FNNwZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 09:52:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 456A22564B;
+	Fri, 14 Jun 2013 13:52:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=a0FQ01t96/Gcujzy3VkyiIeV/3I=; b=cOVGrq
+	hKlw7HXpEgaII/1f9Y6+ESRq823A1xU42sXTo2QqhDYYX5G8SiRqvkGJNcEkrk8Y
+	iIiEtuu/H963IQEbnscoDrui2ym0UuG4cmn0v0N0S0UPaXGYsdbSQX1AkwsZZY/g
+	v3QOd3h4RNly1EqGT44FsB/hp+K+ZaoR/g9V0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NpXgypQinX3V3aLMHqPZcPABR/2+zi+c
+	/b/A8WS5isD39W3sNHTUSz4qdq7Iu0PDq5skVUAygY/VUpeBtr9CkFTQtwLBcOJV
+	b+KbqnVv3wcMo8TBOwjOs8+T67gTmYlqDUVcpoRtp7SqK/Q+sxs39AqvM8A/HZ1K
+	qexIfHb4BeY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CDED2564A;
+	Fri, 14 Jun 2013 13:52:24 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9EAC125647;
+	Fri, 14 Jun 2013 13:52:23 +0000 (UTC)
+In-Reply-To: <CALkWK0=NAiGDVWbwHXMmEffPF9wKXd23BdwOntfdvNCpVe8fiA@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Fri, 14 Jun 2013 11:57:14 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A3EB11D4-D4F9-11E2-BEA4-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227856>
 
-=46rom: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Signed-off-by: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
----
- contrib/mw-to-git/git-remote-mediawiki.perl | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> Junio C Hamano wrote:
+>>> What is wrong with git describe?  Is this cheaper, or am I missing something?
+>>
+>> I think what you are missing is that the "detached from" is not
+>> about your current HEAD after you flipped it around with many resets
+>> and commits.  It is about what tag or what specific commit you
+>> detached your HEAD at originally.
+>
+> No, it is about what tag of specific commit you detached your HEAD
+> from, *without using checkout*.  If you used checkout, you'd get the
+> "detached at" message, and I haven't changed that.
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-t=
-o-git/git-remote-mediawiki.perl
-index d1cddab..82684f3 100755
---- a/contrib/mw-to-git/git-remote-mediawiki.perl
-+++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -337,7 +337,8 @@ sub get_mw_pages {
- sub run_git {
- 	my $args =3D shift;
- 	my $encoding =3D (shift || "encoding(UTF-8)");
--	open(my $git, "-|:$encoding", "git " . $args);
-+	open(my $git, "-|:$encoding", "git " . $args)
-+	    or die "Unable to open: $!\n";
- 	my $res =3D do {
- 		local $/ =3D undef;
- 		<$git>
---=20
-1.8.3.rc3.49.g4e74807
+The part you stripped from your quote looked like this:
+
+>> You were at 1.8.2 but no longer are, so in the following sequence:
+>>
+>>     $ git checkout v1.8.2
+>>     $ git status
+>>     $ git reset --hard HEAD^
+>>     $ git status
+>>
+>> the former would say "detached at v1.8.2" while the latter should
+>> *not*, because we are no longer at v1.8.2.  "detached from v1.8.2"
+>> is too subtle a way to express the state, and is confusing, but I
+>> would not be surprised if people find it useful to be able to learn
+>> "v1.8.2" even after you strayed away.
+
+And your justification to make the latter "git status" to say "Not
+on any branch" instead of "detached from" was "what is wrong with
+describe".
+
+The user used "checkout" to detach the HEAD, and the user stayed in
+that detached state and jumped around.  Where is this "without using
+checkout" coming from?
