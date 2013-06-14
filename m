@@ -1,146 +1,87 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 5/6] status: do not depend on flaky reflog messages
-Date: Fri, 14 Jun 2013 11:57:14 +0530
-Message-ID: <CALkWK0=NAiGDVWbwHXMmEffPF9wKXd23BdwOntfdvNCpVe8fiA@mail.gmail.com>
-References: <1371130349-30651-1-git-send-email-artagnon@gmail.com>
- <1371130349-30651-6-git-send-email-artagnon@gmail.com> <7vvc5hubox.fsf@alter.siamese.dyndns.org>
- <CALkWK0kjxKFkrLArL1mLZYCMN1=sgnDSa3vaoJm6eSUp2E4Pyw@mail.gmail.com> <7vd2rpu3kf.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 4/4] resolve_ref_unsafe(): close race condition reading
+ loose refs
+Date: Fri, 14 Jun 2013 09:17:49 +0200
+Message-ID: <51BAC39D.5030201@alum.mit.edu>
+References: <20130507023802.GA22940@sigill.intra.peff.net> <1370960780-1055-1-git-send-email-mhagger@alum.mit.edu> <1370960780-1055-5-git-send-email-mhagger@alum.mit.edu> <87d2rqs9ma.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 14 08:28:11 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jun 14 09:18:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnNUY-0005a0-7T
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 08:28:10 +0200
+	id 1UnOGl-0005rx-0L
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 09:17:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751401Ab3FNG15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 02:27:57 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:44519 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751344Ab3FNG14 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 02:27:56 -0400
-Received: by mail-bk0-f46.google.com with SMTP id na10so72279bkb.19
-        for <git@vger.kernel.org>; Thu, 13 Jun 2013 23:27:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=2u7YUM/ARxabKCIIJA7GvuytZBlr0QMbPB8fqk8y9MY=;
-        b=hG5T7Z7Q3l4tlLdCw9C8N8/AFTDd60hK3xvj5/XvZydy3uptPDqz2z9PnIEDqzJ+Wg
-         FjVL2Su2AR1vdufzpUYqmOnOJuyoOjhoHK+lRQoR+r5fmgPYJqsa0lxL75qtdpx2/9jr
-         D/SeEClHTbfMUeHCZEuqobRLkRXeMrbqyI7E8i+2x310Ih1Ybh9ZJeoEjg+lm51ycAZA
-         q5a1lhgFr+05xTKF18gvrzYxd1zlpEkjms5yJPNDTtl6SWr7+4ED8ytMwVbtT+jt0h0/
-         E2Nqoo0nWsVX53eDXVQNhv35V+fKrdh1twjWEwmnooW/8wJeKrfctho/pnkjzsutIeTR
-         HjBQ==
-X-Received: by 10.204.69.12 with SMTP id x12mr96007bki.14.1371191274797; Thu,
- 13 Jun 2013 23:27:54 -0700 (PDT)
-Received: by 10.204.186.77 with HTTP; Thu, 13 Jun 2013 23:27:14 -0700 (PDT)
-In-Reply-To: <7vd2rpu3kf.fsf@alter.siamese.dyndns.org>
+	id S1751868Ab3FNHRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 03:17:55 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:53854 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751434Ab3FNHRy (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jun 2013 03:17:54 -0400
+X-AuditID: 12074413-b7f136d000006de1-6f-51bac3a15df0
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 0C.CD.28129.1A3CAB15; Fri, 14 Jun 2013 03:17:53 -0400 (EDT)
+Received: from [192.168.101.152] (mx.berlin.jpk.com [212.222.128.135] (may be forged))
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r5E7Hn0r031833
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 14 Jun 2013 03:17:51 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <87d2rqs9ma.fsf@linux-k42r.v.cablecom.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsUixO6iqLvw8K5Ag++9GhZdV7qZLBp6rzBb
+	zLu7i8niR0sPs8Xdy6vYHVg9Lr38zuZx+/V8Zo9nvXsYPS5eUvb4vEkugDWK2yYpsaQsODM9
+	T98ugTtjR+thxoJdXBUf93UzNjCu5+hi5OSQEDCR2DXlADuELSZx4d56ti5GLg4hgcuMEqt2
+	nGKEcK4xSez72cUCUsUroC1xffNzMJtFQFVi24ZWJhCbTUBXYlFPM5gtKhAm8X7ZVFaIekGJ
+	kzOfANVzcIgIKEtsW1gDMpNZoIlR4vaF1WA1wgIREs+nroDafJVR4uypx2AJTgFziUl7roDZ
+	zAI6Eu/6HjBD2PIS29/OYZ7AKDALyY5ZSMpmISlbwMi8ilEuMac0Vzc3MTOnODVZtzg5MS8v
+	tUjXXC83s0QvNaV0EyMkzIV3MO46KXeIUYCDUYmHl+PczkAh1sSy4srcQ4ySHExKoryhh3YF
+	CvEl5adUZiQWZ8QXleakFh9ilOBgVhLhDf8LVM6bklhZlVqUD5OS5mBREudVW6LuJySQnliS
+	mp2aWpBaBJOV4eBQkuCdDzJUsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhSt8cXA
+	eAVJ8QDt3QbSzltckJgLFIVoPcWoy3Hgx5b3jEIsefl5qVLivAtBigRAijJK8+BWwJLaK0Zx
+	oI+FeXeAVPEAEyLcpFdAS5iAlhRlbAdZUpKIkJJqYFyWonSz7tbbHo5r0TbVxmp/gze7ztsS
+	o73s3LS/s8Tc/4gVnVgWfK19st0x099iXsFZr9+kLBJ3XcpQYH0gZKF+m7et9ZX4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227790>
 
-Junio C Hamano wrote:
->> What is wrong with git describe?  Is this cheaper, or am I missing something?
->
-> I think what you are missing is that the "detached from" is not
-> about your current HEAD after you flipped it around with many resets
-> and commits.  It is about what tag or what specific commit you
-> detached your HEAD at originally.
+On 06/13/2013 10:22 AM, Thomas Rast wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> One race is still possible and undetected: another process could
+>> change the file from a regular file into a symlink between the call to
+>> lstat and the call to open().  The open() call would silently follow
+>> the symlink and not know that something is wrong.  I don't see a way
+>> to detect this situation without the use of the O_NOFOLLOW option,
+>> which is not portable and is not used elsewhere in our code base.
+>>
+>> However, we don't use symlinks anymore, so this situation is unlikely.
+>> And it doesn't appear that treating a symlink as a regular file would
+>> have grave consequences; after all, this is exactly how the code
+>> handles non-relative symlinks.
+> 
+> You could fstat() the fd you got from open(), and verify that it is
+> still the same inode/device.  That's wasting one syscall per ref for
+> pretty much everyone, but perhaps if we really cared about this (and I
+> gather from the above that we don't), we could conditionally use
+> O_NOFOLLOW if available, otherwise do that fstat().
 
-No, it is about what tag of specific commit you detached your HEAD
-from, *without using checkout*.  If you used checkout, you'd get the
-"detached at" message, and I haven't changed that.
+Yes, that would work.  For now I think I will not worry about it, but
+I'll keep your trick in mind.
 
-> "You can ask the same to describe" is wrong and is not a valid
-> argument.  Once you replace the HEAD^ with a distant commit
-> (e.g. HEAD~400) in the third step in the example, "describe" will
-> not talk about v1.8.2 at all.
+Thanks,
+Michael
 
-You're missing the point: how do I, as the end-user, detach my HEAD
-*without using checkout*?  The hypothetical example you have given is:
-
-  $ git checkout HEAD^
-  $ git update-ref HEAD $(git rev-parse HEAD~400)
-
-Which end-user executes that?
-
-> Your argument can be that it is not a useful piece of information,
-> and as you can probably guess from my "I wouldn't be surprised"
-> above, I am not sure how useful it would be and in what situation
-> [*1*].
-
-Precisely.  It is a poorly thought-out feature that locks things up
-too tightly, and makes life hell for contributors.  It must therefore
-be removed.
-
-> But the original commit thought it was necessary and that was done
-> for a reason; we need to be careful here.  With a good justification
-> why it is not necessary (or misleading to the user), I do not think
-> we cannot change it.
-
-We cannot reverse-engineer intents.  All we can do is look at the
-evidence in front of us.  Read the commit message, and look at the
-newly added test.  There is absolutely no indication about why this
-"detached from" is useful, and where.
-
->         $ git rebase master
->         ... replays some but stops
->         $ git status
->
-> currently uses that "HEAD detached from" codepath, but I think that
-> is a mistake.  We could not just tell the HEAD is detached, but the
-> reason _why_ the HEAD is detached (i.e. we are in the middle of a
-> rebase).  The prompt script can do it, "status" should be able to do
-> the same, and do a lot more sensible thing than unconditionally
-> showing that "HEAD detached from" and then say "You are currently
-> rebasing" on a separate line.  Most likely we do not want to even
-> say "Not currently on any branch" but just say "You are currently
-> rebasing branch X on top of Y" (and perhaps "N commits remaining to
-> be replayed").
-
-That information is available in .git/{rebase-apply,rebase-merge}, and
-your suggestion pertains to improving show_rebase_in_progress().  The
-first line is about the state of HEAD, and is completely orthogonal to
-the issue at hand.
-
-  artagnon|rebase-rev-failure|REBASE-i 2/3:~/src/git$ git status
-  # HEAD detached from a7e9fd4
-  # You are currently editing a commit while rebasing branch
-'rebase-rev-failure' on '9926f66'.
-  #
-  nothing to commit, working directory clean
-
-That first line about "HEAD detached from ..." is completely useless.
-And yes, my prompt is more useful.  No prizes for guessing how often I
-use the long form of git status.
-
-> *1* One thing I could think of is to start sightseeing or (more
->     realistically) manually bisecting at a given release point,
->     reset the detached HEAD around several times, and then want to
->     be reminded where the session started from.  I do not think it
->     is particularly a very good example, though.
-
-The example you have given now is:
-
-  $ git checkout @^
-  # or whatever bisect command to detach HEAD
-  $ git reset @~3
-  ...
-  $ git reset @^
-  ...
-  $ git reset @~5
-  ....
-  # when was HEAD originally detached?
-
-Yes, it is a contrived example where this feature arguably has some
-utility.  Is it worth putting the information in the status for such
-an esoteric example?  If one really wants this information, they can
-open up the reflog and grep for "checkout: ".
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
