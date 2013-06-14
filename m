@@ -1,109 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-gui: bring Wish process to front on Mac
-Date: Fri, 14 Jun 2013 10:54:42 -0700
-Message-ID: <7vwqpwo9wd.fsf@alter.siamese.dyndns.org>
-References: <1l424u5.uk987q18u3oxfM%lists@haller-berlin.de>
-	<1370642211-34416-1-git-send-email-stefan@haller-berlin.de>
+Subject: Re: [PATCH V2] git-remote-mediawiki: remove hardcoded version number in the test suite
+Date: Fri, 14 Jun 2013 11:09:27 -0700
+Message-ID: <7vsj0ko97s.fsf@alter.siamese.dyndns.org>
+References: <1371205151-13549-1-git-send-email-benoit.person@ensimag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Haller <stefan@haller-berlin.de>, git@vger.kernel.org
-To: Pat Thoyts <patthoyts@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 14 19:54:51 2013
+Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: benoit.person@ensimag.fr
+X-From: git-owner@vger.kernel.org Fri Jun 14 20:09:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnYD4-0001zs-9O
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 19:54:50 +0200
+	id 1UnYRK-0004Y0-Qq
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 20:09:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752571Ab3FNRyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 13:54:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63326 "EHLO
+	id S1751913Ab3FNSJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 14:09:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43281 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752480Ab3FNRyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 13:54:45 -0400
+	id S1751489Ab3FNSJa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 14:09:30 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 38224280DB;
-	Fri, 14 Jun 2013 17:54:45 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A072528624;
+	Fri, 14 Jun 2013 18:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NjRivOESxVm8Q/wYwUzdc91CwJE=; b=DMjqMD
-	sg7UTTPBw7dT4gAXotEhsolLHN+wSBewwQwufRCRDSoNz5emKGZqFiEjGE8Dpr84
-	lMhWQxZ132U4Uk5FRl2MBU14VOhjobeTdOCVBRTsmwOV8/nka+q2wKuZyNcPs5dB
-	bVDF3Pqho5S7lb4EvaDwcXmxBvaosp9CAeacM=
+	:content-type; s=sasl; bh=OZh6XB0f/XzX06WtN5s8BPmq1as=; b=ir7/q+
+	4vEXqkJjUvXBqddKNGHwVPQbp38onyjKzKKDvxueJ0AJEJLCn3touLkaDVUb0d2L
+	iC4H4VxuCtT8eagaVMNdtqN73PtewlOWInBVJ1YkZLeS1M01E6XKqbTFw5EkO57z
+	797XH/bw0duTQP4ZN35Wbz0SlDel2NjmSovgk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KesNKxWi/FSMk5V2V8+iNd8fsRp44hyg
-	n6Y7oeXFtnE8U2ECFsmdUMTKs+xzybzCZnXbQs1iCUGrcLprH3ZMEXUvkWph5lJT
-	H7sona433vvZiGYSQk0uSYTuxU3v/UD4PHY4OwwD6YrYd4cWaJklXIGzN6/UNJS7
-	jO8XhGjF6bA=
+	:content-type; q=dns; s=sasl; b=UbY2iwIe4At20TaEyQh0R6ZStwBzKrpr
+	QoM7HK66r69ROLj2s9loIYPQ04gSBlR8W7q6YdJ/edOgh18CREIvYRrhtllaR0oO
+	6MQxRFu1idMaSLk81tv9yV9Bg5BPMxX00N6NdJ/361KQT1q7UUJRNFESFFgB8op+
+	55sDhrMSF24=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AF92280DA;
-	Fri, 14 Jun 2013 17:54:45 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9580528623;
+	Fri, 14 Jun 2013 18:09:29 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C14C280D9;
-	Fri, 14 Jun 2013 17:54:44 +0000 (UTC)
-In-Reply-To: <1370642211-34416-1-git-send-email-stefan@haller-berlin.de>
-	(Stefan Haller's message of "Fri, 7 Jun 2013 23:56:51 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2046928621;
+	Fri, 14 Jun 2013 18:09:29 +0000 (UTC)
+In-Reply-To: <1371205151-13549-1-git-send-email-benoit.person@ensimag.fr>
+	(benoit person's message of "Fri, 14 Jun 2013 12:19:11 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7EFC65AE-D51B-11E2-B726-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8E39433C-D51D-11E2-B4E8-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227906>
 
-Stefan Haller <stefan@haller-berlin.de> writes:
+benoit.person@ensimag.fr writes:
 
-> On Mac OS X, any application that is started from the Terminal will open
-> behind all running applications; as a work-around, manually bring ourselves
-> to the front. (Stolen from gitk, commit 76bf6ff93e.)
+> From: Benoit Person <benoit.person@ensimag.fr>
 >
-> We do this as the very first thing, so that any message boxes that might pop
-> up during the rest of the startup sequence are actually seen by the user.
->
-> Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
-> ---
+> Updates the code to make it more easy to switch mediawiki version when
+> testing. Before that, the version number was partly hardcoded, partly
+> in a var.
 
-Pat, is there any progress on this?  I do not mind, and I actually
-would prefer, a pull request early in the development cycle.
+This definitely goes in a good direction; you no longer have to
+touch random lines in test-gitmw-lib.sh and what you have to edit 
+is very much localized.
 
-"I've been busy and haven't got around to it", is a perfectly
-acceptable response.  Just pinging to check.
+It seems t/test.config that is tracked is also designed to be
+randomly edited to suit user's needs.
 
-> Changes since the first patch: 
->  - add catch
->  - specify full path to /usr/bin/osascript
->
->  git-gui.sh | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
->
-> diff --git a/git-gui.sh b/git-gui.sh
-> index e133331..a792924 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -29,6 +29,21 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
->  
->  ######################################################################
->  ##
-> +## On Mac, bring the current Wish process window to front
-> +
-> +if {[tk windowingsystem] eq "aqua"} {
-> +	catch {
-> +		exec /usr/bin/osascript -e [format {
-> +			tell application "System Events"
-> +				set frontmost of processes whose unix id is %d to true
-> +			end tell
-> +		} [pid] ]
-> +	}
-> +}
-> +
-> +
-> +######################################################################
-> +##
->  ## Tcl/Tk sanity check
->  
->  if {[catch {package require Tcl 8.4} err]
+The patch does not make things any worse, but I would imagine that a
+better longer term structure would be for contrib/mw-to-git/Makefile
+to create contrib/mw-to-git/t/test.config by replacing variables in
+contrib/mw-to-git/t/test.config-template, so that the user could say
+
+	cd contrib/mw-to-git
+        make MW_VERSION_MAJOR=1.20 MW_VERSION_MINOR=0 test
+
+or something like that.
+
+But of course, that is a totally unrelated issue.
+
+Will apply.  Thanks.
