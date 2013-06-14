@@ -1,111 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 00/31] git-remote-mediawiki: Follow perlcritic's recommandations
-Date: Fri, 14 Jun 2013 09:03:48 -0700
-Message-ID: <7vwqpwptln.fsf@alter.siamese.dyndns.org>
-References: <1371217839-23017-1-git-send-email-celestin.matte@ensimag.fr>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 2/3] sh-setup: add new peel_committish() helper
+Date: Fri, 14 Jun 2013 17:05:03 +0100
+Organization: OPDS
+Message-ID: <59954A85BB7C4B279B61C46CC1D81CCA@PhilipOakley>
+References: <1371215872-9796-1-git-send-email-artagnon@gmail.com> <1371215872-9796-3-git-send-email-artagnon@gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, benoit.person@ensimag.fr,
-	matthieu.moy@grenoble-inp.fr
-To: =?utf-8?Q?C=C3=A9lestin?= Matte <celestin.matte@ensimag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 14 18:03:58 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>
+To: "Ramkumar Ramachandra" <artagnon@gmail.com>,
+	"Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 14 18:04:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnWTk-0004cv-TK
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 18:03:57 +0200
+	id 1UnWUQ-0005Bv-Ac
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 18:04:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752408Ab3FNQDw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jun 2013 12:03:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59306 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752106Ab3FNQDv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Jun 2013 12:03:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D655C27AB7;
-	Fri, 14 Jun 2013 16:03:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=M2vhP/WlvRE8
-	loBiYEHJRm9N4PA=; b=UUEL5bVlrZy2ka8SY3FF2WroM2tHGtRwgzrvjXbbsLEI
-	9A1/8nyu5DTpTl8KETfw5FMETYfGv4c4PTpXNLUMr3w67pbahPssSo/NFDb4ys/Y
-	O0NJ8bYqyyQKptKEz2W6sSFdSv61c0/2U9Qe5OZaCxyXZZbdUCZ6K+YSoK3FRe8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pEf30f
-	bQyWdyOq2tnd6gYniZTKxukxWDBpgYjajzlDMTkZq+uQpWpXp+Br38fPuSW877Jl
-	N+6Fee+BPa2pRTvaz3w4dXy5d73CwN6/XJhBElJ8iHk8xqn6GRIe4y9kdCgdcM9v
-	VBTSNIcIelXVQMHFz9d1cNxoCi+8fXB33av4k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA93A27AB6;
-	Fri, 14 Jun 2013 16:03:50 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 109E327AB4;
-	Fri, 14 Jun 2013 16:03:49 +0000 (UTC)
-In-Reply-To: <1371217839-23017-1-git-send-email-celestin.matte@ensimag.fr>
-	(=?utf-8?Q?=22C=C3=A9lestin?= Matte"'s message of "Fri, 14 Jun 2013
- 15:50:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 00976B1E-D50C-11E2-9679-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752437Ab3FNQEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 12:04:34 -0400
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:41237 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752232Ab3FNQEd (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jun 2013 12:04:33 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ArkNACM+u1FZ8YhC/2dsb2JhbABbgwkwiQe2EgQBAwGBCRd0gh4FAQEEAQgBAS4eAQEhBQYCAwUCAQMOBwELJRQBBAgSBgcXBgESCAIBAgMBh2sDCQqxYA2IUoxjgXtqgwZhA4hohgaGbIwDggKFJIMQOw
+X-IronPort-AV: E=Sophos;i="4.87,867,1363132800"; 
+   d="scan'208";a="578739815"
+Received: from host-89-241-136-66.as13285.net (HELO PhilipOakley) ([89.241.136.66])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 14 Jun 2013 17:04:31 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227891>
 
-C=C3=A9lestin Matte <celestin.matte@ensimag.fr> writes:
-
-> C=C3=A9lestin Matte (31):
->   git-remote-mediawiki: Make a regexp clearer
->   git-remote-mediawiki: Move "use warnings;" before any instruction
->   git-remote-mediawiki: Replace :utf8 by :encoding(UTF-8)
->   git-remote-mediawiki: Always end a subroutine with a return
->   git-remote-mediawiki: Move a variable declaration at the top of the
->     code
->   git-remote-mediawiki: Change syntax of map calls
->   git-remote-mediawiki: Rewrite unclear line of instructions
->   git-remote-mediawiki: Remove useless regexp modifier (m)
->   git-remote-mediawiki: Change the behaviour of a split
->   git-remote-mediawiki: Change separator of some regexps
->   git-remote-mediawiki: Change style in a regexp
->   git-remote-mediawiki: Change style in a regexp
->   git-remote-mediawiki: Add newline in the end of die() error message=
-s
->   git-remote-mediawiki: Change the name of a variable
->   git-remote-mediawiki: Turn double-negated expressions into simple
->     expressions
->   git-remote-mediawiki: Remove unused variable $entry
->   git-remote-mediawiki: Rename a variable ($last) which has the name =
-of
->     a keyword
->   git-remote-mediawiki: Assign a variable as undef and make proper
->     indentation
->   git-remote-mediawiki: Check return value of open
->   git-remote-mediawiki: remove import of unused open2
->   git-remote-mediawiki: Put long code into a subroutine
->   git-remote-mediawiki: Modify strings for a better coding-style
->   git-remote-mediawiki: Brace file handles for print for more clarity
->   git-remote-mediawiki: Replace "unless" statements with negated "if"
->     statements
->   git-remote-mediawiki: Don't use quotes for empty strings
->   git-remote-mediawiki: Put non-trivial numeric values in constants.
->   git-remote-mediawiki: Fix a typo ("mediwiki" instead of "mediawiki"=
-)
->   git-remote-mediawiki: Clearly rewrite double dereference
->   git-remote-mediawiki: Add a .perlcriticrc file
->   git-remote-mediawiki: add a perlcritic rule in Makefile
->   git-remote-mediawiki: Make error message more precise
+From: "Ramkumar Ramachandra" <artagnon@gmail.com>
+Sent: Friday, June 14, 2013 2:17 PM
+> The normal way to check whether a certain revision resolves to a valid
+> commit is:
 >
->  contrib/mw-to-git/.perlcriticrc             |  28 ++
->  contrib/mw-to-git/Makefile                  |   2 +
->  contrib/mw-to-git/git-remote-mediawiki.perl | 537 +++++++++++++++---=
-----------
->  3 files changed, 320 insertions(+), 247 deletions(-)
->  create mode 100644 contrib/mw-to-git/.perlcriticrc
+>  $ git rev-parse --verify $REV^0
+>
+> Unfortunately, this does not work when $REV is of the type :/quuxery.
 
-Thanks.  Will queue.
+Is there a proper name for this style of revision specification? I've 
+been letting this 'style' wash over me in the hope that I'd understand 
+eventually, but it hasn't.
+
+Loking at git-rev-parse I now see that it might be the 'Commit Message 
+Regex' rev specifier.
+
+If re-rolled, can this elucidation be included in the commit message?
+
+> Write a helper to work around this limitation.
+>
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+> git-sh-setup.sh | 12 ++++++++++++
+> 1 file changed, 12 insertions(+)
+>
+> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+> index 2f78359..7a964ad 100644
+> --- a/git-sh-setup.sh
+> +++ b/git-sh-setup.sh
+> @@ -313,3 +313,15 @@ then
+>  }
+>  : ${GIT_OBJECT_DIRECTORY="$GIT_DIR/objects"}
+> fi
+> +
+> +peel_committish () {
+> + case "$1" in
+> + :/*)
+> + peeltmp=$(git rev-parse --verify "$1") &&
+> + git rev-parse --verify "${peeltmp}^0"
+> + ;;
+> + *)
+> + git rev-parse --verify "${1}^0"
+> + ;;
+> + esac
+> +}
+> -- 
+> 1.8.3.1.381.g12ca056.dirty
+>
+> --
+Philip 
