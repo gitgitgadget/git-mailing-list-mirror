@@ -1,69 +1,59 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: git stash while pending merge should not be allowed
-Date: Fri, 14 Jun 2013 09:30:19 +0100
-Message-ID: <20130614083018.GD23890@serenity.lan>
-References: <51B18331.6060302@coverity.com>
- <7v1u8du5as.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Scott McPeak <smcpeak@coverity.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 14 10:30:40 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 0/2] Rebasing pull with autostash
+Date: Fri, 14 Jun 2013 14:26:16 +0530
+Message-ID: <1371200178-9927-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 14 10:54:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnPP0-0003zG-Qv
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 10:30:35 +0200
+	id 1UnPmD-0001CM-A6
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 10:54:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751617Ab3FNIa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 04:30:29 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:60221 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751138Ab3FNIa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 04:30:27 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 5F84523240;
-	Fri, 14 Jun 2013 09:30:26 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7W6wQAjOfxhs; Fri, 14 Jun 2013 09:30:25 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 5AF622320A;
-	Fri, 14 Jun 2013 09:30:20 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7v1u8du5as.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751169Ab3FNIy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 04:54:27 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:63104 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750930Ab3FNIyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 04:54:25 -0400
+Received: by mail-pb0-f44.google.com with SMTP id uo1so370520pbc.31
+        for <git@vger.kernel.org>; Fri, 14 Jun 2013 01:54:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=owrMuKfLghd78ajUzbgGIe4/KeFGOfCB5eiGmbfM6zA=;
+        b=NOCBFEF7swDg8zKmdabGwb7J3QYRA2fB/fd/uA+z+GDg2dQFBU3ZOB3dk1h6R4Ma4w
+         Av4G+yIaQLPjLgkRZrDfjkxUlrLzywA0IIZECnv/MFwwL/1WKokpupwLIEB3icEek9NG
+         F1aRQOFb9+1F9Hrefvtcsklo2NVjWIiUKj+48qM4i2adNDT+/dSajLVNU9AUTOiJ8IcO
+         uvj/B+ef8sUk0vaWAYENKeh2cboUhWomNqlMj/cyOm3VQvVWUC389PIobFRs87AKSBnI
+         Rs0omOWm0Y3YTi/DdSr4AEsRJ05lEqimWy5wKkW1UVuPO18+i931/M8AnK9axyINiWfu
+         ox/w==
+X-Received: by 10.68.245.170 with SMTP id xp10mr1575819pbc.41.1371200064844;
+        Fri, 14 Jun 2013 01:54:24 -0700 (PDT)
+Received: from luneth.maa.corp.collab.net ([182.71.239.158])
+        by mx.google.com with ESMTPSA id fr1sm1506848pbb.26.2013.06.14.01.54.22
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 14 Jun 2013 01:54:23 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.379.gb74074e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227796>
 
-On Fri, Jun 07, 2013 at 11:47:07AM -0700, Junio C Hamano wrote:
-> Scott McPeak <smcpeak@coverity.com> writes:
-> 
-> > I suggest that this problem could easily have been avoided if "git
-> > stash" refused to run with a pending merge (present MERGE_HEAD file),
-> > since this is crucial repository state that it does not save.  This
-> > seems similar to what "git cherry-pick" does.
-> 
-> Sounds senslbe.  What do we want to see happen in other states, in
-> which Git gives control back to the user asking for help before
-> moving forward (e.g. am, rebase, cherry-pick, revert)?
+It's trivial to support the feature :)
 
-I don't think there's any need to prevent stash running in these cases
-and I sometimes find it useful that I can stash during a rebase.
+Ramkumar Ramachandra (2):
+  pull: respect rebase.autostash
+  pull: clarify the large && { ... } form
 
-Having said that, I wonder what happens with "cherry-pick -x" if you do
-stash changes while it is stopped.  I don't think that is as serious as
-the merge case because it's easy to detect in the commit message.
+ git-pull.sh     |  7 +++++--
+ t/t5520-pull.sh | 11 +++++++++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
+
+-- 
+1.8.3.1.379.gb74074e.dirty
