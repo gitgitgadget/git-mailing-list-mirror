@@ -1,108 +1,174 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@google.com>
-Subject: Re: Teams of people using signed commits...
-Date: Fri, 14 Jun 2013 15:25:27 -0400
-Message-ID: <20130614192526.GA25486@google.com>
-References: <CABQymNKuwiOz-MQuM12fWSgBvBsBrykNYBqPBxCuSuxAC5cZZw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Eric Fleischman <efleischman@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 14 21:31:02 2013
+From: Andrew Pimlott <andrew@pimlott.net>
+Subject: [PATCH] rebase -i: fixup fixup! fixup!
+Date: Fri, 14 Jun 2013 12:31:57 -0700
+Message-ID: <1371237209-sup-639@pimlott.net>
+References: <20130611180530.GA18488@oinkpad.pimlott.net> <87obbc8otc.fsf@hexa.v.cablecom.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jun 14 21:32:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnZi9-0002zc-81
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 21:31:01 +0200
+	id 1UnZjB-0003h8-E4
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 21:32:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753887Ab3FNTay convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jun 2013 15:30:54 -0400
-Received: from mail-gh0-f202.google.com ([209.85.160.202]:56806 "EHLO
-	mail-gh0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753875Ab3FNTax (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 15:30:53 -0400
-Received: by mail-gh0-f202.google.com with SMTP id g24so95974ghb.5
-        for <git@vger.kernel.org>; Fri, 14 Jun 2013 12:30:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=JlKQL/ABv8sCIsF7Jdk9HT9GZ74mxDSP4FBR2Sn1r44=;
-        b=M3zZ/yABmVL/rb5JxZWgOkouHrZKog+bRBIIrfV/H4pv2R0ZKamnI0qpfLj/SDKHRM
-         Oz4YkVuJWopZC2J3yhGu3CBvTdiouUGUs7I2uTKYPt3xRD4StVTyZJkHBer1+Eo7a2kt
-         jOeek2DPdRJ7ksGQy7pb4sUJWU///BGbmwjCfXdtEZTkx2DswlXk2p6afuzR/lHEwfD/
-         p6JNFdZccK2Mh4G5agV8M5ucaz6yuSTLnlOrl3IcUDq90T98eHw6EXNNoxOOgahkBdrU
-         771oa4KsUDfaXoBocXD8SbRe7Jba+O4Rkhev5G+40th9EQLXA9/GhTeWk4UtEbl1aPUY
-         4Y9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent:x-gm-message-state;
-        bh=JlKQL/ABv8sCIsF7Jdk9HT9GZ74mxDSP4FBR2Sn1r44=;
-        b=jI9enn9jvpCI7ND5piOf6efLBf3L4/ofI8t7omJSaKC7i8IsIaN/mQFcIxHJcCrcCL
-         OWP/tN9k+Hq5mJ06h1/kkSSlqgCgZwfXoqe+FXk/OkjgztgTBFTHN7jyTWWOwSPjrGBr
-         Rws5siE950rhCrNc6I5ZZOYWiX4u8YBK7bO6Lq+Q5cumPUGs7HrBGtz8GbWYBb49GW3E
-         PeuOyCLb0YDLPKb60j4FovXikTzYy/R5dttvpNOA+NQYMgoq86lbtAjfq+8OuoxajGTD
-         T6Z4Cco4Gs3u2QATkLnjrx1/HeZIJLZUwJZ7tpy3frkhe6ANj6474R4tUROkIOcDoVe8
-         PvwQ==
-X-Received: by 10.236.112.33 with SMTP id x21mr2091541yhg.57.1371237927585;
-        Fri, 14 Jun 2013 12:25:27 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id o42si227323yhe.5.2013.06.14.12.25.27
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=AES128-SHA bits=128/128);
-        Fri, 14 Jun 2013 12:25:27 -0700 (PDT)
-Received: from valle.nyc.corp.google.com (valle.nyc.corp.google.com [172.26.78.170])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 709F431C022;
-	Fri, 14 Jun 2013 12:25:27 -0700 (PDT)
-Received: by valle.nyc.corp.google.com (Postfix, from userid 159662)
-	id 1CECD4069D; Fri, 14 Jun 2013 15:25:27 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CABQymNKuwiOz-MQuM12fWSgBvBsBrykNYBqPBxCuSuxAC5cZZw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Gm-Message-State: ALoCoQkRJPbbA/PKnX5adrYXxkbpW0tIsOH1KifKVgYWCH5q9GHwz4uL8zDR2bNrHKCBO0Df3nGEI9/lQ8Yb/G/F1SHNKvRic3utEKprREqGAzaG1RNt2innyix8Qv4MdKRJ5OVz69afgadab4Kn182WZov2/IMopMf6gx3udNvrR+m5TwvY/2l9sCFWmsK8pjjnmBtSDKfe
+	id S1753827Ab3FNTcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 15:32:00 -0400
+Received: from pimlott.net ([72.249.23.100]:51090 "EHLO fugue.pimlott.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753778Ab3FNTcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 15:32:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=pimlott.net; s=default;
+	h=Content-Transfer-Encoding:Message-Id:Date:References:In-reply-to:To:From:Subject:Cc:Content-Type; bh=Vx4cz/yjZ0ZJMTP3Mbu7tnWFW7M5g9tqEXHFMPvEMCU=;
+	b=AKu2b2VDVKKcLi3KEzOXrMhC+ugKrWcqjl/xtrI8vS/jIAEEIlOHE0Ynm8upOSzjKYFl+13Fz2MFZmZ5l5PfcfOUvA3+9atdsDRVQZLfvB8fU0+m2/Ho9BwXWlfScOztWBfZVNg81J2+1Ghmajd07fcOEeocnGMQX5XetNzLD9k=;
+Received: from andrew by fugue.pimlott.net with local (Exim 4.72)
+	(envelope-from <andrew@pimlott.net>)
+	id 1UnZj3-0005sS-KI; Fri, 14 Jun 2013 12:31:57 -0700
+In-reply-to: <87obbc8otc.fsf@hexa.v.cablecom.net>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227914>
 
-On Friday, June 14, 2013 at 15:02 EDT,
-     Eric Fleischman <efleischman@gmail.com> wrote:
+Excerpts from Thomas Rast's message of Tue Jun 11 11:50:07 -0700 2013:
+> Andrew Pimlott <andrew@pimlott.net> writes:
+> >     git commit -m 'fix nasty bug'
+> >     ...
+> >     git commit --fixup :/nasty
+> >     ...
+> >     git commit --fixup :/nasty
+> >
+> > The second :/nasty resolves to the previous fixup, not the initial
+> > commit.  I could have made the regular expression more precise, but this
+> > would be a hassle.
+> >
+> > Would a change to support fixup! fixup! be considered?
+> 
+> Sure, why not.  You could start with something like the patch below
+> (untested).  If that happens to work, just add a test and a good commit
+> message.
 
-> We're very interested in using signed commits but are struggling to
-> figure out how to use it in the real world. Would love some advice
-> from those who know more.
+It happened to work and I added a test.  But then it occurred to me that
+it might have been better to fix commit --fixup/--squash to strip the
+fixup! or squash! from the referenced commit in the first place.
+Anyhow, below is my patch for --autosquash, but unles someone has an
+objection to doing it in commit, I'll work on that.
 
-What do you expect to gain from using signed commits? I'm not saying
-they don't have a place, but depending on why you find them attractive
-there might be alternatives. For example, won't signed tags do?
+Andrew
 
-> We think we know how to deal with signed commits & auto-reject such
-> commits at build time, as well as clean up. But we're worried that
-> folks won't sign on the way in accidentally. We don't know of a good
-> way to force the team to always sign commits yet, especially as they
-> get new machines and what hav eyou.
+Ignore subsequent "fixup! " or "squash! " after the first.  Handy in case a
+git commit --fixup/--squash referred to a previous fixup/squash instead of
+the original commit, for example with :/msg.
 
-Hooks? A pre-commit hook that runs on the machine and/or a server-side
-hook (pre-receive or update?) should be able to enforce this. Well, a
-client hook is trivially bypassed so it would just be useful against
-mistakes and forgetfullness.
+Signed-off-by: Andrew Pimlott <andrew@pimlott.net>
+---
+ Documentation/git-rebase.txt |    4 +++-
+ git-rebase--interactive.sh   |   13 ++++++++++-
+ t/t3415-rebase-autosquash.sh |   49 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 64 insertions(+), 2 deletions(-)
 
-> Is there a way to add something to the repo config to force, or at
-> least default, this?
-
-I don't believe you can configure Git to sign commits by default, but
-if you control the machine of your machines (assuming a corporate)
-environment you can set up a template directory for hook distribution.
-Again, that's only for client hooks that are okay to be circumventable.
-
-[...]
-
---=20
-Magnus B=E4ck
-baeck@google.com
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index c84854a..725cf27 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -389,7 +389,9 @@ squash/fixup series.
+ 	the same ..., automatically modify the todo list of rebase -i
+ 	so that the commit marked for squashing comes right after the
+ 	commit to be modified, and change the action of the moved
+-	commit from `pick` to `squash` (or `fixup`).
++	commit from `pick` to `squash` (or `fixup`).  Ignores subsequent
++	"fixup! " or "squash! " after the first, in case you referred to a
++	previous fixup/squash with `git commit --fixup/--squash`.
+ +
+ This option is only valid when the '--interactive' option is used.
+ +
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index f953d8d..54ed4c3 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -689,7 +689,18 @@ rearrange_squash () {
+ 		case "$message" in
+ 		"squash! "*|"fixup! "*)
+ 			action="${message%%!*}"
+-			rest="${message#*! }"
++			rest=$message
++			# ignore any squash! or fixup! after the first
++			while : ; do
++				case "$rest" in
++				"squash! "*|"fixup! "*)
++					rest="${rest#*! }"
++					;;
++				*)
++					break
++					;;
++				esac
++			done
+ 			echo "$sha1 $action $rest"
+ 			# if it's a single word, try to resolve to a full sha1 and
+ 			# emit a second copy. This allows us to match on both message
+diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+index a1e86c4..1a3f40a 100755
+--- a/t/t3415-rebase-autosquash.sh
++++ b/t/t3415-rebase-autosquash.sh
+@@ -193,4 +193,53 @@ test_expect_success 'use commit --squash' '
+ 	test_auto_commit_flags squash 2
+ '
+ 
++test_auto_fixup_fixup () {
++	git reset --hard base &&
++	echo 1 >file1 &&
++	git add -u &&
++	test_tick &&
++	git commit -m "$1! first" &&
++	echo 2 >file1 &&
++	git add -u &&
++	test_tick &&
++	git commit -m "$1! $2! first" &&
++	git tag "final-$1-$2" &&
++	test_tick &&
++	git rebase --autosquash -i HEAD^^^^ &&
++	git log --oneline >actual &&
++	test_pause &&
++	if [ "$1" = "fixup" ]; then
++		test_line_count = 3 actual
++	elif [ "$1" = "squash" ]; then
++		test_line_count = 4 actual
++	else
++		false
++	fi &&
++	git diff --exit-code "final-$1-$2" &&
++	test 2 = "$(git cat-file blob HEAD^:file1)" &&
++	if [ "$1" = "fixup" ]; then
++		test 1 = $(git cat-file commit HEAD^ | grep first | wc -l)
++	elif [ "$1" = "squash" ]; then
++		test 3 = $(git cat-file commit HEAD^ | grep first | wc -l)
++	else
++		false
++	fi
++}
++
++test_expect_success 'fixup! fixup!' '
++	test_auto_fixup_fixup fixup fixup
++'
++
++test_expect_success 'fixup! squash!' '
++	test_auto_fixup_fixup fixup squash
++'
++
++test_expect_success 'squash! squash!' '
++	test_auto_fixup_fixup squash squash
++'
++
++test_expect_success 'squash! fixup!' '
++	test_auto_fixup_fixup squash fixup
++'
++
+ test_done
+-- 
+1.7.10.4
