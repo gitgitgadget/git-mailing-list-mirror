@@ -1,133 +1,111 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: [[PATCH v3] 2/2] [submodule] Replace perl-code with sh
-Date: Fri, 14 Jun 2013 17:56:05 +0200
-Message-ID: <1371225365-4219-3-git-send-email-iveqy@iveqy.com>
-References: <1371225365-4219-1-git-send-email-iveqy@iveqy.com>
-Cc: git@vger.kernel.org, iveqy@iveqy.com, jens.lehmann@web.de
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jun 14 17:53:21 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 00/31] git-remote-mediawiki: Follow perlcritic's recommandations
+Date: Fri, 14 Jun 2013 09:03:48 -0700
+Message-ID: <7vwqpwptln.fsf@alter.siamese.dyndns.org>
+References: <1371217839-23017-1-git-send-email-celestin.matte@ensimag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, benoit.person@ensimag.fr,
+	matthieu.moy@grenoble-inp.fr
+To: =?utf-8?Q?C=C3=A9lestin?= Matte <celestin.matte@ensimag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 14 18:03:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnWJM-0004nV-Qo
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 17:53:13 +0200
+	id 1UnWTk-0004cv-TK
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 18:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751806Ab3FNPxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 11:53:08 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:35660 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751488Ab3FNPxG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 11:53:06 -0400
-Received: by mail-la0-f45.google.com with SMTP id fr10so685167lab.4
-        for <git@vger.kernel.org>; Fri, 14 Jun 2013 08:53:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=fgK/0wj7VCOUOT7QZIlUcPnRLNQbcDFD0NcieVLfDZ4=;
-        b=dEnEehF7MeQq+BEH6pVPcSWYQxEQxSIO3dTWyeeeYHFbLncy8I/VETjOZrbUM645jf
-         +F0PRvh6wmJs/StqSVtO+qpAY6bDzrGvty46lvgFboJJbp2CZ7qH0rJ3iCEZaL8whiDg
-         E8kOO3kMMKgUggF2lKbdWU0e3BI7Br6zP89F9PAZmGykZAgPN1Vm0mXvIWnJH5ZIa98O
-         1oA+TlUYPkiN4lYWc847H6mPVa0LWHOPGG9p/Mb3VTH9HeTogV6hjGlBVOQ5hp7AvXDz
-         gNrL+SWTNuQOz4FLWaz2Apm74Rq/k5lmWlpuJ5GMH/tmKFtg47JoDutvkKGmhvFWYhFT
-         qk1w==
-X-Received: by 10.152.28.199 with SMTP id d7mr1462480lah.67.1371225184734;
-        Fri, 14 Jun 2013 08:53:04 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id p20sm1067877lbb.17.2013.06.14.08.53.02
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 14 Jun 2013 08:53:03 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UnWMH-00016h-KH; Fri, 14 Jun 2013 17:56:13 +0200
-X-Mailer: git-send-email 1.8.0
-In-Reply-To: <1371225365-4219-1-git-send-email-iveqy@iveqy.com>
+	id S1752408Ab3FNQDw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jun 2013 12:03:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59306 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752106Ab3FNQDv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jun 2013 12:03:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D655C27AB7;
+	Fri, 14 Jun 2013 16:03:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=M2vhP/WlvRE8
+	loBiYEHJRm9N4PA=; b=UUEL5bVlrZy2ka8SY3FF2WroM2tHGtRwgzrvjXbbsLEI
+	9A1/8nyu5DTpTl8KETfw5FMETYfGv4c4PTpXNLUMr3w67pbahPssSo/NFDb4ys/Y
+	O0NJ8bYqyyQKptKEz2W6sSFdSv61c0/2U9Qe5OZaCxyXZZbdUCZ6K+YSoK3FRe8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pEf30f
+	bQyWdyOq2tnd6gYniZTKxukxWDBpgYjajzlDMTkZq+uQpWpXp+Br38fPuSW877Jl
+	N+6Fee+BPa2pRTvaz3w4dXy5d73CwN6/XJhBElJ8iHk8xqn6GRIe4y9kdCgdcM9v
+	VBTSNIcIelXVQMHFz9d1cNxoCi+8fXB33av4k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA93A27AB6;
+	Fri, 14 Jun 2013 16:03:50 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 109E327AB4;
+	Fri, 14 Jun 2013 16:03:49 +0000 (UTC)
+In-Reply-To: <1371217839-23017-1-git-send-email-celestin.matte@ensimag.fr>
+	(=?utf-8?Q?=22C=C3=A9lestin?= Matte"'s message of "Fri, 14 Jun 2013
+ 15:50:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 00976B1E-D50C-11E2-9679-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227890>
 
-This will prevent a fork and makes the code similair to the rest of the
-file.
+C=C3=A9lestin Matte <celestin.matte@ensimag.fr> writes:
 
-In the long term git-submodule.sh needs to use something else than sh to
-handle newline in filenames (and therefore needs to use a language that
-accepts \0 in strings). However I don't think that keeping that small
-perl-part will ease any rewrite.
+> C=C3=A9lestin Matte (31):
+>   git-remote-mediawiki: Make a regexp clearer
+>   git-remote-mediawiki: Move "use warnings;" before any instruction
+>   git-remote-mediawiki: Replace :utf8 by :encoding(UTF-8)
+>   git-remote-mediawiki: Always end a subroutine with a return
+>   git-remote-mediawiki: Move a variable declaration at the top of the
+>     code
+>   git-remote-mediawiki: Change syntax of map calls
+>   git-remote-mediawiki: Rewrite unclear line of instructions
+>   git-remote-mediawiki: Remove useless regexp modifier (m)
+>   git-remote-mediawiki: Change the behaviour of a split
+>   git-remote-mediawiki: Change separator of some regexps
+>   git-remote-mediawiki: Change style in a regexp
+>   git-remote-mediawiki: Change style in a regexp
+>   git-remote-mediawiki: Add newline in the end of die() error message=
+s
+>   git-remote-mediawiki: Change the name of a variable
+>   git-remote-mediawiki: Turn double-negated expressions into simple
+>     expressions
+>   git-remote-mediawiki: Remove unused variable $entry
+>   git-remote-mediawiki: Rename a variable ($last) which has the name =
+of
+>     a keyword
+>   git-remote-mediawiki: Assign a variable as undef and make proper
+>     indentation
+>   git-remote-mediawiki: Check return value of open
+>   git-remote-mediawiki: remove import of unused open2
+>   git-remote-mediawiki: Put long code into a subroutine
+>   git-remote-mediawiki: Modify strings for a better coding-style
+>   git-remote-mediawiki: Brace file handles for print for more clarity
+>   git-remote-mediawiki: Replace "unless" statements with negated "if"
+>     statements
+>   git-remote-mediawiki: Don't use quotes for empty strings
+>   git-remote-mediawiki: Put non-trivial numeric values in constants.
+>   git-remote-mediawiki: Fix a typo ("mediwiki" instead of "mediawiki"=
+)
+>   git-remote-mediawiki: Clearly rewrite double dereference
+>   git-remote-mediawiki: Add a .perlcriticrc file
+>   git-remote-mediawiki: add a perlcritic rule in Makefile
+>   git-remote-mediawiki: Make error message more precise
+>
+>  contrib/mw-to-git/.perlcriticrc             |  28 ++
+>  contrib/mw-to-git/Makefile                  |   2 +
+>  contrib/mw-to-git/git-remote-mediawiki.perl | 537 +++++++++++++++---=
+----------
+>  3 files changed, 320 insertions(+), 247 deletions(-)
+>  create mode 100644 contrib/mw-to-git/.perlcriticrc
 
-Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
----
- git-submodule.sh | 51 ++++++++++++++++++++++-----------------------------
- 1 file changed, 22 insertions(+), 29 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index bad051e..be96934 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -112,38 +112,31 @@ resolve_relative_url ()
- #
- module_list()
- {
-+	null_sha1=0000000000000000000000000000000000000000
-+	unmerged=
- 	(
- 		git -c core.quotepath=false ls-files --error-unmatch --stage -- "$@" ||
--		echo "unmatched pathspec exists"
-+		echo "#unmatched"
- 	) |
--	perl -e '
--	my %unmerged = ();
--	my ($null_sha1) = ("0" x 40);
--	my @out = ();
--	my $unmatched = 0;
--	while (<STDIN>) {
--		if (/^unmatched pathspec/) {
--			$unmatched = 1;
--			next;
--		}
--		chomp;
--		my ($mode, $sha1, $stage, $path) =
--			/^([0-7]+) ([0-9a-f]{40}) ([0-3])\t(.*)$/;
--		next unless $mode eq "160000";
--		if ($stage ne "0") {
--			if (!$unmerged{$path}++) {
--				push @out, "$mode $null_sha1 U\t$path\n";
--			}
--			next;
--		}
--		push @out, "$_\n";
--	}
--	if ($unmatched) {
--		print "#unmatched\n";
--	} else {
--		print for (@out);
--	}
--	'
-+	while read mode sha1 stage path
-+	do
-+		if test $mode = "#unmatched"
-+		then
-+			echo "#unmatched"
-+		elif test $mode = "160000"
-+		then
-+			if test $stage != "0"
-+			then
-+				if test "$unmerged" != "$path"
-+				then
-+					echo "$mode $null_sha1 U $path"
-+				fi
-+				unmerged="$path"
-+			else
-+				echo "$mode $sha1 $stage $path"
-+			fi
-+		fi
-+	done
- }
- 
- die_if_unmatched ()
--- 
-1.8.3.1.381.g2ab719e.dirty
+Thanks.  Will queue.
