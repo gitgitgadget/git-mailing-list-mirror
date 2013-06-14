@@ -1,79 +1,132 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [[PATCH v3] 1/2] [submodule] handle multibyte characters in name
-Date: Fri, 14 Jun 2013 11:33:49 -0700
-Message-ID: <7vfvwko836.fsf@alter.siamese.dyndns.org>
-References: <1371225365-4219-1-git-send-email-iveqy@iveqy.com>
-	<1371225365-4219-2-git-send-email-iveqy@iveqy.com>
-	<7va9msppw7.fsf@alter.siamese.dyndns.org>
-	<20130614182741.GA5812@paksenarrion.iveqy.com>
+Subject: Re: [PATCH 1/2] am: handle stray $dotest directory
+Date: Fri, 14 Jun 2013 12:00:26 -0700
+Message-ID: <7vbo78o6ut.fsf@alter.siamese.dyndns.org>
+References: <1371196058-23948-1-git-send-email-artagnon@gmail.com>
+	<1371196058-23948-2-git-send-email-artagnon@gmail.com>
+	<7vli6crau5.fsf@alter.siamese.dyndns.org>
+	<7v61xgraba.fsf@alter.siamese.dyndns.org>
+	<CALkWK0m6iiDAmbxG9wrpgxJ3=nM816U7RM519Mu62qSgDwJbaQ@mail.gmail.com>
+	<7vip1gpqjp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jens.lehmann@web.de
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Fri Jun 14 20:33:59 2013
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 14 21:00:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnYov-0005bw-41
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 20:33:57 +0200
+	id 1UnZEh-0007qw-5u
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 21:00:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753651Ab3FNSdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 14:33:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37790 "EHLO
+	id S1753680Ab3FNTAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 15:00:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49225 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753652Ab3FNSdw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 14:33:52 -0400
+	id S1752406Ab3FNTAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 15:00:30 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C40427A39;
-	Fri, 14 Jun 2013 18:33:52 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C9A727059;
+	Fri, 14 Jun 2013 19:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Q2QX+8PjHAhLqq8hvX08v2xXIKU=; b=GTrkOY
-	fC8lG/BSo3Ay1TqQdIKNofIL6nRVEfTGLepQRDkqkjCEQVlkoRIDT8f3eZVNIOj6
-	pyrAbx9b2z9dEjDfMyVSpXWCZq2n520Q37cXxvvc04pgq+IJKOn27FyzOz6dd2Bv
-	7kvh+c+yADzz3+EoK/YIOcHm2LZfPN3blLj/M=
+	:content-type; s=sasl; bh=zItGfQA3I6E+yf3YmsyL8FkU1c4=; b=nKnCDb
+	fnTiMT+lhNN5Wnmv/LFMlKrRMla+UP/ImQ/wVogC6JRWX8cQf28chKHaOc5BkWBL
+	QGow4UuCYWiVpOKqMHOVrng9/cz63jc8sYFTJxWqyg1g6i17dPJRAbkZJ3f6y+ZD
+	DiKZVM77mCoLKJ3t5CzClPtTIcHMKuKVZv63k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T8ukWyxeBPWFlk+DyGJzEydgyGPRnGAr
-	AhtnK5MR8UvaFh98zt8Z8zRbwx/oHAlDvUMGeGZ0lf8rOdf57JrWZ5fVTcdEAVcT
-	adPNphQFPJZPfB48HKxi4cMUEX2ud6u3ylVpX90FG7aT2aFifzO4MIIRU6QDWbJi
-	3Fbu/Uxsv4E=
+	:content-type; q=dns; s=sasl; b=jYJ4GWYGPXDASnzJ0baBSQ0cSCynVZM5
+	WOovrDNNHT2cuEZ6GCC77aHzTFgmLSePPG/a0UnZXOCPBe6ftc5sxwKr23dT0ZCM
+	cdbHoe1KoxihQTPpKrejjTa6BPVcOkKD5FWzmEg8DuMXJ8MgvWkQy13Lr/BaLum9
+	6Zvuw0VMHCU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5ECB27A38;
-	Fri, 14 Jun 2013 18:33:51 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2491027057;
+	Fri, 14 Jun 2013 19:00:29 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F94C27A32;
-	Fri, 14 Jun 2013 18:33:51 +0000 (UTC)
-In-Reply-To: <20130614182741.GA5812@paksenarrion.iveqy.com> (Fredrik
-	Gustafsson's message of "Fri, 14 Jun 2013 20:27:41 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A7E32704E;
+	Fri, 14 Jun 2013 19:00:28 +0000 (UTC)
+In-Reply-To: <7vip1gpqjp.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 14 Jun 2013 10:09:46 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F5B86378-D520-11E2-95B9-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: ADBF84D0-D524-11E2-A76C-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227911>
 
-Fredrik Gustafsson <iveqy@iveqy.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Fri, Jun 14, 2013 at 10:23:52AM -0700, Junio C Hamano wrote:
->> Fredrik Gustafsson <iveqy@iveqy.com> writes:
->> 
->> > ... The
->> > correct approach to solve the problem for all pathnames may be to use
->> > "ls-files -z" and tell the Perl script that reads its output to read NUL
->> > separated records by using $/ = "\0".
->> 
->> I've tentatively queued the attached without 2/2; the scriptlet is
->> small enough not to matter in an eventual rewrite, so it shouldn't
->> make a difference either way.
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
 >
-> Sorry, I didn't knew enough perl to understand that that was a
-> suggestion rather than a hint to a future developer.
+>> Junio C Hamano wrote:
+>>> And then the message triggers at the second test in t3420 when
+>>> applied on top of 587947750bd7 (rebase: implement --[no-]autostash
+>>> and rebase.autostash, 2013-05-12) or 45acb7592825 (Merge branch
+>>> 'rr/rebase-autostash', 2013-06-11).
+>>
+>> What was triggered?  (I didn't understand what you said)
+>
+> The patch applied on top of either of these commits will *BREAK* the
+> second test in t3420.
 
-Heh, no need to be sorry.  It was a hint, and I just made you a
-future developer ;-)
+Here is how "sh -x t3420-*.sh -i" ends:
+
+    ...
+    ++ git rebase unrelated-onto-branch
+    Created autostash: cdca6ca
+    HEAD is now at 0c4d2f1 third commit
+    First, rewinding head to replay your work on top of it...
+    Stray /srv/project/git/git.git/t/trash
+    directory.t3420-rebase-autostash/.git/rebase-apply directory found.
+    Use "git am --abort" to remove it.
+    + eval_ret=1
+    + test -z t
+    + test 1 = 0
+    + test -n ''
+    + test t = t
+    + test -n ''
+    + return 1
+    + test_failure_ 'rebase: dirty worktree, non-conflicting rebase' '
+    ...
+
+I _think_ the new check you added may be too loose.
+
+A fix-up may look like this.
+
+
+ git-am.sh | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index 37edfae..3f89cf6 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -505,9 +505,9 @@ then
+ 		exit ;;
+ 	esac
+ 	rm -f "$dotest/dirtyindex"
+-else
+-	# Possible stray $dotest directory
+-	if test -d "$dotest"; then
++elif test -d "$dotest" && ! test -f "$dotest/autostash"
++then
++	# stray $dotest directory
+ 	case "$skip,$resolved,$abort" in
+ 	,,t)
+ 		rm -fr "$dotest"
+@@ -518,8 +518,7 @@ else
+ Use \"git am --abort\" to remove it.")"
+ 		;;
+ 	esac
+-	fi
+-
++else
+ 	# Make sure we are not given --skip, --resolved, nor --abort
+ 	test "$skip$resolved$abort" = "" ||
+ 		die "$(gettext "Resolve operation not in progress, we are not resuming.")"
