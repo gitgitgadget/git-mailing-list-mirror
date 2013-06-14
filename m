@@ -1,76 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] am: handle stray $dotest directory
-Date: Fri, 14 Jun 2013 08:19:56 -0700
-Message-ID: <7v1u84ra77.fsf@alter.siamese.dyndns.org>
-References: <1371196058-23948-1-git-send-email-artagnon@gmail.com>
-	<1371196058-23948-2-git-send-email-artagnon@gmail.com>
-	<7vhah0raps.fsf@alter.siamese.dyndns.org>
-	<CALkWK0m6r4yRfCLb3dejdY+1KJgdOHPfrvPXbftNucApXFx+0A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 14 17:20:05 2013
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: [[PATCH v3] 0/2] module_list enhancements
+Date: Fri, 14 Jun 2013 17:56:03 +0200
+Message-ID: <1371225365-4219-1-git-send-email-iveqy@iveqy.com>
+Cc: git@vger.kernel.org, iveqy@iveqy.com, jens.lehmann@web.de
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jun 14 17:53:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnVnJ-0005up-9H
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 17:20:05 +0200
+	id 1UnWJV-0004r2-9y
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 17:53:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753081Ab3FNPT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 11:19:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40959 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751865Ab3FNPT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 11:19:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 98583259DE;
-	Fri, 14 Jun 2013 15:19:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=csFfdhWrZ1jmKfa3dF6vbpj49sg=; b=rXlY05
-	x8CL+IxKhhsv+pkeTFyD+GeNarxAjh4uyujv4VNbSD89JEAlZq/D6JDxtAVXNA8a
-	zeL53QygIykSl0t451J2H/DxXgNQ7jaqKs4TQNEqGOyhQOff5XrhfCCYJUrEBc/G
-	s49+uFqsuo5VWBTaoQ5a7Zy8YSqSOkLGQA+sw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u3xC2IAfao9HXLDJqrX1EQQjHg6tfuCD
-	AGkYaQQ/FP1nkqdbDTRlwoZJ5qdK/DiwyJau4CMvKN99W5CYrBVh++Ca1SFeLg8z
-	ffGdDy9MUO+HxKaNPbMM0DpZKhVF3OEkpi/tlt/4ll3iTKkQWWWkhw4ZJEx7Xf6u
-	+p/L4SS/97I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D92B259DD;
-	Fri, 14 Jun 2013 15:19:58 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E802259DB;
-	Fri, 14 Jun 2013 15:19:57 +0000 (UTC)
-In-Reply-To: <CALkWK0m6r4yRfCLb3dejdY+1KJgdOHPfrvPXbftNucApXFx+0A@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Fri, 14 Jun 2013 20:41:59 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DFCAA302-D505-11E2-BB68-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751750Ab3FNPxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 11:53:07 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:57369 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750930Ab3FNPxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 11:53:05 -0400
+Received: by mail-lb0-f170.google.com with SMTP id t13so746437lbd.1
+        for <git@vger.kernel.org>; Fri, 14 Jun 2013 08:53:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=ijHfsEIiz4f/R04cHqLDmZZ2xPQqhxGS1Lovf89lEsM=;
+        b=BzTUaWRFibKIlTFCTnameNT6CaBllTzjNVM4zx8bnanie/XQzaFaTTG5odIyHdTVeE
+         J4snDu6EN/m10ISH9iwSw6LiFlEiAu+jFUtA48jxr8PW/kIzAmAEohz6Aslhnsjset3N
+         0aw7nFX/qZZqYzMxHd+S4lew2vPI3C0NtFuNOMU5hb95OH0y4K+XRY0E8yBnjJxZYvMR
+         zGUu+SvuGVeMfb7ybFcXwVaK1ow9FRk8ZEcZfFhydF9ku8SBnLLyKjfdumjHokFPLhUu
+         iAyp2FrPKlQGuM95oQMFFdnsMJQK8I/vCCgZ92K2tDiNwmcomTP1KzxW0sF3sNKRYaQE
+         08zg==
+X-Received: by 10.152.120.105 with SMTP id lb9mr1476097lab.20.1371225183785;
+        Fri, 14 Jun 2013 08:53:03 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id et10sm1084824lbc.6.2013.06.14.08.53.02
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 14 Jun 2013 08:53:03 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UnWMH-00016d-CQ; Fri, 14 Jun 2013 17:56:13 +0200
+X-Mailer: git-send-email 1.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227887>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Reworded commit message for
+[submodule] handle multibyte characters in name
+as suggested by Junio.
 
-> Junio C Hamano wrote:
->> $dotest, or \$dotest?
->
-> Works fine for me like this.  Why do we escape the dollar in the other strings?
+Previous iteration can be found here:
+http://thread.gmane.org/gmane.comp.version-control.git/227786/
 
-The reason would become clear once you think what string you are
-feeding eval_gettext with if you do not escape.  The translators
-translate a fixed string (possibly with placeholders) to a fixed
-translated string (possibly with placeholders).
+Fredrik Gustafsson (2):
+  [submodule] handle multibyte characters in name
+  [submodule] Replace perl-code with sh
 
-	eval_gettext "Stray $dotest directory found. ..."
+ git-submodule.sh           | 53 ++++++++++++++++++++--------------------------
+ t/t7400-submodule-basic.sh | 12 +++++++++++
+ 2 files changed, 35 insertions(+), 30 deletions(-)
 
-would allow the shell to expand $dotest before eval_gettext sees it,
-which would mean the string is no longer a constant.
+-- 
+1.8.3.1.381.g2ab719e.dirty
