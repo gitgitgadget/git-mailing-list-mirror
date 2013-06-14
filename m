@@ -1,7 +1,7 @@
 From: =?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
-Subject: [PATCH v6 25/31] git-remote-mediawiki: Don't use quotes for empty strings
-Date: Fri, 14 Jun 2013 15:50:33 +0200
-Message-ID: <1371217839-23017-26-git-send-email-celestin.matte@ensimag.fr>
+Subject: [PATCH v6 17/31] git-remote-mediawiki: Rename a variable ($last) which has the name of a keyword
+Date: Fri, 14 Jun 2013 15:50:25 +0200
+Message-ID: <1371217839-23017-18-git-send-email-celestin.matte@ensimag.fr>
 References: <1371217839-23017-1-git-send-email-celestin.matte@ensimag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -9,138 +9,68 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: benoit.person@ensimag.fr, matthieu.moy@grenoble-inp.fr,
 	=?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 14 15:52:39 2013
+X-From: git-owner@vger.kernel.org Fri Jun 14 15:52:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnUQh-0002Bg-7L
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 15:52:39 +0200
+	id 1UnUQi-0002Bg-9x
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 15:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753145Ab3FNNvv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jun 2013 09:51:51 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:33295 "EHLO rominette.imag.fr"
+	id S1753168Ab3FNNwM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jun 2013 09:52:12 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:44557 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752936Ab3FNNvE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 09:51:04 -0400
+	id S1752944Ab3FNNvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 09:51:00 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5EDp1Ub011302
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5EDoveN020631
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 14 Jun 2013 15:51:01 +0200
+	Fri, 14 Jun 2013 15:50:57 +0200
 Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5EDp2Gj013440;
-	Fri, 14 Jun 2013 15:51:02 +0200
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5EDowXo013391;
+	Fri, 14 Jun 2013 15:50:58 +0200
 Received: from tohwi-K50IE.imag.fr (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5EDoqgH016142;
-	Fri, 14 Jun 2013 15:51:02 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5EDoqg9016142;
+	Fri, 14 Jun 2013 15:50:58 +0200
 X-Mailer: git-send-email 1.8.3.1.491.g8a51f1c
 In-Reply-To: <1371217839-23017-1-git-send-email-celestin.matte@ensimag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 14 Jun 2013 15:51:01 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 14 Jun 2013 15:50:57 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227854>
 
 =46rom: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
-
-Empty strings are replaced by an $EMPTY constant.
 
 Signed-off-by: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
 Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 ---
- contrib/mw-to-git/git-remote-mediawiki.perl | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ contrib/mw-to-git/git-remote-mediawiki.perl | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-t=
 o-git/git-remote-mediawiki.perl
-index f0c313f..d1e0bb8 100755
+index 2cfbc0a..29fb614 100755
 --- a/contrib/mw-to-git/git-remote-mediawiki.perl
 +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -40,6 +40,8 @@ use constant NULL_SHA1 =3D> '000000000000000000000000=
-0000000000000000';
- # Used on Git's side to reflect empty edit messages on the wiki
- use constant EMPTY_MESSAGE =3D> '*Empty MediaWiki Message*';
-=20
-+use constant EMPTY =3D> q{};
-+
- my $remotename =3D $ARGV[0];
- my $url =3D $ARGV[1];
-=20
-@@ -150,11 +152,11 @@ sub parse_command {
- 		mw_list($cmd[1]);
- 	} elsif ($cmd[0] eq 'import') {
- 		die("Invalid arguments for import\n")
--		    if ($cmd[1] eq "" || defined($cmd[2]));
-+		    if ($cmd[1] eq EMPTY || defined($cmd[2]));
- 		mw_import($cmd[1]);
- 	} elsif ($cmd[0] eq 'option') {
- 		die("Too many arguments for option\n")
--		    if ($cmd[1] eq "" || $cmd[2] eq "" || defined($cmd[3]));
-+		    if ($cmd[1] eq EMPTY || $cmd[2] eq EMPTY || defined($cmd[3]));
- 		mw_option($cmd[1],$cmd[2]);
- 	} elsif ($cmd[0] eq 'push') {
- 		mw_push($cmd[1]);
-@@ -555,7 +557,7 @@ sub mediawiki_clean {
- 	# Mediawiki does not allow blank space at the end of a page and ends =
-with a single \n.
- 	# This function right trims a string and adds a \n at the end to foll=
-ow this rule
- 	$string =3D~ s/\s+$//;
--	if ($string eq "" && $page_created) {
-+	if ($string eq EMPTY && $page_created) {
- 		# Creating empty pages is forbidden.
- 		$string =3D EMPTY_CONTENT;
- 	}
-@@ -566,7 +568,7 @@ sub mediawiki_clean {
- sub mediawiki_smudge {
- 	my $string =3D shift;
- 	if ($string eq EMPTY_CONTENT) {
--		$string =3D "";
-+		$string =3D EMPTY;
- 	}
- 	# This \n is important. This is due to mediawiki's way to handle end =
-of files.
- 	return "${string}\n";
-@@ -992,7 +994,7 @@ sub mw_upload_file {
- 	} else {
- 		# Don't let perl try to interpret file content as UTF-8 =3D> use "ra=
-w"
- 		my $content =3D run_git("cat-file blob ${new_sha1}", 'raw');
--		if ($content ne "") {
-+		if ($content ne EMPTY) {
- 			mw_connect_maybe();
- 			$mediawiki->{config}->{upload_url} =3D
- 				"${url}/index.php/Special:Upload";
-@@ -1034,7 +1036,7 @@ sub mw_push_file {
- 	my $newrevid;
-=20
- 	if ($summary eq EMPTY_MESSAGE) {
--		$summary =3D '';
-+		$summary =3D EMPTY;
- 	}
-=20
- 	my $new_sha1 =3D $diff_info_split[3];
-@@ -1045,7 +1047,7 @@ sub mw_push_file {
-=20
- 	my ($title, $extension) =3D $complete_file_name =3D~ /^(.*)\.([^\.]*)=
-$/;
- 	if (!defined($extension)) {
--		$extension =3D "";
-+		$extension =3D EMPTY;
- 	}
- 	if ($extension eq 'mw') {
- 		my $ns =3D get_mw_namespace_id_for_page($complete_file_name);
-@@ -1113,7 +1115,7 @@ sub mw_push {
- 		if ($force) {
- 			print {*STDERR} "Warning: forced push not allowed on a MediaWiki.\n=
-";
+@@ -220,11 +220,11 @@ sub get_mw_page_list {
+ 	my $pages =3D shift;
+ 	my @some_pages =3D @$page_list;
+ 	while (@some_pages) {
+-		my $last =3D 50;
+-		if ($#some_pages < $last) {
+-			$last =3D $#some_pages;
++		my $last_page =3D 50;
++		if ($#some_pages < $last_page) {
++			$last_page =3D $#some_pages;
  		}
--		if ($local eq "") {
-+		if ($local eq EMPTY) {
- 			print {*STDERR} "Cannot delete remote branch on a MediaWiki\n";
- 			print {*STDOUT} "error ${remote} cannot delete\n";
- 			next;
+-		my @slice =3D @some_pages[0..$last];
++		my @slice =3D @some_pages[0..$last_page];
+ 		get_mw_first_pages(\@slice, $pages);
+ 		@some_pages =3D @some_pages[51..$#some_pages];
+ 	}
 --=20
 1.8.3.rc3.49.g4e74807
