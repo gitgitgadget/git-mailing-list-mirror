@@ -1,95 +1,52 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: [PATCH] format-patch: remove existing output-directory
-Date: Fri, 14 Jun 2013 15:16:29 +0200
-Message-ID: <20130614131629.GA1086@paksenarrion.iveqy.com>
-References: <1371213813-7925-1-git-send-email-artagnon@gmail.com>
+Date: Fri, 14 Jun 2013 18:45:19 +0530
+Message-ID: <CALkWK0=dN4oqgvu9FL+EpqyekoQ385tTGbd3Gnf4mee-eTBeOA@mail.gmail.com>
+References: <1371213813-7925-1-git-send-email-artagnon@gmail.com> <20130614130910.GF23890@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 14 15:13:29 2013
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Fri Jun 14 15:16:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnTok-0000VH-TO
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 15:13:27 +0200
+	id 1UnTrK-0002Ms-Rb
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 15:16:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752532Ab3FNNNX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jun 2013 09:13:23 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:45680 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752163Ab3FNNNW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 09:13:22 -0400
-Received: by mail-la0-f52.google.com with SMTP id fo12so520537lab.11
-        for <git@vger.kernel.org>; Fri, 14 Jun 2013 06:13:20 -0700 (PDT)
+	id S1752703Ab3FNNQC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 09:16:02 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:32943 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752163Ab3FNNQB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 09:16:01 -0400
+Received: by mail-ie0-f170.google.com with SMTP id e11so1392049iej.15
+        for <git@vger.kernel.org>; Fri, 14 Jun 2013 06:16:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=MJPNIN0LFUEbqYo6dewWEbmaiW4SCJ6BmjwMFw7IBBo=;
-        b=Cas3qGw9/4PMTgsRDnKFZOYg/WOWz5mmq9HjVk8CxQt9sqAW9LdnfeDr2eKI615Jok
-         FC95pX+3I2Ezq9pAIGAnk/gCnYxtdLXaLYHs280KqR6BR+LNR6tx42TvsYlt6a3j0ojm
-         alsuTkM9q1N+MwU5ob+CjOGaluboDJYBtzxUj9pykabK3YrbnGLef9pdyQSpEStmaIYq
-         CDZhtFtpbSZRSP2UBTii8TH/Fg2LHZs3bQ3dM9/xQrE5Uu/BAd67pUnmgNn/SZHby7yR
-         FJjrpky9pLnKb9b/1xdgo4ET9+Uk14U8TUnIxRJJ1l/Qwew6lpjDp8vmkdlkxUgfUD4G
-         QH7Q==
-X-Received: by 10.152.29.41 with SMTP id g9mr1162241lah.44.1371215600430;
-        Fri, 14 Jun 2013 06:13:20 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id m14sm623916lbl.1.2013.06.14.06.13.19
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 14 Jun 2013 06:13:19 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UnTrh-0000Id-3Z; Fri, 14 Jun 2013 15:16:29 +0200
-Content-Disposition: inline
-In-Reply-To: <1371213813-7925-1-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=jNhKJtgoQL0thaR69kvw5xiWFi728YR2FaT8qjXw7zE=;
+        b=ekH3tgIV8Y919TJl2GK5Cp3b1tsCs00vOT/yt9omWf7Ry12fUh79nMCbmAP+eYzQRu
+         gGmAX2a0Ih0nwoam+k4e9QUKW+qqFX0Y5a9AOtUBzAC9SbwnMZs57Y95eKiAWE5cJReb
+         6/ihckUBzXQrGkWxNz4/LhCp4AF7gFA96CYzXrgV4h/PgpMOvmY5hDGVhSOLfc9cuW/V
+         PLNohVJcDzMLmA9G4OqX3rCVXipPgpj09vrV6E4rwfDPKSLRDN1VdSXUWXi+4qiwr4uu
+         P60tmZynNS7vwD45I/1U4zbMgM2a0Q9j81hFBpi8XjwTI6cveQK/6Qk8Nhj+d6kiUP6P
+         9wKQ==
+X-Received: by 10.50.18.80 with SMTP id u16mr999785igd.13.1371215760718; Fri,
+ 14 Jun 2013 06:16:00 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Fri, 14 Jun 2013 06:15:19 -0700 (PDT)
+In-Reply-To: <20130614130910.GF23890@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227825>
 
-Hi,
-just some questions about your patch.
+John Keeping wrote:
+> I don't think this is the correct behaviour.  I can think of cases where
+> I would want to output multiple things into the same directory.
 
-On Fri, Jun 14, 2013 at 06:13:33PM +0530, Ramkumar Ramachandra wrote:
-> The following command
->=20
->   $ git format-patch -o outgoing master
->=20
-> does not ensure that the output-directory outgoing doesn't already
-> exist.  As a result, it's possible for patches from two different ser=
-ies
-> to get mixed up if the user is not careful.  Fix the problem by
-> unconditionally removing the output-directory before writing to it.
-
-I'm not entirely happy about removing untracked stuff without asking
-the user. What if the output directory isn't empty? What if a user just
-want them in ~?
-
-However I think this patch can improve the workflow for experienced
-developers. Can we tweak this in some way to get the best out of both
-worlds?
-
-> +		struct strbuf buf =3D STRBUF_INIT;
-> +
->  		if (use_stdout)
->  			die(_("standard output, or directory, which one?"));
-> +		strbuf_addstr(&buf, output_directory);
-> +		remove_dir_recursively(&buf, 0);
-
-Should we have a strbuf_release here?
-
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
-
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+format.cleanOutputDirectory = true|false?
