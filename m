@@ -1,106 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] pull: respect rebase.autostash
-Date: Fri, 14 Jun 2013 11:26:11 -0700
-Message-ID: <7vk3lwo8fw.fsf@alter.siamese.dyndns.org>
-References: <1371200178-9927-1-git-send-email-artagnon@gmail.com>
-	<1371200178-9927-2-git-send-email-artagnon@gmail.com>
-	<vpqfvwlkqb5.fsf@anie.imag.fr>
+Subject: Re: [[PATCH v3] 1/2] [submodule] handle multibyte characters in name
+Date: Fri, 14 Jun 2013 11:33:49 -0700
+Message-ID: <7vfvwko836.fsf@alter.siamese.dyndns.org>
+References: <1371225365-4219-1-git-send-email-iveqy@iveqy.com>
+	<1371225365-4219-2-git-send-email-iveqy@iveqy.com>
+	<7va9msppw7.fsf@alter.siamese.dyndns.org>
+	<20130614182741.GA5812@paksenarrion.iveqy.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 14 20:26:22 2013
+Cc: git@vger.kernel.org, jens.lehmann@web.de
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Fri Jun 14 20:33:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnYhX-0008VL-BU
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 20:26:19 +0200
+	id 1UnYov-0005bw-41
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 20:33:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753586Ab3FNS0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 14:26:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46676 "EHLO
+	id S1753651Ab3FNSdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 14:33:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37790 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753560Ab3FNS0O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 14:26:14 -0400
+	id S1753652Ab3FNSdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 14:33:52 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5816F272BB;
-	Fri, 14 Jun 2013 18:26:14 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C40427A39;
+	Fri, 14 Jun 2013 18:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6fJCQg9bIW4bDgkOyqGHCmkK/bQ=; b=DVhy9I
-	n9E6tVV7bZ018ijDZ7OKsvq6QsMMuZvE4ZM4IGCUBW51el0a06N8zVN9UcAWrrc9
-	PA+TOHDpGcXaJofuXvB06DnJMhqSJG/vupckj7EV91FCAxlOHy5nRf7KtFXn0Z6j
-	LIB13PRaRTTpUd8YLcB0THlJIFPQBefzY8SF8=
+	:content-type; s=sasl; bh=Q2QX+8PjHAhLqq8hvX08v2xXIKU=; b=GTrkOY
+	fC8lG/BSo3Ay1TqQdIKNofIL6nRVEfTGLepQRDkqkjCEQVlkoRIDT8f3eZVNIOj6
+	pyrAbx9b2z9dEjDfMyVSpXWCZq2n520Q37cXxvvc04pgq+IJKOn27FyzOz6dd2Bv
+	7kvh+c+yADzz3+EoK/YIOcHm2LZfPN3blLj/M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LYOUWzRHMT6ERWgTI6KwXeeXLXdE0/dg
-	xNjpDCd0wJ3VwdpPOv+IHlUbzpFZyz0upEAvWmjCSK0hVcz8EEdM6sxUL+zl3yIj
-	P4D4js0K9fOzbbD3md5eqIfnAzs1fWDjLRbYl7Jb7LTsPF3EHGaTDDbpgm1QBjao
-	TtcMfbpHiOg=
+	:content-type; q=dns; s=sasl; b=T8ukWyxeBPWFlk+DyGJzEydgyGPRnGAr
+	AhtnK5MR8UvaFh98zt8Z8zRbwx/oHAlDvUMGeGZ0lf8rOdf57JrWZ5fVTcdEAVcT
+	adPNphQFPJZPfB48HKxi4cMUEX2ud6u3ylVpX90FG7aT2aFifzO4MIIRU6QDWbJi
+	3Fbu/Uxsv4E=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C00B272BA;
-	Fri, 14 Jun 2013 18:26:14 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5ECB27A38;
+	Fri, 14 Jun 2013 18:33:51 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D8A31272B7;
-	Fri, 14 Jun 2013 18:26:12 +0000 (UTC)
-In-Reply-To: <vpqfvwlkqb5.fsf@anie.imag.fr> (Matthieu Moy's message of "Fri,
-	14 Jun 2013 11:13:50 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F94C27A32;
+	Fri, 14 Jun 2013 18:33:51 +0000 (UTC)
+In-Reply-To: <20130614182741.GA5812@paksenarrion.iveqy.com> (Fredrik
+	Gustafsson's message of "Fri, 14 Jun 2013 20:27:41 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E483C8D2-D51F-11E2-ABFA-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F5B86378-D520-11E2-95B9-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227910>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Fredrik Gustafsson <iveqy@iveqy.com> writes:
 
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> On Fri, Jun 14, 2013 at 10:23:52AM -0700, Junio C Hamano wrote:
+>> Fredrik Gustafsson <iveqy@iveqy.com> writes:
+>> 
+>> > ... The
+>> > correct approach to solve the problem for all pathnames may be to use
+>> > "ls-files -z" and tell the Perl script that reads its output to read NUL
+>> > separated records by using $/ = "\0".
+>> 
+>> I've tentatively queued the attached without 2/2; the scriptlet is
+>> small enough not to matter in an eventual rewrite, so it shouldn't
+>> make a difference either way.
 >
->> --- a/git-pull.sh
->> +++ b/git-pull.sh
->> @@ -44,6 +44,7 @@ merge_args= edit=
->>  curr_branch=$(git symbolic-ref -q HEAD)
->>  curr_branch_short="${curr_branch#refs/heads/}"
->>  rebase=$(git config --bool branch.$curr_branch_short.rebase)
->> +autostash=$(git config --bool rebase.autostash)
->>  if test -z "$rebase"
->>  then
->>  	rebase=$(git config --bool pull.rebase)
->> @@ -203,6 +204,7 @@ test true = "$rebase" && {
->>  			die "$(gettext "updating an unborn branch with changes added to the index")"
->>  		fi
->>  	else
->> +		test true = "$autostash" ||
->>  		require_clean_work_tree "pull with rebase" "Please commit or stash them."
->
-> Trivial, indeed!
->
-> It would be nice to have an --autostash command-line option too, and the
-> error message in "require_clean_work_tree" could suggest using it. That
-> would make the feature easily discoverable.
+> Sorry, I didn't knew enough perl to understand that that was a
+> suggestion rather than a hint to a future developer.
 
-I would actually suggest doing this the other way around.  --autostash
-option, followed by configuration if needed.
-
-I actually have this slight suspicion that rebase.autostash and
-pull.autostash may want to be separate variables.  Attempting to
-rebase locally when your working tree is in half-baked state is bad
-enough but may be warranted in some workflows, but doing so when
-integrating with other people's work is a practice in a different
-league. It would be quite sensible for somebody to want to allow the
-former (i.e. allows autostash with rebase.autostash=true for local
-rebase) while retaining the safety of the latter (i.e. stop pulling
-with pull.autostash=false).
-
-> Perhaps this patch could mention "pull --rebase" in the doc, like (config.txt)
->
-> - 	ends.  This means that you can run rebase on a dirty worktree.
-> + 	ends.  This means that you can run rebase or `git pull --rebase` on a dirty worktree.
->
-> (or perhaps it's obvious enough and not needed)
+Heh, no need to be sorry.  It was a hint, and I just made you a
+future developer ;-)
