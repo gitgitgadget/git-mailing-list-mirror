@@ -1,52 +1,63 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/2] pull: clarify the large && { ... } form
-Date: Fri, 14 Jun 2013 16:17:21 +0530
-Message-ID: <CALkWK0=_K8-drmpkEGkWE3h0fvm=RsQPu3gaDY6Nhkyg2mRHDg@mail.gmail.com>
-References: <1371200178-9927-1-git-send-email-artagnon@gmail.com>
- <1371200178-9927-3-git-send-email-artagnon@gmail.com> <vpqr4g5kqht.fsf@anie.imag.fr>
+From: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
+Subject: Re: is there a fast web-interface to git for huge repos?
+Date: Fri, 14 Jun 2013 12:55:40 +0200
+Message-ID: <51BAF6AC.2080504@ira.uka.de>
+References: <CAPKkNb4bYfBeqkBKqe-22iJsqjmvrYNSe4oWUnPo7QeghLK59Q@mail.gmail.com> <20130607063353.GB19771@paksenarrion.iveqy.com> <CAPKkNb5PyurX1eNsCsckdfiwgM3dqb5KpN9OS0NpLZw1+VsSdg@mail.gmail.com> <20130607175717.GA25127@paksenarrion.iveqy.com> <CAPKkNb4myh9MPNSgLqs5Mku-z1EOsHyWrgK2Qy_3_UOivXvcnw@mail.gmail.com> <51B23F01.5020608@brokenzipper.com> <CAPKkNb460fNJcwt6084xkuDa2sWMRnF+FBu+i_G01aJMMiRevA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 14 12:48:09 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Charles McGarvey <chazmcgarvey@brokenzipper.com>,
+	Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
+To: "Constantine A. Murenin" <mureninc@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 14 12:55:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnRY8-0002bc-A5
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 12:48:08 +0200
+	id 1UnRfB-0007LL-Cb
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 12:55:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751969Ab3FNKsD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 06:48:03 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:54046 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751625Ab3FNKsC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 06:48:02 -0400
-Received: by mail-ie0-f176.google.com with SMTP id ar20so1015606iec.21
-        for <git@vger.kernel.org>; Fri, 14 Jun 2013 03:48:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=CHlN3sb/di4AzUBgha0v4IOuzAmx7O1c3v6Tt9A8q5U=;
-        b=ZMHw7e+HWhEVe2JvMm7KHdNE/fNgBmxmD5+I6/gadXLWwitj6Y9HGjR1mFLUr5xvY/
-         kHWAbX1IF8+zQ7/lTMbzT5BzjN4NMQTyVOlg1CUBNFNU85SqGSVn6c5Y4jkmQXS2junG
-         gw31jgJvSusmJsCp6k64UXOu/8lMsHsDHwOMpB/LBxN6lJV4LHtpQCQC7gyB1MVQ79go
-         kunptyZ3ngXY4bgbxharrVPB5VzE290iLhhX9X8XmdnaTi3QOS4u/0Y/hSq/IfF+E25D
-         8Klej7uz5bzFz0qt6UyrysPZQ8GVIzLHr+Nxo3h/b6vUMBt1oBKAIcK8z/EXYSvjNGNH
-         UYMg==
-X-Received: by 10.50.25.194 with SMTP id e2mr752065igg.111.1371206881656; Fri,
- 14 Jun 2013 03:48:01 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Fri, 14 Jun 2013 03:47:21 -0700 (PDT)
-In-Reply-To: <vpqr4g5kqht.fsf@anie.imag.fr>
+	id S1752279Ab3FNKzV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 06:55:21 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:39642 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751625Ab3FNKzU (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jun 2013 06:55:20 -0400
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1UnRen-0002dC-A6; Fri, 14 Jun 2013 12:55:16 +0200
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 587 
+	id 1UnRen-0007ux-1G; Fri, 14 Jun 2013 12:55:01 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <CAPKkNb460fNJcwt6084xkuDa2sWMRnF+FBu+i_G01aJMMiRevA@mail.gmail.com>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1371207316.283135000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227811>
 
-Matthieu Moy wrote:
-> Use a newline, not a ';'.
+Am 07.06.2013 22:21, schrieb Constantine A. Murenin:
+> I'm totally fine with daily updates; but I think there still has to be
+> some better way of doing this than wasting 0.5s of CPU time and 5s of
+> HDD time (if completely cold) for each blame / log, at the price of
+> more storage and some pre-caching, and (daily (in my use-case))
+> fine-grained incremental updates.
 
-Thanks.
+To get a feel for the numbers: I would guess 'git blame' is mostly run 
+against the newest version and the release version of a file, right? I 
+couldn't find the number of files in bsd, so lets take linux instead: 
+That is 25k files for version 2.6.27. Lets say 35k files altogether for 
+both release and newer versions of the files.
+
+A typical page of git blame output on github seems to be in the vicinity 
+of 500 kbytes, but that seems to include lots of overhead for comfort 
+functions. At least that means it is a good upper bound value.
+
+35k files times 500k gives 17.5 Gbytes, a trivial value for a static 
+*disk* based cache. It is also a manageable value for affordable SSDs
