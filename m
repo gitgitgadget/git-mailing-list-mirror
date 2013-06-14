@@ -1,67 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 5/6] status: do not depend on flaky reflog messages
-Date: Fri, 14 Jun 2013 20:38:10 +0530
-Message-ID: <CALkWK0n_Jsb46qPojbGL3S+mPunNQWUOmypQOvdaBjcT5wgJBg@mail.gmail.com>
-References: <1371130349-30651-1-git-send-email-artagnon@gmail.com>
- <1371130349-30651-6-git-send-email-artagnon@gmail.com> <7vvc5hubox.fsf@alter.siamese.dyndns.org>
- <CALkWK0kjxKFkrLArL1mLZYCMN1=sgnDSa3vaoJm6eSUp2E4Pyw@mail.gmail.com>
- <7vd2rpu3kf.fsf@alter.siamese.dyndns.org> <CALkWK0=NAiGDVWbwHXMmEffPF9wKXd23BdwOntfdvNCpVe8fiA@mail.gmail.com>
- <7vppvosstl.fsf@alter.siamese.dyndns.org> <CALkWK0k28u583Jci+Dvad1pbu7_dJdnmz1WBkP790a_t2QdPTg@mail.gmail.com>
- <7v38sksq14.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] stash doc: add a warning about using create
+Date: Fri, 14 Jun 2013 08:11:17 -0700
+Message-ID: <7vd2roralm.fsf@alter.siamese.dyndns.org>
+References: <1371205924-8982-1-git-send-email-artagnon@gmail.com>
+	<1371205924-8982-2-git-send-email-artagnon@gmail.com>
+	<CABURp0rF2ESFmvf=UQcbKr6ybc0wmGY-_=Nc3yMQJ2jhZGUQJQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 14 17:09:03 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 14 17:11:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnVcc-0006MV-JL
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 17:09:02 +0200
+	id 1UnVev-00085R-Pk
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 17:11:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753198Ab3FNPIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 11:08:53 -0400
-Received: from mail-bk0-f52.google.com ([209.85.214.52]:65504 "EHLO
-	mail-bk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753063Ab3FNPIx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 11:08:53 -0400
-Received: by mail-bk0-f52.google.com with SMTP id d7so319768bkh.39
-        for <git@vger.kernel.org>; Fri, 14 Jun 2013 08:08:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=cW/yF3AS1BzB8WT479r5pa3zHbUJybT6KheoGEgT5eE=;
-        b=cQkMwd2s6h5Raa4M6nB3mfmHKdKKGqP4N7QNhlgeFs2VunY5rCYLjKLqub1lVJS9pE
-         3Mnyk9iXBFOBY5Dt5z6hW5P7vlbyvJbjcRUvdIKOJJxm9hEv4ksbxwxry0rDCeMvA7bk
-         0YRz6Vhya+pcq3NIf2sfNSS+7DOFdWOre1Uy9zrdsV1ESozG1rkJfaiVMMWQDodQ5K5Q
-         q1JyNZcyzRLOYqZNtcwuJCB1a17xY5Osv/I4w4LpYl/h3I092zZ27OBpgmMEDKb+ozBG
-         eh0/QrL2tAAT7DSXNx2Owpevc/ZrFxaPz+GBkt5OZJ3DLX+57mNlQvME9dXxnTmRnkm3
-         Xwjg==
-X-Received: by 10.204.235.197 with SMTP id kh5mr139434bkb.172.1371222531799;
- Fri, 14 Jun 2013 08:08:51 -0700 (PDT)
-Received: by 10.204.186.77 with HTTP; Fri, 14 Jun 2013 08:08:10 -0700 (PDT)
-In-Reply-To: <7v38sksq14.fsf@alter.siamese.dyndns.org>
+	id S1752880Ab3FNPLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 11:11:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40475 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752045Ab3FNPLU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 11:11:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6FBBF25633;
+	Fri, 14 Jun 2013 15:11:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fNGZ6P82og4rg2U4aP8mbRVekWU=; b=ST7JuM
+	PtEZCuNBnHoTr2ZE6Z/mFNwzzj5FQEyPAlQyJPTSeo2CNAcNG6n14/9bxTrROKki
+	9FUX2z5n4Dgbi3G4ptj5ObwxpUdSTta9pp9wyGzWXLrR8mfSGAhwV4IrkGwnLNT9
+	Brck2bVWR2xdiZnVJFoZAY96F1ie7zcL4gyQE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RFX8EcSCxq0qIuiNq+AjXVnGd/0c7YrU
+	a3OkE84JVteJqcMPfqTHeWw7LmqeUk2R5ANk9JAzs93ScdMND2Id9MAVYGgrcgzs
+	TvPRkbmj/xub86lYduWogNG5bcsEUHvwzY5UYOyT6TYKAX+i6cYl59LqZDdC59w3
+	sutaBz5MwfI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6649A25632;
+	Fri, 14 Jun 2013 15:11:20 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3A3525630;
+	Fri, 14 Jun 2013 15:11:18 +0000 (UTC)
+In-Reply-To: <CABURp0rF2ESFmvf=UQcbKr6ybc0wmGY-_=Nc3yMQJ2jhZGUQJQ@mail.gmail.com>
+	(Phil Hord's message of "Fri, 14 Jun 2013 08:27:46 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AA5E082C-D504-11E2-8FB4-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227881>
 
-Junio C Hamano wrote:
-> As I said (twice), you can argue that that particular piece of
-> information is not useful (at least to you), but why it is not
-> useful has to be justified, against the justification given by
-> b397ea4863a1 (status: show more info than "currently not on any
-> branch", 2013-03-13) and people who have been using that information
-> in the status output, no?
+Phil Hord <phil.hord@gmail.com> writes:
 
-Yes, Junio.  I cannot justify that "detached HEAD from" is completely
-useless, because it is not.  I argued for a practical compromise, and
-have tried to show the huge negative impact against the marginal gain.
- If you argue that we absolutely must not cause an
-information-regression against all odds and are unwilling to
-compromise, I cannot improve the reflog messages written by various
-scripts (and fix git checkout -).  I don't know any other way forward.
+>>  DESCRIPTION
+>>  -----------
+>> @@ -151,6 +151,7 @@ create::
+>>
+>>         Create a stash (which is a regular commit object) and return its
+>>         object name, without storing it anywhere in the ref namespace.
+>> +       This is probably not what you want to use; see "save" above.
+>
+> Thanks, this is helpful.
+>
+> Maybe you can also hint why this command exists.
+>
+>   +       This is intended to be useful for scripts.  It is probably not the
+>   +       command you want to use; see "save" above.
+
+Yeah, I agree that is much better than my original suggestion that
+resulted in the addition in this patch.
+
+Thanks.
