@@ -1,112 +1,75 @@
-From: benoit.person@ensimag.fr
-Subject: [PATCH V2] git-remote-mediawiki: remove hardcoded version number in the test suite
-Date: Fri, 14 Jun 2013 12:19:11 +0200
-Message-ID: <1371205151-13549-1-git-send-email-benoit.person@ensimag.fr>
-Cc: Celestin Matte <celestin.matte@ensimag.fr>,
-	Benoit Person <benoit.person@ensimag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 14 12:20:58 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2 0/5] Write a good 'git stash store' for autostash
+Date: Fri, 14 Jun 2013 16:01:59 +0530
+Message-ID: <1371205924-8982-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 14 12:30:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnR7o-0002tv-Ds
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 12:20:57 +0200
+	id 1UnRHB-0000Kx-T0
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 12:30:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751838Ab3FNKUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 06:20:52 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:38509 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751640Ab3FNKUv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 06:20:51 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5EAKmZj030556
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 14 Jun 2013 12:20:49 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5EAKnla011189;
-	Fri, 14 Jun 2013 12:20:49 +0200
-Received: from localhost.localdomain (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5EAKn5t024697;
-	Fri, 14 Jun 2013 12:20:49 +0200
-X-Mailer: git-send-email 1.8.3.GIT
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 14 Jun 2013 12:20:49 +0200 (CEST)
+	id S1752019Ab3FNKaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jun 2013 06:30:12 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:33566 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751972Ab3FNKaL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 06:30:11 -0400
+Received: by mail-pa0-f51.google.com with SMTP id lf11so524420pab.10
+        for <git@vger.kernel.org>; Fri, 14 Jun 2013 03:30:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=NcpekZ5FJPekSgAnph34I9gzw0tz9hkHGg3bI7Unr0Y=;
+        b=rhqTAtuPmAP/rC2njyKNeuJq5yYzv4Nv6MxhFmgYvVZiGamxDsO8SgqGGatRpxnf0r
+         syp4qYojghqkhnuuQmBvkrcyjqrKL01aw4AhpiOPRLMriPBi/F34ZWoZVPL8wkIKptXY
+         dnArAaJyJmBUkcfPFbWdvDn1wt7UBG9rtrGmefyyOP1VfiY9inMFhKnmq6NgPOg5dMku
+         uelX7G47q5RaIjw3GZJGuR5LRXuLSrKLP57T8fLQmBh9AYF1M0YQLvdcE+bv1zrUtW5L
+         prkx0sEM4jQriveXYQFeCA5JZm26CKNhWVwy5PUFwrDtkqR5R9mo8PeuFIg5Vk6rHBh1
+         gCYg==
+X-Received: by 10.66.118.79 with SMTP id kk15mr1860107pab.193.1371205810823;
+        Fri, 14 Jun 2013 03:30:10 -0700 (PDT)
+Received: from luneth.maa.corp.collab.net ([182.71.239.158])
+        by mx.google.com with ESMTPSA id xj9sm1809871pbc.16.2013.06.14.03.30.07
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 14 Jun 2013 03:30:09 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.383.g0d5ad6b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227803>
 
-From: Benoit Person <benoit.person@ensimag.fr>
+Hi,
 
-Updates the code to make it more easy to switch mediawiki version when
-testing. Before that, the version number was partly hardcoded, partly
-in a var.
+So, I've taken Junio's suggestion and designed a proper command-line
+interface for 'git stash store' in this iteration:
 
-Signed-off-by: Benoit Person <benoit.person@ensimag.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+  git stash store [-m <message>] [-e <error>] <commit>
 
----
- contrib/mw-to-git/t/test-gitmw-lib.sh | 19 ++++++++++---------
- contrib/mw-to-git/t/test.config       |  4 +++-
- 2 files changed, 13 insertions(+), 10 deletions(-)
+The error string will be passed through eval_gettext before it is
+printed.  Otherwise, the idea is the same: to clean up the logic
+surrounding autostash.
 
-diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
-index 3b2cfac..bb76cee 100755
---- a/contrib/mw-to-git/t/test-gitmw-lib.sh
-+++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
-@@ -336,20 +336,21 @@ wiki_install () {
- 	fi
- 
- 	# Fetch MediaWiki's archive if not already present in the TMP directory
-+	MW_FILENAME="mediawiki-$MW_VERSION_MAJOR.$MW_VERSION_MINOR.tar.gz"
- 	cd "$TMP"
--	if [ ! -f "$MW_VERSION.tar.gz" ] ; then
--		echo "Downloading $MW_VERSION sources ..."
--		wget "http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.0.tar.gz" ||
-+	if [ ! -f $MW_FILENAME ] ; then
-+		echo "Downloading $MW_VERSION_MAJOR.$MW_VERSION_MINOR sources ..."
-+		wget "http://download.wikimedia.org/mediawiki/$MW_VERSION_MAJOR/$MW_FILENAME" ||
- 			error "Unable to download "\
--			"http://download.wikimedia.org/mediawiki/1.19/"\
--			"mediawiki-1.19.0.tar.gz. "\
-+			"http://download.wikimedia.org/mediawiki/$MW_VERSION_MAJOR/"\
-+			"$MW_FILENAME. "\
- 			"Please fix your connection and launch the script again."
--		echo "$MW_VERSION.tar.gz downloaded in `pwd`. "\
-+		echo "$MW_FILENAME downloaded in `pwd`. "\
- 			"You can delete it later if you want."
- 	else
--		echo "Reusing existing $MW_VERSION.tar.gz downloaded in `pwd`."
-+		echo "Reusing existing $MW_FILENAME downloaded in `pwd`."
- 	fi
--	archive_abs_path=$(pwd)/"$MW_VERSION.tar.gz"
-+	archive_abs_path=$(pwd)/$MW_FILENAME
- 	cd "$WIKI_DIR_INST/$WIKI_DIR_NAME/" ||
- 		error "can't cd to $WIKI_DIR_INST/$WIKI_DIR_NAME/"
- 	tar xzf "$archive_abs_path" --strip-components=1 ||
-@@ -431,5 +432,5 @@ wiki_delete () {
- 	# Delete the wiki's SQLite database
- 	rm -f "$TMP/$DB_FILE" || error "Database $TMP/$DB_FILE could not be deleted."
- 	rm -f "$FILES_FOLDER/$DB_FILE"
--	rm -rf "$TMP/$MW_VERSION"
-+	rm -rf "$TMP/mediawiki-$MW_VERSION_MAJOR.$MW_VERSION_MINOR.tar.gz"
- }
-diff --git a/contrib/mw-to-git/t/test.config b/contrib/mw-to-git/t/test.config
-index 958b37b..4cfebe9 100644
---- a/contrib/mw-to-git/t/test.config
-+++ b/contrib/mw-to-git/t/test.config
-@@ -30,6 +30,8 @@ WEB_WWW=$WEB/www
- 
- # The variables below are used by the script to install a wiki.
- # You should not modify these unless you are modifying the script itself.
--MW_VERSION=mediawiki-1.19.0
-+# tested versions: 1.19.X -> 1.21.1
-+MW_VERSION_MAJOR=1.21
-+MW_VERSION_MINOR=1
- FILES_FOLDER=install-wiki
- DB_INSTALL_SCRIPT=db_install.php
+Thanks.
+
+Ramkumar Ramachandra (5):
+  stash doc: add a warning about using create
+  stash doc: document short form -p in synopsis
+  stash: simplify option parser for create
+  stash: introduce 'git stash store'
+  rebase: use 'git stash store' to simplify logic
+
+ Documentation/git-stash.txt | 12 ++++++++--
+ git-rebase.sh               |  6 +----
+ git-stash.sh                | 53 ++++++++++++++++++++++++++++++++++++---------
+ t/t3903-stash.sh            | 19 ++++++++++++++++
+ 4 files changed, 73 insertions(+), 17 deletions(-)
+
 -- 
-1.8.3.GIT
+1.8.3.1.383.g0d5ad6b
