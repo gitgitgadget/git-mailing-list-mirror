@@ -1,58 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] prompt: squelch error output from cat
-Date: Fri, 14 Jun 2013 11:19:09 -0700
-Message-ID: <7vobb8o8rm.fsf@alter.siamese.dyndns.org>
-References: <1371198485-32663-1-git-send-email-artagnon@gmail.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: [[PATCH v3] 1/2] [submodule] handle multibyte characters in
+ name
+Date: Fri, 14 Jun 2013 20:27:41 +0200
+Message-ID: <20130614182741.GA5812@paksenarrion.iveqy.com>
+References: <1371225365-4219-1-git-send-email-iveqy@iveqy.com>
+ <1371225365-4219-2-git-send-email-iveqy@iveqy.com>
+ <7va9msppw7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 14 20:19:18 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
+	jens.lehmann@web.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 14 20:24:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnYai-0003LL-CW
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 20:19:16 +0200
+	id 1UnYft-0007EV-9w
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 20:24:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753402Ab3FNSTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 14:19:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51795 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753032Ab3FNSTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 14:19:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 276FB28D24;
-	Fri, 14 Jun 2013 18:19:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=z2QpEj+qgKikNrLRcYuZLQ4rdmg=; b=TxlFjD
-	Sj0CIMlPVVGYH++nB6ZV7KLJ9Wdvur55JHHu8x3x/GkZL1eFnJs2iWF3aVIUi29y
-	47O7IRy8te6T60NkLs60xCO5S8xTrcqSHWAYB2LOQycosOGNINNea2rmS/L46ElT
-	U9JV9YN6uKoi8mFfsKhx8rZ3DtOqs6lb7c73M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZXQ0vc7oEG3Dn6Fx7DAEco2rVa70beg5
-	mkChBKGHmXahBZ1SmIMosUlJw9noevFEs5kWfM0dISH1Lc0/19x8uUpV2lbyNXC7
-	zPOCXm1/LmqCWI5c5ifRkhjkJkgceEVY2c3KAwTaJXx494zRxBQ+rfXZfUwYIsmZ
-	qufAEWBp678=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BA4F28D23;
-	Fri, 14 Jun 2013 18:19:11 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 92DE828D1F;
-	Fri, 14 Jun 2013 18:19:10 +0000 (UTC)
-In-Reply-To: <1371198485-32663-1-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Fri, 14 Jun 2013 13:58:05 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8CE1AD8-D51E-11E2-A9AD-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753486Ab3FNSYd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jun 2013 14:24:33 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:53661 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753120Ab3FNSYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 14:24:32 -0400
+Received: by mail-la0-f48.google.com with SMTP id lx15so797620lab.21
+        for <git@vger.kernel.org>; Fri, 14 Jun 2013 11:24:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Wks/11EGa78YSz37Zj94C3o2+Q0tWejyazLzhTFL588=;
+        b=tJQMp8kVWQ51XrbsxEPp1WaV8oDb+TZ/ASd7fgl8xCPx0+r2P0z6heJH1xmXqje0az
+         V5+CUye+d2yaGYHlhUxdp9A42svrOuVgsyveVaV4ExlxrN0zNhBiTkxQPHK3YIGEZsvh
+         yTSV/zvE3+3YfJxE0RMTHMuRSFyi2jKyFpIirv2c3lyENYt5Ci+5ekhunNkI7YhzxDdl
+         C4KnS9X7gkUhZOn7pLTC2h6vgfsAY9zGUAO2pbaVv0hRoDYNVYGqhoU2NJSXdpEjfBrc
+         6wZXYK7mR4gAi2vQsBClwTOmaQ4mqEefqRaRDDHa1tqrMeKDkLWQtcUWzteJllKqpyu1
+         qECg==
+X-Received: by 10.112.235.104 with SMTP id ul8mr1658065lbc.36.1371234270995;
+        Fri, 14 Jun 2013 11:24:30 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id t17sm1265062lbd.11.2013.06.14.11.24.29
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 14 Jun 2013 11:24:30 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UnYir-0008PP-7M; Fri, 14 Jun 2013 20:27:41 +0200
+Content-Disposition: inline
+In-Reply-To: <7va9msppw7.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227908>
 
-Will queue.  Thanks.
+On Fri, Jun 14, 2013 at 10:23:52AM -0700, Junio C Hamano wrote:
+> Fredrik Gustafsson <iveqy@iveqy.com> writes:
+>=20
+> > ... The
+> > correct approach to solve the problem for all pathnames may be to u=
+se
+> > "ls-files -z" and tell the Perl script that reads its output to rea=
+d NUL
+> > separated records by using $/ =3D "\0".
+>=20
+> I've tentatively queued the attached without 2/2; the scriptlet is
+> small enough not to matter in an eventual rewrite, so it shouldn't
+> make a difference either way.
+
+Sorry, I didn't knew enough perl to understand that that was a
+suggestion rather than a hint to a future developer.
+
+Now when I see how you meant it's looks like the best solution to me.
+To me it looks like we now should be able to handle the multiline case
+here. However, git submodule add doesn't handle newline yet, so it
+really doesn't matter for now.
+
+Thanks for the help!
+
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
+
+tel: 0733-608274
+e-post: iveqy@iveqy.com
