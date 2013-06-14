@@ -1,98 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/6] status: do not depend on flaky reflog messages
-Date: Fri, 14 Jun 2013 06:52:22 -0700
-Message-ID: <7vppvosstl.fsf@alter.siamese.dyndns.org>
-References: <1371130349-30651-1-git-send-email-artagnon@gmail.com>
-	<1371130349-30651-6-git-send-email-artagnon@gmail.com>
-	<7vvc5hubox.fsf@alter.siamese.dyndns.org>
-	<CALkWK0kjxKFkrLArL1mLZYCMN1=sgnDSa3vaoJm6eSUp2E4Pyw@mail.gmail.com>
-	<7vd2rpu3kf.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=NAiGDVWbwHXMmEffPF9wKXd23BdwOntfdvNCpVe8fiA@mail.gmail.com>
+From: =?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
+Subject: [PATCH v6 06/31] git-remote-mediawiki: Change syntax of map calls
+Date: Fri, 14 Jun 2013 15:50:14 +0200
+Message-ID: <1371217839-23017-7-git-send-email-celestin.matte@ensimag.fr>
+References: <1371217839-23017-1-git-send-email-celestin.matte@ensimag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 14 15:52:49 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: benoit.person@ensimag.fr, matthieu.moy@grenoble-inp.fr,
+	=?UTF-8?q?C=C3=A9lestin=20Matte?= <celestin.matte@ensimag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 14 15:53:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnUQj-0002Bg-Vp
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 15:52:42 +0200
+	id 1UnURP-0002gj-Si
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Jun 2013 15:53:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753200Ab3FNNw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jun 2013 09:52:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42025 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753116Ab3FNNwZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jun 2013 09:52:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 456A22564B;
-	Fri, 14 Jun 2013 13:52:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=a0FQ01t96/Gcujzy3VkyiIeV/3I=; b=cOVGrq
-	hKlw7HXpEgaII/1f9Y6+ESRq823A1xU42sXTo2QqhDYYX5G8SiRqvkGJNcEkrk8Y
-	iIiEtuu/H963IQEbnscoDrui2ym0UuG4cmn0v0N0S0UPaXGYsdbSQX1AkwsZZY/g
-	v3QOd3h4RNly1EqGT44FsB/hp+K+ZaoR/g9V0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NpXgypQinX3V3aLMHqPZcPABR/2+zi+c
-	/b/A8WS5isD39W3sNHTUSz4qdq7Iu0PDq5skVUAygY/VUpeBtr9CkFTQtwLBcOJV
-	b+KbqnVv3wcMo8TBOwjOs8+T67gTmYlqDUVcpoRtp7SqK/Q+sxs39AqvM8A/HZ1K
-	qexIfHb4BeY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CDED2564A;
-	Fri, 14 Jun 2013 13:52:24 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9EAC125647;
-	Fri, 14 Jun 2013 13:52:23 +0000 (UTC)
-In-Reply-To: <CALkWK0=NAiGDVWbwHXMmEffPF9wKXd23BdwOntfdvNCpVe8fiA@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Fri, 14 Jun 2013 11:57:14 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A3EB11D4-D4F9-11E2-BEA4-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752896Ab3FNNu5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jun 2013 09:50:57 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:44528 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752876Ab3FNNu4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jun 2013 09:50:56 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5EDorid020549
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 14 Jun 2013 15:50:53 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5EDot5p013338;
+	Fri, 14 Jun 2013 15:50:55 +0200
+Received: from tohwi-K50IE.imag.fr (ensibm [195.221.228.8])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5EDoqfw016142;
+	Fri, 14 Jun 2013 15:50:55 +0200
+X-Mailer: git-send-email 1.8.3.1.491.g8a51f1c
+In-Reply-To: <1371217839-23017-1-git-send-email-celestin.matte@ensimag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 14 Jun 2013 15:50:54 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227857>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+=46rom: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
 
-> Junio C Hamano wrote:
->>> What is wrong with git describe?  Is this cheaper, or am I missing something?
->>
->> I think what you are missing is that the "detached from" is not
->> about your current HEAD after you flipped it around with many resets
->> and commits.  It is about what tag or what specific commit you
->> detached your HEAD at originally.
->
-> No, it is about what tag of specific commit you detached your HEAD
-> from, *without using checkout*.  If you used checkout, you'd get the
-> "detached at" message, and I haven't changed that.
+Put first parameter of map inside a block, for better readability.
+=46ollow BuiltinFunctions::RequireBlockMap
 
-The part you stripped from your quote looked like this:
+Signed-off-by: C=C3=A9lestin Matte <celestin.matte@ensimag.fr>
+Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+---
+ contrib/mw-to-git/git-remote-mediawiki.perl | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
->> You were at 1.8.2 but no longer are, so in the following sequence:
->>
->>     $ git checkout v1.8.2
->>     $ git status
->>     $ git reset --hard HEAD^
->>     $ git status
->>
->> the former would say "detached at v1.8.2" while the latter should
->> *not*, because we are no longer at v1.8.2.  "detached from v1.8.2"
->> is too subtle a way to express the state, and is confusing, but I
->> would not be surprised if people find it useful to be able to learn
->> "v1.8.2" even after you strayed away.
-
-And your justification to make the latter "git status" to say "Not
-on any branch" instead of "detached from" was "what is wrong with
-describe".
-
-The user used "checkout" to detach the HEAD, and the user stayed in
-that detached state and jumped around.  Where is this "without using
-checkout" coming from?
+diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-t=
+o-git/git-remote-mediawiki.perl
+index aa526b7..3d1a324 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki.perl
++++ b/contrib/mw-to-git/git-remote-mediawiki.perl
+@@ -371,7 +371,7 @@ sub get_all_mediafiles {
+=20
+ sub get_linked_mediafiles {
+ 	my $pages =3D shift;
+-	my @titles =3D map $_->{title}, values(%{$pages});
++	my @titles =3D map { $_->{title} } values(%{$pages});
+=20
+ 	# The query is split in small batches because of the MW API limit of
+ 	# the number of links to be returned (500 links max).
+@@ -399,11 +399,13 @@ sub get_linked_mediafiles {
+ 		while (my ($id, $page) =3D each(%{$result->{query}->{pages}})) {
+ 			my @media_titles;
+ 			if (defined($page->{links})) {
+-				my @link_titles =3D map $_->{title}, @{$page->{links}};
++				my @link_titles
++				    =3D map { $_->{title} } @{$page->{links}};
+ 				push(@media_titles, @link_titles);
+ 			}
+ 			if (defined($page->{images})) {
+-				my @image_titles =3D map $_->{title}, @{$page->{images}};
++				my @image_titles
++				    =3D map { $_->{title} } @{$page->{images}};
+ 				push(@media_titles, @image_titles);
+ 			}
+ 			if (@media_titles) {
+@@ -833,7 +835,7 @@ sub mw_import_ref_by_pages {
+ 	my ($n, @revisions) =3D fetch_mw_revisions(\@pages, $fetch_from);
+=20
+ 	@revisions =3D sort {$a->{revid} <=3D> $b->{revid}} @revisions;
+-	my @revision_ids =3D map $_->{revid}, @revisions;
++	my @revision_ids =3D map { $_->{revid} } @revisions;
+=20
+ 	return mw_import_revids($fetch_from, \@revision_ids, \%pages_hash);
+ }
+@@ -1246,8 +1248,8 @@ sub get_allowed_file_extensions {
+ 		siprop =3D> 'fileextensions'
+ 		};
+ 	my $result =3D $mediawiki->api($query);
+-	my @file_extensions=3D map $_->{ext},@{$result->{query}->{fileextensi=
+ons}};
+-	my %hashFile =3D map {$_ =3D> 1}@file_extensions;
++	my @file_extensions =3D map { $_->{ext}} @{$result->{query}->{fileext=
+ensions}};
++	my %hashFile =3D map { $_ =3D> 1 } @file_extensions;
+=20
+ 	return %hashFile;
+ }
+--=20
+1.8.3.rc3.49.g4e74807
