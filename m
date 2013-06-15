@@ -1,142 +1,135 @@
-From: Andrew Pimlott <andrew@pimlott.net>
-Subject: Re: [PATCH] rebase -i: fixup fixup! fixup!
-Date: Fri, 14 Jun 2013 23:50:21 -0700
-Message-ID: <1371278908-sup-1930@pimlott.net>
-References: <20130611180530.GA18488@oinkpad.pimlott.net> <87obbc8otc.fsf@hexa.v.cablecom.net> <1371237209-sup-639@pimlott.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 5/6] status: do not depend on flaky reflog messages
+Date: Sat, 15 Jun 2013 13:32:51 +0530
+Message-ID: <CALkWK0mCK_-bUapAvcrwtNgGnT1=x1d=+J9RO1GK6ssHWP2ztA@mail.gmail.com>
+References: <1371130349-30651-1-git-send-email-artagnon@gmail.com>
+ <1371130349-30651-6-git-send-email-artagnon@gmail.com> <7vvc5hubox.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kjxKFkrLArL1mLZYCMN1=sgnDSa3vaoJm6eSUp2E4Pyw@mail.gmail.com>
+ <7vd2rpu3kf.fsf@alter.siamese.dyndns.org> <CALkWK0=NAiGDVWbwHXMmEffPF9wKXd23BdwOntfdvNCpVe8fiA@mail.gmail.com>
+ <7vppvosstl.fsf@alter.siamese.dyndns.org> <CALkWK0k28u583Jci+Dvad1pbu7_dJdnmz1WBkP790a_t2QdPTg@mail.gmail.com>
+ <7v38sksq14.fsf@alter.siamese.dyndns.org> <CALkWK0n_Jsb46qPojbGL3S+mPunNQWUOmypQOvdaBjcT5wgJBg@mail.gmail.com>
+ <7vsj0kpsb0.fsf@alter.siamese.dyndns.org> <CALkWK0==Phbe-9QaOa3jkYMEvxb6F3kypRkk9RbzrLco-HkHKw@mail.gmail.com>
+ <7v7ghwmi9x.fsf@alter.siamese.dyndns.org> <7v38skmgu8.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 15 08:50:30 2013
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 15 10:04:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnkJh-0003eH-Ce
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Jun 2013 08:50:29 +0200
+	id 1UnlSr-0007yL-44
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Jun 2013 10:04:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423Ab3FOGuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Jun 2013 02:50:24 -0400
-Received: from pimlott.net ([72.249.23.100]:38556 "EHLO fugue.pimlott.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751521Ab3FOGuY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Jun 2013 02:50:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=pimlott.net; s=default;
-	h=Content-Transfer-Encoding:Message-Id:Date:References:In-reply-to:To:From:Subject:Content-Type; bh=z/JE041LPr8hz4jD1esPI8Jb7Q8TfBKIc1zCdfwU0yw=;
-	b=Vftiqzn3QwwUBkXKI7KZxtkFAY2cs6XeXk4Dv4+O/GhbzdUBpNNrXteMS4Wt/oR2NRPfvGXD89WhV9bcNgxTBZU529EVqYPRbzUygGpAi0RnCgTiOafu6R1kPIuT7fFnXrmr5yciRIOqTJ7KJRKBdpyW1AyV2OljvWV/noq2k5k=;
-Received: from andrew by fugue.pimlott.net with local (Exim 4.72)
-	(envelope-from <andrew@pimlott.net>)
-	id 1UnkJZ-0006gj-Ol; Fri, 14 Jun 2013 23:50:21 -0700
-In-reply-to: <1371237209-sup-639@pimlott.net>
-User-Agent: Sup/git
+	id S1754180Ab3FOIDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Jun 2013 04:03:36 -0400
+Received: from mail-bk0-f47.google.com ([209.85.214.47]:58776 "EHLO
+	mail-bk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754121Ab3FOIDd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Jun 2013 04:03:33 -0400
+Received: by mail-bk0-f47.google.com with SMTP id jg1so560061bkc.34
+        for <git@vger.kernel.org>; Sat, 15 Jun 2013 01:03:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=SUbnwBSM5xt8mAAZOu6Jf/e5Pbr6QlQZiIJLcUYZWXU=;
+        b=KoZLJZsFe0y9CdUPh5ZS4DuAyKhBWz28tYI+s/L+XWzr76jutol8DAlEERpH4CglM+
+         4Es+QkskEAxscTdTYsr3Cmnb3Rqmy8tS7NYLJ3xFLB7vTQWZRm/VrzO6eXlgY5oo8p7q
+         DV4rVqSmdwu4FgvUyfe8plspFdtNA74aBNB8PLFyE+kJMk81qXVEf829lXaFTAsoPdCK
+         3WSVkhldfdafNrFsEhNkzKSmvgxbwr1/jlCbCyTa73KACqmCnmMQg+tPK/0O5h46QCAg
+         2FA2u7rnWtMUWOwMosT69YU8XVxDScsJ9YTWS8PX+6E0yETuFFEYreb5X/3U3KEK8OKO
+         wyyg==
+X-Received: by 10.204.69.12 with SMTP id x12mr823196bki.14.1371283412083; Sat,
+ 15 Jun 2013 01:03:32 -0700 (PDT)
+Received: by 10.204.186.77 with HTTP; Sat, 15 Jun 2013 01:02:51 -0700 (PDT)
+In-Reply-To: <7v38skmgu8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227935>
 
-Excerpts from Andrew Pimlott's message of Fri Jun 14 12:31:57 -0700 2013:
-> It happened to work and I added a test.  But then it occurred to me that
-> it might have been better to fix commit --fixup/--squash to strip the
-> fixup! or squash! from the referenced commit in the first place.
-> Anyhow, below is my patch for --autosquash, but unles someone has an
-> objection to doing it in commit, I'll work on that.
+Junio C Hamano wrote:
+>  wt-status.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/wt-status.c b/wt-status.c
+> index bf84a86..403d48d 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1176,7 +1176,11 @@ void wt_status_print(struct wt_status *s)
+>                         branch_name += 11;
+>                 else if (!strcmp(branch_name, "HEAD")) {
+>                         branch_status_color = color(WT_STATUS_NOBRANCH, s);
+> -                       if (state.detached_from) {
+> +
+> +                       if (state.rebase_in_progress) {
+> +                               on_what = _("HEAD detached at ");
+> +                               branch_name = state.onto;
+> +                       } else if (state.detached_from) {
+>                                 unsigned char sha1[20];
+>                                 branch_name = state.detached_from;
 
-Here is a patch for commit.c that does this.
+Good.  You have proposed a solution to the problem.  However, it is
+wrong for the following reasons:
 
-Andrew
+1. It shows a pseudo "HEAD detached at" message.  Everywhere else,
+when the user sees a "HEAD detached at $committish" message, git
+rev-parse $committish = git rev-parse HEAD.  A rebase-in-progress
+seems to be the only exception, and the user has no idea this is
+happened.
 
-When building the commit message for --fixup/--squash, ignore a leading
-fixup! or squash! on the referenced commit.  Handy in case the user referred
-to an earlier squash/fixup commit instead of the original commit, for
-example with :/msg.
+2. The following no longer updates status:
 
-Signed-off-by: Andrew Pimlott <andrew@pimlott.net>
----
- builtin/commit.c  |   18 ++++++++++++++----
- t/t7500-commit.sh |   36 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 50 insertions(+), 4 deletions(-)
+  # in the middle of a rebase
+  $ git reset @~2
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 1621dfc..370df88 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -601,8 +601,13 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 			if (!c)
- 				die(_("could not lookup commit %s"), squash_message);
- 			ctx.output_encoding = get_commit_output_encoding();
--			format_commit_message(c, "squash! %s\n\n", &sb,
--					      &ctx);
-+			format_commit_message(c, "%s\n\n", &sb, &ctx);
-+			if (!prefixcmp(sb.buf, "fixup! ")) {
-+				strbuf_remove(&sb, 0, strlen("fixup! "));
-+			} else if (!prefixcmp(sb.buf, "squash! ")) {
-+				strbuf_remove(&sb, 0, strlen("squash! "));
-+			}
-+			strbuf_insert(&sb, 0, "squash! ", strlen("squash! "));
- 		}
- 	}
- 
-@@ -634,8 +639,13 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		if (!commit)
- 			die(_("could not lookup commit %s"), fixup_message);
- 		ctx.output_encoding = get_commit_output_encoding();
--		format_commit_message(commit, "fixup! %s\n\n",
--				      &sb, &ctx);
-+		format_commit_message(commit, "%s\n\n", &sb, &ctx);
-+		if (!prefixcmp(sb.buf, "fixup! ")) {
-+			strbuf_remove(&sb, 0, strlen("fixup! "));
-+		} else if (!prefixcmp(sb.buf, "squash! ")) {
-+			strbuf_remove(&sb, 0, strlen("squash! "));
-+		}
-+		strbuf_insert(&sb, 0, "fixup! ", strlen("fixup! "));
- 		hook_arg1 = "message";
- 	} else if (!stat(git_path("MERGE_MSG"), &statbuf)) {
- 		if (strbuf_read_file(&sb, git_path("MERGE_MSG"), 0) < 0)
-diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
-index 436b7b6..ecdf74a 100755
---- a/t/t7500-commit.sh
-+++ b/t/t7500-commit.sh
-@@ -320,4 +320,40 @@ test_expect_success 'invalid message options when using --fixup' '
- 	test_must_fail git commit --fixup HEAD~1 -F log
- '
- 
-+test_expect_success 'commit --fixup of existing fixup' '
-+	commit_for_rebase_autosquash_setup &&
-+	git commit --fixup HEAD~1 &&
-+	echo "fourth content line" >>foo &&
-+	git add foo
-+	git commit --fixup HEAD &&
-+	commit_msg_is "fixup! target message subject line"
-+'
-+
-+test_expect_success 'commit --fixup of existing squash' '
-+	commit_for_rebase_autosquash_setup &&
-+	git commit --squash HEAD~1 &&
-+	echo "fourth content line" >>foo &&
-+	git add foo
-+	git commit --fixup HEAD &&
-+	commit_msg_is "fixup! target message subject line"
-+'
-+
-+test_expect_success 'commit --squash of existing squash' '
-+	commit_for_rebase_autosquash_setup &&
-+	git commit --squash HEAD~1 &&
-+	echo "fourth content line" >>foo &&
-+	git add foo
-+	git commit --squash HEAD &&
-+	commit_msg_is "squash! target message subject linecommit message"
-+'
-+
-+test_expect_success 'commit --squash of existing fixup' '
-+	commit_for_rebase_autosquash_setup &&
-+	git commit --fixup HEAD~1 &&
-+	echo "fourth content line" >>foo &&
-+	git add foo
-+	git commit --squash HEAD &&
-+	commit_msg_is "squash! target message subject linecommit message"
-+'
-+
- test_done
--- 
-1.7.10.4
+The constant "HEAD detached at $onto" message is misleading and Bad.
+Besides, wasn't this the primary usecase you wanted?
+
+You previously wrote:
+> *1* One thing I could think of is to start sightseeing or (more
+>     realistically) manually bisecting at a given release point,
+>     reset the detached HEAD around several times, and then want to
+>     be reminded where the session started from.  I do not think it
+>     is particularly a very good example, though.
+
+Whether the HEAD is detached by bisect or rebase is irrelevant.
+
+3. The problem is not unique to rebase at all; yet you have
+special-cased it.  If this isn't a band-aid, what is?  The larger
+problem, as I have stated previously, is that 'git status' output
+depends on the _implementations_ of various commands (do they write a
+"checkout: " message to the reflog or not?).  Therefore, a future
+contributor who updates a command to write more sensible reflog
+messages will have to apply a similar band-aid.
+
+If you want to take the band-aid approach, I think this is the right
+way to do it:
+
+diff --git a/wt-status.c b/wt-status.c
+index bf84a86..99c55e3 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1182,7 +1182,7 @@ void wt_status_print(struct wt_status *s)
+ 				if (!get_sha1("HEAD", sha1) &&
+ 				    !hashcmp(sha1, state.detached_sha1))
+ 					on_what = _("HEAD detached at ");
+-				else
++				else if (!state.rebase_in_progress)
+ 					on_what = _("HEAD detached from ");
+ 			} else {
+ 				branch_name = "";
+
+You have already mentioned that there is a topic cooking to improve
+this first-line in the case of rebase, so this regression from a
+senseless message isn't a problem.
+
+The problem with this bad-aid, as with all band aids, is that this
+will soon explode to become else if(!state.rebase_in_progress &&
+!state.bisect_in_progress && ....) when people update those scripts.
+If you don't want to go with the band-aid, I have no choice but to
+smudge the first-line.
