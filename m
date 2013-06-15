@@ -1,70 +1,121 @@
-From: Pat Thoyts <patthoyts@gmail.com>
-Subject: Re: [PATCH v2] git-gui: bring Wish process to front on Mac
-Date: Sun, 16 Jun 2013 00:07:21 +0100
-Message-ID: <CABNJ2GL3zK9UqsQ-ZCVVkZwXEesjGnmuVbUeQfSKZhL6njm3BA@mail.gmail.com>
-References: <1l424u5.uk987q18u3oxfM%lists@haller-berlin.de>
-	<1370642211-34416-1-git-send-email-stefan@haller-berlin.de>
-	<7vwqpwo9wd.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] unpack-trees: don't shift conflicts left and right
+Date: Sun, 16 Jun 2013 01:44:43 +0200
+Message-ID: <1371339883-22775-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Haller <stefan@haller-berlin.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 16 01:07:28 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 16 01:45:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnzZ8-0004Kg-Fq
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 01:07:26 +0200
+	id 1Uo09e-0001ad-HB
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 01:45:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754764Ab3FOXHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Jun 2013 19:07:22 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:34510 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754752Ab3FOXHW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Jun 2013 19:07:22 -0400
-Received: by mail-pd0-f181.google.com with SMTP id 14so1632403pdj.12
-        for <git@vger.kernel.org>; Sat, 15 Jun 2013 16:07:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=p9SzBy+/ebA0pyAnry8Wt3Zj7zrEjWNyymKOlrQpmHE=;
-        b=04U3rpRfOZIlQ/EEAdOaMr0+rNu8QcfFg01vc5jVm30LxATzN/HmlMIKIF35A6Q5in
-         Yq5Fa3kFk5+oP2yPnp4/mlUTPtWDt5YbKTNDV2E+hLi1BHgso5W+Kk1ds3S357fKE7Ay
-         3yNObDqXXtdpNuEVX3Q5nQWyWzh91BqGw3qr3QTDy6TTSf/8tk0Eux4XOFpdBfCZtiZR
-         wwFV8bELTAdMle1mlKEtRPXwCAR902lQKqneLWfn4XPXw5t/Y6b159ddZmsF+UFZTGPz
-         OD/bduDnwB9MGkRX83as2AZcmNZjoJd1c6TuQqCnaWNgG3ictIa12zPE3TQCIDCczJrT
-         Jl2A==
-X-Received: by 10.68.134.40 with SMTP id ph8mr7582653pbb.177.1371337641692;
- Sat, 15 Jun 2013 16:07:21 -0700 (PDT)
-Received: by 10.68.63.132 with HTTP; Sat, 15 Jun 2013 16:07:21 -0700 (PDT)
-In-Reply-To: <7vwqpwo9wd.fsf@alter.siamese.dyndns.org>
+	id S1754744Ab3FOXov convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Jun 2013 19:44:51 -0400
+Received: from india601.server4you.de ([85.25.151.105]:59711 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754679Ab3FOXou (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Jun 2013 19:44:50 -0400
+Received: from debian.Speedport_W_504V_Typ_A (p4FFDB913.dip0.t-ipconnect.de [79.253.185.19])
+	by india601.server4you.de (Postfix) with ESMTPSA id C7F8520B;
+	Sun, 16 Jun 2013 01:44:48 +0200 (CEST)
+X-Mailer: git-send-email 1.8.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227977>
 
-On 14 June 2013 18:54, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Haller <stefan@haller-berlin.de> writes:
->
->> On Mac OS X, any application that is started from the Terminal will open
->> behind all running applications; as a work-around, manually bring ourselves
->> to the front. (Stolen from gitk, commit 76bf6ff93e.)
->>
->> We do this as the very first thing, so that any message boxes that might pop
->> up during the rest of the startup sequence are actually seen by the user.
->>
->> Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
->> ---
->
-> Pat, is there any progress on this?  I do not mind, and I actually
-> would prefer, a pull request early in the development cycle.
->
+If o->merge is set, the struct traverse_info member conflicts is shifte=
+d
+left in unpack_callback, then passed through traverse_trees_recursive
+to unpack_nondirectories, where it is shifted right before use.  Stop
+the shifting and just pass the conflict bit mask as is.  Rename the
+member to df_conflicts to prove that it isn't used anywhere else.
 
-yep - I applied this and a couple of others and sent up a pull request
-now. I see there are some commits in git's tree that I don't have on
-this side so I'll merge those in here shortly.
+Signed-off-by: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ tree-walk.h    |  2 +-
+ unpack-trees.c | 18 +++---------------
+ 2 files changed, 4 insertions(+), 16 deletions(-)
+
+diff --git a/tree-walk.h b/tree-walk.h
+index 2bf0db9..ae04b64 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -46,7 +46,7 @@ struct traverse_info {
+ 	int pathlen;
+ 	struct pathspec *pathspec;
+=20
+-	unsigned long conflicts;
++	unsigned long df_conflicts;
+ 	traverse_callback_t fn;
+ 	void *data;
+ 	int show_all_errors;
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 57b4074..b27f2a6 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -464,7 +464,7 @@ static int traverse_trees_recursive(int n, unsigned=
+ long dirmask,
+ 	newinfo.pathspec =3D info->pathspec;
+ 	newinfo.name =3D *p;
+ 	newinfo.pathlen +=3D tree_entry_len(p) + 1;
+-	newinfo.conflicts |=3D df_conflicts;
++	newinfo.df_conflicts |=3D df_conflicts;
+=20
+ 	for (i =3D 0; i < n; i++, dirmask >>=3D 1) {
+ 		const unsigned char *sha1 =3D NULL;
+@@ -565,17 +565,12 @@ static int unpack_nondirectories(int n, unsigned =
+long mask,
+ {
+ 	int i;
+ 	struct unpack_trees_options *o =3D info->data;
+-	unsigned long conflicts;
++	unsigned long conflicts =3D info->df_conflicts | dirmask;
+=20
+ 	/* Do we have *only* directories? Nothing to do */
+ 	if (mask =3D=3D dirmask && !src[0])
+ 		return 0;
+=20
+-	conflicts =3D info->conflicts;
+-	if (o->merge)
+-		conflicts >>=3D 1;
+-	conflicts |=3D dirmask;
+-
+ 	/*
+ 	 * Ok, we've filled in up to any potential index entry in src[0],
+ 	 * now do the rest.
+@@ -807,13 +802,6 @@ static int unpack_callback(int n, unsigned long ma=
+sk, unsigned long dirmask, str
+=20
+ 	/* Now handle any directories.. */
+ 	if (dirmask) {
+-		unsigned long conflicts =3D mask & ~dirmask;
+-		if (o->merge) {
+-			conflicts <<=3D 1;
+-			if (src[0])
+-				conflicts |=3D 1;
+-		}
+-
+ 		/* special case: "diff-index --cached" looking at a tree */
+ 		if (o->diff_index_cached &&
+ 		    n =3D=3D 1 && dirmask =3D=3D 1 && S_ISDIR(names->mode)) {
+@@ -832,7 +820,7 @@ static int unpack_callback(int n, unsigned long mas=
+k, unsigned long dirmask, str
+ 			}
+ 		}
+=20
+-		if (traverse_trees_recursive(n, dirmask, conflicts,
++		if (traverse_trees_recursive(n, dirmask, mask & ~dirmask,
+ 					     names, info) < 0)
+ 			return -1;
+ 		return mask;
+--=20
+1.8.3
