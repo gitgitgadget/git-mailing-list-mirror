@@ -1,146 +1,215 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v3 1/2] am: handle stray $dotest directory
-Date: Sat, 15 Jun 2013 18:13:11 +0530
-Message-ID: <1371300192-6222-2-git-send-email-artagnon@gmail.com>
+Subject: [PATCH v3 2/2] t/am: use test_path_is_missing() where appropriate
+Date: Sat, 15 Jun 2013 18:13:12 +0530
+Message-ID: <1371300192-6222-3-git-send-email-artagnon@gmail.com>
 References: <1371300192-6222-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 15 14:45:38 2013
+X-From: git-owner@vger.kernel.org Sat Jun 15 14:45:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UnprN-0001iF-Nq
+	id 1UnprO-0001iF-7f
 	for gcvg-git-2@plane.gmane.org; Sat, 15 Jun 2013 14:45:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754092Ab3FOMpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Jun 2013 08:45:17 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:50040 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753907Ab3FOMpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Jun 2013 08:45:08 -0400
-Received: by mail-pd0-f171.google.com with SMTP id y14so1385472pdi.2
-        for <git@vger.kernel.org>; Sat, 15 Jun 2013 05:45:07 -0700 (PDT)
+	id S1754130Ab3FOMpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Jun 2013 08:45:35 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:41798 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754078Ab3FOMpK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Jun 2013 08:45:10 -0400
+Received: by mail-pb0-f52.google.com with SMTP id xa12so1367477pbc.25
+        for <git@vger.kernel.org>; Sat, 15 Jun 2013 05:45:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=ty87l2ZmkVxJ13BfiYfPh4EMzF23GN3QFnlCextoVPQ=;
-        b=YXoCdwJqL7GYlavv+QD5E9DEMTH80evEwyNUyQvE4zckhyBoYasPiSClM40la9ndKc
-         zEa3Kt+VY7h731xs8p8lFGki9bROh/2J3tZh7qTJtSSrjyIXCnVisrPNYzJq4i2WZa6v
-         OZ52nQRZBiUMuYeixeO9CDx101lf3cEmdycnnfidPjv5BMXHK20xmtn4VKE+wH4DEGNx
-         THwg2NncXI+vsSrlUsQLBSiPdecG4tCVOljVL2AJ0d6PgqgeAPRZFPD5+C6I6P11+CX2
-         GCF5dr4WPY8aopDTG7GpRejcM1GAn4nfXlylsZgLre4QI6rihcvUT0uHJCFI/u5ZSrS3
-         H49w==
-X-Received: by 10.68.176.37 with SMTP id cf5mr6253540pbc.173.1371300307647;
-        Sat, 15 Jun 2013 05:45:07 -0700 (PDT)
+        bh=S7r0RK1S8FMX/xrpMwpUF02HGZ/qhJ3bNVZB3v+z/q8=;
+        b=WvjDeObJgaN0rw5FNJiNO11/woFpSErfuxMT6ANcnBYwT2YHX7OBnu75iYhuFApgjv
+         WEsTgieuoYhJqfYDIYMDEgrQbY+uQonPLfB7aIvZYNahiRTc4HXakSsd2dO2/eGe0iBb
+         pHla4BxAXlkQZnLFNgzj2K7oSLJv2i3ph2wfeWA0/VOxOZNUt2mMqw1NrZPyjnNr5mP0
+         Uw2m13qTyCYFruJ9ACFqw0IVqZ2ln5Eu6FFco2g2tLQU+wIuABG9EIt2UsbtizII0Wv9
+         hHPZbroAWjN+yXFIYbe8qpqwNGSOjatpKAqeI8BG5qUdrMh4/D7bex1rJVdLEc59laL7
+         iOVg==
+X-Received: by 10.66.83.7 with SMTP id m7mr6360432pay.150.1371300309934;
+        Sat, 15 Jun 2013 05:45:09 -0700 (PDT)
 Received: from localhost.localdomain ([122.164.213.38])
-        by mx.google.com with ESMTPSA id pl9sm6194950pbc.5.2013.06.15.05.45.05
+        by mx.google.com with ESMTPSA id pl9sm6194950pbc.5.2013.06.15.05.45.07
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 15 Jun 2013 05:45:07 -0700 (PDT)
+        Sat, 15 Jun 2013 05:45:09 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1.383.g8881048.dirty
 In-Reply-To: <1371300192-6222-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227948>
 
-The following bug has been observed:
+Replace instances of ! test -d with test_path_is_missing.
 
-  $ git am  # no input file
-  ^C
-  $ git am --abort
-  Resolve operation not in progress, we are not resuming.
-
-This happens because the following test fails:
-
-  test -d "$dotest" && test -f "$dotest/last" && test -f "$dotest/next"
-
-and the codepath for an "am in-progress" is not executed.  It falls back
-to the codepath that treats this as a "fresh execution".  Before
-rr/rebase-autostash, this condition was
-
-  test -d "$dotest"
-
-It would incorrectly execute the "normal" am --abort codepath:
-
-  git read-tree --reset -u HEAD ORIG_HEAD
-  git reset ORIG_HEAD
-
-by incorrectly assuming that an am is "in progress" (i.e. ORIG_HEAD
-etc. was written during the previous execution).
-
-Notice that
-
-  $ git am
-  ^C
-
-executes nothing of significance, is equivalent to
-
-  $ mkdir .git/rebase-apply
-
-Therefore, the correct solution is to treat .git/rebase-apply as a
-"stray directory" and remove it on --abort in the fresh-execution
-codepath.  Also ensure that we're not called with --rebasing from
-git-rebase--am.sh; in that case, it is the responsibility of the caller
-to handle and stray directories.
-
-While at it, tell the user to run "git am --abort" to get rid of the
-stray $dotest directory, if she attempts anything else.
-
-Reported-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- git-am.sh     | 17 +++++++++++++++++
- t/t4150-am.sh |  6 ++++++
- 2 files changed, 23 insertions(+)
+ t/t4150-am.sh | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/git-am.sh b/git-am.sh
-index 1cf3d1d..91a2bcc 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -506,6 +506,23 @@ then
- 	esac
- 	rm -f "$dotest/dirtyindex"
- else
-+	# Possible stray $dotest directory in the independent-run
-+	# case; in the --rebasing case, it is upto the caller
-+	# (git-rebase--am) to take care of stray directories.
-+	if test -d "$dotest" && test -z "$rebasing"
-+	then
-+	case "$skip,$resolved,$abort" in
-+	,,t)
-+		rm -fr "$dotest"
-+		exit 0
-+		;;
-+	*)
-+		die "$(eval_gettext "Stray \$dotest directory found.
-+Use \"git am --abort\" to remove it.")"
-+		;;
-+	esac
-+	fi
-+
- 	# Make sure we are not given --skip, --resolved, nor --abort
- 	test "$skip$resolved$abort" = "" ||
- 		die "$(gettext "Resolve operation not in progress, we are not resuming.")"
 diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 12f6b02..6c2cc3e 100755
+index 6c2cc3e..5edb79a 100755
 --- a/t/t4150-am.sh
 +++ b/t/t4150-am.sh
-@@ -363,6 +363,12 @@ test_expect_success 'am --skip works' '
+@@ -147,7 +147,7 @@ test_expect_success 'am applies patch correctly' '
+ 	git checkout first &&
+ 	test_tick &&
+ 	git am <patch1 &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git diff --exit-code second &&
+ 	test "$(git rev-parse second)" = "$(git rev-parse HEAD)" &&
+ 	test "$(git rev-parse second^)" = "$(git rev-parse HEAD^)"
+@@ -158,7 +158,7 @@ test_expect_success 'am applies patch e-mail not in a mbox' '
+ 	git reset --hard &&
+ 	git checkout first &&
+ 	git am patch1.eml &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git diff --exit-code second &&
+ 	test "$(git rev-parse second)" = "$(git rev-parse HEAD)" &&
+ 	test "$(git rev-parse second^)" = "$(git rev-parse HEAD^)"
+@@ -169,7 +169,7 @@ test_expect_success 'am applies patch e-mail not in a mbox with CRLF' '
+ 	git reset --hard &&
+ 	git checkout first &&
+ 	git am patch1-crlf.eml &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git diff --exit-code second &&
+ 	test "$(git rev-parse second)" = "$(git rev-parse HEAD)" &&
+ 	test "$(git rev-parse second^)" = "$(git rev-parse HEAD^)"
+@@ -180,7 +180,7 @@ test_expect_success 'am applies patch e-mail with preceding whitespace' '
+ 	git reset --hard &&
+ 	git checkout first &&
+ 	git am patch1-ws.eml &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git diff --exit-code second &&
+ 	test "$(git rev-parse second)" = "$(git rev-parse HEAD)" &&
+ 	test "$(git rev-parse second^)" = "$(git rev-parse HEAD^)"
+@@ -206,7 +206,7 @@ test_expect_success 'am changes committer and keeps author' '
+ 	git reset --hard &&
+ 	git checkout first &&
+ 	git am patch2 &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	test "$(git rev-parse master^^)" = "$(git rev-parse HEAD^^)" &&
+ 	git diff --exit-code master..HEAD &&
+ 	git diff --exit-code master^..HEAD^ &&
+@@ -258,7 +258,7 @@ test_expect_success 'am --keep really keeps the subject' '
+ 	git reset --hard &&
+ 	git checkout HEAD^ &&
+ 	git am --keep patch4 &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git cat-file commit HEAD >actual &&
+ 	grep "Re: Re: Re: \[PATCH 1/5 v2\] \[foo\] third" actual
+ '
+@@ -268,7 +268,7 @@ test_expect_success 'am --keep-non-patch really keeps the non-patch part' '
+ 	git reset --hard &&
+ 	git checkout HEAD^ &&
+ 	git am --keep-non-patch patch4 &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git cat-file commit HEAD >actual &&
+ 	grep "^\[foo\] third" actual
+ '
+@@ -283,7 +283,7 @@ test_expect_success 'am -3 falls back to 3-way merge' '
+ 	test_tick &&
+ 	git commit -m "copied stuff" &&
+ 	git am -3 lorem-move.patch &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git diff --exit-code lorem
+ '
+ 
+@@ -297,7 +297,7 @@ test_expect_success 'am -3 -p0 can read --no-prefix patch' '
+ 	test_tick &&
+ 	git commit -m "copied stuff" &&
+ 	git am -3 -p0 lorem-zero.patch &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git diff --exit-code lorem
+ '
+ 
+@@ -307,7 +307,7 @@ test_expect_success 'am can rename a file' '
+ 	git reset --hard &&
+ 	git checkout lorem^0 &&
+ 	git am rename.patch &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git update-index --refresh &&
+ 	git diff --exit-code rename
+ '
+@@ -318,7 +318,7 @@ test_expect_success 'am -3 can rename a file' '
+ 	git reset --hard &&
+ 	git checkout lorem^0 &&
+ 	git am -3 rename.patch &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git update-index --refresh &&
+ 	git diff --exit-code rename
+ '
+@@ -329,7 +329,7 @@ test_expect_success 'am -3 can rename a file after falling back to 3-way merge'
+ 	git reset --hard &&
+ 	git checkout lorem^0 &&
+ 	git am -3 rename-add.patch &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git update-index --refresh &&
+ 	git diff --exit-code rename
+ '
+@@ -358,7 +358,7 @@ test_expect_success 'am pauses on conflict' '
+ test_expect_success 'am --skip works' '
+ 	echo goodbye >expected &&
+ 	git am --skip &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git diff --exit-code lorem2^^ -- file &&
+ 	test_cmp expected another
+ '
+@@ -379,7 +379,7 @@ test_expect_success 'am --resolved works' '
+ 	echo resolved >>file &&
+ 	git add file &&
+ 	git am --resolved &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
  	test_cmp expected another
  '
  
-+test_expect_success 'am --abort removes a stray directory' '
-+	mkdir .git/rebase-apply &&
-+	git am --abort &&
+@@ -388,7 +388,7 @@ test_expect_success 'am takes patches from a Pine mailbox' '
+ 	git reset --hard &&
+ 	git checkout first &&
+ 	cat pine patch1 | git am &&
+-	! test -d .git/rebase-apply &&
++	test_path_is_missing .git/rebase-apply &&
+ 	git diff --exit-code master^..HEAD
+ '
+ 
+@@ -397,7 +397,7 @@ test_expect_success 'am fails on mail without patch' '
+ 	git reset --hard &&
+ 	test_must_fail git am <failmail &&
+ 	git am --abort &&
+-	! test -d .git/rebase-apply
 +	test_path_is_missing .git/rebase-apply
-+'
-+
- test_expect_success 'am --resolved works' '
- 	echo goodbye >expected &&
- 	rm -fr .git/rebase-apply &&
+ '
+ 
+ test_expect_success 'am fails on empty patch' '
+@@ -406,7 +406,7 @@ test_expect_success 'am fails on empty patch' '
+ 	echo "---" >>failmail &&
+ 	test_must_fail git am <failmail &&
+ 	git am --skip &&
+-	! test -d .git/rebase-apply
++	test_path_is_missing .git/rebase-apply
+ '
+ 
+ test_expect_success 'am works from stdin in subdirectory' '
 -- 
 1.8.3.1.383.g8881048.dirty
