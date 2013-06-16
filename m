@@ -1,309 +1,185 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 00/12] Fix some reference-related races
-Date: Sun, 16 Jun 2013 07:50:42 +0200
-Message-ID: <51BD5232.20205@alum.mit.edu>
-References: <1370987312-6761-1-git-send-email-mhagger@alum.mit.edu> <51BCCAD2.9070106@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] status: do not depend on flaky reflog messages
+Date: Sat, 15 Jun 2013 22:57:15 -0700
+Message-ID: <7vip1ek37o.fsf@alter.siamese.dyndns.org>
+References: <1371130349-30651-1-git-send-email-artagnon@gmail.com>
+	<1371130349-30651-6-git-send-email-artagnon@gmail.com>
+	<7vvc5hubox.fsf@alter.siamese.dyndns.org>
+	<CALkWK0kjxKFkrLArL1mLZYCMN1=sgnDSa3vaoJm6eSUp2E4Pyw@mail.gmail.com>
+	<7vd2rpu3kf.fsf@alter.siamese.dyndns.org>
+	<CALkWK0=NAiGDVWbwHXMmEffPF9wKXd23BdwOntfdvNCpVe8fiA@mail.gmail.com>
+	<7vppvosstl.fsf@alter.siamese.dyndns.org>
+	<CALkWK0k28u583Jci+Dvad1pbu7_dJdnmz1WBkP790a_t2QdPTg@mail.gmail.com>
+	<7v38sksq14.fsf@alter.siamese.dyndns.org>
+	<CALkWK0n_Jsb46qPojbGL3S+mPunNQWUOmypQOvdaBjcT5wgJBg@mail.gmail.com>
+	<7vsj0kpsb0.fsf@alter.siamese.dyndns.org>
+	<CALkWK0==Phbe-9QaOa3jkYMEvxb6F3kypRkk9RbzrLco-HkHKw@mail.gmail.com>
+	<7v7ghwmi9x.fsf@alter.siamese.dyndns.org>
+	<CALkWK0nDwqqiAq044wwj__1XzAuFDBUG59_0zHRMNzQ6ARsiww@mail.gmail.com>
+	<7vsj0jln23.fsf@alter.siamese.dyndns.org>
+	<CALkWK0=R8h0_FUYMUFQ_qGC1Lf_Xvu84qigznYUK5MtzP8usPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sun Jun 16 07:51:08 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 16 07:57:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uo5rm-0005XQ-QI
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 07:51:07 +0200
+	id 1Uo5y7-0004hf-9H
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 07:57:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754850Ab3FPFus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Jun 2013 01:50:48 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:44806 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754111Ab3FPFur (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Jun 2013 01:50:47 -0400
-X-AuditID: 1207440f-b7f786d000001f20-23-51bd5236e4ad
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 33.1C.07968.6325DB15; Sun, 16 Jun 2013 01:50:46 -0400 (EDT)
-Received: from [192.168.69.140] (p57A255AA.dip0.t-ipconnect.de [87.162.85.170])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r5G5ogkT014688
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 16 Jun 2013 01:50:44 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <51BCCAD2.9070106@ramsay1.demon.co.uk>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrBKsWRmVeSWpSXmKPExsUixO6iqGsWtDfQoPOBqEXXlW4mi4beK8wW
-	8+7uYrL40dLDbLF72gI2B1aPSy+/s3k8693D6HHxkrLH44knWD0+b5ILYI3itklKLCkLzkzP
-	07dL4M6Y9LmDreB/WMXtCTeZGhgvOncxcnJICJhIHPx5hxHCFpO4cG89WxcjF4eQwGVGiQcT
-	30I555kkvqz8wARSxSugKfGy9S+YzSKgKnHg6CWwbjYBXYlFPc1gcVGBMIn3y6ayQtQLSpyc
-	+YQFxBYBqlk87yQzyFBmgSZGidsXVoMVCQtYS3x+/JIZxBYSyJL41/kTLM4pYCxx+cd+sAXM
-	AjoS7/oeMEPY8hLb385hnsAoMAvJjllIymYhKVvAyLyKUS4xpzRXNzcxM6c4NVm3ODkxLy+1
-	SNdELzezRC81pXQTIyTM+Xcwdq2XOcQowMGoxMNbIL43UIg1say4MvcQoyQHk5Io7wQfoBBf
-	Un5KZUZicUZ8UWlOavEhRgkOZiUR3qWyQDnelMTKqtSifJiUNAeLkjiv+hJ1PyGB9MSS1OzU
-	1ILUIpisDAeHkgQvVyBQo2BRanpqRVpmTglCmomDE2Q4l5RIcWpeSmpRYmlJRjwoWuOLgfEK
-	kuIB2rs7AGRvcUFiLlAUovUUozHH5LNb3jNyHPgBJIVY8vLzUqXEea+ClAqAlGaU5sEtgiW4
-	V4ziQH8L834DqeIBJke4ea+AVjEBrYo7tgtkVUkiQkqqgTFwTtGiwrDPiet32b5pP7dVdRWv
-	TRv3iagcIcdJh83Dcn+qdnmvyXjiV3XnTdgEg4ZZpeu2Bt9/1J12n+n/pNhT8yMe 
+	id S1754845Ab3FPF5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Jun 2013 01:57:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65106 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754111Ab3FPF5V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jun 2013 01:57:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 005D61A836;
+	Sun, 16 Jun 2013 05:57:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Vgo1AjCa7XXp5aBkOtZCh89tbxk=; b=RzpnEQ
+	lfRxDh6bNG0anKx2jr7MuXMEZfdAUGy8nmDSkV+k7nVUNJM4q9a7nVVu1S0mlupy
+	KU4V2O/bYFaQKrmxBoIA/vtgP2EDNaqt0YiDmj3aDQPt8e7tQB02nZmp3G/NrHv0
+	kuUup1B0ntXIJ+CgvVDW8YOG1N+5YFUhEoiIQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hhd7mkOc+acfPRCj7VihBvBkqjibKaIp
+	a5PIN0HiBEaoh/G+dcEtjXdZXbWTGZPQHRStAvhQzyv2s48aylbjRE362R4/78jq
+	xu/XLXuR8I2dpzbCU+YmqBXzy1Z0xIRR4xo8ZfzlHxg0HKF5Bb9bk2462rcPQ3eS
+	puFnnpI4nw8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E9D7D1A835;
+	Sun, 16 Jun 2013 05:57:18 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 385281A834;
+	Sun, 16 Jun 2013 05:57:18 +0000 (UTC)
+In-Reply-To: <CALkWK0=R8h0_FUYMUFQ_qGC1Lf_Xvu84qigznYUK5MtzP8usPQ@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Sat, 15 Jun 2013 17:38:39 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9A312C72-D649-11E2-AEEF-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227989>
 
-Thanks for all of the information.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-On 06/15/2013 10:13 PM, Ramsay Jones wrote:
-> Michael Haggerty wrote:
->> *This patch series must be built on top of mh/reflife.*
+> Junio C Hamano wrote:
+>> Two possibilities:
 >>
-> 
-> [...]
-> 
->> The other problem was that the for_each_ref() functions will die if
->> the ref cache that they are iterating over is freed out from under
->> them.  This problem is solved by using reference counts to avoid
->> freeing the old packed ref cache (even if it is no longer valid) until
->> all users are done with it.
-> 
-> Yes, I found exactly this happened to me on cygwin, earlier this week,
-> with the previous version of this code. After seeing this mail, I had
-> decided not to describe the failure on the old version, but wait and
-> test this version instead.
-> 
-> This version is a great improvement, but it still has some failures on
-> cygwin. So, it may be worth (briefly) describing the old failure anyway!
-> Note that several tests failed, but I will only mention t3211-peel-ref.sh
-> tests #7-8.
-> 
->   $ pwd
->   /home/ramsay/git/t/trash directory.t3211-peel-ref
->   $
-> 
->   $ ../../bin-wrappers/git show-ref -d
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/heads/master
->   eb0e854c2cd2511c7571b1a5e3c8b8146193fb30 refs/outside/foo
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/outside/foo^{}
->         5 [main] git 3540 _cygtls::handle_exceptions: Error while dumping state (p
->   robably corrupted stack)
->   Segmentation fault (core dumped)
->   $
-> 
-> The stack-trace for the faulting code looks something like:
-> 
->   cmd_show_ref()
->     for_each_ref(show_ref, NULL)
->       do_for_each_ref(&ref_cache, "", show_ref, 0, 0, NULL)
->         do_for_each_entry(&ref_cache, "", do_one_ref, &data)
->           do_for_each_entry_in_dirs(packed_dir, loose_dir, do_one_ref, &data)
->             *dfeeid() recursive calls*
->               do_one_ref(entry, &data)
->                 show_ref("refs/outside/foo", sha1, NULL) [2nd match]
->                   peel_ref("refs/outside/foo", sha1)
->                     peel_entry(entry, 0)
->                       peel_object(name, sha1)
->                         deref_tag_noverify(o)
->                           parse_object(sha1 <eb0e854c2...>)
->                             lookup_replace_object(sha1)
->                               do_lookup_replace_object(sha1)
->                                 prepare_replace_object()
-> 
->   [un-indent here!]
->       for_each_replace_ref(register_replace_ref, NULL)
->         do_for_each_ref(&ref_cache, "refs/replace", fn, 13, 0, NULL)
->           do_for_each_entry(&ref_cache, "refs/replace", fn, &data)
->             get_packed_refs(&ref_cache)
->               clear_packed_ref_cache(&ref_cache) *free_ref_entries etc*
->   ** return to show_ref() [2nd match] above **
->   ** return to recursive dfeeid() call in original iteration
->   ** dir1->entries has been free()-ed and reused => segmentation fault
->   [dir1->entries == 0x64633263 => dc2c => part of sha1 for refs/outside/foo]
-> 
-> So, the nested "replace-reference-iteration" causes the ref_cache to be
-> freed out from under the initial show-ref iteration, so this works:
-> 
->   $ GIT_NO_REPLACE_OBJECTS=1 ../../bin-wrappers/git show-ref -d
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/heads/master
->   eb0e854c2cd2511c7571b1a5e3c8b8146193fb30 refs/outside/foo
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/outside/foo^{}
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/tags/base
->   eb0e854c2cd2511c7571b1a5e3c8b8146193fb30 refs/tags/foo
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/tags/foo^{}
->   $
-> 
-> You may be wondering why clear_packed_ref_cache() is called? Well, that
-> is because stat_validity_check() *incorrectly* indicates that the
-> packed-refs file has changed. Why does it do that? Well, this is one
-> more example of the problems caused by the cygwin schizophrenic stat()
-> functions. :( [ARGHHHHHHHHH]
-> 
-> At this point, I tried running 'git show-ref' with core.checkstat set
-> on the command line; but that didn't work! I had to fix show-ref and
-> re-build git, and then, this works:
-> 
->   $ ../../bin-wrappers/git -c core.checkstat=minimal -c core.trustctime=f
->   alse show-ref -d
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/heads/master
->   eb0e854c2cd2511c7571b1a5e3c8b8146193fb30 refs/outside/foo
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/outside/foo^{}
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/tags/base
->   eb0e854c2cd2511c7571b1a5e3c8b8146193fb30 refs/tags/foo
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/tags/foo^{}
->   $
+>>  (1) Assume that the other thread will produce a more reasonable
+>>      semantics when finished; perhaps the first line will go away
+>>      entirely, or maybe it would say something like "# Rebasing;
+>>      head at $commit".
+>>
+>>      Your topic does not _care_ what it would say, so you tweak the
+>>      "status" test that is done during "rebase" so that they
+>>      ignore the first lines; or
+>
+> You said you didn't want to regress to show senseless information,...
 
-So if I understand correctly, all of the above is *without* the
-refcounting changes introduced in mh/ref-races?  Is so, then it is not
-surprising, as this is exactly the sort of problem that the reference
-counting is meant to solve.
+Go back and read it again.
 
-> Now, turning to the new code, t3211-peel-ref.sh test #7 now works, but
-> test #8 still fails...
-> 
->   $ ./t3211-peel-ref.sh -i -v
-> 
->   ...
-> 
->   ok 7 - refs are peeled outside of refs/tags (old packed)
-> 
->   expecting success:
->           git pack-refs --all &&
->           cp .git/packed-refs fully-peeled &&
->           git branch yadda &&
->           git pack-refs --all &&
->           git branch -d yadda &&
->           test_cmp fully-peeled .git/packed-refs
-> 
->   fatal: internal error: packed-ref cache cleared while locked
->   not ok 8 - peeled refs survive deletion of packed ref
->   #
->   #               git pack-refs --all &&
->   #               cp .git/packed-refs fully-peeled &&
->   #               git branch yadda &&
->   #               git pack-refs --all &&
->   #               git branch -d yadda &&
->   #               test_cmp fully-peeled .git/packed-refs
->   #
->   $ cd trash\ directory.t3211-peel-ref/
->   $ ../../bin-wrappers/git pack-refs --all
->   fatal: internal error: packed-ref cache cleared while locked
+    If you want to avoid regression, the codepath in wt-status.c
+    should compensate for the change to "rebase" so that it checks
+    $dotest/onto and show what is recorded in there.
 
-These "internal error: packed-ref cache cleared while locked" failures
-result from an internal consistency check that clear_packed_ref_cache()
-is not called while the write lock is held on the packed-refs file.  A
-call to c_p_r_c() could result from
+> I agreed with that.  What is wrong with the patch I showed in the
+> previous email?
 
-* a programming error
+Which previous?  My message you are responding to was a response to
+your non-patch message, and tangling the In-reply-to backwards will
+reach your original patch.
 
-* a determination based on the packed-refs file stat that the file needs
-to be re-read
+Puzzled....
 
-Judging from what you said about cygwin, I assume that the latter is
-happening.  It should be impossible, because the current process is
-holding packed-refs.lock, and therefore other git processes should
-refuse to change the packed-refs file.
+> Smudging is a bad hack, and must only be used as a
+> last resort: when an another topics updates status to say something
+> sensible, it will have to unsmudge the tests.
 
-But if the stat information is not reliable, then the current process
-would *think* that the packed-refs file has been changed even though it
-hasn't, then it would call c_p_r_c() even though it holds the lock on
-packed-refs, and the internal consistency check would fail.
+Yes. I just got an impression, from your incessant arguing, that you
+are resisting the "ignore the top" as "extra work that is not
+interesting to _me_", while I was trying to see what is the best way
+to go forward for the _project_.
 
-So apparently in these cases cygwin is reporting that the packed-refs
-stat information has changed (in the sense defined by the new
-stat_validity_check() function, which does essentially the same checks
-as the old ce_match_stat_basic() function).
+Honestly, I didn't want to waste my time and was trying to come up
+with a compromise, which would be a small regression to the tests
+that we will need to fix with the other topic.  Because you already
+said that you are not interested in that topic, I was anticipating
+that the work to polish the topic would be a lot easier than
+anything I would have to do with you in this topic, because others
+are a lot easier to collaborate with than you are, and that is where
+that suggestion comes from.
 
->   $ ls
->   actual  base.t  expect
->   $ ls .git
->   COMMIT_EDITMSG  branches/  description      index  logs/     packed-refs
->   HEAD            config     hooks-disabled/  info/  objects/  refs/
->   $ ls -l .git/packed-refs
->   -rw-r--r-- 1 ramsay None 296 Jun 14 20:34 .git/packed-refs
->   $ cat .git/packed-refs
->   # pack-refs with: peeled
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/heads/master
->   eb0e854c2cd2511c7571b1a5e3c8b8146193fb30 refs/outside/foo
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/tags/base
->   eb0e854c2cd2511c7571b1a5e3c8b8146193fb30 refs/tags/foo
->   ^d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e
->   $
-> 
-> Now, I have a test-stat program which prints the difference between
-> the two stat implementations used in cygwin git, thus:
-> 
->   $ ../../test-stat .git/packed-refs
->   stat for '.git/packed-refs':
->   *dev:   -1395862925, 0
->   *ino:   166044, 0
->   *mode:  100644 -rw-, 100600 -rw-
->    nlink: 1, 1
->   *uid:   1005, 0
->   *gid:   513, 0
->   *rdev:  -1395862925, 0
->    size:  296, 296
->    atime: 1371238550, 1371238550 Fri Jun 14 20:35:50 2013
->    mtime: 1371238469, 1371238469 Fri Jun 14 20:34:29 2013
->    ctime: 1371238469, 1371238469 Fri Jun 14 20:34:29 2013
+> diff --git a/wt-status.c b/wt-status.c
+> index bf84a86..99c55e3 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1182,7 +1182,7 @@ void wt_status_print(struct wt_status *s)
+>                                 if (!get_sha1("HEAD", sha1) &&
+>                                     !hashcmp(sha1, state.detached_sha1))
+>                                         on_what = _("HEAD detached at ");
+> -                               else
+> +                               else if (!state.rebase_in_progress)
+>                                         on_what = _("HEAD detached from ");
 
-Yikes!  ECYGWINFAIL.  I have no doubt they have reason why they cannot
-implement this correctly, but this is rather limiting.  (I has assumed
-that the #ifdef magic that was already in ce_match_stat_basic() would
-have papered over the problems in stat, but I guess that is not the case.)
+Is this supposed to be on top of your original patch?
 
-You say that there are two stat references in cygwin.  Is there a way to
-ensure that the same one is used in both cases?  Or is it so hopelessly
-broken that there is no point?
+The primary reason I suggested to special case "rebase-in-progress"
+in the "how about this" patch was because that way, you can have the
+"have builtin/commit.c honor reflog-action" much earlier in the
+series, because what this part of the code would say will not be
+affected by what is recorded in the reflog.  If the above, together
+with the original patch, makes the code match the expectation of the
+"rebase stops in the middle and then status runs" tests, that's also
+fine.  The other topic needs to redo it in either case anyway.
 
-Or let me step back and pose a slightly more abstract question:
+> Unless we change the first line drastically to say: "rebase in
+> progress: rebasing onto $ONTO" (or something), I don't think this
+> makes sense.  And if we were to do that, why not do it properly like
+> "rebase ($N/$M): onto $ONTO, upstream $UPSTREAM, branch $BRANCH"?
+> Other people on a different thread are already handling that,...
 
-How, under cygwin, can we implement a quick check of whether a file
-might have changed?  The check should not have any false negatives
-(claiming that a file is unchanged when actually it was rewritten via
-the usual lock_file mechanism) nor should it have any "strong" false
-positives (claiming that a file has changed even though it has never
-been touched), though a "weak" false positive would be OK (claiming that
-a file has changed even though it was replaced by a version with
-identical contents).
+That is the thread I was referring to.
 
-If such a check is possible, then we should build it into the
-implementation of match_stat_data().  If not, we have to think of
-another way to implement the checks of packed-refs cache up-to-dateness.
 
-(One horrible hack would be: when in doubt, read the packed-refs file
-into a temporary ref_dir, then compare *the contents* to the version in
-the cache.  If they are the same, then discard the newly-read version,
-update the stat_validity, and continue to use the old version.  If they
-are different, *then* verify that the lock file was not held, call
-clear_packed_ref_cache(), and start using the new version.)
+>
+> So, you have three simple choices now:
+>
+> 1. Accept the simple patch I proposed above.
+> 2. Propose an alternative patch quickly.  *Patch*.  No more English.
+> 3. Reject all patches, and leave me no choice but to smudge.
+>
+> Which one is it going to be?
 
->   $ ../../bin-wrappers/git -c core.checkstat=minimal pack-refs --all
->   fatal: internal error: packed-ref cache cleared while locked
->   $
-> 
-> Hmmm, that should have worked! Wait, fix 'git pack-refs' to support
-> setting config variables on the command line, rebuild and:
-> 
->   $ ../../bin-wrappers/git -c core.checkstat=minimal pack-refs --all
->   $ cat .git/packed-refs
->   # pack-refs with: peeled fully-peeled
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/heads/master
->   eb0e854c2cd2511c7571b1a5e3c8b8146193fb30 refs/outside/foo
->   ^d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e
->   d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/tags/base
->   eb0e854c2cd2511c7571b1a5e3c8b8146193fb30 refs/tags/foo
->   ^d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e
->   $
-> 
-> I haven't checked the remaining test failures to see if they are
-> caused by this code (I don't think so, but ...), but this failure
-> is clearly a cygwin specific issue.
+None of the above.  After going back and forth this long, I won't
+want to pick an incremental from the middle of discussion, so (1) is
+out.  This is not my itch and I am only helping you in a way that
+the result will not hurt the project, so (2) is not it.  But
+assuming that "checkout that is done as an implementation detail in
+rebase is _not_ checkout from end user's point of view" is where we
+want to go, discarding this series is not something we want to see,
+either.
 
-Thanks again for the testing and analysis,
-Michael
+A rerolled series that does:
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+ - Tweak wt-status.c to take information not from reflog, when
+   detached during rebase (this may need to tweak existing tests,
+   as different "rebase" modes may use 'checkout' liberally in
+   different ways);
+
+ - Teach builtin/commit.c to pay attention to reflog-action; thanks
+   to the previous step, this will not have to change the tests;
+
+ - Update the reflog message rebase uses, but again this will not
+   affect wt-status.c at all.
+
+would be one way to go.
