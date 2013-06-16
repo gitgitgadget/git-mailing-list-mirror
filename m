@@ -1,85 +1,65 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH RFC] git-remote-mediawiki: push-by-rev
-Date: Sun, 16 Jun 2013 22:49:16 +0200
-Message-ID: <vpq8v29eq7n.fsf@anie.imag.fr>
-References: <1371414499-13027-1-git-send-email-celestin.matte@ensimag.fr>
+From: Jan Engelhardt <jengelh@inai.de>
+Subject: Re: English/German terminology, git.git's de.po, and pro-git
+Date: Sun, 16 Jun 2013 23:22:29 +0200 (CEST)
+Message-ID: <alpine.LSU.2.10.9.1306162320560.30428@nerf07.vanv.qr>
+References: <87k3n36nvo.fsf@linux-k42r.v.cablecom.net> <CAN0XMOJ7hRwTAR+i8_C2z2NmmcycLQkiya0ayfWS0vAw3-zqkg@mail.gmail.com> <CAN0XMOKCppZVwwvowzrSDuAKRo-DMeD7GpryjA2deE5mYuSb4Q@mail.gmail.com> <7402110.vsgz8zEiin@cs-pc> <CAN0XMOK4oniunZz5KpC1x=JrY4yH4HnecxMSCyPF+kEyYRRjTw@mail.gmail.com>
+ <20130523181615.GB3270@client.brlink.eu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: TEXT/PLAIN; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, benoit.person@ensimag.fr
-To: =?iso-8859-1?Q?C=E9lestin?= Matte <celestin.matte@ensimag.fr>
-X-From: git-owner@vger.kernel.org Sun Jun 16 22:49:24 2013
+Cc: Ralf Thielow <ralf.thielow@gmail.com>,
+	Christian Stimming <stimming@tuhh.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	"Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	=?UTF-8?Q?Ralph_Hau=C3=9Fmann?= <ralph@scanmyfood.de>,
+	Sven Fuchs <svenfuchs@artweb-design.de>,
+	git <git@vger.kernel.org>, =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>
+To: "Bernhard R. Link" <brl+git@mail.brlink.eu>
+X-From: git-owner@vger.kernel.org Sun Jun 16 23:22:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoJt6-0002PJ-3s
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 22:49:24 +0200
+	id 1UoKPE-0002li-DN
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 23:22:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755409Ab3FPUtT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Jun 2013 16:49:19 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:37356 "EHLO shiva.imag.fr"
+	id S1755417Ab3FPVWc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Jun 2013 17:22:32 -0400
+Received: from ares07.inai.de ([5.9.24.206]:60344 "EHLO ares07.inai.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751439Ab3FPUtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jun 2013 16:49:19 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5GKnEf1017488
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 16 Jun 2013 22:49:14 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UoJsy-0003zq-D0; Sun, 16 Jun 2013 22:49:16 +0200
-In-Reply-To: <1371414499-13027-1-git-send-email-celestin.matte@ensimag.fr>
-	(=?iso-8859-1?Q?=22C=E9lestin?= Matte"'s message of "Sun, 16 Jun 2013
- 22:28:18 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 16 Jun 2013 22:49:14 +0200 (CEST)
+	id S1754207Ab3FPVWb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jun 2013 17:22:31 -0400
+Received: by ares07.inai.de (Postfix, from userid 25121)
+	id 2E5FE96A0D11; Sun, 16 Jun 2013 23:22:29 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by ares07.inai.de (Postfix) with ESMTP id C195496A0D10;
+	Sun, 16 Jun 2013 23:22:29 +0200 (CEST)
+In-Reply-To: <20130523181615.GB3270@client.brlink.eu>
+User-Agent: Alpine 2.10.9 (LSU 9 2013-05-29)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228029>
 
-C=E9lestin Matte <celestin.matte@ensimag.fr> writes:
 
-> This uses subroutines used by the fetch-by-rev strategy. I'm not sure=
- it's
-> actually complete: can it be that simple?
+On Thursday 2013-05-23 20:16, Bernhard R. Link wrote:
+>>
+>> Not sure if German users would know what "hunk" means, in case we
+>> leave it untranslated. And I'm not sure if I would understand "Konte=
+xt".
+>> I tend to leave it untranslated.
+>
+>Anyone found a German translation of the Patch manpage? Translating th=
+e
+>English word-play here, I'd suggest "Block" or "Patch-Block".
 
-The function says:
+Hunk is like a chunk, and the dictionary offers some fun too:
 
-  # Get the last remote revision without taking in account which pages =
-are
-  # tracked or not. This function makes a single request to the wiki th=
-us
-  # avoid a loop onto all tracked pages. This is useful for the fetch-b=
-y-rev
-  # option.
-  sub get_last_global_remote_rev {
-  ...
+dickes St=C3=BCck; Brocken {m} :: chunk
+(Holz)klotz {m} :: chunk (of wood)
 
-So I don't think this would work when you track only a subset of pages.
-If an untracked page has been modified, then the global last revision
-has increased and you'll get a non-fast forward. If you try to pull,
-it'll tell you there's nothing to import.
-
-You'd have to iterate through revisions between the one given by
-get_last_global_remote_rev and the last one the local repo knows about,
-and remove ones touching untracked pages from the list.
-
-> However, I tested on a local wiki and it seemed to work perfectly.
-> Should I add associate tests?
-
-See what t/t9364-pull-by-rev.sh does. You can set pushStrategy too in
-the same file (this won't test all push/pull combinations, but push and
-pull should be independant enough, so testing both unset and both set
-should be enough).
-
-Not sure we have enough test for push with a subset of pages though.
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+and that is what many patches feel like indeed, especially
+when they generate rejects :)
