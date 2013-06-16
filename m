@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v2 5/6] status: do not depend on rebase reflog messages
-Date: Sun, 16 Jun 2013 14:15:15 +0530
-Message-ID: <1371372316-16059-6-git-send-email-artagnon@gmail.com>
+Subject: [PATCH v2 4/6] wt-status: remove unused field in grab_1st_switch_cbdata
+Date: Sun, 16 Jun 2013 14:15:14 +0530
+Message-ID: <1371372316-16059-5-git-send-email-artagnon@gmail.com>
 References: <1371372316-16059-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: Git List <git@vger.kernel.org>
@@ -11,263 +11,71 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uo8cg-00028h-Nu
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 10:47:43 +0200
+	id 1Uo8cg-00028h-7D
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 10:47:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755039Ab3FPIrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Jun 2013 04:47:31 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:61923 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754995Ab3FPIrQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jun 2013 04:47:16 -0400
-Received: by mail-pa0-f42.google.com with SMTP id rl6so1911060pac.29
-        for <git@vger.kernel.org>; Sun, 16 Jun 2013 01:47:16 -0700 (PDT)
+	id S1755034Ab3FPIra (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Jun 2013 04:47:30 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:52177 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754928Ab3FPIrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jun 2013 04:47:14 -0400
+Received: by mail-pb0-f52.google.com with SMTP id xa12so1829955pbc.11
+        for <git@vger.kernel.org>; Sun, 16 Jun 2013 01:47:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=SJLuZFEiHGd/auWPdNw9SmhaI4z6nRIOuikavlCz78I=;
-        b=yGrY0JT8fXCSWO8PFUVE17h6m6CVd6qrmHUduO2l4yxyqLMNET2SwlFTeOZHaPOaw7
-         jWp9HK2If9x9j4fMU1SXfJH46Fk19w9KGwMnSlqgteyyORdaAuJL+tXEMaASGHZHaVXY
-         8soPJ+4JVYkk/5CXoQe5d6dNGHD9bVIy5UiolBkGziiGFVCzlXIPLNTCKX0hnzbqG3Rc
-         1eGuQJRDaK9lN1O6nzUlMrsDi2pN98gKjIv8piDyG5bYuVu4h8wAZOJDyowbHDz/Vvv8
-         U0jO1xld183emziO3+AcSD4Q9joa1F6z1TihkUNqayedg17fauIaEnJAb6LOrKzBDLHr
-         dABA==
-X-Received: by 10.66.183.196 with SMTP id eo4mr8699506pac.156.1371372436528;
-        Sun, 16 Jun 2013 01:47:16 -0700 (PDT)
+        bh=o8XgEQUdbAqcLdvrNHA1XrrM3sc0hAn8lk0yRlxyZwM=;
+        b=oHNfOzkCe4BLG2Osp4BnkD+KOJzrsGRvPhwaBdDS6M9ym2UKn47RkF8LDZ95bP7Jfz
+         DPKSdqACa4WaDo+ICxjysvV+q0I/Cjh1P6FTCsOZ0uWZ8EeNXWDZfS7Sei7zYTsR3fhe
+         akwqQM7VtqTXf76Lo3otB28F9kGJex7u8yhTrJsOC9lYoI+0CslRviA/X8a1aYQY7t9s
+         M87MI/r5pn5tdtl55pp6ErAx6SiG79ZT8tFgkacGeDyJSR3ltbMybgMWFMe7PSjPIUqu
+         jk92SSga82nnGYOrJhtxZbsVz05RpttQRxdSGSsRBajz6ceaP78f98zZV2RbdQs+643j
+         v27g==
+X-Received: by 10.68.134.131 with SMTP id pk3mr8921839pbb.83.1371372433978;
+        Sun, 16 Jun 2013 01:47:13 -0700 (PDT)
 Received: from localhost.localdomain ([122.164.213.38])
-        by mx.google.com with ESMTPSA id vu5sm9917919pab.10.2013.06.16.01.47.14
+        by mx.google.com with ESMTPSA id vu5sm9917919pab.10.2013.06.16.01.47.11
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 16 Jun 2013 01:47:15 -0700 (PDT)
+        Sun, 16 Jun 2013 01:47:13 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1.443.g4fd77b9
 In-Reply-To: <1371372316-16059-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228000>
 
-b397ea4 (status: show more info than "currently not on any branch",
-2013-03-13) made the output of 'git status' richer in the case of a
-detached HEAD.  Before this patch, with a detached HEAD:
-
-  $ git status
-  # Not currently on any branch.
-
-After the patch:
-
-  $ git checkout v1.8.2
-  $ git status
-  # HEAD detached at v1.8.2.
-
-It works by digging the reflog for the most recent message of the form
-"checkout: moving from xxxx to yyyy".  It then asserts that HEAD and
-"yyyy" are the same, and displays this message.  When they aren't equal,
-it displays:
-
-  $ git status
-  # HEAD detached from fe11db.
-
-In case of a rebase [-i] operation in progress, this message depends on
-the implementation of rebase writing "checkout: " messages to the
-reflog.  To remove this dependency so that rebase can be updated to
-write better reflog messages, replace this "HEAD detached from" message
-with the constant:
-
-  # rebase in progress; onto $ONTO
-
-The issue is not isolated to rebase at all.  Several other scripts like
-bisect write "checkout: " messages to the reflog, and the tests in
-t/status-help depend on them.  Fixing them is left as an exercise to
-other contributors.
+The struct grab_1st_switch_cbdata has the field "found", which is set in
+grab_1st_switch() when a match is found.  This information is redundant
+and unused by any caller: the return value of the function serves to
+communicate this information anyway.  Remove the field.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- t/t7512-status-help.sh | 37 +++++++++++++++++--------------------
- wt-status.c            |  5 ++++-
- 2 files changed, 21 insertions(+), 21 deletions(-)
+ wt-status.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index bf08d4e..739624e 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -77,7 +77,7 @@ test_expect_success 'status when rebase in progress before resolving conflicts'
- 	ONTO=$(git rev-parse --short HEAD^^) &&
- 	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
- 	cat >expected <<-EOF &&
--	# HEAD detached at $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently rebasing branch '\''rebase_conflicts'\'' on '\''$ONTO'\''.
- 	#   (fix conflicts and then run "git rebase --continue")
- 	#   (use "git rebase --skip" to skip this patch)
-@@ -104,7 +104,7 @@ test_expect_success 'status when rebase in progress before rebase --continue' '
- 	echo three >main.txt &&
- 	git add main.txt &&
- 	cat >expected <<-EOF &&
--	# HEAD detached at $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently rebasing branch '\''rebase_conflicts'\'' on '\''$ONTO'\''.
- 	#   (all conflicts fixed: run "git rebase --continue")
- 	#
-@@ -136,7 +136,7 @@ test_expect_success 'status during rebase -i when conflicts unresolved' '
- 	ONTO=$(git rev-parse --short rebase_i_conflicts) &&
- 	test_must_fail git rebase -i rebase_i_conflicts &&
- 	cat >expected <<-EOF &&
--	# HEAD detached at $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently rebasing branch '\''rebase_i_conflicts_second'\'' on '\''$ONTO'\''.
- 	#   (fix conflicts and then run "git rebase --continue")
- 	#   (use "git rebase --skip" to skip this patch)
-@@ -162,7 +162,7 @@ test_expect_success 'status during rebase -i after resolving conflicts' '
- 	test_must_fail git rebase -i rebase_i_conflicts &&
- 	git add main.txt &&
- 	cat >expected <<-EOF &&
--	# HEAD detached at $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently rebasing branch '\''rebase_i_conflicts_second'\'' on '\''$ONTO'\''.
- 	#   (all conflicts fixed: run "git rebase --continue")
- 	#
-@@ -188,10 +188,9 @@ test_expect_success 'status when rebasing -i in edit mode' '
- 	export FAKE_LINES &&
- 	test_when_finished "git rebase --abort" &&
- 	ONTO=$(git rev-parse --short HEAD~2) &&
--	TGT=$(git rev-parse --short two_rebase_i) &&
- 	git rebase -i HEAD~2 &&
- 	cat >expected <<-EOF &&
--	# HEAD detached from $TGT
-+	# rebase in progress; onto $ONTO
- 	# You are currently editing a commit while rebasing branch '\''rebase_i_edit'\'' on '\''$ONTO'\''.
- 	#   (use "git commit --amend" to amend the current commit)
- 	#   (use "git rebase --continue" once you are satisfied with your changes)
-@@ -216,9 +215,8 @@ test_expect_success 'status when splitting a commit' '
- 	ONTO=$(git rev-parse --short HEAD~3) &&
- 	git rebase -i HEAD~3 &&
- 	git reset HEAD^ &&
--	TGT=$(git rev-parse --short HEAD) &&
- 	cat >expected <<-EOF &&
--	# HEAD detached at $TGT
-+	# rebase in progress; onto $ONTO
- 	# You are currently splitting a commit while rebasing branch '\''split_commit'\'' on '\''$ONTO'\''.
- 	#   (Once your working directory is clean, run "git rebase --continue")
- 	#
-@@ -246,11 +244,10 @@ test_expect_success 'status after editing the last commit with --amend during a
- 	export FAKE_LINES &&
- 	test_when_finished "git rebase --abort" &&
- 	ONTO=$(git rev-parse --short HEAD~3) &&
--	TGT=$(git rev-parse --short three_amend) &&
- 	git rebase -i HEAD~3 &&
- 	git commit --amend -m "foo" &&
- 	cat >expected <<-EOF &&
--	# HEAD detached from $TGT
-+	# rebase in progress; onto $ONTO
- 	# You are currently editing a commit while rebasing branch '\''amend_last'\'' on '\''$ONTO'\''.
- 	#   (use "git commit --amend" to amend the current commit)
- 	#   (use "git rebase --continue" once you are satisfied with your changes)
-@@ -280,7 +277,7 @@ test_expect_success 'status: (continue first edit) second edit' '
- 	git rebase -i HEAD~3 &&
- 	git rebase --continue &&
- 	cat >expected <<-EOF &&
--	# HEAD detached from $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
- 	#   (use "git commit --amend" to amend the current commit)
- 	#   (use "git rebase --continue" once you are satisfied with your changes)
-@@ -302,7 +299,7 @@ test_expect_success 'status: (continue first edit) second edit and split' '
- 	git rebase --continue &&
- 	git reset HEAD^ &&
- 	cat >expected <<-EOF &&
--	# HEAD detached from $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
- 	#   (Once your working directory is clean, run "git rebase --continue")
- 	#
-@@ -329,7 +326,7 @@ test_expect_success 'status: (continue first edit) second edit and amend' '
- 	git rebase --continue &&
- 	git commit --amend -m "foo" &&
- 	cat >expected <<-EOF &&
--	# HEAD detached from $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
- 	#   (use "git commit --amend" to amend the current commit)
- 	#   (use "git rebase --continue" once you are satisfied with your changes)
-@@ -351,7 +348,7 @@ test_expect_success 'status: (amend first edit) second edit' '
- 	git commit --amend -m "a" &&
- 	git rebase --continue &&
- 	cat >expected <<-EOF &&
--	# HEAD detached from $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
- 	#   (use "git commit --amend" to amend the current commit)
- 	#   (use "git rebase --continue" once you are satisfied with your changes)
-@@ -374,7 +371,7 @@ test_expect_success 'status: (amend first edit) second edit and split' '
- 	git rebase --continue &&
- 	git reset HEAD^ &&
- 	cat >expected <<-EOF &&
--	# HEAD detached from $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
- 	#   (Once your working directory is clean, run "git rebase --continue")
- 	#
-@@ -402,7 +399,7 @@ test_expect_success 'status: (amend first edit) second edit and amend' '
- 	git rebase --continue &&
- 	git commit --amend -m "d" &&
- 	cat >expected <<-EOF &&
--	# HEAD detached from $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
- 	#   (use "git commit --amend" to amend the current commit)
- 	#   (use "git rebase --continue" once you are satisfied with your changes)
-@@ -426,7 +423,7 @@ test_expect_success 'status: (split first edit) second edit' '
- 	git commit -m "e" &&
- 	git rebase --continue &&
- 	cat >expected <<-EOF &&
--	# HEAD detached from $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
- 	#   (use "git commit --amend" to amend the current commit)
- 	#   (use "git rebase --continue" once you are satisfied with your changes)
-@@ -451,7 +448,7 @@ test_expect_success 'status: (split first edit) second edit and split' '
- 	git rebase --continue &&
- 	git reset HEAD^ &&
- 	cat >expected <<-EOF &&
--	# HEAD detached from $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
- 	#   (Once your working directory is clean, run "git rebase --continue")
- 	#
-@@ -481,7 +478,7 @@ test_expect_success 'status: (split first edit) second edit and amend' '
- 	git rebase --continue &&
- 	git commit --amend -m "h" &&
- 	cat >expected <<-EOF &&
--	# HEAD detached from $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
- 	#   (use "git commit --amend" to amend the current commit)
- 	#   (use "git rebase --continue" once you are satisfied with your changes)
-@@ -601,7 +598,7 @@ test_expect_success 'status when rebase conflicts with statushints disabled' '
- 	ONTO=$(git rev-parse --short HEAD^^) &&
- 	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
- 	cat >expected <<-EOF &&
--	# HEAD detached at $ONTO
-+	# rebase in progress; onto $ONTO
- 	# You are currently rebasing branch '\''statushints_disabled'\'' on '\''$ONTO'\''.
- 	#
- 	# Unmerged paths:
 diff --git a/wt-status.c b/wt-status.c
-index 2511270..85a00f1 100644
+index bf84a86..2511270 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -1174,7 +1174,10 @@ void wt_status_print(struct wt_status *s)
- 			branch_name += 11;
- 		else if (!strcmp(branch_name, "HEAD")) {
- 			branch_status_color = color(WT_STATUS_NOBRANCH, s);
--			if (state.detached_from) {
-+			if (state.rebase_in_progress || state.rebase_interactive_in_progress) {
-+				on_what = _("rebase in progress; onto ");
-+				branch_name = state.onto;
-+			} else if (state.detached_from) {
- 				unsigned char sha1[20];
- 				branch_name = state.detached_from;
- 				if (!get_sha1("HEAD", sha1) &&
+@@ -1035,7 +1035,6 @@ got_nothing:
+ }
+ 
+ struct grab_1st_switch_cbdata {
+-	int found;
+ 	struct strbuf buf;
+ 	unsigned char nsha1[20];
+ };
+@@ -1059,7 +1058,6 @@ static int grab_1st_switch(unsigned char *osha1, unsigned char *nsha1,
+ 	for (end = target; *end && *end != '\n'; end++)
+ 		;
+ 	strbuf_add(&cb->buf, target, end - target);
+-	cb->found = 1;
+ 	return 1;
+ }
+ 
 -- 
 1.8.3.1.443.g4fd77b9
