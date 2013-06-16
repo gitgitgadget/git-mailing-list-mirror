@@ -1,8 +1,11 @@
 From: benoit.person@ensimag.fr
-Subject: [PATCH V3 2/4] git-mw: Move some functions from git-remote-mediawiki.perl to GitMediawiki.pm
-Date: Sun, 16 Jun 2013 04:31:31 +0200
-Message-ID: <1371349893-7789-3-git-send-email-benoit.person@ensimag.fr>
+Subject: [PATCH V3 4/4] git-mw: Add preview subcommand into git mw.
+Date: Sun, 16 Jun 2013 04:31:33 +0200
+Message-ID: <1371349893-7789-5-git-send-email-benoit.person@ensimag.fr>
 References: <1371349893-7789-1-git-send-email-benoit.person@ensimag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Celestin Matte <celestin.matte@ensimag.fr>,
 	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
 	Benoit Person <benoit.person@ensimag.fr>
@@ -13,353 +16,446 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uo2lk-0007eC-Ie
+	id 1Uo2ll-0007eC-8n
 	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 04:32:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754888Ab3FPCc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Jun 2013 22:32:26 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:48200 "EHLO shiva.imag.fr"
+	id S1754891Ab3FPCc1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Jun 2013 22:32:27 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:54766 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754803Ab3FPCcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Jun 2013 22:32:17 -0400
+	id S1754850Ab3FPCcU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Jun 2013 22:32:20 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5G2WFaV015978
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5G2WIxq009903
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 16 Jun 2013 04:32:15 +0200
+	Sun, 16 Jun 2013 04:32:18 +0200
 Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5G2WFk1013552;
-	Sun, 16 Jun 2013 04:32:15 +0200
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5G2WI9k013562;
+	Sun, 16 Jun 2013 04:32:18 +0200
 Received: from localhost.localdomain (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5G2W1eK020162;
-	Sun, 16 Jun 2013 04:32:15 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5G2W1eM020162;
+	Sun, 16 Jun 2013 04:32:18 +0200
 X-Mailer: git-send-email 1.8.3.GIT
 In-Reply-To: <1371349893-7789-1-git-send-email-benoit.person@ensimag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 16 Jun 2013 04:32:16 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 16 Jun 2013 04:32:18 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227986>
 
-From: Benoit Person <benoit.person@ensimag.fr>
+=46rom: Benoit Person <benoit.person@ensimag.fr>
 
-Move and rename subs 'mediawiki_clean_filename' into 'clean_filename',
-'mediawiki_smudge_filename' into 'smudge_filename' and
-'mw_connect_maybe' into 'connect_maybe' since we have a cleaner namespace in
-a perl module.
-Move constants 'EMPTY', 'SLASH_REPLACEMENT' and 'HTTP_CODE_OK'.
-Remove side effects in those functions to provide a cleaner API.
-Update git-remote-mediawiki for those changes.
+Add the subcommand to 'git-mw.perl'.
+Add a new constant in GitMediawiki.pm 'HTTP_CODE_PAGE_NOT_FOUND'.
 
 Signed-off-by: Benoit Person <benoit.person@ensimag.fr>
 Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 
 ---
 
-changes from the V2:
-  - Move more constants to GitMediawiki.pm.
-  - Remove the encapsulation of Git::config calls into a git_cmd_try one.
+changes from V2:
+  - Remove the --blob option, distinction between files and blobs is no=
+w=20
+    automatic.
+  - Add a --verbose option to output more information on what's going o=
+n.
+  - Rewrote the doc and the commit message.
+  - Rewrote of the template retrieving code (see 'get_template' sub).
+  - Use a configuration variable to define the content ID search in the
+    template. Default value set as 'bodyContent' since it seems more st=
+andard
+    than 'mw-content-text'.
+  - Final content is now saved as utf-8 to solve encoding issues.
+  - Perlcritic changes:
+    - All 'print's specify their output streams.
+    --> Same useless warnings left in git-remote-mediawiki.perl after c=
+=C3=A9lestin's=20
+        work and git-mw.perl after this patch :) .
 
- contrib/mw-to-git/GitMediawiki.pm           | 77 +++++++++++++++++++++++++-
- contrib/mw-to-git/git-remote-mediawiki.perl | 85 +++++------------------------
- 2 files changed, 89 insertions(+), 73 deletions(-)
+ contrib/mw-to-git/GitMediawiki.pm |   3 +-
+ contrib/mw-to-git/git-mw.perl     | 303 ++++++++++++++++++++++++++++++=
++++++++-
+ 2 files changed, 304 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/mw-to-git/GitMediawiki.pm b/contrib/mw-to-git/GitMediawiki.pm
-index 8a0ffc7..beae6d0 100644
+diff --git a/contrib/mw-to-git/GitMediawiki.pm b/contrib/mw-to-git/GitM=
+ediawiki.pm
+index beae6d0..d1f2c41 100644
 --- a/contrib/mw-to-git/GitMediawiki.pm
 +++ b/contrib/mw-to-git/GitMediawiki.pm
-@@ -18,7 +18,82 @@ require Exporter;
- @EXPORT = ();
- 
+@@ -19,7 +19,7 @@ require Exporter;
+=20
  # Methods which can be called as standalone functions as well:
--@EXPORT_OK = ();
-+@EXPORT_OK = qw(clean_filename smudge_filename connect_maybe
-+				EMPTY HTTP_CODE_OK);
+ @EXPORT_OK =3D qw(clean_filename smudge_filename connect_maybe
+-				EMPTY HTTP_CODE_OK);
++				EMPTY HTTP_CODE_OK HTTP_CODE_PAGE_NOT_FOUND);
+ }
+=20
+ # Mediawiki filenames can contain forward slashes. This variable decid=
+es by which pattern they should be replaced
+@@ -30,6 +30,7 @@ use constant EMPTY =3D> q{};
+=20
+ # HTTP codes
+ use constant HTTP_CODE_OK =3D> 200;
++use constant HTTP_CODE_PAGE_NOT_FOUND =3D> 404;
+=20
+ sub clean_filename {
+ 	my $filename =3D shift;
+diff --git a/contrib/mw-to-git/git-mw.perl b/contrib/mw-to-git/git-mw.p=
+erl
+index 320c00e..0b83108 100644
+--- a/contrib/mw-to-git/git-mw.perl
++++ b/contrib/mw-to-git/git-mw.perl
+@@ -12,10 +12,41 @@ use strict;
+ use warnings;
+=20
+ use Getopt::Long;
++use URI::URL qw(url);
++use LWP::UserAgent;
++use HTML::TreeBuilder;
++
++use Git;
++use MediaWiki::API;
++use GitMediawiki qw(smudge_filename connect_maybe
++					EMPTY HTTP_CODE_PAGE_NOT_FOUND);
++
++# By default, use UTF-8 to communicate with Git and the user
++binmode STDERR, ':encoding(UTF-8)';
++binmode STDOUT, ':encoding(UTF-8)';
++
++#preview parameters
++my $file_name =3D EMPTY;
++my $remote_name =3D EMPTY;
++my $preview_file_name =3D EMPTY;
++my $autoload =3D 0;
++my $verbose =3D 0;
++sub file {
++	$file_name =3D shift;
++	return $file_name;
++}
+=20
+ my %commands =3D (
+ 	'help' =3D>
+-		[\&help, {}, \&help]
++		[\&help, {}, \&help],
++	'preview' =3D>
++		[\&preview, {
++			'<>' =3D> \&file,
++			'output|o=3Ds' =3D> \$preview_file_name,
++			'remote|r=3Ds' =3D> \$remote_name,
++			'autoload|a' =3D> \$autoload,
++			'verbose|v'  =3D> \$verbose
++		}, \&preview_help]
+ );
+=20
+ # Search for sub-command
+@@ -33,6 +64,275 @@ GetOptions( %{$cmd->[1]},
+ # Launch command
+ &{$cmd->[0]};
+=20
++############################# Preview Functions ######################=
+##########
++
++# @TODO : add documentation for verbose option
++sub preview_help {
++	print {*STDOUT} <<'END';
++USAGE: git mw preview [--remote|-r <remote name>] [--autoload|-a]
++                      [--output|-o <output filename>] [--verbose|-v]
++                      <blob> | <filename>
++
++DESCRIPTION:
++Preview is an utiliy to preview local content of a mediawiki repo as i=
+f it was
++pushed on the remote.
++
++For that, preview searches for the remote name of the current branch's=
+ upstream
++if --remote is not set. If that remote is not found or if it is not a =
+mediawiki,
++it lists all mediawiki remotes configured and asks you to replay your =
+command
++with the --remote option set properly.
++
++Then, it searches for a file named 'filename'. If it's not found in th=
+e current
++dir, it will assume it's a blob.
++
++The content retrieved in the file (or in the blob) will then be parsed=
+ by the
++distant mediawiki and combined with a template retrieved from the medi=
+awiki.
++
++Finally, preview will save the HTML result in a file. and autoload it =
+in your
++default web browser if the option --autoload is present.
++
++OPTIONS:
++	-r <remote name>, --remote <remote name>
++		If the remote is a mediawiki, the template and the parse engine used=
+ for
++		the preview will be those of that remote.
++		If not, a list of valid remotes will be shown.
++
++	-a, --autoload
++		Try to load the HTML output in a new tab (or new window) of your def=
+ault
++		web browser.
++
++	-o <output filename>, --output <output filename>
++		Change the HTML output filename. Default filename is based on the in=
+put
++		filename with its extension replaced by '.html'.
++
++	-v, --verbose
++		Show more information on what's going on under the hood.
++END
++	exit;
 +}
 +
-+# Mediawiki filenames can contain forward slashes. This variable decides by which pattern they should be replaced
-+use constant SLASH_REPLACEMENT => '%2F';
++sub preview {
++	my $wiki;
++	my ($remote_url, $wiki_page_name);
++	my ($content, $content_tree, $template, $html_tree, $mw_content_text)=
+;
++	my $file_content;
++	my $template_content_id =3D 'bodyContent';
 +
-+# Used to test for empty strings
-+use constant EMPTY => q{};
-+
-+# HTTP codes
-+use constant HTTP_CODE_OK => 200;
-+
-+sub clean_filename {
-+	my $filename = shift;
-+	$filename =~ s{@{[SLASH_REPLACEMENT]}}{/}g;
-+	# [, ], |, {, and } are forbidden by MediaWiki, even URL-encoded.
-+	# Do a variant of URL-encoding, i.e. looks like URL-encoding,
-+	# but with _ added to prevent MediaWiki from thinking this is
-+	# an actual special character.
-+	$filename =~ s/[\[\]\{\}\|]/sprintf("_%%_%x", ord($&))/ge;
-+	# If we use the uri escape before
-+	# we should unescape here, before anything
-+
-+	return $filename;
-+}
-+
-+sub smudge_filename {
-+	my $filename = shift;
-+	$filename =~ s{/}{@{[SLASH_REPLACEMENT]}}g;
-+	$filename =~ s/ /_/g;
-+	# Decode forbidden characters encoded in clean_filename
-+	$filename =~ s/_%_([0-9a-fA-F][0-9a-fA-F])/sprintf('%c', hex($1))/ge;
-+	return $filename;
-+}
-+
-+sub connect_maybe {
-+	my $wiki = shift;
-+	if ($wiki) {
-+		return $wiki;
++	# file_name argumeent is mandatory
++	if (!defined $file_name) {
++		die "File not set, see `git mw help` \n";
 +	}
 +
-+	my $remote_name = shift;
-+	my $remote_url = shift;
-+	my ($wiki_login, $wiki_password, $wiki_domain);
++	v_print("### SELECTING REMOTE ###\n");
 +
-+	$wiki_login = Git::config("remote.${remote_name}.mwLogin");
-+	$wiki_password = Git::config("remote.${remote_name}.mwPassword");
-+	$wiki_domain = Git::config("remote.${remote_name}.mwDomain");
++	if ($remote_name eq EMPTY) {
++		# Search current branch upstream branch remote
++		my $current_branch =3D git_cmd_try {
++			Git::command_oneline('symbolic-ref', '--short', 'HEAD') }
++			"%s failed w/ code %d";
++		$remote_name =3D Git::config("branch.${current_branch}.remote");
 +
-+	$wiki = MediaWiki::API->new;
-+	$wiki->{config}->{api_url} = "${remote_url}/api.php";
-+	if ($wiki_login) {
-+		my %credential = (
-+			'url' => $remote_url,
-+			'username' => $wiki_login,
-+			'password' => $wiki_password
-+		);
-+		Git::credential(\%credential);
-+		my $request = {lgname => $credential{username},
-+			       lgpassword => $credential{password},
-+			       lgdomain => $wiki_domain};
-+		if ($wiki->login($request)) {
-+			Git::credential(\%credential, 'approve');
-+			print {*STDERR} qq(Logged in mediawiki user "$credential{username}".\n);
++		if ($remote_name) {
++			$remote_url =3D mediawiki_remote_url_maybe($remote_name);
++		}
++
++		# Search all possibles mediawiki remotes
++		if (! $remote_url) {
++			my @remotes =3D git_cmd_try {
++				Git::command('remote'); }
++				"%s failed w/ code %d";
++
++			my @valid_remotes =3D ();
++			foreach my $remote (@remotes) {
++				$remote_url =3D mediawiki_remote_url_maybe($remote);
++				if ($remote_url) {
++					push(@valid_remotes, $remote);
++				}
++			}
++
++			if ($#valid_remotes =3D=3D 0) {
++				print {*STDERR} "Can not find any mediawiki remote in this repo. \=
+n";
++				exit 1;
++			} else {
++				print {*STDERR} "There are multiple mediawiki remotes, which of:\n=
+";
++				foreach my $remote (@remotes) {
++					print {*STDERR} "\t${remote}\n";
++				}
++				print {*STDERR} "do you want ? Use the -r option to specify the re=
+mote\n";
++			}
++
++			exit 0;
++		}
++	} else {
++		# Check remote name
++		my @remotes =3D git_cmd_try {
++			Git::command('remote') }
++			"%s failed w/ code %d";
++		my $found_remote =3D 0;
++		foreach my $remote (@remotes) {
++			if ($remote eq $remote_name) {
++				$found_remote =3D 1;
++				last;
++			}
++		}
++		if (!$found_remote) {
++			die "${remote_name} is not a remote\n";
++		}
++
++		# Find remote url
++		$remote_url =3D mediawiki_remote_url_maybe($remote_name);
++		if (! $remote_url) {
++			die "the remote you selected is not a mediawiki remote\n";
++		}
++	}
++	v_print("selected remote:\n\tname: ${remote_name}\n\turl: ${remote_ur=
+l}\n");
++
++	# Create and connect to the wiki if necessary
++	$wiki =3D connect_maybe($wiki, $remote_name, $remote_url);
++
++	# Read file content
++	if (! -e $file_name) {
++		$file_content =3D git_cmd_try {
++			Git::command('cat-file', 'blob', $file_name); }
++			"%s failed w/ code %d";
++
++		if ($file_name =3D~ /(.+):(.+)/) {
++			$file_name =3D $2;
++		}
++	} else {
++		open my $read_fh, "<", $file_name
++			or die "could not open ${file_name}: $!\n";
++		$file_content =3D do { local $/ =3D undef; <$read_fh> };
++		close $read_fh
++			or die "unable to close: $!\n";
++	}
++
++	# Transform file_name into a mediawiki page name
++	$wiki_page_name =3D smudge_filename($file_name);
++	$wiki_page_name =3D~ s/\.[^.]+$//;
++
++	# Default preview_file_name is file_name with .html ext
++	if ($preview_file_name eq EMPTY) {
++		$preview_file_name =3D $file_name;
++		$preview_file_name =3D~ s/\.[^.]+$/.html/;
++	}
++
++	v_print("### Retrieving template\n");
++	$template =3D get_template($remote_url, $wiki_page_name);
++
++	v_print("### Parsing & merging contents\n");
++	# Parsing template page
++	$html_tree =3D HTML::TreeBuilder->new;
++	$html_tree->parse($template);
++
++	# Load new content
++	$content =3D $wiki->api({
++		action =3D> 'parse',
++		text =3D> $file_content,
++		title =3D> $wiki_page_name
++	}, {
++		skip_encoding =3D> 1
++	}) or die "No response from distant mediawiki\n";
++	$content =3D $content->{'parse'}->{'text'}->{'*'};
++	$content_tree =3D HTML::TreeBuilder->new;
++	$content_tree->parse($content);
++
++	# Replace old content with new one
++	$template_content_id =3D Git::config('mediawiki.IDContent')
++		|| $template_content_id;
++	v_print("Using '${template_content_id}' as the content ID\n");
++	$mw_content_text =3D $html_tree->look_down('id', $template_content_id=
+);
++	if (!defined $mw_content_text) {
++		print {*STDERR} <<"CONFIG";
++Could not combine the new parsed content with the template. You might =
+want to
++configure `mediawiki.IDContent` in your config:
++	git config --add mediawiki.IDContent <your_template_content_element_i=
+d>
++CONFIG
++	}
++	$mw_content_text->delete_content();
++	$mw_content_text->push_content($content_tree);
++
++	# Transform relative links into absolute ones
++	for (@{ $html_tree->extract_links() }) {
++		my ($link, $element, $attr) =3D @{ $_ };
++		my $url =3D url($link)->canonical;
++		$element->attr($attr, URI->new_abs($url, $remote_url));
++	}
++
++	# Save the preview file
++	open(my $save_fh, '>:encoding(UTF-8)', $preview_file_name)
++		or die "Could not open: $!\n";
++	print {$save_fh} $html_tree->as_HTML;
++	close($save_fh)
++		or die "Could not close: $!\n";
++
++	# Auto-loading in browser
++	v_print("### Results\n");
++	if ($autoload) {
++		v_print("Launching browser w/ file: ${preview_file_name}");
++		system('git', 'web--browse', $preview_file_name);
++	} else {
++		print {*STDERR} "Preview file saved as: ${preview_file_name}\n";
++	}
++
++	exit;
++}
++
++sub mediawiki_remote_url_maybe {
++	my $remote =3D shift;
++
++	# Find remote url
++	my $remote_url =3D Git::config("remote.${remote}.url");
++	if ($remote_url =3D~ s/mediawiki::(.*)/$1/) {
++		return url($remote_url)->canonical;
++	}
++
++	return;
++}
++
++sub get_template {
++	my $url =3D shift;
++	my $page_name =3D shift;
++	my ($req, $res, $code, $url_after);
++
++	$req =3D LWP::UserAgent->new;
++	if ($verbose) {
++		$req->show_progress(1);
++	}
++
++	$res =3D $req->get("${url}/index.php?title=3D${page_name}");
++	if (!$res->is_success) {
++		$code =3D $res->code;
++		$url_after =3D $res->request()->uri(); # resolve all redirections
++		if ($code =3D=3D HTTP_CODE_PAGE_NOT_FOUND) {
++			if ($verbose) {
++				print {*STDERR} <<"WARNING";
++Warning: Failed to retrieve '$page_name'. Create it on the mediawiki i=
+f you want
++all the links to work properly.
++Trying to use the mediawiki homepage as a fallback template ...
++WARNING
++			}
++
++			# LWP automatically redirects GET request
++			$res =3D $req->get("${url}/index.php");
++			if (!$res->is_success) {
++				$url_after =3D $res->request()->uri(); # resolve all redirections
++				die "Failed to get homepage @ ${url_after} w/ code ${code}\n";
++			}
 +		} else {
-+			print {*STDERR} qq(Failed to log in mediawiki user "$credential{username}" on ${remote_url}\n);
-+			print {*STDERR} '  (error ' .
-+				$wiki->{error}->{code} . ': ' .
-+				$wiki->{error}->{details} . ")\n";
-+			Git::credential(\%credential, 'reject');
-+			exit 1;
++			die "Failed to get '${page_name}' @ ${url_after} w/ code ${code}\n"=
+;
 +		}
 +	}
 +
-+	return $wiki;
++	return $res->decoded_content;
++}
++
++sub v_print {
++	if ($verbose) {
++		print {*STDERR} @_;
++	}
++}
++
+ ############################## Help Functions ########################=
+##########
+=20
+ sub help {
+@@ -41,6 +341,7 @@ usage: git mw <command> <args>
+=20
+ git mw commands are:
+     help        Display help information about git mw
++    preview 	Parse and render local file into HTML
+ END
+ 	exit;
  }
- 
- 1; # Famous last words
 \ No newline at end of file
-diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
-index 9ff45fd..3b6422b 100755
---- a/contrib/mw-to-git/git-remote-mediawiki.perl
-+++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -14,6 +14,8 @@
- use strict;
- use MediaWiki::API;
- use Git;
-+use GitMediawiki qw(clean_filename smudge_filename connect_maybe
-+					EMPTY HTTP_CODE_OK);
- use DateTime::Format::ISO8601;
- use warnings;
- 
-@@ -23,9 +25,6 @@ binmode STDOUT, ':encoding(UTF-8)';
- 
- use URI::Escape;
- 
--# Mediawiki filenames can contain forward slashes. This variable decides by which pattern they should be replaced
--use constant SLASH_REPLACEMENT => '%2F';
--
- # It's not always possible to delete pages (may require some
- # privileges). Deleted pages are replaced with this content.
- use constant DELETED_CONTENT => "[[Category:Deleted]]\n";
-@@ -40,8 +39,6 @@ use constant NULL_SHA1 => '0000000000000000000000000000000000000000';
- # Used on Git's side to reflect empty edit messages on the wiki
- use constant EMPTY_MESSAGE => '*Empty MediaWiki Message*';
- 
--use constant EMPTY => q{};
--
- # Number of pages taken into account at once in submodule get_mw_page_list
- use constant SLICE_SIZE => 50;
- 
-@@ -50,8 +47,6 @@ use constant SLICE_SIZE => 50;
- # the number of links to be returned (500 links max).
- use constant BATCH_SIZE => 10;
- 
--use constant HTTP_CODE_OK => 200;
--
- my $remotename = $ARGV[0];
- my $url = $ARGV[1];
- 
-@@ -184,37 +179,6 @@ sub parse_command {
- # MediaWiki API instance, created lazily.
- my $mediawiki;
- 
--sub mw_connect_maybe {
--	if ($mediawiki) {
--		return;
--	}
--	$mediawiki = MediaWiki::API->new;
--	$mediawiki->{config}->{api_url} = "${url}/api.php";
--	if ($wiki_login) {
--		my %credential = (
--			'url' => $url,
--			'username' => $wiki_login,
--			'password' => $wiki_passwd
--		);
--		Git::credential(\%credential);
--		my $request = {lgname => $credential{username},
--			       lgpassword => $credential{password},
--			       lgdomain => $wiki_domain};
--		if ($mediawiki->login($request)) {
--			Git::credential(\%credential, 'approve');
--			print {*STDERR} qq(Logged in mediawiki user "$credential{username}".\n);
--		} else {
--			print {*STDERR} qq(Failed to log in mediawiki user "$credential{username}" on ${url}\n);
--			print {*STDERR} '  (error ' .
--				$mediawiki->{error}->{code} . ': ' .
--				$mediawiki->{error}->{details} . ")\n";
--			Git::credential(\%credential, 'reject');
--			exit 1;
--		}
--	}
--	return;
--}
--
- sub fatal_mw_error {
- 	my $action = shift;
- 	print STDERR "fatal: could not $action.\n";
-@@ -324,7 +288,7 @@ sub get_mw_first_pages {
- 
- # Get the list of pages to be fetched according to configuration.
- sub get_mw_pages {
--	mw_connect_maybe();
-+	$mediawiki = connect_maybe($mediawiki, $remotename, $url);
- 
- 	print {*STDERR} "Listing pages on remote wiki...\n";
- 
-@@ -514,7 +478,7 @@ sub get_last_local_revision {
- # avoid a loop onto all tracked pages. This is useful for the fetch-by-rev
- # option.
- sub get_last_global_remote_rev {
--	mw_connect_maybe();
-+	$mediawiki = connect_maybe($mediawiki, $remotename, $url);
- 
- 	my $query = {
- 		action => 'query',
-@@ -530,7 +494,7 @@ sub get_last_global_remote_rev {
- # Get the last remote revision concerning the tracked pages and the tracked
- # categories.
- sub get_last_remote_revision {
--	mw_connect_maybe();
-+	$mediawiki = connect_maybe($mediawiki, $remotename, $url);
- 
- 	my %pages_hash = get_mw_pages();
- 	my @pages = values(%pages_hash);
-@@ -586,29 +550,6 @@ sub mediawiki_smudge {
- 	return "${string}\n";
- }
- 
--sub mediawiki_clean_filename {
--	my $filename = shift;
--	$filename =~ s{@{[SLASH_REPLACEMENT]}}{/}g;
--	# [, ], |, {, and } are forbidden by MediaWiki, even URL-encoded.
--	# Do a variant of URL-encoding, i.e. looks like URL-encoding,
--	# but with _ added to prevent MediaWiki from thinking this is
--	# an actual special character.
--	$filename =~ s/[\[\]\{\}\|]/sprintf("_%%_%x", ord($&))/ge;
--	# If we use the uri escape before
--	# we should unescape here, before anything
--
--	return $filename;
--}
--
--sub mediawiki_smudge_filename {
--	my $filename = shift;
--	$filename =~ s{/}{@{[SLASH_REPLACEMENT]}}g;
--	$filename =~ s/ /_/g;
--	# Decode forbidden characters encoded in mediawiki_clean_filename
--	$filename =~ s/_%_([0-9a-fA-F][0-9a-fA-F])/sprintf('%c', hex($1))/ge;
--	return $filename;
--}
--
- sub literal_data {
- 	my ($content) = @_;
- 	print {*STDOUT} 'data ', bytes::length($content), "\n", $content;
-@@ -816,7 +757,7 @@ sub mw_import_ref {
- 		return;
- 	}
- 
--	mw_connect_maybe();
-+	$mediawiki = connect_maybe($mediawiki, $remotename, $url);
- 
- 	print {*STDERR} "Searching revisions...\n";
- 	my $last_local = get_last_local_revision();
-@@ -930,7 +871,7 @@ sub mw_import_revids {
- 		my %commit;
- 		$commit{author} = $rev->{user} || 'Anonymous';
- 		$commit{comment} = $rev->{comment} || EMPTY_MESSAGE;
--		$commit{title} = mediawiki_smudge_filename($page_title);
-+		$commit{title} = smudge_filename($page_title);
- 		$commit{mw_revision} = $rev->{revid};
- 		$commit{content} = mediawiki_smudge($rev->{'*'});
- 
-@@ -991,7 +932,7 @@ sub mw_upload_file {
- 	}
- 	# Deleting and uploading a file requires a priviledged user
- 	if ($file_deleted) {
--		mw_connect_maybe();
-+		$mediawiki = connect_maybe($mediawiki, $remotename, $url);
- 		my $query = {
- 			action => 'delete',
- 			title => $path,
-@@ -1007,7 +948,7 @@ sub mw_upload_file {
- 		# Don't let perl try to interpret file content as UTF-8 => use "raw"
- 		my $content = run_git("cat-file blob ${new_sha1}", 'raw');
- 		if ($content ne EMPTY) {
--			mw_connect_maybe();
-+			$mediawiki = connect_maybe($mediawiki, $remotename, $url);
- 			$mediawiki->{config}->{upload_url} =
- 				"${url}/index.php/Special:Upload";
- 			$mediawiki->edit({
-@@ -1055,7 +996,7 @@ sub mw_push_file {
- 	my $old_sha1 = $diff_info_split[2];
- 	my $page_created = ($old_sha1 eq NULL_SHA1);
- 	my $page_deleted = ($new_sha1 eq NULL_SHA1);
--	$complete_file_name = mediawiki_clean_filename($complete_file_name);
-+	$complete_file_name = clean_filename($complete_file_name);
- 
- 	my ($title, $extension) = $complete_file_name =~ /^(.*)\.([^\.]*)$/;
- 	if (!defined($extension)) {
-@@ -1078,7 +1019,7 @@ sub mw_push_file {
- 			$file_content = run_git("cat-file blob ${new_sha1}");
- 		}
- 
--		mw_connect_maybe();
-+		$mediawiki = connect_maybe($mediawiki, $remotename, $url);
- 
- 		my $result = $mediawiki->edit( {
- 			action => 'edit',
-@@ -1264,7 +1205,7 @@ sub mw_push_revision {
- }
- 
- sub get_allowed_file_extensions {
--	mw_connect_maybe();
-+	$mediawiki = connect_maybe($mediawiki, $remotename, $url);
- 
- 	my $query = {
- 		action => 'query',
-@@ -1288,7 +1229,7 @@ my %cached_mw_namespace_id;
- # Return MediaWiki id for a canonical namespace name.
- # Ex.: "File", "Project".
- sub get_mw_namespace_id {
--	mw_connect_maybe();
-+	$mediawiki = connect_maybe($mediawiki, $remotename, $url);
- 	my $name = shift;
- 
- 	if (!exists $namespace_id{$name}) {
--- 
+--=20
 1.8.3.GIT
