@@ -1,130 +1,125 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] config doc: rewrite push.default section
-Date: Sun, 16 Jun 2013 15:36:28 +0530
-Message-ID: <1371377188-18938-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 16 12:08:32 2013
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] rebase -i: fixup fixup! fixup!
+Date: Sun, 16 Jun 2013 13:08:18 +0200
+Message-ID: <87ip1e2tzx.fsf@hexa.v.cablecom.net>
+References: <20130611180530.GA18488@oinkpad.pimlott.net>
+	<87obbc8otc.fsf@hexa.v.cablecom.net> <1371237209-sup-639@pimlott.net>
+	<1371278908-sup-1930@pimlott.net>
+	<7vk3lvlmat.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Andrew Pimlott <andrew@pimlott.net>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 16 13:08:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uo9st-0003bU-CJ
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 12:08:31 +0200
+	id 1UoAou-0001CT-UM
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 13:08:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755159Ab3FPKIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Jun 2013 06:08:19 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:54022 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754899Ab3FPKIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jun 2013 06:08:18 -0400
-Received: by mail-pa0-f53.google.com with SMTP id tj12so1928652pac.40
-        for <git@vger.kernel.org>; Sun, 16 Jun 2013 03:08:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=F145GHNtv3DZcYceqpwX69xwgn7m9ESSuq1Q7cC3DUs=;
-        b=ARoUjk/ugZ8LUIanpJKd+W5mTXNTRsPaeIVBGLA+/NupmpFifRNiYDwhZ1REEeLxch
-         fLatpJl1J8wVzPzX150iJFD1hqXhNi1CNcPMR7wxnKiCA96BZwG79pJP2EKzR0Tvuymy
-         CP+UD4DwMO13ySXeQhM1VkJxsx+X8eyKyRiRDSLfdh7QmjDHLVgactZBGUWqV1iea6XB
-         SdDqJGIgMvApVf1NYafyTC60Vo5YSX5bNV6XI77Iz0Rc3VBgClPoTk6B7cN5Vn2i43ms
-         UtmGzUNEAeMro6ke5wEeE6N6yigWfkNFkFeUBSSqPPIDwJ1aYdn1Q34il3YHmVZFtNCU
-         puww==
-X-Received: by 10.68.160.226 with SMTP id xn2mr8832782pbb.174.1371377297689;
-        Sun, 16 Jun 2013 03:08:17 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.213.38])
-        by mx.google.com with ESMTPSA id qi1sm10122328pac.21.2013.06.16.03.08.15
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 16 Jun 2013 03:08:17 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1.443.g4fd77b9
+	id S1754995Ab3FPLIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Jun 2013 07:08:24 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:54428 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754924Ab3FPLIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jun 2013 07:08:24 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 16 Jun
+ 2013 13:08:21 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 16 Jun
+ 2013 13:08:21 +0200
+In-Reply-To: <7vk3lvlmat.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sat, 15 Jun 2013 03:07:22 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228005>
 
-Design by Junio.
+Junio C Hamano <gitster@pobox.com> writes:
 
-By detaching descriptions from the implementation, we're only confusing
-users.  I've chosen to use the term "central workflow" to make the
-descriptions terse and readable, although I've stayed way from
-"triangular workflow" (referred to as non-central workflow).
+> Andrew Pimlott <andrew@pimlott.net> writes:
+>
+>> Excerpts from Andrew Pimlott's message of Fri Jun 14 12:31:57 -0700 2013:
+>>> It happened to work and I added a test.  But then it occurred to me that
+>>> it might have been better to fix commit --fixup/--squash to strip the
+>>> fixup! or squash! from the referenced commit in the first place.
+>>> Anyhow, below is my patch for --autosquash, but unles someone has an
+>>> objection to doing it in commit, I'll work on that.
+>
+> Is it always true that you would squash and fixup in the same order
+> as these follow-up commits happened?
+>
+> That is, if you did this (time flows from top to bottom):
+>
+> 	1 A
+>         2 B
+>         3 fixup A
+>         4 squash B
+>         5 fixup fixup A
+>         6 fixup A
+>
+> I am wondering if applying 6 on top of 5 is always what you want, or
+> you would want to apply it to 3 instead.  Otherwise you would have
+> written
+>
+> 	6 fixup fixup fixup A
+>
+> instead.
+>
+> The two reordering possibilities are:
+>
+>         1 A                        1 A             
+>         3 fixup A                  3 fixup A       
+>         5 fixup fixup A            6 fixup A       
+>         6 fixup A                  5 fixup fixup A
+>         2 B                        2 B             
+>         4 squash B                 4 squash B      
+>
+> If you strip out the prefix when you make commits, you may lose the
+> information if you want to use in order to express these different
+> orders.  I am not sure if it matters in practice, but I am not yet
+> convinced it is a good idea.
 
-Yes, I hate writing documentation but I have no choice if I want to
-update the implementations to do something sane in triangular workflows.
+Isn't it a bit of an academic question?
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- I'll send in the implementation once we can agree that this is what
- we want.
+All 'fixup* A' are clearly intended to be squashed into A eventually.
+You could reorder them, but unless you arranged your fixups as nonlinear
+history (does anyone do that?) they have been built sequentially.  So at
+best the extra reordering does not buy you anything, because you're
+going to fix up A anyways.  You may even get extra conflicts during the
+reordering, which make the process less automatic and more error-prone.
 
- Documentation/config.txt | 51 ++++++++++++++++++++++++------------------------
- 1 file changed, 25 insertions(+), 26 deletions(-)
+  [If you did actually arrange things nonlinearly, so that you have
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 7fd4035..30350a3 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1832,33 +1832,32 @@ push.default::
- 	line. Possible values are:
- +
- --
--* `nothing` - do not push anything.
--* `matching` - push all branches having the same name in both ends.
--  This is for those who prepare all the branches into a publishable
--  shape and then push them out with a single command.  It is not
--  appropriate for pushing into a repository shared by multiple users,
--  since locally stalled branches will attempt a non-fast forward push
--  if other users updated the branch.
--  +
--  This is currently the default, but Git 2.0 will change the default
--  to `simple`.
--* `upstream` - push the current branch to its upstream branch
--  (`tracking` is a deprecated synonym for this).
--  With this, `git push` will update the same remote ref as the one which
--  is merged by `git pull`, making `push` and `pull` symmetrical.
--  See "branch.<name>.merge" for how to configure the upstream branch.
--* `simple` - like `upstream`, but refuses to push if the upstream
--  branch's name is different from the local one. This is the safest
--  option and is well-suited for beginners. It will become the default
--  in Git 2.0.
--* `current` - push the current branch to a branch of the same name.
-+* `nothing` - error out unless a refspec is explicitly given.
-+
-+* `current` - push the refspec "$HEAD".  HEAD is resolved early to a
-+  branch name (referred to as $HEAD).  In other words, push the
-+  current branch to update a branch with the same name on the pushing
-+  side.
-+
-+* `upstream` - push the refspec "$HEAD:branch.$HEAD.merge", and error
-+  out if the push destination is not the same as branch.$HEAD.remote.
-+  The name "upstream" refers to the revision "@{u[pstream]}" in
-+  linkgit:gitrevisions[7].  It is useful in central workflows, to make
-+  the `push` symmetrical to `pull`.
-+
-+* `simple` - in central workflows, behaves like `upstream`, except
-+  that it errors out unless branch.$HEAD.merge is equal to $HEAD.  In
-+  non-central workflows, behaves like `current`.  It will become the
-+  default in Git 2.0.
-+
-+* `matching` - push the refspec ":".  In other words, push all
-+  branches having the same name in both ends, even if it means
-+  non-fast-forward updates.  This is for those who prepare all the
-+  branches into a publishable shape and then push them out with a
-+  single command.  Dangerous, and inappropriate unless you are the
-+  only person updating your push destination.  This is currently the
-+  default, but Git 2.0 will change the default to `simple`.
- --
--+
--The `simple`, `current` and `upstream` modes are for those who want to
--push out a single branch after finishing work, even when the other
--branches are not yet ready to be pushed out. If you are working with
--other people to push into the same shared repository, you would want
--to use one of these.
- 
- rebase.stat::
- 	Whether to show a diffstat of what changed upstream since the last
+    * A
+    |\
+    | * fixup A
+    | |
+    * | fixup A
+    |/
+    * M  (you need M so that you can rebase both fixups simultaneously)
+
+  then you might actually use the number of 'fixup' prefixes to determine
+  their order.  However, if you actually generate such history, you have
+  to go out of your way to look at the other branches too, and make sure
+  that the number of prefixes is sufficiently unique to disambiguate the
+  order as far as you want it to do that, etc.  It sounds like too much of
+  a headache to be worth using like that.]
+
+And once you have that, it seems a nicer and cleaner idea to generate
+'fixup! A' each time, instead of a successive sequence of
+
+  fixup! A
+  fixup! fixup! A
+  fixup! fixup! fixup! A
+  ...
+
 -- 
-1.8.3.1.443.g4fd77b9
+Thomas Rast
+trast@{inf,student}.ethz.ch
