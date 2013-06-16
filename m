@@ -1,80 +1,76 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] config doc: rewrite push.default section
-Date: Sun, 16 Jun 2013 20:48:41 +0200
-Message-ID: <vpqvc5dj3hy.fsf@anie.imag.fr>
-References: <1371377188-18938-1-git-send-email-artagnon@gmail.com>
+Subject: Re: [PATCH/RFC 3/4] git-mw: Adding git-mw.perl script
+Date: Sun, 16 Jun 2013 21:59:33 +0200
+Message-ID: <vpq1u81hlne.fsf@anie.imag.fr>
+References: <1371118039-18925-1-git-send-email-benoit.person@ensimag.fr>
+	<1371118039-18925-4-git-send-email-benoit.person@ensimag.fr>
+	<vpq4nd2rwq1.fsf@anie.imag.fr>
+	<CAETqRCidQpBu-Ws7wQ3xx73ozu0OQeeM7atptYg=ei8ZUXRbsA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 16 20:49:09 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>,
+	Jeff King <peff@peff.net>
+To: =?iso-8859-1?Q?Beno=EEt?= Person <benoit.person@ensimag.fr>
+X-From: git-owner@vger.kernel.org Sun Jun 16 22:00:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoI0i-0008Sz-N6
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 20:49:09 +0200
+	id 1UoJ7J-0006rT-Gp
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 22:00:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755390Ab3FPSsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Jun 2013 14:48:51 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:37682 "EHLO rominette.imag.fr"
+	id S1755459Ab3FPT7o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Jun 2013 15:59:44 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:36684 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755133Ab3FPSsu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jun 2013 14:48:50 -0400
+	id S1755451Ab3FPT7n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jun 2013 15:59:43 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5GImdWf021204
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5GJxVh9010708
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 16 Jun 2013 20:48:39 +0200
+	Sun, 16 Jun 2013 21:59:32 +0200
 Received: from anie.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
 	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UoI0H-0002vo-Pr; Sun, 16 Jun 2013 20:48:41 +0200
-In-Reply-To: <1371377188-18938-1-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Sun, 16 Jun 2013 15:36:28 +0530")
+	id 1UoJ6s-0003cC-5Q; Sun, 16 Jun 2013 21:59:34 +0200
+In-Reply-To: <CAETqRCidQpBu-Ws7wQ3xx73ozu0OQeeM7atptYg=ei8ZUXRbsA@mail.gmail.com>
+	(=?iso-8859-1?Q?=22Beno=EEt?= Person"'s message of "Sat, 15 Jun 2013
+ 15:22:18 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 16 Jun 2013 20:48:40 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 16 Jun 2013 21:59:33 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228023>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Beno=EEt Person <benoit.person@ensimag.fr> writes:
 
-> +* `current` - push the refspec "$HEAD".  HEAD is resolved early to a
-> +  branch name (referred to as $HEAD).  In other words, push the
-> +  current branch to update a branch with the same name on the pushing
-> +  side.
+>> I think you need an equivalent of Git's toplevel bin-wrappers/git, o=
+r
+>> perhaps use the same bin-wrapper/git but let "make install" in
+>> contrib/mw-to-git/ install GitMediawiki.pm in perl/blib/lib
+> Typo s/make install/make/ ?
 
-I'd put it the other way around: the intuitive explanation first, and
-the technical one after. For people not totally familiar with Git, the
-first part does not make much sense (and when I learn a new tool, I
-really don't like when the doc assumes I already know too much about
-it).
+Yes.
 
-Also, this $HEAD Vs HEAD doesn't seem very clear to me. I don't have a
-really good proposal for a better wording, but maybe replacing $HEAD
-with $branch would make a bit more sense, as having $HEAD != HEAD is
-weird.
+> For that one, I am not really sure Git::Mediawiki makes more sense
+> than GitMediawiki. The point of the GitMediawiki.pm package is to
+> contain all the stuff for the bidirectionnal-thingy. So they are not
+> really Git-related, nor Mediawiki-related.
 
-> +* `simple` - in central workflows, behaves like `upstream`, except
-> +  that it errors out unless branch.$HEAD.merge is equal to $HEAD.
+I'd say they are related to both, not to neither.
 
-I'd reverse the sentense too. In your wording, I get the feeling that
-erroring out is the normal flow, and pushing is the exception
-("unless").
+> Making it part of a "Git" directory / namespace does not really feels
+> right, even if it's how it's done for SVN :/ .
 
-"... except that it errors out if branch.$HEAD.merge is not equal to
-$HEAD." ?
+Well, it's the part of Git's perl library which deals with SVN
+interaction, so it makes sense to have it be a subdirectory of Git. I'd
+say it makes as much sense for Mediawiki interaction.
 
-> +  single command.  Dangerous, and inappropriate unless you are the
-> +  only person updating your push destination.
-
-Here also, I'd have said "Dangerous, and inappropriate if you are
-not ...".
-
--- 
+--=20
 Matthieu Moy
 http://www-verimag.imag.fr/~moy/
