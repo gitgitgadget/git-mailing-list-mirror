@@ -1,179 +1,80 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] mergetool--lib: refactor {diff,merge}_cmd logic
-Date: Sun, 16 Jun 2013 18:51:22 +0100
-Message-ID: <828585499e535649d14ef0ecd0f53403aefb10c2.1371405056.git.john@keeping.me.uk>
-Cc: David Aguilar <davvid@gmail.com>, John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 16 19:51:43 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] config doc: rewrite push.default section
+Date: Sun, 16 Jun 2013 20:48:41 +0200
+Message-ID: <vpqvc5dj3hy.fsf@anie.imag.fr>
+References: <1371377188-18938-1-git-send-email-artagnon@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 16 20:49:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoH78-0003xO-IZ
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 19:51:42 +0200
+	id 1UoI0i-0008Sz-N6
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 20:49:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755400Ab3FPRvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Jun 2013 13:51:38 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:40874 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755371Ab3FPRvi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jun 2013 13:51:38 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 7408ECDA599;
-	Sun, 16 Jun 2013 18:51:37 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0XoCT--lx5A8; Sun, 16 Jun 2013 18:51:35 +0100 (BST)
-Received: from river.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 0DCC6CDA48A;
-	Sun, 16 Jun 2013 18:51:29 +0100 (BST)
-X-Mailer: git-send-email 1.8.3.779.g691e267
+	id S1755390Ab3FPSsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Jun 2013 14:48:51 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:37682 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755133Ab3FPSsu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jun 2013 14:48:50 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5GImdWf021204
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 16 Jun 2013 20:48:39 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UoI0H-0002vo-Pr; Sun, 16 Jun 2013 20:48:41 +0200
+In-Reply-To: <1371377188-18938-1-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Sun, 16 Jun 2013 15:36:28 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 16 Jun 2013 20:48:40 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228022>
 
-Instead of needing a wrapper to call the diff/merge command, simply
-provide the diff_cmd and merge_cmd functions for user-specified tools in
-the same way as we do for built-in tools.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- git-mergetool--lib.sh | 82 ++++++++++++++++++++++-----------------------------
- 1 file changed, 35 insertions(+), 47 deletions(-)
+> +* `current` - push the refspec "$HEAD".  HEAD is resolved early to a
+> +  branch name (referred to as $HEAD).  In other words, push the
+> +  current branch to update a branch with the same name on the pushing
+> +  side.
 
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index e338be5..6a72106 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -114,6 +114,33 @@ valid_tool () {
- 	test -n "$cmd"
- }
- 
-+setup_user_tool () {
-+	merge_tool_cmd=$(get_merge_tool_cmd "$tool")
-+	test -n "$merge_tool_cmd" || return 1
-+
-+	diff_cmd () {
-+		( eval $merge_tool_cmd )
-+		status=$?
-+		return $status
-+	}
-+
-+	merge_cmd () {
-+		trust_exit_code=$(git config --bool \
-+			"mergetool.$1.trustExitCode" || echo false)
-+		if test "$trust_exit_code" = "false"
-+		then
-+			touch "$BACKUP"
-+			( eval $merge_tool_cmd )
-+			status=$?
-+			check_unchanged
-+		else
-+			( eval $merge_tool_cmd )
-+			status=$?
-+		fi
-+		return $status
-+	}
-+}
-+
- setup_tool () {
- 	tool="$1"
- 
-@@ -142,15 +169,15 @@ setup_tool () {
- 
- 	if ! test -f "$MERGE_TOOLS_DIR/$tool"
- 	then
--		# Use a special return code for this case since we want to
--		# source "defaults" even when an explicit tool path is
--		# configured since the user can use that to override the
--		# default path in the scriptlet.
--		return 2
-+		setup_user_tool
-+		return $?
- 	fi
- 
- 	# Load the redefined functions
- 	. "$MERGE_TOOLS_DIR/$tool"
-+	# Now let the user override the default command for the tool.  If
-+	# they have not done so then this will return 1 which we ignore.
-+	setup_user_tool
- 
- 	if merge_mode && ! can_merge
- 	then
-@@ -187,20 +214,7 @@ run_merge_tool () {
- 	status=0
- 
- 	# Bring tool-specific functions into scope
--	setup_tool "$1"
--	exitcode=$?
--	case $exitcode in
--	0)
--		:
--		;;
--	2)
--		# The configured tool is not a built-in tool.
--		test -n "$merge_tool_path" || return 1
--		;;
--	*)
--		return $exitcode
--		;;
--	esac
-+	setup_tool "$1" || return 1
- 
- 	if merge_mode
- 	then
-@@ -213,38 +227,12 @@ run_merge_tool () {
- 
- # Run a either a configured or built-in diff tool
- run_diff_cmd () {
--	merge_tool_cmd=$(get_merge_tool_cmd "$1")
--	if test -n "$merge_tool_cmd"
--	then
--		( eval $merge_tool_cmd )
--		status=$?
--		return $status
--	else
--		diff_cmd "$1"
--	fi
-+	diff_cmd "$1"
- }
- 
- # Run a either a configured or built-in merge tool
- run_merge_cmd () {
--	merge_tool_cmd=$(get_merge_tool_cmd "$1")
--	if test -n "$merge_tool_cmd"
--	then
--		trust_exit_code=$(git config --bool \
--			"mergetool.$1.trustExitCode" || echo false)
--		if test "$trust_exit_code" = "false"
--		then
--			touch "$BACKUP"
--			( eval $merge_tool_cmd )
--			status=$?
--			check_unchanged
--		else
--			( eval $merge_tool_cmd )
--			status=$?
--		fi
--		return $status
--	else
--		merge_cmd "$1"
--	fi
-+	merge_cmd "$1"
- }
- 
- list_merge_tool_candidates () {
+I'd put it the other way around: the intuitive explanation first, and
+the technical one after. For people not totally familiar with Git, the
+first part does not make much sense (and when I learn a new tool, I
+really don't like when the doc assumes I already know too much about
+it).
+
+Also, this $HEAD Vs HEAD doesn't seem very clear to me. I don't have a
+really good proposal for a better wording, but maybe replacing $HEAD
+with $branch would make a bit more sense, as having $HEAD != HEAD is
+weird.
+
+> +* `simple` - in central workflows, behaves like `upstream`, except
+> +  that it errors out unless branch.$HEAD.merge is equal to $HEAD.
+
+I'd reverse the sentense too. In your wording, I get the feeling that
+erroring out is the normal flow, and pushing is the exception
+("unless").
+
+"... except that it errors out if branch.$HEAD.merge is not equal to
+$HEAD." ?
+
+> +  single command.  Dangerous, and inappropriate unless you are the
+> +  only person updating your push destination.
+
+Here also, I'd have said "Dangerous, and inappropriate if you are
+not ...".
+
 -- 
-1.8.3.779.g691e267
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
