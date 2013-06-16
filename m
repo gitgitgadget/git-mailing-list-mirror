@@ -1,125 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] unpack-trees: don't shift conflicts left and right
-Date: Sat, 15 Jun 2013 17:56:13 -0700
-Message-ID: <7va9mqlvpu.fsf@alter.siamese.dyndns.org>
-References: <1371339883-22775-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] rebase -i: fixup fixup! fixup!
+Date: Sat, 15 Jun 2013 18:19:53 -0700
+Message-ID: <7vy5aakg1y.fsf@alter.siamese.dyndns.org>
+References: <20130611180530.GA18488@oinkpad.pimlott.net>
+	<87obbc8otc.fsf@hexa.v.cablecom.net> <1371237209-sup-639@pimlott.net>
+	<1371278908-sup-1930@pimlott.net>
+	<7vk3lvlmat.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Jun 16 02:56:25 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
+To: Andrew Pimlott <andrew@pimlott.net>
+X-From: git-owner@vger.kernel.org Sun Jun 16 03:20:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uo1Ga-0007ef-1m
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 02:56:24 +0200
+	id 1Uo1dQ-0006Kz-56
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 03:20:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754818Ab3FPA4R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Jun 2013 20:56:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46565 "EHLO
+	id S1754825Ab3FPBT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Jun 2013 21:19:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57393 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754789Ab3FPA4R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Jun 2013 20:56:17 -0400
+	id S1754809Ab3FPBTz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Jun 2013 21:19:55 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2014A28929;
-	Sun, 16 Jun 2013 00:56:16 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 718CB28B81;
+	Sun, 16 Jun 2013 01:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=npZ9rOevqyFV
-	VRKnLK1ldlJCooo=; b=ttIUhWYcYC2hft5ox2nUPB+cEMfHToOkgObKwbB1WK0e
-	fVb7/g5Sxuvu3kiwTKNTp6Kp2hDkXuAPmvgWTvHglEdS3EEaKyu+8GBBIgg4K50M
-	uXZUmp9Da738+u83kexK/GE2UfIV+hOB7xTKwIUKQrN87hkKIfydCmJRPtS1e1s=
+	:content-type; s=sasl; bh=oz6rUYSM64mTbRouF4lrxiiq6nc=; b=uktadd
+	evi6pWGnxrfY4clVtEiaDAMJ8EGLX2oPzp/f7uITAIjsbFNJSF8/ueMTvY3faKnp
+	P1+sDhdF2SMKdLSQnT15OGurTgHDwQ2LeGpiFeQJxXs7IynwKDNxXRh6N1ILzwij
+	Bj+8DnRgCIZ68FEaDd4b4U8R5bPrXyGhbweH0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QvFsOv
-	4Ljjf9hWwnn1jgXK/k+TGS8h1yjBBTHAPQz9ZA9zDNABMj+TNn5noRF2RRJY3uUc
-	w0MTXcFcJcGIJ1m4i4xrZ7YihcQkL9+bKcZ3c8UC2FmelIjYbavLh2X4xS10cVYw
-	uol4FK0yshhZgY8uCMYTll0XXctGykLZ4HaZ0=
+	:content-type; q=dns; s=sasl; b=TvGqgV3BlJ7aOQwUxy51ENPSXFrGFuIg
+	XZYhTOn/XL+XIDknHZenGc6dwTXq8bgyplLeG7SpV5Cdes2sbiP+inlFZzKV/bTJ
+	K9aH32LsoBW0pwqw/rXDW2EVYUe+RhRwHBeTiMzbHAHX4lgeTiB7jb6Kuliz/999
+	snmoj7d2klQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16EC528928;
-	Sun, 16 Jun 2013 00:56:16 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6010928B80;
+	Sun, 16 Jun 2013 01:19:55 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 713F328927;
-	Sun, 16 Jun 2013 00:56:15 +0000 (UTC)
-In-Reply-To: <1371339883-22775-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
-	(=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s message of "Sun, 16 Jun 2013 01:44:43
- +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D215028B7F;
+	Sun, 16 Jun 2013 01:19:54 +0000 (UTC)
+In-Reply-To: <7vk3lvlmat.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sat, 15 Jun 2013 03:07:22 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8BF19130-D61F-11E2-AA90-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D9F965D0-D622-11E2-B225-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/227979>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> If o->merge is set, the struct traverse_info member conflicts is shif=
-ted
-> left in unpack_callback, then passed through traverse_trees_recursive
-> to unpack_nondirectories, where it is shifted right before use. =20
+> Andrew Pimlott <andrew@pimlott.net> writes:
+>
+>> Excerpts from Andrew Pimlott's message of Fri Jun 14 12:31:57 -0700 2013:
+>>> It happened to work and I added a test.  But then it occurred to me that
+>>> it might have been better to fix commit --fixup/--squash to strip the
+>>> fixup! or squash! from the referenced commit in the first place.
+>>> Anyhow, below is my patch for --autosquash, but unles someone has an
+>>> objection to doing it in commit, I'll work on that.
+> ...
+> If you strip out the prefix when you make commits, you may lose the
+> information if you want to use in order to express these different
+> orders.
 
-> @@ -807,13 +802,6 @@ static int unpack_callback(int n, unsigned long =
-mask, unsigned long dirmask, str
-> =20
->  	/* Now handle any directories.. */
->  	if (dirmask) {
-> -		unsigned long conflicts =3D mask & ~dirmask;
-> -		if (o->merge) {
-> -			conflicts <<=3D 1;
-> -			if (src[0])
-> -				conflicts |=3D 1;
-> -		}
-> -
->  		/* special case: "diff-index --cached" looking at a tree */
->  		if (o->diff_index_cached &&
->  		    n =3D=3D 1 && dirmask =3D=3D 1 && S_ISDIR(names->mode)) {
-> @@ -832,7 +820,7 @@ static int unpack_callback(int n, unsigned long m=
-ask, unsigned long dirmask, str
->  			}
->  		}
-> =20
-> -		if (traverse_trees_recursive(n, dirmask, conflicts,
-> +		if (traverse_trees_recursive(n, dirmask, mask & ~dirmask,
->  					     names, info) < 0)
->  			return -1;
->  		return mask;
+One design principle I would use as a yardstick is to see any code
+that deliberately lose information to achieve something as highly
+suspicious.  You can discard extra information when you read and
+use, if you do not need it, but if you do not record it in the first
+place, you cannot later enhance the reader to take advantage of it.
 
-This loses the bottom bit (i.e. are we merging and do have an index
-entry?) passed to traverse_trees_recursive(), but when that bitmask
-comes back to our callback, we immediately discard the bottom bit by
-shifting before using it in unpack_nondirectories(), so this seems a
-valid clean-up.
+In general, whenever you see yourself _discarding_ information to
+solve an issue, you should carefully ask yourself if that is the
+right solution.
 
-One thing renaming df_conficts to conflicts really proves is that
-this field is not used by the traverse_trees machinery at all.
+I wish we can make sure contributors can learn various design
+principles we have benefited from over the course of this project
+much better.
 
-Before this patch, the bits in conflicts (now df_conflicts) mask had
-the semantics that is not consistent with the dirmask/mask the
-tree-walk machinery uses to communicate with its callers and
-callbacks.  Everything in tree-walk.[ch] is about "walk N trees",
-and bit 0 of dirmask and mask always means the first tree, not
-"first tree, or in index if the callback is doing a merge", which
-is used in the conflicts field before this patch.
+But it is a bit difficult to _teach_ others.
 
-I think the true source of the confusion is that the "conflicts"
-field does not logically belong there.  It is not needed in the
-general "walk N trees" machinery.
+Writing them down is difficult, not because the rules are vague, but
+because they are like air.  I am sure regular contributors with good
+design taste share this sentiment.
 
-The information is only useful for the unpack_trees callback, and
-"info->data" is a more appropriate place to hang such a callback
-specific data.
+You will know a violation of them when you see one, you naturally
+stick to them yourself without even having to think about them, but
+enumerating them without seeing concrete issues takes effort.
 
-Perhaps we should use info->data field to point at
+And this "lets squash multiple --fixup/--squash" happened to realize
+that "we try not to deliberately lose information" is one of them.
 
-	struct {
-        	struct unpack_trees_options *o;
-                unsigned long df_conflict;
-	};
-
-and get rid of info->conflicts field?
+Thanks.
