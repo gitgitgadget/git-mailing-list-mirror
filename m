@@ -1,334 +1,179 @@
-From: "Eduardo R. D'Avila" <erdavila@gmail.com>
-Subject: [PATCH/RFC 1/3] t9903: add tests for git-prompt pcmode
-Date: Sun, 16 Jun 2013 14:32:10 -0300
-Message-ID: <c4c2a37da989c8c39e8cd6be2370ce34dd0675a6.1371402672.git.erdavila@gmail.com>
-References: <cover.1371402672.git.erdavila@gmail.com>
-Cc: felipe.contreras@gmail.com, t.gummerer@gmail.com,
-	artagnon@gmail.com, zoltan.klinger@gmail.com, hegge@resisty.net,
-	martinerikwerner@gmail.com, s.oosthoek@xs4all.nl,
-	gitster@pobox.com, jonathan@leto.net, szeder@ira.uka.de,
-	"Eduardo R. D'Avila" <erdavila@gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH] mergetool--lib: refactor {diff,merge}_cmd logic
+Date: Sun, 16 Jun 2013 18:51:22 +0100
+Message-ID: <828585499e535649d14ef0ecd0f53403aefb10c2.1371405056.git.john@keeping.me.uk>
+Cc: David Aguilar <davvid@gmail.com>, John Keeping <john@keeping.me.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 16 19:39:26 2013
+X-From: git-owner@vger.kernel.org Sun Jun 16 19:51:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoGvD-0001ot-Du
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 19:39:23 +0200
+	id 1UoH78-0003xO-IZ
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Jun 2013 19:51:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755382Ab3FPRjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Jun 2013 13:39:19 -0400
-Received: from mail-ye0-f178.google.com ([209.85.213.178]:62647 "EHLO
-	mail-ye0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755353Ab3FPRjT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jun 2013 13:39:19 -0400
-X-Greylist: delayed 412 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Jun 2013 13:39:18 EDT
-Received: by mail-ye0-f178.google.com with SMTP id m15so711785yen.37
-        for <git@vger.kernel.org>; Sun, 16 Jun 2013 10:39:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :in-reply-to:references;
-        bh=/3hdS/kbrya/uKU//KuNbQ5qsK+n1/GsONwubo9qoc4=;
-        b=bGL+U5eL8DfosMzu0fBMD1l63orUCDvotdsijA0DFFgo3QavlBfqJP2rjy51+TKFmO
-         TtpTonR4jCf1PWyTySPJixjYYl+ccINKjxYM0y2yVuAaGnsqZQO1Y9EO04nssUDAxV4Y
-         dkxaBjwwxgQsjAakeEZGed6XZePPhtKD22/Lu2YwBJ7dFkoL5SpizSAw5T1CRd1X6sj9
-         nG5JYdHJ5mLqFb7EGltOq+JNsYPI0yOi8TW82wWhAjadLOFttNbtmRAxO18mNeZ7Q7Bg
-         HYUA1mhE2XSup1XiUjB/p1WoPP2DhmzRgBoMVOgIjuCbt69urvPxwmE95TqHffdpZBb2
-         1tAQ==
-X-Received: by 10.236.133.242 with SMTP id q78mr6260959yhi.78.1371403945820;
-        Sun, 16 Jun 2013 10:32:25 -0700 (PDT)
-Received: from localhost.localdomain ([177.18.63.49])
-        by mx.google.com with ESMTPSA id s29sm18661561yhf.6.2013.06.16.10.32.22
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 16 Jun 2013 10:32:25 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1.440.g82707f8
-In-Reply-To: <cover.1371402672.git.erdavila@gmail.com>
-In-Reply-To: <cover.1371402672.git.erdavila@gmail.com>
-References: <cover.1371402672.git.erdavila@gmail.com>
+	id S1755400Ab3FPRvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Jun 2013 13:51:38 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:40874 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755371Ab3FPRvi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jun 2013 13:51:38 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 7408ECDA599;
+	Sun, 16 Jun 2013 18:51:37 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0XoCT--lx5A8; Sun, 16 Jun 2013 18:51:35 +0100 (BST)
+Received: from river.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 0DCC6CDA48A;
+	Sun, 16 Jun 2013 18:51:29 +0100 (BST)
+X-Mailer: git-send-email 1.8.3.779.g691e267
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228021>
 
-git-prompt.sh lacks tests for PROMPT_COMMAND mode.
+Instead of needing a wrapper to call the diff/merge command, simply
+provide the diff_cmd and merge_cmd functions for user-specified tools in
+the same way as we do for built-in tools.
 
-Add tests for:
-* pcmode prompt without colors
-* pcmode prompt with colors for bash
-* pcmode prompt with colors for zsh
-
-Having these tests enables an upcoming refactor in
-a safe way.
-
-Signed-off-by: Eduardo R. D'Avila <erdavila@gmail.com>
+Signed-off-by: John Keeping <john@keeping.me.uk>
 ---
-250	0	t/t9903-bash-prompt.sh
- t/t9903-bash-prompt.sh | 250 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 250 insertions(+)
+ git-mergetool--lib.sh | 82 ++++++++++++++++++++++-----------------------------
+ 1 file changed, 35 insertions(+), 47 deletions(-)
 
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 15521cc..ebca9de 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -535,4 +535,254 @@ test_expect_success 'prompt - format string starting with dash' '
- 	test_cmp expected "$actual"
- '
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index e338be5..6a72106 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -114,6 +114,33 @@ valid_tool () {
+ 	test -n "$cmd"
+ }
  
-+test_expect_success 'prompt - pc mode' '
-+	printf "BEFORE: (master):AFTER" > expected &&
-+	printf "" > expected_output &&
-+	(
-+		__git_ps1 "BEFORE:" ":AFTER" > "$actual" &&
-+		test_cmp expected_output "$actual" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
++setup_user_tool () {
++	merge_tool_cmd=$(get_merge_tool_cmd "$tool")
++	test -n "$merge_tool_cmd" || return 1
 +
-+test_expect_success 'prompt - bash color pc mode - branch name' '
-+	printf "BEFORE: (\\\[\\\e[32m\\\]master\\\[\\\e[0m\\\]\\\[\\\e[0m\\\]):AFTER" > expected &&
-+	(
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" > "$actual"
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
++	diff_cmd () {
++		( eval $merge_tool_cmd )
++		status=$?
++		return $status
++	}
 +
-+test_expect_success 'prompt - bash color pc mode - detached head' '
-+	printf "BEFORE: (\\\[\\\e[31m\\\](%s...)\\\[\\\e[0m\\\]\\\[\\\e[0m\\\]):AFTER" $(git log -1 --format="%h" b1^) > expected &&
-+	git checkout b1^ &&
-+	test_when_finished "git checkout master" &&
-+	(
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
++	merge_cmd () {
++		trust_exit_code=$(git config --bool \
++			"mergetool.$1.trustExitCode" || echo false)
++		if test "$trust_exit_code" = "false"
++		then
++			touch "$BACKUP"
++			( eval $merge_tool_cmd )
++			status=$?
++			check_unchanged
++		else
++			( eval $merge_tool_cmd )
++			status=$?
++		fi
++		return $status
++	}
++}
 +
-+test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty worktree' '
-+	printf "BEFORE: (\\\[\\\e[32m\\\]master\\\[\\\e[0m\\\] \\\[\\\e[31m\\\]*\\\[\\\e[0m\\\]):AFTER" > expected &&
-+	echo "dirty" > file &&
-+	test_when_finished "git reset --hard" &&
-+	(
-+		GIT_PS1_SHOWDIRTYSTATE=y &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index' '
-+	printf "BEFORE: (\\\[\\\e[32m\\\]master\\\[\\\e[0m\\\] \\\[\\\e[32m\\\]+\\\[\\\e[0m\\\]):AFTER" > expected &&
-+	echo "dirty" > file &&
-+	test_when_finished "git reset --hard" &&
-+	git add -u &&
-+	(
-+		GIT_PS1_SHOWDIRTYSTATE=y &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index and worktree' '
-+	printf "BEFORE: (\\\[\\\e[32m\\\]master\\\[\\\e[0m\\\] \\\[\\\e[31m\\\]*\\\[\\\e[32m\\\]+\\\[\\\e[0m\\\]):AFTER" > expected &&
-+	echo "dirty index" > file &&
-+	test_when_finished "git reset --hard" &&
-+	git add -u &&
-+	echo "dirty worktree" > file &&
-+	(
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		GIT_PS1_SHOWDIRTYSTATE=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - bash color pc mode - dirty status indicator - before root commit' '
-+	printf "BEFORE: (\\\[\\\e[32m\\\]master\\\[\\\e[0m\\\] \\\[\\\e[32m\\\]#\\\[\\\e[0m\\\]):AFTER" > expected &&
-+	(
-+		GIT_PS1_SHOWDIRTYSTATE=y &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		cd otherrepo &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - bash color pc mode - inside .git directory' '
-+	printf "BEFORE: (\\\[\\\e[32m\\\]GIT_DIR!\\\[\\\e[0m\\\]\\\[\\\e[0m\\\]):AFTER" > expected &&
-+	echo "dirty" > file &&
-+	test_when_finished "git reset --hard" &&
-+	(
-+		GIT_PS1_SHOWDIRTYSTATE=y &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		cd .git &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - bash color pc mode - stash status indicator' '
-+	printf "BEFORE: (\\\[\\\e[32m\\\]master\\\[\\\e[0m\\\] \\\[\\\e[1;34m\\\]$\\\[\\\e[0m\\\]):AFTER" > expected &&
-+	echo 2 >file &&
-+	git stash &&
-+	test_when_finished "git stash drop" &&
-+	(
-+		GIT_PS1_SHOWSTASHSTATE=y &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - bash color pc mode - untracked files status indicator' '
-+	printf "BEFORE: (\\\[\\\e[32m\\\]master\\\[\\\e[0m\\\] \\\[\\\e[31m\\\]%%\\\[\\\e[0m\\\]):AFTER" > expected &&
-+	(
-+		GIT_PS1_SHOWUNTRACKEDFILES=y &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - zsh color pc mode - branch name' '
-+	printf "BEFORE: (%%F{green}master%%f%%f):AFTER" > expected &&
-+	(
-+		ZSH_VERSION=5.0.0 &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" > "$actual"
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - zsh color pc mode - detached head' '
-+	printf "BEFORE: (%%F{red}(%s...)%%f%%f):AFTER" $(git log -1 --format="%h" b1^) > expected &&
-+	git checkout b1^ &&
-+	test_when_finished "git checkout master" &&
-+	(
-+		ZSH_VERSION=5.0.0 &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - zsh color pc mode - dirty status indicator - dirty worktree' '
-+	printf "BEFORE: (%%F{green}master%%f %%F{red}*%%f):AFTER" > expected &&
-+	echo "dirty" > file &&
-+	test_when_finished "git reset --hard" &&
-+	(
-+		ZSH_VERSION=5.0.0 &&
-+		GIT_PS1_SHOWDIRTYSTATE=y &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - zsh color pc mode - dirty status indicator - dirty index' '
-+	printf "BEFORE: (%%F{green}master%%f %%F{green}+%%f):AFTER" > expected &&
-+	echo "dirty" > file &&
-+	test_when_finished "git reset --hard" &&
-+	git add -u &&
-+	(
-+		ZSH_VERSION=5.0.0 &&
-+		GIT_PS1_SHOWDIRTYSTATE=y &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - zsh color pc mode - dirty status indicator - dirty index and worktree' '
-+	printf "BEFORE: (%%F{green}master%%f %%F{red}*%%F{green}+%%f):AFTER" > expected &&
-+	echo "dirty index" > file &&
-+	test_when_finished "git reset --hard" &&
-+	git add -u &&
-+	echo "dirty worktree" > file &&
-+	(
-+		ZSH_VERSION=5.0.0 &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		GIT_PS1_SHOWDIRTYSTATE=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - zsh color pc mode - dirty status indicator - before root commit' '
-+	printf "BEFORE: (%%F{green}master%%f %%F{green}#%%f):AFTER" > expected &&
-+	(
-+		ZSH_VERSION=5.0.0 &&
-+		GIT_PS1_SHOWDIRTYSTATE=y &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		cd otherrepo &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - zsh color pc mode - inside .git directory' '
-+	printf "BEFORE: (%%F{green}GIT_DIR!%%f%%f):AFTER" > expected &&
-+	echo "dirty" > file &&
-+	test_when_finished "git reset --hard" &&
-+	(
-+		ZSH_VERSION=5.0.0 &&
-+		GIT_PS1_SHOWDIRTYSTATE=y &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		cd .git &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - zsh color pc mode - stash status indicator' '
-+	printf "BEFORE: (%%F{green}master%%f %%F{blue}$%%f):AFTER" > expected &&
-+	echo 2 >file &&
-+	git stash &&
-+	test_when_finished "git stash drop" &&
-+	(
-+		ZSH_VERSION=5.0.0 &&
-+		GIT_PS1_SHOWSTASHSTATE=y &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'prompt - zsh color pc mode - untracked files status indicator' '
-+	printf "BEFORE: (%%F{green}master%%f %%F{red}%%%%%%f):AFTER" > expected &&
-+	(
-+		ZSH_VERSION=5.0.0 &&
-+		GIT_PS1_SHOWUNTRACKEDFILES=y &&
-+		GIT_PS1_SHOWCOLORHINTS=y &&
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" > "$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
- test_done
+ setup_tool () {
+ 	tool="$1"
+ 
+@@ -142,15 +169,15 @@ setup_tool () {
+ 
+ 	if ! test -f "$MERGE_TOOLS_DIR/$tool"
+ 	then
+-		# Use a special return code for this case since we want to
+-		# source "defaults" even when an explicit tool path is
+-		# configured since the user can use that to override the
+-		# default path in the scriptlet.
+-		return 2
++		setup_user_tool
++		return $?
+ 	fi
+ 
+ 	# Load the redefined functions
+ 	. "$MERGE_TOOLS_DIR/$tool"
++	# Now let the user override the default command for the tool.  If
++	# they have not done so then this will return 1 which we ignore.
++	setup_user_tool
+ 
+ 	if merge_mode && ! can_merge
+ 	then
+@@ -187,20 +214,7 @@ run_merge_tool () {
+ 	status=0
+ 
+ 	# Bring tool-specific functions into scope
+-	setup_tool "$1"
+-	exitcode=$?
+-	case $exitcode in
+-	0)
+-		:
+-		;;
+-	2)
+-		# The configured tool is not a built-in tool.
+-		test -n "$merge_tool_path" || return 1
+-		;;
+-	*)
+-		return $exitcode
+-		;;
+-	esac
++	setup_tool "$1" || return 1
+ 
+ 	if merge_mode
+ 	then
+@@ -213,38 +227,12 @@ run_merge_tool () {
+ 
+ # Run a either a configured or built-in diff tool
+ run_diff_cmd () {
+-	merge_tool_cmd=$(get_merge_tool_cmd "$1")
+-	if test -n "$merge_tool_cmd"
+-	then
+-		( eval $merge_tool_cmd )
+-		status=$?
+-		return $status
+-	else
+-		diff_cmd "$1"
+-	fi
++	diff_cmd "$1"
+ }
+ 
+ # Run a either a configured or built-in merge tool
+ run_merge_cmd () {
+-	merge_tool_cmd=$(get_merge_tool_cmd "$1")
+-	if test -n "$merge_tool_cmd"
+-	then
+-		trust_exit_code=$(git config --bool \
+-			"mergetool.$1.trustExitCode" || echo false)
+-		if test "$trust_exit_code" = "false"
+-		then
+-			touch "$BACKUP"
+-			( eval $merge_tool_cmd )
+-			status=$?
+-			check_unchanged
+-		else
+-			( eval $merge_tool_cmd )
+-			status=$?
+-		fi
+-		return $status
+-	else
+-		merge_cmd "$1"
+-	fi
++	merge_cmd "$1"
+ }
+ 
+ list_merge_tool_candidates () {
 -- 
-1.8.3.1.440.g82707f8
+1.8.3.779.g691e267
