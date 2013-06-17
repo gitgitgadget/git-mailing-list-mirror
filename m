@@ -1,193 +1,123 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] diff: add --ignore-blank-lines option
-Date: Mon, 17 Jun 2013 21:09:59 +0200
-Message-ID: <CALWbr2zM=rD3GE9a=Xyrvz0E5mAMsDesJu8-Zs7JH7W4U4AbeA@mail.gmail.com>
-References: <7vhah35jn8.fsf@alter.siamese.dyndns.org>
-	<1371301305-30160-1-git-send-email-apelisse@gmail.com>
-	<7vzjuog175.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] wt-status: give better advice when cherry-pick is in progress
+Date: Mon, 17 Jun 2013 12:18:33 -0700
+Message-ID: <7vppvkczqu.fsf@alter.siamese.dyndns.org>
+References: <1371443306-3073-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 17 21:10:13 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Lucien.Kong@ensimag.imag.fr
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 17 21:18:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoeoZ-0000Ml-5o
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 21:10:07 +0200
+	id 1Uoewr-0008Q3-QV
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 21:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752307Ab3FQTKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jun 2013 15:10:01 -0400
-Received: from mail-qe0-f49.google.com ([209.85.128.49]:57360 "EHLO
-	mail-qe0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751603Ab3FQTKA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 15:10:00 -0400
-Received: by mail-qe0-f49.google.com with SMTP id cz11so1912956qeb.22
-        for <git@vger.kernel.org>; Mon, 17 Jun 2013 12:09:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=xmbA+ogxbGRdfOnHPJELnni6ciIgLuigVLS1gZUpQhc=;
-        b=EuH7RPdIJwsy1OBjFeTls8D2Fqj3TP6XVJxGHV6u81y21otREv/b2Se7OZIrHIjSOv
-         hOMgdOhI9bJuHoCEk/Nnf5IkB8wtTHjhBc9WGSQl2HGB/lp1M6KSoAa9SyqUXyLQgrmF
-         DTY1HwG8Fz4+wVZw1/WVAm1lg46+miWVYzvgVXf8IdVVDtR5rVsioKsob9BKHeT/Oz8H
-         06bF2mAogUhTO4DaQJnyF7bX81eHNWuaR1IOqeEiUvlttKLipA/h9w2MEqmWF15hMUrz
-         2Gef1uQQlOqvBRhGO0iKcEg4cAuXcvIcX7Mr+bFq+qt3ZMJqkN/NbLixvtU5p1vmtxvt
-         imJQ==
-X-Received: by 10.224.69.66 with SMTP id y2mr18369212qai.61.1371496199519;
- Mon, 17 Jun 2013 12:09:59 -0700 (PDT)
-Received: by 10.49.108.105 with HTTP; Mon, 17 Jun 2013 12:09:59 -0700 (PDT)
-In-Reply-To: <7vzjuog175.fsf@alter.siamese.dyndns.org>
+	id S1752536Ab3FQTSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Jun 2013 15:18:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48245 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752397Ab3FQTSg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 15:18:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7F1928A03;
+	Mon, 17 Jun 2013 19:18:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oBMXSnmkvc/SitLhmN6sKgXji0E=; b=QVeh2e
+	Vy9fRH9LsteN/taojgKLSnD1VvGR9ybCmHBXADzpZAhmzBF2LgZ9Ey2tVln4QmH3
+	2ncJuAWaPziOoDmdYRN493GL3AnPYfqHBb0p6qAFodrD++H6QU6kaM9brZLQKMIN
+	/iDATbA1gidOpGqfQWntpiB4y+i0pq6FKNDwk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CLtsO//UwQEHjYzKGnunbxnelWF/nNAk
+	uzZVY1RGbVzeKRPF9pGNDl0zmrcopGHsfaC48U2BGrkcRx38BIrGUdcYyWffjpoL
+	h0gVw0iv8Qb6w1OmdDa+XFDpsRy+uJ7PeSqhya9lQu+rt1c4XxmMqmkvginAxQt9
+	pfrmmN0tHBo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA49228A02;
+	Mon, 17 Jun 2013 19:18:35 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2EF0828A01;
+	Mon, 17 Jun 2013 19:18:35 +0000 (UTC)
+In-Reply-To: <1371443306-3073-1-git-send-email-ralf.thielow@gmail.com> (Ralf
+	Thielow's message of "Mon, 17 Jun 2013 06:28:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B4B50976-D782-11E2-AE09-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228100>
 
-On Mon, Jun 17, 2013 at 6:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Antoine Pelisse <apelisse@gmail.com> writes:
->
->> So here is a more thorough description of the option:
->
->> - real changes are interesting
->
-> OK, I think I can understand it.
->
->> - blank lines that are close enough (less than context size) to
->>   interesting changes are considered interesting (recursive definition)
->
-> OK.
->
->> - "context" lines are used around each hunk of interesting changes
->
-> OK.
->
->> - If two hunks are separated by less than "inter-hunk-context", they
->>   will be merged into one.
->
-> Makes sense.
->
->> The current implementation does the "interesting changes selection" in a
->> single pass.
->
-> "current" meaning "the code after this patch is applied"?  Is there
-> a possible future enhancement hinted here?
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-No. There might be, but I'm not sure it should be discussed right now
-(In case you're curious, I'm thinking about interaction with combined
-diff). I will take the hint and rephrase.
+> When cherry-pick is in progress, 'git status' gives the advice to
+> run "git commit" to finish the cherry-pick. However, this won't continue
+> the sequencer.
+> "git status" should give the advice of running "git cherry-pick --continue"
+> or "git cherry-pick --abort".
 
->> +xdchange_t *xdl_get_hunk(xdchange_t **xscr, xdemitconf_t const *xecfg)
->> +{
->> +     xdchange_t *xch, *xchp, *lxch;
->>       long max_common = 2 * xecfg->ctxlen + xecfg->interhunkctxlen;
->> +     long max_ignorable = xecfg->ctxlen;
->> +     unsigned long changes = ULONG_MAX;
+Is the above _always_ the case, or does the updated advice message
+only apply when you are cherry-picking a range of commits with "git
+cherry-pick A..B"?  In other words, when "git cherry-pick $it" (a
+single commit) stops, waiting for your help to resolve it, would
+"git cherry-pick --continue" conclude it?
 
-Let me explain what "changes" means, as I know it will help the rest
-of the message:
-It counts the number of *added* blank lines we have ignored since
-"lxch" (needed to calculate the distance between lxch and xch)
-It also has the meaning of what was called "interesting" before.
-If changes == ULONG_MAX, we are still in interesting zone, otherwise
-it means we have ignored "changes" *added* blank lines (0 being a
-valid value).
-(Actually, After rereading this part, it looks like I could check that
-lxch == xchp rather than setting changes to ULONG_MAX).
+If that works then this definitely is a good change (the user only
+needs to know "cherry-pick --continue").
 
->> +
->> +     /* remove ignorable changes that are too far before other changes */
->> +     for (xchp = *xscr; xchp && xchp->ignore; xchp = xchp->next) {
->> +             xch = xchp->next;
->> +
->> +             if (xch == NULL ||
->> +                 xch->i1 - (xchp->i1 + xchp->chg1) >= max_ignorable)
->> +                     *xscr = xch;
->> +     }
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+>  t/t7512-status-help.sh | 6 ++++--
+>  wt-status.c            | 6 ++++--
+>  2 files changed, 8 insertions(+), 4 deletions(-)
 >
-> This strips leading ignorable ones away until we see an unignorable
-> one.  Looks sane.
->
->> +     if (*xscr == NULL)
->> +             return NULL;
->> +
->> +     lxch = *xscr;
->
-> "lxch" remembers the last one that is "interesting".
->
->> +     for (xchp = *xscr, xch = xchp->next; xch; xchp = xch, xch = xch->next) {
->> +             long distance = xch->i1 - (xchp->i1 + xchp->chg1);
->> +             if (distance > max_common)
->>                       break;
->
-> If we see large-enough gap, the one we processed last (in xchp) is
-> the end of the current hunk.  Looks sane.
->
->> +             if (distance < max_ignorable &&
->> +                 (!xch->ignore || changes == ULONG_MAX)) {
->> +                     lxch = xch;
->> +                     changes = ULONG_MAX;
->
-> The current one is made into the "last interesting one we have seen"
-> and the hunk continues, if either (1) the current one is interesting
-> by itself, or (2) the last one we saw does not match some
-> unexplainable criteria to cause changes set to not ULONG_MAX.
->
-> Puzzling.
-
-- If we are still in interesting zone, we take it, even if it's
-ignorable change. Because it's close enough.
-- Otherwise, only take real changes. We are close to another change,
-and we are still in the loop, so it must be interesting.
-
->> +             } else if (changes != ULONG_MAX &&
->> +                        xch->i1 + changes - (lxch->i1 + lxch->chg1) > max_common) {
->> +                     break;
->
-> If the last one we saw does not match some unexplainable criteria to
-> cause changes set to not ULONG_MAX, and the distance between this
-> one and the last "intersting" one is further than the context, this
-> one will not be a part of the current hunk.
->
-> Puzzling.
-
-If we are no longer in "interesting zone" (changes != ULONG_MAX), it
-means we will stop if the distance is too big.
-"changes" is used in the calculation to consider the changes we have
-already ignored (xch->i1 - (lxch->i1 + lxch->chg1) will only work if
-xch and lxch are consecutive, we need to add the blank lines we
-ignored).
-
-> Could you add comment to the "changes" variable and explain what the
-> variable means?
->
->> +             } else if (!xch->ignore) {
->> +                     lxch = xch;
->> +                     changes = ULONG_MAX;
->
-> When this change by itself is interesting, it becomes the "last
-> interesting one" and the hunk continues.
-
-Exactly, and changes goes back to "interesting".
-
->> +             } else {
->> +                     if (changes == ULONG_MAX)
->> +                             changes = 0;
->> +                     changes += xch->chg2;
->
-> Puzzled beyond guessing.  Also it is curious why here and only here
-> we look at chg2 side of the things, not i1/chg1 in this whole thing.
-
-chg2 being the number of blank line *additions*.
-I don't want to coalesce two hunks because some blank lines have been
-removed between the two, so we must not change the distance
-calculation because of a blank line removal. That behavior can be seen
-in "ignore-blank-lines: between changes" test.
-
-Hope that makes things clearer,
-Thanks again for the thorough reading,
-
-Antoine
+> diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+> index bf08d4e..4f09bec 100755
+> --- a/t/t7512-status-help.sh
+> +++ b/t/t7512-status-help.sh
+> @@ -632,7 +632,8 @@ test_expect_success 'status when cherry-picking before resolving conflicts' '
+>  	cat >expected <<-\EOF &&
+>  	# On branch cherry_branch
+>  	# You are currently cherry-picking.
+> -	#   (fix conflicts and run "git commit")
+> +	#   (fix conflicts and run "git cherry-pick --continue")
+> +	#   (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+>  	#
+>  	# Unmerged paths:
+>  	#   (use "git add <file>..." to mark resolution)
+> @@ -655,7 +656,8 @@ test_expect_success 'status when cherry-picking after resolving conflicts' '
+>  	cat >expected <<-\EOF &&
+>  	# On branch cherry_branch
+>  	# You are currently cherry-picking.
+> -	#   (all conflicts fixed: run "git commit")
+> +	#   (all conflicts fixed: run "git cherry-pick --continue")
+> +	#   (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+>  	#
+>  	# Changes to be committed:
+>  	#
+> diff --git a/wt-status.c b/wt-status.c
+> index bf84a86..438a40d 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -955,10 +955,12 @@ static void show_cherry_pick_in_progress(struct wt_status *s,
+>  	if (advice_status_hints) {
+>  		if (has_unmerged(s))
+>  			status_printf_ln(s, color,
+> -				_("  (fix conflicts and run \"git commit\")"));
+> +				_("  (fix conflicts and run \"git cherry-pick --continue\")"));
+>  		else
+>  			status_printf_ln(s, color,
+> -				_("  (all conflicts fixed: run \"git commit\")"));
+> +				_("  (all conflicts fixed: run \"git cherry-pick --continue\")"));
+> +		status_printf_ln(s, color,
+> +			_("  (use \"git cherry-pick --abort\" to cancel the cherry-pick operation)"));
+>  	}
+>  	wt_status_print_trailer(s);
+>  }
