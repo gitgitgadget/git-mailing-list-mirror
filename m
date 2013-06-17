@@ -1,71 +1,126 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git log: Add a switch to limit the number of displayed lines
- from the commit messages
-Date: Sun, 16 Jun 2013 23:18:52 -0700
-Message-ID: <20130617061852.GA6942@elie.Belkin>
-References: <1371319623.9845.34.camel@mattotaupa>
- <20130615191905.GA3363@elie.Belkin>
- <7vd2rlic2q.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH V3 1/4] git-mw: Introduction of GitMediawiki.pm
+Date: Mon, 17 Jun 2013 09:12:45 +0200
+Message-ID: <vpq8v299pn6.fsf@anie.imag.fr>
+References: <1371349893-7789-1-git-send-email-benoit.person@ensimag.fr>
+	<1371349893-7789-2-git-send-email-benoit.person@ensimag.fr>
+	<vpqobb5g679.fsf@anie.imag.fr>
+	<CAETqRChcu+N-2uNzL9_J6abR5fnduT5UVRif5NTQYOoxPTiRTw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Menzel <paulepanter@users.sourceforge.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 17 08:19:18 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>
+To: =?iso-8859-1?Q?Beno=EEt?= Person <benoit.person@ensimag.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 17 09:12:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoSmc-0007EV-51
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 08:19:18 +0200
+	id 1UoTcS-0002wo-Ob
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 09:12:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755925Ab3FQGTH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jun 2013 02:19:07 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:56058 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932151Ab3FQGTD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 02:19:03 -0400
-Received: by mail-pd0-f179.google.com with SMTP id q10so2428926pdj.38
-        for <git@vger.kernel.org>; Sun, 16 Jun 2013 23:19:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=VRri6mxGcDv9c//oVLwg1OcQYGLN6K3c4PYFHtDiP/w=;
-        b=RxeNChyOC0HNAQlLmHCplq72AhpKmdemJUd7soyqQC4nUomGGiv0oaCQZyLAId4q0f
-         fZVLkdwUxfBttftvTppZ5dt+8qkqRgwKqmTJzv9eUcn4YvuL13aySyWj+WbxWHLo+G74
-         q+fIc0eRo+u60pMLxmnvjHs0yLL6Uf5hwwCNRNc3Sk9hS+GgCretJGZRbWdruHy0Exhh
-         13pBTDmVKAlPdxTbtzFy/6JF1dKVVc8DgT5epzONJOcxKMmRYsWVbUTmQX0wl9BxVX3I
-         VxKIPqL9J5mRrAUPNhLCqsMV196L2rfgyW7KrUuz8jyukvRkh5il7vbpp3cfUyF5MzwS
-         KoLg==
-X-Received: by 10.66.147.167 with SMTP id tl7mr11598471pab.40.1371449942193;
-        Sun, 16 Jun 2013 23:19:02 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPSA id ix3sm12532862pbc.37.2013.06.16.23.19.00
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 16 Jun 2013 23:19:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vd2rlic2q.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S932140Ab3FQHMt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jun 2013 03:12:49 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:46613 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750880Ab3FQHMs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 03:12:48 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5H7CjR6011288
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 17 Jun 2013 09:12:45 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UoTcL-0001bK-Ur; Mon, 17 Jun 2013 09:12:46 +0200
+In-Reply-To: <CAETqRChcu+N-2uNzL9_J6abR5fnduT5UVRif5NTQYOoxPTiRTw@mail.gmail.com>
+	(=?iso-8859-1?Q?=22Beno=EEt?= Person"'s message of "Mon, 17 Jun 2013
+ 01:41:22 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 17 Jun 2013 09:12:45 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228048>
 
-Junio C Hamano wrote:
+Beno=EEt Person <benoit.person@ensimag.fr> writes:
 
-> Or inside "less" that is spawned by "git log -p", I often say this:
->
->     /^commit .*|^diff --git .*<ENTER>
->
-> and navigate with 'n' and 'p'.
+> On 16 June 2013 22:18, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wr=
+ote:
+>> benoit.person@ensimag.fr writes:
+>>
+>>> changes from the V2:
+>>>   - Add a way to test, without installation, code that uses GitMedi=
+awiki.pm.
+>>
+>> This still needs to be documented, even very quickly, somewhere in t=
+he
+>> code (e.g a comment in the Makefile).
+> Well, I think I will have to re-read some docs (and some earlier
+> reviews) about what to write in commit messages, in the emails, in th=
+e
+> code as comments and in the documentation ... I am just totally lost
+> right now :/ .
 
-Hm, that implies an interesting trick.  If I run
+Don't worry, reviews are meant to improve your code (present and
+future), not to blame you ;-).
 
-	LESS='FRSX +/^commit |^diff --git ' git log -p
+Just think about what you expect as a user or developer. Would you run
+"git log Makefile" or "git blame Makefile" to know how to use the
+Makefile? Commit messages are primarily meant for reviewers ("here's
+some code, and here's why it's good and why you should merge it"), and
+can be very useful when bisecting a regression or blaming a source file=
+=2E
 
-then 'n' and shift+'n' can be used for navigating without having to
-spell out the /pattern to start by hand.
+Right now, git-remote-mediawiki has only little doc, and the user manua=
+l
+is hosted on a GitHub wiki, not in the source. So there's no ideal plac=
+e=20
+to say how to use the tool as a developer, but a comment in the Makefil=
+e
+should be OK.
+
+>> Also, it seems to be only part of the solution. With your change, fr=
+om
+>> contrib/mw-to-git/ and after running only "make",
+>>
+>> ./git-mw takes the installed version of GitMediawiki.pm in priority
+>>
+>> ../../bin-wrappers/git takes the installed version of git-mw only (i=
+=2Ee.
+>> does not know "git mw" if "make install" hasn't been ran).
+> Same thing as the documentation point, I think I am a bit lost in tha=
+t
+> whole thing. I will re-look into it for the next version :/ .
+
+In short, the include path should contain both the *.pm file and the
+git-<foo> ones.
+
+>>>  perlcritic:
+>>> -     perlcritic -2 *.perl
+>>> +     perlcritic -2 *.perl
+>>> \ No newline at end of file
+>>
+>> Please, avoid these whitespace-only changes. They create noise durin=
+g
+>> review, and more potential conflicts.
+> For that one, I don't know why git assumes there is a change in it :
+
+I think you removed a newline from the end of the file. It's usually
+considered good practice to have this trailing newline (e.g. so that
+"cat file" in a terminal doesn't put your prompt after the last line).
+IIRC, it's actually required to call the file a "text file" according t=
+o
+POSIX.
+
+> I will look into that for the next version ...
+
+In any case, using "git add -p" and if needed its "s" command avoids
+introducing unwanted things in the commit.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
