@@ -1,105 +1,193 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/6] Fix checkout-dash to work with rebase
-Date: Sun, 16 Jun 2013 21:52:26 -0700
-Message-ID: <7v1u81ibjp.fsf@alter.siamese.dyndns.org>
-References: <1371372316-16059-1-git-send-email-artagnon@gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] mergetool--lib: refactor {diff,merge}_cmd logic
+Date: Sun, 16 Jun 2013 22:31:29 -0700
+Message-ID: <CAJDDKr5ewcYgtZn-oCQ5b=rGix5EALRdiSaNMatOwtP75e0h3g@mail.gmail.com>
+References: <828585499e535649d14ef0ecd0f53403aefb10c2.1371405056.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 17 06:52:33 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Mon Jun 17 07:31:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoRQf-0001s8-DU
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 06:52:33 +0200
+	id 1UoS2Q-0000iL-Gw
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 07:31:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752115Ab3FQEw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jun 2013 00:52:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48278 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750867Ab3FQEw2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 00:52:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6110322B8F;
-	Mon, 17 Jun 2013 04:52:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p5FSNeB0pg2K/xNwTmiJwaWCe7A=; b=Sl55z3
-	H8n3K8Oy8gl5aQKUoVCIex9ayuZwZ5PEPQYKUKf0Me1cn08t5V71azYuGdgvJTif
-	PlGzlfONlTsu9lKarKK5J6z26dmU3jZfoaTJ9EX1vzUTr0SmpWf7cG+G1PMzLnda
-	xjMS6WlOP4BLKFHRMdvSX79DuwYeQran6AtL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tw9YnvS1nk/hhdeAkKXV+YwTa9UnNHub
-	1qe5ju3+n3I7MDmOLXfOwmNiBjM8fnGyHambmcEM6Zs7jy5aC1GB3ssuHgihg9Oa
-	fVVXJmIYESiwIibPQ36/fZ9AM+IPw0WiXxgdJV4snC0zzlvJj3uZBR44wSz+GMaA
-	4IWF+S07Lzk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5768522B8D;
-	Mon, 17 Jun 2013 04:52:28 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF9F022B8C;
-	Mon, 17 Jun 2013 04:52:27 +0000 (UTC)
-In-Reply-To: <1371372316-16059-1-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Sun, 16 Jun 2013 14:15:10 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B5ADD11A-D709-11E2-8CBC-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755590Ab3FQFba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Jun 2013 01:31:30 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:49132 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753718Ab3FQFb3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 01:31:29 -0400
+Received: by mail-pd0-f175.google.com with SMTP id 4so2398794pdd.20
+        for <git@vger.kernel.org>; Sun, 16 Jun 2013 22:31:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=wPt59pDn0obhz7+SQZ2BFV5qP6ytYa1kpWYQ/uGFryE=;
+        b=tTDWOVSq2OZI4zMKZPOCVKaVBnK/1QrvEnxwJms47DcAfUDixLWovtQ1XBAQJS9t65
+         ivF0Kh0jiVaUx/Li9LLRD8wSit5fuhIJTJhBm+tWXjP0aln/JTcjaOZY+t32HxZCoKRd
+         dLooSmtAY4n92az20o2AfucfgxruoxeN4BCJACr7i+tZR3aO0WznNllG2SMbq9dZk4Z7
+         4W5uPzAuKo/eNcYvCcgSTAXAS5GY2Y1zgORxvxzOHaWVTP1jxrv+XMUqXUiLkryKasXx
+         /lnp8QcUXKx54FHIyU3bxFvt1t93J1p1YOcILw6JS+QkvrqK/W4gyFx7r5UIhCWg5hAt
+         1JaQ==
+X-Received: by 10.68.20.165 with SMTP id o5mr11100598pbe.220.1371447089310;
+ Sun, 16 Jun 2013 22:31:29 -0700 (PDT)
+Received: by 10.70.20.161 with HTTP; Sun, 16 Jun 2013 22:31:29 -0700 (PDT)
+In-Reply-To: <828585499e535649d14ef0ecd0f53403aefb10c2.1371405056.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228043>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-
-> So after extensive discussions with Junio, I have updated [5/6] to
-> special-case rebase and rebase -i instead of dropping the "HEAD
-> detached from" message altogether.  Also, [1/6] includes two more
-> tests, as suggested by Junio.
+On Sun, Jun 16, 2013 at 10:51 AM, John Keeping <john@keeping.me.uk> wrote:
+> Instead of needing a wrapper to call the diff/merge command, simply
+> provide the diff_cmd and merge_cmd functions for user-specified tools in
+> the same way as we do for built-in tools.
 >
-> Junio: The message is now the constant "rebase in progress; onto
-> $ONTO".
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
 
-That message is better than I was anticipating.
+This is a nice cleanup.
 
-I was actually assuming that you would leave them as they are
-i.e. "# HEAD detached at xxx", as we agreed that we will see them
-improved anyway by the other topic.
+Acked-by: David Aguilar <davvid@gmail.com>
 
-I am still puzzled to see that the change to checkout comes at the
-very end.  With "do not depend on rebase reflog messages" done
-before the "checkout: respect reflog-action", I was hoping that we
-can have changes to the actual reflog message made to rebase (patch
-2 and 3) can be done at the very end.  Was I missing something else?
 
-In other words, the order I was anticipating to see after the
-discussion (this is different from saying "A series that is not
-ordered like this is unacceptable") was:
+>  git-mergetool--lib.sh | 82 ++++++++++++++++++++++-----------------------------
+>  1 file changed, 35 insertions(+), 47 deletions(-)
+>
+> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+> index e338be5..6a72106 100644
+> --- a/git-mergetool--lib.sh
+> +++ b/git-mergetool--lib.sh
+> @@ -114,6 +114,33 @@ valid_tool () {
+>         test -n "$cmd"
+>  }
+>
+> +setup_user_tool () {
+> +       merge_tool_cmd=$(get_merge_tool_cmd "$tool")
+> +       test -n "$merge_tool_cmd" || return 1
+> +
+> +       diff_cmd () {
+> +               ( eval $merge_tool_cmd )
+> +               status=$?
+> +               return $status
+> +       }
+> +
+> +       merge_cmd () {
+> +               trust_exit_code=$(git config --bool \
+> +                       "mergetool.$1.trustExitCode" || echo false)
+> +               if test "$trust_exit_code" = "false"
+> +               then
+> +                       touch "$BACKUP"
+> +                       ( eval $merge_tool_cmd )
+> +                       status=$?
+> +                       check_unchanged
+> +               else
+> +                       ( eval $merge_tool_cmd )
+> +                       status=$?
+> +               fi
+> +               return $status
+> +       }
+> +}
+> +
+>  setup_tool () {
+>         tool="$1"
+>
+> @@ -142,15 +169,15 @@ setup_tool () {
+>
+>         if ! test -f "$MERGE_TOOLS_DIR/$tool"
+>         then
+> -               # Use a special return code for this case since we want to
+> -               # source "defaults" even when an explicit tool path is
+> -               # configured since the user can use that to override the
+> -               # default path in the scriptlet.
+> -               return 2
+> +               setup_user_tool
+> +               return $?
+>         fi
+>
+>         # Load the redefined functions
+>         . "$MERGE_TOOLS_DIR/$tool"
+> +       # Now let the user override the default command for the tool.  If
+> +       # they have not done so then this will return 1 which we ignore.
+> +       setup_user_tool
+>
+>         if merge_mode && ! can_merge
+>         then
+> @@ -187,20 +214,7 @@ run_merge_tool () {
+>         status=0
+>
+>         # Bring tool-specific functions into scope
+> -       setup_tool "$1"
+> -       exitcode=$?
+> -       case $exitcode in
+> -       0)
+> -               :
+> -               ;;
+> -       2)
+> -               # The configured tool is not a built-in tool.
+> -               test -n "$merge_tool_path" || return 1
+> -               ;;
+> -       *)
+> -               return $exitcode
+> -               ;;
+> -       esac
+> +       setup_tool "$1" || return 1
+>
+>         if merge_mode
+>         then
+> @@ -213,38 +227,12 @@ run_merge_tool () {
+>
+>  # Run a either a configured or built-in diff tool
+>  run_diff_cmd () {
+> -       merge_tool_cmd=$(get_merge_tool_cmd "$1")
+> -       if test -n "$merge_tool_cmd"
+> -       then
+> -               ( eval $merge_tool_cmd )
+> -               status=$?
+> -               return $status
+> -       else
+> -               diff_cmd "$1"
+> -       fi
+> +       diff_cmd "$1"
+>  }
+>
+>  # Run a either a configured or built-in merge tool
+>  run_merge_cmd () {
+> -       merge_tool_cmd=$(get_merge_tool_cmd "$1")
+> -       if test -n "$merge_tool_cmd"
+> -       then
+> -               trust_exit_code=$(git config --bool \
+> -                       "mergetool.$1.trustExitCode" || echo false)
+> -               if test "$trust_exit_code" = "false"
+> -               then
+> -                       touch "$BACKUP"
+> -                       ( eval $merge_tool_cmd )
+> -                       status=$?
+> -                       check_unchanged
+> -               else
+> -                       ( eval $merge_tool_cmd )
+> -                       status=$?
+> -               fi
+> -               return $status
+> -       else
+> -               merge_cmd "$1"
+> -       fi
+> +       merge_cmd "$1"
+>  }
+>
+>  list_merge_tool_candidates () {
+> --
+> 1.8.3.779.g691e267
+>
 
->   wt-status: remove unused field in grab_1st_switch_cbdata
 
-This is an unrelated clean-up, and can be done before anything else.
 
->   t/checkout-last: checkout - doesn't work after rebase
-
-This spells out what we want to happen at the end and marks the
-current breakage.
-
->   status: do not depend on rebase reflog messages
-
-This compensates for fallouts from the next change.
-
->   checkout: respect GIT_REFLOG_ACTION
-
-And this is the fix, the most important step.
-
->   rebase: prepare to write reflog message for checkout
->   rebase -i: prepare to write reflog message for checkout
-
-And these are icing on the cake, but that cannot be done before
-status is fixed.
+--
+David
