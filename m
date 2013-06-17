@@ -1,116 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/git-push.txt: explain better cases where --force is dangerous
-Date: Mon, 17 Jun 2013 14:38:47 -0700
-Message-ID: <7v7ghsbeoo.fsf@alter.siamese.dyndns.org>
-References: <1371491561-19117-1-git-send-email-Matthieu.Moy@imag.fr>
-	<51BF7B1C.2040703@xiplink.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] unpack-trees: don't shift conflicts left and right
+Date: Tue, 18 Jun 2013 00:29:27 +0200
+Message-ID: <51BF8DC7.4020008@lsrfire.ath.cx>
+References: <1371339883-22775-1-git-send-email-rene.scharfe@lsrfire.ath.cx> <7va9mqlvpu.fsf@alter.siamese.dyndns.org> <51BF71D4.402@lsrfire.ath.cx> <7vehc0bh79.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	philipoakley@iee.org, artagnon@gmail.com
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Mon Jun 17 23:38:56 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 00:29:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uoh8Z-00046M-QS
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 23:38:56 +0200
+	id 1Uohvg-0004Q4-3V
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 00:29:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463Ab3FQViv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jun 2013 17:38:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59078 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751169Ab3FQViu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 17:38:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 028F32848D;
-	Mon, 17 Jun 2013 21:38:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wz40WKhp1uVvDaI9nZV/LVk6kEU=; b=Kp4g2n
-	YIBtk8jMr0yEXdnkx64U8f6dKfnkZ+A7W3ttge75qAk4BZJklExE1rPEBC+56Oc4
-	mKDY4pnzWA3Ejh++YmseQJNou+FjfS6QCGTWIQ3EisxrPteDdOM8A0bVrfdFZWiW
-	bnbvVdDXv5qc6438YMBYMuqQ5Ht8alHDbINgQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fMoY1BAeN2iXYOFvq+QOeHUj/1Ogfu5v
-	wzq/FsIqnvFnACCPN+5K2OoUx/UyGp8RzbIS/GI31guzanUXOKXGv6xr5oss8GcB
-	34FqwG+ORF62manJFXzaeCB6pJA2jFCOtVLZc8xWquqTex3g6xWmS1Ol96Wsyt78
-	HzAoAGgoGS4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAC872848C;
-	Mon, 17 Jun 2013 21:38:49 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 501F22848B;
-	Mon, 17 Jun 2013 21:38:49 +0000 (UTC)
-In-Reply-To: <51BF7B1C.2040703@xiplink.com> (Marc Branchaud's message of "Mon,
-	17 Jun 2013 17:09:48 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4BEC5232-D796-11E2-9303-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752526Ab3FQW3f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jun 2013 18:29:35 -0400
+Received: from india601.server4you.de ([85.25.151.105]:43848 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752376Ab3FQW3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 18:29:35 -0400
+Received: from [192.168.2.102] (p4FFDAFF1.dip0.t-ipconnect.de [79.253.175.241])
+	by india601.server4you.de (Postfix) with ESMTPSA id ECF81134;
+	Tue, 18 Jun 2013 00:29:32 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <7vehc0bh79.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228119>
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
-
-> On 13-06-17 01:52 PM, Matthieu Moy wrote:
->> The behavior of "git push --force" is rather clear when it updates only
->> one remote ref, but running it when pushing several branches can really
->> be dangerous. Warn the users a bit more and give them the alternative to
->> push only one branch.
+Am 17.06.2013 22:44, schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+>>> The information is only useful for the unpack_trees callback, and
+>>> "info->data" is a more appropriate place to hang such a callback
+>>> specific data.
+>>>
+>>> Perhaps we should use info->data field to point at
+>>>
+>>> 	struct {
+>>>           	struct unpack_trees_options *o;
+>>>           	unsigned long df_conflict;
+>>> 	};
+>>>
+>>> and get rid of info->conflicts field?
 >>
->> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->> ---
->>   Documentation/git-push.txt | 8 ++++++++
->>   1 file changed, 8 insertions(+)
->>
->> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
->> index 938d1ee..9b9e7d1 100644
->> --- a/Documentation/git-push.txt
->> +++ b/Documentation/git-push.txt
->> @@ -136,6 +136,14 @@ already exists on the remote side.
->>   	not an ancestor of the local ref used to overwrite it.
->>   	This flag disables the check.  This can cause the
->>   	remote repository to lose commits; use it with care.
->> +	Note that `--force` applies to all the refs that are pushed,
->> +	hence using it with `push.default` set to `matching` or with
->> +	multiple push destination configured may override refs other
->
-> s/destination/destinations/
+>> Here's a patch that does so, but it complicates matters quite a bit.
+>> Did I miss anything (or rather: add too much)?
+>=20
+> I do not think so.  These bits are needed per recursion level, and
+> it cannot be shoved into unpack_trees_options so I suspect that your
+> patch is the best we can do.  Or, perhaps we can
+>=20
+>   - add df_conflict to struct unpack_trees_options;
+>=20
+>   - have traverse_info->data point at struct unpack_trees_options as
+>     before; and
+>=20
+>   - save the old value of o->df_conflict on the stack of
+>     traverse_trees_recursive(), update the field in place, and
+>     restore it when the recursion returns???
 
-Good eyes.
+I'm not sure unpack_trees_options is the right place for that, but it
+already has several members that aren't really "options".  It would
+look something like this:
 
-After I re-read the one, I found that "override" somewhat a strange
-expression.  There is nothing that overrides or to be overriden.
 
-How about putting it like this?
+ tree-walk.h    | 1 -
+ unpack-trees.c | 9 +++++++--
+ unpack-trees.h | 1 +
+ 3 files changed, 8 insertions(+), 3 deletions(-)
 
- Documentation/git-push.txt | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 8b637d3..21294aa 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -124,6 +124,15 @@ no `push.default` configuration variable is set.
- 	not an ancestor of the local ref used to overwrite it.
- 	This flag disables the check.  This can cause the
- 	remote repository to lose commits; use it with care.
-+	Note that `--force` applies to all the refs that are pushed,
-+	hence using it with `push.default` set to `matching` or with
-+	multiple push destinations configured with `remote.*.push`
-+	may push out refs other than the current branch (including
-+	local refs that are strictly behind their remote counterpart).
-+	To force a push to only one branch, use a `+` in front of the
-+	refspec to push	(e.g `git push origin +master` to force a push
-+	to the `master`	branch). See the `<refspec>...` section above
-+	for details.
- 
- --repo=<repository>::
- 	This option is only relevant if no <repository> argument is
+diff --git a/tree-walk.h b/tree-walk.h
+index ae04b64..4876695 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -46,7 +46,6 @@ struct traverse_info {
+ 	int pathlen;
+ 	struct pathspec *pathspec;
+=20
+-	unsigned long df_conflicts;
+ 	traverse_callback_t fn;
+ 	void *data;
+ 	int show_all_errors;
+diff --git a/unpack-trees.c b/unpack-trees.c
+index b27f2a6..1c0ead0 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -454,6 +454,10 @@ static int traverse_trees_recursive(int n, unsigne=
+d long dirmask,
+ 	void *buf[MAX_UNPACK_TREES];
+ 	struct traverse_info newinfo;
+ 	struct name_entry *p;
++	struct unpack_trees_options *o =3D info->data;
++	unsigned long saved_df_conflicts =3D o->df_conflicts;
++
++	o->df_conflicts |=3D df_conflicts;
+=20
+ 	p =3D names;
+ 	while (!p->mode)
+@@ -464,7 +468,6 @@ static int traverse_trees_recursive(int n, unsigned=
+ long dirmask,
+ 	newinfo.pathspec =3D info->pathspec;
+ 	newinfo.name =3D *p;
+ 	newinfo.pathlen +=3D tree_entry_len(p) + 1;
+-	newinfo.df_conflicts |=3D df_conflicts;
+=20
+ 	for (i =3D 0; i < n; i++, dirmask >>=3D 1) {
+ 		const unsigned char *sha1 =3D NULL;
+@@ -480,6 +483,8 @@ static int traverse_trees_recursive(int n, unsigned=
+ long dirmask,
+ 	for (i =3D 0; i < n; i++)
+ 		free(buf[i]);
+=20
++	o->df_conflicts =3D saved_df_conflicts;
++
+ 	return ret;
+ }
+=20
+@@ -565,7 +570,7 @@ static int unpack_nondirectories(int n, unsigned lo=
+ng mask,
+ {
+ 	int i;
+ 	struct unpack_trees_options *o =3D info->data;
+-	unsigned long conflicts =3D info->df_conflicts | dirmask;
++	unsigned long conflicts =3D o->df_conflicts | dirmask;
+=20
+ 	/* Do we have *only* directories? Nothing to do */
+ 	if (mask =3D=3D dirmask && !src[0])
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 36a73a6..05ee968 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -66,6 +66,7 @@ struct unpack_trees_options {
+=20
+ 	struct cache_entry *df_conflict_entry;
+ 	void *unpack_data;
++	unsigned long df_conflicts;
+=20
+ 	struct index_state *dst_index;
+ 	struct index_state *src_index;
