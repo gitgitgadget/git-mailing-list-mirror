@@ -1,70 +1,109 @@
-From: =?iso-8859-1?Q?Stefan_Sch=FC=DFler?= <mail@stefanschuessler.de>
-Subject: Git pull silently removing files in the index
-Date: Mon, 17 Jun 2013 12:14:00 +0200
-Message-ID: <D08911E9-6589-4A1F-9B1C-9D3F66438753@stefanschuessler.de>
-Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 17 12:14:18 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] config doc: rewrite push.default section
+Date: Mon, 17 Jun 2013 13:09:44 +0200
+Message-ID: <vpqip1d803r.fsf@anie.imag.fr>
+References: <1371377188-18938-1-git-send-email-artagnon@gmail.com>
+	<7vli69iff2.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 17 13:10:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoWRw-0000K5-AD
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 12:14:12 +0200
+	id 1UoXJu-0004qh-9S
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 13:09:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932385Ab3FQKOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jun 2013 06:14:08 -0400
-Received: from mail-bk0-f45.google.com ([209.85.214.45]:61928 "EHLO
-	mail-bk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932277Ab3FQKOG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Jun 2013 06:14:06 -0400
-Received: by mail-bk0-f45.google.com with SMTP id je9so1087549bkc.18
-        for <git@vger.kernel.org>; Mon, 17 Jun 2013 03:14:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:content-type:content-transfer-encoding:subject
-         :message-id:date:to:mime-version:x-mailer;
-        bh=LCbubr9YBT1ZFWerHtsVEYOxWpGdrVtBc7npe459ToI=;
-        b=dfTxuydlKXfO9asQj0AhKENwnlZAQ7HEPZZxe78bHgS8rdyuX8zJh3VwWfeqIJl7HE
-         3w/2qUlvelcm8XqYy/MjPwD1KSrOv+hWweW3ZpKTgYka521ijOYnkuJlKSAUZLM2xTr7
-         A9pu8IgH9gzZHcV9uOnlt+yJIGdPvdvQzEhZLhYaIoUC3T3PawXGRFEUrJan4PtKu6dF
-         VzfFU8E0itm4FP1MRlKZuFKZkRjlKVJGLKheWUEgJyFc6SDgLNAs/kkf2r9iONh7xw59
-         98iwf2exOkIbeT1WQsA/mtsmQhbx1m0VPAYwxhwjxBWkYVCLmNYl1Zv8m8/vptKkdjpF
-         /s6g==
-X-Received: by 10.205.9.129 with SMTP id ow1mr1756008bkb.130.1371464044941;
-        Mon, 17 Jun 2013 03:14:04 -0700 (PDT)
-Received: from [192.168.2.106] (p5790DD9E.dip0.t-ipconnect.de. [87.144.221.158])
-        by mx.google.com with ESMTPSA id oy6sm3738770bkb.14.2013.06.17.03.14.04
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 17 Jun 2013 03:14:04 -0700 (PDT)
-X-Mailer: Apple Mail (2.1508)
+	id S1756171Ab3FQLJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Jun 2013 07:09:52 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:47827 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756047Ab3FQLJu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 07:09:50 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5HB9gZP016294
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 17 Jun 2013 13:09:43 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UoXJg-0008TT-B4; Mon, 17 Jun 2013 13:09:44 +0200
+In-Reply-To: <7vli69iff2.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 16 Jun 2013 20:28:49 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 17 Jun 2013 13:09:43 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228061>
 
-I think there's a bug in git pull. Doing a git pull in a fresh repository without any commits removes files in the index.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Example:
+>> +* `matching` - push the refspec ":".  In other words, push all
+>> +  branches having the same name in both ends, even if it means
+>> +  non-fast-forward updates.  This is for those who prepare all the
+>> +  branches into a publishable shape and then push them out with a
+>> +  single command.  Dangerous, and inappropriate unless you are the
+>> +  only person updating your push destination.
+>
+> It was already pointed out that unnecessary negativity needs to be
+> fixed, but more importantly the above "Dangerous" is not even
+> correct.
 
-  $ mkdir foo 
-  $ cd foo
-  $ git init
-  $ touch file1 file2
-  $ git add file1
-  $ ls
-  file1 file2
-  $ git pull https://github.com/sos4nt/empty.git master
-  $ ls
-  file2
+What's really dangerous is the --force flag. A few weeks ago I had to
+help a colleague who did a "git push --force" to update his branch, and
+he lost data on his co-worker's branches (thanks to "git reflog", it
+wasn't an actual data loss, but still pretty bad).
 
-"file2" is still there, but "file1" was silently removed and no error message was shown.
+But then the place to warn loudly is the doc for --force. What about
+this?
 
-I'm running git 1.8.3.1
+------- 8< ------- 8< ------- 8< ------- 8< ------- 8< ------- 8< 
 
-Cheers, Stefan
+>From a529588dd8df84e54e5ec267068248cc555373f5 Mon Sep 17 00:00:00 2001
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Date: Mon, 17 Jun 2013 13:02:39 +0200
+Subject: [PATCH] Documentation/git-push.txt: explain better cases where
+ --force is dangerous
+
+The behavior of "git push --force" is rather clear when it updates only
+one remote ref, but running it when pushing several branches can really
+be dangerous. Warn the users a bit more and give them the alternative to
+push only one branch.
+
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/git-push.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 938d1ee..0899a35 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -136,6 +136,13 @@ already exists on the remote side.
+        not an ancestor of the local ref used to overwrite it.
+        This flag disables the check.  This can cause the
+        remote repository to lose commits; use it with care.
++       Note that `--force` applies to all the refs that are pushed,
++       hence using `git push --all --force`, or `git push --force`
++       with `push.default` set to `matching` may override refs other
++       than the current branch (including local refs that are
++       strictly behind their remote counterpart). To force a push to
++       only one branch, use `git push <remote> +<branch>` instead of
++       `--force`.
+ 
+ --repo=<repository>::
+        This option is only relevant if no <repository> argument is
+-- 
+1.8.3.1.495.g13f33cf.dirty
+
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
