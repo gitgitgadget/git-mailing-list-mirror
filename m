@@ -1,211 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/6] Fix checkout-dash to work with rebase
-Date: Mon, 17 Jun 2013 10:56:13 -0700
-Message-ID: <7vk3lsei4i.fsf@alter.siamese.dyndns.org>
-References: <1371372316-16059-1-git-send-email-artagnon@gmail.com>
-	<7v1u81ibjp.fsf@alter.siamese.dyndns.org>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] diff: add --ignore-blank-lines option
+Date: Mon, 17 Jun 2013 19:58:43 +0200
+Message-ID: <CALWbr2w3hjdbsEUO4ta7UyoexTfeZQ864F4UeeAyr0uKvQRXbg@mail.gmail.com>
+References: <7vhah35jn8.fsf@alter.siamese.dyndns.org>
+	<1371301305-30160-1-git-send-email-apelisse@gmail.com>
+	<7vzjuog175.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 17 19:56:31 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 17 19:58:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UodfH-000247-Fz
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 19:56:28 +0200
+	id 1Uodhb-0006SD-70
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 19:58:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754634Ab3FQR4S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jun 2013 13:56:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40644 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754539Ab3FQR4Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 13:56:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 04FAA281D7;
-	Mon, 17 Jun 2013 17:56:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=br92DOTGI2NFXcxGVgBE07oKVsk=; b=GJZEqRNgfa/gElq4ksCK
-	rvfz3A/sclgu0R5tXwJL+0vsdfFCpxCPdeeCpy5dba/rbhqJOVfWuJk3EZSb4Pls
-	luO5wz690yCK/oLCJiFiuQm0/QDzp4q08eSeAPhqU+/GiWUcA+CeAzZc70mT3tdY
-	Ss7hdalCABnqWdC2gyJWgqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=R3cMbpdsGNeRZJWi5EnnXNsnZ2uwnot4c2Tbs9DXYn/uV2
-	eHeoixKUybYcg+vOpiZ6rnLyhjtFkQII7LGou/UaZr30f1USnR1z//IOVggjnIT5
-	s76NoYz/QqZEbKEiAF0tJkaI69b//zLaD9AsiOPq5wwNSmhurgHqoXTtun3hs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB376281D5;
-	Mon, 17 Jun 2013 17:56:15 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0FE75281B8;
-	Mon, 17 Jun 2013 17:56:14 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 342970AE-D777-11E2-92B3-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753713Ab3FQR6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Jun 2013 13:58:46 -0400
+Received: from mail-qe0-f43.google.com ([209.85.128.43]:48131 "EHLO
+	mail-qe0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753254Ab3FQR6o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 13:58:44 -0400
+Received: by mail-qe0-f43.google.com with SMTP id q19so1864390qeb.16
+        for <git@vger.kernel.org>; Mon, 17 Jun 2013 10:58:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=4qhqFufEQOAQIyIlIdyOBv1msfWgruXf9vj0NOHp/S4=;
+        b=0fTreuE6k1Nl7Hwlu9JM8bMksAc7oEAStsKQmaM/NI0K5z9DrApKfyl7MjvNEa0qzu
+         4GuBkAi4VPuHpSQjRb56aBs2fa2Rj2Jbaj7dJibmXwe/xBzZEyQ2fQvcQ2Kmxa3PqIV6
+         dUHpHOd/MSE7up0Rxthci+4ZNoYDEJoaz/OCWrgFYVPY8hSNbeke+t2sobPRJMMlHfcB
+         kxrlgYBaLXWZjFjlDV3H4EhByzqXLVzUrKjrSid5MDMSbxVEd9unRDAUcaKbuRY2n4K1
+         o/GEnOM5r2Qj/ta/D+xwLEKpinGnkZsYszpmmVWR7FvllCQLrQShokv6E09c7Uc3YhmD
+         u1/g==
+X-Received: by 10.224.69.66 with SMTP id y2mr18028603qai.61.1371491924021;
+ Mon, 17 Jun 2013 10:58:44 -0700 (PDT)
+Received: by 10.49.108.105 with HTTP; Mon, 17 Jun 2013 10:58:43 -0700 (PDT)
+In-Reply-To: <7vzjuog175.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228093>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> In other words, the order I was anticipating to see after the
-> discussion (this is different from saying "A series that is not
-> ordered like this is unacceptable") was:
+On Mon, Jun 17, 2013 at 6:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Antoine Pelisse <apelisse@gmail.com> writes:
 >
->>   wt-status: remove unused field in grab_1st_switch_cbdata
+>> So here is a more thorough description of the option:
 >
-> This is an unrelated clean-up, and can be done before anything else.
+>> - real changes are interesting
 >
->>   t/checkout-last: checkout - doesn't work after rebase
+> OK, I think I can understand it.
 >
-> This spells out what we want to happen at the end and marks the
-> current breakage.
+>> - blank lines that are close enough (less than context size) to
+>>   interesting changes are considered interesting (recursive definition)
 >
->>   status: do not depend on rebase reflog messages
+> OK.
 >
-> This compensates for fallouts from the next change.
+>> - "context" lines are used around each hunk of interesting changes
 >
->>   checkout: respect GIT_REFLOG_ACTION
+> OK.
 >
-> And this is the fix, the most important step.
+>> - If two hunks are separated by less than "inter-hunk-context", they
+>>   will be merged into one.
 >
->>   rebase: prepare to write reflog message for checkout
->>   rebase -i: prepare to write reflog message for checkout
+> Makes sense.
 >
-> And these are icing on the cake, but that cannot be done before
-> status is fixed.
-
-I actually tried to reorder the patches and they seem to work OK as
-expected.  And I think it makes sense to order them the way I've
-been suggesting, so I'll tentatively queue the result of reordering
-on 'rr/rebase-checkout-reflog' and push it out as a part of 'pu'.
-
-Please check to see if I introduced a new bug while doing so.
-
-Regardless of the ordering, however, I suspect two patches that
-change the message recorded in reflog in "rebase" need further
-fixing.
-
-For example, the one in "git reabse" does this:
-
-    GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
-    git checkout -q "$onto^0" || die "could not detach HEAD"
-    git update-ref ORIG_HEAD $orig_head
-    ...
-    run_specific_rebase
-
-But the specific rebase, e.g. git-rebase--interactive, does this:
-
-	case $head_name in
-	refs/*)
-		message="$GIT_REFLOG_ACTION: $head_name onto $onto" &&
-		git update-ref -m "$message" $head_name $newhead $orig_head &&
-		git symbolic-ref \
-		  -m "$GIT_REFLOG_ACTION: returning to $head_name" \
-		  HEAD $head_name
-		;;
-	esac && {
-
-I think the message you added to "git reabse" is only meant for that
-specific "checkout $onto", but it is set globally.  Wouldn't it
-affect later use, which expected it to be "rebase" and nothing else?
-
-Perhaps something like this on top of the entire series may be
-sufficient (which will be queued as "SQUASH???" at the tip).
-
-Hint for anybody (not limited to Ram):
-
-There also are other 'git checkout' invocations in git-rebase\*.sh
-that are not yet covered by these "nicer reflog message" patches,
-which may want to be fixed up before these two icing-on-cake patches
-become ready to be merged; see output of
-
-	git grep -C2 'git checkout' -- git-rebase\*.sh
-
-Thanks.
-
- git-rebase--interactive.sh    | 15 ++++++++++-----
- git-rebase.sh                 |  4 ++--
- t/t3404-rebase-interactive.sh | 15 +++++++++++++++
- 3 files changed, 27 insertions(+), 7 deletions(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index a05a6e4..f21ff7c 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -837,9 +837,11 @@ comment_for_reflog start
- 
- if test ! -z "$switch_to"
- then
--	GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $switch_to"
--	output git checkout "$switch_to" -- ||
--		die "Could not checkout $switch_to"
-+	(
-+		GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $switch_to"
-+		export GIT_REFLOG_ACTION
-+		output git checkout "$switch_to" --
-+	) || die "Could not checkout $switch_to"
- fi
- 
- orig_head=$(git rev-parse --verify HEAD) || die "No HEAD?"
-@@ -981,7 +983,10 @@ has_action "$todo" ||
- 
- test -d "$rewritten" || test -n "$force_rebase" || skip_unnecessary_picks
- 
--GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
--output git checkout $onto || die_abort "could not detach HEAD"
-+(
-+	GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
-+	export GIT_REFLOG_ACTION
-+	output git checkout $onto
-+) || die_abort "could not detach HEAD"
- git update-ref ORIG_HEAD $orig_head
- do_rest
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 7d55372..2344eef 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -523,8 +523,8 @@ test "$type" = interactive && run_specific_rebase
- # Detach HEAD and reset the tree
- say "$(gettext "First, rewinding head to replay your work on top of it...")"
- 
--GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
--git checkout -q "$onto^0" || die "could not detach HEAD"
-+GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name" \
-+	git checkout -q "$onto^0" || die "could not detach HEAD"
- git update-ref ORIG_HEAD $orig_head
- 
- # If the $onto is a proper descendant of the tip of the branch, then
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index a58406d..c175ef1 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -934,6 +934,21 @@ test_expect_success 'rebase --edit-todo can be used to modify todo' '
- 	test L = $(git cat-file commit HEAD | sed -ne \$p)
- '
- 
-+test_expect_success 'rebase -i produces readable reflog' '
-+	git reset --hard &&
-+	git branch -f branch1 H &&
-+	git rebase -i --onto I F branch1 &&
-+	cat >expect <<-\EOF &&
-+	rebase -i (start): checkout I
-+	rebase -i (pick): G
-+	rebase -i (pick): H
-+	rebase -i (finish): returning to refs/heads/branch1
-+	EOF
-+	tail -n 4 .git/logs/HEAD |
-+	sed -e "s/.*	//" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'rebase -i respects core.commentchar' '
- 	git reset --hard &&
- 	git checkout E^0 &&
+>> The current implementation does the "interesting changes selection" in a
+>> single pass.
+>
+> "current" meaning "the code after this patch is applied"?  Is there
+> a possible future enhancement hinted here?
+>
+>> +xdchange_t *xdl_get_hunk(xdchange_t **xscr, xdemitconf_t const *xecfg)
+>> +{
+>> +     xdchange_t *xch, *xchp, *lxch;
+>>       long max_common = 2 * xecfg->ctxlen + xecfg->interhunkctxlen;
+>> +     long max_ignorable = xecfg->ctxlen;
+>> +     unsigned long changes = ULONG_MAX;
+>> +
+>> +     /* remove ignorable changes that are too far before other changes */
+>> +     for (xchp = *xscr; xchp && xchp->ignore; xchp = xchp->next) {
+>> +             xch = xchp->next;
+>> +
+>> +             if (xch == NULL ||
+>> +                 xch->i1 - (xchp->i1 + xchp->chg1) >= max_ignorable)
+>> +                     *xscr = xch;
+>> +     }
+>
+> This strips leading ignorable ones away until we see an unignorable
+> one.  Looks sane.
+>
+>> +     if (*xscr == NULL)
+>> +             return NULL;
+>> +
+>> +     lxch = *xscr;
+>
+> "lxch" remembers the last one that is "interesting".
+>
+>> +     for (xchp = *xscr, xch = xchp->next; xch; xchp = xch, xch = xch->next) {
+>> +             long distance = xch->i1 - (xchp->i1 + xchp->chg1);
+>> +             if (distance > max_common)
+>>                       break;
+>
+> If we see large-enough gap, the one we processed last (in xchp) is
+> the end of the current hunk.  Looks sane.
+>
+>> +             if (distance < max_ignorable &&
+>> +                 (!xch->ignore || changes == ULONG_MAX)) {
+>> +                     lxch = xch;
+>> +                     changes = ULONG_MAX;
+>
+> The current one is made into the "last interesting one we have seen"
+> and the hunk continues, if either (1) the current one is interesting
+> by itself, or (2) the last one we saw does not match some
+> unexplainable criteria to cause changes set to not ULONG_MAX.
+>
+> Puzzling.
+>
+>> +             } else if (changes != ULONG_MAX &&
+>> +                        xch->i1 + changes - (lxch->i1 + lxch->chg1) > max_common) {
+>> +                     break;
+>
+> If the last one we saw does not match some unexplainable criteria to
+> cause changes set to not ULONG_MAX, and the distance between this
+> one and the last "intersting" one is further than the context, this
+> one will not be a part of the current hunk.
+>
+> Puzzling.
+>
+> Could you add comment to the "changes" variable and explain what the
+> variable means?
+>
+>> +             } else if (!xch->ignore) {
+>> +                     lxch = xch;
+>> +                     changes = ULONG_MAX;
+>
+> When this change by itself is interesting, it becomes the "last
+> interesting one" and the hunk continues.
+>
+>> +             } else {
+>> +                     if (changes == ULONG_MAX)
+>> +                             changes = 0;
+>> +                     changes += xch->chg2;
+>
+> Puzzled beyond guessing.  Also it is curious why here and only here
+> we look at chg2 side of the things, not i1/chg1 in this whole thing.
