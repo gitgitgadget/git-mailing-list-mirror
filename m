@@ -1,247 +1,86 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [PATCH v2 6/6] test-lib: support running tests under valgrind in parallel
-Date: Mon, 17 Jun 2013 11:18:51 +0200
-Message-ID: <d68924be9b176de44c91d0378810e1120d507fd2.1371460265.git.trast@inf.ethz.ch>
-References: <cover.1371460265.git.trast@inf.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Phil Hord <phil.hord@gmail.com>, Johannes Sixt <j6t@kdbg.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 17 11:19:27 2013
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: [PATCH] [submodule] Remove duplicate call to set_rev_name
+Date: Mon, 17 Jun 2013 11:55:36 +0200
+Message-ID: <1371462936-9672-1-git-send-email-iveqy@iveqy.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: iveqy@iveqy.com
+X-From: git-owner@vger.kernel.org Mon Jun 17 11:52:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoVav-0004qy-Cf
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 11:19:25 +0200
+	id 1UoW72-0004P6-Jt
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 11:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932205Ab3FQJTH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jun 2013 05:19:07 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:40405 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755694Ab3FQJTC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 05:19:02 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 17 Jun
- 2013 11:18:50 +0200
-Received: from linux-k42r.v.cablecom.net (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 17 Jun
- 2013 11:18:52 +0200
-X-Mailer: git-send-email 1.8.3.1.530.g6f90e57
-In-Reply-To: <cover.1371460265.git.trast@inf.ethz.ch>
-X-Originating-IP: [129.132.153.233]
+	id S932508Ab3FQJwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Jun 2013 05:52:18 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:44612 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932313Ab3FQJwR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 05:52:17 -0400
+Received: by mail-la0-f48.google.com with SMTP id lx15so2194362lab.7
+        for <git@vger.kernel.org>; Mon, 17 Jun 2013 02:52:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=OOnznWxoAAmwj2H8UEhU6JTGrHBRwjg2oPdunLdcofQ=;
+        b=zzclPWI0VaJhTzzKkd2twRrZmXhgA9ue7lz+JGCXixA05XiC8mADlV8alAFWwYwSqm
+         aV/5WKJ0Dy9IPwTv7JtdiZKMVgLnW618bsQP1yAIQzG3sZFuZTvpFPWors5pRXtOtgeG
+         JJzN03tjFQ1ggZpP596FtKql0jR5j4ew5efHB4bmGYikmLO+MvHSPsKhJPIGQU96Vnvu
+         Iqkt53C1nTdSo3G6avYU2ecxgCPBkN0cKp3C0MIVw+vlZ7/OVgB7SnVwua9QZq76Eu37
+         7Ytas6MB9TfIpORtoXqpeLllXkyXDGZbbZHXGE34Uykj6MUmMMs5/BBgl4yQ22kYdU7G
+         R8lw==
+X-Received: by 10.152.5.197 with SMTP id u5mr6317656lau.59.1371462735029;
+        Mon, 17 Jun 2013 02:52:15 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id w9sm5121839lbk.7.2013.06.17.02.52.14
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 17 Jun 2013 02:52:14 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UoWA0-0002WY-OY; Mon, 17 Jun 2013 11:55:40 +0200
+X-Mailer: git-send-email 1.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228059>
 
-With the new --valgrind-parallel=<n> option, we support running the
-tests in a single test script under valgrind in parallel using 'n'
-processes.
+set_rev_name is a possible expensive operation. If a submodule has
+changes in it, set_rev_name was called twice.
 
-This really follows the dumbest approach possible, as follows:
+Solution is to move set_rev_name so it's only called once, no matter the
+codepath taken.
 
-* We spawn the test script 'n' times, using a throw-away
-  TEST_OUTPUT_DIRECTORY.  Each of the instances is given options that
-  ensures that it only runs every n-th test under valgrind, but
-  together they cover the entire range.
-
-* We add up the numbers from the individual tests, and provide the
-  usual output.
-
-This is really a gross hack at this point, and should be improved.  In
-particular we should keep the actual outputs somewhere more easily
-discoverable, and summarize them to the user.
-
-Nevertheless, this is already workable and gives a speedup of more
-than 2 on a dual-core (hyperthreaded) machine, using n=4.  This is
-expected since the overhead of valgrind is so big (on the order of 20x
-under good conditions, and a large startup overhead at every git
-invocation) that redundantly running the non-valgrind tests in between
-is not that expensive.
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
 ---
- t/test-lib.sh | 106 ++++++++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 84 insertions(+), 22 deletions(-)
+ git-submodule.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index aaf6084..ca293c6 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -204,6 +204,15 @@ do
- 	--valgrind-only=*)
- 		valgrind_only=$(expr "z$1" : 'z[^=]*=\(.*\)')
- 		shift ;;
-+	--valgrind-parallel=*)
-+		valgrind_parallel=$(expr "z$1" : 'z[^=]*=\(.*\)')
-+		shift ;;
-+	--valgrind-only-stride=*)
-+		valgrind_only_stride=$(expr "z$1" : 'z[^=]*=\(.*\)')
-+		shift ;;
-+	--valgrind-only-offset=*)
-+		valgrind_only_offset=$(expr "z$1" : 'z[^=]*=\(.*\)')
-+		shift ;;
- 	--tee)
- 		shift ;; # was handled already
- 	--root=*)
-@@ -217,7 +226,7 @@ do
- 	esac
- done
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 79bfaac..75feaf1 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -1129,16 +1129,16 @@ cmd_status()
+ 			say "-$sha1 $displaypath"
+ 			continue;
+ 		fi
+-		set_name_rev "$sm_path" "$sha1"
+ 		if git diff-files --ignore-submodules=dirty --quiet -- "$sm_path"
+ 		then
++			set_name_rev "$sm_path" "$sha1"
+ 			say " $sha1 $displaypath$revname"
+ 		else
+ 			if test -z "$cached"
+ 			then
+ 				sha1=$(clear_local_git_env; cd "$sm_path" && git rev-parse --verify HEAD)
+-				set_name_rev "$sm_path" "$sha1"
+ 			fi
++			set_name_rev "$sm_path" "$sha1"
+ 			say "+$sha1 $displaypath$revname"
+ 		fi
  
--if test -n "$valgrind_only"
-+if test -n "$valgrind_only" || test -n "$valgrind_only_stride"
- then
- 	test -z "$valgrind" && valgrind=memcheck
- 	test -z "$verbose" && verbose_only="$valgrind_only"
-@@ -367,7 +376,9 @@ maybe_teardown_verbose () {
- last_verbose=t
- maybe_setup_verbose () {
- 	test -z "$verbose_only" && return
--	if match_pattern_list $test_count $verbose_only
-+	if match_pattern_list $test_count $verbose_only ||
-+		{ test -n "$valgrind_only_stride" &&
-+		expr $test_count "%" $valgrind_only_stride - $valgrind_only_offset = 0 >/dev/null; }
- 	then
- 		exec 4>&2 3>&1
- 		# Emit a delimiting blank line when going from
-@@ -391,7 +402,7 @@ maybe_teardown_valgrind () {
- 
- maybe_setup_valgrind () {
- 	test -z "$GIT_VALGRIND" && return
--	if test -z "$valgrind_only"
-+	if test -z "$valgrind_only" && test -z "$valgrind_only_stride"
- 	then
- 		GIT_VALGRIND_ENABLED=t
- 		return
-@@ -400,6 +411,10 @@ maybe_setup_valgrind () {
- 	if match_pattern_list $test_count $valgrind_only
- 	then
- 		GIT_VALGRIND_ENABLED=t
-+	elif test -n "$valgrind_only_stride" &&
-+		expr $test_count "%" $valgrind_only_stride - $valgrind_only_offset = 0 >/dev/null
-+	then
-+		GIT_VALGRIND_ENABLED=t
- 	fi
- }
- 
-@@ -552,6 +567,9 @@ test_done () {
- 	esac
- }
- 
-+
-+# Set up a directory that we can put in PATH which redirects all git
-+# calls to 'valgrind git ...'.
- if test -n "$valgrind"
- then
- 	make_symlink () {
-@@ -599,33 +617,42 @@ then
- 		make_symlink "$symlink_target" "$GIT_VALGRIND/bin/$base" || exit
- 	}
- 
--	# override all git executables in TEST_DIRECTORY/..
--	GIT_VALGRIND=$TEST_DIRECTORY/valgrind
--	mkdir -p "$GIT_VALGRIND"/bin
--	for file in $GIT_BUILD_DIR/git* $GIT_BUILD_DIR/test-*
--	do
--		make_valgrind_symlink $file
--	done
--	# special-case the mergetools loadables
--	make_symlink "$GIT_BUILD_DIR"/mergetools "$GIT_VALGRIND/bin/mergetools"
--	OLDIFS=$IFS
--	IFS=:
--	for path in $PATH
--	do
--		ls "$path"/git-* 2> /dev/null |
--		while read file
-+	# In the case of --valgrind-parallel, we only need to do the
-+	# wrapping once, in the main script.  The worker children all
-+	# have $valgrind_only_stride set, so we can skip based on that.
-+	if test -z "$valgrind_stride"
-+	then
-+		# override all git executables in TEST_DIRECTORY/..
-+		GIT_VALGRIND=$TEST_DIRECTORY/valgrind
-+		mkdir -p "$GIT_VALGRIND"/bin
-+		for file in $GIT_BUILD_DIR/git* $GIT_BUILD_DIR/test-*
- 		do
--			make_valgrind_symlink "$file"
-+			make_valgrind_symlink $file
- 		done
--	done
--	IFS=$OLDIFS
-+		# special-case the mergetools loadables
-+		make_symlink "$GIT_BUILD_DIR"/mergetools "$GIT_VALGRIND/bin/mergetools"
-+		OLDIFS=$IFS
-+		IFS=:
-+		for path in $PATH
-+		do
-+			ls "$path"/git-* 2> /dev/null |
-+			while read file
-+			do
-+				make_valgrind_symlink "$file"
-+			done
-+		done
-+		IFS=$OLDIFS
-+	fi
- 	PATH=$GIT_VALGRIND/bin:$PATH
- 	GIT_EXEC_PATH=$GIT_VALGRIND/bin
- 	export GIT_VALGRIND
- 	GIT_VALGRIND_MODE="$valgrind"
- 	export GIT_VALGRIND_MODE
- 	GIT_VALGRIND_ENABLED=t
--	test -n "$valgrind_only" && GIT_VALGRIND_ENABLED=
-+	if test -n "$valgrind_only" || test -n "$valgrind_only_stride"
-+	then
-+		GIT_VALGRIND_ENABLED=
-+	fi
- 	export GIT_VALGRIND_ENABLED
- elif test -n "$GIT_TEST_INSTALLED"
- then
-@@ -711,6 +738,41 @@ then
- else
- 	mkdir -p "$TRASH_DIRECTORY"
- fi
-+
-+# Gross hack to spawn N sub-instances of the tests in parallel, and
-+# summarize the results.  Note that if this is enabled, the script
-+# terminates at the end of this 'if' block.
-+if test -n "$valgrind_parallel"
-+then
-+	for i in $(test_seq 1 $valgrind_parallel)
-+	do
-+		root="$TRASH_DIRECTORY/vgparallel-$i"
-+		mkdir "$root"
-+		TEST_OUTPUT_DIRECTORY="$root" \
-+			${SHELL_PATH} "$0" \
-+			--root="$root" --statusprefix="[$i] " \
-+			--valgrind="$valgrind" \
-+			--valgrind-only-stride="$valgrind_parallel" \
-+			--valgrind-only-offset="$i" &
-+		pids="$pids $!"
-+	done
-+	trap "kill $pids" INT TERM HUP
-+	wait $pids
-+	trap - INT TERM HUP
-+	for i in $(test_seq 1 $valgrind_parallel)
-+	do
-+		root="$TRASH_DIRECTORY/vgparallel-$i"
-+		eval "$(cat "$root/test-results/$(basename "$0" .sh)"-*.counts |
-+			sed 's/^\([a-z][a-z]*\) \([0-9][0-9]*\)/inner_\1=\2/')"
-+		test_count=$(expr $test_count + $inner_total)
-+		test_success=$(expr $test_success + $inner_success)
-+		test_fixed=$(expr $test_fixed + $inner_fixed)
-+		test_broken=$(expr $test_broken + $inner_broken)
-+		test_failure=$(expr $test_failure + $inner_failed)
-+	done
-+	test_done
-+fi
-+
- # Use -P to resolve symlinks in our working directory so that the cwd
- # in subprocesses like git equals our $PWD (for pathname comparisons).
- cd -P "$TRASH_DIRECTORY" || exit 1
 -- 
-1.8.3.1.530.g6f90e57
+1.8.0
