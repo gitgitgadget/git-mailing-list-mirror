@@ -1,152 +1,124 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] diff: add --ignore-blank-lines option
-Date: Mon, 17 Jun 2013 19:58:43 +0200
-Message-ID: <CALWbr2w3hjdbsEUO4ta7UyoexTfeZQ864F4UeeAyr0uKvQRXbg@mail.gmail.com>
-References: <7vhah35jn8.fsf@alter.siamese.dyndns.org>
-	<1371301305-30160-1-git-send-email-apelisse@gmail.com>
-	<7vzjuog175.fsf@alter.siamese.dyndns.org>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] config doc: rewrite push.default section
+Date: Mon, 17 Jun 2013 19:10:27 +0100
+Organization: OPDS
+Message-ID: <F2D994ABCB8442B5A3F71791BAFB7C80@PhilipOakley>
+References: <1371377188-18938-1-git-send-email-artagnon@gmail.com><7vli69iff2.fsf@alter.siamese.dyndns.org><vpqip1d803r.fsf@anie.imag.fr><7B6316FB423B45559A4698FD35D519FC@PhilipOakley> <vpq61xc1wnd.fsf@anie.imag.fr>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 17 19:58:52 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Ramkumar Ramachandra" <artagnon@gmail.com>,
+	"Git List" <git@vger.kernel.org>
+To: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 17 20:10:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uodhb-0006SD-70
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 19:58:51 +0200
+	id 1Uodsp-0003NQ-Va
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 20:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753713Ab3FQR6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jun 2013 13:58:46 -0400
-Received: from mail-qe0-f43.google.com ([209.85.128.43]:48131 "EHLO
-	mail-qe0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753254Ab3FQR6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 13:58:44 -0400
-Received: by mail-qe0-f43.google.com with SMTP id q19so1864390qeb.16
-        for <git@vger.kernel.org>; Mon, 17 Jun 2013 10:58:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=4qhqFufEQOAQIyIlIdyOBv1msfWgruXf9vj0NOHp/S4=;
-        b=0fTreuE6k1Nl7Hwlu9JM8bMksAc7oEAStsKQmaM/NI0K5z9DrApKfyl7MjvNEa0qzu
-         4GuBkAi4VPuHpSQjRb56aBs2fa2Rj2Jbaj7dJibmXwe/xBzZEyQ2fQvcQ2Kmxa3PqIV6
-         dUHpHOd/MSE7up0Rxthci+4ZNoYDEJoaz/OCWrgFYVPY8hSNbeke+t2sobPRJMMlHfcB
-         kxrlgYBaLXWZjFjlDV3H4EhByzqXLVzUrKjrSid5MDMSbxVEd9unRDAUcaKbuRY2n4K1
-         o/GEnOM5r2Qj/ta/D+xwLEKpinGnkZsYszpmmVWR7FvllCQLrQShokv6E09c7Uc3YhmD
-         u1/g==
-X-Received: by 10.224.69.66 with SMTP id y2mr18028603qai.61.1371491924021;
- Mon, 17 Jun 2013 10:58:44 -0700 (PDT)
-Received: by 10.49.108.105 with HTTP; Mon, 17 Jun 2013 10:58:43 -0700 (PDT)
-In-Reply-To: <7vzjuog175.fsf@alter.siamese.dyndns.org>
+	id S1754052Ab3FQSKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Jun 2013 14:10:23 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:6614 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753583Ab3FQSKX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Jun 2013 14:10:23 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AhcOAFxQv1FOl3t//2dsb2JhbABbFoJzMYkHtjMEAQMBfRd0gh4FAQEFCAEBLh4BASELAgMFAgEDEQMBAQEKJRQBBBoGBw8IBhMIAgECAwGIAbl9jl1qgwZhA4hohgaUdYUhgxA7
+X-IronPort-AV: E=Sophos;i="4.87,882,1363132800"; 
+   d="scan'208";a="413383839"
+Received: from host-78-151-123-127.as13285.net (HELO PhilipOakley) ([78.151.123.127])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 17 Jun 2013 19:10:16 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228094>
 
-On Mon, Jun 17, 2013 at 6:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Antoine Pelisse <apelisse@gmail.com> writes:
+From: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
+Sent: Monday, June 17, 2013 6:20 PM
+> "Philip Oakley" <philipoakley@iee.org> writes:
 >
->> So here is a more thorough description of the option:
+>>> +       Note that `--force` applies to all the refs that are pushed,
+>>> +       hence using `git push --all --force`, or `git push --force`
+>>> +       with `push.default` set to `matching` may override refs 
+>>> other
+>>> +       than the current branch (including local refs that are
+>>> +       strictly behind their remote counterpart). To force a push 
+>>> to
+>>> +       only one branch, use `git push <remote> +<branch>` instead 
+>>> of
+>>> +       `--force`.
+>>
+>> It would be useful to include a real example "e.g. `git push origin
+>> +master`", or a link to specifying a refspec "see <refspec>... 
+>> above",
+>> such that the "+" doesn't get lost in the general text, as push is 
+>> one
+>> of the first few commands a new user is likely to be looking up (and
+>> misunderstanding ;-), so let's make the + obvious
 >
->> - real changes are interesting
+> Yes, why not. I'll point to the <refspec> section for detail, and just
+> give an example here.
 >
-> OK, I think I can understand it.
+>> I did notice that the <refspec>... section doesn't actually associate
+>> the "+" with the force action - Am I misunderstanding this?
 >
->> - blank lines that are close enough (less than context size) to
->>   interesting changes are considered interesting (recursive definition)
+> It says:
 >
-> OK.
+>  By having the optional leading `+`, you can tell Git to update the
+>  <dst> ref even if it is not allowed by default (e.g., it is not a
+>  fast-forward.)"
 >
->> - "context" lines are used around each hunk of interesting changes
+> I think it's OK.
+
+I was more noting that there is zero direct association in the text 
+between the --force option, and the "+", and with that, a funny feeling 
+that either (a) they had subtle differences I hadn't understood, or (b) 
+they were exactly the same and the documenation was being too subtle and 
+a cluebat should be applied to the documenation (on the principle I am 
+not a unique fool ;-)
+
 >
-> OK.
->
->> - If two hunks are separated by less than "inter-hunk-context", they
->>   will be merged into one.
->
-> Makes sense.
->
->> The current implementation does the "interesting changes selection" in a
->> single pass.
->
-> "current" meaning "the code after this patch is applied"?  Is there
-> a possible future enhancement hinted here?
->
->> +xdchange_t *xdl_get_hunk(xdchange_t **xscr, xdemitconf_t const *xecfg)
->> +{
->> +     xdchange_t *xch, *xchp, *lxch;
->>       long max_common = 2 * xecfg->ctxlen + xecfg->interhunkctxlen;
->> +     long max_ignorable = xecfg->ctxlen;
->> +     unsigned long changes = ULONG_MAX;
->> +
->> +     /* remove ignorable changes that are too far before other changes */
->> +     for (xchp = *xscr; xchp && xchp->ignore; xchp = xchp->next) {
->> +             xch = xchp->next;
->> +
->> +             if (xch == NULL ||
->> +                 xch->i1 - (xchp->i1 + xchp->chg1) >= max_ignorable)
->> +                     *xscr = xch;
->> +     }
->
-> This strips leading ignorable ones away until we see an unignorable
-> one.  Looks sane.
->
->> +     if (*xscr == NULL)
->> +             return NULL;
->> +
->> +     lxch = *xscr;
->
-> "lxch" remembers the last one that is "interesting".
->
->> +     for (xchp = *xscr, xch = xchp->next; xch; xchp = xch, xch = xch->next) {
->> +             long distance = xch->i1 - (xchp->i1 + xchp->chg1);
->> +             if (distance > max_common)
->>                       break;
->
-> If we see large-enough gap, the one we processed last (in xchp) is
-> the end of the current hunk.  Looks sane.
->
->> +             if (distance < max_ignorable &&
->> +                 (!xch->ignore || changes == ULONG_MAX)) {
->> +                     lxch = xch;
->> +                     changes = ULONG_MAX;
->
-> The current one is made into the "last interesting one we have seen"
-> and the hunk continues, if either (1) the current one is interesting
-> by itself, or (2) the last one we saw does not match some
-> unexplainable criteria to cause changes set to not ULONG_MAX.
->
-> Puzzling.
->
->> +             } else if (changes != ULONG_MAX &&
->> +                        xch->i1 + changes - (lxch->i1 + lxch->chg1) > max_common) {
->> +                     break;
->
-> If the last one we saw does not match some unexplainable criteria to
-> cause changes set to not ULONG_MAX, and the distance between this
-> one and the last "intersting" one is further than the context, this
-> one will not be a part of the current hunk.
->
-> Puzzling.
->
-> Could you add comment to the "changes" variable and explain what the
-> variable means?
->
->> +             } else if (!xch->ignore) {
->> +                     lxch = xch;
->> +                     changes = ULONG_MAX;
->
-> When this change by itself is interesting, it becomes the "last
-> interesting one" and the hunk continues.
->
->> +             } else {
->> +                     if (changes == ULONG_MAX)
->> +                             changes = 0;
->> +                     changes += xch->chg2;
->
-> Puzzled beyond guessing.  Also it is curious why here and only here
-> we look at chg2 side of the things, not i1/chg1 in this whole thing.
+> -- 
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
+
+Maybe...
+------- 8< ------- 
+From 57d8aaac6b7543919aaf09909c13a180722c0a94 Mon Sep 17 00:00:00 2001
+From: Philip Oakley <philipoakley@iee.org>
+Date: Mon, 17 Jun 2013 18:47:04 +0100
+Subject: [PATCH] git-push doc: +<dst> refspec is --force
+
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
+ Documentation/git-push.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index eb2883c..df92b09 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -136,6 +136,8 @@ already exists on the remote side.
+  not an ancestor of the local ref used to overwrite it.
+  This flag disables the check.  This can cause the
+  remote repository to lose commits; use it with care.
++ See also the optional leading `+` <dst> ref specifier in
++ '<refspec>...' above.
+
+ --repo=<repository>::
+  This option is only relevant if no <repository> argument is
+-- 
+1.8.1.msysgit.1
