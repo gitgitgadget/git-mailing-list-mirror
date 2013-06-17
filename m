@@ -1,82 +1,79 @@
-From: Namhyung Kim <namhyung.kim@lge.com>
-Subject: [PATCH] name-rev: Allow to omit refs/tags/ part in --refs option when --tags used
-Date: Mon, 17 Jun 2013 16:53:56 +0900
-Message-ID: <1371455636-1378-1-git-send-email-namhyung.kim@lge.com>
-Cc: git@vger.kernel.org
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] rebase -i: fixup fixup! fixup!
+Date: Mon, 17 Jun 2013 10:07:58 +0200
+Message-ID: <8738shi2ht.fsf@linux-k42r.v.cablecom.net>
+References: <20130611180530.GA18488@oinkpad.pimlott.net>
+	<87obbc8otc.fsf@hexa.v.cablecom.net> <1371237209-sup-639@pimlott.net>
+	<1371278908-sup-1930@pimlott.net>
+	<7vk3lvlmat.fsf@alter.siamese.dyndns.org>
+	<87ip1e2tzx.fsf@hexa.v.cablecom.net>
+	<7v7ghtjwbb.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Andrew Pimlott <andrew@pimlott.net>, git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 17 09:54:06 2013
+X-From: git-owner@vger.kernel.org Mon Jun 17 10:08:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoUGJ-00081s-54
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 09:54:03 +0200
+	id 1UoUTy-0007KR-Fg
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 10:08:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756053Ab3FQHx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jun 2013 03:53:58 -0400
-Received: from LGEMRELSE7Q.lge.com ([156.147.1.151]:43640 "EHLO
-	LGEMRELSE7Q.lge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755089Ab3FQHx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 03:53:58 -0400
-X-AuditID: 9c930197-b7beaae000004876-69-51bec094df1c
-Received: from sejong.aot.lge.com ( [10.177.220.181])
-	by LGEMRELSE7Q.lge.com (Symantec Brightmail Gateway) with SMTP id 3E.C1.18550.490CEB15; Mon, 17 Jun 2013 16:53:56 +0900 (KST)
-X-Mailer: git-send-email 1.7.11.7
-X-Brightmail-Tracker: AAAAAA==
+	id S932305Ab3FQIID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Jun 2013 04:08:03 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:34242 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932304Ab3FQIIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 04:08:00 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 17 Jun
+ 2013 10:07:54 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Mon, 17 Jun 2013 10:07:56 +0200
+In-Reply-To: <7v7ghtjwbb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 16 Jun 2013 19:38:32 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228050>
 
-In its current form, when an user wants to filter specific ref using
---refs option, she needs to give something like --refs=refs/tags/v1.*.
+Junio C Hamano <gitster@pobox.com> writes:
 
-This is not intuitive as users might think it's enough to give just
-actual tag name part like --refs=v1.*.  It applies to refs other than
-just tags too.  Change it for users to be able to use --refs=sth or
---refs=remotes/sth.
+> Thomas Rast <trast@inf.ethz.ch> writes:
+>
+>> Isn't it a bit of an academic question?
+>> ...
+>> And once you have that, it seems a nicer and cleaner idea to generate
+>> 'fixup! A' each time, instead of a successive sequence of
+>>
+>>   fixup! A
+>>   fixup! fixup! A
+>>   fixup! fixup! fixup! A
+>>   ...
+>
+> As to reordering, you are absolutely correct.
+[...]
+> Does dropping these leading "fixup!" (or "squash!") at commit time
+> make the application in "rebase -i --autosquash" significantly
+> easier to do?
 
-Also remove the leading 'tags/' part in the output when --tags option
-was given since the option restricts to work with tags only.  This is
-what we have if --name-only option was given also.
+Conveniently enough we have seen both already ;-)  Andrew's version for
+commit.c could use a bit of refactorization, since it inserts the same
+code in two places, but then it's about the same complexity as the
+change for rebase.
 
-Signed-off-by: Namhyung Kim <namhyung.kim@lge.com>
----
- builtin/name-rev.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+I'm not sure it's worth arguing about whether the "fixup! fixup!"  is a
+symptom of some underlying problem, and changing rebase is only tapering
+over the symptom; or whether it's actually a useful distinction.  Either
+one works fine as a fix for an annoyance that Andrew had, and that bit
+me in the past too.
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 6238247..446743b 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -97,7 +97,8 @@ static int name_ref(const char *path, const unsigned char *sha1, int flags, void
- 	if (data->tags_only && prefixcmp(path, "refs/tags/"))
- 		return 0;
- 
--	if (data->ref_filter && fnmatch(data->ref_filter, path, 0))
-+	if (data->ref_filter && !prefixcmp(data->ref_filter, "refs/")
-+	    && fnmatch(data->ref_filter, path, 0))
- 		return 0;
- 
- 	while (o && o->type == OBJ_TAG) {
-@@ -113,12 +114,15 @@ static int name_ref(const char *path, const unsigned char *sha1, int flags, void
- 		if (!prefixcmp(path, "refs/heads/"))
- 			path = path + 11;
- 		else if (data->tags_only
--		    && data->name_only
- 		    && !prefixcmp(path, "refs/tags/"))
- 			path = path + 10;
- 		else if (!prefixcmp(path, "refs/"))
- 			path = path + 5;
- 
-+		if (data->ref_filter && prefixcmp(data->ref_filter, "refs/")
-+		    && fnmatch(data->ref_filter, path, 0))
-+			return 0;
-+
- 		name_rev(commit, xstrdup(path), 0, 0, deref);
- 	}
- 	return 0;
 -- 
-1.7.11.7
+Thomas Rast
+trast@{inf,student}.ethz.ch
