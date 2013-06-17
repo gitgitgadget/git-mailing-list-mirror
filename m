@@ -1,209 +1,102 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: [RFC] speed up git submodule
-Date: Mon, 17 Jun 2013 02:05:03 +0200
-Message-ID: <1371427503-9678-1-git-send-email-iveqy@iveqy.com>
-Cc: git@vger.kernel.org
-To: iveqy@iveqy.com
-X-From: git-owner@vger.kernel.org Mon Jun 17 02:02:13 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase -i: fixup fixup! fixup!
+Date: Sun, 16 Jun 2013 19:38:32 -0700
+Message-ID: <7v7ghtjwbb.fsf@alter.siamese.dyndns.org>
+References: <20130611180530.GA18488@oinkpad.pimlott.net>
+	<87obbc8otc.fsf@hexa.v.cablecom.net> <1371237209-sup-639@pimlott.net>
+	<1371278908-sup-1930@pimlott.net>
+	<7vk3lvlmat.fsf@alter.siamese.dyndns.org>
+	<87ip1e2tzx.fsf@hexa.v.cablecom.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Pimlott <andrew@pimlott.net>, git <git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jun 17 04:38:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoMtf-0004TF-PZ
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 02:02:12 +0200
+	id 1UoPL7-0004hf-46
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 04:38:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755536Ab3FQABx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Jun 2013 20:01:53 -0400
-Received: from mail-la0-f44.google.com ([209.85.215.44]:62528 "EHLO
-	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755502Ab3FQABx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jun 2013 20:01:53 -0400
-Received: by mail-la0-f44.google.com with SMTP id er20so1931401lab.17
-        for <git@vger.kernel.org>; Sun, 16 Jun 2013 17:01:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=1pbLi/fEGPQFRqcBgUp/nB0NZ/hQm4rhr7/Z/aMoyrY=;
-        b=Qn8F4jM8zSKQqAk605ZyGdOJLE91zFM4ahDLiK3Uvhqk1DlMjEo+wKvDsqwZRf79j9
-         spp6EJBtCIBOMdKap1AeRYs5EqTt/ecOCHtyMt+WGyUiYeXPaDWNgNDGWyEIKy+UKkzq
-         gf32ioik/xkf78xa8dyn3zEGqqPWfVQP96aftGEiZnHu9QIr7i009dNFKNjPvFdQYWTC
-         B5MunSgqRVAVWpy7oXsX0aQj9VHdqxcUJI7yYH0yVP9dO0AOQP20adrF88R7a8O/GHK0
-         7FdJS1xHAQzOxjZCa4PDWMk0jTV6VoF8TmtZiX5UHMG8MYZGYO892ZJN+fEXQ4a1gJ1v
-         Ki2g==
-X-Received: by 10.112.146.33 with SMTP id sz1mr5313615lbb.47.1371427310989;
-        Sun, 16 Jun 2013 17:01:50 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id o5sm1734765lag.2.2013.06.16.17.01.49
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 16 Jun 2013 17:01:50 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UoMwc-0002Wj-BG; Mon, 17 Jun 2013 02:05:14 +0200
-X-Mailer: git-send-email 1.8.0
+	id S1755123Ab3FQCih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Jun 2013 22:38:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45978 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754996Ab3FQCig (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jun 2013 22:38:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA6121D7BF;
+	Mon, 17 Jun 2013 02:38:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EdeyYXxUXWxGBLSmOYXKeXfL+i0=; b=ZuQuuk
+	DNlvpqmNvCXK1IhjKw4bCmhFBalJl77d3qFuz3g981x3bUoY+iMiXyy4TaLIauvM
+	P7BKjfm5Y1Q/nY2m6rf/+avAmAS3MznvnijLxIdsw170XG5dqmY7dgU5p2cFu/Qp
+	flVfzRz8ej442Mj17ilGaygOFDTiPGEVtte3E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gArNXPYWxTL83x8zVIBaObT8NYGjJek0
+	l713id66raKecyyQrzHbGdHEsOTN61M1OE5q0dY+opRPmUpwu8JulgGFZ5nCiKGV
+	1qgyAPII3BUb45whbA8IifK9929o6AfyavkpwhMEGtMf6UQSsuMf/nt1fwmbE6eV
+	re5cVAjo0fU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90A641D7BE;
+	Mon, 17 Jun 2013 02:38:35 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C675D1D7BB;
+	Mon, 17 Jun 2013 02:38:34 +0000 (UTC)
+In-Reply-To: <87ip1e2tzx.fsf@hexa.v.cablecom.net> (Thomas Rast's message of
+	"Sun, 16 Jun 2013 13:08:18 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 01B1D2EA-D6F7-11E2-9F61-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228032>
 
-I've been playing a bit with lua. It's an embedded scripting language
-with strong c integration. It's small and fast.
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-The interesting feature would be to run C-functions direct inside lua. I
-suppose that would increase speed even more, at the same time as we have
-the convinence of a interpreted language. Lua is smaller and faster
-(well as always, it depends on what you're doing) than python and ruby.
-Perl is a really pain for the windows folks (I've heard).
+> Isn't it a bit of an academic question?
+> ...
+> And once you have that, it seems a nicer and cleaner idea to generate
+> 'fixup! A' each time, instead of a successive sequence of
+>
+>   fixup! A
+>   fixup! fixup! A
+>   fixup! fixup! fixup! A
+>   ...
 
-A correct implementation for lua support would be to start a
-lua-interpreter from inside git.c (or somewhere) and load the lua code
-for a specific command. That would make us independent of any target
-installation of lua (althought the git binary would increase with the
-lua library around 300 kb).
+As to reordering, you are absolutely correct.
 
-However I did a quick test using lua as a replacement for sh (without
-direct calls to c-functions) and the result is impressive. (However this
-is the wrong way of using lua, shell scripting is not something lua is
-good at).
+If you are going to apply all three anyway, then the end result
+either does not change at all (when none of them overlap textually),
+or you will end up with unnecessary conflicts (when they do).
 
-I did some runs on a project with 52 submodules (or 53 if you count the
-ones in .gitmodules). These results are pretty typical:
-iveqy@kolya:~/projects/eracle_core$ time /home/iveqy/projects/git/git-submodule.lua > /dev/null
+But if you were to pick (and drop some), all three labeled with
+"fixup A" vs later ones having more "fixup" in front will make a
+difference in identification and usability.  When you want to drop
+the second fixup, "fixup fixup A" can be chosen unambiguously in
+your editor among "fixup A", "fixup fixup A" and "fixup fixup fixup
+A".
 
-real    0m1.665s
-user    0m0.276s
-sys     0m0.452s
-iveqy@kolya:~/projects/eracle_core$ time git submodule > /dev/null
+It also somewhat feels wrong when the user sees this:
 
-real    0m3.413s
-user    0m0.476s
-sys     0m1.224s
+    $ git log --oneline -2
+    xxxx A
+    yyyy fixup! A
 
-For me, that speedup does matter.
+and asks to do this:
 
-NOTICE!!!
-This code is experimental. It does have some known bugs, it does have
-some style issues. A state of the art complete implementation would
-contain a few more tests/jumps and less concat (which is extremely
-expensive in lua) and less git-invokation.
+    $ git commit --fixup yyyy
 
-Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
----
- git-submodule.lua | 104 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 104 insertions(+)
- create mode 100755 git-submodule.lua
+and if you end up with "fixup! A", not "fixup! fixup! A".  The user
+is asking to follow-up on the "fixup! A", not on the original "A".
 
-diff --git a/git-submodule.lua b/git-submodule.lua
-new file mode 100755
-index 0000000..14f71e6
---- /dev/null
-+++ b/git-submodule.lua
-@@ -0,0 +1,104 @@
-+#!/usr/bin/lua
-+
-+function run_cmd(cmd)
-+	local f = io.popen(cmd, 'r');
-+	local out = f:read('*a');
-+	f:close()
-+	return out
-+end
-+
-+function fwrite(fmt, ...)
-+	return io.write(string.format(fmt, ...))
-+end
-+
-+function read_gitmodules()
-+	local inf = assert(io.open('.gitmodules', 'r'))
-+	local config = inf:read("*all")
-+	gitmodules = {}
-+	for sm in string.gmatch(config, '%[[^]]*%][^%[]*') do
-+		local thismod = {}
-+		local name = string.match(sm, '%[%s-submodule%s-"(.+)"%s-%]')
-+		thismod["name"] = name
-+		local path = ''
-+		for k, v in string.gmatch(sm, '\n%s*([^=^%s]*)%s*=%s*([^\n]*)') do
-+			if k == 'path' then
-+				path = v
-+			else
-+				thismod[k] = v
-+			end
-+		end
-+		if path == '' then
-+			fwrite("No path found for %s in .gitmodules\n", name)
-+			os.exit(1)
-+		end
-+		gitmodules[path] = thismod
-+	end
-+
-+	return gitmodules
-+end
-+
-+function module_list()
-+	local lsfiles = 'git ls-files --stage --error-unmatch -z || echo "#unmatched"'
-+	local out = run_cmd(lsfiles)
-+	local unmerged = ''
-+	local subs = read_gitmodules()
-+
-+	for row in string.gmatch(out, '.-\0') do
-+		if row == '#unmatched' then
-+			os.exit(1)
-+		end
-+
-+		local mode, sha1, stage, path = string.match(row, '(%d+)%s([0-9a-f]+)%s(.)%s(.*)\0')
-+		if mode == '160000' then
-+			if stage == '0' then
-+				subs[path]["sha1"] = sha1
-+				subs[path]["stage"] = stage
-+			else
-+				if unmerged ~= path then
-+					local null_sha1 = '0000000000000000000000000000000000000000'
-+					subs[path]["sha1"] = null_sha1
-+					subs[path]["stage"] = 'U'
-+				end
-+				unmerged = path
-+			end
-+		end
-+	end
-+	return subs
-+end
-+
-+function get_name_rev(path, sha1)
-+	if sha1 == nil then sha1="" end
-+	local cmd = "cd \"" .. path .. "\" && (git describe " .. sha1 ..
-+				" 2>/dev/null || git describe --tags " .. sha1 ..
-+				" 2>/dev/null || git describe --contains " .. sha1 ..
-+				" 2>/dev/null || git describe --all --always " .. sha1 ..
-+				" 2>/dev/null) "
-+	return string.gsub(run_cmd(cmd), '\n', '')
-+end
-+
-+function cmd_status()
-+	subs = module_list()
-+	for smpath in pairs(subs) do
-+		if (subs[smpath].sha1) then
-+			if subs[smpath].stage == 'U' then
-+				subs[smpath]["revname"] = get_name_rev(smpath, subs[smpath].sha1)
-+				fwrite("U%s %s (%s)", subs[smpath].sha1, smpath, subs[smpath].revname)
-+			elseif run_cmd("test -z " .. subs[smpath].url .. " || ! test -d " .. smpath .."/.git -o -f " .. smpath .. "/.git || echo '0' ") ~= '0\n' then
-+				subs[smpath]["revname"] = get_name_rev(smpath, subs[smpath].sha1)
-+				fwrite("-%s %s (%s)\n", subs[smpath].sha1, smpath, subs[smpath].revname)
-+			elseif run_cmd("git diff-files --ignore-submodules=dirty --quiet -- " .. smpath .. " || echo '0'") ~= '0\n' then
-+				p = run_cmd("git diff-files --ignore-submodules=dirty --quiet -- " .. smpath .. " || echo '0'")
-+				subs[smpath]["revname"] = get_name_rev(smpath, subs[smpath].sha1)
-+				fwrite(" %s %s (%s)\n", subs[smpath].sha1, smpath, subs[smpath].revname)
-+			else
-+				subs[smpath].sha1 = string.gsub(run_cmd('cd ' .. smpath .. ' && git rev-parse --verify HEAD'), "\n", "")
-+				subs[smpath]["revname"] = get_name_rev(smpath, subs[smpath].sha1)
-+				fwrite("+%s %s (%s)\n", subs[smpath].sha1, smpath, subs[smpath].revname)
-+			end
-+		end
-+	end
-+end
-+
-+if arg[1] == nil or arg[1] == 'status' then
-+	cmd_status()
-+end
--- 
-1.8.3.1.381.g2ab719e.dirty
+Does dropping these leading "fixup!" (or "squash!") at commit time
+make the application in "rebase -i --autosquash" significantly
+easier to do?
