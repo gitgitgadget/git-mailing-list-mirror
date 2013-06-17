@@ -1,100 +1,94 @@
-From: =?UTF-8?Q?Mathieu_Li=C3=A9nard--Mayor?= 
-	<mathieu.lienard--mayor@ensimag.fr>
-Subject: Re: [PATCH] status: display the SHA1 of the commit being currently  processed
-Date: Mon, 17 Jun 2013 15:33:32 +0200
-Message-ID: <c878cf98bff28ea8b72fb6d33fd9ca85@ensibm.imag.fr>
-References: <1371471004-9069-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
- <alpine.DEB.2.00.1306171357440.7683@perkele.intern.softwolves.pp.se>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: GIt error
+Date: Mon, 17 Jun 2013 15:37:31 +0200
+Message-ID: <20130617133731.GC25488@paksenarrion.iveqy.com>
+References: <E7FBE41B36DC254CB796CE1D6D45B14A0FAE034D@048-CH1MPN1-032.048d.mgd.msft.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-	<git@vger.kernel.org>, <gitster@pobox.com>,
-	Jorge Juan Garcia Garcia 
-	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Jun 17 15:33:52 2013
+Cc: git@vger.kernel.org
+To: justin.sathyanathan@accenture.com
+X-From: git-owner@vger.kernel.org Mon Jun 17 15:34:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoZZ8-0006MG-BL
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 15:33:50 +0200
+	id 1UoZZV-000738-UD
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 15:34:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932272Ab3FQNdm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jun 2013 09:33:42 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:50949 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932119Ab3FQNdj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 09:33:39 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5HDXVH9014073
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 17 Jun 2013 15:33:31 +0200
-Received: from web-ensimag.imag.fr (web-ensimag.imag.fr [195.221.228.24])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5HDXWfL013082;
-	Mon, 17 Jun 2013 15:33:32 +0200
-Received: from web-ensimag.imag.fr (localhost [127.0.0.1])
-	by web-ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id r5HDXWOd025133;
-	Mon, 17 Jun 2013 15:33:32 +0200
-Received: (from apache@localhost)
-	by web-ensimag.imag.fr (8.13.8/8.13.8/Submit) id r5HDXWSG025130;
-	Mon, 17 Jun 2013 15:33:32 +0200
-X-Authentication-Warning: web-ensimag.imag.fr: apache set sender to mathieu.lienard--mayor@ensimag.fr using -f
-In-Reply-To: <alpine.DEB.2.00.1306171357440.7683@perkele.intern.softwolves.pp.se>
-X-Sender: mathieu.lienard--mayor@ensimag.fr
-User-Agent: Roundcube Webmail/0.8.1
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 17 Jun 2013 15:33:31 +0200 (CEST)
+	id S932515Ab3FQNeJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jun 2013 09:34:09 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:55015 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932119Ab3FQNeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 09:34:07 -0400
+Received: by mail-lb0-f169.google.com with SMTP id d10so2526550lbj.14
+        for <git@vger.kernel.org>; Mon, 17 Jun 2013 06:34:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=0eMzvPJTtUH0aRDC2F8gRGq2ChTtT5kystPmdy+Vt9U=;
+        b=HhhIiT35vIf4qSgZxSoaOEBSpBIgLKZYNIHpMHVrBwky3PUVZepfa+ZexS9/SjEfPr
+         qadEUN+4dccAEI7vbK/5l+Tv5jy+aQooA0VoCWL+8zdNsYD83IwPwi0dTr/zf2RYydK4
+         ihT0wRSm9FJf/35wsnvY/l8Kg4VNHBGh/Ymu1rTx0mJHpF+z4mTX4TRcUwuQ8pWR8shC
+         j6w8LnzXgL1u6HuyQr/2bGHuaiFcBbMhWuk3h16EysD81dIwUtVDazY2ZFpMA7D43ZZn
+         ROG0wrl0AHJLEm1f7c1ha+Wg/rh0NZq/VDcLwGOkNAw24mlJJsyNlrRNba9Or9Bvwo8u
+         njBg==
+X-Received: by 10.152.1.134 with SMTP id 6mr6516192lam.16.1371476045542;
+        Mon, 17 Jun 2013 06:34:05 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id e9sm5464084lbj.3.2013.06.17.06.34.04
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 17 Jun 2013 06:34:04 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UoZch-0003j9-O1; Mon, 17 Jun 2013 15:37:31 +0200
+Content-Disposition: inline
+In-Reply-To: <E7FBE41B36DC254CB796CE1D6D45B14A0FAE034D@048-CH1MPN1-032.048d.mgd.msft.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228068>
 
-Le 2013-06-17 15:10, Peter Krefting a =C3=A9crit=C2=A0:
-> Mathieu Lienard--Mayor:
->
->> +	/*
->> +	 * If the file stopped-sha does not exist
->> +	 * we go back to the old output saying "a commit"
->> +	 * instead of providing the commit's SHA1.
->> +	 */
->> +	if (!stopped_sha) {
->> +		stopped_sha =3D "a commit";
->> +		must_free_stopped_sha =3D 0;
->> +	}
->
-> This is missing gettext markers, and besides that, it very difficult
-> to handle for translators. Please consider changing the code to use
-> different strings based on what you want to insert, i.e.:
->
->> 		if (state->branch)
->> 			status_printf_ln(s, color,
->> -					 _("You are currently splitting a commit while rebasing branch=
-=20
->> '%s' on '%s'."),
->> +					 _("Splitting %s while rebasing branch '%s' on '%s'."),
->
->    stopped_sha ? _("Splitting %s while rebasing branch '%s' on=20
-> '%s'.")
->                : _("Splitting a commit while rebasing branch '%2$s'=20
-> on '%3$s'.")
->
-> or something similar.
-Actually, at first I dealt with it this way:
+On Mon, Jun 17, 2013 at 01:28:30PM +0000, justin.sathyanathan@accenture=
+=2Ecom wrote:
+> 1.Iam getting error attached when cloning of repository is done:
 
-status_printf_ln(s, color,
-                  _("Splitting %s while rebasing branch '%s' on '%s'.")=
-,
-		 stopped_sha ? stopped_sha : _("a commit"),
-		 ....);
+What error?
 
-Would this be more suitable for translators ?
+> 2.Also, when file is tried to be added,it gives error below:
+>=20
+> $ git add *
+> fatal: unable to stat 'src/development_architecture/integration_appli=
+cation_proj
+> ect_template/provider_archetype/provider_archetype/src/main/resources=
+/archetype-
+> resources/__rootArtifactId__-data/src/main/java/com/accenture/afpj/sa=
+mple/skelet
+> on/visitor/data/VisitorRepositoryJpaImpl.java': Filename too long
+
+As it said, filename is too long.
+See the FAQ:
+https://github.com/msysgit/msysgit/wiki/Frequently-Asked-Questions
+and the thread:
+http://thread.gmane.org/gmane.comp.version-control.msysgit/14572
+
+> Request you to help to resolve same asap as it is affecting the proje=
+ct.
+If you want reliable and direct help I suggest you hire a git-consult o=
+r
+buy support. This list will help you in the best way it can (and mostly
+that's enough) but cannot do things "asap".
 
 --=20
-Mathieu Li=C3=A9nard--Mayor,
-2nd year at Grenoble INP - ENSIMAG
-(+33)6 80 56 30 02
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
+
+tel: 0733-608274
+e-post: iveqy@iveqy.com
