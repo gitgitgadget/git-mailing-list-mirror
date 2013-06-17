@@ -1,109 +1,323 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] config doc: rewrite push.default section
-Date: Mon, 17 Jun 2013 13:09:44 +0200
-Message-ID: <vpqip1d803r.fsf@anie.imag.fr>
-References: <1371377188-18938-1-git-send-email-artagnon@gmail.com>
-	<7vli69iff2.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 17 13:10:03 2013
+From: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Subject: [PATCH] status: display the SHA1 of the commit being currently processed
+Date: Mon, 17 Jun 2013 14:10:04 +0200
+Message-ID: <1371471004-9069-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Cc: gitster@pobox.com,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+	Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 17 14:10:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoXJu-0004qh-9S
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 13:09:58 +0200
+	id 1UoYGS-0007iR-VU
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 14:10:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756171Ab3FQLJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jun 2013 07:09:52 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47827 "EHLO rominette.imag.fr"
+	id S932759Ab3FQMKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Jun 2013 08:10:24 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:56839 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756047Ab3FQLJu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 07:09:50 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5HB9gZP016294
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 17 Jun 2013 13:09:43 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UoXJg-0008TT-B4; Mon, 17 Jun 2013 13:09:44 +0200
-In-Reply-To: <7vli69iff2.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 16 Jun 2013 20:28:49 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 17 Jun 2013 13:09:43 +0200 (CEST)
+	id S932727Ab3FQMKX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 08:10:23 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5HCAId2014405
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 17 Jun 2013 14:10:18 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5HCAJkq012281;
+	Mon, 17 Jun 2013 14:10:19 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5HCAJD6015689;
+	Mon, 17 Jun 2013 14:10:19 +0200
+Received: (from lienardm@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id r5HCAHY5015685;
+	Mon, 17 Jun 2013 14:10:17 +0200
+X-Mailer: git-send-email 1.7.8
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 17 Jun 2013 14:10:18 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228062>
 
-Junio C Hamano <gitster@pobox.com> writes:
+When in the middle of a rebase, it can be annoying to go in .git
+in order to find the SHA1 of the commit where the rebase stopped.
 
->> +* `matching` - push the refspec ":".  In other words, push all
->> +  branches having the same name in both ends, even if it means
->> +  non-fast-forward updates.  This is for those who prepare all the
->> +  branches into a publishable shape and then push them out with a
->> +  single command.  Dangerous, and inappropriate unless you are the
->> +  only person updating your push destination.
->
-> It was already pointed out that unnecessary negativity needs to be
-> fixed, but more importantly the above "Dangerous" is not even
-> correct.
+git-status now includes this information in its default output.
+With this new information, the message is now shorter, to avoid
+too long lines.
 
-What's really dangerous is the --force flag. A few weeks ago I had to
-help a colleague who did a "git push --force" to update his branch, and
-he lost data on his co-worker's branches (thanks to "git reflog", it
-wasn't an actual data loss, but still pretty bad).
+The new message looks like:
+$ git status
+ HEAD detached from 33e516f
+ Editing c346c87 while rebasing branch 'rebase_i_edit' on 'f90e540'.
 
-But then the place to warn loudly is the doc for --force. What about
-this?
-
-------- 8< ------- 8< ------- 8< ------- 8< ------- 8< ------- 8< 
-
->From a529588dd8df84e54e5ec267068248cc555373f5 Mon Sep 17 00:00:00 2001
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Date: Mon, 17 Jun 2013 13:02:39 +0200
-Subject: [PATCH] Documentation/git-push.txt: explain better cases where
- --force is dangerous
-
-The behavior of "git push --force" is rather clear when it updates only
-one remote ref, but running it when pushing several branches can really
-be dangerous. Warn the users a bit more and give them the alternative to
-push only one branch.
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Signed-off-by: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+Signed-off-by: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 ---
- Documentation/git-push.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 938d1ee..0899a35 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -136,6 +136,13 @@ already exists on the remote side.
-        not an ancestor of the local ref used to overwrite it.
-        This flag disables the check.  This can cause the
-        remote repository to lose commits; use it with care.
-+       Note that `--force` applies to all the refs that are pushed,
-+       hence using `git push --all --force`, or `git push --force`
-+       with `push.default` set to `matching` may override refs other
-+       than the current branch (including local refs that are
-+       strictly behind their remote counterpart). To force a push to
-+       only one branch, use `git push <remote> +<branch>` instead of
-+       `--force`.
+ -changes in the tests to match the new status output
+ -read file rebase-merge/stopped_sha to include the SHA in status output
+
+ t/t7512-status-help.sh |   36 ++++++++++++++++++++++++------------
+ wt-status.c            |   25 +++++++++++++++++++++----
+ 2 files changed, 45 insertions(+), 16 deletions(-)
+
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index bf08d4e..dc93d77 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -189,10 +189,11 @@ test_expect_success 'status when rebasing -i in edit mode' '
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~2) &&
+ 	TGT=$(git rev-parse --short two_rebase_i) &&
++	SHA=$(git rev-parse --short three_rebase_i) &&
+ 	git rebase -i HEAD~2 &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached from $TGT
+-	# You are currently editing a commit while rebasing branch '\''rebase_i_edit'\'' on '\''$ONTO'\''.
++	# Editing $SHA while rebasing branch '\''rebase_i_edit'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+ 	#
+@@ -217,9 +218,10 @@ test_expect_success 'status when splitting a commit' '
+ 	git rebase -i HEAD~3 &&
+ 	git reset HEAD^ &&
+ 	TGT=$(git rev-parse --short HEAD) &&
++	SHA=$(git rev-parse --short three_split) &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached at $TGT
+-	# You are currently splitting a commit while rebasing branch '\''split_commit'\'' on '\''$ONTO'\''.
++	# Splitting $SHA while rebasing branch '\''split_commit'\'' on '\''$ONTO'\''.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+ 	# Changes not staged for commit:
+@@ -247,11 +249,12 @@ test_expect_success 'status after editing the last commit with --amend during a
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~3) &&
+ 	TGT=$(git rev-parse --short three_amend) &&
++	SHA=$(git rev-parse --short four_amend) &&
+ 	git rebase -i HEAD~3 &&
+ 	git commit --amend -m "foo" &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached from $TGT
+-	# You are currently editing a commit while rebasing branch '\''amend_last'\'' on '\''$ONTO'\''.
++	# Editing $SHA while rebasing branch '\''amend_last'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+ 	#
+@@ -277,11 +280,12 @@ test_expect_success 'status: (continue first edit) second edit' '
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~3) &&
++	SHA=$(git rev-parse --short three_edits) &&
+ 	git rebase -i HEAD~3 &&
+ 	git rebase --continue &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached from $ONTO
+-	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
++	# Editing $SHA while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+ 	#
+@@ -298,12 +302,13 @@ test_expect_success 'status: (continue first edit) second edit and split' '
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~3) &&
++	SHA=$(git rev-parse --short three_edits) &&
+ 	git rebase -i HEAD~3 &&
+ 	git rebase --continue &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached from $ONTO
+-	# You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
++	# Splitting $SHA while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+ 	# Changes not staged for commit:
+@@ -325,12 +330,13 @@ test_expect_success 'status: (continue first edit) second edit and amend' '
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~3) &&
++	SHA=$(git rev-parse --short three_edits) &&
+ 	git rebase -i HEAD~3 &&
+ 	git rebase --continue &&
+ 	git commit --amend -m "foo" &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached from $ONTO
+-	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
++	# Editing $SHA while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+ 	#
+@@ -347,12 +353,13 @@ test_expect_success 'status: (amend first edit) second edit' '
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~3) &&
++	SHA=$(git rev-parse --short three_edits) &&
+ 	git rebase -i HEAD~3 &&
+ 	git commit --amend -m "a" &&
+ 	git rebase --continue &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached from $ONTO
+-	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
++	# Editing $SHA while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+ 	#
+@@ -369,13 +376,14 @@ test_expect_success 'status: (amend first edit) second edit and split' '
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~3) &&
++	SHA=$(git rev-parse --short three_edits) &&
+ 	git rebase -i HEAD~3 &&
+ 	git commit --amend -m "b" &&
+ 	git rebase --continue &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached from $ONTO
+-	# You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
++	# Splitting $SHA while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+ 	# Changes not staged for commit:
+@@ -397,13 +405,14 @@ test_expect_success 'status: (amend first edit) second edit and amend' '
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~3) &&
++	SHA=$(git rev-parse --short three_edits) &&
+ 	git rebase -i HEAD~3 &&
+ 	git commit --amend -m "c" &&
+ 	git rebase --continue &&
+ 	git commit --amend -m "d" &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached from $ONTO
+-	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
++	# Editing $SHA while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+ 	#
+@@ -420,6 +429,7 @@ test_expect_success 'status: (split first edit) second edit' '
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~3) &&
++	SHA=$(git rev-parse --short three_edits) &&
+ 	git rebase -i HEAD~3 &&
+ 	git reset HEAD^ &&
+ 	git add main.txt &&
+@@ -427,7 +437,7 @@ test_expect_success 'status: (split first edit) second edit' '
+ 	git rebase --continue &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached from $ONTO
+-	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
++	# Editing $SHA while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+ 	#
+@@ -444,6 +454,7 @@ test_expect_success 'status: (split first edit) second edit and split' '
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~3) &&
++	SHA=$(git rev-parse --short three_edits) &&
+ 	git rebase -i HEAD~3 &&
+ 	git reset HEAD^ &&
+ 	git add main.txt &&
+@@ -452,7 +463,7 @@ test_expect_success 'status: (split first edit) second edit and split' '
+ 	git reset HEAD^ &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached from $ONTO
+-	# You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
++	# Splitting $SHA while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+ 	# Changes not staged for commit:
+@@ -474,6 +485,7 @@ test_expect_success 'status: (split first edit) second edit and amend' '
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~3) &&
++	SHA=$(git rev-parse --short three_edits) &&
+ 	git rebase -i HEAD~3 &&
+ 	git reset HEAD^ &&
+ 	git add main.txt &&
+@@ -482,7 +494,7 @@ test_expect_success 'status: (split first edit) second edit and amend' '
+ 	git commit --amend -m "h" &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached from $ONTO
+-	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
++	# Editing $SHA while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+ 	#
+diff --git a/wt-status.c b/wt-status.c
+index bf84a86..5f5cddf 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -885,8 +885,19 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 				struct wt_status_state *state,
+ 				const char *color)
+ {
++	char *stopped_sha = read_line_from_git_path("rebase-merge/stopped-sha");
++	int must_free_stopped_sha = 1;
+ 	struct stat st;
  
- --repo=<repository>::
-        This option is only relevant if no <repository> argument is
++	/*
++	 * If the file stopped-sha does not exist
++	 * we go back to the old output saying "a commit"
++	 * instead of providing the commit's SHA1.
++	 */
++	if (!stopped_sha) {
++		stopped_sha = "a commit";
++		must_free_stopped_sha = 0;
++	}
+ 	if (has_unmerged(s)) {
+ 		if (state->branch)
+ 			status_printf_ln(s, color,
+@@ -919,24 +930,28 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 	} else if (split_commit_in_progress(s)) {
+ 		if (state->branch)
+ 			status_printf_ln(s, color,
+-					 _("You are currently splitting a commit while rebasing branch '%s' on '%s'."),
++					 _("Splitting %s while rebasing branch '%s' on '%s'."),
++					 stopped_sha,
+ 					 state->branch,
+ 					 state->onto);
+ 		else
+ 			status_printf_ln(s, color,
+-					 _("You are currently splitting a commit during a rebase."));
++					 _("Splitting %s during a rebase."),
++					 stopped_sha);
+ 		if (advice_status_hints)
+ 			status_printf_ln(s, color,
+ 				_("  (Once your working directory is clean, run \"git rebase --continue\")"));
+ 	} else {
+ 		if (state->branch)
+ 			status_printf_ln(s, color,
+-					 _("You are currently editing a commit while rebasing branch '%s' on '%s'."),
++					 _("Editing %s while rebasing branch '%s' on '%s'."),
++					 stopped_sha,
+ 					 state->branch,
+ 					 state->onto);
+ 		else
+ 			status_printf_ln(s, color,
+-					 _("You are currently editing a commit during a rebase."));
++					 _("Editing %s during a rebase."),
++					 stopped_sha);
+ 		if (advice_status_hints && !s->amend) {
+ 			status_printf_ln(s, color,
+ 				_("  (use \"git commit --amend\" to amend the current commit)"));
+@@ -945,6 +960,8 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 		}
+ 	}
+ 	wt_status_print_trailer(s);
++	if (must_free_stopped_sha)
++		free(stopped_sha);
+ }
+ 
+ static void show_cherry_pick_in_progress(struct wt_status *s,
 -- 
-1.8.3.1.495.g13f33cf.dirty
-
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.8
