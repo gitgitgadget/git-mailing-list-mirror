@@ -1,180 +1,116 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] diff: add --ignore-blank-lines option
-Date: Mon, 17 Jun 2013 23:33:08 +0200
-Message-ID: <CALWbr2x0gxQ8boXEa3WJUbaA8e9imt9Ri_NFmANEhJuK6Moi+A@mail.gmail.com>
-References: <7vhah35jn8.fsf@alter.siamese.dyndns.org>
-	<1371301305-30160-1-git-send-email-apelisse@gmail.com>
-	<7vzjuog175.fsf@alter.siamese.dyndns.org>
-	<CALWbr2zM=rD3GE9a=Xyrvz0E5mAMsDesJu8-Zs7JH7W4U4AbeA@mail.gmail.com>
-	<7vd2rkcy6r.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/git-push.txt: explain better cases where --force is dangerous
+Date: Mon, 17 Jun 2013 14:38:47 -0700
+Message-ID: <7v7ghsbeoo.fsf@alter.siamese.dyndns.org>
+References: <1371491561-19117-1-git-send-email-Matthieu.Moy@imag.fr>
+	<51BF7B1C.2040703@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 17 23:33:16 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	philipoakley@iee.org, artagnon@gmail.com
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Mon Jun 17 23:38:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uoh35-0001I1-AJ
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 23:33:15 +0200
+	id 1Uoh8Z-00046M-QS
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 23:38:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751430Ab3FQVdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jun 2013 17:33:11 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:36008 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751169Ab3FQVdK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 17:33:10 -0400
-Received: by mail-la0-f42.google.com with SMTP id eb20so2955367lab.15
-        for <git@vger.kernel.org>; Mon, 17 Jun 2013 14:33:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ZMtWIhIn5RN56GUWoXC3Fq+tmQmJW3c2mU5i/lV3/Vw=;
-        b=AOMh5I6kUWT5HboigNxt/gHyvhipAbfRDQG1KjGblEZnmpVqAoBc2t3RrVR45MBk8d
-         hJY/JZfltXJkv01VF4IzphRFCveZHNAeSILtz+4JI8qIAGhYvLuSHCTUBajKjx24OFXm
-         ezJTE1wlycfeBJ9RXGoECEXD6MqN3c4u2Pj0rS1VPJUgL5B22w5tGry1gD0Dl+bHDV91
-         +GlunN5zLOUPTogLXuytiaq/GT0fBecPFrqMYfKbdup2a+PO05SIyF6dRlP3bbuX/tnv
-         EG9fEub9ojwkCgwsxMNCr7hssgdCQUEuvpz8IFugvQF/eBjIhjFohzxWCYSr3aIMkIOJ
-         qJTQ==
-X-Received: by 10.152.9.69 with SMTP id x5mr7569870laa.57.1371504788349; Mon,
- 17 Jun 2013 14:33:08 -0700 (PDT)
-Received: by 10.112.61.8 with HTTP; Mon, 17 Jun 2013 14:33:08 -0700 (PDT)
-In-Reply-To: <7vd2rkcy6r.fsf@alter.siamese.dyndns.org>
+	id S1751463Ab3FQViv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Jun 2013 17:38:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59078 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751169Ab3FQViu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 17:38:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 028F32848D;
+	Mon, 17 Jun 2013 21:38:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wz40WKhp1uVvDaI9nZV/LVk6kEU=; b=Kp4g2n
+	YIBtk8jMr0yEXdnkx64U8f6dKfnkZ+A7W3ttge75qAk4BZJklExE1rPEBC+56Oc4
+	mKDY4pnzWA3Ejh++YmseQJNou+FjfS6QCGTWIQ3EisxrPteDdOM8A0bVrfdFZWiW
+	bnbvVdDXv5qc6438YMBYMuqQ5Ht8alHDbINgQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fMoY1BAeN2iXYOFvq+QOeHUj/1Ogfu5v
+	wzq/FsIqnvFnACCPN+5K2OoUx/UyGp8RzbIS/GI31guzanUXOKXGv6xr5oss8GcB
+	34FqwG+ORF62manJFXzaeCB6pJA2jFCOtVLZc8xWquqTex3g6xWmS1Ol96Wsyt78
+	HzAoAGgoGS4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAC872848C;
+	Mon, 17 Jun 2013 21:38:49 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 501F22848B;
+	Mon, 17 Jun 2013 21:38:49 +0000 (UTC)
+In-Reply-To: <51BF7B1C.2040703@xiplink.com> (Marc Branchaud's message of "Mon,
+	17 Jun 2013 17:09:48 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4BEC5232-D796-11E2-9303-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228118>
 
->>>> +             } else if (changes != ULONG_MAX &&
->>>> +                        xch->i1 + changes - (lxch->i1 + lxch->chg1) > max_common) {
->>>> +                     break;
+Marc Branchaud <marcnarc@xiplink.com> writes:
+
+> On 13-06-17 01:52 PM, Matthieu Moy wrote:
+>> The behavior of "git push --force" is rather clear when it updates only
+>> one remote ref, but running it when pushing several branches can really
+>> be dangerous. Warn the users a bit more and give them the alternative to
+>> push only one branch.
 >>
->> If we are no longer in "interesting zone" (changes != ULONG_MAX), it
->> means we will stop if the distance is too big.
->> "changes" is used in the calculation to consider the changes we have
->> already ignored (xch->i1 - (lxch->i1 + lxch->chg1) will only work if
->> xch and lxch are consecutive, we need to add the blank lines we
->> ignored).
->
-> And this uses max_common that is much larger than max_ignorable
-> because...?
->
-> The last interesting change, with its post context and inter hunk
-> gap, together with precontext for this one, is close enough to the
-> beginning of this one.  So it is understandable if xch by itself is
-> intereseting to use max_common.  Even an interesting one, if that is
-> so far from the last interesting one, should not be part of this
-> hunk.
->
-> However, if the current one is by itself uninteresting, should we
-> still use the max_common, or should this be compared with
-> max_ignorable?
-
-Because of the "recursive definition", we don't know yet if an
-ignorable change will be interesting or not.
-We need to make sure it will be close to another interesting change first.
-If it is, it will fall in the first if part, and lxch will catch-up.
-If not, we will eventually be too far and break.
-
-Re-reading note: OK, This last sentence ("If not we will eventually be
-too far and break") is actually a bug. We might break before we find
-something interesting while we should keep going. For example in such
-a case, we should display like this, but won't:
-
-@@ -x,x +x,x @@
-+change   <--- That is lxch
- 1
- 2
- 3
-+       <--- Here we leave "interesting"
- 4
- 5
-+       <--- We are too far and quit searching
- 6
- 7
-+
- 8
- 9
-+
- 10
- 11
-+change
-
->>>> +             } else {
->>>> +                     if (changes == ULONG_MAX)
->>>> +                             changes = 0;
->>>> +                     changes += xch->chg2;
->>>
->>> Puzzled beyond guessing.  Also it is curious why here and only here
->>> we look at chg2 side of the things, not i1/chg1 in this whole thing.
+>> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>> ---
+>>   Documentation/git-push.txt | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
 >>
->> chg2 being the number of blank line *additions*.
+>> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+>> index 938d1ee..9b9e7d1 100644
+>> --- a/Documentation/git-push.txt
+>> +++ b/Documentation/git-push.txt
+>> @@ -136,6 +136,14 @@ already exists on the remote side.
+>>   	not an ancestor of the local ref used to overwrite it.
+>>   	This flag disables the check.  This can cause the
+>>   	remote repository to lose commits; use it with care.
+>> +	Note that `--force` applies to all the refs that are pushed,
+>> +	hence using it with `push.default` set to `matching` or with
+>> +	multiple push destination configured may override refs other
 >
-> This is on the else side of if (!xch->ignore), so we are looking at
-> ignored hunk, which means there is only blank line change.  Can chg2
-> be 0 while chg1 is not zero, i.e. xch being a blank line removal?
+> s/destination/destinations/
 
-Exactly. It can be a blank line removal. But I don't want to consider
-it in the calculation.
-Here's why:
-We have:
-1
-2
-3
+Good eyes.
 
+After I re-read the one, I found that "override" somewhat a strange
+expression.  There is nothing that overrides or to be overriden.
 
+How about putting it like this?
 
+ Documentation/git-push.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-4
-5
-6
-
-and change it to:
-change
-1
-2
-3
-4
-5
-6
-change
-
-What should be the output of diff --ignore-blank-lines ?
-
-I chose this alternative:
-@@ -1,3 +1,4 @@
-+change
- 1
- 2
- 3
-@@ -7,3 +5,4 @@
- 4
- 5
- 6
-+change
-
-While one could have chosen:
-@@ -1,10 +1,8 @@
-+change
- 1
- 2
- 3
--
--
--
--
- 4
- 5
- 6
-+change
-
-> What should happen in that case?  Don't we want to show it, for the
-> same reason we want to keep removal, as long as it is close enough
-> to the interesting zone?
-
-Nothing is interesting here, we just leave the interesting zone (if
-not already left) because everything else failed.
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 8b637d3..21294aa 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -124,6 +124,15 @@ no `push.default` configuration variable is set.
+ 	not an ancestor of the local ref used to overwrite it.
+ 	This flag disables the check.  This can cause the
+ 	remote repository to lose commits; use it with care.
++	Note that `--force` applies to all the refs that are pushed,
++	hence using it with `push.default` set to `matching` or with
++	multiple push destinations configured with `remote.*.push`
++	may push out refs other than the current branch (including
++	local refs that are strictly behind their remote counterpart).
++	To force a push to only one branch, use a `+` in front of the
++	refspec to push	(e.g `git push origin +master` to force a push
++	to the `master`	branch). See the `<refspec>...` section above
++	for details.
+ 
+ --repo=<repository>::
+ 	This option is only relevant if no <repository> argument is
