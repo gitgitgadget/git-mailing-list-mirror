@@ -1,104 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] rebase: use peel_committish() where appropriate
-Date: Sun, 16 Jun 2013 19:52:49 -0700
-Message-ID: <7vy5a9ih32.fsf@alter.siamese.dyndns.org>
-References: <1371215872-9796-1-git-send-email-artagnon@gmail.com>
-	<1371215872-9796-4-git-send-email-artagnon@gmail.com>
-	<7vmwqspr52.fsf@alter.siamese.dyndns.org>
-	<CALkWK0k5jgafQa6b5=_d2vTT1zzdc4rCgzuoFhOCA1Xtm8v19w@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Slightly prettier reflog message from checkout
+Date: Sun, 16 Jun 2013 19:59:52 -0700
+Message-ID: <7vtxkxigrb.fsf@alter.siamese.dyndns.org>
+References: <1371317906-3991-1-git-send-email-artagnon@gmail.com>
+	<7vmwqqkftv.fsf@alter.siamese.dyndns.org>
+	<CALkWK0ki9C9OL36b3j14C-mVMPy07Uj5FXcrfMZJs_g3zBRC9A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 17 04:53:07 2013
+X-From: git-owner@vger.kernel.org Mon Jun 17 05:00:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoPZ4-0005N9-IJ
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 04:53:06 +0200
+	id 1UoPfr-0001hc-El
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Jun 2013 05:00:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755423Ab3FQCwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Jun 2013 22:52:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48651 "EHLO
+	id S1755819Ab3FQC75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Jun 2013 22:59:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36473 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755103Ab3FQCww (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jun 2013 22:52:52 -0400
+	id S1755783Ab3FQC7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jun 2013 22:59:55 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16EE21DDDC;
-	Mon, 17 Jun 2013 02:52:52 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D2F331E176;
+	Mon, 17 Jun 2013 02:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Q0gIP8csNQ2HxAUW/hfEhM61P08=; b=sOhoWr
-	M7/reRC7H9WhfCcYC6ZJbP3BtLPRvxt13v3EiLQsHTISqgklj0MrZ9WrpVCa5kt2
-	UprWboW79O1k0cDiqi5V8qSXtldZ71wyg9d5ANwsXBL56aEyzPiwmbjteGdRFu8G
-	3izqrcl52HVVk0CHKnw0ZvOv5ITVFtDLHMuvo=
+	:content-type; s=sasl; bh=UPeoUYbp21B+ky2uDzJi4DfJDko=; b=FeON8c
+	DC/CFjRFK7pkGZviFZcOckztNX7eYVyAWAn5sb8OajJf+rTecG/gkYkZrF6/jnJs
+	e5R8BtkJrN0cjFQhiW2E6Wf0Iz+OOMnmblaj0SulDc5MBJRYWH6ZFNe33rFcaLbj
+	0t1TiOv+MLc9DfxDzzzTJL3y6vYL3+d1W86Zo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Wg4olt8L74u5G0mdheq/XJhF3C+m6Ovb
-	PbY34Oo9PxVJFX2GO1IEEMvKTrybOl1Dwwo03TdRPH8Bbz6tzBs72pT/3x4jkEbE
-	65evE9E8seepCnYwmsjp72ddRJCcEfCfEdmyrheB/fHfuo6kju5SdnDSTQzaFc/v
-	8gGAUX3mPZc=
+	:content-type; q=dns; s=sasl; b=SQTuWWSHBdwx66//rc9FcWzsOExiRoks
+	XpLffnHkdas8waTrjQFpMxieRp3yqek3EnWi7V+LMg6N62F8RIf7m8unujyVB1g/
+	CsHaViglvQis0Xbdivis29dRgtCkaTxbfPciSfiv/8rtsPc6qaQDHzpzpCmpv3JS
+	TzoCUHNmkCk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DEE11DDDB;
-	Mon, 17 Jun 2013 02:52:52 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA8791E175;
+	Mon, 17 Jun 2013 02:59:54 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B4151DDD6;
-	Mon, 17 Jun 2013 02:52:51 +0000 (UTC)
-In-Reply-To: <CALkWK0k5jgafQa6b5=_d2vTT1zzdc4rCgzuoFhOCA1Xtm8v19w@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Sat, 15 Jun 2013 19:17:37 +0530")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 57B6B1E171;
+	Mon, 17 Jun 2013 02:59:54 +0000 (UTC)
+In-Reply-To: <CALkWK0ki9C9OL36b3j14C-mVMPy07Uj5FXcrfMZJs_g3zBRC9A@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Sun, 16 Jun 2013 14:51:52 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 003E79DE-D6F9-11E2-BC04-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FC5CCDEC-D6F9-11E2-B7E1-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228035>
 
 Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
 > Junio C Hamano wrote:
->> You can also specify the commit at the end of the history to be
->> rebased (very useful while trial runs to see where a series should
->> apply):
->>
->>     git rebase foo ":/Add B"
->>
->> This is already handled properly because it first gets turned into
->> an object name $orig_head and then we use it (without ^0) to update
->> the ORIG_HEAD.
+>> I view the two codepaths touched by these patches the other way
+>> around.
 >
-> Correct, but what sense does it make unless <branch> is a ref to update?
-
-It often is necessary, after applying a patch series that was
-prepared against commit that is unnecessarily new (e.g. a bugfix
-that should apply to 'maint' prepared against 'next'), to see if the
-result rebases on older codebase.  Giving a commit (not branch) to
-the command to force rebasing the commit on a detached HEAD is a
-very handy technique to do so without damaging the original branch.
-
-    $ git checkout mater^0
-    $ git am -s mbox
-    Applying A
-    Applying B
-    Applying C
-    $ git rebase --onto maint master ":/B"
-
-would see if the earlier two commits that are pure bugfix cleanly
-applies to 'maint' (and then I can rebuild the topic by forking a
-branch from 'maint', queue A and B, and if C is not needed for that
-fix, fork another from that point, possibly merge 'master' to it and
-then queue C).
-
->> What would happen when you are given "--onto :/f...o" is somewhat
->> interesting, but that may be a separate topic, I think.  At that
->> point, it is probably in the realm of "don't do it then" ;-)
+> I see.  Thanks for the early feedback.  I have some doubts.
 >
-> The utility of this very series can be questioned.  I've rarely wanted
-> to use the :/fommery with rebase, so this mostly an exercise in
-> "theoretical correctness" (something I usually stay away from).
+>> An abbreviated unique SHA-1 you have today may not be unique
+>> tomorrow.
 
-We are saying the same thing: "don't do it then".
+> When did we guarantee that the messages written by the reflog are invariant?
+
+That is not the point.  From the proposed log message for your 2/2:
+
+  f855138: checkout: moving from bdff0e3a374617dce784f801b97500d9ba2e4705 to co-reflog
+  f855138: checkout: moving from bdff0e3 to co-reflog
+
+The "bdff0e3" may be a unique abbreviation to identify the commit
+bdff0e3a374617dce784f801b97500d9ba2e4705 when the reflog entry was
+written.  But the latter can become meaningless once you have an
+unrelated commit in your history that shares the prefix.
+
+That is the "deliberate loss of information" I saw in the proposal.
+Recording full 40-hex does not have to worry about that issue; you
+do not even have to argue "but in this case we do not even have to
+have unique SHA-1, nobody uses it" vs. "some other codepaths you are
+not aware of may want to take advantage and start using it".  In
+other words, we will have one less thing we have to worry about.
