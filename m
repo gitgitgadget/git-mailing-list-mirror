@@ -1,297 +1,153 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH v2 05/13] bash prompt: return early from __git_ps1() when not
- in a git repository
-Date: Tue, 18 Jun 2013 04:16:58 +0200
-Message-ID: <1371521826-3225-6-git-send-email-szeder@ira.uka.de>
-References: <1371521826-3225-1-git-send-email-szeder@ira.uka.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+From: "Eduardo R. D'Avila" <erdavila@gmail.com>
+Subject: [PATCH 3/3] git-prompt.sh: enable color prompt in non-pcmode
+Date: Mon, 17 Jun 2013 23:17:24 -0300
+Message-ID: <1371521844-9901-1-git-send-email-erdavila@gmail.com>
+References: <7vhagxicu9.fsf@alter.siamese.dyndns.org>
+Cc: felipe.contreras@gmail.com, t.gummerer@gmail.com,
+	artagnon@gmail.com, zoltan.klinger@gmail.com, hegge@resisty.net,
+	martinerikwerner@gmail.com, s.oosthoek@xs4all.nl,
+	gitster@pobox.com, jonathan@leto.net, szeder@ira.uka.de,
+	"Eduardo R. D'Avila" <erdavila@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 18 04:18:05 2013
+X-From: git-owner@vger.kernel.org Tue Jun 18 04:18:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UolUi-0006JT-QV
+	id 1UolUj-0006JT-Ga
 	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 04:18:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753923Ab3FRCR7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jun 2013 22:17:59 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:50345 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753901Ab3FRCR4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 22:17:56 -0400
-Received: from localhost6.localdomain6 (f052037223.adsl.alicedsl.de [78.52.37.223])
-	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
-	id 0Ld3qq-1U6fJY3ewC-00iC73; Tue, 18 Jun 2013 04:17:53 +0200
-X-Mailer: git-send-email 1.8.3.1.487.g8f4672d
-In-Reply-To: <1371521826-3225-1-git-send-email-szeder@ira.uka.de>
-X-Provags-ID: V02:K0:bZMsqrgG4BCBCxQ0TDc6Q2jqKja34gPGdM/Y0RSonr5
- pNjVcPvBIxfHkx00eKIPqNN7rMUxiWL+AZ+Mn11Sdpyj1sOo+o
- nxXPEdsys1nDgaOzbxOEs0Sy5Lt8QHDAyL3tNEz6Hlp6Pz02HY
- L7Z/LfUTeXdadwFiyUK9JahMqlJD9OP3nf5vujjXdPVRbT/eT9
- Z5d5Ae2I07qZhI7Uq8+fM5wm4j3+EFMQOsNKEabIZucqo+jUn1
- 4ymGEOkqGayNzBagPke52EaNcFFVnYgCM2E4Wy/ZvgkXBS1e/l
- aOyt1QlL3ow5nIrN4laINb/+NsPu+nZr+nodCZCaM6XNC/tW+P
- mxWXvOU6XRib70SC9M9eJLRLfgsM4cqswJzviv687oCRkQD9aV
- 7iA+2Sj4i5dog==
+	id S1753921Ab3FRCR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Jun 2013 22:17:58 -0400
+Received: from mail-qc0-f172.google.com ([209.85.216.172]:34144 "EHLO
+	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753891Ab3FRCR5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 22:17:57 -0400
+Received: by mail-qc0-f172.google.com with SMTP id j10so2045656qcx.3
+        for <git@vger.kernel.org>; Mon, 17 Jun 2013 19:17:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=5Be0GyB1y5x8zOuZgloTqmC9+5Gtq6+hTB8H/XiyH8w=;
+        b=V0lHEbEzAkGztKCL5irDBh90P1DKz7LloBiElmv/KFnQlN1CDJiVXfbnzP8mQuVEn5
+         H+OCxNaO/q2n8hE9BjHBvYZUMB+6UdmlLzXOjKzvprxd2/37lN5p+jAhN+ajapgQzq8s
+         6LqQJWjSuDxu/YdRzYRwyjcDbfaWb42+Rji3U56+I3p7EXrTGz8XPnpdYLVZJ8KfNNMd
+         KvPrx48ZQA/oKtbwC5jDvJeopVwL6u021QBgahM4Y2Q+k+Lg+SMBpzBFdqqtwEbvF27j
+         /tyO3WWxf8BlSs6oklGBIdDhcF8ekzY4r+VYXV7icXJKpZGwSVU0ETiGKO9+UASg608c
+         2fOQ==
+X-Received: by 10.229.23.136 with SMTP id r8mr7425944qcb.115.1371521876936;
+        Mon, 17 Jun 2013 19:17:56 -0700 (PDT)
+Received: from localhost.localdomain ([177.97.121.196])
+        by mx.google.com with ESMTPSA id c10sm25300715qag.2.2013.06.17.19.17.52
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 17 Jun 2013 19:17:56 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.440.g82707f8
+In-Reply-To: <7vhagxicu9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228138>
 
-=46rom: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+The use of colors in a prompt is only possible in
+pcmode (using the variable PROMPT_COMMAND).
 
-=2E.. to gain one level of indentation for the bulk of the function.
+Enable color prompt in non-pcmode (using the variable
+PS1) for both Bash and ZSH.
 
-(The patch looks quite unreadable, you'd better check it with 'git
-diff -w'.)
-
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+Signed-off-by: Eduardo R. D'Avila <erdavila@gmail.com>
 ---
- contrib/completion/git-prompt.sh | 201 ++++++++++++++++++++-----------=
---------
- 1 file changed, 101 insertions(+), 100 deletions(-)
+15	9	contrib/completion/git-prompt.sh
+19	0	t/t9903-bash-prompt.sh
+ contrib/completion/git-prompt.sh | 24 +++++++++++++++---------
+ t/t9903-bash-prompt.sh           | 19 +++++++++++++++++++
+ 2 files changed, 34 insertions(+), 9 deletions(-)
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
-prompt.sh
-index 07a6218d..96b496cc 100644
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 70515cc..c5c75e7 100644
 --- a/contrib/completion/git-prompt.sh
 +++ b/contrib/completion/git-prompt.sh
-@@ -341,121 +341,122 @@ __git_ps1 ()
- 			#In PC mode PS1 always needs to be set
- 			PS1=3D"$ps1pc_start$ps1pc_end"
- 		fi
-+		return
-+	fi
-+
-+	local r=3D""
-+	local b=3D""
-+	local step=3D""
-+	local total=3D""
-+	if [ -d "$g/rebase-merge" ]; then
-+		b=3D"$(cat "$g/rebase-merge/head-name" 2>/dev/null)"
-+		step=3D$(cat "$g/rebase-merge/msgnum" 2>/dev/null)
-+		total=3D$(cat "$g/rebase-merge/end" 2>/dev/null)
-+		if [ -f "$g/rebase-merge/interactive" ]; then
-+			r=3D"|REBASE-i"
-+		else
-+			r=3D"|REBASE-m"
-+		fi
+@@ -13,7 +13,7 @@
+ #    3a) Change your PS1 to call __git_ps1 as
+ #        command-substitution:
+ #        Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+-#        ZSH:  PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
++#        ZSH:  setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+ #        the optional argument will be used as format string.
+ #    3b) Alternatively, if you are using bash, __git_ps1 can be
+ #        used for PROMPT_COMMAND with two parameters, <pre> and
+@@ -235,12 +235,18 @@ __git_ps1_colorize_gitstring ()
+ 		local c_lblue='%F{blue}'
+ 		local c_clear='%f'
  	else
--		local r=3D""
--		local b=3D""
--		local step=3D""
--		local total=3D""
--		if [ -d "$g/rebase-merge" ]; then
--			b=3D"$(cat "$g/rebase-merge/head-name" 2>/dev/null)"
--			step=3D$(cat "$g/rebase-merge/msgnum" 2>/dev/null)
--			total=3D$(cat "$g/rebase-merge/end" 2>/dev/null)
--			if [ -f "$g/rebase-merge/interactive" ]; then
--				r=3D"|REBASE-i"
-+		if [ -d "$g/rebase-apply" ]; then
-+			step=3D$(cat "$g/rebase-apply/next" 2>/dev/null)
-+			total=3D$(cat "$g/rebase-apply/last" 2>/dev/null)
-+			if [ -f "$g/rebase-apply/rebasing" ]; then
-+				b=3D"$(cat "$g/rebase-apply/head-name" 2>/dev/null)"
-+				r=3D"|REBASE"
-+			elif [ -f "$g/rebase-apply/applying" ]; then
-+				r=3D"|AM"
- 			else
--				r=3D"|REBASE-m"
--			fi
--		else
--			if [ -d "$g/rebase-apply" ]; then
--				step=3D$(cat "$g/rebase-apply/next" 2>/dev/null)
--				total=3D$(cat "$g/rebase-apply/last" 2>/dev/null)
--				if [ -f "$g/rebase-apply/rebasing" ]; then
--					b=3D"$(cat "$g/rebase-apply/head-name" 2>/dev/null)"
--					r=3D"|REBASE"
--				elif [ -f "$g/rebase-apply/applying" ]; then
--					r=3D"|AM"
--				else
--					r=3D"|AM/REBASE"
--				fi
--			elif [ -f "$g/MERGE_HEAD" ]; then
--				r=3D"|MERGING"
--			elif [ -f "$g/CHERRY_PICK_HEAD" ]; then
--				r=3D"|CHERRY-PICKING"
--			elif [ -f "$g/REVERT_HEAD" ]; then
--				r=3D"|REVERTING"
--			elif [ -f "$g/BISECT_LOG" ]; then
--				r=3D"|BISECTING"
-+				r=3D"|AM/REBASE"
- 			fi
-+		elif [ -f "$g/MERGE_HEAD" ]; then
-+			r=3D"|MERGING"
-+		elif [ -f "$g/CHERRY_PICK_HEAD" ]; then
-+			r=3D"|CHERRY-PICKING"
-+		elif [ -f "$g/REVERT_HEAD" ]; then
-+			r=3D"|REVERTING"
-+		elif [ -f "$g/BISECT_LOG" ]; then
-+			r=3D"|BISECTING"
+-		# Using \[ and \] around colors
+-		# is necessary to prevent wrapping issues!
+-		local c_red='\[\e[31m\]'
+-		local c_green='\[\e[32m\]'
+-		local c_lblue='\[\e[1;34m\]'
+-		local c_clear='\[\e[0m\]'
++		local c_red='\e[31m'
++		local c_green='\e[32m'
++		local c_lblue='\e[1;34m'
++		local c_clear='\e[0m'
++		if [ $pcmode = yes ]; then
++			# Using \[ and \] around colors
++			# is necessary to prevent wrapping issues!
++			c_red="\[$c_red\]"
++			c_green="\[$c_green\]"
++			c_lblue="\[$c_lblue\]"
++			c_clear="\[$c_clear\]"
 +		fi
-=20
--			test -n "$b" ||
--			b=3D"$(git symbolic-ref HEAD 2>/dev/null)" || {
--				detached=3Dyes
--				b=3D"$(
--				case "${GIT_PS1_DESCRIBE_STYLE-}" in
--				(contains)
--					git describe --contains HEAD ;;
--				(branch)
--					git describe --contains --all HEAD ;;
--				(describe)
--					git describe HEAD ;;
--				(* | default)
--					git describe --tags --exact-match HEAD ;;
--				esac 2>/dev/null)" ||
-+		test -n "$b" ||
-+		b=3D"$(git symbolic-ref HEAD 2>/dev/null)" || {
-+			detached=3Dyes
-+			b=3D"$(
-+			case "${GIT_PS1_DESCRIBE_STYLE-}" in
-+			(contains)
-+				git describe --contains HEAD ;;
-+			(branch)
-+				git describe --contains --all HEAD ;;
-+			(describe)
-+				git describe HEAD ;;
-+			(* | default)
-+				git describe --tags --exact-match HEAD ;;
-+			esac 2>/dev/null)" ||
-=20
--				b=3D"$(cut -c1-7 "$g/HEAD" 2>/dev/null)..." ||
--				b=3D"unknown"
--				b=3D"($b)"
--			}
--		fi
-+			b=3D"$(cut -c1-7 "$g/HEAD" 2>/dev/null)..." ||
-+			b=3D"unknown"
-+			b=3D"($b)"
-+		}
-+	fi
-=20
--		if [ -n "$step" ] && [ -n "$total" ]; then
--			r=3D"$r $step/$total"
--		fi
-+	if [ -n "$step" ] && [ -n "$total" ]; then
-+		r=3D"$r $step/$total"
-+	fi
-=20
--		local w=3D""
--		local i=3D""
--		local s=3D""
--		local u=3D""
--		local c=3D""
--		local p=3D""
-+	local w=3D""
-+	local i=3D""
-+	local s=3D""
-+	local u=3D""
-+	local c=3D""
-+	local p=3D""
-=20
--		if [ "true" =3D "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]=
-; then
--			if [ "true" =3D "$(git rev-parse --is-bare-repository 2>/dev/null)"=
- ]; then
--				c=3D"BARE:"
-+	if [ "true" =3D "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ];=
- then
-+		if [ "true" =3D "$(git rev-parse --is-bare-repository 2>/dev/null)" =
-]; then
-+			c=3D"BARE:"
-+		else
-+			b=3D"GIT_DIR!"
-+		fi
-+	elif [ "true" =3D "$(git rev-parse --is-inside-work-tree 2>/dev/null)=
-" ]; then
-+		if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
-+		   [ "$(git config --bool bash.showDirtyState)" !=3D "false" ]
-+		then
-+			git diff --no-ext-diff --quiet --exit-code || w=3D"*"
-+			if git rev-parse --quiet --verify HEAD >/dev/null; then
-+				git diff-index --cached --quiet HEAD -- || i=3D"+"
- 			else
--				b=3D"GIT_DIR!"
--			fi
--		elif [ "true" =3D "$(git rev-parse --is-inside-work-tree 2>/dev/null=
-)" ]; then
--			if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
--			   [ "$(git config --bool bash.showDirtyState)" !=3D "false" ]
--			then
--				git diff --no-ext-diff --quiet --exit-code || w=3D"*"
--				if git rev-parse --quiet --verify HEAD >/dev/null; then
--					git diff-index --cached --quiet HEAD -- || i=3D"+"
--				else
--					i=3D"#"
--				fi
--			fi
--			if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]; then
--				git rev-parse --verify refs/stash >/dev/null 2>&1 && s=3D"$"
-+				i=3D"#"
- 			fi
-+		fi
-+		if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]; then
-+			git rev-parse --verify refs/stash >/dev/null 2>&1 && s=3D"$"
-+		fi
-=20
--			if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
--			   [ "$(git config --bool bash.showUntrackedFiles)" !=3D "false" ] =
-&&
--			   [ -n "$(git ls-files --others --exclude-standard)" ]
--			then
--				u=3D"%${ZSH_VERSION+%}"
--			fi
-+		if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
-+		   [ "$(git config --bool bash.showUntrackedFiles)" !=3D "false" ] &=
-&
-+		   [ -n "$(git ls-files --others --exclude-standard)" ]
-+		then
-+			u=3D"%${ZSH_VERSION+%}"
-+		fi
-=20
--			if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
--				__git_ps1_show_upstream
--			fi
-+		if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
-+			__git_ps1_show_upstream
- 		fi
-+	fi
-=20
--		local z=3D"${GIT_PS1_STATESEPARATOR-" "}"
--		local f=3D"$w$i$s$u"
--		if [ $pcmode =3D yes ]; then
--			local gitstring=3D
--			if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
--				__git_ps1_colorize_gitstring
--			else
--				gitstring=3D"$c${b##refs/heads/}${f:+$z$f}$r$p"
--			fi
--			gitstring=3D$(printf -- "$printf_format" "$gitstring")
--			PS1=3D"$ps1pc_start$gitstring$ps1pc_end"
-+	local z=3D"${GIT_PS1_STATESEPARATOR-" "}"
-+	local f=3D"$w$i$s$u"
-+	if [ $pcmode =3D yes ]; then
-+		local gitstring=3D
+ 	fi
+ 	local bad_color=$c_red
+ 	local ok_color=$c_green
+@@ -411,7 +417,7 @@ __git_ps1 ()
+ 		local z="${GIT_PS1_STATESEPARATOR-" "}"
+ 
+ 		# NO color option unless in PROMPT_COMMAND mode
+-		if [ $pcmode = yes ] && [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
 +		if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
-+			__git_ps1_colorize_gitstring
- 		else
--			# NO color option unless in PROMPT_COMMAND mode
--			printf -- "$printf_format" "$c${b##refs/heads/}${f:+$z$f}$r$p"
-+			gitstring=3D"$c${b##refs/heads/}${f:+$z$f}$r$p"
+ 			__git_ps1_colorize_gitstring
  		fi
-+		gitstring=3D$(printf -- "$printf_format" "$gitstring")
-+		PS1=3D"$ps1pc_start$gitstring$ps1pc_end"
-+	else
-+		# NO color option unless in PROMPT_COMMAND mode
-+		printf -- "$printf_format" "$c${b##refs/heads/}${f:+$z$f}$r$p"
+ 
+@@ -422,7 +428,7 @@ __git_ps1 ()
+ 			gitstring=$(printf -- "$printf_format" "$gitstring")
+ 			PS1="$ps1pc_start$gitstring$ps1pc_end"
+ 		else
+-			printf -- "$printf_format" "$gitstring"
++			printf -- "${printf_format//%s/%b}" "$gitstring"
+ 		fi
  	fi
  }
---=20
-1.8.3.1.487.g8f4672d
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 1101adf..7dccc1c 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -789,4 +789,23 @@ test_expect_success 'prompt - zsh color pc mode - untracked files status indicat
+ 	test_cmp expected "$actual"
+ '
+ 
++test_expect_success 'prompt - bash color ps1 mode - untracked files status indicator' '
++	printf " (\e[32mmaster\e[0m)" >expected &&
++	(
++		GIT_PS1_SHOWCOLORHINTS=y &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
++test_expect_success 'prompt - zsh color ps1 mode - untracked files status indicator' '
++	printf " (%%F{green}master%%f)" >expected &&
++	(
++		GIT_PS1_SHOWCOLORHINTS=y &&
++		ZSH_VERSION=5.0.0 &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
+ test_done
+-- 
+1.8.3.1.440.g82707f8
