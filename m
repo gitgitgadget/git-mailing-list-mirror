@@ -1,82 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Documentation/git-merge.txt: weaken warning about uncommited changes
-Date: Tue, 18 Jun 2013 10:42:55 +0200
-Message-ID: <1371544975-18703-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: artagnon@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jun 18 10:43:24 2013
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH v2 3/6] test-lib: verbose mode for only tests matching a pattern
+Date: Tue, 18 Jun 2013 10:45:59 +0200
+Message-ID: <8761xbdcxk.fsf@linux-k42r.v.cablecom.net>
+References: <cover.1371460265.git.trast@inf.ethz.ch>
+	<8739d3ba5947c60d402030fc35d47115e7a51b0f.1371460265.git.trast@inf.ethz.ch>
+	<20130618053710.GB5916@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Phil Hord <phil.hord@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 18 10:46:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UorVb-0007Sh-B9
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 10:43:23 +0200
+	id 1UorYh-0005V5-QW
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 10:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754892Ab3FRInL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 04:43:11 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:58224 "EHLO shiva.imag.fr"
+	id S1755076Ab3FRIqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 04:46:22 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:25197 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754827Ab3FRInG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 04:43:06 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5I8h08G023929
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 18 Jun 2013 10:43:00 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1UorVF-0005Fa-A9; Tue, 18 Jun 2013 10:43:01 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1UorVF-0004sM-08; Tue, 18 Jun 2013 10:43:01 +0200
-X-Mailer: git-send-email 1.8.3.1.495.g13f33cf.dirty
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 18 Jun 2013 10:43:00 +0200 (CEST)
+	id S1754907Ab3FRIqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 04:46:11 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 18 Jun
+ 2013 10:46:05 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (213.55.184.227) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Tue, 18 Jun 2013 10:46:08 +0200
+In-Reply-To: <20130618053710.GB5916@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 18 Jun 2013 01:37:12 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [213.55.184.227]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228174>
 
-Commit 35d2fffd introduced 'git merge --abort' as a synonym to 'git reset
---merge', and added some failing tests in t7611-merge-abort.sh (search
-'###' in this file) showing that 'git merge --abort' could not always
-recover the pre-merge state.
+Jeff King <peff@peff.net> writes:
 
-Still, in many cases, 'git merge --abort' just works, and it is usually
-considered that the ability to start a merge with uncommited changes is
-an important property of Git.
+> On Mon, Jun 17, 2013 at 11:18:48AM +0200, Thomas Rast wrote:
+>
+>> As suggested by Jeff King, this takes care to wrap the entire test_expect_*
+>> block, but nothing else, in the verbose toggling.  To that end we use
+>> a new pair of hook functions.  The placement is a bit weird because we
+>> need to wait until the beginning of test_skip for $test_count to be
+>> incremented.
+[...]
+>   test_start ;# increment number, run setup hooks
+>   if ! test_skip
+>   then
+>     ...
+>   fi
+>   test_finish ;# teardown hooks
+>
+> Then it is a bit easier to see that each start has a finish (whereas in
+> the current version, the setups in test_skip are matched by individual
+> teardowns in each caller). I did not look too hard at it, though, so I
+> wouldn't be surprised if there is some other hidden order dependency
+> that makes that not work. :)
 
-Weaken the warning by discouraging only merge with /non-trivial/
-uncommited changes.
+No, I think that's actually very reasonable.  I'll do it that way in v3.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-This is a followup to an old discussion:
+> But then what is this hunk doing:
+>
+>>  test_eval_ () {
+>>  	# This is a separate function because some tests use
+>>  	# "return" to end a test_expect_success block early.
+>> @@ -358,9 +399,7 @@ test_run_ () {
+>>  
+>>  	if test -z "$immediate" || test $eval_ret = 0 || test -n "$expecting_failure"
+>>  	then
+>> -		setup_malloc_check
+>>  		test_eval_ "$test_cleanup"
+>> -		teardown_malloc_check
+>>  	fi
+>>  	if test "$verbose" = "t" && test -n "$HARNESS_ACTIVE"
+>>  	then
 
-http://thread.gmane.org/gmane.comp.version-control.git/221069
+Thanks for catching this -- it's just a mis-edit that would effectively
+revert 1/6.
 
-I don't think documenting all the failure cases in the doc would be a
-good idea, so I've left the "in some cases" part.
-
- Documentation/git-merge.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 67ca99c..8c7f2f6 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -56,8 +56,8 @@ especially if those changes were further modified after the merge
- was started), 'git merge --abort' will in some cases be unable to
- reconstruct the original (pre-merge) changes. Therefore:
- 
--*Warning*: Running 'git merge' with uncommitted changes is
--discouraged: while possible, it leaves you in a state that is hard to
-+*Warning*: Running 'git merge' with non-trivial uncommitted changes is
-+discouraged: while possible, it may leave you in a state that is hard to
- back out of in the case of a conflict.
- 
- 
 -- 
-1.8.3.1.495.g13f33cf.dirty
+Thomas Rast
+trast@{inf,student}.ethz.ch
