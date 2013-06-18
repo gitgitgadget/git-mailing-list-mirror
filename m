@@ -1,71 +1,59 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH 2/2] t/t9802: explicitly name the upstream branch to use
- as a base
-Date: Tue, 18 Jun 2013 09:42:07 -0400
-Message-ID: <20130618134207.GA28716@padd.com>
-References: <1371519650-17869-1-git-send-email-bcasey@nvidia.com>
- <1371519650-17869-2-git-send-email-bcasey@nvidia.com>
+From: Alexander Nestorov <alexandernst@gmail.com>
+Subject: Re: [Request] Git reset should be able to ignore file permissions
+Date: Tue, 18 Jun 2013 15:48:45 +0200
+Message-ID: <CACuz9s1KGKsL-pGftAtAWyX5gUA5c-PYyJUSstf+xw151rZLtA@mail.gmail.com>
+References: <CACuz9s31OUWNxTqCmj7ukAo7=TpXK7zBv5kTFZ5obpXKOju9ng@mail.gmail.com>
+ <vpqsj0fr19j.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <bcasey@nvidia.com>
-X-From: git-owner@vger.kernel.org Tue Jun 18 15:48:11 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 18 15:49:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UowGY-0005b9-9p
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 15:48:10 +0200
+	id 1UowHr-0008Ru-6Z
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 15:49:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932582Ab3FRNsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 09:48:05 -0400
-Received: from honk.padd.com ([74.3.171.149]:35082 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932561Ab3FRNsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 09:48:04 -0400
-X-Greylist: delayed 352 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Jun 2013 09:48:04 EDT
-Received: from arf.padd.com (unknown [50.55.134.154])
-	by honk.padd.com (Postfix) with ESMTPSA id 6DC89620D;
-	Tue, 18 Jun 2013 06:42:10 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 152FF22F05; Tue, 18 Jun 2013 09:42:08 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1371519650-17869-2-git-send-email-bcasey@nvidia.com>
+	id S932730Ab3FRNt1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 09:49:27 -0400
+Received: from mail-qe0-f51.google.com ([209.85.128.51]:42064 "EHLO
+	mail-qe0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932679Ab3FRNt0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 09:49:26 -0400
+Received: by mail-qe0-f51.google.com with SMTP id a11so2449230qen.24
+        for <git@vger.kernel.org>; Tue, 18 Jun 2013 06:49:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=wpq0tQWko483VSb4PZsmq3R1R/VaN9BM5zG67XWNFC4=;
+        b=NbMPzfv5dZpFMT/HDL1Z5zeVzSXshv2SAil/Zx0r/adrOnSlEa28FKPmCKM4HHadHh
+         E3ONxLVFr0q5awBD+TuZovxen0Fod/o//5YFvZlOHfI7VHC0ldwPSgeHmLzFU7S+tH+T
+         2xXtBiaCuX/CdRtO5xg0jn2ii/2UZl6Dwp1He9srsiZcTL4skW+FA814zGvcC/e7XziT
+         PeFZUYwJzaw7LWuS+GQreF7B5wgRLltqBueNiwPpvpzDA4eeGBCcdtVA4ZZJ5cS2rZpD
+         LjLSa8DG+fj9Vz6Gqb7w2pf9QwzSqsYbLYvXuRHG6LC3a7Slo4sGnc06/SxC9PsyZZHE
+         tubA==
+X-Received: by 10.229.106.230 with SMTP id y38mr8728881qco.21.1371563366217;
+ Tue, 18 Jun 2013 06:49:26 -0700 (PDT)
+Received: by 10.229.168.70 with HTTP; Tue, 18 Jun 2013 06:48:45 -0700 (PDT)
+In-Reply-To: <vpqsj0fr19j.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228230>
 
-bcasey@nvidia.com wrote on Mon, 17 Jun 2013 18:40 -0700:
-> From: Brandon Casey <drafnel@gmail.com>
-> 
-> Prior to commit fa83a33b, the 'git checkout' DWIMery would create a
-> new local branch if the specified branch name did not exist and it
-> matched exactly one ref in the "remotes" namespace.  It searched
-> the "remotes" namespace for matching refs using a simple comparison
-> of the trailing portion of the remote ref names.  This approach
-> could sometimes produce false positives or negatives.
-> 
-> Since fa83a33b, the DWIMery more strictly excludes the remote name
-> from the ref comparison by iterating through the remotes that are
-> configured in the .gitconfig file.  This has the side-effect that
-> any refs that exist in the "remotes" namespace, but do not match
-> the destination side of any remote refspec, will not be used by
-> the DWIMery.
-> 
-> This change in behavior breaks the tests in t9802 which relied on
-> the old behavior of searching all refs in the remotes namespace,
-> since the git-p4 script does not configure any remotes in the
-> .gitconfig.  Let's work around this in these tests by explicitly
-> naming the upstream branch to base the new local branch on when
-> calling 'git checkout'.
+Git does preserve file permissions, that is, git is aware of the
+permissions you can set with chmod.
 
-Thanks for finding and fixing this.  Great explanation.  I
-tested it locally too.
+I'm not trying to ignore the x bit, what I'm trying to do is make
+"git reset" checkout only the files that actually changed instead
+of checking out all the files with different permissions than the
+ones git thinks they should have.
 
-Acked-by: Pete Wyckoff <pw@padd.com>
-
-		-- Pete
+Said with other word: when you run "git reset", git does a "status"
+and checkouts all the files that showed up from the "status".
+That's exactly what I'm trying to avoid, as "status" is aware of both
+content changes and permissions changes.
