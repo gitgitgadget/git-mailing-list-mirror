@@ -1,116 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] http.c: don't rewrite the user:passwd string multiple
- times
-Date: Tue, 18 Jun 2013 18:13:28 -0400
-Message-ID: <20130618221327.GA14234@sigill.intra.peff.net>
-References: <1371520840-24906-1-git-send-email-bcasey@nvidia.com>
- <20130618051902.GA5916@sigill.intra.peff.net>
- <CA+sFfMdEvwzmnEBeO+_pwdmN3m5rkJvUCVFFJU8mtmyN+WxH6w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Avoid broken Solaris tr
+Date: Tue, 18 Jun 2013 15:31:30 -0700
+Message-ID: <7vli672gql.fsf@alter.siamese.dyndns.org>
+References: <1371590247-13436-1-git-send-email-bdwalton@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brandon Casey <bcasey@nvidia.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, daniel@haxx.se
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 19 00:13:38 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ben Walton <bdwalton@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 19 00:31:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Up49h-00027t-K7
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 00:13:37 +0200
+	id 1Up4R8-0005yj-4p
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 00:31:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933785Ab3FRWNd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 18:13:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40986 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932479Ab3FRWNc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 18:13:32 -0400
-Received: (qmail 4435 invoked by uid 102); 18 Jun 2013 22:14:30 -0000
-Received: from mobile-032-132-054-112.mycingular.net (HELO sigill.intra.peff.net) (32.132.54.112)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 18 Jun 2013 17:14:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Jun 2013 18:13:28 -0400
-Content-Disposition: inline
-In-Reply-To: <CA+sFfMdEvwzmnEBeO+_pwdmN3m5rkJvUCVFFJU8mtmyN+WxH6w@mail.gmail.com>
+	id S1756282Ab3FRWbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 18:31:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37770 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755322Ab3FRWbd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 18:31:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B227B29DBF;
+	Tue, 18 Jun 2013 22:31:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LGSNo2eCIwWXd4mCsqES/PvrM04=; b=KPOyvl
+	a384f8DIuYtrhWNjkl8kVliNrN0syeIMc5sUwvzUw/8etjugA0jhQ8y/zkjFFqYm
+	2CxPCXRebkYem+DdVNr2PcyiYbKBZ2NqFb/mQnxL7E+xQIQH66HQTo68jl/nhfOk
+	9L0etYxILAp/5rDVSkmLHln8ytQjf/wI5m2/k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vEFEtD1Rjudifh06QFpkez0AdqJu3WyT
+	d2IkkP/dPESnjX6e1TWVkPTL+L2R+i0CMw7JtpMpgGxrSHTd5mIoqlsmcOw3KYt5
+	niip//OxVh/glErZuRMq2oOkPltF8nzM4a2ZpLXDzUsZfVkK5iAlPN9V6aijiIez
+	Kodd87b82lE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A609329DBE;
+	Tue, 18 Jun 2013 22:31:32 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0BFC929DB9;
+	Tue, 18 Jun 2013 22:31:31 +0000 (UTC)
+In-Reply-To: <1371590247-13436-1-git-send-email-bdwalton@gmail.com> (Ben
+	Walton's message of "Tue, 18 Jun 2013 22:17:27 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D376EA70-D866-11E2-AF7C-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228320>
 
-On Tue, Jun 18, 2013 at 12:29:03PM -0700, Brandon Casey wrote:
+Ben Walton <bdwalton@gmail.com> writes:
 
-> >   1. Older versions of curl (and I do not recall which version off-hand,
-> >      but it is not important) stored just the pointer. Calling code was
-> >      required to manage the string lifetime itself.
-> 
-> Daniel mentions that the change happened in libcurl 7.17.  RHEL 4.X
-> (yes, ancient, dead, I realize) provides 7.12 and RHEL 5.X (yes,
-> ancient, but still widely in use) provides 7.15.  Just pointing it
-> out.
+> Solaris' tr (both /usr/bin/ and /usr/xpg4/bin) fail to handle the case
+> where the first argument is a multi-character set and the second is a
+> single null character.
 
-Yeah, I didn't mean to imply "we don't care about these versions", only
-that our analysis is different between the two sets. We have #ifdefs for
-curl going back to 7.7.4. That's probably excessive, but AFAIK, we would
-still work with such old versions.
+Almost all the tr invocations look like converting LF to NUL, except
+for two that squash a colon ':', HT and LF all to NUL.  Is Solaris's
+tr fine with the former but not the latter?
 
-> > It could be a problem when we have multiple handles in play
-> > simultaneously (we invalidate the pointer that another simultaneous
-> > handle is using, but do not immediately reset its pointer).
-> 
-> Don't we have multiple handles in play at the same time?  What's going
-> on in get_active_slot() when USE_CURL_MULTI is defined?  It appears to
-> be maintaining a list of "slot" 's, each with its own curl handle
-> initialized either by curl_easy_duphandle() or get_curl_handle().
+> We make this change globally in t0008-ignores instead of just for the
+> cases where it matters in order to maintain consistency.
 
-Yes, we do; the dumb http walker will pipeline loose pack and object
-requests (which makes a big difference when fetching small files). The
-smart http code may use the curl-multi interface under the hood, but it
-should only have a single handle, and the use of the multi interface is
-just for sharing code with the dumb fetch.
+I am not suggesting to keep 'tr "\n" "\0"', but just wanted to make
+sure I am reading the first paragraph correctly.  If we are
+rewriting, we should do so consistently.
 
-> So, yeah, this is what I was referring to when I mentioned
-> "potentially dangerous".  Since the current code does not change the
-> size of the string, the pointer will never change, so we won't ever
-> invalidate a pointer that another handle is using.
+> +perl -pne 's/^"//; s/\\//; s/"$//; s/\n/\0/g' stdin >stdin0
 
-Agreed. I did not so much mean to dispute your "potentially dangerous"
-claim as clarify exactly what the potential is. :)
+What is -pne?  Is it the same as -pe?
 
-> The other thing I thought was potentially dangerous, was just
-> truncating the string.  Again, if there are multiple curl handles in
-> use (which I thought was a possibility), then merely truncating the
-> string that contains the username/password could potentially cause a
-> problem for another handle that could be in the middle of
-> authenticating using the string.  But, I don't know if there is any
-> multi-processing happening within the curl library.
+tr/\n/\0/ (or y/\n/\0/) may be more faithful to the original.
 
-I don't think curl does any threading; when we are not inside
-curl_*_perform, there is no curl code running at all (Daniel can correct
-me if I'm wrong on that).
 
-So I think from curl's perspective a truncation and exact rewrite is
-atomic, and it sees only the final content.  I don't know what would
-happen if you truncated and put in _different_ contents. For example, if
-curl would have written out half of the username/password, blocked and
-returned from curl_multi_perform, then you update the buffer, then it
-resumes writing.
+> +perl -pne 's/^"//; s/\\//; s/"$//; s/\n/\0/g' expected-default > \
+> +    expected-default0
 
-IOW, I believe the current code is safe (though in a very subtle way),
-but if you were to allow password update, I'm not sure if it would be or
-not (and if not, you would need a per-handle buffer to make it safe).
+Ditto.  We may want to give the same script used in the above two
+(and twice again in the later hunk) more descriptive name, e.g.
 
-I'm fine with making the safety less subtle (e.g., your patch, with a
-comment added).
+	broken_c_unquote () {
+		perl -pe '... that script ...' "$@"
+	}
 
-> If we _don't_ ever use multiple curl handles, and/or if there is no
-> threading going on in the background within libcurl, then I don't
-> think there is really any danger in what the current code does.  It
-> would just be an issue of needlessly rewriting the same string over
-> and over again, which is probably not a big deal depending on how
-> often that happens.
+	broken_c_quote stdin >stdin0
 
-It should be once per http request. But copying a dozen bytes is
-probably nothing compared to the actual request.
+Side note: the script is broken as a generic C-unquote function in
+multiple ways.  It does not work if it has more than one backslash
+quoted characters, it does not understand \t, \b, \015, \\, etc. to
+name two.
+
+But the breakage does not matter for the strings used in the test
+vector.
