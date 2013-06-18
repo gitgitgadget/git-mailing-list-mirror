@@ -1,712 +1,81 @@
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH v2 01/13] bash prompt: fix redirection coding style in tests
-Date: Tue, 18 Jun 2013 04:16:54 +0200
-Message-ID: <1371521826-3225-2-git-send-email-szeder@ira.uka.de>
+Subject: [PATCH v2 02/13] bash prompt: fix here document indentation in
+ interactive rebase test
+Date: Tue, 18 Jun 2013 04:16:55 +0200
+Message-ID: <1371521826-3225-3-git-send-email-szeder@ira.uka.de>
 References: <1371521826-3225-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 18 04:17:37 2013
+X-From: git-owner@vger.kernel.org Tue Jun 18 04:17:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UolUF-0005Ec-IC
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 04:17:36 +0200
+	id 1UolUL-0005Rb-13
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 04:17:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753879Ab3FRCRb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jun 2013 22:17:31 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:54157 "EHLO
+	id S1753889Ab3FRCRh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jun 2013 22:17:37 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:65506 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753767Ab3FRCRa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 22:17:30 -0400
+	with ESMTP id S1753803Ab3FRCRg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 22:17:36 -0400
 Received: from localhost6.localdomain6 (f052037223.adsl.alicedsl.de [78.52.37.223])
-	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
-	id 0Luron-1UNv3o0e5B-0108H8; Tue, 18 Jun 2013 04:17:29 +0200
+	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
+	id 0LiJAx-1U1SE00bo3-00nCN6; Tue, 18 Jun 2013 04:17:35 +0200
 X-Mailer: git-send-email 1.8.3.1.487.g8f4672d
 In-Reply-To: <1371521826-3225-1-git-send-email-szeder@ira.uka.de>
-X-Provags-ID: V02:K0:Sz5RHpKCfLuTHn2MiORzuF3pVIf/7J3YTFUp6k76gt8
- 4v4mymxGYxFe1utOMPxBH2cBmjRL3KcK9DP4B4LGtYkna8EtOK
- QZcQGT16Q8yN2qUe+jdQ7/W1eP5leKyObM7XS8vkGAAGv6ugQw
- vLA24NS+ilUmumRDNupSf5/8zF6Po02QMYrzS/8mxcHBrLwf65
- sXiMEKI+z/JYs+NymNGEx2faVVd5SHdj/ATSTHCB749Mq9HJZ3
- MfvYbUCHzxXfZ89pc97W1N/s91+SAOXFdU33PXiYW4gFYBze9q
- haHn6OX1+qNWp3MsU8O9zPfqYEeKvgvR3nrSJHwNNDsfziRjat
- Gz8tTkVpnxzpa001xOpjOnXaP2nQsdyVc0aNu5cArDUKoc0Ymo
- g7LSQnb/aj93Q==
+X-Provags-ID: V02:K0:jJMtrjq8pXWZtqpxeJQpTyebp6ZtHV3uQd9EYy/36qp
+ fn/Lo/XBrKxlZzOpDdiqPyL0rLHFswbwhTcZApRJ3yITgw2+J6
+ FCxbTY1/Wezm+waSsgAw+OzfnKCwWJRQu0R+eGl+XIoT5ol+mW
+ /Pa4twXdQ7qW6KVHGEO9p3naASq9LlDL9CxFLtBjyHMYUsAkUC
+ QEXHTZ5hZXF+gQGJ3RyUU92wMs7ZZ734jDycY8DMOe/qgJSxWW
+ MdNcDAsp9/1o49AdvzRzksYlK9pUa3MJish6cyh9Pl+XUYWbAT
+ PCDpMwIlzL/+bkIQJCPhfIDnHc5zI+lyODC6noOC6F5FGPBV4C
+ yrq/3bL+bs1iuSTxfYjoUC8ojWay3jr4MaPM5WT3NzONFk4JF1
+ D5y1PcVX8DCEA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228134>
 
 =46rom: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 
-Use '>file' instead of '> file', in accordance with the coding
-guidelines.
+Also move the shebang line into the here document.
 
 Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
- t/t9903-bash-prompt.sh | 232 ++++++++++++++++++++++++-----------------=
---------
- 1 file changed, 116 insertions(+), 116 deletions(-)
+ t/t9903-bash-prompt.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 15521cc4..7c7f8b97 100755
+index 7c7f8b97..b0af5d5f 100755
 --- a/t/t9903-bash-prompt.sh
 +++ b/t/t9903-bash-prompt.sh
-@@ -14,98 +14,98 @@ actual=3D"$TRASH_DIRECTORY/actual"
- test_expect_success 'setup for prompt tests' '
- 	mkdir -p subdir/subsubdir &&
- 	git init otherrepo &&
--	echo 1 > file &&
-+	echo 1 >file &&
- 	git add file &&
- 	test_tick &&
- 	git commit -m initial &&
- 	git tag -a -m msg1 t1 &&
- 	git checkout -b b1 &&
--	echo 2 > file &&
-+	echo 2 >file &&
- 	git commit -m "second b1" file &&
--	echo 3 > file &&
-+	echo 3 >file &&
- 	git commit -m "third b1" file &&
- 	git tag -a -m msg2 t2 &&
- 	git checkout -b b2 master &&
--	echo 0 > file &&
-+	echo 0 >file &&
- 	git commit -m "second b2" file &&
--	echo 00 > file &&
-+	echo 00 >file &&
- 	git commit -m "another b2" file &&
--	echo 000 > file &&
-+	echo 000 >file &&
- 	git commit -m "yet another b2" file &&
- 	git checkout master
- '
-=20
- test_expect_success 'gitdir - from command line (through $__git_dir)' =
-'
--	echo "$TRASH_DIRECTORY/otherrepo/.git" > expected &&
-+	echo "$TRASH_DIRECTORY/otherrepo/.git" >expected &&
- 	(
- 		__git_dir=3D"$TRASH_DIRECTORY/otherrepo/.git" &&
--		__gitdir > "$actual"
-+		__gitdir >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'gitdir - repo as argument' '
--	echo "otherrepo/.git" > expected &&
--	__gitdir "otherrepo" > "$actual" &&
-+	echo "otherrepo/.git" >expected &&
-+	__gitdir "otherrepo" >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'gitdir - remote as argument' '
--	echo "remote" > expected &&
--	__gitdir "remote" > "$actual" &&
-+	echo "remote" >expected &&
-+	__gitdir "remote" >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'gitdir - .git directory in cwd' '
--	echo ".git" > expected &&
--	__gitdir > "$actual" &&
-+	echo ".git" >expected &&
-+	__gitdir >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'gitdir - .git directory in parent' '
--	echo "$(pwd -P)/.git" > expected &&
-+	echo "$(pwd -P)/.git" >expected &&
- 	(
- 		cd subdir/subsubdir &&
--		__gitdir > "$actual"
-+		__gitdir >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'gitdir - cwd is a .git directory' '
--	echo "." > expected &&
-+	echo "." >expected &&
- 	(
- 		cd .git &&
--		__gitdir > "$actual"
-+		__gitdir >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'gitdir - parent is a .git directory' '
--	echo "$(pwd -P)/.git" > expected &&
-+	echo "$(pwd -P)/.git" >expected &&
- 	(
- 		cd .git/refs/heads &&
--		__gitdir > "$actual"
-+		__gitdir >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'gitdir - $GIT_DIR set while .git directory in cwd=
-' '
--	echo "$TRASH_DIRECTORY/otherrepo/.git" > expected &&
-+	echo "$TRASH_DIRECTORY/otherrepo/.git" >expected &&
- 	(
- 		GIT_DIR=3D"$TRASH_DIRECTORY/otherrepo/.git" &&
- 		export GIT_DIR &&
--		__gitdir > "$actual"
-+		__gitdir >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'gitdir - $GIT_DIR set while .git directory in par=
-ent' '
--	echo "$TRASH_DIRECTORY/otherrepo/.git" > expected &&
-+	echo "$TRASH_DIRECTORY/otherrepo/.git" >expected &&
- 	(
- 		GIT_DIR=3D"$TRASH_DIRECTORY/otherrepo/.git" &&
- 		export GIT_DIR &&
- 		cd subdir &&
--		__gitdir > "$actual"
-+		__gitdir >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-@@ -119,36 +119,36 @@ test_expect_success 'gitdir - non-existing $GIT_D=
-IR' '
- '
-=20
- test_expect_success 'gitdir - gitfile in cwd' '
--	echo "$(pwd -P)/otherrepo/.git" > expected &&
--	echo "gitdir: $TRASH_DIRECTORY/otherrepo/.git" > subdir/.git &&
-+	echo "$(pwd -P)/otherrepo/.git" >expected &&
-+	echo "gitdir: $TRASH_DIRECTORY/otherrepo/.git" >subdir/.git &&
- 	test_when_finished "rm -f subdir/.git" &&
- 	(
- 		cd subdir &&
--		__gitdir > "$actual"
-+		__gitdir >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'gitdir - gitfile in parent' '
--	echo "$(pwd -P)/otherrepo/.git" > expected &&
--	echo "gitdir: $TRASH_DIRECTORY/otherrepo/.git" > subdir/.git &&
-+	echo "$(pwd -P)/otherrepo/.git" >expected &&
-+	echo "gitdir: $TRASH_DIRECTORY/otherrepo/.git" >subdir/.git &&
- 	test_when_finished "rm -f subdir/.git" &&
- 	(
- 		cd subdir/subsubdir &&
--		__gitdir > "$actual"
-+		__gitdir >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success SYMLINKS 'gitdir - resulting path avoids symlinks'=
- '
--	echo "$(pwd -P)/otherrepo/.git" > expected &&
-+	echo "$(pwd -P)/otherrepo/.git" >expected &&
- 	mkdir otherrepo/dir &&
- 	test_when_finished "rm -rf otherrepo/dir" &&
- 	ln -s otherrepo/dir link &&
- 	test_when_finished "rm -f link" &&
- 	(
- 		cd link &&
--		__gitdir > "$actual"
-+		__gitdir >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-@@ -163,96 +163,96 @@ test_expect_success 'gitdir - not a git repositor=
-y' '
- '
-=20
- test_expect_success 'prompt - branch name' '
--	printf " (master)" > expected &&
--	__git_ps1 > "$actual" &&
-+	printf " (master)" >expected &&
-+	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - detached head' '
--	printf " ((%s...))" $(git log -1 --format=3D"%h" b1^) > expected &&
-+	printf " ((%s...))" $(git log -1 --format=3D"%h" b1^) >expected &&
- 	git checkout b1^ &&
- 	test_when_finished "git checkout master" &&
--	__git_ps1 > "$actual" &&
-+	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - describe detached head - contains' '
--	printf " ((t2~1))" > expected &&
-+	printf " ((t2~1))" >expected &&
- 	git checkout b1^ &&
- 	test_when_finished "git checkout master" &&
- 	(
- 		GIT_PS1_DESCRIBE_STYLE=3Dcontains &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - describe detached head - branch' '
--	printf " ((b1~1))" > expected &&
-+	printf " ((b1~1))" >expected &&
- 	git checkout b1^ &&
- 	test_when_finished "git checkout master" &&
- 	(
- 		GIT_PS1_DESCRIBE_STYLE=3Dbranch &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - describe detached head - describe' '
--	printf " ((t1-1-g%s))" $(git log -1 --format=3D"%h" b1^) > expected &=
-&
-+	printf " ((t1-1-g%s))" $(git log -1 --format=3D"%h" b1^) >expected &&
- 	git checkout b1^ &&
- 	test_when_finished "git checkout master" &&
- 	(
- 		GIT_PS1_DESCRIBE_STYLE=3Ddescribe &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - describe detached head - default' '
--	printf " ((t2))" > expected &&
-+	printf " ((t2))" >expected &&
- 	git checkout --detach b1 &&
- 	test_when_finished "git checkout master" &&
--	__git_ps1 > "$actual" &&
-+	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - inside .git directory' '
--	printf " (GIT_DIR!)" > expected &&
-+	printf " (GIT_DIR!)" >expected &&
- 	(
- 		cd .git &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - deep inside .git directory' '
--	printf " (GIT_DIR!)" > expected &&
-+	printf " (GIT_DIR!)" >expected &&
- 	(
- 		cd .git/refs/heads &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - inside bare repository' '
--	printf " (BARE:master)" > expected &&
-+	printf " (BARE:master)" >expected &&
- 	git init --bare bare.git &&
- 	test_when_finished "rm -rf bare.git" &&
- 	(
- 		cd bare.git &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
+@@ -248,12 +248,12 @@ test_expect_success 'prompt - inside bare reposit=
+ory' '
 =20
  test_expect_success 'prompt - interactive rebase' '
--	printf " (b1|REBASE-i 2/3)" > expected
-+	printf " (b1|REBASE-i 2/3)" >expected
- 	echo "#!$SHELL_PATH" >fake_editor.sh &&
- 	cat >>fake_editor.sh <<\EOF &&
--echo "exec echo" > "$1"
--echo "edit $(git log -1 --format=3D"%h")" >> "$1"
--echo "exec echo" >> "$1"
-+echo "exec echo" >"$1"
-+echo "edit $(git log -1 --format=3D"%h")" >>"$1"
-+echo "exec echo" >>"$1"
- EOF
+ 	printf " (b1|REBASE-i 2/3)" >expected
+-	echo "#!$SHELL_PATH" >fake_editor.sh &&
+-	cat >>fake_editor.sh <<\EOF &&
+-echo "exec echo" >"$1"
+-echo "edit $(git log -1 --format=3D"%h")" >>"$1"
+-echo "exec echo" >>"$1"
+-EOF
++	cat >fake_editor.sh <<-EOF &&
++		#!$SHELL_PATH
++		echo "exec echo" >"\$1"
++		echo "edit \$(git log -1 --format=3D"%h")" >>"\$1"
++		echo "exec echo" >>"\$1"
++	EOF
  	test_when_finished "rm -f fake_editor.sh" &&
  	chmod a+x fake_editor.sh &&
-@@ -261,277 +261,277 @@ EOF
- 	test_when_finished "git checkout master" &&
- 	git rebase -i HEAD^ &&
- 	test_when_finished "git rebase --abort"
--	__git_ps1 > "$actual" &&
-+	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - rebase merge' '
--	printf " (b2|REBASE-m 1/3)" > expected &&
-+	printf " (b2|REBASE-m 1/3)" >expected &&
- 	git checkout b2 &&
- 	test_when_finished "git checkout master" &&
- 	test_must_fail git rebase --merge b1 b2 &&
- 	test_when_finished "git rebase --abort" &&
--	__git_ps1 > "$actual" &&
-+	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - rebase' '
--	printf " (b2|REBASE 1/3)" > expected &&
-+	printf " (b2|REBASE 1/3)" >expected &&
- 	git checkout b2 &&
- 	test_when_finished "git checkout master" &&
- 	test_must_fail git rebase b1 b2 &&
- 	test_when_finished "git rebase --abort" &&
--	__git_ps1 > "$actual" &&
-+	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - merge' '
--	printf " (b1|MERGING)" > expected &&
-+	printf " (b1|MERGING)" >expected &&
- 	git checkout b1 &&
- 	test_when_finished "git checkout master" &&
- 	test_must_fail git merge b2 &&
- 	test_when_finished "git reset --hard" &&
--	__git_ps1 > "$actual" &&
-+	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - cherry-pick' '
--	printf " (master|CHERRY-PICKING)" > expected &&
-+	printf " (master|CHERRY-PICKING)" >expected &&
- 	test_must_fail git cherry-pick b1 &&
- 	test_when_finished "git reset --hard" &&
--	__git_ps1 > "$actual" &&
-+	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - bisect' '
--	printf " (master|BISECTING)" > expected &&
-+	printf " (master|BISECTING)" >expected &&
- 	git bisect start &&
- 	test_when_finished "git bisect reset" &&
--	__git_ps1 > "$actual" &&
-+	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - dirty status indicator - clean' '
--	printf " (master)" > expected &&
-+	printf " (master)" >expected &&
- 	(
- 		GIT_PS1_SHOWDIRTYSTATE=3Dy &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - dirty status indicator - dirty worktree'=
- '
--	printf " (master *)" > expected &&
--	echo "dirty" > file &&
-+	printf " (master *)" >expected &&
-+	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	(
- 		GIT_PS1_SHOWDIRTYSTATE=3Dy &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - dirty status indicator - dirty index' '
--	printf " (master +)" > expected &&
--	echo "dirty" > file &&
-+	printf " (master +)" >expected &&
-+	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	git add -u &&
- 	(
- 		GIT_PS1_SHOWDIRTYSTATE=3Dy &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - dirty status indicator - dirty index and=
- worktree' '
--	printf " (master *+)" > expected &&
--	echo "dirty index" > file &&
-+	printf " (master *+)" >expected &&
-+	echo "dirty index" >file &&
- 	test_when_finished "git reset --hard" &&
- 	git add -u &&
--	echo "dirty worktree" > file &&
-+	echo "dirty worktree" >file &&
- 	(
- 		GIT_PS1_SHOWDIRTYSTATE=3Dy &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - dirty status indicator - before root com=
-mit' '
--	printf " (master #)" > expected &&
-+	printf " (master #)" >expected &&
- 	(
- 		GIT_PS1_SHOWDIRTYSTATE=3Dy &&
- 		cd otherrepo &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - dirty status indicator - shell variable =
-unset with config disabled' '
--	printf " (master)" > expected &&
--	echo "dirty" > file &&
-+	printf " (master)" >expected &&
-+	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	test_config bash.showDirtyState false &&
- 	(
- 		sane_unset GIT_PS1_SHOWDIRTYSTATE &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - dirty status indicator - shell variable =
-unset with config enabled' '
--	printf " (master)" > expected &&
--	echo "dirty" > file &&
-+	printf " (master)" >expected &&
-+	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	test_config bash.showDirtyState true &&
- 	(
- 		sane_unset GIT_PS1_SHOWDIRTYSTATE &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - dirty status indicator - shell variable =
-set with config disabled' '
--	printf " (master)" > expected &&
--	echo "dirty" > file &&
-+	printf " (master)" >expected &&
-+	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	test_config bash.showDirtyState false &&
- 	(
- 		GIT_PS1_SHOWDIRTYSTATE=3Dy &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - dirty status indicator - shell variable =
-set with config enabled' '
--	printf " (master *)" > expected &&
--	echo "dirty" > file &&
-+	printf " (master *)" >expected &&
-+	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	test_config bash.showDirtyState true &&
- 	(
- 		GIT_PS1_SHOWDIRTYSTATE=3Dy &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - dirty status indicator - not shown insid=
-e .git directory' '
--	printf " (GIT_DIR!)" > expected &&
--	echo "dirty" > file &&
-+	printf " (GIT_DIR!)" >expected &&
-+	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	(
- 		GIT_PS1_SHOWDIRTYSTATE=3Dy &&
- 		cd .git &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - stash status indicator - no stash' '
--	printf " (master)" > expected &&
-+	printf " (master)" >expected &&
- 	(
- 		GIT_PS1_SHOWSTASHSTATE=3Dy &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - stash status indicator - stash' '
--	printf " (master $)" > expected &&
-+	printf " (master $)" >expected &&
- 	echo 2 >file &&
- 	git stash &&
- 	test_when_finished "git stash drop" &&
- 	(
- 		GIT_PS1_SHOWSTASHSTATE=3Dy &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - stash status indicator - not shown insid=
-e .git directory' '
--	printf " (GIT_DIR!)" > expected &&
-+	printf " (GIT_DIR!)" >expected &&
- 	echo 2 >file &&
- 	git stash &&
- 	test_when_finished "git stash drop" &&
- 	(
- 		GIT_PS1_SHOWSTASHSTATE=3Dy &&
- 		cd .git &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - untracked files status indicator - no un=
-tracked files' '
--	printf " (master)" > expected &&
-+	printf " (master)" >expected &&
- 	(
- 		GIT_PS1_SHOWUNTRACKEDFILES=3Dy &&
- 		cd otherrepo &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - untracked files status indicator - untra=
-cked files' '
--	printf " (master %%)" > expected &&
-+	printf " (master %%)" >expected &&
- 	(
- 		GIT_PS1_SHOWUNTRACKEDFILES=3Dy &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - untracked files status indicator - shell=
- variable unset with config disabled' '
--	printf " (master)" > expected &&
-+	printf " (master)" >expected &&
- 	test_config bash.showUntrackedFiles false &&
- 	(
- 		sane_unset GIT_PS1_SHOWUNTRACKEDFILES &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - untracked files status indicator - shell=
- variable unset with config enabled' '
--	printf " (master)" > expected &&
-+	printf " (master)" >expected &&
- 	test_config bash.showUntrackedFiles true &&
- 	(
- 		sane_unset GIT_PS1_SHOWUNTRACKEDFILES &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - untracked files status indicator - shell=
- variable set with config disabled' '
--	printf " (master)" > expected &&
-+	printf " (master)" >expected &&
- 	test_config bash.showUntrackedFiles false &&
- 	(
- 		GIT_PS1_SHOWUNTRACKEDFILES=3Dy &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - untracked files status indicator - shell=
- variable set with config enabled' '
--	printf " (master %%)" > expected &&
-+	printf " (master %%)" >expected &&
- 	test_config bash.showUntrackedFiles true &&
- 	(
- 		GIT_PS1_SHOWUNTRACKEDFILES=3Dy &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - untracked files status indicator - not s=
-hown inside .git directory' '
--	printf " (GIT_DIR!)" > expected &&
-+	printf " (GIT_DIR!)" >expected &&
- 	(
- 		GIT_PS1_SHOWUNTRACKEDFILES=3Dy &&
- 		cd .git &&
--		__git_ps1 > "$actual"
-+		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
-=20
- test_expect_success 'prompt - format string starting with dash' '
--	printf -- "-master" > expected &&
--	__git_ps1 "-%s" > "$actual" &&
-+	printf -- "-master" >expected &&
-+	__git_ps1 "-%s" >"$actual" &&
- 	test_cmp expected "$actual"
- '
-=20
+ 	test_set_editor "$TRASH_DIRECTORY/fake_editor.sh" &&
 --=20
 1.8.3.1.487.g8f4672d
