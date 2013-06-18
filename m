@@ -1,55 +1,72 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v3 4/5] stash: introduce 'git stash store'
-Date: Tue, 18 Jun 2013 14:20:21 +0530
-Message-ID: <CALkWK0n3aEC+BxM7iAY=pcy7fKzpLeTAeRf8UttJ+K1PURP2rQ@mail.gmail.com>
-References: <1371302006-29775-1-git-send-email-artagnon@gmail.com>
- <1371302006-29775-5-git-send-email-artagnon@gmail.com> <7vtxkwd1cw.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Documentation/git-merge.txt: weaken warning about uncommited changes
+Date: Tue, 18 Jun 2013 10:56:39 +0200
+Message-ID: <vpqppvju794.fsf@anie.imag.fr>
+References: <1371544975-18703-1-git-send-email-Matthieu.Moy@imag.fr>
+	<CALkWK0=USVa2htHSTyj4C7FrKEko-e_UGAnu-3UNvx_ue1vwig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 18 10:51:10 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 10:56:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uord7-0005iq-Pl
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 10:51:10 +0200
+	id 1Uorii-0007vr-Nt
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 10:56:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755037Ab3FRIvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 04:51:04 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:36877 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754058Ab3FRIvB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 04:51:01 -0400
-Received: by mail-ie0-f182.google.com with SMTP id s9so9416072iec.41
-        for <git@vger.kernel.org>; Tue, 18 Jun 2013 01:51:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=sjZ3PY7RtamrSaocipa09Esqr8EUtXe5f960mVMpUX8=;
-        b=fCTx/xt8Uv2wEuqG1VdrnxJ4QwL0MG7/wXuqEaaZD7YKd9xnJYj018z6cO6BlPIXUz
-         xTx1nYMOHGPlQtAja3WMKvHHCZuX3np+pPG/6hDeezU/zOeOluUtVQbGE2Ph+6uGYAFP
-         mvlTKcqz5u1Yf/IPPRk4T7wwwu4LI7rk7NpJB2WYvs+/j6ri7mCnXzzbrFAbd4slNKqC
-         PFjZoE8bG2w7JtpmIiDv3G4Pm4Ue79ccXnvXplaBSJoPtXF1AuVm5lWrmePuFqlx20qP
-         /FmT9BWLe13oNpgAWsKkAWnTKBh/m6zpPGhX5O63BX8BACJAbXscunBvDnghia7GIslW
-         rOIA==
-X-Received: by 10.50.98.104 with SMTP id eh8mr6993967igb.111.1371545461576;
- Tue, 18 Jun 2013 01:51:01 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Tue, 18 Jun 2013 01:50:21 -0700 (PDT)
-In-Reply-To: <7vtxkwd1cw.fsf@alter.siamese.dyndns.org>
+	id S1755372Ab3FRI4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 04:56:47 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:57019 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754980Ab3FRI4p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 04:56:45 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5I8uc77018323
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 18 Jun 2013 10:56:38 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UoriR-0005aY-Cp; Tue, 18 Jun 2013 10:56:39 +0200
+In-Reply-To: <CALkWK0=USVa2htHSTyj4C7FrKEko-e_UGAnu-3UNvx_ue1vwig@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 18 Jun 2013 14:19:28 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 18 Jun 2013 10:56:39 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228177>
 
-Junio C Hamano wrote:
->> +     test $# == 1 ||
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+
+> Matthieu Moy wrote:
+>> Weaken the warning by discouraging only merge with /non-trivial/
+>> uncommited changes.
+>>
+>> I don't think documenting all the failure cases in the doc would be a
+>> good idea, so I've left the "in some cases" part.
 >
-> This is broken under POSIX shells.  No need to resend (will locally
-> patch up).
+> It's already documented in the pre-merge checks section, as Jonathan
+> pointed out [1]. 
 
-Ugh, my C habit.  Thanks for catching it.
+I had missed this one. But that's not the only case, you may also have
+problems with renames. The complete list would be really long to have
+here, and won't bring much to the user.
+
+> We should update the documentation to point to it: I do not think
+> "non-trivial" is much of an improvement.
+
+Actually, I think it essentially says it all. If your changes are
+important enough to deserve a real backup, you should stash or commit.
+If you're ready to take the risk of losing it (the risk is small, but
+does exist), it's OK to run "git merge" blindly.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
