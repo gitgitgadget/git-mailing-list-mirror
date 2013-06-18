@@ -1,99 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fix "builtin-*" references to be "builtin/*"
-Date: Tue, 18 Jun 2013 10:06:28 -0700
-Message-ID: <7vd2rj5ox7.fsf@alter.siamese.dyndns.org>
-References: <1371571166-6481-1-git-send-email-hordp@cisco.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, phil.hord@gmail.com
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Tue Jun 18 19:06:38 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 0/5] Fix describe --contains --all
+Date: Tue, 18 Jun 2013 22:43:23 +0530
+Message-ID: <1371575608-9980-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 18 19:16:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UozMa-0000HD-BS
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 19:06:36 +0200
+	id 1UozWM-0002ru-F4
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 19:16:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933116Ab3FRRGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 13:06:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48447 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932860Ab3FRRGb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 13:06:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92793285CB;
-	Tue, 18 Jun 2013 17:06:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EHk12jkB6/DDHnmfA9Fq+9AI/HY=; b=s9k1WV
-	tqohajI7kf5WLJwX+3Rngrg41/8KR7XKed/uiVeSbDC1i/wyPlEqv6c7zn+dOro7
-	Ss7guriX9oCzevFht/4esOSgDLu7Z3d5+YOZcg5mE103+XbinP9XWCBW2uDEBga4
-	k4b7HjkANnOgKckYGaBgTeVzCJ0chqBGGwfKY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f8285nMWLhoiHg6Q+qCk0i8WE01HM5km
-	oYg8JM2ewyY66gwmG96o8iD78YNvytEY1eai7OhqdkQAOYEBP4zsfsHYCiPL/Rfq
-	vBvKVfRWFz8R8WGp2jiIHFP4CkIt2nJr5/wD1bfGBakOzhiOwwURJhAM0GjfCzEG
-	QmIoW9g+kCM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85FA2285CA;
-	Tue, 18 Jun 2013 17:06:30 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DFB25285C8;
-	Tue, 18 Jun 2013 17:06:29 +0000 (UTC)
-In-Reply-To: <1371571166-6481-1-git-send-email-hordp@cisco.com> (Phil Hord's
-	message of "Tue, 18 Jun 2013 11:59:26 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B49E70E-D839-11E2-A7BF-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755567Ab3FRRQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 13:16:38 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:35345 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751603Ab3FRRQh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 13:16:37 -0400
+Received: by mail-pa0-f46.google.com with SMTP id fa11so4206433pad.33
+        for <git@vger.kernel.org>; Tue, 18 Jun 2013 10:16:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=JayteajMnMresbB56BP7dH/YZlyEBxTlUGJUH3eKw9k=;
+        b=hSFUWgu84HViRn6KLJoVgWvhgi/OdjhNh8dVyYuhy41tc+Oc7EEDXwbmCbveZsPpdT
+         b4KhKnFcgy2JXOQqNshDqVbjMVrvyT1bNkq1yzTC+D0XqBcyxeO20ql4FmRBv+WJ+y8T
+         Cb2jgScP8VnPY4lwMzofvASz3b6SPTAZw2nI76yCsNnWG5zJBpc/JB2ixJjNG3HAB6ow
+         DZRBA5iP9l1PQP+H7XuFFSE05gR3oGCt2nW0uTQOofGLO7AmF2ohJmFZ5h7/jqlsypav
+         xiXnH74d6s4e1G8y6GuVzInDS9+Lrk+5BYf4/tE+Tx9RvcENBEIaE9/0eDQ3rTKK3kkj
+         hs0Q==
+X-Received: by 10.68.251.234 with SMTP id zn10mr17945410pbc.188.1371575797219;
+        Tue, 18 Jun 2013 10:16:37 -0700 (PDT)
+Received: from localhost.localdomain ([122.164.211.22])
+        by mx.google.com with ESMTPSA id vz8sm20498303pac.20.2013.06.18.10.16.35
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 18 Jun 2013 10:16:36 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.456.gb7f4cb6.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228278>
 
-Phil Hord <hordp@cisco.com> writes:
+Hi,
 
-> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-> index e831cc2..2483700 100644
-> --- a/Documentation/user-manual.txt
-> +++ b/Documentation/user-manual.txt
-> @@ -4256,7 +4256,7 @@ no longer need to call `setup_pager()` directly).
->  Nowadays, `git log` is a builtin, which means that it is _contained_ in the
->  command `git`.  The source side of a builtin is
->  
-> -- a function called `cmd_<bla>`, typically defined in `builtin-<bla>.c`,
-> +- a function called `cmd_<bla>`, typically defined in `builtin/<bla>.c`,
->    and declared in `builtin.h`,
+I discovered --contains --all in describe, and found out that it
+doesn't work as advertised for a deep historical reason.  [3/5] is
+super-important and addresses this issue; everything else is
+decoration.
 
-If we were to do this, we would need to update the "1.5.3 or newer"
-comment at the top of this file to "1.7.1 or newer" ;-).
+Thanks.
 
-More seriously, it may be OK to say
+Ramkumar Ramachandra (5):
+  prompt: clean up describe logic
+  prompt: do not double-discriminate detached HEAD
+  name-rev: fix assumption about --name-only usage
+  name-rev: strip trailing ^0 in when --name-only
+  name-rev doc: rewrite --stdin paragraph
 
-	typically defined in `builtin/<bla.c>` (note that older
-	versions of Git used to have it in `builtin-<bla>.c`
-	instead), and declared in `builtin.h`.
+ Documentation/git-name-rev.txt       | 12 +++++++-----
+ builtin/name-rev.c                   | 13 ++++++++++---
+ contrib/completion/git-prompt.sh     | 20 +++++++++++---------
+ t/t4202-log.sh                       |  8 ++++----
+ t/t6007-rev-list-cherry-pick-file.sh | 32 ++++++++++++++++----------------
+ t/t9903-bash-prompt.sh               |  2 +-
+ 6 files changed, 49 insertions(+), 38 deletions(-)
 
-only here, and then apply your s|builtin-|builtin/| changes to the
-remainder of this file.
-
-> diff --git a/builtin/help.c b/builtin/help.c
-> index 062957f..ce7b889 100644
-> --- a/builtin/help.c
-> +++ b/builtin/help.c
-> @@ -1,5 +1,5 @@
->  /*
-> - * builtin-help.c
-> + * builtin/help.c
->   *
->   * Builtin help command
->   */
-
-As Jonathan said, dropping this line (and the line after it) would
-be a sane thing to do.
-
-Other than that, the patch looked good.
+-- 
+1.8.3.1.456.gb7f4cb6.dirty
