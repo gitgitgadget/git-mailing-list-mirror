@@ -1,81 +1,68 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] fixup! bash prompt: use bash builtins to find out current
- branch
-Date: Tue, 18 Jun 2013 12:01:38 +0200
-Message-ID: <1371549698-16826-1-git-send-email-szeder@ira.uka.de>
-References: <20130618094931.GB2204@goldbirke>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH V3 1/4] git-mw: Introduction of GitMediawiki.pm
+Date: Tue, 18 Jun 2013 12:10:30 +0200
+Message-ID: <vpqhagvu3u1.fsf@anie.imag.fr>
+References: <1371349893-7789-1-git-send-email-benoit.person@ensimag.fr>
+	<1371349893-7789-2-git-send-email-benoit.person@ensimag.fr>
+	<vpqobb5g679.fsf@anie.imag.fr>
+	<CAETqRChcu+N-2uNzL9_J6abR5fnduT5UVRif5NTQYOoxPTiRTw@mail.gmail.com>
+	<vpq8v299pn6.fsf@anie.imag.fr>
+	<CAETqRCjiMh_cYuZit5Z8OLki_RTz8=ViYPMv005iQu9Fv=U0ow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 18 12:02:13 2013
+Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>
+To: =?iso-8859-1?Q?Beno=EEt?= Person <benoit.person@ensimag.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 18 12:10:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uosjs-00058B-KD
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 12:02:12 +0200
+	id 1Uoss5-0004AN-SI
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 12:10:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754951Ab3FRKCI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Jun 2013 06:02:08 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:54192 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754759Ab3FRKCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 06:02:05 -0400
-Received: from localhost6.localdomain6 (g230129165.adsl.alicedsl.de [92.230.129.165])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0MFn1t-1V3PTC3e2n-00FCcW; Tue, 18 Jun 2013 12:02:04 +0200
-X-Mailer: git-send-email 1.8.3.1.487.g8f4672d
-In-Reply-To: <20130618094931.GB2204@goldbirke>
-X-Provags-ID: V02:K0:YUHbSw2sVdNjmokj6Pg4w9BKE5jUOYxacZpC+du1/h/
- 7i+su8e0+6zSs+Fy+Qs3qzDhDUhPP7GU1IApZA2Xo4DNbD5x35
- t+FcL3lsOqkeHEyeVvEnUbWRWcJ+NnjfdwSNIjqGTdVbuJg8rs
- rVlyNC186QasUb1mEIQ1Xg9/Py0ZVjPgsjP5t/1VnSB70oMV5F
- YGJOzo8Tqv10RTHHXEiRS5uf6qzt1X3JNfAhvC4rOO2TpJfB2h
- ydFcKvUi3NfI39D4W8V2zYzCfikbzNkkLcFemskiG3vmJJeufO
- bvVqXsJmkJbGmqRLekDlQWyoyYsjsi4HJtmR4qzLtBDT03eWok
- hSu9z7tV89fuaCQuVldUeAvYNsd4cJUj1XuarxrcFG8xM6koKj
- KV9tuqJ+7n3xw==
+	id S1754948Ab3FRKKf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Jun 2013 06:10:35 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:46444 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754164Ab3FRKKe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 06:10:34 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5IAAVrp001194
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 18 Jun 2013 12:10:31 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Uosrw-0007W3-5z; Tue, 18 Jun 2013 12:10:32 +0200
+In-Reply-To: <CAETqRCjiMh_cYuZit5Z8OLki_RTz8=ViYPMv005iQu9Fv=U0ow@mail.gmail.com>
+	(=?iso-8859-1?Q?=22Beno=EEt?= Person"'s message of "Tue, 18 Jun 2013
+ 11:06:16 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 18 Jun 2013 12:10:31 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228184>
 
-=46rom: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+Beno=EEt Person <benoit.person@ensimag.fr> writes:
 
----
-On Tue, Jun 18, 2013 at 11:49:31AM +0200, SZEDER G=C3=A1bor wrote:
-> (Hmm, speaking of which, the
-> patch reading HEAD might break setups using $PROMPT_COMMAND, because
-> it might do a simple return without updating $PS1...)
+>>From my point of view, this could definitely be improved from:
+>> -     perlcritic -2 *.perl
+>> +     perlcritic -2 *.perl
+>> \ No newline at end of file
+> to something like that:
+>> -     perlcritic -2 *.perl
+>> +     perlcritic -2 *.perl
+>> \ removed newline at end of file
+> which gives more insights into why the line is considered "edited".
 
-Indeed.  Here's the fixup.
+Too late ;-). This is a diff/patch thing, and Git is compatible with
+them.
 
- contrib/completion/git-prompt.sh | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
-prompt.sh
-index 4e5c8efa..3c8c7b0d 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -362,7 +362,12 @@ __git_ps1 ()
- 			b=3D"$(git symbolic-ref HEAD 2>/dev/null)"
- 		else
- 			local head=3D""
--			read head 2>/dev/null <"$g/HEAD" || return
-+			if ! read head 2>/dev/null <"$g/HEAD"; then
-+				if [ $pcmode =3D yes ]; then
-+					PS1=3D"$ps1pc_start$ps1pc_end"
-+				fi
-+				return
-+			fi
- 			# is it a symbolic ref?
- 			b=3D"${head#ref: }"
- 			if [ "$head" =3D "$b" ]; then
 --=20
-1.8.3.1.487.g8f4672d
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
