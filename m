@@ -1,71 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 4/5] stash: introduce 'git stash store'
-Date: Tue, 18 Jun 2013 07:31:40 -0700
-Message-ID: <7v61xba3sj.fsf@alter.siamese.dyndns.org>
-References: <1371302006-29775-1-git-send-email-artagnon@gmail.com>
-	<1371302006-29775-5-git-send-email-artagnon@gmail.com>
-	<7vtxkwd1cw.fsf@alter.siamese.dyndns.org>
-	<CALkWK0n3aEC+BxM7iAY=pcy7fKzpLeTAeRf8UttJ+K1PURP2rQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [Request] Git reset should be able to ignore file permissions
+Date: Tue, 18 Jun 2013 16:33:04 +0200
+Message-ID: <vpqppvjpjz3.fsf@anie.imag.fr>
+References: <CACuz9s31OUWNxTqCmj7ukAo7=TpXK7zBv5kTFZ5obpXKOju9ng@mail.gmail.com>
+	<vpqsj0fr19j.fsf@anie.imag.fr>
+	<CACuz9s1KGKsL-pGftAtAWyX5gUA5c-PYyJUSstf+xw151rZLtA@mail.gmail.com>
+	<vpq7ghrqzrv.fsf@anie.imag.fr>
+	<CACuz9s0=7z-M1-zgRNUs2hS-4LcuXrsWbqyDaMnuvFXRnP7E-Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 18 16:31:50 2013
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Alexander Nestorov <alexandernst@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 16:33:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uowwl-0000KA-Tt
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 16:31:48 +0200
+	id 1UowyB-00034O-0Y
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 16:33:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754863Ab3FRObn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 10:31:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64783 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752691Ab3FRObn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 10:31:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8952F26DB5;
-	Tue, 18 Jun 2013 14:31:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LA5TNdyougEA4JwMtxQylds2JTU=; b=DrPoMM
-	aOV6luOWe8J0eBauYSzH96mS9k0rQnTwpoMY0uKEPdWxUVZ5E8KhgrRRyUbS5t0Q
-	KnB9l/KK/C8HIqPP0lYDHMZ63Z3G5mlHCLPiwGEgSvTQMnwD/Xqeo+17fM73ephv
-	/JT6FNtl9XdXh1+cipJYiFRU12cNZn0RW+dKs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X7EIqxOK9OHTzVeGA0Guo28dfHWKq10L
-	fH4QvwAKDTjNiIrZhw6KEU4gBJ1Dqy7fKAQXljrZwzRcR+UkQ3BAPTfGwDlxPu8d
-	DYnYtsUyEUNulDvrUeYxGdkxVOHf6knFfTPRPxBU/w76bWuKUm1flZWrRnAdmSOX
-	B+ks98ZHFSQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DEB626DB4;
-	Tue, 18 Jun 2013 14:31:42 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB31A26DB3;
-	Tue, 18 Jun 2013 14:31:41 +0000 (UTC)
-In-Reply-To: <CALkWK0n3aEC+BxM7iAY=pcy7fKzpLeTAeRf8UttJ+K1PURP2rQ@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Tue, 18 Jun 2013 14:20:21 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CB3C7976-D823-11E2-B73D-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754897Ab3FROdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 10:33:11 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41971 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753292Ab3FROdK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 10:33:10 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5IEX3kJ031470
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 18 Jun 2013 16:33:05 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Uowy1-0005Lu-1o; Tue, 18 Jun 2013 16:33:05 +0200
+In-Reply-To: <CACuz9s0=7z-M1-zgRNUs2hS-4LcuXrsWbqyDaMnuvFXRnP7E-Q@mail.gmail.com>
+	(Alexander Nestorov's message of "Tue, 18 Jun 2013 16:22:52 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 18 Jun 2013 16:33:05 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228240>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+[ The rule here is to keep everyone Cced, not just git@vger ]
 
-> Junio C Hamano wrote:
->>> +     test $# == 1 ||
->>
->> This is broken under POSIX shells.  No need to resend (will locally
->> patch up).
->
-> Ugh, my C habit.  Thanks for catching it.
+Alexander Nestorov <alexandernst@gmail.com> writes:
 
-You're welcome---that is what the reviews are for.
+> Indeed, "git update-index --refresh" before "git reset" did the trick :)
+> Anyways, what about the proposal? Should it be implemented?
+
+I'd say the current behavior is OK by default (it's not so common to
+have stat-only changes, and re-checking the content would slow down the
+other operations).
+
+We could add a flag to "git reset" asking it to refresh the index before
+continuing, but that would essentially end-up doing "git update-index
+--refresh; git reset".
+
+It would make more sense to me to add something about update-index in
+the documentation of git reset. Patches welcome ;-).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
