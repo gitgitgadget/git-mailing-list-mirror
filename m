@@ -1,105 +1,80 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: send-email adds redundant From: lines to message body
-Date: Tue, 18 Jun 2013 15:36:53 +0300
-Message-ID: <20130618123653.GE26857@redhat.com>
-References: <20130618110904.GA20052@goldbirke>
- <20130618114207.GD26857@redhat.com>
- <20130618114800.GB20052@goldbirke>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH 4/8] status: do not depend on rebase reflog messages
+Date: Tue, 18 Jun 2013 13:40:07 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1306181338330.10630@perkele.intern.softwolves.pp.se>
+References: <1371557670-12534-1-git-send-email-artagnon@gmail.com> <1371557670-12534-5-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Jun 18 14:36:29 2013
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 14:40:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uov9A-0001tN-DG
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 14:36:28 +0200
+	id 1UovCv-0000Sy-Br
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 14:40:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932250Ab3FRMgY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Jun 2013 08:36:24 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:15271 "EHLO mx1.redhat.com"
+	id S932262Ab3FRMkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 08:40:14 -0400
+Received: from mx.getmail.no ([84.210.184.8]:60991 "EHLO bouvier.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932121Ab3FRMgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 08:36:22 -0400
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r5ICa6Nv014132
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 18 Jun 2013 08:36:06 -0400
-Received: from redhat.com (vpn1-5-182.ams2.redhat.com [10.36.5.182])
-	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id r5ICa48C030548;
-	Tue, 18 Jun 2013 08:36:05 -0400
-Content-Disposition: inline
-In-Reply-To: <20130618114800.GB20052@goldbirke>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+	id S1755275Ab3FRMkL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 08:40:11 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by bouvier.getmail.no (Postfix) with ESMTP id 3809F45E2E;
+	Tue, 18 Jun 2013 14:40:13 +0200 (CEST)
+X-Spam-Flag: NO
+X-Spam-Score: -2.87
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.87 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, T_FAKE_REPLY_SURE_A=0.01,
+	T_FAKE_REPLY_SURE_B=0.01, T_KHOP_THREADED=-0.01,
+	T_LONG_HEADER_LINE_80=0.01, T_UNKNOWN_ORIGIN=0.01] autolearn=ham
+Received: from bouvier.getmail.no ([127.0.0.1])
+	by localhost (bouvier.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id qHrpwXhSu81X; Tue, 18 Jun 2013 14:40:12 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by bouvier.getmail.no (Postfix) with ESMTP id 7B3FE45E60;
+	Tue, 18 Jun 2013 14:40:12 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+Received: from bouvier.getmail.no ([127.0.0.1])
+	by localhost (bouvier.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id FvXh9FzVIGLD; Tue, 18 Jun 2013 14:40:12 +0200 (CEST)
+Received: from perkele (cm-84.215.89.29.getinternet.no [84.215.89.29])
+	by bouvier.getmail.no (Postfix) with ESMTP id 5B41E45E51;
+	Tue, 18 Jun 2013 14:40:12 +0200 (CEST)
+Received: by perkele (Postfix, from userid 501)
+	id DF9B22FCF3; Tue, 18 Jun 2013 14:40:07 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by perkele (Postfix) with ESMTP id DC3E62FCF2;
+	Tue, 18 Jun 2013 13:40:07 +0100 (CET)
+In-Reply-To: <1371557670-12534-5-git-send-email-artagnon@gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228223>
 
-On Tue, Jun 18, 2013 at 01:48:00PM +0200, SZEDER G=E1bor wrote:
-> On Tue, Jun 18, 2013 at 02:42:07PM +0300, Michael S. Tsirkin wrote:
-> > On Tue, Jun 18, 2013 at 01:09:04PM +0200, SZEDER G=E1bor wrote:
-> > > Hi,
-> > >=20
-> > > 'git send-email' recently started to add redundant From: lines to=
- my
-> > > messages, see e.g.
-> > >=20
-> > >   http://article.gmane.org/gmane.comp.version-control.git/228132
-> >=20
-> > Can you please show what do commits point to?
-> > E.g. push to some public tree?
->=20
-> Sure.
->=20
->   https://github.com/szeder/git.git bash-prompt-speedup
+Ramkumar Ramachandra:
 
-I see. The From line looks like this:
-	From: =3D?UTF-8?q?SZEDER=3D20G=3DC3=3DA1bor?=3D <szeder@ira.uka.de>
-which is why it didn't match.
+> +				on_what = _("rebase in progress; onto ");
 
-I added a test like this and sure enough, it fails.
-Will look into a fix now.
+Could you please add a
 
---->
-send-email: add test for duplicate utf8 name
+   /* TRANSLATORS: Followed by branch name. */
 
-Verify that author name is not duplicated if it matches
-sender, even if it is in utf8.
+or something similar here (and possibly to the other "on_what"s in the 
+function)?
 
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Ideally, the "%s" for the branch name should be inside that 
+on_what string, but I guess that can be difficult since it is output 
+in a different colour?
 
----
-
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 9f46f22..cef884f 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -956,6 +956,19 @@ test_expect_success $PREREQ 'utf8 author is correc=
-tly passed on' '
- 	grep "^From: F=FC=F1n=FD N=E2m=E9 <odd_?=3Dmail@example.com>" msgtxt1
- '
-=20
-+test_expect_success $PREREQ 'utf8 sender is not duplicated' '
-+	clean_fake_sendmail &&
-+	test_commit weird_sender &&
-+	test_when_finished "git reset --hard HEAD^" &&
-+	git commit --amend --author "F=FC=F1n=FD N=E2m=E9 <odd_?=3Dmail@examp=
-le.com>" &&
-+	git format-patch --stdout -1 >funny_name.patch &&
-+	git send-email --from=3D"F=FC=F1n=FD N=E2m=E9 <odd_?=3Dmail@example.c=
-om>" \
-+	  --to=3Dnobody@example.com \
-+	  --smtp-server=3D"$(pwd)/fake.sendmail" \
-+	  funny_name.patch &&
-+	test `grep "^From:" msgtxt1|wc -l` -eq 1
-+'
-+
- test_expect_success $PREREQ 'sendemail.composeencoding works' '
- 	clean_fake_sendmail &&
- 	git config sendemail.composeencoding iso-8859-1 &&
+-- 
+\\// Peter - http://www.softwolves.pp.se/
