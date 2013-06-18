@@ -1,104 +1,100 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH] GIT-VERSION-GEN: support non-standard $GIT_DIR path
-Date: Tue, 18 Jun 2013 09:20:06 +0200
-Message-ID: <1371540006.32543.5.camel@localhost>
-References: <20130615230108.GA21005@kaarsemaker.net>
-	 <7v38sgcxjp.fsf@alter.siamese.dyndns.org>
-	 <7vy5a8biu8.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] git-add--interactive.perl: Permit word-based diff
+Date: Tue, 18 Jun 2013 09:22:16 +0200
+Message-ID: <87k3lrzxw7.fsf@hexa.v.cablecom.net>
+References: <CAMNuMARruu+1=kny=g5O1MoxCXuoT3BHdSEEPSqvyn2t2JsAYg@mail.gmail.com>
+	<20130618063144.GA6276@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 18 09:20:35 2013
+Content-Type: text/plain
+Cc: Mark Abraham <mark.j.abraham@gmail.com>, <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 18 09:22:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoqDS-0001aD-4J
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 09:20:34 +0200
+	id 1UoqFG-0005Ku-9b
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 09:22:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753096Ab3FRHUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 03:20:12 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:38056 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752531Ab3FRHUK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 03:20:10 -0400
-Received: by mail-wi0-f172.google.com with SMTP id c10so3081779wiw.5
-        for <git@vger.kernel.org>; Tue, 18 Jun 2013 00:20:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :content-type:x-mailer:mime-version:content-transfer-encoding
-         :x-gm-message-state;
-        bh=d45RE/O7KjcLB7tbRY828HCiDM3ortfsV5OItbvKoUY=;
-        b=COMl7ANRZiSlX0FsLcBhCeBQ35vtGayJiKfrSEKpI+kBvllgNNLAqUbuNqwtkLvtNL
-         GnW3Y/Np7yLNyJcAJo3ktKe0w+yq5ukxT0PhnurEkAIjnNWqewBN3E0tFmpwZZ/OiNuJ
-         VaGZbu7tLzQKiZ4eeSuNUEVfUxXusdENdS32KqgEigHNkLocu2oxOwugny4TxsozWAiO
-         fF8OjR6xYfCUvkXw/zpTc6R2j3Xt3km9PH6yFjiak+nAA7UtjSvxuw/c6D13L+mQ28N7
-         HUzEpZHHq+PSq5zSx914HwhGjo8w0OhhmwVs0huiJFV0aYGvzw5E8TDWog6tZrBqKrjK
-         VArw==
-X-Received: by 10.194.174.137 with SMTP id bs9mr9910604wjc.59.1371540009197;
-        Tue, 18 Jun 2013 00:20:09 -0700 (PDT)
-Received: from [10.42.1.4] (82-168-11-8.ip.telfort.nl. [82.168.11.8])
-        by mx.google.com with ESMTPSA id o14sm26764231wiv.3.2013.06.18.00.20.07
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 18 Jun 2013 00:20:08 -0700 (PDT)
-In-Reply-To: <7vy5a8biu8.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 3.6.2-0ubuntu0.1 
-X-Gm-Message-State: ALoCoQlrqrZ19X510wPTa+TkzIXg4a8M8HU/g9KSdboBu1OdjWKogx/PkXSO5snZmhajXvOyF57L
+	id S1752165Ab3FRHWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 03:22:22 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:25157 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750873Ab3FRHWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 03:22:21 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 18 Jun
+ 2013 09:22:16 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 18 Jun
+ 2013 09:22:17 +0200
+In-Reply-To: <20130618063144.GA6276@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 18 Jun 2013 02:31:46 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228166>
 
-On ma, 2013-06-17 at 13:09 -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
-> >
-> >>  I'm doing daily builds of git, using many workers and a shared git.git,
-> >>  with per-worker checkouts
-> >
-> > OK, so GIT_DIR is explicitly specified in these "workers".
+[I don't seem to have received a copy of the original mail, so I can
+only guess...]
 
-Yes, both GIT_DIR and GIT_WORK_TREE are set and the use of .git/HEAD and
-anything relying on it is shunned, so workers can run checkout as they
-please.
+Jeff King <peff@peff.net> writes:
 
-> > Makes sense.
+> On Sat, Jun 15, 2013 at 04:01:04PM +0200, Mark Abraham wrote:
 >
-> Actually it does not.  What if GIT_DIR is an empty string or not set
-> at all?  The patch breaks the build for everybody else, doesn't it?
-
-It does indeed, I only tested in my setup and not with a normal make
-test. Apologies.
-
-> Perhaps like this instead?
+>> Controlled by new configuration option
+>> "color.word-diff-in-interactive-add". There is no existing support for
+>> "git add" to pass a command-line option like "--word-diff=color" to
+>> git-add--interactive.perl, so a configuration option is the only
+>> lightweight solution.
+>> 
+>> With this feature, the added or deleted form of a hunk can be empty,
+>> so made some necessary checks for $_ being defined.
 >
->  GIT-VERSION-GEN | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-> index 2908204..91ec831 100755
-> --- a/GIT-VERSION-GEN
-> +++ b/GIT-VERSION-GEN
-> @@ -11,7 +11,7 @@ LF='
->  if test -f version
->  then
->  	VN=$(cat version) || VN="$DEF_VER"
-> -elif test -d .git -o -f .git &&
-> +elif test -d ${GIT_DIR:-.git} -o -f .git &&
->  	VN=$(git describe --match "v[0-9]*" --abbrev=7 HEAD 2>/dev/null) &&
->  	case "$VN" in
->  	*$LF*) (exit 1) ;;
+> Hmm. We can't apply a word-diff, so presumably your "permit" here is
+> just for the display, replacing the colorized bits. And that looks like
+> what your patch does.
+>
+> Note that the number of lines in your --word-diff=color hunk and the
+> actual diff will not necessarily be the same.  What happens if I split a
+> hunk with your patch?
 
-Yes, that makes a lot more sense and actually works in normal make test
-and with a detached .git. Do you want me to send an updated patch?
+If it's actually what you hint at, there's another problem: the word
+diff might not even have the same number of hunks.  For example, a
+long-standing bug (or feature, depending on POV) of word-diff is that it
+does not take opportunities to completely drop hunks that did not make
+any word-level changes.
+
+Consider this:
+
+  diff --git a/foo b/foo
+  index 5eaddaa..089eeac 100644
+  --- a/foo
+  +++ b/foo
+  @@ -1,2 +1,2 @@
+  -foo bar                                                                                               
+  -baz                                                                                                   
+  +foo                                                                                                   
+  +bar baz
+
+In word-diff mode that's
+
+  diff --git a/foo b/foo                                                                                 
+  index 5eaddaa..089eeac 100644                                                                          
+  --- a/foo                                                                                              
+  +++ b/foo                                                                                              
+  @@ -1,2 +1,2 @@                                                                                        
+  foo                                                                                                    
+  bar baz
+
+Arguably word-diff should be fixed to drop the hunk.  But if 'add -p'
+depends on exact hunk correspondence, it will break.
 
 -- 
-Dennis Kaarsemaker
-www.kaarsemaker.net
+Thomas Rast
+trast@{inf,student}.ethz.ch
