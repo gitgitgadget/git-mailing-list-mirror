@@ -1,139 +1,105 @@
-From: Namhyung Kim <namhyung@gmail.com>
-Subject: [PATCH v2] name-rev: Allow to specify a subpath for --refs option
-Date: Tue, 18 Jun 2013 21:35:31 +0900
-Message-ID: <1371558931-2980-1-git-send-email-namhyung@gmail.com>
-Cc: git@vger.kernel.org, Namhyung Kim <namhyung.kim@lge.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 18 14:35:53 2013
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: send-email adds redundant From: lines to message body
+Date: Tue, 18 Jun 2013 15:36:53 +0300
+Message-ID: <20130618123653.GE26857@redhat.com>
+References: <20130618110904.GA20052@goldbirke>
+ <20130618114207.GD26857@redhat.com>
+ <20130618114800.GB20052@goldbirke>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Jun 18 14:36:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uov8a-0000ml-RB
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 14:35:53 +0200
+	id 1Uov9A-0001tN-DG
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 14:36:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755713Ab3FRMfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 08:35:48 -0400
-Received: from LGEMRELSE7Q.lge.com ([156.147.1.151]:59014 "EHLO
-	LGEMRELSE7Q.lge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754090Ab3FRMfs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 08:35:48 -0400
-X-AuditID: 9c930197-b7beaae000004876-be-51c054227c7e
-Received: from sejong.aot.lge.com ( [10.177.220.181])
-	by LGEMRELSE7Q.lge.com (Symantec Brightmail Gateway) with SMTP id 8A.06.18550.22450C15; Tue, 18 Jun 2013 21:35:46 +0900 (KST)
-X-Mailer: git-send-email 1.7.11.7
-X-Brightmail-Tracker: AAAAAA==
+	id S932250Ab3FRMgY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Jun 2013 08:36:24 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:15271 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932121Ab3FRMgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 08:36:22 -0400
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r5ICa6Nv014132
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Tue, 18 Jun 2013 08:36:06 -0400
+Received: from redhat.com (vpn1-5-182.ams2.redhat.com [10.36.5.182])
+	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id r5ICa48C030548;
+	Tue, 18 Jun 2013 08:36:05 -0400
+Content-Disposition: inline
+In-Reply-To: <20130618114800.GB20052@goldbirke>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228222>
 
-From: Namhyung Kim <namhyung.kim@lge.com>
+On Tue, Jun 18, 2013 at 01:48:00PM +0200, SZEDER G=E1bor wrote:
+> On Tue, Jun 18, 2013 at 02:42:07PM +0300, Michael S. Tsirkin wrote:
+> > On Tue, Jun 18, 2013 at 01:09:04PM +0200, SZEDER G=E1bor wrote:
+> > > Hi,
+> > >=20
+> > > 'git send-email' recently started to add redundant From: lines to=
+ my
+> > > messages, see e.g.
+> > >=20
+> > >   http://article.gmane.org/gmane.comp.version-control.git/228132
+> >=20
+> > Can you please show what do commits point to?
+> > E.g. push to some public tree?
+>=20
+> Sure.
+>=20
+>   https://github.com/szeder/git.git bash-prompt-speedup
 
-In its current form, when an user wants to filter specific ref using
- --refs option, she needs to give something like --refs=refs/tags/v1.*.
+I see. The From line looks like this:
+	From: =3D?UTF-8?q?SZEDER=3D20G=3DC3=3DA1bor?=3D <szeder@ira.uka.de>
+which is why it didn't match.
 
-It'd be convenient providing a way to specify a subpath of ref pattern.
-For example, --refs=origin/* can find refs/remotes/origin/master by
-searching the pattern against its substrings in turn:
+I added a test like this and sure enough, it fails.
+Will look into a fix now.
 
-  refs/remotes/origin/master
-  remotes/origin/master
-  origin/master
+--->
+send-email: add test for duplicate utf8 name
 
-If it finds a match in a subpath, unambigous part of the ref path will
-be removed in the output.
+Verify that author name is not duplicated if it matches
+sender, even if it is in utf8.
 
-Many thanks to Junio C. Hamano for suggesting better logic and code.
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 
-Signed-off-by: Namhyung Kim <namhyung.kim@lge.com>
 ---
- Documentation/git-name-rev.txt |  3 ++-
- builtin/name-rev.c             | 36 +++++++++++++++++++++++++++++-------
- 2 files changed, 31 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/git-name-rev.txt b/Documentation/git-name-rev.txt
-index ad1d146..6b0f1ba 100644
---- a/Documentation/git-name-rev.txt
-+++ b/Documentation/git-name-rev.txt
-@@ -25,7 +25,8 @@ OPTIONS
- 	Do not use branch names, but only tags to name the commits
- 
- --refs=<pattern>::
--	Only use refs whose names match a given shell pattern.
-+	Only use refs whose names match a given shell pattern.  The pattern
-+	can be one of branch name, tag name or fully qualified ref name.
- 
- --all::
- 	List all commits reachable from all refs
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 6238247..87d4854 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -82,6 +82,20 @@ copy_data:
- 	}
- }
- 
-+static int subpath_matches(const char *path, const char *filter)
-+{
-+	const char *subpath = path;
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 9f46f22..cef884f 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -956,6 +956,19 @@ test_expect_success $PREREQ 'utf8 author is correc=
+tly passed on' '
+ 	grep "^From: F=FC=F1n=FD N=E2m=E9 <odd_?=3Dmail@example.com>" msgtxt1
+ '
+=20
++test_expect_success $PREREQ 'utf8 sender is not duplicated' '
++	clean_fake_sendmail &&
++	test_commit weird_sender &&
++	test_when_finished "git reset --hard HEAD^" &&
++	git commit --amend --author "F=FC=F1n=FD N=E2m=E9 <odd_?=3Dmail@examp=
+le.com>" &&
++	git format-patch --stdout -1 >funny_name.patch &&
++	git send-email --from=3D"F=FC=F1n=FD N=E2m=E9 <odd_?=3Dmail@example.c=
+om>" \
++	  --to=3Dnobody@example.com \
++	  --smtp-server=3D"$(pwd)/fake.sendmail" \
++	  funny_name.patch &&
++	test `grep "^From:" msgtxt1|wc -l` -eq 1
++'
 +
-+	while (subpath) {
-+		if (!fnmatch(filter, subpath, 0))
-+			return subpath - path;
-+		subpath = strchr(subpath, '/');
-+		if (subpath)
-+			subpath++;
-+	}
-+	return -1;
-+}
-+
- struct name_ref_data {
- 	int tags_only;
- 	int name_only;
-@@ -92,13 +106,23 @@ static int name_ref(const char *path, const unsigned char *sha1, int flags, void
- {
- 	struct object *o = parse_object(sha1);
- 	struct name_ref_data *data = cb_data;
-+	int can_abbreviate_output = data->tags_only && data->name_only;
- 	int deref = 0;
- 
- 	if (data->tags_only && prefixcmp(path, "refs/tags/"))
- 		return 0;
- 
--	if (data->ref_filter && fnmatch(data->ref_filter, path, 0))
--		return 0;
-+	if (data->ref_filter) {
-+		switch (subpath_matches(path, data->ref_filter)) {
-+		case -1: /* did not match */
-+			return 0;
-+		case 0:  /* matched fully */
-+			break;
-+		default: /* matched subpath */
-+			can_abbreviate_output = 1;
-+			break;
-+		}
-+	}
- 
- 	while (o && o->type == OBJ_TAG) {
- 		struct tag *t = (struct tag *) o;
-@@ -110,12 +134,10 @@ static int name_ref(const char *path, const unsigned char *sha1, int flags, void
- 	if (o && o->type == OBJ_COMMIT) {
- 		struct commit *commit = (struct commit *)o;
- 
--		if (!prefixcmp(path, "refs/heads/"))
-+		if (can_abbreviate_output)
-+			path = shorten_unambiguous_ref(path, 0);
-+		else if (!prefixcmp(path, "refs/heads/"))
- 			path = path + 11;
--		else if (data->tags_only
--		    && data->name_only
--		    && !prefixcmp(path, "refs/tags/"))
--			path = path + 10;
- 		else if (!prefixcmp(path, "refs/"))
- 			path = path + 5;
- 
--- 
-1.7.11.7
+ test_expect_success $PREREQ 'sendemail.composeencoding works' '
+ 	clean_fake_sendmail &&
+ 	git config sendemail.composeencoding iso-8859-1 &&
