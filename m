@@ -1,68 +1,75 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: Aw: Re: [PATCH] Remove pdf target from Makefiles
-Date: Tue, 18 Jun 2013 09:59:51 +0200 (CEST)
-Message-ID: <146574770.2154401.1371542391078.JavaMail.ngmail@webmail18.arcor-online.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH v2 2/6] test-lib: refactor $GIT_SKIP_TESTS matching
+Date: Tue, 18 Jun 2013 10:23:44 +0200
+Message-ID: <87fvwfddyn.fsf@linux-k42r.v.cablecom.net>
+References: <cover.1371460265.git.trast@inf.ethz.ch>
+	<4795e6f40e7ce62fc4c414e8cbbd2aa777d3fbb0.1371460265.git.trast@inf.ethz.ch>
+	<51C0064B.8060408@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: jrnieder@gmail.com, th.acker@arcor.de
-X-From: git-owner@vger.kernel.org Tue Jun 18 09:59:58 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phil Hord <phil.hord@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Jun 18 10:24:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoqpZ-0004MO-5F
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 09:59:57 +0200
+	id 1UorDA-0002oJ-II
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 10:24:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753632Ab3FRH7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 03:59:53 -0400
-Received: from mail-in-06.arcor-online.net ([151.189.21.46]:56517 "EHLO
-	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752552Ab3FRH7w (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Jun 2013 03:59:52 -0400
-Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
-	by mx.arcor.de (Postfix) with ESMTP id 21B8610BB3A;
-	Tue, 18 Jun 2013 09:59:51 +0200 (CEST)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 1E72C6F25CA;
-	Tue, 18 Jun 2013 09:59:51 +0200 (CEST)
-Received: from webmail18.arcor-online.net (webmail18.arcor-online.net [151.189.8.76])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 13E351085E8;
-	Tue, 18 Jun 2013 09:59:51 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-07.arcor-online.net 13E351085E8
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1371542391; bh=lEnoh+YWobWohHUoWnfXj1LP9cHf3xZ+PQtQ94vWCY8=;
-	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=ZTX5BNUFWW48RAaHJkwg8chyR3BUpGaxFxH5KKdBIqCNzhn+qusqp/oJDErUL9ssc
-	 TctyZqLVFPyqBmWY+PUA0RwR0+c6fjS+fYkN+SR0YvDBXwN86LaqBMeBBkVqmuIF+M
-	 HRqKZgXgpuQPAaYsixgBmlGAAVw8H4Cg8k5WeB+Y=
-Received: from [194.138.39.59] by webmail18.arcor-online.net (151.189.8.76) with HTTP (Arcor Webmail); Tue, 18 Jun 2013 09:59:50 +0200 (CEST)
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 194.138.39.59
+	id S1754448Ab3FRIYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 04:24:14 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:22351 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753678Ab3FRIXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 04:23:54 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 18 Jun
+ 2013 10:23:47 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.211.168) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Tue, 18 Jun 2013 10:23:51 +0200
+In-Reply-To: <51C0064B.8060408@viscovery.net> (Johannes Sixt's message of
+	"Tue, 18 Jun 2013 09:03:39 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.211.168]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228172>
 
-> 
-> I don't understand.  Do you mean that you want to change the rules
-> that generate user-manual.xml?  Would generating different XML files
-> for the PDF and for other purposes (with different names) work as a
-> way to achieve that without losing the printable manual?
-> 
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-This would be even worse when we have to create different xml depending on the
-wanted output. The problem here is in the xml->pdf/html step: I wanted to change
-the formatting of links in the pdf from "Section <number>" to "<section_name>" to
-make it the same as in the html. Thereby I noticed that the definition for this is
-in files from /etc/asciidoc/dblatex. So to change it we have to introduce our own files
-in ./Documentation and work on them to bring the formatting of user-manual.html
-and user-manual.pdf closer together.
+> Am 6/17/2013 11:18, schrieb Thomas Rast:
+>> +match_pattern_list () {
+>> +	arg="$1"
+>> +	shift
+>> +	test -z "$*" && return 1
+>> +	for pat
+>> +	do
+>> +		case "$arg" in
+>> +		$pat)
+>> +			return 0
+>> +		esac
+>> +	done
+>> +	return 1
+>> +}
+>
+> Watch this failing test case:
+>
+>    GIT_SKIP_TESTS="t950[012]" ./t3006-ls-files-long.sh
+>
+> 'pat' is too short and too sweet to be used as a shell variable name in a
+> library function. ;)
 
+Gah!  Serves me right for not testing test-lib.  Thanks for noticing.
 
----
-Thomas
+/me goes stand in the corner for a while
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
