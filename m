@@ -1,118 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] sequencer: write useful reflog message for fast-forward
-Date: Tue, 18 Jun 2013 11:53:52 -0700
-Message-ID: <7vzjun45dr.fsf@alter.siamese.dyndns.org>
-References: <1371580518-32455-1-git-send-email-artagnon@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 18 20:54:02 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2 0/7] Re-roll rr/rebase-checkout-reflog
+Date: Wed, 19 Jun 2013 00:25:30 +0530
+Message-ID: <1371581737-10013-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 18 20:58:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Up12V-0000DG-GY
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 20:53:59 +0200
+	id 1Up17I-0002Ab-45
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 20:58:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933025Ab3FRSxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 14:53:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58470 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932968Ab3FRSxz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 14:53:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 561FE297B6;
-	Tue, 18 Jun 2013 18:53:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WBA20QOs2OUthFOkko/qqS+4row=; b=AtnwLD
-	RtIkIFRM/AKOgRaJK0y/D/zWFV/Xup9lAx5EDsHHBAc0Cn8qArHZzaaE31Mblr5C
-	1oGamMDiy0NGmhrkH057Y0XDwW/zPuA2iyBgybA1mXlLcv37omzkoSJQ4fGf9js/
-	y53ZeEMn499PJ9xpuwjBGrHUjd6AwHBiICJVo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p9WODY4yF/XBxKyZZJIcOciIPcPk/5F1
-	529PrREJ6HmnXVWvCV+a4ZguYMnqZ6oKJd68/Ko7sZOwhpWs09vG8bEgV5V1D8EZ
-	W1SQZZIZKNrmup4m/7hezflWDY9VWxztPgl0lpnqfvzLWQxLrGatP5OR40FMudfM
-	T+ugpC2Sjuk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C9E5297B5;
-	Tue, 18 Jun 2013 18:53:54 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AAC5C297B1;
-	Tue, 18 Jun 2013 18:53:53 +0000 (UTC)
-In-Reply-To: <1371580518-32455-1-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Wed, 19 Jun 2013 00:05:18 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6C14ED46-D848-11E2-BE03-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S933682Ab3FRS6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 14:58:47 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:48625 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933351Ab3FRS6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 14:58:46 -0400
+Received: by mail-pd0-f174.google.com with SMTP id 10so4182483pdc.5
+        for <git@vger.kernel.org>; Tue, 18 Jun 2013 11:58:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=Bs5YJKq5Scv51ZiEnTJ3aksmogc6WD/UCmQ6dcwJwts=;
+        b=xpxaFiIfnIh/xNbKuKYl2BHeX/ulwCsNA0lRYG+vOfAsz+D65WqOBDI3+qlWVUK4lB
+         k7ijvP6CASBi6AE/YKYAgK15neGk7dE/cymV25AVDX6Y0EXgMIjx845MwwcgfIKXR4dK
+         d0Otvv9wIBH+e9jTGIiIL8kvbFO5LoWPAK1oPlk8ZChV2LJsRxXUKhZuN+308s4U+Ymw
+         JxUGVACa96ZTdsvpE8GnmAJI14isZsBmiwHMlVl5auWmkD0i454e2iTRAe6d0Y8jt+vE
+         mn9n8NlyxWiXf7UmId8YrOcK6wQQtwHUsyqxevRhtTfZhF4GpKViqoUhuKIoAnryFMih
+         cUIw==
+X-Received: by 10.66.228.34 with SMTP id sf2mr3321928pac.134.1371581925497;
+        Tue, 18 Jun 2013 11:58:45 -0700 (PDT)
+Received: from localhost.localdomain ([122.164.211.22])
+        by mx.google.com with ESMTPSA id ag4sm19432751pbc.20.2013.06.18.11.58.43
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 18 Jun 2013 11:58:44 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.455.g5932b31
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228296>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+In this iteration, I've redone [6/7] and [7/7] to address the "do not
+leak GIT_REFLOG_ACTION" problem that Junio talked about.  Predictably,
+I couldn't convince myself to take Junio's subshell approach.
+Instead, I've reworked the entire logic to have two variables:
+GIT_REFLOG_ACTION and base_reflog_action.  It is now elegant and
+correct.
 
-> The following command
->
->   $ git cherry-pick --ff b8bb3f
->
-> writes the following uninformative message to the reflog
->
->   cherry-pick
->
-> Improve it to
->
->   cherry-pick: fast-forward to b8bb3f
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
+I'm elated that I got the chance to do this right.
 
-Perhaps, but a few questions in general (i.e. not limited to the
-difference the patch brings in, but because you are touching the
-codepath anyway).
+Thanks.
 
- - Is this limited to cherry-pick?  do_pick_commit() which is the
-   caller of fast_forward_to() is called not just for cherry-pick
-   but also for revert, and I do not see anything that makes sure
-   that it is called only when (opts->action == REPLAY_CHERRY_PICK).
+Junio C Hamano (1):
+  t/t7512-status-help: test "HEAD detached from"
 
- - Do we want to abbreviate?  For that matter, why even say "to
-   $commit", which can be seen in the "from to" part of the reflog
-   record anyway?
+Ramkumar Ramachandra (6):
+  wt-status: remove unused field in grab_1st_switch_cbdata
+  t/t2012-checkout-last: test "checkout -" after a rebase
+  status: do not depend on rebase reflog messages
+  checkout: respect GIT_REFLOG_ACTION
+  rebase: write better reflog messages
+  rebase -i: write better reflog messages
 
-In other words:
+ builtin/checkout.c            | 11 +++++++---
+ git-am.sh                     |  4 +++-
+ git-rebase--am.sh             |  5 +++++
+ git-rebase--interactive.sh    | 14 +++++++++----
+ git-rebase.sh                 | 13 ++++++++++--
+ t/t2012-checkout-last.sh      | 34 +++++++++++++++++++++++++++++++
+ t/t3404-rebase-interactive.sh | 15 ++++++++++++++
+ t/t7512-status-help.sh        | 47 ++++++++++++++++++++++++-------------------
+ wt-status.c                   |  7 ++++---
+ 9 files changed, 116 insertions(+), 34 deletions(-)
 
-	strbuf_addf(&sb, "%s: fast-forward", action_name(opts))
-
-might be sufficient, and when sequencer learns to handle more than
-cherry-pick and revert, we won't have to remember that we need to
-change this part.
-
->  sequencer.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index ab6f8a7..ae63ff3 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -273,12 +273,14 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from,
->  			   int unborn)
->  {
->  	struct ref_lock *ref_lock;
-> +	struct strbuf sb = STRBUF_INIT;
->  
->  	read_cache();
->  	if (checkout_fast_forward(from, to, 1))
->  		exit(1); /* the callee should have complained already */
->  	ref_lock = lock_any_ref_for_update("HEAD", unborn ? null_sha1 : from, 0);
-> -	return write_ref_sha1(ref_lock, to, "cherry-pick");
-> +	strbuf_addf(&sb, "cherry-pick: fast-forward to %s", find_unique_abbrev(to, DEFAULT_ABBREV));
-> +	return write_ref_sha1(ref_lock, to, sb.buf);
->  }
->  
->  static int do_recursive_merge(struct commit *base, struct commit *next,
+-- 
+1.8.3.1.455.g5932b31
