@@ -1,68 +1,79 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: =?UTF-8?Q?beno=C3=AEt_person?= <benoit.person@gmail.com>
 Subject: Re: [PATCH] send-email: allow use of basic email list in --cc --to
  and --bcc
-Date: Tue, 18 Jun 2013 15:51:36 +0530
-Message-ID: <CALkWK0=2t7mv9t1xLOG8X5HMRhcamf3LjC+Qny1cX5mJGJdE_A@mail.gmail.com>
+Date: Tue, 18 Jun 2013 12:26:18 +0200
+Message-ID: <CAETqRCjCf0HKfAsgcWPnv81OY07T0JZdXVGGr-DgLsP3miWUvQ@mail.gmail.com>
 References: <1371549079-19291-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
- <CALkWK0mTWC87Z1E3eZ_gzjXrmtFb9ir6aY7mXVBfe9oHHXCHcQ@mail.gmail.com> <f1cbf11015d6ebd9640b2b59ab4631e1@ensibm.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jorge-Juan.Garcia-Garcia@ensimag.imag.fr, git@vger.kernel.org,
-	gitster@pobox.com,
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: =?UTF-8?Q?Mathieu_Li=C3=A9nard=2D=2DMayor?= 
-	<mathieu.lienard--mayor@ensimag.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 18 12:22:21 2013
+To: Jorge-Juan.Garcia-Garcia@ensimag.imag.fr
+X-From: git-owner@vger.kernel.org Tue Jun 18 12:26:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uot3N-0001c3-3r
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 12:22:21 +0200
+	id 1Uot7K-0001Li-TQ
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 12:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754407Ab3FRKWR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Jun 2013 06:22:17 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:61579 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751905Ab3FRKWQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Jun 2013 06:22:16 -0400
-Received: by mail-ie0-f179.google.com with SMTP id c10so9033830ieb.24
-        for <git@vger.kernel.org>; Tue, 18 Jun 2013 03:22:16 -0700 (PDT)
+	id S1756045Ab3FRK0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 06:26:20 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:63126 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756000Ab3FRK0S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 06:26:18 -0400
+Received: by mail-ie0-f175.google.com with SMTP id a13so9456298iee.20
+        for <git@vger.kernel.org>; Tue, 18 Jun 2013 03:26:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=hgWUaAu8oIjqfCaBfmYlCpPjGfNXVDTlvAeNt0FaEhM=;
-        b=PSVH/EletZFIU6PQKp6lBCrT8pDEE0xUAN2g7Xz9q1RkDJA0er8xzjMrMcaiTHkNf+
-         SxBV2BcEmzobrMzneSDRQs9nxClm7GNJYUFVxt0dkes7ZNONLP75oizR7ZF/KqAEvBBD
-         bGmUOUqM9VKkYDzju0nwRAxDD1jVxLlPzejHPS4CVwJGAnJJykvonnHZx3I05vSvxNap
-         DWo6K3JE1we3XgWiGsIHlwRFjjbquzur/PEAmlzyMYPMxr5LWnqAKp0MY9aemsTO/2ky
-         1OinxRY+0o8uyObvP5k7jwiEg/gfCb5o3EyyR1N20JwXe41T63W7XPA6/yc4tsPJq97b
-         r7xQ==
-X-Received: by 10.50.3.37 with SMTP id 5mr7231243igz.0.1371550936329; Tue, 18
- Jun 2013 03:22:16 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Tue, 18 Jun 2013 03:21:36 -0700 (PDT)
-In-Reply-To: <f1cbf11015d6ebd9640b2b59ab4631e1@ensibm.imag.fr>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=I0ezPCoZNDaPk1IcxppB/+o9GNw/hPOFw2e88c4mWeA=;
+        b=LNo4Np3svneNM8fZSmwpGuDYmO9x0HdTDabXFr6TOK3lO/p+GGACudDEAAEVM10yFT
+         r/ey3QV2bGvYBCh7exDq72DuEJSWuWam6hfkOsIIEnrry9bxwbjKvlclqPqAdRj2GrTE
+         HIlnncOaNWToXao62rqI2Cggob2lr3DM5SwmG8C1b5WjiEJfXZjcmIf87diYVMCkXkYa
+         j3o/K0odzndu+A9POtNwBbiHkg3KcOxfeR3ZZ4+ru1mMORg/tCE82ryf92AJNA9j2s+I
+         SaS1xSnonMWNKYL7rciZ4bZ5tDxyo2U78TKQBvBvKUPuIhmDa+e3tUntEm6q+hXRgIhi
+         9Vjg==
+X-Received: by 10.50.153.113 with SMTP id vf17mr7004495igb.101.1371551178272;
+ Tue, 18 Jun 2013 03:26:18 -0700 (PDT)
+Received: by 10.42.210.20 with HTTP; Tue, 18 Jun 2013 03:26:18 -0700 (PDT)
+In-Reply-To: <1371549079-19291-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+X-Google-Sender-Auth: tfH7bQ9YQsxccvhbd4O3eWYEC_g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228189>
 
-Mathieu Li=C3=A9nard--Mayor wrote:
->> Is this a regression?  I can't send emails to a recipient whose name
->> contains a comma?
->
-> It is not. Previously the input would be considered incorrect:
+> +sub split_email_list {
+> +    my(@list) = @_;
+> +    my @tmp;
+> +    my @emails;
+> +       for (my $i = 0; $i <= $#list; $i++) {
+> +           if ($list[$i] =~ /,/) {
+> +               @emails = split(/,/, $list[$i]);
+> +           } else {
+> +               @emails = $list[$i];
+> +           }
+> +           # Removal of unwanted spaces
+> +           for (my $j = 0; $j <= $#emails; $j++) {
+> +               $emails[$j] =~ s/^\s+//;
+> +               $emails[$j] =~ s/\s+$//;
+> +           }
+> +           @tmp = (@tmp, @emails);
+> +       }
+> +    return(@tmp);
+> +}
+Why two regex ? You could do something like :
+$emails[$j] =~ s/^\s+|\s+$//g;
+to remove leading and trailing whitespaces at the same time.
 
-Right.  It dies with
+I think it's better to use the builin 'push' function to concatenate
+your two arrays:
+push(@tmp, @emails);
 
-  Comma in --to entry: ...
-
-This artificial limitation is imposed by 79ee555b (Check and document
-the options to prevent mistakes, 2006-06-21).
-
-Perhaps include this information in the commit message?
+Benoit Person
