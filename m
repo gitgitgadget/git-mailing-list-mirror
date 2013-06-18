@@ -1,86 +1,73 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 06/13] bash prompt: run 'git rev-parse --git-dir'
- directly instead of __gitdir()
-Date: Tue, 18 Jun 2013 00:16:32 -0400
-Message-ID: <CAPig+cTXxxkburz1PySnYptN70QUM3JwkKq9g5ULRYpUai4MrQ@mail.gmail.com>
-References: <1371521826-3225-1-git-send-email-szeder@ira.uka.de>
-	<1371521826-3225-7-git-send-email-szeder@ira.uka.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/2] Documentation/Makefile: move infodir to be with
+ other '*dir's
+Date: Mon, 17 Jun 2013 21:32:41 -0700
+Message-ID: <20130618043240.GA2896@elie.Belkin>
+References: <4857ab4f4097c582063f064f657a8e5dfbfee232.1371402684.git.john@keeping.me.uk>
+ <ffea107da7b3b7d5e390d27397d3a72155e942b4.1371402684.git.john@keeping.me.uk>
+ <7vppvkbikk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Jun 18 06:16:38 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 06:32:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UonLS-0000u1-22
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 06:16:38 +0200
+	id 1UonbB-0001DC-Ly
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 06:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752444Ab3FREQe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Jun 2013 00:16:34 -0400
-Received: from mail-la0-f44.google.com ([209.85.215.44]:62778 "EHLO
-	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752180Ab3FREQd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Jun 2013 00:16:33 -0400
-Received: by mail-la0-f44.google.com with SMTP id er20so3169215lab.31
-        for <git@vger.kernel.org>; Mon, 17 Jun 2013 21:16:32 -0700 (PDT)
+	id S1750879Ab3FREct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 00:32:49 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:54328 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750758Ab3FREct (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 00:32:49 -0400
+Received: by mail-pa0-f51.google.com with SMTP id lf11so3555025pab.10
+        for <git@vger.kernel.org>; Mon, 17 Jun 2013 21:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=OnaMyWjyjfFG5z2v++h4sBR2QYi3eiIhWlJNxpaxg+A=;
-        b=D08nQAgdQBoAwn7Egyif5yMYXwCwZTA3F00t1ZsVYVUa3Og9x425kK0svrEin5z73E
-         GJj4++qWlJIkJ5lhxPVk6s2XqKf/t0vjmSyarT6sL98KP9VHBwzocf76PUcWY5O+AxsQ
-         7XOuyxhd6uZQ/++alDssp/PFphEN1kLyyu9/2tlXN1lBYpFDsuCkYgFTSu9tff3maEWR
-         p0YgOdMABfHReGkUSrRuENecdmN6u/5rEiyK1FEj2KKbQdPp59M3KQ+R7MpRijCRRGUP
-         69oBNSSOD7MEle2YYZJ9K200UE+b12OgdVjs6mWd0wwx/UUERio9oJXsyS7WDc8w62f4
-         EKjw==
-X-Received: by 10.152.44.225 with SMTP id h1mr8041447lam.90.1371528992082;
- Mon, 17 Jun 2013 21:16:32 -0700 (PDT)
-Received: by 10.114.161.4 with HTTP; Mon, 17 Jun 2013 21:16:32 -0700 (PDT)
-In-Reply-To: <1371521826-3225-7-git-send-email-szeder@ira.uka.de>
-X-Google-Sender-Auth: xbwUcKVotx3n8T6RKmv_JIPEW5Q
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=K9V+JWtUYRNwaRw0eUR0dk0f9C0sUU+qLMhCpXiTtV4=;
+        b=qpNVNoyaMnT2wNx89I+TrzRRTXZyFhbV0n8W+/QvjHwGKjl36jCDI3X5TfWAgC9+tD
+         ArUcYzkXWPYgDuzaGcobIW9CbqoaD15uLfKIGmU7VNiQJyFmsctS5QCoztuYVSoAzAnt
+         DvxD74U1O2P3h7ZWdApaSRNR19fhP8djYB6jt+lp4OLjNtykIgtjyO4ZjjJTfh0UHSxx
+         oJ/dGzDlswyIrFq8+vU7K2dIGNgYHl6IqLntrTKDez5Cd8zuKxAZ/sGJ96HanMatGYeD
+         m0aJsjVVLkkTEt2ivs6BXUDqs3PJzm+YgAEUOPpiASqIq+kSubgnmeh7I4X5QAJEOk4l
+         BRAQ==
+X-Received: by 10.68.211.36 with SMTP id mz4mr15301998pbc.191.1371529968768;
+        Mon, 17 Jun 2013 21:32:48 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id fr1sm16440814pbb.26.2013.06.17.21.32.46
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 17 Jun 2013 21:32:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vppvkbikk.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228151>
 
-On Mon, Jun 17, 2013 at 10:16 PM, SZEDER G=E1bor <szeder@ira.uka.de> wr=
-ote:
-> From: SZEDER G=E1bor <szeder@ira.uka.de>
->
-> __git_ps1() finds out the path to the repository by using the
-> __gitdir() helper function.  __gitdir() is basically just a wrapper
-> around 'git rev-parse --git-dir', extended with support for
-> recognizing a remote repository given as argument, to use the path
-> given on the command line, and with a few shortcuts to recognize a gi=
-t
-> repository in cwd or at $GIT_DIR quickly without actually running 'gi=
-t
-> rev-parse'.  However, the former two is only necessary for the
-> completion script but makes no sense for the bash prompt, while the
-> latter shortcuts are performance optimizations __git_ps1() can do
-> without (they just avoid the overhead of fork()+exec()ing a git
-> process).
->
-> Run 'git rev-parse --git-dir' directly in __git_ps1(), because it wil=
-l
-> allow this patch series to combine several $(git rev-parse ...)
-> command substitutions in the main code path, and the overall
-> performance benefit will far outweight the loss of those few shortcut=
-s
+Jun 17, 2013 at 01:14:51PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
 
-s/outweight/outweigh/
-
-> in __gitdir().  Furthermore, since __gitdir() is not needed anymore
-> for the prompt, remove it from the prompt script finally eliminating
-> its duplication between the prompt and completion scripts.  Also
-> remove the comment from the completion script warning about this code
-> duplication.
+>> Signed-off-by: John Keeping <john@keeping.me.uk>
+>> ---
 >
-> Signed-off-by: SZEDER G=E1bor <szeder@ira.uka.de>
+> Thanks; will directly apply 1/2 on maint.  I am not absolutely sure
+> about this one, where variables related to an optional "info"
+> support used to be in one place but with the patch only "infodir" is
+> separated away.  Maybe it is not a big deal, though.
+
+In practice, I think keeping the variables that specify the filesystem
+hierarchy together is more useful (or in other words, this looks like a
+good patch).
+
+Thanks,
+Jonathan
