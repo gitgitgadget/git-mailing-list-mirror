@@ -1,267 +1,87 @@
-From: "Eduardo R. D'Avila" <erdavila@gmail.com>
-Subject: [PATCH v2 2/3] git-prompt.sh: refactor colored prompt code
-Date: Mon, 17 Jun 2013 23:16:51 -0300
-Message-ID: <1371521811-9819-1-git-send-email-erdavila@gmail.com>
-References: <7vhagxicu9.fsf@alter.siamese.dyndns.org>
-Cc: felipe.contreras@gmail.com, t.gummerer@gmail.com,
-	artagnon@gmail.com, zoltan.klinger@gmail.com, hegge@resisty.net,
-	martinerikwerner@gmail.com, s.oosthoek@xs4all.nl,
-	gitster@pobox.com, jonathan@leto.net, szeder@ira.uka.de,
-	"Eduardo R. D'Avila" <erdavila@gmail.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH v2 00/13] bash prompt speedup
+Date: Tue, 18 Jun 2013 04:16:53 +0200
+Message-ID: <1371521826-3225-1-git-send-email-szeder@ira.uka.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 18 04:17:19 2013
+X-From: git-owner@vger.kernel.org Tue Jun 18 04:17:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UolTw-0004XP-QV
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 04:17:17 +0200
+	id 1UolU6-0004tl-TE
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 04:17:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753843Ab3FRCRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jun 2013 22:17:13 -0400
-Received: from mail-qc0-f172.google.com ([209.85.216.172]:51148 "EHLO
-	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753767Ab3FRCRM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 22:17:12 -0400
-Received: by mail-qc0-f172.google.com with SMTP id j10so2003847qcx.17
-        for <git@vger.kernel.org>; Mon, 17 Jun 2013 19:17:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=jgYt5gppCIW2iO2IjETFT8EZiRdqCLX/ubSmx8QBU3o=;
-        b=DwvUYn4/EmFsvTrdjhtw8Exae8QnqR9ziv0YizfvJkUgxt9ba1Lt4C1VK0Y1PadTjf
-         pIA8aROdIuNuR+fI3uJvPu73pltx6XkNrfibUVxi3tV6LYPWIvtJP1FqTtQ6/qwE+/vV
-         S9SD9LgKwE0Ycg5mFDG66aFX3t/RluLpTGf2asci4qrkPA3FoRfwjNsbKCBCfbGj25xr
-         kuLvfMGJrhEYHbPGjtmdVuchJmEBcwJEfVz61a5uDrndnc4/bieQSKMrvlpJv/BPJbTu
-         0te78AZlzr7UcLyVwlndttk29/A7sVNae43lz/43DnqZYtHn69X49TKDsS8rO/0jwT/4
-         UiRw==
-X-Received: by 10.224.174.6 with SMTP id r6mr20467674qaz.87.1371521831764;
-        Mon, 17 Jun 2013 19:17:11 -0700 (PDT)
-Received: from localhost.localdomain ([177.97.121.196])
-        by mx.google.com with ESMTPSA id gn4sm25236019qab.8.2013.06.17.19.17.07
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 17 Jun 2013 19:17:10 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1.440.g82707f8
-In-Reply-To: <7vhagxicu9.fsf@alter.siamese.dyndns.org>
+	id S1753872Ab3FRCRX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jun 2013 22:17:23 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:63074 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753767Ab3FRCRW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jun 2013 22:17:22 -0400
+Received: from localhost6.localdomain6 (f052037223.adsl.alicedsl.de [78.52.37.223])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0MH3DS-1Ub45b0oMM-00DKrl; Tue, 18 Jun 2013 04:17:21 +0200
+X-Mailer: git-send-email 1.8.3.1.487.g8f4672d
+X-Provags-ID: V02:K0:AuMJoh0uDQ+uspz/+yCrOWaW9VgLdIDI2Sdl0ubFfa1
+ ePXj/hpUqMwPFRzKeNWd9BoHIibnsyRAp7ZoLvRu7k/UXvaoQQ
+ 52YVRmv7r1gh15P5r8mJvK3IiVT08EDiIn8vNo5OuTkn+cublX
+ BdUHRbxmPHfPSUDNLaE54bVkLH8Amc8vVdHaiPKDz3DBUePfUT
+ eVfkK/yDEca8v/WB20PzO/S6F/3GrtenYGVhuuE9HHqElOvRyZ
+ kXXe+xhBkLUEyAcfSqp8kJtbbJOimJwDk5kO7R1P4cW+utyykM
+ EyRDN3vbnHvyhr/n2URYxYupxMxjiSK9nVuQKK2JdJPP4jlmvQ
+ 6VcemHxInyD377eYQf2FcmqT4JW6Zn1Gk1cmzgGrluFKa9HhA5
+ cQZQ0eDDjHypQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228132>
 
-__git_ps1_colorize_gitstring() sets color codes and
-builds the prompt gitstring. It has duplicated code
-to handle color codes for bash and zsh shells.
-__git_ps1() also has duplicated logic to build the
-prompt gitstring.
+=46rom: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 
-Remove duplication of logic to build gitstring in
-__git_ps1_colorize_gitstring() and __git_ps1().
+Hi,
 
-Leave in __git_ps1_colorize_gitstring() only logic
-to set color codes.
+displaying the git-specific bash prompt on Windows/MinGW takes quite
+long, long enough to be noticeable.  This is mainly caused by the
+numerous fork()s and exec()s to create subshells and run git or other
+commands, which are rather expensive on Windows.
 
-Signed-off-by: Eduardo R. D'Avila <erdavila@gmail.com>
----
-26	59	contrib/completion/git-prompt.sh
-6	6	t/t9903-bash-prompt.sh
- contrib/completion/git-prompt.sh | 85 ++++++++++++----------------------------
- t/t9903-bash-prompt.sh           | 12 +++---
- 2 files changed, 32 insertions(+), 65 deletions(-)
+This patch series eliminates many command substitutions and commands
+in __git_ps1() from top to bottom by replacing them with bash builtins
+or consolidating them.  A few timing results are shown in the log
+message of patch 10.
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 86a4f3f..70515cc 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -225,8 +225,8 @@ __git_ps1_show_upstream ()
- }
- 
- # Helper function that is meant to be called from __git_ps1.  It
--# builds up a gitstring injecting color codes into the appropriate
--# places.
-+# injects color codes into the appropriate gitstring variables used
-+# to build a gitstring.
- __git_ps1_colorize_gitstring ()
- {
- 	if [[ -n ${ZSH_VERSION-} ]]; then
-@@ -234,74 +234,40 @@ __git_ps1_colorize_gitstring ()
- 		local c_green='%F{green}'
- 		local c_lblue='%F{blue}'
- 		local c_clear='%f'
--		local bad_color=$c_red
--		local ok_color=$c_green
--		local branch_color="$c_clear"
--		local flags_color="$c_lblue"
--		local branchstring="$c${b##refs/heads/}"
--
--		if [ $detached = no ]; then
--			branch_color="$ok_color"
--		else
--			branch_color="$bad_color"
--		fi
--
--		gitstring="$branch_color$branchstring$c_clear"
--
--		if [ -n "$w$i$s$u$r$p" ]; then
--			gitstring="$gitstring$z"
--		fi
--		if [ "$w" = "*" ]; then
--			gitstring="$gitstring$bad_color$w"
--		fi
--		if [ -n "$i" ]; then
--			gitstring="$gitstring$ok_color$i"
--		fi
--		if [ -n "$s" ]; then
--			gitstring="$gitstring$flags_color$s"
--		fi
--		if [ -n "$u" ]; then
--			gitstring="$gitstring$bad_color$u"
--		fi
--		gitstring="$gitstring$c_clear$r$p"
--		return
-+	else
-+		# Using \[ and \] around colors
-+		# is necessary to prevent wrapping issues!
-+		local c_red='\[\e[31m\]'
-+		local c_green='\[\e[32m\]'
-+		local c_lblue='\[\e[1;34m\]'
-+		local c_clear='\[\e[0m\]'
- 	fi
--	local c_red='\e[31m'
--	local c_green='\e[32m'
--	local c_lblue='\e[1;34m'
--	local c_clear='\e[0m'
- 	local bad_color=$c_red
- 	local ok_color=$c_green
--	local branch_color="$c_clear"
- 	local flags_color="$c_lblue"
--	local branchstring="$c${b##refs/heads/}"
- 
-+	local branch_color=""
- 	if [ $detached = no ]; then
- 		branch_color="$ok_color"
- 	else
- 		branch_color="$bad_color"
- 	fi
-+	c="$branch_color$c"
- 
--	# Setting gitstring directly with \[ and \] around colors
--	# is necessary to prevent wrapping issues!
--	gitstring="\[$branch_color\]$branchstring\[$c_clear\]"
--
--	if [ -n "$w$i$s$u$r$p" ]; then
--		gitstring="$gitstring$z"
--	fi
-+	z="$c_clear$z"
- 	if [ "$w" = "*" ]; then
--		gitstring="$gitstring\[$bad_color\]$w"
-+		w="$bad_color$w"
- 	fi
- 	if [ -n "$i" ]; then
--		gitstring="$gitstring\[$ok_color\]$i"
-+		i="$ok_color$i"
- 	fi
- 	if [ -n "$s" ]; then
--		gitstring="$gitstring\[$flags_color\]$s"
-+		s="$flags_color$s"
- 	fi
- 	if [ -n "$u" ]; then
--		gitstring="$gitstring\[$bad_color\]$u"
-+		u="$bad_color$u"
- 	fi
--	gitstring="$gitstring\[$c_clear\]$r$p"
-+	r="$c_clear$r"
- }
- 
- # __git_ps1 accepts 0 or 1 arguments (i.e., format string)
-@@ -443,19 +409,20 @@ __git_ps1 ()
- 		fi
- 
- 		local z="${GIT_PS1_STATESEPARATOR-" "}"
-+
-+		# NO color option unless in PROMPT_COMMAND mode
-+		if [ $pcmode = yes ] && [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
-+			__git_ps1_colorize_gitstring
-+		fi
-+
- 		local f="$w$i$s$u"
-+		local gitstring="$c${b##refs/heads/}${f:+$z$f}$r$p"
-+
- 		if [ $pcmode = yes ]; then
--			local gitstring=
--			if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
--				__git_ps1_colorize_gitstring
--			else
--				gitstring="$c${b##refs/heads/}${f:+$z$f}$r$p"
--			fi
- 			gitstring=$(printf -- "$printf_format" "$gitstring")
- 			PS1="$ps1pc_start$gitstring$ps1pc_end"
- 		else
--			# NO color option unless in PROMPT_COMMAND mode
--			printf -- "$printf_format" "$c${b##refs/heads/}${f:+$z$f}$r$p"
-+			printf -- "$printf_format" "$gitstring"
- 		fi
- 	fi
- }
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 6a88778..1101adf 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -551,7 +551,7 @@ test_expect_success 'prompt - pc mode' '
- '
- 
- test_expect_success 'prompt - bash color pc mode - branch name' '
--	printf "BEFORE: (${c_green}master${c_clear}${c_clear}):AFTER" >expected &&
-+	printf "BEFORE: (${c_green}master${c_clear}):AFTER" >expected &&
- 	(
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		__git_ps1 "BEFORE:" ":AFTER" >"$actual"
-@@ -561,7 +561,7 @@ test_expect_success 'prompt - bash color pc mode - branch name' '
- '
- 
- test_expect_success 'prompt - bash color pc mode - detached head' '
--	printf "BEFORE: (${c_red}(%s...)${c_clear}${c_clear}):AFTER" $(git log -1 --format="%h" b1^) >expected &&
-+	printf "BEFORE: (${c_red}(%s...)${c_clear}):AFTER" $(git log -1 --format="%h" b1^) >expected &&
- 	git checkout b1^ &&
- 	test_when_finished "git checkout master" &&
- 	(
-@@ -627,7 +627,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - befo
- '
- 
- test_expect_success 'prompt - bash color pc mode - inside .git directory' '
--	printf "BEFORE: (${c_green}GIT_DIR!${c_clear}${c_clear}):AFTER" >expected &&
-+	printf "BEFORE: (${c_green}GIT_DIR!${c_clear}):AFTER" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	(
-@@ -666,7 +666,7 @@ test_expect_success 'prompt - bash color pc mode - untracked files status indica
- '
- 
- test_expect_success 'prompt - zsh color pc mode - branch name' '
--	printf "BEFORE: (%%F{green}master%%f%%f):AFTER" >expected &&
-+	printf "BEFORE: (%%F{green}master%%f):AFTER" >expected &&
- 	(
- 		ZSH_VERSION=5.0.0 &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
-@@ -677,7 +677,7 @@ test_expect_success 'prompt - zsh color pc mode - branch name' '
- '
- 
- test_expect_success 'prompt - zsh color pc mode - detached head' '
--	printf "BEFORE: (%%F{red}(%s...)%%f%%f):AFTER" $(git log -1 --format="%h" b1^) >expected &&
-+	printf "BEFORE: (%%F{red}(%s...)%%f):AFTER" $(git log -1 --format="%h" b1^) >expected &&
- 	git checkout b1^ &&
- 	test_when_finished "git checkout master" &&
- 	(
-@@ -748,7 +748,7 @@ test_expect_success 'prompt - zsh color pc mode - dirty status indicator - befor
- '
- 
- test_expect_success 'prompt - zsh color pc mode - inside .git directory' '
--	printf "BEFORE: (%%F{green}GIT_DIR!%%f%%f):AFTER" >expected &&
-+	printf "BEFORE: (%%F{green}GIT_DIR!%%f):AFTER" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	(
--- 
-1.8.3.1.440.g82707f8
+
+SZEDER G=C3=A1bor (13):
+  bash prompt: fix redirection coding style in tests
+  bash prompt: fix here document indentation in interactive rebase test
+  completion, bash prompt: move __gitdir() tests to completion test
+    suite
+  bash prompt: add a test for symbolic link symbolic refs
+  bash prompt: return early from __git_ps1() when not in a git
+    repository
+  bash prompt: run 'git rev-parse --git-dir' directly instead of
+    __gitdir()
+  bash prompt: use bash builtins to find out rebase state
+  bash prompt: use bash builtins to find out current branch
+  bash prompt: use bash builtins to get detached HEAD abbrev. object
+    name
+  bash prompt: combine 'git rev-parse' executions
+  bash prompt: use bash builtins to check stash state
+  bash prompt: avoid command substitution when checking for untracked
+    files
+  bash prompt: avoid command substitution when finalizing gitstring
+
+ contrib/completion/git-completion.bash |   2 -
+ contrib/completion/git-prompt.sh       | 223 ++++++++++++-----------
+ t/t9902-completion.sh                  | 134 ++++++++++++++
+ t/t9903-bash-prompt.sh                 | 319 +++++++++++--------------=
+--------
+ 4 files changed, 345 insertions(+), 333 deletions(-)
+
+--=20
+1.8.3.1.487.g8f4672d
