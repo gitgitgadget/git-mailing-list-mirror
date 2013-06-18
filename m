@@ -1,65 +1,79 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Documentation/git-push.txt: explain better cases where --force is dangerous
-Date: Tue, 18 Jun 2013 09:42:17 +0200
-Message-ID: <vpq38sfx3ty.fsf@anie.imag.fr>
-References: <1371491561-19117-1-git-send-email-Matthieu.Moy@imag.fr>
-	<51BF7B1C.2040703@xiplink.com>
-	<7v7ghsbeoo.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] config doc: rewrite push.default section
+Date: Tue, 18 Jun 2013 13:17:09 +0530
+Message-ID: <CALkWK0mOsSskGE2ukS4M8QN_Nuf7+rVosWG6E81QXgoQO8Zz-Q@mail.gmail.com>
+References: <1371377188-18938-1-git-send-email-artagnon@gmail.com> <vpqvc5dj3hy.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org,
-	philipoakley@iee.org, artagnon@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 18 09:42:37 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 18 09:47:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoqYm-0002iR-2e
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 09:42:36 +0200
+	id 1Uoqdt-00059d-Vp
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 09:47:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753589Ab3FRHm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 03:42:26 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:55973 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753566Ab3FRHmY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 03:42:24 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5I7gGI0028428
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 18 Jun 2013 09:42:16 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UoqYT-0003Uw-KC; Tue, 18 Jun 2013 09:42:17 +0200
-In-Reply-To: <7v7ghsbeoo.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 17 Jun 2013 14:38:47 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 18 Jun 2013 09:42:17 +0200 (CEST)
+	id S1753224Ab3FRHru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 03:47:50 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:41431 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752651Ab3FRHrt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 03:47:49 -0400
+Received: by mail-ie0-f180.google.com with SMTP id f4so9156589iea.39
+        for <git@vger.kernel.org>; Tue, 18 Jun 2013 00:47:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=NqtyNLeJi2y6uuYnTQPw67fqfx5l+txBDbe51negsoA=;
+        b=BUQ3j7Py95SDZ10B/59PkPb7oM0qNtX/F0ABvsPH8Bv+6adT5SswuqfWpbic0KwINC
+         k5MgXDvYrLASVf2hHrOtj2Wvd8tvNTkF9U+6xrJYnoJFY927YiQMp1jt/DDhsdRmR9zY
+         +NDNInfxymICBt0C0IF8/Sw08DBUxnlB58pP7OkjAzZ84Ic4xWJ1c0JwSTt3a6tgAPDU
+         9NnfpY5VplQyUX/uIP0JAQKI5NE7pg8GPKVoaKCQmpWebDCUWD3/fxB2r9W9kBBAf1l9
+         qFHZEbG+6nvirp2otr+/PHX4qZ7ix1c7J6orOTPGL/x5+iTaBq6ctEXpYMfVcINdgLvL
+         AQ/Q==
+X-Received: by 10.50.23.8 with SMTP id i8mr6963365igf.42.1371541669471; Tue,
+ 18 Jun 2013 00:47:49 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Tue, 18 Jun 2013 00:47:09 -0700 (PDT)
+In-Reply-To: <vpqvc5dj3hy.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228170>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Matthieu Moy wrote:
+> I'd put it the other way around: the intuitive explanation first, and
+> the technical one after. For people not totally familiar with Git, the
+> first part does not make much sense (and when I learn a new tool, I
+> really don't like when the doc assumes I already know too much about
+> it).
 
+Good.
 
-> After I re-read the one, I found that "override" somewhat a strange
-> expression.  There is nothing that overrides or to be overriden.
+> Also, this $HEAD Vs HEAD doesn't seem very clear to me. I don't have a
+> really good proposal for a better wording, but maybe replacing $HEAD
+> with $branch would make a bit more sense, as having $HEAD != HEAD is
+> weird.
 
-Right, I actually meant "overwrite".
+Good.
 
-> How about putting it like this?
+>> +* `simple` - in central workflows, behaves like `upstream`, except
+>> +  that it errors out unless branch.$HEAD.merge is equal to $HEAD.
+>
+> "... except that it errors out if branch.$HEAD.merge is not equal to
+> $HEAD." ?
 
-I'm not sure "push out refs other than the current branch" is strong
-enough. Once you are used to "push = fast-forward = can't loose data",
-"push out a ref" is not very scary.
+Good.
 
-I'd do s/push out/overwrite/, but I'm fine with your version too.
+>> +  single command.  Dangerous, and inappropriate unless you are the
+>> +  only person updating your push destination.
+>
+> Here also, I'd have said "Dangerous, and inappropriate if you are
+> not ...".
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I might have overplayed the danger a bit, as Junio points out.  I'll
+have a look at your --force documentation patch.
