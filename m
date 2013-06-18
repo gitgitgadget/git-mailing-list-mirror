@@ -1,92 +1,118 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 1/2] show-ref.c: Add missing call to git_config()
-Date: Tue, 18 Jun 2013 19:38:49 +0100
-Message-ID: <51C0A939.8030200@ramsay1.demon.co.uk>
-References: <51BCCE98.3070201@ramsay1.demon.co.uk> <7vppvlighf.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] sequencer: write useful reflog message for fast-forward
+Date: Tue, 18 Jun 2013 11:53:52 -0700
+Message-ID: <7vzjun45dr.fsf@alter.siamese.dyndns.org>
+References: <1371580518-32455-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>, mhagger@alum.mit.edu
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 18 20:40:19 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 20:54:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Up0pH-0000CE-0v
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 20:40:19 +0200
+	id 1Up12V-0000DG-GY
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 20:53:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933660Ab3FRSkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 14:40:09 -0400
-Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:35299 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932419Ab3FRSkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 14:40:08 -0400
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 3804F6F867A;
-	Tue, 18 Jun 2013 19:40:07 +0100 (BST)
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 7D6E26F82CD;
-	Tue, 18 Jun 2013 19:40:06 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
-	Tue, 18 Jun 2013 19:40:05 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <7vppvlighf.fsf@alter.siamese.dyndns.org>
-X-MDF-HostID: 3
+	id S933025Ab3FRSxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 14:53:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58470 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932968Ab3FRSxz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 14:53:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 561FE297B6;
+	Tue, 18 Jun 2013 18:53:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WBA20QOs2OUthFOkko/qqS+4row=; b=AtnwLD
+	RtIkIFRM/AKOgRaJK0y/D/zWFV/Xup9lAx5EDsHHBAc0Cn8qArHZzaaE31Mblr5C
+	1oGamMDiy0NGmhrkH057Y0XDwW/zPuA2iyBgybA1mXlLcv37omzkoSJQ4fGf9js/
+	y53ZeEMn499PJ9xpuwjBGrHUjd6AwHBiICJVo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=p9WODY4yF/XBxKyZZJIcOciIPcPk/5F1
+	529PrREJ6HmnXVWvCV+a4ZguYMnqZ6oKJd68/Ko7sZOwhpWs09vG8bEgV5V1D8EZ
+	W1SQZZIZKNrmup4m/7hezflWDY9VWxztPgl0lpnqfvzLWQxLrGatP5OR40FMudfM
+	T+ugpC2Sjuk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C9E5297B5;
+	Tue, 18 Jun 2013 18:53:54 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AAC5C297B1;
+	Tue, 18 Jun 2013 18:53:53 +0000 (UTC)
+In-Reply-To: <1371580518-32455-1-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Wed, 19 Jun 2013 00:05:18 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6C14ED46-D848-11E2-BE03-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228295>
 
-Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
-> 
->> At present, 'git show-ref' ignores any attempt to set config
->> variables (e.g. core.checkstat) from the command line using
->> the -c option to git.
-> 
-> I think what you really want to see is not giving "-c" and have it
-> honored.
-> 
-> 	"git show-ref" does not honor configuration variables at
-> 	all, but at least core configuration variables read by
-> 	git_default_config (most importantly core.checkstat) should
-> 	be read and honored, because ...
-> 
-> would be more appropriate.  What are the variables that matter to
-> show-ref, and what are the reasons why they should be honored?  I
-> thought show-ref was just a way to enumerate refs, and does not read
-> the index nor checks if there are modifications in the working tree,
-> so I do not see any reason offhand for it to honor core.checkstat
-> (and I think that is the reason why we don't have the call there in
-> the current code).
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-:-D Yes, you caught me!
+> The following command
+>
+>   $ git cherry-pick --ff b8bb3f
+>
+> writes the following uninformative message to the reflog
+>
+>   cherry-pick
+>
+> Improve it to
+>
+>   cherry-pick: fast-forward to b8bb3f
+>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
 
-These patches *may* not be necessary, prior to Michael's
-"reference related races" series. Specifically, the introduction
-of the stat_validity_check() function to the reference handling API.
+Perhaps, but a few questions in general (i.e. not limited to the
+difference the patch brings in, but because you are touching the
+codepath anyway).
 
-This means that the behaviour 'git show-ref' is now affected by
-several config variables, including core.checkstat. I haven't
-spent any time auditing the code, but the list would include
-(at least) core.trustctime, core.filemode, core.checkstat,
-core.ignorecygwinfstricks, ...
+ - Is this limited to cherry-pick?  do_pick_commit() which is the
+   caller of fast_forward_to() is called not just for cherry-pick
+   but also for revert, and I do not see anything that makes sure
+   that it is called only when (opts->action == REPLAY_CHERRY_PICK).
 
-> 
-> Exactly the same comment applies to 2/2.
+ - Do we want to abbreviate?  For that matter, why even say "to
+   $commit", which can be seen in the "from to" part of the reflog
+   record anyway?
 
-ditto
+In other words:
 
-> Note that I am _not_ opposing these changes.  You brought them up
-> because you saw some reason why these should honor some core
-> variables.  I just want that reason to be explained in the log for
-> the future developers.
+	strbuf_addf(&sb, "%s: fast-forward", action_name(opts))
 
-Yes, I will send a v2 (soon-ish, I hope).
+might be sufficient, and when sequencer learns to handle more than
+cherry-pick and revert, we won't have to remember that we need to
+change this part.
 
-ATB,
-Ramsay Jones
+>  sequencer.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index ab6f8a7..ae63ff3 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -273,12 +273,14 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from,
+>  			   int unborn)
+>  {
+>  	struct ref_lock *ref_lock;
+> +	struct strbuf sb = STRBUF_INIT;
+>  
+>  	read_cache();
+>  	if (checkout_fast_forward(from, to, 1))
+>  		exit(1); /* the callee should have complained already */
+>  	ref_lock = lock_any_ref_for_update("HEAD", unborn ? null_sha1 : from, 0);
+> -	return write_ref_sha1(ref_lock, to, "cherry-pick");
+> +	strbuf_addf(&sb, "cherry-pick: fast-forward to %s", find_unique_abbrev(to, DEFAULT_ABBREV));
+> +	return write_ref_sha1(ref_lock, to, sb.buf);
+>  }
+>  
+>  static int do_recursive_merge(struct commit *base, struct commit *next,
