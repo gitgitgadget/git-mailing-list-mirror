@@ -1,67 +1,76 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] send-email: allow use of basic email list in --cc --to
- and --bcc
-Date: Tue, 18 Jun 2013 16:28:50 +0530
-Message-ID: <CALkWK0nqQt9mP95NKnyucdAxXekj+OFsp5XsF8wXxoCRjLNbvg@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] send-email: allow use of basic email list in --cc --to and --bcc
+Date: Tue, 18 Jun 2013 13:06:36 +0200
+Message-ID: <vpq1u7zu18j.fsf@anie.imag.fr>
 References: <1371549079-19291-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
- <CALkWK0=vytkxM3yzVaed+i3Q+RpvH=tSLndf=vUmiYC=sn=nFg@mail.gmail.com> <0ad4bd4930efddcbaa5ed958c6758894@ensibm.imag.fr>
+	<CALkWK0=vytkxM3yzVaed+i3Q+RpvH=tSLndf=vUmiYC=sn=nFg@mail.gmail.com>
+	<0ad4bd4930efddcbaa5ed958c6758894@ensibm.imag.fr>
+	<CALkWK0nqQt9mP95NKnyucdAxXekj+OFsp5XsF8wXxoCRjLNbvg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jorge-Juan.Garcia-Garcia@ensimag.imag.fr, git@vger.kernel.org,
+Cc: Mathieu =?iso-8859-1?Q?Li=E9nard--Mayor?= 
+	<mathieu.lienard--mayor@ensimag.fr>,
+	Jorge-Juan.Garcia-Garcia@ensimag.imag.fr, git@vger.kernel.org,
 	gitster@pobox.com,
-	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: =?UTF-8?Q?Mathieu_Li=C3=A9nard=2D=2DMayor?= 
-	<mathieu.lienard--mayor@ensimag.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 18 12:59:41 2013
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 13:06:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UotdU-00080l-IJ
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 12:59:40 +0200
+	id 1UotkM-00057W-5Z
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 13:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754807Ab3FRK7b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Jun 2013 06:59:31 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:49153 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751436Ab3FRK7a convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Jun 2013 06:59:30 -0400
-Received: by mail-ie0-f179.google.com with SMTP id c10so9519281ieb.38
-        for <git@vger.kernel.org>; Tue, 18 Jun 2013 03:59:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=tJ/m6/OK7iIY2g4f/4d0igxaC1HmL+4XmpuO4CVNwqg=;
-        b=iwd63nmTzZdu7xh0eIunFLnMCwSrpua5uEsknth7FnLBHPKxemcxCIrW2dBj3dk/T1
-         kqYgokXoAoMHKOAXfYaOjYgk2EKFIHjFZGLWDMvwMCIMccyCM+0CopgF/Yr2dFZbjXqc
-         ZqjWoXSIahv4PkTxiySNXWCDFwCMMrjufVGo4+321mBzFCzmsaQRXaJyZjyJpiAwRbXg
-         GB/mXwAxgQdcPa8OREM9GJV2N3XmYg0LrDNDrlwthkWp3W3npsLITPoMCR/JtLPtTGHs
-         kvPttlOXDmDSDgpZQTDHAg5k9MocgFow2GSFy+PSCQvUIce/e0wARr3Htkj0AohrFzBR
-         O+gg==
-X-Received: by 10.50.3.37 with SMTP id 5mr7288111igz.0.1371553170291; Tue, 18
- Jun 2013 03:59:30 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Tue, 18 Jun 2013 03:58:50 -0700 (PDT)
-In-Reply-To: <0ad4bd4930efddcbaa5ed958c6758894@ensibm.imag.fr>
+	id S1754466Ab3FRLGm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Jun 2013 07:06:42 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:34656 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752411Ab3FRLGl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 07:06:41 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5IB6Z9x023056
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 18 Jun 2013 13:06:35 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UotkC-0000B0-VA; Tue, 18 Jun 2013 13:06:36 +0200
+In-Reply-To: <CALkWK0nqQt9mP95NKnyucdAxXekj+OFsp5XsF8wXxoCRjLNbvg@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 18 Jun 2013 16:28:50 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 18 Jun 2013 13:06:36 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228196>
 
-Mathieu Li=C3=A9nard--Mayor wrote:
-> Shouldn't
->
-> $ git send-email --cc 'foo@example.com' --cc 'bar@example.com'
->
-> and
->
-> $ git send-email --cc 'foo@example.com, bar@example.com'
->
-> have the exact same effect ?
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Ah.  Perhaps it would be clearer to check the headers directly like in
-the other tests?
+> Mathieu Li=E9nard--Mayor wrote:
+>> Shouldn't
+>>
+>> $ git send-email --cc 'foo@example.com' --cc 'bar@example.com'
+>>
+>> and
+>>
+>> $ git send-email --cc 'foo@example.com, bar@example.com'
+>>
+>> have the exact same effect ?
+>
+> Ah.  Perhaps it would be clearer to check the headers directly like i=
+n
+> the other tests?
+
+Actually, I find it more elegant like this: it doesn't rely on the
+particular layout of headers, so the tests would still pass if somethin=
+g
+else is changed in the headers.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
