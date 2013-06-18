@@ -1,91 +1,100 @@
-From: =?UTF-8?Q?Beno=C3=AEt_Person?= <benoit.person@ensimag.fr>
-Subject: Re: [PATCH V3 1/4] git-mw: Introduction of GitMediawiki.pm
-Date: Tue, 18 Jun 2013 11:06:16 +0200
-Message-ID: <CAETqRCjiMh_cYuZit5Z8OLki_RTz8=ViYPMv005iQu9Fv=U0ow@mail.gmail.com>
-References: <1371349893-7789-1-git-send-email-benoit.person@ensimag.fr>
-	<1371349893-7789-2-git-send-email-benoit.person@ensimag.fr>
-	<vpqobb5g679.fsf@anie.imag.fr>
-	<CAETqRChcu+N-2uNzL9_J6abR5fnduT5UVRif5NTQYOoxPTiRTw@mail.gmail.com>
-	<vpq8v299pn6.fsf@anie.imag.fr>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v2 0/6] Fix checkout-dash to work with rebase
+Date: Tue, 18 Jun 2013 15:00:38 +0530
+Message-ID: <CALkWK0nGeyna_vxnN0RMULRj3sEj3v=Q61cXrHDYDHYv-nZ4sg@mail.gmail.com>
+References: <1371372316-16059-1-git-send-email-artagnon@gmail.com>
+ <7v1u81ibjp.fsf@alter.siamese.dyndns.org> <7vk3lsei4i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 18 11:06:28 2013
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 11:31:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uorru-0000W0-8B
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 11:06:26 +0200
+	id 1UosG6-0005ct-2E
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 11:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755442Ab3FRJGT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 05:06:19 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:51675 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755280Ab3FRJGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 05:06:17 -0400
-Received: by mail-ie0-f172.google.com with SMTP id 16so9527348iea.3
-        for <git@vger.kernel.org>; Tue, 18 Jun 2013 02:06:16 -0700 (PDT)
+	id S932125Ab3FRJbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 05:31:21 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:35351 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755519Ab3FRJbT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 05:31:19 -0400
+Received: by mail-ie0-f177.google.com with SMTP id aq17so8479213iec.8
+        for <git@vger.kernel.org>; Tue, 18 Jun 2013 02:31:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=9y34kbEZFnw89glmlOgviVx8Y0r7pVZClQ86EQHRphA=;
-        b=EgBA7MFVBxZi4C1xxnRntG7YBHOMeNXKPuXpWkvfJDrhj1Swwohnq57YCZX0oDcrN7
-         b8ssOcLnuPBnCOaZb9HOEHiUzr4kn725ZgbGlgqSLFCOA1Nv1++V6vEtj2fZxooD9yS7
-         XK7Jp6rSfE/QRnvtTbln8zEm8AIi6EsGg0unpWq2S4I74uz4qAX+Lsi+rG4wqM6oXhj/
-         iwT+c0oy6bRZAnuhckz+dnVzFW/BMtVRz17teFe6ithJLBhLOIkJkvpHgbHBTOznh1Nq
-         rE0qPm/WD8T6jO9bwAIXI1xLE0WEsrMWQyfJBYYrOZVwueTibcYTHQ+DBYmRDEC9Z5G8
-         1iVQ==
-X-Received: by 10.50.41.34 with SMTP id c2mr6989451igl.57.1371546376405; Tue,
- 18 Jun 2013 02:06:16 -0700 (PDT)
-Received: by 10.42.210.20 with HTTP; Tue, 18 Jun 2013 02:06:16 -0700 (PDT)
-In-Reply-To: <vpq8v299pn6.fsf@anie.imag.fr>
-X-Google-Sender-Auth: URIk2qX2vZIOpBcgf3qsDPwkPjY
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=u74ZL5t0EaNCCM6VRy9hxchIa7IDTAkalaucXifyOCI=;
+        b=LqKE7iaFMjf9t3A9+eg+pJant20Q6DZFS34FoykdW5aF4DJmEy8ibcCtiLz8fhZv1T
+         RF1y0bI9vkd0A6ERDTPGwKsrQzZ7bHeRZOzzoRkBKX6lUWbzZVxb4a5qfjV8ByGS3a7c
+         bHVLg95Vv09hGqiJ2SqihDKI3lXQNLyC5IFpXJY8Ue8Tje3vhZGKwOFkpV39VZ5t8XTz
+         L9iTN4rtY3LVQkQ3ApaeQUPCfVvWFqxw8ck30m66QWSO3GweR4M/YHpwUFBvFbtqPDhw
+         U8bqPZ57iZAGxYF5ZsRV3czfJP3npuicRM8t882Cmm4JcjPFeBJCrF8mdgfnx1FCB6vU
+         s1Ng==
+X-Received: by 10.50.79.231 with SMTP id m7mr7010875igx.40.1371547879001; Tue,
+ 18 Jun 2013 02:31:19 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Tue, 18 Jun 2013 02:30:38 -0700 (PDT)
+In-Reply-To: <7vk3lsei4i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228179>
 
-On 17 June 2013 09:12, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
->>> Also, it seems to be only part of the solution. With your change, from
->>> contrib/mw-to-git/ and after running only "make",
->>>
->>> ./git-mw takes the installed version of GitMediawiki.pm in priority
->>>
->>> ../../bin-wrappers/git takes the installed version of git-mw only (i.e.
->>> does not know "git mw" if "make install" hasn't been ran).
->> Same thing as the documentation point, I think I am a bit lost in that
->> whole thing. I will re-look into it for the next version :/ .
+Junio C Hamano wrote:
+> I actually tried to reorder the patches and they seem to work OK as
+> expected.  And I think it makes sense to order them the way I've
+> been suggesting, so I'll tentatively queue the result of reordering
+> on 'rr/rebase-checkout-reflog' and push it out as a part of 'pu'.
 >
-> In short, the include path should contain both the *.pm file and the
-> git-<foo> ones.
-The fact is, for now, is there a way to test changes in
-git-remote-mediawiki.perl without 'make install'-ing it ? I could not find one
+> Please check to see if I introduced a new bug while doing so.
 
-So maybe in the "build-perl-script" of the toplevel Makefile we could add
-something copying the script at the toplevel ?
+Thanks for the reorder and commit message tweaks.  I'm working on the
+series you put up on `pu` now.
 
-And in GitMediawiki's Makefile, we let everything stay as is : copying *.pm
-into /perl/blib/lib when building and copying it in installdir when installing ?
+> For example, the one in "git reabse" does this:
+>
+>     GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
+>     git checkout -q "$onto^0" || die "could not detach HEAD"
+>     git update-ref ORIG_HEAD $orig_head
+>     ...
+>     run_specific_rebase
+>
+> But the specific rebase, e.g. git-rebase--interactive, does this:
+>
+>         case $head_name in
+>         refs/*)
+>                 message="$GIT_REFLOG_ACTION: $head_name onto $onto" &&
+>                 git update-ref -m "$message" $head_name $newhead $orig_head &&
+>                 git symbolic-ref \
+>                   -m "$GIT_REFLOG_ACTION: returning to $head_name" \
+>                   HEAD $head_name
+>                 ;;
+>         esac && {
+>
+> I think the message you added to "git reabse" is only meant for that
+> specific "checkout $onto", but it is set globally.  Wouldn't it
+> affect later use, which expected it to be "rebase" and nothing else?
 
-> I think you removed a newline from the end of the file. It's usually
-> considered good practice to have this trailing newline (e.g. so that
-> "cat file" in a terminal doesn't put your prompt after the last line).
-> IIRC, it's actually required to call the file a "text file" according to
-> POSIX.
-That catch oO, thanks for the explanations.
-From my point of view, this could definitely be improved from:
-> -     perlcritic -2 *.perl
-> +     perlcritic -2 *.perl
-> \ No newline at end of file
-to something like that:
-> -     perlcritic -2 *.perl
-> +     perlcritic -2 *.perl
-> \ removed newline at end of file
-which gives more insights into why the line is considered "edited".
+Both rebase.sh and rebase--interactive.sh set a sane GIT_REFLOG_ACTION
+right on top (using set_reflog_action), so no worries.  I'll just
+double-check to make sure that no bogus/ incorrect messages are
+printed.
 
-Benoit Person
+> Perhaps something like this on top of the entire series may be
+> sufficient (which will be queued as "SQUASH???" at the tip).
+
+I think this takes the wrong approach to the problem.  In my opinion,
+the correct approach is to actually overshadow die() with a function
+that clears GIT_REFLOG_ACTION before calling die().
+
+>         git grep -C2 'git checkout' -- git-rebase\*.sh
+
+Ugh.  I'll check all the codepaths thoroughly before submitting a re-roll.
+
+Thanks.
