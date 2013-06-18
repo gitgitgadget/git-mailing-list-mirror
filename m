@@ -1,68 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] t/t9802: explicitly name the upstream branch to use as a base
-Date: Tue, 18 Jun 2013 09:17:24 -0700
-Message-ID: <7vehbz75rf.fsf@alter.siamese.dyndns.org>
-References: <1371519650-17869-1-git-send-email-bcasey@nvidia.com>
-	<1371519650-17869-2-git-send-email-bcasey@nvidia.com>
-	<20130618134207.GA28716@padd.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Re: [PATCH] Remove pdf target from Makefiles
+Date: Tue, 18 Jun 2013 09:19:46 -0700
+Message-ID: <20130618161946.GA2887@elie.Belkin>
+References: <146574770.2154401.1371542391078.JavaMail.ngmail@webmail18.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <bcasey@nvidia.com>, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Tue Jun 18 18:17:35 2013
+Cc: git@vger.kernel.org
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Tue Jun 18 18:20:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uoyb7-0004Fg-Ua
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 18:17:34 +0200
+	id 1UoydX-00011m-9X
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 18:20:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933062Ab3FRQR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 12:17:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63103 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933052Ab3FRQR0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 12:17:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44CE228899;
-	Tue, 18 Jun 2013 16:17:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3JYtktDcnByaFvfRDiW61esyO2s=; b=JtvnSy
-	e1bKzUFPUHwN82Sr67BloTyI+2Sl2qdU30kJOaVTj9b03zC9EfxuGCq224RvwIwK
-	heOJU/WL4MANRaepmMZ1Kq7tJQP5e+wE8gCd6D+iP95jcEPMP02/mYf1zCpeHGB6
-	u3+ehNpwhWYoo3MpN0QkJ65bBXpUkXv8xj0Z4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QqHFIeY7hQvQYa9izbFmhEqhpT4cTbmL
-	/cBSTdh4jh4mdOkzi8Gh6+ZAThtCPb3z+qzVq7Qp89HW9a6i/2o3+IryHxhLrJow
-	RWglUh6aq8KXLPQfan2pHArZiktF9wNQqSir3DIjzvBIUldXhx6PQpI7yVuMRbII
-	x5zghBeVA9Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C50028898;
-	Tue, 18 Jun 2013 16:17:26 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B825728896;
-	Tue, 18 Jun 2013 16:17:25 +0000 (UTC)
-In-Reply-To: <20130618134207.GA28716@padd.com> (Pete Wyckoff's message of
-	"Tue, 18 Jun 2013 09:42:07 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 906DFD56-D832-11E2-AEDB-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S933395Ab3FRQT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 12:19:57 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:62222 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933087Ab3FRQTz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 12:19:55 -0400
+Received: by mail-pa0-f47.google.com with SMTP id kl14so4167620pab.20
+        for <git@vger.kernel.org>; Tue, 18 Jun 2013 09:19:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Gnsh0dtWk8R0MXAn3BMEnYlLGrWn/ShcUvQBmd3X0WY=;
+        b=JOOuxPSv1+7kb3FbWCKpsU5Cogdz7jC8OOsblTpgB/bUP4e3Wx4WGIWnohnaYkQSGd
+         Fp/aRVsoh6Pd4WasDppv5KCP2bjwyXXgfdadLb36ZSHfaqGFx/dBt5801AXKAoYe76os
+         321kZhIjd2nvw7ij7E8xw//hs+SG/Ju+Wncuq8yAjkGG5anWIOD2WSsKxWglhZa+y596
+         8OFAYCETIj9/aE1d7dkdIZJXCdx4iDemX8Vg1UdQ2fQdb3PqncGmZimfaGH1wgizjhFv
+         MkEUhwD8/mYdMTThsEyocg+DXfQ+0ZO5KNoE1oJPKlHKB6pDR3QRWb3CuQg3plRfiiY+
+         dTLg==
+X-Received: by 10.68.222.135 with SMTP id qm7mr7219288pbc.38.1371572395340;
+        Tue, 18 Jun 2013 09:19:55 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id v20sm20343919paj.4.2013.06.18.09.19.53
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 18 Jun 2013 09:19:54 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <146574770.2154401.1371542391078.JavaMail.ngmail@webmail18.arcor-online.net>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228262>
 
-Pete Wyckoff <pw@padd.com> writes:
+Thomas Ackermann wrote:
 
-> Thanks for finding and fixing this.  Great explanation.  I
-> tested it locally too.
+>>                                 Would generating different XML files
+>> for the PDF and for other purposes (with different names) work as a
+>> way to achieve that without losing the printable manual?
 >
-> Acked-by: Pete Wyckoff <pw@padd.com>
+> This would be even worse when we have to create different xml depending on the
+> wanted output. The problem here is in the xml->pdf/html step: I wanted to change
+> the formatting of links in the pdf from "Section <number>" to "<section_name>" to
+> make it the same as in the html. Thereby I noticed that the definition for this is
+> in files from /etc/asciidoc/dblatex. So to change it we have to introduce our own files
+> in ./Documentation and work on them to bring the formatting of user-manual.html
+> and user-manual.pdf closer together.
 
-Thanks, both.  Queued.
+Now I'm even more confused. ;-)
+
+If I understood the original commit message correctly, you were saying
+the XML file was not suitable for html generation and you wanted to
+tweak it, and were dropping the PDF target to avoid breaking it.  Now
+if I understand correctly you are saying the XML file actually *is*
+suitable for html generation, and that the html generation rules just
+need tweaking.  In that case, why remove the PDF target?
+
+Puzzled,
+Jonathan
