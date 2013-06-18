@@ -1,72 +1,91 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Documentation/git-merge.txt: weaken warning about uncommited changes
-Date: Tue, 18 Jun 2013 10:56:39 +0200
-Message-ID: <vpqppvju794.fsf@anie.imag.fr>
-References: <1371544975-18703-1-git-send-email-Matthieu.Moy@imag.fr>
-	<CALkWK0=USVa2htHSTyj4C7FrKEko-e_UGAnu-3UNvx_ue1vwig@mail.gmail.com>
+From: =?UTF-8?Q?Beno=C3=AEt_Person?= <benoit.person@ensimag.fr>
+Subject: Re: [PATCH V3 1/4] git-mw: Introduction of GitMediawiki.pm
+Date: Tue, 18 Jun 2013 11:06:16 +0200
+Message-ID: <CAETqRCjiMh_cYuZit5Z8OLki_RTz8=ViYPMv005iQu9Fv=U0ow@mail.gmail.com>
+References: <1371349893-7789-1-git-send-email-benoit.person@ensimag.fr>
+	<1371349893-7789-2-git-send-email-benoit.person@ensimag.fr>
+	<vpqobb5g679.fsf@anie.imag.fr>
+	<CAETqRChcu+N-2uNzL9_J6abR5fnduT5UVRif5NTQYOoxPTiRTw@mail.gmail.com>
+	<vpq8v299pn6.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 18 10:56:58 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 18 11:06:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uorii-0007vr-Nt
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 10:56:57 +0200
+	id 1Uorru-0000W0-8B
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 11:06:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755372Ab3FRI4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 04:56:47 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57019 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754980Ab3FRI4p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 04:56:45 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5I8uc77018323
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 18 Jun 2013 10:56:38 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UoriR-0005aY-Cp; Tue, 18 Jun 2013 10:56:39 +0200
-In-Reply-To: <CALkWK0=USVa2htHSTyj4C7FrKEko-e_UGAnu-3UNvx_ue1vwig@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Tue, 18 Jun 2013 14:19:28 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 18 Jun 2013 10:56:39 +0200 (CEST)
+	id S1755442Ab3FRJGT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 05:06:19 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:51675 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755280Ab3FRJGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 05:06:17 -0400
+Received: by mail-ie0-f172.google.com with SMTP id 16so9527348iea.3
+        for <git@vger.kernel.org>; Tue, 18 Jun 2013 02:06:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=9y34kbEZFnw89glmlOgviVx8Y0r7pVZClQ86EQHRphA=;
+        b=EgBA7MFVBxZi4C1xxnRntG7YBHOMeNXKPuXpWkvfJDrhj1Swwohnq57YCZX0oDcrN7
+         b8ssOcLnuPBnCOaZb9HOEHiUzr4kn725ZgbGlgqSLFCOA1Nv1++V6vEtj2fZxooD9yS7
+         XK7Jp6rSfE/QRnvtTbln8zEm8AIi6EsGg0unpWq2S4I74uz4qAX+Lsi+rG4wqM6oXhj/
+         iwT+c0oy6bRZAnuhckz+dnVzFW/BMtVRz17teFe6ithJLBhLOIkJkvpHgbHBTOznh1Nq
+         rE0qPm/WD8T6jO9bwAIXI1xLE0WEsrMWQyfJBYYrOZVwueTibcYTHQ+DBYmRDEC9Z5G8
+         1iVQ==
+X-Received: by 10.50.41.34 with SMTP id c2mr6989451igl.57.1371546376405; Tue,
+ 18 Jun 2013 02:06:16 -0700 (PDT)
+Received: by 10.42.210.20 with HTTP; Tue, 18 Jun 2013 02:06:16 -0700 (PDT)
+In-Reply-To: <vpq8v299pn6.fsf@anie.imag.fr>
+X-Google-Sender-Auth: URIk2qX2vZIOpBcgf3qsDPwkPjY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228178>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-
-> Matthieu Moy wrote:
->> Weaken the warning by discouraging only merge with /non-trivial/
->> uncommited changes.
->>
->> I don't think documenting all the failure cases in the doc would be a
->> good idea, so I've left the "in some cases" part.
+On 17 June 2013 09:12, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+>>> Also, it seems to be only part of the solution. With your change, from
+>>> contrib/mw-to-git/ and after running only "make",
+>>>
+>>> ./git-mw takes the installed version of GitMediawiki.pm in priority
+>>>
+>>> ../../bin-wrappers/git takes the installed version of git-mw only (i.e.
+>>> does not know "git mw" if "make install" hasn't been ran).
+>> Same thing as the documentation point, I think I am a bit lost in that
+>> whole thing. I will re-look into it for the next version :/ .
 >
-> It's already documented in the pre-merge checks section, as Jonathan
-> pointed out [1]. 
+> In short, the include path should contain both the *.pm file and the
+> git-<foo> ones.
+The fact is, for now, is there a way to test changes in
+git-remote-mediawiki.perl without 'make install'-ing it ? I could not find one
 
-I had missed this one. But that's not the only case, you may also have
-problems with renames. The complete list would be really long to have
-here, and won't bring much to the user.
+So maybe in the "build-perl-script" of the toplevel Makefile we could add
+something copying the script at the toplevel ?
 
-> We should update the documentation to point to it: I do not think
-> "non-trivial" is much of an improvement.
+And in GitMediawiki's Makefile, we let everything stay as is : copying *.pm
+into /perl/blib/lib when building and copying it in installdir when installing ?
 
-Actually, I think it essentially says it all. If your changes are
-important enough to deserve a real backup, you should stash or commit.
-If you're ready to take the risk of losing it (the risk is small, but
-does exist), it's OK to run "git merge" blindly.
+> I think you removed a newline from the end of the file. It's usually
+> considered good practice to have this trailing newline (e.g. so that
+> "cat file" in a terminal doesn't put your prompt after the last line).
+> IIRC, it's actually required to call the file a "text file" according to
+> POSIX.
+That catch oO, thanks for the explanations.
+From my point of view, this could definitely be improved from:
+> -     perlcritic -2 *.perl
+> +     perlcritic -2 *.perl
+> \ No newline at end of file
+to something like that:
+> -     perlcritic -2 *.perl
+> +     perlcritic -2 *.perl
+> \ removed newline at end of file
+which gives more insights into why the line is considered "edited".
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Benoit Person
