@@ -1,115 +1,87 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: Re: [PATCH 2/2] git-svn: Configure a prompt callback for
- gnome_keyring.
-Date: Tue, 18 Jun 2013 18:36:10 +0200
-Message-ID: <20130618163609.GD10217@login.drsnuggles.stderr.nl>
-References: <20120426183634.GA4023@login.drsnuggles.stderr.nl>
- <1335468843-24653-1-git-send-email-matthijs@stdin.nl>
- <1335468843-24653-2-git-send-email-matthijs@stdin.nl>
- <20120427082840.GB7257@dcvr.yhbt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/8] sh-setup: make die_with_status clear GIT_REFLOG_ACTION
+Date: Tue, 18 Jun 2013 09:37:21 -0700
+Message-ID: <7vwqpr5q9q.fsf@alter.siamese.dyndns.org>
+References: <1371557670-12534-1-git-send-email-artagnon@gmail.com>
+	<1371557670-12534-7-git-send-email-artagnon@gmail.com>
+	<7vbo738na9.fsf@alter.siamese.dyndns.org>
+	<CALkWK0kE1g5k=TxJCBQoHi+o7SZD5skQ2s6utxEgeuK=_C9ULg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Gustav Munkby <grddev@gmail.com>,
-	Edward Rudd <urkle@outoforder.cc>,
-	Carsten Bormann <cabo@tzi.org>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Jun 18 18:36:40 2013
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 18:37:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uoytb-00080h-QF
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 18:36:40 +0200
+	id 1UoyuV-0001Zz-39
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 18:37:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933037Ab3FRQge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 12:36:34 -0400
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:37467 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932824Ab3FRQgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 12:36:17 -0400
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1Uoyt8-0006Z7-9X; Tue, 18 Jun 2013 18:36:11 +0200
-Received: (nullmailer pid 25238 invoked by uid 1000);
-	Tue, 18 Jun 2013 16:36:10 -0000
-Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
-	Eric Wong <normalperson@yhbt.net>, Gustav Munkby <grddev@gmail.com>,
-	Edward Rudd <urkle@outoforder.cc>, Carsten Bormann <cabo@tzi.org>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20120427082840.GB7257@dcvr.yhbt.net>
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Score: -2.6 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	0.0 FB_WORD1_END_DOLLAR    BODY: Looks like a word ending with a $
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
-	0.0 AWL                    AWL: From: address is in the auto white-list
+	id S933090Ab3FRQh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 12:37:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44459 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933022Ab3FRQhY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 12:37:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B971A295C4;
+	Tue, 18 Jun 2013 16:37:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EDhQpMMJGNYFyR6guzW7nAk02AQ=; b=f2lOr3
+	v/FcVYCvhtmnMAHENeGHozbeoXeU+KwTsPqimAPjxJovvJ23LCtE48yIeCsIE4Q7
+	Kdojlvt/u3h+tnQ8obulmM9gK/CEWY6Vwwga46U23ee2OoE9KTrG9EozgPfzHZzZ
+	NzPBocJ4RtPVSj0ZNfIXh3CizO9tK5FZrep2U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LAK0w5bffzegi4IFckOHW+DToaUyLDpn
+	9jbE3Mzts2AjBaP1KKstpTKpFkPbs8+bYI4Db06kN20kxlPSTclLSSpHx48T73NX
+	q/BlmRnkzTtEyrCeomQxgjzbNJWoyMxA60akg8hFQVDw0IHcXObxBEZMxT9Q+Mgi
+	0z6qQ95/dfg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADF4A295C3;
+	Tue, 18 Jun 2013 16:37:23 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 18500295C0;
+	Tue, 18 Jun 2013 16:37:23 +0000 (UTC)
+In-Reply-To: <CALkWK0kE1g5k=TxJCBQoHi+o7SZD5skQ2s6utxEgeuK=_C9ULg@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 18 Jun 2013 21:17:09 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5A1A8672-D835-11E2-8C3F-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228268>
 
-Hi folks,
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-On Fri, Apr 27, 2012 at 08:28:40AM +0000, Eric Wong wrote:
-> Matthijs Kooijman <matthijs@stdin.nl> wrote:
-> > This allows git-svn to prompt for a keyring unlock password, when a
-> > the needed gnome keyring is locked.
-> > 
-> > This requires changes in the subversion perl bindings which have been
-> > committed to trunk (1241554 and some followup commits) and should be
-> > available with the (as of yet unreleased) 1.8.0 release.
-> 
-> I'm a hesitant to use/depend on unreleased functionality in SVN.
-> 
-> Is there a chance the API could change before the release.  Also,
-> what kind of tests do the SVN guys do on the Perl bindings + GNOME?
-> I'm especially concerned since we just worked around segfault
-> bugs in the other patch.
-> 
-> Can we put this on hold until somebody can test the 1.8.0 release?
+> Please excuse my stupidity and drop this patch.  
 
-After over a year, Subversion has finally started with 1.8.0 release
-candidates. I've rebased this patch and succesfully tested it against
-1.8.0-rc3.
+Heh, we always have brain-fart every once in a while.  Your
+stupidity is always gladly excused ;-)
 
-I'll send the updated patch over as a reply to this mail.
+> I got mislead by your SQUASH??? patch which took care to set the
+> environment variable and call checkout in a subshell.
 
+To some, we could have done
 
-As for testing, it took a bit of messing to get all the paths correct,
-so I'll document what I did here.
+	ENV_VAR="$ENV_VAR: some other string" command
 
-I used a the 1.8.0-rc3 tarball and ran:
+but there were uses of "output" shell function in some instances,
+and
 
-	subversion-1.8.0-rc3$ ./configure --prefix=/usr/local/svn
-	subversion-1.8.0-rc3$ make all install
-	subversion-1.8.0-rc3$ make swig-pl install-swig-pl PREFIX=/usr/local/svn
+	VAR=VAL shell_function
 
-I took a git master checkout with the patch applied and ran:
+does not work, so that was the reason why
 
-	git$ make prefix=/usr/local/git all install
+	(
+        	VAR=VAL; export VAR
+                shell_function
+	)
 
-Then, inside some git-svn clone, I ran:
-
-	$ PERL5LIB=/usr/local/svn/local/lib/perl/5.14.2/ LD_LIBRARY_PATH=/usr/local/svn/lib/  /usr/local/git/bin/git svn rebase
-	Password for 'default' GNOME keyring:
-	Current branch master is up to date.
-
-When removing the PERL5LIB and LD_LIBRARY_PATH variables to run against
-the system version of subversion (1.6.17 here), I get an authorization
-failure as before:
-
-	$ /usr/local/git/bin/git svn rebase
-	Authorization failed: OPTIONS of 'http://svn.example.org': authorization failed: Could not authenticate to server: rejected Basic challenge (http://example.org) at /usr/local/git/share/perl/5.14.2/Git/SVN.pm line 717
-
-Gr.
-
-Matthijs
+form was used.
