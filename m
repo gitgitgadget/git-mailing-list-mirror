@@ -1,127 +1,92 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 00/12] Fix some reference-related races
-Date: Tue, 18 Jun 2013 19:13:14 +0100
-Message-ID: <51C0A33A.7060802@ramsay1.demon.co.uk>
-References: <1370987312-6761-1-git-send-email-mhagger@alum.mit.edu> <51BCCAD2.9070106@ramsay1.demon.co.uk> <51BD5232.20205@alum.mit.edu>
+Subject: Re: [PATCH 1/2] show-ref.c: Add missing call to git_config()
+Date: Tue, 18 Jun 2013 19:38:49 +0100
+Message-ID: <51C0A939.8030200@ramsay1.demon.co.uk>
+References: <51BCCE98.3070201@ramsay1.demon.co.uk> <7vppvlighf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jun 18 20:40:18 2013
+Cc: GIT Mailing-list <git@vger.kernel.org>, mhagger@alum.mit.edu
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 20:40:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Up0pC-0008UH-5i
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 20:40:14 +0200
+	id 1Up0pH-0000CE-0v
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 20:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932911Ab3FRSkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 14:40:07 -0400
-Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:35288 "EHLO
+	id S933660Ab3FRSkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 14:40:09 -0400
+Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:35299 "EHLO
 	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932419Ab3FRSkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 14:40:06 -0400
+	with ESMTP id S932419Ab3FRSkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 14:40:08 -0400
 Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 470866F89CB;
-	Tue, 18 Jun 2013 19:40:04 +0100 (BST)
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 3804F6F867A;
+	Tue, 18 Jun 2013 19:40:07 +0100 (BST)
 Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 468946F82CD;
-	Tue, 18 Jun 2013 19:40:03 +0100 (BST)
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 7D6E26F82CD;
+	Tue, 18 Jun 2013 19:40:06 +0100 (BST)
 Received: from [193.237.126.196] (unknown [193.237.126.196])
 	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
-	Tue, 18 Jun 2013 19:40:01 +0100 (BST)
+	Tue, 18 Jun 2013 19:40:05 +0100 (BST)
 User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <51BD5232.20205@alum.mit.edu>
+In-Reply-To: <7vppvlighf.fsf@alter.siamese.dyndns.org>
 X-MDF-HostID: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228294>
 
-Michael Haggerty wrote:
-> Thanks for all of the information.
+Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 > 
-> On 06/15/2013 10:13 PM, Ramsay Jones wrote:
->> Michael Haggerty wrote:
->>> *This patch series must be built on top of mh/reflife.*
-
-[ ... ]
-
->> You may be wondering why clear_packed_ref_cache() is called? Well, that
->> is because stat_validity_check() *incorrectly* indicates that the
->> packed-refs file has changed. Why does it do that? Well, this is one
->> more example of the problems caused by the cygwin schizophrenic stat()
->> functions. :( [ARGHHHHHHHHH]
->>
-
-[ ... ]
-
-> So if I understand correctly, all of the above is *without* the
-> refcounting changes introduced in mh/ref-races?  Is so, then it is not
-> surprising, as this is exactly the sort of problem that the reference
-> counting is meant to solve.
-
-Yes, as I said, this describes the old (non refcounted) series.
-This particular problem (the segmentation fault) is fixed by the new
-series (as noted below). [Note, however, that the packed-refs file
-will still be re-read more often than needed.]
-
->> Now, turning to the new code, t3211-peel-ref.sh test #7 now works, but
->> test #8 still fails...
-
-[ ... ]
-
-> These "internal error: packed-ref cache cleared while locked" failures
-> result from an internal consistency check that clear_packed_ref_cache()
-> is not called while the write lock is held on the packed-refs file.  A
-> call to c_p_r_c() could result from
+>> At present, 'git show-ref' ignores any attempt to set config
+>> variables (e.g. core.checkstat) from the command line using
+>> the -c option to git.
 > 
-> * a programming error
+> I think what you really want to see is not giving "-c" and have it
+> honored.
 > 
-> * a determination based on the packed-refs file stat that the file needs
-> to be re-read
+> 	"git show-ref" does not honor configuration variables at
+> 	all, but at least core configuration variables read by
+> 	git_default_config (most importantly core.checkstat) should
+> 	be read and honored, because ...
 > 
-> Judging from what you said about cygwin, I assume that the latter is
-> happening.
+> would be more appropriate.  What are the variables that matter to
+> show-ref, and what are the reasons why they should be honored?  I
+> thought show-ref was just a way to enumerate refs, and does not read
+> the index nor checks if there are modifications in the working tree,
+> so I do not see any reason offhand for it to honor core.checkstat
+> (and I think that is the reason why we don't have the call there in
+> the current code).
 
-Indeed.
+:-D Yes, you caught me!
 
->             It should be impossible, because the current process is
-> holding packed-refs.lock, and therefore other git processes should
-> refuse to change the packed-refs file.
+These patches *may* not be necessary, prior to Michael's
+"reference related races" series. Specifically, the introduction
+of the stat_validity_check() function to the reference handling API.
 
-:-P You are assuming that a single process can't lie to itself ...
+This means that the behaviour 'git show-ref' is now affected by
+several config variables, including core.checkstat. I haven't
+spent any time auditing the code, but the list would include
+(at least) core.trustctime, core.filemode, core.checkstat,
+core.ignorecygwinfstricks, ...
 
-[ ... ]
-
-> Yikes!  ECYGWINFAIL.
-
-Ah, NO, this should read ECYGWINGITFAIL.
-This is a self-inflicted wound; it has nothing much to do with cygwin.
-
-I should not have assumed that you knew what I meant by "schizophrenic
-stat() functions" above; sorry about that! If you are interested, then
-the following commits may be useful reading: adbc0b6, 7faee6b, 7974843,
-05bab3ea, 924aaf3e and b8a97333.
-
-[ ... ]
-
->> I haven't checked the remaining test failures to see if they are
->> caused by this code (I don't think so, but ...), but this failure
->> is clearly a cygwin specific issue.
 > 
-> Thanks again for the testing and analysis,
+> Exactly the same comment applies to 2/2.
 
-So, unless you feel the need to fix this yourself, you can probably
-ignore this issue for now. I will hopefully find time to fix it up
-before this topic progresses to next. (Although I don't have any
-feeling for the time-frame of this topic).
+ditto
 
-HTH
+> Note that I am _not_ opposing these changes.  You brought them up
+> because you saw some reason why these should honor some core
+> variables.  I just want that reason to be explained in the log for
+> the future developers.
+
+Yes, I will send a v2 (soon-ish, I hope).
 
 ATB,
 Ramsay Jones
