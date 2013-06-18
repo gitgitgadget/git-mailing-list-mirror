@@ -1,84 +1,155 @@
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH v2 11/13] bash prompt: use bash builtins to check stash state
-Date: Tue, 18 Jun 2013 04:17:04 +0200
-Message-ID: <1371521826-3225-12-git-send-email-szeder@ira.uka.de>
+Subject: [PATCH v2 10/13] bash prompt: combine 'git rev-parse' executions
+Date: Tue, 18 Jun 2013 04:17:03 +0200
+Message-ID: <1371521826-3225-11-git-send-email-szeder@ira.uka.de>
 References: <1371521826-3225-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 18 04:18:39 2013
+X-From: git-owner@vger.kernel.org Tue Jun 18 04:18:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UolVG-0007Y3-GJ
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 04:18:38 +0200
+	id 1UolVH-0007Y3-0y
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 04:18:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753764Ab3FRCSe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jun 2013 22:18:34 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:57268 "EHLO
+	id S1753950Ab3FRCSf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jun 2013 22:18:35 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:52170 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751836Ab3FRCSd (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1752144Ab3FRCSd (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 17 Jun 2013 22:18:33 -0400
 Received: from localhost6.localdomain6 (f052037223.adsl.alicedsl.de [78.52.37.223])
-	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
-	id 0MORHR-1Uj0jl0885-006REQ; Tue, 18 Jun 2013 04:18:32 +0200
+	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
+	id 0Lx7w9-1UHLSt1hkn-016iLo; Tue, 18 Jun 2013 04:18:26 +0200
 X-Mailer: git-send-email 1.8.3.1.487.g8f4672d
 In-Reply-To: <1371521826-3225-1-git-send-email-szeder@ira.uka.de>
-X-Provags-ID: V02:K0:WNeKXiZaZpDb4L9nzVfq81BV4c9OXdb1WCY74qKsLCq
- d1IcIeGVIFpp8LfYb4e5/bAZn9CZBkPayzV9tzGtu2Rv7B/2R4
- TFqHfXSTLkxCIcaE/jsW4wZnMVuo8Zw5mnShqLABDMEJZVqzw/
- KOPzxZXN5a02+uZ0HMUR7ReT6Q3OK7hC3jdOu8I9uFr8uKXm86
- xS2AmFvoTA7RENxpL+0dukhPTf1UXtBzUXOQhqickDlRqD95yj
- Cz023wRwpZGNWa/4zncSrHVZYe/sS0R0nLB9qSHnHoB/1cyd4Z
- WOIBvP7oxNp+9V4WViil9Jkvjn0ALAzGj0UTuPBjwIz+5Q/s9K
- OyCmGOuh5PG+6pTY8upjtpnLbYIp6ugrbjFSGmP2UlH76Mavxa
- KWxoInzLdLqSw==
+X-Provags-ID: V02:K0:eF1f+2N8gn7+5Tfl7LbILwcP75cAG4x32QRoPsIpnm0
+ og4RVAkXwMEqA6HMDIaWrh2+v3XU51MVfCrzMaQBnanz2q7+DU
+ gT20rgOKBgTiNm8+ucRO+s42tpB/xpIZ97WTS3FFwiOuH8xKlL
+ sF78WjPtIKx5bMNAk75SqT+scsUyhFfeM+GItb+dt3f9YainuC
+ r/6zrqbVRFU1AypVnzxJ+rnfzM6gP8DTEhegcC+5fanKnoUvGF
+ Y+tK9oWKzy1jXLrYU9cm4kaCwfsB0O1wknQLGaNTyb402yvNPb
+ Me0uh9Cj0+fo6Sk6sUzgk26U5+HlbNpf37kv6SzcxpBxSkkCQN
+ eeDTi3rcGcRGPNNjqz69QoIC/ExUKDuZjBvqeyFxo1gtlVoW1c
+ tVW3YtboWT5KA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228144>
 
 =46rom: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 
-When the environment variable $GIT_PS1_SHOWSTASHSTATE is set
-__git_ps1() checks the presence of stashes by running 'git rev-parse
---verify refs/stash'.  This command not only checks that the
-'refs/stash' ref exists but also, well, verifies that it's a valid
-ref.
+>From the four '$(git rev-parse --<opt>)' command substitutions
+__git_ps1() executes three in its main code path:
 
-However, we don't need to be that thorough for the bash prompt.  We
-can omit that verification and only check whether 'refs/stash' exists
-or not.  Since 'git pack-refs' never packs 'refs/stash', it's a matter
-of checking the existence of a ref file.  Perform this check using
-only bash builtins to spare the overhead of fork()+exec()ing a git
-process.
+ - the first to get the path to the .git directory ('--git-dir'),
+ - the second to check whether we're inside the .git directory
+   ('--is-inside-git-dir'),
+ - and the last, depending on the results of the second, either
+   * to check whether it's a bare repo ('--is-bare-repository'), or
+   * to check whether inside a work tree ('--is-inside-work-tree').
+
+Naturally, this imposes the overhead of fork()ing three subshells and
+fork()+exec()ing three git commands.
+
+Combine these four 'git rev-parse' queries into one and use bash
+parameter expansions to parse the combined output, i.e. to separate
+the path to the .git directory from the true/false of
+'--is-inside-git-dir', etc.  This way we can eliminate two of the
+three subshells and git commands.
+
+The whole series speeds up the bash prompt on Windows/MSysGit
+considerably.  Here are some timing results in two scenarios, repeated
+10 times:
+
+At the top of the work tree, before:
+
+    $ time for i in {0..9} ; do prompt=3D"$(__git_ps1)" ; done
+
+    real    0m1.716s
+    user    0m0.301s
+    sys     0m0.772s
+
+  After:
+
+    real    0m0.686s
+    user    0m0.075s
+    sys     0m0.287s
+
+In a subdirectory, during rebase, stash status indicator enabled,
+before:
+
+    real    0m3.557s
+    user    0m0.495s
+    sys     0m1.767s
+
+  After:
+
+    real    0m0.702s
+    user    0m0.045s
+    sys     0m0.409s
 
 Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
- contrib/completion/git-prompt.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ contrib/completion/git-prompt.sh | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
 diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
 prompt.sh
-index b73cebf7..208e2ec7 100644
+index 10ec6902..b73cebf7 100644
 --- a/contrib/completion/git-prompt.sh
 +++ b/contrib/completion/git-prompt.sh
-@@ -421,8 +421,9 @@ __git_ps1 ()
- 				i=3D"#"
- 			fi
- 		fi
--		if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]; then
--			git rev-parse --verify refs/stash >/dev/null 2>&1 && s=3D"$"
-+		if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ] &&
-+		   [ -r "$g/refs/stash" ]; then
-+			s=3D"$"
- 		fi
+@@ -311,8 +311,9 @@ __git_ps1 ()
+ 		;;
+ 	esac
 =20
- 		if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
+-	local g=3D
+-	if ! g=3D"$(git rev-parse --git-dir 2>/dev/null)"; then
++	local repo_info=3D
++	if ! repo_info=3D"$(git rev-parse --git-dir --is-inside-git-dir \
++		--is-bare-repository --is-inside-work-tree 2>/dev/null)"; then
+ 		if [ $pcmode =3D yes ]; then
+ 			#In PC mode PS1 always needs to be set
+ 			PS1=3D"$ps1pc_start$ps1pc_end"
+@@ -320,6 +321,13 @@ __git_ps1 ()
+ 		return
+ 	fi
+=20
++	local inside_worktree=3D"${repo_info##*$'\n'}"
++	repo_info=3D"${repo_info%$'\n'*}"
++	local bare_repo=3D"${repo_info##*$'\n'}"
++	repo_info=3D"${repo_info%$'\n'*}"
++	local inside_gitdir=3D"${repo_info##*$'\n'}"
++	local g=3D"${repo_info%$'\n'*}"
++
+ 	local r=3D""
+ 	local b=3D""
+ 	local step=3D""
+@@ -396,13 +404,13 @@ __git_ps1 ()
+ 	local c=3D""
+ 	local p=3D""
+=20
+-	if [ "true" =3D "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ];=
+ then
+-		if [ "true" =3D "$(git rev-parse --is-bare-repository 2>/dev/null)" =
+]; then
++	if [ "true" =3D "$inside_gitdir" ]; then
++		if [ "true" =3D "$bare_repo" ]; then
+ 			c=3D"BARE:"
+ 		else
+ 			b=3D"GIT_DIR!"
+ 		fi
+-	elif [ "true" =3D "$(git rev-parse --is-inside-work-tree 2>/dev/null)=
+" ]; then
++	elif [ "true" =3D "$inside_worktree" ]; then
+ 		if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
+ 		   [ "$(git config --bool bash.showDirtyState)" !=3D "false" ]
+ 		then
 --=20
 1.8.3.1.487.g8f4672d
