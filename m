@@ -1,98 +1,70 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v2 00/13] bash prompt speedup
-Date: Tue, 18 Jun 2013 04:28:26 +0200
-Message-ID: <20130618022826.GA2204@goldbirke>
-References: <1371521826-3225-1-git-send-email-szeder@ira.uka.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] http.c: don't rewrite the user:passwd string multiple times
+Date: Tue, 18 Jun 2013 00:15:52 -0400
+Message-ID: <CAPig+cTKBzfrB6QQ4qjHNknv1CKRro_t=f77OV+ZhabtMN6Uiw@mail.gmail.com>
+References: <1371520840-24906-1-git-send-email-bcasey@nvidia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 18 04:28:36 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <bcasey@nvidia.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 06:16:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uoleq-00021M-Tc
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 04:28:33 +0200
+	id 1UonKp-00082y-D1
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 06:15:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463Ab3FRC23 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jun 2013 22:28:29 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:55619 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751428Ab3FRC22 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jun 2013 22:28:28 -0400
-Received: from localhost6.localdomain6 (f052037223.adsl.alicedsl.de [78.52.37.223])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0MNezy-1Uhe7N0UqA-006fsA; Tue, 18 Jun 2013 04:28:27 +0200
-Content-Disposition: inline
-In-Reply-To: <1371521826-3225-1-git-send-email-szeder@ira.uka.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:9OPbqlH+l2fFtu3JUxLNdwlYtswbHFd1nhOPgpzhKQo
- UheONsOSYTKX2+0wVMUKYFIwE3W6JNMkNemfl4ryZt5py2AQWn
- 4n9PSCoe3SEVEdJN1yVHE/ClHlTXWxTWKzcVvy5LyQjvoMJovD
- CSN6wu5uRc20Ad5KX95bMlEcHABCFl4z5aG7Yc/5BUCMbaypTg
- sLuN6pDwBWlMT9LJBvihBrFoMm4clUAJ5GZ5Ucwh4TfATJLqi9
- t0wOTz64ZtvjGhs+ETza8ZXcZzqAHK0jWTvD446z5ZJuNA60D9
- rvY5FcnIcDEzHazA9Lo3DrGNlMFbXFFVqjrl9XJpgQiVCG9L6d
- bsowUjcp1tE4I9rHk5KE=
+	id S1752431Ab3FREPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 00:15:55 -0400
+Received: from mail-la0-f49.google.com ([209.85.215.49]:34489 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751836Ab3FREPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 00:15:55 -0400
+Received: by mail-la0-f49.google.com with SMTP id ea20so3057912lab.8
+        for <git@vger.kernel.org>; Mon, 17 Jun 2013 21:15:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=HlVNb7Mvnuh+1jUfWFIhCo3vRBtdSWzc2+O9l0yTF2s=;
+        b=J2Vs2sIJX0g5F4TjE0ktgd3T7VnSml4XS8YGApxM2OBnVDJhohgu0Kd6IYkMaQsm5O
+         g+DnYlXnorJvOX5+3Esz2UGad2HvmjJot6SMT9Qercp3oWSjiah44PJ0CdyV0A6UqAiY
+         kV/Xmmdm9VCCLTGQLEOug1cULcuUX6eger7MImpSMZgIzZ4d8vHGO40PVyjZECdlIsvX
+         lNmT8g3/TPEnkWhwa1U5QiiIFDQvc2kIQuBkZ4gV6GM6rXNqRbl8g36ShOyncGEWx6DP
+         IYWAWqJFnnBHdBnmZId/+05v5nFXahQkxVfX7TRNKGqhS2mrABXb0ecFgU1J+6zk56fp
+         3sag==
+X-Received: by 10.152.5.227 with SMTP id v3mr4536759lav.31.1371528952420; Mon,
+ 17 Jun 2013 21:15:52 -0700 (PDT)
+Received: by 10.114.161.4 with HTTP; Mon, 17 Jun 2013 21:15:52 -0700 (PDT)
+In-Reply-To: <1371520840-24906-1-git-send-email-bcasey@nvidia.com>
+X-Google-Sender-Auth: NobQBALbnHdQCWrCD--kF7QwR6I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228149>
 
-=46orgot to mention that it's built on top of 2847cae8 (prompt: squelch
-error output from cat, 2013-06-14).
+On Mon, Jun 17, 2013 at 10:00 PM, Brandon Casey <bcasey@nvidia.com> wrote:
+> From: Brandon Casey <drafnel@gmail.com>
+>
+> Curl requires that we manage any strings that we pass to it as pointers.
+> So, we should not be overwriting this strbuf after we've passed it to
+> curl.
+>
+> Additionally, it is unnecessary since we only prompt for the user name
+> and password once, so we end up overwriting the strbuf with the same
+> sequence of characters each time.  This is why in practice it has not
+> caused any problems for git's use of curl; the internal strbuf char
+> pointer does not change, and get's overwritten with the same string
 
+s/get's/gets/
 
-Best,
-G=E1bor
-
-
-On Tue, Jun 18, 2013 at 04:16:53AM +0200, SZEDER G=E1bor wrote:
-> Hi,
->=20
-> displaying the git-specific bash prompt on Windows/MinGW takes quite
-> long, long enough to be noticeable.  This is mainly caused by the
-> numerous fork()s and exec()s to create subshells and run git or other
-> commands, which are rather expensive on Windows.
->=20
-> This patch series eliminates many command substitutions and commands
-> in __git_ps1() from top to bottom by replacing them with bash builtin=
-s
-> or consolidating them.  A few timing results are shown in the log
-> message of patch 10.
->=20
->=20
-> SZEDER G=E1bor (13):
->   bash prompt: fix redirection coding style in tests
->   bash prompt: fix here document indentation in interactive rebase te=
-st
->   completion, bash prompt: move __gitdir() tests to completion test
->     suite
->   bash prompt: add a test for symbolic link symbolic refs
->   bash prompt: return early from __git_ps1() when not in a git
->     repository
->   bash prompt: run 'git rev-parse --git-dir' directly instead of
->     __gitdir()
->   bash prompt: use bash builtins to find out rebase state
->   bash prompt: use bash builtins to find out current branch
->   bash prompt: use bash builtins to get detached HEAD abbrev. object
->     name
->   bash prompt: combine 'git rev-parse' executions
->   bash prompt: use bash builtins to check stash state
->   bash prompt: avoid command substitution when checking for untracked
->     files
->   bash prompt: avoid command substitution when finalizing gitstring
->=20
->  contrib/completion/git-completion.bash |   2 -
->  contrib/completion/git-prompt.sh       | 223 ++++++++++++-----------
->  t/t9902-completion.sh                  | 134 ++++++++++++++
->  t/t9903-bash-prompt.sh                 | 319 +++++++++++------------=
-----------
->  4 files changed, 345 insertions(+), 333 deletions(-)
->=20
-> --=20
-> 1.8.3.1.487.g8f4672d
->=20
+> each time.
+>
+> But it's unnecessary and potentially dangerous, so let's avoid it.
+>
+> Signed-off-by: Brandon Casey <drafnel@gmail.com>
