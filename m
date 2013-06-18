@@ -1,83 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fixing the git-repack replacement gap?
-Date: Tue, 18 Jun 2013 10:17:24 -0700
-Message-ID: <7v8v275oez.fsf@alter.siamese.dyndns.org>
-References: <201306181052.50490.mfick@codeaurora.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-add--interactive.perl: Permit word-based diff
+Date: Tue, 18 Jun 2013 13:23:22 -0400
+Message-ID: <20130618172300.GA3557@sigill.intra.peff.net>
+References: <CAMNuMARruu+1=kny=g5O1MoxCXuoT3BHdSEEPSqvyn2t2JsAYg@mail.gmail.com>
+ <20130618063144.GA6276@sigill.intra.peff.net>
+ <87k3lrzxw7.fsf@hexa.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Shawn Pearce <sop@google.com>
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Tue Jun 18 19:17:34 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Mark Abraham <mark.j.abraham@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jun 18 19:23:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UozXA-0004ZP-HZ
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 19:17:32 +0200
+	id 1Uozd1-0000Ya-Q4
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 19:23:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933191Ab3FRRR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 13:17:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54001 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932992Ab3FRRR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 13:17:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB07C28D2C;
-	Tue, 18 Jun 2013 17:17:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lLCUKH/fQj7gXeETIxBduHsgMKM=; b=O4bDfz
-	tSXpVluvWbHb5Jvs9w2ghWjADDLDZPgg7CoNU9TCrSPYqWZgGj2w0X+vzbvudYUT
-	cdp4fq4tn+fkqQWXsUha1UvEnfcvkP2sWpj9WsQNVsCO99OoqP3Fz7Jn9LvxLdhj
-	E4HYmIgDS9z238dDEe1T/2jP6O4As3KKNj07U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=V1GkW9v1PWgn+98p/sBN6+saIRJuOpX9
-	KntTzbhc8FGsrvMLXE61n0rhVvWsfxuPNP2wRcgUSG07H954vRACL2bKrzYginE1
-	2cUp7gpm7I5Z6kBIRytDFfyRafi4hQe+SE0eImxlayzb7+8rHZP2L8AA85V9ziE6
-	Z1UOYPPRwZg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0FA228D2B;
-	Tue, 18 Jun 2013 17:17:26 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 122E928D28;
-	Tue, 18 Jun 2013 17:17:25 +0000 (UTC)
-In-Reply-To: <201306181052.50490.mfick@codeaurora.org> (Martin Fick's message
-	of "Tue, 18 Jun 2013 10:52:50 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F2637BF0-D83A-11E2-8D01-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
+	id S933274Ab3FRRXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 13:23:31 -0400
+Received: from cloud.peff.net ([50.56.180.127]:39031 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932631Ab3FRRXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 13:23:31 -0400
+Received: (qmail 22738 invoked by uid 102); 18 Jun 2013 17:24:28 -0000
+Received: from mobile-032-141-227-127.mycingular.net (HELO sigill.intra.peff.net) (32.141.227.127)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 18 Jun 2013 12:24:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Jun 2013 13:23:22 -0400
+Content-Disposition: inline
+In-Reply-To: <87k3lrzxw7.fsf@hexa.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228285>
 
-Martin Fick <mfick@codeaurora.org> writes:
+On Tue, Jun 18, 2013 at 09:22:16AM +0200, Thomas Rast wrote:
 
-> ... So, what 
-> if we could simply add a dummy object to the file to cause 
-> it to deserve a name change?
->
-> So the idea would be, have git-repack detect the conflict in 
-> filenames and have it repack the new file with an additional 
-> dummy (unused) object in it, and then deliver the new file 
-> which no longer conflicts.  Would this be possible?
+> [I don't seem to have received a copy of the original mail, so I can
+> only guess...]
 
-Sounds like a fun exercise.  I do not think it breaks anything, and
-because we have the list of objects to be placed in the resulting
-pack fairly early in the process, this sequence would be possible:
+Yes, the original doesn't seem to have made it to the list. Sorry, I
+don't have a copy (I am in the habit of deleting direct mails that are
+cc'd to the list, as I keep a separate list archive).
 
-    (1) enumerate the objects;
-    (2) compute the resulting packname;
-    (3) notice it is the same as an existing one;
-    (4) add another dummy object and go back to (2);
-    (5) do the heavy-lifting of delitify;
-    (6) write out the resulting pack.
+Mark, did you happen to send an HTML mail? The list will silently
+reject such mail.
 
-inside pack-objects.
+> > Note that the number of lines in your --word-diff=color hunk and the
+> > actual diff will not necessarily be the same.  What happens if I split a
+> > hunk with your patch?
+> 
+> If it's actually what you hint at, there's another problem: the word
+> diff might not even have the same number of hunks.  For example, a
+> long-standing bug (or feature, depending on POV) of word-diff is that it
+> does not take opportunities to completely drop hunks that did not make
+> any word-level changes.
 
-I do not know if the loop between (2) and (4) is the only necessary
-thing to completely avoid the race you are worrying about, though.
+Yeah, I didn't even think of that.
+
+In general, I think one can assume 1-to-1 correspondence between whole
+regular diffs and whole word-diffs, but not below that (i.e., neither a
+correspondence between hunks nor between lines).
+
+With something like contrib/diff-highlight, you get some decoration, and
+can assume a 1-to-1 line correspondence.
+
+However, I think that when reviewing text (especially re-wrapped
+paragraphs) that word-diff can be much easier to read, _because_ it
+throws away the line correspondence. To be correct, though, I think we
+would have to simply show the whole word-diff for a file and say "is
+this OK?". Which sort of defeats the purpose of "add -p" as a hunk
+selector (you could just as easily run "git diff --color-words foo" and
+"git add foo"). But it does save keystrokes if your workflow is to
+simply "add -p" everything to double-check it before adding.
+
+So I dunno. I could see myself using it, but I certainly wouldn't want a
+config variable that turns it on all the time (which is what the
+original patch did).
+
+-Peff
