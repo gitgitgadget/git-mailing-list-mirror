@@ -1,101 +1,69 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: [PATCH] Documentation: Move "git diff <blob> <blob>"
-Date: Tue, 18 Jun 2013 17:58:50 +0300
-Message-ID: <1371567530-21811-1-git-send-email-kevin@bracey.fi>
-Cc: Junio C Hamano <gitster@pobox.com>, Kevin Bracey <kevin@bracey.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 18 17:06:04 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] send-email: allow use of basic email list in --cc --to and --bcc
+Date: Tue, 18 Jun 2013 17:05:14 +0200
+Message-ID: <vpqehbzpihh.fsf@anie.imag.fr>
+References: <1371549079-19291-1-git-send-email-Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+	<7vip1b8nut.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jorge-Juan.Garcia-Garcia@ensimag.imag.fr, git@vger.kernel.org,
+	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 17:07:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UoxTq-0006cW-N0
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 17:05:59 +0200
+	id 1UoxVA-0000ad-0S
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 17:07:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932245Ab3FRPFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 11:05:55 -0400
-Received: from 19.mo5.mail-out.ovh.net ([46.105.35.78]:40918 "EHLO
-	mo5.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755926Ab3FRPFy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 11:05:54 -0400
-X-Greylist: delayed 410 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Jun 2013 11:05:54 EDT
-Received: from mail30.ha.ovh.net (b6.ovh.net [213.186.33.56])
-	by mo5.mail-out.ovh.net (Postfix) with SMTP id 22316FFAE0F
-	for <git@vger.kernel.org>; Tue, 18 Jun 2013 16:59:02 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 18 Jun 2013 16:59:01 +0200
-Received: from 62-183-157-30.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@62.183.157.30)
-  by ns0.ovh.net with SMTP; 18 Jun 2013 16:58:57 +0200
-X-Ovh-Mailout: 178.32.228.5 (mo5.mail-out.ovh.net)
-X-Mailer: git-send-email 1.8.3.rc0.28.g4b02ef5
-X-Ovh-Tracer-Id: 8480559574632403166
-X-Ovh-Remote: 62.183.157.30 (62-183-157-30.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: 42
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiiedrieejucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecuudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlgedvmd
-X-Spam-Check: DONE|U 0.5/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 42
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiiedrieejucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecuudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlgedvmd
+	id S932308Ab3FRPHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 11:07:13 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43130 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756116Ab3FRPHM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 11:07:12 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5IF5DrW029078
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 18 Jun 2013 17:05:13 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UoxT8-00065y-Uv; Tue, 18 Jun 2013 17:05:14 +0200
+In-Reply-To: <7vip1b8nut.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 18 Jun 2013 08:01:14 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 18 Jun 2013 17:05:13 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228248>
 
-The section describing "git diff <blob> <blob>" had been placed in a
-position that disrupted the statement "This is synonymous to the
-previous form".
+Junio C Hamano <gitster@pobox.com> writes:
 
-Reorder to place this form after all the <commit>-using forms, and the
-note applying to them. Also mention this form in the initial description
-paragraph.
+> Doesn't
+>
+> 	git send-email --to='Foo <foo@example.com>' --to='bar@example.com'
+>
+> work?  If it does, I do not see much point of this change.  If you
+> are starting from two pieces of information, why combine it into
+> one, only have the program to split it again, risking to be bitten
+> by bugs, and changing the code to do so, risking to add new bugs?
 
-Signed-off-by: Kevin Bracey <kevin@bracey.fi>
----
- Documentation/git-diff.txt | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+The obvious use-case is to copy-paste a list of addresses from an email.
+Currently, the Cc: list of the email I'm sending looks like
 
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index a7b4620..78d6d50 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -18,8 +18,8 @@ SYNOPSIS
- DESCRIPTION
- -----------
- Show changes between the working tree and the index or a tree, changes
--between the index and a tree, changes between two trees, or changes
--between two files on disk.
-+between the index and a tree, changes between two trees, changes between
-+two blob objects, or changes between two files on disk.
- 
- 'git diff' [--options] [--] [<path>...]::
- 
-@@ -56,11 +56,6 @@ directories. This behavior can be forced by --no-index.
- 	This is to view the changes between two arbitrary
- 	<commit>.
- 
--'git diff' [options] <blob> <blob>::
--
--	This form is to view the differences between the raw
--	contents of two blob objects.
--
- 'git diff' [--options] <commit>..<commit> [--] [<path>...]::
- 
- 	This is synonymous to the previous form.  If <commit> on
-@@ -87,6 +82,11 @@ and the range notations ("<commit>..<commit>" and
- "<commit>\...<commit>") do not mean a range as defined in the
- "SPECIFYING RANGES" section in linkgit:gitrevisions[7].
- 
-+'git diff' [options] <blob> <blob>::
-+
-+	This form is to view the differences between the raw
-+	contents of two blob objects.
-+
- OPTIONS
- -------
- :git-diff: 1
+Cc: Jorge-Juan.Garcia-Garcia@ensimag.imag.fr,  git@vger.kernel.org,  Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+
+If I were to use "git send-email" on it, I'd have to cut the list
+myself.
+
+This could be mentionned in the commit message.
+
 -- 
-1.8.3.rc0.28.g4b02ef5
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
