@@ -1,7 +1,7 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [PATCH v3 8/8] test-lib: support running tests under valgrind in parallel
-Date: Tue, 18 Jun 2013 14:26:04 +0200
-Message-ID: <1f5236603e050962b3792c59170d56a2a10a482f.1371557431.git.trast@inf.ethz.ch>
+Subject: [PATCH v3 5/8] test-lib: verbose mode for only tests matching a pattern
+Date: Tue, 18 Jun 2013 14:26:01 +0200
+Message-ID: <a48122be29cc9088cc0aa388e9148bc62c1712dd.1371557431.git.trast@inf.ethz.ch>
 References: <cover.1371557431.git.trast@inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
@@ -15,21 +15,21 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UouzU-0007cU-2k
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 14:26:28 +0200
+	id 1UouzT-0007cU-0x
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 14:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756000Ab3FRM0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 08:26:25 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:42516 "EHLO edge20.ethz.ch"
+	id S932192Ab3FRM0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 08:26:22 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:19103 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756034Ab3FRM0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 08:26:21 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 18 Jun
+	id S1755794Ab3FRM0S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 08:26:18 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 18 Jun
  2013 14:26:15 +0200
 Received: from linux-k42r.v.cablecom.net (213.55.184.157) by cas10.d.ethz.ch
  (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 18 Jun
- 2013 14:26:19 +0200
+ 2013 14:26:16 +0200
 X-Mailer: git-send-email 1.8.3.1.530.g6f90e57
 In-Reply-To: <cover.1371557431.git.trast@inf.ethz.ch>
 X-Originating-IP: [213.55.184.157]
@@ -37,212 +37,158 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228218>
 
-With the new --valgrind-parallel=<n> option, we support running the
-tests in a single test script under valgrind in parallel using 'n'
-processes.
+With the new --verbose-only=<pattern> option, one can enable --verbose
+at a per-test granularity.  The pattern is matched against the test
+number, e.g.
 
-This really follows the dumbest approach possible, as follows:
+  ./t0000-basic.sh --verbose-only='2[0-2]'
 
-* We spawn the test script 'n' times, using a throw-away
-  TEST_OUTPUT_DIRECTORY.  Each of the instances is given options that
-  ensures that it only runs every n-th test under valgrind, but
-  together they cover the entire range.
+to see only the full output of test 20-22, while showing the rest in the
+one-liner format.
 
-* We add up the numbers from the individual tests, and provide the
-  usual output.
+As suggested by Jeff King, this takes care to wrap the entire
+test_expect_* block, but nothing else, in the verbose toggling.  We
+can use the test_start/end functions from the previous commit for the
+purpose.
 
-This is really a gross hack at this point, and should be improved.  In
-particular we should keep the actual outputs somewhere more easily
-discoverable, and summarize them to the user.
-
-Nevertheless, this is already workable and gives a speedup of more
-than 2 on a dual-core (hyperthreaded) machine, using n=4.  This is
-expected since the overhead of valgrind is so big (on the order of 20x
-under good conditions, and a large startup overhead at every git
-invocation) that redundantly running the non-valgrind tests in between
-is not that expensive.
+This is arguably not *too* useful on its own, but makes the next patch
+easier to follow.
 
 Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
 ---
- t/test-lib.sh | 106 ++++++++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 84 insertions(+), 22 deletions(-)
+ t/README         |  5 +++++
+ t/t0000-basic.sh | 30 ++++++++++++++++++++++++++++--
+ t/test-lib.sh    | 31 +++++++++++++++++++++++++++++++
+ 3 files changed, 64 insertions(+), 2 deletions(-)
 
+diff --git a/t/README b/t/README
+index 35b3c5c..f4e6299 100644
+--- a/t/README
++++ b/t/README
+@@ -76,6 +76,11 @@ appropriately before running "make".
+ 	command being run and their output if any are also
+ 	output.
+ 
++--verbose-only=<pattern>::
++	Like --verbose, but the effect is limited to tests with
++	numbers matching <pattern>.  The number matched against is
++	simply the running count of the test within the file.
++
+ --debug::
+ 	This may help the person who is developing a new test.
+ 	It causes the command defined with test_debug to run.
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index b568c06..0d86039 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -225,17 +225,43 @@ test_expect_success 'test --verbose' '
+ 	test_expect_success "failing test" false
+ 	test_done
+ 	EOF
++	mv test-verbose/out test-verbose/out+
++	grep -v "^Initialized empty" test-verbose/out+ >test-verbose/out &&
+ 	check_sub_test_lib_test test-verbose <<-\EOF
+ 	> expecting success: true
+ 	> ok 1 - passing test
+-	>
++	> Z
+ 	> expecting success: echo foo
+ 	> foo
+-	>
+ 	> ok 2 - test with output
++	> Z
+ 	> expecting success: false
+ 	> not ok 3 - failing test
+ 	> #	false
++	> Z
++	> # failed 1 among 3 test(s)
++	> 1..3
++	EOF
++'
++
++test_expect_success 'test --verbose-only' '
++	test_must_fail run_sub_test_lib_test \
++		test-verbose-only-2 "test verbose-only=2" \
++		--verbose-only=2 <<-\EOF &&
++	test_expect_success "passing test" true
++	test_expect_success "test with output" "echo foo"
++	test_expect_success "failing test" false
++	test_done
++	EOF
++	check_sub_test_lib_test test-verbose-only-2 <<-\EOF
++	> ok 1 - passing test
++	> Z
++	> expecting success: echo foo
++	> foo
++	> ok 2 - test with output
++	> Z
++	> not ok 3 - failing test
++	> #	false
+ 	> # failed 1 among 3 test(s)
+ 	> 1..3
+ 	EOF
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index f2abff9..acc7f2a 100644
+index e99b0ea..2bceb92 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -204,6 +204,15 @@ do
- 	--valgrind-only=*)
- 		valgrind_only=$(expr "z$1" : 'z[^=]*=\(.*\)')
- 		shift ;;
-+	--valgrind-parallel=*)
-+		valgrind_parallel=$(expr "z$1" : 'z[^=]*=\(.*\)')
+@@ -184,6 +184,9 @@ do
+ 		help=t; shift ;;
+ 	-v|--v|--ve|--ver|--verb|--verbo|--verbos|--verbose)
+ 		verbose=t; shift ;;
++	--verbose-only=*)
++		verbose_only=$(expr "z$1" : 'z[^=]*=\(.*\)')
 +		shift ;;
-+	--valgrind-only-stride=*)
-+		valgrind_only_stride=$(expr "z$1" : 'z[^=]*=\(.*\)')
-+		shift ;;
-+	--valgrind-only-offset=*)
-+		valgrind_only_offset=$(expr "z$1" : 'z[^=]*=\(.*\)')
-+		shift ;;
- 	--tee)
- 		shift ;; # was handled already
- 	--root=*)
-@@ -217,7 +226,7 @@ do
- 	esac
- done
- 
--if test -n "$valgrind_only"
-+if test -n "$valgrind_only" || test -n "$valgrind_only_stride"
- then
- 	test -z "$valgrind" && valgrind=memcheck
- 	test -z "$verbose" && verbose_only="$valgrind_only"
-@@ -367,7 +376,9 @@ maybe_teardown_verbose () {
- last_verbose=t
- maybe_setup_verbose () {
- 	test -z "$verbose_only" && return
--	if match_pattern_list $test_count $verbose_only
-+	if match_pattern_list $test_count $verbose_only ||
-+		{ test -n "$valgrind_only_stride" &&
-+		expr $test_count "%" $valgrind_only_stride - $valgrind_only_offset = 0 >/dev/null; }
- 	then
- 		exec 4>&2 3>&1
- 		# Emit a delimiting blank line when going from
-@@ -391,7 +402,7 @@ maybe_teardown_valgrind () {
- 
- maybe_setup_valgrind () {
- 	test -z "$GIT_VALGRIND" && return
--	if test -z "$valgrind_only"
-+	if test -z "$valgrind_only" && test -z "$valgrind_only_stride"
- 	then
- 		GIT_VALGRIND_ENABLED=t
- 		return
-@@ -400,6 +411,10 @@ maybe_setup_valgrind () {
- 	if match_pattern_list $test_count $valgrind_only
- 	then
- 		GIT_VALGRIND_ENABLED=t
-+	elif test -n "$valgrind_only_stride" &&
-+		expr $test_count "%" $valgrind_only_stride - $valgrind_only_offset = 0 >/dev/null
-+	then
-+		GIT_VALGRIND_ENABLED=t
- 	fi
+ 	-q|--q|--qu|--qui|--quie|--quiet)
+ 		# Ignore --quiet under a TAP::Harness. Saying how many tests
+ 		# passed without the ok/not ok details is always an error.
+@@ -342,6 +345,32 @@ match_pattern_list () {
+ 	return 1
  }
  
-@@ -550,6 +565,9 @@ test_done () {
- 	esac
++maybe_teardown_verbose () {
++	test -z "$verbose_only" && return
++	exec 4>/dev/null 3>/dev/null
++	verbose=
++}
++
++last_verbose=t
++maybe_setup_verbose () {
++	test -z "$verbose_only" && return
++	if match_pattern_list $test_count $verbose_only
++	then
++		exec 4>&2 3>&1
++		# Emit a delimiting blank line when going from
++		# non-verbose to verbose.  Within verbose mode the
++		# delimiter is printed by test_expect_*.  The choice
++		# of the initial $last_verbose is such that before
++		# test 1, we do not print it.
++		test -z "$last_verbose" && echo >&3 ""
++		verbose=t
++	else
++		exec 4>/dev/null 3>/dev/null
++		verbose=
++	fi
++	last_verbose=$verbose
++}
++
+ test_eval_ () {
+ 	# This is a separate function because some tests use
+ 	# "return" to end a test_expect_success block early.
+@@ -371,10 +400,12 @@ test_run_ () {
+ 
+ test_start_ () {
+ 	test_count=$(($test_count+1))
++	maybe_setup_verbose
  }
  
-+
-+# Set up a directory that we can put in PATH which redirects all git
-+# calls to 'valgrind git ...'.
- if test -n "$valgrind"
- then
- 	make_symlink () {
-@@ -597,33 +615,42 @@ then
- 		make_symlink "$symlink_target" "$GIT_VALGRIND/bin/$base" || exit
- 	}
+ test_finish_ () {
+ 	echo >&3 ""
++	maybe_teardown_verbose
+ }
  
--	# override all git executables in TEST_DIRECTORY/..
--	GIT_VALGRIND=$TEST_DIRECTORY/valgrind
--	mkdir -p "$GIT_VALGRIND"/bin
--	for file in $GIT_BUILD_DIR/git* $GIT_BUILD_DIR/test-*
--	do
--		make_valgrind_symlink $file
--	done
--	# special-case the mergetools loadables
--	make_symlink "$GIT_BUILD_DIR"/mergetools "$GIT_VALGRIND/bin/mergetools"
--	OLDIFS=$IFS
--	IFS=:
--	for path in $PATH
--	do
--		ls "$path"/git-* 2> /dev/null |
--		while read file
-+	# In the case of --valgrind-parallel, we only need to do the
-+	# wrapping once, in the main script.  The worker children all
-+	# have $valgrind_only_stride set, so we can skip based on that.
-+	if test -z "$valgrind_only_stride"
-+	then
-+		# override all git executables in TEST_DIRECTORY/..
-+		GIT_VALGRIND=$TEST_DIRECTORY/valgrind
-+		mkdir -p "$GIT_VALGRIND"/bin
-+		for file in $GIT_BUILD_DIR/git* $GIT_BUILD_DIR/test-*
- 		do
--			make_valgrind_symlink "$file"
-+			make_valgrind_symlink $file
- 		done
--	done
--	IFS=$OLDIFS
-+		# special-case the mergetools loadables
-+		make_symlink "$GIT_BUILD_DIR"/mergetools "$GIT_VALGRIND/bin/mergetools"
-+		OLDIFS=$IFS
-+		IFS=:
-+		for path in $PATH
-+		do
-+			ls "$path"/git-* 2> /dev/null |
-+			while read file
-+			do
-+				make_valgrind_symlink "$file"
-+			done
-+		done
-+		IFS=$OLDIFS
-+	fi
- 	PATH=$GIT_VALGRIND/bin:$PATH
- 	GIT_EXEC_PATH=$GIT_VALGRIND/bin
- 	export GIT_VALGRIND
- 	GIT_VALGRIND_MODE="$valgrind"
- 	export GIT_VALGRIND_MODE
- 	GIT_VALGRIND_ENABLED=t
--	test -n "$valgrind_only" && GIT_VALGRIND_ENABLED=
-+	if test -n "$valgrind_only" || test -n "$valgrind_only_stride"
-+	then
-+		GIT_VALGRIND_ENABLED=
-+	fi
- 	export GIT_VALGRIND_ENABLED
- elif test -n "$GIT_TEST_INSTALLED"
- then
-@@ -709,6 +736,41 @@ then
- else
- 	mkdir -p "$TRASH_DIRECTORY"
- fi
-+
-+# Gross hack to spawn N sub-instances of the tests in parallel, and
-+# summarize the results.  Note that if this is enabled, the script
-+# terminates at the end of this 'if' block.
-+if test -n "$valgrind_parallel"
-+then
-+	for i in $(test_seq 1 $valgrind_parallel)
-+	do
-+		root="$TRASH_DIRECTORY/vgparallel-$i"
-+		mkdir "$root"
-+		TEST_OUTPUT_DIRECTORY="$root" \
-+			${SHELL_PATH} "$0" \
-+			--root="$root" --statusprefix="[$i] " \
-+			--valgrind="$valgrind" \
-+			--valgrind-only-stride="$valgrind_parallel" \
-+			--valgrind-only-offset="$i" &
-+		pids="$pids $!"
-+	done
-+	trap "kill $pids" INT TERM HUP
-+	wait $pids
-+	trap - INT TERM HUP
-+	for i in $(test_seq 1 $valgrind_parallel)
-+	do
-+		root="$TRASH_DIRECTORY/vgparallel-$i"
-+		eval "$(cat "$root/test-results/$(basename "$0" .sh)"-*.counts |
-+			sed 's/^\([a-z][a-z]*\) \([0-9][0-9]*\)/inner_\1=\2/')"
-+		test_count=$(expr $test_count + $inner_total)
-+		test_success=$(expr $test_success + $inner_success)
-+		test_fixed=$(expr $test_fixed + $inner_fixed)
-+		test_broken=$(expr $test_broken + $inner_broken)
-+		test_failure=$(expr $test_failure + $inner_failed)
-+	done
-+	test_done
-+fi
-+
- # Use -P to resolve symlinks in our working directory so that the cwd
- # in subprocesses like git equals our $PWD (for pathname comparisons).
- cd -P "$TRASH_DIRECTORY" || exit 1
+ test_skip () {
 -- 
 1.8.3.1.530.g6f90e57
