@@ -1,52 +1,79 @@
-From: Alexander Nestorov <alexandernst@gmail.com>
-Subject: Re: [Request] Git reset should be able to ignore file permissions
-Date: Tue, 18 Jun 2013 16:22:52 +0200
-Message-ID: <CACuz9s0=7z-M1-zgRNUs2hS-4LcuXrsWbqyDaMnuvFXRnP7E-Q@mail.gmail.com>
-References: <CACuz9s31OUWNxTqCmj7ukAo7=TpXK7zBv5kTFZ5obpXKOju9ng@mail.gmail.com>
- <vpqsj0fr19j.fsf@anie.imag.fr> <CACuz9s1KGKsL-pGftAtAWyX5gUA5c-PYyJUSstf+xw151rZLtA@mail.gmail.com>
- <vpq7ghrqzrv.fsf@anie.imag.fr>
+From: Junio C Hamano <junio@pobox.com>
+Subject: Re: [PATCH 1/2] sha1_name: stop hard-coding 40-character hex checks
+Date: Tue, 18 Jun 2013 07:27:57 -0700
+Message-ID: <7vehbza3yq.fsf@alter.siamese.dyndns.org>
+References: <1371317906-3991-1-git-send-email-artagnon@gmail.com>
+	<1371317906-3991-2-git-send-email-artagnon@gmail.com>
+	<CABURp0qs7uPkczmS8EC-iNgCVh2eTaeCKsh7NwVuS4j92jMn+A@mail.gmail.com>
+	<CALkWK0=_Ac+dQV23xiXty3peWdhn2iFzgSPb7LYDFmoCzYhxQQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 18 16:23:43 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Phil Hord <phil.hord@gmail.com>, Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 18 16:28:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uowos-0000u5-JS
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 16:23:38 +0200
+	id 1UowtG-0001eA-8u
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Jun 2013 16:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932135Ab3FROXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 10:23:34 -0400
-Received: from mail-qe0-f48.google.com ([209.85.128.48]:34138 "EHLO
-	mail-qe0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932868Ab3FROXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 10:23:33 -0400
-Received: by mail-qe0-f48.google.com with SMTP id 2so2451196qea.7
-        for <git@vger.kernel.org>; Tue, 18 Jun 2013 07:23:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=Nb3f0/aBGdIUgtwffOE/twxw3Lga8oRAwz87c1PCD6s=;
-        b=ZftHbjbIzXM5GG83sgm2C8iKVqAdPR8SYMVz45iEF7kePm2QITneOfyHuugOjBMFE5
-         NGHUMlmduO2utzs6iwfArJZoyfHioQ+pPTtN2GQ23Q3QoPyGSp4f7mrl4FX4KglOqabK
-         UbhjZP/+2yR6NcnswIYFot0961UW5k0whE16+R/NNOqkSd5km8p5YcSouZrUocdhvbHw
-         uLipdG9uhcXeeofgMAjBIg5HEUzKKDv3LBivdgqyDi3dIG1KwUY/Y9iYqfAHF7/SZ64y
-         OIYwQXFuzZejsiFq1THg7YX4l8KeNac4GU8eVDwjRfUIbf8DianYQxdyHBvuDITKarVR
-         2+dg==
-X-Received: by 10.224.172.1 with SMTP id j1mr1149494qaz.11.1371565412265; Tue,
- 18 Jun 2013 07:23:32 -0700 (PDT)
-Received: by 10.229.168.70 with HTTP; Tue, 18 Jun 2013 07:22:52 -0700 (PDT)
-In-Reply-To: <vpq7ghrqzrv.fsf@anie.imag.fr>
+	id S932868Ab3FRO2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 10:28:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56629 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932830Ab3FRO2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 10:28:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DEF526B18;
+	Tue, 18 Jun 2013 14:27:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uu4UQ6tXPrGgvuoYf6oLkDiJNKY=; b=aqLETU
+	mR3TKoHuSTJnLosGqMpvIGm8Foy+MbIqFS8ONdJIwtVwGc/GyTgcMDqusCNbUyXD
+	vOACASuMb7w/6cp5ciJ6L5c3na6thxvHrqNPJG9LjCteutc4pIxVoZhLh2B89cPS
+	/VHiVJfKL18lFGPXjD51pqRCAF64HgqSpYgkE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SQ5iO9vBa7tIHXm6Z+bq0kRDv5fsP184
+	K0QFMXyGxtRXPyc4iPyMBrDY5U7HeCkJ1WzY5e5RO8mTD0Y69V8s/+PnP2y0tnhr
+	Q/kRfMZTVxUAtsziLU91SM+xmi91dkahGpQ9MwnRblWbOEhUKPR5wuCPaTcpBW0S
+	UKsyVYa/ARE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74C9326B17;
+	Tue, 18 Jun 2013 14:27:59 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E5D5026B14;
+	Tue, 18 Jun 2013 14:27:58 +0000 (UTC)
+In-Reply-To: <CALkWK0=_Ac+dQV23xiXty3peWdhn2iFzgSPb7LYDFmoCzYhxQQ@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 18 Jun 2013 12:33:22 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 464E1012-D823-11E2-91B6-E56BAAC0D69C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228237>
 
-Indeed, "git update-index --refresh" before "git reset" did the trick :)
-Anyways, what about the proposal? Should it be implemented?
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Thank you
+> Phil Hord wrote:
+>> I share your disdain for the bare '40's in the code.  But I think this
+>> code is less clear than the previous version with the magic number.
+>
+> Please read the cover-letter: 
+
+Which was...
+
+>> [1/2] is important.  [2/2] is a minor prettification, that wouldn't
+>> have been possible without [1/2].
+
+...and I do not find how the above is connected with
+
+> I was just toying around to see if this
+> was a good idea,...
+
+...this in any way.  Puzzled.
