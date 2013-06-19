@@ -1,95 +1,278 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v3 1/7] t/t7512-status-help: test "HEAD detached from"
-Date: Wed, 19 Jun 2013 13:34:43 +0530
-Message-ID: <1371629089-27008-2-git-send-email-artagnon@gmail.com>
+Subject: [PATCH v3 4/7] status: do not depend on rebase reflog messages
+Date: Wed, 19 Jun 2013 13:34:46 +0530
+Message-ID: <1371629089-27008-5-git-send-email-artagnon@gmail.com>
 References: <1371629089-27008-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 19 10:08:37 2013
+X-From: git-owner@vger.kernel.org Wed Jun 19 10:08:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpDRL-0001ly-I4
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 10:08:27 +0200
+	id 1UpDRY-00029c-Ko
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 10:08:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756657Ab3FSIIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 04:08:15 -0400
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:48565 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756637Ab3FSIIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 04:08:00 -0400
-Received: by mail-pb0-f43.google.com with SMTP id md12so4817292pbc.2
-        for <git@vger.kernel.org>; Wed, 19 Jun 2013 01:08:00 -0700 (PDT)
+	id S1756674Ab3FSII3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 04:08:29 -0400
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:45102 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756667Ab3FSIII (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 04:08:08 -0400
+Received: by mail-pb0-f45.google.com with SMTP id mc8so4812095pbc.18
+        for <git@vger.kernel.org>; Wed, 19 Jun 2013 01:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=w8tQ8NNXZxH4YIPTutqVNkUuZ8ZSiLCG3yhk28cO9NM=;
-        b=UO9lv1P7xdiVHzBOpBIGcq1c8qMhkC66fClLE7sqGrhb+beipGRCfLNoo6SH4Xp/FW
-         AxeruIdi8If4j4aXiQuyONrOWfG1kAU/M3s6nVlcCR7sexK4smUQ+tpdgFjZRq9PuloG
-         O9WN4KX+At5D/UMxv75IujxOd53HVGzyUX+ERdhtdklInzzLHN9WkGa2f75Bs/znn7qp
-         p4TydQEeYENX/9t4+bZ08O8Hb419XzwzYWSju4/pLexnPdIjg/A75OcXMXeBBkcHKsuR
-         uanNDn16fdfNmiGfjVSB1/x+JQaRjSAFwVURH4Kl55guEHPRopzLUixDoGOkWwIC3cdK
-         Gzng==
-X-Received: by 10.68.76.67 with SMTP id i3mr1729675pbw.20.1371629279973;
-        Wed, 19 Jun 2013 01:07:59 -0700 (PDT)
+        bh=s3UQx3Ss8JCz9QhNDA30AwMZX9WS0Djggxk0ttZFt4Q=;
+        b=mzwlL+G0TnObaWEnzPw/cSiQnEbRMOxJh+sUGLXdqiH8BgNZzLcTRxwLPLKaAhCsh6
+         5EuUDtDeg8xBimxRAE5j5IOqD5FEh6TqhL8svRS5RPvqBO4ogE0M+jIy0xRG9+tlEDAE
+         VaBtLnbDyWPKFw9CtBMK9ULXYUgGl1B4YjSfEYekcU9K3bnTQ/i2qHsh43llulAmOfx+
+         1gYRNWclOigBhT9QNu6LQBLVOJ6VBtOKC2wVwIfT0Zej7SdLhgFLa6WlDTEOeMbBRVVa
+         UmV13FZfU81voVT4t+apHKQ9vUNLcAjrEyI7jzpCWgOQ4d/9DvDs4yfi/vlJNn81kmdg
+         aQ8A==
+X-Received: by 10.68.241.135 with SMTP id wi7mr1699778pbc.88.1371629287109;
+        Wed, 19 Jun 2013 01:08:07 -0700 (PDT)
 Received: from localhost.localdomain ([122.164.211.22])
-        by mx.google.com with ESMTPSA id vz8sm23663400pac.20.2013.06.19.01.07.57
+        by mx.google.com with ESMTPSA id vz8sm23663400pac.20.2013.06.19.01.08.04
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 19 Jun 2013 01:07:59 -0700 (PDT)
+        Wed, 19 Jun 2013 01:08:06 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1.449.g41b32a4.dirty
 In-Reply-To: <1371629089-27008-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228374>
 
-From: Junio C Hamano <gitster@pobox.com>
+b397ea4 (status: show more info than "currently not on any branch",
+2013-03-13) attempted to make the output of 'git status' richer in
+the case of a detached HEAD.  Before this patch, with a detached
+HEAD, we saw:
 
-b397ea (status: show more info than "currently not on any branch",
-2013-03-13) wanted to make sure that after a checkout to detach HEAD,
-the user can see where the HEAD was originally detached from.  The last
-test added by that commit to t/status-help shows one example,
-immediately after HEAD is detached via a checkout.  Enhance that test to
-test the "HEAD detached from" message is displayed when the user further
-resets to another commit.
+  $ git status
+  # Not currently on any branch.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+But after the patch, we see:
+
+  $ git checkout v1.8.2
+  $ git status
+  # HEAD detached at v1.8.2
+
+It works by digging the reflog for the most recent message of the
+form "checkout: moving from xxxx to yyyy".  It then asserts that
+HEAD and "yyyy" are the same, and displays this message.  When they
+aren't equal, it displays:
+
+  $ git status
+  # HEAD detached from fe11db
+
+so that the user can see where the HEAD was first detached.
+
+In case of a rebase [-i] operation in progress, this message depends on
+the implementation of rebase writing "checkout: " messages to the
+reflog, but that is an implementation detail of "rebase".  To remove
+this dependency so that rebase can be updated to write better reflog
+messages, replace this "HEAD detached from" message with:
+
+  # rebase in progress; onto $ONTO
+
+Changes to the commit object name in the expected output for some of the
+tests shows that what the test expected "status" to show during "rebase
+-i" was not consistent with the output during a vanilla "rebase", which
+showed on top of what commit the series is being replayed.  Now we
+consistently show something meaningful to the end user.
+
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t7512-status-help.sh | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ t/t7512-status-help.sh | 37 +++++++++++++++++--------------------
+ wt-status.c            |  5 ++++-
+ 2 files changed, 21 insertions(+), 21 deletions(-)
 
 diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index bf08d4e..bafa5e7 100755
+index bafa5e7..d6c66d7 100755
 --- a/t/t7512-status-help.sh
 +++ b/t/t7512-status-help.sh
-@@ -667,7 +667,7 @@ test_expect_success 'status when cherry-picking after resolving conflicts' '
- 	test_i18ncmp expected actual
- '
- 
--test_expect_success 'status showing detached from a tag' '
-+test_expect_success 'status showing detached at and from a tag' '
- 	test_commit atag tagging &&
- 	git checkout atag &&
- 	cat >expected <<-\EOF
-@@ -675,6 +675,14 @@ test_expect_success 'status showing detached from a tag' '
- 	nothing to commit (use -u to show untracked files)
- 	EOF
- 	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual &&
-+
-+	git reset --hard HEAD^ &&
-+	cat >expected <<-\EOF
-+	# HEAD detached from atag
-+	nothing to commit (use -u to show untracked files)
-+	EOF
-+	git status --untracked-files=no >actual &&
- 	test_i18ncmp expected actual
- '
- 
+@@ -77,7 +77,7 @@ test_expect_success 'status when rebase in progress before resolving conflicts'
+ 	ONTO=$(git rev-parse --short HEAD^^) &&
+ 	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached at $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently rebasing branch '\''rebase_conflicts'\'' on '\''$ONTO'\''.
+ 	#   (fix conflicts and then run "git rebase --continue")
+ 	#   (use "git rebase --skip" to skip this patch)
+@@ -104,7 +104,7 @@ test_expect_success 'status when rebase in progress before rebase --continue' '
+ 	echo three >main.txt &&
+ 	git add main.txt &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached at $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently rebasing branch '\''rebase_conflicts'\'' on '\''$ONTO'\''.
+ 	#   (all conflicts fixed: run "git rebase --continue")
+ 	#
+@@ -136,7 +136,7 @@ test_expect_success 'status during rebase -i when conflicts unresolved' '
+ 	ONTO=$(git rev-parse --short rebase_i_conflicts) &&
+ 	test_must_fail git rebase -i rebase_i_conflicts &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached at $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently rebasing branch '\''rebase_i_conflicts_second'\'' on '\''$ONTO'\''.
+ 	#   (fix conflicts and then run "git rebase --continue")
+ 	#   (use "git rebase --skip" to skip this patch)
+@@ -162,7 +162,7 @@ test_expect_success 'status during rebase -i after resolving conflicts' '
+ 	test_must_fail git rebase -i rebase_i_conflicts &&
+ 	git add main.txt &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached at $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently rebasing branch '\''rebase_i_conflicts_second'\'' on '\''$ONTO'\''.
+ 	#   (all conflicts fixed: run "git rebase --continue")
+ 	#
+@@ -188,10 +188,9 @@ test_expect_success 'status when rebasing -i in edit mode' '
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~2) &&
+-	TGT=$(git rev-parse --short two_rebase_i) &&
+ 	git rebase -i HEAD~2 &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached from $TGT
++	# rebase in progress; onto $ONTO
+ 	# You are currently editing a commit while rebasing branch '\''rebase_i_edit'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+@@ -216,9 +215,8 @@ test_expect_success 'status when splitting a commit' '
+ 	ONTO=$(git rev-parse --short HEAD~3) &&
+ 	git rebase -i HEAD~3 &&
+ 	git reset HEAD^ &&
+-	TGT=$(git rev-parse --short HEAD) &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached at $TGT
++	# rebase in progress; onto $ONTO
+ 	# You are currently splitting a commit while rebasing branch '\''split_commit'\'' on '\''$ONTO'\''.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+@@ -246,11 +244,10 @@ test_expect_success 'status after editing the last commit with --amend during a
+ 	export FAKE_LINES &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD~3) &&
+-	TGT=$(git rev-parse --short three_amend) &&
+ 	git rebase -i HEAD~3 &&
+ 	git commit --amend -m "foo" &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached from $TGT
++	# rebase in progress; onto $ONTO
+ 	# You are currently editing a commit while rebasing branch '\''amend_last'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+@@ -280,7 +277,7 @@ test_expect_success 'status: (continue first edit) second edit' '
+ 	git rebase -i HEAD~3 &&
+ 	git rebase --continue &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached from $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+@@ -302,7 +299,7 @@ test_expect_success 'status: (continue first edit) second edit and split' '
+ 	git rebase --continue &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached from $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+@@ -329,7 +326,7 @@ test_expect_success 'status: (continue first edit) second edit and amend' '
+ 	git rebase --continue &&
+ 	git commit --amend -m "foo" &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached from $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+@@ -351,7 +348,7 @@ test_expect_success 'status: (amend first edit) second edit' '
+ 	git commit --amend -m "a" &&
+ 	git rebase --continue &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached from $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+@@ -374,7 +371,7 @@ test_expect_success 'status: (amend first edit) second edit and split' '
+ 	git rebase --continue &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached from $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+@@ -402,7 +399,7 @@ test_expect_success 'status: (amend first edit) second edit and amend' '
+ 	git rebase --continue &&
+ 	git commit --amend -m "d" &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached from $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+@@ -426,7 +423,7 @@ test_expect_success 'status: (split first edit) second edit' '
+ 	git commit -m "e" &&
+ 	git rebase --continue &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached from $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+@@ -451,7 +448,7 @@ test_expect_success 'status: (split first edit) second edit and split' '
+ 	git rebase --continue &&
+ 	git reset HEAD^ &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached from $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+@@ -481,7 +478,7 @@ test_expect_success 'status: (split first edit) second edit and amend' '
+ 	git rebase --continue &&
+ 	git commit --amend -m "h" &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached from $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+ 	#   (use "git commit --amend" to amend the current commit)
+ 	#   (use "git rebase --continue" once you are satisfied with your changes)
+@@ -601,7 +598,7 @@ test_expect_success 'status when rebase conflicts with statushints disabled' '
+ 	ONTO=$(git rev-parse --short HEAD^^) &&
+ 	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
+ 	cat >expected <<-EOF &&
+-	# HEAD detached at $ONTO
++	# rebase in progress; onto $ONTO
+ 	# You are currently rebasing branch '\''statushints_disabled'\'' on '\''$ONTO'\''.
+ 	#
+ 	# Unmerged paths:
+diff --git a/wt-status.c b/wt-status.c
+index 2511270..85a00f1 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1174,7 +1174,10 @@ void wt_status_print(struct wt_status *s)
+ 			branch_name += 11;
+ 		else if (!strcmp(branch_name, "HEAD")) {
+ 			branch_status_color = color(WT_STATUS_NOBRANCH, s);
+-			if (state.detached_from) {
++			if (state.rebase_in_progress || state.rebase_interactive_in_progress) {
++				on_what = _("rebase in progress; onto ");
++				branch_name = state.onto;
++			} else if (state.detached_from) {
+ 				unsigned char sha1[20];
+ 				branch_name = state.detached_from;
+ 				if (!get_sha1("HEAD", sha1) &&
 -- 
 1.8.3.1.449.g41b32a4.dirty
