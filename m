@@ -1,92 +1,66 @@
-From: Veres Lajos <vlajos@gmail.com>
-Subject: small misspellings fixes
-Date: Wed, 19 Jun 2013 07:37:24 +0200 (CEST)
-Message-ID: <alpine.DEB.2.00.1306190733440.8850@citymarket.hu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: small misspellings fixes
+Date: Wed, 19 Jun 2013 07:51:12 +0200
+Message-ID: <vpq7ghqmywf.fsf@anie.imag.fr>
+References: <alpine.DEB.2.00.1306190733440.8850@citymarket.hu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 19 07:45:14 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Veres Lajos <vlajos@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 19 07:51:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpBCj-0005b7-4o
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 07:45:13 +0200
+	id 1UpBIr-0002ic-A9
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 07:51:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753867Ab3FSFpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 01:45:07 -0400
-Received: from [188.227.225.139] ([188.227.225.139]:53849 "EHLO citymarket.hu"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752001Ab3FSFpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 01:45:06 -0400
-X-Greylist: delayed 458 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Jun 2013 01:45:06 EDT
-Received: from citymarket.hu (localhost [127.0.0.1])
-	by citymarket.hu (Postfix) with ESMTP id EFD5A102158
-	for <git@vger.kernel.org>; Wed, 19 Jun 2013 07:37:24 +0200 (CEST)
-Received: by citymarket.hu (Postfix, from userid 1000)
-	id D8E3A102220; Wed, 19 Jun 2013 07:37:24 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by citymarket.hu (Postfix) with ESMTP id D223E102158
-	for <git@vger.kernel.org>; Wed, 19 Jun 2013 07:37:24 +0200 (CEST)
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1756355Ab3FSFvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 01:51:16 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:60856 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755739Ab3FSFvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 01:51:16 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5J5pCPi012236
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 19 Jun 2013 07:51:12 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UpBIW-0001Vp-Vt; Wed, 19 Jun 2013 07:51:13 +0200
+In-Reply-To: <alpine.DEB.2.00.1306190733440.8850@citymarket.hu> (Veres Lajos's
+	message of "Wed, 19 Jun 2013 07:37:24 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 19 Jun 2013 07:51:13 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228344>
 
-small misspellings fixes
+Veres Lajos <vlajos@gmail.com> writes:
 
-Signed-off-by: Veres Lajos <vlajos@gmail.com>
----
-diff --git a/git-p4.py b/git-p4.py
-index 911bbce..88fcf23 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -3168,7 +3168,7 @@ class P4Rebase(Command):
-         if os.system("git update-index --refresh") != 0:
-             die("Some files in your working directory are modified and different than what is in your index. You can use git update-index <filename> to bring the index up-to-date or stash away all your changes with git stash.");
-         if len(read_pipe("git diff-index HEAD --")) > 0:
--            die("You have uncommited changes. Please commit them before rebasing or stash them away with git stash.");
-+            die("You have uncommitted changes. Please commit them before rebasing or stash them away with git stash.");
+> I am trying to convert this pull request:
+> https://github.com/git/git/pull/42
+> to a proper patch email
 
-         [upstream, settings] = findUpstreamBranchPoint()
-         if len(upstream) == 0:
-diff --git a/git-svn.perl b/git-svn.perl
-index d070de0..4e8275f 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1246,7 +1246,7 @@ sub cmd_rebase {
- 		return;
- 	}
- 	if (command(qw/diff-index HEAD --/)) {
--		print STDERR "Cannot rebase with uncommited changes:\n";
-+		print STDERR "Cannot rebase with uncommitted changes:\n";
- 		command_noisy('status');
- 		exit 1;
- 	}
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 2f70433..460d8eb 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -316,7 +316,7 @@ test_expect_success 'merge c1 with c2 (squash)' '
+Use "git format-patch" and/or "git send-email" to get the proper
+formatting.
 
- test_debug 'git log --graph --decorate --oneline --all'
+> (Sorry If I miss something about the process.)
 
--test_expect_success 'unsuccesful merge of c1 with c2 (squash, ff-only)' '
-+test_expect_success 'unsuccessful merge of c1 with c2 (squash, ff-only)' '
- 	git reset --hard c1 &&
- 	test_must_fail git merge --squash --ff-only c2
- '
+Yes, your patch doesn't have exactly the right format, and you should
+have Cc-ed Junio (see Documentation/SubmittingPatches in Git's source
+tree).
+
+Other than that, the content of the patch looks good (and actually, at
+least one of the typos is mine :-( ). Can you resend?
+
+Thanks,
+
 -- 
-Hi,
-
-I am trying to convert this pull request:
-https://github.com/git/git/pull/42
-to a proper patch email
-(Sorry If I miss something about the process.)
--- 
-Veres Lajos
-vlajos@gmail.com
-+36 20 438 5909
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
