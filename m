@@ -1,140 +1,188 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v3 5/7] checkout: respect GIT_REFLOG_ACTION
-Date: Wed, 19 Jun 2013 13:34:47 +0530
-Message-ID: <1371629089-27008-6-git-send-email-artagnon@gmail.com>
+Subject: [PATCH v3 6/7] rebase: write better reflog messages
+Date: Wed, 19 Jun 2013 13:34:48 +0530
+Message-ID: <1371629089-27008-7-git-send-email-artagnon@gmail.com>
 References: <1371629089-27008-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 19 10:08:53 2013
+X-From: git-owner@vger.kernel.org Wed Jun 19 10:08:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpDRk-0002Ty-GL
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 10:08:52 +0200
+	id 1UpDRe-0002M0-UL
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 10:08:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756679Ab3FSIIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 04:08:38 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:42654 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755576Ab3FSIIK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 04:08:10 -0400
-Received: by mail-pd0-f175.google.com with SMTP id 4so4779121pdd.6
-        for <git@vger.kernel.org>; Wed, 19 Jun 2013 01:08:09 -0700 (PDT)
+	id S1756680Ab3FSIIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 04:08:40 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:33514 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756606Ab3FSIIM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 04:08:12 -0400
+Received: by mail-pa0-f44.google.com with SMTP id lj1so4915979pab.3
+        for <git@vger.kernel.org>; Wed, 19 Jun 2013 01:08:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=DKdpCPZuPcJ4owM5ZigpbJ2G3QWGoYn7D1ayxelkcLQ=;
-        b=y3fRVQuF+GA35jzDnhjpA3vaB+yJ1rKezVnAQVdMDqwE6/5Oy1rt3aHibz7NflYVA1
-         n4jMr0/KKs3Zd8l1EqIn8Uy+PtxMN8vcF4p3Lv3UnXLabhVNca9fTtZ/+isMmiLnfBZS
-         QlK+2lV4IW7wXvjaY5fmK7YME+vM2Ww6ACFodWyNXqs0qDtzWpZwoAqb8w3YXfkuNjot
-         TSCw3/TWCek67Wo5cD6XVax+2PHafptaCxsArqlc/HCCDWxLBmxjL3S4iz/7ZC/WfRW5
-         RTJ9NygSOO+9/HdPoSGTCKcrc75NLq3tiElO3htj3AnUzkn1+BBUYVRNAGVjXdi/p+v7
-         ptHg==
-X-Received: by 10.68.111.228 with SMTP id il4mr1693833pbb.134.1371629289367;
-        Wed, 19 Jun 2013 01:08:09 -0700 (PDT)
+        bh=cigAe7tX99I44r4Ukn+p+/e3laTN0dDgkrNOw8D3m6A=;
+        b=ZBKDZa70Y5lLUWx3RcdW4mjy4sw7cv04HVjW2fJ+yRSpFLBX7YLsIMp3r+92RACfNn
+         0z4X+vCDyfSXqWq93Oy9AzjkGtEYedoqE0avRL+U0ensD7Hhs0ijJk/kROI6EMvXMnma
+         BS6ra2b4YNTVlfy+u8o9aJLP5XICnspn2bwuyUsJ7n6WA0hy+rW8vOWaRm/rAMsKJOJq
+         8FGhemA+FftDJXBUP1tANuZloFUEsN+VlxRNBkngTbx6ywaVUEAVT42ATl15IDQ0WSLx
+         8U1lJTLqU5CZ07yRmDAXQ5Z4luGYO/nNNS6o0X5ZKuHjp9vmSD5t+Et9Xaay3l/BnlRx
+         mUrA==
+X-Received: by 10.66.87.5 with SMTP id t5mr5700682paz.169.1371629291706;
+        Wed, 19 Jun 2013 01:08:11 -0700 (PDT)
 Received: from localhost.localdomain ([122.164.211.22])
-        by mx.google.com with ESMTPSA id vz8sm23663400pac.20.2013.06.19.01.08.07
+        by mx.google.com with ESMTPSA id vz8sm23663400pac.20.2013.06.19.01.08.09
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 19 Jun 2013 01:08:08 -0700 (PDT)
+        Wed, 19 Jun 2013 01:08:11 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1.449.g41b32a4.dirty
 In-Reply-To: <1371629089-27008-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228377>
 
-GIT_REFLOG_ACTION is an environment variable specifying the reflog
-message to write after an action is completed.  Several other commands
-including merge, reset, and commit respect it.
+Now that the "checkout" invoked internally from "rebase" knows to honor
+GIT_REFLOG_ACTION, we can start to use it to write a better reflog
+message when "rebase anotherbranch", "rebase --onto branch",
+etc. internally checks out the new fork point.  We will write:
 
-Fix the failing tests in t/checkout-last by making checkout respect it
-too.  You can now expect
+  rebase: checkout master
 
-  $ git checkout -
+instead of the old
 
-to work as expected after any a rebase [-i].  It will also work with any
-other scripts provided they set an appropriate GIT_REFLOG_ACTION if they
-internally use "git checkout".
+  rebase
+
+The usage semantics of GIT_REFLOG_ACTION have changed; by appending to
+GIT_REFLOG_ACTION directly, we risk appending to a prebuilt string like
+"rebase: checkout mool" from a previous append, when we really intended
+to append to the string "rebase".  Solve this problem by introducing a
+base_reflog_action variable that is different from GIT_REFLOG_ACTION.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/checkout.c       | 11 ++++++++---
- t/t2012-checkout-last.sh |  8 ++++----
- 2 files changed, 12 insertions(+), 7 deletions(-)
+ git-am.sh         |  4 +++-
+ git-rebase--am.sh |  7 +++++++
+ git-rebase.sh     | 18 ++++++++++++++++--
+ 3 files changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f5b50e5..1e2af85 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -587,7 +587,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 				   struct branch_info *new)
- {
- 	struct strbuf msg = STRBUF_INIT;
--	const char *old_desc;
-+	const char *old_desc, *reflog_msg;
- 	if (opts->new_branch) {
- 		if (opts->new_orphan_branch) {
- 			if (opts->new_branch_log && !log_all_ref_updates) {
-@@ -620,8 +620,13 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 	old_desc = old->name;
- 	if (!old_desc && old->commit)
- 		old_desc = sha1_to_hex(old->commit->object.sha1);
--	strbuf_addf(&msg, "checkout: moving from %s to %s",
--		    old_desc ? old_desc : "(invalid)", new->name);
+diff --git a/git-am.sh b/git-am.sh
+index 1cf3d1d..74ef9ca 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -46,6 +46,8 @@ set_reflog_action am
+ require_work_tree
+ cd_to_toplevel
+ 
++base_reflog_action="$GIT_REFLOG_ACTION"
 +
-+	reflog_msg = getenv("GIT_REFLOG_ACTION");
-+	if (!reflog_msg)
-+		strbuf_addf(&msg, "checkout: moving from %s to %s",
-+			old_desc ? old_desc : "(invalid)", new->name);
-+	else
-+		strbuf_insert(&msg, 0, reflog_msg, strlen(reflog_msg));
+ git var GIT_COMMITTER_IDENT >/dev/null ||
+ 	die "$(gettext "You need to set your committer info first")"
  
- 	if (!strcmp(new->name, "HEAD") && !new->path && !opts->force_detach) {
- 		/* Nothing to do. */
-diff --git a/t/t2012-checkout-last.sh b/t/t2012-checkout-last.sh
-index 6ad6edf..e7ba8c5 100755
---- a/t/t2012-checkout-last.sh
-+++ b/t/t2012-checkout-last.sh
-@@ -116,7 +116,7 @@ test_expect_success 'master...' '
- 	test "z$(git rev-parse --verify HEAD)" = "z$(git rev-parse --verify master^)"
+@@ -884,7 +886,7 @@ did you forget to use 'git add'?"
+ 		fi &&
+ 		git commit-tree $tree ${parent:+-p} $parent <"$dotest/final-commit"
+ 	) &&
+-	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
++	git update-ref -m "$base_reflog_action: $FIRSTLINE" HEAD $commit $parent ||
+ 	stop_here $this
+ 
+ 	if test -f "$dotest/original-commit"; then
+diff --git a/git-rebase--am.sh b/git-rebase--am.sh
+index 34e3102..7fbeb35 100644
+--- a/git-rebase--am.sh
++++ b/git-rebase--am.sh
+@@ -5,11 +5,13 @@
+ 
+ case "$action" in
+ continue)
++	GIT_REFLOG_ACTION="$base_reflog_action"
+ 	git am --resolved --resolvemsg="$resolvemsg" &&
+ 	move_to_original_branch
+ 	return
+ 	;;
+ skip)
++	GIT_REFLOG_ACTION="$base_reflog_action"
+ 	git am --skip --resolvemsg="$resolvemsg" &&
+ 	move_to_original_branch
+ 	return
+@@ -40,9 +42,11 @@ else
+ 		rm -f "$GIT_DIR/rebased-patches"
+ 		case "$head_name" in
+ 		refs/heads/*)
++			GIT_REFLOG_ACTION="$base_reflog_action: checkout $head_name"
+ 			git checkout -q "$head_name"
+ 			;;
+ 		*)
++			GIT_REFLOG_ACTION="$base_reflog_action: checkout $orig_head"
+ 			git checkout -q "$orig_head"
+ 			;;
+ 		esac
+@@ -59,6 +63,9 @@ else
+ 		return $?
+ 	fi
+ 
++	# always reset GIT_REFLOG_ACTION before calling any external
++	# scripts; they have no idea about our base_reflog_action
++	GIT_REFLOG_ACTION="$base_reflog_action"
+ 	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg" <"$GIT_DIR/rebased-patches"
+ 	ret=$?
+ 
+diff --git a/git-rebase.sh b/git-rebase.sh
+index d0c11a9..6cdf9f8 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -47,6 +47,13 @@ set_reflog_action rebase
+ require_work_tree_exists
+ cd_to_toplevel
+ 
++# Should contain a base string like "rebase" (or "rebase -i (start)")
++# to which a more information like ": checkout foom" can be appended
++# to set the final GIT_REFLOG_ACTION.  If you append to
++# GIT_REFLOG_ACTION directly, you risk appending to a prebuilt string
++# like "rebase: checkout mool" from a previous append.
++base_reflog_action="$GIT_REFLOG_ACTION"
++
+ LF='
  '
+ ok_to_skip_pre_rebase=
+@@ -336,7 +343,8 @@ then
+ 	# Only interactive rebase uses detailed reflog messages
+ 	if test "$type" = interactive && test "$GIT_REFLOG_ACTION" = rebase
+ 	then
+-		GIT_REFLOG_ACTION="rebase -i ($action)"
++		GIT_REFLOG_ACTION="rebase -i ($1)"
++		base_reflog_action="$GIT_REFLOG_ACTION"
+ 		export GIT_REFLOG_ACTION
+ 	fi
+ fi
+@@ -543,7 +551,11 @@ then
+ 	if test -z "$force_rebase"
+ 	then
+ 		# Lazily switch to the target branch if needed...
+-		test -z "$switch_to" || git checkout "$switch_to" --
++		if test -n "$switch_to"
++		then
++			GIT_REFLOG_ACTION="$base_reflog_action: checkout $switch_to"
++			git checkout "$switch_to" --
++		fi
+ 		say "$(eval_gettext "Current branch \$branch_name is up to date.")"
+ 		exit 0
+ 	else
+@@ -568,6 +580,8 @@ test "$type" = interactive && run_specific_rebase
  
--test_expect_failure '"checkout -" works after a rebase A' '
-+test_expect_success '"checkout -" works after a rebase A' '
- 	git checkout master &&
- 	git checkout other &&
- 	git rebase master &&
-@@ -124,7 +124,7 @@ test_expect_failure '"checkout -" works after a rebase A' '
- 	test "z$(git symbolic-ref HEAD)" = "zrefs/heads/master"
- '
+ # Detach HEAD and reset the tree
+ say "$(gettext "First, rewinding head to replay your work on top of it...")"
++
++GIT_REFLOG_ACTION="$base_reflog_action: checkout $onto_name"
+ git checkout -q "$onto^0" || die "could not detach HEAD"
+ git update-ref ORIG_HEAD $orig_head
  
--test_expect_failure '"checkout -" works after a rebase A B' '
-+test_expect_success '"checkout -" works after a rebase A B' '
- 	git branch moodle master~1 &&
- 	git checkout master &&
- 	git checkout other &&
-@@ -133,7 +133,7 @@ test_expect_failure '"checkout -" works after a rebase A B' '
- 	test "z$(git symbolic-ref HEAD)" = "zrefs/heads/master"
- '
- 
--test_expect_failure '"checkout -" works after a rebase -i A' '
-+test_expect_success '"checkout -" works after a rebase -i A' '
- 	git checkout master &&
- 	git checkout other &&
- 	git rebase -i master &&
-@@ -141,7 +141,7 @@ test_expect_failure '"checkout -" works after a rebase -i A' '
- 	test "z$(git symbolic-ref HEAD)" = "zrefs/heads/master"
- '
- 
--test_expect_failure '"checkout -" works after a rebase -i A B' '
-+test_expect_success '"checkout -" works after a rebase -i A B' '
- 	git branch foodle master~1 &&
- 	git checkout master &&
- 	git checkout other &&
 -- 
 1.8.3.1.449.g41b32a4.dirty
