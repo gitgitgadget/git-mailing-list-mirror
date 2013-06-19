@@ -1,104 +1,76 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 00/12] Fix some reference-related races
-Date: Wed, 19 Jun 2013 07:51:22 +0200
-Message-ID: <51C146DA.5000500@alum.mit.edu>
-References: <1370987312-6761-1-git-send-email-mhagger@alum.mit.edu> <51BCCAD2.9070106@ramsay1.demon.co.uk> <51BD5232.20205@alum.mit.edu> <51C0A33A.7060802@ramsay1.demon.co.uk>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/4] glossary: define committish (a.k.a. commit-ish)
+Date: Wed, 19 Jun 2013 11:26:45 +0530
+Message-ID: <CALkWK0=-PT=QD5enFQhrDZN03xCAttZKtjtT8rE7n4QynT+Ndg@mail.gmail.com>
+References: <1371607780-2966-1-git-send-email-rhansen@bbn.com>
+ <1371607780-2966-3-git-send-email-rhansen@bbn.com> <CALkWK0mo2SG+Eh1Qmy58Xo-taG_EGEj9RSx65EYhvs2CLK9dUA@mail.gmail.com>
+ <51C135BE.4030506@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Johan Herland <johan@herland.net>,
-	git discussion list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Wed Jun 19 07:52:59 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Wed Jun 19 07:57:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpBKD-0005lf-QQ
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 07:52:58 +0200
+	id 1UpBOc-0007DT-Ah
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 07:57:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756429Ab3FSFvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 01:51:32 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:42904 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756390Ab3FSFv1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Jun 2013 01:51:27 -0400
-X-AuditID: 1207440c-b7f016d000005997-36-51c146df9f3c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 46.9E.22935.FD641C15; Wed, 19 Jun 2013 01:51:27 -0400 (EDT)
-Received: from [192.168.101.152] (mx.berlin.jpk.com [212.222.128.135] (may be forged))
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r5J5pNWW030235
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 19 Jun 2013 01:51:25 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <51C0A33A.7060802@ramsay1.demon.co.uk>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIKsWRmVeSWpSXmKPExsUixO6iqHvf7WCgwZ+pPBZdV7qZLBp6rzBb
-	zLu7i8niR0sPs8XuaQvYHFg9Lr38zubxrHcPo8fFS8oejyeeYPX4vEkugDWK2yYpsaQsODM9
-	T98ugTtj4Yuwgge8FZ97V7E0MH7j6mLk5JAQMJG4ueUqE4QtJnHh3nq2LkYuDiGBy4wS2+5M
-	Y4dwrjFJbFn3jxmkildAW6L1WxtQgoODRUBV4n9nAkiYTUBXYlFPM9ggUYEwiffLprJClAtK
-	nJz5hAXEFgGqWTzvJDPITGaBhYwS+54+BWsQFrCW+Pz4JTPEsvWMEm83/AdbxilgLPHl3G1G
-	EJtZQEfiXd8DZghbXmL72znMExgFZiFZMgtJ2SwkZQsYmVcxyiXmlObq5iZm5hSnJusWJyfm
-	5aUW6Rrq5WaW6KWmlG5ihAQ5zw7Gb+tkDjEKcDAq8fDeWH0gUIg1say4MvcQoyQHk5Io7wfX
-	g4FCfEn5KZUZicUZ8UWlOanFhxglOJiVRHj1HIByvCmJlVWpRfkwKWkOFiVxXtUl6n5CAumJ
-	JanZqakFqUUwWRkODiUJ3rsgQwWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJBsRpf
-	DIxWkBQP0N7LIO28xQWJuUBRiNZTjLocB35sec8oxJKXn5cqJc57D6RIAKQoozQPbgUspb1i
-	FAf6WJj3MUgVDzAdwk16BbSECWiJ0Pd9IEtKEhFSUg2MBW8l7r1yqn2ySE5xXtLv67Glc+K+
-	+n+30SoVuv/wsP7Z+MW+zHUB71j3L3gcvzn+fn/JP1l2aw3l+xtvadwXW7L/9ZXu 
+	id S1755739Ab3FSF50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 01:57:26 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:50297 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751089Ab3FSF5Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 01:57:25 -0400
+Received: by mail-ie0-f180.google.com with SMTP id f4so11750028iea.25
+        for <git@vger.kernel.org>; Tue, 18 Jun 2013 22:57:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Riy7MzY13vsmzECauq5Gv3HM/RXZWMRs6spNcS8NhMk=;
+        b=bQP2+JcHFmWT3tw2fZXYbk2Bq3puItv3xRHphkUASfh6Eh7HxYdWB3WlpmieBbMSt7
+         CrSgDXqoeTLhSLfUFpIbPKxdLjlwHUPU2s46wTD6j55wlmK6ZJTVF1V1qKMabNp9qAO5
+         stDHRZ+wuVSnX/vBkJlX7yRa+z6i7RlEaYF6Ayi+VYlcDCG0h8JAOJYQvRVdOK5HqT9S
+         8APlwoP+4Ks1AzOCVoBAKYBc4hUDFgNgXj+A123MFK+3b++1mDFdZnwXxno+rvrhlEr7
+         zM5FT7H7aWg6dgulaQNbKgRuibI39Przn0t0AxLRmBvzFgjDEtlZMT/s5etLsB3pKAhJ
+         Ki+Q==
+X-Received: by 10.50.3.37 with SMTP id 5mr621202igz.0.1371621445278; Tue, 18
+ Jun 2013 22:57:25 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Tue, 18 Jun 2013 22:56:45 -0700 (PDT)
+In-Reply-To: <51C135BE.4030506@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228347>
 
-On 06/18/2013 08:13 PM, Ramsay Jones wrote:
-> Michael Haggerty wrote:
->> On 06/15/2013 10:13 PM, Ramsay Jones wrote:
->>> Now, turning to the new code, t3211-peel-ref.sh test #7 now works, but
->>> test #8 still fails...
-> 
-> [ ... ]
-> 
->>             It should be impossible, because the current process is
->> holding packed-refs.lock, and therefore other git processes should
->> refuse to change the packed-refs file.
-> 
-> :-P You are assuming that a single process can't lie to itself ...
-> 
-> [ ... ]
-> 
-> I should not have assumed that you knew what I meant by "schizophrenic
-> stat() functions" above; sorry about that! If you are interested, then
-> the following commits may be useful reading: adbc0b6, 7faee6b, 7974843,
-> 05bab3ea, 924aaf3e and b8a97333.
+Richard Hansen wrote:
+> On 2013-06-19 00:19, Ramkumar Ramachandra wrote:
+>> Is master~3 a committish?  What about :/foomery?
+>
+> Yes; as documented, both of those are refs that point to a commit.
 
-Thanks, that helps.
+>From gitglossary(7):
 
->>> I haven't checked the remaining test failures to see if they are
->>> caused by this code (I don't think so, but ...), but this failure
->>> is clearly a cygwin specific issue.
->>
->> Thanks again for the testing and analysis,
-> 
-> So, unless you feel the need to fix this yourself, you can probably
-> ignore this issue for now. I will hopefully find time to fix it up
-> before this topic progresses to next. (Although I don't have any
-> feeling for the time-frame of this topic).
+ref
+    A 40-byte hex representation of a SHA-1 or a name that denotes a
+    particular object. They may be stored in a file under $GIT_DIR/refs/
+    directory, or in the $GIT_DIR/packed-refs file.
 
-Despite reading the commits that you referenced, I still don't feel
-competent to fix this myself so I gratefully accept your offer.
-Ideally, whatever complexity is needed would be hidden in the functions
-stat_validity_check() and stat_validity_update() added by patch 09/12 of
-my series, and possibly match_stat_data() from 08/12.
+Do master~3 and :/foomery qualify as refs?
 
-Let me know if I can help.
+>> Look at the other forms in gitrevisions(7); master:quuxery,
+>> master^{tree} are notable exceptions.
+>
+> gitrevisions(7) says that master:quuxery is a ref pointing to a blob or
+> tree, so it is not a committish.  However, if quuxery is a submodule, I
+> would expect master:quuxery to point to a commit object and thus be a
+> committish.  So perhaps the <rev>:<path> description in gitrevisions(7)
+> should be updated to accommodate submodules.
 
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+When quuxery is a submodule, master:quuxery refers to a commit object
+that does not exist in the parent repository.  I don't know what we
+gain by documenting a comittish you can't even `show`.
