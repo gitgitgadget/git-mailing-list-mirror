@@ -1,102 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] push: remove dead code in setup_push_upstream()
-Date: Wed, 19 Jun 2013 13:01:15 -0700
-Message-ID: <7vy5a5yino.fsf@alter.siamese.dyndns.org>
-References: <1371640304-26019-1-git-send-email-artagnon@gmail.com>
-	<1371640304-26019-5-git-send-email-artagnon@gmail.com>
+From: Richard Hansen <rhansen@bbn.com>
+Subject: Re: [PATCH] peel_onion(): add support for <rev>^{tag}
+Date: Wed, 19 Jun 2013 16:08:49 -0400
+Message-ID: <51C20FD1.4090203@bbn.com>
+References: <1371605946-32565-1-git-send-email-rhansen@bbn.com> <7vvc5aymhd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 19 22:01:26 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 19 22:09:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpOZG-0000XY-Mu
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 22:01:23 +0200
+	id 1UpOgc-0005Ux-7J
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 22:08:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757384Ab3FSUBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 16:01:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46490 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756805Ab3FSUBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 16:01:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A924F29B48;
-	Wed, 19 Jun 2013 20:01:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=G4eBWShdTDJzze3yScYJY/JnQuE=; b=DJl66O
-	yvbGsT7YOKp1V5UYSVUohG1+Ic+ZNqzqNbFRlAJ2ZWoBs2G0mf2XoiOO8hDTieJS
-	00LgSnM8/jbUixBNcUB3U5Zmcr9P9F+dMKIB5kes5/LQKOclUWFvGZgyhlnbd13V
-	52yI+5sBU8pI7SWxDWbI95GrtEIsBoWT1+YaY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e9UQG55Jv1UzE4lz+ogypZOL5j/Wg6Yd
-	snxm0imEETYisTeeSLXeKo4NPve+qjqRnCsxbMpBqFAJnPknXKXxf4khqDxPHp51
-	bJk2M6UjZoCFCXIlIUy00UyFyupbYBWfC0nBdmVrrgJnRhd1MTQvLAuzX1eqJbz/
-	2YCXEPY/J/4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FF8529B40;
-	Wed, 19 Jun 2013 20:01:17 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E6E129B3C;
-	Wed, 19 Jun 2013 20:01:16 +0000 (UTC)
-In-Reply-To: <1371640304-26019-5-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Wed, 19 Jun 2013 16:41:42 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 008630B6-D91B-11E2-B7F1-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S935108Ab3FSUIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 16:08:54 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:62925 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934978Ab3FSUIx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 16:08:53 -0400
+Received: from socket.bbn.com ([192.1.120.102]:39126)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1UpOgU-000Pzz-46; Wed, 19 Jun 2013 16:08:50 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id DCAA940665
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <7vvc5aymhd.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228421>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On 2013-06-19 14:38, Junio C Hamano wrote:
+> Richard Hansen <rhansen@bbn.com> writes:
+> 
+>> gitrevisions(7) implies that <rev>^{tag} should work,...
+> 
+> Does it?  Is it possible that that should be fixed?
 
-> Now that simple has been decoupled from upstream in setup_push_simple(),
-> remove the dead code in setup_push_upstream().
+Depends on whether you think ^{tag} is a useful feature or not; see below.
 
-Good.
+> 
+> What does it even _mean_ to peel something to a TAG?
 
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  builtin/push.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/push.c b/builtin/push.c
-> index d8d27d9..783bacf 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -139,7 +139,7 @@ end:
->  	add_refspec(branch->name);
->  }
->  
-> -static void setup_push_upstream(struct remote *remote, int simple)
-> +static void setup_push_upstream(struct remote *remote)
->  {
->  	struct strbuf refspec = STRBUF_INIT;
->  	struct branch *branch = branch_get(NULL);
-> @@ -161,8 +161,6 @@ static void setup_push_upstream(struct remote *remote, int simple)
->  		      "your current branch '%s', without telling me what to push\n"
->  		      "to update which remote branch."),
->  		    remote->name, branch->name);
-> -	if (simple && strcmp(branch->refname, branch->merge[0]->src))
-> -		die_push_simple(branch, remote);
->  
->  	strbuf_addf(&refspec, "%s:%s", branch->name, branch->merge[0]->src);
->  	add_refspec(refspec.buf);
-> @@ -211,7 +209,7 @@ static void setup_default_push_refspecs(struct remote *remote)
->  		break;
->  
->  	case PUSH_DEFAULT_UPSTREAM:
-> -		setup_push_upstream(remote, 0);
-> +		setup_push_upstream(remote);
->  		break;
->  
->  	case PUSH_DEFAULT_CURRENT:
+It's the same as peeling something to any other object type:  If the
+object is that type, done.  Otherwise dereference and try again.  If it
+can't be dereferenced, barf.
+
+> 
+> A commit, a tree or a blob cannot be peeled to a tag---none of them
+> can contain a tag.
+
+Right, so all of those would barf.
+
+> 
+> When you have a tag that points at something else, what you have is
+> already a tag, so <that-tag>^{tag} would be <that-tag> itself.
+
+Exactly, just like <object>^{object} is <object> itself.
+
+> 
+> Even more confusingly, when you have a tag that points at another
+> tag, what does <that-outer-tag>^{tag} mean?  The outer tag itself,
+> or do you need to peel at least once to reveal the inner-tag?  What
+> if that inner-tag points at yet another tag?
+> 
+> The patch does not touch peel_to_type(), so your answer to the above
+> question seems to be "if T is already a tag, T^{tag} is T itself",
+> but then that operation does not look all that useful.
+
+Barfing on non-tags is the feature this adds.  It's otherwise useless,
+just like <object>^{object} is useless except to barf when <object>
+doesn't exist.
+
+It's a sometimes-convenient way to assert that an object specifier
+refers to a tag object and not something else.  For example, instead of:
+
+   fatal() { printf %s\\n "ERROR: $*" >&2; exit 1; }
+
+   type=$(git cat-file -t "$1") || fatal "$1 is not a valid object"
+   [ "${type}" = tag ] || fatal "$1 is not a tag object"
+   use "$1" here
+
+you can do:
+
+   use "$1"^{tag} here
+
+-Richard
+
+
+> 
+> Confused...
+> 
+>> diff --git a/sha1_name.c b/sha1_name.c
+>> index 90419ef..68fd0e4 100644
+>> --- a/sha1_name.c
+>> +++ b/sha1_name.c
+>> @@ -677,6 +677,8 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
+>>  	sp++; /* beginning of type name, or closing brace for empty */
+>>  	if (!strncmp(commit_type, sp, 6) && sp[6] == '}')
+>>  		expected_type = OBJ_COMMIT;
+>> +	else if (!strncmp(tag_type, sp, 3) && sp[3] == '}')
+>> +		expected_type = OBJ_TAG;
+>>  	else if (!strncmp(tree_type, sp, 4) && sp[4] == '}')
+>>  		expected_type = OBJ_TREE;
+>>  	else if (!strncmp(blob_type, sp, 4) && sp[4] == '}')
+> 
