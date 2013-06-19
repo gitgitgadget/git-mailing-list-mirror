@@ -1,66 +1,61 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: small misspellings fixes
-Date: Wed, 19 Jun 2013 07:51:12 +0200
-Message-ID: <vpq7ghqmywf.fsf@anie.imag.fr>
-References: <alpine.DEB.2.00.1306190733440.8850@citymarket.hu>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH mz/rebase-tests] rebase topology tests: fix commit names
+ on case-insensitive file systems
+Date: Wed, 19 Jun 2013 07:52:33 +0200
+Message-ID: <51C14721.2050500@viscovery.net>
+References: <1370292135-1236-1-git-send-email-martinvonz@gmail.com> <1370585503-11374-1-git-send-email-martinvonz@gmail.com> <51C00C07.6080600@viscovery.net> <CANiSa6gWkaC62U8oxo0mRc-G-m3UJJSjq8YSuywBh-omtHO=zQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Veres Lajos <vlajos@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 19 07:51:36 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Chris Webb <chris@arachsys.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 19 07:52:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpBIr-0002ic-A9
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 07:51:33 +0200
+	id 1UpBK1-0005Lp-Q0
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 07:52:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756355Ab3FSFvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 01:51:16 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:60856 "EHLO rominette.imag.fr"
+	id S1756469Ab3FSFwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 01:52:38 -0400
+Received: from so.liwest.at ([212.33.55.13]:19416 "EHLO so.liwest.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755739Ab3FSFvQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 01:51:16 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5J5pCPi012236
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 19 Jun 2013 07:51:12 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UpBIW-0001Vp-Vt; Wed, 19 Jun 2013 07:51:13 +0200
-In-Reply-To: <alpine.DEB.2.00.1306190733440.8850@citymarket.hu> (Veres Lajos's
-	message of "Wed, 19 Jun 2013 07:37:24 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 19 Jun 2013 07:51:13 +0200 (CEST)
+	id S1756463Ab3FSFwh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 01:52:37 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1UpBJq-0006am-Ft; Wed, 19 Jun 2013 07:52:34 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 34D8F1660F;
+	Wed, 19 Jun 2013 07:52:34 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <CANiSa6gWkaC62U8oxo0mRc-G-m3UJJSjq8YSuywBh-omtHO=zQ@mail.gmail.com>
+X-Enigmail-Version: 1.5.1
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228345>
 
-Veres Lajos <vlajos@gmail.com> writes:
+Am 6/18/2013 17:53, schrieb Martin von Zweigbergk:
+> On Tue, Jun 18, 2013 at 12:28 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>>  Knowing that the tests would take their time to complete on Windows,
+> 
+> I'm curious just how slow it is. Are we talking minutes?
 
-> I am trying to convert this pull request:
-> https://github.com/git/git/pull/42
-> to a proper patch email
+D:\Src\mingw-git\t>bash -c "time make t342[15]*"
+...
+real    5m7.160s
+user    0m21.831s
+sys     0m6.376s
 
-Use "git format-patch" and/or "git send-email" to get the proper
-formatting.
+The real time is correct, but I don't think that we can trust user or sys
+times as the box was otherwise idle.
 
-> (Sorry If I miss something about the process.)
-
-Yes, your patch doesn't have exactly the right format, and you should
-have Cc-ed Junio (see Documentation/SubmittingPatches in Git's source
-tree).
-
-Other than that, the content of the patch looks good (and actually, at
-least one of the typos is mine :-( ). Can you resend?
-
-Thanks,
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-- Hannes
