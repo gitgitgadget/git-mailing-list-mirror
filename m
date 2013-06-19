@@ -1,58 +1,84 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [PATCH 2/4] glossary: define committish (a.k.a. commit-ish)
-Date: Wed, 19 Jun 2013 00:38:22 -0400
-Message-ID: <51C135BE.4030506@bbn.com>
-References: <1371607780-2966-1-git-send-email-rhansen@bbn.com> <1371607780-2966-3-git-send-email-rhansen@bbn.com> <CALkWK0mo2SG+Eh1Qmy58Xo-taG_EGEj9RSx65EYhvs2CLK9dUA@mail.gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 1/2] Documentation: Update 'linux-2.6.git' -> 'linux.git'
+Date: Tue, 18 Jun 2013 22:05:50 -0700
+Message-ID: <CAJDDKr75PwVjJ-hs=1eBQEKG0O7FaZROfHRT-oujANeFN-ErMw@mail.gmail.com>
+References: <cover.1371606791.git.wking@tremily.us>
+	<3286ddfe2dd6cbf9c435bd7f9eb579782eb32e1f.1371606791.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 19 06:38:36 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Wed Jun 19 07:05:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpAAE-0003pE-Po
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 06:38:35 +0200
+	id 1UpAah-0003K5-6e
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 07:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750939Ab3FSEib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 00:38:31 -0400
-Received: from smtp.bbn.com ([128.33.1.81]:35826 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750778Ab3FSEia (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 00:38:30 -0400
-Received: from socket.bbn.com ([192.1.120.102]:39101)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1UpAA3-000If2-QD; Wed, 19 Jun 2013 00:38:23 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 33CC83FE94
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <CALkWK0mo2SG+Eh1Qmy58Xo-taG_EGEj9RSx65EYhvs2CLK9dUA@mail.gmail.com>
-X-Enigmail-Version: 1.5.1
+	id S1751592Ab3FSFFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 01:05:51 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:55752 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751253Ab3FSFFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 01:05:50 -0400
+Received: by mail-pa0-f42.google.com with SMTP id rl6so4762692pac.1
+        for <git@vger.kernel.org>; Tue, 18 Jun 2013 22:05:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=n96BpGGubXPFtP8T/5JPqSyrKhjAObnKjT72rRvxg/Q=;
+        b=Zs9b3SjAhhIm0mQjsE3KsQYR+jY0sKVZRXZhHLE7XjsuIHVGjVWgUEsdDlJgqG6kl2
+         B8Tzr9s19EtQGv2EeOVLqXrDlYkQ0fiwvd6sXyGvdMN0AqEj8NBUGWKEFlTz9at1o5f3
+         um/GCY87D8KgTRO39SDZymevztZL2ugjih6XsEW/rbm8Y5PDZrKCzA5zSHtx5SttLavx
+         149M4MYbVEta3rGIa+b2E5puNvSOKDycqUTjEufzq7L9h8K+0Bqtf2D3VIM8EghMGEDa
+         uAywx0pC6iLxTPqR7C4ZbTh9DPCTE3Et0hcC6NWmNVknJF5ibJ6lTFpt6PlbyFokZgET
+         7F8A==
+X-Received: by 10.66.160.101 with SMTP id xj5mr5089696pab.5.1371618350079;
+ Tue, 18 Jun 2013 22:05:50 -0700 (PDT)
+Received: by 10.70.20.161 with HTTP; Tue, 18 Jun 2013 22:05:50 -0700 (PDT)
+In-Reply-To: <3286ddfe2dd6cbf9c435bd7f9eb579782eb32e1f.1371606791.git.wking@tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228339>
 
-On 2013-06-19 00:19, Ramkumar Ramachandra wrote:
-> Is master~3 a committish?  What about :/foomery?
+On Tue, Jun 18, 2013 at 6:55 PM, W. Trevor King <wking@tremily.us> wrote:
+> From: "W. Trevor King" <wking@tremily.us>
+>
+> The 3.x tree has been out for a while now.  The -2.6 repository name
+> survived the initial release [1], but kernel.org now only lists
+> 'linux.git' (for aegl as well as torvalds) [2].
+>
+> [1]: http://article.gmane.org/gmane.linux.kernel/1147422
+>   On 2011-05-30 01:47:57 GMT, Linus Torvalds wrote:
+>   > ... yes, that means that my git tree is still called
+>   > "linux-2.6.git" on kernel.org.
+> [2]: http://git.kernel.org/cgit/
+>
+> Signed-off-by: W. Trevor King <wking@tremily.us>
+> ---
+>  Documentation/git-clone.txt       | 2 +-
+>  Documentation/git-fast-export.txt | 2 +-
+>  Documentation/user-manual.txt     | 6 +++---
+>  t/perf/README                     | 2 +-
+>  4 files changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> index a0727d7..8e5260f 100644
+> --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> @@ -274,7 +274,7 @@ $ git clone --bare -l /home/proj/.git /pub/scm/proj.git
+>  * Create a repository on the kernel.org machine that borrows from Linus:
+>  +
+>  ------------
+> -$ git clone --bare -l -s /pub/scm/.../torvalds/linux-2.6.git \
+> +$ git clone --bare -l -s /pub/scm/.../torvalds/linux.git \
+>      /pub/scm/.../me/subsys-2.6.git
 
-Yes; as documented, both of those are refs that point to a commit.
-
-> Look at the other forms in gitrevisions(7); master:quuxery,
-> master^{tree} are notable exceptions.
-
-gitrevisions(7) says that master:quuxery is a ref pointing to a blob or
-tree, so it is not a committish.  However, if quuxery is a submodule, I
-would expect master:quuxery to point to a commit object and thus be a
-committish.  So perhaps the <rev>:<path> description in gitrevisions(7)
-should be updated to accommodate submodules.
-
-master^{tree} is guaranteed to be a tree (if such a tree exists), so it
-is not a committish.
-
--Richard
+Perhaps subsys.git instead of subsys-2.6.git too?
+--
+David
