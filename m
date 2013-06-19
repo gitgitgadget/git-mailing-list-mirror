@@ -1,60 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 00/12] Fix some reference-related races
-Date: Wed, 19 Jun 2013 14:56:45 -0400
-Message-ID: <20130619185645.GB23647@sigill.intra.peff.net>
-References: <1371628293-28824-1-git-send-email-mhagger@alum.mit.edu>
+From: Richard Hansen <rhansen@bbn.com>
+Subject: Re: [PATCH 1/4] glossary: add 'treeish' as a synonym for 'tree-ish'
+Date: Wed, 19 Jun 2013 15:12:07 -0400
+Message-ID: <51C20287.3060301@bbn.com>
+References: <1371607780-2966-1-git-send-email-rhansen@bbn.com> <1371607780-2966-2-git-send-email-rhansen@bbn.com> <7vli6610yg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jun 19 20:56:54 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 19 21:12:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpNYr-0004dE-GO
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 20:56:53 +0200
+	id 1UpNnk-0006ce-9B
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 21:12:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757418Ab3FSS4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 14:56:50 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49206 "EHLO peff.net"
+	id S1757427Ab3FSTMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 15:12:12 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:30362 "EHLO smtp.bbn.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756847Ab3FSS4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 14:56:48 -0400
-Received: (qmail 30037 invoked by uid 102); 19 Jun 2013 18:57:46 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Jun 2013 13:57:46 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Jun 2013 14:56:45 -0400
-Content-Disposition: inline
-In-Reply-To: <1371628293-28824-1-git-send-email-mhagger@alum.mit.edu>
+	id S1757414Ab3FSTML (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 15:12:11 -0400
+Received: from socket.bbn.com ([192.1.120.102]:39122)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1UpNnc-000PEv-9d; Wed, 19 Jun 2013 15:12:08 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 08EDF3FF5E
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <7vli6610yg.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228413>
 
-On Wed, Jun 19, 2013 at 09:51:21AM +0200, Michael Haggerty wrote:
+On 2013-06-19 13:09, Junio C Hamano wrote:
+> Richard Hansen <rhansen@bbn.com> writes:
+> 
+>> The documentation contains a mix of the two spellings, and including
+>> both makes it possible for users to search the glossary with their
+>> spelling of choice.
+> 
+> Is it an option to instead find dashless form in our documentation
+> and turn all of them into tree-ish form with a dash?  I personally
+> find it cleaner that way.
 
-> Re-roll of mh/ref-races.  Thanks to Peff, Junio, and Ramsay for
-> reviewing v1.
+I can s/treeish/tree-ish/g, although I'd still like to keep 'treeish' in
+the glossary so that people can find it when they search for the
+misspelled version.
 
-Thanks. I just read through them again. Everything looks good to me.
+Perhaps something like:
 
-Patches 10 and 11 are missing my signoff, but obviously:
+-[[def_tree-ish]]tree-ish::
++[[def_tree-ish]]tree-ish (sometimes misspelled treeish)::
 
-  Signed-off-by: Jeff King <peff@peff.net>
+would be satisfactory?
 
-> The last patch is still optional--it avoids a little bit of work when
-> rewriting the packed-refs file, but relies on the stat-based freshness
-> check not giving a false negative.
+While we're on the topic, do you have a preference for commit-ish vs.
+committish?  Grepping the code shows comittish to be the overwhelming
+favorite, but it's inconsistent with tree-ish.
 
-I don't have a real problem with it, but given the cygwin confusions
-that Ramsay mentioned, maybe it is better to hold back on it for now? It
-sounds like the cygwin problems go the other way (false positives
-instead of false negatives).
+-Richard
 
--Peff
+
+> 
+>>
+>> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+>> ---
+>>  Documentation/glossary-content.txt | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+>> index db2a74d..01365d9 100644
+>> --- a/Documentation/glossary-content.txt
+>> +++ b/Documentation/glossary-content.txt
+>> @@ -486,7 +486,7 @@ should not be combined with other pathspec.
+>>  	with refs to the associated blob and/or tree objects. A
+>>  	<<def_tree,tree>> is equivalent to a <<def_directory,directory>>.
+>>  
+>> -[[def_tree-ish]]tree-ish::
+>> +[[def_tree-ish]]tree-ish (also treeish)::
+>>  	A <<def_ref,ref>> pointing to either a <<def_commit_object,commit
+>>  	object>>, a <<def_tree_object,tree object>>, or a <<def_tag_object,tag
+>>  	object>> pointing to a tag or commit or tree object.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
