@@ -1,79 +1,100 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] glossary: add 'treeish' as a synonym for 'tree-ish'
-Date: Wed, 19 Jun 2013 14:46:48 -0700
-Message-ID: <7vli65ydrr.fsf@alter.siamese.dyndns.org>
-References: <1371607780-2966-1-git-send-email-rhansen@bbn.com>
-	<1371607780-2966-2-git-send-email-rhansen@bbn.com>
-	<7vli6610yg.fsf@alter.siamese.dyndns.org> <51C20287.3060301@bbn.com>
+Subject: Re: [PATCH 5/6] t/t5528-push-default: generalize test_push_*
+Date: Wed, 19 Jun 2013 14:56:34 -0700
+Message-ID: <7vd2rhydbh.fsf@alter.siamese.dyndns.org>
+References: <1371640304-26019-1-git-send-email-artagnon@gmail.com>
+	<1371640304-26019-6-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Wed Jun 19 23:46:57 2013
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 19 23:56:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpQDP-0001Oq-P3
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 23:46:56 +0200
+	id 1UpQMr-00040y-EQ
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 23:56:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934936Ab3FSVqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 17:46:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41799 "EHLO
+	id S935015Ab3FSV4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 17:56:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34461 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934566Ab3FSVqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 17:46:51 -0400
+	id S934566Ab3FSV4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 17:56:37 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF53C2983A;
-	Wed, 19 Jun 2013 21:46:50 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 699D029E65;
+	Wed, 19 Jun 2013 21:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Vhao8W8pMuDlVkPCjdrlEj8rXKw=; b=ix5zkW
-	pyYsKSyZmS8aRr1Ccqrs4Cl5H0+k5oP58gdDyl5BshZinFcbOeKUwF5Q/zKSm4S3
-	DXOUpCmIVnGXHbQeE12SllUdGWfPQ2r40oRDzsCBwRTBa5SG02V7d/W1LM+LI1+J
-	PH7dAL1lgGWU5+SSeJdLbWfYVHYqB7GenkxPw=
+	:content-type; s=sasl; bh=rp3NnVhRF1tFFB8pShm5iTIqG8w=; b=RyQKC4
+	YBfO/CcnUysQaCv+en4vg3zUQVJbTw6bzb77jI5ft70TbdGGppTZ7RuLlBAUiz2T
+	vymtNxI/0E63hsJt0XhzDZBdl/UzEdcEsXQ+HaiRoStBcTlXgZoFFRvmOdgpV6Ea
+	i3wUwv3aTkF///Ru1GW9MAShSLua8BzyvCbIQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TL5413yP4cPbSDw+QjC1g+9uAxZcuuyQ
-	vR4ZeCpLFB4VwLl25d/wo2kjdlJ3QARMtagi3UEL0G8Usi99ppfwomoJwspV+6WX
-	XIoNw5PhBnc8WB92Utf4lONkYYrpnGt0xVL52zC8ZhaZcbfckuMh2xyc1mWSvowd
-	NWYsmJhiSmI=
+	:content-type; q=dns; s=sasl; b=LwYvX/iDWdkE43W06qPxr9DL+ixZ89FF
+	AlDa/2ZYcJXMv/2dfIZUhXp+T04vr+WEgYhpGB42NlxSR/7CzNsV9HG3vsEM5CYl
+	4R3RmA7zLyPbdQ+oKjua2bPrSKEoV19qS/Joyem34fQgoN4HETHsnqwwHsji5F31
+	N3cnPu9HxMw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2B3229838;
-	Wed, 19 Jun 2013 21:46:50 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C80429E5E;
+	Wed, 19 Jun 2013 21:56:36 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4774C29835;
-	Wed, 19 Jun 2013 21:46:50 +0000 (UTC)
-In-Reply-To: <51C20287.3060301@bbn.com> (Richard Hansen's message of "Wed, 19
-	Jun 2013 15:12:07 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC65029E5D;
+	Wed, 19 Jun 2013 21:56:35 +0000 (UTC)
+In-Reply-To: <1371640304-26019-6-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Wed, 19 Jun 2013 16:41:43 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BF6D0E1A-D929-11E2-B9FB-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1C65FE96-D92B-11E2-8126-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228427>
 
-Richard Hansen <rhansen@bbn.com> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> Perhaps something like:
+> The setup creates two bare repositories: repo1 and repo2, but
+> test_push_commit() hard-codes checking in repo1 for the actual output.
+> Generalize it and its caller, test_push_success(), to optionally accept
+> a third argument to specify the name of the repository to check for
+> actual output.  We will use this in the next patch.
 >
-> -[[def_tree-ish]]tree-ish::
-> +[[def_tree-ish]]tree-ish (sometimes misspelled treeish)::
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+
+Makes sense.
+
+>  t/t5528-push-default.sh | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 >
-> would be satisfactory?
-
-If it is a misspelling, I do not think we need to list both.  An
-entry "tree-ish" can be found if you were looking for treeish.
-
-If it is not, then "sometimes misspelled" should perhaps is better
-"aka".
-
-I do not personally have a very strong preference between the dashed
-and dashless forms, but if I really have to pick one over the other,
-I would probably go with tree-ish, commit-ish, as these are not real
-words.  I do have mild preference of not listing both to keep things
-shorter and cleaner.
+> diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
+> index e54dd02..b599186 100755
+> --- a/t/t5528-push-default.sh
+> +++ b/t/t5528-push-default.sh
+> @@ -15,17 +15,19 @@ test_expect_success 'setup bare remotes' '
+>  
+>  # $1 = local revision
+>  # $2 = remote revision (tested to be equal to the local one)
+> +# $3 = [optional] repo to check for actual output (repo1 by default)
+>  check_pushed_commit () {
+>  	git log -1 --format='%h %s' "$1" >expect &&
+> -	git --git-dir=repo1 log -1 --format='%h %s' "$2" >actual &&
+> +	git --git-dir="${3:-repo1}" log -1 --format='%h %s' "$2" >actual &&
+>  	test_cmp expect actual
+>  }
+>  
+>  # $1 = push.default value
+>  # $2 = expected target branch for the push
+> +# $3 = [optional] repo to check for actual output (repo1 by default)
+>  test_push_success () {
+>  	git -c push.default="$1" push &&
+> -	check_pushed_commit HEAD "$2"
+> +	check_pushed_commit HEAD "$2" "$3"
+>  }
+>  
+>  # $1 = push.default value
