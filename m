@@ -1,85 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] glossary: define committish (a.k.a. commit-ish)
-Date: Wed, 19 Jun 2013 14:05:50 -0700
-Message-ID: <7vtxktyfo1.fsf@alter.siamese.dyndns.org>
-References: <1371607780-2966-1-git-send-email-rhansen@bbn.com>
-	<1371607780-2966-3-git-send-email-rhansen@bbn.com>
-	<7vhagu10ql.fsf@alter.siamese.dyndns.org> <51C203A1.4000404@bbn.com>
+Subject: Re: [PATCH 1/2] Documentation: Update 'linux-2.6.git' -> 'linux.git'
+Date: Wed, 19 Jun 2013 14:37:47 -0700
+Message-ID: <7vppvhye6s.fsf@alter.siamese.dyndns.org>
+References: <7vtxku112r.fsf@alter.siamese.dyndns.org>
+	<20130619194709.GQ15550@odin.tremily.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Wed Jun 19 23:05:58 2013
+Cc: David Aguilar <davvid@gmail.com>, Git <git@vger.kernel.org>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Wed Jun 19 23:38:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpPZl-00049g-Om
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 23:05:58 +0200
+	id 1UpQ4t-0000wf-3Q
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 23:38:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935204Ab3FSVFy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 17:05:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57210 "EHLO
+	id S964860Ab3FSViA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 17:38:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61406 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935060Ab3FSVFx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 17:05:53 -0400
+	id S964790Ab3FSVhu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 17:37:50 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CD62290AA;
-	Wed, 19 Jun 2013 21:05:52 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E15129244;
+	Wed, 19 Jun 2013 21:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uxfiRkkT7wNPCTKC+plL6QoarNA=; b=a2iSzr
-	Y5iNpgcFr/tiPIniUyuMg8BqAAoF7d0dO2MmNRAcRlk0vgujHj/SsRrJ3dn+MgEm
-	qfPBsokYXSXmMvghNx/03mXLlC6EAGewCJnLN/DxJ2outfmvNEpEjipKftHSmLYw
-	XUzqURdzKZN6N/nfYn7BxpQRXZ+rvhNfNUQms=
+	:content-type; s=sasl; bh=bY4hEoPI5+aWRL3CKWUSshr43Xo=; b=vr/VWi
+	X0dUDK0CG9eNySdJbI5jMK0Ws8sqV1WwYxVzUO11tGJ0EmHBnZPjhkXfr06nv1DZ
+	iVlySqWS+G/7fDS8Qi+oozDIJGHK8nmsxt5cvVc8DGaD2CW4Jqlp3dsJiAoQhXQP
+	9UR0ZRjyf+nVWoChd5qo/PQtTmlnktfhB9qYs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gNXLud9DFnEK6S8tVx/giXmahCANfJXH
-	i6DmvKm3T9uZm4cDqrB7/8J4oh2m6sGidb9UuYoXVu1gwcUk34LDElEpmxt3Aqou
-	t6tcTlU9z6CPYBDlVIbFGB1zt4U1U40GDATX563j1M68xw/VjetjGQ+kwOA3cfAm
-	7xNrfSfJV7s=
+	:content-type; q=dns; s=sasl; b=MCWjGWNkg8uCSCNXJFz11Q1Bzf4oFzGm
+	rfKX+QwnhDQhQX1CRURgPKyRF8Ts5qorIQ8JXyltYWJplNhO+T/JvnxovqsrENE3
+	fUyukp2rocDh/gnwIdSrhNz9c1fL/m3nTLWYzoqZRRms0Rb+DuK6gh6txujAjE5f
+	wVrmbSAjMic=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51CFD290A9;
-	Wed, 19 Jun 2013 21:05:52 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84C8C29243;
+	Wed, 19 Jun 2013 21:37:49 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B2488290A8;
-	Wed, 19 Jun 2013 21:05:51 +0000 (UTC)
-In-Reply-To: <51C203A1.4000404@bbn.com> (Richard Hansen's message of "Wed, 19
-	Jun 2013 15:16:49 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F219129242;
+	Wed, 19 Jun 2013 21:37:48 +0000 (UTC)
+In-Reply-To: <20130619194709.GQ15550@odin.tremily.us> (W. Trevor King's
+	message of "Wed, 19 Jun 2013 15:47:10 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 06021286-D924-11E2-9822-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7CC8ED6E-D928-11E2-8E17-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228425>
 
-Richard Hansen <rhansen@bbn.com> writes:
+"W. Trevor King" <wking@tremily.us> writes:
 
-> On 2013-06-19 13:14, Junio C Hamano wrote:
->> <object-type>-ish does not have anything to do with a ref.  Even
->> when an object is dangling in your object store without being
->> reachable from any of your refs, it keeps its own "ish"-ness.
->
-> Ah, so your personal definition of "ref" matches my personal definition
-> of "ref", and this definition doesn't match gitglossary(7).  :)
+> I think any doc rewrites should be outside the scope of this patch,
+> which should just replace references to linux-2.6.git with linux.git
+> (as it does).  
 
-Huh?  The only thing I I said was that "*-ish" does not have
-anything to do with a ref.  I didn't say anything about definition
-of "ref".
+OK.
 
-You are the one who brought "ref" into description of *-ish, with
-this:
+> Should the size updates from 2/2 (user-manual: Update download size
+> for Git and the kernel) go into the reroll, or have they been picked
+> up in a separate branch?
 
-> +[[def_committish]]committish (also commit-ish)::
-> +	A <<def_ref,ref>> pointing to an <<def_object,object>> that
-> +	can be recursively dereferenced to a
+I think 2/2 is fine.  Here is what I'll queue.
 
-All I am saying is that an object does not have to be pointed by any
-ref to be any-ish.  ish-ness is an attribute of an object, not an
-ref.  You do not say refs/heads/master (which is a ref) is a
-commit-ish or a tree-ish.  The object pointed at by that ref is
-always a commit and is a commit-ish and a tree-ish.
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index e831cc2..1cbf5af 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -57,10 +57,10 @@ download a copy of an existing repository.  If you don't already have a
+ project in mind, here are some interesting examples:
+ 
+ ------------------------------------------------
+-	# Git itself (approx. 10MB download):
++	# Git itself (approx. 40MB download):
+ $ git clone git://git.kernel.org/pub/scm/git/git.git
+-	# the Linux kernel (approx. 150MB download):
+-$ git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
++	# the Linux kernel (approx. 640MB download):
++$ git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+ ------------------------------------------------
+ 
+ The initial clone may be time-consuming for a large project, but you
