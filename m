@@ -1,75 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [Request] Git reset should be able to ignore file permissions
-Date: Wed, 19 Jun 2013 07:40:45 +0200
-Message-ID: <vpqsj0emzdu.fsf@anie.imag.fr>
-References: <CACuz9s31OUWNxTqCmj7ukAo7=TpXK7zBv5kTFZ5obpXKOju9ng@mail.gmail.com>
-	<vpqsj0fr19j.fsf@anie.imag.fr>
-	<CACuz9s1KGKsL-pGftAtAWyX5gUA5c-PYyJUSstf+xw151rZLtA@mail.gmail.com>
-	<vpq7ghrqzrv.fsf@anie.imag.fr>
-	<CACuz9s0=7z-M1-zgRNUs2hS-4LcuXrsWbqyDaMnuvFXRnP7E-Q@mail.gmail.com>
-	<vpqppvjpjz3.fsf@anie.imag.fr>
-	<CACuz9s2DfN5O91ZF8QOnWuA0V3bGFuUG5RVmkmjeL7Jien+fYg@mail.gmail.com>
-	<CACuz9s1H2Gi+B7=Fc3yJ+PC9oDueLQzXstSX0C9uAy3_MN4Kag@mail.gmail.com>
-	<vpqy5a7mmsg.fsf@anie.imag.fr>
-	<CACuz9s2KEne5_PwHwmsd1X7iE=GB3pC=iUzxSo=t6TbF+ZjCxA@mail.gmail.com>
+From: Veres Lajos <vlajos@gmail.com>
+Subject: small misspellings fixes
+Date: Wed, 19 Jun 2013 07:37:24 +0200 (CEST)
+Message-ID: <alpine.DEB.2.00.1306190733440.8850@citymarket.hu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Alexander Nestorov <alexandernst@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 19 07:40:53 2013
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 19 07:45:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpB8W-0004bN-Hw
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 07:40:52 +0200
+	id 1UpBCj-0005b7-4o
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 07:45:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752227Ab3FSFkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 01:40:49 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:58415 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751325Ab3FSFks (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 01:40:48 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5J5ejOB004978
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 19 Jun 2013 07:40:45 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UpB8P-0001R0-Oj; Wed, 19 Jun 2013 07:40:45 +0200
-In-Reply-To: <CACuz9s2KEne5_PwHwmsd1X7iE=GB3pC=iUzxSo=t6TbF+ZjCxA@mail.gmail.com>
-	(Alexander Nestorov's message of "Tue, 18 Jun 2013 19:03:18 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 19 Jun 2013 07:40:45 +0200 (CEST)
+	id S1753867Ab3FSFpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 01:45:07 -0400
+Received: from [188.227.225.139] ([188.227.225.139]:53849 "EHLO citymarket.hu"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752001Ab3FSFpG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 01:45:06 -0400
+X-Greylist: delayed 458 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Jun 2013 01:45:06 EDT
+Received: from citymarket.hu (localhost [127.0.0.1])
+	by citymarket.hu (Postfix) with ESMTP id EFD5A102158
+	for <git@vger.kernel.org>; Wed, 19 Jun 2013 07:37:24 +0200 (CEST)
+Received: by citymarket.hu (Postfix, from userid 1000)
+	id D8E3A102220; Wed, 19 Jun 2013 07:37:24 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by citymarket.hu (Postfix) with ESMTP id D223E102158
+	for <git@vger.kernel.org>; Wed, 19 Jun 2013 07:37:24 +0200 (CEST)
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228343>
 
-Alexander Nestorov <alexandernst@gmail.com> writes:
+small misspellings fixes
 
-> How about that:
->
-> +Reset only files who's content changed (instead of mtime modification)::
+Signed-off-by: Veres Lajos <vlajos@gmail.com>
+---
+diff --git a/git-p4.py b/git-p4.py
+index 911bbce..88fcf23 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -3168,7 +3168,7 @@ class P4Rebase(Command):
+         if os.system("git update-index --refresh") != 0:
+             die("Some files in your working directory are modified and different than what is in your index. You can use git update-index <filename> to bring the index up-to-date or stash away all your changes with git stash.");
+         if len(read_pipe("git diff-index HEAD --")) > 0:
+-            die("You have uncommited changes. Please commit them before rebasing or stash them away with git stash.");
++            die("You have uncommitted changes. Please commit them before rebasing or stash them away with git stash.");
 
-Much better, yes. I'd say "stat information" instead of mtime (that's
-what used in the description of update-index --refresh, and is a bit
-more accurate since Git also checks the inode number IIRC).
+         [upstream, settings] = findUpstreamBranchPoint()
+         if len(upstream) == 0:
+diff --git a/git-svn.perl b/git-svn.perl
+index d070de0..4e8275f 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1246,7 +1246,7 @@ sub cmd_rebase {
+ 		return;
+ 	}
+ 	if (command(qw/diff-index HEAD --/)) {
+-		print STDERR "Cannot rebase with uncommited changes:\n";
++		print STDERR "Cannot rebase with uncommitted changes:\n";
+ 		command_noisy('status');
+ 		exit 1;
+ 	}
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 2f70433..460d8eb 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -316,7 +316,7 @@ test_expect_success 'merge c1 with c2 (squash)' '
 
-> +------------
-> +$ git update-index --refresh               <1>
-> +$ git reset --hard                         <2>
-> +------------
-> ++
-> +<1> Make git realize which files actually changed instead of
+ test_debug 'git log --graph --decorate --oneline --all'
 
-s/git/Git/ when talking about "The Git system" (as opposed to "The git
-command"). git-gui or other Git clients would also see the index change.
-
+-test_expect_success 'unsuccesful merge of c1 with c2 (squash, ff-only)' '
++test_expect_success 'unsuccessful merge of c1 with c2 (squash, ff-only)' '
+ 	git reset --hard c1 &&
+ 	test_must_fail git merge --squash --ff-only c2
+ '
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Hi,
+
+I am trying to convert this pull request:
+https://github.com/git/git/pull/42
+to a proper patch email
+(Sorry If I miss something about the process.)
+-- 
+Veres Lajos
+vlajos@gmail.com
++36 20 438 5909
