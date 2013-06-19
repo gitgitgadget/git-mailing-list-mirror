@@ -1,67 +1,58 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Richard Hansen <rhansen@bbn.com>
 Subject: Re: [PATCH 2/4] glossary: define committish (a.k.a. commit-ish)
-Date: Wed, 19 Jun 2013 09:49:37 +0530
-Message-ID: <CALkWK0mo2SG+Eh1Qmy58Xo-taG_EGEj9RSx65EYhvs2CLK9dUA@mail.gmail.com>
-References: <1371607780-2966-1-git-send-email-rhansen@bbn.com> <1371607780-2966-3-git-send-email-rhansen@bbn.com>
+Date: Wed, 19 Jun 2013 00:38:22 -0400
+Message-ID: <51C135BE.4030506@bbn.com>
+References: <1371607780-2966-1-git-send-email-rhansen@bbn.com> <1371607780-2966-3-git-send-email-rhansen@bbn.com> <CALkWK0mo2SG+Eh1Qmy58Xo-taG_EGEj9RSx65EYhvs2CLK9dUA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, gitster@pobox.com
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Wed Jun 19 06:20:28 2013
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 19 06:38:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Up9se-0006Vq-3V
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 06:20:24 +0200
+	id 1UpAAE-0003pE-Po
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 06:38:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750866Ab3FSEUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 00:20:19 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:54386 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750778Ab3FSEUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 00:20:18 -0400
-Received: by mail-ie0-f175.google.com with SMTP id a13so12123034iee.20
-        for <git@vger.kernel.org>; Tue, 18 Jun 2013 21:20:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=SkUzwDmiPFbk05ZXE9ebffDLD7DI2xUybEwYb86jTCI=;
-        b=jqzteGW8gtWX/EcafzQvSapWCQv2FWRy1uHdQlaHkOX3aTT1zNf6Rnoi/cJh+CQ7yI
-         u7nB5JNMUExXSGEzsHVNEdYsNamFj5X2+y+Bj3Tc23DBD2ThTEJqv6nN3rQTQaNaNX1E
-         qZ9JaBTU6Ivt7cSFXASAiJxoP/4vEK3qRdnZqXPfmP6JOLni7OhQocrjDcw5CsltWzlN
-         F7Cee4a60O0qfM6FCR9YAiK/Qt7JFG7ZDdILhX005vVfQ/+CvCaWHId5Xp7CJySiBrA+
-         P55PqV4cBjgNiBC4kWjboR/JSo0xvAKTT7BLg3ThW1chDmMx1qckj+YmJ/bm6NC2v4as
-         e8yg==
-X-Received: by 10.50.25.194 with SMTP id e2mr388996igg.111.1371615618083; Tue,
- 18 Jun 2013 21:20:18 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Tue, 18 Jun 2013 21:19:37 -0700 (PDT)
-In-Reply-To: <1371607780-2966-3-git-send-email-rhansen@bbn.com>
+	id S1750939Ab3FSEib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 00:38:31 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:35826 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750778Ab3FSEia (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 00:38:30 -0400
+Received: from socket.bbn.com ([192.1.120.102]:39101)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1UpAA3-000If2-QD; Wed, 19 Jun 2013 00:38:23 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 33CC83FE94
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <CALkWK0mo2SG+Eh1Qmy58Xo-taG_EGEj9RSx65EYhvs2CLK9dUA@mail.gmail.com>
+X-Enigmail-Version: 1.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228338>
 
-Richard Hansen wrote:
-> +[[def_committish]]committish (also commit-ish)::
+On 2013-06-19 00:19, Ramkumar Ramachandra wrote:
+> Is master~3 a committish?  What about :/foomery?
 
-Good.
+Yes; as documented, both of those are refs that point to a commit.
 
-> +       A <<def_ref,ref>> pointing to an <<def_object,object>> that
-> +       can be recursively dereferenced to a
-> +       <<def_commit_object,commit object>>.
-> +       The following are all committishes:
-> +       a ref pointing to a commit object,
-> +       a ref pointing to a <<def_tag_object,tag object>> that points
-> +       to a commit object,
-> +       a ref pointing to a tag object that points to a tag object
-> +       that points to a commit object, etc.
+> Look at the other forms in gitrevisions(7); master:quuxery,
+> master^{tree} are notable exceptions.
 
-Is master~3 a committish?  What about :/foomery?  Look at the other
-forms in gitrevisions(7); master:quuxery, master^{tree} are notable
-exceptions.
+gitrevisions(7) says that master:quuxery is a ref pointing to a blob or
+tree, so it is not a committish.  However, if quuxery is a submodule, I
+would expect master:quuxery to point to a commit object and thus be a
+committish.  So perhaps the <rev>:<path> description in gitrevisions(7)
+should be updated to accommodate submodules.
 
-Thanks.
+master^{tree} is guaranteed to be a tree (if such a tree exists), so it
+is not a committish.
+
+-Richard
