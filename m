@@ -1,112 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] glossary: define committish (a.k.a. commit-ish)
-Date: Wed, 19 Jun 2013 15:36:28 -0700
-Message-ID: <7vwqppwwwj.fsf@alter.siamese.dyndns.org>
-References: <1371607780-2966-1-git-send-email-rhansen@bbn.com>
-	<1371607780-2966-3-git-send-email-rhansen@bbn.com>
-	<7vhagu10ql.fsf@alter.siamese.dyndns.org> <51C203A1.4000404@bbn.com>
-	<7vtxktyfo1.fsf@alter.siamese.dyndns.org> <51C22F77.8050004@bbn.com>
+From: Veres Lajos <vlajos@gmail.com>
+Subject: [PATCH] misspellings fixes by
+ https://github.com/vlajos/misspell_fixer
+Date: Thu, 20 Jun 2013 00:37:09 +0200 (CEST)
+Message-ID: <alpine.DEB.2.00.1306200036230.8850@citymarket.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 00:36:37 2013
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 20 00:37:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpQzU-0007p8-Bn
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 00:36:36 +0200
+	id 1UpR0B-0000ps-I7
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 00:37:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935284Ab3FSWgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 18:36:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40992 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935252Ab3FSWgb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 18:36:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F238E1B39E;
-	Wed, 19 Jun 2013 22:36:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=L1buVJ98bWRpk0U9Q0bPhPdmciM=; b=SJBSWP
-	QWnb3U3C6iOyfVXmk9rT+M6dTPohnvbwa5WiMIaTvvuu/8Qwx9LKzv/p8sXnHo4c
-	87ORm2PdfZ/2xi+aoA1BAqe+6Ah/FBxnFRaH0DBfBur4veHFMwy51on0jZbe/R1p
-	y534i4Le1KHqucBrV4syWuxHFw7sUuBa6ei+E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CkPIPqumWxS5R4hmhEiM708zVWK9CUiY
-	JGCghkGQnrTmL47jaJVtQNCU7lmrPnYPF/YPTjcdA8KHoZWB6R9x2Omf6iU8JT34
-	LuJN75KezdoIeurkb8MEUrQW8+jvZ+K0KtqZX3SVLmHyNYRzzHP/bJGbispL5Pkw
-	TvXbxt9B3Gc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E72801B39D;
-	Wed, 19 Jun 2013 22:36:30 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 489AA1B39B;
-	Wed, 19 Jun 2013 22:36:30 +0000 (UTC)
-In-Reply-To: <51C22F77.8050004@bbn.com> (Richard Hansen's message of "Wed, 19
-	Jun 2013 18:23:51 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AFA5A030-D930-11E2-A4B2-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S935294Ab3FSWhN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 18:37:13 -0400
+Received: from citymarket.hu ([188.227.225.139]:33238 "EHLO citymarket.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935252Ab3FSWhM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 18:37:12 -0400
+Received: from citymarket.hu (localhost [127.0.0.1])
+	by citymarket.hu (Postfix) with ESMTP id 72D0C102118
+	for <git@vger.kernel.org>; Thu, 20 Jun 2013 00:37:09 +0200 (CEST)
+Received: by citymarket.hu (Postfix, from userid 1000)
+	id 71EAB1023F1; Thu, 20 Jun 2013 00:37:09 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by citymarket.hu (Postfix) with ESMTP id 6AB6F102118
+	for <git@vger.kernel.org>; Thu, 20 Jun 2013 00:37:09 +0200 (CEST)
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228432>
 
-Richard Hansen <rhansen@bbn.com> writes:
 
-> Here's what I'm trying to say:
->
->   * Given the current definition of "ref" in gitglossary(7), claiming
->     that a foo-ish is a ref is not entirely incorrect.
+Signed-off-by: Veres Lajos <vlajos@gmail.com>
+---
+ git-p4.py        |    2 +-
+ git-svn.perl     |    2 +-
+ t/t7600-merge.sh |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-Ahh.  If you had quoted this a few exchanges ago:
+diff --git a/git-p4.py b/git-p4.py
+index 911bbce..88fcf23 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -3168,7 +3168,7 @@ class P4Rebase(Command):
+         if os.system("git update-index --refresh") != 0:
+             die("Some files in your working directory are modified and different than what is in your index. You can use git update-index <filename> to bring the index up-to-date or stash away all your changes with git stash.");
+         if len(read_pipe("git diff-index HEAD --")) > 0:
+-            die("You have uncommited changes. Please commit them before rebasing or stash them away with git stash.");
++            die("You have uncommitted changes. Please commit them before rebasing or stash them away with git stash.");
 
-    [[def_ref]]ref::
-            A 40-byte hex representation of a <<def_SHA1,SHA-1>> or a name that
-            denotes a particular <<def_object,object>>. They may be stored in
-            a file under `$GIT_DIR/refs/` directory, or
-            in the `$GIT_DIR/packed-refs` file.
+         [upstream, settings] = findUpstreamBranchPoint()
+         if len(upstream) == 0:
+diff --git a/git-svn.perl b/git-svn.perl
+index d070de0..4e8275f 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1246,7 +1246,7 @@ sub cmd_rebase {
+ 		return;
+ 	}
+ 	if (command(qw/diff-index HEAD --/)) {
+-		print STDERR "Cannot rebase with uncommited changes:\n";
++		print STDERR "Cannot rebase with uncommitted changes:\n";
+ 		command_noisy('status');
+ 		exit 1;
+ 	}
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 2f70433..460d8eb 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -316,7 +316,7 @@ test_expect_success 'merge c1 with c2 (squash)' '
 
-I would have immediately understood what you were trying to say.
-Sorry about a wasted back-and-forth.
+ test_debug 'git log --graph --decorate --oneline --all'
 
-The above is an utterly confused explanation.  It explains object
-names and mentions as a sidenote that object names _can_ be held in
-refs.
-
-It does not say what a ref is, in other words.
-
-Before 'packed-refs' was introduced, the right definition would have
-been
-
-	A file under `$GIT_DIR/refs/` directory that holds an object
-	name.
-
-And packed-refs is a way to coalesce such files into a single file
-to make it easier/faster to access.
-
-In today's world (after packed-refs was introduced), probably
-
-	A name that begins with refs/ (e.g. refs/heads/master) that
-	can point at an object name.
-
-        The namespace of refs is hierarchical and different
-        subhierarchy is used for different purposes (e.g. the
-        refs/heads/ hierarchy is used to represent local branches).
-
-is an appropriate rewrite of the above.
-
-If we also want to explain the implementation details of refs, then
-additionally at the end of the first paragraph, add:
-
-	... at an object name, by storing its 40-byte hex
-	representation.  They are implemented as either a file in
-	$GIT_DIR/refs/ directory (called "loose refs") or an entry
-	in $GIT_DIR/packed-refs file (called "packed refs"); when a
-	loose ref exists, a packed ref of the same name is ignored.
+-test_expect_success 'unsuccesful merge of c1 with c2 (squash, ff-only)' '
++test_expect_success 'unsuccessful merge of c1 with c2 (squash, ff-only)' '
+ 	git reset --hard c1 &&
+ 	test_must_fail git merge --squash --ff-only c2
+ '
+-- 
+1.7.10.4
