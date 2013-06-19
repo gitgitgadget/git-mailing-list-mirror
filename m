@@ -1,68 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2 6/7] rebase: write better reflog messages
-Date: Wed, 19 Jun 2013 07:39:54 +0200
-Message-ID: <51C1442A.2010904@viscovery.net>
-References: <1371581737-10013-1-git-send-email-artagnon@gmail.com> <1371581737-10013-7-git-send-email-artagnon@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [Request] Git reset should be able to ignore file permissions
+Date: Wed, 19 Jun 2013 07:40:45 +0200
+Message-ID: <vpqsj0emzdu.fsf@anie.imag.fr>
+References: <CACuz9s31OUWNxTqCmj7ukAo7=TpXK7zBv5kTFZ5obpXKOju9ng@mail.gmail.com>
+	<vpqsj0fr19j.fsf@anie.imag.fr>
+	<CACuz9s1KGKsL-pGftAtAWyX5gUA5c-PYyJUSstf+xw151rZLtA@mail.gmail.com>
+	<vpq7ghrqzrv.fsf@anie.imag.fr>
+	<CACuz9s0=7z-M1-zgRNUs2hS-4LcuXrsWbqyDaMnuvFXRnP7E-Q@mail.gmail.com>
+	<vpqppvjpjz3.fsf@anie.imag.fr>
+	<CACuz9s2DfN5O91ZF8QOnWuA0V3bGFuUG5RVmkmjeL7Jien+fYg@mail.gmail.com>
+	<CACuz9s1H2Gi+B7=Fc3yJ+PC9oDueLQzXstSX0C9uAy3_MN4Kag@mail.gmail.com>
+	<vpqy5a7mmsg.fsf@anie.imag.fr>
+	<CACuz9s2KEne5_PwHwmsd1X7iE=GB3pC=iUzxSo=t6TbF+ZjCxA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 19 07:40:29 2013
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Alexander Nestorov <alexandernst@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 19 07:40:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpB88-0003fk-Gb
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 07:40:28 +0200
+	id 1UpB8W-0004bN-Hw
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 07:40:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753439Ab3FSFkD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 01:40:03 -0400
-Received: from so.liwest.at ([212.33.55.13]:10536 "EHLO so.liwest.at"
+	id S1752227Ab3FSFkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 01:40:49 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:58415 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752001Ab3FSFkC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 01:40:02 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UpB7a-0005o6-Qw; Wed, 19 Jun 2013 07:39:55 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 7CAC91660F;
-	Wed, 19 Jun 2013 07:39:54 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <1371581737-10013-7-git-send-email-artagnon@gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S1751325Ab3FSFks (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 01:40:48 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5J5ejOB004978
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 19 Jun 2013 07:40:45 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UpB8P-0001R0-Oj; Wed, 19 Jun 2013 07:40:45 +0200
+In-Reply-To: <CACuz9s2KEne5_PwHwmsd1X7iE=GB3pC=iUzxSo=t6TbF+ZjCxA@mail.gmail.com>
+	(Alexander Nestorov's message of "Tue, 18 Jun 2013 19:03:18 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 19 Jun 2013 07:40:45 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228342>
 
-Am 6/18/2013 20:55, schrieb Ramkumar Ramachandra:
-> Now that the "checkout" invoked internally from "rebase" knows to honor
-> GIT_REFLOG_ACTION, we can start to use it to write a better reflog
-> message when "rebase anotherbranch", "rebase --onto branch",
-> etc. internally checks out the new fork point.  We will write:
-> 
->   rebase: checkout master
-> 
-> instead of the old
-> 
->   rebase
+Alexander Nestorov <alexandernst@gmail.com> writes:
 
-> diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-> index 34e3102..69fae7a 100644
-> --- a/git-rebase--am.sh
-> +++ b/git-rebase--am.sh
-> @@ -5,11 +5,13 @@
->  
->  case "$action" in
->  continue)
-> +	GIT_REFLOG_ACTION="$base_reflog_action"
+> How about that:
+>
+> +Reset only files who's content changed (instead of mtime modification)::
 
-I haven't followed the topic closely, but I wonder why there are so many
-explicit assignments to GIT_REFLOG_ACTION. Is calling set_reflog_action
-(defined in git-sh-setup) the wrong thing to do?
+Much better, yes. I'd say "stat information" instead of mtime (that's
+what used in the description of update-index --refresh, and is a bit
+more accurate since Git also checks the inode number IIRC).
 
--- Hannes
+> +------------
+> +$ git update-index --refresh               <1>
+> +$ git reset --hard                         <2>
+> +------------
+> ++
+> +<1> Make git realize which files actually changed instead of
+
+s/git/Git/ when talking about "The Git system" (as opposed to "The git
+command"). git-gui or other Git clients would also see the index change.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
