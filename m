@@ -1,127 +1,112 @@
-From: Richard Hansen <rhansen@bbn.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 2/4] glossary: define committish (a.k.a. commit-ish)
-Date: Wed, 19 Jun 2013 18:23:51 -0400
-Message-ID: <51C22F77.8050004@bbn.com>
-References: <1371607780-2966-1-git-send-email-rhansen@bbn.com> <1371607780-2966-3-git-send-email-rhansen@bbn.com> <7vhagu10ql.fsf@alter.siamese.dyndns.org> <51C203A1.4000404@bbn.com> <7vtxktyfo1.fsf@alter.siamese.dyndns.org>
+Date: Wed, 19 Jun 2013 15:36:28 -0700
+Message-ID: <7vwqppwwwj.fsf@alter.siamese.dyndns.org>
+References: <1371607780-2966-1-git-send-email-rhansen@bbn.com>
+	<1371607780-2966-3-git-send-email-rhansen@bbn.com>
+	<7vhagu10ql.fsf@alter.siamese.dyndns.org> <51C203A1.4000404@bbn.com>
+	<7vtxktyfo1.fsf@alter.siamese.dyndns.org> <51C22F77.8050004@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 00:24:10 2013
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Thu Jun 20 00:36:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpQnQ-0008Nb-Fq
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 00:24:08 +0200
+	id 1UpQzU-0007p8-Bn
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 00:36:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964934Ab3FSWXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 18:23:55 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:61522 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934961Ab3FSWXy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 18:23:54 -0400
-Received: from socket.bbn.com ([192.1.120.102]:40604)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1UpQnA-000Flr-B3; Wed, 19 Jun 2013 18:23:52 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 1644640665
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <7vtxktyfo1.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5.1
+	id S935284Ab3FSWgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 18:36:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40992 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935252Ab3FSWgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 18:36:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F238E1B39E;
+	Wed, 19 Jun 2013 22:36:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=L1buVJ98bWRpk0U9Q0bPhPdmciM=; b=SJBSWP
+	QWnb3U3C6iOyfVXmk9rT+M6dTPohnvbwa5WiMIaTvvuu/8Qwx9LKzv/p8sXnHo4c
+	87ORm2PdfZ/2xi+aoA1BAqe+6Ah/FBxnFRaH0DBfBur4veHFMwy51on0jZbe/R1p
+	y534i4Le1KHqucBrV4syWuxHFw7sUuBa6ei+E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CkPIPqumWxS5R4hmhEiM708zVWK9CUiY
+	JGCghkGQnrTmL47jaJVtQNCU7lmrPnYPF/YPTjcdA8KHoZWB6R9x2Omf6iU8JT34
+	LuJN75KezdoIeurkb8MEUrQW8+jvZ+K0KtqZX3SVLmHyNYRzzHP/bJGbispL5Pkw
+	TvXbxt9B3Gc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E72801B39D;
+	Wed, 19 Jun 2013 22:36:30 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 489AA1B39B;
+	Wed, 19 Jun 2013 22:36:30 +0000 (UTC)
+In-Reply-To: <51C22F77.8050004@bbn.com> (Richard Hansen's message of "Wed, 19
+	Jun 2013 18:23:51 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AFA5A030-D930-11E2-A4B2-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228431>
 
-On 2013-06-19 17:05, Junio C Hamano wrote:
-> Richard Hansen <rhansen@bbn.com> writes:
-> 
->> On 2013-06-19 13:14, Junio C Hamano wrote:
->>> <object-type>-ish does not have anything to do with a ref.  Even
->>> when an object is dangling in your object store without being
->>> reachable from any of your refs, it keeps its own "ish"-ness.
->>
->> Ah, so your personal definition of "ref" matches my personal definition
->> of "ref", and this definition doesn't match gitglossary(7).  :)
-> 
-> Huh?  The only thing I I said was that "*-ish" does not have
-> anything to do with a ref.  I didn't say anything about definition
-> of "ref".
+Richard Hansen <rhansen@bbn.com> writes:
 
-The phrase
+> Here's what I'm trying to say:
+>
+>   * Given the current definition of "ref" in gitglossary(7), claiming
+>     that a foo-ish is a ref is not entirely incorrect.
 
-    when an object is dangling in your object store without being
-    reachable from any of your refs
+Ahh.  If you had quoted this a few exchanges ago:
 
-implies something about your definition of a ref that is inconsistent
-with gitglossary(7).  See below.
+    [[def_ref]]ref::
+            A 40-byte hex representation of a <<def_SHA1,SHA-1>> or a name that
+            denotes a particular <<def_object,object>>. They may be stored in
+            a file under `$GIT_DIR/refs/` directory, or
+            in the `$GIT_DIR/packed-refs` file.
 
-> 
-> You are the one who brought "ref" into description of *-ish, with
-> this:
-> 
->> +[[def_committish]]committish (also commit-ish)::
->> +	A <<def_ref,ref>> pointing to an <<def_object,object>> that
->> +	can be recursively dereferenced to a
+I would have immediately understood what you were trying to say.
+Sorry about a wasted back-and-forth.
 
-And I did that to be consistent with the definition of tree-ish, which
-currently says:
+The above is an utterly confused explanation.  It explains object
+names and mentions as a sidenote that object names _can_ be held in
+refs.
 
-    tree-ish
-        A ref pointing to either a commit object, a tree object, or a
-        tag object pointing to a tag or commit or tree object.
+It does not say what a ref is, in other words.
 
-Notice the term "ref" in the above definition.  This definition says
-that a tree-ish is a particular kind of ref -- NOT a property of an
-object as you claim.  I'm not saying you're wrong -- I actually agree
-with you completely -- I'm just saying that your definition of ref
-doesn't match the definition of ref in gitglossary(7).
+Before 'packed-refs' was introduced, the right definition would have
+been
 
-The current definition of ref says:
+	A file under `$GIT_DIR/refs/` directory that holds an object
+	name.
 
-    ref
-        A 40-byte hex representation of a SHA-1 or a name that denotes
-        a particular object.  They may be stored in a file under
-        $GIT_DIR/refs/ directory, or in the $GIT_DIR/packed-refs file.
+And packed-refs is a way to coalesce such files into a single file
+to make it easier/faster to access.
 
-Depending on how one interprets "name" (which is not defined in
-gitglossary(7)) in the above definition of ref, claiming that
-"master:README" is a ref is consistent with gitglossary(7).  It is NOT,
-however, consistent with what you -- or anyone else I know -- think of
-as a ref.
+In today's world (after packed-refs was introduced), probably
 
-> 
-> All I am saying is that an object does not have to be pointed by any
-> ref to be any-ish.  ish-ness is an attribute of an object, not an
-> ref.  You do not say refs/heads/master (which is a ref) is a
-> commit-ish or a tree-ish.  The object pointed at by that ref is
-> always a commit and is a commit-ish and a tree-ish.
+	A name that begins with refs/ (e.g. refs/heads/master) that
+	can point at an object name.
 
-I understand and agree completely and always have.
+        The namespace of refs is hierarchical and different
+        subhierarchy is used for different purposes (e.g. the
+        refs/heads/ hierarchy is used to represent local branches).
 
-Here's what I'm trying to say:
+is an appropriate rewrite of the above.
 
-  * Given the current definition of "ref" in gitglossary(7), claiming
-    that a foo-ish is a ref is not entirely incorrect.
-  * If the definition of "ref" is altered to match the general
-    understanding of a "ref", then claiming that a foo-ish is a ref is
-    wrong.  Very wrong.
+If we also want to explain the implementation details of refs, then
+additionally at the end of the first paragraph, add:
 
-I was trying to be minimal and consistent with my changes, but
-unfortunately it seems like more changes are necessary.  When I next
-have time, I'll send some revised patches to include the following changes:
-
-  * replace the current definition of "ref" with something that matches
-    general understanding
-  * eliminate the use of "ref" in the definitions of tag object, tree
-    object, and tree-ish
-  * create a term that means "a thing understood by rev-parse that
-    uniquely identifies an object" (perhaps "object specifier"?) that
-    can be used in gitglossary(7) and elsewhere
-
--Richard
+	... at an object name, by storing its 40-byte hex
+	representation.  They are implemented as either a file in
+	$GIT_DIR/refs/ directory (called "loose refs") or an entry
+	in $GIT_DIR/packed-refs file (called "packed refs"); when a
+	loose ref exists, a packed ref of the same name is ignored.
