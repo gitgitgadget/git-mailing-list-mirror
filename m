@@ -1,110 +1,79 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v2] sequencer: write useful reflog message for fast-forward
-Date: Wed, 19 Jun 2013 13:07:09 +0530
-Message-ID: <1371627429-24819-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 19 09:40:29 2013
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: [PATCH] http.c: don't rewrite the user:passwd string multiple
+ times
+Date: Wed, 19 Jun 2013 09:40:54 +0200 (CEST)
+Message-ID: <alpine.DEB.2.00.1306190927020.23103@tvnag.unkk.fr>
+References: <1371520840-24906-1-git-send-email-bcasey@nvidia.com> <20130618051902.GA5916@sigill.intra.peff.net> <CA+sFfMdEvwzmnEBeO+_pwdmN3m5rkJvUCVFFJU8mtmyN+WxH6w@mail.gmail.com> <20130618221327.GA14234@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Brandon Casey <drafnel@gmail.com>,
+	Brandon Casey <bcasey@nvidia.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 19 09:41:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpD0E-0004gE-2r
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 09:40:26 +0200
+	id 1UpD15-0006be-Gr
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 09:41:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756552Ab3FSHkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 03:40:20 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:53346 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755576Ab3FSHkT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 03:40:19 -0400
-Received: by mail-pd0-f180.google.com with SMTP id 10so4790381pdi.11
-        for <git@vger.kernel.org>; Wed, 19 Jun 2013 00:40:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=sGnladsDjUeFYXAmVti9cWu4dIUXcefL6MYyFCOGPgM=;
-        b=0I0dTczVnUpCj3S9f3j5jk7otR0lYRlpilecUGWTdf78WFv0Q/hxyPlh1BxxxJWy3A
-         kopNJiczErIHlxRlY482AFqytvbGPiNJLNsfcynb9Ss8cA1a1w9WYSay5upYjVK7kH4v
-         rbN8+bzWnvm3fSzeS76+eC909uJ4ff+XSyv+GPKTuJ1RRLhhswvdipaI2y9iFpmHu+Xv
-         bqwlyYuoJQ54dnaYUixJlU9+dVHNT3M7ickJpU1iRQ3MF0HPAzos2hUvh7+j7KZna5kj
-         E4zO513Ui/O+1WNsB8dgrFW+i79W7sRq2e2RjKmBNB9dRlr+RiQyL0VfwtoYHj7xRo8M
-         UbKg==
-X-Received: by 10.68.175.33 with SMTP id bx1mr1646291pbc.21.1371627618259;
-        Wed, 19 Jun 2013 00:40:18 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.211.22])
-        by mx.google.com with ESMTPSA id ty8sm23598851pac.8.2013.06.19.00.40.16
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 19 Jun 2013 00:40:17 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1.449.g41b32a4.dirty
+	id S1756578Ab3FSHlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 03:41:15 -0400
+Received: from giant.haxx.se ([80.67.6.50]:34194 "EHLO giant.haxx.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756336Ab3FSHlP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 03:41:15 -0400
+Received: from giant.haxx.se (localhost.localdomain [127.0.0.1])
+	by giant.haxx.se (8.14.4/8.14.4/Debian-2) with ESMTP id r5J7etQq010202
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 19 Jun 2013 09:40:55 +0200
+Received: from localhost (dast@localhost)
+	by giant.haxx.se (8.14.4/8.14.4/Submit) with ESMTP id r5J7etV6010199;
+	Wed, 19 Jun 2013 09:40:55 +0200
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+X-X-Sender: dast@giant.haxx.se
+In-Reply-To: <20130618221327.GA14234@sigill.intra.peff.net>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228356>
 
-The following command
+On Tue, 18 Jun 2013, Jeff King wrote:
 
-  $ git cherry-pick --ff b8bb3f
+>> But, I don't know if there is any multi-processing happening within the 
+>> curl library.
+>
+> I don't think curl does any threading; when we are not inside 
+> curl_*_perform, there is no curl code running at all (Daniel can correct me 
+> if I'm wrong on that).
 
-writes the following uninformative message to the reflog
+Correct, that's true. The default setup of libcurl never uses any threading at 
+all, everything is done using non-blocking calls and state-machines.
 
-  cherry-pick
+There's but a minor exception, so let me describe that case just to be 
+perfectly clear:
 
-Improve it to
+When you've build libcurl with the "threaded resolver" backend, libcurl fires 
+up a new thread to resolve host names with during the name resolving phase of 
+a transfer and that thread can then actually continue to run when 
+curl_multi_perform() returns.
 
-  cherry-pick: fast-forward
+That's however very isolated, stricly only for name resolving and there should 
+be no way for an application to mess that up. Nothing of what you've discussed 
+in this thread would affect or harm that thread. The biggest impact it tends 
+to have on applications (that aren't following the API properly or assume a 
+little too much) is that it changes the nature of what file descriptors to 
+wait for slightly during the name resolve phase.
 
-Avoid hard-coding "cherry-pick" in fast_forward_to(), so the sequencer
-is generic enough to support future actions.
+Some Linux distros ship their default libcurl builds using the threaded 
+resolver.
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Changes since v1:
-
- - fast_forward_to() now takes opts to determine action_name()
- - strbuf_release() to free memory
-
- sequencer.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index ab6f8a7..423c1f5 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -270,15 +270,20 @@ static int error_dirty_index(struct replay_opts *opts)
- }
- 
- static int fast_forward_to(const unsigned char *to, const unsigned char *from,
--			   int unborn)
-+			int unborn, struct replay_opts *opts)
- {
- 	struct ref_lock *ref_lock;
-+	struct strbuf sb = STRBUF_INIT;
-+	int ret;
- 
- 	read_cache();
- 	if (checkout_fast_forward(from, to, 1))
- 		exit(1); /* the callee should have complained already */
- 	ref_lock = lock_any_ref_for_update("HEAD", unborn ? null_sha1 : from, 0);
--	return write_ref_sha1(ref_lock, to, "cherry-pick");
-+	strbuf_addf(&sb, "%s: fast-forward", action_name(opts));
-+	ret = write_ref_sha1(ref_lock, to, sb.buf);
-+	strbuf_release(&sb);
-+	return ret;
- }
- 
- static int do_recursive_merge(struct commit *base, struct commit *next,
-@@ -523,7 +528,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 	if (opts->allow_ff &&
- 	    ((parent && !hashcmp(parent->object.sha1, head)) ||
- 	     (!parent && unborn)))
--	     return fast_forward_to(commit->object.sha1, head, unborn);
-+		return fast_forward_to(commit->object.sha1, head, unborn, opts);
- 
- 	if (parent && parse_commit(parent) < 0)
- 		/* TRANSLATORS: The first %s will be "revert" or
 -- 
-1.8.3.1.449.g41b32a4.dirty
+
+  / daniel.haxx.se
