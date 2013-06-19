@@ -1,175 +1,143 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/6] config doc: rewrite push.default section
-Date: Wed, 19 Jun 2013 12:55:25 -0700
-Message-ID: <7v7ghpzxhu.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 3/6] push: change `simple` to accommodate triangular workflows
+Date: Wed, 19 Jun 2013 13:00:55 -0700
+Message-ID: <7v38sdzx8o.fsf@alter.siamese.dyndns.org>
 References: <1371640304-26019-1-git-send-email-artagnon@gmail.com>
-	<1371640304-26019-3-git-send-email-artagnon@gmail.com>
+	<1371640304-26019-4-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 19 21:55:35 2013
+X-From: git-owner@vger.kernel.org Wed Jun 19 22:01:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpOTe-0007V5-HW
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 21:55:35 +0200
+	id 1UpOYw-0008Ex-FE
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 22:01:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935093Ab3FSTz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 15:55:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47511 "EHLO
+	id S1757362Ab3FSUA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jun 2013 16:00:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51909 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757302Ab3FSTz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 15:55:28 -0400
+	id S1756805Ab3FSUA5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jun 2013 16:00:57 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B78DC297F5;
-	Wed, 19 Jun 2013 19:55:27 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 401AE29AEB;
+	Wed, 19 Jun 2013 20:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=x7Lu9a3auCGwx6IWGXd0tpWdabQ=; b=tVERBy
-	sHBXRQVe+za8pkbh7UGNXe+oVu3C+Lt3WxEjwBX4MWP3NfrymU12oyrHj9ckyd0e
-	tKr1qGmmS/LZOPFuXgegYyGKoO8+faGCYVUOWVZ/h5L7w3jxKXm00D1aupQpMdHQ
-	OqUi5P0xcJShijcH6TMxcdwzCUkcYq6ChYNkw=
+	:content-type; s=sasl; bh=x3pcElC9PvGHsJcokf6BK/sHJDc=; b=H0BXkV
+	vNTgxUkJtoNDjVjVHz6RE5OSfwhVDddkxpyBJr0pDFs3qsi8GpuwPMtmS6J4G1Yq
+	YbK/jMr6XBdXzec+h/USbCGS6072MUrqDFTWOw5qeE2C8w+QebRE7v1R3o8cB0pO
+	d9ZUZaXOQPmAo5hmUsDI5tScuqB+qJx74pcjM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G1rONYLqWOMyM6UFFToZkUd/YNGPacsf
-	/vS+vfnNYDFyWrEdxOoQu0bN+y9lz42Qdzbt/h5ABk4G3IHLUyL0Q7bHpPC8muGz
-	O+I4QVaJZHxQKu6shXVsLAhO2zgV3jCR5MLJbR7lCbsW0g/SC1M0emfl2hoKHTfC
-	M+hyBzd7Luc=
+	:content-type; q=dns; s=sasl; b=KF0ePU9sPiSz7tJdrvQjWn69NnBfqvEj
+	RpXxTk9klXwEAqx2R+Ag0j4st18TL/20GzKzZPTtcQ7XYXC8pnXYSCvhblMqbr+j
+	xedO/EGvUHycG6RkGwPOZHaWN3U4czvzyVE5LkF+JiV7usUByF8eHszze/NUWvqZ
+	qMUxZEcqF+M=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC17A297F3;
-	Wed, 19 Jun 2013 19:55:27 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35F4629AEA;
+	Wed, 19 Jun 2013 20:00:57 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EAC94297F0;
-	Wed, 19 Jun 2013 19:55:26 +0000 (UTC)
-In-Reply-To: <1371640304-26019-3-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Wed, 19 Jun 2013 16:41:40 +0530")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7DF8829AE6;
+	Wed, 19 Jun 2013 20:00:56 +0000 (UTC)
+In-Reply-To: <1371640304-26019-4-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Wed, 19 Jun 2013 16:41:41 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2FD996EC-D91A-11E2-9922-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F447A50A-D91A-11E2-B33A-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228419>
 
 Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
->  push.default::
-> +	Defines the action `git push` should take if no refspec is
-> +	explicitly given.  Different values are well-suited for
-> +	specific workflows; for instance, in a purely central workflow
-> +	(i.e. the fetch source is equal to the push destination),
-> +	`upstream` is probably what you want.  Possible values are:
->  +
->  --
-> -* `nothing` - do not push anything.
-> -* `matching` - push all branches having the same name in both ends.
-> -  This is for those who prepare all the branches into a publishable
-> -  shape and then push them out with a single command.  It is not
-> -  appropriate for pushing into a repository shared by multiple users,
-> -  since locally stalled branches will attempt a non-fast forward push
-> -  if other users updated the branch.
-> -  +
-> -  This is currently the default, but Git 2.0 will change the default
-> -  to `simple`.
-> -* `upstream` - push the current branch to its upstream branch
-> -  (`tracking` is a deprecated synonym for this).
-> -  With this, `git push` will update the same remote ref as the one which
-> -  is merged by `git pull`, making `push` and `pull` symmetrical.
-> -  See "branch.<name>.merge" for how to configure the upstream branch.
-> +* `nothing` - do not push anything (error out) unless a refspec is
-> +  explicitly given.  Very safe, but not very convenient.
+> When remote.pushdefault or branch.<name>.pushremote is set (a triangular
+> workflow feature), master@{u} != origin, and push.default is set to
+> `upstream` or `simple`:
+>
+>   $ git push
+>   fatal: You are pushing to remote 'origin', which is not the upstream of
+>   your current branch 'master', without telling me what to push
+>   to update which remote branch.
+>
+> Unfortunately, in the case of `upstream`, the very name indicates that
+> it is only suitable for use in central workflows; let us not even
+> attempt to give it a new meaning in triangular workflows, and error out
+> as usual.
 
-Drop the last one, that does not add any value to the description.
+Sensible.
 
-> +
-> +* `current` - push the current branch to update a branch with the same
-> +  name on the receiving end.  Works in both central and non-central
-> +  workflows.  Equivalent to pushing the refspec "$branch" ($branch is
-> +  the name of the current branch).
+> However, the `simple` does not have this problem: it is poised to
+> be the default for Git 2.0, and we would definitely like it to do
+> something sensible in triangular workflows.
+>
+> Decouple `simple` from `upstream` completely, and change it to mean
+> `current` with a safety feature: a `push` and `pull` should not be
+> asymmetrical in the special case of central workflows.
 
-I do not think this is a place to teach how various refspecs are
-spelled, but if you want to, then giving a complete command line
-would be more appropriate.  Otherwise I'd suggest dropping
-everything after "Equivalent to...".
+Double negation confused my parser.  'push' and 'pull' should be
+kept symmetrical in central workflows?
 
-> +* `upstream` - push the current branch to a branch with the name
-> +  branch.$branch.merge on the receiving end, and error out if the push
-> +  destination is not the same as branch.$branch.remote.
+> +* `simple` - a safer version of `current`; push the current branch to
+> +  update a branch with the same name on the receiving end, with a
+> +  safety feature: in central workflows, error out if
+> +  branch.$branch.merge is set and not equal to $branch,
 
-While the above may be technically accurate, a mechanical definition
-help readers who read this for the first time may not be very
-helpful.  What does the operation mean?
+If branch.$branch.merge is _not_ set, what happens in the current
+code, and what should happen?
 
-	push the current branch back to the branch whose changes are
-	usually integrated into the current branch with "git pull"
-	(which is called @{upstream}).
+> + to make sure
+> +  that a `push` and `push` are never asymmetrical.  It will become the
+> +  default in Git 2.0.
 
-	this mode only makes sense if you are pushing to the same
-	repository you would normally "pull" from (i.e. central
-	workflow).
+Ditto.
 
->  * `simple` - like `upstream`, but refuses to push if the upstream
->    branch's name is different from the local one. This is the safest
->    option and is well-suited for beginners. It will become the default
->    in Git 2.0.
+>  * `matching` - push all branches having the same name on both ends
+>    (essentially ignoring all newly created local branches).
+> diff --git a/builtin/push.c b/builtin/push.c
+> index 2d84d10..d8d27d9 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -120,6 +120,25 @@ static const char message_detached_head_die[] =
+>  	   "\n"
+>  	   "    git push %s HEAD:<name-of-remote-branch>\n");
+>  
+> +static void setup_push_simple(struct remote *remote)
+> +{
+> +	struct branch *branch = branch_get(NULL);
+> +	if (!branch)
+> +		die(_(message_detached_head_die), remote->name);
 
 OK.
 
-> +* `matching` - push all branches having the same name on both ends
-> +  (essentially ignoring all newly created local branches).
+> +	if (!branch->merge_nr || !branch->merge || !branch->remote_name)
+> +		/* No upstream configured */
+> +		goto end;
 
-That misses the 'essense' of 'matching' by a wide margin, as "newly
-created" does not have anything to do with it.  Topic branches you
-decided not to push long time ago and haven't pushed out so far will
-not suddenly get pushed with "git push", either.
+Without any configuration the current branch is pushed out, which
+loosens the safety we implemented in the current 'safer upstream'.
 
-Think of it this way.  Among your local branches, there are classes
-of branches that:
+I am not convinced this is a good change.  I am not convinced this is
+a bad change, either, yet, but this loosening smells bad.
 
- (1) you would want to push now,
- (2) you would want to push when they are done, and
- (3) you would never want to push.
+> diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
+> index 69ce6bf..e54dd02 100755
+> --- a/t/t5528-push-default.sh
+> +++ b/t/t5528-push-default.sh
+> @@ -85,7 +85,7 @@ test_expect_success 'push from/to new branch with current creates remote branch'
+>  test_expect_success 'push to existing branch, with no upstream configured' '
+>  	test_config branch.master.remote repo1 &&
+>  	git checkout master &&
+> -	test_push_failure simple &&
+> +	test_push_success simple master &&
+>  	test_push_failure upstream
+>  '
 
-Other "push only single branch" modes make this distinction by
-limiting the push to only the first class (those you would want to
-push now), but it further limits that set to a single branch, which
-is the current one.  It is up to you to differentiate class 2+3
-(those you do not want to push now) from class 1 (the single one you
-do want to push) and you indicate that choice by running 'git push'
-only when you are on the branch you want to push out.
-
-The 'matching' mode allows you to "configure" by having the other
-side remember which ones are in the class 1 (i.e. those that you
-will push out when you say 'git push').  Instead of keeping a list
-of branches to be pushed in local configuration variable, you use
-the set of branches your publishing point has.  It has a limitation
-that you are not allowed to have the second category (i.e. at this
-point of running 'git push' they are not ready to be pushed out),
-though.
-
-Perhaps
-
-	... on both ends.  This makes the repository you are pushing
-	to remember the set of branches that will be pushed out
-	(e.g. if you always push 'maint' and 'master' there and no
-	other branches, the repository you push to will have these
-	two branches, and your local 'maint' and 'master' will be
-	pushed there).
-
-        To use this mode effectively, you have to make sure _all_
-	the branches you would push out are ready to be pushed out
-	before running 'git push', as the whole point of this mode
-	is to allow you to push all of the branches in one go.  If
-	you usually finish work on only one branch and push out the
-	result, while other branches are unfinished, this mode is
-	not for you.  Also this mode is not suitable for pushing
-	into a shared central repository, as other people may add
-	new branches there, or update the tip of existing branches
-	outside your control.
-
-or something like that.
+Likewise.
