@@ -1,93 +1,94 @@
-From: Brandon Casey <bcasey@nvidia.com>
-Subject: [PATCH v2] http.c: don't rewrite the user:passwd string multiple times
-Date: Tue, 18 Jun 2013 19:43:49 -0700
-Message-ID: <1371609829-31813-1-git-send-email-bcasey@nvidia.com>
-References: <CA+sFfMcsOx14UdzLF_JsgkpUQU6yG7DE+00eA3d+Lo-qncDgew@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <gitster@pobox.com>, <peff@peff.net>, <daniel@haxx.se>,
-	Brandon Casey <drafnel@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 19 04:44:15 2013
+From: "W. Trevor King" <wking@tremily.us>
+Subject: [PATCH 2/2] user-manual: Update download size for Git and the kernel
+Date: Tue, 18 Jun 2013 21:55:22 -0400
+Message-ID: <deb78c114d068ab3f9e28bcd019c3e29ad7b770c.1371606791.git.wking@tremily.us>
+References: <cover.1371606791.git.wking@tremily.us>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 19 04:56:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Up8Na-0008H8-8o
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 04:44:14 +0200
+	id 1Up8ZH-0001L0-26
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Jun 2013 04:56:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934083Ab3FSCoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jun 2013 22:44:09 -0400
-Received: from hqemgate03.nvidia.com ([216.228.121.140]:6031 "EHLO
-	hqemgate03.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933861Ab3FSCoI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jun 2013 22:44:08 -0400
-Received: from hqnvupgp07.nvidia.com (Not Verified[216.228.121.13]) by hqemgate03.nvidia.com
-	id <B51c11c940000>; Tue, 18 Jun 2013 19:51:00 -0700
-Received: from hqemhub01.nvidia.com ([172.20.12.94])
-  by hqnvupgp07.nvidia.com (PGP Universal service);
-  Tue, 18 Jun 2013 19:42:17 -0700
-X-PGP-Universal: processed;
-	by hqnvupgp07.nvidia.com on Tue, 18 Jun 2013 19:42:17 -0700
-Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub01.nvidia.com
- (172.20.150.30) with Microsoft SMTP Server id 8.3.298.1; Tue, 18 Jun 2013
- 19:43:51 -0700
-X-Mailer: git-send-email 1.8.3.1.440.gc2bf105
-In-Reply-To: <CA+sFfMcsOx14UdzLF_JsgkpUQU6yG7DE+00eA3d+Lo-qncDgew@mail.gmail.com>
+	id S934091Ab3FSC4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jun 2013 22:56:15 -0400
+Received: from vms173003pub.verizon.net ([206.46.173.3]:45678 "EHLO
+	vms173003pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933836Ab3FSC4O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jun 2013 22:56:14 -0400
+X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Jun 2013 22:56:14 EDT
+Received: from odin.tremily.us ([unknown] [72.68.80.181])
+ by vms173003.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MOM00MKDAP5BFD0@vms173003.mailsrvcs.net> for
+ git@vger.kernel.org; Tue, 18 Jun 2013 20:55:53 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id F25BFA3A71A; Tue,
+ 18 Jun 2013 21:55:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1371606953; bh=BCxzO6UilcgXSasMM6W5ipIEXbZII71jT61jTf/5SQc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:	 References;
+	b=RERTXbetZVYx0EysmOh3ckHUVjhKy05cW53B1Ta8tPfk/L1miHXlSgX8c4eSGjnLH
+ Xze6SqcqO/Gzl88s39q665QQvDT3Zb3WLaNCKBHEF7MQW7VD2GDfAjRzFj+hFZOg/L
+ IGs+wUkqUP4Fz5M1CHtYEHNpNTsjKnE7YR/aqDII=
+X-Mailer: git-send-email 1.8.1.5
+In-reply-to: <cover.1371606791.git.wking@tremily.us>
+In-reply-to: <cover.1371606791.git.wking@tremily.us>
+References: <cover.1371606791.git.wking@tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228331>
 
-From: Brandon Casey <drafnel@gmail.com>
+From: "W. Trevor King" <wking@tremily.us>
 
-Curl older than 7.17 (RHEL 4.X provides 7.12 and RHEL 5.X provides
-7.15) requires that we manage any strings that we pass to it as
-pointers.  So, we really shouldn't be modifying this strbuf after we
-have passed it to curl.
+They've grown since d19fbc3 (Documentation: add git user's manual,
+2007-01-07) when the stats were initially added.  I've rounded
+download sizes up to the nearest power of ten MiB to decrease the
+precision and give a bit of growing room.  Exact sizes:
 
-Our interaction with curl is currently safe (before or after this
-patch) since the pointer that is passed to curl is never invalidated;
-it is repeatedly rewritten with the same sequence of characters but
-the strbuf functions never need to allocate a larger string, so the
-same memory buffer is reused.
+  $ git clone git://git.kernel.org/pub/scm/git/git.git
+  Initialized empty Git repository in /tmp/git/.git/
+  remote: Counting objects: 156872, done.
+  remote: Compressing objects: 100% (40826/40826), done.
+  remote: Total 156872 (delta 115322), reused 155492 (delta 114094)
+  Receiving objects: 100% (156872/156872), 37.29 MiB | 7.54 MiB/s, done.
+  Resolving deltas: 100% (115322/115322), done.
 
-This "guarantee" of safety is somewhat subtle and could be overlooked
-by someone who may want to add a more complex handling of the username
-and password.  So, let's stop modifying this strbuf after we have
-passed it to curl, but also leave a note to describe the assumptions
-that have been made about username/password lifetime and to draw
-attention to the code.
+  $ git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  Initialized empty Git repository in /tmp/linux/.git/
+  remote: Counting objects: 3057404, done.
+  remote: Compressing objects: 100% (474769/474769), done.
+  Receiving objects: 100% (3057404/3057404), 634.33 MiB | 27.95 MiB/s, done.
+  remote: Total 3057404 (delta 2570385), reused 3040910 (delta 2554408)
+  Resolving deltas: 100% (2570385/2570385), done.
+  Checking out files: 100% (43012/43012), done.
 
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
+Signed-off-by: W. Trevor King <wking@tremily.us>
 ---
- http.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ Documentation/user-manual.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/http.c b/http.c
-index 92aba59..2d086ae 100644
---- a/http.c
-+++ b/http.c
-@@ -228,9 +228,15 @@ static void init_curl_http_auth(CURL *result)
- #else
- 	{
- 		static struct strbuf up = STRBUF_INIT;
--		strbuf_reset(&up);
--		strbuf_addf(&up, "%s:%s",
--			    http_auth.username, http_auth.password);
-+		/*
-+		 * Note that we assume we only ever have a single set of
-+		 * credentials in a given program run, so we do not have
-+		 * to worry about updating this buffer, only setting its
-+		 * initial value.
-+		 */
-+		if (!up.len)
-+			strbuf_addf(&up, "%s:%s",
-+				http_auth.username, http_auth.password);
- 		curl_easy_setopt(result, CURLOPT_USERPWD, up.buf);
- 	}
- #endif
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index cd9941a..ffc4e1c 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -57,9 +57,9 @@ download a copy of an existing repository.  If you don't already have a
+ project in mind, here are some interesting examples:
+ 
+ ------------------------------------------------
+-	# Git itself (approx. 10MB download):
++	# Git itself (approx. 40MB download):
+ $ git clone git://git.kernel.org/pub/scm/git/git.git
+-	# the Linux kernel (approx. 150MB download):
++	# the Linux kernel (approx. 640MB download):
+ $ git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+ ------------------------------------------------
+ 
 -- 
-1.8.3.1.440.gc2bf105
+1.8.3
