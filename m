@@ -1,90 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] peel_onion(): add support for <rev>^{tag}
-Date: Thu, 20 Jun 2013 11:03:39 -0700
-Message-ID: <7v4ncswtfo.fsf@alter.siamese.dyndns.org>
-References: <1371605946-32565-1-git-send-email-rhansen@bbn.com>
-	<7vvc5aymhd.fsf@alter.siamese.dyndns.org> <51C20FD1.4090203@bbn.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 04/12] refs: implement simple transactions for the
+ packed-refs file
+Date: Thu, 20 Jun 2013 20:03:43 +0200
+Message-ID: <51C343FF.6030002@alum.mit.edu>
+References: <1371628293-28824-1-git-send-email-mhagger@alum.mit.edu> <1371628293-28824-5-git-send-email-mhagger@alum.mit.edu> <7vfvwdzz6k.fsf@alter.siamese.dyndns.org> <51C2B41F.2050708@alum.mit.edu> <20130620115508.GB773@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 20:03:50 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 20 20:03:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpjD1-0003bN-RC
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 20:03:48 +0200
+	id 1UpjD7-0003mA-5o
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 20:03:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757989Ab3FTSDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 14:03:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45320 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757977Ab3FTSDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 14:03:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE20B2981C;
-	Thu, 20 Jun 2013 18:03:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GFvyYKD5YCtTBrZ4vrplC8+iktA=; b=lAQHQV
-	vAQSF0sid9bAeJYLFwI5aZcYDo1dF/CVTkyUU+4kJNnfyKLXgQril3HZGpSgejaD
-	RFbgr5VSrYOdGNKHUCgbRNtC0zgfV0w8HA8aJb4yyTn0Wj7Q/CXkoWSzuUubrw6P
-	W0xZ8lHrQktecCHweyiF3Bkh+L20tkF3SkHbg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ljT7QsHn10NoxuX6eZT94PS1LBceJrEn
-	RskfeHpfXZ+dDPZ5vhBmULvFv7TISo+AeHqXOcMDGcFz2JkQKxmxTCxGpQOTAwGO
-	iKhzRdARC5R2IOx7jSCycQza3ZyysZO/XC2tinzKEVE62T3Jevi9k9Fvmr1TP/FB
-	9YS3WYk9HDE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF9C62981B;
-	Thu, 20 Jun 2013 18:03:41 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4FE8529817;
-	Thu, 20 Jun 2013 18:03:41 +0000 (UTC)
-In-Reply-To: <51C20FD1.4090203@bbn.com> (Richard Hansen's message of "Wed, 19
-	Jun 2013 16:08:49 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BD64C270-D9D3-11E2-99AC-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758019Ab3FTSDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 14:03:48 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:43515 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757977Ab3FTSDr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Jun 2013 14:03:47 -0400
+X-AuditID: 12074413-b7f136d000006de1-9f-51c344024478
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id A3.36.28129.20443C15; Thu, 20 Jun 2013 14:03:46 -0400 (EDT)
+Received: from [192.168.69.140] (p57A25408.dip0.t-ipconnect.de [87.162.84.8])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r5KI3hP2026093
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 20 Jun 2013 14:03:44 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <20130620115508.GB773@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIKsWRmVeSWpSXmKPExsUixO6iqMvkcjjQYOc/dYuuK91MFg29V5gt
+	5t3dxWTxo6WH2WL3tAVsDqwel15+Z/N41ruH0ePiJWWPxxNPsHp83iQXwBrFbZOUWFIWnJme
+	p2+XwJ0xbX83Y8EfjopNy2+yNjBOYu9i5OSQEDCRuPR5ERuELSZx4d56IJuLQ0jgMqPElE+X
+	mCGcs0wS3988BqviFdCW6Jv+hBnEZhFQlfh27zwLiM0moCuxqKeZCcQWFQiTeL9sKitEvaDE
+	yZlPwGpEBGQlvh/eyAgylFlgEqPE7G23wQYJC8RINPy9wQSx7QujxJEVS8Hu4xSwlJg+cTaQ
+	zQHUoS6xfp4QSJhZQF5i+9s5zBMYBWYh2TELoWoWkqoFjMyrGOUSc0pzdXMTM3OKU5N1i5MT
+	8/JSi3TN9XIzS/RSU0o3MUKCXHgH466TcocYBTgYlXh4A5QOBwqxJpYVV+YeYpTkYFIS5WVx
+	BgrxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4ZVWAMrxpiRWVqUW5cOkpDlYlMR51Zao+wkJpCeW
+	pGanphakFsFkZTg4lCR4uUGGChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxINiNb4Y
+	GK0gKR6gvXedQPYWFyTmAkUhWk8x6nIc+LHlPaMQS15+XqqUOO8TkCIBkKKM0jy4FbCU9opR
+	HOhjYd7/IFU8wHQIN+kV0BImoCV7Vh8CWVKSiJCSamA0a1GtvrxQOYhLqP8Jg9u+ZX/u7n4v
+	V3ipfZf+W1eG9r/TRJ/tnZ2mbCkjN/s0272D158E1alrHd1lpLtXpsg54kzNn1Nf 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228518>
 
-Richard Hansen <rhansen@bbn.com> writes:
+On 06/20/2013 01:55 PM, Jeff King wrote:
+> On Thu, Jun 20, 2013 at 09:49:51AM +0200, Michael Haggerty wrote:
+> 
+>> [I just noticed that lock_ref_sha1_basic() leaks a struct lock_file
+>> every time that it is called.]
+> 
+> I noticed that recently, too. I have a patch series about 90% complete
+> that abstracts the tempfile handling (the ultimate goal of which is to
+> optionally clean up tmp_* files in the objects/ directory). It refactors
+> the lockfile cleanup, and it would not be too hard to have a committed
+> or rolled-back lockfile actually remove itself from the "to clean at
+> exit" list.
+> 
+> Which would make it perfectly safe to have a lockfile as an automatic
+> variable as long as you commit or rollback before leaving the function.
 
-> Barfing on non-tags is the feature this adds.  It's otherwise useless,
-> just like <object>^{object} is useless except to barf when <object>
-> doesn't exist.
+Cool, then I won't work on that.  You might also have to make the
+lockfile list into a doubly-linked-list to avoid having to do a linear
+scan to find the entry to delete, unless the total number of entries is
+known to remain small.
 
-Thanks.
+Please CC me on the patch series when it is done.
 
-I could buy that.  And after re-reading the proposed log message,
-you do not quite have anything to say that.  Instead, you have this:
+Michael
 
-    Note that <rev>^{tag} is not the same as <rev>^{object} when <rev> is
-    not a tag:
-
-        $ git rev-parse --verify v1.8.3.1^{}^{object}
-        362de916c06521205276acb7f51c99f47db94727
-        $ git rev-parse --verify v1.8.3.1^{}^{tag}
-        error: v1.8.3.1^{}^{tag}: expected tag type, but the object deref...
-        fatal: Needed a single revision
-
-The latter peels v1.8.3.1 to a non-tag (i.e. a commit) and then asks
-to peel that commit to a tag, which will of course fail, but that is
-not a good example.  
-
-Perhaps something like this instead.
-
-    Note that <rev>^{tag} can be used to make sure <rev> names a tag:
-
-        $ git rev-parse --verify v1.8.3.1^{tag}
-        $ git rev-parse --verify master^{tag}
-
-    The former succeeds, while the latter fails.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
