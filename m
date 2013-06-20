@@ -1,138 +1,78 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Splitting a rev list into 2 sets
-Date: Thu, 20 Jun 2013 16:56:26 +0530
-Message-ID: <CALkWK0=6ZofURGvC-FtS81765yDsA9+0wW94riPZUPudc_nDyw@mail.gmail.com>
-References: <CAC9WiBi-E+LN4hKGeu0mG7ihJWCaTg-W1Dx_PWmX_vsx-uLOaw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 00/12] Fix some reference-related races
+Date: Thu, 20 Jun 2013 07:52:22 -0400
+Message-ID: <20130620115221.GA773@sigill.intra.peff.net>
+References: <1371628293-28824-1-git-send-email-mhagger@alum.mit.edu>
+ <20130619185645.GB23647@sigill.intra.peff.net>
+ <51C2C6DD.90107@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 13:27:14 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 20 13:52:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Upd1F-000443-LS
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 13:27:14 +0200
+	id 1UpdPk-0007LG-7f
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 13:52:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965249Ab3FTL1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 07:27:08 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:52013 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965093Ab3FTL1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 07:27:06 -0400
-Received: by mail-ie0-f177.google.com with SMTP id aq17so16160991iec.22
-        for <git@vger.kernel.org>; Thu, 20 Jun 2013 04:27:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=2iVb5OiOpgLbSKySTPUKPT96de7Md4wMH3tmA6K4E1U=;
-        b=CwMzbS42Kd+/X7cfIwrjbzGq28cE/BfvHhCX7ureuO8SVJgX9qkFpGpC1ZNCnqjr9I
-         24VMQSBOy7bLEc84Kvx7Uui7io+UHrWi59gIDpKNQjIVhdLQ4+XDIJM69Il0ZJjBhJiQ
-         z1NYs9+W3Q6pG+vJogT+eOAea0dW54y6qwsAMfzgBk6fxzBx4U3Zim5PNObsc0OBzQj0
-         uoIjP0nhH7Lmjqr2HVjvRsxjhfoBgFcph8OAitx6HMsZs6jMg0JZ91BB/bvC75VwkNjc
-         maOJgKT6S6PXLIgIng54t0FMX6UERixy3STk3CwOwpyVOG6ZoFq7z7VKtptkjkooRDaM
-         QvAA==
-X-Received: by 10.42.80.9 with SMTP id t9mr2964074ick.14.1371727626578; Thu,
- 20 Jun 2013 04:27:06 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Thu, 20 Jun 2013 04:26:26 -0700 (PDT)
-In-Reply-To: <CAC9WiBi-E+LN4hKGeu0mG7ihJWCaTg-W1Dx_PWmX_vsx-uLOaw@mail.gmail.com>
+	id S965522Ab3FTLw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 07:52:28 -0400
+Received: from cloud.peff.net ([50.56.180.127]:56116 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965044Ab3FTLw1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 07:52:27 -0400
+Received: (qmail 14211 invoked by uid 102); 20 Jun 2013 11:53:26 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Jun 2013 06:53:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2013 07:52:22 -0400
+Content-Disposition: inline
+In-Reply-To: <51C2C6DD.90107@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228483>
 
-Francis Moreau wrote:
-> To get the commit set which can't be reached by master (ie commits
-> which are specific to branches other than master) I would do:
+On Thu, Jun 20, 2013 at 11:09:49AM +0200, Michael Haggerty wrote:
+
+> If the packed-refs file is already locked by another process (and there
+> is no reason why that cannot be, and there is only one attempt to
+> acquire the lock), then repack_without_ref() emits an error and returns
+> with an error code.  delete_ref() passes the error along, but doesn't
+> restore the loose ref.
 >
->   # "$@" is the range spec passed to the script
->   git rev-list "$@" ^master | check_other_commit
+> [...]
 >
-> But I don't know if it's possible to use a different git-rev-list
-> command to get the rest of the commits, ie the ones that are reachable
-> by the specified range and master.
->
-> One way to do that is to record the first commit set got by the first
-> rev-list command and check that the ones returned by "git rev-list $@"
-> are not in the record.
+> I think this problem would also be fixed by the locking scheme that I
+> proposed earlier [1]: to acquire and hold the packed-refs lock across
+> the modification of *both* files, and to rewrite the packed-refs file
+> *before* deleting the loose-refs file (because rewriting the packed-refs
+> file without the to-be-deleted reference is a logical NOP).
 
-I don't fully understand your query, because almost anything is
-possible with rev-list:
+Yeah, I agree. You could also "roll back" the loose deletion, but I'd
+rather just try to do it atomically.
 
-  $ git rev-list foo..bar master # reachable from master, bar, not foo
+I don't think this increases lock contention, since delete_ref would
+need to lock the packed-refs file anyway. However, there is the related
+change that we should probably lock the packed-refs file before checking
+"is this ref in the packed-refs file?" in repack_without_ref. Which does
+increase lock contention, but is more correct.
 
-What I _suspect_ you're asking is for help when you can't construct
-this "foo..bar master" programmatically (or when you cannot express
-your criterion as arguments to rev-list).  You want an initial commit
-set, and filter it at various points in your program using various
-criteria, right?  In that case, I'd suggest something like this:
+We should also consider deadlock issues. If the order is always "acquire
+packed-refs lock, then acquire loose locks", we are fine. If this does
+loose-then-packed, we are also fine with the current code, as
+git-pack-refs does not prune the loose refs while under the packed-refs
+lock. But I seem to recall discussion of pruning them under the
+packed-refs lock, which would deadlock if repack_without_ref does
+loose-then-packed.
 
-    # Returns a list of commits given a committish that `rev-list`
-    # accepts.
-    def self.list_commits(committish)
-        commits = []
-        revlist = execute("git", "rev-list", "--reverse", "--date-order",
-                          "--simplify-merges", committish).chomp.split("\n")
+But I guess we do not actually block on locks, but rather just die (and
+release our locks), so deadlock is not an option for us.
 
-        # do it in batches of 1000 commits
-        while revlist
-            these_revs = revlist.first(1000).join("\n")
-            this_chunk = execute({ :in => these_revs }, "git",
-                               "cat-file", "--batch")
-
-            # parse_cat_file parses the chunk and updates @commit_index
-            parse_cat_file(this_chunk) { |struct| commits << struct }
-
-            revlist = revlist[1000 .. revlist.length - 1]
-        end
-        return commits
-    end
-
-    # Filters a list of commits with the precondition that it exists
-    # in the committish.  :sha1 is used to uniquely identify a commit.
-    def self.filter_commits(commits, committish)
-        revlist = execute("git", "rev-list", "--simplify-merges",
-                                 committish).split("\n")
-        allowed_commits = revlist.map { |sha1| @commit_index[sha1.hex] }
-        return commits & allowed_commits
-    end
-
-In essence, I use '&' to filter and it's extremely fast.  The trick is
-to shell out to git sparingly, store the data you get in a sensible
-manner, and build fast custom filters based on what you want.  Here
-are a few more examples:
-
-    # Filters a list of commits with the precondition that it is a
-    # first-parent commit in a given committish.
-    def self.filter_fp_commits(commits, committish)
-        revlist = execute("git", "rev-list", "--first-parent",
-                          "--simplify-merges", committish).split("\n")
-        allowed_commits = revlist.map { |sha1| @commit_index[sha1.hex] }
-        return commits & allowed_commits
-    end
-
-    # Slice a list of commits using a start_hex and end_hex, which
-    # may both be nil.
-    def self.slice_commits(commits, start_commit, end_commit)
-        start_idx = commits.index(start_commit)
-        end_idx = commits.index(end_commit)
-        start_idx = 0 if start_idx.nil?
-        end_idx = commits.size - 1 if end_idx.nil?
-        return commits[start_idx..end_idx]
-    end
-
-    def self.filter_commits_tree_path(commits, path)
-        commit_chunk = (commits.map { |commit| commit.sha1 }).join("\n")
-        commit_chunk = "#{commit_chunk}\n"
-        diff_tree_chunk = execute({ :in => commit_chunk }, "git", "diff-tree", \
-                                  "-m", "-r", "-s", "--stdin", path)
-        matching_sha1s = diff_tree_chunk.split("\n")
-        allowed_commits = matching_sha1s.map { |sha1| @commit_index[sha1.hex] }
-        return commits & allowed_commits
-    end
-
-Did that help?
+-Peff
