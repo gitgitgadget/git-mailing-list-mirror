@@ -1,59 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 04/12] refs: implement simple transactions for the
- packed-refs file
-Date: Thu, 20 Jun 2013 07:55:09 -0400
-Message-ID: <20130620115508.GB773@sigill.intra.peff.net>
-References: <1371628293-28824-1-git-send-email-mhagger@alum.mit.edu>
- <1371628293-28824-5-git-send-email-mhagger@alum.mit.edu>
- <7vfvwdzz6k.fsf@alter.siamese.dyndns.org>
- <51C2B41F.2050708@alum.mit.edu>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v2 2/2] send-email: add test for duplicate utf8 name
+Date: Thu, 20 Jun 2013 15:27:05 +0300
+Message-ID: <1371731166-24015-2-git-send-email-mst@redhat.com>
+References: <1371731166-24015-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 20 13:55:22 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?us-ascii?B?PT9VVEYtOD9xP1NaRURFUj0yMEc9QzM9QTFib3I/PQ==?= 
+	<szeder@ira.uka.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 20 14:26:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpdSS-00047d-D0
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 13:55:20 +0200
+	id 1Updwh-00019T-7h
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 14:26:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965322Ab3FTLzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 07:55:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56142 "EHLO peff.net"
+	id S1757726Ab3FTM03 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Jun 2013 08:26:29 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:13571 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965178Ab3FTLzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 07:55:12 -0400
-Received: (qmail 14375 invoked by uid 102); 20 Jun 2013 11:56:11 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Jun 2013 06:56:11 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2013 07:55:09 -0400
+	id S1753085Ab3FTM03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 08:26:29 -0400
+Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r5KCQJLN026383
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Thu, 20 Jun 2013 08:26:20 -0400
+Received: from redhat.com (vpn-200-33.tlv.redhat.com [10.35.200.33])
+	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id r5KCQHoq007294;
+	Thu, 20 Jun 2013 08:26:18 -0400
 Content-Disposition: inline
-In-Reply-To: <51C2B41F.2050708@alum.mit.edu>
+In-Reply-To: <1371731166-24015-1-git-send-email-mst@redhat.com>
+X-Mutt-Fcc: =sent
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228485>
 
-On Thu, Jun 20, 2013 at 09:49:51AM +0200, Michael Haggerty wrote:
+Verify that author name is not duplicated if it matches
+sender, even if it is in utf8.
 
-> [I just noticed that lock_ref_sha1_basic() leaks a struct lock_file
-> every time that it is called.]
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ t/t9001-send-email.sh | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-I noticed that recently, too. I have a patch series about 90% complete
-that abstracts the tempfile handling (the ultimate goal of which is to
-optionally clean up tmp_* files in the objects/ directory). It refactors
-the lockfile cleanup, and it would not be too hard to have a committed
-or rolled-back lockfile actually remove itself from the "to clean at
-exit" list.
-
-Which would make it perfectly safe to have a lockfile as an automatic
-variable as long as you commit or rollback before leaving the function.
-
--Peff
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 9f46f22..020acc4 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -956,6 +956,20 @@ test_expect_success $PREREQ 'utf8 author is correc=
+tly passed on' '
+ 	grep "^From: F=FC=F1n=FD N=E2m=E9 <odd_?=3Dmail@example.com>" msgtxt1
+ '
+=20
++test_expect_success $PREREQ 'utf8 sender is not duplicated' '
++	clean_fake_sendmail &&
++	test_commit weird_sender &&
++	test_when_finished "git reset --hard HEAD^" &&
++	git commit --amend --author "F=FC=F1n=FD N=E2m=E9 <odd_?=3Dmail@examp=
+le.com>" &&
++	git format-patch --stdout -1 >funny_name.patch &&
++	git send-email --from=3D"F=FC=F1n=FD N=E2m=E9 <odd_?=3Dmail@example.c=
+om>" \
++	  --to=3Dnobody@example.com \
++	  --smtp-server=3D"$(pwd)/fake.sendmail" \
++	  funny_name.patch &&
++	grep "^From:" msgtxt1 > msgfrom &&
++	test_line_count =3D 1 msgfrom
++'
++
+ test_expect_success $PREREQ 'sendemail.composeencoding works' '
+ 	clean_fake_sendmail &&
+ 	git config sendemail.composeencoding iso-8859-1 &&
+--=20
+MST
