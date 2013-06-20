@@ -1,78 +1,153 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: Splitting a rev list into 2 sets
-Date: Thu, 20 Jun 2013 09:04:19 -0400
-Message-ID: <CABURp0r+rzRqHv9vMX3Nsxn_p2R7zf8AsY=_Cg98xWRWn+7bkg@mail.gmail.com>
-References: <CAC9WiBi-E+LN4hKGeu0mG7ihJWCaTg-W1Dx_PWmX_vsx-uLOaw@mail.gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: [PATCH v2] pull: merge into unborn by fast-forwarding from empty tree
+Date: Thu, 20 Jun 2013 15:06:01 +0200
+Message-ID: <aca810600b895ed3f0a3fc575e0f6861e591de5b.1371733403.git.trast@inf.ethz.ch>
+References: <20130620124758.GA2376@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 15:04:46 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?q?Stefan=20Sch=C3=BC=C3=9Fler?= <mail@stefanschuessler.de>
+X-From: git-owner@vger.kernel.org Thu Jun 20 15:06:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpeXc-0007Zg-Su
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 15:04:45 +0200
+	id 1UpeZ0-0001Wc-QW
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 15:06:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965388Ab3FTNEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 09:04:41 -0400
-Received: from mail-vc0-f177.google.com ([209.85.220.177]:37607 "EHLO
-	mail-vc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965039Ab3FTNEk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 09:04:40 -0400
-Received: by mail-vc0-f177.google.com with SMTP id hv10so4648038vcb.8
-        for <git@vger.kernel.org>; Thu, 20 Jun 2013 06:04:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Mvv3mWtsPXtbpjXk1E4aUPHMLqeXE2xj4yniJUy5i3c=;
-        b=KWm2dOk/Hf06qC47pZZakfZ2UQC74amCh8GB0uXkKDHxhlkVZoEtLWpZqihkGIxyx4
-         dy0TZ6o97qbPnFS6stvmnPR7mjTRrmN3G2+9LebzmHTx2tC8RewVjIZQjjaZxivVMkVw
-         jjJC7QFZq8nByh4aX26kJtW/G2oAn3vxgy8M4ujJ02tKdajTVqF3ru1lJwVJC4KYBzJM
-         glC95y9shfLYVosfli91VpEPzuG1h8kzv5xbvCJFedq12jm4DYYUfPF5451h/voRvzPR
-         k72tt/6uoRohzbK6HTPHuiSjSe9KQqOHOr1im8HSKohBKP+YSKqeB1TL0qzR/WiS7adh
-         EdcA==
-X-Received: by 10.220.111.206 with SMTP id t14mr2715894vcp.77.1371733479671;
- Thu, 20 Jun 2013 06:04:39 -0700 (PDT)
-Received: by 10.58.220.72 with HTTP; Thu, 20 Jun 2013 06:04:19 -0700 (PDT)
-In-Reply-To: <CAC9WiBi-E+LN4hKGeu0mG7ihJWCaTg-W1Dx_PWmX_vsx-uLOaw@mail.gmail.com>
+	id S1030219Ab3FTNGG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Jun 2013 09:06:06 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:32161 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935370Ab3FTNGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 09:06:04 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 20 Jun
+ 2013 15:05:58 +0200
+Received: from linux-k42r.v.cablecom.net (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 20 Jun
+ 2013 15:06:01 +0200
+X-Mailer: git-send-email 1.8.3.1.664.gae9f72a
+In-Reply-To: <20130620124758.GA2376@sigill.intra.peff.net>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228494>
 
-On Thu, Jun 20, 2013 at 6:14 AM, Francis Moreau <francis.moro@gmail.com> wrote:
-> I'd like to write a script that would parse commits in one of my repo.
-> Ideally this script should accept any revision ranges that
-> git-rev-list would accept.
->
-> This script should consider commits in master differently than the
-> ones in others branches.
->
-> To get the commit set which can't be reached by master (ie commits
-> which are specific to branches other than master) I would do:
->
->   # "$@" is the range spec passed to the script
->   git rev-list "$@" ^master | check_other_commit
->
-> But I don't know if it's possible to use a different git-rev-list
-> command to get the rest of the commits, ie the ones that are reachable
-> by the specified range and master.
->
-> One way to do that is to record the first commit set got by the first
-> rev-list command and check that the ones returned by "git rev-list $@"
-> are not in the record.
->
-> But I'm wondering if someone can see another solution more elegant ?
+The logic for pulling into an unborn branch was originally designed to
+be used on a newly-initialized repository (d09e79c, git-pull: allow
+pulling into an empty repository, 2006-11-16).  It thus did not
+initially deal with uncommitted changes in the unborn branch.  The
+case of an _unstaged_ untracked file was fixed by 4b3ffe5 (pull: do
+not clobber untracked files on initial pull, 2011-03-25).  However, it
+still clobbered existing staged files, both when the file exists in
+the merged commit (it will be overwritten), and when it does not (it
+will be deleted).
 
-I do not know if I would call this elegant, but I think this
-codification of your "One way to do that" is at least small and mostly
-readable:
+We fix this by doing a two-way merge, where the "current" side of the
+merge is an empty tree, and the "target" side is HEAD (already updated
+to FETCH_HEAD at this point).  This amounts to claiming that all work
+in the index was done vs. an empty tree, and thus all content of the
+index is precious.
 
-   git rev-list "$@" |grep -v -f <(git rev-list "$@" ^master)
+Reported-by: Stefan Sch=C3=BC=C3=9Fler <mail@stefanschuessler.de>
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+---
 
-Phil
+Jeff King <peff@peff.net> writes:
+
+> Do we want to also check the index state after each pull? In the form=
+er
+> case, I think it should obviously represent a conflict. In the latter=
+,
+> we should be retaining the index contents of newfile.
+>
+> These are basic things that read-tree's two-way merge should get righ=
+t
+> (and are presumably tested elsewhere), but it might be worth confirmi=
+ng
+> the desired behavior here in case somebody later tries to tweak this
+> code path not to use read-tree.
+
+Right, good point.
+
+I also reworded the subject and message somewhat to read better.
+
+
+ git-pull.sh     |  9 ++++++++-
+ t/t5520-pull.sh | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+), 1 deletion(-)
+
+diff --git a/git-pull.sh b/git-pull.sh
+index 638aabb..1f84383 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -266,10 +266,17 @@ case "$merge_head" in
+ 	;;
+ esac
+=20
++# Pulling into unborn branch: a shorthand for branching off
++# FETCH_HEAD, for lazy typers.
+ if test -z "$orig_head"
+ then
+ 	git update-ref -m "initial pull" HEAD $merge_head "$curr_head" &&
+-	git read-tree -m -u HEAD || exit 1
++	# Two-way merge: we claim the index is based on an empty tree,
++	# and try to fast-forward to HEAD.  This ensures we will not
++	# lose index/worktree changes that the user already made on
++	# the unborn branch.
++	empty_tree=3D4b825dc642cb6eb9a060e54bf8d69288fbee4904
++	git read-tree -m -u $empty_tree HEAD || exit 1
+ 	exit
+ fi
+=20
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 6af6c63..ed4d9c8 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -57,6 +57,35 @@ test_expect_success 'pulling into void does not over=
+write untracked files' '
+ 	)
+ '
+=20
++test_expect_success 'pulling into void does not overwrite staged files=
+' '
++	git init cloned-staged-colliding &&
++	(
++		cd cloned-staged-colliding &&
++		echo "alternate content" >file &&
++		git add file &&
++		test_must_fail git pull .. master &&
++		echo "alternate content" >expect &&
++		test_cmp expect file &&
++		git cat-file blob :file >file.index &&
++		test_cmp expect file.index
++	)
++'
++
++
++test_expect_success 'pulling into void does not remove new staged file=
+s' '
++	git init cloned-staged-new &&
++	(
++		cd cloned-staged-new &&
++		echo "new tracked file" >newfile &&
++		git add newfile &&
++		git pull .. master &&
++		echo "new tracked file" >expect &&
++		test_cmp expect newfile &&
++		git cat-file blob :newfile >newfile.index &&
++		test_cmp expect newfile.index
++	)
++'
++
+ test_expect_success 'test . as a remote' '
+=20
+ 	git branch copy master &&
+--=20
+1.8.3.1.664.gae9f72a
