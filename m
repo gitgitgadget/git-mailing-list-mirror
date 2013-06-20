@@ -1,98 +1,77 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 00/12] Fix some reference-related races
-Date: Thu, 20 Jun 2013 10:37:42 +0200
-Message-ID: <1371717474-28942-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 10:44:21 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v4 5/5] git-remote-mediawiki: Add preview subcommand into git mw.
+Date: Thu, 20 Jun 2013 10:53:56 +0200
+Message-ID: <vpqip19duxn.fsf@anie.imag.fr>
+References: <1371712593-6210-1-git-send-email-benoit.person@ensimag.fr>
+	<1371712593-6210-6-git-send-email-benoit.person@ensimag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>
+To: benoit.person@ensimag.fr
+X-From: git-owner@vger.kernel.org Thu Jun 20 10:54:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpaTZ-0001vt-LY
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 10:44:18 +0200
+	id 1Upad4-0005g6-H3
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 10:54:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965124Ab3FTIoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 04:44:12 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:57456 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755509Ab3FTIiH (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Jun 2013 04:38:07 -0400
-X-AuditID: 12074413-b7f136d000006de1-5f-51c2bf6e31f1
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id A7.03.28129.E6FB2C15; Thu, 20 Jun 2013 04:38:06 -0400 (EDT)
-Received: from michael.fritz.box (p57A25408.dip0.t-ipconnect.de [87.162.84.8])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r5K8c0s8001560
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 20 Jun 2013 04:38:04 -0400
-X-Mailer: git-send-email 1.8.3.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsUixO6iqJu3/1CgwcsphhZdV7qZLBp6rzBb
-	zLu7i8ni9or5zBY/WnqYLXZPW8DmwObx9/0HJo9LL7+zeTzr3cPocfGSssfjiSdYPT5vkgtg
-	i+K2SUosKQvOTM/Tt0vgzljcfpKp4AN/xYp9XYwNjCd5uhg5OCQETCT+fnLpYuQEMsUkLtxb
-	z9bFyMUhJHCZUeLD9O3sEM45JolHa4+xgFSxCehKLOppZgKxRQTUJCa2HWIBKWIW2M0osfz0
-	KXaQhLCAlcSKYweYQWwWAVWJDwvWsYHYvAIuEo82n2SCWKcgMeXhe+YJjNwLGBlWMcol5pTm
-	6uYmZuYUpybrFicn5uWlFuma6+VmluilppRuYoQEjvAOxl0n5Q4xCnAwKvHwal4+GCjEmlhW
-	XJl7iFGSg0lJlHfuvkOBQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4U+cA5XhTEiurUovyYVLS
-	HCxK4rxqS9T9hATSE0tSs1NTC1KLYLIyHBxKErxpIEMFi1LTUyvSMnNKENJMHJwgw7mkRIpT
-	81JSixJLSzLiQaEeXwwMdpAUD9DeZSDtvMUFiblAUYjWU4y6HJPPbnnPKMSSl5+XKiXOuwqk
-	SACkKKM0D24FLE28YhQH+liYNxqkigeYYuAmvQJawgS0ZM9qsCUliQgpqQbGSQwV0crzjq/T
-	WlbDvPUCX1KEPJvKmxTmW22vv6RaCZvXemkXPm1WkJiWVzZbQzmdRWGLx+I119f8YKo/IB+6
-	y2rJM5ulZ19l+dwtefD7WJ3sfOv/IlumHo+vbzCwtr3+Zl70hbfnH6cmvdokn2W/ 
+	id S965077Ab3FTIyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 04:54:00 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:59817 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965007Ab3FTIx6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 04:53:58 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5K8rtFw006837
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 20 Jun 2013 10:53:55 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Upacu-0006NF-Ke; Thu, 20 Jun 2013 10:53:56 +0200
+In-Reply-To: <1371712593-6210-6-git-send-email-benoit.person@ensimag.fr>
+	(benoit person's message of "Thu, 20 Jun 2013 09:16:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 20 Jun 2013 10:53:55 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228465>
 
-v3 of mh/ref-races.  Thanks to Junio for the suggestion implemented in
-this version.
+benoit.person@ensimag.fr writes:
 
-Change since v2:
+> +# @TODO : add documentation for verbose option
 
-* Change lock_packed_refs() to use its own struct lock_file rather
-  than requiring the caller to supply its own.
+I guess that's not applicable anymore.
 
-Please note that this patch series's usage of stat()/fstat() causes
-breakages under cygwin, pointed out by Ramsay Jones.  He has
-graciously offered to work on this issue.
+> +distant mediawiki and combined with a template retrieved from the mediawiki.
 
-Patch 12/12 is still optional--it avoids a little bit of work when
-rewriting the packed-refs file (including when deleting a reference
-that has a packed version), but relies on the stat-based freshness
-check not giving a false negative.  Peff seems to lean slightly
-against merging the last patch and AFAIK nobody else has expressed an
-opinion.  (Of course, if the test cannot be relied upon in the check
-before writing, then we should not forget that its failure in a check
-before reading can also cause problems, however rarely.)
+s/distant/remote/
 
-Jeff King (2):
-  get_packed_ref_cache: reload packed-refs file when it changes
-  for_each_ref: load all loose refs before packed refs
+> +sub preview {
+> +	my $wiki;
+> +	my ($remote_url, $wiki_page_name);
+> +	my ($new_content, $template);
+> +	my $file_content;
+> +
+> +	if ($file_name eq EMPTY) {
+> +		die "Missing file argument, see `git mw help` \n";
 
-Michael Haggerty (10):
-  repack_without_ref(): split list curation and entry writing
-  pack_refs(): split creation of packed refs and entry writing
-  refs: wrap the packed refs cache in a level of indirection
-  refs: implement simple transactions for the packed-refs file
-  refs: manage lifetime of packed refs cache via reference counting
-  do_for_each_entry(): increment the packed refs cache refcount
-  packed_ref_cache: increment refcount when locked
-  Extract a struct stat_data from cache_entry
-  add a stat_validity struct
-  refs: do not invalidate the packed-refs cache unnecessarily
+Unneeded space before \n.
 
- builtin/clone.c    |   5 +-
- builtin/ls-files.c |  12 +-
- cache.h            |  60 ++++++++--
- read-cache.c       | 181 ++++++++++++++++++------------
- refs.c             | 319 ++++++++++++++++++++++++++++++++++++++++++++---------
- refs.h             |  26 ++++-
- 6 files changed, 469 insertions(+), 134 deletions(-)
+> +	for (@{ $html_tree->extract_links() }) {
+> +		my ($link, $element, $attr) = @{ $_ };
+> +		my $url = url($link)->canonical;
+> +		$element->attr($attr, URI->new_abs($url, $remote_url));
+> +	}
+
+Extracting this into a function like "make_links_absolute" would have
+made it clearer.
 
 -- 
-1.8.3.1
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
