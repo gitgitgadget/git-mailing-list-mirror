@@ -1,68 +1,52 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] pull: merge into unborn by fast-forwarding from empty
- tree
-Date: Thu, 20 Jun 2013 18:03:28 -0400
-Message-ID: <20130620220328.GA3992@sigill.intra.peff.net>
-References: <20130620124758.GA2376@sigill.intra.peff.net>
- <aca810600b895ed3f0a3fc575e0f6861e591de5b.1371733403.git.trast@inf.ethz.ch>
- <7v8v24vd0m.fsf@alter.siamese.dyndns.org>
- <20130620201957.GC31364@sigill.intra.peff.net>
- <7vmwqkqzhy.fsf@alter.siamese.dyndns.org>
- <20130620205533.GA8074@sigill.intra.peff.net>
- <7v7ghoqwwv.fsf@alter.siamese.dyndns.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH] [submodule] Remove duplicate call to set_rev_name
+Date: Thu, 20 Jun 2013 23:58:12 +0200
+Message-ID: <20130620215812.GA2687@sandbox-ub>
+References: <1371462936-9672-1-git-send-email-iveqy@iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Stefan =?utf-8?B?U2Now7zDn2xlcg==?= <mail@stefanschuessler.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 21 00:03:36 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Fri Jun 21 00:04:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Upmx6-0008Dz-8X
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 00:03:36 +0200
+	id 1Upmxy-0001BD-Ah
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 00:04:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758353Ab3FTWDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 18:03:32 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60278 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758343Ab3FTWDc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 18:03:32 -0400
-Received: (qmail 15979 invoked by uid 102); 20 Jun 2013 22:04:31 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Jun 2013 17:04:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2013 18:03:28 -0400
+	id S1758375Ab3FTWE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 18:04:26 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.29.28]:36479 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758370Ab3FTWE0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 18:04:26 -0400
+X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Jun 2013 18:04:26 EDT
+Received: from [77.20.34.36] (helo=sandbox-ub)
+	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Upmrx-0001eT-LY; Thu, 20 Jun 2013 23:58:17 +0200
 Content-Disposition: inline
-In-Reply-To: <7v7ghoqwwv.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1371462936-9672-1-git-send-email-iveqy@iveqy.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228547>
 
-On Thu, Jun 20, 2013 at 02:45:04PM -0700, Junio C Hamano wrote:
+Hi,
 
-> Jeff King <peff@peff.net> writes:
+On Mon, Jun 17, 2013 at 11:55:36AM +0200, Fredrik Gustafsson wrote:
+> set_rev_name is a possible expensive operation. If a submodule has
+> changes in it, set_rev_name was called twice.
 > 
-> > I think I got us off-track with my expectation of ending the one case
-> > with a conflicted index. But caring about that is even more unlikely.  I
-> > think Thomas's original patch is probably a happy medium.
-> 
-> OK, so should I consider it Reviewed-by: peff?
+> Solution is to move set_rev_name so it's only called once, no matter the
+> codepath taken.
 
-Yes, modulo the breakage of the &&- chain that Thomas mentioned.
+Looks good to me.
 
-> > As an orthogonal matter, we probably should reverse the order of
-> > updating HEAD and the index/working tree, as it does not make much sense
-> > to me to do the former if the latter is not possible (and that is the
-> > case even with the current code).
-> 
-> Yes.
-
-OK. I'll prepare a series with both patches. Stand by...
-
--Peff
+Cheers Heiko
