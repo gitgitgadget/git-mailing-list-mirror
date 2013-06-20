@@ -1,125 +1,86 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH v2] pull: merge into unborn by fast-forwarding from empty tree
-Date: Thu, 20 Jun 2013 16:29:25 +0200
-Message-ID: <87mwqk4zzu.fsf@linux-k42r.v.cablecom.net>
-References: <20130620124758.GA2376@sigill.intra.peff.net>
-	<aca810600b895ed3f0a3fc575e0f6861e591de5b.1371733403.git.trast@inf.ethz.ch>
-	<20130620131547.GA11073@sigill.intra.peff.net>
-	<87zjuk6hr2.fsf@linux-k42r.v.cablecom.net>
-	<87mwqk6h5d.fsf@linux-k42r.v.cablecom.net>
-	<20130620134726.GB18200@sigill.intra.peff.net>
+From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH] t7400: test of UTF-8 submodule names pass under Mac OS
+Date: Thu, 20 Jun 2013 16:58:48 +0200
+Message-ID: <201306201658.50174.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan =?utf-8?B?U2Now7zDn2xlcg==?= <mail@stefanschuessler.de>,
-	<git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 20 16:29:33 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: iveqy@iveqy.com
+To: git@vger.kernel.org, tboegi@web.de
+X-From: git-owner@vger.kernel.org Thu Jun 20 16:59:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Upfrf-0004IV-LY
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 16:29:32 +0200
+	id 1UpgKM-00040A-7J
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 16:59:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965244Ab3FTO32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 10:29:28 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:39949 "EHLO edge10.ethz.ch"
+	id S1758020Ab3FTO7A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Jun 2013 10:59:00 -0400
+Received: from mout.web.de ([212.227.17.11]:59523 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756403Ab3FTO31 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 10:29:27 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 20 Jun
- 2013 16:29:22 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS21.d.ethz.ch (172.31.51.111) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Thu, 20 Jun 2013 16:29:25 +0200
-In-Reply-To: <20130620134726.GB18200@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 20 Jun 2013 09:47:26 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1758017Ab3FTO67 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Jun 2013 10:58:59 -0400
+Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb002) with
+ ESMTPA (Nemesis) id 0M7bhn-1U3kwC3AiV-00xKUj; Thu, 20 Jun 2013 16:58:56 +0200
+X-Provags-ID: V03:K0:3PcBdeoegUghvMp44rkKcdPnUmDQxvlxxUh9Ik5c7jJH7JsFkG4
+ i5gcMGNXO3/SkkpAqGbGdkYWlkp6vfZL3lFTkjuhxTFY9b7Lq1qZ20FidmU82LtGJtVIYsM
+ +UJiz4tpOARjntwi6ROwe3OWzuH9u9bwuhqGbLtAyzovo+Lw1cOP3F8GIbvpdGSjc6AP43u
+ amZQPurwbmEu+drW0U7Ig==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228508>
 
-Jeff King <peff@peff.net> writes:
+submodules with names using UTF-8 need core.precomposeunicode true
+under Mac OS X, set it in the TC.
 
-> On Thu, Jun 20, 2013 at 03:33:34PM +0200, Thomas Rast wrote:
->
->> >> I naively would have expected this to leave us in a conflicted state
->> >> over "file".  But I guess read-tree just rejects it, because we are not
->> >> doing a real three-way merge.  I'm not sure it is that big a deal; this
->> >> is more about safety than about creating a conflicted/resolvable state.
->> >
->> > Note that the test_must_fail essentially tests that the merge is rejected.
->> 
->> Bah, no it doesn't, a conflicting merge also returns a nonzero status.
->> Sigh.
->> 
->> If you meant we should actually conflict,
->
-> Yes, that's what I meant.
-[...]
->> diff --git i/git-pull.sh w/git-pull.sh
->> index 1f84383..b3d36a8 100755
->> --- i/git-pull.sh
->> +++ w/git-pull.sh
->> @@ -276,7 +276,7 @@ then
->>  	# lose index/worktree changes that the user already made on
->>  	# the unborn branch.
->>  	empty_tree=4b825dc642cb6eb9a060e54bf8d69288fbee4904
->> -	git read-tree -m -u $empty_tree HEAD || exit 1
->> +	git merge-recursive $empty_tree -- $(git write-tree) HEAD || exit 1
->
-> I don't think there is any advantage to using merge-recursive over
-> read-tree here, in the sense that there cannot be any interesting
-> content-level merging going on (our ancestor is the empty tree, so we
-> know that differing content cannot be resolved).
->
-> So I think you could just use read-tree with a 3-way merge, but I cannot
-> seem to provoke it to leave a conflict. Hrm.
+Improve the portability:
+Not all shells on all OS may understand literal UTF-8 strings.
+Use a help variable filled by printf, as we do it in e.g. t0050.
 
-I guess read-tree doesn't consider that its job; it leaves the conflict
-in the index alright for me if I do this:
+"strange names" can be called UTF-8, rephrase the heading
 
- git-pull.sh     | 4 ++--
- t/t5520-pull.sh | 5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+I wasn't fast enough to catch it on pu:
+fg/submodule-non-ascii-path
 
-diff --git i/git-pull.sh w/git-pull.sh
-index 1f84383..4047d02 100755
---- i/git-pull.sh
-+++ w/git-pull.sh
-@@ -275,8 +275,8 @@ then
- 	# and try to fast-forward to HEAD.  This ensures we will not
- 	# lose index/worktree changes that the user already made on
- 	# the unborn branch.
--	empty_tree=4b825dc642cb6eb9a060e54bf8d69288fbee4904
--	git read-tree -m -u $empty_tree HEAD || exit 1
-+	empty_tree=4b825dc642cb6eb9a060e54bf8d69288fbee4904 &&
-+	git read-tree -m -u $empty_tree $(git write-tree) HEAD || exit 1
- 	exit
- fi
- 
+ t/t7400-submodule-basic.sh | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-But it won't write the conflict markers in the worktree.
-
-On the topic of "do we want to conflict": one issue is that we don't
-have a prior state to go to, since it was never committed.  Not even the
-implicit empty tree can be passed to 'reset --keep'.  So it might be
-better to *avoid* creating conflict hunks -- and fail -- so as to avoid
-giving the user a state that is hard to back out of.
-
-In the same spirit I would also support this:
-
-> I wonder if it would make sense to update HEAD only _after_ we had
-> resolved successfully. As it is now, you are left in a weird state where
-> pull has reported failure, but we actually update the HEAD (and "git
-> status" afterwards reflects that you are building on top of the pulled
-> HEAD).
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 0376370..fedfa5b 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -889,16 +889,19 @@ test_expect_success 'submodule deinit fails when =
+submodule has a .git directory
+ 	test -n "$(git config --get-regexp "submodule\.example\.")"
+ '
+=20
+-test_expect_success 'submodule with strange name works "=C3=A5 =C3=A4=C3=
+=B6"' '
+-	mkdir "=C3=A5 =C3=A4=C3=B6" &&
++svname=3D$(printf '\303\245 \303\244\303\266')
++test_expect_success 'submodule with UTF-8 name' '
++	mkdir "$svname" &&
+ 	(
+-		cd "=C3=A5 =C3=A4=C3=B6" &&
++		cd "$svname" &&
+ 		git init &&
+ 		touch sub
+ 		git add sub
+ 		git commit -m "init sub"
+ 	)
+-	git submodule add "/=C3=A5 =C3=A4=C3=B6" &&
+-	test -n "$(git submodule | grep "=C3=A5 =C3=A4=C3=B6")"
++	git config core.precomposeunicode true &&
++	git submodule add /"$svname" &&
++	git submodule >&2 &&
++	test -n "$(git submodule | grep "$svname")"
+ '
+ test_done
+--=20
+1.8.3
