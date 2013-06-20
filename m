@@ -1,97 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pull: pull into void by fast-forwarding from empty tree
-Date: Thu, 20 Jun 2013 08:47:58 -0400
-Message-ID: <20130620124758.GA2376@sigill.intra.peff.net>
-References: <45f6841746e5dcea03a97fc3ea24aef274728023.1371731513.git.trast@inf.ethz.ch>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH v2 2/2] send-email: add test for duplicate utf8 name
+Date: Thu, 20 Jun 2013 14:48:15 +0200
+Message-ID: <87vc597xtc.fsf@linux-k42r.v.cablecom.net>
+References: <1371731166-24015-1-git-send-email-mst@redhat.com>
+	<1371731166-24015-2-git-send-email-mst@redhat.com>
+	<87a9ml9cou.fsf@linux-k42r.v.cablecom.net>
+	<20130620124502.GA24172@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan =?utf-8?B?U2Now7zDn2xlcg==?= <mail@stefanschuessler.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jun 20 14:48:12 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Jun 20 14:48:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpeHb-00059f-Jo
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 14:48:11 +0200
+	id 1UpeHr-0005Y9-KV
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 14:48:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965472Ab3FTMsE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 08:48:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56490 "EHLO peff.net"
+	id S965484Ab3FTMsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 08:48:19 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:30528 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965449Ab3FTMsB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 08:48:01 -0400
-Received: (qmail 16870 invoked by uid 102); 20 Jun 2013 12:49:01 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Jun 2013 07:49:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2013 08:47:58 -0400
-Content-Disposition: inline
-In-Reply-To: <45f6841746e5dcea03a97fc3ea24aef274728023.1371731513.git.trast@inf.ethz.ch>
+	id S965102Ab3FTMsS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 08:48:18 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 20 Jun
+ 2013 14:48:12 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 20 Jun 2013 14:48:15 +0200
+In-Reply-To: <20130620124502.GA24172@redhat.com> (Michael S. Tsirkin's message
+	of "Thu, 20 Jun 2013 15:45:02 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228491>
 
-On Thu, Jun 20, 2013 at 02:36:03PM +0200, Thomas Rast wrote:
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-> The logic for pulling into an unborn branch was originally designed to
-> be used on a newly-initialized repository (d09e79c, git-pull: allow
-> pulling into an empty repository, 2006-11-16).  It thus did not
-> initially deal with uncommitted changes in the unborn branch.  The
-> case of an _unstaged_ untracked file was fixed by by 4b3ffe5 (pull: do
-> not clobber untracked files on initial pull, 2011-03-25).  However, it
-> still clobbered existing staged files, both when the file exists in
-> the merged commit (it will be overwritten), and when it does not (it
-> will be lost!).
+> On Thu, Jun 20, 2013 at 02:41:37PM +0200, Thomas Rast wrote:
+>> "Michael S. Tsirkin" <mst@redhat.com> writes:
+>> 
+>> > Verify that author name is not duplicated if it matches
+>> > sender, even if it is in utf8.
+>> 
+>> Small nit: if you make two patches out of it, add the tests first with
+>> test_expect_failure.  Then flip it to test_expect_success in the actual
+>> code change.  That makes it easy to verify that the test actually checks
+>> the right thing, and that it was your code change that fixed it.
+>
+> I did this by reverting 1/2 and rerunning.
+>
+> But applying in reverse order means bisect can give us
+> a setup where some tests fail, I thought it's a
+> good idea to avoid that.
 
-Yeah, in 4beffe5 I just assumed that using "read-tree -m" would give us
-the protections we need. But obviously I didn't think about the fact
-that we are not giving it enough information.
+That's why you need to test_expect_*failure* in the commit that adds the
+tests -- essentially saying "I know this is broken!".
 
-> We fix this by doing a two-way merge, where the "current" side of the
-> merge is an empty tree, and the "target" side is HEAD (already updated
-> to FETCH_HEAD at this point).  This amounts to claiming that all work
-> in the index was done vs. an empty tree, and thus all content of the
-> index is precious.
+Yes, it's a roundabout way.  But splitting code and tests in the way you
+just posted is equally roundabout, while not having the benefit that one
+can check out the commit at patch 1 and verify that it is indeed broken
+(showing up as "still have known breakage").
 
-This seems like the correct fix; it is giving read-tree the right
-information to make the decision. Thanks for working on this.
-
-> +test_expect_success 'pulling into void does not overwrite staged files' '
-> +	git init cloned-staged-colliding &&
-> +	(
-> +		cd cloned-staged-colliding &&
-> +		echo "alternate content" >file &&
-> +		git add file &&
-> +		test_must_fail git pull .. master &&
-> +		echo "alternate content" >expect &&
-> +		test_cmp expect file
-> +	)
-> +'
-> +
-> +test_expect_success 'pulling into void does not remove new staged files' '
-> +	git init cloned-staged-new &&
-> +	(
-> +		cd cloned-staged-new &&
-> +		echo "new tracked file" >newfile &&
-> +		git add newfile &&
-> +		git pull .. master &&
-> +		echo "new tracked file" >expect &&
-> +		test_cmp expect newfile
-> +	)
-> +'
-
-Do we want to also check the index state after each pull? In the former
-case, I think it should obviously represent a conflict. In the latter,
-we should be retaining the index contents of newfile.
-
-These are basic things that read-tree's two-way merge should get right
-(and are presumably tested elsewhere), but it might be worth confirming
-the desired behavior here in case somebody later tries to tweak this
-code path not to use read-tree.
-
--Peff
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
