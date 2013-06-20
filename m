@@ -1,151 +1,144 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/6] config doc: rewrite push.default section
-Date: Wed, 19 Jun 2013 20:27:37 -0700
-Message-ID: <7vhagtwjfa.fsf@alter.siamese.dyndns.org>
-References: <1371640304-26019-1-git-send-email-artagnon@gmail.com>
-	<1371640304-26019-3-git-send-email-artagnon@gmail.com>
-	<7v7ghpzxhu.fsf@alter.siamese.dyndns.org>
+From: benoit.person@ensimag.fr
+Subject: [PATCH v4 0/5] git-remote-mediawiki: new tool to preview local changes without pushing
+Date: Thu, 20 Jun 2013 09:16:28 +0200
+Message-ID: <1371712593-6210-1-git-send-email-benoit.person@ensimag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 05:27:53 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Celestin Matte <celestin.matte@ensimag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Benoit Person <benoit.person@ensimag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 20 09:17:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpVXL-0002Ud-EG
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 05:27:51 +0200
+	id 1UpZ7G-0000vg-KF
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 09:17:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935696Ab3FTD1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jun 2013 23:27:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64906 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935542Ab3FTD1m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jun 2013 23:27:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 364A01FAEA;
-	Thu, 20 Jun 2013 03:27:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sphRMh6aEH6EhqcH0FZVdbrd0CE=; b=aR37TU
-	bI82SPIIzOvPC8KAYV0UgYu8RKc0MFIPzX7CDw93OCx9dJPPu9CRb8oUHCvPg1Ls
-	yCfAmehxBuatRjLwwV471TEOb2cLsTqMsiCEP9YCWs1MpmMheznZo4/OTqD91DBW
-	3uRHlpslkVAw/nHDIPx04sx58XBZUKfYuETXQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LtgR0toLuNNu45x8UW7h6sfqQNzFrhdd
-	H3f46Pi2ATYUxelGTK0pQCTDYc8Y0H5iccTPqdWVqP7jwzYvOA1bfB8igytwRG2u
-	bx6PvvEZIl9e2YEzDL8jFS3oPa5Ax21V3mPHoR+MNQ/gvzt576YspmWKHD9iEHaU
-	07qcvCgEBfE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2ADF01FAE7;
-	Thu, 20 Jun 2013 03:27:42 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 627911FAD9;
-	Thu, 20 Jun 2013 03:27:40 +0000 (UTC)
-In-Reply-To: <7v7ghpzxhu.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 19 Jun 2013 12:55:25 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5CA4209A-D959-11E2-9509-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753902Ab3FTHRG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Jun 2013 03:17:06 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:45957 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753585Ab3FTHRE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 03:17:04 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5K7H0sT020671
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 20 Jun 2013 09:17:01 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5K7H1q4008335;
+	Thu, 20 Jun 2013 09:17:01 +0200
+Received: from localhost.localdomain (ensibm [195.221.228.8])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5K7H091011528;
+	Thu, 20 Jun 2013 09:17:01 +0200
+X-Mailer: git-send-email 1.8.3.GIT
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 20 Jun 2013 09:17:01 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228439>
 
-Junio C Hamano <gitster@pobox.com> writes:
+=46rom: Benoit Person <benoit.person@ensimag.fr>
 
-> or something like that.
+The #7 issue on git-mediawiki's issue tracker [1] states that the abili=
+ty to
+preview content without pushing would be a nice thing to have.
 
-Just for a completeness, in a patch form:
+changes from v3:
+  - Rewrite all commit messages.
+  - No more "\ No newline at end of file".
+  - Rename GitMediawiki.pm into Git::Mediawiki.pm (so it moves GitMedaw=
+iki.pm
+    into Git/Mediawiki.pm).
+  - Remove from the Makefile the copy_pm target (see below 'Add a bin-w=
+rapper').
+  - Use of 'install' insted of 'cp' in the Makefile.
+  - Comment on the install_pm target in the Makefile.
+  - Add a bin-wrapper for git to test scripts without 'make install'-in=
+g them.
+  - Move verbose option handling from previous v3-4/4 (introduction of =
+preview
+  	tool) into v4-4/5 (introduction of git-mw).
+  - Refactor some code into subroutines to clean the global 'preview'
+    subroutine.
+  - Rewrite some error messages to make them more concise while still g=
+iving
+    the same amount of information.
+  - Use 'remote.${remote_name}.mwIDcontent' instead of 'mediawiki.IDCon=
+tent'
+    as config item for the lookup ID used to combine template + new con=
+tent.
+  - Remove comments about what's going on in the preview subroutine.
+  - Use 'clean_filename' (and not 'smudge_filename') in the preview too=
+l to find
+    the correct mediawiki page name based on a filename.
+  - Remove space/tab mixup in the 'help' subroutine.
 
- Documentation/config.txt | 66 ++++++++++++++++++++++++++++--------------------
- 1 file changed, 39 insertions(+), 27 deletions(-)
+changes from v2:
+  - Add a way to test, without installation, code that uses GitMediawik=
+i.pm.
+  - Move more constants to GitMediawiki.pm
+  - Remove the encapsulation of Git::config calls into a git_cmd_try on=
+e.
+  - Remove the --blob option, distinction between files and blobs is no=
+w=20
+    automatic.
+  - Add a --verbose option to output more information on what's going o=
+n.
+  - Rewrote the doc and the commit message.
+  - Rewrote of the template retrieving code (see 'get_template' sub).
+  - Use a configuration variable to define the content ID search in the
+    template. Default value set as 'bodyContent' since it seems more st=
+andard
+    than 'mw-content-text'.
+  - Final content is now saved as utf-8 to solve encoding issues.
+  - Perlcritic changes:=20
+    - Update for loops style to a more perlish one.
+    - All 'print's specify their output streams.
+    --> Same useless warnings left in git-remote-mediawiki.perl after c=
+=C3=A9lestin's=20
+        work and git-mw.perl after this patch :) .
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 81628e8..4b7fc54 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1833,37 +1833,49 @@ push.default::
- 	`upstream` is probably what you want.  Possible values are:
- +
- --
-+
- * `nothing` - do not push anything (error out) unless a refspec is
--  explicitly given.  Very safe, but not very convenient.
-+  explicitly given. This is primarily meant for people who want to
-+  avoid mistakes by always being explicit.
- 
- * `current` - push the current branch to update a branch with the same
-   name on the receiving end.  Works in both central and non-central
--  workflows.  Equivalent to pushing the refspec "$branch" ($branch is
--  the name of the current branch).
--
--* `upstream` - push the current branch to a branch with the name
--  branch.$branch.merge on the receiving end, and error out if the push
--  destination is not the same as branch.$branch.remote.  The name
--  "upstream" refers to "@{u[pstream]}" in linkgit:gitrevisions[7],
--  which makes sense only if both branch.$branch.remote and
--  branch.$branch.merge are set.  It makes sure that a `push` is
--  symmetrical to `pull` in central workflows, and cannot be used in
--  non-central workflows.
--
--* `simple` - a safer version of `current`; push the current branch to
--  update a branch with the same name on the receiving end, with a
--  safety feature: in central workflows, error out if
--  branch.$branch.merge is set and not equal to $branch, to make sure
--  that a `push` and `push` are never asymmetrical.  It will become the
--  default in Git 2.0.
--
--* `matching` - push all branches having the same name on both ends
--  (essentially ignoring all newly created local branches).
--  Well-suited for those who want to batch-update a specific set of
--  branches they consistently work on.  Use with caution, especially
--  when pushing with '--force'.  Equivalent to pushing the refspec ":".
--  This is currently the default, but Git 2.0 will change the default
--  to `simple`.
-+  workflows.
-+
-+* `upstream` - push the current branch back to the branch whose
-+  changes are usually integrated into the current branch (which is
-+  called `@{upstream}`).  This mode only makes sense if you are
-+  pushing to the same repository you would normally pull from
-+  (i.e. central workflow).
-+
-+* `simple` - a safer version of `current`; push the current branch
-+  to update a branch with the same name on the receiving end, with a
-+  safety feature: in central workflows, error out if your current
-+  branch is not set to integrate with the branch with the same name,
-+  to ensure that a `push` and a `push` are symmetrical.
-++
-+This mode will become the default in Git 2.0.
-+
-+* `matching` - push all branches having the same name on both ends.
-+  This makes the repository you are pushing to remember the set of
-+  branches that will be pushed out (e.g. if you always push 'maint'
-+  and 'master' there and no other branches, the repository you push
-+  to will have these two branches, and your local 'maint' and
-+  'master' will be pushed there).
-++
-+To use this mode effectively, you have to make sure _all_ the
-+branches you would push out are ready to be pushed out before
-+running 'git push', as the whole point of this mode is to allow you
-+to push all of the branches in one go.  If you usually finish work
-+on only one branch and push out the result, while other branches are
-+unfinished, this mode is not for you.  Also this mode is not
-+suitable for pushing into a shared central repository, as other
-+people may add new branches there, or update the tip of existing
-+branches outside your control.
-++
-+This is currently the default, but Git 2.0 will change the default
-+to `simple`.
-+
- --
- 
- rebase.stat::
--- 
-1.8.3.1-674-gb27e881
+changes from v1:
+  - add new package GitMediawiki
+    - move some of git-remote-mediawiki functions into the package
+    - update git-remote-mediawiki to use those "moved" functions
+    - add a hacky-way to install it in the Makefile
+    - use it in the new git mw tool
+  - add a way to give to the preview tool blobs as argument
+  - add a fallback when the upstream's branch remote is not a mediawiki=
+ remote
+  - update the `autoload` option to use `git web--browse` and not `xdg-=
+open`
+  - update the way we find the upstream's branch remote name
+
+This serie is based on the 'master' branch merged with c=C3=A9lestin's =
+patch series.
+
+[1] https://github.com/moy/Git-Mediawiki/issues/7
+
+Benoit Person (5):
+  git-remote-mediawiki: Introduction of Git::Mediawiki.pm
+  git-remote-mediawiki: new git bin-wrapper for developement
+  git-remote-mediawiki: factoring code between git-remote-mediawiki and
+    Git::Mediawiki
+  git-remote-mediawiki: Adding git-mw command
+  git-remote-mediawiki: Add preview subcommand into git mw.
+
+ contrib/mw-to-git/Git/Mediawiki.pm          | 100 ++++++++
+ contrib/mw-to-git/Makefile                  |  24 +-
+ contrib/mw-to-git/git                       |  25 ++
+ contrib/mw-to-git/git-mw.perl               | 359 ++++++++++++++++++++=
+++++++++
+ contrib/mw-to-git/git-remote-mediawiki.perl |  85 +------
+ 5 files changed, 518 insertions(+), 75 deletions(-)
+ create mode 100644 contrib/mw-to-git/Git/Mediawiki.pm
+ create mode 100755 contrib/mw-to-git/git
+ create mode 100644 contrib/mw-to-git/git-mw.perl
+
+--=20
+1.8.3.GIT
