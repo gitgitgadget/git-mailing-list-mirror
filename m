@@ -1,62 +1,96 @@
-From: Alexander Nestorov <alexandernst@gmail.com>
-Subject: Re: [Request] Git reset should be able to ignore file permissions
-Date: Thu, 20 Jun 2013 15:28:54 +0200
-Message-ID: <CACuz9s3pkY+VL6ZaU7ruo-8y_Htvzp890XQbxoVs15vCQqqUgw@mail.gmail.com>
-References: <CACuz9s31OUWNxTqCmj7ukAo7=TpXK7zBv5kTFZ5obpXKOju9ng@mail.gmail.com>
- <vpqsj0fr19j.fsf@anie.imag.fr> <CACuz9s1KGKsL-pGftAtAWyX5gUA5c-PYyJUSstf+xw151rZLtA@mail.gmail.com>
- <vpq7ghrqzrv.fsf@anie.imag.fr> <CACuz9s0=7z-M1-zgRNUs2hS-4LcuXrsWbqyDaMnuvFXRnP7E-Q@mail.gmail.com>
- <vpqppvjpjz3.fsf@anie.imag.fr> <CACuz9s2DfN5O91ZF8QOnWuA0V3bGFuUG5RVmkmjeL7Jien+fYg@mail.gmail.com>
- <CACuz9s1H2Gi+B7=Fc3yJ+PC9oDueLQzXstSX0C9uAy3_MN4Kag@mail.gmail.com>
- <vpqy5a7mmsg.fsf@anie.imag.fr> <CACuz9s2KEne5_PwHwmsd1X7iE=GB3pC=iUzxSo=t6TbF+ZjCxA@mail.gmail.com>
- <vpqsj0emzdu.fsf@anie.imag.fr> <CACuz9s0jqe9zErBLZ5+kv2OCKW5fFHq0sifc2GS=n4jFpDiQZw@mail.gmail.com>
- <vpqfvwel4bi.fsf@anie.imag.fr> <7vobb2ym99.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH v2] pull: merge into unborn by fast-forwarding from empty tree
+Date: Thu, 20 Jun 2013 15:33:34 +0200
+Message-ID: <87mwqk6h5d.fsf@linux-k42r.v.cablecom.net>
+References: <20130620124758.GA2376@sigill.intra.peff.net>
+	<aca810600b895ed3f0a3fc575e0f6861e591de5b.1371733403.git.trast@inf.ethz.ch>
+	<20130620131547.GA11073@sigill.intra.peff.net>
+	<87zjuk6hr2.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 15:29:58 2013
+Content-Type: text/plain
+Cc: Stefan =?utf-8?B?U2Now7zDn2xlcg==?= <mail@stefanschuessler.de>,
+	<git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 20 15:33:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Upew1-0006tD-7t
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 15:29:57 +0200
+	id 1Upeze-0004q6-Fc
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 15:33:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757738Ab3FTN3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 09:29:37 -0400
-Received: from mail-qa0-f48.google.com ([209.85.216.48]:44890 "EHLO
-	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757720Ab3FTN3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 09:29:35 -0400
-Received: by mail-qa0-f48.google.com with SMTP id cm16so1066569qab.14
-        for <git@vger.kernel.org>; Thu, 20 Jun 2013 06:29:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=u7ehLtu9FGeaUK2kB9COidik5wQ8z1NtOt8QReSbMkw=;
-        b=nnA+XpNSbaiLm5jwAF43EAJnFMi6SJseG2+MuswnEkkouS8wdY38FiZLY2qfT5BypN
-         k6UK5vY1fhBzP+ULzIRs61guFLP0EOSUUU5eNlR534sjyTLFj7JriWbkfbfRqC7NbvHc
-         pa47JN+8ItL6ZR0QqiTa83R8nfr/cedV5kHKWk8UF3Rk/ZKg1butyP+RfbfQQZMRAky0
-         RcQ4EsovrMljBeLAhi+yNJo/yXq6IqQk5g7fuAnUE1YZRtlducYhAKWDbLFRXj/WUsCQ
-         Hoag4cZUnJSE6NvreWSnVlIx5E8dsKPiasc7uUBxuVK8t3yYxBvzc9ji0oGufp9uvuZl
-         UC1g==
-X-Received: by 10.49.131.36 with SMTP id oj4mr9483031qeb.51.1371734974667;
- Thu, 20 Jun 2013 06:29:34 -0700 (PDT)
-Received: by 10.229.168.70 with HTTP; Thu, 20 Jun 2013 06:28:54 -0700 (PDT)
-In-Reply-To: <7vobb2ym99.fsf@alter.siamese.dyndns.org>
+	id S1757866Ab3FTNdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 09:33:37 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:48394 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757596Ab3FTNdh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 09:33:37 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 20 Jun
+ 2013 15:33:27 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 20 Jun 2013 15:33:35 +0200
+In-Reply-To: <87zjuk6hr2.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
+	of "Thu, 20 Jun 2013 15:20:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228502>
 
-@Matthieu
- Ok, I'm replacing with "Reset only files which actually changed (not
-those with only stat information change)"
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-@Junio
- I'm not sure what you're asking, sorry, I'm not able to understand
-your question.
+> Jeff King <peff@peff.net> writes:
+>
+>> On Thu, Jun 20, 2013 at 03:06:01PM +0200, Thomas Rast wrote:
+>>
+>>> +test_expect_success 'pulling into void does not overwrite staged files' '
+>>> +	git init cloned-staged-colliding &&
+>>> +	(
+>>> +		cd cloned-staged-colliding &&
+>>> +		echo "alternate content" >file &&
+>>> +		git add file &&
+>>> +		test_must_fail git pull .. master &&
+>>> +		echo "alternate content" >expect &&
+>>> +		test_cmp expect file &&
+>>> +		git cat-file blob :file >file.index &&
+>>> +		test_cmp expect file.index
+>>> +	)
+>>> +'
+>>
+>> I naively would have expected this to leave us in a conflicted state
+>> over "file".  But I guess read-tree just rejects it, because we are not
+>> doing a real three-way merge.  I'm not sure it is that big a deal; this
+>> is more about safety than about creating a conflicted/resolvable state.
+>
+> Note that the test_must_fail essentially tests that the merge is rejected.
+
+Bah, no it doesn't, a conflicting merge also returns a nonzero status.
+Sigh.
+
+If you meant we should actually conflict, I'm not sure what options
+there would be other than actually calling a merge driver.  And we could
+actually do this like so (it'll obviously break the tests):
+
+diff --git i/git-pull.sh w/git-pull.sh
+index 1f84383..b3d36a8 100755
+--- i/git-pull.sh
++++ w/git-pull.sh
+@@ -276,7 +276,7 @@ then
+ 	# lose index/worktree changes that the user already made on
+ 	# the unborn branch.
+ 	empty_tree=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+-	git read-tree -m -u $empty_tree HEAD || exit 1
++	git merge-recursive $empty_tree -- $(git write-tree) HEAD || exit 1
+ 	exit
+ fi
+ 
+
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
