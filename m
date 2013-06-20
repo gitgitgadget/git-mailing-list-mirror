@@ -1,62 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] pull: merge into unborn by fast-forwarding from empty
- tree
-Date: Thu, 20 Jun 2013 09:15:47 -0400
-Message-ID: <20130620131547.GA11073@sigill.intra.peff.net>
-References: <20130620124758.GA2376@sigill.intra.peff.net>
- <aca810600b895ed3f0a3fc575e0f6861e591de5b.1371733403.git.trast@inf.ethz.ch>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Splitting a rev list into 2 sets
+Date: Thu, 20 Jun 2013 15:17:08 +0200
+Message-ID: <CAC9WiBg2+ep2EMhcofh14TqG+eujbDg51UDLGm3OK=ntOFuRxw@mail.gmail.com>
+References: <CAC9WiBi-E+LN4hKGeu0mG7ihJWCaTg-W1Dx_PWmX_vsx-uLOaw@mail.gmail.com>
+	<CABURp0r+rzRqHv9vMX3Nsxn_p2R7zf8AsY=_Cg98xWRWn+7bkg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan =?utf-8?B?U2Now7zDn2xlcg==?= <mail@stefanschuessler.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jun 20 15:15:55 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 20 15:17:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpeiQ-0000Ek-P3
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 15:15:55 +0200
+	id 1Upeji-0002We-RV
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 15:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757539Ab3FTNPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 09:15:51 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56691 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754273Ab3FTNPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 09:15:50 -0400
-Received: (qmail 18365 invoked by uid 102); 20 Jun 2013 13:16:49 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Jun 2013 08:16:49 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2013 09:15:47 -0400
-Content-Disposition: inline
-In-Reply-To: <aca810600b895ed3f0a3fc575e0f6861e591de5b.1371733403.git.trast@inf.ethz.ch>
+	id S1757575Ab3FTNRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 09:17:10 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:45566 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754724Ab3FTNRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 09:17:09 -0400
+Received: by mail-oa0-f43.google.com with SMTP id i7so7929304oag.2
+        for <git@vger.kernel.org>; Thu, 20 Jun 2013 06:17:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=nnVqjMDiG9N8B0w00KlbtDecTlBiMoj+t8eA1qJnhc8=;
+        b=nXo+gmsa3RbRJUqsHhAEBLXPQzFwASplIKsu/B1pyu3E78UW7cPpCwZ06iwkF99m+L
+         GTqivRKDiqG1bcY1lNYWi2CmCRm5f94l22oKSuZxqSacIEK/fhYiXBERnFRQv1OEys0K
+         y5WOiGj7n+OR/xroVvWucHJfod30sDcfhnYPpF+3I49/bD8+sfjN/PkH+KK1Xg4vCPMK
+         AaN6wk2GLFPY4jbyppK8hbw+BQe4MM1Z5XajG/VM0aHALyA3PFEstD8J3B2tq1omu8Lq
+         k3D+qIBK64ZgD/ZHHhEJ3c3+KyLzCZ8jxd61iQmwoqq1y1P3LllRa/JtiYFoDRgt8Y+D
+         5+sQ==
+X-Received: by 10.60.144.163 with SMTP id sn3mr4277059oeb.112.1371734228948;
+ Thu, 20 Jun 2013 06:17:08 -0700 (PDT)
+Received: by 10.182.200.169 with HTTP; Thu, 20 Jun 2013 06:17:08 -0700 (PDT)
+In-Reply-To: <CABURp0r+rzRqHv9vMX3Nsxn_p2R7zf8AsY=_Cg98xWRWn+7bkg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228497>
 
-On Thu, Jun 20, 2013 at 03:06:01PM +0200, Thomas Rast wrote:
+Hi,
 
-> +test_expect_success 'pulling into void does not overwrite staged files' '
-> +	git init cloned-staged-colliding &&
-> +	(
-> +		cd cloned-staged-colliding &&
-> +		echo "alternate content" >file &&
-> +		git add file &&
-> +		test_must_fail git pull .. master &&
-> +		echo "alternate content" >expect &&
-> +		test_cmp expect file &&
-> +		git cat-file blob :file >file.index &&
-> +		test_cmp expect file.index
-> +	)
-> +'
+On Thu, Jun 20, 2013 at 3:04 PM, Phil Hord <phil.hord@gmail.com> wrote:
+> On Thu, Jun 20, 2013 at 6:14 AM, Francis Moreau <francis.moro@gmail.com> wrote:
+>> I'd like to write a script that would parse commits in one of my repo.
+>> Ideally this script should accept any revision ranges that
+>> git-rev-list would accept.
+>>
+>> This script should consider commits in master differently than the
+>> ones in others branches.
+>>
+>> To get the commit set which can't be reached by master (ie commits
+>> which are specific to branches other than master) I would do:
+>>
+>>   # "$@" is the range spec passed to the script
+>>   git rev-list "$@" ^master | check_other_commit
+>>
+>> But I don't know if it's possible to use a different git-rev-list
+>> command to get the rest of the commits, ie the ones that are reachable
+>> by the specified range and master.
+>>
+>> One way to do that is to record the first commit set got by the first
+>> rev-list command and check that the ones returned by "git rev-list $@"
+>> are not in the record.
+>>
+>> But I'm wondering if someone can see another solution more elegant ?
+>
+> I do not know if I would call this elegant, but I think this
+> codification of your "One way to do that" is at least small and mostly
+> readable:
+>
+>    git rev-list "$@" |grep -v -f <(git rev-list "$@" ^master)
+>
 
-I naively would have expected this to leave us in a conflicted state
-over "file".  But I guess read-tree just rejects it, because we are not
-doing a real three-way merge.  I'm not sure it is that big a deal; this
-is more about safety than about creating a conflicted/resolvable state.
+Yes, thanks.
 
--Peff
+But I wanted to be sure that git-rev-list can't display the
+intersection of several sets before going forward.
+
+--
+Francis
