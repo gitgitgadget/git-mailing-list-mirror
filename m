@@ -1,98 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] status: display the SHA1 of the commit being currently processed
-Date: Thu, 20 Jun 2013 11:11:00 -0700
-Message-ID: <7vzjukveiz.fsf@alter.siamese.dyndns.org>
-References: <1371471004-9069-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr>
-	<alpine.DEB.2.00.1306171357440.7683@perkele.intern.softwolves.pp.se>
-	<c878cf98bff28ea8b72fb6d33fd9ca85@ensibm.imag.fr>
-	<alpine.DEB.2.00.1306171452340.7683@perkele.intern.softwolves.pp.se>
-	<0b88af05ea8d4723a870476036992abc@ensibm.imag.fr>
-	<51BF26F9.1080900@viscovery.net>
-	<7vvc5cg0i8.fsf@alter.siamese.dyndns.org>
-	<alpine.DEB.2.00.1306200853250.7267@ds9.cixit.se>
-	<51C2B8DA.6040400@viscovery.net>
+Subject: Re: [PATCH v2 04/12] refs: implement simple transactions for the packed-refs file
+Date: Thu, 20 Jun 2013 11:36:36 -0700
+Message-ID: <7vip18vdcb.fsf@alter.siamese.dyndns.org>
+References: <1371628293-28824-1-git-send-email-mhagger@alum.mit.edu>
+	<1371628293-28824-5-git-send-email-mhagger@alum.mit.edu>
+	<7vfvwdzz6k.fsf@alter.siamese.dyndns.org>
+	<51C2B41F.2050708@alum.mit.edu>
+	<7vd2rgwvvd.fsf@alter.siamese.dyndns.org>
+	<51C342B7.5050002@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Peter Krefting <peter@softwolves.pp.se>,
-	Mathieu =?utf-8?Q?Li=C3=A9na?= =?utf-8?Q?rd--Mayor?= 
-	<mathieu.lienard--mayor@ensimag.fr>, git@vger.kernel.org,
-	Jorge Juan Garcia Garcia 
-	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jun 20 20:11:11 2013
+Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 20 20:36:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpjKA-0006uC-AP
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 20:11:10 +0200
+	id 1Upjiv-0004wA-1m
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 20:36:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758545Ab3FTSLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 14:11:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44929 "EHLO
+	id S1161087Ab3FTSgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 14:36:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55972 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758541Ab3FTSLD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 14:11:03 -0400
+	id S1758155Ab3FTSgj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 14:36:39 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2E8329BFF;
-	Thu, 20 Jun 2013 18:11:02 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E89E29D47;
+	Thu, 20 Jun 2013 18:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9UB04FMimK0SN6U8A/MuTAmbGHQ=; b=syHZ3y
-	QIaTIb96AWoz5XQ8+MYAipjNVQ0do7jSXFHqolmsbgDxh0PEQ/xv4TSberadzTlw
-	lSp8MMz688X2ZELY5ht45uWf1+A+gbCLvqSfeaRiEtzO38nwA9rBNmv6AapM5s99
-	IEoKvDBrtaRT6+47VGpfoW9wwF8AlkFUhdFnc=
+	:content-type; s=sasl; bh=vEt+1hCVlp3Qwz5jGidZqQ4Lipw=; b=FIevOl
+	ffpzQdJ9HSJIkWXXCeBzVt7D81c5kcXt1pI1x8ScSfXjHeBSnVIVa5zvICYYAKmq
+	tr4L8DrPIej/rRdTtiOmuJXVJZlLa2dgrpVCtuzkRBgASewQXcCrPMF4Ek7cJznw
+	uVQDYyCwZrrxL5Y/0IiRx9Gw3MMJtR8hejLGE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NbEYfkGRdiomvpjtDkgVuPt7L6N+Sidb
-	4aZly0iEdhJU94EK69M0fScFxkiWucZJjmH6f8TcWngOtDJ3U8ZA/cYUikjF1dfW
-	2ZrHx6KDkT2VGftVWFP2ramZCiMySnjrh0vVzG8ghGrGAw66dNFUyluImNQV0/C4
-	vb9/jSlVTnA=
+	:content-type; q=dns; s=sasl; b=xjJX2KEYIzlEoZn/124XYR6gNxuKupl+
+	Bh2eLydnawzwI87lDmEiW7aEgVSNiXiVjHPwExmV4FsdaWoSAYIAgqVdlIlKKOPN
+	nea+gw7vvtqgcjW6J+oSn9XRA/zB3p14pZxiqr0MLDkFInIop0MpQlPUMFhLpBzt
+	dEwykigSGRE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9650029BFE;
-	Thu, 20 Jun 2013 18:11:02 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7169029D46;
+	Thu, 20 Jun 2013 18:36:38 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EEC4829BFD;
-	Thu, 20 Jun 2013 18:11:01 +0000 (UTC)
-In-Reply-To: <51C2B8DA.6040400@viscovery.net> (Johannes Sixt's message of
-	"Thu, 20 Jun 2013 10:10:02 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E487429D42;
+	Thu, 20 Jun 2013 18:36:37 +0000 (UTC)
+In-Reply-To: <51C342B7.5050002@alum.mit.edu> (Michael Haggerty's message of
+	"Thu, 20 Jun 2013 19:58:15 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C417D034-D9D4-11E2-9D48-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 578BA978-D9D8-11E2-9B62-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228520>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Am 6/20/2013 9:56, schrieb Peter Krefting:
->> Junio C Hamano:
->> 
->>> But my understanding is that the reordering using printf() is the
->>> mechanism we suggest l10n folks to use when the order of parameters
->>> given to printf does not match the preferred word order in the message
->>> in their language.
->> 
->> It's documented in the gettext manual, and seems to be used in the
->> zh_CN.po to change the word order in quite a few places.
+> On 06/20/2013 07:11 PM, Junio C Hamano wrote:
 >
-> It is fine to use %n$ in translated strings as long as gettext is enabled
-> only on systems that have a sufficiently capable printf and these formats
-> are not used in the source code.
+>> Perhaps I am missing something from the previous discussions, but I
+>> am having trouble understanding the "main packed ref cache" part of
+>> the above.  "main" as opposed to...?
 >
-> But you can't have this string:
->
->   "Splitting a commit while rebasing branch '%2$s' on '%3$s'."
->
-> neither in the template nor in the translation, because the numbers must
-> begin at 1 (and must be used without gaps).
+> "main" as opposed to "submodule".
 
-Did any message we saw in the patch (and the discussion to possibly
-improve it) need to have such a format string, or are you pointing
-out a common gotcha we may want to warn translators about in
-po/README?
+I see.
+
+> No, the scenario would be that a git process wants to change a reference
+> in a submodule directly, as opposed to starting another git process
+> within the submodule, as I believe is done now.  Maybe it's too
+> far-fetched even to consider...
+
+Perhaps.  But the "singleton lock because we only handle main packed
+ref cache" does not prevent us from doing so later, so I think v3 is
+OK.
+
+Thanks.
