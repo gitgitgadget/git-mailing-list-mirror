@@ -1,59 +1,72 @@
-From: Namhyung Kim <namhyung@gmail.com>
-Subject: [PATCH] send-email: Fix documentation of --signed-off-by-cc option
-Date: Thu, 20 Jun 2013 17:26:51 +0900
-Message-ID: <1371716811-12043-1-git-send-email-namhyung@gmail.com>
-Cc: git@vger.kernel.org, Minchan Kim <minchan@kernel.org>,
-	Namhyung Kim <namhyung.kim@lge.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 10:27:40 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v4 1/5] git-remote-mediawiki: Introduction of Git::Mediawiki.pm
+Date: Thu, 20 Jun 2013 10:30:25 +0200
+Message-ID: <vpqy5a5dw0u.fsf@anie.imag.fr>
+References: <1371712593-6210-1-git-send-email-benoit.person@ensimag.fr>
+	<1371712593-6210-2-git-send-email-benoit.person@ensimag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>
+To: benoit.person@ensimag.fr
+X-From: git-owner@vger.kernel.org Thu Jun 20 10:30:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpaDP-0000ao-Op
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 10:27:36 +0200
+	id 1UpaGK-0006yM-H4
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 10:30:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754768Ab3FTI1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 04:27:30 -0400
-Received: from LGEMRELSE6Q.lge.com ([156.147.1.121]:62670 "EHLO
-	LGEMRELSE6Q.lge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754644Ab3FTI1S (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 04:27:18 -0400
-X-AuditID: 9c930179-b7c30ae0000047e1-43-51c2bce4bf2e
-Received: from sejong.aot.lge.com ( [10.177.220.181])
-	by LGEMRELSE6Q.lge.com (Symantec Brightmail Gateway) with SMTP id 8E.70.18401.4ECB2C15; Thu, 20 Jun 2013 17:27:16 +0900 (KST)
-X-Mailer: git-send-email 1.7.11.7
-X-Brightmail-Tracker: AAAAAA==
+	id S1754134Ab3FTIaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 04:30:30 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41155 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754108Ab3FTIa2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 04:30:28 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5K8UPtO004017
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 20 Jun 2013 10:30:25 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UpaG9-0005au-RA; Thu, 20 Jun 2013 10:30:25 +0200
+In-Reply-To: <1371712593-6210-2-git-send-email-benoit.person@ensimag.fr>
+	(benoit person's message of "Thu, 20 Jun 2013 09:16:29 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 20 Jun 2013 10:30:25 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228450>
 
-From: Namhyung Kim <namhyung.kim@lge.com>
+This serie has a conflict with cm/remote-mediawiki. We probably want to
+wait for other mediawiki patch series to hit master (they are all marked
+as "will merge to master" in Junio's last "what's cooking) before
+merging this one.
 
-The man page says it'll control the Cc: lines being added also,
-but this is not true.
+benoit.person@ensimag.fr writes:
 
-Reported-by: Minchan Kim <minchan@kernel.org>
-Signed-off-by: Namhyung Kim <namhyung.kim@lge.com>
----
- Documentation/git-send-email.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> From: Benoit Person <benoit.person@ensimag.fr>
+>
+> Currently, the mw-to-git project contains only a remote helper
+> (git-remote-mediawiki.perl). To inmprove the user experience while working
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 40a9a9a..5694d98 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -238,7 +238,7 @@ Automating
- 	the value of 'sendemail.identity'.
- 
- --[no-]signed-off-by-cc::
--	If this is set, add emails found in Signed-off-by: or Cc: lines to the
-+	If this is set, add emails found in Signed-off-by: lines to the
- 	cc list. Default is the value of 'sendemail.signedoffbycc' configuration
- 	value; if that is unspecified, default to --signed-off-by-cc.
- 
+s/inmprove/improve/
+
+> A perl package offer the best way to handle such case:
+
+s/offer/offers/
+
+> An alternate solution is to concatenate a "toolset" file with each *.perl
+> when 'make'-ing the project. In that scheme, everything is imported in the
+> script's namespace. Plus, files should be renamed in order to chain to Git's
+> toplevel makefile.
+
+Perhaps say explicitely "hence this solution is not acceptable" or so.
+
 -- 
-1.7.11.7
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
