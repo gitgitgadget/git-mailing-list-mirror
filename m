@@ -1,71 +1,59 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] status: display the SHA1 of the commit being currently
- processed
-Date: Thu, 20 Jun 2013 10:10:02 +0200
-Message-ID: <51C2B8DA.6040400@viscovery.net>
-References: <1371471004-9069-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr> <alpine.DEB.2.00.1306171357440.7683@perkele.intern.softwolves.pp.se> <c878cf98bff28ea8b72fb6d33fd9ca85@ensibm.imag.fr> <alpine.DEB.2.00.1306171452340.7683@perkele.intern.softwolves.pp.se> <0b88af05ea8d4723a870476036992abc@ensibm.imag.fr> <51BF26F9.1080900@viscovery.net> <7vvc5cg0i8.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1306200853250.7267@ds9.cixit.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?Mathieu_Li=E9nar?= =?ISO-8859-1?Q?d--Mayor?= 
-	<mathieu.lienard--mayor@ensimag.fr>, git@vger.kernel.org,
-	Jorge Juan Garcia Garcia 
-	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Thu Jun 20 10:10:30 2013
+From: Namhyung Kim <namhyung@gmail.com>
+Subject: [PATCH] send-email: Fix documentation of --signed-off-by-cc option
+Date: Thu, 20 Jun 2013 17:26:51 +0900
+Message-ID: <1371716811-12043-1-git-send-email-namhyung@gmail.com>
+Cc: git@vger.kernel.org, Minchan Kim <minchan@kernel.org>,
+	Namhyung Kim <namhyung.kim@lge.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 20 10:27:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpZwq-0007TR-8W
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 10:10:28 +0200
+	id 1UpaDP-0000ao-Op
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 10:27:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754411Ab3FTIKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 04:10:15 -0400
-Received: from so.liwest.at ([212.33.55.13]:45406 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754182Ab3FTIKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 04:10:09 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UpZwQ-0005rS-Si; Thu, 20 Jun 2013 10:10:03 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 6B63A1660F;
-	Thu, 20 Jun 2013 10:10:02 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <alpine.DEB.2.00.1306200853250.7267@ds9.cixit.se>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1754768Ab3FTI1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 04:27:30 -0400
+Received: from LGEMRELSE6Q.lge.com ([156.147.1.121]:62670 "EHLO
+	LGEMRELSE6Q.lge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754644Ab3FTI1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 04:27:18 -0400
+X-AuditID: 9c930179-b7c30ae0000047e1-43-51c2bce4bf2e
+Received: from sejong.aot.lge.com ( [10.177.220.181])
+	by LGEMRELSE6Q.lge.com (Symantec Brightmail Gateway) with SMTP id 8E.70.18401.4ECB2C15; Thu, 20 Jun 2013 17:27:16 +0900 (KST)
+X-Mailer: git-send-email 1.7.11.7
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228449>
 
-Am 6/20/2013 9:56, schrieb Peter Krefting:
-> Junio C Hamano:
-> 
->> But my understanding is that the reordering using printf() is the
->> mechanism we suggest l10n folks to use when the order of parameters
->> given to printf does not match the preferred word order in the message
->> in their language.
-> 
-> It's documented in the gettext manual, and seems to be used in the
-> zh_CN.po to change the word order in quite a few places.
+From: Namhyung Kim <namhyung.kim@lge.com>
 
-It is fine to use %n$ in translated strings as long as gettext is enabled
-only on systems that have a sufficiently capable printf and these formats
-are not used in the source code.
+The man page says it'll control the Cc: lines being added also,
+but this is not true.
 
-But you can't have this string:
+Reported-by: Minchan Kim <minchan@kernel.org>
+Signed-off-by: Namhyung Kim <namhyung.kim@lge.com>
+---
+ Documentation/git-send-email.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  "Splitting a commit while rebasing branch '%2$s' on '%3$s'."
-
-neither in the template nor in the translation, because the numbers must
-begin at 1 (and must be used without gaps).
-
--- Hannes
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 40a9a9a..5694d98 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -238,7 +238,7 @@ Automating
+ 	the value of 'sendemail.identity'.
+ 
+ --[no-]signed-off-by-cc::
+-	If this is set, add emails found in Signed-off-by: or Cc: lines to the
++	If this is set, add emails found in Signed-off-by: lines to the
+ 	cc list. Default is the value of 'sendemail.signedoffbycc' configuration
+ 	value; if that is unspecified, default to --signed-off-by-cc.
+ 
+-- 
+1.7.11.7
