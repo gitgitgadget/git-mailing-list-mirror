@@ -1,78 +1,74 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] send-email: Fix documentation of --signed-off-by-cc option
-Date: Thu, 20 Jun 2013 22:15:53 +0530
-Message-ID: <CALkWK0n+CMV64VxLMV6AqVxwpC2nyk=vh=0F+ESvKG2Mn9G7oA@mail.gmail.com>
-References: <1371716811-12043-1-git-send-email-namhyung@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 04/12] refs: implement simple transactions for the packed-refs file
+Date: Thu, 20 Jun 2013 10:11:02 -0700
+Message-ID: <7vd2rgwvvd.fsf@alter.siamese.dyndns.org>
+References: <1371628293-28824-1-git-send-email-mhagger@alum.mit.edu>
+	<1371628293-28824-5-git-send-email-mhagger@alum.mit.edu>
+	<7vfvwdzz6k.fsf@alter.siamese.dyndns.org>
+	<51C2B41F.2050708@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Minchan Kim <minchan@kernel.org>,
-	Namhyung Kim <namhyung.kim@lge.com>
-To: Namhyung Kim <namhyung@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 18:46:45 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 20 19:11:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Upi0M-00063J-W7
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 18:46:39 +0200
+	id 1UpiOC-0003LS-Fq
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 19:11:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965476Ab3FTQqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 12:46:35 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:43728 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965232Ab3FTQqe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 12:46:34 -0400
-Received: by mail-ie0-f179.google.com with SMTP id c10so16909562ieb.38
-        for <git@vger.kernel.org>; Thu, 20 Jun 2013 09:46:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=WZ3T12F+lLBCUFLg1d0zrm4ugIxfvHW4j/5RVhqQ3WM=;
-        b=xie5Ivip7NF42EJxwsSD8nd6ssPCU6+jvkNzBZKKAffTlKCDZSDIM2ER6B1jIPUvTd
-         Xjbc5mEs9JvHFgjfPzGAKoWnRjzS3MhfeCEBxvRASbgS6CZRlWUpixzCZ3uXWVnBgmjX
-         EzDU5sMNWJC6m7IfM7r0jHvqP5F5h09plbgGjNotwvO8ZnOleEpMShnAAI52R6esgsFZ
-         akBUQ21HefPWaxPUTjidNHFUGP09IghuMngkZ+RaifY0fzeUHPnDy3xX2V6/VHrt9g+j
-         ZzvebUCPQgiN7IIOJUnzVvwt/kfFZWml5mQxpLQEul9Q9qaO+z1CyGHmz8Ctyzt57dZp
-         ZDwg==
-X-Received: by 10.50.1.37 with SMTP id 5mr165038igj.29.1371746793656; Thu, 20
- Jun 2013 09:46:33 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Thu, 20 Jun 2013 09:45:53 -0700 (PDT)
-In-Reply-To: <1371716811-12043-1-git-send-email-namhyung@gmail.com>
+	id S1161242Ab3FTRLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 13:11:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36463 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161212Ab3FTRLL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 13:11:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B6FE296E7;
+	Thu, 20 Jun 2013 17:11:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Dmoo1/e1htNAYXSJePlI/pD4/PE=; b=ZCZLhj
+	x4ySDGJEGXNhMipy7I3uau7FXDt5uZ33eaTcYO1aSsveNcjVt694nrwISFcFtU2J
+	9/m1hbeBjW4yybgxxaSAIx4goYX1l3oLCIJB8ob9feZFVXmfEUfr+qIDz+wTEnXy
+	6CNMaCdGFx0U79xCF1fPdkNjeALXQ6GK+h/Cs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=S7hKYVVZs85EQJPzxxiNeQSLk/Guq6VR
+	xSBhW/JemPOAULMxIXJiPn9qr/t9X5xZ66HBo++xryy2t3GMb/SESG++yNTKTNSg
+	W32xn96uUU1htMEDXNoRJcOnFIatxkaU24x6e8/A/DYjtRe8U9dqIETHK3b0X/Lc
+	VHxMZCNs0Ug=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F995296E5;
+	Thu, 20 Jun 2013 17:11:10 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8919296E0;
+	Thu, 20 Jun 2013 17:11:09 +0000 (UTC)
+In-Reply-To: <51C2B41F.2050708@alum.mit.edu> (Michael Haggerty's message of
+	"Thu, 20 Jun 2013 09:49:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 66DF5A48-D9CC-11E2-A36C-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228513>
 
-Namhyung Kim wrote:
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index 40a9a9a..5694d98 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -238,7 +238,7 @@ Automating
->         the value of 'sendemail.identity'.
->
->  --[no-]signed-off-by-cc::
-> -       If this is set, add emails found in Signed-off-by: or Cc: lines to the
-> +       If this is set, add emails found in Signed-off-by: lines to the
->         cc list. Default is the value of 'sendemail.signedoffbycc' configuration
->         value; if that is unspecified, default to --signed-off-by-cc.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Correct, but I'd urge you to step back and look at all the options.
-Cc lines in the body (called bodycc) are parsed: see
-git-send-email.perl:1361.  By default, everyone (cc, author, self,
-sob, bodycc) is cc'ed by default.  You can turn off each of these
-individually using --supress-cc which can take values
-(all|cccmd|cc|author|self|sob|body|bodycc).  As you can see from
-git-send-email.perl:400, the real purpose of --signed-off-by-cc is to
-override a sendemail.suppresscc=sob; however, it can't override any
-stronger values of suppresscc (body, all).  So, it's mostly a
-no-option, and there is no corresponding --[no-]bodycc-cc.  Overall,
-the way out of this horrible mess of options is to deprecate
---[no-]signed-off-by-cc, and modify --supress-cc to have a
---no-suppress-cc counterpart, just like --[no-]suppress-from.
+> But currently only the main packed ref cache can be locked, so it would
+> be possible for lock_packed_refs() to use the static packlock instance
+> for locking.
 
-Thanks.
+Perhaps I am missing something from the previous discussions, but I
+am having trouble understanding the "main packed ref cache" part of
+the above.  "main" as opposed to...?  Is it envisioned that later
+somebody can lock one subpart while another can lock a different and
+non-overlapping subpart, to make changes independently, and somehow
+their non-overlapping changes will be consolidated into a single
+consistent result?
