@@ -1,89 +1,121 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: Splitting a rev list into 2 sets
-Date: Thu, 20 Jun 2013 15:17:08 +0200
-Message-ID: <CAC9WiBg2+ep2EMhcofh14TqG+eujbDg51UDLGm3OK=ntOFuRxw@mail.gmail.com>
-References: <CAC9WiBi-E+LN4hKGeu0mG7ihJWCaTg-W1Dx_PWmX_vsx-uLOaw@mail.gmail.com>
-	<CABURp0r+rzRqHv9vMX3Nsxn_p2R7zf8AsY=_Cg98xWRWn+7bkg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [BUG] clone: regression in error messages in master
+Date: Thu, 20 Jun 2013 18:46:55 +0530
+Message-ID: <CALkWK0n7S8s-ABQ1qV5JSsyhYo6=rmK1UT+uYW9hjjeWjambug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 15:17:20 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 20 15:17:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Upeji-0002We-RV
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 15:17:15 +0200
+	id 1Upek8-0003A5-UB
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 15:17:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757575Ab3FTNRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 09:17:10 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:45566 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754724Ab3FTNRJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 09:17:09 -0400
-Received: by mail-oa0-f43.google.com with SMTP id i7so7929304oag.2
-        for <git@vger.kernel.org>; Thu, 20 Jun 2013 06:17:09 -0700 (PDT)
+	id S1757595Ab3FTNRh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 09:17:37 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:46477 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757512Ab3FTNRg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 09:17:36 -0400
+Received: by mail-ie0-f181.google.com with SMTP id x12so16510995ief.12
+        for <git@vger.kernel.org>; Thu, 20 Jun 2013 06:17:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nnVqjMDiG9N8B0w00KlbtDecTlBiMoj+t8eA1qJnhc8=;
-        b=nXo+gmsa3RbRJUqsHhAEBLXPQzFwASplIKsu/B1pyu3E78UW7cPpCwZ06iwkF99m+L
-         GTqivRKDiqG1bcY1lNYWi2CmCRm5f94l22oKSuZxqSacIEK/fhYiXBERnFRQv1OEys0K
-         y5WOiGj7n+OR/xroVvWucHJfod30sDcfhnYPpF+3I49/bD8+sfjN/PkH+KK1Xg4vCPMK
-         AaN6wk2GLFPY4jbyppK8hbw+BQe4MM1Z5XajG/VM0aHALyA3PFEstD8J3B2tq1omu8Lq
-         k3D+qIBK64ZgD/ZHHhEJ3c3+KyLzCZ8jxd61iQmwoqq1y1P3LllRa/JtiYFoDRgt8Y+D
-         5+sQ==
-X-Received: by 10.60.144.163 with SMTP id sn3mr4277059oeb.112.1371734228948;
- Thu, 20 Jun 2013 06:17:08 -0700 (PDT)
-Received: by 10.182.200.169 with HTTP; Thu, 20 Jun 2013 06:17:08 -0700 (PDT)
-In-Reply-To: <CABURp0r+rzRqHv9vMX3Nsxn_p2R7zf8AsY=_Cg98xWRWn+7bkg@mail.gmail.com>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=s+YojzHNHeMdsAmsOPC33JQTRvZbnv6Yl2EEPAN5ZGI=;
+        b=u7Ck5kt2dkeeSqx22tylkUEdX0T/2n4EPmzzoWyCRwE4yYKLfdbSlGjzc2a1NDF1uo
+         yU0zCoHnd9J6hfNe/S1gi26UnhC91agn1VqVPUTH/lKKGzjD7Zc5OrxZMHjFEmqe51yW
+         IJBGs3T6zWq4bkHlKfQzEkuqVsOZc1ytg1esSOpM60KBl2rhaCk/RXQA5AfphPrx4ue6
+         cqKTLzWzhC96t6vxE/hb8tm16tMoLMEghh7NBWnDskzCKnbgO2zGBzHsDcOmWZqors4t
+         M0N1bEgHvaoa7DGlg+4/5+YrxUuRMKYOfGvJFZQNBcdcywIG/sFUuWEJJ0T9zDq9zfLW
+         9K4Q==
+X-Received: by 10.50.98.104 with SMTP id eh8mr12314792igb.111.1371734255932;
+ Thu, 20 Jun 2013 06:17:35 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Thu, 20 Jun 2013 06:16:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228498>
 
 Hi,
 
-On Thu, Jun 20, 2013 at 3:04 PM, Phil Hord <phil.hord@gmail.com> wrote:
-> On Thu, Jun 20, 2013 at 6:14 AM, Francis Moreau <francis.moro@gmail.com> wrote:
->> I'd like to write a script that would parse commits in one of my repo.
->> Ideally this script should accept any revision ranges that
->> git-rev-list would accept.
->>
->> This script should consider commits in master differently than the
->> ones in others branches.
->>
->> To get the commit set which can't be reached by master (ie commits
->> which are specific to branches other than master) I would do:
->>
->>   # "$@" is the range spec passed to the script
->>   git rev-list "$@" ^master | check_other_commit
->>
->> But I don't know if it's possible to use a different git-rev-list
->> command to get the rest of the commits, ie the ones that are reachable
->> by the specified range and master.
->>
->> One way to do that is to record the first commit set got by the first
->> rev-list command and check that the ones returned by "git rev-list $@"
->> are not in the record.
->>
->> But I'm wondering if someone can see another solution more elegant ?
->
-> I do not know if I would call this elegant, but I think this
-> codification of your "One way to do that" is at least small and mostly
-> readable:
->
->    git rev-list "$@" |grep -v -f <(git rev-list "$@" ^master)
->
+So this should explain the problem:
 
-Yes, thanks.
+  # using v1.8.3.1
+  $ git clone https://google.com
+  Cloning into 'google.com'...
+  fatal: repository 'https://google.com/' not found
 
-But I wanted to be sure that git-rev-list can't display the
-intersection of several sets before going forward.
+  # using master
+  $ git clone https://google.com
+  Cloning into 'google.com'...
+  fatal: repository 'https://google.com/' not found
+  fatal: Reading from helper 'git-remote-https' failed
 
---
-Francis
+To figure out where the regression was coming from, I ran a bisect
+with this script:
+
+  #!/bin/sh
+  make clean &&
+  make -j 8 &&
+  cd t &&
+  sh -v -i clone-message.sh
+
+where clone-message.sh is:
+
+  test_description=clone-message
+
+  . ./test-lib.sh
+
+  test_expect_success setup '
+
+  	rm -fr .git &&
+  	test_create_repo src &&
+  	(
+  		cd src &&
+  		>file &&
+  		git add file &&
+  		git commit -m initial &&
+  		echo 1 >file &&
+  		git add file &&
+  		git commit -m updated
+  	)
+
+  '
+
+  test_expect_success 'clone invalid URL' '
+  	rm -fr dst &&
+  	test_must_fail git clone https://google.com 2>msg &&
+  	test_i18ngrep "repository .* not found" msg &&
+  	! test_i18ngrep "git-remote-https" msg
+  '
+
+  test_done
+
+The bisect pointed me to: 81d340d4 (transport-helper: report errors
+properly, 2013-04-10).
+
+  $ git clone https://google.com
+  Cloning into 'google.com'...
+  fatal: https://google.com/info/refs?service=git-upload-pack not
+found: did you run git update-server-info on the server?
+  fatal: Reading from remote helper failed
+
+What?!  Okay, the last "Reading from remote helper failed" was
+introduced by this commit; my clone-message.sh has a bug.  So I
+commented out the first test_i18ngrep and ran it.  Result: c096955
+(transport-helper: mention helper name when it dies, 2013-04-10).
+This is not the real culprit: it just changed the message string that
+81d340d4 originally introduced.
+
+Okay, so am I reporting a valid bug?  Going through remote-curl, I can
+see that it dies in remote-curl.c:213 if HTTP_TARGET_MISSING.  If that
+is the case, what is the point of printing the second message about
+the remote helper program not being present?
+
+Thanks.
