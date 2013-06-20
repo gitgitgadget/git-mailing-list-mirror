@@ -1,92 +1,336 @@
 From: Alexey Shumkin <Alex.Crezoff@gmail.com>
-Subject: [PATCH v5 0/5] Reroll patches against v1.8.3.1
-Date: Thu, 20 Jun 2013 13:26:16 +0400
-Message-ID: <cover.1371720245.git.Alex.Crezoff@gmail.com>
-References: <cover.1359018188.git.Alex.Crezoff@gmail.com>
+Subject: [PATCH v5 1/5] t6006 (rev-list-format): don't hardcode SHA-1 in expected outputs
+Date: Thu, 20 Jun 2013 13:26:17 +0400
+Message-ID: <3aff7ccae2f7e8b1499b4e11a65c5815b06c1959.1371720245.git.Alex.Crezoff@gmail.com>
+References: <cover.1371720245.git.Alex.Crezoff@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Alexey Shumkin <Alex.Crezoff@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 20 11:26:55 2013
+X-From: git-owner@vger.kernel.org Thu Jun 20 11:27:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Upb8n-0002oC-CS
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 11:26:53 +0200
+	id 1Upb8s-0002zW-C7
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 11:26:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965203Ab3FTJ0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 05:26:49 -0400
-Received: from mail-la0-f44.google.com ([209.85.215.44]:42121 "EHLO
-	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935297Ab3FTJ0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 05:26:48 -0400
-Received: by mail-la0-f44.google.com with SMTP id er20so5519885lab.17
-        for <git@vger.kernel.org>; Thu, 20 Jun 2013 02:26:46 -0700 (PDT)
+	id S965225Ab3FTJ0x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Jun 2013 05:26:53 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:45884 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935297Ab3FTJ0u (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 05:26:50 -0400
+Received: by mail-lb0-f181.google.com with SMTP id w10so5521489lbi.26
+        for <git@vger.kernel.org>; Thu, 20 Jun 2013 02:26:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=rarus.ru; s=google;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=DbylhbESfQYiYKIJAbK0DOSboDzAbWB2pfXPMZNQgDo=;
-        b=fxPBaCCgyYzX1a4VAeGExWZJtjY1ws5/JHJxVr2rP3yvqTJ6oRTtWmNwViiSmbPW33
-         pnhtrwIuXz8dnOOsE4aym3F1S7VUTPCsr3vx9bvDUtY4buJZJPEhkbUkrekTyUPBPBIq
-         5Y1KursMeioDakxTisI9C14/c/6DSXnS6IrZA=
+         :references:in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=81C/qBW8dmVz9OnmkR6KL3ORnCrWGlRetoNllIHTrFY=;
+        b=EcxEZ7dmAAUdH+vm8dgJ+bZnD2QWXyAAqLHIZTZm3nVRJsaJ4Kn6RFEoLFVrGdPi/3
+         wxC1ScS9FKQ5P1l3DFek4fhNshCSH1253Fu2QyubLNYLFXn5sV6eClFL+qpdWn3o9dS1
+         ovHvPvnTdWv+YmUITQfyts5JaobYtvn1FhE7c=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=DbylhbESfQYiYKIJAbK0DOSboDzAbWB2pfXPMZNQgDo=;
-        b=wnccd4rLtnHSAKfWwQnY3ouXgmwlXCjfwG24pPT9kqFSvwGvNyxE9QoHyOPwLTLU4Q
-         So5ax2dMQlVJOEHkwuRZFmj09ibaZTj9+1ClaokrzZNKWEjSm8EOphvVjMmxwCjW3Dm4
-         obG3rcpF/fGl9C1YTrxPW2Z4tNLHaZCZ0McNwnPCTJUyQZckd03nxSnT15svvVEGlCv+
-         TrlKeSGIlR8iK+1HO+KtQJuFdkGWGR2F5LrD1tNIyPytmpk4/92jwEbK+K25oM8lRFb9
-         vH7/oviXo+OP4Sd1JBCgDkrWI6cB2kDVrjO36q+XmPCUmo8HjCBPq6ipfOciT6JjtlRh
-         djsg==
+         :references:in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=81C/qBW8dmVz9OnmkR6KL3ORnCrWGlRetoNllIHTrFY=;
+        b=IoBZtGY+36/gT1n7xv72yWFRk4JnwDEO5+ieYAWCzT9BSBiAkREcff6axwy/iABfdF
+         5+29A0IF/EzULUb4/vjYRmtmSJl9HeEWNiAOn8zooyNwHWI7NQ4UfKcUkD1/3nzRy6hi
+         pbgK4t29q8QDcxCWZhqJKIy0skFer3uBXHGCCOSzoJvVwpZWv02qtVcSgolIkBspMegS
+         2tWIgZMfqRPGKpnQ7bNtWQIC4DHFMAxVhKUoH+HhxlDZsuX03qnkuWWfOgGStLA4ah78
+         LJIpkBBZMjGPQmzwUN4ZKjnVnQf3vkzDRK/bNwzX4m1mGEz829oOzpxxSEuh1AaTWKY4
+         z27w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:x-gm-message-state;
-        bh=DbylhbESfQYiYKIJAbK0DOSboDzAbWB2pfXPMZNQgDo=;
-        b=N4FZyIQFprnxsaIhypBEKiNDZkLGlg6NkoBhGdBw13NWGy06aAk6h8J7pN2FexGbh4
-         dyUnj23Ytjktei2c+ciVaeuUfkdxmXWbovgWSpnVK5esSbkKk3TysPTylulh5Z9/+pjf
-         wP+RsBWLhaQuxzwOM8i7kpNoprr3soU2QXlnybLO/ZZHeHTIOcUIAVjS4lQ7uLPwprt/
-         io78HYYgseJzURZtfWemm+aPIEqFV0mtmVhMUSY6VjSD8wroG18ztppk9zAiH0zjANnc
-         iZHudCcldFOWOYjU8qrFMwcqPf/InJi8AIZXSHozVw0xB/wU7cMEl19D+rV4dS3oSzCR
-         nWnA==
-X-Received: by 10.112.58.135 with SMTP id r7mr5179463lbq.89.1371720406238;
-        Thu, 20 Jun 2013 02:26:46 -0700 (PDT)
+         :references:in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding:x-gm-message-state;
+        bh=81C/qBW8dmVz9OnmkR6KL3ORnCrWGlRetoNllIHTrFY=;
+        b=VtweTTy+cJyWp3wL2blS3KUoUi8yO8OrNPz3ayslJW/ApvukbzsruxInkZxhOJq2JI
+         fir1B0VaMX4f/037I4vhXBQ05wV9Zm01OCxVVTfSMJt/b6miykQxGzZQh/UAWZkaLsdT
+         C9Goxw6g/GIQX5+U3nWPgGq9RDv4q3liT7AKD5SoX3wz6ipVJ4q9MuYmrbD2sjkITcFW
+         x0sF1YTnAQ/C6Da2STU2SLZ8MFmki92zc6+z9S/fH33FDFlLzS7WBhZsDy0Vh6/T0SbQ
+         xCKXO9UDoX5IYKUETNKu5JehNeYjXe/tRVDwwmHaEkCwCfJHo7Q70tt3UPrswwzbpVJ1
+         X1KA==
+X-Received: by 10.112.219.133 with SMTP id po5mr4990031lbc.80.1371720408912;
+        Thu, 20 Jun 2013 02:26:48 -0700 (PDT)
 Received: from localhost ([85.21.218.130])
-        by mx.google.com with ESMTPSA id m14sm30244lbl.1.2013.06.20.02.26.44
+        by mx.google.com with ESMTPSA id u1sm10770636lag.5.2013.06.20.02.26.47
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 20 Jun 2013 02:26:45 -0700 (PDT)
+        Thu, 20 Jun 2013 02:26:48 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1.15.g5c23c1e
-In-Reply-To: <cover.1359018188.git.Alex.Crezoff@gmail.com>
-X-Gm-Message-State: ALoCoQlt1c7xv0TgRsnuWqtanogdrz3R3gZGqI9AIiNNydsP0Nv97zjDz8SeDVMtbwhReDqe0BfZ
+In-Reply-To: <cover.1371720245.git.Alex.Crezoff@gmail.com>
+In-Reply-To: <cover.1371720245.git.Alex.Crezoff@gmail.com>
+References: <cover.1359018188.git.Alex.Crezoff@gmail.com> <cover.1371720245.git.Alex.Crezoff@gmail.com>
+X-Gm-Message-State: ALoCoQkwNwcZcTNst+YRRj5kDzBidRm2QRVvkY0ttZDYtHqDqAwAIog3wvcSCvbyeQWJjYFJEvPR
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228469>
 
-Alexey Shumkin (5):
-  t6006 (rev-list-format): don't hardcode SHA-1 in expected outputs
-  t7102 (reset): don't hardcode SHA-1 in expected outputs
-  t4205 (log-pretty-formats): don't hardcode SHA-1 in expected outputs
-  pretty: Add failing tests: user format ignores i18n.logOutputEncoding
-    setting
-  pretty: user format ignores i18n.logOutputEncoding setting
+The expected SHA-1 digests are always available in variables. Use
+them instead of hardcoding.
 
- builtin/reset.c                  |   8 +-
- builtin/rev-list.c               |   1 +
- builtin/shortlog.c               |   1 +
- log-tree.c                       |   1 +
- submodule.c                      |   3 +
- t/t4041-diff-submodule-option.sh |  25 +++--
- t/t4205-log-pretty-formats.sh    | 179 ++++++++++++++++++++-------------
- t/t6006-rev-list-format.sh       | 209 ++++++++++++++++++++++++---------------
- t/t7102-reset.sh                 |  37 ++++++-
- 9 files changed, 299 insertions(+), 165 deletions(-)
+Signed-off-by: Alexey Shumkin <Alex.Crezoff@gmail.com>
+---
+ t/t6006-rev-list-format.sh | 142 +++++++++++++++++++++++++------------=
+--------
+ 1 file changed, 79 insertions(+), 63 deletions(-)
 
--- 
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index 0393c9f..d32e65e 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -7,8 +7,21 @@ test_description=3D'git rev-list --pretty=3Dformat tes=
+t'
+=20
+ test_tick
+ test_expect_success 'setup' '
+-touch foo && git add foo && git commit -m "added foo" &&
+-  echo changed >foo && git commit -a -m "changed foo"
++	: >foo &&
++	git add foo &&
++	git commit -m "added foo" &&
++	head1=3D$(git rev-parse --verify HEAD) &&
++	head1_short=3D$(git rev-parse --short $head1) &&
++	tree1=3D$(git cat-file commit HEAD | sed -n -e "s/^tree //p" -e "/^$/=
+q") &&
++	tree1_short=3D$(git rev-parse --short $tree1) &&
++	echo changed >foo &&
++	git commit -a -m "changed foo" &&
++	head2=3D$(git rev-parse --verify HEAD) &&
++	head2_short=3D$(git rev-parse --short $head2) &&
++	head2_parent=3D$(git cat-file commit HEAD | sed -n -e "s/^parent //p"=
+ -e "/^$/q") &&
++	head2_parent_short=3D$(git rev-parse --short $head2_parent) &&
++	tree2=3D$(git cat-file commit HEAD | sed -n -e "s/^tree //p" -e "/^$/=
+q") &&
++	tree2_short=3D$(git rev-parse --short $tree2)
+ '
+=20
+ # usage: test_format name format_string <expected_output
+@@ -32,49 +45,49 @@ has_no_color () {
+ 	test_cmp expect "$1"
+ }
+=20
+-test_format percent %%h <<'EOF'
+-commit 131a310eb913d107dd3c09a65d1651175898735d
++test_format percent %%h <<EOF
++commit $head2
+ %h
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++commit $head1
+ %h
+ EOF
+=20
+-test_format hash %H%n%h <<'EOF'
+-commit 131a310eb913d107dd3c09a65d1651175898735d
+-131a310eb913d107dd3c09a65d1651175898735d
+-131a310
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
+-86c75cfd708a0e5868dc876ed5b8bb66c80b4873
+-86c75cf
++test_format hash %H%n%h <<EOF
++commit $head2
++$head2
++$head2_short
++commit $head1
++$head1
++$head1_short
+ EOF
+=20
+-test_format tree %T%n%t <<'EOF'
+-commit 131a310eb913d107dd3c09a65d1651175898735d
+-fe722612f26da5064c32ca3843aa154bdb0b08a0
+-fe72261
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
+-4d5fcadc293a348e88f777dc0920f11e7d71441c
+-4d5fcad
++test_format tree %T%n%t <<EOF
++commit $head2
++$tree2
++$tree2_short
++commit $head1
++$tree1
++$tree1_short
+ EOF
+=20
+-test_format parents %P%n%p <<'EOF'
+-commit 131a310eb913d107dd3c09a65d1651175898735d
+-86c75cfd708a0e5868dc876ed5b8bb66c80b4873
+-86c75cf
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++test_format parents %P%n%p <<EOF
++commit $head2
++$head1
++$head2_parent_short
++commit $head1
+=20
+=20
+ EOF
+=20
+ # we don't test relative here
+-test_format author %an%n%ae%n%ad%n%aD%n%at <<'EOF'
+-commit 131a310eb913d107dd3c09a65d1651175898735d
++test_format author %an%n%ae%n%ad%n%aD%n%at <<EOF
++commit $head2
+ A U Thor
+ author@example.com
+ Thu Apr 7 15:13:13 2005 -0700
+ Thu, 7 Apr 2005 15:13:13 -0700
+ 1112911993
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++commit $head1
+ A U Thor
+ author@example.com
+ Thu Apr 7 15:13:13 2005 -0700
+@@ -82,14 +95,14 @@ Thu, 7 Apr 2005 15:13:13 -0700
+ 1112911993
+ EOF
+=20
+-test_format committer %cn%n%ce%n%cd%n%cD%n%ct <<'EOF'
+-commit 131a310eb913d107dd3c09a65d1651175898735d
++test_format committer %cn%n%ce%n%cd%n%cD%n%ct <<EOF
++commit $head2
+ C O Mitter
+ committer@example.com
+ Thu Apr 7 15:13:13 2005 -0700
+ Thu, 7 Apr 2005 15:13:13 -0700
+ 1112911993
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++commit $head1
+ C O Mitter
+ committer@example.com
+ Thu Apr 7 15:13:13 2005 -0700
+@@ -97,43 +110,43 @@ Thu, 7 Apr 2005 15:13:13 -0700
+ 1112911993
+ EOF
+=20
+-test_format encoding %e <<'EOF'
+-commit 131a310eb913d107dd3c09a65d1651175898735d
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++test_format encoding %e <<EOF
++commit $head2
++commit $head1
+ EOF
+=20
+-test_format subject %s <<'EOF'
+-commit 131a310eb913d107dd3c09a65d1651175898735d
++test_format subject %s <<EOF
++commit $head2
+ changed foo
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++commit $head1
+ added foo
+ EOF
+=20
+-test_format body %b <<'EOF'
+-commit 131a310eb913d107dd3c09a65d1651175898735d
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++test_format body %b <<EOF
++commit $head2
++commit $head1
+ EOF
+=20
+-test_format raw-body %B <<'EOF'
+-commit 131a310eb913d107dd3c09a65d1651175898735d
++test_format raw-body %B <<EOF
++commit $head2
+ changed foo
+=20
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++commit $head1
+ added foo
+=20
+ EOF
+=20
+-test_format colors %Credfoo%Cgreenbar%Cbluebaz%Cresetxyzzy <<'EOF'
+-commit 131a310eb913d107dd3c09a65d1651175898735d
++test_format colors %Credfoo%Cgreenbar%Cbluebaz%Cresetxyzzy <<EOF
++commit $head2
+ =1B[31mfoo=1B[32mbar=1B[34mbaz=1B[mxyzzy
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++commit $head1
+ =1B[31mfoo=1B[32mbar=1B[34mbaz=1B[mxyzzy
+ EOF
+=20
+-test_format advanced-colors '%C(red yellow bold)foo%C(reset)' <<'EOF'
+-commit 131a310eb913d107dd3c09a65d1651175898735d
++test_format advanced-colors '%C(red yellow bold)foo%C(reset)' <<EOF
++commit $head2
+ =1B[1;31;43mfoo=1B[m
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++commit $head1
+ =1B[1;31;43mfoo=1B[m
+ EOF
+=20
+@@ -186,39 +199,42 @@ This commit message is much longer than the other=
+s,
+ and it will be encoded in iso8859-1. We should therefore
+ include an iso8859 character: =A1bueno!
+ EOF
++
+ test_expect_success 'setup complex body' '
+-git config i18n.commitencoding iso8859-1 &&
+-  echo change2 >foo && git commit -a -F commit-msg
++	git config i18n.commitencoding iso8859-1 &&
++	echo change2 >foo && git commit -a -F commit-msg &&
++	head3=3D$(git rev-parse --verify HEAD) &&
++	head3_short=3D$(git rev-parse --short $head3)
+ '
+=20
+-test_format complex-encoding %e <<'EOF'
+-commit 1ed88da4a5b5ed8c449114ac131efc62178734c3
++test_format complex-encoding %e <<EOF
++commit $head3
+ iso8859-1
+-commit 131a310eb913d107dd3c09a65d1651175898735d
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++commit $head2
++commit $head1
+ EOF
+=20
+-test_format complex-subject %s <<'EOF'
+-commit 1ed88da4a5b5ed8c449114ac131efc62178734c3
++test_format complex-subject %s <<EOF
++commit $head3
+ Test printing of complex bodies
+-commit 131a310eb913d107dd3c09a65d1651175898735d
++commit $head2
+ changed foo
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++commit $head1
+ added foo
+ EOF
+=20
+-test_format complex-body %b <<'EOF'
+-commit 1ed88da4a5b5ed8c449114ac131efc62178734c3
++test_format complex-body %b <<EOF
++commit $head3
+ This commit message is much longer than the others,
+ and it will be encoded in iso8859-1. We should therefore
+ include an iso8859 character: =A1bueno!
+=20
+-commit 131a310eb913d107dd3c09a65d1651175898735d
+-commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++commit $head2
++commit $head1
+ EOF
+=20
+ test_expect_success '%x00 shows NUL' '
+-	echo  >expect commit 1ed88da4a5b5ed8c449114ac131efc62178734c3 &&
++	echo  >expect commit $head3 &&
+ 	echo >>expect fooQbar &&
+ 	git rev-list -1 --format=3Dfoo%x00bar HEAD >actual.nul &&
+ 	nul_to_q <actual.nul >actual &&
+--=20
 1.8.3.1.15.g5c23c1e
