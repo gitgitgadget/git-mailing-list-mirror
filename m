@@ -1,86 +1,90 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 04/12] refs: implement simple transactions for the
- packed-refs file
-Date: Thu, 20 Jun 2013 19:58:15 +0200
-Message-ID: <51C342B7.5050002@alum.mit.edu>
-References: <1371628293-28824-1-git-send-email-mhagger@alum.mit.edu> <1371628293-28824-5-git-send-email-mhagger@alum.mit.edu> <7vfvwdzz6k.fsf@alter.siamese.dyndns.org> <51C2B41F.2050708@alum.mit.edu> <7vd2rgwvvd.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] peel_onion(): add support for <rev>^{tag}
+Date: Thu, 20 Jun 2013 11:03:39 -0700
+Message-ID: <7v4ncswtfo.fsf@alter.siamese.dyndns.org>
+References: <1371605946-32565-1-git-send-email-rhansen@bbn.com>
+	<7vvc5aymhd.fsf@alter.siamese.dyndns.org> <51C20FD1.4090203@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 19:58:36 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Thu Jun 20 20:03:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Upj7x-0003uK-Gs
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 19:58:33 +0200
+	id 1UpjD1-0003bN-RC
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 20:03:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755545Ab3FTR6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 13:58:20 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:49690 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751863Ab3FTR6T (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Jun 2013 13:58:19 -0400
-X-AuditID: 1207440e-b7f0f6d0000043b7-5f-51c342bba005
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id D6.D7.17335.BB243C15; Thu, 20 Jun 2013 13:58:19 -0400 (EDT)
-Received: from [192.168.69.140] (p57A25408.dip0.t-ipconnect.de [87.162.84.8])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r5KHwFLh025838
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 20 Jun 2013 13:58:16 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <7vd2rgwvvd.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAKsWRmVeSWpSXmKPExsUixO6iqLvb6XCgwZ0v/BZdV7qZLBp6rzBb
-	zLu7i8niR0sPs8XuaQvYHFg9Lr38zubxrHcPo8fFS8oejyeeYPX4vEkugDWK2yYpsaQsODM9
-	T98ugTtj86ewghMcFet2bGJsYPzB1sXIySEhYCLR+H4dO4QtJnHh3nqgOBeHkMBlRomO3W8Y
-	IZyzTBLfXj5g7mLk4OAV0Jb4+KAOpIFFQFVi4v/7YM1sAroSi3qamUBsUYEwiffLprKC2LwC
-	ghInZz5hAbFFBNQkJrYdYgGZySzQyShxc+FPRpCEsECMRMPfG2DNQgIfGSXa3kaC2JwCZhIP
-	Fx4Bq2EW0JF41wdyA4gtL7H97RzmCYwCs5DsmIWkbBaSsgWMzKsY5RJzSnN1cxMzc4pTk3WL
-	kxPz8lKLdI31cjNL9FJTSjcxQkKcbwdj+3qZQ4wCHIxKPLwBSocDhVgTy4orcw8xSnIwKYny
-	vnAACvEl5adUZiQWZ8QXleakFh9ilOBgVhLhlVYAyvGmJFZWpRblw6SkOViUxHnVlqj7CQmk
-	J5akZqemFqQWwWRlODiUJHgzHIEaBYtS01Mr0jJzShDSTBycIMO5pESKU/NSUosSS0sy4kGR
-	Gl8MjFWQFA/QXguQdt7igsRcoChE6ylGXY4DP7a8ZxRiycvPS5US560AKRIAKcoozYNbAUto
-	rxjFgT4W5o0CqeIBJkO4Sa+AljABLdmz+hDIkpJEhJRUA6Np6hbzifa3o02bKsWUGxo1LS/F
-	Nh4z2HelXbDXYm3o9llWH75xbGX7817dsFL9ad7cOfGPTkoyNxiJzuAIOtbyb+vj 
+	id S1757989Ab3FTSDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 14:03:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45320 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757977Ab3FTSDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 14:03:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE20B2981C;
+	Thu, 20 Jun 2013 18:03:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GFvyYKD5YCtTBrZ4vrplC8+iktA=; b=lAQHQV
+	vAQSF0sid9bAeJYLFwI5aZcYDo1dF/CVTkyUU+4kJNnfyKLXgQril3HZGpSgejaD
+	RFbgr5VSrYOdGNKHUCgbRNtC0zgfV0w8HA8aJb4yyTn0Wj7Q/CXkoWSzuUubrw6P
+	W0xZ8lHrQktecCHweyiF3Bkh+L20tkF3SkHbg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ljT7QsHn10NoxuX6eZT94PS1LBceJrEn
+	RskfeHpfXZ+dDPZ5vhBmULvFv7TISo+AeHqXOcMDGcFz2JkQKxmxTCxGpQOTAwGO
+	iKhzRdARC5R2IOx7jSCycQza3ZyysZO/XC2tinzKEVE62T3Jevi9k9Fvmr1TP/FB
+	9YS3WYk9HDE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF9C62981B;
+	Thu, 20 Jun 2013 18:03:41 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4FE8529817;
+	Thu, 20 Jun 2013 18:03:41 +0000 (UTC)
+In-Reply-To: <51C20FD1.4090203@bbn.com> (Richard Hansen's message of "Wed, 19
+	Jun 2013 16:08:49 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BD64C270-D9D3-11E2-99AC-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228517>
 
-On 06/20/2013 07:11 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> But currently only the main packed ref cache can be locked, so it would
->> be possible for lock_packed_refs() to use the static packlock instance
->> for locking.
-> 
-> Perhaps I am missing something from the previous discussions, but I
-> am having trouble understanding the "main packed ref cache" part of
-> the above.  "main" as opposed to...?
+Richard Hansen <rhansen@bbn.com> writes:
 
-"main" as opposed to "submodule".
+> Barfing on non-tags is the feature this adds.  It's otherwise useless,
+> just like <object>^{object} is useless except to barf when <object>
+> doesn't exist.
 
-> Is it envisioned that later
-> somebody can lock one subpart while another can lock a different and
-> non-overlapping subpart, to make changes independently, and somehow
-> their non-overlapping changes will be consolidated into a single
-> consistent result?
+Thanks.
 
-No, the scenario would be that a git process wants to change a reference
-in a submodule directly, as opposed to starting another git process
-within the submodule, as I believe is done now.  Maybe it's too
-far-fetched even to consider...
+I could buy that.  And after re-reading the proposed log message,
+you do not quite have anything to say that.  Instead, you have this:
 
-Michael
+    Note that <rev>^{tag} is not the same as <rev>^{object} when <rev> is
+    not a tag:
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+        $ git rev-parse --verify v1.8.3.1^{}^{object}
+        362de916c06521205276acb7f51c99f47db94727
+        $ git rev-parse --verify v1.8.3.1^{}^{tag}
+        error: v1.8.3.1^{}^{tag}: expected tag type, but the object deref...
+        fatal: Needed a single revision
+
+The latter peels v1.8.3.1 to a non-tag (i.e. a commit) and then asks
+to peel that commit to a tag, which will of course fail, but that is
+not a good example.  
+
+Perhaps something like this instead.
+
+    Note that <rev>^{tag} can be used to make sure <rev> names a tag:
+
+        $ git rev-parse --verify v1.8.3.1^{tag}
+        $ git rev-parse --verify master^{tag}
+
+    The former succeeds, while the latter fails.
