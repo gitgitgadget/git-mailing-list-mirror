@@ -1,8 +1,7 @@
 From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2 2/2] send-email: add test for duplicate utf8 name
-Date: Thu, 20 Jun 2013 15:27:05 +0300
-Message-ID: <1371731166-24015-2-git-send-email-mst@redhat.com>
-References: <1371731166-24015-1-git-send-email-mst@redhat.com>
+Subject: [PATCH v2 1/2] send-email: sanitize author when writing From line
+Date: Thu, 20 Jun 2013 15:27:08 +0300
+Message-ID: <1371731166-24015-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -15,67 +14,73 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Updwh-00019T-7h
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 14:26:35 +0200
+	id 1Updwh-00019T-Of
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 14:26:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757726Ab3FTM03 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Jun 2013 08:26:29 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:13571 "EHLO mx1.redhat.com"
+	id S1757744Ab3FTM0b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Jun 2013 08:26:31 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:7528 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753085Ab3FTM03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 08:26:29 -0400
-Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r5KCQJLN026383
+	id S1753085Ab3FTM0a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 08:26:30 -0400
+Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r5KCQMdu014911
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Thu, 20 Jun 2013 08:26:20 -0400
+	Thu, 20 Jun 2013 08:26:23 -0400
 Received: from redhat.com (vpn-200-33.tlv.redhat.com [10.35.200.33])
-	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id r5KCQHoq007294;
-	Thu, 20 Jun 2013 08:26:18 -0400
+	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id r5KCQKwY000568;
+	Thu, 20 Jun 2013 08:26:21 -0400
 Content-Disposition: inline
-In-Reply-To: <1371731166-24015-1-git-send-email-mst@redhat.com>
 X-Mutt-Fcc: =sent
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228486>
 
-Verify that author name is not duplicated if it matches
-sender, even if it is in utf8.
+sender is now sanitized, but we didn't sanitize
+author when checking whether From: line is needed
+in the message body.
+As a result git started writing duplicate From lines
+when author matched sender and has utf8 characters.
 
+Reported-by: SZEDER G=E1bor <szeder@ira.uka.de>
+Tested-by: SZEDER G=E1bor <szeder@ira.uka.de>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- t/t9001-send-email.sh | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ git-send-email.perl | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 9f46f22..020acc4 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -956,6 +956,20 @@ test_expect_success $PREREQ 'utf8 author is correc=
-tly passed on' '
- 	grep "^From: F=FC=F1n=FD N=E2m=E9 <odd_?=3Dmail@example.com>" msgtxt1
- '
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 671762b..ecbf56f 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1259,6 +1259,7 @@ foreach my $t (@files) {
+ 	open my $fh, "<", $t or die "can't open file $t";
 =20
-+test_expect_success $PREREQ 'utf8 sender is not duplicated' '
-+	clean_fake_sendmail &&
-+	test_commit weird_sender &&
-+	test_when_finished "git reset --hard HEAD^" &&
-+	git commit --amend --author "F=FC=F1n=FD N=E2m=E9 <odd_?=3Dmail@examp=
-le.com>" &&
-+	git format-patch --stdout -1 >funny_name.patch &&
-+	git send-email --from=3D"F=FC=F1n=FD N=E2m=E9 <odd_?=3Dmail@example.c=
-om>" \
-+	  --to=3Dnobody@example.com \
-+	  --smtp-server=3D"$(pwd)/fake.sendmail" \
-+	  funny_name.patch &&
-+	grep "^From:" msgtxt1 > msgfrom &&
-+	test_line_count =3D 1 msgfrom
-+'
-+
- test_expect_success $PREREQ 'sendemail.composeencoding works' '
- 	clean_fake_sendmail &&
- 	git config sendemail.composeencoding iso-8859-1 &&
+ 	my $author =3D undef;
++	my $sauthor =3D undef;
+ 	my $author_encoding;
+ 	my $has_content_type;
+ 	my $body_encoding;
+@@ -1297,7 +1298,7 @@ foreach my $t (@files) {
+ 			}
+ 			elsif (/^From:\s+(.*)$/i) {
+ 				($author, $author_encoding) =3D unquote_rfc2047($1);
+-				my $sauthor =3D sanitize_address($author);
++				$sauthor =3D sanitize_address($author);
+ 				next if $suppress_cc{'author'};
+ 				next if $suppress_cc{'self'} and $sauthor eq $sender;
+ 				printf("(mbox) Adding cc: %s from line '%s'\n",
+@@ -1393,7 +1394,7 @@ foreach my $t (@files) {
+ 		$subject =3D quote_subject($subject, $auto_8bit_encoding);
+ 	}
+=20
+-	if (defined $author and $author ne $sender) {
++	if (defined $sauthor and $sauthor ne $sender) {
+ 		$message =3D "From: $author\n\n$message";
+ 		if (defined $author_encoding) {
+ 			if ($has_content_type) {
 --=20
 MST
