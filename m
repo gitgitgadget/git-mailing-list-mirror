@@ -1,95 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/4] log: --author-date-order
-Date: Thu, 20 Jun 2013 12:36:21 -0700
-Message-ID: <7v61x8tw0a.fsf@alter.siamese.dyndns.org>
-References: <1370581872-31580-1-git-send-email-gitster@pobox.com>
-	<1370820277-30158-1-git-send-email-gitster@pobox.com>
-	<1370820277-30158-5-git-send-email-gitster@pobox.com>
-	<20130610055014.GF3621@sigill.intra.peff.net>
-	<7vobbel8ib.fsf@alter.siamese.dyndns.org>
-	<20130610184918.GC2084@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 04/12] refs: implement simple transactions for the
+ packed-refs file
+Date: Thu, 20 Jun 2013 15:55:26 -0400
+Message-ID: <20130620195526.GA31364@sigill.intra.peff.net>
+References: <1371628293-28824-1-git-send-email-mhagger@alum.mit.edu>
+ <1371628293-28824-5-git-send-email-mhagger@alum.mit.edu>
+ <7vfvwdzz6k.fsf@alter.siamese.dyndns.org>
+ <51C2B41F.2050708@alum.mit.edu>
+ <20130620115508.GB773@sigill.intra.peff.net>
+ <51C343FF.6030002@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Elliott Cable <me@ell.io>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 20 21:36:31 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 20 21:55:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Upkej-0000mx-Q4
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 21:36:30 +0200
+	id 1UpkxD-0003b6-77
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 21:55:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965908Ab3FTTgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 15:36:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46205 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965491Ab3FTTgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 15:36:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F31E529638;
-	Thu, 20 Jun 2013 19:36:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M4Q/NOKV54L0K+D2lUSs7gJvb0Y=; b=Ctu+/0
-	cA1HHu4uqpwjAiTKjQmIsh+7zUMFlkMViK2fxL/aCV6uDRLG/Zg8ycJWKPnT/bOW
-	kzkmFCXD7E4+RaMOpLMVRroDbzd5RbqReaSRoF6yclMOKDkKWh85ScYE2PUX0jBs
-	7cWK8+L3b/RfLrN4Tx+mLUrANYk8gOBfPRVs0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iej2b67LgkEAeASl/k+d7IjpJFmQrXND
-	3Pjl7O2V7dBag0/EwllPVVCAM9oyX+K8LpiPhi4aVeR0u1a+KppZLgM5IrCA/FF4
-	5vvoj2ql/rOXtXFCnxMsmWMwEAhcC2pTqpaHOXclidfNjwdI5cFiS6aTJ5fnTTYo
-	VCTFWdzSUyY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7D3C29637;
-	Thu, 20 Jun 2013 19:36:23 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 68FA72962A;
-	Thu, 20 Jun 2013 19:36:23 +0000 (UTC)
-In-Reply-To: <20130610184918.GC2084@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 10 Jun 2013 14:49:18 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B0AA5056-D9E0-11E2-9431-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1161188Ab3FTTzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 15:55:31 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59378 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161110Ab3FTTza (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 15:55:30 -0400
+Received: (qmail 5623 invoked by uid 102); 20 Jun 2013 19:56:29 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Jun 2013 14:56:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2013 15:55:26 -0400
+Content-Disposition: inline
+In-Reply-To: <51C343FF.6030002@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228527>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jun 20, 2013 at 08:03:43PM +0200, Michael Haggerty wrote:
 
->> Or we could extend parse_commit() API to take an optional commit
->> info slab to store not just author date but other non-essential
->> stuff like people's names, and we arrange that extended API to be
->> triggered when we know --author-date-order is in effect?
->
-> I like the latter option. It takes a non-trivial amount of time to load
-> the commits from disk, and now we are potentially doing it 2 or 3 times
-> for a run (once to parse, once to get the author info for topo-sort, and
-> possibly later to show it if --pretty is given; though I did not check
-> and maybe we turn off save_commit_buffer with --pretty). It would be
-> nice to have an extended parse_object that handled that. I'm not sure of
-> the interface. Maybe variadic with pairs of type/slab, like:
->
->   parse_commit_extended(commit,
->                         PARSE_COMMIT_AUTHORDATE, &authordate_slab,
->                         PARSE_COMMIT_DONE);
->
-> ?
+> > I noticed that recently, too. I have a patch series about 90% complete
+> > that abstracts the tempfile handling (the ultimate goal of which is to
+> > optionally clean up tmp_* files in the objects/ directory). It refactors
+> > the lockfile cleanup, and it would not be too hard to have a committed
+> > or rolled-back lockfile actually remove itself from the "to clean at
+> > exit" list.
+> > 
+> > Which would make it perfectly safe to have a lockfile as an automatic
+> > variable as long as you commit or rollback before leaving the function.
+> 
+> Cool, then I won't work on that.  You might also have to make the
+> lockfile list into a doubly-linked-list to avoid having to do a linear
+> scan to find the entry to delete, unless the total number of entries is
+> known to remain small.
 
-What I had in mind actually was a custom slab tailored for each
-caller that is an array of struct.  If the caller is interested in
-authordate and authorname, instead of populating two separate
-authordate_slab and authorname_slab, the caller declares a
+Yes, I noticed that potential issue, but I don't think it is worth
+worrying about. We typically only take one lock at a time, or a handful
+of tempfiles (e.g., one object at a time, or two files for diff).
 
-	struct {
-        	unsigned long date;
-                char name[FLEX_ARRAY];
-	} author_info;
+And once it's abstracted out, it would be easy to handle later.
 
-prepares author_info_slab, and use your commit_parser API to fill
-them.
+The part I am a little stuck on is plugging it into
+pack-objects/index-pack. Their output handling is a little convoluted
+because they may be writing to stdout, to a tempfile, to a named file,
+or even appending to an existing file in the case of index-pack
+--fix-thin. I don't think it's unmanageable, but I need to spend some
+more time on the refactoring.
+
+> Please CC me on the patch series when it is done.
+
+Will do.
+
+-Peff
