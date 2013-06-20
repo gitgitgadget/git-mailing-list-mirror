@@ -1,68 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 0/2] pull into unborn branch safety tree
-Date: Thu, 20 Jun 2013 15:52:57 -0700
-Message-ID: <7vli64pf7a.fsf@alter.siamese.dyndns.org>
-References: <20130620124758.GA2376@sigill.intra.peff.net>
-	<aca810600b895ed3f0a3fc575e0f6861e591de5b.1371733403.git.trast@inf.ethz.ch>
-	<7v8v24vd0m.fsf@alter.siamese.dyndns.org>
-	<20130620201957.GC31364@sigill.intra.peff.net>
-	<7vmwqkqzhy.fsf@alter.siamese.dyndns.org>
-	<20130620205533.GA8074@sigill.intra.peff.net>
-	<7v7ghoqwwv.fsf@alter.siamese.dyndns.org>
-	<20130620220328.GA3992@sigill.intra.peff.net>
-	<20130620223550.GA21667@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Stefan =?utf-8?B?U2Now7zDn2xlcg==?= <mail@stefanschuessler.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 21 00:53:06 2013
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: [PATCH v2] remote: make prune work for mixed mirror/non-mirror repos
+Date: Fri, 21 Jun 2013 00:53:26 +0200
+Message-ID: <1371768806-5666-1-git-send-email-dennis@kaarsemaker.net>
+References: <1371763424.17896.32.camel@localhost>
+Cc: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 21 00:59:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Upniz-0004cE-Ve
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 00:53:06 +0200
+	id 1UpnpX-0005kY-CF
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 00:59:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030444Ab3FTWxB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 18:53:01 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61894 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030380Ab3FTWxA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 18:53:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6F6A2A5A9;
-	Thu, 20 Jun 2013 22:52:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QnWYn7085vKRtxQB+I2Rn+NeOKw=; b=V2rTe4
-	tJy4nZAtzUVhHVOjYNMQwgGgZKtn7zROxQtMxPMHAw7zxjADBCRfr9h3l0e1mYKz
-	aJqHfC6UobWC8m0LW/z1Kq7qS6VPtrNAgIQuTXjEviXQj5qIebww21frFFVdaewz
-	oS/sn3jhCaC+Jga3ko6miPUpmn5tW07Nv6Zp4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=giqiGVmLUBPOBFSbuoTbTIkV625YDeGl
-	7lyRMin0sXXsviJHf7xFT1ZR3GIK145nmyZCu4+YzoOCbeNwFti1ZwT+3VAVSC3r
-	D12buXvY4XQCCQ/NausRA90+wvxRsTZOx6FMyvZkwce7vmHhAPU4fnhcPfqOakZ7
-	seoMV5N+zro=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA1412A5A8;
-	Thu, 20 Jun 2013 22:52:59 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2D8542A5A7;
-	Thu, 20 Jun 2013 22:52:59 +0000 (UTC)
-In-Reply-To: <20130620223550.GA21667@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 20 Jun 2013 18:35:50 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 277C0042-D9FC-11E2-B4FA-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S965675Ab3FTW7m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 18:59:42 -0400
+Received: from cpsmtpb-ews06.kpnxchange.com ([213.75.39.9]:62501 "EHLO
+	cpsmtpb-ews06.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965356Ab3FTW7l (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Jun 2013 18:59:41 -0400
+X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Jun 2013 18:59:41 EDT
+Received: from cpsps-ews24.kpnxchange.com ([10.94.84.190]) by cpsmtpb-ews06.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514);
+	 Fri, 21 Jun 2013 00:53:29 +0200
+Received: from CPSMTPM-TLF101.kpnxchange.com ([195.121.3.4]) by cpsps-ews24.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514);
+	 Fri, 21 Jun 2013 00:53:29 +0200
+Received: from kaarsemaker.net ([82.168.11.8]) by CPSMTPM-TLF101.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514);
+	 Fri, 21 Jun 2013 00:53:27 +0200
+Received: by kaarsemaker.net (sSMTP sendmail emulation); Fri, 21 Jun 2013 00:53:27 +0200
+X-Mailer: git-send-email 1.8.3.1-619-gbec0aa7
+In-Reply-To: <1371763424.17896.32.camel@localhost>
+X-OriginalArrivalTime: 20 Jun 2013 22:53:27.0817 (UTC) FILETIME=[FA487790:01CE6E08]
+X-RcptDomain: vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228555>
 
-Thanks; both look obviously good.
+When cloning a repo with --mirror, and adding more remotes later,
+get_stale_heads for origin would mark all refs from other repos as stale. In
+this situation, with refs-src and refs->dst both equal to refs/*, we should
+ignore refs/remotes/* and refs/tags/* when looking for stale refs to
+prevent this from happening.
+
+Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+---
+ The previous attempt only ignored refs/remotes, but that's not good enough as
+ that will still delete tags. So let's ignore refs/tags too. The downside is
+ that tags removed at the origin don't get removed, but prune should only be
+ pruning branches anyway if I read the documentation correctly.
+
+ remote.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/remote.c b/remote.c
+index e71f66d..efc5481 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1884,6 +1884,7 @@ struct stale_heads_info {
+ 	struct ref **stale_refs_tail;
+ 	struct refspec *refs;
+ 	int ref_count;
++	int is_mirror;
+ };
+ 
+ static int get_stale_heads_cb(const char *refname,
+@@ -1896,6 +1897,13 @@ static int get_stale_heads_cb(const char *refname,
+ 
+ 	if (query_refspecs(info->refs, info->ref_count, &query))
+ 		return 0; /* No matches */
++	/*
++	 * If we're pruning a clone that was --mirror'ed, let's ignore refs/tags
++	 * and refs/remotes
++	 */
++	if (info->is_mirror && (!prefixcmp(refname, "refs/tags/") ||
++	    !prefixcmp(refname, "refs/remotes/")))
++		return 0;
+ 
+ 	/*
+ 	 * If we did find a suitable refspec and it's not a symref and
+@@ -1917,6 +1925,8 @@ struct ref *get_stale_heads(struct refspec *refs, int ref_count, struct ref *fet
+ 	struct ref *ref, *stale_refs = NULL;
+ 	struct string_list ref_names = STRING_LIST_INIT_NODUP;
+ 	struct stale_heads_info info;
++	if(!strcmp(refs->src, "refs/*") && !strcmp(refs->dst, "refs/*"))
++		info.is_mirror = 1;
+ 	info.ref_names = &ref_names;
+ 	info.stale_refs_tail = &stale_refs;
+ 	info.refs = refs;
+-- 
+1.8.3.1-619-gbec0aa7
