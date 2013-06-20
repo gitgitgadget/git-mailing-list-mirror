@@ -1,72 +1,101 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] pull: pull into void by fast-forwarding from empty tree
-Date: Thu, 20 Jun 2013 21:34:17 +0530
-Message-ID: <CALkWK0k-SaYz2uCpeXnTTL7HvBQ=r1PhWCJeDvdpuKL6qhDoig@mail.gmail.com>
-References: <45f6841746e5dcea03a97fc3ea24aef274728023.1371731513.git.trast@inf.ethz.ch>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Splitting a rev list into 2 sets
+Date: Thu, 20 Jun 2013 18:24:10 +0200
+Message-ID: <CAC9WiBgb18ZX0vr8V79tCEUStrDRhRiSh44nH6+3B_Kf8rypYg@mail.gmail.com>
+References: <CAC9WiBi-E+LN4hKGeu0mG7ihJWCaTg-W1Dx_PWmX_vsx-uLOaw@mail.gmail.com>
+	<8761x87wc8.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?B?U3RlZmFuIFNjaMO8w59sZXI=?= <mail@stefanschuessler.de>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jun 20 18:05:07 2013
+X-From: git-owner@vger.kernel.org Thu Jun 20 18:24:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UphMA-0005BP-4y
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 18:05:06 +0200
+	id 1Upheh-0003UM-Og
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 18:24:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758181Ab3FTQFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 12:05:00 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:63258 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757947Ab3FTQE7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 12:04:59 -0400
-Received: by mail-ie0-f172.google.com with SMTP id 16so17190677iea.3
-        for <git@vger.kernel.org>; Thu, 20 Jun 2013 09:04:59 -0700 (PDT)
+	id S1757748Ab3FTQYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 12:24:12 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:56169 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757826Ab3FTQYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 12:24:11 -0400
+Received: by mail-ob0-f179.google.com with SMTP id xk17so7443019obc.10
+        for <git@vger.kernel.org>; Thu, 20 Jun 2013 09:24:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=U0n4PZ9GWVfNrooVQh4oI606YA8Qx61T5wRiFcE6USw=;
-        b=azql7jFkH3HHMAhqqXFFk8zCk+/WwTBHAecO7njWbo84rB8ceuTm1hwyEkw2sE7nph
-         329VDmU6jE0OK1FN5Ifc8haPfQ5FOhrvvNVWFRFGZlnIhzRjUoiFzqCFUbd5aeooRmmA
-         /g9HDxN3xOnyIBe4UY9Jdbom9bmCMsfLJ1dNLVsrxHrYz3dFJkflaJvEpRvUiSjjDab/
-         eZBkPstktj41U6GD5QAf27FTcASFUaWR7eTFRHdPDF8ADLb9sbt7UiEJtzNTasFnaXWe
-         FqBqsp+WgicI7rgn4lw+dmnfSdbOsHnx4Ib/tlS7Zl+6fY1ax280mHUhgwBH7RAlj1GS
-         +EsA==
-X-Received: by 10.50.1.37 with SMTP id 5mr36392igj.29.1371744298970; Thu, 20
- Jun 2013 09:04:58 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Thu, 20 Jun 2013 09:04:17 -0700 (PDT)
-In-Reply-To: <45f6841746e5dcea03a97fc3ea24aef274728023.1371731513.git.trast@inf.ethz.ch>
+        bh=6xwE9y0WqGHDqr6fCxkvVpQx49VMAHx3/HtMlXh0LCY=;
+        b=oRVWKq5L5SjHM8Ux4hpSOZN4wLRFxStsYI3rKO6cVywaNH+xbcanAoBAmNg+az5F7m
+         RH/d0m6U4+v0kD6OXNbtf7KiOko7Ve9UrwHoaUqk6bUDvDGTo26EgqE4nOAdlTFtrNiC
+         cbmw65B0LIKtq1uQk8EyQA8C+ThwA6X/LfsTJZ7/m5Lbv/gPb9ZrG4deZNxYXVjherxy
+         1pVVlIrGZ9ktH1Y+HESfOJ58hKJHsSiF4wTSUvkVXOZTB5vDLbO6plEXzQdkaj8vETkR
+         +Qk+7PcnJdwyi3M6TNqPGhF4XBNCV6z3vIT7l4amP/BxuBy/tsf3IkbYFzHKjPKjkAot
+         z5HQ==
+X-Received: by 10.60.146.202 with SMTP id te10mr987248oeb.13.1371745450325;
+ Thu, 20 Jun 2013 09:24:10 -0700 (PDT)
+Received: by 10.182.200.169 with HTTP; Thu, 20 Jun 2013 09:24:10 -0700 (PDT)
+In-Reply-To: <8761x87wc8.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228511>
 
-Thomas Rast wrote:
-> diff --git a/git-pull.sh b/git-pull.sh
-> index 638aabb..1f84383 100755
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -266,10 +266,17 @@ case "$merge_head" in
->         ;;
->  esac
+Hi,
+
+On Thu, Jun 20, 2013 at 3:20 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> Francis Moreau <francis.moro@gmail.com> writes:
+>>
+>> But I'm wondering if someone can see another solution more elegant ?
 >
-> +# Pulling into unborn branch: a shorthand for branching off
-> +# FETCH_HEAD, for lazy typers.
->  if test -z "$orig_head"
->  then
->         git update-ref -m "initial pull" HEAD $merge_head "$curr_head" &&
-> -       git read-tree -m -u HEAD || exit 1
-> +       # Two-way merge: we claim the index is based on an empty tree,
-> +       # and try to fast-forward to HEAD.  This ensures we will not
-> +       # lose index/worktree changes that the user already made on
-> +       # the unborn branch.
-> +       empty_tree=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+> I think there's a cute way.  Suppose your arguments are of the form
 
-Perhaps replace this magic with $(git hash-object -t tree /dev/null)
-or $(git mktree </dev/null)?
+Really nice !
+
+>
+>   p1 p2 ... --not n1 n2 ...
+>
+> that is each pX is positive, and each nX is negative.  Then as you
+> observed, building the difference with master is easy: just add it to
+> the negative args.
+
+I didn't know that git-rev-parse could be used to transform any range
+specification into that form (p1 p2 .. -not n1 n2..)
+
+>
+> Intersecting with master is harder, because you don't know what parts of
+> it (if any) are in the range.  But the --boundary option can help: these
+> are the commits where the positive and negative ranges "first" met, and
+> prevented the walk from continuing.
+>
+> So the part of master reachable from p1, p2, etc. is exactly the set of
+> boundary commits of 'p1 p2 ... ^master'.  And on top of that, excluding
+> the parts reachable from the n's is easy.  So you can do:
+
+Really clever.
+
+>
+>   positive=$(git rev-parse "$@" | grep -v '^\^')
+>   negative=$(git rev-parse "$@" | grep '^\^')
+>   boundary=$(git rev-list --boundary $positive ^master | sed -n 's/^-//p')
+>   # the intersection is
+>   git rev-list $boundary $negative
+
+I think there's a minor issue here, when boundary is empty. Please
+correct me if I'm wrong but I think it can only happen if positive is
+simply master or a subset of master. In that case I think the solution
+is just make boundary equal to positive:
+
+     # the intersection is
+     git rev-list ${boundary:-$positive} $negative
+
+Now I'm going to see if that solution is faster than the initial one.
+
+Great Thanks
+--
+Francis
