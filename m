@@ -1,80 +1,125 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 04/12] refs: implement simple transactions for the
- packed-refs file
-Date: Thu, 20 Jun 2013 15:55:26 -0400
-Message-ID: <20130620195526.GA31364@sigill.intra.peff.net>
-References: <1371628293-28824-1-git-send-email-mhagger@alum.mit.edu>
- <1371628293-28824-5-git-send-email-mhagger@alum.mit.edu>
- <7vfvwdzz6k.fsf@alter.siamese.dyndns.org>
- <51C2B41F.2050708@alum.mit.edu>
- <20130620115508.GB773@sigill.intra.peff.net>
- <51C343FF.6030002@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] rebase: guard against missing files in read_basic_state()
+Date: Thu, 20 Jun 2013 12:56:52 -0700
+Message-ID: <7v1u7wtv23.fsf@alter.siamese.dyndns.org>
+References: <1371139573-28047-1-git-send-email-artagnon@gmail.com>
+	<1371139573-28047-2-git-send-email-artagnon@gmail.com>
+	<7vy5adskz3.fsf@alter.siamese.dyndns.org>
+	<CANiSa6hUV-xMMASbJf67j0Zn+Mu25CRcvQThNd1EuemhSBB6Rg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 20 21:55:37 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 20 21:57:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpkxD-0003b6-77
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 21:55:35 +0200
+	id 1Upkyc-0005jG-RH
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 21:57:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161188Ab3FTTzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 15:55:31 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59378 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161110Ab3FTTza (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 15:55:30 -0400
-Received: (qmail 5623 invoked by uid 102); 20 Jun 2013 19:56:29 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Jun 2013 14:56:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2013 15:55:26 -0400
-Content-Disposition: inline
-In-Reply-To: <51C343FF.6030002@alum.mit.edu>
+	id S965975Ab3FTT46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 15:56:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50052 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965573Ab3FTT45 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 15:56:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 710E2293F3;
+	Thu, 20 Jun 2013 19:56:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+LLDoOUKW5MoacULDgXGOxODeHI=; b=o3AprE
+	FwGJlqoaH3Yh1zpNMbC0AqUN/mviG69d9tmJHIaNE7fs8Gk2CxPS84y34N/quxlY
+	hdprmPFNLQPxhKaIEBtiSCotAZifk5z+eSelaLLweWWJMAP6fygkLGZZLJzp6ws/
+	M3KBa6u9c0NoMAQQSMTsxtFED1kgBzL+sXp4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HrfEGOPxAA00MGq0xQbBREUb5IH2hv1f
+	Sh+nz+oWEH8gLfceHgzUW9aMUVrLsiDZSnuG1kGW+Qfw5Smmbc/Dlmsf7KcwDg91
+	UqTKH2ZDUHD0CuMBSUjelI59fnef95sfn5/Nl4VyJVOxAoeSCG/Sm91TY6ETonj0
+	g6rmXMYTIxk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65460293F2;
+	Thu, 20 Jun 2013 19:56:54 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C0567293EE;
+	Thu, 20 Jun 2013 19:56:53 +0000 (UTC)
+In-Reply-To: <CANiSa6hUV-xMMASbJf67j0Zn+Mu25CRcvQThNd1EuemhSBB6Rg@mail.gmail.com>
+	(Martin von Zweigbergk's message of "Sat, 15 Jun 2013 22:45:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8E03C85E-D9E3-11E2-B74D-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228528>
 
-On Thu, Jun 20, 2013 at 08:03:43PM +0200, Michael Haggerty wrote:
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
 
-> > I noticed that recently, too. I have a patch series about 90% complete
-> > that abstracts the tempfile handling (the ultimate goal of which is to
-> > optionally clean up tmp_* files in the objects/ directory). It refactors
-> > the lockfile cleanup, and it would not be too hard to have a committed
-> > or rolled-back lockfile actually remove itself from the "to clean at
-> > exit" list.
-> > 
-> > Which would make it perfectly safe to have a lockfile as an automatic
-> > variable as long as you commit or rollback before leaving the function.
-> 
-> Cool, then I won't work on that.  You might also have to make the
-> lockfile list into a doubly-linked-list to avoid having to do a linear
-> scan to find the entry to delete, unless the total number of entries is
-> known to remain small.
+> On Thu, Jun 13, 2013 at 3:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>
+>> A more troublesome is that nobody seems to check the return value of
+>> this function.  If head-name, onto or orig-head is missing, is that
+>> an error condition that should make the callers of read_basic_state
+>> stop and refuse to proceed?
+>
+> Since we unconditionally write those three (and 'quiet'), it seems
+> reasonable to require all of them to be there when continuing, so I
+> think you're right that we should fail fast.
+>
+>> The way the && cascade is used seems to indicate that, but up to the
+>> point where it sents $verbose. If and only if head-name, onto, orig-head
+>> and quiet can be read in state-dir, verbose in state-dir is checked
+>> and only then $verbose is set.
+>>
+>> Martin, this seems to be from your series around early Feburary
+>> 2011.  Do you recall why these checks are cascaded this way?
+>> I do not offhand think of a good reason.
+>
+> Neither do I. I think the cascading after 'quiet' is just a mistake on
+> my part. The consequences are probably close to none, since if one of
+> earlier commands fail, the other files will probably not be there
+> either. (Not defending it; I'm happy if it gets fixed, e.g. by making
+> it fail fast.)
 
-Yes, I noticed that potential issue, but I don't think it is worth
-worrying about. We typically only take one lock at a time, or a handful
-of tempfiles (e.g., one object at a time, or two files for diff).
+I think this is probably the right thing to do, if we want to honor
+the original intention of the earlier part of && cascade.  Everything
+before this new "|| die" reads from a file that should always exist
+(e.g. even when not asked to be quiet, that state is not signaled by
+the lack of $state_dir/quiet, but by having an empty string in it),
+while everything after check optional state variable files (e.g. if
+$state_dir/verbose does not exist, it is not an error, but signals
+that the user did not ask us to be verbose).
 
-And once it's abstracted out, it would be easy to handle later.
+Note that applying this patch _could_ uncover latent bug that was
+masked by the lack of "die" here (maybe later codepath may depended
+on not having orig_head at all and the only observable effect was
+that in such a case, both quiet and verbose were silently ignored,
+because the control did not reach the GIT_QUIET=... and verbose=t
+assignments.
 
-The part I am a little stuck on is plugging it into
-pack-objects/index-pack. Their output handling is a little convoluted
-because they may be writing to stdout, to a tempfile, to a named file,
-or even appending to an existing file in the case of index-pack
---fix-thin. I don't think it's unmanageable, but I need to spend some
-more time on the refactoring.
+ git-rebase.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-> Please CC me on the patch series when it is done.
-
-Will do.
-
--Peff
+diff --git a/git-rebase.sh b/git-rebase.sh
+index d0c11a9..90506ba 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -95,7 +95,9 @@ read_basic_state () {
+ 	else
+ 		orig_head=$(cat "$state_dir"/head)
+ 	fi &&
+-	GIT_QUIET=$(cat "$state_dir"/quiet) &&
++	GIT_QUIET=$(cat "$state_dir"/quiet) ||
++	die "failed to read basic rebase state from $state_dir"
++
+ 	test -f "$state_dir"/verbose && verbose=t
+ 	test -f "$state_dir"/strategy && strategy="$(cat "$state_dir"/strategy)"
+ 	test -f "$state_dir"/strategy_opts &&
