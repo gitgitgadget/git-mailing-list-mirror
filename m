@@ -1,62 +1,104 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] pull: merge into unborn by fast-forwarding from empty
- tree
-Date: Thu, 20 Jun 2013 16:55:33 -0400
-Message-ID: <20130620205533.GA8074@sigill.intra.peff.net>
-References: <20130620124758.GA2376@sigill.intra.peff.net>
- <aca810600b895ed3f0a3fc575e0f6861e591de5b.1371733403.git.trast@inf.ethz.ch>
- <7v8v24vd0m.fsf@alter.siamese.dyndns.org>
- <20130620201957.GC31364@sigill.intra.peff.net>
- <7vmwqkqzhy.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] push: change `simple` to accommodate triangular workflows
+Date: Thu, 20 Jun 2013 14:03:19 -0700
+Message-ID: <7vfvwcqyug.fsf@alter.siamese.dyndns.org>
+References: <1371640304-26019-1-git-send-email-artagnon@gmail.com>
+	<1371640304-26019-4-git-send-email-artagnon@gmail.com>
+	<7v38sdzx8o.fsf@alter.siamese.dyndns.org>
+	<7vk3lpwkt6.fsf@alter.siamese.dyndns.org>
+	<CALkWK0=v25wC1r8ScUkKDhFjctZCDLJtpDx2g2avyYgJVmZCWg@mail.gmail.com>
+	<7vd2rgtwl3.fsf@alter.siamese.dyndns.org>
+	<E1FE663A82E6499AA9B598B4F60A5CE6@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Stefan =?utf-8?B?U2Now7zDn2xlcg==?= <mail@stefanschuessler.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 22:55:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "Ramkumar Ramachandra" <artagnon@gmail.com>,
+	"Git List" <git@vger.kernel.org>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Jun 20 23:03:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpltO-00009Q-45
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 22:55:42 +0200
+	id 1Upm0t-0003BX-1E
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 23:03:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030246Ab3FTUzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 16:55:38 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59819 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935359Ab3FTUzh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 16:55:37 -0400
-Received: (qmail 8685 invoked by uid 102); 20 Jun 2013 20:56:36 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Jun 2013 15:56:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2013 16:55:33 -0400
-Content-Disposition: inline
-In-Reply-To: <7vmwqkqzhy.fsf@alter.siamese.dyndns.org>
+	id S1758013Ab3FTVDX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 17:03:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56234 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757940Ab3FTVDW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 17:03:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2ED829DD9;
+	Thu, 20 Jun 2013 21:03:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Nzp4GETaiEMpGnPrKqXWyFORU0E=; b=JyEGfm
+	PdaYi9NRbqltjs/szvbCc5nGwgd40ZJcTHG2wqhvG6AhNkL+A529CC2VxaRycti3
+	B+0ArO7jMvTexr4suvWHsA7HgC+uZH6J82UGgrv2tLpEqFGlmLoc4GTolcwD97Du
+	Qi+qTt0Q6oGALBRUWuAIRm5yTNUL7zD0qF6bY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Th7OGBU2DB0GYD3Mm2X6oQuy3KWPv/C3
+	wOZ8xKO7C8GA0bgBmXHXOR+msStWg9pk1bOdMkgYaQsvlQnC6wcGsO/IDeDNW7+A
+	vSX6drZyqmFclDFxqvZgF3tf9CgdGM5uYBk9YOASaCxpqgUpoRgV5poMJrE1Fb56
+	Z9F1rUGmci0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB35029DD8;
+	Thu, 20 Jun 2013 21:03:21 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0602529DD0;
+	Thu, 20 Jun 2013 21:03:20 +0000 (UTC)
+In-Reply-To: <E1FE663A82E6499AA9B598B4F60A5CE6@PhilipOakley> (Philip Oakley's
+	message of "Thu, 20 Jun 2013 21:49:57 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D69AB93E-D9EC-11E2-BE2B-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228539>
 
-On Thu, Jun 20, 2013 at 01:49:13PM -0700, Junio C Hamano wrote:
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-> > But read-tree already does
-> > the hard work for us, so I don't think it is a lot of code either way.
-> 
-> OK, I just got an impression from reading the back-and-forth between
-> you two that read-tree does not want to deal with that case.
+> From: "Junio C Hamano" <gitster@pobox.com>
+> Sent: Thursday, June 20, 2013 8:23 PM
+>> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>
+>>> Junio C Hamano wrote:
+>>>> Double negation confused my parser.  'push' and 'pull' should be
+>>>> kept symmetrical in central workflows?
+>>>
+>>> They're not the same thing.  It is very much intentional and
+>>> intended:
+>>> the safety net is not to "ensure that the push and pull are
+>>> symmetrical" (i.e. among other things, error out if
+>>> branch.$branch.merge is unset), but rather "ensure that the push and
+>>> pull are never asymmetrical".
+>>
+>> Hmmmm....
+>>
+>>    not to "ensure that the push and pull are symmetrical"
+>>    rather "ensure that the push and pull are never asymmetrical".
+>>
+>> They still talk the same thing to me.  What am I missing?
+>>
+>> Am I being clueless, or is there something else going on?
+>
+> I think it is a case of the user having explicitly set push=Africa and
+> pull=Europe which can't be a setting for simple symmetry.
 
-I think I got us off-track with my expectation of ending the one case
-with a conflicted index. But caring about that is even more unlikely.  I
-think Thomas's original patch is probably a happy medium.
+Yeah but then that is not a discussion about central workflow.
 
-As an orthogonal matter, we probably should reverse the order of
-updating HEAD and the index/working tree, as it does not make much sense
-to me to do the former if the latter is not possible (and that is the
-case even with the current code).
+I can understand "In a central workflow push and pull should be
+symmetrical."  I can also, with a bit of double-negation brain
+twisting, understand "In a central workflow, push and pull should
+not be asymmetrical."
 
--Peff
+But when I suggest to avoid double-negation, I was told that these
+two statements mean different things, and the original should not be
+rewritten to avoid double-negation, which is where my brain stopped
+and asked for help.
