@@ -1,89 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 0/5] Reroll patches against v1.8.3.1
-Date: Thu, 20 Jun 2013 13:10:01 -0700
-Message-ID: <7vppvgsfvq.fsf@alter.siamese.dyndns.org>
-References: <cover.1359018188.git.Alex.Crezoff@gmail.com>
-	<cover.1371720245.git.Alex.Crezoff@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/4] log: --author-date-order
+Date: Thu, 20 Jun 2013 16:16:50 -0400
+Message-ID: <20130620201650.GB31364@sigill.intra.peff.net>
+References: <1370581872-31580-1-git-send-email-gitster@pobox.com>
+ <1370820277-30158-1-git-send-email-gitster@pobox.com>
+ <1370820277-30158-5-git-send-email-gitster@pobox.com>
+ <20130610055014.GF3621@sigill.intra.peff.net>
+ <7vobbel8ib.fsf@alter.siamese.dyndns.org>
+ <20130610184918.GC2084@sigill.intra.peff.net>
+ <7v61x8tw0a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alexey Shumkin <Alex.Crezoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 22:10:16 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Elliott Cable <me@ell.io>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 20 22:17:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UplBN-0007pw-AC
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 22:10:13 +0200
+	id 1UplHu-0000yU-H0
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 22:16:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161216Ab3FTUKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 16:10:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50365 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161120Ab3FTUKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 16:10:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 04BA129B16;
-	Thu, 20 Jun 2013 20:10:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FtSKjCvZXY1aQ488aHYUf5VLlFI=; b=VEbIi8
-	UpDkwZUir65+yJ78I6lru1vSuCNR6eunSMS9rHtBVEBG3mSYsFL8BhfoWXrTF4U1
-	wApcU5XN5OyrPKd8cmAI9yiA6rNYT5KjeQ3rLmLPG2l2ESwW2Q4V93McTjTQ7a/E
-	gY96kc0amW7B6sB/aHPyai9kWXYL1cyJ5iiMA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H5V4VwYe8lywNUx7l11b4wnVuMzilMkP
-	+V4WVT8D9T9Gin78TFsp5FFYeOy26pgvP1ix5QDhTdKjzCI3tLQ+UnHJRxYurh8s
-	aHelr1L7uXLOi04c+lf5iriYrKcU2PrZz9xK7/bwhCXSaX3OfGsGl6RhMf+7YvsV
-	3QDHzwdKKd8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F076E29B13;
-	Thu, 20 Jun 2013 20:10:03 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F1D8829B10;
-	Thu, 20 Jun 2013 20:10:02 +0000 (UTC)
-In-Reply-To: <cover.1371720245.git.Alex.Crezoff@gmail.com> (Alexey Shumkin's
-	message of "Thu, 20 Jun 2013 13:26:16 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 646AA39E-D9E5-11E2-A828-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1161118Ab3FTUQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 16:16:54 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59522 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161052Ab3FTUQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jun 2013 16:16:53 -0400
+Received: (qmail 6609 invoked by uid 102); 20 Jun 2013 20:17:53 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Jun 2013 15:17:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2013 16:16:50 -0400
+Content-Disposition: inline
+In-Reply-To: <7v61x8tw0a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228530>
 
-Alexey Shumkin <Alex.Crezoff@gmail.com> writes:
+On Thu, Jun 20, 2013 at 12:36:21PM -0700, Junio C Hamano wrote:
 
-> Alexey Shumkin (5):
->   t6006 (rev-list-format): don't hardcode SHA-1 in expected outputs
->   t7102 (reset): don't hardcode SHA-1 in expected outputs
->   t4205 (log-pretty-formats): don't hardcode SHA-1 in expected outputs
->   pretty: Add failing tests: user format ignores i18n.logOutputEncoding
->     setting
->   pretty: user format ignores i18n.logOutputEncoding setting
+> > I like the latter option. It takes a non-trivial amount of time to load
+> > the commits from disk, and now we are potentially doing it 2 or 3 times
+> > for a run (once to parse, once to get the author info for topo-sort, and
+> > possibly later to show it if --pretty is given; though I did not check
+> > and maybe we turn off save_commit_buffer with --pretty). It would be
+> > nice to have an extended parse_object that handled that. I'm not sure of
+> > the interface. Maybe variadic with pairs of type/slab, like:
+> >
+> >   parse_commit_extended(commit,
+> >                         PARSE_COMMIT_AUTHORDATE, &authordate_slab,
+> >                         PARSE_COMMIT_DONE);
+> >
+> > ?
+> 
+> What I had in mind actually was a custom slab tailored for each
+> caller that is an array of struct.  If the caller is interested in
+> authordate and authorname, instead of populating two separate
+> authordate_slab and authorname_slab, the caller declares a
+> 
+> 	struct {
+>         	unsigned long date;
+>                 char name[FLEX_ARRAY];
+> 	} author_info;
+> 
+> prepares author_info_slab, and use your commit_parser API to fill
+> them.
 
-Next time, please jog readers' memory better by giving a bit more
-descriptive cover letter.  "Reroll" is known by "v5" alrady, and
-"against v1.8.3.1" certainly helps, but what this series is about is
-unclear, especially because the end-game patch "user format ignores"
-is rather badly stated.  It is unclear if it is a good thing that
-user format ignores it and the patch makes sure that is the case, if
-we currently ignore it in user format and the patch fixes it by
-making user format pay attention to it, etc.
+Yes, I think it is nicer to stay in one slab if you have multiple
+values, but it means more custom code for the caller. If the
+commit_parser API is nice, it should not be that much code, though.
 
-Thanks.
+It does make it harder to support arbitrary combinations directly in
+parse_commit. If a caller wants to also parse_commit and use the same
+buffer to pick out its custom information, I think we'd need to do one
+of:
 
->  builtin/reset.c                  |   8 +-
->  builtin/rev-list.c               |   1 +
->  builtin/shortlog.c               |   1 +
->  log-tree.c                       |   1 +
->  submodule.c                      |   3 +
->  t/t4041-diff-submodule-option.sh |  25 +++--
->  t/t4205-log-pretty-formats.sh    | 179 ++++++++++++++++++++-------------
->  t/t6006-rev-list-format.sh       | 209 ++++++++++++++++++++++++---------------
->  t/t7102-reset.sh                 |  37 ++++++-
->  9 files changed, 299 insertions(+), 165 deletions(-)
+  1. Give parse_commit a callback, so that the callback can pick out the
+     data it wants while parse_commit has the commit buffer in memory.
+     E.g.:
+
+       void grab_author_info(const char *buf, unsigned long len, void *data)
+       {
+              struct author_info *ai = data;
+              /* fill fields from buffer */
+       }
+
+       ...
+       parse_commit_extra(commit, grab_author_info,
+                          slab_at(&author_slab, commit));
+
+  2. Teach parse_commit to operate not only on a raw commit object, but
+     also on the commit_parser API. Like:
+
+       struct commit_parser parser = {0};
+
+       /* actually open the object and start our incremental parser */
+       init_commit_parser(&parser, commit);
+
+       /* fill in parents, date, etc, as parse_commit does now */
+       parse_commit_from_parser(commit, &parser);
+
+       /* fill in whatever extra data we are interested in */
+       *slab_at(&slab, commit) = get_author_date(&parser);
+
+       /* done, drop the buffer */
+       close_commit_parser(&parser);
+
+The latter would need to handle transferring ownership of the buffer to
+"struct commit" from "struct commit_parser" when save_commit_buffer is
+turned off.
+
+I think we're a bit high-level now to be making such decisions, though,
+as we do not even have such a commit_parser API.
+
+-Peff
