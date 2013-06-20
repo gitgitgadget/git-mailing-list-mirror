@@ -1,138 +1,143 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 05/12] refs: manage lifetime of packed refs cache via reference counting
-Date: Thu, 20 Jun 2013 10:37:47 +0200
-Message-ID: <1371717474-28942-6-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 03/12] refs: wrap the packed refs cache in a level of indirection
+Date: Thu, 20 Jun 2013 10:37:45 +0200
+Message-ID: <1371717474-28942-4-git-send-email-mhagger@alum.mit.edu>
 References: <1371717474-28942-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 20 10:43:20 2013
+X-From: git-owner@vger.kernel.org Thu Jun 20 10:43:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpaSd-0008MN-NA
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 10:43:20 +0200
+	id 1UpaT5-0000qC-Sg
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Jun 2013 10:43:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935303Ab3FTInO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 04:43:14 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:44060 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935185Ab3FTIiP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Jun 2013 04:38:15 -0400
-X-AuditID: 12074414-b7f626d0000001f1-3f-51c2bf77674b
+	id S935383Ab3FTIn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jun 2013 04:43:26 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:57456 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756136Ab3FTIiM (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Jun 2013 04:38:12 -0400
+X-AuditID: 12074413-b7f136d000006de1-73-51c2bf7318f7
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id A3.D8.00497.77FB2C15; Thu, 20 Jun 2013 04:38:15 -0400 (EDT)
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 09.03.28129.37FB2C15; Thu, 20 Jun 2013 04:38:12 -0400 (EDT)
 Received: from michael.fritz.box (p57A25408.dip0.t-ipconnect.de [87.162.84.8])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r5K8c0sD001560
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r5K8c0sB001560
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 20 Jun 2013 04:38:14 -0400
+	Thu, 20 Jun 2013 04:38:10 -0400
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1371717474-28942-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrMIsWRmVeSWpSXmKPExsUixO6iqFu+/1CgwdZWOYuuK91MFg29V5gt
-	5t3dxWRxe8V8ZosfLT3MFrunLWBzYPP4+/4Dk8ell9/ZPJ717mH0uHhJ2ePxxBOsHp83yQWw
-	RXHbJCWWlAVnpufp2yVwZ1zaUF0wSbTi3sQDTA2MHYJdjJwcEgImEtN/fGKDsMUkLtxbD2Rz
-	cQgJXGaUWL5lNiuEc45J4nPTbkaQKjYBXYlFPc1MILaIgJrExLZDLCBFzAK7gTpOn2IHSQgL
-	REts2D8PrIFFQFViefs3sAZeAReJO/c+s0CsU5CY8vA9M4jNKeAq8ebwHFYQWwioZuuuHawT
-	GHkXMDKsYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdK10MvNLNFLTSndxAgJNJEdjEdOyh1iFOBg
-	VOLh1bh8MFCINbGsuDL3EKMkB5OSKO/cfYcChfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwps4B
-	yvGmJFZWpRblw6SkOViUxHm/LVb3ExJITyxJzU5NLUgtgsnKcHAoSfA+BBkqWJSanlqRlplT
-	gpBm4uAEGc4lJVKcmpeSWpRYWpIRD4qN+GJgdICkeID2LgNp5y0uSMwFikK0nmLU5Zh8dst7
-	RiGWvPy8VClx3scgRQIgRRmleXArYGnlFaM40MfCvBdAqniAKQlu0iugJUxAS/asBltSkoiQ
-	kmpgnHrYn1v++QKHWwov1z5d2HFh39nqg2w/KqdXyOomWxeHtL9jPfQoUUA39/qHG3sP1fsV
-	Oc+fvVPt7NHDps3X58xg+sTzfgbzl7q2253ie88IJzN/U9klsOuBirOl7lQxLdPG 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCIsWRmVeSWpSXmKPExsUixO6iqFuy/1CgwdTtjBZdV7qZLBp6rzBb
+	zLu7i8ni9or5zBY/WnqYLXZPW8DmwObx9/0HJo9LL7+zeTzr3cPocfGSssfjiSdYPT5vkgtg
+	i+K2SUosKQvOTM/Tt0vgzmhfeZu14KJoxZlzjxkbGI8LdjFyckgImEg8uTONFcIWk7hwbz1b
+	FyMXh5DAZUaJxgs9jBDOOSaJf/efMIFUsQnoSizqaQazRQTUJCa2HWIBKWIW2M0osfz0KXaQ
+	hLBAiERL90MWEJtFQFWiZeNTsDivgIvEk3V7mSDWKUhMefieGcTmFHCVeHN4DtgZQkA1W3ft
+	YJ3AyLuAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka65Xm5miV5qSukmRkioCe9g3HVS7hCj
+	AAejEg+v5uWDgUKsiWXFlbmHGCU5mJREeefuOxQoxJeUn1KZkVicEV9UmpNafIhRgoNZSYQ3
+	dQ5QjjclsbIqtSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwZsGMlSwKDU9tSIt
+	M6cEIc3EwQkynEtKpDg1LyW1KLG0JCMeFB3xxcD4AEnxAO1dBtLOW1yQmAsUhWg9xajLMfns
+	lveMQix5+XmpUuK8q0CKBECKMkrz4FbAEssrRnGgj4V5o0GqeIBJCW7SK6AlTEBL9qwGW1KS
+	iJCSamBc9dCC++o827RsvVeb06Z8+RfhtObJdDsHR2WP+XtZm4RWsid/eJKXuciKZeOVnR9t
+	Hu5aIzOxI99LVWP9DTZlk74pN1dWngoQsi8IuyMbd3DVn2Jn1giHhs3pJWdkg07s 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228462>
 
-In struct packed_ref_cache, keep a count of the number of users of the
-data structure.  Only free the packed ref cache when the reference
-count goes to zero rather than when the packed ref cache is cleared.
-This mechanism will be used to prevent the cache data structure from
-being freed while it is being iterated over.
-
-So far, only the reference in struct ref_cache::packed is counted;
-other users will be adjusted in separate commits.
+As we know, we can solve any problem in this manner.  In this case,
+the problem is to avoid freeing a packed refs cache while somebody is
+using it.  So add a level of indirection as a prelude to
+reference-counting the packed refs cache.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 39 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 36 insertions(+), 3 deletions(-)
+ refs.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index b345799..80c172f 100644
+index 9f1a007..373d95b 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -810,6 +810,14 @@ struct packed_ref_cache {
- 	struct ref_entry *root;
+@@ -806,6 +806,10 @@ static int is_refname_available(const char *refname, const char *oldrefname,
+ 	return 1;
+ }
  
++struct packed_ref_cache {
++	struct ref_entry *root;
++};
++
+ /*
+  * Future: need to be in "struct repository"
+  * when doing a full libification.
+@@ -813,7 +817,7 @@ static int is_refname_available(const char *refname, const char *oldrefname,
+ static struct ref_cache {
+ 	struct ref_cache *next;
+ 	struct ref_entry *loose;
+-	struct ref_entry *packed;
++	struct packed_ref_cache *packed;
  	/*
-+	 * Count of references to the data structure in this instance,
-+	 * including the pointer from ref_cache::packed if any.  The
-+	 * data will not be freed as long as the reference count is
-+	 * nonzero.
-+	 */
-+	unsigned int referrers;
-+
-+	/*
- 	 * Iff the packed-refs file associated with this instance is
- 	 * currently locked for writing, this points at the associated
- 	 * lock (which is owned by somebody else).
-@@ -836,14 +844,38 @@ static struct ref_cache {
- /* Lock used for the main packed-refs file: */
- static struct lock_file packlock;
- 
-+/*
-+ * Increment the reference count of *packed_refs.
-+ */
-+static void acquire_packed_ref_cache(struct packed_ref_cache *packed_refs)
-+{
-+	packed_refs->referrers++;
-+}
-+
-+/*
-+ * Decrease the reference count of *packed_refs.  If it goes to zero,
-+ * free *packed_refs and return true; otherwise return false.
-+ */
-+static int release_packed_ref_cache(struct packed_ref_cache *packed_refs)
-+{
-+	if (!--packed_refs->referrers) {
-+		free_ref_entry(packed_refs->root);
-+		free(packed_refs);
-+		return 1;
-+	} else {
-+		return 0;
-+	}
-+}
-+
+ 	 * The submodule name, or "" for the main repo.  We allocate
+ 	 * length 1 rather than FLEX_ARRAY so that the main ref_cache
+@@ -825,7 +829,8 @@ static struct ref_cache {
  static void clear_packed_ref_cache(struct ref_cache *refs)
  {
  	if (refs->packed) {
--		if (refs->packed->lock)
-+		struct packed_ref_cache *packed_refs = refs->packed;
-+
-+		if (packed_refs->lock)
- 			die("internal error: packed-ref cache cleared while locked");
--		free_ref_entry(refs->packed->root);
--		free(refs->packed);
+-		free_ref_entry(refs->packed);
++		free_ref_entry(refs->packed->root);
++		free(refs->packed);
  		refs->packed = NULL;
-+		release_packed_ref_cache(packed_refs);
+ 	}
+ }
+@@ -996,24 +1001,39 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
  	}
  }
  
-@@ -1024,6 +1056,7 @@ static struct packed_ref_cache *get_packed_ref_cache(struct ref_cache *refs)
+-static struct ref_dir *get_packed_refs(struct ref_cache *refs)
++/*
++ * Get the packed_ref_cache for the specified ref_cache, creating it
++ * if necessary.
++ */
++static struct packed_ref_cache *get_packed_ref_cache(struct ref_cache *refs)
+ {
+ 	if (!refs->packed) {
+ 		const char *packed_refs_file;
  		FILE *f;
  
- 		refs->packed = xcalloc(1, sizeof(*refs->packed));
-+		acquire_packed_ref_cache(refs->packed);
- 		refs->packed->root = create_dir_entry(refs, "", 0, 0);
+-		refs->packed = create_dir_entry(refs, "", 0, 0);
++		refs->packed = xcalloc(1, sizeof(*refs->packed));
++		refs->packed->root = create_dir_entry(refs, "", 0, 0);
  		if (*refs->name)
  			packed_refs_file = git_path_submodule(refs->name, "packed-refs");
+ 		else
+ 			packed_refs_file = git_path("packed-refs");
+ 		f = fopen(packed_refs_file, "r");
+ 		if (f) {
+-			read_packed_refs(f, get_ref_dir(refs->packed));
++			read_packed_refs(f, get_ref_dir(refs->packed->root));
+ 			fclose(f);
+ 		}
+ 	}
+-	return get_ref_dir(refs->packed);
++	return refs->packed;
++}
++
++static struct ref_dir *get_packed_ref_dir(struct packed_ref_cache *packed_ref_cache)
++{
++	return get_ref_dir(packed_ref_cache->root);
++}
++
++static struct ref_dir *get_packed_refs(struct ref_cache *refs)
++{
++	return get_packed_ref_dir(get_packed_ref_cache(refs));
+ }
+ 
+ void add_packed_ref(const char *refname, const unsigned char *sha1)
 -- 
 1.8.3.1
