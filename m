@@ -1,134 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] lib-httpd/apache.conf: check version only after mod_version loads
-Date: Fri, 21 Jun 2013 13:59:56 -0700
-Message-ID: <7vmwqjkwmr.fsf@alter.siamese.dyndns.org>
-References: <C44E969B-A5AE-44EF-BFCA-CAEF69516BEB@gernhardtsoftware.com>
-	<20130621043052.GA5318@sigill.intra.peff.net>
-	<20130621044236.GA5798@sigill.intra.peff.net>
-	<26902D6D-D105-4943-BC67-461CEF82D888@gernhardtsoftware.com>
-	<20130621044953.GA5962@sigill.intra.peff.net>
-	<D0852D0F-3282-41DF-8A5A-4BEF1B39ED66@gernhardtsoftware.com>
-	<20130621180334.GA4499@sigill.intra.peff.net>
-	<1B9251F9-C1AF-41F7-8BF8-D36DDB27EF09@gernhardtsoftware.com>
-	<20130621181250.GA5290@sigill.intra.peff.net>
+Subject: Re: git diff returns fatal error with core.safecrlf is set to true.
+Date: Fri, 21 Jun 2013 14:57:24 -0700
+Message-ID: <7vip17ktyz.fsf@alter.siamese.dyndns.org>
+References: <6a3d8a2b19a859d8c969ee434e1d6a89@meuh.org>
+	<7vobazo4ds.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
-	"git\@vger.kernel.org List" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 21 23:00:17 2013
+Cc: <git@vger.kernel.org>
+To: Yann Droneaud <ydroneaud@opteya.com>
+X-From: git-owner@vger.kernel.org Fri Jun 21 23:57:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uq8RL-0006LE-FJ
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 23:00:15 +0200
+	id 1Uq9Kl-0000gJ-JR
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 23:57:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945960Ab3FUVAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 17:00:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48959 "EHLO
+	id S1946191Ab3FUV52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 17:57:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41304 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1945933Ab3FUU76 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 16:59:58 -0400
+	id S1946161Ab3FUV51 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 17:57:27 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 459752AD43;
-	Fri, 21 Jun 2013 20:59:58 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 412292A280;
+	Fri, 21 Jun 2013 21:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pV0xKVAwxLFadfSZgFNOXMtLkQo=; b=ePb6mQ
-	aj5drmgMdC3/ny7EU05vReYJDtBFFpTeWs+oJfX4L+eEvXkDtN+JpL/2LtVrOIk+
-	RvoJwZmeLqHbhghMARhjE7HGbqDswKBfZVbNNcr7/YIS5x+n6eEZ23YIduema6+5
-	8T2G5bpVE/aDTLadZ5733EQVkhGOZaPJqWPBg=
+	:content-type; s=sasl; bh=sGI9iQx3qw4huI8UhsF395v6M00=; b=b7Thzv
+	queefVGz7S1be8R1tXJIHpPgM4LK0VQ+ySqbV4g4EX2XhsnVicTgolEygY6Evxoz
+	o9hwmLn75C+LOERfZPcQ/yb/a5GtmuKg2PoneLpS4dSmxI+GfFSNfVj2C8aAuXhL
+	h2sBZvZoZHeW56I1wX/digrOD1oFoDMaJ/n7I=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qHH+wzUycsyfZpNC8+zsC4y/mpLNco46
-	2dCh0sNWcdQeL6nRar2k6waVc7LScksNcySNHc4r92EBmmUyrmwbu0hlXCqr9TPE
-	Q3L7F2Jf35CiGKjuzalmJX37m1OT+YILMlUas29Ta4plDd1G1JsUvQ7f7H7YdkL8
-	/9RdyKqQkIc=
+	:content-type; q=dns; s=sasl; b=lXU5n1BhGlJOa+ScbsM1WNwcJw8ZGgHh
+	6B/8/6m6CD6Td1l7rgeCEGe9Z62XvjOu2c6HChrxoW8Z4fK45VxUY3Y34+zUHha2
+	ftbALakA/mBntPVbIpUhUEXCEO/5ZclVKx15ChNhLxnR9fTs7RpNYrxufcGv11AP
+	9rdFNGXC6/U=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39BE12AD42;
-	Fri, 21 Jun 2013 20:59:58 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34F8B2A27F;
+	Fri, 21 Jun 2013 21:57:26 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9234C2AD41;
-	Fri, 21 Jun 2013 20:59:57 +0000 (UTC)
-In-Reply-To: <20130621181250.GA5290@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 21 Jun 2013 14:12:51 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 992082A27E;
+	Fri, 21 Jun 2013 21:57:25 +0000 (UTC)
+In-Reply-To: <7vobazo4ds.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 21 Jun 2013 08:44:15 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 87C1A0EC-DAB5-11E2-83EF-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8EF0CE9E-DABD-11E2-9739-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228659>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Cool. I think the patch should look like the one below, then.
->
-> Just to double-check that I have explained the issue correctly, can you
-> share the output of "apache2 -l"? Mine has:
->
->   $ apache2 -l
->   Compiled in modules:
->     core.c
->     mod_log_config.c
->     mod_logio.c
->     mod_version.c
->     prefork.c
->     http_core.c
->     mod_so.c
->
-> which explains why it works here. I'm assuming you will not have
-> mod_version.c compiled in.
->
-> -- >8 --
-> Subject: lib-httpd/apache.conf: check version only after mod_version loads
->
-> Commit 0442743 introduced an <IfVersion> directive near the
-> top of the apache config file. However, at that point we
-> have not yet checked for and loaded the mod_version module.
-> This means that the directive will behave oddly if
-> mod_version is dynamically loaded, failing to match when it
-> should.
->
-> We can fix this by moving the whole block below the
-> LoadModule directive for mod_version.
->
-> Reported-by: Brian Gernhardt <brian@gernhardtsoftware.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  t/lib-httpd/apache.conf | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-> index 56ae548..dd17e3a 100644
-> --- a/t/lib-httpd/apache.conf
-> +++ b/t/lib-httpd/apache.conf
-> @@ -1,7 +1,4 @@ ServerName dummy
->  ServerName dummy
-> -<IfVersion < 2.4>
-> -LockFile accept.lock
-> -</IfVersion>
->  PidFile httpd.pid
->  DocumentRoot www
->  LogFormat "%h %l %u %t \"%r\" %>s %b" common
-> @@ -26,6 +23,10 @@ ErrorLog error.log
->  	LoadModule version_module modules/mod_version.so
->  </IfModule>
->  
-> +<IfVersion < 2.4>
-> +LockFile accept.lock
-> +</IfVersion>
-> +
+> The helper may want to learn a way to be told to demote that error
+> to a warning.
 
-Once you see it in the patch form, it is very clear what this change
-does and why it is necessary in the context ;-)
+Perhaps something like this?
 
-Thanks, both of you, for digging this down to the root cause; you
-guys have done before it graduates to 'master', which I especially
-appreciate.
+ diff.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Will queue.
+diff --git a/diff.c b/diff.c
+index f0b3e7c..9b4f3ac 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2677,6 +2677,10 @@ static int diff_populate_gitlink(struct diff_filespec *s, int size_only)
+ int diff_populate_filespec(struct diff_filespec *s, int size_only)
+ {
+ 	int err = 0;
++	enum safe_crlf crlf_warn = (safe_crlf != SAFE_CRLF_FAIL
++				    ? safe_crlf
++				    : SAFE_CRLF_WARN);
++
+ 	if (!DIFF_FILE_VALID(s))
+ 		die("internal error: asking to populate invalid file.");
+ 	if (S_ISDIR(s->mode))
+@@ -2732,7 +2736,7 @@ int diff_populate_filespec(struct diff_filespec *s, int size_only)
+ 		/*
+ 		 * Convert from working tree format to canonical git format
+ 		 */
+-		if (convert_to_git(s->path, s->data, s->size, &buf, safe_crlf)) {
++		if (convert_to_git(s->path, s->data, s->size, &buf, crlf_warn)) {
+ 			size_t size = 0;
+ 			munmap(s->data, s->size);
+ 			s->should_munmap = 0;
