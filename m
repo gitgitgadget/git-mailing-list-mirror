@@ -1,87 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] clone: regression in error messages in master
-Date: Fri, 21 Jun 2013 10:11:39 -0700
-Message-ID: <7vli63mlro.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0n7S8s-ABQ1qV5JSsyhYo6=rmK1UT+uYW9hjjeWjambug@mail.gmail.com>
-	<CAEBDL5UNNHnogHb2ztq2G8OxyCNMoLia7xYFNSy+kfHD3pS1pQ@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2013, #07; Thu, 20)
+Date: Fri, 21 Jun 2013 22:43:20 +0530
+Message-ID: <CALkWK0mUcJ1f0xP2w-fUFr-tMSKMX23_nmYQUYXw3zjw7Hm9GQ@mail.gmail.com>
+References: <7v1u7woydw.fsf@alter.siamese.dyndns.org> <CALkWK0=1e5ospzJBqaz9iLwSiOoTy_+vTxwVMvW-H7kynfkbBg@mail.gmail.com>
+ <7vk3lno40x.fsf@alter.siamese.dyndns.org> <CALkWK0kDDRicX9VmcRgG9daXVi6W-zGNt=x6ruy7X5MhrHOZbQ@mail.gmail.com>
+ <7vtxkrmlz5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Fri Jun 21 19:11:47 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 21 19:14:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uq4sF-0004zZ-05
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 19:11:47 +0200
+	id 1Uq4uk-0007pY-Gl
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 19:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423478Ab3FURLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 13:11:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35947 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423404Ab3FURLm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 13:11:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBD362A080;
-	Fri, 21 Jun 2013 17:11:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WylG7Dmo27APwrZNehmT+1Lw2fY=; b=hHv14S
-	2p4cX4e62uLoziNuHUJAo0E5bbf7SZeLgnAuNiXmdEatRwXI9/CcQ9JM/dILRDrh
-	3mLQjwQKX+r16+kKAJzBqzfHRXaE3EiZQ+wWbVRCnDMnDRXmHBeOg/+MHREOQkzX
-	RTyhU5U1OpGBnfT6x3dq+a3HTvbD0EWBKX6UU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x/KKL0EtZa3dFXOi5dtKvV2GDCM3nHEe
-	wvnuUix6MnzJwibkI4vPZYLwuLUTj7SIwvZ8zgKc3hHe7YcBz4dZs/C0CPjxymdi
-	4Trz6EVv4H599P4TAWmYvofFrIJf7GkWhdFUE3CgJmcHrGBOS7dpQRRkCHOhUmUJ
-	ZtpITJrtOGg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFBB12A07F;
-	Fri, 21 Jun 2013 17:11:41 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 127572A07B;
-	Fri, 21 Jun 2013 17:11:40 +0000 (UTC)
-In-Reply-To: <CAEBDL5UNNHnogHb2ztq2G8OxyCNMoLia7xYFNSy+kfHD3pS1pQ@mail.gmail.com>
-	(John Szakmeister's message of "Fri, 21 Jun 2013 06:07:07 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A3FE29C6-DA95-11E2-9B1E-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1423529Ab3FUROG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 13:14:06 -0400
+Received: from mail-bk0-f43.google.com ([209.85.214.43]:54455 "EHLO
+	mail-bk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423506Ab3FUROD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 13:14:03 -0400
+Received: by mail-bk0-f43.google.com with SMTP id jm2so3509060bkc.16
+        for <git@vger.kernel.org>; Fri, 21 Jun 2013 10:14:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=OHkZ0KfgJiR+Jx35NMECFsD+VLNrLbihjTlW+X1zoIk=;
+        b=N9AIN0gk6jwswLGPhgaHRivC9r3TCaY0IDNVLOAOlE8NI+uBc3jeVg6h/kCzmcXw4A
+         ZnoXsiUSkcY28iCcMKCNh8eKW4ixIheM36AIzo61g0vJuGJt1LwXjKVwLyaEL+8SfKM7
+         gcyESFrjdmT4I/hYNU8lHKwJZjO8h+TzkEUA3AZ00qEbK/UXngSJZA13+k3YiOfQ1Alv
+         NsK0CPwUclM0Q4g4628AxEqkERhVIaz1BJj73QHK8UM1GJPf14BRv9fgwDY2gWJ6zhZf
+         SCRdbLrFsa8KBiJzA5f/PNChqYo61fAjqc28B+dwiWtx4Gugaz4Z+TfrpUK44YF0l7c1
+         OZtQ==
+X-Received: by 10.204.240.79 with SMTP id kz15mr1953430bkb.112.1371834842227;
+ Fri, 21 Jun 2013 10:14:02 -0700 (PDT)
+Received: by 10.204.186.77 with HTTP; Fri, 21 Jun 2013 10:13:20 -0700 (PDT)
+In-Reply-To: <7vtxkrmlz5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228636>
 
-John Szakmeister <john@szakmeister.net> writes:
-
-> On Thu, Jun 20, 2013 at 9:16 AM, Ramkumar Ramachandra
-> <artagnon@gmail.com> wrote:
->> Hi,
->>
->> So this should explain the problem:
->>
->>   # using v1.8.3.1
->>   $ git clone https://google.com
->>   Cloning into 'google.com'...
->>   fatal: repository 'https://google.com/' not found
->>
->>   # using master
->>   $ git clone https://google.com
->>   Cloning into 'google.com'...
->>   fatal: repository 'https://google.com/' not found
->>   fatal: Reading from helper 'git-remote-https' failed
+Junio C Hamano wrote:
+>> ...  I've noticed a significant decline in
+>> list-reviews in general: a lot of good code on the list hasn't been
+>> reviewed.
 >
-> I can see where this is confusing, but can also see how it's useful
-> information to have.  On clone, it's probably not that useful since
-> you're looking right at the url, but I could see that information
-> being more useful on a pull or push with the default arguments (when
-> the source and destination aren't quite as obvious).
+> Hmph, I do not particularly see that happening.
 
-The "extra" error messages is not the first one, but the last one,
-and the suggested revert is a proposal to remove the latter, not the
-"repository $URL not found".
+Observer bias.  To verify either claim, could you run some stats on
+the ML archives [1] and report the results?
+
+[1]: I lost the copy Peff gave me because I kept it locally.
