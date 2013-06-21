@@ -1,60 +1,72 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: Re: HTTP tests fail on OS X
-Date: Fri, 21 Jun 2013 13:03:40 -0400
-Message-ID: <D0852D0F-3282-41DF-8A5A-4BEF1B39ED66@gernhardtsoftware.com>
-References: <C44E969B-A5AE-44EF-BFCA-CAEF69516BEB@gernhardtsoftware.com> <20130621043052.GA5318@sigill.intra.peff.net> <20130621044236.GA5798@sigill.intra.peff.net> <26902D6D-D105-4943-BC67-461CEF82D888@gernhardtsoftware.com> <20130621044953.GA5962@sigill.intra.peff.net>
-Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] [submodule] Remove duplicate call to set_rev_name
+Date: Fri, 21 Jun 2013 10:03:44 -0700
+Message-ID: <7vy5a3mm4v.fsf@alter.siamese.dyndns.org>
+References: <1371462936-9672-1-git-send-email-iveqy@iveqy.com>
+	<20130620215812.GA2687@sandbox-ub>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 21 19:03:48 2013
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Fri Jun 21 19:03:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uq4kV-0004Q8-Am
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 19:03:47 +0200
+	id 1Uq4kc-0004bN-Lo
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 19:03:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423442Ab3FURDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 13:03:43 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:38240 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423399Ab3FURDm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Jun 2013 13:03:42 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id E3C1027362F7; Fri, 21 Jun 2013 17:03:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [10.10.10.10] (cpe-142-105-190-134.rochester.res.rr.com [142.105.190.134])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	id S1423444Ab3FURDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 13:03:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37200 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1423399Ab3FURDt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 13:03:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CB5429A4E;
+	Fri, 21 Jun 2013 17:03:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lDiBLvB8zYjiRo3aOlp3OeBMy8M=; b=HbQyU/
+	6ySd0tGM5hNV8KJJwuTLl5jdbU6MiBfeBdqeLZHVnZwyK8t2pUgn3/5Of4SfZC2+
+	EdQ12VyulxiaQ/hNYlTq3QTBVUfhpRiuIsPk0cwT+SkRddseTZKC1OCjiPnGVwOx
+	hGJWCLCdniQGTe/0sSGAWnsplYqZeyI6gnMP8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JU7qkv70HrPhFvjOQPO61hOwLj0Qtp7X
+	XyDOPJFTiSl39oJSXcO9zGlR+Q558jW4rB6w2mEOMP2VwnSC5lR2Lb88ls//W1FQ
+	dnuQdFQpL/8V8SsYOLLVehe7wodE0Q2U+8VBQV4Fnrg1HpmhgTUJYbqF5b+cbgnw
+	ywdyJwgDP7I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DBD229A4C;
+	Fri, 21 Jun 2013 17:03:47 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id C98DB273617E;
-	Fri, 21 Jun 2013 17:03:40 +0000 (UTC)
-In-Reply-To: <20130621044953.GA5962@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.1508)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ECB0E29A45;
+	Fri, 21 Jun 2013 17:03:45 +0000 (UTC)
+In-Reply-To: <20130620215812.GA2687@sandbox-ub> (Heiko Voigt's message of
+	"Thu, 20 Jun 2013 23:58:12 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 88E8FD7E-DA94-11E2-BED2-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228632>
 
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-On Jun 21, 2013, at 12:49 AM, Jeff King <peff@peff.net> wrote:
+> Hi,
+>
+> On Mon, Jun 17, 2013 at 11:55:36AM +0200, Fredrik Gustafsson wrote:
+>> set_rev_name is a possible expensive operation. If a submodule has
+>> changes in it, set_rev_name was called twice.
+>> 
+>> Solution is to move set_rev_name so it's only called once, no matter the
+>> codepath taken.
+>
+> Looks good to me.
 
-> I'm not sure what else to look at...I guess try ratcheting up the
-> debugging/log level on your failing copy and see if it prints anything
-> useful.
-
-I found this error in the error.log:
-
-[Fri Jun 21 12:59:59 2013] [emerg] (2)No such file or directory: Couldn't create accept lock (/private/var/run/accept.lock.64288) (5)
-
-Annoying that httpd returns before it tries to create the lock.
-
-Without the IfVersion directive, it creates the lock in the ./httpd directory instead.  Not sure why apache is doing that, it's very irritating.
-
-~~ Brian
+Thanks.
