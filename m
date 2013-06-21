@@ -1,97 +1,69 @@
-From: "Eduardo R. D'Avila" <erdavila@gmail.com>
-Subject: [PATCH 4/4] git-prompt.sh: add missing information in comments
-Date: Thu, 20 Jun 2013 23:25:29 -0300
-Message-ID: <8fcf64a70e63761f3982e1be05be0a2bb1fb68bf.1371780085.git.erdavila@gmail.com>
-References: <cover.1371780085.git.erdavila@gmail.com>
-Cc: felipe.contreras@gmail.com, artagnon@gmail.com,
-	s.oosthoek@xs4all.nl, gitster@pobox.com, szeder@ira.uka.de,
-	"Eduardo R. D'Avila" <erdavila@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 21 04:33:57 2013
+From: Jeff King <peff@peff.net>
+Subject: Re: HTTP tests fail on OS X
+Date: Fri, 21 Jun 2013 00:30:52 -0400
+Message-ID: <20130621043052.GA5318@sigill.intra.peff.net>
+References: <C44E969B-A5AE-44EF-BFCA-CAEF69516BEB@gernhardtsoftware.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
+To: Brian Gernhardt <brian@gernhardtsoftware.com>
+X-From: git-owner@vger.kernel.org Fri Jun 21 06:31:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UprAg-0008A1-Iy
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 04:33:54 +0200
+	id 1Upt08-00037w-LB
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 06:31:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161100Ab3FUCdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jun 2013 22:33:50 -0400
-Received: from mail-gh0-f179.google.com ([209.85.160.179]:61753 "EHLO
-	mail-gh0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161076Ab3FUCdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jun 2013 22:33:49 -0400
-Received: by mail-gh0-f179.google.com with SMTP id f16so1868669ghb.10
-        for <git@vger.kernel.org>; Thu, 20 Jun 2013 19:33:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :in-reply-to:references;
-        bh=6G1EIkYUYRZZSvWep1hiyuyqLDM86fEmB49wmXNGNJA=;
-        b=aHxNRHszNgN8RcIv9Gd52D7V7u+BWbs8Loy5UVaG7PeDI762B9pzdvSWfavRWYKRyu
-         rK0+XQMFDQoFJGJlY1yXg8AkdfuPHF4y4EzbQ+xMKMviZjpiet6ETAFbdEnYRzv1qDCH
-         +9AgDBkAD26oeaUsIQplki3wZtK2yCWamRpNi1Tr25j+2tyyxQjEMqWYAf1CCWKlgPbM
-         XCQ6k6shb8JNVQ/3ctBIC1uugy7xgfYwnMJ5bhhVNEgvqknOJhYxQdM/40roUw27D93t
-         lX3J1dCICNlehUuVnwlTZeV+HJubk3ct+SKKSJo2dO+vFvODvlhVWzjcQVwf8r1IgZmg
-         e+wg==
-X-Received: by 10.236.69.65 with SMTP id m41mr6526125yhd.228.1371781603145;
-        Thu, 20 Jun 2013 19:26:43 -0700 (PDT)
-Received: from localhost.localdomain (201.86.243.62.dynamic.adsl.gvt.net.br. [201.86.243.62])
-        by mx.google.com with ESMTPSA id s65sm4968400yhs.14.2013.06.20.19.26.40
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 20 Jun 2013 19:26:42 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1.487.g28387b2
-In-Reply-To: <cover.1371780085.git.erdavila@gmail.com>
-In-Reply-To: <cover.1371780085.git.erdavila@gmail.com>
-References: <cover.1371780085.git.erdavila@gmail.com>
+	id S1030446Ab3FUEa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 00:30:58 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34695 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030247Ab3FUEa4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 00:30:56 -0400
+Received: (qmail 3365 invoked by uid 102); 21 Jun 2013 04:31:56 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Jun 2013 23:31:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Jun 2013 00:30:52 -0400
+Content-Disposition: inline
+In-Reply-To: <C44E969B-A5AE-44EF-BFCA-CAEF69516BEB@gernhardtsoftware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228568>
 
-Mention that the command below is needed for prompt
-in ZSH with PS1:
-  setopt PROMPT_SUBST
+On Fri, Jun 21, 2013 at 12:27:02AM -0400, Brian Gernhardt wrote:
 
-Make it clear that colored prompt is only available
-in PROMPT_COMMAND mode.
+> I've bisected it to this commit:
+> 
+> > commit 0442743810c6f6c14386a5a9d6bf8e4d69adbc51
+> > Author: Jeff King <peff@peff.net>
+> > Date:   Sun Jun 9 04:07:59 2013 -0400
+> > 
+> >     t/lib-httpd/apache.conf: do not use LockFile in apache >= 2.4
+> 
+> OS X 10.8.4, apache 2.2.22
 
-Signed-off-by: Eduardo R. D'Avila <erdavila@gmail.com>
----
-5	4	contrib/completion/git-prompt.sh
- contrib/completion/git-prompt.sh | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+Hrm. That's quite odd. The patch in its entirety looks like this:
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 70515cc..3ab2a69 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -13,10 +13,10 @@
- #    3a) Change your PS1 to call __git_ps1 as
- #        command-substitution:
- #        Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
--#        ZSH:  PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
-+#        ZSH:  setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
- #        the optional argument will be used as format string.
--#    3b) Alternatively, if you are using bash, __git_ps1 can be
--#        used for PROMPT_COMMAND with two parameters, <pre> and
-+#    3b) Alternatively, if you are using Bash or ZSH, __git_ps1 can
-+#        be used for PROMPT_COMMAND with two parameters, <pre> and
- #        <post>, which are strings you would put in $PS1 before
- #        and after the status string generated by the git-prompt
- #        machinery.  e.g.
-@@ -78,7 +78,8 @@
- #
- # If you would like a colored hint about the current dirty state, set
- # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
--# the colored output of "git status -sb".
-+# the colored output of "git status -sb" and are available only when
-+# using __git_ps1 for PROMPT_COMMAND.
- 
- # __gitdir accepts 0 or 1 arguments (i.e., location)
- # returns location of .git repo
--- 
-1.8.3.1.487.g28387b2
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index 542241b..891edd7 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -1,5 +1,7 @@ LockFile accept.lock
+ ServerName dummy
++<IfVersion < 2.4>
+ LockFile accept.lock
++</IfVersion>
+ PidFile httpd.pid
+ DocumentRoot www
+
+So it should not be having any effect at all on apache 2.2, unless it
+somehow does not like the <IfVersion> tags.
+
+Puzzled...
+
+-Peff
