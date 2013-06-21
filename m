@@ -1,111 +1,118 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 06/16] t/t5505-remote: test url-with-# in branches-file
-Date: Fri, 21 Jun 2013 16:42:30 +0530
-Message-ID: <1371813160-4200-7-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 05/16] remote: remove dead code in read_branches_file()
+Date: Fri, 21 Jun 2013 16:42:29 +0530
+Message-ID: <1371813160-4200-6-git-send-email-artagnon@gmail.com>
 References: <1371813160-4200-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 21 13:16:24 2013
+X-From: git-owner@vger.kernel.org Fri Jun 21 13:16:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpzKK-0003RE-8U
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 13:16:24 +0200
+	id 1UpzKK-0003RE-Of
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 13:16:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030249Ab3FULQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 07:16:13 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:64949 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965513Ab3FULQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 07:16:10 -0400
-Received: by mail-pb0-f49.google.com with SMTP id jt11so7571921pbb.22
-        for <git@vger.kernel.org>; Fri, 21 Jun 2013 04:16:10 -0700 (PDT)
+	id S1030319Ab3FULQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 07:16:14 -0400
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:41543 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965550Ab3FULQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 07:16:08 -0400
+Received: by mail-pb0-f50.google.com with SMTP id wz7so7665612pbc.37
+        for <git@vger.kernel.org>; Fri, 21 Jun 2013 04:16:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=BVzWUbb9JE7MnfjVgiSqu0pfnE3Os0mnnYGkGb3Gy+o=;
-        b=mvJz1uwdN4cQxpBDbuaLlbRr6bCSKvr6x9ua23jRM8M2ZdED+psIB5k+U3Cm5eLIhe
-         CbqBeRs83+MH50CHunvZ2DRXQoFuxpBZBlV8AM5XlBq26hCSNgZIZSXqHudFWT1TrR/J
-         ++qNgW8F82UrArl+pGuOEpRubB1rcYxESB5BA/AMpW8orfY4oW37+M2VnDt8zAd9Nir9
-         o1TjcKsSIxPop644/tB0sGzdlAxE2lzesLHw77ggUcZPDC9JFzvhN0ugZXBdQ+V2l3Nx
-         MO0hrl7YoyAYaAXqd5EY9K3EypsPdBH8YdGXTyO/T8t2bBJ4coMqjgyztLo4zrbsBiq3
-         NT3Q==
-X-Received: by 10.66.154.225 with SMTP id vr1mr16156644pab.85.1371813370409;
-        Fri, 21 Jun 2013 04:16:10 -0700 (PDT)
+        bh=I6qQfcb0zrIX8qgFn6qxAPcLqpJU5g81T60Mf3GC1dM=;
+        b=CRQIvIN15DNu4SpFg5s/xXuQUdUU9bj8LwQIUcqoMIuDC60JW6DLJWaNp7WitN/p0c
+         K+7pP18n5ZdKUcQVcaqFCVyfcm3yVAYCA01urUfLeO2OuJnRp+JWqTO5Yx9S+McRTt8h
+         SAtCq9C5DkN0c5xyEUV2pYHdi2ELPjmYA48PUZdqAyexxWTouCtcxprO/G0CDOoCID3M
+         eBbbUbiVZt7cdiqiz1lGFioULjRWOPqJBGdxmPDkOLGOwP0lsGrDXYo7JcTnydiYvEmV
+         C1o4mET0Q4eoXP5QFhad95RtE1tTm/rTgmRgZ8EEogtX25di6fsbZohZoLkUYp9V/i46
+         p6Ww==
+X-Received: by 10.66.193.199 with SMTP id hq7mr15986014pac.183.1371813368286;
+        Fri, 21 Jun 2013 04:16:08 -0700 (PDT)
 Received: from localhost.localdomain ([122.164.10.8])
-        by mx.google.com with ESMTPSA id ig4sm4486341pbc.18.2013.06.21.04.16.08
+        by mx.google.com with ESMTPSA id ig4sm4486341pbc.18.2013.06.21.04.16.06
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 21 Jun 2013 04:16:09 -0700 (PDT)
+        Fri, 21 Jun 2013 04:16:07 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1.499.g7ad3486.dirty
 In-Reply-To: <1371813160-4200-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228600>
 
-Add one more test similar to "migrate a remote from named file in
-$GIT_DIR/branches" to check that a url with a # can be used to specify
-the branch name (as opposed to the constant "master").
+The first line of the function checks that the remote-name contains a
+slash ('/'), and sets the "slash" variable accordingly.  The only caller
+of read_branches_file() is remote_get_1(); the calling codepath is
+guarded by valid_remote_nick(), which checks that the remote does not
+contain a slash.  Therefore, the "slash" variable can never be set:
+remove the dead code that assumes otherwise.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- t/t5505-remote.sh | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ remote.c | 26 +++-----------------------
+ 1 file changed, 3 insertions(+), 23 deletions(-)
 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index fd0a81e..93e11c8 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -702,27 +702,42 @@ test_expect_success 'migrate a remote from named file in $GIT_DIR/branches' '
- 	)
- '
+diff --git a/remote.c b/remote.c
+index e71f66d..128b210 100644
+--- a/remote.c
++++ b/remote.c
+@@ -276,10 +276,9 @@ static void read_remotes_file(struct remote *remote)
  
--test_expect_success 'remote prune to cause a dangling symref' '
-+test_expect_success 'migrate a remote from named file in $GIT_DIR/branches (2)' '
- 	git clone one seven &&
-+	origin_url=$(pwd)/one &&
-+	(
-+		cd seven &&
-+		git remote rm origin &&
-+		echo "quux#foom" > .git/branches/origin &&
-+		git remote rename origin origin &&
-+		test_path_is_missing .git/branches/origin &&
-+		test "$(git config remote.origin.url)" = "quux" &&
-+		test "$(git config remote.origin.fetch)" = "refs/heads/foom:refs/heads/origin"
-+		test "$(git config remote.origin.push)" = "HEAD:refs/heads/foom"
-+	)
-+'
+ static void read_branches_file(struct remote *remote)
+ {
+-	const char *slash = strchr(remote->name, '/');
+ 	char *frag;
+ 	struct strbuf branch = STRBUF_INIT;
+-	int n = slash ? slash - remote->name : 1000;
++	int n = 1000;
+ 	FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
+ 	char *s, *p;
+ 	int len;
+@@ -299,36 +298,17 @@ static void read_branches_file(struct remote *remote)
+ 	while (isspace(p[-1]))
+ 		*--p = 0;
+ 	len = p - s;
+-	if (slash)
+-		len += strlen(slash);
+ 	p = xmalloc(len + 1);
+ 	strcpy(p, s);
+-	if (slash)
+-		strcat(p, slash);
+ 
+-	/*
+-	 * With "slash", e.g. "git fetch jgarzik/netdev-2.6" when
+-	 * reading from $GIT_DIR/branches/jgarzik fetches "HEAD" from
+-	 * the partial URL obtained from the branches file plus
+-	 * "/netdev-2.6" and does not store it in any tracking ref.
+-	 * #branch specifier in the file is ignored.
+-	 *
+-	 * Otherwise, the branches file would have URL and optionally
+-	 * #branch specified.  The "master" (or specified) branch is
+-	 * fetched and stored in the local branch of the same name.
+-	 */
+ 	frag = strchr(p, '#');
+ 	if (frag) {
+ 		*(frag++) = '\0';
+ 		strbuf_addf(&branch, "refs/heads/%s", frag);
+ 	} else
+ 		strbuf_addstr(&branch, "refs/heads/master");
+-	if (!slash) {
+-		strbuf_addf(&branch, ":refs/heads/%s", remote->name);
+-	} else {
+-		strbuf_reset(&branch);
+-		strbuf_addstr(&branch, "HEAD:");
+-	}
 +
-+test_expect_success 'remote prune to cause a dangling symref' '
-+	git clone one eight &&
- 	(
- 		cd one &&
- 		git checkout side2 &&
- 		git branch -D master
- 	) &&
- 	(
--		cd seven &&
-+		cd eight &&
- 		git remote prune origin
- 	) >err 2>&1 &&
- 	test_i18ngrep "has become dangling" err &&
- 
- 	: And the dangling symref will not cause other annoying errors &&
- 	(
--		cd seven &&
-+		cd eight &&
- 		git branch -a
- 	) 2>err &&
- 	! grep "points nowhere" err &&
- 	(
--		cd seven &&
-+		cd eight &&
- 		test_must_fail git branch nomore origin
- 	) 2>err &&
- 	grep "dangling symref" err
++	strbuf_addf(&branch, ":refs/heads/%s", remote->name);
+ 	add_url_alias(remote, p);
+ 	add_fetch_refspec(remote, strbuf_detach(&branch, NULL));
+ 	/*
 -- 
 1.8.3.1.499.g7ad3486.dirty
