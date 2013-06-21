@@ -1,94 +1,123 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 05/16] remote: remove dead code in read_branches_file()
-Date: Fri, 21 Jun 2013 15:26:48 -0700
-Message-ID: <7v1u7vkslz.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 06/16] t/t5505-remote: test url-with-# in branches-file
+Date: Fri, 21 Jun 2013 15:28:40 -0700
+Message-ID: <7vwqpnjdyf.fsf@alter.siamese.dyndns.org>
 References: <1371813160-4200-1-git-send-email-artagnon@gmail.com>
-	<1371813160-4200-6-git-send-email-artagnon@gmail.com>
+	<1371813160-4200-7-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 22 00:26:56 2013
+X-From: git-owner@vger.kernel.org Sat Jun 22 00:28:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uq9nD-0008G3-LT
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 00:26:56 +0200
+	id 1Uq9p1-0001vJ-Gu
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 00:28:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422959Ab3FUW0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 18:26:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44005 "EHLO
+	id S1423461Ab3FUW2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 18:28:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41550 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161490Ab3FUW0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 18:26:51 -0400
+	id S1422881Ab3FUW2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 18:28:43 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0680B2AB78;
-	Fri, 21 Jun 2013 22:26:51 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C1272AC49;
+	Fri, 21 Jun 2013 22:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TGtX2QN1PEa+mc1do8y13L7Ei5Q=; b=oQLv51
-	TJQ56lEMJg338HT7i0RyAUuR3FA8Emlf9zYjPvyw88WkDTuGjbywuaC49Xbes/m8
-	xmLwmpUlJPG2ZdElfPK7+MGISD6xbE+RG4+M2deblMINLh6gdWP0bveEPtoh24K5
-	IY/yrNOcmdZsnYte7CdV7MS/gdvO6A3f13jWA=
+	:content-type; s=sasl; bh=38SW8/VDzvMvXFHce0m1+L0HkkQ=; b=nTiJ3F
+	qb6KABvKXfmYEdlJL3Xkn/SE9tauIc5FzTUx5xzbE/V3pevLD0BWQfJL0aHzSSdi
+	N4Ix+CTPwodzNL4KEKz768mub+pVaxkIL9pT2eqix7YF6xU0MnMZNyZKjcK9c05S
+	4nHR2j9hw9YFsJRZ+TRcPmSSG6vl8qqtNiyVA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BwEeChqfOM5JEJIrYhg0bqa1hwcSMG+m
-	CXCWDC0vVMbjC8M5GlEpZJu3xnR1ATcVO2VuLU5M+IXUauDWMBd8fr4y7PoDuddn
-	TIo7OD+ojUc09hw3ZYnG0Ms0Vq+o7JodtqP/FCcPRVF6rhaDBNqy95iA7bRO3OEV
-	BOyuwdH2iVA=
+	:content-type; q=dns; s=sasl; b=ubr4vnZJQnAB8QnilExDcMIFuMlBOVcR
+	gWv064368HG36gIqc85CmElczkyMwkv3eepZkI7doP3YHcOguSkRkCmExd1n/POG
+	g2YnuTUQUUHr08WprePHV2oCDdPvDiRMG8DPiQxFPl1cU+gxANG25ltT5/6BdKLN
+	w5T30t2mMyo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EEB802AB77;
-	Fri, 21 Jun 2013 22:26:50 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 73D522AC48;
+	Fri, 21 Jun 2013 22:28:42 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6FAD32AB76;
-	Fri, 21 Jun 2013 22:26:50 +0000 (UTC)
-In-Reply-To: <1371813160-4200-6-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Fri, 21 Jun 2013 16:42:29 +0530")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D3CED2AC47;
+	Fri, 21 Jun 2013 22:28:41 +0000 (UTC)
+In-Reply-To: <1371813160-4200-7-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Fri, 21 Jun 2013 16:42:30 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AADCA304-DAC1-11E2-9AF0-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: ED4466AA-DAC1-11E2-977E-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228664>
 
 Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> The first line of the function checks that the remote-name contains a
-> slash ('/'), and sets the "slash" variable accordingly.  The only caller
-> of read_branches_file() is remote_get_1(); the calling codepath is
-> guarded by valid_remote_nick(), which checks that the remote does not
-> contain a slash.  Therefore, the "slash" variable can never be set:
-> remove the dead code that assumes otherwise.
+> Add one more test similar to "migrate a remote from named file in
+> $GIT_DIR/branches" to check that a url with a # can be used to specify
+> the branch name (as opposed to the constant "master").
+>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  t/t5505-remote.sh | 23 +++++++++++++++++++----
+>  1 file changed, 19 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+> index fd0a81e..93e11c8 100755
+> --- a/t/t5505-remote.sh
+> +++ b/t/t5505-remote.sh
+> @@ -702,27 +702,42 @@ test_expect_success 'migrate a remote from named file in $GIT_DIR/branches' '
+>  	)
+>  '
+>  
+> -test_expect_success 'remote prune to cause a dangling symref' '
+> +test_expect_success 'migrate a remote from named file in $GIT_DIR/branches (2)' '
+>  	git clone one seven &&
+> +	origin_url=$(pwd)/one &&
 
-This is extremely interesting.
+The variable assigned here does not seem to get used.  Is this needed?
 
-As far as I can tell, that valid-remote-nick was done in df93e33c
-(Validate nicknames of remote branches to prohibit confusing ones,
-2008-02-15), and back in that version, the codepath and the feature
-that wants to see a slash and do magical things, which is described
-by this comment you are removing:
-
-> -	/*
-> -	 * With "slash", e.g. "git fetch jgarzik/netdev-2.6" when
-> -	 * reading from $GIT_DIR/branches/jgarzik fetches "HEAD" from
-> -	 * the partial URL obtained from the branches file plus
-> -	 * "/netdev-2.6" and does not store it in any tracking ref.
-> -	 * #branch specifier in the file is ignored.
-
-did exist (see "git show df93e33c:remote.c").  It expects to see
-"jgarzik/netdev-2.6" in remote->name, grabs the leading "jgarzik"
-part to form ".git/branches/jgarzik" to open and read from, and then
-appends the remainder "/netdev-2.6" to the "partial URL" it read
-to come up with the final URL.
-
-So it appears that back then (and througout to today), nobody uses
-that "partial URL" feature which is specific (and was a rather nice
-invention/legacy by Cogito) to .git/branches file.
-
-Reminds me of the strategy to deprecate functionality in X (cf. 
-http://lwn.net/Articles/536520/) ;-)
+> +	(
+> +		cd seven &&
+> +		git remote rm origin &&
+> +		echo "quux#foom" > .git/branches/origin &&
+> +		git remote rename origin origin &&
+> +		test_path_is_missing .git/branches/origin &&
+> +		test "$(git config remote.origin.url)" = "quux" &&
+> +		test "$(git config remote.origin.fetch)" = "refs/heads/foom:refs/heads/origin"
+> +		test "$(git config remote.origin.push)" = "HEAD:refs/heads/foom"
+> +	)
+> +'
+> +
+> +test_expect_success 'remote prune to cause a dangling symref' '
+> +	git clone one eight &&
+>  	(
+>  		cd one &&
+>  		git checkout side2 &&
+>  		git branch -D master
+>  	) &&
+>  	(
+> -		cd seven &&
+> +		cd eight &&
+>  		git remote prune origin
+>  	) >err 2>&1 &&
+>  	test_i18ngrep "has become dangling" err &&
+>  
+>  	: And the dangling symref will not cause other annoying errors &&
+>  	(
+> -		cd seven &&
+> +		cd eight &&
+>  		git branch -a
+>  	) 2>err &&
+>  	! grep "points nowhere" err &&
+>  	(
+> -		cd seven &&
+> +		cd eight &&
+>  		test_must_fail git branch nomore origin
+>  	) 2>err &&
+>  	grep "dangling symref" err
