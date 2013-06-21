@@ -1,83 +1,68 @@
-From: Dave Abrahams <dave@boostpro.com>
-Subject: fast-import bug?
-Date: Fri, 21 Jun 2013 02:21:47 -0700
-Message-ID: <m2zjuj2504.fsf@cube.gateway.2wire.net>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: [PATCH 0/3] Handling overlapping refspecs slightly smarter
+Date: Fri, 21 Jun 2013 12:04:08 +0200
+Message-ID: <1371809051-29988-1-git-send-email-dennis@kaarsemaker.net>
+References: <1371763424.17896.32.camel@localhost>
+Cc: Dennis Kaarsemaker <dennis@kaarsemaker.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 21 11:22:00 2013
+X-From: git-owner@vger.kernel.org Fri Jun 21 12:04:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UpxXb-0004Gz-Ox
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 11:22:00 +0200
+	id 1UpyCb-0005XH-GV
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 12:04:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750999Ab3FUJVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 05:21:55 -0400
-Received: from mail-gh0-f182.google.com ([209.85.160.182]:44671 "EHLO
-	mail-gh0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750728Ab3FUJVy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 05:21:54 -0400
-Received: by mail-gh0-f182.google.com with SMTP id z15so1974492ghb.41
-        for <git@vger.kernel.org>; Fri, 21 Jun 2013 02:21:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:subject:date:message-id:user-agent:mime-version
-         :content-type:x-gm-message-state;
-        bh=jdMxmCfUtuUx7MOM0RLqX0tJEJBx50XJsUw0tPqsbd4=;
-        b=mLDmUe21Q51SDxj/iFmCyfKOxmPY2QEcFb0SCgrYSYAE0m2yrdoXsoUOQ52V0Txm+L
-         +X907AKVgoNYfabct3u1tIYx3pQL5r39PBjrJ0ILwpjfFRzWPo4CwyANM377I405vxUq
-         QllBx24u0NLYjiViesqUJN2ryiP/ZTRM5Du+dPzbb9jmybcRBnTTRRY9daOAH97g1G30
-         OyuTJOvJsVA2ubs/rbGoO1hWGfndmfgy+rQIVsCzB6A8G4klWYPxViGB5W9hwQdGi/yu
-         4jbAKmW5pjVY7zx/wcdzZ7J4p3G51A+pP4o/F5nL1i+ALVqoNl7Dc9rizTPXCx3xJTv6
-         MNRw==
-X-Received: by 10.236.151.129 with SMTP id b1mr6949771yhk.253.1371806514036;
-        Fri, 21 Jun 2013 02:21:54 -0700 (PDT)
-Received: from pluto.boostpro.com (107-219-149-247.lightspeed.sntcca.sbcglobal.net. [107.219.149.247])
-        by mx.google.com with ESMTPSA id l39sm6894513yhn.26.2013.06.21.02.21.52
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 21 Jun 2013 02:21:53 -0700 (PDT)
-Received: by pluto.boostpro.com (Postfix, from userid 501)
-	id CC37C250707C; Fri, 21 Jun 2013 02:21:47 -0700 (PDT)
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.2.93 (darwin)
-X-Gm-Message-State: ALoCoQkqqwN9u0+ta6PtM6iZT6jcY1hNkQ4IG2Q/oDwCGL2hM9vK+rftdkxj+STO7XQlrgpA0ssz
+	id S1751100Ab3FUKEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 06:04:16 -0400
+Received: from cpsmtpb-ews05.kpnxchange.com ([213.75.39.8]:59335 "EHLO
+	cpsmtpb-ews05.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750725Ab3FUKEQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Jun 2013 06:04:16 -0400
+Received: from cpsps-ews24.kpnxchange.com ([10.94.84.190]) by cpsmtpb-ews05.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514);
+	 Fri, 21 Jun 2013 12:04:13 +0200
+Received: from CPSMTPM-TLF103.kpnxchange.com ([195.121.3.6]) by cpsps-ews24.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514);
+	 Fri, 21 Jun 2013 12:04:13 +0200
+Received: from kaarsemaker.net ([82.168.11.8]) by CPSMTPM-TLF103.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514);
+	 Fri, 21 Jun 2013 12:04:12 +0200
+Received: by kaarsemaker.net (sSMTP sendmail emulation); Fri, 21 Jun 2013 12:04:12 +0200
+X-Mailer: git-send-email 1.8.3.1-619-gbec0aa7
+In-Reply-To: <1371763424.17896.32.camel@localhost>
+X-OriginalArrivalTime: 21 Jun 2013 10:04:12.0880 (UTC) FILETIME=[AE35BD00:01CE6E66]
+X-RcptDomain: vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228587>
+
+1/3 should be pretty sane, just adding a warning in documentation and 'git
+remote add' about overlapping refspecs.
+
+2/3 only makes sense if 3/3 is accepted, as it's a test for that change.
+
+3/3 I'm not 100% sure about, though the approach feels reasonably ok. It changes
+get_stale_heads to also detect overlapping refspecs and abort any prune action
+if it finds them. What I'm not sure about is whether this is the right place to
+do it, or to do it in the callers of get_stale_heads and exit(1) in this
+situation.
+
+Both 1/3 and 3/3 ignore exactly matching refspecs, as that's a supported thing
+already, another test in t5505 broke before I made both ignore exactly matching
+refspecs.
 
 
-The docs for fast-import seem to imply that I can use "ls" to get the
-SHA1 of a commit for which I have a mark:
+Dennis Kaarsemaker (3):
+  remote: Add warnings about mixin --mirror and other remotes
+  remote: Add test for prune and mixed --mirror and normal remotes
+  remote: don't prune when detecting overlapping refspecs
 
-       Reading from a named tree
-           The <dataref> can be a mark reference (:<idnum>) or the full 40-byte
-           SHA-1 of a Git tag, commit, or tree object, preexisting or waiting to
-           be written. The path is relative to the top level of the tree named by
-           <dataref>.
-
-                       'ls' SP <dataref> SP <path> LF
-
-       See filemodify above for a detailed description of <path>.
-
-       Output uses the same format as git ls-tree <tree> -- <path>:
-
-           <mode> SP ('blob' | 'tree' | 'commit') SP <dataref> HT <path> LF
-
-       The <dataref> represents the blob, tree, or commit object at <path> and
-                                                   ^^^^^^
-       can be used in later cat-blob, filemodify, or ls commands.
-
-but I can't get it to work.  It's not entirely clear it's supposed to
-work.  What path would I pass?  Passing an empty path simply causes git
-to report "missing ".
-
-TIA,
-Dave
+ Documentation/git-remote.txt |  6 +++++-
+ builtin/remote.c             | 17 +++++++++++++++++
+ remote.c                     | 23 +++++++++++++++++++++++
+ t/t5505-remote.sh            |  9 +++++++++
+ 4 files changed, 54 insertions(+), 1 deletion(-)
 
 -- 
-Dave Abrahams
+1.8.3.1-619-gbec0aa7
