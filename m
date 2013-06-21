@@ -1,87 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/16] Cleanup {branches,remotes}-file cruft
-Date: Fri, 21 Jun 2013 09:33:55 -0700
-Message-ID: <7v38sbo230.fsf@alter.siamese.dyndns.org>
-References: <1371813160-4200-1-git-send-email-artagnon@gmail.com>
-	<7vsj0bo7pr.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [HELP] Corrupted repository
+Date: Fri, 21 Jun 2013 22:14:06 +0530
+Message-ID: <CALkWK0mTZqtGFp-BW9XBjX4Cm2hCZ1=P5M0a4cMBuE0v__LpZw@mail.gmail.com>
+References: <CALkWK0mQj+x3bxbxWKuwpeMj8E8bfvyK-c2bAWna6a9Xe=nBOQ@mail.gmail.com>
+ <7v7ghno2lz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, akpm@linux-foundation.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 21 18:34:10 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 21 18:44:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uq4Hl-00043J-K6
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 18:34:05 +0200
+	id 1Uq4SB-00086V-A5
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 18:44:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423370Ab3FUQd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 12:33:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64141 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423252Ab3FUQd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 12:33:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 348092A93E;
-	Fri, 21 Jun 2013 16:33:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4eriPbAfX96C/93zeHXL/CW/sXU=; b=GzbhIK
-	Dpj/AmlU4bXQ0TRY3OZ2SZW/9etd774oowUhpu/VIGnezG3n5tAuqIR7s4ODmFpl
-	NWsqLy6w2mtZpRzozWt7DZ4QHVp4X2HRgksz63sKUeiwthF78wzD06eN6WXWK3DC
-	MUu0NzdM4ri6aT2/7+1I/8Wq3uYhRE1boYEWs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H2ujglaJWKRA2gGy/4lg/bx11gBStZS3
-	SFJv8PJnpk+nURS3zG+LyGdXDuS8L+u8SRiYJGSJYxPAaLiU0rhQWmaDO2kklkjW
-	s1d0Cj2lW35VfOaJxC8F0PB4MhMzuULtHw+thqCAj8fFfIdUVZlzxzQ9VeSnYgkY
-	WN9Cu3dVrk8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28FA82A93C;
-	Fri, 21 Jun 2013 16:33:57 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8DBBD2A935;
-	Fri, 21 Jun 2013 16:33:56 +0000 (UTC)
-In-Reply-To: <7vsj0bo7pr.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 21 Jun 2013 07:32:16 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5E3F64A4-DA90-11E2-BA72-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1161613Ab3FUQor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 12:44:47 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:55798 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161585Ab3FUQoq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 12:44:46 -0400
+Received: by mail-ie0-f177.google.com with SMTP id aq17so20052502iec.36
+        for <git@vger.kernel.org>; Fri, 21 Jun 2013 09:44:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=UsdfCZAygFclr0LL7BHFvhLgfSRpSANy12kjFFb7t70=;
+        b=CZst0Zst9fa79tVkRJf52C/BpSIjoV4qJ/SB3Q5Yf0sjX7+ejaPufNv6rCI6m4Uo1i
+         JD9wNNK+BrDxMsF/daz9ZAG0ThHCwq+r/91xxp/C3d4f7QpS6xxZeRqsfa2FsMWMT+9I
+         xF11+ySnfYrcwTimHeB9NiePp0LLaI4StjKkgYIryPCSLwcDX1ZvPdLbAZAtSy85BrJH
+         Hr+Y5hj8BPgSddB+0WZ7/+iXdcctuLnBnkZrRFboLnr8/O9Q1heOOHJBmETMdXsZEvBU
+         0jLko0FBjeMVxD+f0GKCV9gwYODTjSt4+M8yvcldgQGvF7ETQItYyEUhkLCij8pNdtu4
+         jCzQ==
+X-Received: by 10.42.190.74 with SMTP id dh10mr6515614icb.35.1371833086364;
+ Fri, 21 Jun 2013 09:44:46 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Fri, 21 Jun 2013 09:44:06 -0700 (PDT)
+In-Reply-To: <7v7ghno2lz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228630>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano wrote:
+>>   $ ~/src/git
+>>   error: object file
+>> .git/objects/8e/6a6dda24b017915449897fcc1353a9b848fd2f is empty
+>>   error: object file
+>> .git/objects/8e/6a6dda24b017915449897fcc1353a9b848fd2f is empty
+>>   fatal: loose object 8e6a6dda24b017915449897fcc1353a9b848fd2f (stored
+>> in .git/objects/8e/6a6dda24b017915449897fcc1353a9b848fd2f) is corrupt
+>
+> So fsync() and close() thought that the filesystem stored this loose
+> object safely, but it turns out that the data is not on disk.
 
-> I myself thought that replacing the established work process of
-> these people to the one that instead uses "git config" should be
-> simple enough even back then, and in the longer term, these old
-> mechanisms will become disused so that we can remove them, but
-> deciding _when_ is the good time is not a no-brainer at all.
+Where should I start digging if I want to fix this?  Actually you just
+need to tell me how to build reduced-case corruptions to test: I can
+trace and figure out the rest.
 
-I do not fundamentally have a strong objection against deprecation
-of these older mechanisms, if the removal is aimed to coincide with
-a major version bump, like Git 2.0.
+>>   artagnon|remote-cruft*+:~/src/git$ git prune
+>>   artagnon|remote-cruft*+:~/src/git$ git status
+>>   fatal: bad object HEAD
+>>   fatal: bad object HEAD
+>
+> And the value in the HEAD was???
 
-It however needs to be very well advertised, with clear instruction
-to help migrate people's workflow and scripts to the mechanism that
-will survive the purge (i.e. "git config").
+ref: refs/heads/remote-cruft.  That's why I included my prompt :)
 
-We do not want to repeat the "We have advertised that 'git-foo' will
-stop working at v1.6.0 for 6 months since v1.5.4 release notes, but
-people complained loudly only after it happend." fiasco again for
-something "minor" like this.
+>>   artagnon|remote-cruft*+:~/src/git$ git symbolic-ref HEAD refs/heads/master
+>>   artagnon|master*+=:~/src/git$ git status
+>>   ## master
+>>   MM Documentation/git-ls-remote.txt
+>>   MM remote.c
+>>   MM t/t5505-remote.sh
+>>   MM t/t5510-fetch.sh
+>>   MM t/t5515-fetch-merge-logic.sh
+>>   MM t/t5516-fetch-push.sh
+>>   ?? lib/
+>>   ?? outgoing/
+>>
+>> That status is completely bogus, by the way.
+>
+> ... which may suggest that your index file may have been corrupted
+> on the filesystem.
 
-I say "minor" only because I think the cost of keeping these old
-mechanisms alive is very low (if it is a heavy burden on the
-maintenance, please tell me and how).
+Yeah, my question pertains to why is the index half-corrupted.  Is
+there no checksum to say "index corrupted; do not display bogus
+nonsense"?
 
-So from my point of view, a proposal to remove them has an almost no
-benefit vs potentially very high cost of having to break many people
-who are silently happily using them; not a very good benefit/cost
-ratio.
+>>   artagnon|master*+=:~/src/git$ git checkout remote-cruft
+>>   fatal: reference is not a tree: remote-cruft
+>>   artagnon|master=:~/src/git$ git reflog
+>>   21ff915 HEAD@{10 minutes ago}: rebase -i (finish): returning to
+>> refs/heads/remote-cruft
+>>
+>> What happened to the rest of my reflog?!
+>
+> On the filesystem known to not record the last consistent state of
+> the repository, the answer to that question may be rather obvious,
+> no?
+
+I didn't understand.  What does .git/logs/HEAD have to do with any of
+this?  Why is it truncated?
+
+>>   artagnon|master=:~/src/git$ git branch -D remote-cruft
+>>   error: Couldn't look up commit object for 'refs/heads/remote-cruft'
+>
+> The command would want to report what was at the tip, so it is
+> understandable it may want to look up that commit before removing
+> the ref.
+
+I would have expected it to display a warning and remove the ref
+anyway.  Or error out, and override with a force-flag?
+
+>> Fine, let's fetch.
+>
+> Why?
+>
+> "fetch" walks the ancestry graph on both ends to minimize transfers.
+> It's not something you would expect to work when you know refs at
+> your end does not even record what you do have.  It _may_ appear to
+> work if your refs are intact but you are missing objects, as they
+> will not be transferred again from the good copy if you let your
+> repository's ref claim that you have _all_ objects behind it when
+> you actually don't.
+
+Right.  I expected it to figure out that I have a broken history and
+fetch everything (which is what happened the second time, no?).
+
+> What would have been a better starting point to untangle is to make
+> a separate clone, pretending as if this repository did not even
+> exist, and copy the resulting packfile into this repository.  That
+> would at least give you a known good copies of objects that you
+> already have pushed out.
+
+Yeah, I deliberately avoided doing that: apart from the config and
+refs, I had no real unpushed work in ~/src/git anyway (I push _very_
+frequently, which explains my "resolve HEAD early in current" patch).
+The most important part of what I did was running unpack-objects by
+hand: that fixed everything.  I shouldn't have had to run that by hand
+though: why isn't there an in-built way to unpack everything, remove
+corruptions, and repack the good stuff?
+
+> And the next step would have been (without doing any of the above
+> "remove this branch, recreate this one anew") to compare the tips
+> of refs in this broken repository and the clone.  The same ones you
+> can trust, and different ones you dig further.
+
+Right.  I didn't have local data in this case, so I didn't bother.
+
+>> Was I being stupid, or is fixing corrupted repositories really this
+>> non-trivial?  Comments appreciated.
+>
+> I think "Let's fetch first" was the step that took you in a wrong
+> direction that requires unnecessary work.
+
+This was mainly a learning exercise for me: I wanted to see how good
+git was at working with corrupted repositories.  I did my surgery
+fairly quickly, and avoided large network transfers (I have a slow
+connection).
