@@ -1,79 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t/t5800-remote-testpy: skip all tests if not built
-Date: Fri, 21 Jun 2013 01:31:12 -0400
-Message-ID: <20130621053112.GA9634@sigill.intra.peff.net>
-References: <1371586006-16289-1-git-send-email-artagnon@gmail.com>
- <7vip1b40zb.fsf@alter.siamese.dyndns.org>
- <CALkWK0=6ot9ZXEyMmO1ZtEXPi5H1JXXvG5j6yvBeE56H9zQBwg@mail.gmail.com>
+From: Arnaud Fontaine <arnau@debian.org>
+Subject: [PATCH] Do not ignore merge options in interactive rebase
+Date: Fri, 21 Jun 2013 14:23:48 +0900
+Organization: Debian
+Message-ID: <87bo70dokb.fsf@duckcorp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 21 07:31:23 2013
+Content-Type: text/plain
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 21 07:34:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UptwQ-000391-Hi
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 07:31:22 +0200
+	id 1Uptz1-0006wu-J4
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 07:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935571Ab3FUFbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 01:31:18 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35208 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935551Ab3FUFbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 01:31:17 -0400
-Received: (qmail 15882 invoked by uid 102); 21 Jun 2013 05:32:16 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 21 Jun 2013 00:32:16 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Jun 2013 01:31:12 -0400
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=6ot9ZXEyMmO1ZtEXPi5H1JXXvG5j6yvBeE56H9zQBwg@mail.gmail.com>
+	id S1161086Ab3FUFd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 01:33:58 -0400
+Received: from Orfeo.duckcorp.org ([193.17.192.211]:53565 "EHLO
+	mx1.duckcorp.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935551Ab3FUFd5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 01:33:57 -0400
+X-Greylist: delayed 600 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Jun 2013 01:33:57 EDT
+Received: from localhost (ip6-localhost [IPv6:::1])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mx1.duckcorp.org (Postfix) with ESMTPSA id 3bc7bs2Tsxz2J59;
+	Fri, 21 Jun 2013 07:23:53 +0200 (CEST)
+X-URL: http://www.debian.org
+X-Operating-System: Debian GNU/Linux
+X-GnuPG-KeyID: 5E3619D3
+X-PGP-Fingerprint: D792 B8A5 A567 B001 C342  2613 BDF2 A220 5E36 19D3
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228575>
 
-On Wed, Jun 19, 2013 at 02:05:06AM +0530, Ramkumar Ramachandra wrote:
+Merge strategy and its options can be specified in `git rebase`,
+but with `--interactive`, they were completely ignored.
 
-> Junio C Hamano wrote:
-> > Sounds like making "make test" build it is a more correct approach,
-> > at least to me.  What am I missing?
-> 
-> How exactly?  I'm not exactly competent in make, but this is what I
-> understood from what you said (and it's obviously wrong):
-> 
-> diff --git a/Makefile b/Makefile
-> index 03524d0..da91937 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -580,6 +580,7 @@ TEST_PROGRAMS_NEED_X += test-svn-fe
->  TEST_PROGRAMS_NEED_X += test-wildmatch
-> 
->  TEST_PROGRAMS = $(patsubst %,%$X,$(TEST_PROGRAMS_NEED_X))
-> +TEST_PROGRAMS += git-remote-testpy
+Signed-off-by: Arnaud Fontaine <arnau@debian.org>
+---
+ git-rebase--interactive.sh    | 11 ++++++++++-
+ t/t3404-rebase-interactive.sh | 11 +++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
+ mode change 100644 => 100755 git-rebase--interactive.sh
 
-I'm confused. git-remote-testpy is already mentioned in SCRIPT_PYTHON,
-which means it should be built by "make" or "make all", as well as "make
-test" (which depends on "all"). I just double checked that this is the
-case with a fresh clone of master. NO_INSTALL should not have an impact.
-
-But upon looking at the Makefile more, I am doubly confused. We build
-$(ALL_PROGRAMS), which contains $(SCRIPTS), which contains
-$(SCRIPT_PYTHON_INS), the set of _installed_ python scripts. Which
-doesn't make sense; we would want to build all of the generated scripts,
-and only care about the installed ones for the "install" target.
-
-Ah, I see. We later add back in $(NO_INSTALL) as dependencies of "all".
-That is perhaps not the most direct way of doing it, but I suspect it
-was done to keep the meaning of "$(ALL_PROGRAMS)" the same before and
-after.
-
-So I do not see any problem with the current Makefile. Running "make" or
-"make test" should let t5800 pass. Can you describe how you are
-triggering the issue in more detail?
-
--Peff
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+old mode 100644
+new mode 100755
+index f953d8d..c157fdf
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -239,7 +239,16 @@ pick_one () {
+ 
+ 	test -d "$rewritten" &&
+ 		pick_one_preserving_merges "$@" && return
+-	output git cherry-pick $empty_args $ff "$@"
++
++	if test -n "$do_merge"
++	then
++		test -z "$strategy" && strategy=recursive
++		output git cherry-pick --strategy=$strategy \
++			$(echo $strategy_opts | sed "s/'--\([^']*\)'/-X\1/g") \
++			$empty_args $ff "$@"
++	else
++		output git cherry-pick $empty_args $ff "$@"
++	fi
+ }
+ 
+ pick_one_preserving_merges () {
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 79e8d3c..8b6a36f 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -947,4 +947,15 @@ test_expect_success 'rebase -i respects core.commentchar' '
+ 	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
+ '
+ 
++test_expect_success 'rebase -i with --strategy and -X' '
++	git checkout -b conflict-merge-use-theirs conflict-branch &&
++	git reset --hard HEAD^ &&
++	echo five >conflict &&
++	echo Z >file1 &&
++	git commit -a -m "one file conflict" &&
++	EDITOR=true git rebase -i --strategy=recursive -Xours conflict-branch &&
++	test $(git show conflict-branch:conflict) = $(cat conflict) &&
++	test $(cat file1) = Z
++'
++
+ test_done
+-- 
+1.8.3.GIT
