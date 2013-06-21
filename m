@@ -1,72 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] web--browse: support /usr/bin/cygstart on Cygwin
-Date: Fri, 21 Jun 2013 09:06:18 -0700
-Message-ID: <7vbo6zo3d1.fsf@alter.siamese.dyndns.org>
-References: <1371799472-11564-1-git-send-email-yselkowitz@users.sourceforge.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2013, #07; Thu, 20)
+Date: Fri, 21 Jun 2013 21:37:47 +0530
+Message-ID: <CALkWK0kDDRicX9VmcRgG9daXVi6W-zGNt=x6ruy7X5MhrHOZbQ@mail.gmail.com>
+References: <7v1u7woydw.fsf@alter.siamese.dyndns.org> <CALkWK0=1e5ospzJBqaz9iLwSiOoTy_+vTxwVMvW-H7kynfkbBg@mail.gmail.com>
+ <7vk3lno40x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: "Yaakov \(Cygwin\/X\)" <yselkowitz@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Jun 21 18:06:29 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 21 18:08:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uq3r2-00053r-9U
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 18:06:28 +0200
+	id 1Uq3t2-0007dn-4V
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 18:08:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161581Ab3FUQGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 12:06:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59288 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161419Ab3FUQGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 12:06:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CB4E29AD3;
-	Fri, 21 Jun 2013 16:06:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MotpwTb5A//UZhatmVdRDVXO4Qc=; b=BFEMWk
-	iXKgHLOWjj+BRBRG/1D6hbKsgcuPxKRZX9U8kQp58KrQtiN5wWcJp6hMOYBITB33
-	Z2D65fMuWvPbnEoFos4Bx/D9hUbqyn1BL6PJj+5fr3JSo6RKq6vR54n8laJiBcV4
-	RgtghUl2GLPLtqfvoe4T7hFQ03tNNf0B6ZITc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mTiDRC+gIk8ohAxh1E1ValecfbIdKhDN
-	VFwuPWXKc9YKEu/AbRfiTZztyA04avFoV00tjule0asBjHuTc8KRHEYUOEcx4/kB
-	MaNK4lPkaGku2Mf7NXJf4XZGnP2ovOoFZzjKEsf1A5dcTFywoDacCQ6Iq7SIayFr
-	PXap4HOaddg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7130A29AD2;
-	Fri, 21 Jun 2013 16:06:20 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E9F0929AD0;
-	Fri, 21 Jun 2013 16:06:19 +0000 (UTC)
-In-Reply-To: <1371799472-11564-1-git-send-email-yselkowitz@users.sourceforge.net>
-	(Yaakov's message of "Fri, 21 Jun 2013 02:24:32 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 82D2E560-DA8C-11E2-95BD-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1422915Ab3FUQI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 12:08:28 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:48983 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161432Ab3FUQI2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 12:08:28 -0400
+Received: by mail-ie0-f181.google.com with SMTP id x12so18664366ief.26
+        for <git@vger.kernel.org>; Fri, 21 Jun 2013 09:08:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=VOBMAVRRTU1YO6+4NK78HQRIOY8PJsC/z+DRnXpkGo4=;
+        b=ay1/VbkcnP6q5Lce8EgICGXrJjGKe2CzH03j5/xsxWUSeEtX+tbibAp5WNRuBT77b+
+         l1Q/VqqGJ6qBHOViCCj/9JqywecHiVUvz1nRAd6h/onlQllH6hcK2fzaZGafFYY7BDzA
+         +baf/nYrQeLT9eLQKA1mGurLUWwUgsT9qTZ7KFwwA18YsbPYb+/xB4iGCkSpXARVtgqX
+         clNDyfQqnTnpnOH8VL8f2rYM/r4UucsF8y1Hm7L2Pt5AoRF6tFTKMeDsv0b3JxVmFMBG
+         fHVVfKrcqgRr0xCF/bugZI1iFoD5onD3wGF+vi26cZUF5xZtmocd2w5plrUjwaK9s1D0
+         gj4g==
+X-Received: by 10.50.87.71 with SMTP id v7mr2869033igz.29.1371830907579; Fri,
+ 21 Jun 2013 09:08:27 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Fri, 21 Jun 2013 09:07:47 -0700 (PDT)
+In-Reply-To: <7vk3lno40x.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228624>
 
-"Yaakov (Cygwin/X)" <yselkowitz@users.sourceforge.net> writes:
-
-> From: Yaakov Selkowitz <yselkowitz@users.sourceforge.net>
+Junio C Hamano wrote:
+>> - rr/describe-contains-all at  $gmane/228278.
 >
-> While both GUI and console Cygwin browsers do exist, anecdotal evidence
-> suggests most users rely on their native Windows browser.  cygstart,
-> which is a long-standing part of the base Cygwin installation, will
-> cause the page to be opened in the default Windows browser (the one
-> registered to open .html files).
+> This may overlap with a topic in flight (but I didn't look at it).
+
+Let me know if I can do anything to make it easier for you.  I'm quite
+excited about this one.
+
+>> - rr/mixed-case-aliases at $gmane/227959.
 >
-> Signed-off-by: Yaakov Selkowitz <yselkowitz@users.sourceforge.net>
+> Personally, not just uninterested but moderately against.
 
-Will queue and wait for somebody from Cygwin land to comment.
+Okay, but I'd like an explanation.
 
-Thanks.
+> I do not think I am the most qualified reviewer in some of the areas
+> they touch, I do not want to be the only one who is reviewing
+> patches here, and I am personally not very much interested in seeing
+> these topics in Git, so I've been waiting if somebody else shows
+> interest and starts reviewing.
+>
+> Which is not happening, so perhaps nobody is interested in them?
+
+I don't know what happened.  I've noticed a significant decline in
+list-reviews in general: a lot of good code on the list hasn't been
+reviewed.  Everyone must share the burden of review, and I try to do
+my bit.
