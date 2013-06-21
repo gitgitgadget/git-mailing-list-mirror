@@ -1,67 +1,94 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [HELP] Corrupted repository
-Date: Sat, 22 Jun 2013 00:45:47 +0530
-Message-ID: <CALkWK0kLmdbooWUw-x+TBk-fB_XDFQzyu6Q8yb1Prsgi3FD67A@mail.gmail.com>
-References: <CALkWK0mQj+x3bxbxWKuwpeMj8E8bfvyK-c2bAWna6a9Xe=nBOQ@mail.gmail.com>
- <7v7ghno2lz.fsf@alter.siamese.dyndns.org> <CALkWK0mTZqtGFp-BW9XBjX4Cm2hCZ1=P5M0a4cMBuE0v__LpZw@mail.gmail.com>
- <7vzjujl267.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jun 2013, #07; Thu, 20)
+Date: Fri, 21 Jun 2013 13:31:42 -0700
+Message-ID: <7vvc57kxxt.fsf@alter.siamese.dyndns.org>
+References: <7v1u7woydw.fsf@alter.siamese.dyndns.org>
+	<CALkWK0=1e5ospzJBqaz9iLwSiOoTy_+vTxwVMvW-H7kynfkbBg@mail.gmail.com>
+	<7vk3lno40x.fsf@alter.siamese.dyndns.org>
+	<CALkWK0kDDRicX9VmcRgG9daXVi6W-zGNt=x6ruy7X5MhrHOZbQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 21 21:16:35 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 21 22:31:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uq6oz-0005Uo-RH
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 21:16:34 +0200
+	id 1Uq7zu-00014w-3x
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 22:31:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423711Ab3FUTQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 15:16:29 -0400
-Received: from mail-bk0-f42.google.com ([209.85.214.42]:35326 "EHLO
-	mail-bk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423707Ab3FUTQ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 15:16:28 -0400
-Received: by mail-bk0-f42.google.com with SMTP id jk13so3575990bkc.29
-        for <git@vger.kernel.org>; Fri, 21 Jun 2013 12:16:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Xqa0Q0gK4cCZ8BXS/XWx+RJIQBF44qU0CVCYjS1QI14=;
-        b=WyGF/IBjT9YMnm+F6DRcjrnVrp5RFeawQJm9Xrm05OwsaB1/0ulkf+oLWpjxA5a1sj
-         tyzodgPKsVsjyzIIbqjZEkKRhchuMqyc/5RaSJ5hPXAl+iEpAgIbcvqxjNg15N2mWpr5
-         QVlUdDhWSS9ih4Dojex3e38fa0ErYu1p3gyevS/AIsUZZuZXxi1lxfG7OzeICEFMkKNA
-         C+k1crHc6sjeHALv6LQU6pakO9EH4/+Qv4P04MLnLfp6qDJccS71jWby91VtIFdKdG6r
-         oMNQNksemY176KZF8HkjlmXMc4irE63B0RExNlxtJukvKUurTU/scVh/pmb+Z8ZlAgv4
-         HAQA==
-X-Received: by 10.204.235.197 with SMTP id kh5mr2014679bkb.172.1371842187280;
- Fri, 21 Jun 2013 12:16:27 -0700 (PDT)
-Received: by 10.204.186.77 with HTTP; Fri, 21 Jun 2013 12:15:47 -0700 (PDT)
-In-Reply-To: <7vzjujl267.fsf@alter.siamese.dyndns.org>
+	id S1946039Ab3FUUbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 16:31:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55668 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1945951Ab3FUUbp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 16:31:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 152D32A045;
+	Fri, 21 Jun 2013 20:31:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rUG7yF1gzCUt963CJDZJMXX9wO8=; b=u0s15c
+	gPdBupuzKbcaIGl8FlK5yIedYHKMDvkFv0iLS6CyksEk/HifXIcEmCi2b24PJ9G0
+	SqaHXb971I916ikMe3rBZ1RirgWJXbjoVHrSP5unkg59lrUhjgdpb8xv8Ls2QH+L
+	c36gQzFyJvsMOWIz25ljpJM1/tkyRwv4HSMUE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VQs118IWA9BcsJHFyFDekeDn1S5mFWsJ
+	0t7mrZ2U+wa4jkrKv0+PONLp+knAiefC+rxPhNkHHRXYbvWzhULk/zQQpwxwzgee
+	u0XSDvT7LusiYzuCRaNrc7zSyzG65rK96IYY4PlhPYVmmb7+jxFNTDGh8j2olNUL
+	CS8YGeCS55k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C1A82A044;
+	Fri, 21 Jun 2013 20:31:45 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 67CC32A040;
+	Fri, 21 Jun 2013 20:31:44 +0000 (UTC)
+In-Reply-To: <CALkWK0kDDRicX9VmcRgG9daXVi6W-zGNt=x6ruy7X5MhrHOZbQ@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Fri, 21 Jun 2013 21:37:47 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 968B8C04-DAB1-11E2-A2A2-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228656>
 
-Junio C Hamano wrote:
-> A tl;dr is that we _trust_ our refs and everything reachable from
-> them has to be complete.  If that is not the case, things will not
-> work, and it is not a priority to add workarounds in the normal
-> codepath to slow things down.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Makes sense.
+> Junio C Hamano wrote:
+>>> - rr/describe-contains-all at  $gmane/228278.
+>>
+>> This may overlap with a topic in flight (but I didn't look at it).
+>
+> Let me know if I can do anything to make it easier for you.  I'm quite
+> excited about this one.
+>
+>>> - rr/mixed-case-aliases at $gmane/227959.
+>>
+>> Personally, not just uninterested but moderately against.
+>
+> Okay, but I'd like an explanation.
 
-> That does not forbid an addition of "git recover-corrupted-repo"
-> command, whose "assume everything might be broken" code is not
-> shared with the fastpath of other commands.
+Because the implementation is too ugly.
 
-I'm not looking for a kitchen-sink command: I'm looking for a
-well-documented toolset to precisely fix corruptions.  We have some
-corruption tests in our testsuite already: I think I'll start digging
-there.
+The damage to the more generic config parser codepath is a real
+downside and the benefit from the little "feature" does not seem to
+justify it.
 
-Thanks.
+I would however can imagine an alternative implementation which
+might be more palatable. It may go like this:
+
+	[alias "lgF"]
+		command = "log --oneline --boundary --first-parent"
+                help = "show the first parent chain, one line per commit"
+		completion = log
+
+so that not just alias.c code can take notice of alias.lgF.command
+to expand it, but we can later extend it to help "git help lgF" and
+bash/zsh completion (i.e. they would learn "lgF parameter would
+complete in a way similar to 'log'" from alias.lgF.completion).
