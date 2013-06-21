@@ -1,65 +1,67 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 00/16] Cleanup {branches,remotes}-file cruft
-Date: Sat, 22 Jun 2013 00:39:28 +0530
-Message-ID: <CALkWK0mHyOU35NmZPf8x-f4FduZ9Mt=Uyqa8t9PvVmRiq+RcUA@mail.gmail.com>
-References: <1371813160-4200-1-git-send-email-artagnon@gmail.com>
- <7vsj0bo7pr.fsf@alter.siamese.dyndns.org> <7v38sbo230.fsf@alter.siamese.dyndns.org>
+Subject: Re: [HELP] Corrupted repository
+Date: Sat, 22 Jun 2013 00:45:47 +0530
+Message-ID: <CALkWK0kLmdbooWUw-x+TBk-fB_XDFQzyu6Q8yb1Prsgi3FD67A@mail.gmail.com>
+References: <CALkWK0mQj+x3bxbxWKuwpeMj8E8bfvyK-c2bAWna6a9Xe=nBOQ@mail.gmail.com>
+ <7v7ghno2lz.fsf@alter.siamese.dyndns.org> <CALkWK0mTZqtGFp-BW9XBjX4Cm2hCZ1=P5M0a4cMBuE0v__LpZw@mail.gmail.com>
+ <7vzjujl267.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, akpm@linux-foundation.org
+Cc: Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 21 21:10:18 2013
+X-From: git-owner@vger.kernel.org Fri Jun 21 21:16:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uq6iw-0007Hl-1E
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 21:10:18 +0200
+	id 1Uq6oz-0005Uo-RH
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 21:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423680Ab3FUTKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 15:10:11 -0400
-Received: from mail-bk0-f43.google.com ([209.85.214.43]:48540 "EHLO
-	mail-bk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423604Ab3FUTKK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 15:10:10 -0400
-Received: by mail-bk0-f43.google.com with SMTP id jm2so3547541bkc.16
-        for <git@vger.kernel.org>; Fri, 21 Jun 2013 12:10:09 -0700 (PDT)
+	id S1423711Ab3FUTQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 15:16:29 -0400
+Received: from mail-bk0-f42.google.com ([209.85.214.42]:35326 "EHLO
+	mail-bk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423707Ab3FUTQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 15:16:28 -0400
+Received: by mail-bk0-f42.google.com with SMTP id jk13so3575990bkc.29
+        for <git@vger.kernel.org>; Fri, 21 Jun 2013 12:16:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=KMBJm5Tzkvb/JdU3GeVf3tIXkekxJk6awVSs9iMYVIk=;
-        b=Fcv7McDQpUwR5kxVpsiTMSawjFF6v74sNsLujNEg0Pq8yVHxTk9CQFn7k27suUtKrF
-         IjkQ0XzVxDEJSV6MsXBRF37TIJsiq/XbnzxaF5EuntMxRE9eJ5aJeQpKeIW39XgimLj9
-         B5h03sqTwUrTV4yZqWkdvmBQW7tMpgIY98yS/ibotkVBtDs0pwDnn18YTsDqemVWSmIF
-         4XfTyOwQuuaRYBTASQRFsDqNyOZLYvvsH4XYi9HeG1j5mlEzHPSk37wxZx6ZebkjJIHy
-         7ChH/YntO0irf32IA6ZzEGvTYW+kat/OoWn+I6XNGfJ8QeNgtlHaq4hLqMMAWJfWWbmU
-         C7eQ==
-X-Received: by 10.204.228.207 with SMTP id jf15mr2060281bkb.16.1371841809221;
- Fri, 21 Jun 2013 12:10:09 -0700 (PDT)
-Received: by 10.204.186.77 with HTTP; Fri, 21 Jun 2013 12:09:28 -0700 (PDT)
-In-Reply-To: <7v38sbo230.fsf@alter.siamese.dyndns.org>
+        bh=Xqa0Q0gK4cCZ8BXS/XWx+RJIQBF44qU0CVCYjS1QI14=;
+        b=WyGF/IBjT9YMnm+F6DRcjrnVrp5RFeawQJm9Xrm05OwsaB1/0ulkf+oLWpjxA5a1sj
+         tyzodgPKsVsjyzIIbqjZEkKRhchuMqyc/5RaSJ5hPXAl+iEpAgIbcvqxjNg15N2mWpr5
+         QVlUdDhWSS9ih4Dojex3e38fa0ErYu1p3gyevS/AIsUZZuZXxi1lxfG7OzeICEFMkKNA
+         C+k1crHc6sjeHALv6LQU6pakO9EH4/+Qv4P04MLnLfp6qDJccS71jWby91VtIFdKdG6r
+         oMNQNksemY176KZF8HkjlmXMc4irE63B0RExNlxtJukvKUurTU/scVh/pmb+Z8ZlAgv4
+         HAQA==
+X-Received: by 10.204.235.197 with SMTP id kh5mr2014679bkb.172.1371842187280;
+ Fri, 21 Jun 2013 12:16:27 -0700 (PDT)
+Received: by 10.204.186.77 with HTTP; Fri, 21 Jun 2013 12:15:47 -0700 (PDT)
+In-Reply-To: <7vzjujl267.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228655>
 
 Junio C Hamano wrote:
-> So from my point of view, a proposal to remove them has an almost no
-> benefit vs potentially very high cost of having to break many people
-> who are silently happily using them; not a very good benefit/cost
-> ratio.
+> A tl;dr is that we _trust_ our refs and everything reachable from
+> them has to be complete.  If that is not the case, things will not
+> work, and it is not a priority to add workarounds in the normal
+> codepath to slow things down.
 
-Yep, it should stay around because it's useful to some people and harms nobody.
+Makes sense.
 
-> I say "minor" only because I think the cost of keeping these old
-> mechanisms alive is very low (if it is a heavy burden on the
-> maintenance, please tell me and how).
+> That does not forbid an addition of "git recover-corrupted-repo"
+> command, whose "assume everything might be broken" code is not
+> shared with the fastpath of other commands.
 
-Yeah, the point of this series is to reduce that maintenance burden.
-After it is applied, there will be exactly two functions (each with
-one caller) that are tested fully by precisely three tests in
-t/remote; and exactly one piece of documentation will refer to
-branches-file/remotes-file, namely urls-remotes.txt.
+I'm not looking for a kitchen-sink command: I'm looking for a
+well-documented toolset to precisely fix corruptions.  We have some
+corruption tests in our testsuite already: I think I'll start digging
+there.
+
+Thanks.
