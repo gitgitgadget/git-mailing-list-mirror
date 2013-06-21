@@ -1,130 +1,249 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 07/16] t/t5516-fetch-push: don't use branches-file
-Date: Fri, 21 Jun 2013 15:29:58 -0700
-Message-ID: <7vsj0bjdw9.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 08/16] t/t5516-fetch-push: use test_config()
+Date: Fri, 21 Jun 2013 15:32:52 -0700
+Message-ID: <7vobazjdrf.fsf@alter.siamese.dyndns.org>
 References: <1371813160-4200-1-git-send-email-artagnon@gmail.com>
-	<1371813160-4200-8-git-send-email-artagnon@gmail.com>
+	<1371813160-4200-9-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 22 00:30:10 2013
+X-From: git-owner@vger.kernel.org Sat Jun 22 00:32:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uq9qL-0003RX-GD
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 00:30:09 +0200
+	id 1Uq9t5-0006Kh-Ba
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 00:32:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423615Ab3FUWaD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 18:30:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60707 "EHLO
+	id S1423633Ab3FUWcz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 18:32:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34064 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422881Ab3FUWaB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 18:30:01 -0400
+	id S1422881Ab3FUWcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 18:32:55 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D1BA2AC9B;
-	Fri, 21 Jun 2013 22:30:01 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99CE12AD84;
+	Fri, 21 Jun 2013 22:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iq93RK3zOqO0e7wjILj0jKMqagY=; b=FEtikP
-	uRwq0Ka+TQYdgroCysKPKekMUYgB43APFgaOdc9PnHmnci0FxaovGQJNqCCyoS8f
-	TMmxPRryvJ0cGq4vdYGSa2e/+0w55l338fgOvWuMqklU9Vd04XeJ9fkhNN1KhqUa
-	9Vk6W4d1pIXACjoC60LyH5TxDQpBMdYBHn0sI=
+	:content-type; s=sasl; bh=P6lTWuFvLnxUOsKHEzdkyr+HrYQ=; b=ANYZ+O
+	FyOAO6Q2GNmcxGXw2Fmw7qRD67AVAi9J/rsKXXrVarANrvVZgxsi9IGuZMshajFQ
+	aF8m7XWb1RgOsfYdXBsZNr7W7qqilO/MfJP8w+Cm0wvUyElEaCpyhM9OeIciXKY0
+	cE6jxyDqkCY27EixVabPi2HeeoAcnO4csvE1w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=w6JnweiI00eXTKZBWngr+67rGz/AJ4cy
-	Q3l82EtnHZkKXdcq0Cc98G2FXkiZnPnTnfqKfxCiLT7xqDfC1pR6B+gocEI5FK/F
-	Nwew3Wb3lrZhKv2qEHwxtWYSv11xzKw6BKK9vfWMteKVOW6Y2/vsgj2NZxa9DUBf
-	JwTx4F+Y/6w=
+	:content-type; q=dns; s=sasl; b=G0iiXLTL48gbK+zxeUfRSGgKGevZgu/l
+	+D6QEBsH4RnWrLN7uMaFykFYl3pJAs6ZEjC1zrgCR5J6+0dGMF27Vceulifib8nc
+	tkyWxelEnYSf1sexlahd0sTQ9rvKGCc1c1oA07T9MkCVjPqvIyDkFsNfScXN5hRL
+	ldn3FJN7XCY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E9602AC99;
-	Fri, 21 Jun 2013 22:30:01 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F02B2AD83;
+	Fri, 21 Jun 2013 22:32:54 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CA512AC98;
-	Fri, 21 Jun 2013 22:30:00 +0000 (UTC)
-In-Reply-To: <1371813160-4200-8-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Fri, 21 Jun 2013 16:42:31 +0530")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B5FB52AD82;
+	Fri, 21 Jun 2013 22:32:53 +0000 (UTC)
+In-Reply-To: <1371813160-4200-9-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Fri, 21 Jun 2013 16:42:32 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1C1068E4-DAC2-11E2-8AB4-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 836615D4-DAC2-11E2-85F4-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228666>
 
 Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> Four tests exercising fetch and push functionality unnecessarily depend
-> on $GIT_DIR/branches files.  Modern Git does not encourage the use of
-> those files, and the parser remote.c:read_branches_file() is only
-> provided for backward compatibility with older repositories.  We already
-> have tests in t/t5505-remote to verify that the parser works: so,
-> substitute the $GIT_DIR/branches configuration with an equivalent
-> gitconfig-style configuration, using the results of those tests.
+> Replace the 'git config' calls in tests with test_config for greater
+> robustness.
 
-As we are not deprecating, I think we agree we would prefer to keep
-these working.  If we need tests using remotes/ or config, they
-should be added as their own tests, not by removing branches/ one.
+That may be a good thing in principle, but I _think_
+
+	mk_empty testrepo &&
+        (
+        	cd testrepo &&
+                do whatever to its config &&
+                run test
+	)
+
+sequence is used so that we do not even have to worry about what
+leftover configuration values are in the testrepo/.git/config; so
+does it really matter?
+
+If this conversion had something more than "s/git config/test_config/"
+replacement, that would indicate that you uncovered a bug in the
+existing test and found a good fix, but that does not seem to be the
+case for this particular patch.
 
 >
 > Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 > ---
->  t/t5516-fetch-push.sh | 16 ++++++++++++----
->  1 file changed, 12 insertions(+), 4 deletions(-)
+>  t/t5516-fetch-push.sh | 46 +++++++++++++++++++++++-----------------------
+>  1 file changed, 23 insertions(+), 23 deletions(-)
 >
 > diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index 4691d51..6e9fa84 100755
+> index 6e9fa84..afb25c4 100755
 > --- a/t/t5516-fetch-push.sh
 > +++ b/t/t5516-fetch-push.sh
-> @@ -852,9 +852,11 @@ test_expect_success 'fetch with branches' '
+> @@ -142,8 +142,8 @@ test_expect_success 'fetch with wildcard' '
 >  	mk_empty testrepo &&
->  	git branch second $the_first_commit &&
->  	git checkout second &&
-> -	echo ".." > testrepo/.git/branches/branch1 &&
 >  	(
 >  		cd testrepo &&
-> +		test_config remote.branch1.url ".."  &&
-> +		test_config remote.branch1.fetch "refs/heads/master:refs/heads/branch1"  &&
-> +		test_config remote.branch1.push "HEAD:refs/heads/master"  &&
->  		git fetch branch1 &&
->  		echo "$the_commit commit	refs/heads/branch1" >expect &&
->  		git for-each-ref refs/heads >actual &&
-> @@ -865,9 +867,11 @@ test_expect_success 'fetch with branches' '
+> -		git config remote.up.url .. &&
+> -		git config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
+> +		test_config remote.up.url .. &&
+> +		test_config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
+>  		git fetch up &&
 >  
->  test_expect_success 'fetch with branches containing #' '
->  	mk_empty testrepo &&
-> -	echo "..#second" > testrepo/.git/branches/branch2 &&
+>  		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
+> @@ -157,9 +157,9 @@ test_expect_success 'fetch with insteadOf' '
 >  	(
+>  		TRASH=$(pwd)/ &&
 >  		cd testrepo &&
-> +		test_config remote.branch2.url ".."  &&
-> +		test_config remote.branch2.fetch "refs/heads/second:refs/heads/branch2"  &&
-> +		test_config remote.branch2.push "HEAD:refs/heads/second"  &&
->  		git fetch branch2 &&
->  		echo "$the_first_commit commit	refs/heads/branch2" >expect &&
->  		git for-each-ref refs/heads >actual &&
-> @@ -879,7 +883,9 @@ test_expect_success 'fetch with branches containing #' '
->  test_expect_success 'push with branches' '
->  	mk_empty testrepo &&
->  	git checkout second &&
-> -	echo "testrepo" > .git/branches/branch1 &&
-> +	test_config remote.branch1.url testrepo &&
-> +	test_config remote.branch1.fetch "refs/heads/master:refs/heads/branch1" &&
-> +	test_config remote.branch1.push "HEAD:refs/heads/master" &&
->  	git push branch1 &&
->  	(
->  		cd testrepo &&
-> @@ -891,7 +897,9 @@ test_expect_success 'push with branches' '
+> -		git config "url.$TRASH.insteadOf" trash/ &&
+> -		git config remote.up.url trash/. &&
+> -		git config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
+> +		test_config "url.$TRASH.insteadOf" trash/ &&
+> +		test_config remote.up.url trash/. &&
+> +		test_config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
+>  		git fetch up &&
 >  
->  test_expect_success 'push with branches containing #' '
->  	mk_empty testrepo &&
-> -	echo "testrepo#branch3" > .git/branches/branch2 &&
-> +	test_config remote.branch2.url testrepo &&
-> +	test_config remote.branch2.fetch "refs/heads/branch3:refs/heads/branch2" &&
-> +	test_config remote.branch2.push "HEAD:refs/heads/branch3" &&
->  	git push branch2 &&
+>  		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
+> @@ -173,9 +173,9 @@ test_expect_success 'fetch with pushInsteadOf (should not rewrite)' '
+>  	(
+>  		TRASH=$(pwd)/ &&
+>  		cd testrepo &&
+> -		git config "url.trash/.pushInsteadOf" "$TRASH" &&
+> -		git config remote.up.url "$TRASH." &&
+> -		git config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
+> +		test_config "url.trash/.pushInsteadOf" "$TRASH" &&
+> +		test_config remote.up.url "$TRASH." &&
+> +		test_config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
+>  		git fetch up &&
+>  
+>  		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
+> @@ -780,7 +780,7 @@ test_expect_success 'mixed ref updates, deletes, invalid deletes trigger hooks w
+>  
+>  test_expect_success 'allow deleting a ref using --delete' '
+>  	mk_test testrepo heads/master &&
+> -	(cd testrepo && git config receive.denyDeleteCurrent warn) &&
+> +	(cd testrepo && test_config receive.denyDeleteCurrent warn) &&
+>  	git push testrepo --delete master &&
+>  	(cd testrepo && test_must_fail git rev-parse --verify refs/heads/master)
+>  '
+> @@ -809,7 +809,7 @@ test_expect_success 'warn on push to HEAD of non-bare repository' '
 >  	(
 >  		cd testrepo &&
+>  		git checkout master &&
+> -		git config receive.denyCurrentBranch warn
+> +		test_config receive.denyCurrentBranch warn
+>  	) &&
+>  	git push testrepo master 2>stderr &&
+>  	grep "warning: updating the current branch" stderr
+> @@ -820,7 +820,7 @@ test_expect_success 'deny push to HEAD of non-bare repository' '
+>  	(
+>  		cd testrepo &&
+>  		git checkout master &&
+> -		git config receive.denyCurrentBranch true
+> +		test_config receive.denyCurrentBranch true
+>  	) &&
+>  	test_must_fail git push testrepo master
+>  '
+> @@ -830,8 +830,8 @@ test_expect_success 'allow push to HEAD of bare repository (bare)' '
+>  	(
+>  		cd testrepo &&
+>  		git checkout master &&
+> -		git config receive.denyCurrentBranch true &&
+> -		git config core.bare true
+> +		test_config receive.denyCurrentBranch true &&
+> +		test_config core.bare true
+>  	) &&
+>  	git push testrepo master 2>stderr &&
+>  	! grep "warning: updating the current branch" stderr
+> @@ -842,7 +842,7 @@ test_expect_success 'allow push to HEAD of non-bare repository (config)' '
+>  	(
+>  		cd testrepo &&
+>  		git checkout master &&
+> -		git config receive.denyCurrentBranch false
+> +		test_config receive.denyCurrentBranch false
+>  	) &&
+>  	git push testrepo master 2>stderr &&
+>  	! grep "warning: updating the current branch" stderr
+> @@ -918,7 +918,7 @@ test_expect_success 'push into aliased refs (consistent)' '
+>  		cd child1 &&
+>  		git branch foo &&
+>  		git symbolic-ref refs/heads/bar refs/heads/foo
+> -		git config receive.denyCurrentBranch false
+> +		test_config receive.denyCurrentBranch false
+>  	) &&
+>  	(
+>  		cd child2 &&
+> @@ -940,7 +940,7 @@ test_expect_success 'push into aliased refs (inconsistent)' '
+>  		cd child1 &&
+>  		git branch foo &&
+>  		git symbolic-ref refs/heads/bar refs/heads/foo
+> -		git config receive.denyCurrentBranch false
+> +		test_config receive.denyCurrentBranch false
+>  	) &&
+>  	(
+>  		cd child2 &&
+> @@ -1006,7 +1006,7 @@ test_expect_success 'push --porcelain rejected' '
+>  	git push testrepo refs/heads/master:refs/remotes/origin/master &&
+>  	(cd testrepo &&
+>  		git reset --hard origin/master^
+> -		git config receive.denyCurrentBranch true) &&
+> +		test_config receive.denyCurrentBranch true) &&
+>  
+>  	echo >.git/foo  "To testrepo"  &&
+>  	echo >>.git/foo "!	refs/heads/master:refs/heads/master	[remote rejected] (branch is currently checked out)" &&
+> @@ -1020,7 +1020,7 @@ test_expect_success 'push --porcelain --dry-run rejected' '
+>  	git push testrepo refs/heads/master:refs/remotes/origin/master &&
+>  	(cd testrepo &&
+>  		git reset --hard origin/master
+> -		git config receive.denyCurrentBranch true) &&
+> +		test_config receive.denyCurrentBranch true) &&
+>  
+>  	echo >.git/foo  "To testrepo"  &&
+>  	echo >>.git/foo "!	refs/heads/master^:refs/heads/master	[rejected] (non-fast-forward)" &&
+> @@ -1052,7 +1052,7 @@ do
+>  		mk_test testrepo heads/master hidden/one hidden/two hidden/three &&
+>  		(
+>  			cd testrepo &&
+> -			git config $configsection.hiderefs refs/hidden
+> +			test_config $configsection.hiderefs refs/hidden
+>  		) &&
+>  
+>  		# push to unhidden ref succeeds normally
+> @@ -1078,7 +1078,7 @@ test_expect_success 'fetch exact SHA1' '
+>  	git push testrepo master:refs/hidden/one &&
+>  	(
+>  		cd testrepo &&
+> -		git config transfer.hiderefs refs/hidden
+> +		test_config transfer.hiderefs refs/hidden
+>  	) &&
+>  	check_push_result testrepo $the_commit hidden/one &&
+>  
+> @@ -1098,7 +1098,7 @@ test_expect_success 'fetch exact SHA1' '
+>  		# the server side can allow it to succeed
+>  		(
+>  			cd ../testrepo &&
+> -			git config uploadpack.allowtipsha1inwant true
+> +			test_config uploadpack.allowtipsha1inwant true
+>  		) &&
+>  
+>  		git fetch -v ../testrepo $the_commit:refs/heads/copy &&
+> @@ -1126,8 +1126,8 @@ test_expect_success 'fetch follows tags by default' '
+>  	(
+>  		cd dst &&
+>  		git remote add origin ../src &&
+> -		git config branch.master.remote origin &&
+> -		git config branch.master.merge refs/heads/master &&
+> +		test_config branch.master.remote origin &&
+> +		test_config branch.master.merge refs/heads/master &&
+>  		git pull &&
+>  		git for-each-ref >../actual
+>  	) &&
