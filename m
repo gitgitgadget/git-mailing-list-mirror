@@ -1,67 +1,70 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] status: display the SHA1 of the commit being currently
- processed
-Date: Fri, 21 Jun 2013 07:34:15 +0200
-Message-ID: <51C3E5D7.6040604@viscovery.net>
-References: <1371471004-9069-1-git-send-email-Mathieu.Lienard--Mayor@ensimag.imag.fr> <alpine.DEB.2.00.1306171357440.7683@perkele.intern.softwolves.pp.se> <c878cf98bff28ea8b72fb6d33fd9ca85@ensibm.imag.fr> <alpine.DEB.2.00.1306171452340.7683@perkele.intern.softwolves.pp.se> <0b88af05ea8d4723a870476036992abc@ensibm.imag.fr> <51BF26F9.1080900@viscovery.net> <7vvc5cg0i8.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1306200853250.7267@ds9.cixit.se> <51C2B8DA.6040400@viscovery.net> <7vzjukveiz.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] t/t5800-remote-testpy: skip all tests if not built
+Date: Fri, 21 Jun 2013 12:07:50 +0530
+Message-ID: <CALkWK0ky+zYk+7s8yK6VeA+2xyQ41TfoREym2jq3L77q5MTpzA@mail.gmail.com>
+References: <1371586006-16289-1-git-send-email-artagnon@gmail.com>
+ <7vip1b40zb.fsf@alter.siamese.dyndns.org> <CALkWK0=6ot9ZXEyMmO1ZtEXPi5H1JXXvG5j6yvBeE56H9zQBwg@mail.gmail.com>
+ <20130621053112.GA9634@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Peter Krefting <peter@softwolves.pp.se>,
-	=?ISO-8859-1?Q?Mathieu_Li=E9?= =?ISO-8859-1?Q?nard--Mayor?= 
-	<mathieu.lienard--mayor@ensimag.fr>, git@vger.kernel.org,
-	Jorge Juan Garcia Garcia 
-	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 21 07:34:29 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 21 08:38:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UptzP-0007Wt-NF
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 07:34:28 +0200
+	id 1UpuzT-0004KU-JF
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 08:38:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422756Ab3FUFeY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 01:34:24 -0400
-Received: from so.liwest.at ([212.33.55.13]:58110 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161096Ab3FUFeX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 01:34:23 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UptzD-0001OV-TQ; Fri, 21 Jun 2013 07:34:16 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 8048A1660F;
-	Fri, 21 Jun 2013 07:34:15 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <7vzjukveiz.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1422945Ab3FUGib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 02:38:31 -0400
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:44199 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422652Ab3FUGia (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 02:38:30 -0400
+Received: by mail-ie0-f173.google.com with SMTP id k13so18715932iea.4
+        for <git@vger.kernel.org>; Thu, 20 Jun 2013 23:38:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=lsGVkxIQigBuqc9iMhpWWnWUqyQMgDJT7ud/kxisUKM=;
+        b=I+wixbHAszTe4VutZMimfjjHnDQfeoAg63EoZAxJw7hYL0fqrixuzxe/lCqOgU6mgk
+         x/snT66AHSbv2JDhC1jTgkl0w3CwCFjM45rbdCKLrbH9l87p9VloSylmBErp3kZtUmP+
+         tYku5OO9riZpWPJcj+tVRfy7p0mNj0JUWnbHsR9Ighe8Anv8gubP6T02e37KFPOG/sJI
+         Co25nDoQBshYWKv36M3fDYZsl5kvz/REMBuX55ihZPWDoOeSQFT3tjY470Extt8G5sfp
+         euFg23D3B+TbUsKyRWKqPXyhk6qVrV/Vyk5ypkQmBTcUbIFDBUvRXXygzcQT4G4tl9bG
+         IetQ==
+X-Received: by 10.50.47.105 with SMTP id c9mr1393215ign.50.1371796710333; Thu,
+ 20 Jun 2013 23:38:30 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Thu, 20 Jun 2013 23:37:50 -0700 (PDT)
+In-Reply-To: <20130621053112.GA9634@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228577>
 
-Am 6/20/2013 20:11, schrieb Junio C Hamano:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
->> But you can't have this string:
->>
->>   "Splitting a commit while rebasing branch '%2$s' on '%3$s'."
->>
->> neither in the template nor in the translation, because the numbers must
->> begin at 1 (and must be used without gaps).
-> 
-> Did any message we saw in the patch (and the discussion to possibly
-> improve it) need to have such a format string, or are you pointing
-> out a common gotcha we may want to warn translators about in
-> po/README?
+Jeff King wrote:
+> So I do not see any problem with the current Makefile. Running "make" or
+> "make test" should let t5800 pass. Can you describe how you are
+> triggering the issue in more detail?
 
-I took the example from Peter's message earlier in this thread:
+master, at the time of reporting the issue:
 
-http://thread.gmane.org/gmane.comp.version-control.git/228062/focus=228064
+  artagnon|master=:~/src/git$ make -j 8
+  artagnon|master=:~/src/git$ rm git-remote-testpy
+  artagnon|master=:~/src/git$ make -j 8
+  artagnon|master=:~/src/git$ cd t
+  artagnon|master=:~/src/git$ sh t5800-remote-testpy.sh
+  # failure
 
--- Hannes
+Yesterday's jc publish fixed it: 6c473a5 (build: generate and clean
+test scripts, 2013-06-07) graduated to master; it adds $NO_INSTALL to
+the target "all", among other things.
+
+> [...]
+
+Yes, I agree that it is convoluted and can be cleaned up.
