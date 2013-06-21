@@ -1,118 +1,134 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Do not ignore merge options in interactive rebase
-Date: Fri, 21 Jun 2013 13:43:03 -0700
-Message-ID: <7vr4fvkxew.fsf@alter.siamese.dyndns.org>
-References: <87bo70dokb.fsf@duckcorp.org>
+Subject: Re: [PATCH] lib-httpd/apache.conf: check version only after mod_version loads
+Date: Fri, 21 Jun 2013 13:59:56 -0700
+Message-ID: <7vmwqjkwmr.fsf@alter.siamese.dyndns.org>
+References: <C44E969B-A5AE-44EF-BFCA-CAEF69516BEB@gernhardtsoftware.com>
+	<20130621043052.GA5318@sigill.intra.peff.net>
+	<20130621044236.GA5798@sigill.intra.peff.net>
+	<26902D6D-D105-4943-BC67-461CEF82D888@gernhardtsoftware.com>
+	<20130621044953.GA5962@sigill.intra.peff.net>
+	<D0852D0F-3282-41DF-8A5A-4BEF1B39ED66@gernhardtsoftware.com>
+	<20130621180334.GA4499@sigill.intra.peff.net>
+	<1B9251F9-C1AF-41F7-8BF8-D36DDB27EF09@gernhardtsoftware.com>
+	<20130621181250.GA5290@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Arnaud Fontaine <arnau@debian.org>
-X-From: git-owner@vger.kernel.org Fri Jun 21 22:43:13 2013
+Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
+	"git\@vger.kernel.org List" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 21 23:00:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uq8Aq-0005Hj-NE
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 22:43:13 +0200
+	id 1Uq8RL-0006LE-FJ
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 23:00:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946043Ab3FUUnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jun 2013 16:43:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64606 "EHLO
+	id S1945960Ab3FUVAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 17:00:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48959 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946041Ab3FUUnG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 16:43:06 -0400
+	id S1945933Ab3FUU76 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 16:59:58 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BC4F2A5E3;
-	Fri, 21 Jun 2013 20:43:06 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 459752AD43;
+	Fri, 21 Jun 2013 20:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=T4v2TqqEdWrI9JS6H07JRjyRxxk=; b=M0sSNP
-	+P/LKwJUQz/H7i8iPeXqF6s+Dl3fUF/JwSU1T4VVLXbU/bsxmDNAAIXJimjqq3ad
-	qWF07YZsVgA9bN5b+XEh/STGWyRAaUKzRhGI3O+QT/3r/zT1L+u0v4Uh85q4asQa
-	spvfez8jijQ1QDHbty8t7tipNFk2TqtDz5P30=
+	:content-type; s=sasl; bh=pV0xKVAwxLFadfSZgFNOXMtLkQo=; b=ePb6mQ
+	aj5drmgMdC3/ny7EU05vReYJDtBFFpTeWs+oJfX4L+eEvXkDtN+JpL/2LtVrOIk+
+	RvoJwZmeLqHbhghMARhjE7HGbqDswKBfZVbNNcr7/YIS5x+n6eEZ23YIduema6+5
+	8T2G5bpVE/aDTLadZ5733EQVkhGOZaPJqWPBg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SNR109zhtqMSMobgxaW67Gm6lVnp5aaT
-	lApWrc+2WpNP3ItrwoO648XbG4XHWrGtXQVA7EoBvkWQHl9fUU0nfJUNrGVK320H
-	Nf1Q0Yvhm+CZME8npLyzaE6sIJlKd69pTdvQQxYXThSt+gn54qiXekHpYjH8lPBB
-	wnfjH62rcHQ=
+	:content-type; q=dns; s=sasl; b=qHH+wzUycsyfZpNC8+zsC4y/mpLNco46
+	2dCh0sNWcdQeL6nRar2k6waVc7LScksNcySNHc4r92EBmmUyrmwbu0hlXCqr9TPE
+	Q3L7F2Jf35CiGKjuzalmJX37m1OT+YILMlUas29Ta4plDd1G1JsUvQ7f7H7YdkL8
+	/9RdyKqQkIc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 008DA2A5E2;
-	Fri, 21 Jun 2013 20:43:06 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39BE12AD42;
+	Fri, 21 Jun 2013 20:59:58 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 661A42A5E1;
-	Fri, 21 Jun 2013 20:43:05 +0000 (UTC)
-In-Reply-To: <87bo70dokb.fsf@duckcorp.org> (Arnaud Fontaine's message of "Fri,
-	21 Jun 2013 14:23:48 +0900")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9234C2AD41;
+	Fri, 21 Jun 2013 20:59:57 +0000 (UTC)
+In-Reply-To: <20130621181250.GA5290@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 21 Jun 2013 14:12:51 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2C7320DC-DAB3-11E2-82AC-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 87C1A0EC-DAB5-11E2-83EF-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228658>
 
-Arnaud Fontaine <arnau@debian.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Merge strategy and its options can be specified in `git rebase`,
-> but with `--interactive`, they were completely ignored.
-
-And why is it a bad thing?  If you meant s/--interactive/-m/ in the
-above, then I can sort of understand the justification, though.
-
-
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> old mode 100644
-> new mode 100755
-
-I see an unjustifiable mode change here.
-
-> index f953d8d..c157fdf
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -239,7 +239,16 @@ pick_one () {
+> Cool. I think the patch should look like the one below, then.
+>
+> Just to double-check that I have explained the issue correctly, can you
+> share the output of "apache2 -l"? Mine has:
+>
+>   $ apache2 -l
+>   Compiled in modules:
+>     core.c
+>     mod_log_config.c
+>     mod_logio.c
+>     mod_version.c
+>     prefork.c
+>     http_core.c
+>     mod_so.c
+>
+> which explains why it works here. I'm assuming you will not have
+> mod_version.c compiled in.
+>
+> -- >8 --
+> Subject: lib-httpd/apache.conf: check version only after mod_version loads
+>
+> Commit 0442743 introduced an <IfVersion> directive near the
+> top of the apache config file. However, at that point we
+> have not yet checked for and loaded the mod_version module.
+> This means that the directive will behave oddly if
+> mod_version is dynamically loaded, failing to match when it
+> should.
+>
+> We can fix this by moving the whole block below the
+> LoadModule directive for mod_version.
+>
+> Reported-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/lib-httpd/apache.conf | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+> index 56ae548..dd17e3a 100644
+> --- a/t/lib-httpd/apache.conf
+> +++ b/t/lib-httpd/apache.conf
+> @@ -1,7 +1,4 @@ ServerName dummy
+>  ServerName dummy
+> -<IfVersion < 2.4>
+> -LockFile accept.lock
+> -</IfVersion>
+>  PidFile httpd.pid
+>  DocumentRoot www
+>  LogFormat "%h %l %u %t \"%r\" %>s %b" common
+> @@ -26,6 +23,10 @@ ErrorLog error.log
+>  	LoadModule version_module modules/mod_version.so
+>  </IfModule>
 >  
->  	test -d "$rewritten" &&
->  		pick_one_preserving_merges "$@" && return
-> -	output git cherry-pick $empty_args $ff "$@"
+> +<IfVersion < 2.4>
+> +LockFile accept.lock
+> +</IfVersion>
 > +
-> +	if test -n "$do_merge"
-> +	then
 
-So you _did_ mean "rebase -m"?
+Once you see it in the patch form, it is very clear what this change
+does and why it is necessary in the context ;-)
 
-> +		test -z "$strategy" && strategy=recursive
-> +		output git cherry-pick --strategy=$strategy \
+Thanks, both of you, for digging this down to the root cause; you
+guys have done before it graduates to 'master', which I especially
+appreciate.
 
-This is a bad change.
-
-I would understand if the above were:
-
-	git cherry-pick ${strategy+--strategy=$strategy} ...
-
-in other words, "if there is no strategy specified, do not override
-the configured default that might be different from recursive"
-(pull.twohead may be set to resolve).
-
-> +			$(echo $strategy_opts | sed "s/'--\([^']*\)'/-X\1/g") \
-
-Is it guaranteed $startegy_opts do not have a space in it?
-
-There is a call to "git merge" that uses "${strategy+-s $strategy}",
-but it does not seem to propagate the strategy option.  Does it need
-a similar change?  It seems that the first step might be to factor
-out these calls to the "git cherry-pick" and "git merge" to helper
-functions to make it easier to call them with -s/-X options in a
-consistent way.
-
-> +			$empty_args $ff "$@"
-> +	else
-> +		output git cherry-pick $empty_args $ff "$@"
-> +	fi
-
-It seems that there is another call to "git cherry-pick" in the
-script ("git grep" for it).  Does it need a similar change?
+Will queue.
